@@ -4529,8 +4529,8 @@ indents text by the width of the word &#8220;margarine&#8221;.
 </p>
 
 <p>
-With no argument, IL indents by its last active value.  See the
-<a href="#indents-explanation">brief explanation of how mom handles indents</a>
+With no argument, IL after an ILX indents by its last active value.  See the
+<a href="#indents-handling">explanation of how mom handles indents</a>
 for more details.
 </p>
 
@@ -4581,8 +4581,8 @@ indents text by the width of the word &#8220;jello&#8221;.
 </p>
 
 <p>
-With no argument, IR indents by its last active value.  See the
-<a href="#indents-explanation">brief explanation of how mom handles indents</a>
+With no argument, IR after an IRX indents by its last active value.  See the
+<a href="#indents-handling">explanation of how mom handles indents</a>
 for more details.
 </p>
 
@@ -4606,7 +4606,7 @@ automatically turns off IB.
 </div>
 
 <div class="box-macro-args">
-Macro: <b>IB</b> <kbd class="macro-args">[ &lt;left measure&gt; &lt;right measure&gt; ]</kbd>
+Macro: <b>IB</b> <kbd class="macro-args">[ &lt;indent-1&gt; &lt;indent-2&gt; ]</kbd>
 </div>
 <p class="requires">
 &bull;&nbsp;The optional arguments require a <a href="definitions.html#unitofmeasure">unit of measure</a>
@@ -4618,18 +4618,20 @@ time.
 </p>
 
 <p>
-At its first invocation, you must supply a measure for both indents;
-at subsequent invocations when you wish to supply a measure, both
-must be given again.  As with IL and IR, the measures are added to
-the values previously passed to the macro.  Hence, if you wish to
-change just one of the values, you must give an argument of zero to
-the other.
+If you supply only an <kbd>indent-1</kbd> argument, the argument is
+the amount to indent from both the left and right margins.  If you
+give both <kbd>indent-1</kbd> and <kbd>indent-2</kbd>, the first is
+the indent from the left margin and the second is the indent from
+the right margin.
 </p>
 
 <p>
-A word of advice: If you need to manipulate left and right
-indents separately, use a combination of IL and IR instead of IB.
-You&#8217;ll save yourself a lot of grief.
+As with IL and IR, the measures are added to the values previously
+passed to the macro.  Hence, if you wish to change just one of the
+values, you must give an argument of zero to the other.  (A word of
+advice: If you need to manipulate left and right indents separately,
+use a combination of IL and IR instead of IB.  You&#8217;ll save
+yourself a lot of grief.)
 </p>
 
 <p>
@@ -4648,9 +4650,9 @@ and right indents by the width of &#8220;jello&#8221;.
 </p>
 
 <p>
-Like IL and IR, IB with no argument indents by its last active
-values.  See the
-<a href="#indents-explanation">brief explanation of how mom handles indents</a>
+Like IL and IR, IB with no argument after an IBX indents by its
+last active values.  See the
+<a href="#indents-handling">explanation of how mom handles indents</a>
 for more details.
 </p>
 
