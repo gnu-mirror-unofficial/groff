@@ -2054,14 +2054,17 @@ end
 .    \}
 .    nr #TEXT_WIDTH \w'\\$1'
 .    ie \\n[.u]=1 \{\
+.       nop \~
 \Z'\\$1'\
 \Z'\D't \\n[#UNDERSCORE_WEIGHT]''\
 \v'\\*[$UNDERSCORE_GAP]+\\n[#UNDERSCORE_WEIGHT_ADJ]u'\
 \D'l \\n[#TEXT_WIDTH]u 0'\
 \Z'\D't \\n[#RULE_WEIGHT]''\
 \v'-(\\*[$UNDERSCORE_GAP]+\\n[#UNDERSCORE_WEIGHT_ADJ]u)'\c
+.       nop
 .    \}
 .    el \{\
+.       nop \ \"
 \Z'\\$1'\
 \Z'\D't \\n[#UNDERSCORE_WEIGHT]''\
 \v'\\*[$UNDERSCORE_GAP]+\\n[#UNDERSCORE_WEIGHT_ADJ]u'\
@@ -3420,38 +3423,25 @@ end
 \# +++INDENT BOTH+++
 \#
 .MAC IB END
-.    if \\n[#INDENT_STYLE_LEFT] .ILX
+.    if \\n[#INDENT_STYLE_LEFT]  .ILX
 .    if \\n[#INDENT_STYLE_RIGHT] .IRX
 .    nr #INDENT_STYLE_BOTH  1
 .    nr #INDENT_ACTIVE      1
 .    nr #INDENT_BOTH_ACTIVE 1
 .    ie '\\$1'' \{\
 .       br
+.       ll \\n[.l]u-\\n[#BR_INDENT]u
 .       in \\n[#BL_INDENT]u
-.       ie \\n[#TAB_ACTIVE] \{\
-.          ll \\n[.l]u-\\n[#BR_INDENT]u
-.          ta \\n[.l]u-\\n[#BR_INDENT]u
-.       \}
-.       el \{\
-.          ll \\n[.l]u-\\n[#BR_INDENT]u
-.          ta \\n[.l]u-\\n[#BR_INDENT]u
-.       \}
+.       ta \\n[.l]u-\\n[#BR_INDENT]u
 .    \}
 .    el \{\
 .       br
 .       nr #BL_INDENT (\\n[#INDENT]+\\$1)
 .       ie \\n[#NUM_ARGS]=2 .nr #BR_INDENT +(\\$2)
 .       el .nr #BR_INDENT \\n[#BL_INDENT]
-.       ie \\n[#TAB_ACTIVE] \{\
-.          in \\n[#BL_INDENT]u
-.          ll \\n[.l]u-\\n[#BR_INDENT]u
-.          ta \\n[.l]u-\\n[#BL_INDENT]u
-.       \}
-.       el \{\
-.          in \\n[#BL_INDENT]u
-.          ll \\n[.l]u-\\n[#BR_INDENT]u
-.          ta \\n[.l]u-\\n[#BR_INDENT]u
-.       \}
+.       ll \\n[.l]u+\\n[.i]u-\\n[#BR_INDENT]u
+.       in \\n[#BL_INDENT]u
+.       ta \\n[.l]u-\\n[#BR_INDENT]u
 .    \}
 .END
 \#
@@ -7588,6 +7578,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    nr PDFHREF.VIEW.LEADING \\n[PDFHREF.VIEW.LEADING.T]
 .    if !\\n[#TOC] .RV_HARD_SET_MARGINS
 .    if \\n[#COLUMNS] .COLUMNS \\n[#NUM_COLS] \\n[#GUTTER]u
+.    sp |\\n[#DOCHEADER_ADVANCE]u-\\n[#DOC_LEAD]u
 .\" Collect TITLE for TOC.
 .    if !\\n[#TOC]=1 \{\
 .       nr #TOC_ENTRY_PN \\n%+\\n[#PAGE_NUM_ADJ]
@@ -10242,6 +10233,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          if \\n[#QUOTE_4_HD] .sp .5v
 .       if !\\n[#SPACE_ADDED] .SHIM
 .       if \\n[#SPACE_ADDED] .rr #SPACE_ADDED
+.       vpt
 .    \}
 .    el \{\
 .       if \\n[#NUM_ARGS]>1 \{\
