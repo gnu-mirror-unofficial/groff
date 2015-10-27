@@ -1,3 +1,15 @@
+2015-10-27  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	gropdf was choking on -I flag passed by groff, now uses
+	these directories to search for included pdfs.
+	
+	* src/devices/gropdf/gropdf.pl: Handle -I flag, avoid 
+	  unitialised values.
+	
+	* src/roff/groff/groff.1.man: Include 'X pdf: pdfpic'
+	
+	* src/devices/gropdf/gropdf.1.man: Document -I flag
+	
 2015-09-10  Bernd Warken  <groff-bernd.warken-72@web.de>
 
 	* src/roff/grog/subs.pl: fix comments

@@ -47,7 +47,7 @@ the original English.
 .SY gropdf
 .OP \-delvs
 .OP \-F dir
-\#.OP \-I dir
+.OP \-I dir
 .OP \-p papersize
 \#.OP \-w n
 .OP \-y foundry
@@ -132,29 +132,20 @@ to the search path for font, and device description files;
 is the name of the device, usually
 .BR pdf .
 .
-.\" .TP
-.\" .BI \-I dir
-.\" This option may be used to add a directory to the search path for
-.\" files on the command line and files named in
-.\" .B \[rs]X'ps: import'
-.\" and
-.\" .B \[rs]X'ps: file'
-.\" escapes.
-.\" .
-.\" The search path is initialized with the current directory.
-.\" .
-.\" This option may be specified more than once; the directories are then
-.\" searched in the order specified (but before the current directory).
-.\" .
-.\" If you want to make the current directory be read before other directories,
-.\" add
-.\" .B \-I.\&
-.\" at the appropriate place.
-.\" .
-.\" .IP
-.\" No directory search is performed for files with an absolute file name.
-.\" .
-.\" .TP
+.TP
+.BI \-I dir
+This option may be used to add a directory to the search path for
+files named in
+.B \[rs]X'pdf: pdfpic'
+escape.
+.
+The current directory is always searched first.
+.
+This option may be specified more than once; the directories are then
+searched in the order specified.
+.
+.IP
+No directory search is performed for files with an absolute file name.
 .
 .TP
 .B \-l

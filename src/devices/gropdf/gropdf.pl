@@ -180,10 +180,13 @@ my $debug=0;
 my $version=0;
 my $stats=0;
 my $unicodemap;
+my @idirs;
 
 #Load_Config();
 
-GetOptions("F=s" => \$fd, 'l' => \$frot, 'p=s' => \$fpsz, 'd!' => \$debug, 'v' => \$version, 'e' => \$embedall, 'y=s' => \$Foundry, 's' => \$stats, 'u:s' => \$unicodemap);
+GetOptions("F=s" => \$fd, 'I=s' => \@idirs, 'l' => \$frot, 'p=s' => \$fpsz, 'd!' => \$debug, 'v' => \$version, 'e' => \$embedall, 'y=s' => \$Foundry, 's' => \$stats, 'u:s' => \$unicodemap);
+
+unshift(@idirs,'.');
 
 if ($version)
 {
@@ -925,7 +928,7 @@ sub do_x
 	    elsif (lc($xprm[1]) eq 'pdfpic')
 	    {
 		my $fil=$xprm[2];
-		my $flag=uc($xprm[3])||'-L';
+		my $flag=uc($xprm[3]||'-L');
 		my $wid=GetPoints($xprm[4])||-1;
 		my $hgt=GetPoints($xprm[5]||-1);
 		my $ll=GetPoints($xprm[6]||0);
@@ -1175,7 +1178,7 @@ sub GetPoints
 {
     my $val=shift;
 
-    $val=ToPoints($1,$2) if ($val=~m/(-?[\d.]+)([cipnz])/);
+    $val=ToPoints($1,$2) if ($val and $val=~m/(-?[\d.]+)([cipnz])/);
 
     return $val;
 }
@@ -1302,6 +1305,35 @@ sub LoadSWF
     return $xonm;
 }
 
+sub OpenInc
+{
+    my $fn=shift;
+    my $fnm=$fn;
+    my $F;
+
+    if (substr($fnm,0,1)  eq '/' or substr($fnm,1,1) eq ':') # dos
+    {
+	if (-r $fnm and open($F,"<$fnm"))
+	{
+	    return($F,$fnm);
+	}
+    }
+    else
+    {
+	foreach my $dir (@idirs)
+	{
+	    $fnm="$dir/$fn";
+	    
+	    if (-r "$fnm" and open($F,"<$fnm"))
+	    {
+		return($F,$fnm);
+	    }
+	}
+    }
+    
+    return(undef,$fn);
+}
+
 sub LoadPDF
 {
     my $pdfnm=shift;
@@ -1316,17 +1348,19 @@ sub LoadPDF
     my $instream=0;
     my $cont;
 
-    if (!open(PD,"<$pdfnm"))
+    my ($PD,$PDnm)=OpenInc($pdfnm);
+    
+    if (!defined($PD))
     {
 	Msg(0,"Failed to open PDF '$pdfnm'");
 	return undef;
     }
 
-    my $hdr=<PD>;
+    my $hdr=<$PD>;
 
     $/="\r" if (length($hdr) > 10);
 
-    while (<PD>)
+    while (<$PD>)
     {
 	chomp;
 
@@ -1363,8 +1397,8 @@ sub LoadPDF
 	{
 	    if ($curobj > -1)
 	    {
-		$pdf->[$curobj]->{STREAMPOS}=[tell(PD),$strmlen];
-		seek(PD,$strmlen,1);
+		$pdf->[$curobj]->{STREAMPOS}=[tell($PD),$strmlen];
+		seek($PD,$strmlen,1);
 		$instream=1;
 	    }
 	    else
@@ -1377,9 +1411,9 @@ sub LoadPDF
 	$pdftxt.=$_.' ';
     }
 
-    close(PD);
+    close($PD);
 
-    open(PD,"<$pdfnm");
+    open(PD,"<$PDnm");
 #	$pdftxt=~s/\]/ \]/g;
     my (@pdfwds)=split(' ',$pdftxt);
     my $wd;
