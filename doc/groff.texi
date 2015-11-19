@@ -1423,7 +1423,7 @@ none otherwise.
 @tindex GROFF_ENCODING@r{, environment variable}
 The value of this environment value is passed to the @code{preconv}
 preprocessor to select the encoding of input files.  Setting this option
-implies @code{groff}'s command line option @option{-k} (this is,
+implies @code{groff}'s command line option @option{-k} (that is,
 @code{groff} actually always calls @code{preconv}).  If set without a
 value, @code{groff} calls @code{preconv} without arguments.  An explicit
 @option{-K} command line option overrides the value of
@@ -4201,7 +4201,7 @@ by the string register @code{TOC}.
 
 @Defmac {PX, [@code{no}], ms}
 Prints the table of contents on a new page, using the current page
-numbering sequence.  Use this macro to print a manually-generated table
+numbering sequence.  Use this macro to print a manually generated table
 of contents at the beginning of your document.
 
 The optional argument @code{no} suppresses printing the title specified
@@ -4405,7 +4405,7 @@ The general error-handling policy of @code{groff -ms} is to detect and
 report errors, rather than silently to ignore them.
 
 @item
-@code{groff -ms} does not work in compatibility mode (this is, with the
+@code{groff -ms} does not work in compatibility mode (that is, with the
 @option{-C} option).
 
 @item
@@ -4952,12 +4952,12 @@ argument for @code{groff}.
 
 @item latin-5
 @cindex encoding, input, @w{latin-5} (ISO @w{8859-9})
-@cindex @w{latin-2} (ISO @w{8859-9}), input encoding
-@cindex ISO @w{8859-9} (@w{latin-2}), input encoding
-@cindex input encoding, @w{latin-2} (ISO @w{8859-9})
-@pindex latin2.tmac
-For Turkish.  Either say @w{@samp{.mso latin9.tmac}} at the very
-beginning of your document or use @samp{-mlatin9} as a command line
+@cindex @w{latin-5} (ISO @w{8859-9}), input encoding
+@cindex ISO @w{8859-9} (@w{latin-5}), input encoding
+@cindex input encoding, @w{latin-5} (ISO @w{8859-9})
+@pindex latin5.tmac
+For Turkish.  Either say @w{@samp{.mso latin5.tmac}} at the very
+beginning of your document or use @samp{-mlatin5} as a command line
 argument for @code{groff}.
 
 @item latin-9 (latin-0)
@@ -5608,8 +5608,8 @@ This allows to reliably modify requests.
 Using this register outside of a macro makes no sense (it always returns
 zero in such cases).
 
-If a macro is called as a string (this is, using @code{\*}), the value
-of the @code{.br} register is inherited from the calling macro.
+If a macro is called as a string (that is, using @code{\*}), the value
+of the @code{.br} register is inherited from the caller.
 @endDefreg
 
 @menu
@@ -7962,7 +7962,7 @@ escape sequences, using a strange escape character, @samp{-}.
 @Example
 .ec -
 .de xxx
---A'123'
+--A'foo'
 ..
 .xxx
     @result{} -A'foo'
@@ -7981,7 +7981,7 @@ only @code{\E} yields the expected result:
 @Example
 .ec -
 .de xxx
--EA'123'
+-EA'foo'
 ..
 .xxx
     @result{} 1
@@ -10166,7 +10166,7 @@ length by the same amount to compensate it.
 @endDefreq
 
 Sometimes, when typesetting letters of different fonts, more or less
-space at such boundaries are needed.  There are two escapes to help with
+space at such boundaries is needed.  There are two escapes to help with
 this.
 
 @Defesc {\\/, , , }
@@ -10665,7 +10665,7 @@ This is \*[foo nice].
 @endExample
 
 The @code{\*} escape @dfn{interpolates} (expands in-place) a
-previously-defined string variable.  To be more precise, the stored
+previously defined string variable.  To be more precise, the stored
 string is pushed onto the input stack, which is then parsed by
 @code{gtroff}.  Similar to number registers, it is possible to nest
 strings, i.e., string variables can be called within string variables.
@@ -10732,7 +10732,7 @@ restore} input token at the end.
 @Example
 .nr xxx 12345
 .ds aa The value of xxx is \\n[xxx].
-.ds1 bb The value of xxx ix \\n[xxx].
+.ds1 bb The value of xxx is \\n[xxx].
 .
 .cp 1
 .
@@ -10740,7 +10740,7 @@ restore} input token at the end.
     @result{} warning: number register `[' not defined
     @result{} The value of xxx is 0xxx].
 \*(bb
-    @result{} The value of xxx ix 12345.
+    @result{} The value of xxx is 12345.
 @endExample
 
 @cindex name space, common, of macros, diversions, and strings
@@ -11130,7 +11130,7 @@ defined by the @code{char} request.
 
 @item F @var{font}
 True if a font named @var{font} exists.  @var{font} is handled as if it
-was opened with the @code{ft} request (this is, font translation and
+was opened with the @code{ft} request (that is, font translation and
 styles are applied), without actually mounting it.
 
 This test doesn't load the complete font but only its header to verify
@@ -11439,7 +11439,7 @@ at exit.
 The value of xxx is \\n[xxx].
 ..
 .de1 bb
-The value of xxx ix \\n[xxx].
+The value of xxx is \\n[xxx].
 ..
 .
 .cp 1
@@ -11448,7 +11448,7 @@ The value of xxx ix \\n[xxx].
     @result{} warning: number register `[' not defined
     @result{} The value of xxx is 0xxx].
 .bb
-    @result{} The value of xxx ix 12345.
+    @result{} The value of xxx is 12345.
 @endExample
 
 The @code{dei} request defines a macro indirectly.  That is, it expands
@@ -11529,8 +11529,8 @@ Using @file{trace.tmac}, you can trace calls to @code{am} and
 alias and rename a macro, respectively.
 
 The @code{de}, @code{am}, @code{di}, @code{da}, @code{ds}, and @code{as}
-requests (together with its variants) only create a new object if the
-name of the macro, diversion or string diversion is currently undefined
+requests (together with their variants) only create a new object if the
+name of the macro, diversion or string is currently undefined
 or if it is defined to be a request; normally they modify the value of
 an existing object.
 
@@ -12867,17 +12867,17 @@ appends to an existing diversion.
 
 @code{di} or @code{da} without an argument ends the diversion.
 
-The current partially-filled line is included into the diversion.  See
+The current partially filled line is included into the diversion.  See
 the @code{box} request below for an example.  Note that switching to
 another (empty) environment (with the @code{ev} request) avoids the
-inclusion of the current partially-filled line.
+inclusion of the current partially filled line.
 @endDefreq
 
 @DefreqList {box, macro}
 @DefreqListEndx {boxa, macro}
 Begin (or append to) a diversion like the @code{di} and @code{da}
 requests.  The difference is that @code{box} and @code{boxa} do not
-include a partially-filled line in the diversion.
+include a partially filled line in the diversion.
 
 Compare this:
 
@@ -15104,7 +15104,7 @@ Use overprint and disable colours for printing on legacy Teletype
 printers (see below).
 
 @item -d
-Do not render lines (this is, ignore all @code{\D} escapes).
+Do not render lines (that is, ignore all @code{\D} escapes).
 
 @item -f
 Use form feed control characters in the output.
