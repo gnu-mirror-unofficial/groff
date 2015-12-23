@@ -302,7 +302,7 @@ line "1" "2" "3" "4" "5";
 .sp 2
 .CE "4: Effects of multiple text arguments"
 .PP
-The last line of Figure 3.2's program, `\fBarc; down; move;
+The last line of Figure 3-2's program, `\fBarc; down; move;
 "arc"\fP', describing the captioned arc, introduces several new ideas.
 Firstly, we see how to change the direction in which objects are
 joined.  Had we written \fBarc; move; "arc"\fP,
@@ -1130,7 +1130,7 @@ compass(ellipse wid 1.5 ht 1);
 these are the locations where eight compass rays from the geometric center
 would intersect the figure.  So when we say \fBlast circle .s\fP we are
 referring to the south compass point of the last circle drawn.  The
-explanation of Figure 7.3's program is now complete.
+explanation of Figure 8-3's program is now complete.
 .PP
 (In case you dislike compass points, the names \fB.top\fP,
 \&\fB.bottom\fP, \fB.left\fP and \fB.right\fP are synonyms for \fB.n\fP,
