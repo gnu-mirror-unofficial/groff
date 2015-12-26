@@ -1,3 +1,16 @@
+2015-12-26  Carsten Kunze  <carsten.kunze@arcor.de>
+
+	* contrib/mm/m.tmac: Disable macro misc@tag in case output
+	  type is not HTML.
+
+	This macro did cause unwanted space in case a MM macros .H
+	had been followed immediately by .DS.
+
+	(See also discussion at groff@gnu.org, thread starting at
+	http://lists.gnu.org/archive/html/groff/2015-12/msg00033.html)
+
+	Bug reported by Damian McGuckin <damianm@esi.com.au>.
+
 2015-12-14  Werner LEMBERG  <wl@gnu.org>
 
 	* src/preproc/eqn/text.cpp (entity_table): s/lamda/lambda/.

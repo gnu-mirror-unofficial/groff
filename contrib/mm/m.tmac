@@ -736,6 +736,12 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\" Wrapper to cancel the side effect of .tag + .br generating
 .\" unwanted vertical space.
 .de misc@tag
+.\" This macro is currently used solely to give information to the
+.\" HTML postprocessor.  If for PostScript or PDF output macro .H
+.\" had been followed by .DS both .H post-space and .DS pre-space
+.\" had been output because of this macro.  So it is now enabled
+.\" only when postprocessor tags are required.
+.if '\*[.T]'html' \{\
 .\" retain temporary indentation and horizontal position
 .if !(\\n[.in]-\\n[.i]=0) .nr misc*ti \\n[.in]
 .nr misc*.k \\n[.k]
@@ -751,6 +757,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 \h'\\n[misc*.k]u'\c
 .rr misc*.k
 .vpt 1
+.\}
 ..
 .\" ######## module pict #################
 .nr pict*width 0
