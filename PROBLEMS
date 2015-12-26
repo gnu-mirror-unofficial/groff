@@ -969,3 +969,50 @@ Use
 Local Variables:
 mode: text
 End:
+
+----------------------------------------------------------------------
+
+* When compiling on NetBSD, make issues warnings like
+
+  Warning: line 28: Unable to locate font(s)
+  URWGothicL-Demi,a010015l.pfb on the given path(s)
+
+  and
+
+  Warning: line 77: Failed to create groff font 'U-AB' by running
+  afmtodit
+
+In this case install the package "urw-fonts":
+
+  pkgin install urw-fonts
+
+and make the font path known to ghostscript, e.g. with (ksh):
+
+  export GS_LIB=/usr/pkg/share/fonts/urw
+
+----------------------------------------------------------------------
+
+* Currently (December 2015) building groff failes on NetBSD and
+  FreeBSD with the message:
+
+  make[1]: don't know how to make contrib/chem/chem.1. Stop
+
+The reason is a bug in the make(1) tool used on those systems related
+to .SUFFIXES lines.
+
+A temporary workaround is to change the Makefile line
+
+  .SUFFIXES: .roff .in .ps .mom .pdf .me .ms .ps .html .txt .texi \
+    .dvi .pdf .xhtml .man .c .cpp .log .o .obj .sed .sin \
+    .test .test$(EXEEXT) .trs .ypp
+
+into
+
+  .SUFFIXES: .man .roff .in .ps .mom .pdf .me .ms .ps .html .txt \
+    .texi .dvi .pdf .xhtml .c .cpp .log .o .obj .sed .sin \
+    .test .test$(EXEEXT) .trs .ypp
+
+(put .man at begin of the list).
+
+The bug is reported to the maintainer of the make(1) tool of those
+systems.
