@@ -386,12 +386,48 @@ macro to create paragraphs with no initial indent.
 .PP
 The
 .B QP
-macro indents all text at both left and right margins.
+macro indents all text at both left and right margins
+by the amount of the register
+.BR QI .
 .
 The effect is identical to the HTML
 .B <BLOCKQUOTE>
 .
 The next paragraph or heading returns margins to normal.
+.
+.B QP
+inserts the vertical space specified in register
+.B PD
+as inter-paragraph spacing.
+.
+.
+.PP
+A paragraph bracketed between the macros
+.B QS
+and
+.B QE
+has the same appearance as a paragraph started with
+.B QP
+and a following paragraph started with
+.BR LP .
+.
+Both
+.B QS
+and
+.B QE
+insert the inter-paragraph spacing specified in
+.B PD
+and the text is indented on both sides by the amount of
+.BR QI .
+.
+The text between
+.B QS
+and
+.B QE
+can be split into further paragraphs by using
+.B \&.LP
+or
+.BR \&.PP .
 .
 .
 .PP

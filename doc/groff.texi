@@ -3089,7 +3089,8 @@ Default: 0.3@dmn{v}.
 @endDefmpreg
 
 @Defmpreg {QI, ms}
-Defines the indentation on both sides of a quoted (@code{QP} macro)
+Defines the indentation on both sides of a quoted (@code{QP},
+@code{QS}, and @code{QE} macros)
 paragraph.
 
 Effective: next paragraph.
@@ -3361,9 +3362,23 @@ Sets a paragraph without an initial indentation.
 @endDefmac
 
 @Defmac {QP, , ms}
-Sets a paragraph that is indented at both left and right margins.  The
-effect is identical to the @acronym{HTML} @code{<BLOCKQUOTE>} element.
+Sets a paragraph that is indented at both left and right margins
+by the amount of the register @code{QI}.
+The effect is identical to the @acronym{HTML} @code{<BLOCKQUOTE>} element.
 The next paragraph or heading returns margins to normal.
+@code{QP} inserts vertical space of amount set by register @code{PD}
+before the paragraph.
+@endDefmac
+
+@DefmacList {QS, , ms}
+@DefmacListEndx {QE, , ms}
+These macros begin and end a quoted section.
+The @code{QI} register
+controls the amount of indentation.
+Both @code{QS} and @code{QE} insert inter-paragraph vertical space
+set by register @code{PD}.
+The text between @code{QS} and @code{QE} can be structured further
+by use of the macros @code{LP} or @code{PP}.
 @endDefmac
 
 @Defmac {XP, , ms}
