@@ -1297,11 +1297,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 .	nr \\n[.ev]:pri \\n[\\n[.ev]:pri!\\n[\\n[.ev]:il]]
 .\}
 .el .@error unbalanced \\$0
-.par@reset
-.if '\\$0'QE' \{\
-.	sp \\n[\\n[.ev]:PD]u
-.	ne \\n[PORPHANS]v+\\n(.Vu
-.\}
+.ie '\\$0'QE' .par*start 0 0
+.el .par@reset
 ..
 .de @QS
 .br
@@ -1314,9 +1311,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 .nr \\n[.ev]:li +\\n[QI]
 .nr \\n[.ev]:ri +\\n[QI]
 .nr \\n[.ev]:ai \\n[\\n[.ev]:PI]
-.par@reset
-.sp \\n[\\n[.ev]:PD]u
-.ne \\n[PORPHANS]v+\\n(.Vu
+.par*start 0 0
 ..
 .als @QE @RE
 .\" start boxed text
