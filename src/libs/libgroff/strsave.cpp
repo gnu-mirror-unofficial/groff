@@ -18,12 +18,13 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include <string.h>
+#include <stdlib.h>
 
 char *strsave(const char *s)
 {
   if (s == 0)
     return 0;
-  char *p = new char[strlen(s) + 1];
+  char *p = (char*)malloc(strlen(s) + 1);
   strcpy(p, s);
   return p;
 }

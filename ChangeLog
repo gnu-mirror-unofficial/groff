@@ -1,5 +1,17 @@
 2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
 
+	Use `malloc' in `strsave'; use `free' for returned pointers.
+
+	* src/libs/libgroff/font.cpp (text_file::~text_file): Use `free'.
+
+	* src/libs/libgroff/searchpath.cpp (search_path::open_file): Use
+	`free'.
+
+	* src/libs/libgroff/strsave.cpp: Include `stdlib.h'.
+	(strsave): Use `malloc'.
+
+2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
+
 	Simplify memory allocation (#47162).
 
 	Many invalid memory accesses were caught by UBSAN (e.g., invalid

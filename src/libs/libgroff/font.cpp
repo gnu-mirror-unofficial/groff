@@ -90,7 +90,7 @@ text_file::text_file(FILE *p, char *s)
 text_file::~text_file()
 {
   a_delete buf;
-  a_delete path;
+  free(path);
   if (fp)
     fclose(fp);
 }

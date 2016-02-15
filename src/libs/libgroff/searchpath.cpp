@@ -130,10 +130,10 @@ FILE *search_path::open_file(const char *name, char **pathp)
       if (pathp)
 	*pathp = path;
       else
-	a_delete path;
+	free(path);
       return fp;
     }
-    a_delete path;
+    free(path);
     if (*end == '\0')
       break;
     p = end + 1;
