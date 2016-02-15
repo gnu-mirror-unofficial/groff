@@ -1,5 +1,12 @@
 2016-02-15  Bálint Réczey  <balint@balintreczey.hu>
 
+	[pre-grohtml] Fix out-of-bounds array access (#47161).
+
+	* src/preproc/html/pre-html.cpp (char_buffer::write_upto_newline):
+	Implement it.
+
+2016-02-15  Bálint Réczey  <balint@balintreczey.hu>
+
 	Don't use `memcpy' with NULL input or output argument (#47160).
 
 	* src/libs/libgroff/string.cpp (string::string, string::operator=):

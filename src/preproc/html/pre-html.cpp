@@ -661,7 +661,7 @@ void char_buffer::write_upto_newline(char_block **t, int *i, int is_html)
 	&& (*t)->buffer[j] == '\n')
       j++;
     writeNbytes((*t)->buffer + (*i), j - (*i));
-    if ((*t)->buffer[j] == INLINE_LEADER_CHAR) {
+    if (j < char_block::SIZE && (*t)->buffer[j] == INLINE_LEADER_CHAR) {
       if (can_see(t, &j, HTML_IMAGE_INLINE_BEGIN))
 	write_start_image(INLINE, is_html);
       else if (can_see(t, &j, HTML_IMAGE_INLINE_END))
