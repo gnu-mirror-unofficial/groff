@@ -28,7 +28,6 @@ private:
   color_scheme scheme;
   unsigned int components[4];
   color *next;
-  static color *free_list;
 
   int read_encoding(const color_scheme, const char * const,
 		    const size_t);
@@ -39,8 +38,6 @@ public:
   color(symbol s = default_symbol) : scheme(DEFAULT), nm(s) {}
   color(const color * const);
   ~color();
-  void *operator new(size_t);
-  void operator delete(void *);
 
   int operator==(const color & c) const;
   int operator!=(const color & c) const;

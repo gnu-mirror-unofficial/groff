@@ -153,7 +153,6 @@ void tty_font::handle_x_command(int argc, const char **argv)
 #endif
 
 class tty_glyph {
-  static tty_glyph *free_list;
 public:
   tty_glyph *next;
   int w;
@@ -162,37 +161,11 @@ public:
   unsigned char mode;
   schar back_color_idx;
   schar fore_color_idx;
-  void *operator new(size_t);
-  void operator delete(void *);
   inline int draw_mode() { return mode & (VDRAW_MODE|HDRAW_MODE); }
   inline int order() {
     return mode & (VDRAW_MODE|HDRAW_MODE|CU_MODE|COLOR_CHANGE); }
 };
 
-tty_glyph *tty_glyph::free_list = 0;
-
-void *tty_glyph::operator new(size_t)
-{
-  if (!free_list) {
-    const int BLOCK = 1024;
-    free_list = (tty_glyph *)new char[sizeof(tty_glyph) * BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK - 1].next = 0;
-  }
-  tty_glyph *p = free_list;
-  free_list = free_list->next;
-  p->next = 0;
-  return p;
-}
-
-void tty_glyph::operator delete(void *p)
-{
-  if (p) {
-    ((tty_glyph *)p)->next = free_list;
-    free_list = (tty_glyph *)p;
-  }
-}
 
 class tty_printer : public printer {
   tty_glyph **lines;

@@ -43,31 +43,6 @@ min(const unsigned int a, const unsigned int b)
     return b;
 }
 
-color *color::free_list = 0;
-
-void *color::operator new(size_t n)
-{
-  assert(n == sizeof(color));
-  if (!free_list) {
-    const int BLOCK = 128;
-    free_list = (color *)new char[sizeof(color)*BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK-1].next = 0;
-  }
-  color *p = free_list;
-  free_list = (color *)(free_list->next);
-  p->next = 0;
-  return p;
-}
-
-void color::operator delete(void *p)
-{
-  if (p) {
-    ((color *)p)->next = free_list;
-    free_list = (color *)p;
-  }
-}
 
 color::color(const color * const c)
 {

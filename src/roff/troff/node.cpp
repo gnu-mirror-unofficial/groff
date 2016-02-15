@@ -1847,7 +1847,6 @@ int charinfo_node::overlaps_vertically()
 }
 
 class glyph_node : public charinfo_node {
-  static glyph_node *free_list;
 protected:
   tfont *tf;
   color *gcol;
@@ -1858,8 +1857,6 @@ protected:
 	     statem *, int, node * = 0);
 #endif
 public:
-  void *operator new(size_t);
-  void operator delete(void *);
   glyph_node(charinfo *, tfont *, color *, color *,
 	     statem *, int, node * = 0);
   ~glyph_node() {}
@@ -1891,8 +1888,6 @@ public:
   int is_tag();
   void debug_node();
 };
-
-glyph_node *glyph_node::free_list = 0;
 
 class ligature_node : public glyph_node {
   node *n1;
@@ -1975,33 +1970,9 @@ public:
   int is_tag();
 };
 
-void *glyph_node::operator new(size_t n)
-{
-  assert(n == sizeof(glyph_node));
-  if (!free_list) {
-    const int BLOCK = 1024;
-    free_list = (glyph_node *)new char[sizeof(glyph_node)*BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK-1].next = 0;
-  }
-  glyph_node *p = free_list;
-  free_list = (glyph_node *)(free_list->next);
-  p->next = 0;
-  return p;
-}
-
 void *ligature_node::operator new(size_t n)
 {
   return new char[n];
-}
-
-void glyph_node::operator delete(void *p)
-{
-  if (p) {
-    ((glyph_node *)p)->next = free_list;
-    free_list = (glyph_node *)p;
-  }
 }
 
 void ligature_node::operator delete(void *p)
@@ -3195,32 +3166,6 @@ int node::merge_space(hunits, hunits, hunits)
   return 0;
 }
 
-#if 0
-space_node *space_node::free_list = 0;
-
-void *space_node::operator new(size_t n)
-{
-  assert(n == sizeof(space_node));
-  if (!free_list) {
-    free_list = (space_node *)new char[sizeof(space_node)*BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK-1].next = 0;
-  }
-  space_node *p = free_list;
-  free_list = (space_node *)(free_list->next);
-  p->next = 0;
-  return p;
-}
-
-inline void space_node::operator delete(void *p)
-{
-  if (p) {
-    ((space_node *)p)->next = free_list;
-    free_list = (space_node *)p;
-  }
-}
-#endif
 
 space_node::space_node(hunits nn, color *c, node *p)
 : node(p, 0, 0), n(nn), set(0), was_escape_colon(0), col(c)

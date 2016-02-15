@@ -2543,39 +2543,7 @@ struct tab {
   tab_type type;
   tab(hunits, tab_type);
   enum { BLOCK = 1024 };
-  static tab *free_list;
-  void *operator new(size_t);
-  void operator delete(void *);
 };
-
-tab *tab::free_list = 0;
-
-void *tab::operator new(size_t n)
-{
-  assert(n == sizeof(tab));
-  if (!free_list) {
-    free_list = (tab *)new char[sizeof(tab)*BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK-1].next = 0;
-  }
-  tab *p = free_list;
-  free_list = (tab *)(free_list->next);
-  p->next = 0;
-  return p;
-}
-
-#ifdef __GNUG__
-/* cfront can't cope with this. */
-inline
-#endif
-void tab::operator delete(void *p)
-{
-  if (p) {
-    ((tab *)p)->next = free_list;
-    free_list = (tab *)p;
-  }
-}
 
 tab::tab(hunits x, tab_type t) : next(0), pos(x), type(t)
 {

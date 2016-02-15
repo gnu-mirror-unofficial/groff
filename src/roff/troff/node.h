@@ -165,11 +165,6 @@ public:
 
 class space_node : public node {
 private:
-#if 0
-  enum { BLOCK = 1024 };
-  static space_node *free_list;
-  void operator delete(void *);
-#endif
 protected:
   hunits n;
   char set;
@@ -178,10 +173,6 @@ protected:
   space_node(hunits, int, int, color *, statem *, int, node * = 0);
 public:
   space_node(hunits, color *, node * = 0);
-#if 0
-  ~space_node();
-  void *operator new(size_t);
-#endif
   node *copy();
   int nspaces();
   hunits width();

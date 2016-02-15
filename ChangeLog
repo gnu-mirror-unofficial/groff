@@ -1,3 +1,27 @@
+2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
+
+	Simplify memory allocation (#47162).
+
+	Many invalid memory accesses were caught by UBSAN (e.g., invalid
+	memory access in `small_temp_iterator::operator new') while
+	bootstrapping hardened1-linux-amd64 Debian port in the `free_list'
+	handling because it doesn't properly handle the padding between
+	array elements.
+
+	Some places were already #if 0-d out anyway.
+
+	* src/roff/troff/input.cpp (small_temp_iterator): Remove class.
+	(make_temp_iterator): Use `temp_iterator' only.
+
+	* src/devices/grotty/tty.cpp (tty_glyph): Remove `free_list', `new',
+	and `delete'.
+
+	* src/include/color.h, src/include/color.cpp (color): Ditto.
+
+	* src/roff/troff/env.cpp (tab): Ditto.
+
+	* src/roff/troff/node.cpp (glyph_node): Ditto.
+
 2016-02-15  Bálint Réczey  <balint@balintreczey.hu>
 
 	[pre-grohtml] Fix out-of-bounds array access (#47161).
@@ -62,7 +86,7 @@
 	gropdf was choking on -I flag passed by groff, now uses
 	these directories to search for included pdfs.
 	
-	* src/devices/gropdf/gropdf.pl: Handle -I flag, avoid 
+	* src/devices/gropdf/gropdf.pl: Handle -I flag, avoid
 	  unitialised values.
 	
 	* src/roff/groff/groff.1.man: Include 'X pdf: pdfpic'

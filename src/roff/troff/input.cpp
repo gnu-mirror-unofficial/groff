@@ -3607,73 +3607,14 @@ temp_iterator::~temp_iterator()
   a_delete base;
 }
 
-class small_temp_iterator : public input_iterator {
-private:
-  small_temp_iterator(const char *, int);
-  ~small_temp_iterator();
-  enum { BLOCK = 16 };
-  static small_temp_iterator *free_list;
-  void *operator new(size_t);
-  void operator delete(void *);
-  enum { SIZE = 12 };
-  unsigned char buf[SIZE];
-  friend input_iterator *make_temp_iterator(const char *);
-};
-
-small_temp_iterator *small_temp_iterator::free_list = 0;
-
-void *small_temp_iterator::operator new(size_t n)
-{
-  assert(n == sizeof(small_temp_iterator));
-  if (!free_list) {
-    free_list =
-      (small_temp_iterator *)new char[sizeof(small_temp_iterator)*BLOCK];
-    for (int i = 0; i < BLOCK - 1; i++)
-      free_list[i].next = free_list + i + 1;
-    free_list[BLOCK-1].next = 0;
-  }
-  small_temp_iterator *p = free_list;
-  free_list = (small_temp_iterator *)(free_list->next);
-  p->next = 0;
-  return p;
-}
-
-#ifdef __GNUG__
-inline
-#endif
-void small_temp_iterator::operator delete(void *p)
-{
-  if (p) {
-    ((small_temp_iterator *)p)->next = free_list;
-    free_list = (small_temp_iterator *)p;
-  }
-}
-
-small_temp_iterator::~small_temp_iterator()
-{
-}
-
-#ifdef __GNUG__
-inline
-#endif
-small_temp_iterator::small_temp_iterator(const char *s, int len)
-{
-  for (int i = 0; i < len; i++)
-    buf[i] = s[i];
-  ptr = buf;
-  eptr = buf + len;
-}
 
 input_iterator *make_temp_iterator(const char *s)
 {
   if (s == 0)
-    return new small_temp_iterator(s, 0);
+    return new temp_iterator(s, 0);
   else {
     int n = strlen(s);
-    if (n <= small_temp_iterator::SIZE)
-      return new small_temp_iterator(s, n);
-    else
-      return new temp_iterator(s, n);
+    return new temp_iterator(s, n);
   }
 }
 
