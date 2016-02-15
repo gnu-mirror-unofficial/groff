@@ -3596,7 +3596,8 @@ inline
 temp_iterator::temp_iterator(const char *s, int len)
 {
   base = new unsigned char[len];
-  memcpy(base, s, len);
+  if (len > 0)
+    memcpy(base, s, len);
   ptr = base;
   eptr = base + len;
 }

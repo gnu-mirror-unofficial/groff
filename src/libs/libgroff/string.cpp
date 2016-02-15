@@ -98,7 +98,8 @@ string::string(const char *p)
   else {
     len = strlen(p);
     ptr = salloc(len, &sz);
-    memcpy(ptr, p, len);
+    if (len != 0)
+      memcpy(ptr, p, len);
   }
 }
 
@@ -141,7 +142,8 @@ string &string::operator=(const char *p)
     int slen = strlen(p);
     ptr = sfree_alloc(ptr, sz, slen, &sz);
     len = slen;
-    memcpy(ptr, p, len);
+    if (len != 0)
+      memcpy(ptr, p, len);
   }
   return *this;
 }

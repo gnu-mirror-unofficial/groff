@@ -1,3 +1,13 @@
+2016-02-15  Bálint Réczey  <balint@balintreczey.hu>
+
+	Don't use `memcpy' with NULL input or output argument (#47160).
+
+	* src/libs/libgroff/string.cpp (string::string, string::operator=):
+	Implement it.
+
+	* src/roff/troff/input.cpp (temp_iterator::temp_iterator): Implement
+	it.
+
 2016-02-04  Carsten Kunze  <carsten.kunze@arcor.de>
 
 	* tmac/s.tmac: Bugfix of previous commit simplified (and
