@@ -220,7 +220,8 @@ void do_picture(FILE *fp)
 {
   flyback_flag = 0;
   int c;
-  a_delete graphname;
+  if (!graphname)
+    free(graphname);
   graphname = strsave("graph");		// default picture name in TeX mode
   while ((c = getc(fp)) == ' ')
     ;

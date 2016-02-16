@@ -987,13 +987,13 @@ check_coding_tag(FILE *fp, string &data)
       d1 = get_variable_value_pair(d1, &variable, &value);
       if (!strcasecmp(variable, "coding")) {
 	*d2 = '-';		// restore '-'
-	a_delete inbuf;
+	free(inbuf);
 	return value;
       }
     }
     *d2 = '-';			// restore '-'
   }
-  a_delete inbuf;
+  free(inbuf);
   return NULL;
 }
 

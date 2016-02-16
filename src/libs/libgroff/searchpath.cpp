@@ -187,11 +187,11 @@ FILE *search_path::open_file_cautious(const char *name, char **pathp,
       if (pathp)
 	*pathp = path;
       else
-	a_delete path;
+	free(path);
       return fp;
     }
     int err = errno;
-    a_delete path;
+    free(path);
     if (err != ENOENT)
     {
       errno = err;

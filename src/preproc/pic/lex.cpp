@@ -148,7 +148,7 @@ macro_input::macro_input(const char *str)
 
 macro_input::~macro_input()
 {
-  a_delete s;
+  free(s);
 }
 
 int macro_input::get()
@@ -208,8 +208,8 @@ argument_macro_input::argument_macro_input(const char *body, int ac, char **av)
 argument_macro_input::~argument_macro_input()
 {
   for (int i = 0; i < argc; i++)
-    a_delete argv[i];
-  a_delete s;
+    free(argv[i]);
+  free(s);
 }
 
 int argument_macro_input::get()
@@ -1387,8 +1387,8 @@ for_input::for_input(char *vr, double f, double t,
 
 for_input::~for_input()
 {
-  a_delete var;
-  a_delete body;
+  free(var);
+  free(body);
 }
 
 int for_input::get()

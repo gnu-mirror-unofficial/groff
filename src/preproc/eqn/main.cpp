@@ -398,7 +398,7 @@ int main(int argc, char **argv)
     if (fp) {
       do_file(fp, path);
       fclose(fp);
-      a_delete path;
+      free(path);
     }
   }
   if (optind >= argc)

@@ -157,7 +157,7 @@ int do_file(const char *filename)
   int err = errno;
   string whole_filename(file_name_in_path ? file_name_in_path : filename);
   whole_filename += '\0';
-  a_delete file_name_in_path;
+  free(file_name_in_path);
   if (fp == 0) {
     error("can't open `%1': %2", whole_filename.contents(), strerror(err));
     return 0;

@@ -17,6 +17,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. */
 
+#include <stdlib.h>
+
 #include "pic.h"
 #include "ptable.h"
 #include "object.h"
@@ -540,7 +542,7 @@ text_piece::text_piece()
 
 text_piece::~text_piece()
 {
-  a_delete text;
+  free(text);
 }
 
 class graphic_object : public object {
@@ -1958,7 +1960,7 @@ string_list::string_list(char *s)
 
 string_list::~string_list()
 {
-  a_delete str;
+  free(str);
 }
   
 /* A path is used to hold the argument to the `with' attribute.  For

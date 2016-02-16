@@ -47,7 +47,7 @@ definition::definition() : is_macro(1), is_simple(0)
 definition::~definition()
 {
   if (is_macro)
-    a_delete contents;
+    free(contents);
 }
 
 declare_ptable(definition)
@@ -471,7 +471,7 @@ macro_input::macro_input(const char *str, input *x) : input(x)
 
 macro_input::~macro_input()
 {
-  a_delete s;
+  free(s);
 }
 
 int macro_input::get()
@@ -498,7 +498,7 @@ top_input::top_input(const char *str, const char *fn, int ln, input *x)
 
 top_input::~top_input()
 {
-  a_delete filename;
+  free(filename);
 }
 
 int top_input::get()
@@ -963,7 +963,7 @@ void do_definition(int is_simple)
     macro_table.define(name, def);
   }
   else if (def->is_macro) {
-    a_delete def->contents;
+    free(def->contents);
   }
   get_delimited_text();
   token_buffer += '\0';

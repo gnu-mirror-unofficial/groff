@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include <ctype.h>
+#include <stdlib.h>
 #include "eqn.h"
 #include "pbox.h"
 #include "ptable.h"
@@ -552,7 +553,7 @@ void box::set_spacing_type(char *type)
     error("unrecognised type `%1'", type);
   else
     spacing_type = t;
-  a_delete type;
+  free(type);
 }
 
 char_box::char_box(unsigned char cc)
@@ -647,7 +648,7 @@ special_char_box::special_char_box(const char *t)
 
 special_char_box::~special_char_box()
 {
-  a_delete s;
+  free(s);
 }
 
 void special_char_box::output()
@@ -941,7 +942,7 @@ box *split_text(char *text)
 	fb = b;
     }
   }
-  a_delete text;
+  free(text);
   if (lb != 0)
     return lb;
   else if (fb != 0)

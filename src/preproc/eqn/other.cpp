@@ -17,6 +17,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. */
 
+#include <stdlib.h>
+
 #include "eqn.h"
 #include "pbox.h"
 
@@ -464,7 +466,7 @@ void size_box::output()
 
 size_box::~size_box()
 {
-  a_delete size;
+  free(size);
 }
 
 void size_box::debug_print()
@@ -481,7 +483,7 @@ font_box::font_box(char *s, box *pp) : pointer_box(pp), f(s)
 
 font_box::~font_box()
 {
-  a_delete f;
+  free(f);
 }
 
 int font_box::compute_metrics(int style)

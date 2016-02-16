@@ -581,13 +581,13 @@ possible_command::possible_command()
 
 possible_command::~possible_command()
 {
-  a_delete name;
+  free(name);
   a_delete argv;
 }
 
 void possible_command::set_name(const char *s)
 {
-  a_delete name;
+  free(name);
   name = strsave(s);
 }
 
@@ -601,8 +601,8 @@ void possible_command::clear_name()
 
 void possible_command::set_name(const char *s1, const char *s2)
 {
-  a_delete name;
-  name = new char[strlen(s1) + strlen(s2) + 1];
+  free(name);
+  name = (char*)malloc(strlen(s1) + strlen(s2) + 1);
   strcpy(name, s1);
   strcat(name, s2);
 }

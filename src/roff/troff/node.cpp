@@ -4080,7 +4080,7 @@ void suppress_node::tprint(troff_output_file *out)
     char *tem = (char *)last_image_filename;
     last_image_filename = strsave(filename.contents());
     if (tem)
-      a_delete tem;
+      free(tem);
     last_image_id = image_id;
     // printf("start of image and page = %d\n", current_page);
   }

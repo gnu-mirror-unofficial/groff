@@ -458,7 +458,7 @@ text_entry::text_entry(const table *p, const entry_modifier *m, char *s)
 
 text_entry::~text_entry()
 {
-  a_delete contents;
+  free(contents);
 }
 
 repeated_char_entry::repeated_char_entry(const table *p,

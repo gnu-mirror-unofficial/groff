@@ -551,7 +551,7 @@ quoted_text_box::quoted_text_box(char *s) : text(s)
 
 quoted_text_box::~quoted_text_box()
 {
-  a_delete text;
+  free(text);
 }
 
 void quoted_text_box::output()

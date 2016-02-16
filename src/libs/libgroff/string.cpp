@@ -17,6 +17,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. */
 
+#include <stdlib.h>
+
 #include "lib.h"
 
 #include "stringclass.h"
@@ -286,7 +288,7 @@ char *string::extract() const
   for (i = 0; i < n; i++)
     if (p[i] == '\0')
       nnuls++;
-  char *q = new char[n + 1 - nnuls];
+  char *q =(char*)malloc(n + 1 - nnuls);
   char *r = q;
   for (i = 0; i < n; i++)
     if (p[i] != '\0')

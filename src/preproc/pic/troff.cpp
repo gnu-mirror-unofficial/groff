@@ -514,12 +514,12 @@ void troff_output::reset_color()
   if (driver_extension_flag) {
     if (last_filled) {
       printf(".fcolor\n");
-      a_delete last_filled;
+      free(last_filled);
       last_filled = 0;
     }
     if (last_outlined) {
       printf(".gcolor\n");
-      a_delete last_outlined;
+      free(last_outlined);
       last_outlined = 0;
     }
   }

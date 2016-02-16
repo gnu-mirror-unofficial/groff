@@ -150,7 +150,7 @@ resource::resource(resource_type t, string &n, string &v, unsigned r)
 
 resource::~resource()
 {
-  a_delete filename;
+  free(filename);
 }
 
 void resource::print_type_and_name(FILE *outfp)
@@ -323,7 +323,7 @@ void resource_manager::output_prolog(ps_output &out)
   putc('\n', outfp);
   process_file(-1, fp, path, outfp);
   fclose(fp);
-  a_delete path;
+  free(path);
   fputs("%%EndResource\n", outfp);
 }
 
@@ -386,7 +386,7 @@ void resource_manager::supply_resource(resource *r, int rank, FILE *outfp,
     process_file(rank, fp, path, outfp);
     fclose(fp);
     if (r->type == RESOURCE_FONT)
-      a_delete path;
+      free(path);
     if (outfp) {
       if (r->type == RESOURCE_FILE && is_document)
 	fputs("%%EndDocument\n", outfp);
@@ -1090,7 +1090,7 @@ void resource_manager::read_download_file()
       fatal_with_file_and_line(path, lineno, "missing filename");
     lookup_font(p)->filename = strsave(q);
   }
-  a_delete path;
+  free(path);
   fclose(fp);
 }
 

@@ -1,6 +1,71 @@
 2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
 
-	Use `malloc' in `strsave'; use `free' for returned pointers.
+	Fix many malloc/new vs. free/delete/delete[] mismatches (#47164)
+
+	* src/devices/grops/ps.cpp (ps_font::~ps_font,
+	ps_printer::define_encoding): Use `free'.
+	* src/devices/grops/psrm.cpp (resource::~resource,
+	resource_manager::output_prolog, resource_manager::supply_resource,
+	resource_manager::read_download_file): Ditto.
+
+	* src/include/ptable.h (PTABLE::~PTABLE, PTABLE::define): Ditto.
+
+	* src/libs/libgroff/searchpath.cpp
+	(search_path::open_file_cautious): Ditto.
+
+	* src/libs/libgroff/string.cpp: Include `stdlib.h'.
+	(string::extract): Use `malloc'.
+
+	* src/preproc/eqn/box.cpp (quoted_text_box::~quoted_text_box): Use
+	`free'.
+
+	* src/preproc/eqn/lex.cpp (definition::~definition,
+	macro_input::~macro_input, top_input::~top_input, do_definition):
+	Ditto.
+
+	* src/preproc/eqn/main.cpp (main): Ditto.
+
+	* src/preproc/eqn/other.cpp: Include `stdlib.h'.
+	(size_box::~size_box, font_box::~font_box): Use `free'.
+
+	* src/preproc/eqn/text.cpp: Include `stdlib.h'.
+	(box::set_spacing_type, special_char_box::~special_char_box,
+	split_text): Use `free'.
+
+	* src/preproc/grn/main.cpp (conv): Use `free'.
+
+	* src/preproc/html/pre-html.cpp (get_resolution): Ditto.
+
+	* src/preproc/pic/lex.cpp (macro_input::~macro_input,
+	argument_macro_input::~argument_macro_input, for_input::~for_input):
+	Ditto.
+
+	* src/preproc/pic/main.cpp (do_picture): Ditto.
+
+	* src/preproc/pic/object.cpp: Include `stdlib.h'.
+	(text_piece::~text_piece, string_list::~string_list): Use `free'.
+
+	* src/preproc/pic/pic.ypp (placeless_element, element, text, label,
+	expr_not_lower_than): Ditto.
+
+	* src/preproc/pic/troff.cpp (troff_output::reset_color): Ditto.
+
+	* src/preproc/preconv/preconv.cpp (check_coding_tag): Ditto.
+
+	* src/preproc/soelim/soelim.cpp (do_file): Ditto.
+
+	* src/preproc/tbl/table.cpp (text_entry::~text_entry): Ditto.
+
+	* src/roff/groff/groff.cpp (possible_command::~possible_command,
+	possible_command::set_name): Ditto.
+
+	* src/roff/troff/env.cpp (hyphen_trie::read_patterns_file): Ditto.
+
+	* src/roff/troff/node.cpp (suppress_node::tprint): Ditto.
+
+2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
+
+	Use `malloc' in `strsave'; use `free' for returned pointers (#47164).
 
 	* src/libs/libgroff/font.cpp (text_file::~text_file): Use `free'.
 

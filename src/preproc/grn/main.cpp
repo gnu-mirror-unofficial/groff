@@ -552,7 +552,7 @@ conv(register FILE *fp,
 	return;
       PICTURE = DBRead(gfp);	/* read picture file */
       fclose(gfp);
-      a_delete path;
+      free(path);
       if (DBNullelt(PICTURE))
 	return;			/* If a request is made to make the  */
 				/* picture fit into a specific area, */

@@ -3923,7 +3923,7 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
     }
   }
   fclose(fp);
-  a_delete path;
+  free(path);
   return;
 }
 

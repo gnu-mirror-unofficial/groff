@@ -296,7 +296,7 @@ static unsigned int get_resolution(void)
   FILE *f;
   unsigned int res;
   f = font_path.open_file("devps/DESC", &pathp);
-  a_delete pathp;
+  free(pathp);
   if (f == 0)
     fatal("can't open devps/DESC");
   while (get_line(f)) {

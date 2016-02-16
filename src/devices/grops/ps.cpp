@@ -430,7 +430,7 @@ ps_font::ps_font(const char *nm)
 
 ps_font::~ps_font()
 {
-  a_delete encoding;
+  free(encoding);
   a_delete reencoded_name;
 }
 
@@ -803,7 +803,7 @@ void ps_printer::define_encoding(const char *encoding, int encoding_index)
     }
     lineno++;
   }
-  a_delete path;
+  free(path);
   out.put_literal_symbol(make_encoding_name(encoding_index))
      .put_delimiter('[');
   for (i = 0; i < 256; i++) {
