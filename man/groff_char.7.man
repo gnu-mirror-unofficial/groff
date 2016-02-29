@@ -768,10 +768,10 @@ macro:
 .nf
 .RS
 .ft C
-\&.\e" Make a pile centered vertically 0.5em\""
-\&.\e" above the baseline.\""
-\&.\e" The first argument is placed at the top.\""
-\&.\e" The pile is returned in string `pile'\""
+\&.\e" Make a pile centered vertically 0.5em
+\&.\e" above the baseline.
+\&.\e" The first argument is placed at the top.
+\&.\e" The pile is returned in string `pile'
 \&.eo
 \&.de pile-make
 \&.  nr pile-wd 0
@@ -782,16 +782,16 @@ macro:
 \&.  while \en[pile-#] \e{\e
 \&.    nr pile-wd (\en[pile-wd] >? \ew'\e$[\en[pile-#]]')
 \&.    nr pile-ht +(\en[rst] - \en[rsb])
-\&.    as pile-args \ev'\en[rsb]u'\e"\""
-\&.    as pile-args \eZ'\e$[\en[pile-#]]'\e"\""
-\&.    as pile-args \ev'-\en[rst]u'\e"\""
+\&.    as pile-args \ev'\en[rsb]u'\e"
+\&.    as pile-args \eZ'\e$[\en[pile-#]]'\e"
+\&.    as pile-args \ev'-\en[rst]u'\e"
 \&.    nr pile-# -1
 \&.  \e}
 \&.
-\&.  ds pile \ev'(-0.5m + (\en[pile-ht]u / 2u))'\e"\""
-\&.  as pile \e*[pile-args]\e"\""
-\&.  as pile \ev'((\en[pile-ht]u / 2u) + 0.5m)'\e"\""
-\&.  as pile \eh'\en[pile-wd]u'\e"\""
+\&.  ds pile \ev'(-0.5m + (\en[pile-ht]u / 2u))'\e"
+\&.  as pile \e*[pile-args]\e"
+\&.  as pile \ev'((\en[pile-ht]u / 2u) + 0.5m)'\e"
+\&.  as pile \eh'\en[pile-wd]u'\e"
 \&..
 \&.ec
 .ft
