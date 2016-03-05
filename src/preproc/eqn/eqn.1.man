@@ -40,10 +40,6 @@ the original English.
 .  el .TP "\\$1"
 ..
 .
-.\" The BSD man macros can't handle " in arguments to font change macros,
-.\" so use \(ts instead of ".
-.tr \(ts"\""
-.
 .
 .\" --------------------------------------------------------------------
 .SH SYNOPSIS
@@ -541,7 +537,7 @@ is pre-defined using
 as a tilde accent below the baseline.
 .
 .TP
-.BI split\ \(ts text \(ts
+.BI split\ \[dq] text \[dq]
 This has the same effect as simply
 .
 .RS
@@ -562,7 +558,7 @@ This has the same effect as
 .
 .RS
 .IP
-.BI \(ts text \(ts
+.BI \[dq] text \[dq]
 .RE
 .
 .IP
@@ -1158,9 +1154,9 @@ command, but
 is not recognized if called with arguments.
 .
 .TP
-.BI include\ \(ts file \(ts
+.BI include\ \[dq] file \[dq]
 .TQ
-.BI copy\ \(ts file \(ts
+.BI copy\ \[dq] file \[dq]
 Include the contents of
 .I file
 .RB ( include
