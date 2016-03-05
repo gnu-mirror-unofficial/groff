@@ -43,11 +43,6 @@ the original English.
 .  el .TP "\\$1"
 ..
 .
-.\" The BSD man macros can't handle " in arguments to font change macros,
-.\" so use \(ts instead of ".
-.tr \(ts"\""
-.
-.
 .\" --------------------------------------------------------------------
 .SH SYNOPSIS
 .\" --------------------------------------------------------------------
@@ -807,29 +802,29 @@ Each command is broken up into words.
 Words are separated by spaces or tabs.
 .
 A word that begins with
-.B \(ts
+.B \[dq]
 extends to the next
-.B \(ts
+.B \[dq]
 that is not followed by another
-.BR \(ts .
+.BR \[dq] .
 .
 If there is no such
-.B \(ts
+.B \[dq]
 the word extends to the end of the line.
 .
 Pairs of
-.B \(ts
+.B \[dq]
 in a word beginning with
-.B \(ts
+.B \[dq]
 collapse to a single
-.BR \(ts .
+.BR \[dq] .
 .
 Neither
 .B #
 nor
 .B ;
 are recognized inside
-.BR \(ts s.
+.BR \[dq] s.
 .
 A line can be continued by ending it with
 .BR \e ;
