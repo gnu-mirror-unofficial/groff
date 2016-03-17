@@ -2,7 +2,7 @@
 .ig
 Mom -- a typesetting/document-processing macro set for groff.
 
-Copyright (C) 2002-2015  Free Software Foundation, Inc.
+Copyright (C) 2002-2016  Free Software Foundation, Inc.
  Written by Peter Schaffter <peter@schaffter.ca>
  PDF integration contributed by Deri James <deri.james@chuzzlewit.co.uk>
 
@@ -21,7 +21,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.1-a
+Version 2.1-b
 -------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
@@ -741,20 +741,20 @@ end
 \# KERN_UNIT macro.
 \#
 .MAC KERN_UNIT END
-.    ie '\\$1'DEFAULT' .nr #KERN_UNIT 36
-.    el .nr #KERN_UNIT \\$1
+.    ie '\\$1'DEFAULT' .ds $KERN_UNIT 36
+.    el .ds $KERN_UNIT \\$1
 .END
 \#
-.nr #KERN_UNIT 36
-.ds BU   \h'-(\En[#PT_SIZE]u/\n[#KERN_UNIT]u*\\$1u)'
-.ds FU   \h'(\En[#PT_SIZE]u/\n[#KERN_UNIT]u*\\$1u)'
+.ds $KERN_UNIT 36
+.ds BU   \h'-(\En[.ps]u/\E*[$KERN_UNIT]u*\\$1u)'
+.ds FU   \h'(\En[.ps]u/\E*[$KERN_UNIT]u*\\$1u)'
 \#
 \# Initialize strings for pre-1.1.3c-style BU and FU
 \#
 .nr #LOOP 0 1
 .while \n+[#LOOP]<37 \{\
-.   ds BU\n[#LOOP] \h'-(\En[#PT_SIZE]u/\n[#KERN_UNIT]u*\n[#LOOP]u)'
-.   ds FU\n[#LOOP] \h'(\En[#PT_SIZE]u/\n[#KERN_UNIT]u*\n[#LOOP]u)'
+.   ds BU\n[#LOOP] \h'-(\En[.ps]u/\E*[$KERN_UNIT]u*\n[#LOOP]u)'
+.   ds FU\n[#LOOP] \h'(\En[.ps]u/\E*[$KERN_UNIT]u*\n[#LOOP]u)'
 .\}
 \#
 \# Horizontal movements
