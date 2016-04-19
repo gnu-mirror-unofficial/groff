@@ -101,6 +101,7 @@ int list_box::compute_metrics(int style)
 	  || prevt == OPERATOR_TYPE
 	  || prevt == RELATION_TYPE
 	  || prevt == OPENING_TYPE
+	  || prevt == SUPPRESS_TYPE
 	  || prevt == PUNCTUATION_TYPE)
 	list.p[i]->spacing_type = ORDINARY_TYPE;
     }

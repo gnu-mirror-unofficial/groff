@@ -1,3 +1,24 @@
+2016-04-19  Carsten Kunze  <carsten.kunze@arcor.de>
+
+	eqn: Fix problem with explicite spacing before unary operator
+
+	* src/preproc/eqn/list.cpp (list_box::compute_metrics): Change
+	item spacing type from BINARY to ORDINARY also when previous
+	type is SUPPRESS_TYPE.
+
+	As reported in
+
+	http://lists.gnu.org/archive/html/groff/2016-04/msg00024.html
+
+	by Douglas McIlroy <doug@cs.dartmouth.edu>
+
+	an implicite space is added between an unary operator and it's
+	operand when an explicite space is put before the unary
+	operator.  Unary operators are initially set up as binary.
+	Depending on the preceding element their type can be changed
+	to unary.  This did not happen when an explicite space ('~' or
+	'^') had been before that operator.
+
 2016-02-16  Bálint Réczey  <balint@balintreczey.hu>
 
 	Fix many malloc/new vs. free/delete/delete[] mismatches (#47164)
