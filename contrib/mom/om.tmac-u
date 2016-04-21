@@ -21,8 +21,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.1-b
--------------
+Version 2.1-b_1
+---------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -9078,8 +9078,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 \#   For use when users don't want 3-part headers/footers, but rather
 \#   want to design their own headers/footers and need different
 \#   headers/footers on recto and verso pages.  Using just
-\#   HEADER_RECTO, even when recto/verso is not on, allows users to
-\#   design their own headers/footers for doc pages.
+\#   HEADER_RECTO or FOOTER_RECTO, even when recto/verso is not on,
+\#   allows users to design their own headers/footers for doc pages.
 \#
 .MAC HDRFTR_RECTO END
 .    nr #USERDEF_HDRFTR 1
@@ -9177,7 +9177,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .             ie !\\n[#HDRFTR_BOTH] .return
 .             el \{\
 .                rr #FOOTERS_ON
-.                nr #HEADERS_ON 1
+.                if !\\n[#COLLATE] .nr #HEADERS_ON 1
 .                ie \\n[#HEADER_RULE]=1 .HEADER_RULE
 .                el .HEADER_RULE OFF
 .                ie \\n[#HDRFTR_BOTH] .HEADER_VERSO \\*[$HDR_VERSO_QUAD] "\\*[$HDR_VERSO_STRING]"
@@ -10043,6 +10043,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    \}
 .    ie \\n[#FOOTERS_ON] \{\
 .       if !\\n[#SKIP_FOOTER]>0 .PRINT_HDRFTR
+.       if \\n[#HDRFTR_BOTH] \
+.          HEADER_RECTO \\*[$HDR_RECTO_QUAD] "\\*[$HDR_RECTO_STRING]"
 .    \}
 .    el \{\
 .       if \\n[#PAGINATE] \{\
