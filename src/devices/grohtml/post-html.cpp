@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "html.h"
 #include "html-text.h"
 #include "html-table.h"
+#include "curtime.h"
 
 #include <time.h>
 
@@ -5013,7 +5014,7 @@ void html_printer::do_file_components (void)
 	.put_string(Version_string)
 	.end_comment();
 
-      t = time(0);
+      t = current_time();
       html.begin_comment("CreationDate: ")
 	.put_string(ctime(&t), strlen(ctime(&t))-1)
 	.end_comment();
@@ -5126,7 +5127,7 @@ html_printer::~html_printer()
     .put_string(Version_string)
     .end_comment();
 
-  t = time(0);
+  t = current_time();
   html.begin_comment("CreationDate: ")
     .put_string(ctime(&t), strlen(ctime(&t))-1)
     .end_comment();

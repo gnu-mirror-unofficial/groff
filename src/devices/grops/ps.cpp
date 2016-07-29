@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "cset.h"
 #include "nonposix.h"
 #include "paper.h"
+#include "curtime.h"
 
 #include "ps.h"
 #include <time.h>
@@ -1390,7 +1391,7 @@ ps_printer::~ps_printer()
 #else
     time_t
 #endif
-    t = time(0);
+    t = current_time();
     fputs(ctime(&t), out.get_file());
   }
   for (font_pointer_list *f = font_list; f; f = f->next) {

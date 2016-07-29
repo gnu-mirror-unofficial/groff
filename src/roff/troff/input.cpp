@@ -36,6 +36,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "input.h"
 #include "defs.h"
 #include "unicode.h"
+#include "curtime.h"
 
 // Needed for getpid() and isatty()
 #include "posix.h"
@@ -8080,7 +8081,7 @@ static void init_registers()
 #else /* not LONG_FOR_TIME_T */
   time_t
 #endif /* not LONG_FOR_TIME_T */
-    t = time(0);
+    t = current_time();
   // Use struct here to work around misfeature in old versions of g++.
   struct tm *tt = localtime(&t);
   set_number_reg("seconds", int(tt->tm_sec));

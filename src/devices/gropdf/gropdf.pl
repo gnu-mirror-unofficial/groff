@@ -259,13 +259,14 @@ elsif (exists($ppsz{$papersz}))
     @defaultmb=@mediabox=(0,0,$ppsz{$papersz}->[0],$ppsz{$papersz}->[1]);
 }
 
-my (@dt)=localtime(time);
+my (@dt)=localtime($ENV{SOURCE_DATE_EPOCH} || time);
 my $dt=PDFDate(\@dt);
 
 my %info=('Creator' => "(groff version $cfg{GROFF_VERSION})",
 				'Producer' => "(gropdf version $cfg{GROFF_VERSION})",
 				'ModDate' => "($dt)",
 				'CreationDate' => "($dt)");
+
 while (<>)
 {
     chomp;

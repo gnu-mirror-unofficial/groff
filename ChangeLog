@@ -1,3 +1,26 @@
+2016-07-29  Colin Watson  <cjwatson@debian.org>
+
+	Implement `SOURCE_DATE_EPOCH' for reproducible builds.
+
+	* src/include/curtime.h: New file.
+	* src/libs/libgroff/curtime.cpp: New file.
+	* src/libs/libgroff/libgroff.am (libgroff_a_SOURCES): Add
+	src/libs/libgroff/curtime.cpp.
+
+	* src/roff/troff/input.cpp (init_registers): Use `current_time'
+	instead of `time(0)'.
+	* src/devices/grohtml/post-html.cpp
+	(html_printer::do_file_components): Likewise.
+	(html_printer::~html_printer): Likewise.
+	* src/devices/grops/ps.cpp (ps_printer::~ps_printer): Likewise.
+	* src/devices/gropdf/gropdf.pl: Use `$ENV{SOURCE_DATE_EPOCH}` if
+	available in preference to `time`.
+
+	* doc/groff.texi (Environment): Document `SOURCE_DATE_EPOCH'.
+	* src/devices/grohtml/grohtml.1.man (ENVIRONMENT): Likewise.
+	* src/devices/gropdf/gropdf.1.man (ENVIRONMENT): Likewise.
+	* src/devices/grops/grops.1.man (ENVIRONMENT): Likewise.
+
 2016-04-19  Carsten Kunze  <carsten.kunze@arcor.de>
 
 	eqn: Fix problem with explicite spacing before unary operator
