@@ -1,3 +1,17 @@
+2016-09-09  Werner LEMBERG  <wl@gnu.org>
+
+	troff: Fix hyphenation (#48904).
+
+	This commit fixes two bugs present from the very beginning: troff
+	(a) didn't allow to hyphenate words shorter than 4 characters
+	(ignoring `.hy' settings), and (b) never tried to hyphenate after
+	the first character due to wrong handling of the `.hy' settings.
+
+	* src/roff/troff/env.cpp (environment::hyphenate_line): Use
+	hyphenation flags to determine the minimum word length considered
+	for hyphenation.
+	(hyphenate): Fix handling of `HYPHEN_FIRST_CHARS'.
+
 2016-07-29  Colin Watson  <cjwatson@debian.org>
 
 	Implement `SOURCE_DATE_EPOCH' for reproducible builds.

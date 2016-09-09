@@ -2023,7 +2023,9 @@ void environment::hyphenate_line(int start_here)
       && !((hyphenation_flags & HYPHEN_LAST_LINE)
 	   && (curdiv->distance_to_next_trap()
 	       <= vertical_spacing + total_post_vertical_spacing()))
-      && i >= 4)
+      && i >= (2
+	       + (hyphenation_flags & HYPHEN_FIRST_CHARS ? 1 : 0)
+	       + (hyphenation_flags & HYPHEN_LAST_CHARS ? 1 : 0)))
     hyphenate(sl, hyphenation_flags);
   while (forward != 0) {
     node *tem1 = forward;
@@ -3963,9 +3965,8 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	int num[WORD_MAX + 3];
 	current_language->patterns.hyphenate(hbuf, len + 2, num);
 	int i;
-	num[2] = 0;
 	if (flags & HYPHEN_FIRST_CHARS)
-	  num[3] = 0;
+	  num[2] = 0;
 	if (flags & HYPHEN_LAST_CHARS)
 	  --len;
 	for (i = 2, tem = h; i < len && tem; tem = tem->next, i++)
