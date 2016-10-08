@@ -2990,6 +2990,7 @@
 .  \}
 .  el \{ .ie "\$1"-tag" \{\
 .    ds doc-list-type-stack\n[doc-list-depth] tag-list
+.    nr doc-list-indent-stack\n[doc-list-depth] 6n
 .    nr doc-list-have-indent-stack\n[doc-list-depth] 1
 .  \}
 .  el \{ .ie "\$1"-item" \{\
@@ -3105,7 +3106,6 @@
 .\" NS   doc-list-offset-stackXXX
 .\" NS   doc-num-columns
 .\" NS   doc-tag-prefix-stackXXX
-.\" NS   doc-tag-width-stackXXX
 .\" NS
 .\" NS local variables:
 .\" NS   doc-box-dBla
@@ -3148,8 +3148,6 @@
 .
 .  el \{ .ie "\*[doc-arg\n[doc-arg-ptr]]"-width" \{\
 .    nr doc-arg-ptr +1
-.    ds doc-tag-width-stack\n[doc-list-depth] TagwidtH
-.
 .    ds doc-str-dBla "\*[doc-arg\n[doc-arg-ptr]]
 .    substring doc-str-dBla 0 0
 .    ie .\*[doc-str-dBla] \{\
@@ -3394,7 +3392,6 @@
 .    nr doc-list-indent-stack\n[doc-reg-dsgv]-saved \n[doc-list-indent-stack\n[doc-reg-dsgv]]
 .    nr doc-compact-list-stack\n[doc-reg-dsgv]-saved \n[doc-compact-list-stack\n[doc-reg-dsgv]]
 .    ds doc-tag-prefix-stack\n[doc-reg-dsgv]-saved "\*[doc-tag-prefix-stack\n[doc-reg-dsgv]]
-.    ds doc-tag-width-stack\n[doc-reg-dsgv]-saved "\*[doc-tag-width-stack\n[doc-reg-dsgv]]
 .    nr doc-list-offset-stack\n[doc-reg-dsgv]-saved \n[doc-list-offset-stack\n[doc-reg-dsgv]]
 .    nr doc-enum-list-count-stack\n[doc-reg-dsgv]-saved \n[doc-enum-list-count-stack\n[doc-reg-dsgv]]
 .    nr doc-reg-dsgv +1
@@ -3538,7 +3535,6 @@
 .    nr doc-list-indent-stack\n[doc-reg-drgv] \n[doc-list-indent-stack\n[doc-reg-drgv]-saved]
 .    nr doc-compact-list-stack\n[doc-reg-drgv] \n[doc-compact-list-stack\n[doc-reg-drgv]-saved]
 .    ds doc-tag-prefix-stack\n[doc-reg-drgv] "\*[doc-tag-prefix-stack\n[doc-reg-drgv]-saved]
-.    ds doc-tag-width-stack\n[doc-reg-drgv] "\*[doc-tag-width-stack\n[doc-reg-drgv]-saved]
 .    nr doc-list-offset-stack\n[doc-reg-drgv] \n[doc-list-offset-stack\n[doc-reg-drgv]-saved]
 .    nr doc-enum-list-count-stack\n[doc-reg-drgv] \n[doc-enum-list-count-stack\n[doc-reg-drgv]-saved]
 .    nr doc-reg-drgv +1
@@ -4030,13 +4026,6 @@
 .  ev
 .  box
 .
-.  if !"TagwidtH"\*[doc-tag-width-stack\n[doc-list-depth]]" \{\
-.    if !\n[doc-list-have-indent-stack\n[doc-list-depth]] \{\
-.      in -(\n[doc-list-indent-stack\n[doc-list-depth]]u + \n[doc-digit-width]u)
-.      nr doc-list-have-indent-stack\n[doc-list-depth] 1
-.    \}
-.    doc-get-tag-width
-.  \}
 .  doc-set-vertical-and-indent 1
 .  nr doc-reg-dtl (\n[doc-list-indent-stack\n[doc-list-depth]]u + \n[doc-digit-width]u)
 .  ti -\n[doc-reg-dtl]u
@@ -4061,29 +4050,6 @@
 .
 .  nr doc-in-list 0
 .  doc-reset-args
-..
-.
-.
-.\" NS doc-get-tag-width macro
-.\" NS   resolve unknown tag width (`tag' list-type only)
-.\" NS
-.\" NS modifies:
-.\" NS   doc-list-indent-stackXXX
-.\" NS   doc-tag-width-stackXXX
-.\" NS
-.\" NS requires:
-.\" NS   doc-curr-arg
-.\" NS   doc-curr-type
-.
-.de doc-get-tag-width
-.  ie (\n[doc-curr-type] == 1) \{\
-.    ds doc-tag-width-stack\n[doc-list-depth] \*[doc-curr-arg]
-.    nr doc-list-indent-stack\n[doc-list-depth] \n[\*[doc-curr-arg]]
-.  \}
-.  el \{\
-.    ds doc-tag-width-stack\n[doc-list-depth] No
-.    nr doc-list-indent-stack\n[doc-list-depth] \n[No]
-.  \}
 ..
 .
 .
@@ -4139,19 +4105,6 @@
 .ds doc-tag-prefix-stack1
 .
 .
-.\" NS doc-tag-width-stackXXX global string
-.\" NS   stack of strings indicating how to set up current element of
-.\" NS   doc-list-indent-stackXXX -- if set to TagwidtH, user has set it
-.\" NS   directly; if it is a macro name, use the macro's width value;
-.\" NS   otherwise, `doc-get-tag-width' uses width value of `No'.
-.\" NS
-.\" NS limit:
-.\" NS   doc-list-depth
-.
-.ds doc-tag-width-stack0
-.ds doc-tag-width-stack1
-.
-.
 .\" NS doc-list-offset-stackXXX global register
 .\" NS   stack of list offsets
 .\" NS
@@ -4193,7 +4146,6 @@
 .\" NS   doc-list-offset-stackXXX
 .\" NS   doc-list-type-stackXXX
 .\" NS   doc-tag-prefix-stackXXX
-.\" NS   doc-tag-width-stackXXX
 .\" NS   doc-enum-list-count-stackXXX
 .\" NS
 .\" NS local variables:
@@ -4205,7 +4157,6 @@
 .  nr doc-list-indent-stack\n[doc-reg-dils] 0
 .  nr doc-list-offset-stack\n[doc-reg-dils] 0
 .  ds doc-tag-prefix-stack\n[doc-reg-dils]
-.  ds doc-tag-width-stack\n[doc-reg-dils] \*[doc-tag-width-stack\n[doc-list-depth]]
 .  ds doc-list-type-stack\n[doc-reg-dils]
 .  nr doc-compact-list-stack\n[doc-reg-dils] 0
 .  nr doc-enum-list-count-stack\n[doc-reg-dils] 0
@@ -4222,7 +4173,6 @@
 .\" NS   doc-list-offset-stackXXX
 .\" NS   doc-list-type-stackXXX
 .\" NS   doc-tag-prefix-stackXXX
-.\" NS   doc-tag-width-stackXXX
 .\" NS   doc-enum-list-count-stackXXX
 .
 .de doc-decrement-list-stack
@@ -4231,7 +4181,6 @@
 .  nr doc-list-indent-stack\n[doc-list-depth] 0
 .  nr doc-list-offset-stack\n[doc-list-depth] 0
 .  ds doc-tag-prefix-stack\n[doc-list-depth]
-.  ds doc-tag-width-stack\n[doc-list-depth]
 .  nr doc-compact-list-stack\n[doc-list-depth] 0
 .  nr doc-enum-list-count-stack\n[doc-list-depth] 0
 ..

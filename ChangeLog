@@ -1,3 +1,31 @@
+2016-10-05  Ingo Schwarze  <schwarze@usta.de>
+
+	* tmac/doc.tmac-u: Simplify behaviour of .Bl -tag
+	* tmac/groff_mdoc.7.man: Update documentation to the new
+	behaviour of .Bl -tag
+
+	If an mdoc(7) .Bl -tag macro lacks the -width argument, the
+	body indentation is calculated separately for each child .It
+	macro.  Neither the Heirloom nor the mandoc(1) implementation
+	of the mdoc(7) language show such behaviour; both use a
+	constant default width for the whole list in that case.
+
+	Apart from doubts whether lists with variable indentation are
+	typographically sound in the first place, support for variable
+	widths in groff is so restricted that it's practically
+	useless.  For each .It, the width will be the default width of
+	whatever happens to be the leading macro after the .It, or of
+	.No if .It is not followed by a macro.
+
+	See
+
+	https://savannah.gnu.org/bugs/index.php?49272
+
+	and
+
+	http://lists.gnu.org/archive/html/groff/2016-10/msg00006.html
+
+
 2016-09-09  Werner LEMBERG  <wl@gnu.org>
 
 	* tmac/sv.tmac: Fix `.hy' settings (#48904).
