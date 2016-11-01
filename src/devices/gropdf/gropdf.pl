@@ -3289,7 +3289,7 @@ sub RemapChr
 
     foreach my $un (2..$#{$fnt->{GNO}})
     {
-	$unused=$un,last if $fnt->{GNO}->[$un] eq '/.notdef';
+	$unused=$un,last if $fnt->{GNO}->[$un] eq '/.notdef' and $un ne 14;
     }
 
     if (--$unused <= 255)
