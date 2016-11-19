@@ -136,6 +136,23 @@
 .
 ..
 .
+.rn nm @#		\" --- rename to original command
+.de nm			\" --- turn on number mode preserving font info
+.ie \\n(.$ \
+\{\
+.	nr _S \\n(.s
+.	nr _F \\n(.f
+.	ps \\n[_#p]
+.	ft \\n[_#f]
+.	@# \\$1 \\$2 \\$3 \\$4
+.	ft \\n(_F
+.	ps \\n(_S
+.	rr _F
+.	rr _S
+.\}
+.el .@#
+..
+.
 .de @z			\" --- end macro
 .if \n@>1 .tm >> @z, .z=\\n(.z ?a=\\n(?a
 .if !"\\n(.z"" \
@@ -524,9 +541,11 @@
 ..
 .
 .de n1			\" *** line numbering 1
-.nm 1
 .ll -\w'0000'u
 .nr ?n 1
+.nr _#p \\n(.s
+.nr _#f \\n(.f
+.nm 1
 ..
 .
 .de n2			\" *** line numbering 2
@@ -549,6 +568,8 @@
 .				nr ln (\\n[_ln])-\\*(|j
 .			el \
 .				nr ln \\$1  \" unsigned N
+.		nr _#p \\n(.s
+.		nr _#f \\n(.f
 .		nm \\n(ln
 .		nr ?n 2
 .		rm |i |j
@@ -664,10 +685,13 @@
 .@p \\n(_0u
 .nr _I \\n(.iu
 .in 0
+.nm
 .di |i
 \&\\$1
 .br
 .di
+.if \\n(?n \
+.	nm \\n(ln
 .in \\n(_Iu
 .ds |j \\*(|i\\
 .ie \\w"\\*(|j" \
@@ -1063,6 +1087,8 @@
 .	nm
 .ev
 .rm |c
+.if \\n(?n \
+.	nm \\n(ln
 ..
 .
 .
@@ -1102,9 +1128,9 @@
 .
 .de )l			\" *** end list
 .br
-.if \\n(?n \
-.	nm
 .ev
+.if \\n(?n \
+.	nm \\n(ln
 .sp \\n(bsu+\\n(.Lv-1v
 .nr ?k 0
 ..
