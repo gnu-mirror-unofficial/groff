@@ -986,7 +986,7 @@
 .nf
 .ls 1
 .in 0
-.sp \\n(zsu
+.if !`\\$2`ns` .sp \\n(zsu	\" no pre-spacing if (b .. )b
 .if \\n(?n \
 .	nm \\n(ln
 .\\$1
@@ -1019,7 +1019,7 @@
 .@)
 .if (\\n(bt=0):(\\n(.t<\\n(bt) \
 .	ne \\n(dnu		\" make it all on one page
-.@k |k
+.@k |k ns
 .ev                             \" return from display environment
 .sp \\n(bsu+\\n(.Lv-1v
 ..
