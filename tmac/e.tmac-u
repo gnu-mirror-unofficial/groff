@@ -1064,6 +1064,11 @@
 .br
 .if "\\n(.z"|c" .tm Line \\n(c. -- Nested .(c requests
 .if \\n(?n .nm
+.if ``\\n(.z` \
+\{\
+.	@C 1		\" Ensure env. set up for centering in open text
+.	ev
+.\}
 .di |c
 ..
 .
