@@ -748,7 +748,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .vpt 0
 .DEVTAG-\\$1 \\$2
 .br
-.if r misc*ti \{
+.if r misc*ti \{\
 .	ti \\n[misc*ti]u
 .	rr misc*ti
 .	sp -1
@@ -2869,7 +2869,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\"-----------
 .\" called by end-of-text!
 .de ref@eot-print
-.\".if \\n[ref*flag] \{
+.\".if \\n[ref*flag] \{\
 .if d ref*mac \{\
 .	if \\n[D]>2 .tm Print references, called by eot
 .	nr ref*flag 0
