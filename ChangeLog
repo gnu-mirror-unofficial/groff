@@ -1,3 +1,24 @@
+2017-02-16  Ingo Schwarze  <schwarze@usta.de>
+
+	mdoc \*[Lq], \*[Rq]: map to \[lq], \[rq] for all terminal
+	devices
+
+	* tmac/doc-nroff-u: .ds Lq \[lq], .ds Rq \[rq]
+
+	If you use \[lq] and \[rq] directly in your document, the
+	quotes already render nicely for all terminal devices:
+	as U+201C and U+201D for devutf8 and as ASCII 0x22 (") for
+	devascii and devlatin1.
+	So it is not quite clear why doc-nroff should avoid
+	\[lq] and \[rq] when resolving \[Lq] and \[Rq] for devascii
+	and devlatin1. Quite to the contrary, many people seem to
+	consider "``" and "''" ugly renderings because they look
+	unbalanced.
+
+	See
+
+	https://savannah.gnu.org/bugs/?43554
+
 2017-02-16  Bjarni Ingi Gislason  <bjarniig@rhi.hi.is>
 
 	Use the traditional (portable) method of using a backslash
