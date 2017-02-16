@@ -1,5 +1,28 @@
 2017-02-16  Ingo Schwarze  <schwarze@usta.de>
 
+	mdoc %T: use typographic quotes
+
+	* tmac/doc.tmac-u: Changed \*[q] to \*[Lq] and \*[Rq]
+
+	Citing Anthony J. Bentley:
+
+	The below patch causes -mdoc to generate typographic quotes
+	around a %T (reference title) instead of straight quotes.
+
+	I also submitted similar diffs to mandoc and heirloom troff
+	(which haven't been committed yet).  It would be nice for
+	the major implementations not to differ here, and the change
+	is trivial. 
+
+	It's worth noting that groff's refer(1) already uses typographic
+	quotes around %T with my -ms documents.
+
+	https://savannah.gnu.org/bugs/?43553
+	http://comments.gmane.org/gmane.comp.tools.mdocml.devel/723 
+	https://github.com/n-t-roff/heirloom-doctools/pull/6
+
+2017-02-16  Ingo Schwarze  <schwarze@usta.de>
+
 	mdoc \*[Lq], \*[Rq]: map to \[lq], \[rq] for all terminal
 	devices
 
