@@ -619,7 +619,11 @@ int main(int argc, char **argv)
     out = make_fig_output();
   else
 #endif
+  {
     out = make_troff_output();
+    printf(".if !dPS .ds PS\n"
+	   ".if !dPE .ds PE\n");
+  }
 #ifdef FIG_SUPPORT
   if (whole_file_flag) {
     if (optind >= argc)

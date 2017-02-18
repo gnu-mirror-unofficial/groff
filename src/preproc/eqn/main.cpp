@@ -377,6 +377,8 @@ int main(int argc, char **argv)
     }
   init_table(device);
   init_char_table();
+  printf(".if !dEQ .ds EQ\n"
+	 ".if !dEN .ds EN\n");
   if (output_format == troff) {
     printf(".if !'\\*(.T'%s' "
 	   ".if !'\\*(.T'html' "	// the html device uses `-Tps' to render

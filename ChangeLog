@@ -1,3 +1,11 @@
+2017-02-18  Colin Watson  <cjwatson@debian.org>
+
+	* src/preproc/eqn/main.cpp: Define EQ and EN if they are not already
+	defined, to appease "groff -wmac".
+	* src/preproc/pic/main.cpp: Likewise for PS and PE.
+
+	Fixes: http://bugs.debian.org/495713
+
 2017-02-16  Ingo Schwarze  <schwarze@usta.de>
 
 	mdoc %T: use typographic quotes
