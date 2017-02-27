@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016  Free Software Foundation, Inc.
+Copyright (C) 2004-2017  Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -110,6 +110,7 @@ or concept you&#8217;re not familiar with.
         <a href="#numericargument">Numeric argument</a><br/>
         <a href="#outputline">Output line</a><br/>
         <a href="#primitives">Primitives</a><br/>
+        <a href="#preprocessor">Pre-processor</a><br/>
         <a href="#stringargument">String Argument</a><br/>
         <a href="#unitofmeasure">Unit of measure</a><br/>
         <a href="#zerowidthcharacter">Zero-width character</a><br/>
@@ -123,10 +124,12 @@ or concept you&#8217;re not familiar with.
     <tr><th class="definitions">Mom terms</th></tr>
     <tr>
       <td>
+        <a href="#baseline-grid">Baseline grid</a><br/>
         <a href="#blockquote">Blockquote</a><br/>
         <a href="#controlmacro">Control macro</a><br/>
         <a href="#docheader">Docheader</a><br/>
         <a href="#epigraph">Epigraph</a><br/>
+        <a href="#float">Float</a><br/>
         <a href="#footer">Footer</a><br/>
         <a href="#head">Head</a><br/>
         <a href="#header">Header</a><br/>
@@ -698,6 +701,17 @@ or concept you&#8217;re not familiar with.
   A line of text as it appears in output copy.
   </dd>
   
+  <dt id="preprocessor">Pre-processor</dt>
+  <dd>
+  Pre-processors are used by groff to generate tables (tbl),
+  diagrams (pic), and equations (eqn).  These pre-processors are
+  fully supported by mom.  In addition, the &#8220;refer&#8221;
+  pre-processor is used to generate bibliographies and lists of
+  cited works.  The PDF_IMAGE macro, which allows insertion of
+  graphics into a document, is not strictly a pre-processor but
+  behaves similarly to tbl, pic, and eqn.
+  </dd>
+  
   <dt id="primitives">Primitives</dt>
   <dd>
   The lowercase instructions, introduced with a period, that groff
@@ -828,13 +842,13 @@ or concept you&#8217;re not familiar with.
 
 <h3 id="mom-terms" class="docs">Mom terms</h3>
 <dl>
-  <dt id="blockquote">Blockquote</dt>
+  <dt id="baseline-grid">Baseline grid</dt>
   <dd>
-  Cited material other than
-  <a href="#quote">quotes</a>.
-  Typically set at a smaller point size than paragraph text,
-  indented from the left and right margins.  Blockquotes are
-  <a href="#filled">filled</a>.
+  Virtual guide lines spaced according to the
+  <a href="#leading">leading</a>
+  established for running text.  Adherence to the grid ensures that
+  text fills the page completely to the bottom margin.  Uncorrected
+  deviations from the grid result in bottom margins that fall short.
   </dd>
   
   <dt id="controlmacro">Control macro</dt>
@@ -857,6 +871,14 @@ or concept you&#8217;re not familiar with.
   <dd>
   A short, usually cited passage that appears at the beginning of
   a chapter, story, or other document.
+  </dd>
+  
+  <dt id="float">Float</dt>
+  <dd>
+  A float is material intended to be kept together as a block.
+  Floated material that fits on a page in position is output on that
+  page.  Floats that do not fit in position are deferred to the top
+  of the next page.
   </dd>
   
   <dt id="footer">Footer/page footer</dt>

@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -124,7 +124,7 @@ the rest of the document is.  Lastly, if
 printing is enabled, the table of contents respects it.  This
 sometimes leads to tables of contents that begin with the wrong
 margins, but the margins can be corrected either by outputting a
-<a href="#blank-page">BLANKPAGE</a>
+<a href="headfootpage.html#blank-pages">BLANKPAGE</a>
 or by using the control macro
 <a href="#toc-rv-switch">TOC_RV_SWITCH</a>.
 </p>
@@ -380,6 +380,7 @@ themselves (overall family, headers/footers, pagination, etc).
     <li><a href="#toc-padding">Establish the number of placeholders to leave for page reference numbers</a></li>
     <li><a href="#toc-rv-switch">Switch tables of contents page margins</a></li>
   </ul></li>
+  <li><a href="#toc-more">I still need more!</a></li>
 </ol>
 </div>
 
@@ -1098,7 +1099,60 @@ page when you want an odd, or vice versa.
 
 <p>
 The same result can be accomplished by outputting a
-<a href="#blank-page">BLANKPAGE</a>.
+<a href="headfootpage.html#blank-pages">BLANKPAGE</a>.
+</p>
+
+<h4 id="toc-more" class="docs" style="margin-top: -.5em;">6. I still need more!</h4>
+
+<p>
+If there is some aspect of Table of Contents formatting for which
+no TOC control macros are provided, mom has a special
+<a href="definitions.html#toggle">toggle macro</a>
+to help out: TOC_PAGE_SETTINGS.
+</p>
+
+<p>
+TOC_PAGE_SETTINGS allows you to enter extra formatting changes for
+the Table of Contents as if it were simply another collated section
+or chapter of a document.  Because it&#8217;s a toggle macro,
+invoking it by itself begins collecting your formatting directives,
+and invoking it with any argument (<b>OFF, QUIT, END</b>...) stops
+the collection.
+</p>
+
+<p>
+TOC_PAGE_SETTINGS is special in that the formatting commands
+contained within it must be preceded by <kbd>\!</kbd> (that&#8217;s
+backslash-exclamation point).
+</p>
+
+<p id="toc-page-settings-example">
+For example, say you want to redesign the default page headers for
+the Tables of Contents so that it only contains the document title
+on the left and &#8220;Contents&#8221; in italics on the right, and
+furthermore adjust the footer margin and footer gap, this is how
+you&#8217;d do it:
+<br/>
+<span class="pre-in-pp">
+  .TOC_PAGE_SETTINGS
+  \!.HEADER_RECTO L "^\E*[$TITLE]#\*[IT]Contents\*[PREV]^"
+  \!.FOOTER_MARGIN 3P
+  \!.B_MARGIN 6P+3p
+  .TOC_PAGE_SETTINGS END
+</span>
+(For an explanation of why the example uses <kbd>.B_MARGIN</kbd> to
+set/change the footer gap, see
+<a href="headfootpage.html#gap-note">here</a>.)
+</p>
+
+<p>
+TOC_PAGE_SETTINGS can be put in the stylesheet section of a document
+(ie after
+<a href="docprocessing.html#printstyle">PRINTSTYLE</a>
+and before
+<a href="docprocessing.html#start">START</a>)
+or invoked just before
+<a href="#toc">TOC</a>.
 </p>
 
 <div class="rule-long"><hr/></div>

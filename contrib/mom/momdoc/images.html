@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -84,6 +84,7 @@ FDL in the main directory of the groff source package.
   <li><a href="#captions-and-labels">Captions and labels</a>
     <ul>
       <li><a href="#autolabel">AUTOLABEL</a></li>
+      <li><a href="#set-autolabel">SET_AUTOLABEL</a></li>
       <li><a href="#caption-after-label">CAPTION_AFTER_LABEL</a></li>
       <li><a href="#captions-labels-sources">CAPTIONS / LABELS / SOURCES</a>&mdash;set style parameters for each</li>
       <li><a href="#mla">MLA</a></li>
@@ -185,13 +186,13 @@ Macro: <b>PDF_IMAGE</b> <kbd class="macro-args">[ -L | -C | -R | -I &lt;indent&g
 <br/>
 &lt;image-file.pdf&gt; &lt;width&gt; &lt;height&gt; [ SCALE &lt;factor&gt; ] \
 <br/>
-[ ADJUST +|-&lt;vertical adjustment&gt; ] [ NO_SHIM ] \
+[ ADJUST +|-&lt;vertical adjustment&gt; ] [ NO_SHIM ] [ NO_FLEX ] \
 <br/>
 [ FRAME ] \
 <br/>
 [ CAPTION "&lt;caption&gt;" ] [ SHORT_CAPTION "&lt;short caption&gt;" ] \
 <br/>
-[ LABEL "&lt;label&gt;" ]</kbd>
+[ LABEL "&lt;label&gt;" ] [ TARGET "&lt;name&gt;" ]</kbd>
 </div>
 <p class="requires">
 &bull;&nbsp;<span style="font-style: normal">
@@ -293,18 +294,31 @@ measure is required.
 
 <p>
 <kbd>NO_SHIM</kbd> instructs mom not to apply
-<a href="docprocessing.html#shim">shimming</a>
-after the image, which she does by default.  Shimming ensures that
-running text after the image falls properly on the page&#8217;s baseline
-grid, but usually results in slightly unequal spacing above and
-below, which must be corrected with the <kbd>ADJUST</kbd> argument.
-Mom&#8217;s default shimming is generally a good idea since it ensures
-properly aligned bottom margins for running text, however if you
-have several images on the page, there may be visible differences in
-the spacing beneath images.  <kbd>NO_SHIM</kbd> corrects the
-problem, but will result in running text that does not completely
-fill the page unless shimming is applied manually elsewhere on the
-same page.
+<a href="docprocessing.html#shim-vs-flex">shimming</a>
+after an image, which she will do automatically when shimming is
+enabled, which it is by default.  Shimming ensures that running text
+after the image falls properly on the page&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+but can result in slightly unequal spacing above and below
+(correctible with the <kbd>ADJUST</kbd> argument).
+<kbd>NO_SHIM</kbd> is useful when you have several images on the
+page and there are visible differences in the spacing beneath them
+as a result of shimming.  To ensure a flush bottom margin, the last
+image on the page should be shimmed, ie should not be given the
+<kbd>NO_SHIM</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_FLEX'</h5>
+
+<p>
+<kbd>NO_FLEX</kbd> instructs mom not to apply
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>
+after an image, which she will do automatically when flex-spacing is
+enabled. <kbd>NO_FLEX</kbd> is useful when you have several images
+on the page and you want to distribute excess vertical
+whitespace on the page amongst other flex-spacing points on the
+page.  If there are no others, the final image should be
+flex-spaced, ie not given the <kbd>NO_FLEX</kbd> argument.
 </p>
 
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'FRAME'</h5>
@@ -344,6 +358,36 @@ in both the document proper and the List of Figures.  Mom provides
 an auto-labelling facility for images (see
 <a href="#autolabel">AUTOLABEL</a>),
 which, if enabled, overrides the <kbd>LABEL</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'TARGET'</h5>
+
+<p>
+<kbd>TARGET</kbd> followed by a unique name surrounded by
+double-quotes creates a PDF target for the image so that it may be
+linked to from other places in the file (with PDF_LINK; see
+<a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+When
+<a href="#autolabel">autolabelling</a>
+is enabled and the document is processed with
+<a href="using.html#pdfmom" style="font-weight: bold">pdfmom</a>,
+the target name can be used to generate the target&#8217;s label
+number in running text if it is entered as a groff string, ie of the
+form <kbd>\*[name]</kbd>.  For example, if you create a target named
+&#8220;foo&#8221; for a pdf image whose autolabel number would be 3,
+entering
+<br/>
+<span class="pre-in-pp">
+  See
+  .PDF_LINK foo "Figure \*[foo]"
+</span>
+anywhere in running text would result in a pdf link that reads
+&#8220;Figure 3&#8221;.  If chapter numbers are being prefixed to
+labels, the same string in, say, chapter 5 would produce the pdf
+link &#8220;Figure 5.3&#8221;.
 </p>
 
 <p>
@@ -493,14 +537,18 @@ correct optical centering.
 </p>
 
 <p>
-Additionally, non-floated EPS images inserted into
-<a href="definitions.html#running">running text</a>
-will almost certainly disrupt the baseline placement of running
-text.  In order to get mom back on track after inserting a
-non-floated <kbd>.PSPIC</kbd> image, I strongly recommend using the
+Additionally, non-floated EPS images
+will almost certainly disrupt the baseline placement of
+<a href="definitions.html#running">running text</a>.
+In order to get mom back on track after inserting a non-floated
+<kbd>.PSPIC</kbd> image, insert the
 <a href="docprocessing.html#shim">SHIM</a>
-macro so that the bottom margin of running text falls where it
-should.
+or
+<a href="docprocessing.html#flex">FLEX</a>
+macro afterwards, depending on the
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+strategy in effect, so that the bottom margin of running text falls
+where it should.
 </p>
 
 <p>
@@ -555,9 +603,10 @@ previous page without interruption.
 
 <p>
 In the case of a float that doesn&#8217;t fit being followed by
-one that does, the second is output in position and the first is
-deferred.  In the case of two or more that don&#8217;t fit, they are
-output in order on the next page.
+one that does, both are deferred and output one after the other.
+Note that this represents a change from versions 2.1-b_1 and earlier
+where the second float was output in position and the first was
+deferred.
 </p>
 
 <p>
@@ -600,12 +649,13 @@ not
 Floats begin on the baseline immediately below the running text
 preceding them.  No additional whitespace surrounds them, above or
 below.  Running text below a float is, however,
-<a href="docprocessing.html#shim">shimmed</a>,
-unless shimming has been disabled with <kbd>.NO_SHIM</kbd> or the
-<kbd>NO_SHIM</kbd> argument is given to <kbd>FLOAT</kbd>.  Shimming
-generally results in a small amount of extra whitespace after the
-float, which can be equalized with the whitespace beforehand using
-the <kbd>ADJUST</kbd> argument to FLOAT.
+<a href="docprocessing.html#shim">shimmed</a>
+or
+<a href="docprocessing.html#flex">flex-spaced</a>,
+depending on the
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+strategy in effect.  This behaviour can be disabled for individual
+floats with <kbd>NO_SHIM</kbd> or <kbd>NO_FLEX</kbd>.
 </p>
 
 <p>
@@ -623,7 +673,7 @@ or
 </div>
 
 <div class="box-macro-args">
-Macro: <b>FLOAT</b> <kbd class="macro-args">[ ADJUST +|-&lt;amount&gt; ] [ FORCE ] [ SPAN ] [ NO_SHIM] | &lt;anything&gt;</kbd>
+Macro: <b>FLOAT</b> <kbd class="macro-args">[ ADJUST +|-&lt;amount&gt; ] [ FORCE ] [ SPAN ] [ NO_SHIM] [ NO_FLEX ] | TARGET "&lt;name&gt;" | &lt;anything&gt;</kbd>
 </div>
 
 <div class="box-tip">
@@ -647,10 +697,11 @@ the space allotted to it</i> by the specified amount.
 <a href="definitions.html#unitofmeasure">unit of measure</a>
 appended.  <kbd>ADJUST</kbd> gives you precise control over
 the vertical centering of floats, allowing you to compensate for
-unequal spacing that may result of from the automatic shimming of
-floats (or the absence thereof).  See
-<a href="docprocessing.html#shim">SHIM</a>
-for a discussion of automatic shimming.
+unequal spacing that may result of from the automatic
+<a href="docprocessing.html#shim">shimming</a>
+or
+<a href="docprocessing.html#flex">flex-spacing</a>
+floats.
 </p>
 
 <p>
@@ -675,21 +726,58 @@ a warning should this occur.  Unboxed tables, on the other hand, are
 acceptable within floats that are given the <kbd>SPAN</kbd> argument.
 </p>
 
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_SHIM'</h5>
+
 <p>
 <kbd>NO_SHIM</kbd> instructs mom not to apply
-<a href="docprocessing.html#shim">shimming</a>
-after the float, which she does by default.  Shimming ensures that
-running text after the float falls properly on the page&#8217;s baseline
-grid, but usually results in slightly unequal spacing above and
-below, which must be corrected with the <kbd>ADJUST</kbd> argument.
-Mom&#8217;s default shimming is generally a good idea since it ensures
-properly aligned bottom margins for running text, however if you
-have several floats on the page, there may be visible differences in
-the spacing beneath them.  <kbd>NO_SHIM</kbd> corrects the
-problem, but will result in running text that does not completely
-fill the page unless shimming is applied manually elsewhere on the
-same page.
+<a href="docprocessing.html#shim-vs-flex">shimming</a>
+after a float, which she will do automatically when shimming is
+enabled, which it is by default.  Shimming ensures that running text
+after the float falls properly on the page&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+but can result in slightly unequal spacing above and below
+(correctible with the <kbd>ADJUST</kbd> argument).
+<kbd>NO_SHIM</kbd> is useful when you have several floats on the
+page and there are visible differences in the spacing beneath them
+as a result of shimming.  To ensure a flush bottom margin, the last
+float on the page should be shimmed, ie should not be given the
+<kbd>NO_SHIM</kbd> argument.
 </p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_FLEX'</h5>
+
+<p>
+<kbd>NO_FLEX</kbd> instructs mom not to apply
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>
+after a float, which she will do automatically when flex-spacing is
+enabled. <kbd>NO_FLEX</kbd> is useful when you have several floats
+on the page and you want to distribute excess vertical
+whitespace on the page amongst other flex-spacing points on the
+page.  If there are no others, the final float should be
+flex-spaced, ie not given the <kbd>NO_FLEX</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'TARGET'</h5>
+
+<p>
+<kbd>TARGET</kbd> followed by a unique name surrounded by
+double-quotes creates a PDF target for the float so that it may be
+linked to from other places in the file (with PDF_LINK; see
+<a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+Floats cannot be autolabelled, so unlike pdf images and
+pre-processor material, the target name cannot be used as a string
+to generate the target&#8217;s label number in running text.  Label
+numbers for floats must be entered explicitly running text, however
+they may be entered symbolically in the argument to
+<a href="#label">LABEL</a>.
+See
+<a href="#reserved-label-strings">Reserved variables for
+labels</a>.
+</p>
+
 
 <div class="box-tip">
 <p class="tip-top">
@@ -724,8 +812,7 @@ Labelling and captioning of tables (<b>tbl</b>), equations
 are handled by the macros that initiate them, regardless of whether
 they&#8217;re wrapped inside a float.  However, since a float may
 contain any valid input, it is sometimes necessary to add a label
-and/or caption to the float itself when it is not being used to
-contain preprocessor input.
+and/or caption to the float itself.
 </p>
 
 <div class="box-tip">
@@ -785,18 +872,22 @@ If a float has a caption at the top, the caption is whitespaced
 an additional 1/4 linespace below the caption.  If the float has
 no corresponding label at the bottom, the float observes the
 bottom-spacing rules for all floats, namely that no extra space is
-added except whatever
+added other than
 <a href="docprocessing.html#shim">shimming</a>
-is necessary to restore proper baseline alignment.
+or
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>,
+depending on the
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+in effect.
 </p>
 
 <p>
 If a float has a label at the bottom but no caption at the top, the
 float begins exactly where started, i.e. with no extra whitespace
 between running text and the float.  The label (and attached
-caption, if any) are whitespaced 1/4 linespace below the float, with
-an additional 1/4 linespace underneath <i>plus</i> whatever shimming is
-needed to restore proper baseline alignment.
+caption, if any) are whitespaced 1/4 linespace below the float,
+with an additional 1/4 linespace underneath <i>plus</i> shimming or
+flex-spacing.
 </p>
 
 <p>
@@ -847,11 +938,12 @@ before ending the float:
 <h3  id="reserved-label-strings" class="docs" style="text-transform: none">Reserved variables for labels</h3>
 
 <p>
-Mom reserves two variables you may use when entering label text
-after the <kbd>LABEL</kbd> argument.
-<kbd>\*[chapter]</kbd> holds the current chapter or major section
-number.  <kbd>\*[label]</kbd> increments the label number by one
-and is initially set to zero after each invocation of
+Mom reserves strings you may use when entering label text after
+the <kbd>LABEL</kbd> argument. <kbd>\*[chapter]</kbd> holds the
+current chapter or major section number. <kbd>\*[fig-label]</kbd>,
+<kbd>\*[tbl-label]</kbd>, and <kbd>\*[eqn-label]</kbd>
+increment the label number of the appropriate label type by one,
+and are initially set to zero after each invocation of
 <a href="docprocessing.html#start">START</a>
 when the
 <a href="docprocessing.html#doctype">DOCTYPE</a>
@@ -859,18 +951,20 @@ is <kbd>CHAPTER</kbd>.  Thus, in every chapter requiring numbered
 float labels, you can enter
 <br/>
 <span class="pre-in-pp">
-  .LABEL "Fig. \*[chapter].\*[label].
+  .LABEL "Fig. \*[chapter].\*[fig-label]. TO_LIST FIGURES
 </span>
-which, assuming the third labelled float of Chapter 2 will produce
-<kbd>Fig. 2.3.</kbd>
+which, assuming the third autolabelled float of Chapter 2, will
+produce <kbd>Fig. 2.3.</kbd>
 </p>
 
 <p>
 If your <b>DOCTYPE</b> is <kbd>DEFAULT</kbd> or <kbd>NAMED</kbd>,
-you must reset <kbd>\*[label]</kbd> by entering
+you must reset <kbd>\*[&lt;type&gt;-label]</kbd> after each
+<a href="docprocessing.html#collate">COLLATE</a>
+by entering
 <br/>
 <span class="pre-in-pp">
-  .AUTOLABEL &lt;list type&gt;
+  .AUTOLABEL_&lt;list type&gt;
 </span>
 before <kbd>.START</kbd>.
 </p>
@@ -878,7 +972,7 @@ before <kbd>.START</kbd>.
 <p>
 If
 <a href="#autolabel">autolabelling</a>
-is enabled, e.g. <kbd>.AUTOLABEL_IMAGES</kbd> (List
+is enabled, eg <kbd>.AUTOLABEL_IMAGES</kbd> (List
 of Figures) or <kbd>.AUTOLABEL_PIC</kbd> (also List of Figures),
 the prefix is stripped from the label when it appears in
 the List.  Thus, if you have invoked <kbd>.AUTOLABEL_PIC</kbd>,
@@ -905,7 +999,7 @@ label&#8221;.
 If you&#8217;d like a caption attached to the label, pass
 <kbd>LABEL</kbd> the optional argument <kbd>CAPTION</kbd> followed
 by the text of the caption as a single string surrounded by
-double-quotes: <br/>
+double-quotes:
 <br/>
 <span class="pre-in-pp">
   .FLOAT
@@ -1158,14 +1252,22 @@ Unboxed tables inside floats may span multiple pages provided the
 <span class="note">Note:</span>
 The vertical spacing around unfloated tables may appear slightly
 unequal, especially if there are several tables on the page.  This
-is a result of
+is a result of the
 <a href="docprocessing.html#shim">shimming</a>
-that mom applies automatically after each table.  You may
-disable shimming with <kbd>.NO_SHIM</kbd>, or by giving the
-<kbd>NO_SHIM</kbd> argument to <kbd>.TS</kbd>.  In either case, you
-will still likely want to adjust the spacing around with table with
-the <kbd>AJUST</kbd> argument to <kbd>.TS</kbd>.  Tables inside
-floats should be adjusted with the <kbd>ADJUST</kbd> argument to
+or
+<a href="docprocessing.html#flex">flex-spacing</a>
+that mom applies automatically after each table, depending on which
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+is in effect.  You may
+disable shimming or flex-spacing with
+<a href="docprocessing.html#no-shim">NO_SHIM</a>
+or
+<a href="docprocessing.html#no-flex">NO_FLEX</a>,
+or by passing the <kbd>NO_SHIM</kbd> or <kbd>NO_FLEX</kbd> argument
+to <kbd>.TS</kbd>.  In either case, you will still likely want to
+adjust the spacing around with table with the <kbd>AJUST</kbd>
+argument to <kbd>.TS</kbd>.  Tables inside floats should be adjusted
+with the <kbd>ADJUST</kbd> argument to
 <a href="#float">FLOAT</a>,
 not the <kbd>ADJUST</kbd> argument to <kbd>.TS</kbd>.
 </p>
@@ -1196,11 +1298,15 @@ required)
 <kbd class="macro-args"><br/>
 &nbsp;&nbsp;[ NO_SHIM ]
 <br/>
+&nbsp;&nbsp;[ NO_FLEX ]
+<br/>
 &nbsp;&nbsp;[ CAPTION "&lt;caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ SHORT_CAPTION "&lt;short caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ LABEL "&lt;label&gt;" ]
+<br/>
+&nbsp;&nbsp;[ TARGET "&lt;name&gt;" ]
 </kbd>
 <br/>
 Macro: <a href="#th"><b>TH</b></a> <kbd class="macro-args">(optional, only if .TS H)</kbd>
@@ -1384,19 +1490,33 @@ measure is required.
 
 <p>
 <kbd>NO_SHIM</kbd> instructs mom not to apply
-<a href="docprocessing.html#shim">shimming</a>
-after the image, which she does by default.  Shimming ensures that
-running text after the image falls properly on the page&#8217;s baseline
-grid, but usually results in slightly unequal spacing above and
-below, which must be corrected with the <kbd>ADJUST</kbd> argument.
-Mom&#8217;s default shimming is generally a good idea since it ensures
-properly aligned bottom margins for running text, however if you
-have several images on the page, there may be visible differences in
-the spacing beneath images.  <kbd>NO_SHIM</kbd> corrects the
-problem, but will result in running text that does not completely
-fill the page unless shimming is applied manually elsewhere on the
-same page.
+<a href="docprocessing.html#shim-vs-flex">shimming</a>
+after a table, which she will do automatically when shimming is
+enabled, which it is by default.  Shimming ensures that running text
+after the table falls properly on the page&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+but can result in slightly unequal spacing above and below
+(correctible with the <kbd>ADJUST</kbd> argument).
+<kbd>NO_SHIM</kbd> is useful when you have several tables on the
+page and there are visible differences in the spacing beneath them
+as a result of shimming.  To ensure a flush bottom margin, the last
+table on the page should be shimmed, ie should not be given the
+<kbd>NO_SHIM</kbd> argument.
 </p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_FLEX'</h5>
+
+<p>
+<kbd>NO_FLEX</kbd> instructs mom not to apply
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>
+after a table, which she will do automatically when flex-spacing is
+enabled. <kbd>NO_FLEX</kbd> is useful when you have several tables
+on the page and you want to distribute excess vertical
+whitespace on the page amongst other flex-spacing points on the
+page.  If there are no others, the final table should be
+flex-spaced, ie not given the <kbd>NO_FLEX</kbd> argument.
+</p>
+
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'CAPTION'</h5>
 
 <p>
@@ -1433,6 +1553,36 @@ in both the document proper and the List of Tables.  Mom provides
 an auto-labelling facility for tables (see
 <a href="#autolabel">AUTOLABEL</a>),
 which, if enabled, overrides the <kbd>LABEL</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'TARGET'</h5>
+
+<p>
+<kbd>TARGET</kbd> followed by a unique name surrounded by
+double-quotes creates a PDF target for the table so that it may be
+linked to from other places in the file (with PDF_LINK; see
+<a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+When
+<a href="#autolabel">autolabelling</a>
+is enabled and the document is processed with
+<a href="using.html#pdfmom" style="font-weight: bold">pdfmom</a>,
+the target name can be used to generate the target&#8217;s label
+number in running text if it is entered as a groff string, ie of
+the form <kbd>\*[name]</kbd>.  For example, if you create a target
+called &#8220;foo&#8221; for a table whose autolabel number would be
+3, entering
+<br/>
+<span class="pre-in-pp">
+  See
+  .PDF_LINK foo "Table \*[foo]"
+</span>
+anywhere in running text would result in a pdf link that reads
+&#8220;Table 3&#8221;.  If chapter numbers are being prefixed to
+labels, the same string in, say, chapter 5 would produce the pdf
+link &#8220;Table 5.3&#8221;.  
 </p>
 
 <div class="macro-id-overline">
@@ -1555,11 +1705,15 @@ required)
 <kbd class="macro-args"><br/>
 &nbsp;&nbsp;[ NO_SHIM ]
 <br/>
+&nbsp;&nbsp;[ NO_FLEX ]
+<br/>
 &nbsp;&nbsp;[ CAPTION "&lt;caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ SHORT_CAPTION "&lt;short caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ LABEL "&lt;label&gt;" ]
+</kbd>
+&nbsp;&nbsp;[ TARGET "&lt;name&gt;" ]
 </kbd>
 <br/>
 Macro: <b>PE</b> <span style="font-size: 95%">(no arguments; ends
@@ -1606,18 +1760,31 @@ measure is required.
 
 <p>
 <kbd>NO_SHIM</kbd> instructs mom not to apply
-<a href="docprocessing.html#shim">shimming</a>
-after the diagram, which she does by default.  Shimming ensures that
-running text after the diagram falls properly on the page&#8217;s baseline
-grid, but usually results in slightly unequal spacing above and
-below, which must be corrected with the <kbd>ADJUST</kbd> argument.
-Mom&#8217;s default shimming is generally a good idea since it ensures
-properly aligned bottom margins for running text, however if you
-have several diagrams on the page, there may be visible differences in
-the spacing beneath them.  <kbd>NO_SHIM</kbd> corrects the
-problem, but will result in running text that does not completely
-fill the page unless shimming is applied manually elsewhere on the
-same page.
+<a href="docprocessing.html#shim-vs-flex">shimming</a>
+after a <b>pic</b> diagrame, which she will do automatically when
+shimming is enabled, which it is by default.  Shimming ensures that
+running text after the diagrame falls properly on the page&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+but can result in slightly unequal spacing above and below
+(correctible with the <kbd>ADJUST</kbd> argument).
+<kbd>NO_SHIM</kbd> is useful when you have several diagrams on the
+page and there are visible differences in the spacing beneath them
+as a result of shimming.  To ensure a flush bottom margin, the last
+diagram on the page should be shimmed, ie should not be given the
+<kbd>NO_SHIM</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_FLEX'</h5>
+
+<p>
+<kbd>NO_FLEX</kbd> instructs mom not to apply
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>
+after a <b>pic</b> diagram, which she will do automatically when
+flex-spacing is enabled. <kbd>NO_FLEX</kbd> is useful when you
+have several diagrams on the page and you want to distribute excess
+vertical whitespace on the page amongst other flex-spacing points
+on the page.  If there are no others, the final diagram should be
+flex-spaced, ie not given the <kbd>NO_FLEX</kbd> argument.
 </p>
 
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'CAPTION'</h5>
@@ -1649,6 +1816,36 @@ in both the document proper and the List of Figures.  Mom provides
 an auto-labelling facility for diagrams (see
 <a href="#autolabel">AUTOLABEL</a>),
 which, if enabled, overrides the <kbd>LABEL</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'TARGET'</h5>
+
+<p>
+<kbd>TARGET</kbd> followed by a unique name surrounded by
+double-quotes creates a PDF target for the diagram so that it may be
+linked to from other places in the file (with PDF_LINK; see
+<a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+When
+<a href="#autolabel">autolabelling</a>
+is enabled and the document is processed with
+<a href="using.html#pdfmom" style="font-weight: bold">pdfmom</a>,
+the target name can be used to generate the target&#8217;s label
+number in running text if it is entered as a groff string, ie of
+the form <kbd>\*[name]</kbd>.  For example, if you create a target
+called &#8220;foo&#8221; for a diagram whose autolabel number would
+be 3, entering
+<br/>
+<span class="pre-in-pp">
+  See
+  .PDF_LINK foo "Figure \*[foo]"
+</span>
+anywhere in running text would result in a pdf link that reads
+&#8220;Figure 3&#8221;.  If chapter numbers are being prefixed to
+labels, the same string in, say, chapter 5 would produce the pdf
+link &#8220;Figure 5.3&#8221;.
 </p>
 
 <!---PIC_TEXT_STYLE--->
@@ -1738,6 +1935,10 @@ required)
 required)
 </span>
 <kbd class="macro-args"><br/>
+&nbsp;&nbsp;[ NO_SHIM ]
+<br/>
+&nbsp;&nbsp;[ NO_FLEX ]
+<br/>
 &nbsp;&nbsp;[ CAPTION "&lt;caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ LABEL "&lt;label&gt;" ]
@@ -1745,6 +1946,8 @@ required)
 &nbsp;&nbsp;[ SHIFT_LABEL +|-&lt;vertical adjustment&gt; ]
 <br/>
 &nbsp;&nbsp;[ SHORT_CAPTION "&lt;short caption&gt;" ]
+<br/>
+&nbsp;&nbsp;[ TARGET "&lt;name&gt;" ]
 <br/>
 Macro: <a href="#en"><b>EN</b></a> <kbd class="macro-args"> [ CONTINUED | CONT | ... ]</kbd>
 </div>
@@ -1804,18 +2007,31 @@ measure is required.
 
 <p>
 <kbd>NO_SHIM</kbd> instructs mom not to apply
-<a href="docprocessing.html#shim">shimming</a>
-after the equation, which she does by default.  Shimming ensures that
-running text after the equation falls properly on the page&#8217;s baseline
-grid, but usually results in slightly unequal spacing above and
-below, which must be corrected with the <kbd>ADJUST</kbd> argument.
-Mom&#8217;s default shimming is generally a good idea since it ensures
-properly aligned bottom margins for running text, however if you
-have several equations on the page, there may be visible differences in
-the spacing beneath them.  <kbd>NO_SHIM</kbd> corrects the
-problem, but will result in running text that does not completely
-fill the page unless shimming is applied manually elsewhere on the
-same page.
+<a href="docprocessing.html#shim-vs-flex">shimming</a>
+after an equation, which she will do automatically when shimming is
+enabled, which it is by default.  Shimming ensures that running text
+after the equation falls properly on the page&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+but can result in slightly unequal spacing above and
+below (correctible with the <kbd>ADJUST</kbd> argument).
+<kbd>NO_SHIM</kbd> is useful when you have several equations on the
+page and there are visible differences in the spacing beneath them
+as a result of shimming.  To ensure a flush bottom margin, the last
+equation on the page should be shimmed, ie should not be given the
+<kbd>NO_SHIM</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_FLEX'</h5>
+
+<p>
+<kbd>NO_FLEX</kbd> instructs mom not to apply
+<a href="docprocessing.html#shim-vs-flex">flex-spacing</a>
+after an equation, which she will do automatically when flex-spacing
+is enabled. <kbd>NO_FLEX</kbd> is useful when you have several
+equations on the page and you want to distribute excess vertical
+whitespace on the page amongst other flex-spacing points on
+the page.  If there are no others, the final equation should be
+flex-spaced, ie not given the <kbd>NO_FLEX</kbd> argument.
 </p>
 
 </p>
@@ -1857,6 +2073,37 @@ with the last line.  Assuming a three-line equation,
 <kbd>.EQ&nbsp;SHIFT_LABEL&nbsp;-1v</kbd> would raise the label by
 one line, thus centering it vertically on the equation.
 </p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'TARGET'</h5>
+
+<p>
+<kbd>TARGET</kbd> followed by a unique name surrounded by
+double-quotes creates a PDF target for the equation so that it may
+be linked to from other places in the file (with PDF_LINK; see
+<a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+When
+<a href="#autolabel">autolabelling</a>
+is enabled and the document is processed with
+<a href="using.html#pdfmom" style="font-weight: bold">pdfmom</a>,
+the target name can be used to generate the target&#8217;s label
+number in running text if it is entered as a groff string, ie of
+the form <kbd>\*[name]</kbd>.  For example, if you create a target
+called &#8220;foo&#8221; for an equation whose autolabel number
+would be 3, entering
+<br/>
+<span class="pre-in-pp">
+  See
+  .PDF_LINK foo "Equation \*[foo]"
+</span>
+anywhere in running text would result in a pdf link that reads
+&#8220;Equation 3&#8221;.  If chapter numbers are being prefixed to
+labels, the same string in, say, chapter 5 would produce the pdf
+link &#8220;Equation 5.3&#8221;.
+</p>
+
 
 <div class="macro-id-overline" style="margin-top: .5em">
 <h4 id="en" class="docs" style="font-size: 100%; margin-top: .5em">The .EN macro</h4>
@@ -2063,8 +2310,37 @@ is <i>not</i> reset automatically.  To reset it, invoke
 <a href="docprocessing.html#collate">COLLATE</a>.
 </div>
 
+<div id="set-autolabel" class="box-macro-args" style="margin-top: .5em">
+Macro: <b>SET_AUTOLABEL</b> <kbd class="macro-args">FIG | TBL | PIC | EQN &lt;n&gt;</kbd>
+</div>
+
 <p>
-Prefixed chapter numbers 
+You may sometimes need to set or reset the autolabel number for a
+particular type of pre-processor or for PDF images.  This is likely
+to occur if you are using
+<a href="#float">FLOAT</a>
+in conjunction with the <kbd>TO_LIST</kbd> argument.
+</p>
+
+<p>
+For example, if your document has Figures (PDF images, pic diagrams)
+and you want your tables to be labelled as Figures as well, you have
+to wrap the tables inside a float and label the float manually as
+&#8220;Fig.&nbsp;n&#8221;, sending it to the List of Figures with
+<kbd>TO_LIST FIGURES</kbd>.
+</p>
+
+<p>
+Mom does not autolabel floats or assign them automatically
+to a list, so she doesn&#8217;t know you&#8217;ve interrupted the
+auto-incrementing label numbers.  Use SET_AUTOLABEL get her back on
+track.  The number you give as an argument after telling her which
+kind of label number to set is the one you want to appear next.
+<br/>
+<span class="pre-in-pp">
+  .SET_AUTOLABEL FIG 6
+</span>
+means the next autolabelled Figure will be &#8220;Fig. 6.&#8221;
 </p>
 
 <div class="macro-id-overline">
@@ -2470,6 +2746,8 @@ Arguments:
 &nbsp;&nbsp;TITLE_SIZE +|-&lt;size&gt; \
 <br/>
 &nbsp;&nbsp;TITLE_QUAD LEFT | CENTER | RIGHT \
+<br/>
+&nbsp;&nbsp;TOC_HEADER_UNDERSCORE default = none
 <br/>
 &nbsp;&nbsp;TITLE_COLOR &lt;color&gt; \
 <br/>

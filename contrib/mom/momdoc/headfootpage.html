@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -383,7 +383,7 @@ there&#8217;s no need to turn headers off first.
 </p>
 </div>
 
-<p>
+<p style="margin-top: -.5em">
 If you need both headers and footers, there&#8217;s a special macro,
 <a href="#headers-and-footers">HEADERS_AND_FOOTERS</a>,
 that allows you to set it up.
@@ -1318,9 +1318,6 @@ but if you want a different gap, say, 2 centimetres, do
 <span class="pre-in-pp">
   .HEADER_GAP 2c
 </span>
-</p>
-
-<p>
 If your document uses
 <a href="definitions.html#footer">footers</a>,
 replace HEADER_, above, with FOOTER_.  The argument to FOOTER_GAP
@@ -1354,6 +1351,32 @@ footers AND page numbers.  If you wish to change the gap between the
 last line of running text and a bottom page number, use FOOTER_GAP.
 If page numbers are at the top of the page, change the gap between
 the number and the first line of running text with HEADER_GAP.
+</p>
+</div>
+
+<div id="gap-note" class="box-tip">
+<p class="tip-top">
+<span class="note">Additional note:</span>
+HEADER_GAP and FOOTER_GAP may only be used once, at the start of a
+document.  In
+<a href="rectoverso.html#collate">collated documents</a>,
+this means that HEADER_GAP or FOOTER_GAP cannot be used to change
+the gaps once they have been set.  The same applies to the Table of
+Contents, Endnotes, Bibliographies, and Lists of...&nbsp;.
+</p>
+
+<p class="tip-bottom">
+In the event that you need to change the header or footer gap after
+the start of a document, you must do so with
+<a href="typesetting.html#t-margin">T_MARGIN</a>
+or
+<a href="typesetting.html#b-margin">B_MARGIN</a>,
+which raise or lower the top and bottom margins of
+<a href="definitions.html#running">running text</a>
+but do not affect the placement headers and footers.
+(See
+<a href="tables-of-contents.html#toc-page-settings-example">here</a>
+for a demonstration.)
 </p>
 </div>
 

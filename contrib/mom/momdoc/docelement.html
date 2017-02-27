@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -660,23 +660,6 @@ her to do so, use the control macro
 <a href="typesetting.html#printstyle">PRINTSTYLE TYPEWRITE</a>.)
 </p>
 
-<div class="box-tip">
-<p class="tip">
-<span class="tip">Tip:</span>
-If you want to add less than a full linespace between
-paragraphs, you may give the amount of space you&#8217;d like as an
-argument to
-<kbd>.PARA_SPACE</kbd>. 
-</span>
-Introducing a paragraph with <kbd>.PP2</kbd> will add a space equal
-to one-quarter of the prevailing linespace before the start of the
-paragraph.  Initial paragraphs, ie those at the start of a document,
-or after a heading or
-<a href="#linebreak-intro">linebreak</a>,
-should still be introduced with
-<kbd>.PP</kbd>.
-</div>
-
 <p>
 Note that mom does not provide widow or orphan control for
 paragraphs (ie even if only one line of a paragraph fits at the
@@ -688,37 +671,16 @@ page&mdash;to a new page, which is not what you want.
 </p>
 
 <div class="box-tip">
-<p class="tip-top">
+<p class="tip">
 <span class="tip">Tip:</span>
-The last thing you want while you&#8217;re writing and editing
-drafts of a document (particularly stories and chapters) is a
-text file cluttered up with <kbd>.PP</kbd>&#8217;s. The visual
-interruption in the flow of text is a serious obstacle to creativity
-and critiquing.
-</p>
-
-<p>
-I use the tab key on my keyboard to indent paragraphs by four spaces
-when I'm writing, producing a text file that looks pretty much like
-what you see on a printed page.  When it comes time to format and
-print the file, I run it through a sed script that (amongst other
-things) converts the intial four spaces into <kbd>.PP</kbd> (plus a
-new line) and pipes the output to groff for processing and printing.
-</p>
-
-<p class="tip-bottom">
-Another solution would be to insert a blank line between paragraphs
-of your text files.  The blank lines can then be sedded out at
-print time, as above (<kbd>.PP</kbd> plus a newline), or, more
-conveniently, you could use the <kbd>.blm</kbd>
-<a href="definitions.html#primitives">primitive</a>
-(blank line macro) to tell groff (and mom) that blank lines should
-be interpreted as PP&#8217;s.
+If you would prefer not to clutter up your files with
+<kbd>.PP</kbd>s, you can use groff&#8217;s &#8220;blank line
+macro&#8221; to instruct groff to interpret blank lines as
+<kbd>.PP</kbd>&#8217;s, like this:
 <br/>
 <span class="pre-in-pp">
   .blm PP
 </span>
-tells groff that blank lines are really the macro PP.
 </p>
 </div>
 
@@ -908,20 +870,23 @@ and
 
 <p>
 If you wish to change the leading of regular text paragraphs only,
-invoke <kbd>.LS</kbd> immediately after <kbd>.PP</kbd> in every
+invoke <kbd>.LS</kbd> immediately after <kbd>.PP</kbd> in any
 paragraph whose leading you wish to change.
 </p>
 
 <div class="box-tip">
 <p class="tip">
 <span class="note">Warning:</span>
-It is extremely unwise to change a paragraph&#8217;s leading with LS as
-it will, in all cases, screw up mom&#8217;s ability to balance
-the bottom margin of pages.  Should you absolutely need to change
-paragraph leading with LS, and subsequently want mom to get back on
-the right leading track, use the
+Changing a paragraph&#8217;s leading will almost certaininly screw
+up mom&#8217;s ability to balance the bottom margin of pages.
+Should you absolutely require a change of paragraph&#8217;s leading and
+need to get mom back on track leading-wise afterwards, use the
 <a href="docprocessing.html#shim">SHIM</a>
-macro.
+or
+<a href="docprocessing.html#shim">FLEX</a>
+macro, depending on which
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+strategy you are using.
 </p>
 </div>
 
@@ -1077,6 +1042,15 @@ paragraphs
 <span class="pre-in-pp">
   .PARA_SPACE 6p
 </span>
+</p>
+
+<p style="margin-top: -1em" >
+If
+<a href="docprocessing.html#flex-vs-shim">flex-spacing</a>
+is enabled, additional flexible vertical whitespace can be inserted
+between spaced paragraphs with the
+<a href="docprocessing.html#flex">FLEX</a>
+macro.
 </p>
 
 <p>
@@ -1262,25 +1236,26 @@ each heading.
 
 <p>
 If, however, you disrupt the regular placement of text on
-mom&#8217;s baseline grid, HEADING adds as much whitespace to the
-blank line as is necessary to get things back on track.  The extra
-whitespace is always less than the current leading and therefore
-usually doesn't draw attention to itself.  This, along with a
-similar strategy for whitespace around quotes and blockquotes, is
-what allows mom to balance the bottom margins of pages effectively.
-The manual,
-<a href="http://www.schaffter.ca/mom/pdf/mom-pdf.pdf"><span class="book-title">Producing PDFs with groff and mom</span></a>,
-demonstrates this well: the inter-paragraph spacing is 1/3 of the
-leading, yet mom is able to produce a document with good page-rhythm
-and evenly balanced bottom margins.
+mom&#8217;s
+<a href="definitions.html#baseline-grid">baseline grid</a>,
+HEADING adds extra whitespace to the blank line according to the
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+strategy in effect.  This, along with a similar strategy for
+whitespace around quotes, blockquotes, and
+<a href="definitions.html#float">floated</a>
+and
+<a href="definitions.html#preprocessor">pre-processor material</a>
+is what allows mom to balance the bottom
+margins of pages effectively.
 </p>
 
 <p>
-It occasionally happens that the extra whitespace becomes noticeable,
-typically when the amount of whitespace approaches the value of the
-current leading.  The result looks like two blank lines instead of
-one.  When this happens, a simple but effective fix is to reduce the
-space before the heading by backing up one line, either with
+It occasionally happens that the extra whitespace becomes
+noticeable.  This typically occurs when the amount of whitespace
+adjustment approaches the value of the current leading.  The result
+looks like two blank lines instead of one.  When this happens, a
+simple but effective fix is to reduce the space before the heading
+by backing up one line, either with
 <br/>
 <span class="pre-in-pp">
   .SPACE -1v
@@ -1291,30 +1266,21 @@ or
   .RLD -1v
 </span>
 This results in slightly less whitespace than normal, but the
-difference is usually not apparent.
-</p>
-
-<p class="tip-bottom">
-If you&#8217;d prefer that mom not add flexible whitespace to
-headings, invoke the macro
+difference is usually not apparent.  Alternatively, you may pass the
+<kbd>NO_SHIM</kbd> or <kbd>NO_FLEX</kbd> argument to
+<a href="#heading-style">HEADING_STYLE</a>
+to prevent shimming or flex-spacing of any particlar heading level
+either globally or selectively.  If shimming/flex-spacing is
+disabled selectively with
 <br/>
 <span class="pre-in-pp">
-  .NO_SHIM
+  .HEADING_STYLE &lt;n&gt; NO_SHIM | NO_FLEX
 </span>
-either in the style sheet section of your document (ie after
-PRINTSTYLE but before START), which will globally disable whitespace
-adjustment not only before headings, but around quotes and
-blockquotes as well, or on a per-instance basis.  <kbd>.NO_SHIM</kbd>
-is disabled by issuing
+it can be re-enabled for the heading level with
 <br/>
 <span class="pre-in-pp">
-  .NO_SHIM OFF
+  .HEADING_STYLE &lt;n&gt; SHIM | FLEX
 </span>
-Please note that <kbd>.NO_SHIM</kbd> also disables mom&#8217;s
-automatic shimming around quotes, blockquotes, after PDF images and
-floats, and
-<a href="docprocessing.html#shim">SHIM</a>
-macro itself.
 </p>
 </div>
 
@@ -1361,7 +1327,9 @@ which may be given in any order:
   SMALLCAPS | NO_SMALLCAPS \
   BASELINE_ADJUST &lt;amount to raise heading from the baseline&gt; \
   SPACE_AFTER | NO_SPACE_AFTER \
-  NUMBER | NO_NUMBER
+  NUMBER | NO_NUMBER \
+  NO_SHIM | SHIM \
+  NO_FLEX | FLEX
 </span>
 </p>
 
@@ -1432,6 +1400,15 @@ entries is controlled separately with
 Mom also has a special macro to toggle whether to prefix a chapter
 number to numbered headings and Table of Contents entries,
 <a href="#prefix-chapter-number">PREFIX_CHAPTER_NUMBER</a>.
+</p>
+
+<p class="defaults" style="margin-bottom: 1em">
+<kbd>SHIM</kbd> is not necessary if shimming is enabled
+globally, which it is by default; it exists to re-enable
+shimming for the heading level if you have previously passed
+HEADING_STYLE&nbsp;<kbd>&lt;n&gt;</kbd> a <kbd>NO_SHIM</kbd>
+argument.  The <kbd>FLEX</kbd> and <kbd>NO_FLEX</kbd> arguments work
+the same way if flex-spacing is enabled.
 </p>
 
 <p class="defaults" style="padding-bottom: .5em">
@@ -2032,63 +2009,30 @@ This behaviour can be changed with the control macro
 If your quote (or blockquote) leading differs from the document
 leading, mom attempts to observe the same rules for vertical
 whitespace outlined above; however, she will also insert a small,
-flexible amount of extra whitespace around the quotes to make sure
-the whitespace is equal, top and bottom.  Since she does this
-on a quote by quote basis, rather than by figuring out how much
-extra whitespace is needed to adjust <i>all</i> quotes on a page,
-the spacing around multiple quotes on the same page will differ
-slightly, although each will be balanced between lines of normal
-<a href="definitions.html#running">running text</a>,
-top and bottom.  (The inability to scan an entire page and insert
-equalized whitespace at marked places is a limitation of groff,
-which, by and large, processes text on a line-per-line basis.)
+flexible amount of extra whitespace
+(<a href="docprocessing.html#shim-vs-flex">shim or flex-spacing</a>)
+around the quotes to make sure the whitespace is equal, top and
+bottom.  When shimming is enabled, this may result in multiple
+quotes or blockquotes on the same page being spaced slightly
+differently.
 </p>
 
-<h4 id="no-shim" class="docs">Disable shimming of quotes and blockquotes</h4>
-
-<p>
-If you don&#8217;t want the behaviour described above (ie you
-don&#8217;t want mom shimming quotes and blockquotes), issue the
-macro
-<br/>
-<span class="pre-in-pp">
-  .NO_SHIM
-</span>
-in the style sheet section of your document (ie after PRINTSTYLE but
-before START), which will disable shimming globally, or on a
-per-instance basis prior to <kbd>.QUOTE</kbd> or <kbd>.BLOCKQUOTE</kbd>.
-</p>
-
-<p>
-If you set the leading of
-<a href="#quote-autolead">quotes</a>
-or
-<a href="#blockquote-autolead">blockquotes</a>
-to a value other than the one used in paragraphs, mom will apply
-shimming <i>after</i> the quote, whether or not <kbd>.NO_SHIM</kbd>
-is enabled.  This is the only way mom can guarantee that the
-difference in leading will not result in uneven bottom margins.
-</p>
-
-<p>
-If you&#8217;ve disabled shimming of quotes and blockquotes with
-<kbd>.NO_SHIM</kbd> and you want mom to return to her default
-behaviour in this matter, invoke <kbd>.NO_SHIM&nbsp;OFF</kbd> (or
-<kbd>QUIT, END, X</kbd>, etc).
-</p>
-
-<p>
-Please note that <kbd>NO_SHIM</kbd> disables shimming before
-headings, and the
-<a href="docprocessing.html#shim">SHIM</a>
-macro itself.
-</p>
+<h4 id="no-shim" class="docs">Disable shimming/flex-spacing of quotes and blockquotes</h4>
 
 <p class="tip-bottom">
-If you don&#8217;t provide mom with a QUOTE_AUTOLEAD, quotes are
-leaded at the default for normal running text, meaning that multiple
-quotes on the same page are all spaced identically.
+If you don&#8217;t want the behaviour
+described above (ie you don&#8217;t want mom putting additional shim
+or flex-spacing around quotes and
+blockquotes), put <kbd>.NO_SHIM</kbd> or/and <kbd>.NO_FLEX</kbd>
+in the style sheet section of your document (ie after PRINTSTYLE
+but before START), which will disable shimming or/and flex-spacing
+globally for all tags, or disable shimming/flex-spacing
+on a per-instance basis prior to <kbd>.QUOTE</kbd> or
+<kbd>.BLOCKQUOTE</kbd>, re-enabling it after the terminating
+<kbd>.QUOTE&nbsp;OFF</kbd> or <kbd>.BLOCKQUOTE&nbsp;OFF</kbd> with
+<kbd>.NO_SHIM&nbsp;OFF</kbd> or <kbd>.NO_FLEX&nbsp;OFF</kbd>.
 </p>
+
 </div>
 
 <h3 id="float-quote" class="docs">Keeping QUOTEs and BLOCKQUOTEs together as a block</h3>
@@ -2563,11 +2507,17 @@ The correct order for changing the escape character inside
   .ESC_CHAR .
   .CODE OFF
 </span>
+Be aware that changing the escape character prevents subsequent
+macros, which require that the backslash be the escape character,
+from functioning correctly.  Therefore, do not introduce any macros
+into your CODE block without first restoring the escape character to
+its default.
 </p>
 
 <p>
 Alternatively, you can enter the backslash character as
-<kbd>\e</kbd>, which tells groff to print a literal backslash.
+<kbd>\e</kbd> or <kbd>\\</kbd> (two backslashes), which tells groff
+to print a literal backslash.
 </p>
 
 <div class="box-tip">
@@ -2605,13 +2555,15 @@ in conjunction with CODE, like this:
   .QUOTE
   .CODE
   $ echo "Hello, world" | sed -e 's/Hello,/Goodbye, cruel/'
-  .CODE OFF
   .QUOTE OFF
 </span>
 QUOTE takes care of breaking both the text and the code, as well as
 indenting the code and offsetting it from
 <a href="definitions.html#running">running text</a>
-with vertical whitespace.
+with vertical whitespace.  Notice that <kbd>.CODE</kbd>, above, has
+no corresponding <kbd>.CODE OFF</kbd>.  <kbd>.CODE</kbd> inside a QUOTE
+does not require a terminating <kbd>.CODE&nbsp;OFF</kbd>, which risks
+introducing unwanted vertical whitespace.
 </p>
 </div>
 
@@ -2637,8 +2589,9 @@ for short snippets, as in the following example.
 
 <p>
 <kbd>\*[CODE]</kbd> does not permit changing the escape character,
-so <kbd>\e</kbd> must be used.  Furthermore, if your code starts
-with a period, you must enter it as &#8220;<kbd>\&.</kbd>&#8221;.
+so <kbd>\e</kbd> or a doubled backslash must be used.  Furthermore,
+if your code starts with a period, you must enter it as
+&#8220;<kbd>\&.</kbd>&#8221;.
 <br/>
 <span class="pre-in-pp">
   Registers are created with the \*[CODE]\&.nr\*[CODE OFF] request.
@@ -2654,7 +2607,8 @@ with the parameters of
 <a href="definitions.html#running">running text</a>,
 you must terminate the block with &#8220;<kbd>\c</kbd>&#8221; and
 enter the punctuation at the beginning of the next input line.  If
-the punctuation mark is a period, you must precede it with
+the punctuation mark is a period or an apostrophe, you must precede
+it with
 &#8220;<kbd>\&amp;</kbd>&#8221;.
 <br/>
 <span class="pre-in-pp">
@@ -2665,8 +2619,9 @@ the punctuation mark is a period, you must precede it with
   \&.  As this demonstrates...
 </span>
 Use of <kbd>\*[CODE]</kbd> inline does not require the
-<kbd>\c</kbd>, however periods after <kbd>\*[CODE&nbsp;OFF]</kbd>
-still need to be introduced with <kbd>\&</kbd>, as in this example:
+<kbd>\c</kbd>, however periods and apostrophes after
+<kbd>\*[CODE&nbsp;OFF]</kbd> still need to be introduced with
+<kbd>\&</kbd>, as in this example:
 <br/>
 <span class="pre-in-pp">
   ...append the unit of measure \*[CODE]p\*[CODE&nbsp;OFF]\&. New sentence...
@@ -2815,8 +2770,8 @@ Macro: <b>LIST</b> <kbd class="macro-args">[ BULLET | DASH | DIGIT | ALPHA | alp
 
 <p>
 Invoked by itself (ie with no argument), LIST
-initializes a list (with bullets as the default enumerator).
-Afterwards, each block of input text preceded by
+initializes a list with bullets as the default enumerator.
+Afterward,s each block of input text preceded by
 <kbd><a href="#item">.ITEM</a></kbd>,
 on a line by itself, is treated as a list item.
 </p>
@@ -3343,11 +3298,11 @@ When you turn line-numbering on, mom, by default
 
 <p>
 Mom expects that
-<kbd><a href="#quote">QUOTE</a></kbd>s
+<a href="#quote">QUOTE</a>s
 and
-<kbd><a href="#blockquote">BLOCKQUOTE</a></kbd>s
-will not be line-numbered, however control macros
-are provided to enable line numbering for either.
+<a href="#blockquote">BLOCKQUOTE</a>s
+will not be line-numbered, however control macros are provided to
+enable line numbering for either.
 See
 <a href="#number-quote-lines">Line numbering control macros for quotes and blockquotes</a>.
 </p>
@@ -3809,12 +3764,21 @@ assured mom is happy to oblige.
 
 <p>
 A small amount of vertical whitespace and a short horizontal rule
-separate footnotes from the document body.  The amount of whitespace
-varies slightly from page to page depending on the number of lines
-in the footnotes. Mom tries for a nice balance between too little
+separate footnotes from the document body.  When
+<a href="docprocessing.html#flex-vs-shim">shimming</a>
+is enabled, the amount of whitespace
+may vary slightly from page to page depending on the number of lines
+in the footnotes.  Mom tries for a nice balance between too little
 whitespace and too much, but when push comes to shove, she&#8217;ll
 usually opt for ample over cramped.  The last lines of footnotes are
 always flush with the document&#8217;s bottom margin.
+</p>
+
+<p>
+When 
+<a href="docprocessing.html#flex-vs-shim">flex-spacing</a>
+is enabled, the distance between the last line of text and the
+first footnote is always the same.
 </p>
 
 <p>
@@ -4710,9 +4674,8 @@ is removed.
 </p>
 
 <p>
-By default, mom starts the endnotes page with a bold,
-centred, double-underscored head, &#8220;ENDNOTES&#8221;.
-Subsequently, for each section in a
+By default, mom starts the endnotes page with a bold, centred head,
+&#8220;ENDNOTES&#8221;.  Subsequently, for each section in a
 <a href="rectoverso.html#collate-intro">collated</a>
 document (eg chapters in a book), she identifies the section in bold
 type, flush left and underscored, followed by one-half linespace.
@@ -5584,9 +5547,9 @@ this way.
 </p>
 
 <p>
-Mom&#8217;s default is to double-underscore the title with 1/2-point
-rules placed 2 points apart and 2 points below the baseline of the
-title.
+By default, mom double-underscores the title if your
+<a href="docprocessing.html#printstyle">PRINTSTYLE</a>
+is <kbd>TYPEWRITE</kbd>.
 </p>
 
 <!-- -ENDNOTES_HEADER_CAPS- -->

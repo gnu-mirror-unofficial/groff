@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -20,7 +20,7 @@ FDL in the main directory of the groff source package.
 
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-  <title>Mom, version 2.1-b -- Table of Contents</title>
+  <title>Mom, version 2.2 -- Table of Contents</title>
   <link rel="stylesheet" type="text/css" href="stylesheet.css" />
 </head>
 
@@ -31,7 +31,7 @@ FDL in the main directory of the groff source package.
 <div class="page">
 
   <div class="version">
-    mom, version 2.1-b
+    mom, version 2.2
   </div>
 
 <h1 class="toc" style="margin-top: 9px;">Table of Contents</h1>
@@ -95,6 +95,7 @@ FDL in the main directory of the groff source package.
     <ul class="toc" style="margin-left: 3em;">
       <li><a href="#doc-proc">Introduction to document processing</a></li>
       <li><a href="#doc-defaults">Document defaults</a></li>
+      <li><a href="#vert-ws">Vertical whitespace management</a></li>
       <li><a href="#prelim">Preliminary document setup</a></li>
       <li><a href="#typemacdoc">Behaviour of the typesetting macros during document processing</a></li>
       <li><a href="#tags">The document element tags</a> &ndash; headings, paragraphs, quotes, footnotes, etc.</li>
@@ -264,9 +265,10 @@ FDL in the main directory of the groff source package.
   <ul class="toc">
     <li><a href="docprocessing.html#docprocessing-intro">5.1 Introduction to document processing</a></li>
     <li><a id="doc-defaults" href="docprocessing.html#defaults">5.2 Document defaults</a> &ndash; papersize, margins, etc.
-      <ul>
-        <li><a href="docprocessing.html#leading-note">5.2.1 Important note on leading/spacing and bottom margins</a></li>
-        <li><a href="docprocessing.html#shim">5.2.1 The SHIM macro</a> &ndash; flexible spacer to keep document leading back on track</li>
+      <li><a id="vert-ws" href="docprocessing.html#vertical-whitespace-management">5.3 Vertical whitespace management</a>
+        <ul>
+        <li><a id="typemacdoc" href="docprocessing.html#shim">5.3.1 SHIM</a></li>
+        <li><a href="docprocessing.html#flex">5.3.2 FLEX</a>
       </ul></li>
     <li><a id="prelim" href="docprocessing.html#setup" class="highlight">5.3 PRELIMINARY DOCUMENT SETUP</a>
       <ul>
@@ -311,20 +313,14 @@ FDL in the main directory of the groff source package.
               </ul></li>
             <li><a href="docprocessing.html#doc-lead-adjust">5.3.7.2  DOC_LEAD_ADJUST</a> &ndash; adjust document
                 <a href="definitions.html#leading">leading</a>
-                to fill pages
-            <ul class="fourth-level">
-              <li>&ndash; <a href="docprocessing.html#shim">5.3.6.7.1 SHIM</a> &ndash; flexible spacer to keep document leading back on track</li>
-            </ul></li>
-        </ul></li>
+                to fill pages</li>
+            </ul>
       <li><a href="docprocessing.html#style-after-start">5.3.8 Changing basic type and formatting parameters <span style="font-style: italic">after</span> START</a>
         <ul>
           <li><a id="typemacdoc" href="docprocessing.html#behaviour">5.3.8.1 Behaviour of the typesetting macros during document processing</a></li>
           <li><a href="docprocessing.html#intro-doc-param">5.3.8.2 Post-START global style-change macros</a>
-          <ul class="fourth-level">
-            <li>&ndash; <a href="docprocessing.html#index-doc-param">Macro list</a></li>
           </ul></li>
         </ul></li>
-      </ul></li>
       <li><a id="tags" class="highlight" href="docelement.html#top">5.4 THE DOCUMENT ELEMENT TAGS</a>
         <ul>
           <li><a href="docelement.html#docelement-intro">5.4.1 Introduction to the document element tags</a>

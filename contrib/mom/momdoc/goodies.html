@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -619,6 +619,15 @@ character to whatever the argument is.  ESC_CHAR with no argument
 restores the escape character to the backslash.
 </p>
 
+<div class="box-tip">
+<p class="tip">
+<span class="important">Important:</span>
+Changing the escape character prevents macros, which require that
+the backslash be the escape character, from functioning correctly.
+Do not introduce any subsequent macros without first restoring the
+escape character to its default.
+</p>
+</div>
 
 <div class="box-tip">
 <p class="tip">
@@ -710,6 +719,22 @@ to say that you can&#8217;t underscore a multi-line passage simply
 by putting the text of the whole thing in the string you pass to
 UNDERSCORE.  If you need to underscore several lines of type, use
 <a href="#underline">UNDERLINE</a>.
+</p>
+</div>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Additional note:</span>
+In
+<a href="definitions.html#filled">nofill modes</a>,
+UNDERSCORE causes a break before and after, meaning the underscored
+word or phrase will appear as a separate line in your output.  If
+you wish to embed an underscored word or phrase into non-filled
+text, temporarily change to the corresponding fill mode with
+<a href="typesetting.html#quad">QUAD</a>
+and insert breaks manually with
+<a href="typesetting.html#br">BR</a>
+as appropriate, reverting to the original nofill mode afterwards.
 </p>
 </div>
 
@@ -828,6 +853,22 @@ the macro
 (q.v).
 </p>
 
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+In
+<a href="definitions.html#filled">nofill modes</a>,
+UNDERSCORE2 causes a break before and after, meaning the double-underscored
+word or phrase will appear as a separate line in your output.  If
+you wish to embed a double-underscored word or phrase into non-filled
+text, temporarily change to the corresponding fill mode with
+<a href="typesetting.html#quad">QUAD</a>
+and insert breaks manually with
+<a href="typesetting.html#br">BR</a>
+as appropriate, reverting to the original nofill mode afterwards.
+</p>
+</div>
+
 <!-- -UNDERLINE- --> 
 <div class="macro-id-overline">
 <h3 id="underline" class="macro-id">Underline</h3>
@@ -839,10 +880,10 @@ Macro: <b>UNDERLINE</b> <kbd class="macro-args">toggle</kbd>
 
 <p>
 The distinction between underscoring and underlining is that
-underscoring is suitable for occasional effects (a word here, a word
-there), whereas underlining underlines whole passages of type.
-Furthermore, you cannot colorize underlining, and there&#8217;s a
-special macro,
+underscoring is suitable for occasional effects (a word here,
+a phrase there), whereas underlining underlines whole passages
+of type.  Furthermore, you cannot colorize underlining, and
+there&#8217;s a special macro,
 <a href="#underline-specs">UNDERLINE_SPECS</a>,
 to control the weight and distance from the baseline of the
 underline.  Lastly, files that use UNDERLINE must be processed with

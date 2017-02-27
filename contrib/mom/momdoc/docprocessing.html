@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2016 Free Software Foundation, Inc.
+Copyright (C) 2004-2017 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -40,23 +40,14 @@ FDL in the main directory of the groff source package.
 
 <h1 class="docs">Document processing with mom</h1>
 
-<div style="text-align: center;">
-<ul class="no-enumerator" style="margin-left: -2.5em;">
-  <li><a href="#defaults">Document defaults</a></li>
-  <li><a href="#leading-note">Important note on leading/spacing and bottom margins</a></li>
-  <li><a href="#shim">The SHIM macro</a></li>
-</ul>
-</div>
-
-<div class="rule-medium"><hr/></div>
-
 <h2 id="toc-doc-processing" class="docs" style="text-align: center;">Table of contents</h2>
 
 <div id="docprocessing-mini-toc" style="font-size: 90%; line-height: 150%; margin-top: .5em;">
 <div class="mini-toc-col-1" style="margin-left: 0;">
-<h3 class="toc toc-docproc-header" style="margin-top: 1em;"><a class="header-link" href="#docprocessing-intro">Introduction</a></h3>
-<h3 class="toc toc-docproc-header" style="margin-top: .5em;"><a
-class="header-link" href="#setup">Preliminary document setup</a></h3>
+<h3 class="toc toc-docproc-header" style="margin-top: 1em;"><a class="header-link" href="#docprocessing-intro">Introduction to document processing</a></h3>
+<h3 class="toc toc-docproc-header" style="margin-top: .5em;"><a class="header-link" href="#defaults">Document defaults</a></h3>
+<h3 class="toc toc-docproc-header" style="margin-top: .5em;"><a class="header-link" href="#vertical-whitespace-management">Vertical whitespace management</a></h3>
+<h3 class="toc toc-docproc-header" style="margin-top: .5em;"><a class="header-link" href="#setup">Preliminary document setup</a></h3>
 <ul class="toc-docproc" style="margin-top: .5em;">
   <li><a href="#docprocessing-tut"><b>Tutorial &ndash; Setting up a mom document</b></a></li>
   <li><a href="#reference-macros"><b>The reference macros (metadata)</b></a>
@@ -147,8 +138,8 @@ class="header-link" href="#setup">Preliminary document setup</a></h3>
     </ul></li>
   </ul></li>
 </ul>
+<h3 class="toc toc-docproc-header"><a class="header-link" href="#terminating">Terminating a document</a></h3>
 </div>
-<h3 style="margin-top: -.5em; text-align: center; text-transform: uppercase; font-size: 95%;"><a class="header-link" href="#terminating">Terminating a document</a></h3>
 </div>
 
 <div class="rule-short" style="margin-top: -1.75em"><br/><hr/></div>
@@ -221,68 +212,143 @@ documentation, so just in case:
 
 <!-- ==================================================================== -->
 
-<h2 id="leading-note" class="docs">Important note on leading/spacing and bottom margins</h2>
+<h2 id="vertical-whitespace-management" class="macro-group">Vertical whitespace management</h2>
+
+<ul style="margin-left: -.5em;">
+  <li><a href="#shim">Macro: SHIM</a></li>
+  <li><a href="#no-shim">Macro: NO_SHIM</a></li>
+  <li><a href="#flex">Macro: FLEX</a></li>
+  <li><a href="#no-flex">Macro: NO_FLEX</a></li>
+</ul>
+
 
 <p>
 Mom takes evenly-aligned bottom margins in
 <a href="definitions.html#running">running text</a>
-very seriously.  Only under a very few (exceptional) circumstances
+very seriously.  Only under a very few, exceptional circumstances
 will she allow a bottom margin to &#8220;hang&#8221; (ie to fall
 short).
 </p>
 
 <p>
-In order to ensure even bottom margins, mom uses the
-&#8220;base&#8221; document
+Mom offers two modes of operation for ensuring flush bottom margins:
+shimming and flex-spacing.  Shimming means that mom nudges the
+next line after a significant break in running text back onto the
+<a href="definitions.html#baseline-grid">baseline grid</a>
+(eg, after the insertion of a graphic).  Flex-spacing means that any
+vertical whitespace remaining between the end of running text and
+the bottom margin is distributed equally at logical points on the
+page.
+</p>
+
+<p>
+Mom uses the
 <a href="definitions.html#leading">leading</a>
-in effect <i>at the start of running text on each page</i> (ie
-the leading used in paragraphs) to calculate the spacing of every
-document element.  Prior to invoking
+of running text (the &#8220;document leading&#8221;) that&#8217;s in effect
+<i>at the start of running text on each page</i>
+to establish the grid and space document elements such as heads or
+blockquotes so that they adhere to it.  (Prior to invoking
 <a href="#start">START</a>,
-this is set with the
+the document leading is set with the
 <a href="typesetting.html#macros-typesetting">typesetting macro</a>
 <a href="typesetting.html#leading">LS</a>,
 afterwards with the document
 <a href="definitions.html#controlmacro">control macro</a>
-<a href="#doc-lead">DOC_LEAD</a>.
+<a href="#doc-lead">DOC_LEAD</a>.)
 </p>
 
 <p>
-Because mom relies so heavily on the base document
-leading, any change to the leading or spacing on a page will almost
-certainly have undesirable consequences on that page&#8217;s bottom margin
-unless the change is fully compensated for elsewhere on the page.
+What this means is that documents whose paragraphs are not separated
+by whitepace and which do not contain graphics or
+<a href="definitions.html#pre-processor">pre-processor material</a>
+will fill the page completely to the bottom margin.
+However, if your paragraphs are spaced, or if there are any leading
+changes on a page, or if graphics or pre-processor material are
+inserted, it&#8217;s very likely the bottom margins will hang
+unless shimming or flex-spacing is enabled.
+</p>
+
+<h3 id="shim-vs-flex" class="docs">Shimming <span style="text-transform: none">vs.</span> flex-spacing</h3>
+
+<p>
+<b>Shimming</b> is mom's default mode of operation.  She applies it
+automatically before headings, around quotes and blockquotes, and
+beneath
+<a href="definitions.html#float">floats</a>
+and
+<a href="definitions.html#preprocessor">pre-processor material</a>.
+In addition, the
+<a href="#shim">SHIM</a>
+macro can be inserted into a document to make sure that the
+text following falls on the baseline grid.
 </p>
 
 <p>
-In other words, if you add a few points of space somewhere on a page,
-you must subtract the same number of points somewhere else on that
-same page, and vice versa.
+This mode of operation works well in documents whose paragraphs are
+not spaced.  Deviations from the baseline grid, usually
+caused by floats or pre-processor material, are corrected
+immediately.  If the shimming results in slightly unbalanced
+whitespace around them, it can easily be remedied by passing the
+<kbd>ADJUST</kbd> argument to the appropriate macro.
 </p>
 
 <p>
-If it&#8217;s a question of adding or subtracting full
-line spaces between or within document elements, you
-can do so by using the &#8220;<kbd>v</kbd>&#8221; <a
-href="definitions.html#unitofmeasure">unit of measure</a> with
-whatever spacing macro you choose &mdash;
-<a href="typesetting.html#ald">ALD</a>,
-<a href="typesetting.html#rld">RLD</a>,
-<a href="typesetting.html#space">SPACE</a>
-&mdash; and mom won&#8217;t object.  &#8220;<kbd>v</kbd>&#8221; means
-&#8220;the current leading&#8221;, so she isn&#8217;t confused by it.  And
-since &#8220;<kbd>v</kbd>&#8221; accepts decimal fractions, you can add/subtract
-half linespaces and quarter linespaces with &#8220;<kbd>v</kbd>&#8221; as well,
-<i>provided you compensate for the fractional linespace somewhere
-else on the page</i>.
+If you do not want mom shimming automatically,
+<a href="#no-shim">NO_SHIM</a>
+turns shimming off globally and suppresses the SHIM macro.  If you
+want to disable shimming only for a particular float or
+pre-processor, the <kbd>NO_SHIM</kbd> argument may be given to the
+appropriate macro.
 </p>
 
 <p>
-If all this seems like too much work, mom provides a special macro
-to get you out of trouble if you&#8217;ve played around with leading
-and/or spacing.  The macro is called SHIM (like those little pieces
-of wood carpenters use to get their work even, level and snug), and
-it&#8217;s described below.
+<b>Flex-spacing</b> kicks in automatically whenever you turn shimming
+off.  In other words, if you want a document flex-spaced,
+<kbd>.NO_SHIM</kbd> is how you achieve it.  If, in addition to not
+shimming, you don&#8217;t want mom flex-spacing either,
+<a href="#no-flex">NO_FLEX</a>
+lets you disable it, too.
+</p>
+
+<p>
+Flex-spacing differs from shimming in that mom doesn&#8217;t
+correct deviations from the baseline grid.  Rather, she distributes
+whitespace left at the bottom of the page equally in appropriate
+places.  Like shimming, flex-spacing is automatically applied
+before heads, after floats and pre-processor material, and around
+quotes and blockquotes.  Like shimming, flex-spacing can be
+disabled for individual floats or pre-processor material with the
+<kbd>NO_FLEX</kbd> flag.
+</p>
+
+<p>
+In addition, you can use the
+<a href="#flex">FLEX</a>
+macro to insert flex-spacing yourself into the document, which you
+will almost certainly want to do if your paragraphs are spaced.
+This is because paragraphs are not flex-spaced.  Typographically,
+the ideal for spaced paragraphs is that the space between them
+remain constant.  Paradoxically, the only way to achieve flush
+bottom margins, or to correct excessive flex-spacing before a
+heading, is by adding flex-space between paragraphs.  This requires
+human judgment, and mom does not presume to decide for you.
+</p>
+
+<p>
+Shimming and flex-spacing are mutually exclusive.  If the one is
+active, the other isn&#8217;t unless you have disabled both.  This means
+that you cannot use the FLEX macro when shimming is enabled, or the
+SHIM macro when flex-spacing is enabled.  Mom will issue a warning
+if you do.
+</p>
+
+<p>
+The choice of whether to use shimming or flex-spacing depends on
+whether or not your paragraphs are spaced.  In a document with
+indented, non-spaced paragraphs, shimming and flex-spacing produce
+nearly the same result, with shimming winning by an aesthetic hair.
+In documents with spaced paragraphs, flex-spacing is the only way to
+achieve flush bottom margins.
 </p>
 
 <!-- -SHIM- -->
@@ -296,116 +362,198 @@ Macro: <b>SHIM</b>
 </div>
 
 <p>
-SHIM doesn&#8217;t take any argument.  Use it whenever you&#8217;ve played
-around with the
-<a href="definitions.html#leading">leading</a>
-or spacing on a page and you need to get mom&#8217;s document
-leading back on track.
+When shimming is enabled, which it is by default, the SHIM macro
+allows you to nudge the line following it back onto the baseline
+grid.  In documents with non-spaced paragraphs, this prevents
+the bottom margins from hanging.
 </p>
-
-<p>
-For example, say you want to insert an image into a document with
-<a href="images.html#pspic">PSPIC</a>.
-Images and graphics aren&#8217;t usually conveniently sized in
-multiples of the document leading, which means that when you insert
-the picture, you disrupt mom&#8217;s ordered placement of baselines
-on the page.  This will certainly result in a bottom margin that
-doesn&#8217;t match the bottom margins of your document&#8217;s
-other pages.
-</p>
-
-<p>
-The solution is to insert SHIM after the image, like this:
-<br/>
-<span class="pre-in-pp">
-  &lt;text&gt;
-  .PSPIC &lt;args&gt;
-  .SHIM
-  &lt;text&gt;
-</span>
-</p>
-
-<p>
-SHIM instructs mom to insert as much or a little space after the
-picture as is needed to ensure that the baseline of the next
-<a href="definitions.html#outputline">output line</a>
-falls where mom would have put it had you not disrupted the normal
-flow of output lines with the picture.
-</p>
-
-<p>
-And say, on previewing the above example, you find the image
-doesn&#8217;t centre nicely between the lines of text, you can
-adjust the image position by using
-<a href="typesetting.html#ald">ALD</a>
-or
-<a href="typesetting.html#rld">RLD</a>
-before PSPIC.  To demonstrate,
-<br/>
-<span class="pre-in-pp">
-  &lt;text&gt;
-  .RLD 3p
-  .PSPIC &lt;args&gt;
-  .SHIM
-  &lt;text&gt;
-</span>
-which raises the image slightly and thereby balances the whitespace around it.
-</p>
-
-<p>
-You may sometimes find the amount of space generated by
-<kbd>SHIM</kbd> looks too big, whether inserted manually into a
-document or as a result of automatic shimming (see immediately
-below).  The situation occurs when the amount of shimming applied
-comes close to the leading currently in effect, making it seem as if
-there&#8217;s one linespace too much whitespace.  The solution is
-simply to add <kbd>.SPACE&nbsp;-1v</kbd> or <kbd>.RLD&nbsp;1v</kbd>
-to the document immediately after <kbd>.SHIM</kbd>.  (Both
-<kbd>.SPACE&nbsp;-1v</kbd> and <kbd>.RLD&nbsp;1v</kbd> back up
-by one linespace.)
-</p>
-<h4 id="automatic-shimming" class="docs">Automatic shimming of headings, quotes, blockquotes, PDF images, and floats</h4>
 
 <p style="margin-bottom: -1em">
-By default, mom automatically applies shimming
+Mom herself automatically applies shimming
 </p>
 <ul>
   <li><i>before</i> headings</li>
   <li><i>around</i> quotes and blockquotes</li>
-  <li><i>after</i> PDF images, floats, and tables</li>
+  <li><i>after</i> PDF images, tables, pic diagrams, equations, and floats</li>
 </ul>
 
 <p>
-In documents where paragraphs are not spaced, automatic shimming is
-almost always desirable.  In documents where paragraphs are spaced
-by an amount less than the document leading, or which have numerous
-graphics, headings, and quotes, you may want to disable shimming,
-either globally or on a tag-by-tag basis.
-</p>
-
-<p id="disable-shim">
-<span style="font-weight: bold; font-style: italic; font-size: 95%">To disable
-automatic shimming</span>, invoke the macro, <kbd>.NO_SHIM</kbd>,
-either in the style sheet section of your document (ie after
-<a href="#printstyle">PRINTSTYLE</a>
-and before
-<a href="#start">START</a>),
-or just before
-<a href="docelement.html#heading">HEADING</a>,
-<a href="docelement.html#quote">QUOTE</a>,
-<a href="docelement.html#blockquote">BLOCKQUOTE</a>,
-<a href="images.html#pdf-image">PDF_IMAGE</a>
-<a href="images.html#float">FLOAT</a>.
-or
-<a href="images.html#ts">TS</a>.
+You may sometimes find the amount of space generated by
+<kbd>SHIM</kbd> looks too big, whether inserted manually into a
+document or as a result of automatic shimming.
+The situation occurs when the amount of shimming applied
+comes close to the leading currently in effect, making it seem as if
+there&#8217;s one linespace too much whitespace.
 </p>
 
 <p>
-Note that <kbd>.NO_SHIM</kbd> also disables the SHIM macro itself.
+The solution is simply to add <kbd>.SPACE&nbsp;-1v</kbd> or
+<kbd>.RLD&nbsp;1v</kbd> to the document immediately after
+<kbd>.SHIM</kbd>.  (Both <kbd>.SPACE&nbsp;-1v</kbd> and
+<kbd>.RLD&nbsp;1v</kbd> back up by one linespace.)
 </p>
 
-<p>To re-enable automatic shimming and the SHIM macro itself, use
-<kbd>.NO_SHIM OFF</kbd> (or <kbd>QUIT, END, X</kbd>, etc).
+<div class="macro-id-overline">
+<h3 id="no-shim" class="macro-id">NO_SHIM</h3>
+</div>
+
+<div class="box-macro-args">
+Macro: <b>NO_SHIM</b> <kbd class="macro-args">&lt;none&gt; | &lt;anything&gt;
+</div>
+
+<p>
+NO_SHIM, without an argument, disables automatic shimming,
+suppresses the SHIM macro, and enables flex-spacing.
+</p>
+
+<p>
+NO_SHIM with any argument (eg <b>OFF, QUIT, END, X</b>, etc)
+re-enables shimming if it has been disabled and disables
+flex-spacing.
+</p>
+
+<!-- -FLEX- -->
+
+<div class="macro-id-overline">
+<h3 id="flex" class="macro-id">FLEX</h3>
+</div>
+
+<div class="box-macro-args">
+Macro: <b>FLEX</b> <kbd class="macro-args">[ FORCE ]</kbd>
+</div>
+
+<p>
+When flex-spacing is enabled, the FLEX macro inserts flexible
+vertical whitespace into a document.  The amount of flex-space is
+determined from any extra whitespace at the bottom of a page divided
+by the number of flex points on the same page.
+</p>
+
+<p style="margin-bottom: -1em">
+If flex-spacing is enabled, mom herself automatically applies
+flex-spacing
+</p>
+<ul style="margin-bottom: -.5em">
+  <li><i>before</i> headings</li>
+  <li><i>around</i> quotes and blockquotes</li>
+  <li><i>after</i> PDF images, tables, pic diagrams, equations, and floats</li>
+</ul>
+
+<p>
+Near the bottom of some pages, you may find that
+<a href="definitions.html#float">floated</a>
+or
+<a href="definitions.html#preprocessor">pre-proccesor material</a>,
+including images, or a single line of text afterward, is not flush
+with the bottom margin.  This is a result of mom flex-spacing
+<i>after</i> such material but not before.  The solution to is
+insert <kbd>.FLEX</kbd> immediately beforehand.
+</p>
+
+<p>
+There are some instances where mom inhibits flex-spacing, notably
+after outputting deferred floats and pre-processor material.
+Introducing FLEX by itself in these instances&mdash;say, before a head
+or paragraph&mdash;will not have any effect; you must pass FLEX the
+<kbd>FORCE</kbd> argument.
+</p>
+
+<div class="box-tip">
+<p class="tip">
+<span class="important">Important note on flex-spacing policy:</span><br/>
+Mom disables flex-spacing on
+</p>
+<ul style="margin-top: -1em; margin-bottom: -.5em">
+  <li>the last page or column of a document, before the Table of Contents,
+      Endnotes, Bibliography, and/or any &#8220;Lists of...&#8221;
+  </li>
+  <li>the page preceding a
+      <a href="rectoverso.html#collate">COLLATE</a>
+  </li>
+  <li>the page preceding a
+      <a href="typesetting.html#NEWPAGE">NEWPAGE</a>
+      or
+      <a href="headfootpage.html#blankpage">BLANKPAGE</a>
+  </li>
+  <li>the column preceding a
+      <a href="#col-next">COL_NEXT</a>
+      or
+      <a href="#col-break">COL_BREAK</a>
+  </li>
+</ul>
+
+<p>
+If this is not what you want, insert
+<a href="#no-flex"><kbd>.NO_FLEX&nbsp;OFF</kbd></a>
+before the first flex-space point on the affected page or in the
+affected column.
+</p>
+
+<p>
+Flex-spacing is also disabled for any page or column where
+insufficient room at or near the bottom causes a
+<a href="docelement.html#heading">HEADING</a>
+or
+<a href="images.html#tbl">table</a>
+to be moved to the top of the next page.  These situations cannot
+be harmonized with flex-spacing except by adjusting your layout
+to prevent them.  You may try re-enabling flex-spacing for the
+page (<kbd>.NO_FLEX&nbsp;OFF</kbd>) and manually inserting
+flex-spaces at appropriate points, but the original whitespace is
+usually large enough that re-distributing it merely changes
+one layout gaffe into another.
+</p>
+
+<p>
+Very occasionally you may notice that a document element (spaced
+paragraph, floated material, pre-processor material, or a PDF image)
+near the bottom of page has also caused mom to disable flex-spacing
+for that page.  This occurs when the document element following it
+is a
+<a href="docelement.html#pp-space">spaced paragraph</a>.
+</p>
+
+<p>
+It is typographically acceptable for there to be space between
+insertions in running text (eg an image) and the bottom margin when
+the next page begins with a paragraph.  If you&#8217;d like to
+nudge the insertion a little closer to the bottom margin&mdash;not
+all the way; that isn&#8217;t possible without pushing it to the
+next page and disrupting subsequent flex-spacing&mdash;insert a
+small amount of space beforehand with
+<a href="typesetting.html#sp">SP</a>.
+Do not, in these cases, use the <kbd>ADJUST</kbd>
+argument (for example to
+<a href="images.html#pdf-image">PDF_IMAGE</a>.)
+</p>
+
+<p class="tip-bottom">
+In the case of a spaced paragraph itself near the bottom of the page
+causing a break, re-enabling flex-spacing
+(<kbd>.NO_FLEX&nbsp;OFF</kbd>) at an appropriate place in your input
+file will resolve the issue, provided there is at least one
+flex-point on the page.  If not, add one or more.
+</p>
+</div>
+
+<div class="macro-id-overline">
+<h3 id="no-flex" class="macro-id">NO_FLEX</h3>
+</div>
+
+<div class="box-macro-args">
+Macro: <b>NO_FLEX</b> <kbd class="macro-args">&lt;none&gt; | &lt;anything&gt;</kbd>
+</div>
+
+<p>
+NO_FLEX, without an argument, disables automatic flex-spacing
+and suppresses the FLEX macro.  If, in addition to NO_FLEX, NO_SHIM
+has also been given, your document will be neither flex-spaced nor
+shimmed.
+</p>
+
+<p>
+NO_FLEX with any argument (eg <b>OFF, QUIT, END, X</b>, etc)
+re-enables flex-spacing if it has been disabled.
 </p>
 
 <div class="rule-short"><hr/></div>
@@ -566,8 +714,8 @@ and tag, but who&#8217;s ever satisfied with defaults?  Use any of
 the
 <a href="typesetting.html#macros-typesetting">typesetting macros</a>
 here to change mom&#8217;s document defaults (paper size, margins,
-family, point size, line space, rag, etc), or use any of the
-document processing
+family, point size, line space, rag, etc), or any of the document
+processing
 <a href="definitions.html#controlmacro">control macros</a>.
 This is the style-sheet section of a document, and
 must come after the
@@ -1566,7 +1714,7 @@ of a
 <a href="#reference-macros">reference macro</a>,
 <kbd><a href="#chapter">CHAPTER</a></kbd>).
 If you give the chapter a title with
-<a href="#chapter-title">CHAPTER TITLE</a>,
+<a href="#chapter-title">CHAPTER_TITLE</a>,
 mom prints &#8220;Chapter &lt;n&gt;&#8221; and the
 title underneath.  If you omit the
 <a href="#chapter">CHAPTER</a>
@@ -2309,14 +2457,10 @@ in the
 given to any of the
 <a href="docprocessing.html#reference-macros">reference macros</a>,
 nor in the string arguments given to
-<a href="docelement.html#head">HEAD</a>,
-<a href="docelement.html#subhead">SUBHEAD</a>
-or
-<a href="docelement.html#parahead">PARAHEAD</a>.
+<a href="docelement.html#heading">HEADING</a>.
 Use, rather, the
 <a href="definitions.html#controlmacro">control macros</a>
-mom provides to automatically colourize these
-elements.
+mom provides to automatically colourize these elements.
 </p>
 </div>
 
@@ -2428,7 +2572,7 @@ for an explanation of how to disable this default behaviour.
 </div>
 
 <div class="box-macro-args">
-Macro: <b>DOCHEADER</b> <kbd class="macro-args">&lt;toggle&gt; [ distance to advance from top of page ]</kbd>
+Macro: <b>DOCHEADER</b> <kbd class="macro-args">&lt;toggle&gt; [ distance to advance from top of page ] [ NO_SHIM ]</kbd>
 </div>
 
 <p class="requires">
@@ -2480,7 +2624,7 @@ using mom&#8217;s typesetting macros.  It is recommended that if you
 do create a custom docheader, you make
 <a href="docprocessing.html#shim"><kbd>.SHIM</kbd></a>
 the last macro before the first item of your document (for
-example, <kbd>.PP</kbd> or <kbd>.HEADING 1</kbd>.  PP...)
+example, <kbd>PP</kbd> or <kbd>HEADING&nbsp;1</kbd>.
 </p>
 
 <div class="box-tip">
@@ -2488,15 +2632,14 @@ example, <kbd>.PP</kbd> or <kbd>.HEADING 1</kbd>.  PP...)
 <span class="note">Note:</span>
 You may have tried <kbd>DOCHEAHER&nbsp;OFF</kbd> with a distance argument
 and discovered that mom will not budge the starting position of the document
-from its default location.  This is byproduct of
+from her chosen default location.  This is byproduct of
 <a href="#shim">shimming</a>,
-which is enabled by default.  If you encounter the problem and you
-want shimming to remain the default, simply disable it (with
-<a href="#disable-shim">NO_SHIM</a>
-immediately prior to
-<a href="#start">START</a>
-and re-enable it immediately afterwards with
-<a href="#disable-shim">NO_SHIM OFF</a>.
+which mom always applies before the first line of running text after
+the docheader, regardless of which
+<a href="#vertical-whitespace-management">vertical whitespace management</a>
+strategy is in effect.  If you encounter the problem, pass
+<kbd>DOCHEADER&nbsp;OFF&nbsp;&lt;distance&gt;</kbd>
+the additional final argument, <kbd>NO_SHIM</kbd>.
 </p>
 </div>
 
@@ -3027,17 +3170,33 @@ or remove space after the docheader, there is no need to invoke
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-If you add or subtract space after the docheader, e.g. with
+If you do add or subtract space after the docheader, e.g. with
 <a href="typesetting.html#ald">ALD</a>
 or
 <a href="typesetting.html#SP">SP</a>,
 and your
 <a href="definitions.html#unitofmeasure">unit of measure</a>
-is something other than &#8220;<kbd>v</kbd>&#8221;, be sure to follow the spacing
-command with
-<a href="docprocessing.html#shim"><kbd>.SHIM</kbd></a>
-unless shimming has been disabled with
-<a href="#disable-shim">NO_SHIM</a>.
+is something other than a multiple of &#8220;<kbd>v</kbd>&#8221;, be
+sure to follow the spacing command with
+<a href="docprocessing.html#shim">SHIM</a>
+before entering <kbd>.COL_MARK</kbd> unless shimming has been
+disabled with
+<a href="#no-shim">NO_SHIM</a>.
+If your document is being flex-spaced, do not use
+<a href="docprocessing.html#flex">FLEX</a>.
+Rather, disable flex-spacing with temporarily with
+<br/>
+<span class="pre-in-pp">
+  .NO_FLEX
+  .NO_SHIM off
+  .SHIM
+  .COL_MARK
+</span>
+and re-enable it afterwards with
+<span class="pre-in-pp">
+  .NO_SHIM
+  .NO_FLEX off
+</span>
 </p>
 </div>
 
@@ -3259,8 +3418,8 @@ the tops of pages after the first.)
                a document will almost certainly result in a
                bottom margin that doesn&#8217;t align with the
                bottom margin of subsequent pages.  You&#8217;ll
-               need to use the SHIM macro to get mom back on
-               track when you&#8217;re ready to return to the
+               need to use the SHIM or FLEX macro to get mom back
+               on track when you&#8217;re ready to return to the
                document&#8217;s default leading.
 
   <a id="autolead" style="margin-top: -1em">AUTOLEAD</a>   &bull;Invoked before START, sets the overall document
@@ -3387,7 +3546,12 @@ Since adding space in this way is almost sure to disrupt mom&#8217;s
 ability to guarantee perfectly flush bottom margins, I highly
 recommend using the
 <a href="docprocessing.html#shim">SHIM</a>
-macro immediately after ADD_SPACE.
+or
+<a href="docprocessing.html#flex">FLEX</a>
+macro immediately after ADD_SPACE, which will add the space plus
+whatever correction is required by the
+<a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
+strategy in effect.
 </p>
 
 <!-- *** -->
