@@ -1,5 +1,5 @@
 .\" -*- nroff -*-
-.\" Copyright (C) 2012-2016  Free Software Foundation, Inc.
+.\" Copyright (C) 2012-2017  Free Software Foundation, Inc.
 .\"
 .\" This file is part of mom, which is part of groff, a free software
 .\" project.
@@ -15,7 +15,7 @@
 .\" Reference macros (metadata)
 .TITLE     "Producing PDFs" "with groff and mom"
 .PDF_TITLE "\*[$TITLE]
-.COPYRIGHT "20\*[BU3]1\*[BU2]5 Free Software Foundation
+.COPYRIGHT "20\*[BU3]1\*[BU2]5, 20\*[BU3]1\*[BU2]7 Free Software Foundation
 .AUTHOR "Deri James" "\*[UP .5p]and" "Peter Schaffter"
 .\" Cover author style
 .COVER_AUTHOR_STYLE \
@@ -58,6 +58,7 @@ You should have received a copy of the GNU
 General Public License along with this program.
 If not, see:
 .SP .25v
+.PDF_LINK_COLOR 0.0 0.3 0.9
 .PDF_WWW_LINK http://www.gnu.org/licenses/
 .IQ CLEAR
 .HY
@@ -119,16 +120,12 @@ If not, see:
 .ds cod  \E*[CODE]\&\E*[COND]
 .ds codx \E*[CONDX]\E*[CODE off]\&
 .\" Paragraph spacing
-.de PP2
-. ALD .3v
-. PP
-..
+.PARA_SPACE .3v
 .\" Wrapper around QUOTE
 .de COD
 . QUOTE
 . nop \*[COND]\\$*\*[CONDX]
 . QUOTE OFF
-. sp -\\n[#SHIM]u
 ..
 .\" Note box
 .de BOX-NOTE
@@ -142,10 +139,12 @@ If not, see:
 .SPACE_TOC_ITEMS
 .AUTO_RELOCATE_TOC
 .TOC_ENTRY_STYLE 2 FONT I
-.TOC_LEAD 14
+.TOC_LEAD 14.5 ADJUST
+.TOC_PADDING 1
 .\"
 .DOCHEADER_ADVANCE 5c \" Begin docheader this distance down from top of page
 .\"
+.NO_SHIM
 .START
 .\"
 .SP .5c
@@ -161,7 +160,7 @@ or to remote web pages
 .PDF_LINK external PREFIX ( SUFFIX ), "external links"
 and the generation of a clickable document outline that appears in
 the Contents panel of most PDF viewers.
-.PP2
+.PP
 .RW .01
 Using \[groff] and \[mom] to produce PDF documents results in the
 automatic generation of clickable document outlines (discussed
@@ -195,7 +194,7 @@ One reason to prefer using the native PDF driver (via \[pdfmom] or
   "paper and page setup macros"
 do not require a corresponding \[-P-p<papersize>] flag on the
 command line.
-.PP2
+.PP
 There are other minor differences between the methods, discussed
 .PDF_LINK pdf-diff SUFFIX . "here"
 .RW 0
@@ -205,7 +204,6 @@ Often, but not always, links in the body of a PDF document point
 to headings elsewhere in the same document.  Creating these links
 is a simple process.  First, identify the places to link to
 ("destinations"), then link to them from any place in the document.
-.NO_SHIM
 .HEADING 2 NAMED naming "Creating destination points at headings"
 .PP
 The first step in creating links to a heading is to give the
@@ -219,12 +217,11 @@ would, in addition to printing the head in the body of the document,
 identify the introduction by the unique id, "intro"\*[BU6].  This
 id, or name, can then be used to create links to the introduction
 from any part of the document.
-.PP2
+.PP
 Furthermore, \*[cod]NAMED\|<id>\*[codx] stores the text of the
 heading for use later on when linking to it (see
 .PDF_LINK internal SUFFIX ). +
 If headings are being numbered, the heading number is prepended.
-.NO_SHIM off
 .HEADING 2 NAMED target  "Creating destination points at arbitrary locations"
 .PP
 Any part of a document can be a link destination, not just headings.
@@ -243,7 +240,7 @@ Internal links are clickable text areas that allow you to jump to
 named destinations within a document.  (See
 .PDF_LINK external "here"
 for a description of external links.)
-.PP2
+.PP
 Internal links are created with the macro \*[cod]PDF_LINK\*[codx],
 which takes the form
 .COD "\&.PDF_LINK <id> [PREFIX <text>] [SUFFIX <text>] \
@@ -253,23 +250,23 @@ the document (see
 .PDF_LINK naming +
 and
 .PDF_LINK target SUFFIX ). +
-.PP2
+.PP
 \*[cod]PREFIX\|<text>\*[codx] and \*[cod]SUFFIX\|<text>\*[codx], both or
 either of which are optional, are printed around the clickable area
 but do not form part of the link itself.
-.PP2
+.PP
 \*[cod]<hotlink text>\*[codx] is the text that should be clickable,
 identifiable in the PDF document by the colour assigned to links
 (see
 .PDF_LINK colour SUFFIX ). +
 .PDF_TARGET expando
-.PP2
+.PP
 If the hotlink text ends in \*[cod]\[dq]*\[dq]\*[codx]\*[BU9],
 the asterisk is replaced by the text of the destination
 point, assuming it's a heading.  If the hotlink text ends in
 \*[cod]\[dq]+\[dq]\*[codx]\*[BU9], the replacement text is surrounded
 by quotes.
-.PP2
+.PP
 Using our
 .PDF_LINK intro-ex SUFFIX , "HEADING example"
 .RW .1
@@ -284,7 +281,7 @@ In the text, the link would look like this:
 External links are clickable text areas whose destination is a
 URL.  Clicking on them causes a browser window to pop up with the
 destination address.
-.PP2
+.PP
 The format of the macro to create external links is similar to the
 one for creating internal links:
 .COD "\&.PDF_WWW_LINK <url> [PREFIX <text>] [SUFFIX <text>] [\[dq]<hotlink text>\[dq]]"
@@ -293,7 +290,7 @@ one for creating internal links:
 exactly the same meaning, as does \*[cod]<hotlink text>\*[codx],
 which furthermore accepts the same expandos, \*[cod]\[dq]+\[dq]\*[codx] and
 \*[cod]\[dq]*\[dq]\*[codx].
-.PP2
+.PP
 .RW .1
 If no hotlink text is given, then \*[cod]<url>\*[codx] is
 used as the text.  If hotlink text is given and ends in
@@ -331,7 +328,7 @@ both lead to mom using
 .PDF_LINK colour red
 .PDF_LINK_COLOR
 links.
-.PP2
+.PP
 The default colour can be restored by calling
 \*[cod]PDF_LINK_COLOR\*[codx] with no parameter.
 .FLOAT
@@ -345,24 +342,24 @@ be processed with
 \[oq]\[pdfmom]\~\[-Tps]\[cq].
 .IBQ
 .FLOAT off
-.NO_SHIM off
+.SP .5v
 .HEADING 1 NAMED outline "The PDF Outline"
 .PP
 Most PDF viewers provide a panel that displays a document's outline,
 similar to a table of contents.  Clicking on an entry navigates
 directly to the appropriate place in the document.
-.PP2
+.PP
 Mom generates PDF outlines the same way she populates
 her own table of contents: by intercepting calls to the
 \*[cod]HEADING\*[codx] macro, as well as to the various title
 and chapter macros used in namimg documents, and allocating each a
 hierarchic level.
-.PP2
+.PP
 Covers, titles/chapters, and the table of contents are all
 assigned to level 1\*[BU5].  Subsequent headings are assigned to
 n\*[UP 1p]+\*[DOWN 1p]\*[BU4]1, where n is the level given to
 \*[cod]HEADING\*[codx].
-.PP2
+.PP
 .RW .22
 The PDF outline can sensibly recover from skipped or omitted heading
 levels; the printed table of contents cannot.  Users are therefore
@@ -376,13 +373,13 @@ visible in the PDF outline.  Closed \%levels have at least one level
 beneath them that is not visible unless the closed link is clicked.
 It is common for only the first two levels to be open so the outline
 doesn't look cluttered.
-.PP2
+.PP
 To establish which levels should be open by default when a document
 loads, use
 .COD "\&.PDF_BOOKMARKS_OPEN n
 where \*[cod]n\*[codx] is a number specifying at which level all
 subsequent ones should be closed.
-.PP2
+.PP
 If, at any point in the document, you specify
 .COD "\&.PDF_BOOKMARKS_OPEN NO  \e\[dq] or any other text argument
 then all subsequent bookmarks will be closed until
@@ -396,6 +393,7 @@ Mom's default is to collect entries, so if the command is placed at
 the start of a document, it \%disables entry collection completely.
 Elsewhere, it suspends collection until you re-enable it with
 .COD "\&.PDF_BOOKMARKS  \e\[dq] i.e. with no parameter
+.SP -1
 .HEADING 2 NAMED pdf:title "The PDF window title"
 .PP
 While not strictly part of the PDF outline, the title of a document
@@ -413,7 +411,7 @@ can remove the window title by issuing
 .COD ".PDF_TITLE \[dq]\[dq] \e\[dq] ie. with a blank argument
 .IBQ
 .FLOAT off
-.NO_SHIM
+.SP .5v
 .HEADING 1 NAMED toc "Tables of Contents"
 .RLD .5v
 .HEADING 2 NAMED toc:gen "Generating a Table of Contents 
@@ -429,7 +427,7 @@ SUFFIX ). "mom documentation"
 When the file is processed and loaded in a viewer, entries in the
 Table of Contents will be clickable links.
 .RW 0
-.PP2
+.PP
 Whichever link colour is active at the end of the document, prior to
 \*[cod]TOC\*[codx], will be used for the \%Table of Contents
 links.
@@ -440,11 +438,11 @@ file, the Table of Contents is printed at the end of the document.
 When this is not desirable, the PostScript output from \[groff]
 must be processed with \[psselect] in order to place the TOC in the
 preferred location.
-.PP2
+.PP
 When using mom and \[groff]'s native pdf device (via \[pdfmom] or
 \[groff] \[-Tpdf]), positioning of the Table of Contents can be done
 within the source file.
-.PP2
+.PP
 The command to control the placement of the TOC is
 .COD "\&.AUTO_RELOCATE_TOC [<position>]
 where the optional \*[cod]<position>\*[codx] can be one of these
@@ -469,16 +467,13 @@ AFTER_COVER\*[SIZE]
 It is normally not necessary to supply a keyword, since
 \*[cod]AUTO_RELOCATE_TOC\*[codx] places the TOC after the DOC_COVER,
 if there is one, or the first COVER when no DOC_COVER is present.
-.NO_SHIM off
 In rare instances where it is desirable to place the TOC somewhere
 else in the document, there are two low-level commands,
-.SP .5v
-\*[FWD 6p]\*[cod].TOC_BEFORE_HERE\*[codx]
+\*[cod].TOC_BEFORE_HERE\*[codx]
 \ \*[SIZE -.5]and\*[SIZE]\ \"
 \*[cod].TOC_AFTER_HERE\*[codx]
-.SP .5v
 which place the TOC either before or after the current page.
-.PP2
+.PP
 These last two commands have a small catch: although the TOC will
 appear where specified, the \%"Contents" entry in the PDF outline,
 which observes a hierarchy of levels, will assign the TOC to
@@ -495,7 +490,6 @@ for creating PDF files with \[groff]: the original method, ie.
 passing the \[-Tps] and \[-mpdfmark] options to \[groff] (or using
 \[pdfroff], which does this for you); or the newer \[-Tpdf], which
 produces PDF files natively.
-.NO_SHIM
 .HEADING 2 NAMED fwd:ref "The problem of forward references"
 .PP
 .EW .2
@@ -511,7 +505,7 @@ with one of the expandos,
 Mom doesn't know what text to put in the expando because it has not
 yet been defined.  This means that \[groff] must be run multiple
 times to find the unknown text.
-.PP2
+.PP
 .EW .2
 The program \[pdfroff] exists to handle these multiple runs, but it
 imposes some limitations on the PDF features available with \[mom].
@@ -522,7 +516,7 @@ imposes some limitations on the PDF features available with \[mom].
 preferred, trouble-free way to generate PDF documents from a mom
 source file.  Like \[pdfroff], it is a frontend to \[groff] and
 accepts all the same options (see \[man]\~\[groff]).
-.PP2
+.PP
 .EW .2
 Called as-is, \[pdfmom] accepts all the same options as \[groff],
 and requires no additional flags.  PDF generation is performed by
@@ -536,7 +530,7 @@ The resulting PDF is produced from PostScript output fed into
 .COD "pdfmom -Tps [pdfroff opts [groff opts]] doc.mom > doc.pdf
 For either invocation, it is not necessary to add \[-mom] or
 \[-mpdfmark], as these are implied.
-.PP2
+.PP
 If Encapsulated PostScript or plain PostScript images have been
 embedded in a document with
 .PDF_WWW_LINK http://www.schaffter.ca/mom/momdoc/images.html#pspic SUFFIX , \
@@ -615,7 +609,7 @@ underlining (eg of italics)
 .ITEM
 generally produces larger files; these can be reduced by piping
 the output through \[ps2pdf]\*[B]
-.RLD .5v
+.RLD .25v
 .FLOAT
 .QUAD LEFT
 .BR_AT_LINE_KERN
@@ -627,10 +621,10 @@ through \[ps2pdf] lose some of
 .EW 0
 their metadata, notably the window title set with
 \*[cod]PDF_TITLE\*[codx].
+.SP .75
 .FLOAT off
 .ITEM
 is newer code with less testing\c
 .EL
 .LIST OFF
-.IQ CLEAR
 .TOC
