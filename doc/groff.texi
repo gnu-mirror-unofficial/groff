@@ -12572,12 +12572,12 @@ sense to use it outside of trap macros.
 @cindex @code{ne} request, and the @code{.trunc} register
 @cindex truncated vertical space register (@code{.trunc})
 A read-only register containing the amount of vertical space truncated
-by the most recently sprung vertical position trap, or, if the trap was
-sprung by an @code{ne} request, minus the amount of vertical motion
-produced by the @code{ne} request.  In other words, at the point a trap
-is sprung, it represents the difference of what the vertical position
-would have been but for the trap, and what the vertical position
-actually is.
+from an @code{sp} request by the most recently sprung vertical
+position trap, or, if the trap was sprung by an @code{ne} request,
+minus the amount of vertical motion produced by the @code{ne}
+request.  In other words, at the point a trap is sprung, it
+represents the difference of what the vertical position would have
+been but for the trap, and what the vertical position actually is.
 
 Since the @code{.trunc} register is only set by traps it doesn't make
 much sense to use it outside of trap macros.
@@ -12954,9 +12954,9 @@ as register @code{nl}.
 @cindex mark, high-water, register (@code{.h})
 @cindex position of lowest text line (@code{.h})
 @cindex text line, position of lowest (@code{.h})
-The @dfn{high-water mark} on the current page.  It corresponds to the
-text baseline of the lowest line on the page.  This is a read-only
-register.
+The @dfn{high-water mark} on the current page or in the current
+diversion.  It corresponds to the text baseline of the lowest line
+on the page.  This is a read-only register.
 
 @Example
 .tm .h==\n[.h], nl==\n[nl]
