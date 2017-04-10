@@ -1,3 +1,20 @@
+2017-04-10  Ingo Schwarze  <schwarze@usta.de>
+
+	* tmac/doc.tmac-u: Punctuation handling of .Lk fixed
+
+	The implementation of the groff_mdoc(7) .Lk (hyperlink) macro
+	contains code to make sure that the second argument is not
+	punctuation before treating it as a link text, but the test
+	can never lead to the result "punctuation" because the
+	initialization of the global variable doc-width was missing
+	before the call to doc-get-arg-type.  Consequently, even "."
+	was not recognized as punctuation.
+
+	Problem reported by Anthony Bentley <bentley@openbsd.org>,
+	fixed by Ingo Schwarze <schwarze@usta.de>.
+
+	https://savannah.gnu.org/bugs/?50771
+
 2017-04-07  Werner LEMBERG  <wl@gnu.org>
 
 	* tmac/hyphenex.us: Updated to current release from TeXLive.
