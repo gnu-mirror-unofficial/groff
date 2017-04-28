@@ -158,6 +158,10 @@ int index_search_item::load(int fd)
   }
   mtime = sb.st_mtime;
   int size = int(sb.st_size);
+  if (size == 0) {
+    error("`%1' is an empty file", name);
+    return 0;
+  }
   char *addr;
   map_addr = mapread(fd, size);
   if (map_addr) {
