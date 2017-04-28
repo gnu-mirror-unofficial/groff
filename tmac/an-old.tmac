@@ -525,7 +525,7 @@
 .
 .de1 IR
 .  if \\n[.$] \{\
-.    ds an-result \&\f[I]\\$1\f[R]\"
+.    ds an-result \&\f[I]\,\\$1\f[R]\"
 .    shift
 .    while (\\n[.$] >= 2) \{\
 .      as an-result \/\\$1\f[I]\,\\$2\f[R]\"
@@ -539,7 +539,7 @@
 .
 .de1 IB
 .  if \\n[.$] \{\
-.    ds an-result \&\f[I]\\$1\"
+.    ds an-result \&\f[I]\,\\$1\"
 .    shift
 .    while (\\n[.$] >= 2) \{\
 .      as an-result \/\f[B]\\$1\f[I]\,\\$2\\*[an-empty]\"
