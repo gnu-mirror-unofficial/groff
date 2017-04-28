@@ -1802,7 +1802,7 @@ int main(int argc, char **argv)
       break;
     case 'c':
       if (sscanf(optarg, "%d", &ncopies) != 1 || ncopies <= 0) {
-	error("bad number of copies `%s'", optarg);
+	error("bad number of copies `%1'", optarg);
 	ncopies = 1;
       }
       break;

@@ -1,3 +1,13 @@
+2017-04-28  Rich Burridge
+
+	"grops -c a" dumps core
+
+	* src/devices/grops/ps.cpp: conversion specifier %s changed
+	to %1 (errprint() uses special syntax different from
+	printf(3))
+
+	https://savannah.gnu.org/bugs/?42190
+
 2017-04-28  Bjarni Ingi Gislason  <bjarniig@rhi.hi.is>
 
 	Macro "itc" is needed to make escape "\c" useful
