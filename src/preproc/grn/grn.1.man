@@ -231,7 +231,7 @@ Commands may be upper or lower case and abbreviated down to one character.
 .
 .
 .PP
-Commands that affect a picture\[aq]s environment (those listed before
+Commands that affect a picture's environment (those listed before
 .BR default ,
 see below) are only in effect for the current picture:
 .
@@ -249,7 +249,7 @@ The commands are as follows:
 .BI 4\  N
 .
 Set
-.IR gremlin \[aq]s
+.IR gremlin 's
 text size number 1 (2, 3, or 4) to
 .I N
 points.
@@ -265,7 +265,7 @@ The default is 12 (16, 24, and 36, respectively).
 .TQ
 .BI special\  f
 Set the roman (italics, bold, or special) font to
-.IR @g@troff \[aq]s
+.IR @g@troff 's
 font
 .I f
 (either a name or number).
@@ -277,7 +277,7 @@ The default is R (I, B, and S, respectively).
 .TQ
 .BI stipple\  f
 Set the stipple font to
-.IR @g@troff \[aq]s
+.IR @g@troff 's
 stipple font
 .I f
 (name or number).
@@ -316,7 +316,7 @@ may be abbreviated down to \[oq]sc\[cq].
 .BI thick\  N
 .
 Set the thickness of
-.IR gremlin \[aq]s
+.IR gremlin 's
 narrow (medium and thick, respectively) lines to
 .I N
 times 0.15pt (this value can be changed at compile time).
@@ -344,7 +344,7 @@ regardless of any scaling factors in the picture.
 Setting
 .B pointscale
 will cause the point sizes to scale with the picture (within
-.IR @g@troff \[aq]s
+.IR @g@troff 's
 limitations, of course).
 .
 An operand of anything but
@@ -406,7 +406,7 @@ commands are given, the second one overrides the first.
 .
 If
 .I name
-doesn\[aq]t exist, an error message is reported and processing
+doesn't exist, an error message is reported and processing
 continues from the
 .B .GE
 line.
@@ -418,7 +418,7 @@ line.
 .
 Since
 .I @g@grn
-is a preprocessor, it doesn\[aq]t know about current indents, point
+is a preprocessor, it doesn't know about current indents, point
 sizes, margins, number registers, etc.  Consequently, no
 .I @g@troff
 input can be placed between the
@@ -465,7 +465,7 @@ should always be run last.
 .
 .
 .PP
-A picture is considered an entity, but that doesn\[aq]t stop
+A picture is considered an entity, but that doesn't stop
 .I @g@troff
 from trying to break it up if it falls off the end of a page.
 .
@@ -476,7 +476,7 @@ proper placement.
 .PP
 .I @g@grn
 uses
-.IR @g@troff \[aq]s
+.IR @g@troff 's
 number registers
 .B g1
 through
@@ -597,7 +597,7 @@ and
 are floating point values giving a positioning point to be used when
 this file is read into another file.
 .
-The stuff on this line really isn\[aq]t all that important; a value of
+The stuff on this line really isn't all that important; a value of
 \[lq]1 0.00 0.00\[rq] is suggested.
 .
 .IP \(bu
@@ -698,7 +698,7 @@ ncw(0.1i)l.
 4 \(mi@@special (S font in groff)
 .TE
 .sp
-If you\[aq]re using
+If you're using
 .I @g@grn
 to run your pictures through
 .IR groff ,
@@ -751,14 +751,14 @@ to 483.
 For horizontal pictures, x-values range from 0 to 511 and y-values
 range from 0 to 367.
 .
-Although you needn\[aq]t absolutely stick to this range, you\[aq]ll
+Although you needn't absolutely stick to this range, you'll
 get best results if you at least stay in this vicinity.
 .
 Also, point lists are terminated by a point of (\-1, \-1), so you
 shouldn't ever use negative coordinates.
 .
 .I gremlin
-writes out coordinates using format \[lq]%f1.2\[rq]; it\[aq]s probably
+writes out coordinates using format \[lq]%f1.2\[rq]; it's probably
 a good idea to use the same format if you want to modify the
 .I @g@grn
 code.
