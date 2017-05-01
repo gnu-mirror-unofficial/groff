@@ -211,11 +211,13 @@ options are required for running the input under
 .BR \-g ,
 .BR \-G ,
 .BR \-j ,
-.BR \-J ,
+.\" gideal is not implemented yet.
+.\" .BR \-J ,
 .BR \-p ,
 .BR \-R ,
 .BR \-s ,
-.BR \-t .
+.B \-t
+(preprocessors); and
 .BR \-man ,
 .BR \-mdoc,
 .BR \-mdoc-old,
@@ -223,7 +225,8 @@ options are required for running the input under
 .BR \-mm ,
 .BR \-mom ,
 and
-.BR \-ms .
+.B \-ms
+(macro packages).
 .
 .
 .P
@@ -307,39 +310,6 @@ The
 .BR groffer  (@MAN1EXT@)
 program heavily depends on a working
 .BR grog .
-.
-.
-.P
-The
-.B grog
-source contains two files written in different programming languages:
-.
-.ft CB
-grog.pl
-.ft R
-is the
-.I Perl
-version, while
-.ft CB
-grog.sh
-.ft R
-is a shell script using
-.BR awk (1).
-During the run of
-.BR make (1),
-it is determined whether the system contains a suitable version of
-.BR perl (1).
-If so,
-.ft CB
-grog.pl
-.ft R
-is transformed into
-.BR grog ;
-otherwise
-.ft CB
-grog.sh
-.ft R
-is used instead.
 .
 .
 .\" --------------------------------------------------------------------
