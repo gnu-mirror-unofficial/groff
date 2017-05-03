@@ -1326,6 +1326,7 @@ which may be given in any order:
   CAPS | NO_CAPS \
   SMALLCAPS | NO_SMALLCAPS \
   BASELINE_ADJUST &lt;amount to raise heading from the baseline&gt; \
+  NEEDS &lt;lines of text required beneath the heading &gt;
   SPACE_AFTER | NO_SPACE_AFTER \
   NUMBER | NO_NUMBER \
   NO_SHIM | SHIM \
@@ -1378,6 +1379,17 @@ BASELINE_ADJUST is the amount by which to raise the heading.  It
 requires no <kbd>+</kbd> or <kbd>-</kbd> sign, and must have a
 <a href="definitions.html#unitofmeasure">unit of measure</a>
 appended to it.
+</p>
+
+<p class="defaults" style="margin-bottom: 1em">
+<kbd>NEEDS</kbd> lets you reserve the number of lines of text
+required beneath a heading, including fractions thereof (eg
+&#8220;1.5&#8221; for one line of text plus half a linespace).
+If a heading falls near the bottom margin and there isn&#8217;t
+sufficient room for both the heading and the reserved space, mom
+will break to a new page for the heading.  A
+<a href="definitions.html#unitofmeasure">unit of measure</a>
+should not be appended to the argument.
 </p>
 
 <p class="defaults" style="margin-bottom: 1em">
@@ -2765,7 +2777,7 @@ or the
 </div>
 
 <div class="box-macro-args">
-Macro: <b>LIST</b> <kbd class="macro-args">[ BULLET | DASH | DIGIT | ALPHA | alpha | ROMAN&lt;n&gt; | roman&lt;n&gt; | USER &lt;string&gt;] [ &lt;separator&gt; | &lt;user-defined enumerator&gt; ] [ &lt;prefix&gt; ] [ &lt;off&gt; ]</kbd>
+Macro: <b>LIST</b> <kbd class="macro-args">[ BULLET | DASH | DIGIT | ALPHA | alpha | ROMAN&lt;n&gt; | roman&lt;n&gt; | USER &lt;user-defined enumerator&gt;  | PLAIN ] [ &lt;separator&gt; ] [ &lt;prefix&gt; ] [ &lt;anything&gt; ]</kbd>
 </div>
 
 <p>

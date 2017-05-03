@@ -1508,6 +1508,44 @@ or
 <a href="cover.html#cover">COVER</a>
 </p>
 
+<p>
+Style parameters for the copyright line may be
+entered as individual macros or
+<a href="docelement.html#grouping">grouped</a>,
+eg
+<br/>
+<span class="pre-in-pp">
+  .COPYRIGHT_FAMILY H
+  .COPYRIGHT_FONT   R
+  .COPYRIGHT_SIZE   -2
+</span>
+or
+<br/>
+<span class="pre-in-pp">
+  .COPYRIGHT_STYLE \
+  FAMILY H \
+  FONT   R \
+  SIZE   -2
+</span>
+The vertical position of the copyright line may be raised (-) or
+lowered (+) with the macro COPYRIGHT_V_ADJUST.  For example, to
+raise the copyright line by 3
+<a href="definitions.html#picaspoints">points</a>, you&#8217;d do
+<br/>
+<span class="pre-in-pp">
+  .COPYRIGHT_V_ADJUST -3p
+</span>
+Alternatively, the COPYRIGHT_STYLE macro may be used with the
+argument <kbd>V_ADJUST</kbd>:
+<span class="pre-in-pp">
+  .COPYRIGHT_STYLE \
+  FAMILY    H \
+  FONT      R \
+  SIZE     -2 \
+  V_ADJUST -3p
+</span>
+</p>
+
 <!-- -MISC- -->
 
 <div class="macro-id-overline">
@@ -3506,11 +3544,13 @@ conjunction with
 <!-- -ADD_SPACE- -->
 
 <div class="macro-id-overline">
-<h3 id="add-space" class= "macro-id">ADD_SPACE</h3>
+<h3 id="add-space" class= "macro-id">ADD_SPACE/RESTORE_SPACE</h3>
 </div>
 
 <div class="box-macro-args">
 Macro: <b>ADD_SPACE</b> <kbd class="macro-args">&lt;amount of space&gt;</kbd>
+<br/>
+Macro: <b>RESTORE_SPACE</b>
 </div>
 
 <p class="requires">
@@ -3552,6 +3592,20 @@ macro immediately after ADD_SPACE, which will add the space plus
 whatever correction is required by the
 <a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
 strategy in effect.
+</p>
+
+<h4 class="docs doc-param-macros" style="margin-top: .5em">RESTORE_SPACE</h4>
+
+<p style="margin-top: .5em">
+You may sometimes find that mom refuses to respect
+<a href="typesetting.html#space">SP</a>,
+<a href="typesetting.html#index-aldrld">ALD/RLD</a>,
+<a href="docprocessing.html#shim">SHIM</a>,
+or
+<a href="docprocessing.html#flex">FLEX</a>
+after the first element (line of text, floated material) output
+at the top of a page.  Should this happen, insert the macro
+RESTORE_SPACE before issuing the spacing command.
 </p>
 
 <!-- *** -->
