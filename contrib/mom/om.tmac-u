@@ -21,8 +21,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.2
------------
+Version 2.2-a
+-------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -30,7 +30,7 @@ nothing left to take away.
 By those standards, mom is a Rube Goldberg contraption.  She was
 created over the years while groff, and my understanding of it,
 changed and evolved.  However, I'm a firm believer in "if it ain't
-broke, don't fix it."  Version 2.0 removes some of the redundancies
+broke, don't fix it."  Version 2.0 removed some of the redundancies
 and cruft, but mom still needs some nip and tuck.
 
 "<anything>" in the description of arguments that can be passed
@@ -45,6 +45,12 @@ extensions, and float management).
 .\" %beginstrip%
 \#
 \# ====================================================================
+\#
+\# Mom version
+.ds version 2.2-a
+.if dVERSION \{\
+.   ab [mom]: Version \*[version]
+.\}
 \#
 \# Check which version of groff is being run
 .if (\n[.x]\n[.y] < 118) \
@@ -4224,7 +4230,7 @@ y\R'#DESCENDER \\n[.cdp]'
             FONT  B  \
             SIZE  +0 \
             QUAD  L  \
-            NEEDS 1v \
+            NEEDS 1 \
             COLOR black
 .\"  Set up default style for nine levels of TOC headings
 .           TOC_ENTRY_STYLE \\n[#HD_LEVEL] \
@@ -4636,13 +4642,11 @@ y\R'#DESCENDER \\n[.cdp]'
 .    if '\\$1'DOC_COVER' \{\
 .       shift
 .       DOC_COVERTITLE \\$@
-.       nr #FROM_DOC_COVERTITLE 1
 .       return
 .    \}
 .    if '\\$1'COVER' \{\
 .       shift
 .       COVERTITLE \\$@
-.       nr #FROM_COVERTITLE 1
 .       return
 .    \}
 .    ie \\n[#NUM_ARGS]=0 \{\
@@ -4775,6 +4779,10 @@ y\R'#DESCENDER \\n[.cdp]'
 .       ds $COVER_COPYRIGHT \[co]\\$1
 .    el \
 .       if '\\$1'DOC_COVER' .ds $DOC_COVER_COPYRIGHT \[co]\\$2
+.END
+\#
+.MAC COPYRIGHT_V_ADJUST END
+.    ds $COPYRIGHT_V_ADJ \\$1
 .END
 \#
 .MAC MISC END \"Doc cover and cover pages only; enclose all args in double quotes
@@ -5458,6 +5466,11 @@ SMALLCAPS takes precedence.
 .          rr #\\*[$STYLE_TYPE]_UNDERLINE
 .          if !'\\*[$BIB-EN-TOC]'' \
 .             rr #\\*[$BIB-EN-TOC]_UNDERLINE
+.          shift
+.       \}
+.       if '\\$1'V_ADJUST' \{\
+.          shift
+.          COPYRIGHT_V_ADJUST \\$1
 .          shift
 .       \}
 .    \}
@@ -7242,35 +7255,32 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .\"    registers from their (DOC_)COVER_TITLE equivalents.
 .\"
 .    if (\\n[#\\*[DOC_]COVER_TITLE]=6):(\\n[#\\*[DOC_]COVER_TITLE]=7) \{\
-.       if \\n[#FROM_\\*[DOC_]COVERTITLE] \{\
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_FAM \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_FAM \
 \\*[$\\*[DOC_]COVER_TITLE_FAM]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_FT \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_FT \
 \\*[$\\*[DOC_]COVER_TITLE_FT]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_COLOR \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_COLOR \
 \\*[$\\*[DOC_]COVER_TITLE_COLOR]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_COLOR \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_COLOR \
 \\n[#\\*[DOC_]COVER_TITLE_COLOR]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_CAPS  \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_CAPS  \
 \\n[#\\*[DOC_]COVER_TITLE_CAPS]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_SMALLCAPS  \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_SMALLCAPS  \
 \\n[#\\*[DOC_]COVER_TITLE_SMALLCAPS]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_LEAD  \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_LEAD  \
 \\*[$\\*[DOC_]COVER_TITLE_LEAD]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_SIZE_CHANGE \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_SIZE_CHANGE \
 \\*[$\\*[DOC_]COVER_TITLE_SIZE_CHANGE]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE \
 \\n[#\\*[DOC_]COVER_TITLE_UNDERLINE]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_WEIGHT \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_WEIGHT \
 \\n[#\\*[DOC_]COVER_TITLE_UNDERLINE_WEIGHT]
-.          nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_WEIGHT_ADJ \
+.       nr #\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_WEIGHT_ADJ \
 \\n[#\\*[DOC_]COVER_TITLE_UNDERLINE_WEIGHT_ADJ]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_GAP \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_UNDERLINE_GAP \
 \\*[$\\*[DOC_]COVER_TITLE_UNDERLINE_GAP]
-.          ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_RULE_GAP \
+.       ds $\\*[DOC_]COVER_\\*[DOC_]COVERTITLE_RULE_GAP \
 \\*[$\\*[DOC_]COVER_TITLE_RULE_GAP]
-.          rr #FROM_\\*[DOC_]COVERTITLE
-.       \}
 .       ie \\n[#PRINT_STYLE]=1 \{\
 .          CAPS
 .          vs \\n[.v]u*2u
@@ -7422,15 +7432,18 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       fam \\*[$\\*[DOC_]COVER_COPYRIGHT_FAM]
 .       ft  \\*[$\\*[DOC_]COVER_COPYRIGHT_FT]
 .       ps \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_COPYRIGHT_SIZE_CHANGE]
-.       nr #COPYRIGHT_V_ADJ \\n[#DOC_LEAD]-\\n[.v]
-.       sp \\n[#COPYRIGHT_V_ADJ]u
-.       rr #COPYRIGHT_V_ADJ
+.       nr #COPYRIGHT_V_POS \\n[#DOC_LEAD]-\\n[.v]
+.       sp \\n[#COPYRIGHT_V_POS]u
+.       rr #COPYRIGHT_V_POS
 .    \}
 .    if \\n[#\\*[DOC_]COVER_COPYRIGHT]=1 \{\
 .       QUAD \\*[$\\*[DOC_]COVER_COPYRIGHT_QUAD]
 .       if \\n[#\\*[DOC_]COVER_COPYRIGHT_COLOR]=1 \
 .          gcolor \\*[$\\*[DOC_]COVER_COPYRIGHT_COLOR]
-.       PRINT \\*[$\\*[DOC_]COVER_COPYRIGHT]
+.       ie !'\\*[$COPYRIGHT_V_ADJ]'' \
+.          PRINT \v'\\*[$COPYRIGHT_V_ADJ]'\\*[$\\*[DOC_]COVER_COPYRIGHT]
+.       el \
+.          PRINT \\*[$\\*[DOC_]COVER_COPYRIGHT]
 .       if \\n[#\\*[DOC_]COVER_COPYRIGHT_COLOR]=1 \
 .          gcolor
 .    \}
@@ -7496,15 +7509,20 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .MAC END_COVER END
 .    EOL
 .    TRAP
-.    NEWPAGE
 .    if '\\*[$COVER_TYPE]'DOC_COVER_' .ds DOC DOC
+.    NEWPAGE
 .    rm $COVER_TYPE
 .    if \\n[#PAGINATION_WAS_ON]=1 .nr % +1
-.    ie \\n[#\\*[DOC]_COVER_BLANKPAGE]=1 \{\
+.    ie \\n[#\\*[DOC]COVER_BLANKPAGE]=1 \{\
 .       if \\n[TOC.RELOCATE] \
 .          if !\\n[#TOC_BH] .TOC_AFTER_HERE
-.       NEWPAGE
-.       rr #\\*[DOC]_COVER_BLANKPAGE
+.\" Without the empty PDF_BOOKMARK, (doc)cover BLANKPAGE causes
+.\" the PDF outline to place the first doc or chapter before the TOC,
+.\" even though PDF output is correct.
+.       PDF_BOOKMARK 1
+.       nop \&
+.       bp
+.       rr #\\*[DOC]COVER_BLANKPAGE
 .       if !\\n[#\\*[DOC]COVERS_COUNT]=1 .nr % -2
 .    \}
 .    el \
@@ -7841,6 +7859,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          \}
 .       \}
 .    \}
+.    RESTORE_SPACE
 .END
 \#
 .MAC RR_ADVANCE_FROM_TOP END
@@ -8811,13 +8830,19 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .ds PAGE# \En[#PAGENUMBER]
 \#
 .MAC RESTORE_SPACE END
-.   vpt 0
+.   if \\n[@TOP] \{\
+.      ch RR_@TOP
+.      rr @TOP
+.   \}
+.   if \\n[.u]=1 .nr #FILLED 1
+.   nf
 .   rs
 .   nop \&
 .   sp -1
-.   ch RR_@TOP
-.   rr @TOP
-.   vpt
+.   if \\n[#FILLED] \{\
+.      fi
+.      rr #FILLED
+.   \}
 .END
 \#
 \# HDRFTR RULE GAP
@@ -10407,7 +10432,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   If PARAHEAD given, HEADING must come after PP.
 \#
 .MAC HEADING END
-.    br
+'    br
+.    if \\n[@TOP] .br
 .    if !\B'\\$1' \{\
 .       tm1 "[mom]: The first argument to \\$0 must be a numeric heading level.
 .       ab   [mom]: Aborting '\\n[.F]' at \\$0, line \\n[.c].
@@ -10439,7 +10465,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       if !\\n[@TOP] \{\
 .          nr #HEAD 1
 .          ie !\\n[#START] \{\
-.             nr #HEADING_NEEDS \\n[#NUM_ARGS]v+\\*[$HEAD_\\n[#LEVEL]_NEEDS]+1v
+.             nr #HEADING_NEEDS \\n[#NUM_ARGS]v+\\*[$HEAD_\\n[#LEVEL]_NEEDS]v+1v
 .             if \\n[#HEAD_\\n[#LEVEL]_SPACE_AFTER] .nr #HEADING_NEEDS +1v
 .             if \\n[.t]<\\n[#HEADING_NEEDS] .sp \\n[.t]u
 .             vpt 0
@@ -11695,6 +11721,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    ie '\\$1'' \{\
 .       ev QUOTE
 .       evc 0
+.       if \\n[.i] .in 0
 .       if \\n[#LINENUMBERS]=2 \
 .          if \\n[#SILENT_QUOTE_LN]=1 .nm \\n[#NEXT_LN] 1000 -4
 .       nr #IN_DIVER 1
@@ -11876,6 +11903,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    ie '\\$1'' \{\
 .       ev BLOCKQUOTE
 .       evc 0
+.       if \\n[.i] .in 0
 .       if \\n[#LINENUMBERS]=2 \
 .          if \\n[#SILENT_BQUOTE_LN]=1 .nm \\n[#NEXT_LN] 1000 -4
 .       nr #IN_DIVER 1
@@ -12157,7 +12185,6 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          rm $BQ_SPACE_ADJUST
 .       \}
 .    \}
-.    if '\\n[.z]'FLOAT*DIV' \!.po
 .    if !\\n[#START] .rr #QUOTE
 .    if \\n[in-cutaround] .nr #PP_INDENT \\n[pp-ind-tmp]
 \#.    if !\\n[ev-popped] .ev \" Needed once cutarounds are implemented
@@ -14960,7 +14987,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .ds $TOC_PN \\*[ST102]\F[\\*[$TOC_PN_FAM]]\f[\\*[$TOC_PN_FT]]\
 \s[\\n[#TOC_PS]u]^\\*[ST102X]\\*[ST103]\s[\\*[$TOC_PN_SIZE_CHANGE]]\
-\|\|\|\h'\w'0'u*\\n[#TOC_PN_PADDING]u'\\*[ST103X]
+\h'.2n'\h'\w'0'u*\\n[#TOC_PN_PADDING]u'\\*[ST103X]
 \#
 .ds $TOC_PN_TYPEWRITE \\*[ST102]^\\*[ST102X]\\*[ST103]\
 \h'\w'0'u*\\n[#TOC_PN_PADDING]u'\\*[ST103X]
@@ -14975,7 +15002,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .     rr #SKIP_ENTRY
 \!.  \}
 \!.  el \{\
-.       br
+.       TQ
 .       ie \\n[#PRINT_STYLE]=1 \{\
 \!.        fam \\*[$TYPEWRITER_FAM]
 \!.        ft  R
@@ -15045,7 +15072,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \!.     PAD_MARKER #
 \!.     EOL
 \!.     ST 102 L
-\!.     ST 103 R
+\!.     ST 103 R QUAD
 .       if \\n[#PRINT_STYLE]=2 \{\
 \!.        FAMILY  \\*[$TOC_PN_FAM]
 \!.        FT      \\*[$TOC_PN_FT]
@@ -15058,8 +15085,6 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \!.        ps \\*[$TOC_PN_SIZE_CHANGE]
 .       \}
 \!.     PRINT \\n[#TOC_ENTRY_PN]
-\!.     TQ
-\!.     vpt
 \!. \}
 .   da
 .   ev
@@ -15400,7 +15425,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .MAC TOC END
 .    ie (\\n[@TOP]=0)&(\\n[.t]<=\\n[.v]) \
-'       br \" When last line of text is on or near b-margin.
+'       br  \" When last line of text is on or near b-margin.
 .    el .br \" All other cases
 .    if dPDF.EXPORT \
 .       if \\n[#FLEX_ACTIVE] \
@@ -15462,11 +15487,6 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    rm $HDRFTR_CENTER_OLD
 .    rm $HDRFTR_CENTER_NEW
 .    rr #COLLATED_DOC
-.    ie \\n[#TOC_HEADER_V_POS] \
-.      DOCHEADER OFF \\n[#TOC_HEADER_V_POS]u-\\n[#DOC_LEAD]u 
-.    el .DOCHEADER OFF \\n[#T_MARGIN]u-\\n[#DOC_LEAD]u
-.    if (\\n[#PRINT_STYLE]=1)&(\\n[#SINGLE_SPACE]=1) \
-.       DOCHEADER OFF \\n[#T_MARGIN]u-(\\n[#DOC_LEAD]u*2u)
 .    if !r #TOC_START_PAGENUM .nr #TOC_START_PAGENUM 1
 .       PAGENUMBER \\n[#TOC_START_PAGENUM]
 .    if \\n[#LINENUMBERS]=2 .nr #LINENUMBERS 3
@@ -15479,8 +15499,14 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    if r #TOC_PAGE_PARAMS .TOC_PAGE_PARAMS
 .    ie \\n[#ADJ_TOC_LEAD] \{\
 .       DOC_LEAD \\*[$TOC_LEAD] ADJUST
-.    el .DOC_LEAD \\*[$TOC_LEAD]
+.       TRAPS
 .    \}
+.    el .DOC_LEAD \\*[$TOC_LEAD]
+.    ie \\n[#TOC_HEADER_V_POS] \
+.      DOCHEADER OFF \\n[#TOC_HEADER_V_POS]u-\\n[#DOC_LEAD]u 
+.    el .DOCHEADER OFF \\n[#T_MARGIN]u-\\n[#DOC_LEAD]u
+.    if (\\n[#PRINT_STYLE]=1)&(\\n[#SINGLE_SPACE]=1) \
+.       DOCHEADER OFF \\n[#T_MARGIN]u-(\\n[#DOC_LEAD]u*2u)
 .    START
 .    PDF_BOOKMARK 1 \\*[$TOC_HEADER_STRING]
 .    if \\n[#PRINT_STYLE]=1 .TYPEWRITER
@@ -15510,10 +15536,9 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    if \\n[#TOC_HEADER_COLOR]=1 .gcolor
 .    br
 .    sp
-.    SHIM
+.    SHIM_1
 .    nf
 .    TOC_ENTRIES
-.    rr #TOC
 .    if \\n[#LINENUMBERS]=3 \{\
 .       NUMBER_LINES RESUME
 .       nr #LINENUMBERS 1
@@ -15623,6 +15648,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#   completely if the level in which it's invoked is the first.
 \#
 .MAC LIST END
+.    br
 .    ds $1ST_LETTER \\$1
 .    if !'\\*[$1ST_LETTER]'' .substring $1ST_LETTER 0 0
 .    if '\\*[$1ST_LETTER]'r' .ds $1ST_LETTER R
@@ -15812,7 +15838,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'roman' \
 .       GET_ROMAN_INDENT
 .    if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'other' \
-.       nr #LIST_INDENT\\n[#DEPTH] \w'\\*[$ENUMERATOR\\n[#DEPTH]]\0'
+.       nr #LIST_INDENT\\n[#DEPTH] \w'\\*[$ENUMERATOR\\n[#DEPTH]]\ '
 .    ll \\n[#CURRENT_L_LENGTH]u
 .    ie \\n[#DEPTH]=1 \{\
 .       ie \\n[#INDENT_ACTIVE]=1 \{\
@@ -16292,6 +16318,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .      rm $SEPARATOR\\n[#REMOVE]
 .      rm $ENUMERATOR_TYPE\\n[#REMOVE]
 .      rr #PAD_LIST_DIGITS\\n[#REMOVE]
+.      rr #SHIFT_LIST\\n[#REMOVE]
 .   \}
 .   rr #STORED_L_INDENT
 .   rr #STORED_BL_INDENT
@@ -16350,9 +16377,21 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .MAC COLLATE END
 .    if dPDF.EXPORT .tm .ds pre-collate-\\n% \\n%@\\n[#COL_NUM]
-.    if \\n[defer] .bp
-.    if \\n[#FORCE_RECTO] \
-.       if o .BLANKPAGE 1 DIVIDER
+.    if \\n[defer] \{\
+.       nr #BLANKPAGE_AFTER_DEFER 1
+.       bp
+.    \}
+.    if !\\n[#TOC] \{\
+.       if \\n[#FORCE_RECTO] \{\
+.          ds $PN_FORMAT_CURR \\g[#PAGENUMBER]
+.          af #PAGENUMBER 1
+.          if (\\n[#PAGENUMBER]%2=1) .nr #ODD_PAGENUM 1
+.          af #PAGENUMBER \\*[$PN_FORMAT_CURR]
+.          if \\n[#ODD_PAGENUM] .BLANKPAGE 1 DIVIDER
+.          rr #ODD_PAGENUM
+.          rr #BLANKPAGE_AFTER_DEFER
+.       \}
+.    \}
 .    nr #HEADER_STATE \\n[#HEADERS_ON]
 .    if (\\n[defer]=0)&(\\n[float*defer]=0) .HEADERS OFF
 .    if \\n[#LINENUMBERS] \{\
@@ -16394,7 +16433,6 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    QUAD \\*[$DOC_QUAD]
 .    nr #SAVED_DOC_LEAD \\n[#DOC_LEAD]
 .    nr #COLLATED_DOC 1
-.    if ( (\\n[.t]-1) <= \\n[.v] ) .nr #NO_BREAK 1
 .    vs \\n[#DOC_LEAD]u
 \*[SLANTX]
 \*[CONDX]
@@ -16411,7 +16449,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .      rs
 .      nop \&
 .    \}
-.    if '\\n[.ev]'P+AGE_TRANSITION\\n[pg-trans]' .ev
+.    if '\\n[.ev]'PAGE_TRANSITION\\n[pg-trans]' .ev
 .    if \\n[#DEFER_PAGINATION] .PAGINATE
 .    if !'\\*[$RESTORE_PAGENUM_STYLE]'' \{\
 .       PAGENUM_STYLE \\*[$RESTORE_PAGENUM_STYLE]
@@ -16667,11 +16705,14 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    \}
 .    NEWPAGE
 .    ie '\\$1'DIVIDER' \{\
+.       nop \&
+.       if \\n[#BLANKPAGE_AFTER_DEFER] .bp
 .       if \\n[#FOOTERS_WERE_ON] .FOOTERS
 .          if \\n[#RESTORE_PN_V_POS] \{\
 .             if \\n[#PAGINATE_WAS_ON] .PAGINATE
 .             nr #PAGE_NUM_V_POS \\n[#RESTORE_PN_V_POS]
 .          \}
+.       if \\n[#HEADERS_WERE_ON] .HEADERS
 .       shift
 .       if '\\$1'NULL' .nr #PAGE_NUM_ADJ -\\n[#HOW_MANY]
 .    \}
@@ -16718,6 +16759,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       rr tbl*no-top-hook
 .    \}
 .    if \\n[defer] \{\
+.       nr #TMP_PAGE_OFFSET \\n[.o]
+.       po \\n[#L_MARGIN]u
 .       ev protect
 .       evc FLOAT
 .       nf
@@ -16800,6 +16843,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          rnn new-float-depth:\\n[loop-count] float-depth:\\n[loop-count]
 .          rnn new-D-float:\\n[loop-count] D-float:\\n[loop-count]
 .       \}
+.       if !\\n[#TMP_PAGE_OFFSET]=\\n[.o] .po \\n[#TMP_PAGE_OFFSET]u
+.       rr #TMP_PAGE_OFFSET
 .       rr float*defer
 .       ch FOOTER \\n[#VARIABLE_FOOTER_POS]u
 .       ch FN_OVERFLOW_TRAP -\\n[#FN_OVERFLOW_TRAP_POS]u
@@ -16847,13 +16892,13 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       nop \&
 .       sp -1
 .    \}
-.    if \\n[no-top-space] \{\
+.    if \\n[no-top-space:\\n[float*defer]] \{\
 .       ie !\\n[#COLUMNS] \{\
 .          sp |\\n[#T_MARGIN]u-\\n[#DOC_LEAD]u+.5
 .          ns
 .       \}
 .       el .sp |\\n[dc]u
-.       if \\n[float*tbl] \{\
+.       if \\n[float*tbl:\\n[float*defer]] \{\
 .          rs
 .          ie \\n[tbl*caption-top-lead-diff] \{\
 .             sp \\n[tbl*caption-top-lead-diff]u
@@ -16861,6 +16906,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          \}
 .          el \
 .             if '\\*[float*type:\\n[float*defer]]'boxed-tbl' .sp 2p
+.          rr no-top-space:\\n[float*defer]
+.          rr float*tbl:\\n[float*defer]
 .       \}
 .    \}
 .    if \\n[float*pic] \{\
@@ -16878,11 +16925,11 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    ns
 .    vpt
 .    FLOAT*DIV:\\n[loop-count]
-.    if \\n[no-top-space] \{\
+.    if \\n[no-top-space:\\n[float*defer]] \{\
 .       rs
 .       nop \&
 .       sp -1
-.       rr no-top-space
+.       rr no-top-space:\\n[float*defer]
 .    \}
 .    if \\n[#COLUMNS] \
 .       if !'\\*[pic*space-adj]'' .sp -\\*[pic*space-adj]
@@ -16910,7 +16957,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \# FLOAT
 \# -----
 \# *Arguments:
-\#   [ ADJUST +|-<amount> ] [ FORCE] [ SPAN] [ NO_SHIM] | <anything>
+\#   [ ADJUST +|-<amount> ] [ FORCE] [ SPAN] [ NO_SHIM] | [ NO_FLEX ] [ TARGET ] | <anything>
 \# *Function:
 \#   Captures input in a diversion, which is output immediately if
 \#   there's room on the page; otherwise outputs diversion at top of
@@ -17053,7 +17100,10 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .             if \\n[float-span] \
 .                if !\\n[tbl*boxed] .rnn float-span float-span:\\n[defer]
 .             if \\n[float*tbl] \{\
-.                if \\n[defer]=1 .nr no-top-space 1
+.                if \\n[defer]>0 \{\
+.                   nr no-top-space:\\n[defer] 1
+.                   nr float*tbl:\\n[defer] 1
+.                \}
 .                ie \\n[tbl*boxed] \{\
 .                   ds float*type:\\n[defer] boxed-tbl
 .                   rr float-span
@@ -17064,7 +17114,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .                rr tbl*center
 .             \}
 .             if \\n[float*eqn] \{\
-.                if \\n[defer]=1 .nr no-top-space 1
+.                if \\n[defer]=1 .nr no-top-space:\\n[defer] 1
 .                ds float*type:\\n[defer] eqn
 .             \}
 .             if \\n[float*pic] \
@@ -17094,6 +17144,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       rr dn-save
 .       ch FOOTER \\n[#VARIABLE_FOOTER_POS]u
 .       ch FN_OVERFLOW_TRAP -\\n[#FN_OVERFLOW_TRAP_POS]u
+.       vpt 0
 .       if !'\\*[float-adj]'' .sp \\*[float-adj]
 .       if \\n[.u] .nr fill 1
 .       if \\n[@TOP] \{\
@@ -17183,6 +17234,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       rm FLOAT*DIV
 .       if !'\\*[float-adj]'' \
 .          if !\\n[no-adjust] .sp -\\*[float-adj]
+.       vpt
 .       if !\\n[#NO_SHIM] \
 .          if !\\n[@no-shim] .SHIM
 .       rm float-adj
@@ -18969,11 +19021,12 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       nr #LISTS_LEAD \\n[#TOC_LEAD]
 .    if \\n[#PRINT_STYLE]=2 \{\
 .       ie \\n[#LISTS_LEAD_ADJUST]=1 \{\
-.          vs \\n[#LISTS_LEAD]u
+.          nr #DOC_LEAD \\n[#LISTS_LEAD]
 .          DOC_LEAD_ADJUST
+.          TRAPS
 .       \}
 .       el \{\
-.          vs \\n[#LISTS_LEAD]u
+.          nr #DOC_LEAD \\n[#LISTS_LEAD]
 .          DOC_LEAD_ADJUST OFF
 .       \}
 .    \}
@@ -19263,7 +19316,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .ds $LISTS_PN \\*[ST102]\F[\\*[$LISTS_PN_FAM]]\f[\\*[$LISTS_PN_FT]]\
 \s[\\n[#LISTS_PS]u]^\\*[ST102X]\\*[ST103]\s[\\\\*[$LISTS_PN_SIZE_CHANGE]]\
-\|\|\|\h'\w'0'u*\\\\n[#LISTS_PN_PADDING]u'\\*[ST103X]
+\h'.2n'\h'\w'0'u*\\\\n[#LISTS_PN_PADDING]u'\\*[ST103X]
 \#
 .ds $LISTS_PN_TYPEWRITE \\*[ST102]^\\*[ST102X]\\*[ST103]\|\
 \h'\w'0'u*\\\\n[#LISTS_PN_PADDING]u'\\*[ST103X]
@@ -19353,19 +19406,17 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .MAC TS END
 .    br
-.    ie \\n[@TOP] \
-.       RESTORE_SPACE
-.    el .if \\n[.t]=1 .sp \\n[.t]u
 .    rr tbl*have-header
 .    rr float*tbl
 .    rr tbl*boxed
 .    if '\\n[.z]'FLOAT*DIV' .nr float*tbl 1
 .    if !'\\n[.z]'FLOAT*DIV' \{\
 .       if \\n[.t]=1 \{\
-.          if !\\n[@TOP] \{\
+.          ie !\\n[@TOP] \{\
 .             ie \\n[#COLUMNS] .COL_NEXT internal
 .             el .NEWPAGE
 .          \}
+.          el .RESTORE_SPACE
 .       \}
 .    \}
 .    rr tbl*boxed
@@ -22360,7 +22411,7 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 \#   [ -L -| -R | -C | -I <indent> ] \
 \#     <image file> <width> <height> \
 \#     [ SCALE <factor> ] [ ADJUST +|-<vertical shift> ] [ TARGET <pdf target> ] \
-\#     [ NO_SHIM ]
+\#     [ NO_SHIM ] [ NO_FLEX ]
 \# *Function:
 \#   Allows embedding of PDF images with the same arguments as PSPIC
 \#   plus SCALE and ADJUST options.
@@ -22442,12 +22493,12 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .          shift 2
 .       \}
 .       if '\\$1'NO_SHIM' \{\
-.          if !'\\n[.z]'FLOAT*DIV' .nr pdf-image*no-shim 1
+.          if !'\\n[.z]'FLOAT*DIV' .nr pdf-img*no-shim 1
 .          nr @no-shim 1
 .          shift 1
 .       \}
 .       if '\\$1'NO_FLEX' \{\
-.          if !'\\n[.z]'FLOAT*DIV' .nr pdf-image*no-flex 1
+.          nr pdf-img*no-flex 1
 .          nr @no-flex 1
 .          shift 1
 .       \}
@@ -22598,7 +22649,9 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .    if !'\\*[pdf-img*caption-short]'' .ds short -short
 .    ie !'\\*[pdf-img*label]'' \
 .       TO_FIGURES "\\*[pdf-img*label]" "\\*[pdf-img*caption\\*[short]]"
-.    el .TO_FIGURES "\\*[pdf-img*caption\\*[short]]"
+.    el \
+.       if !'\\*[pdf-img*caption\\*[short]]'' \
+.          TO_FIGURES "\\*[pdf-img*caption\\*[short]]"
 .    if !\\n[pdf-img:float] \{\
 .       ie !\\n[#NO_SHIM] \
 .          if !\\n[pdf-img*no-shim] .SHIM
