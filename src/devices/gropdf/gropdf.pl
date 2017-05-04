@@ -791,7 +791,11 @@ sub do_x
 		    my $t=$1;
 		    $t=~s/\\\) /\\\\\) /g;
 		    $t=~s/\\e/\\\\/g;
-		    my @xwds=split(' ',"<< $t >>");
+		    $t=~m/(^.*\/Title \()(.*)(\).*)/;
+		    my ($pre,$title,$post)=($1,$2,$3);
+		    $title=~s/(?<!\\)\(/\\\(/g;
+		    $title=~s/(?<!\\)\)/\\\)/g;
+		    my @xwds=split(' ',"<< $pre$title$post >>");
 		    my $out=ParsePDFValue(\@xwds);
 
 		    my $this=[$out,[]];
@@ -3077,11 +3081,11 @@ sub do_V
     {
 	$xpos=substr($ahead[0],1)/$unitwidth;
 
+	$nomove=$pendmv=0;
 	@ahead=();
 
     }
 
-#    $nomove=$pendmv=0;
     $poschg=1;
 }
 
