@@ -1,3 +1,31 @@
+2017-05-09  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Package `ghostscript' 9.21 renamed some fonts installed in
+	`/usr/share/ghostscript/9.21/Resource/Font', e.g. URWGothicL-Demi
+	renamed to URWGothic-Demi, and droped the installation of URW
+	fonts in `/usr/share/fonts/type1/gsfonts/', breaking font
+	generation in `font/devpdf/util/BuildFoundries.pl'.
+
+	* m4/groff.m4 (GROFF_URW_FONTS_PATH): New option
+	`--with-urw-fonts-dir' to pass a custom path to URW fonts.
+	(GROFF_URW_FONTS): search the presence of URW fonts by checking if
+	file `a010013l.pfb' exists in the paths given by `gs -h', in the
+	default paths used in `Foundry.in' and in the path given with
+	option `--with-urw-fonts-dir'.
+	(GROFF_URW_FONTS_CHECK): print a warning at the end of the
+	configuration phase if no URW fonts were found.
+
+	* configure.ac: call new macros `GROFF_URW_FONTS_PATH',
+	`GROFF_URW_FONTS' and `GROFF_URW_FONTS_CHECK'.
+
+	* font/devpdf/Foundry.in: add new basic fonts names and pass
+	custom URW fonts path `urwfontsdir'.
+
+	* font/devpdf/devpdf.am: subsitute `urwfontsdir' in `Foundry'
+	generation.
+
+	Fixes https://savannah.gnu.org/bugs/?50786
+
 2017-05-04  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Fixes for gropdf

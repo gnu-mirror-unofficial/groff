@@ -1,5 +1,5 @@
 # Autoconf macros for groff.
-# Copyright (C) 1989-2014  Free Software Foundation, Inc.
+# Copyright (C) 1989-2016, 2017  Free Software Foundation, Inc.
 #
 # This file is part of groff.
 #
@@ -321,6 +321,62 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
    AC_SUBST([make_pdfexamples])
    AC_SUBST([make_install_pdfexamples])
    AC_SUBST([make_uninstall_pdfexamples])])
+
+# Option to configure path to URW fonts
+AC_DEFUN([GROFF_URW_FONTS_PATH],
+   [AC_ARG_WITH([urw-fonts-dir],
+     [AS_HELP_STRING([--with-urw-fonts-dir=DIR],
+       [Search for URW fonts in this directory])],
+     [urwfontsdir="$withval"])
+   AC_SUBST(urwfontsdir)])
+
+# Check if URW fonts are available, either in the paths given by `gs
+# -h', in /usr/share/fonts/type1/gsfonts/ ,
+# /opt/local/share/fonts/urw-fonts (where font/devpdf/Foundry.in
+# expect them), or in the custom path passed to configure.
+AC_DEFUN([GROFF_URW_FONTS],
+  [AC_MSG_CHECKING([whether URW fonts in pfb format are available])
+  _list_paths=`gs -h | grep -A 16 "Search path" | grep "^[ ]" | tr : ' ' `
+  _list_paths="$_list_paths /usr/share/fonts/type1/gsfonts/ \
+               /opt/local/share/fonts/urw-fonts/"
+  if test -n "$urwfontsdir"; then
+    _list_paths="$ _list_paths $urwfontsdir"
+  fi
+  groff_have_urw_fonts=no
+  for k in $_list_paths; do
+    if test -f $k/a010013l.pfb; then
+      AC_MSG_RESULT([found in $k])
+      groff_have_urw_fonts=yes
+      break
+    fi
+  done 
+  if test $groff_have_urw_fonts = no; then
+    AC_MSG_RESULT([no])
+  fi
+  ])
+
+# Warning if URW fonts were not found
+AC_DEFUN([GROFF_URW_FONTS_CHECK],
+  [if test "$groff_have_urw_fonts" = no; then
+  AC_MSG_NOTICE([
+  No URW fonts in .pfb format were found on your system, URW fonts
+  generation for `devpdf' will not work properly.  These fonts can be
+  downloaded here:
+
+    http://downloads.ghostscript.com/public/fonts/urw-base35-v1.10.zip
+
+  By default groff will search these fonts in the paths given by `gs
+  -h' and in these 2 default directories:
+  `/usr/share/fonts/type1/gsfonts/' and
+  `/opt/local/share/fonts/urw-fonts/' (paths used by
+  font/devpdf/Foundry.in).  You can also pass the option
+  `--with-urw-fonts-dir=DIR' to 'configure' to set a custom path.  You
+  would need to re-run the 'configure' script after installing these
+  fonts.
+  
+  ])
+  fi
+  ])
 
 
 # Check whether pnmtops can handle the -nosetpage option.

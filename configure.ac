@@ -161,6 +161,9 @@ GROFF_TRADITIONAL_CPP
 # checks for operating system services
 GROFF_WCOREFLAG
 
+# URW fonts extra dir
+GROFF_URW_FONTS_PATH
+
 # other random stuff
 GROFF_BROKEN_SPOOLER_FLAGS
 GROFF_PAGE
@@ -177,6 +180,10 @@ GROFF_HAVE_TEST_EF_OPTION
 GROFF_BASH
 gl_GLIBC21
 gl_LOCALCHARSET
+
+# checks for presence of URW fonts (requires ghostscript, which is
+# checked in GROFF_HTML_PROGRAMS
+GROFF_URW_FONTS
 
 AM_CONDITIONAL([BUILD_WINSCRIPTS], [test -n "$make_winscripts"])
 
@@ -230,6 +237,9 @@ echo "\
  Doc build         : ${doc} "
 fi
 echo "\
+ URW fonts for pdf : $groff_have_urw_fonts"
+echo "\
 ----------------------------------------------------------------------"
 
 GROFF_APPRESDIR_CHECK
+GROFF_URW_FONTS_CHECK

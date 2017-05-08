@@ -106,7 +106,7 @@ font/devpdf/DESC: $(devpdf_srcdir)/DESC.in
 
 font/devpdf/Foundry:
 	@$(RM) $(top_builddir)/font/devpdf/Foundry
-	@cat $(devpdf_srcdir)/Foundry.in >$(top_builddir)/font/devpdf/Foundry
+	@sed "s|[@]urwfontsdir[@]|$(urwfontsdir)|" $(devpdf_srcdir)/Foundry.in >$(top_builddir)/font/devpdf/Foundry
 
 all: font/devpdf/build_font_files
 
