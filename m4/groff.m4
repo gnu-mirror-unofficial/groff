@@ -1621,3 +1621,39 @@ AC_DEFUN([GROFF_BASH],
      BASH_PROG=/bin/sh
   fi
   AC_SUBST([BASH_PROG])])
+
+# Looking for uchardet library, used by preconv.
+AC_DEFUN([GROFF_UCHARDET],
+  [AC_ARG_WITH([uchardet],
+               AS_HELP_STRING([--with-uchardet],
+                              [Build `preconv' with uchardet library for file \
+                               encoding automatic detection [=auto|no|yes]]))
+   AS_IF([test "x$with_uchardet" != "xno"],
+         [PKG_CHECK_MODULES([UCHARDET],
+                            [uchardet >= 0.0.1],
+                            [AC_DEFINE([HAVE_UCHARDET],
+                                       [1],
+                                       [uchardet library availability])
+                             groff_have_uchardet=yes],
+                            [if test "x$with_uchardet" = "xyes"; then
+                               AC_MSG_FAILURE([Could not found uchardet library])
+                             else
+                               AC_MSG_WARN([uchardet library not found, preconv \
+                                            might not work properly])
+                             fi
+                             groff_have_uchardet=no])],
+          [groff_have_uchardet=no]
+          )])
+
+# Warning if uchardet library was not found
+AC_DEFUN([GROFF_UCHARDET_CHECK],
+  [if test "x$groff_have_uchardet" = "xno" -a "x$with_uchardet" != "xno"; then
+  AC_MSG_WARN([
+  uchardet library was not found, preprocessor `preconv', which uses it to detect
+  the input file encoding, might not work properly (to check how and in which
+  order `preconv' tries to determine the file encoding see its man page).
+  ])
+  fi
+  ])
+
+

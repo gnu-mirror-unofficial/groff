@@ -142,13 +142,20 @@ Otherwise, check whether the input starts with a
 If found, use it.
 .
 .IP 3.
-Finally, check whether there is a known
+Otherwise, check whether there is a known
 .I coding tag
 (see below) in either the first or second input line.
 .
 If found, use it.
 .
-.IP 4.
+.IP 4
+Finally, if
+.BR uchardet
+library
+(an encoding detector library available on most major distributions)
+is available on the system, use it to try to detect the encoding of the file.
+.
+.IP 5.
 If everything fails, use a default encoding as given with option
 .BR \-D ,
 by the current locale, or \[oq]latin1\[cq] if the locale is set to

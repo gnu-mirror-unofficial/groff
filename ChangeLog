@@ -1,5 +1,35 @@
 2017-07-12  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
+	Use uchardet library in `preconv' to detect input file encoding
+
+	* m4/groff.m4 (GROFF_UCHARDET): new macro that use pkg-config to
+	check if uchardet library is available and define new option
+	`--with-uchardet':
+	- If `yes' is passed and uchardet is not found, configure fails.
+	- If `no' is passed we don't use uchardet and don't display any
+	warning.
+	- If `auto' (or any other option) is passed of if --with-uchardet
+	is not passed, we use uchardet if available, otherwise the build
+	goes on but a warning is displayed at the end of the configuration
+	phase.
+
+	* configure.ac: use pkg-config and `GROFF_UCHARDET' to detect the
+	presence of uchardet library.
+
+	* src/preproc/preconv/preconv.am: link against uchardet library if
+	available.
+
+	* src/preproc/preconv/preconv.cpp (detect_file_encoding): new
+	function that uses uchardet library to detect input file encoding.
+	(do_file): `detect_file_encoding'.
+
+	* src/preproc/preconv/preconv.1.man: update `preconv'
+	documentation.
+
+	See https://savannah.gnu.org/bugs/?51330
+
+2017-07-12  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
 	Add gnulib module fprintf-posix
 
 	* bootstrap.conf: do it.

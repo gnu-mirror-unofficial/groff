@@ -87,6 +87,8 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MKDIR_P
 GROFF_PROG_XPMTOPPM
+PKG_PROG_PKG_CONFIG
+GROFF_UCHARDET
 
 # use a dummy substitution if no csh hack is necessary to avoid errors
 # with non-GNU sed programs
@@ -219,27 +221,29 @@ AC_OUTPUT
 echo "
 ${PACKAGE_NAME} version ${PACKAGE_VERSION}
 ----------------------------------------------------------------------
- Prefix            : ${prefix}
- Compiler          : ${CC} ${CFLAGS} ${CPPFLAGS}"
+ Prefix                          : ${prefix}
+ Compiler                        : ${CC} ${CFLAGS} ${CPPFLAGS}"
 if test "x$groff_no_x" = "xyes"; then
 echo "\
- X11 support       : no"
+ X11 support                     : no"
 else
 echo "\
- X11 support       : yes
- X11 resources dir : $appresdir"
+ X11 support                     : yes
+ X11 resources dir               : $appresdir"
 fi
 if test "x$doc" = x; then
 echo "\
- Doc build         : no"
+ Doc build                       : no"
 else
 echo "\
- Doc build         : ${doc} "
+ Doc build                       : ${doc} "
 fi
 echo "\
- URW fonts for pdf : $groff_have_urw_fonts"
+ URW fonts for pdf               : $groff_have_urw_fonts
+ Use uchardet library for preconv: $groff_have_uchardet"
 echo "\
 ----------------------------------------------------------------------"
 
 GROFF_APPRESDIR_CHECK
 GROFF_URW_FONTS_CHECK
+GROFF_UCHARDET_CHECK

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-/* Copyright (C) 2005-2014  Free Software Foundation, Inc.
+/* Copyright (C) 2005-2017  Free Software Foundation, Inc.
      Written by Werner Lemberg (wl@gnu.org)
 
 This file is part of groff.
@@ -22,6 +22,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <assert.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <sys/stat.h>
+#ifdef HAVE_UCHARDET
+#include <uchardet/uchardet.h>
+#endif
 #include "errarg.h"
 #include "error.h"
 #include "localcharset.h"
@@ -997,6 +1001,67 @@ check_coding_tag(FILE *fp, string &data)
   return NULL;
 }
 
+char *
+detect_file_encoding(FILE *fp)
+{
+#ifdef HAVE_UCHARDET
+  uchardet_t ud;
+  struct stat stat_buf;
+  size_t len, read_bytes;
+  char *data;
+  int res, current_position;
+  const char *charset;
+  char *ret;
+
+  current_position = ftell(fp);
+  /* due to BOM and tag detection we are not at the begining of the file */
+  rewind(fp);
+  if (fstat(fileno(fp), &stat_buf) != 0) {
+    fprintf(stderr, "fstat: %s\n", strerror(errno));
+    return NULL;
+  }
+  len = stat_buf.st_size;
+  if (debug_flag)
+    fprintf(stderr, "  len: %zu\n", len);  
+  if (len == 0)
+    return NULL;
+  data = (char *)calloc(len, 1);
+  read_bytes = fread(data, 1, len, fp);
+  if (read_bytes == 0) {
+    fprintf(stderr, "fread: %s\n", strerror(errno));
+    return NULL;
+  }
+  /* We rewind back to the original position */
+  if (fseek(fp, current_position, SEEK_SET) != 0) {
+    fprintf(stderr, "Fatal error: fseek: %s\n", strerror(errno));
+    return NULL;
+  }
+  ud = uchardet_new();
+  res = uchardet_handle_data(ud, data, len);
+  if (res != 0) {
+    fprintf(stderr, "uchardet_handle_data: %d\n", res);
+    uchardet_delete(ud);
+    return NULL;
+  }
+  if (debug_flag)
+    fprintf(stderr, "  uchardet read: %zu bytes\n", read_bytes);
+  uchardet_data_end(ud);
+  charset = uchardet_get_charset(ud);
+  if (debug_flag)
+    fprintf(stderr, "  charset: %s\n", charset);
+  if (charset) {
+    ret = (char *)calloc(strlen(charset) + 1, 1);
+    strcpy(ret, charset);
+  }
+  uchardet_delete(ud);
+  free(data);
+
+  return ret;
+#else /* not HAVE_UCHARDET */
+  return NULL;
+#endif /* not HAVE_UCHARDET */
+}
+
 // ---------------------------------------------------------
 // Handle an input file.  If filename is `-' handle stdin.
 //
@@ -1025,6 +1090,7 @@ do_file(const char *filename)
   const char *BOM_encoding = get_BOM(fp, BOM, data);
   // Determine the encoding.
   char *encoding;
+  int must_free_encoding = 0;
   if (user_encoding[0]) {
     if (debug_flag) {
       fprintf(stderr, "  user-specified encoding `%s', "
@@ -1046,8 +1112,15 @@ do_file(const char *filename)
     char *file_encoding = check_coding_tag(fp, data);
     if (!file_encoding) {
       if (debug_flag)
-	fprintf(stderr, "  no file encoding\n");
-      file_encoding = default_encoding;
+	fprintf(stderr, "  no encoding tag\n");
+      file_encoding = detect_file_encoding(fp);
+      if (!file_encoding) {
+        if (debug_flag)
+          fprintf(stderr, "  could not detect encoding with uchardet\n");
+        file_encoding = default_encoding;
+      }
+      else
+        must_free_encoding = 1;
     }
     else
       if (debug_flag)
@@ -1056,6 +1129,8 @@ do_file(const char *filename)
   }
   strncpy(encoding_string, encoding, MAX_VAR_LEN - 1);
   encoding_string[MAX_VAR_LEN - 1] = 0;
+  if (must_free_encoding)
+    free(encoding);
   encoding = encoding_string;
   // Translate from MIME & Emacs encoding names to locale encoding names.
   encoding = emacs2mime(encoding_string);
@@ -1143,13 +1218,18 @@ main(int argc, char **argv)
 			    "dD:e:hrv", long_options, NULL)) != EOF)
     switch (opt) {
     case 'v':
-      printf("GNU preconv (groff) version %s %s iconv support\n",
+      printf("GNU preconv (groff) version %s %s iconv support and %s uchardet support\n",
 	     Version_string,
 #ifdef HAVE_ICONV
 	     "with"
 #else
 	     "without"
 #endif /* HAVE_ICONV */
+#ifdef HAVE_UCHARDET
+             "with"
+#else
+             "without"
+#endif /* HAVE_UCHARDET */
 	    );
       exit(0);
       break;
