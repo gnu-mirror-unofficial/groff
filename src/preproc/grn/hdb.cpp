@@ -6,6 +6,10 @@
  * gremlin picture editor.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdlib.h>
 #include "gprint.h"
 #include <string.h>

@@ -15,6 +15,9 @@ for more details.
 The GNU General Public License version 2 (GPL2) is available in the
 internet at <http://www.gnu.org/licenses/gpl-2.0.txt>. */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 #include <math.h>
 
 int is_prime(unsigned n)

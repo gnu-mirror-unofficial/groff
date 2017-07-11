@@ -3,6 +3,9 @@
  *
  * accept dvi function calls and translate to X
  */
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <X11/Xos.h>
 #include <X11/IntrinsicP.h>
