@@ -2508,6 +2508,8 @@ void do_input_trap(int continued)
   curenv->input_trap_count = 0;
   if (continued)
     curenv->continued_input_trap = 1;
+  else
+    curenv->continued_input_trap = 0;
   int n;
   if (has_arg() && get_integer(&n)) {
     if (n <= 0)

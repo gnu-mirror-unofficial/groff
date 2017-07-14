@@ -1,5 +1,17 @@
 2017-08-25  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
+	Fix bug: `.itc' request breaks subsequent `.it' requests.
+
+	See bug at: https://savannah.gnu.org/bugs/?51376.  Using `.itc'
+	lets all later uses of `.it' behave like `.itc', that is,
+	interrupted text line ending with \c is not counted as a separate
+	line.
+
+	* env.cpp: Restore input_trap state to normal when '.it' is
+	called.
+
+2017-08-25  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
 	Fix a part of a virtual (pseudo) structure in "tty.tmac".
 
 	* tmac/tty.tmac: Fix warning:  ".../git/groff/tmac/tty.tmac:19:
