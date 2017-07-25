@@ -2946,6 +2946,7 @@ sub PutLine
     {
 	if (scalar(@lin) == 1 and (!defined($lin[0]->[1]) or $lin[0]->[1] == 0))
 	{
+	    $lin[0]->[0]=~s/\\\d{1,3}/\\${&}/g;
 	    $stream.="($lin[0]->[0]) Tj\n";
 	}
 	else
@@ -2954,7 +2955,12 @@ sub PutLine
 
 	    foreach my $wd (@lin)
 	    {
-		$stream.="($wd->[0]) " if defined($wd->[0]);
+		if (defined($wd->[0]))
+		{
+		    $wd->[0]=~s/\\\d{1,3}/\\${&}/g;
+		    $stream.="($wd->[0]) ";
+		}
+		
 		$stream.="$wd->[1] " if defined($wd->[1]) and $wd->[1] != 0;
 	    }
 
@@ -2965,6 +2971,7 @@ sub PutLine
     {
 	if (scalar(@lin) == 1 and (!defined($lin[0]->[1]) or $lin[0]->[1] == 0))
 	{
+	    $lin[0]->[0]=~s/\\\d{1,3}/\\${&}/g;
 	    $stream.="0 Tw ($lin[0]->[0]) Tj\n";
 	}
 	else
@@ -2975,7 +2982,12 @@ sub PutLine
 
 		foreach my $wd (@lin)
 		{
-		    $stream.="($wd->[0]) " if defined($wd->[0]);
+		    if (defined($wd->[0]))
+		    {
+			$wd->[0]=~s/\\\d{1,3}/\\${&}/g;
+			$stream.="($wd->[0]) ";
+		    }
+		    
 		    $stream.="$wd->[1] " if defined($wd->[1]) and $wd->[1] != 0;
 		}
 
@@ -3014,6 +3026,7 @@ sub PutLine
 		foreach my $wd (@lin)
 		{
 		    my $wwt=$wd->[1]||0;
+		    $wd->[0]=~s/\\\d{1,3}/\\${&}/g;
 
 		    while ($wwt <= $wt+.1)
 		    {
