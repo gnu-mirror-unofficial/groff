@@ -1,3 +1,13 @@
+2017-07-31  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	See bug at: https://savannah.gnu.org/bugs/?51568
+	
+	* src/devices/gropdf/gropdf: previous 'fix' was too narrow, all
+	'\' characters should be escaped. Also there was an unwanted 
+	interaction with code in routine 'do_t'. Sometimes, do_C, when 
+	the named glyph is mapped to a chr < 32, this is encoded as octal
+	\nnn, so in this case the '\' must not be escaped.
+	
 2017-07-25  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	If input text contained string which could be interpreted as

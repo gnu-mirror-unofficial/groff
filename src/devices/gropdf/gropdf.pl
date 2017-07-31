@@ -2942,11 +2942,18 @@ sub PutLine
     $pendmv-=$nomove;
     $lin[$#lin]->[1]=-$pendmv/$cftsz if ($pendmv != 0);
 
+    foreach my $wd (@lin)
+    {
+	next if $wd->[0]=~s/\\\|!\|/\\/g;
+	$wd->[0]=~s/\\/\\\\/g;
+	$wd->[0]=~s/\(/\\(/g;
+	$wd->[0]=~s/\)/\\)/g;
+    }
+    
     if (0)
     {
 	if (scalar(@lin) == 1 and (!defined($lin[0]->[1]) or $lin[0]->[1] == 0))
 	{
-	    $lin[0]->[0]=~s/\\\d{1,3}/\\${&}/g;
 	    $stream.="($lin[0]->[0]) Tj\n";
 	}
 	else
@@ -2955,12 +2962,7 @@ sub PutLine
 
 	    foreach my $wd (@lin)
 	    {
-		if (defined($wd->[0]))
-		{
-		    $wd->[0]=~s/\\\d{1,3}/\\${&}/g;
-		    $stream.="($wd->[0]) ";
-		}
-		
+		$stream.="($wd->[0]) " if defined($wd->[0]);
 		$stream.="$wd->[1] " if defined($wd->[1]) and $wd->[1] != 0;
 	    }
 
@@ -2971,7 +2973,6 @@ sub PutLine
     {
 	if (scalar(@lin) == 1 and (!defined($lin[0]->[1]) or $lin[0]->[1] == 0))
 	{
-	    $lin[0]->[0]=~s/\\\d{1,3}/\\${&}/g;
 	    $stream.="0 Tw ($lin[0]->[0]) Tj\n";
 	}
 	else
@@ -2982,12 +2983,7 @@ sub PutLine
 
 		foreach my $wd (@lin)
 		{
-		    if (defined($wd->[0]))
-		    {
-			$wd->[0]=~s/\\\d{1,3}/\\${&}/g;
-			$stream.="($wd->[0]) ";
-		    }
-		    
+		    $stream.="($wd->[0]) " if defined($wd->[0]);
 		    $stream.="$wd->[1] " if defined($wd->[1]) and $wd->[1] != 0;
 		}
 
@@ -3026,7 +3022,6 @@ sub PutLine
 		foreach my $wd (@lin)
 		{
 		    my $wwt=$wd->[1]||0;
-		    $wd->[0]=~s/\\\d{1,3}/\\${&}/g;
 
 		    while ($wwt <= $wt+.1)
 		    {
@@ -3118,7 +3113,7 @@ sub TextWid
     my $txt=shift;
     my $w=0;
     my $ck=0;
-    $txt=~s/^\\(\d\d\d)/chr($1)/e;
+    $txt=~s/^\\\|!\|(\d\d\d)/chr($1)/e;
 
     foreach my $c (split('',$txt))
     {
@@ -3159,9 +3154,6 @@ sub do_t
     $xpos+=($pendmv-$nomove)/$unitwidth;
 
     $stream.="% == '$par'=$wid 'xpos=$xpos\n" if $debug;
-    $par=~s/\\(?!\d\d\d)/\\\\/g;
-    $par=~s/\)/\\)/g;
-    $par=~s/\(/\\(/g;
 
     # $pendmv = 'h' move since last 't'
     # $nomove = width of char(s) added by 'C', 'N' or 'c'
@@ -3289,7 +3281,7 @@ sub FindChar
 	my $ch=$fnt->{GNM}->{$chnm};
 	$ch=RemapChr($ch,$fnt,$chnm) if ($ch > 255);
 
-	return(($ch<32)?sprintf("\\%03o",$ch):chr($ch),$fnt->{WID}->[$ch]*$cftsz);
+	return(($ch<32)?sprintf("\\|!|%03o",$ch):chr($ch),$fnt->{WID}->[$ch]*$cftsz);
     }
     else
     {
