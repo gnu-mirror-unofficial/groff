@@ -2249,29 +2249,29 @@ sub GetType1
 	my $typ=0;
 	my $data='';
 	my $sl=0;
-
+	
 	while ($typ != 3)
-	{
-	    my $chk=sysread($f,$hdr,6);
-
-	    if ($chk < 2)
 	    {
+	    my $chk=sysread($f,$hdr,6);
+		
+	    if ($chk < 2)
+		{
 		# eof($f) uses buffered i/o (since file was open not sysopen)
 		# which screws up next sysread. So this will terminate loop if font
 		# has no terminating section type 3.
 		last if $l3;
 		return(5,$l2,$l3,undef);
-	    }
-
+		}
+		
 	    $typ=ord(substr($hdr,1,1));
-
+		
 	    if ($chk == 6)
 	    {
 		$sl=unpack('L',substr($hdr,2,4));
 		$chk=sysread($f,$data,$sl);
 		return(1,$l2,$l3,undef) if $chk != $sl;
 	    }
-
+		
 	    if ($typ == 1)
 	    {
 		if ($l2 == 0)
@@ -2279,9 +2279,9 @@ sub GetType1
 		    # First text bit(s) must be head
 		    $head.=$data;
 		    $l1+=$sl;
-		}
-		else
-		{
+	    }
+	    else
+	    {
 		    # A text bit after the binary sections must be tail
 		    $tail.=$data;
 		    $l3+=$sl;
@@ -2299,32 +2299,32 @@ sub GetType1
 		return(3,$l2,$l3,undef);
 	    }
 	}
-
+		
 	close($f);
 	return($l1,$l2,$l3,"$head$body$tail");
     }
-
+		
     my (@lines)=(<$f>);
     unshift(@lines,$l);
-
+		    
     close($f);
-
+		    
     Msg(1,"Font file '$file' must be an Adobe type 1 font file") if $lines[0]!~m/\%\!PS.Adobe/i;
     $head=$body=$tail='';
-
+		    
     foreach my $line (@lines)
-    {
+		    {
 	if (!defined($l1))
-	{
+		    {
 	    if (length($line) > 19 and $line=~s/^(currentfile eexec)//)
 	    {
 		$head.=$1;
 		$l1=length($head);
 		redo;
-	    }
-
+		    }
+		    
 	    $head.=$line;
-
+		
 	    if ($line=~m/eexec$/)
 	    {
 		#				chomp($head);
@@ -2351,7 +2351,7 @@ sub GetType1
 	    $tail.=$line;
 	}
     }
-
+    
     $l1=length($head);
     $l2=length($body);
     $l3=length($tail);
@@ -2944,10 +2944,11 @@ sub PutLine
 
     foreach my $wd (@lin)
     {
-	next if $wd->[0]=~s/\\\|!\|/\\/g;
+	next if !defined($wd->[0]);
 	$wd->[0]=~s/\\/\\\\/g;
 	$wd->[0]=~s/\(/\\(/g;
 	$wd->[0]=~s/\)/\\)/g;
+	$wd->[0]=~s/!\|!\|/\\/g;
     }
     
     if (0)
@@ -3113,7 +3114,7 @@ sub TextWid
     my $txt=shift;
     my $w=0;
     my $ck=0;
-    $txt=~s/^\\\|!\|(\d\d\d)/chr($1)/e;
+    $txt=~s/^!\|!\|(\d\d\d)/chr($1)/e;
 
     foreach my $c (split('',$txt))
     {
@@ -3281,7 +3282,7 @@ sub FindChar
 	my $ch=$fnt->{GNM}->{$chnm};
 	$ch=RemapChr($ch,$fnt,$chnm) if ($ch > 255);
 
-	return(($ch<32)?sprintf("\\|!|%03o",$ch):chr($ch),$fnt->{WID}->[$ch]*$cftsz);
+	return(($ch<32)?sprintf("!|!|%03o",$ch):chr($ch),$fnt->{WID}->[$ch]*$cftsz);
     }
     else
     {
