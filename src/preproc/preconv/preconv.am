@@ -19,7 +19,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 bin_PROGRAMS += preconv
-preconv_LDADD = libgroff.a $(LIBM) $(LIBICONV) $(UCHARDET_LIBS)
+preconv_LDADD = libgroff.a $(LIBM) $(LIBICONV) $(UCHARDET_LIBS) lib/libgnu.a
 preconv_SOURCES = src/preproc/preconv/preconv.cpp
 preconv_CPPFLAGS = $(AM_CPPFLAGS) $(UCHARDET_CFLAGS)
 man1_MANS += src/preproc/preconv/preconv.1

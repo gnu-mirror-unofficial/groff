@@ -21,7 +21,7 @@
 bin_PROGRAMS += lkbib
 man1_MANS += src/utils/lkbib/lkbib.1
 EXTRA_DIST += src/utils/lkbib/lkbib.1.man
-lkbib_LDADD = libbib.a libgroff.a $(LIBM)
+lkbib_LDADD = libbib.a libgroff.a $(LIBM) lib/libgnu.a
 lkbib_SOURCES = src/utils/lkbib/lkbib.cpp
 src/utils/lkbib/lkbib.$(OBJEXT): defs.h
 

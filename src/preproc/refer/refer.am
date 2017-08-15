@@ -20,7 +20,7 @@
 
 prefixexecbin_PROGRAMS += refer
 refer_CPPFLAGS = $(AM_CPPFLAGS) -I $(top_srcdir)/src/preproc/refer
-refer_LDADD = libbib.a libgroff.a $(LIBM)
+refer_LDADD = libbib.a libgroff.a $(LIBM) lib/libgnu.a
 refer_SOURCES =  \
   src/preproc/refer/command.cpp \
   src/preproc/refer/ref.cpp \

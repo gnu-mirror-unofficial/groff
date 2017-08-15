@@ -25,7 +25,7 @@
 bin_PROGRAMS += hpftodit
 man1_MANS += src/utils/hpftodit/hpftodit.1
 EXTRA_DIST += src/utils/hpftodit/hpftodit.1.man
-hpftodit_LDADD = libgroff.a $(LIBM)
+hpftodit_LDADD = libgroff.a $(LIBM) lib/libgnu.a
 hpftodit_SOURCES = \
   src/utils/hpftodit/hpftodit.cpp \
   src/utils/hpftodit/hpuni.cpp

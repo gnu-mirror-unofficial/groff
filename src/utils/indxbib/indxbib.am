@@ -24,7 +24,7 @@ indxbib_SOURCES = \
   src/utils/indxbib/indxbib.cpp \
   src/utils/indxbib/signal.c
 src/utils/indxbib/indxbib.$(OBJEXT): defs.h
-indxbib_LDADD = libbib.a libgroff.a $(LIBM)
+indxbib_LDADD = libbib.a libgroff.a $(LIBM) lib/libgnu.a
 PREFIXMAN1 += src/utils/indxbib/indxbib.1
 EXTRA_DIST += \
   src/utils/indxbib/indxbib.1.man \

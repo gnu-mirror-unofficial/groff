@@ -1,3 +1,33 @@
+2017-08-15  Ingo Schwarze  <schwarze@usta.de>
+
+	Fix build if `configure' check for `fprintf-posix' fails.
+
+	See bug at: https://savannah.gnu.org/bugs/?51554.  If tests for
+	posix compliance of fprintf from `gnulib_m4/fprintf-posix.m4'
+	fail, a replacement function of `fprintf' is used.  Consequently,
+	all executables that use this function must link against the
+	gnulib (`libgnu.a').  The bug was introduced by commit
+	fa41eeba06987a12bc0434f8b51896d4618a3997.
+
+	* src/devices/xditview/xditview.am
+	* src/preproc/eqn/eqn.am
+	* src/preproc/pic/pic.am
+	* src/preproc/preconv/preconv.am
+	* src/preproc/refer/refer.am
+	* src/preproc/soelim/soelim.am
+	* src/preproc/tbl/tbl.am
+	* src/utils/addftinfo/addftinfo.am
+	* src/utils/hpftodit/hpftodit.am
+	* src/utils/indxbib/indxbib.am
+	* src/utils/lkbib/lkbib.am
+	* src/utils/lookbib/lookbib.am
+	* src/utils/pfbtops/pfbtops.am
+	* src/utils/tfmtodit/tfmtodit.am
+	* src/utils/xtotroff/xtotroff.am: link against libgnu.a
+
+	* INSTALL.REPO: recommend the autoconf and automake versions used
+	during automake migration rather than the minimum versions.
+
 2017-08-04  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	See bug at: https://savannah.gnu.org/bugs/?51568
