@@ -2,7 +2,7 @@
 #
 #	gropdf		: PDF post processor for groff
 #
-# Copyright (C) 2011-2015 Free Software Foundation, Inc.
+# Copyright (C) 2011-2017 Free Software Foundation, Inc.
 #      Written by Deri James <deri@chuzzlewit.myzen.co.uk>
 #
 # This file is part of groff.
@@ -2236,122 +2236,11 @@ sub GetType1
 
     OpenFile(\$f,$fontdir,"$file");
     Msg(1,"Failed to open '$file'") if !defined($f);
-    binmode($f);
 
-    my $l=<$f>;
+    $head=GetChunk($f,1,"currentfile eexec");
+    $body=GetChunk($f,2,"00000000") if !eof($f);
+    $tail=GetChunk($f,3,"cleartomark") if !eof($f);
 
-    if (substr($l,0,1) eq "\x80")
-    {
-	# PFB file
-	sysseek($f,0,0);
-	my $hdr='';
-	$l1=$l2=$l3=0;
-	my $typ=0;
-	my $data='';
-	my $sl=0;
-	
-	while ($typ != 3)
-	    {
-	    my $chk=sysread($f,$hdr,6);
-		
-	    if ($chk < 2)
-		{
-		# eof($f) uses buffered i/o (since file was open not sysopen)
-		# which screws up next sysread. So this will terminate loop if font
-		# has no terminating section type 3.
-		last if $l3;
-		return(5,$l2,$l3,undef);
-		}
-		
-	    $typ=ord(substr($hdr,1,1));
-		
-	    if ($chk == 6)
-	    {
-		$sl=unpack('L',substr($hdr,2,4));
-		$chk=sysread($f,$data,$sl);
-		return(1,$l2,$l3,undef) if $chk != $sl;
-	    }
-		
-	    if ($typ == 1)
-	    {
-		if ($l2 == 0)
-		{
-		    # First text bit(s) must be head
-		    $head.=$data;
-		    $l1+=$sl;
-	    }
-	    else
-	    {
-		    # A text bit after the binary sections must be tail
-		    $tail.=$data;
-		    $l3+=$sl;
-		}
-	    }
-	    elsif ($typ == 2)
-	    {
-		return(2,$l2,$l3,undef) if $l3; # Found a binary bit after the tail
-		$body.=$data;
-		$l2+=$sl;
-	    }
-	    elsif ($typ != 3)
-	    {
-		# What segment type is this!
-		return(3,$l2,$l3,undef);
-	    }
-	}
-		
-	close($f);
-	return($l1,$l2,$l3,"$head$body$tail");
-    }
-		
-    my (@lines)=(<$f>);
-    unshift(@lines,$l);
-		    
-    close($f);
-		    
-    Msg(1,"Font file '$file' must be an Adobe type 1 font file") if $lines[0]!~m/\%\!PS.Adobe/i;
-    $head=$body=$tail='';
-		    
-    foreach my $line (@lines)
-		    {
-	if (!defined($l1))
-		    {
-	    if (length($line) > 19 and $line=~s/^(currentfile eexec)//)
-	    {
-		$head.=$1;
-		$l1=length($head);
-		redo;
-		    }
-		    
-	    $head.=$line;
-		
-	    if ($line=~m/eexec$/)
-	    {
-		#				chomp($head);
-		#				$head.="\x0d";
-		$l1=length($head);
-	    }
-	}
-	elsif (!defined($l2))
-	{
-	    #$line=~s/(\0\0)0+$/&1/;
-	    if ($line=~m/^0+$/)
-	    {
-		$l2=length($body);
-		$tail=$line;
-	    }
-	    else
-	    {
-		chomp($line);
-		$body.=pack('H*',$line);
-	    }
-	}
-	else
-	{
-	    $tail.=$line;
-	}
-    }
-    
     $l1=length($head);
     $l2=length($body);
     $l3=length($tail);
@@ -2359,6 +2248,95 @@ sub GetType1
     return($l1,$l2,$l3,"$head$body$tail");
 }
 
+sub GetChunk
+{
+    my $F=shift;
+    my $segno=shift;
+    my $ascterm=shift;
+    my ($type,$hdr,$chunk,@msg);
+    binmode($F);
+    my $enc="ascii";
+    
+    while (1)
+    {
+	# There may be multiple chunks of the same type
+	
+	my $ct=read($F,$hdr,2);
+	
+	if ($ct==2)
+	{
+	    if (substr($hdr,0,1) eq "\x80")
+	    {
+		# binary chunk
+		
+		my $chunktype=ord(substr($hdr,1,1));
+		$enc="binary";
+		
+		if (defined($type) and $type != $chunktype)
+		{
+		    seek($F,-2,1);
+		    last;
+		}
+		
+		$type=$chunktype;
+		return if $chunktype == 3;
+		
+		$ct=read($F,$hdr,4);
+		
+		Msg(1,"Failed to read binary segment length"), return if $ct != 4;
+		
+		my $sl=unpack('L',$hdr);
+		my $data;
+		my $chk=read($F,$data,$sl);
+		
+		Msg(1 ,"Failed to read binary segment"), return if $chk != $sl;
+		
+		$chunk.=$data;
+	    }
+	    else
+	    {
+		# ascii chunk
+		
+		my $hex=0;
+		seek($F,-2,1);
+		my $ct=0;
+		
+		while (1)
+		{
+		    my $lin=<$F>;
+		    
+		    last if !$lin;
+		    
+		    $hex=1,$enc.=" hex" if $segno == 2 and !$ct and $lin=~m/^[A-F0-9a-f]{4,4}/;
+		    
+		    if ($segno !=2 and $lin=~m/^(.*$ascterm\n?)(.*)/)
+		    {
+			$chunk.=$1;
+			seek($F,-length($2)-1,1) if $2;
+			last;
+		    }
+		    elsif ($segno == 2 and $lin=~m/^(.*?)($ascterm.*)/)
+		    {
+			$chunk.=$1;
+			seek($F,-length($2)-1,1) if $2;
+			last;
+		    }
+		    
+		    chomp($lin), $lin=pack('H*',$lin) if $hex;
+		    $chunk.=$lin; $ct++;
+		}
+		
+		last;
+	    }
+	}
+	else
+	{
+	    push(@msg,"Failed to read 2 header bytes");
+	}
+    }
+    
+    return $chunk;
+}
 
 sub OutStream
 {

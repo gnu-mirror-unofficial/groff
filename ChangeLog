@@ -1,3 +1,14 @@
+2017-08-21  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	'gropdf' does not correctly load new ghostscript fonts
+
+	See bug at: https://savannah.gnu.org/bugs/?50989. Since ghostscript
+	9.21 the fonts supplied have changed from .pfb to .pfa type (with a
+	raw binary section). These failed to be properly loaded.
+
+	* src/devices/gropdf/gropdf: Changes to handle raw binary section in
+	a .pfa type font.
+
 2017-08-18  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	`pdfmom' man page incorrectly displayed.
