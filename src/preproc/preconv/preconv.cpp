@@ -1221,9 +1221,9 @@ main(int argc, char **argv)
       printf("GNU preconv (groff) version %s %s iconv support and %s uchardet support\n",
 	     Version_string,
 #ifdef HAVE_ICONV
-	     "with"
+	     "with",
 #else
-	     "without"
+	     "without",
 #endif /* HAVE_ICONV */
 #ifdef HAVE_UCHARDET
              "with"
