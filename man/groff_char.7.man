@@ -278,7 +278,7 @@ the ISO \%latin1 \[oq]Hyphen, Minus Sign\[cq] (code\ 45) prints as a
 hyphen (Unicode u2010).
 The same output glyph can be requested explicitly
 with \[oq]\f(CW\e(hy\fP\[cq].
-A minus sign can be obtained with \[oq]\f(CW\e(mi\fP\[cq] (Unicode u2212).
+A minus sign can be obtained with \[oq]\f(CW\e-\fP\[cq] (Unicode u2212).
 .
 .
 .TP
@@ -308,13 +308,15 @@ _
 \[char36]	\[char36]	36	dollar	u0024	currency dollar sign
 \[char37]	\[char37]	37	percent	u0025	percent
 \[char38]	\[char38]	38	ampersand	u0026	ampersand
-\[char39]	\[char39]	39	quoteright	u0027	right quote
+\[cq]	\[aq]	39	quoteright	u2019	right quote
+\[aq]	\e(aq		quotesingle	u0027	apostrophe quote
 \[char40]	\[char40]	40	parenleft	u0028	parentheses left
 \[char41]	\[char41]	41	parenright	u0029	parentheses right
 \[char42]	\[char42]	42	asterisk	u002A	asterisk
 \[char43]	\[char43]	43	plus	u002B	plus
 \[char44]	\[char44]	44	comma	u002C	comma
-\[char45]	\[char45]	45	hyphen	u2010	hyphen
+\[hy]	\[char45]	45	hyphen	u2010	hyphen
+\-	\e-		minus	u2212	minus sign
 \[char46]	\[char46]	46	period	u002E	period, dot
 \[char47]	\[char47]	47	slash	u002F	slash
 \[char58]	\[char58]	58	colon	u003A	colon
@@ -327,13 +329,16 @@ _
 \[char91]	\[char91]	91	bracketleft	u005B	square bracket left
 \[char92]	\[char92]	92	backslash	u005C	backslash
 \[char93]	\[char93]	93	bracketright	u005D	square bracket right
-\[char94]	\[char94]	94	circumflex	u005E	circumflex accent
+\[a^]	\[ha]	94	circumflex	u02C6	modifier circumflex
+\[ha]	\e(ha		asciicircum	u005E	circumflex accent
 \[char95]	\[char95]	95	underscore	u005F	underscore
-\[char96]	\[char96]	96	quoteleft	u0060	quote left
+\[oq]	\[ga]	96	quoteleft	u2018	left quote
+\[ga]	\e(ga		grave	u0060	grave accent
 \[char123]	\[char123]	123	braceleft	u007B	curly brace left
 \[char124]	\[char124]	124	bar	u007C	bar
 \[char125]	\[char125]	125	braceright	u007D	curly brace right
-\[char126]	\[char126]	126	tilde	u007E	tilde accent
+\[u02DC]	\[ti]	126	tilde	u02DC	small tilde
+\[ti]	\e(ti		asciitilde	u007E	tilde
 .TE
 .ad
 .
