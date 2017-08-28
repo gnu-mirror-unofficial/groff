@@ -1186,6 +1186,168 @@ some viewer that is important to your audience.
 If in doubt, copy the implementation onto your page.
 .
 .
+.PP
+In a way similar to using
+.I groff
+requests, it is possible to use the facilities documented in the
+ESCAPE SEQUENCES section of the
+.BR groff (7)
+manual page and in the
+.BR groff_char (7)
+manual page.
+.
+Regarding portability, similar caveats apply as with respect to
+.I groff
+requests.
+.
+Some escape sequences are however required for correct typesetting
+even in manual pages and usually do not cause portability problems:
+.
+.TP
+.RB \(dq \e\  \(dq
+Unpaddable non-breaking space character.
+.
+.TP
+.B \e&
+Zero-width space.
+.
+Used for different kinds of escaping, for example after abbreviations
+that occur at the end of an input line to prevent misinterpretation
+of the final dot as a full stop ending a sentence, or before an
+apostroph or dot at the beginning of a text input line to prevent
+misinterpretation as a macro line, for example:
+.sp
+.EX
+The
+\&.B .gcolor
+request supports several color names, e.g.\e&
+\e&'green', by default.
+.EE
+.
+.TP
+.B \e(aq
+ASCII apostroph.
+.
+Useful for syntax elements of programming languages because some
+output devices might replace unescaped apostrophes with right single
+quotation marks.
+.
+.TP
+.B \e(dq
+Sometimes needed on macro lines to prevent the interpretation of the
+ASCII quotation mark character \(oq\(dq\(cq as the beginning or end
+of a macro argument.
+.
+.TP
+.B \e(em
+Used as a punctuation mark for an interruption in a sentence\(emlike
+in this one.
+.
+.TP
+.B \e(en
+Used to separate the two ends of a range, in particular between
+numbers, for example: the digits 1\(en9.
+.
+.TP
+.B \e(ga
+ASCII grave accent.
+.
+Useful for syntax elements of programming languages, for example
+shell command substitutions, because some output devices might
+replace unescaped grave accents with left single quotation marks.
+.
+.TP
+.B \e(ha
+ASCII circumflex accent.
+.
+Useful for syntax elements of programming languages because some
+output devices might replace unescaped circumflex accents with
+non-ASCII glyphs like the Unicode U+02C6 modifier letter circumflex.
+.
+.TP
+.B \e(ti
+ASCII tilde.
+.
+Useful for syntax elements of programming languages because some
+output devices might replace unescaped tildes with non-ASCII glyphs
+like the Unicode U+02DC small tilde.
+.
+.TP
+.B \e-
+Minus sign.
+.
+Also use this to display syntax elements that require the ASCII
+hyphen-minus character, for example command line options and C
+language operators.
+.
+The unesacped \(oq\-\(cq input character is not appropriate for
+these cases because it may render as a hyphen on some output devices.
+.
+.TP
+.B \ec
+If this escape sequence occurs at the end of an input line, no
+white space is inserted between the last glyph resulting from this
+and the first glyph resulting from the next input line.
+.
+This is occasionally useful when three different fonts are needed
+in one single word, for example:
+.sp
+.EX
+\&.BR "dd if" =\ec
+\&.I file
+.EE
+.sp
+Alternatively, and with likely better portability, the
+.B \ef
+font escape sequence can be used, see below.
+.sp
+Attempting to use
+.B \ec
+to include the output from more than one macro line into the head of a
+.B .TP
+macro is non-portable and will misrender with groff-1.22.3,
+mandoc-1.14.1, older versions of these programs, and with other
+formatters.
+.
+.TP
+.B \ee
+Widely used in manual pages to represent a backslash output glyph.
+.
+It works reliably as long as the
+.B .ec
+request is not used, which should never happen in manual pages, and
+it is slightly more portable than the more exact
+.B \e(rs
+escape sequence.
+.
+.TP
+.BR \efB ,\  \efI ,\  \efR ,\  \efP
+Switch to bold, italic, roman, or back to the previous font,
+respectively.
+.
+This is needed when three different fonts are required on a single
+input line, for example:
+.sp
+.EX
+\&.TP
+\efBif\efP=\efIfile\efP
+.EE
+.sp
+It can also be used if three different fonts are needed in one
+single word.  It is likely more portable than
+.BR \ec .
+.sp
+As long as only two fonts are needed, using font alternation
+macros like
+.B .BR
+usually results in more readable source code.
+.
+.
+.PP
+For maximum portability, escape sequences and special characters
+not listed above are better avoided in manual pages.
+.
+.
 .\" --------------------------------------------------------------------
 .SH FILES
 .\" --------------------------------------------------------------------
