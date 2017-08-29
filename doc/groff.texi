@@ -7754,11 +7754,11 @@ mode, and 0 in normal mode.
 @subsection Leaders
 @cindex leaders
 
-Sometimes it may may be desirable to use the @code{tc} request to fill a
+Sometimes it may be desirable to use the @code{tc} request to fill a
 particular tab stop with a given glyph (for example dots in a table of
-contents), but also normal tab stops on the rest of the line.  For this
-@code{gtroff} provides an alternate tab mechanism, called @dfn{leaders},
-which does just that.
+contents), but also normal tab stops on the rest of the line.
+For this @code{gtroff} provides an alternate tab mechanism, called
+@dfn{leaders}, which does just that.
 
 @cindex leader character
 A leader character (character code@tie{}1) behaves similarly to a tab
@@ -10634,7 +10634,7 @@ numeric expression with a default scale indicator of @samp{z}.
 @itemx \s'-@var{n}'
 @itemx \s+'@var{n}'
 @itemx \s-'@var{n}'
-Increase or or decrease the point size by @var{n}@tie{}scaled points;
+Increase or decrease the point size by @var{n}@tie{}scaled points;
 @var{n}@tie{}is a numeric expression (which may start with a minus sign)
 with a default scale indicator of @samp{z}.
 @end table
@@ -11583,10 +11583,11 @@ macro one level higher.  This is used to define a wrapper macro for
 @cindex \@key{RET}, when reading text for a macro
 When @code{gtroff} reads in the text for a macro, string, or diversion,
 it copies the text (including request lines, but excluding escapes) into
-an internal buffer.  Escapes are converted into an internal form, except
-for @code{\n}, @code{\$}, @code{\*}, @code{\\} and @code{\@key{RET}},
-which are evaluated and inserted into the text where the escape was
-located.  This is known as @dfn{copy-in} mode or @dfn{copy} mode.
+an internal buffer.
+Escapes are converted into an internal form, except for @code{\n},
+@code{\$}, @code{\*}, @code{\\} and @code{\@key{RET}}, which are evaluated
+and inserted into the text where the escape was located.
+This is known as @dfn{copy-in} mode or @dfn{copy} mode.
 
 What this means is that you can specify when these escapes are to be
 evaluated (either at copy-in time or at the time of use) by insulating
@@ -13564,9 +13565,10 @@ for @code{pso} also.
 @Defreq {mso, file}
 Identical to the @code{so} request except that @code{gtroff} searches
 for the specified @var{file} in the same directories as macro files for
-the the @option{-m} command line option.  If the file name to be
-included has the form @file{@var{name}.tmac} and it isn't found,
-@code{mso} tries to include @file{tmac.@var{name}} and vice versa.
+the @option{-m} command line option.
+If the file name to be included has the form @file{@var{name}.tmac} and it
+isn't found, @code{mso} tries to include @file{tmac.@var{name}} and vice
+versa.
 If the file does not exist, a warning of type @samp{file} is emitted.
 @xref{Debugging}, for information about warnings.
 @endDefreq
