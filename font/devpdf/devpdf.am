@@ -49,9 +49,6 @@ DEVPDFFONTMAP_1 = \
 DEVPDFFONTMAP_2 = font/devpdf/map/symbolmap
 devpdffontmap_DATA = $(DEVPDFFONTMAP_1) $(DEVPDFFONTMAP_2)
 
-devpdffontutildir = $(devpdffontdir)/util
-nodist_devpdffontutil_DATA = font/devpdf/util/BuildFoundries
-
 EXTRA_DIST += \
   font/devpdf/DESC.in \
   font/devpdf/Foundry.in \
@@ -136,8 +133,8 @@ mostlyclean_devpdf_extra:
 install-data-local: install_devpdf
 install_devpdf:
 	@echo Installing devpdf files
-	-@test -d $(DESTDIR)$(devpdffontdir)/util \
-	  || $(mkinstalldirs) $(DESTDIR)$(devpdffontdir)/util
+	-@test -d $(DESTDIR)$(devpdffontdir) \
+	  || $(mkinstalldirs) $(DESTDIR)$(devpdffontdir)
 	@for f in $(GROFF_FONT_FILES); do \
 	  $(RM) $(DESTDIR)$(devpdffontdir)/$$f; \
 	  if test -f $$f; then \
@@ -155,9 +152,6 @@ uninstall_devpdf:
 	  for f in $(GROFF_FONT_FILES); do \
 	    rm -f $(DESTDIR)$(devpdffontdir)/$$f; \
 	  done; \
-	  if test -d $(DESTDIR)$(devpdffontutildir); then \
-	    rmdir $(DESTDIR)$(devpdffontutildir); \
-	  fi; \
 	  if test -d $(DESTDIR)$(devpdffontencdir); then \
 	    rmdir $(DESTDIR)$(devpdffontencdir); \
 	  fi; \
