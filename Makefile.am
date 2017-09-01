@@ -516,6 +516,12 @@ ETAGSCCFLAG=-C
 # Sed script to deal with OS dependencies in sh scripts.
 SH_DEPS_SED_SCRIPT=$(top_builddir)/shdeps.sed
 
+# On some platforms we need to set LANG and LC_ALL to C for sed
+SED=\
+  LANG=C \
+  LC_ALL=C \
+  sed
+
 # The program to create directory hierarchies.
 # mkinstalldirs is now in gnulib/build-aux
 

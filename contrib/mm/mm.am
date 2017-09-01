@@ -63,7 +63,7 @@ EXTRA_DIST += \
   contrib/mm/mmroff.pl
 
 mmroff: $(mm_srcdir)/mmroff.pl
-	sed -e 's;/usr/bin/perl;$(PERL);' $(mm_srcdir)/mmroff.pl >$@
+	$(SED) -e 's;/usr/bin/perl;$(PERL);' $(mm_srcdir)/mmroff.pl >$@
 	chmod +x $@
 
 # Special installation rules for m.tmac, mse.tmac, mmse.tmac, mm.tmac
@@ -76,11 +76,11 @@ install_mm:
 	$(RM) $(DESTDIR)$(tmacdir)/$(tmac_m_prefix)m.tmac
 	$(INSTALL_DATA) $(mm_srcdir)/m.tmac \
 	  $(DESTDIR)$(tmacdir)/$(tmac_m_prefix)m.tmac
-	sed -e "s;^.mso m.tmac;.mso $(tmac_m_prefix)m.tmac;g" \
+	$(SED) -e "s;^.mso m.tmac;.mso $(tmac_m_prefix)m.tmac;g" \
 	  $(mm_srcdir)/mse.tmac > $(DESTDIR)$(tmacdir)/$(tmac_m_prefix)mse.tmac
-	@sed -e "s;^.mso mse.tmac;.mso $(tmac_m_prefix)mse.tmac;g" \
+	@$(SED) -e "s;^.mso mse.tmac;.mso $(tmac_m_prefix)mse.tmac;g" \
 	  $(mm_srcdir)/mmse.tmac > $(DESTDIR)$(tmacdir)/$(tmac_m_prefix)mmse.tmac
-	@sed -e "s;^.mso m.tmac;.mso $(tmac_m_prefix)m.tmac;g" \
+	@$(SED) -e "s;^.mso m.tmac;.mso $(tmac_m_prefix)m.tmac;g" \
 	  $(mm_srcdir)/mm.tmac > $(DESTDIR)$(tmacdir)/$(tmac_m_prefix)mm.tmac
 	@for f in $(MMLOCALE); do \
 	  test -f $(DESTDIR)$(tmacdir)/mm/$$f \

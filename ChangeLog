@@ -1,3 +1,13 @@
+2017-09-01  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Fix build on MacOS X
+
+	* Makefile.am: define `SED' command with LANG and LC_ALL set to C.
+	* contrib/mm/mm.am: use it.
+	* doc/doc.am: Ditto.
+
+	Fix bug https://savannah.gnu.org/bugs/?49649
+
 2017-08-30  Colin Watson <cjwatson@debian.org>
 
 	`BuildFoundries' should not be installed.
