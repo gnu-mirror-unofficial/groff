@@ -10090,7 +10090,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          rm FOOTNOTES
 .          if d RUNON_FOOTNOTES   .rm RUNON_FOOTNOTES
 .          if \\n[#PRINT_STYLE]=1 .vs \\n[#SAVED_LEAD]u
-.          if \\n[#PRINT_STYLE]=2 .LS \\n[#SAVED_LEAD]u
+.          if \\n[#PRINT_STYLE]=2 .vs \\n[#SAVED_LEAD]u
 .          if '\\n[.z]'FN_OVERFLOW' \{\
 .             di
 .             nr #FN_OVERFLOW_DEPTH \\n[#DIVER_DEPTH]
