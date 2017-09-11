@@ -17078,11 +17078,13 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          \}
 .\" Save depth of diversion here.  The .da zeroes it.
 .          nr dn-save \\n[dn]
-.          if !\\n[@no-flex] \{\
-.             da FLOAT*DIV
-\!.           FLEX
-\!.           nr flexed 1
-.             da
+.          if \\n[#FLEX_ACTIVE] \{\
+.             if !\\n[@no-flex] \{\
+.                da FLOAT*DIV
+\!.              FLEX
+\!.              nr flexed 1
+.                da
+.             \}
 .          \}
 .          nr dn \\n[dn-save]
 .          rr dn-save
@@ -17134,11 +17136,13 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          \}
 .       \}
 .       nr dn-save \\n[dn]
-.       if !\\n[@no-flex] \{\
-.          da FLOAT*DIV
-\!.        FLEX
-\!.        nr flexed 1
-.          da
+.       if \\n[#FLEX_ACTIVE] \{\
+.          if !\\n[@no-flex] \{\
+.             da FLOAT*DIV
+\!.           FLEX
+\!.           nr flexed 1
+.             da
+.          \}
 .       \}
 .       nr dn \\n[dn-save]
 .       rr dn-save
