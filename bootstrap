@@ -450,7 +450,20 @@ check_versions() {
   while read app req_ver; do
     # We only need libtoolize from the libtool package.
     if test "$app" = libtool; then
-      app=libtoolize
+      case `uname` in
+      Darwin*)
+        # on MacOS X systems. GNU libtool conflicts with the Xcode
+        # libtool, and 'libtoolize' is often installed as
+        # 'glibtoolize'.
+        if check_exists libtoolize; then
+          app=libtoolize
+        elif check_exists glibtoolize; then
+          app=glibtoolize
+        else
+          die 'cannot find libtoolize or glibtoolize'
+        fi;;
+      *) app=libtoolize;;
+      esac
     fi
     # Exempt git if --no-git is in effect.
     if test "$app" = git; then
