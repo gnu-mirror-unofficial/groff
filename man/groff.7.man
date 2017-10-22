@@ -3567,9 +3567,9 @@ Plus-minus sign
 .SS "Unicode Characters"
 .\" --------------------------------------------------------------------
 .
-There is the extended escape
+The extended escape
 .B u
-that allows the inclusion of all available Unicode characters into some
+allows the inclusion of all available Unicode characters into a
 .I roff
 file.
 .
@@ -3580,11 +3580,11 @@ file.
 is the escape name.
 .
 .I xxxx
-is a hexadecimal number of 4 hex digits, such as
+is a hexadecimal number of four hex digits, such as
 .B 0041
 for the letter
 .BR A ,
-see
+thus
 .BR \e[u0041] .
 . 
 .
@@ -3594,17 +3594,17 @@ see
 is the escape name.
 .
 .I yyyyy
-is a hexadecimal number of 5 hex digits, such as
+is a hexadecimal number of five hex digits, such as
 .B 2FA1A
-for a Chinese looking character for
+for a Chinese-looking character from the Unicode block
 .IR "CJK Compatibility Ideographs Supplement" ,
-see
+thus
 .BR \e[u2FA1A] .
 .
 .
 .P
-Both hexadecimal collections mean the corresponding Unicode code for a
-character.
+The hexadecimal value indicates the corresponding Unicode code point for
+a character.
 .
 .
 .TP
@@ -3616,19 +3616,22 @@ character.
 and
 .I hex3
 are all Unicode hexadecimal codes (4 or 5 hex digits) that are used
-for overstriking, e.g.
+for overstriking, e.g.\&
 .B \e[u0041_0301]
 is
-.I "A acute"
-.BR \['A] .
+.IR "A acute" ,
+which can also be specified as
+.BR \['A] ;
+see
+.BR groff_char (7).
 .
 .
 .P
-The availability of the Unicode characters depends on the used font.
+The availability of the Unicode characters depends on the font used.
 .
 For text mode, the device
 .B -Tutf8
-is quite complete, for
+is quite complete; for
 .I troff
 modes it might happen that some or many characters will not be
 displayed.
