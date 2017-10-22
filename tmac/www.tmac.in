@@ -51,6 +51,15 @@ HTML always denotes XHTML also.
 .cp 0
 .
 .
+.\" Taken from tmac/an-ext.tmac
+.\" Map mono-width fonts to standard fonts for groff's TTY device.
+.if n \{\
+.  do ftr CR R
+.  do ftr CW R
+.  do ftr CI I
+.  do ftr CB B
+.\}
+.
 .ie r xhtml \
 .  ds www-> />\"
 .el \
@@ -1472,7 +1481,7 @@ HTML always denotes XHTML also.
 .\" start of some code
 .\"
 .de CDS
-.  ft C
+.  ft CR
 .  nf
 ..
 .
@@ -1603,7 +1612,7 @@ HTML always denotes XHTML also.
 .\" final setup
 .\" --------------------------------------------------------------------
 .
-.LINKSTYLE blue C \[la] \[ra]
+.LINKSTYLE blue CR \[la] \[ra]
 .
 .if \n[www-html] \{\
 .  nh
