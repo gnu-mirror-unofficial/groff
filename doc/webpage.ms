@@ -618,7 +618,7 @@ equivalents to the \eX and \eY escapes, respectively.
 .LI
 A new read-only number register `.br' is available which is set to\~1
 if a macro is called as .foo and to\~0 if called as 'foo.
-This allows to reliably modify requests.
+This allows reliable modification of requests.
 
 .in 2m
 .nf
