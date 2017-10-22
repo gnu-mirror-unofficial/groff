@@ -134,10 +134,10 @@ Included in this release are implementations of `troff', `pic', `eqn',
 `tbl', `grn', `refer', `\-man', `\-mdoc', `\-mom', and `\-ms' macros, and
 drivers for `PostScript', `PDF', `TeX DVI' format, `HP LaserJet\~4'
 printers, `Canon CAPSL' printers, `HTML' and `XHTML' formats (beta status),
-and typewriter-like devices.  Also included is a modified version of the
-Berkeley `\-me' macros, the enhanced version `gxditview' of the X11
-`xditview' previewer, and an implementation of the `\-mm' macros contributed
-by J\[:o]rgen H\[:a]gg.
+and typewriter-like devices.
+Also included is a modified version of the Berkeley `\-me' macros, the
+enhanced version `gxditview' of the X11 `xditview' previewer, and an
+implementation of the `\-mm' macros contributed by J\[:o]rgen H\[:a]gg.
 
 See the file `INSTALL' for installation instructions on how to install from
 a release.
@@ -726,9 +726,9 @@ Pic now supports up to 32 macro arguments (and up to 16 on EBCDIC
 platforms).
 
 .LI
-Heinz-Jürgen Örtel contributed code for two new keywords, `xslanted' and
-`yslanted', which can change the shape of boxes into arbitrary
-parallelograms.
+Heinz-J\[:u]rgen \[:O]rtel contributed code for two new keywords,
+`xslanted' and `yslanted', which can change the shape of boxes into
+arbitrary parallelograms.
 .ULE
 .
 .
@@ -897,7 +897,7 @@ This package currently works with `\-Tps' only.
 \-mandoc now supports multiple man pages (in either man or mdoc format).
 
 .LI
-Fabrice Ménard contributed locales support.
+Fabrice M\['e]nard contributed locales support.
 In particular, it is now possible to get French localization of the main
 macro packages (\-ms, \-mm, \-me, and \-mom, but not \-man and \-mdoc
 which are localized differently) by appending `-mfr' to the list of macro
@@ -1030,8 +1030,8 @@ The following macros aren't new but haven't been documented previously:
 .in
 
 .LI
-The following keywords have been extended.  Again, this isn't new but
-hasn't been documented previously:
+The following keywords have been extended.
+Again, this isn't new but hasn't been documented previously:
 
 .in 2m
 .ft B
@@ -1634,8 +1634,8 @@ The glyphs \e[*e] and \e[+e] have been exchanged to be in sync with
 all other devices.
 
 .LI
-The glyph \e[~=] is now called \e[|=].  Similar to other devices, \e[~=]
-is now another name for glyph \e[~~].
+The glyph \e[~=] is now called \e[|=].
+Similar to other devices, \e[~=] is now another name for glyph \e[~~].
 .ULE
 .
 .
@@ -1855,9 +1855,9 @@ papersize /etc/papersize a4
 
 .LI
 A local font directory has been prepended to the default font path; it
-defaults to /usr/local/share/groff/site-font.  Similar to the normal
-font searching process, files must be placed into a dev\f[I]XXX\f[]
-subdirectory, e.g.
+defaults to /usr/local/share/groff/site-font.
+Similar to the normal font searching process, files must be placed into
+a dev\f[I]XXX\f[] subdirectory, e.g.
 
 .in 2m
 .ft C
@@ -2078,7 +2078,8 @@ a
 .fi
 .in
 
-The result is `x\~a'.  Using `tr', the result would be `x\~x'.
+The result is `x\~a'.
+Using `tr', the result would be `x\~x'.
 
 .LI
 The request `pvs' isn't new, but hasn't been documented before.
@@ -2164,8 +2165,9 @@ A new macro `Ex' has been added to the mdoc macro package to document an
 exit status.
 
 .LI
-`troff.man' has been split.  Differences to UNIX troff are now documented
-in the new man page `groff_diff.man'.
+`troff.man' has been split.
+Differences to UNIX troff are now documented in the new man page
+`groff_diff.man'.
 
 .LI
 The PSPIC macro has been extended to work with DVI output (`pspic.tmac' is
