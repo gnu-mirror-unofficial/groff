@@ -665,7 +665,7 @@ Note that mom does not provide widow or orphan control for
 paragraphs (ie even if only one line of a paragraph fits at the
 bottom of a page, she will set it on that page).  The reason for
 this is that writers of fiction often have single-line paragraphs
-(eg in dialogue).  Groff&#8217;s simplistic orphan control will
+(e.g., in dialogue).  Groff&#8217;s simplistic orphan control will
 break these one-liners&mdash;if they fall at the bottom of the
 page&mdash;to a new page, which is not what you want.
 </p>
@@ -750,7 +750,7 @@ If you wish to change the family for regular text paragraphs only,
 invoke <kbd>.FAMILY</kbd> immediately after <kbd>.PP</kbd> in every
 paragraph whose family you wish to differ from the prevailing
 document family.  Alternatively, set the family and font for
-paragraphs with PP_FONT, giving it a complete family+font name, eg
+paragraphs with PP_FONT, giving it a complete family+font name, e.g.,
 <br/>
 <span class="pre-in-pp">
   PP_FONT TI
@@ -1124,7 +1124,7 @@ bookmark for
 
 <p>
 Headings can also be numbered on a per-heading-level basis,
-hierarchically and concatenatively, eg
+hierarchically and concatenatively, e.g.,
 <br/>
 <span class="pre-in-pp">
   1.
@@ -1383,7 +1383,7 @@ appended to it.
 
 <p class="defaults" style="margin-bottom: 1em">
 <kbd>NEEDS</kbd> lets you reserve the number of lines of text
-required beneath a heading, including fractions thereof (eg
+required beneath a heading, including fractions thereof (e.g.,
 &#8220;1.5&#8221; for one line of text plus half a linespace).
 If a heading falls near the bottom margin and there isn&#8217;t
 sufficient room for both the heading and the reserved space, mom
@@ -1512,7 +1512,7 @@ numbered head element of each collated document).
 
 <p>
 PREFIX_CHAPTER_NUMBER can be disabled by passing it any argument
-other than a digit (eg <b>OFF, QUIT, END, X</b>, etc), although,
+other than a digit (e.g., <b>OFF, QUIT, END, X</b>, etc), although,
 as noted above, mom will keep, and&mdash;in the case of collated
 documents&mdash;increment the chapter number, allowing you to turn
 prefixing of chapter numbers to numbered head elements off and on
@@ -1824,7 +1824,7 @@ Mom will alert you to this on stderr.
 <p>
 Linebreaks (&#8220;author linebreaks&#8221;, &#8220;section
 breaks&#8221;) are gaps in the vertical flow of running text that
-indicate a shift in content (eg a scene change in story).  They
+indicate a shift in content (e.g., a scene change in story).  They
 are frequently set off by typographic symbols, sometimes whimsical
 in nature.
 </p>
@@ -1884,7 +1884,7 @@ and a vertical adjustment factor.
 </p>
 
 <p>
-The first argument is any valid groff character (eg <kbd>*</kbd>
+The first argument is any valid groff character (e.g., <kbd>*</kbd>
 [an asterisk], <kbd>\[dg]</kbd> [a dagger], <kbd>\f[ZD]\N'141\fP</kbd>
 [an arbitrary character from Zapf Dingbats], <kbd>\l'4P'</kbd> [a
 4-pica long rule]). Mom sets the character centred on the current
@@ -1988,7 +1988,7 @@ or underlined
 indented from the left margin.  Obviously, she&#8217;s thinking
 &#8220;quotes from poetry or song lyrics&#8221;, but with the
 <a href="#quote-control">QUOTE control macros</a>
-you can change her defaults so QUOTE serves other needs, eg
+you can change her defaults so QUOTE serves other needs, e.g.,
 entering verbatim snippets of programming code, command-line
 instructions, and so on.  (See the
 <a href="#code">CODE</a>
@@ -2101,7 +2101,7 @@ Macro: <b>QUOTE</b> <kbd class="macro-args">[ ADJUST +|-&lt;space&gt; ] | &lt;an
 <p>
 QUOTE is a toggle macro.  To begin a section of quoted text, invoke
 it with no argument, then type in your quote.  When you&#8217;re
-finished, invoke <kbd>.QUOTE</kbd> with any argument (eg <kbd>OFF,
+finished, invoke <kbd>.QUOTE</kbd> with any argument (e.g., <kbd>OFF,
 END, X, Q</kbd>...) to turn it off.  Example:
 <br/>
 <span class="pre-in-pp">
@@ -2322,7 +2322,7 @@ Macro: <b>BLOCKQUOTE</b>  <kbd class="macro-args">[ ADJUST +|-&lt;space&gt; ] | 
 BLOCKQUOTE is a toggle macro.  To begin a cited passage, invoke
 the tag with no argument, then type in your blockquote.  When
 you&#8217;re finished, invoke <kbd>.BLOCKQUOTE</kbd> with any
-argument (eg <kbd>OFF, END, X, Q</kbd>...) to turn it off.
+argument (e.g., <kbd>OFF, END, X, Q</kbd>...) to turn it off.
 Example:
 <br/>
 <span class="pre-in-pp">
@@ -2553,7 +2553,7 @@ it as well, invoke <kbd>.CODE</kbd> with the argument,
 you want a break afterwards, you must supply it manually with
 <a href="typesetting.html#br">BR</a>
 unless what follows immediately is a macro that automatically causes
-a break (eg
+a break (e.g.,
 <a href="#pp">PP</a>).
 </p>
 
@@ -2581,7 +2581,7 @@ introducing unwanted vertical whitespace.
 
 <p>
 Passing any argument other than <kbd>BR</kbd>, <kbd>BREAK</kbd> or
-<kbd>SPREAD</kbd> to CODE (eg <kbd>OFF, QUIT, END, X,</kbd> etc.)
+<kbd>SPREAD</kbd> to CODE (e.g., <kbd>OFF, QUIT, END, X,</kbd> etc.)
 turns CODE off and returns the family, font, and smartquotes back to
 their former state.
 </p>
@@ -2820,7 +2820,7 @@ uppercase letters), <kbd>alpha</kbd> (for lowercase letters),
 <p>
 The arguments, <kbd>ROMAN&lt;n&gt;</kbd> and
 <kbd>roman&lt;n&gt;</kbd>, are special.  You must append to them
-a digit (arabic, eg "1" or "9" or "17") saying how many items a
+a digit (arabic, e.g., "1" or "9" or "17") saying how many items a
 particular roman-numeralled LIST is going to have. Mom requires this
 information in order to align roman numerals sensibly, and will
 abort&mdash;with a message &mdash; if you don&#8217;t provide it.
@@ -2988,7 +2988,7 @@ which would produce
 Any single argument to <kbd>LIST</kbd> other than
 <kbd>BULLET</kbd>, <kbd>DASH</kbd>, <kbd>DIGIT</kbd>,
 <kbd>ALPHA</kbd>, <kbd>alpha</kbd>, <kbd>ROMAN&lt;n&gt;</kbd>,
-<kbd>roman&lt;n&gt;</kbd> or <kbd>USER</kbd> (eg
+<kbd>roman&lt;n&gt;</kbd> or <kbd>USER</kbd> (e.g.,
 <kbd>LIST&nbsp;OFF</kbd> or <kbd>LIST&nbsp;BACK</kbd>) takes you out
 of the current list.
 </p>
@@ -3373,7 +3373,7 @@ you must, at a minimum, tell it what line number you want the
 <a href="definitions.html#outputline">output line</a>
 to have.  The optional arguments <kbd>which lines to number</kbd>
 and <kbd>gutter</kbd> allow you to state which lines should
-be numbered (eg every five or every ten lines), and the gutter to
+be numbered (e.g., every five or every ten lines), and the gutter to
 place between line numbers and
 <a href="definitions.html#running">running text</a>.
 </p>
@@ -3838,7 +3838,7 @@ they&#8217;ll know the entry belongs to the previous page).
 </p>
 
 <p>
-Very exceptionally, two footnotes may have to be deferred (eg one
+Very exceptionally, two footnotes may have to be deferred (e.g., one
 occurs on the second to last line of a page, and another on the last
 line).  In such a circumstance, mom does not add
 a blank after the second deferred footnote.  If you&#8217;d like a blank
@@ -4317,12 +4317,12 @@ footnotes either by single line numbers, or line ranges.  If
 what you want is a single line number, you need only invoke
 <kbd>.FOOTNOTE</kbd>, <i>without the terminating</i> <kbd>\c</kbd>,
 at the appropriate place in running text.  Input lines after the
-footnote has been terminated (eg with <kbd>.FOOTNOTE OFF</kbd>)
+footnote has been terminated (e.g., with <kbd>.FOOTNOTE OFF</kbd>)
 must begin at the left margin.
 </p>
 
 <p>
-If you want a range of line numbers (eg&nbsp;[5-11]&nbsp;),
+If you want a range of line numbers (e.g.,&nbsp;[5-11]&nbsp;),
 insert, directly into the first line of the range you want,
 the <a href="definitions.html#inlines">inline escape</a>,
 <kbd>\*[FN_MARK]</kbd>.  For the terminating line number of the
@@ -4692,7 +4692,7 @@ is removed.
 By default, mom starts the endnotes page with a bold, centred head,
 &#8220;ENDNOTES&#8221;.  Subsequently, for each section in a
 <a href="rectoverso.html#collate-intro">collated</a>
-document (eg chapters in a book), she identifies the section in bold
+document (e.g., chapters in a book), she identifies the section in bold
 type, flush left and underscored, followed by one-half linespace.
 Endnotes pertaining to the section are output underneath, identified
 by superscript numbers.  The text of the endnotes themselves is
@@ -5068,7 +5068,7 @@ Macro: <b>ENDNOTE_SPACING</b> <kbd class="macro-args">&lt;space to insert betwee
 
 <p>
 If you'd like some whitespace between endnotes, just invoke
-ENDNOTE_SPACING with the amount of space you want, eg
+ENDNOTE_SPACING with the amount of space you want, e.g.,
 <br/>
 <span class="pre-in-pp">
   .ENDNOTE_SPACING 6p
@@ -5522,7 +5522,7 @@ Invoked without an argument, <kbd>.ENDNOTES_HEADER_UNDERSCORE</kbd>
 will place a single rule underneath the endnotes page title.  Invoked
 with the argument, <kbd>DOUBLE</kbd>, ENDNOTES_HEADER_UNDERSCORE will
 double-underscore the title.  Invoked with any other non-numeric
-argument, (eg <kbd>OFF, NO, X</kbd>, etc.) the macro disables
+argument, (e.g., <kbd>OFF, NO, X</kbd>, etc.) the macro disables
 underscoring of the title.
 </p>
 
@@ -5683,7 +5683,7 @@ endnotes either by single line numbers or by line ranges.  If
 what you want is a single line number, you need only invoke
 <kbd>.ENDNOTE</kbd> at the appropriate place in running
 text <i>without the terminating</i> <kbd>\c</kbd>.  Input lines
-after the endnote has been terminated (eg with <kbd>.ENDNOTE
+after the endnote has been terminated (e.g., with <kbd>.ENDNOTE
 OFF</kbd>) must begin at the left margin.
 </p>
 
@@ -5697,7 +5697,7 @@ nothing to prevent you from doing so.)
 </p>
 
 <p id="en-mark">
-If you want a range of line numbers (eg&nbsp;[5-11]&nbsp;),
+If you want a range of line numbers (e.g.,&nbsp;[5-11]&nbsp;),
 insert, directly into the first line of the range you want, the
 <a href="definitions.html#inlines">inline escape</a>,
 <kbd>\*[EN-MARK]</kbd>.  For the terminating line number of the
@@ -5774,7 +5774,7 @@ If you need less space (the total number of endnotes is less than 10) or
 more (the total number of endnotes is greater than 99), use the
 macro,
 <a href="docelement.html#endnote-numbers-align">ENDNOTE_NUMBERS_ALIGN</a>,
-to set the desired amount of reserved space, eg
+to set the desired amount of reserved space, e.g.,
 <br/>
 <span class="pre-in-pp">
   .ENDNOTE_NUMBERS_ALIGN RIGHT 1
@@ -6153,7 +6153,7 @@ If you forget to do so, mom will issue a warning and abort.
 <p>
 The arguments may be entered in any order, and since the list is
 long, use of the backslash character ( <kbd>\</kbd> ) to put each on
-a separate line is recommended, eg.
+a separate line is recommended, e.g.,
 <br/>
 <span class="pre-in-pp">
   .MN_INIT \
@@ -6463,7 +6463,7 @@ this:
 <span class="pre-in-pp">
     .FINIS_STRING_CAPS OFF
 </span>
-<kbd>OFF</kbd>, above, could be anything, eg <kbd>NO</kbd> or
+<kbd>OFF</kbd>, above, could be anything, e.g., <kbd>NO</kbd> or
 <kbd>X</kbd>.
 </p>
 

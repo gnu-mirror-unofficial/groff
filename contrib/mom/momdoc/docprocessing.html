@@ -169,7 +169,7 @@ macros that control how they look and behave.
 Setting up a mom doc is a simple, four-part procedure.  You
 begin by entering metadata about the document itself (title,
 subtitle, author, etc.).  Next, you tell mom what kind of document
-you&#8217;re creating (eg chapter, letter, abstract, etc...) and
+you&#8217;re creating (e.g., chapter, letter, abstract, etc...) and
 what kind of output you want (typeset, typewritten, draft-style,
 etc) &mdash; essentially, templates.  Thirdly, you make as many
 or as few changes to the templates as you wish; in other words,
@@ -199,7 +199,7 @@ documentation, so just in case:
       visually 1-inch
   </li>
   <li>pages are numbered; the number appears centred, at the
-      bottom, surrounded by hyphens ( eg -6- )
+      bottom, surrounded by hyphens ( e.g., -6- )
   </li>
   <li>the first page of a document begins with a
       <a href="definitions.html#docheader">document header</a>
@@ -235,7 +235,7 @@ Mom offers two modes of operation for ensuring flush bottom margins:
 shimming and flex-spacing.  Shimming means that mom nudges the
 next line after a significant break in running text back onto the
 <a href="definitions.html#baseline-grid">baseline grid</a>
-(eg, after the insertion of a graphic).  Flex-spacing means that any
+(e.g., after the insertion of a graphic).  Flex-spacing means that any
 vertical whitespace remaining between the end of running text and
 the bottom margin is distributed equally at logical points on the
 page.
@@ -407,7 +407,7 @@ suppresses the SHIM macro, and enables flex-spacing.
 </p>
 
 <p>
-NO_SHIM with any argument (eg <b>OFF, QUIT, END, X</b>, etc)
+NO_SHIM with any argument (e.g., <b>OFF, QUIT, END, X</b>, etc)
 re-enables shimming if it has been disabled and disables
 flex-spacing.
 </p>
@@ -515,7 +515,7 @@ is a
 
 <p>
 It is typographically acceptable for there to be space between
-insertions in running text (eg an image) and the bottom margin when
+insertions in running text (e.g., an image) and the bottom margin when
 the next page begins with a paragraph.  If you&#8217;d like to
 nudge the insertion a little closer to the bottom margin&mdash;not
 all the way; that isn&#8217;t possible without pushing it to the
@@ -552,7 +552,7 @@ shimmed.
 </p>
 
 <p>
-NO_FLEX with any argument (eg <b>OFF, QUIT, END, X</b>, etc)
+NO_FLEX with any argument (e.g., <b>OFF, QUIT, END, X</b>, etc)
 re-enables flex-spacing if it has been disabled.
 </p>
 
@@ -972,7 +972,7 @@ the title of each article or entitled section), and appears
 </p>
 
 <ol style="list-style-type: lower-alpha">
-  <li>as the window title in PDF viewers (eg Okular or Evince)</li>
+  <li>as the window title in PDF viewers (e.g., Okular or Evince)</li>
   <li>in the initial rightmost position of page headers in the document</li>
 </ol>
 
@@ -1090,7 +1090,7 @@ Macro: <b>AUTHOR</b> <kbd class="macro-args">[COVER | DOC_COVER] &quot;&lt;autho
 </p>
 
 <p>
-Each author string can hold as many names as you like, eg
+Each author string can hold as many names as you like, e.g.,
 <br/>
 <span class="pre-in-pp" style="margin-bottom: -1em;">
   .AUTHOR "Joe Blow"
@@ -1263,7 +1263,7 @@ page headers.
 <p>
 The style of the chapter title can be altered by
 <a href="docelement.html#docelement-control">control macros</a>,
-eg CHAPTER_TITLE_FAMILY, CHAPTER_TITLE_FONT, etc.  The default
+e.g., CHAPTER_TITLE_FAMILY, CHAPTER_TITLE_FONT, etc.  The default
 family, font and point size are Times Roman, Bold Italic, 4 points
 larger than
 <a href="definitions.html#running">running text</a>.
@@ -1512,7 +1512,7 @@ or
 Style parameters for the copyright line may be
 entered as individual macros or
 <a href="docelement.html#grouping">grouped</a>,
-eg
+e.g.,
 <br/>
 <span class="pre-in-pp">
   .COPYRIGHT_FAMILY H
@@ -1773,7 +1773,7 @@ the page header.
 
 <p>
 <kbd>NAMED</kbd> takes an additional argument: a name for this
-particular kind of document (eg outline, synopsis, abstract,
+particular kind of document (e.g., outline, synopsis, abstract,
 memorandum), enclosed in double-quotes. <kbd>NAMED</kbd> is
 identical to <kbd>DEFAULT</kbd> except that mom prints the argument
 to <kbd>NAMED</kbd> beneath the
@@ -2314,7 +2314,7 @@ below have the following meanings:
   FAMILY         The family of all type in the document
   PT_SIZE        The point size of type in paragraphs; mom uses
                  this to calculate automatic point size changes
-                 (eg for heads, footnotes, quotes, headers, etc)
+                 (e.g., for heads, footnotes, quotes, headers, etc)
   LS/AUTOLEAD**  The leading used in paragraphs; all leading and
                  spacing of running text is calculated from this
 
@@ -3465,14 +3465,14 @@ the tops of pages after the first.)
               point size (ie the point size used in paragraphs);
               subsequently disabled after START, except for calls
               to DOC_PT_SIZE
-              
+
              &bull;DOC_LEAD before DOC_PT_SIZE cancels the AUTOLEAD
               set before START
 
              &bull;Invoked after START, remains in effect for all
               subsequent point size changes made with PT_SIZE,
               but does not affect the leading of the document
-              element tags (eg HEADING, PP, QUOTE...), or calls
+              element tags (e.g., HEADING, PP, QUOTE...), or calls
               to DOC_PT_SIZE
 
   QUAD        &bull;Changes quad for the duration of the
@@ -3769,7 +3769,7 @@ Macro: <b>DOC_FAMILY</b> <kbd class="macro-args">&lt;family&gt;</kbd>
       <li><a href="docelement.html#endnote-intro">endnotes pages</a></li>
       <li><a href="docelement.html#toc-intro">table of contents</a></li>
   </ul></li>
-  <li>any page elements (eg headers page numbers, footnotes) whose
+  <li>any page elements (e.g., headers page numbers, footnotes) whose
       families you wish to remain at their old values must be
       reset with the appropriate
       <a href="docelement.html#docelement-control">control macros</a>
@@ -3896,7 +3896,7 @@ You need do nothing special to terminate a document.  When groff
 finishes processing the last
 <a href="definitions.html#inputline">input line</a>
 of a file, the page is ejected, subject to whatever routines are
-needed to complete it (eg printing footnotes or adding the page
+needed to complete it (e.g., printing footnotes or adding the page
 number).
 </p>
 
@@ -3910,7 +3910,7 @@ page at the end of the formatted document.
 
 <p>
 The situation is rare, generally occurring only when some additional
-macro is required after the input text, eg to exit a
+macro is required after the input text, e.g., to exit a
 <a href="docelement.html#list-intro">list</a>
 or terminate a
 <a href="docelement.html#quote">quote</a>.

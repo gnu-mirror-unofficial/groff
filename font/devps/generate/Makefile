@@ -27,7 +27,7 @@
 SHELL = /bin/sh
 
 # Directory containing AFM files.  Must not be current directory.
-# Either long names (eg Times-Roman.afm) or short names (eg timesr.afm)
+# Either long names (e.g., Times-Roman.afm) or short names (e.g., timesr.afm)
 # may be used. See the afmname script.
 afmdir=/usr/local/lib/afm
 

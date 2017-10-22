@@ -5001,7 +5001,7 @@ y\R'#DESCENDER \\n[.cdp]'
 \# TYPE-STYLE CONTROL MACROS
 \# -------------------------
 \# The control macros for family, font, size, color and quad are
-\# here grouped together.  Each (eg _FAMILY) uses the calling alias
+\# here grouped together.  Each (e.g., _FAMILY) uses the calling alias
 \# to determine the document element to which the style parameter
 \# applies.  Defaults for all these guys are set in DEFAULTS, and
 \# listed in the "Control Macros" section of the documentation
@@ -5181,7 +5181,7 @@ y\R'#DESCENDER \\n[.cdp]'
 .       substring c1-c5 0 4  \" Grab first five letters of the alias
 .    \}
 .\"  If none of the following, convert the substring of the
-.\"  calling alias, ie \*[ELEMENT], into the parameter string, eg
+.\"  calling alias, ie \*[ELEMENT], into the parameter string, e.g.,
 .\"  $TITLE_FAM, assign arg, and set register.
 .    if !'\\*[c1-c5]'BIBLI' \
 .    if !'\\*[c1-c5]'BLOCK' \
@@ -14364,7 +14364,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \!.     if \\\\n[.vpt]=0 .vpt
 \!.     ne 3
 .       vs \\n[#EN_LEAD]u
-.\" Print identifying doc title (eg Chapter n)
+.\" Print identifying doc title (e.g., Chapter n)
 .       if \\n[#EN_NUMBER]=1 \{\
 .          if \\n[#PRINT_STYLE]=1 .TYPEWRITER
 .          if \\n[#PRINT_STYLE]=2 \{\
@@ -21179,7 +21179,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .if '\\*[eval*[A]'.' \
 .   if !'\\*[$REF_STYLE]'NOTE' .chop [A
 .\" Per MLA, NOTE should not use idem, therefore if %i contains other than
-.\" idem (eg. ed., trans.), transpose it to after author's name
+.\" idem (e.g., ed., trans.), transpose it to after author's name
 .ie '\\*[$REF_STYLE]'NOTE' \{\
 .   ie !'\\*[idem]'' .ref*field A "" "" ", \\*[idem]"
 .   el .ref*field A
@@ -21224,7 +21224,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .\}
 .ref*field m ,
 ..
-\# %p Post-author string (eg. Preface, Foreword, etc)
+\# %p Post-author string (e.g., Preface, Foreword, etc)
 .de ref*add-p
 .\" Convert first letter to uppercase, per MLA, if BIBLIO
 .if '\\*[$REF_STYLE]'BIBLIO' \{\
@@ -21557,7 +21557,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .ie '\\*[$REF_STYLE]'NOTE' ref*field G ,
 .el .ref*field G . " "
 ..
-\# %O Other (info that goes after %T [or %B] but is hard to categorize; eg a dissertation)
+\# %O Other (info that goes after %T [or %B] but is hard to categorize; e.g., a dissertation)
 .de ref*add-O
 .ds eval*[O \\*([O
 .substring eval*[O -1

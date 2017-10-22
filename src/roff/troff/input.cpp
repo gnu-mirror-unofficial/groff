@@ -3733,7 +3733,7 @@ void macro_iterator::shift(int n)
   }
 }
 
-// This gets used by eg .if '\?xxx\?''.
+// This gets used by, e.g., .if '\?xxx\?''.
 
 int operator==(const macro &m1, const macro &m2)
 {
@@ -5595,7 +5595,7 @@ static void skip_alternative()
 	  ;
       }
     /*
-      Note that the level can properly be < 0, eg
+      Note that the level can properly be < 0, e.g.
 	
 	.if 1 \{\
 	.if 0 \{\

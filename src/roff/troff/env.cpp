@@ -777,7 +777,7 @@ environment::environment(const environment *e)
   suppress_next_eol(e->suppress_next_eol),
   seen_break(e->seen_break),
   tabs(e->tabs),
-  name(e->name),		// so that eg `.if "\n[.ev]"0"' works
+  name(e->name),		// so that, e.g., `.if "\n[.ev]"0"' works
   control_char(e->control_char),
   no_break_control_char(e->no_break_control_char),
   hyphen_indicator_char(e->hyphen_indicator_char)

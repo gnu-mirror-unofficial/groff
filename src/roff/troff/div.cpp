@@ -178,12 +178,12 @@ macro_diversion::macro_diversion(symbol s, int append)
 {
 #if 0
   if (append) {
-    /* We don't allow recursive appends eg:
+    /* We don't allow recursive appends, e.g.:
 
       .da a
       .a
       .di
-      
+
       This causes an infinite loop in troff anyway.
       This is because the user could do
 
