@@ -112,7 +112,7 @@ my @files = EMPTYARRAY;
 
 
 #----------
-# first run for command line arguments
+# first run for command-line arguments
 #----------
 
 # global variables for first run
@@ -386,7 +386,7 @@ sub install_verbose {
   $v->print( $Globals->{'prog'} . " is" . $s .
 	     " installed." );
 
-  $v->print( 'The command line options are:' );
+  $v->print( 'The command-line options are:' );
 
   $s = "  options:";
   $s .= " `" . $_ . "'" for ( @ARGV );
@@ -399,7 +399,7 @@ sub install_verbose {
 
 
 #----------
-# second run of command line arguments
+# second run of command-line arguments
 #----------
 sub run_second {
     # Second run of args with new @ARGV from the former splitting.

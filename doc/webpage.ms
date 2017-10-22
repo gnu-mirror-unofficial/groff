@@ -694,7 +694,7 @@ nroff
 
 .ULS
 .LI
-Two new command line options `\-w' and `\-W' are accepted and passed to
+Two new command-line options `\-w' and `\-W' are accepted and passed to
 groff to enable and disable warning messages, respectively.
 .ULE
 .
@@ -804,11 +804,11 @@ grohtml
 XHTML support has been added.
 
 .LI
-New command line option `\-V' (to be used in XHTML mode) to produce an
+New command-line option `\-V' (to be used in XHTML mode) to produce an
 XHTML validator button.
 
 .LI
-New command line option `\-y' to produce a right-justified groff signature
+New command-line option `\-y' to produce a right-justified groff signature
 at the end of the document (in combination with option `\-V').
 .ULE
 .
@@ -933,7 +933,7 @@ DragonFly OS.
 
 .LI
 If mdoc is used to print multiple man pages (together with the \-rcR=0
-command line option), each man page now starts a new page.
+command-line option), each man page now starts a new page.
 
 .LI
 \-mtrace has been considerably improved, now showing number and string
@@ -1064,10 +1064,10 @@ This device driver has been raised to beta stage; its set of tags should
 be stable now.
 
 .LI
-New command line option `\-s' to set the base point size.
+New command-line option `\-s' to set the base point size.
 
 .LI
-New command line option `\-S' to set the split level while generating
+New command-line option `\-S' to set the split level while generating
 multiple files.
 .ULE
 .
@@ -1234,7 +1234,7 @@ groff
 
 .ULS
 .LI
-The argument of the command line option `\-I' is now also passed to troff
+The argument of the command-line option `\-I' is now also passed to troff
 and grops, specifying a directory to search for files on the command line,
 files named in `so' and `psbb' requests, and files named in \eX'ps:\~file'
 and \eX'ps:\~import' escapes.
@@ -1281,7 +1281,7 @@ They are equivalent to `dei' and `ami', respectively, but the macros
 are executed with compatibility mode off (similar to `de1' and `am1').
 
 .LI
-New command line option `\-I' to specify a directory for files (both
+New command-line option `\-I' to specify a directory for files (both
 those on the command line and those named in `psbb' requests).
 This is also handled by the groff wrapper program.
 
@@ -1345,7 +1345,7 @@ grops
 
 .ULS
 .LI
-New command line option `\-I' to specify a directory to search for files
+New command-line option `\-I' to specify a directory to search for files
 on the command line and files named in \eX'ps:\~import' and \eX'ps:\~file'
 escapes.
 This is also handled by the groff wrapper program.
@@ -1711,12 +1711,12 @@ and others made the man macros more customizable.
 
 .ULS
 .LI
-New command line options \-rFT, \-rIN, and \-rSN to set the vertical
+New command-line options \-rFT, \-rIN, and \-rSN to set the vertical
 location of the footer line, the body text indentation, and the
 sub-subheading indentation.
 
 .LI
-New command line option \-rHY (similar to the ms macros) to control
+New command-line option \-rHY (similar to the ms macros) to control
 hyphenation.
 
 .LI
@@ -1734,7 +1734,7 @@ explicitly specified on the command line.
 
 .LI
 troff's start-up file `troffrc' now includes `papersize.tmac' to set
-the paper size with the command line option `-dpaper=<size>'.
+the paper size with the command-line option `-dpaper=<size>'.
 
 Possible values for `<size>' are the same as the predefined `papersize'
 values in the DESC file (only lowercase; see the groff_font man page)
@@ -1742,7 +1742,7 @@ except \%a7-d7.
 An appended `l' (ell) character denotes landscape orientation.
 Examples: `a4', `c3l', `letterl'.
 
-Most output drivers need additional command line switches `\-p' and
+Most output drivers need additional command-line switches `\-p' and
 `\-l' to override the default paper length and orientation as set in
 the driver specific DESC file.
 
@@ -2266,8 +2266,8 @@ groff
 
 .ULS
 .LI
-The new command line `\-c' disables color output (which is always disabled
-in compatibility mode).
+The new command-line option `\-c' disables color output (which is always
+disabled in compatibility mode).
 .ULE
 .
 .
@@ -2276,7 +2276,7 @@ Nroff
 
 .ULS
 .LI
-Two new command line options `\-c' and `\-C'; the former passes `\-c' to
+Two new command-line options `\-c' and `\-C'; the former passes `\-c' to
 grotty (switching to the old output scheme); the latter passes `\-C' to
 groff (enabling compatibility mode).
 .ULE

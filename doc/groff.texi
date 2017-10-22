@@ -1028,7 +1028,7 @@ gtbl}, @ref{Invoking ggrn}, @ref{Invoking grefer}, @ref{Invoking gchem},
 @ref{Invoking grodvi}, @ref{Invoking grolj4}, @ref{Invoking grolbp}, and
 @ref{Invoking gxditview}.
 
-The command line format for @code{groff} is:
+The command-line format for @code{groff} is:
 
 @Example
 groff [ -abceghijklpstvzCEGNRSUVXZ ] [ -d@var{cs} ] [ -D@var{arg} ]
@@ -1038,7 +1038,7 @@ groff [ -abceghijklpstvzCEGNRSUVXZ ] [ -d@var{cs} ] [ -D@var{arg} ]
       [ -w@var{name} ] [ -W@var{name} ] [ @var{files}@dots{} ]
 @endExample
 
-The command line format for @code{gtroff} is as follows.
+The command-line format for @code{gtroff} is as follows.
 
 @Example
 gtroff [ -abcivzCERU ] [ -d@var{cs} ] [ -f@var{fam} ] [ -F@var{dir} ]
@@ -1423,10 +1423,10 @@ none otherwise.
 @tindex GROFF_ENCODING@r{, environment variable}
 The value of this environment value is passed to the @code{preconv}
 preprocessor to select the encoding of input files.  Setting this option
-implies @code{groff}'s command line option @option{-k} (that is,
+implies @code{groff}'s command-line option @option{-k} (that is,
 @code{groff} actually always calls @code{preconv}).  If set without a
 value, @code{groff} calls @code{preconv} without arguments.  An explicit
-@option{-K} command line option overrides the value of
+@option{-K} command-line option overrides the value of
 @env{GROFF_ENCODING}.  See the manual page of @code{preconv} for details.
 
 @item GROFF_FONT_PATH
@@ -1476,7 +1476,7 @@ above.
 @cindex macros, searching
 
 All macro file names must be named @code{@var{name}.tmac} or
-@code{tmac.@var{name}} to make the @option{-m@var{name}} command line
+@code{tmac.@var{name}} to make the @option{-m@var{name}} command-line
 option work.  The @code{mso} request doesn't have this restriction; any
 file name can be used, and @code{gtroff} won't try to append or prepend
 the @samp{tmac} string.
@@ -1495,7 +1495,7 @@ macro files are (in that order):
 @itemize @bullet
 @item
 The directories specified with @code{gtroff}'s or @code{groff}'s
-@option{-M} command line option.
+@option{-M} command-line option.
 
 @item
 @tindex GROFF_TMAC_PATH@r{, environment variable}
@@ -1509,7 +1509,7 @@ The directories given in the @env{GROFF_TMAC_PATH} environment variable.
 @cindex current directory
 @cindex directory, current
 The current directory (only if in unsafe mode using the @option{-U}
-command line switch).
+command-line switch).
 
 @item
 @cindex home directory
@@ -1569,7 +1569,7 @@ The elements of the search path for font files are (in that order):
 @itemize @bullet
 @item
 The directories specified with @code{gtroff}'s or @code{groff}'s
-@option{-F} command line option.  All device drivers and some
+@option{-F} command-line option.  All device drivers and some
 preprocessors also have this option.
 
 @item
@@ -1609,7 +1609,7 @@ handled separately.  @xref{Page Layout}, for vertical manipulation of
 the page size.  @xref{Line Layout}, for horizontal changes.
 
 A default paper size can be set in the device's @file{DESC} file.  Most
-output devices also have a command line option @option{-p} to override
+output devices also have a command-line option @option{-p} to override
 the default paper size and option @option{-l} to use landscape
 orientation.  @xref{DESC File Format}, for a description of the
 @code{papersize} keyword, which takes the same argument as @option{-p}.
@@ -1617,7 +1617,7 @@ orientation.  @xref{DESC File Format}, for a description of the
 @pindex papersize.tmac
 @pindex troffrc
 A convenient shorthand to set a particular paper size for @code{gtroff}
-is command line option @option{-dpaper=@var{size}}.  This defines string
+is command-line option @option{-dpaper=@var{size}}.  This defines string
 @code{paper}, which is processed in file @file{papersize.tmac} (loaded in
 the start-up file @file{troffrc} by default).  Possible values for
 @var{size} are the same as the predefined values for the
@@ -2247,7 +2247,7 @@ are based on it.
 @node Man options, Man usage, man, man
 @subsection Options
 
-The command line format for using the @file{man} macros with
+The command-line format for using the @file{man} macros with
 @code{groff} is:
 
 @Example
@@ -2496,7 +2496,7 @@ Finally, the macros @code{SH}, @code{SS}, @code{LP} (@code{PP},
 @cindex @code{man} macros, how to set fonts
 
 The standard font is roman; the default text size is 10@tie{}point.  If
-command line option @option{-rS=@var{n}} is given, use @var{n}@dmn{pt}
+command-line option @option{-rS=@var{n}} is given, use @var{n}@dmn{pt}
 as the default text size.
 
 @Defmac {SM, [@Var{text}], man}
@@ -4968,7 +4968,7 @@ the file @file{latin1.tmac} is loaded at start-up.
 @cindex input encoding, @w{latin-2} (ISO @w{8859-2})
 @pindex latin2.tmac
 To use this encoding, either say @w{@samp{.mso latin2.tmac}} at the very
-beginning of your document or use @samp{-mlatin2} as a command line
+beginning of your document or use @samp{-mlatin2} as a command-line
 argument for @code{groff}.
 
 @item latin-5
@@ -4978,7 +4978,7 @@ argument for @code{groff}.
 @cindex input encoding, @w{latin-5} (ISO @w{8859-9})
 @pindex latin5.tmac
 For Turkish.  Either say @w{@samp{.mso latin5.tmac}} at the very
-beginning of your document or use @samp{-mlatin5} as a command line
+beginning of your document or use @samp{-mlatin5} as a command-line
 argument for @code{groff}.
 
 @item latin-9 (latin-0)
@@ -4991,7 +4991,7 @@ This encoding is intended (at least in Europe) to replace @w{latin-1}
 encoding.  The main difference to @w{latin-1} is that @w{latin-9}
 contains the Euro character.  To use this encoding, either say
 @w{@samp{.mso latin9.tmac}} at the very beginning of your document or
-use @samp{-mlatin9} as a command line argument for @code{groff}.
+use @samp{-mlatin9} as a command-line argument for @code{groff}.
 @end table
 
 Note that it can happen that some input encoding characters are not
@@ -5018,7 +5018,7 @@ the box (@w{latin-2} isn't).
 
 By its very nature, @option{-Tutf8} supports all input encodings;
 @option{-Tdvi} has support for both @w{latin-2} and @w{latin-9} if the
-command line @option{-mec} is used also to load the file @file{ec.tmac}
+command-line @option{-mec} is used also to load the file @file{ec.tmac}
 (which flips to the EC fonts).
 
 
@@ -6494,7 +6494,7 @@ GNU@tie{}@code{troff}; it exists for backward compatibility.
 @cindex unsafe mode
 @cindex mode, unsafe
 @vindex .U
-If @code{gtroff} is called with the @option{-U} command line option to
+If @code{gtroff} is called with the @option{-U} command-line option to
 activate unsafe mode, the number register @code{.U} is set to@tie{}1,
 and to zero otherwise.  @xref{Groff Options}.
 
@@ -6636,7 +6636,7 @@ running under GNU @code{troff}.
 @item \n[.A]
 @vindex .A
 @cindex @acronym{ASCII} approximation output register (@code{.A})
-If the command line option @option{-a} is used to produce an
+If the command-line option @option{-a} is used to produce an
 @acronym{ASCII} approximation of the output, this is set to@tie{}1, zero
 otherwise.  @xref{Groff Options}.
 
@@ -6654,7 +6654,7 @@ information.
 
 @item \n[.T]
 @vindex .T
-If @code{gtroff} is called with the @option{-T} command line option, the
+If @code{gtroff} is called with the @option{-T} command-line option, the
 number register @code{.T} is set to@tie{}1, and zero otherwise.
 @xref{Groff Options}.
 
@@ -13396,7 +13396,7 @@ Internally, @code{color} sets a global flag; it does not produce a
 token.  Similar to the @code{cp} request, you should use it at the
 beginning of your document to control color output.
 
-Colors can be also turned off with the @option{-c} command line option.
+Colors can be also turned off with the @option{-c} command-line option.
 @endDefreq
 
 @Defreq {defcolor, ident scheme color_components}
@@ -13543,7 +13543,7 @@ bar
 yields @samp{This is foobar}.
 
 The search path for @var{file} can be controlled with the @option{-I}
-command line option.
+command-line option.
 @endDefreq
 
 @Defreq {pso, command}
@@ -13565,7 +13565,7 @@ for @code{pso} also.
 @Defreq {mso, file}
 Identical to the @code{so} request except that @code{gtroff} searches
 for the specified @var{file} in the same directories as macro files for
-the @option{-m} command line option.
+the @option{-m} command-line option.
 If the file name to be included has the form @file{@var{name}.tmac} and it
 isn't found, @code{mso} tries to include @file{tmac.@var{name}} and vice
 versa.
@@ -14111,7 +14111,7 @@ If an error occurs (for example, @code{psbb} cannot find the
 zero.
 
 The search path for @var{filename} can be controlled with the
-@option{-I} command line option.
+@option{-I} command-line option.
 @endDefreq
 
 
@@ -14328,7 +14328,7 @@ also @ref{I/O}.
 @endDefreq
 
 When doing something involved it is useful to leave the debugging
-statements in the code and have them turned on by a command line flag.
+statements in the code and have them turned on by a command-line flag.
 
 @Example
 .if \n(DB .tm debugging output
@@ -14466,7 +14466,7 @@ This request is active only if text is justified to both margins (using
 @endDefreq
 
 @cindex warnings
-@code{gtroff} has command line options for printing out more warnings
+@code{gtroff} has command-line options for printing out more warnings
 (@option{-w}) and for printing backtraces (@option{-b}) when a warning
 or an error occurs.  The most verbose level of warnings is @option{-ww}.
 
@@ -14679,8 +14679,8 @@ otherwise, turn it off.
 The read-only number register @code{.C} is@tie{}1 if compatibility mode
 is on, 0@tie{}otherwise.
 
-Compatibility mode can be also turned on with the @option{-C} command
-line option.
+Compatibility mode can be also turned on with the @option{-C}
+command-line option.
 
 The @code{do} request turns off compatibility mode while executing its
 arguments as a @code{gtroff} command.  However, it does not turn off

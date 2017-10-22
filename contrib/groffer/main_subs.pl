@@ -134,9 +134,9 @@ sub main_set_options {
   'encoding', 'extension', 'locale');
 
 ### main_set_options()
-  ###### collections of command line options
+  ###### collections of command-line options
 
-  # There are two hashes that control the whole of the command line
+  # There are two hashes that control the whole of the command-line
   # options, one for short and one for long options.  Options without
   # and with arguments are mixed by advicing a value of 0 for an option
   # without argument and a value of 1 for an option with argument.
@@ -434,7 +434,7 @@ sub main_config_params {	# handle configuration files
     chomp @GROFFER_OPT;
   }
 
-  # Handle command line parameters together with $GROFFER_OPT.
+  # Handle command-line parameters together with $GROFFER_OPT.
   # Options can be abbreviated, with each - as abbreviation place.
   {
     my @argv0 = (@GROFFER_OPT, @ARGV);

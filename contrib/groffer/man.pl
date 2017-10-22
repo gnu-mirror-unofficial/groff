@@ -342,7 +342,7 @@ sub man_get {
 # $LC_ALL; this has the same precedence as
 # $MANPATH, $MANSEC, $PAGER, $SYSTEM; overridden by
 # $MANOPT; overridden by
-# the groffer command line options.
+# the groffer command-line options.
 #
 # $MANROFFSEQ is ignored because grog determines the preprocessors.
 #

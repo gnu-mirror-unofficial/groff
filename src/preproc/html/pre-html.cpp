@@ -1557,7 +1557,7 @@ static void usage(FILE *stream)
     "it is part of the groff pipeline to produce HTML output.\n"
     "\n"
     "If there is ever the need to call it manually (e.g., for\n"
-    "debugging purposes), add command line option `-V' while calling\n"
+    "debugging purposes), add command-line option `-V' while calling\n"
     "the `groff' program to see which arguments are passed to it.\n"
     "\n");
 }

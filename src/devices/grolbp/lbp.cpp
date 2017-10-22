@@ -585,7 +585,7 @@ static void handle_unknown_desc_command(const char *command, const char *arg,
 {
   // orientation command
   if (strcasecmp(command, "orientation") == 0) {
-    // We give priority to command line options
+    // We give priority to command-line options
     if (orientation > 0)
       return;
     if (arg == 0)

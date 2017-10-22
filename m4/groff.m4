@@ -1466,7 +1466,7 @@ AC_DEFUN([GROFF_X11],
    AC_SUBST([XLIBDIRS])])
 
 
-# Set up the `--with-appresdir' command line option.
+# Set up the `--with-appresdir' command-line option.
 
 # Don't quote AS_HELP_STRING!
 AC_DEFUN([GROFF_APPRESDIR_OPTION],
@@ -1516,7 +1516,7 @@ AC_DEFUN([GROFF_APPRESDIR_CHECK],
   To install them into a different directory, say,
   `/etc/X11/app-defaults', add
   `--with-appresdir=/etc/X11/app-defaults' to the configure script
-  command line options and rerun it (`prefix' value has no effect on
+  command-line options and rerun it (`prefix' value has no effect on
   a --with-appresdir option).
 
   If the gxditview resources are installed in a directory that is not
@@ -1531,7 +1531,7 @@ AC_DEFUN([GROFF_APPRESDIR_CHECK],
    fi])
 
 
-# Set up the `--with-grofferdir' command line option.
+# Set up the `--with-grofferdir' command-line option.
 
 AC_DEFUN([GROFF_GROFFERDIR_OPTION],
   [AC_ARG_WITH([grofferdir],

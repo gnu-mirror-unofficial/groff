@@ -1213,7 +1213,7 @@ main(int argc, char **argv)
     { "version", no_argument, 0, 'v' },
     { NULL, 0, 0, 0 }
   };
-  // Parse the command line options.
+  // Parse the command-line options.
   while ((opt = getopt_long(argc, argv,
 			    "dD:e:hrv", long_options, NULL)) != EOF)
     switch (opt) {

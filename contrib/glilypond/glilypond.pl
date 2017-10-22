@@ -164,10 +164,10 @@ our $out;
 
 
 ########################################################################
-# Args: command line arguments
+# Args: command-line arguments
 ########################################################################
 
-# command line arguments are handled in 2 runs:
+# command-line arguments are handled in 2 runs:
 # 1) split short option collections, `=' optargs, and transfer abbrevs
 # 2) handle the transferred options with subs
 
