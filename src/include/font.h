@@ -33,7 +33,7 @@ typedef void (*FONT_COMMAND_HANDLER)(const char *,	// command
 //     `charNNN' denoting a single `char' in the input character set,
 //     `uXXXX' denoting a Unicode character,
 //
-//   - those with a number, referring to the the font-dependent glyph with
+//   - those with a number, referring to the font-dependent glyph with
 //     the given number.
 
 // The statically allocated information about a glyph.

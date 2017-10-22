@@ -151,7 +151,7 @@ void over_box::output()
     printf("\\h'\\n[" WIDTH_FORMAT "]u-\\n[" WIDTH_FORMAT "]u/2u'",
 	   uid, den->uid);
 
-    // print the the denominator
+    // print the denominator
     den->output();
 
   #ifdef USE_Z

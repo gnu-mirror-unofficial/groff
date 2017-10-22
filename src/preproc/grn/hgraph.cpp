@@ -801,7 +801,7 @@ Paramaterize(int x[],
  | Routine:	PeriodicSpline (h, z, dz, d2z, d3z, npoints)
  |
  | Results:	This routine solves for the cubic polynomial to fit a spline
- |		curve to the the points specified by the list of values. 
+ |		curve to the points specified by the list of values.
  |		The Curve generated is periodic.  The algorithms for this
  |		curve are from the `Spline Curve Techniques' paper cited
  |		above.
@@ -874,7 +874,7 @@ PeriodicSpline(double h[],	/* paramaterization  */
  | Routine:	NaturalEndSpline (h, z, dz, d2z, d3z, npoints)
  |
  | Results:	This routine solves for the cubic polynomial to fit a spline
- |		curve the the points specified by the list of values.  The
+ |		curve the points specified by the list of values.  The
  |		alogrithms for this curve are from the `Spline Curve
  |		Techniques' paper cited above.
  *----------------------------------------------------------------------------*/

@@ -457,7 +457,7 @@ man7dir=$(manroot)/man$(man7ext)
 #				(Reiser) preprocessor
 # ARRAY_DELETE_NEEDS_SIZE	if your C++ doesn't understand `delete []'
 #
-# PAGE=A4			if the the printer's page size is A4
+# PAGE=A4			if the printer's page size is A4
 # GHOSTSCRIPT=gs		the name (and directory if required) of the
 #				ghostscript program
 

@@ -938,7 +938,7 @@ output_charset(const int tfm_type)
 	     && charcode_name_table[charcode]) {
       char *name = charcode_name_table[charcode]->name;
       // don't warn about Unicode or unnamed glyphs
-      //  that aren't in the the TFM file
+      //  that aren't in the TFM file
       if (tfm_type == UNICODE && !quiet_flag && !equal(name, UNNAMED)
 	  && !is_uname(name)) {
 	fprintf(stderr, "%s: warning: symbol U+%04X (%s",
