@@ -1152,8 +1152,7 @@ info pages for a complete reference of all requests.
 .
 .PP
 Note, however, that using raw troff requests is likely to make your
-page render poorly on the (increasingly common) class of viewers that
-render it to HTML.
+page render poorly on the class of viewers that transform it to HTML.
 .
 Troff requests make implicit assumptions about things like character
 and page sizes that may break in an HTML environment; also, many of
@@ -1207,44 +1206,85 @@ even in manual pages and usually do not cause portability problems:
 .RB \(dq \e\  \(dq
 Unpaddable non-breaking space character.
 .
+(The double-quotes are to make the presence of the space character
+clear in this document, and are not necessary in the input file.)
+.
+Useful for preventing breaking between a numerical quantity and its
+corresponding unit(s), for instance:
+.
+.RS
+.IP
+.EX
+There are 2.54\e\ cm in an inch, 1,024\e\ bytes in 1\e\ kiB.
+.EE
+.RE
+.
 .TP
 .B \e&
 Zero-width space.
 .
-Used for different kinds of escaping, for example after abbreviations
-that occur at the end of an input line to prevent misinterpretation
-of the final dot as a full stop ending a sentence, or before an
-apostroph or dot at the beginning of a text input line to prevent
-misinterpretation as a macro line, for example:
-.sp
+Can be used to (1)\~suppress recognition of end-of-sentence punctuation
+sequences at the end of an input line, and (2)\~suppress recognition of
+a dot or apostrophe at the beginning of a line as a troff request.
+.
+.RS
+.IP
 .EX
-The
-\&.B .gcolor
-request supports several color names, e.g.\e&
-\e&'green', by default.
+Using a boot argument of
+\e&'sound=0' will disable the sound driver entirely, according to J.\e&
+Alfred Prufrock.
 .EE
+.RE
 .
 .TP
 .B \e(aq
-ASCII apostroph.
+ASCII apostrophe.
 .
 Useful for syntax elements of programming languages because some
 output devices might replace unescaped apostrophes with right single
 quotation marks.
 .
 .TP
+.B \e(oq
+Opening single quotation mark.
+.
+.TQ
+.B \e(cq
+Closing single quotation mark.
+.
+.IP
+Use these for paired directional single quotes, \(oqlike this\(cq.
+.
+.TP
 .B \e(dq
+ASCII double-quote.
+.
 Sometimes needed on macro lines to prevent the interpretation of the
 ASCII quotation mark character \(oq\(dq\(cq as the beginning or end
 of a macro argument.
 .
 .TP
+.B \e(lq
+Left double quotation mark.
+.
+.TQ
+.B \e(rq
+Right double quotation mark.
+.
+.IP
+Use these for paired directional double quotes, \(lqlike this\(rq.
+.
+.TP
 .B \e(em
+Em-dash.
+.
 Used as a punctuation mark for an interruption in a sentence\(emlike
 in this one.
 .
 .TP
 .B \e(en
+En-dash.
+.
 Used to separate the two ends of a range, in particular between
 numbers, for example: the digits 1\(en9.
 .
@@ -1285,29 +1325,33 @@ these cases because it may render as a hyphen on some output devices.
 .
 .TP
 .B \ec
-If this escape sequence occurs at the end of an input line, no
-white space is inserted between the last glyph resulting from this
-and the first glyph resulting from the next input line.
+.
+If this escape sequence occurs at the end of an input line, no white
+space is inserted between the last glyph on it and the first glyph
+resulting from the next input line.
 .
 This is occasionally useful when three different fonts are needed
-in one single word, for example:
-.sp
+in a single word, for example:
+.
+.RS
+.IP
 .EX
 \&.BR "dd if" =\ec
 \&.I file
 .EE
-.sp
-Alternatively, and with likely better portability, the
+.RE
+.
+.IP
+Alternatively, and perhaps with better portability, the
 .B \ef
-font escape sequence can be used, see below.
+font escape sequence can be used; see below.
 .sp
 Attempting to use
 .B \ec
 to include the output from more than one macro line into the head of a
 .B .TP
-macro is non-portable and will misrender with groff-1.22.3,
-mandoc-1.14.1, older versions of these programs, and with other
-formatters.
+macro will misrender with groff-1.22.3, mandoc-1.14.1, older versions of
+these programs, and perhaps with some other formatters.
 .
 .TP
 .B \ee
@@ -1318,6 +1362,7 @@ It works reliably as long as the
 request is not used, which should never happen in manual pages, and
 it is slightly more portable than the more exact
 .B \e(rs
+(\[lq]reverse solidus\[rq])
 escape sequence.
 .
 .TP
@@ -1327,16 +1372,21 @@ respectively.
 .
 This is needed when three different fonts are required on a single
 input line, for example:
-.sp
+.
+.RS
+.IP
 .EX
 \&.TP
 \efBif\efP=\efIfile\efP
 .EE
-.sp
-It can also be used if three different fonts are needed in one
-single word.  It is likely more portable than
+.RE
+.
+.IP
+It can also be used if three different fonts are needed in a
+single word.
+It may be more portable than
 .BR \ec .
-.sp
+.IP
 As long as only two fonts are needed, using font alternation
 macros like
 .B .BR
