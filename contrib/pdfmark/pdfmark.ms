@@ -1,4 +1,3 @@
-.\" vim: ft=groff          -*- nroff -*-
 .ig
 pdfmark.ms
 
@@ -2562,3 +2561,7 @@ macro.
 .NH 3
 .XN -N import-map -- Deploying a Document Reference Map
 .TC
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
+.\" vim: filetype=groff:
