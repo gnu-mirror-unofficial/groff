@@ -35,12 +35,6 @@ the original English.
 .\" Definitions
 .\" --------------------------------------------------------------------
 .
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.el .TP "\\$1"
-..
 .de CW
 .ie \\n(.$>2 \&\\$1\f(CR\\$2\fP\\$3
 .el \&\f(CR\\$1\fP\\$2
