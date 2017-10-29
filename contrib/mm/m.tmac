@@ -16,7 +16,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Please send bug reports with examples to bug-groff@gnu.org.
 
@@ -318,8 +318,8 @@ Index		array!index
 .ds Letns!copy Copy \" space!
 .ds Letns!to " to
 .ds Letns!0 Copy to
-.ds Letns!1 Copy (with att.) to
-.ds Letns!2 Copy (without att.) to
+.ds Letns!1 Copy (with att.\&) to
+.ds Letns!2 Copy (without att.\&) to
 .ds Letns!3 Att.
 .ds Letns!4 Atts.
 .ds Letns!5 Enc.
@@ -327,15 +327,15 @@ Index		array!index
 .ds Letns!7 Under separate cover
 .ds Letns!8 Letter to
 .ds Letns!9 Memorandum to
-.ds Letns!10 Copy (with atts.) to
-.ds Letns!11 Copy (without atts.) to
+.ds Letns!10 Copy (with atts.\&) to
+.ds Letns!11 Copy (without atts.\&) to
 .ds Letns!12 Abstract Only to
 .ds Letns!13 Complete Memorandum to
 .ds Letns!14 CC:
 .\"
 .\" Text printed below the footer. Controlled by @copy_type (C).
 .ds Pg_type!0
-.ds Pg_type!1 OFFICIAL FILE COPY 
+.ds Pg_type!1 OFFICIAL FILE COPY
 .ds Pg_type!2 DATE FILE COPY
 .ds Pg_type!3 D\ R\ A\ F\ T
 .ds Pg_type!4 D\ R\ A\ F\ T
@@ -946,7 +946,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .als }2 hd*suf-space
 .aln ;3 hd*need
 .\"-------------
-.\" .hd@split varable index name val1 val2 ...
+.\" .hd@split variable index name val1 val2 ...
 .de hd@split
 .if \\$2>(\\n[.$]-3) .@error "\\$3 must have at least \\$2 values (\\*[\\$3]).
 .nr hd*sp-tmp \\$2+3
@@ -1025,7 +1025,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\" May change hd*mark (}0), hd*suf-space (}2) and hd*need (;3)
 .\" Can also change Hps1/2.
 .if d HX .HX \\n[hd*level] \\n[hd*arg1] "\\$2\\$3"
-.\"-------------------------------------- 
+.\"--------------------------------------
 .\" pre-space
 .ie \\n[hd*level]<=\\n[Hps] .SP (u;\\n[Hps2])
 .el .SP (u;\\n[Hps1])
@@ -1062,12 +1062,12 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .	vs \\*[hd*new-ps]+2
 .\}
 .\"
-.\"---------- user macro HY ------------- 
+.\"---------- user macro HY -------------
 .\"	user macro to reset indents
 .if d HY .HY \\n[hd*level] \\n[hd*arg1] "\\$2\\$3"
 .\" HTML: mark beginning of heading
 .misc@tag NH \\n[hd*level]
-.\"-------------------------------------- 
+.\"--------------------------------------
 .nr hd*mark-size \w@\\*[hd*mark]@
 .if (\\n[hd*level]<=\\n[Hc])&\\n[hd*htype] .ce\" center if level<=Hc
 .\"
@@ -1123,8 +1123,8 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .while \\n+[hd*i]<15 .af H\\n[hd*i] \\$[\\n[hd*i]] 1
 ..
 .\"----------------------
-.\" set page-nr, called from header 
-.\" 
+.\" set page-nr, called from header
+.\"
 .de hd@set-page
 .\"
 .ie \\n[.$]>0 .nr P \\$1
@@ -1172,7 +1172,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\"
 .if \\n[D]>2 .tm pg*foot-trap \\n[@pl]u-(\\n[pg*block-size]u+\\n[ft*note-size]u+\\n[pg*foot-margin]u+\\n[pg*footer-size]u+\\n[pg*extra-footer-size]u) = \\n[pg*foot-trap]
 .\"
-.\" last-pos points to the position of the footer and bottom 
+.\" last-pos points to the position of the footer and bottom
 .\" block below foot-notes.
 .nr pg*last-pos \\n[@pl]u-(\\n[pg*block-size]u+\\n[pg*foot-margin]u+\\n[pg*footer-size]u+\\n[pg*extra-footer-size]u)
 .if \\n[D]>2 .tm pg*last-pos \\n[@pl]u-(\\n[pg*block-size]u+\\n[pg*foot-margin]u+\\n[pg*footer-size]u+\\n[pg*extra-footer-size]u) = \\n[pg*last-pos]
@@ -1280,7 +1280,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .		PX
 .		rs
 .	\}
-.	\" check for pending footnotes 
+.	\" check for pending footnotes
 .	ft@check-old
 .	\"
 .	\" back to normal text processing
@@ -1290,7 +1290,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .	\" reset NCOL pointer at each new page.
 .	nr pg*last-ncol 0
 .	\" set multicolumn
-.	\" 
+.	\"
 .	pg@set-po
 .	\" print floating displays
 .	df@print-float 4
@@ -1298,7 +1298,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .	ns
 .\}
 .if \\n[pg*top-enabled]<0 .nr pg*top-enabled 1
-.nr hd*cur-bline \\n[nl]	\" .H needs to know if output has occured
+.nr hd*cur-bline \\n[nl]	\" .H needs to know if output has occurred
 .\}
 ..
 .\"---------------------------------------------------------
@@ -1460,7 +1460,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .ref@eot-print
 ..
 .\"-------------------------
-.\" set top and bottom margins 
+.\" set top and bottom margins
 .\" -T	sets pg*footer-size and pg*header-size instead
 .de VM
 .ie '\\$1'-T' \{\
@@ -1487,7 +1487,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .pg@move-trap
 ..
 .\"---------------------
-.\" multicolumn output. 
+.\" multicolumn output.
 .de pg@set-po
 .if \\n[pg*cols-per-page]>1 \{\
 .	ll \\n[pg*column-size]u
@@ -1718,7 +1718,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .		nr ds*wide 0
 .		if r ft*df-save \{\
 .			nr Df \\n[ft*df-save]
-.			rm ft*df-save 
+.			rm ft*df-save
 .		\}
 .	\}
 .	if '\\*[ft*x]'WD' \{\
@@ -2399,7 +2399,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .SP .5
 ..
 .\" ####### module eq #######################################
-.\" 
+.\"
 .nr eq*number 0 1
 .ds eq*label
 .de EQ
@@ -2513,7 +2513,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .	\}
 .\}
 .am toc*list
-.\" .toc@set level headernumber text pagenr
+.\" .toc@set level headernumber text pagenumber
 .toc@set \\$1 "\\$2" "\\$3" \\$4
 \\..
 ..
@@ -2537,7 +2537,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .in \\n[toc*text]u
 .ti -\\n[toc*hl!\\$1]u
 .\"
-.\" length of headernum space
+.\" length of headernumber space
 .nr toc*i \\n[toc*hl!\\$1]-\w@\\$2@
 .\"
 .ll \\n[@ll]u-\w@\\$4@u-2m
@@ -2569,7 +2569,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .ll \\n[@ll]u
 ..
 .\"########################### module lix ############################
-.\" LIST OF figures, tables, exhibits and equations 
+.\" LIST OF figures, tables, exhibits and equations
 .nr lix*fg-nr 0 1
 .nr lix*tb-nr 0 1
 .nr lix*ec-nr 0 1
@@ -2701,7 +2701,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 ..
 .\"------------
 .\" print appended macro
-.\" lix@dsln type pagenumber text headernr
+.\" lix@dsln type pagenumber text headernumber
 .de lix@dsln
 .nr lix*i \\n[lix*wth\\$1]-\w@\\$4@
 .ne 4v
@@ -2900,7 +2900,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .nr ref*flag 0 1
 ..
 .\"########################### module app ############################
-.\" 
+.\"
 .nr app*nr 0 1
 .af app*nr A
 .nr app*dnr 0 1
@@ -2946,7 +2946,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .	\}
 .	ds app*ind \\n+[app*nr]
 .	nr H1 \\n+[app*dnr]
-.	nr H1h \\n[app*dnr] 
+.	nr H1h \\n[app*dnr]
 .\}
 .\"	clear lower counters
 .nr app*i 1 1
