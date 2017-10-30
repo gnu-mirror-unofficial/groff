@@ -160,7 +160,7 @@ extensions, and float management).
 .sty \n[.fp] UBLI    \"  Ultra Black Italic
 .sty \n[.fp] UBLCD   \"  Ultra Black Condensed
 .sty \n[.fp] UBLCDI  \"  Ultra Black Condensed Italic
-.sty \n[.fp] UBLEX   \"  Ultra Black Exteneded
+.sty \n[.fp] UBLEX   \"  Ultra Black Extended
 .sty \n[.fp] UBLEXI  \"  Ultra Black Extended Italic
 \#
 .sty \n[.fp] SC      \"  Small Caps Roman
@@ -1733,7 +1733,7 @@ end
 \# *Argument:
 \#   <none>
 \# *Function:
-\#   Automagically moves to TAB<n+1> on the same line as the last
+\#   Automatically moves to TAB<n+1> on the same line as the last
 \#   line of the previous tab.
 \# *Notes:
 \#   The \c inline must be appended to the end of input lines when in
@@ -2375,7 +2375,7 @@ end
 \#
 \# PAD
 \# ---
-\# *Argments:
+\# *Arguments:
 \#   "<string of text with padding markers inserted>"
 \#   "<id of bookmark created by .PDF_BOOKMARK>"
 \# *Function:
@@ -3685,7 +3685,7 @@ end
 \#   a trap (when they break the preceding line, they spring the
 \#   trap, and groff won't back up to the line preceding the trap).
 \#   TRAP is a kludge to get EL and TN work properly on last lines.
-\#   The user simply enloses the offending lines in TRAP OFF/TRAP.
+\#   The user simply encloses the offending lines in TRAP OFF/TRAP.
 \#
 .MAC TRAP END
 .    ie '\\$1'' .vpt
@@ -4282,7 +4282,7 @@ y\R'#DESCENDER \\n[.cdp]'
 \#   Instructs TYPEWRITE to treat italics as italics, whether
 \#   invoked via control lines or inline.
 \# *Notes:
-\#   ITALIC_MEANS_ITALIC and UNDERLINE_ITALIC are mututally exclusive,
+\#   ITALIC_MEANS_ITALIC and UNDERLINE_ITALIC are mutually exclusive,
 \#   hence invoking the one automatically turns off the other.
 \#
 .MAC ITALIC_MEANS_ITALIC END
@@ -4306,7 +4306,7 @@ y\R'#DESCENDER \\n[.cdp]'
 \#   Instructs TYPEWRITE to underline italics, whether invoked
 \#   via control lines or inline.
 \# *Notes:
-\#   UNDERLINE_ITALIC and ITALIC_MEANS_ITALIC are mututally exclusive,
+\#   UNDERLINE_ITALIC and ITALIC_MEANS_ITALIC are mutually exclusive,
 \#   hence invoking the one automatically turns off the other.
 \#
 \#   UNDERLINE_ITALIC is the default for TYPEWRITE.
@@ -4337,7 +4337,7 @@ y\R'#DESCENDER \\n[.cdp]'
 \#   italic but didn't have it, ergo the need to tell TYPEWRITE to
 \#   treat \*[SLANT] as italic (i.e. underlined).
 \#
-\#   UNDERLINE_SLANT and SLANT_MEANS_SLANT are mututally exclusive,
+\#   UNDERLINE_SLANT and SLANT_MEANS_SLANT are mutually exclusive,
 \#   hence invoking the one automatically turns off the other.
 \#
 \#   UNDERLINE_SLANT is the default for TYPEWRITE.
@@ -7556,7 +7556,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 \# *Arguments:
 \#   <none>
 \# *Function:
-\#   Macro to start document processiong.  Reads in default document
+\#   Macro to start document processing.  Reads in default document
 \#   style parameters and any parameters the user has changed before
 \#   issuing START.  Using the information gathered in the opening
 \#   macros, prints appropriate title (or chapter #), subtitle,
@@ -8885,7 +8885,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 \#   If the user wants to incorporate the page number into the string,
 \#   \*[PAGE#] must be used.  For example, if the user wants to put
-\#   an elipsis before the page number in the string, s/he should use
+\#   an ellipsis before the page number in the string, s/he should use
 \#   ...\*[PAGE#], not ...#
 \#
 .MAC HDRFTR_LEFT END
@@ -8957,7 +8957,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 \#   If the user wants to incorporate the page number into the string,
 \#   \*[PAGE#] must be used.  For example, if the user wants to put
-\#   an elipsis before the page number in the string, s/he should use
+\#   an ellipsis before the page number in the string, s/he should use
 \#   ...\*[PAGE#], not ...#
 \#
 .MAC HDRFTR_CENTER END
@@ -9047,7 +9047,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 \#   If the user wants to incorporate the page number into the string,
 \#   \*[PAGE#] must be used.  For example, if the user wants to put
-\#   an elipsis before the page number in the string, s/he should use
+\#   an ellipsis before the page number in the string, s/he should use
 \#   ...\*[PAGE#], not ...#
 \#
 .MAC HDRFTR_RIGHT END
@@ -9763,7 +9763,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    \}
 .    if \\n[#PRINT_STYLE]=1 \{\
 .       if \\n[#ENDNOTES]=1 \{\
-.\" Single-spaced endotes have a different lead
+.\" Single-spaced endnotes have a different lead
 .          if \\n[#EN_SINGLESPACE] \{\
 .             nr #RESTORE_DOC_LEAD \\n[#DOC_LEAD]
 .             nr #DOC_LEAD \\n[#EN_LEAD]u
@@ -11259,7 +11259,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   [character] [iterations] [vertical adjustment]
 \# *Function:
 \#   Allows user to specify a line break character and the number
-\#   of times to repeat it horiontally.
+\#   of times to repeat it horizontally.
 \# *Notes:
 \#   Without an argument, LINEBREAK_CHAR will deposit a blank line.
 \#
@@ -13962,7 +13962,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .
 .ALIAS ENDNOTE_STRING ENDNOTES_HEADER_STRING
 \#
-\# ENDNOTE STRING START POSTION
+\# ENDNOTE STRING START POSITION
 \# ----------------------------
 \# *Argument:
 \#   <distance from page top>
@@ -14883,8 +14883,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#   Sets #BIB_LIST to 1 for numbered list style, 0 for plain output
 \# *Notes:
 \#   Technically, user is supposed to enter PLAIN if s/he wants an
-\#   unumbered bibliography, but the el clause says "any arg but
-\#   LIST means unumbered."  Effectively, any arg but LIST produces
+\#   unnumbered bibliography, but the el clause says "any arg but
+\#   LIST means unnumbered."  Effectively, any arg but LIST produces
 \#   a "plain" bibliographic list.
 \#
 \# The 2nd and 3rd args have the same options as the 2nd and 3rd
@@ -21340,7 +21340,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .while !'\\*[eval*[E]',' \{\
 .   ds eval*[E \\*([E
 .   substring eval*[E \\n+[position] \\n[position]
-.   if \\n+[counter]>30 .break \" 30 is abitrary
+.   if \\n+[counter]>30 .break \" 30 is arbitrary
 .\}
 .\" Check for " and"
 .if '\\*[eval*[E]',' \{\
@@ -21601,7 +21601,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 \#
 \# Book reprints
 \# -------------
-\# %d date of publication (the orignal date of publication)
+\# %d date of publication (the original date of publication)
 .de ref*add-d
 .ie '\\*[$REF_STYLE]'NOTE' \{\
 .   ref*field d "" ( ;
