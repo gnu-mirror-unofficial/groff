@@ -1223,9 +1223,12 @@ There are 2.54\e\ cm in an inch, and 1,024\e\ bytes in 1\e\ kiB.
 .B \e&
 Zero-width space.
 .
-Can be used to (1)\~suppress recognition of end-of-sentence punctuation
-sequences at the end of an input line, and (2)\~suppress recognition of
-a dot or apostrophe at the beginning of a line as a troff request.
+Can be used after an end-of-sentence punctuation sequence at the end of
+an input line to prevent its recognition as such, and before a dot or
+apostrophe at the beginning of an input line to prevent its
+interpretation as the beginning of a
+.I roff
+request.
 .
 .RS
 .IP
@@ -1493,3 +1496,4 @@ Local changes and customizations should be put into this file.
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:
