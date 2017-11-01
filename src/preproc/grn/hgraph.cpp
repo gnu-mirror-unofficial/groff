@@ -875,7 +875,7 @@ PeriodicSpline(double h[],	/* paramaterization  */
  |
  | Results:	This routine solves for the cubic polynomial to fit a spline
  |		curve the points specified by the list of values.  The
- |		alogrithms for this curve are from the `Spline Curve
+ |		algorithms for this curve are from the `Spline Curve
  |		Techniques' paper cited above.
  *----------------------------------------------------------------------------*/
 

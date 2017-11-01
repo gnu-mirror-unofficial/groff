@@ -1233,7 +1233,7 @@ names, even if they start with a `-' character.
 
 -C		compatibility mode
 --ligatures	include options `-P-y -PU' for internal font, which
-		preserverses the ligatures like `fi'
+		preserves the ligatures like `fi'
 --run		run the checked-out groff command
 --warnings	display more warnings to standard error
 
