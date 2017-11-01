@@ -1,4 +1,3 @@
-.\" Emacs mode: -*- nroff -*-
 .TH GROFF_TMAC @MAN5EXT@ "@MDATE@" "Groff Version @VERSION@"
 .SH NAME
 groff_tmac \- macro files in the roff typesetting system
@@ -27,7 +26,7 @@ Front-Cover Texts, and with no Back-Cover Texts.
 
 A copy of the Free Documentation License is included as a file called
 FDL in the main directory of the groff source package, it is also
-available on\-line at the
+available on-line at the
 .UR http://\:www.gnu.org/\:copyleft/\:fdl.html
 GNU copyleft site
 .UE .
@@ -338,6 +337,28 @@ Switch to the EC and TC font families.
 To be used with
 .BR \%grodvi (@MAN1EXT@)
 \[en] this man page also gives more details of how to use it.
+.
+.
+.TP
+.B hdtbl
+The Heidelberger table macros, contributed by Joachim Walsdorff, allow
+the generation of tables, using a syntax similar to the HTML table
+model.
+.
+Note that
+.B hdtbl
+is a macro package, not a preprocessor like
+.BR tbl (@MAN1EXT).
+.
+.B hdtbl
+works only with the
+.B \-Tps
+and
+.B \-Tpdf
+output devices.
+.
+See
+.BR groff_hdtbl (@MAN7EXT@) .
 .
 .
 .TP
@@ -1313,3 +1334,4 @@ FHS web site
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: filetype=groff:
