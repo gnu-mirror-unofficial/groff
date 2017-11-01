@@ -23,8 +23,8 @@
 .\"
 .\"
 .\" This file provides macros for addition, multiplication, and division of
-.\" 62bit signed integers.  Its main application is to `scale' 31bit values,
-.\" namely, to perform the operation `a * b / c' accurately.
+.\" 62-bit signed integers.  Its main application is to `scale' 31-bit
+.\" values, namely, to perform the operation `a * b / c' accurately.
 .\"
 .\" Note that it is the duty of the user to check whether the input values
 .\" fit within 31 bits (this is the range [-1073741824,1073741823]).
@@ -36,8 +36,8 @@
 .
 .\" .add31to62 <x> <y> <z>
 .\"
-.\" Add a 31bit signed integer to a signed 62bit integer.  Result is a
-.\" signed 62bit integer:
+.\" Add a 31-bit signed integer to a signed 62-bit integer.  Result is a
+.\" signed 62-bit integer:
 .\"
 .\"   <x> + (<y>h * 2^30 + <y>l) = <z>h * 2^30 + <z>l
 .\"
@@ -74,7 +74,7 @@
 .
 .\" .mult31by31 <x> <y> <z>
 .\"
-.\" Multiply two 31bit signed integers.  Result is a 62bit signed
+.\" Multiply two 31-bit signed integers.  Result is a 62-bit signed
 .\" integer:
 .\"
 .\"   <x> * <y> = <z>h * 2^30 + <z>l
@@ -140,8 +140,8 @@
 .
 .\" .div62by31 <x> <y> <z>
 .\"
-.\" Divide a signed 62bit integer by a 31bit integer.  Result is a
-.\" 31bit signed integer:
+.\" Divide a signed 62-bit integer by a 31-bit integer.  Result is a
+.\" 31-bit signed integer:
 .\"
 .\"   (<x>h * 2^30 + <x>l) / <y> = <z>
 .\"
