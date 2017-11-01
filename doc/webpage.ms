@@ -243,7 +243,7 @@ Three mailing lists are available:
 
 .ULS
 .LI
-.MTO bug-groff@gnu.org bug-groff@gnu.org
+.MTO bug\-groff@gnu.org bug\-groff@gnu.org
 for reporting bugs and following bug reports
 
 .LI
@@ -251,13 +251,13 @@ for reporting bugs and following bug reports
 for general discussion of groff
 
 .LI
-.MTO groff-commit@gnu.org groff-commit@gnu.org
+.MTO groff\-commit@gnu.org groff\-commit@gnu.org
 a read-only list showing commits to the git repository
 .ULE
 
 To subscribe, send a mail to \[la]list\[ra]-request@\[la]domain\[ra]
 (example:
-.MTO groff-request@\:gnu.org groff-request@\:gnu.org
+.MTO groff\-request@\:gnu.org groff\-request@\:gnu.org
 for the `groff' list) with the word `subscribe' in either the
 subject or body of the e-mail (don't include the quotes).
 Alternatively, you may subscribe by visiting the web pages at
@@ -2339,7 +2339,7 @@ Groffer
 .ULS
 .LI
 A new script contributed by
-.MTO groff-bernd.warken-72@web.de "Bernd Warken" .
+.MTO groff\-bernd.warken\-72@web.de "Bernd Warken" .
 It displays groff files and man pages on X and tty, taking care of most
 parameters automatically.
 .ULE
