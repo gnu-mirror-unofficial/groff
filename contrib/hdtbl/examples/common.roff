@@ -1,4 +1,3 @@
-.\"	-*-	mode: nroff	-*-
 .ig
 
 common.roff
@@ -60,6 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .\"	******************************************************************
 .\"	**	Utility macro for the date, requires UNIX date.		**
+.\"	**	**** Requires unsafe mode ("groff -U").			**
 .\"	**	after return string *date contains the date in the	**
 .\"	**	standard form of the Unix date-command,			**
 .\"	**	for example "Sun Dec  5 22:27:57     2004"		**
@@ -71,7 +71,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .
 .\"	******************************************************************
-.\"	**	Utility macro for time measurement, requires UNIX date	**
+.\"	**	Utility macro for time measurement, requires UNIX date.	**
+.\"	**	**** Requires unsafe mode ("groff -U").			**
 .\"	**	.time s[tart]|[end]					**
 .\"	**		.time start:					**
 .\"	**			reg *time gets the start-time (seconds) **
@@ -340,3 +341,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  fcolor white
 .
 .\" EOF
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
+.\" vim: filetype=groff:
