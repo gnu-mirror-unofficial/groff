@@ -26,7 +26,7 @@
 @copying
 This manual documents GNU @code{troff} version 1.22.3.
 
-Copyright @copyright{} 1994-2014 Free Software Foundation, Inc.
+Copyright @copyright{} 1994--2014 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -1622,7 +1622,7 @@ is command-line option @option{-dpaper=@var{size}}.  This defines string
 the start-up file @file{troffrc} by default).  Possible values for
 @var{size} are the same as the predefined values for the
 @code{papersize} keyword (but only in lowercase) except
-@code{a7}-@code{d7}.  An appended @samp{l} (ell) character denotes
+@code{a7}--@code{d7}.  An appended @samp{l} (ell) character denotes
 landscape orientation.
 
 For example, use the following for PS output on A4 paper in landscape
@@ -2495,7 +2495,7 @@ Finally, the macros @code{SH}, @code{SS}, @code{LP} (@code{PP},
 @cindex font selection [@code{man}]
 @cindex @code{man} macros, how to set fonts
 
-The standard font is roman; the default text size is 10@tie{}point.  If
+The standard font is roman; the default text size is 10@tie{}points.  If
 command-line option @option{-rS=@var{n}} is given, use @var{n}@dmn{pt}
 as the default text size.
 
@@ -4923,7 +4923,7 @@ in other logical places.  Keep separate phrases on lines by themselves,
 as entire phrases are often added or deleted when editing.
 
 @item
-Try to keep lines less than 40-60@tie{}characters, to allow space for
+Try to keep lines less than 40--60@tie{}characters, to allow space for
 inserting more text.
 
 @item
@@ -5059,13 +5059,13 @@ current settings (e.g.@: type size) of @code{gtroff}.
 @cindex unit, @code{i}
 Inches.  An antiquated measurement unit still in use in certain
 backwards countries with incredibly low-cost computer equipment.  One
-inch is equal to@tie{}2.54@dmn{cm}.
+inch is defined to be 2.54@tie{}cm (worldwide since 1964).
 
 @item c
 @cindex centimeter unit (@code{c})
 @cindex @code{c} unit
 @cindex unit, @code{c}
-Centimeters.  One centimeter is equal to@tie{}0.3937@dmn{in}.
+Centimeters.  One centimeter is about 0.3937@tie{}in.
 
 @item p
 @cindex point unit (@code{p})
@@ -5078,7 +5078,7 @@ It is 72@tie{}points to an inch.
 @cindex pica unit (@code{P})
 @cindex @code{P} unit
 @cindex unit, @code{P}
-Pica.  Another typesetting measurement.  6@tie{}Picas to an inch (and
+Pica.  Another typesetting measurement.  6@tie{}picas to an inch (and
 12@tie{}points to a pica).
 
 @item s
@@ -5386,13 +5386,13 @@ Backspace (@acronym{ASCII}@tie{}@code{0x08} or
 The following input characters are invalid and are ignored if
 @code{groff} runs on a machine based on @acronym{ASCII}, causing a
 warning message of type @samp{input} (see @ref{Debugging}, for more
-details): @code{0x00}, @code{0x0B}, @code{0x0D}-@code{0x1F},
-@code{0x80}-@code{0x9F}.
+details): @code{0x00}, @code{0x0B}, @code{0x0D}--@code{0x1F},
+@code{0x80}--@code{0x9F}.
 
 And here are the invalid input characters if @code{groff} runs on an
 @acronym{EBCDIC} host: @code{0x00}, @code{0x08}, @code{0x09},
-@code{0x0B}, @code{0x0D}-@code{0x14}, @code{0x17}-@code{0x1F},
-@code{0x30}-@code{0x3F}.
+@code{0x0B}, @code{0x0D}--@code{0x14}, @code{0x17}--@code{0x1F},
+@code{0x30}--@code{0x3F}.
 
 Currently, some of these reserved codepoints are used internally, thus
 making it non-trivial to extend @code{gtroff} to cover Unicode or other
@@ -6533,19 +6533,19 @@ Initialized at start-up of @code{gtroff}.
 @cindex day of the week register (@code{dw})
 @cindex date, day of the week register (@code{dw})
 @vindex dw
-Day of the week (1-7).
+Day of the week (1--7).
 
 @item \n[dy]
 @cindex day of the month register (@code{dy})
 @cindex date, day of the month register (@code{dy})
 @vindex dy
-Day of the month (1-31).
+Day of the month (1--31).
 
 @item \n[mo]
 @cindex month of the year register (@code{mo})
 @cindex date, month of the year register (@code{mo})
 @vindex mo
-Current month (1-12).
+Current month (1--12).
 
 @item \n[year]
 @cindex date, year register (@code{year}, @code{yr})
@@ -7165,8 +7165,8 @@ preceded by a backslash.
 No support for `digraphs' like @code{\$}.
 
 @item
-@code{^^@var{xx}} (@var{x} is 0-9 or a-f) and @code{^^@var{x}}
-(character code of @var{x} in the range 0-127) are recognized; other use
+@code{^^@var{xx}} (@var{x} is 0--9 or a--f) and @code{^^@var{x}}
+(character code of @var{x} in the range 0--127) are recognized; other use
 of @code{^} causes an error.
 
 @item
@@ -7233,8 +7233,8 @@ character (not a special character) other than a digit or a space.
 
 To make hyphenation work, hyphenation codes must be set up.  At
 start-up, groff only assigns hyphenation codes to the letters
-@samp{a}-@samp{z} (mapped to themselves) and to the letters
-@samp{A}-@samp{Z} (mapped to @samp{a}-@samp{z}); all other hyphenation
+@samp{a}--@samp{z} (mapped to themselves) and to the letters
+@samp{A}--@samp{Z} (mapped to @samp{a}--@samp{z}); all other hyphenation
 codes are set to zero.  Normally, hyphenation patterns contain only
 lowercase letters, which should be applied regardless of case.  In
 other words, the words `FOO' and `Foo' should be hyphenated exactly the
@@ -7381,7 +7381,7 @@ of the page:
 
 @noindent
 A call to @samp{.y-from-bot-up 10c} means that the bottom of the next
-line will be at 10@dmn{cm} from the paper edge at the bottom.
+line will be at 10@tie{}cm from the paper edge at the bottom.
 
 If a vertical trap is sprung during execution of @code{sp}, the amount
 of vertical space after the trap is discarded.  For example, this
@@ -9661,10 +9661,10 @@ property).
 Ignore hyphenation code values of the surrounding characters.  Use this
 in combination with values 2 and@tie{}4 (initially no characters have
 this property).  For example, if you need an automatic break point after
-the hyphen in number ranges like `3000-5000', insert
+the en-dash in number ranges like `3000--5000', insert
 
 @Example
-.cflags 68 -
+.cflags 68 \(en
 @endExample
 
 @noindent
@@ -16686,8 +16686,8 @@ Deprecated.  Use @code{papersize} instead.
 @item papersize @var{string} @dots{}
 @kindex papersize
 Select a paper size.  Valid values for @var{string} are the ISO paper
-types @code{A0}-@code{A7}, @code{B0}-@code{B7}, @code{C0}-@code{C7},
-@code{D0}-@code{D7}, @code{DL}, and the US paper types @code{letter},
+types @code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
+@code{D0}--@code{D7}, @code{DL}, and the US paper types @code{letter},
 @code{legal}, @code{tabloid}, @code{ledger}, @code{statement},
 @code{executive}, @code{com10}, and @code{monarch}.  Case is not
 significant for @var{string} if it holds predefined paper types.
@@ -16697,7 +16697,7 @@ the first line and tests for the above paper sizes.  Finally,
 @var{string} can be a custom paper size in the format
 @code{@var{length},@var{width}} (no spaces before and after the comma).
 Both @var{length} and @var{width} must have a unit appended; valid
-values are @samp{i} for inches, @samp{C} for centimeters, @samp{p} for
+values are @samp{i} for inches, @samp{c} for centimeters, @samp{p} for
 points, and @samp{P} for picas.  Example: @code{12c,235p}.  An argument
 that starts with a digit is always treated as a custom paper format.
 @code{papersize} sets both the vertical and horizontal dimension of the
@@ -16752,7 +16752,7 @@ There are @var{n}@tie{}machine units per inch.
 This means that the device has fonts at @var{s1}, @var{s2}, @dots{}
 @var{sn} scaled points.  The list of sizes must be terminated by@tie{}0
 (this is digit zero).  Each @var{si} can also be a range of sizes
-@var{m}-@var{n}.  The list can extend over more than one line.
+@var{m}--@var{n}.  The list can extend over more than one line.
 
 @item sizescale @var{n}
 @kindex sizescale
