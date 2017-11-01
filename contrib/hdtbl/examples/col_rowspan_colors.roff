@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .so \*[sopath]examples/common.roff
 .
+.\" The "time" macro from common.roff requires groff's -U unsafe mode.
 .time start
 .
 .de color#
@@ -37,9 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr # 0
 .color#
 .if \\n[t*cols\\n[t*#]]/2*2=\\n[t*cols\\n[t*#]] \{ .
-.   tmc \\n(.F:\\n(.c: cols was even (\\n[t*cols\\n[t*#]]), 
+.   tmc \\n(.F:\\n(.c: cols was even (\\n[t*cols\\n[t*#]]),
 .   nr t*cols\\n[t*#] +1
-.   tm  increased by one col to \\n[t*cols\\n[t*#]].
+.   tm1 " increased by one col to \\n[t*cols\\n[t*#]].
 .   t*cl \\*[width]
 .   ie "\\*[tal]"r" .nr in\\n[t*#] -\\*[width]\"    recalculate cell widths etc.
 .   el .if "\\*[tal]"c" .nr in\\n[t*#] -\\*[width]/2
@@ -54,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .   color#
 .   ds html "".TR height=\\nW" ".TD colspan=\\nI bgc=c\\n#"
 .   color#
-.   as html " ".TD rowspan=\\nI bgc=c\\n#" 
+.   as html " ".TD rowspan=\\nI bgc=c\\n#"
 .   color#
 .   as html " ".TR height=\\nW" ".TD rowspan=\\nI bgc=c\\n#"
 .   color#
@@ -69,14 +70,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .PN 8 Indented text before table.
 *** *** ***
 .TBL width=90% border=1n csp=1n cpd=1n bgc=wheat tal=c .TR .TD
-.TBL  border= cols=10 width=1c tal=c csp=0 cpd=0 \"cols must be odd
+.TBL  border= cols=11 width=1c tal=c csp=0 cpd=0 \"cols must be odd
 .CPTN val=b Randomly Colored Table Cells with Colspan/\%Rowspan
 .brt
-.ETB .ETB 
+.ETB .ETB
 .PN 15 Text after table.
+.\" "time" and "date" from common.roff require groff's -U unsafe mode.
 .time
 .date
-.\"	466MHz Celeron CPU, 384MB RAM 
+.\"	466 MHz Celeron CPU, 384 MB RAM
 .\"	WindowsXP/cygwin groff18.1:	 4s
 .\"	WindowsXP/cygwin groff19.2:	 7s
 .\"	Suse Linux 9.3 groff19.2:	 1s
