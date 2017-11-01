@@ -2483,7 +2483,7 @@ The macros @code{RS} and @code{RE} also cause a break but do not insert
 vertical space.
 
 @cindex default indentation, resetting [@code{man}]
-@cindex indentaion, resetting to default [@code{man}]
+@cindex indentation, resetting to default [@code{man}]
 @cindex @code{man} macros, resetting default indentation
 Finally, the macros @code{SH}, @code{SS}, @code{LP} (@code{PP},
 @code{P}), and @code{RS} reset the indentation to its default value.
@@ -4482,7 +4482,7 @@ and @code{UC} macros collide with different macros with the same names
 in the Berkeley version of @code{ms}.
 
 These @code{groff} emulations are sufficient to give back the 1976
-Kernighan@tie{}& Cherry paper @cite{Typsetting Mathematics -- User's
+Kernighan@tie{}& Cherry paper @cite{Typesetting Mathematics -- User's
 Guide} its section headings, and restore some text that had gone missing
 as arguments of undefined macros.  No warranty express or implied is
 given as to how well the typographic details these produce match the
@@ -4790,7 +4790,7 @@ hyphen), and the other portion is added to the next line to be filled.
 
 Although it is often debated, some typesetting rules say there should be
 different amounts of space after various punctuation marks.  For
-example, the @cite{Chicago typsetting manual} says that a period at the
+example, the @cite{Chicago typesetting manual} says that a period at the
 end of a sentence should have twice as much space following it as would
 a comma or a period as part of an abbreviation.
 
@@ -8649,7 +8649,7 @@ line (which stays untouched).
 It is not an error to omit closing delimiters.  For example,
 @w{@samp{.tl /foo}} is equivalent to @w{@samp{.tl /foo///}}: It prints a
 title line with the left justified word @samp{foo}; the centered and
-right justfied parts are empty.
+right justified parts are empty.
 
 @item
 @code{tl} accepts the same parameter delimiting characters as the
@@ -10649,7 +10649,7 @@ with a default scale indicator of @samp{z}.
 @cindex strings
 
 @code{gtroff} has string variables, which are entirely for user
-convenience (i.e.@: there are no built-in strings exept @code{.T}, but
+convenience (i.e.@: there are no built-in strings except @code{.T}, but
 even this is a read-write string variable).
 
 Although the following requests can be used to create strings,
@@ -11248,7 +11248,7 @@ first request is the `if' part and the latter is the `else' part.
 @cindex conditional block, begin (@code{\@{})
 @cindex conditional block, end (@code{\@}})
 @cindex block, conditional, begin (@code{\@{})
-@cindex block, condititional, end (@code{\@}})
+@cindex block, conditional, end (@code{\@}})
 In many cases, an if (or if-else) construct needs to execute more than
 one request.  This can be done using the escapes @code{\@{} (which must
 start the first line) and @code{\@}} (which must end the last line).
@@ -11316,7 +11316,7 @@ parsed and stored again as a temporary macro.
 @cindex recursive macros
 @cindex macros, recursive
 @noindent
-The traditional and ofter better solution (@acronym{UNIX} @code{troff}
+The traditional and often better solution (@acronym{UNIX} @code{troff}
 doesn't have the @code{while} request) is to use a recursive macro
 instead that is parsed only once during its definition.
 
@@ -11434,13 +11434,13 @@ for executing.
 .
 .de foo
 .  de bar end
-.    nop \f[B]Hallo \\\\$1!\f[]
+.    nop \f[B]Hello \\\\$1!\f[]
 .  end
 ..
 .
 .foo
 .bar Joe
-    @result{} @b{Hallo Joe!}
+    @result{} @b{Hello Joe!}
 @endExample
 
 @noindent
@@ -14726,13 +14726,13 @@ feature).  For example, the code
 
 @Example
 .de xx
-Hallo!
+Hello!
 ..
 \fB.xx\fP
 @endExample
 
 @noindent
-prints @samp{Hallo!} in bold face if in compatibility mode, and
+prints @samp{Hello!} in bold face if in compatibility mode, and
 @samp{.xx} in bold face otherwise.
 
 @cindex @code{\A}, incompatibilities with @acronym{AT&T} @code{troff}
@@ -15623,7 +15623,7 @@ Do not generate the table of contents.
 Generate simple fragment identifiers.
 
 @item -o@var{offset}
-Use vertical paddding @var{offset} for images.
+Use vertical padding @var{offset} for images.
 
 @item -p
 Display the page rendering progress to @code{stderr}.
@@ -15996,7 +15996,7 @@ values for @var{n} also, but @code{gtroff} doesn't use this.
 
 @item m @var{color-scheme} @r{[}@var{component} @dots{}@r{]}
 Set the color for text (glyphs), line drawing, and the outline of
-graphic objects using different color schemes; the analoguous command
+graphic objects using different color schemes; the analogous command
 for the filling color of graphic objects is @samp{DF}.  The color
 components are specified as integer arguments between 0 and 65536.  The
 number of color components and their meaning vary for the different
@@ -16167,7 +16167,7 @@ rightmost point of the ellipse.
 
 @item DF @var{color-scheme} @r{[}@var{component} @dots{}@r{]}@angles{line break}
 Set fill color for solid drawing objects using different color schemes;
-the analoguous command for setting the color of text, line graphics, and
+the analogous command for setting the color of text, line graphics, and
 the outline of graphic objects is @samp{m}.  The color components are
 specified as integer arguments between 0 and 65536.  The number of color
 components and their meaning vary for the different color schemes.
@@ -16546,7 +16546,7 @@ Due to the obsolete jump-and-write command, the text clusters in the
 
 The intermediate output language of @acronym{AT&T} @code{troff} was
 first documented in the @acronym{UNIX} troff manual, with later
-additions documented in @cite{A Typesetter-indenpendent TROFF}, written
+additions documented in @cite{A Typesetter-independent TROFF}, written
 by Brian Kernighan.
 
 The @code{gtroff} intermediate output format is compatible with this
