@@ -14,7 +14,7 @@
 .\" for more details.
 .\"
 .\" You should have received a copy of the GNU General Public License
-.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" For tolerably obvious reason, this needs to be processed through PIC.
 .\" It also needs to be processed through TBL and EQN.  Use "groff -p -e -t".

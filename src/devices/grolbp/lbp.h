@@ -13,7 +13,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>. */
+along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 /*  This file contains a set of utility functions to use canon CAPSL printers
  *  (lbp-4 and lbp-8 series printers) */

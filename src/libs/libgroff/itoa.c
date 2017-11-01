@@ -14,7 +14,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>. */
+along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #define INT_DIGITS 19		/* enough for 64 bit integer */
 #define UINT_DIGITS 20
