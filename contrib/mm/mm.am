@@ -45,22 +45,25 @@ dist_mm_DATA = $(MMFILES)
 tmacmmdir = $(tmacdir)
 dist_tmacmm_DATA = contrib/mm/refer-mm.tmac
 
+MMEXAMPLEFILES=\
+  contrib/mm/examples/letter.mm
+
+mmexampledir=$(exampledir)/mm
+dist_mmexample_DATA = $(MMEXAMPLEFILES)
+
 # Local configuration files with default values.
 MMLOCALE = \
   locale \
   se_locale
 
+# XXX: This doesn't actually ship anything at present.
 EXTRA_DIST += \
   contrib/mm/ChangeLog \
   contrib/mm/examples \
   contrib/mm/Makefile.sim \
   contrib/mm/mm \
   contrib/mm/NOTES \
-  contrib/mm/README \
-  contrib/mm/groff_mm.7.man \
-  contrib/mm/groff_mmse.7.man \
-  contrib/mm/mmroff.1.man \
-  contrib/mm/mmroff.pl
+  contrib/mm/README
 
 mmroff: $(mm_srcdir)/mmroff.pl
 	$(SED) -e 's;/usr/bin/perl;$(PERL);' $(mm_srcdir)/mmroff.pl >$@
@@ -88,6 +91,9 @@ install_mm:
 	done
 uninstall-local: uninstall_mm
 uninstall_mm:
+	if test -d $(DESTDIR)$(mmexampledir); then \
+	  rmdir $(DESTDIR)$(mmexampledir); \
+	fi
 	-for f in $(MMLOCALE); do \
 	  test -s $(DESTDIR)$(tmacdir)/mm/$$f \
 	    || $(RM) $(DESTDIR)$(tmacdir)/mm/$$f; \
@@ -113,3 +119,4 @@ dist_mm:
 # Local Variables:
 # mode: makefile-automake
 # End:
+# vim: set filetype=automake:
