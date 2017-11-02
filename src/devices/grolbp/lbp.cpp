@@ -400,7 +400,7 @@ inline void lbp_printer::polygon(int hpos, int vpos, int np, int *p)
   points = new int[np + 2];
   points[0] = hpos;
   points[1] = vpos;
-  // fprintf(stderr, "Poligon (%d,%d) ", points[0], points[1]);
+  // fprintf(stderr, "Polygon (%d,%d) ", points[0], points[1]);
   for (i = 0; i < np; i++)
     points[i + 2] = p[i];
   // for (i = 0; i < np; i++) fprintf(stderr, " %d ", p[i]);
