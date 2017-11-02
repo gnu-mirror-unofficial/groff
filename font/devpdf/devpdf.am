@@ -1,10 +1,10 @@
 # Copyright (C) 2011-2015 Free Software Foundation, Inc.
 #      Free Software Foundation, Inc.
-#      Original Makefile.sub Written 
+#      Original Makefile.sub written
 #      by Deri James <deri@chuzzlewit.demon.co.uk>
 #      Automake migration by Bertrand Garrigues
 #
-# Last update: 13 Aug 2015
+# Last update: 2017-11-02
 #
 # This file is part of groff.
 #
@@ -22,7 +22,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 devpdf_srcdir = $(top_srcdir)/font/devpdf
-GROFF_FONT_FILES=`cd $(top_builddir)/font/devpdf && grep -l internalname * | grep -v devpdf.am`
+GROFF_FONT_FILES=`cd $(top_builddir)/font/devpdf \
+  && grep -l internalname [A-CEG-Z]*`
 ENC_FILES=`cd $(top_builddir)/font/devpdf; ls enc/*`
 MAP_FILES=`cd $(top_builddir)/font/devpdf; ls map/*`
 
@@ -168,3 +169,4 @@ uninstall_devpdf:
 # Local Variables:
 # mode: makefile-automake
 # End:
+# vim: set filetype=automake:
