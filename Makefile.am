@@ -2,7 +2,7 @@
 # Original Makefile.in written by James Clark (jjc@jclark.com)
 # Migrated to Automake by Bertrand Garrigues
 #
-# Last update: 22 Aug 2015
+# Last update: 2017-11-02
 #
 # This file is part of groff.
 #
@@ -25,7 +25,7 @@
 # The variables that are listed in the following comments will be
 # automatically set by automake in the generated Makefile.in
 
-# SHELL 
+# SHELL
 
 # PACKAGE_TARNAME
 
@@ -545,8 +545,8 @@ AM_CPPFLAGS = \
 # .am files
 bin_PROGRAMS =
 nobase_bin_PROGRAMS =
-bin_SCRIPTS = 
-dist_bin_SCRIPTS = 
+bin_SCRIPTS =
+dist_bin_SCRIPTS =
 MOSTLYCLEANFILES =
 MOSTLYCLEANADD =
 noinst_LIBRARIES =
@@ -579,7 +579,7 @@ AM_TESTS_ENVIRONMENT = \
 # We use Automake's Uniform Naming Scheme.
 #
 # prefixexecbin_PROGRAMS is the list of programs that may have a
-# NAMEPREFIX if an existing non-GNU troff system was detected. 
+# NAMEPREFIX if an existing non-GNU troff system was detected.
 #
 # This is done by the m4 macro GROFF_G that checks for the presence of
 # GNU Troff built-in \n[.g] macro. If a Unix Troff binary was
@@ -593,7 +593,7 @@ AM_TESTS_ENVIRONMENT = \
 # for the scripts.
 NAMEPREFIX=$(g)
 prefixexecbin_PROGRAMS =
-prefixexecbin_SCRIPTS = 
+prefixexecbin_SCRIPTS =
 if USEPROGRAMPREFIX
 # We use datadir because the uninstall rule for the PROGRAMS attempt
 # to cd into prefixexecbindir, and thus if prefixexecbindir is removed
@@ -700,6 +700,9 @@ include $(top_srcdir)/tmac/tmac.am
 # objects that use defs (for exmaple in groff.am:
 # src/roff/groff/groff.$(OBJEXT): defs.h)
 BUILT_SOURCES += defs.h
+
+# Force generation of test-groff even though we don't ship it.
+BUILT_SOURCES += test-groff
 
 # Same thing for gnulib's localcharset.c and configmake.h: gnulib uses
 # BUILT_SOURCES only, adding the following makes 'make lib/libgnu.a'
@@ -812,7 +815,7 @@ uninstall_groffdirs:
 	fi
 
 # Uninstall program that have a 'g' prefix
-uninstall-hook: uninstall_binaries_with_prefix 
+uninstall-hook: uninstall_binaries_with_prefix
 uninstall_binaries_with_prefix:
 if USEPROGRAMPREFIX
 	if test -n "$(NAMEPREFIX)"; then \
@@ -829,7 +832,7 @@ EXTRA_DIST += \
   ChangeLog.116 \
   ChangeLog.117 \
   ChangeLog.118 \
-   ChangeLog.119 \
+  ChangeLog.119 \
   ChangeLog.120 \
   ChangeLog.121 \
   FDL \
@@ -854,7 +857,7 @@ MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
   $(PREFIXMAN1) $(PREFIXMAN5) $(PREFIXMAN7) \
   test-groff
 
-# Suffixe rule to build .1, .5 and .7 files from .1.man, .5.man and
+# Suffix rule to build .1, .5 and .7 files from .1.man, .5.man and
 # .7.man files.  The brackets around the @ are used to prevent the
 # substitution of the variable by automake.
 SUFFIXES += .man
