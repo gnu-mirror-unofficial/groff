@@ -1,4 +1,3 @@
-.\" -*- nroff -*-
 .TH GROPDF @MAN1EXT@ "@MDATE@" "Groff Version @VERSION@"
 .SH NAME
 gropdf \- PDF driver for groff
@@ -10,7 +9,7 @@ gropdf \- PDF driver for groff
 .
 .\" license
 .de co
-Copyright \[co] 2011-2014 Free Software Foundation, Inc.
+Copyright \[co] 2011\[en]2014 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -905,7 +904,7 @@ The very first line in a PFA/PFB file contains this:
 .
 .RS
 .IP
-.B %!PS-AdobeFont-1.0:
+.B %!PS\-AdobeFont\-1.0:
 .RE
 .
 .IP
@@ -921,11 +920,11 @@ An example call is
 .
 .RS
 .IP
-afmtodit Foo-Bar-Bold.afm map/textmap FBB
+afmtodit Foo\-Bar\-Bold.afm map/textmap FBB
 .RE
 .
 .IP
-which converts the metric file \[oq]Foo-Bar-Bold.afm\[cq] to the groff
+which converts the metric file \[oq]Foo\-Bar\-Bold.afm\[cq] to the groff
 font \[oq]FBB\[cq].
 .
 If you have a font family which comes with normal, bold, italic, and
@@ -971,7 +970,7 @@ This means that you should copy the default \[oq]download\[cq] file to
 the first directory in your font path and add your fonts there.
 .
 To continue the above example we assume that the PS font name for
-Foo-Bar-Bold.pfa is \[oq]XY-Foo-Bar-Bold\[cq] (the PS font name is
+Foo\-Bar\-Bold.pfa is \[oq]XY\-Foo\-Bar\-Bold\[cq] (the PS font name is
 stored in the
 .B internalname
 field in the \[oq]FBB\[cq] file) and belongs to foundry \[oq]F\[cq]
@@ -979,7 +978,7 @@ thus the following line should be added to \[oq]download\[cq]:
 .
 .RS
 .IP
-.B F XY-Foo-Bar-Bold Foo-Bar-Bold.pfa
+.B F XY\-Foo\-Bar\-Bold Foo\-Bar\-Bold.pfa
 .
 .
 .LP
@@ -1030,7 +1029,7 @@ Font description file for font\~\c
 .IR F .
 .
 .TP
-.BI @FONTDIR@/devpdf/ U-F
+.BI @FONTDIR@/devpdf/ U\-F
 Font description file for font\~\c
 .I F
 (using foundry\~\c
@@ -1096,3 +1095,4 @@ automatically loaded by
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:
