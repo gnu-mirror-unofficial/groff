@@ -18,7 +18,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Version 2.2-a
 -------------
@@ -221,6 +221,7 @@ end
 .ds PDFHREF.TEXTCOL.DEFAULT 0.0 0.3 0.9
 .nr PDFHREF.VIEW.LEADING.C 3i
 .nr PDFHREF.VIEW.LEADING.T 1i
+.nr PDFHREF.VIEW.LEADING 0
 .nr PDFHREF.VIEW.LEADING.H \n[PDFHREF.VIEW.LEADING]
 \#
 \# ====================================================================
@@ -6749,7 +6750,10 @@ SMALLCAPS takes precedence.
 .       \}
 .       if '\\$1'TITLE' \{\
 .          nr #\\*[DOC_]COVER_TITLE 1
-.          if \\n[#FROM_\\*[DOC_]COVERTITLE] .nr #\\*[DOC_]COVER_TITLE 7
+.          if \\n[#FROM_\\*[DOC_]COVERTITLE] \{\
+.             nr #\\*[DOC_]COVER_TITLE 7
+.             rr #FROM_\\*[DOC_]COVERTITLE
+.          \}
 .          shift
 .       \}
 .       if '\\$1'CHAPTER' \{\
@@ -6824,7 +6828,10 @@ SMALLCAPS takes precedence.
 \#
 .MAC COVERTITLE END
 .    rm DOC_
-.    if '\\$0'DOC_COVERTITLE' .ds DOC_ DOC_
+.    if '\\$0'DOC_COVERTITLE' \{\
+.       ds DOC_ DOC_
+.       nr #FROM_\\*[DOC_]COVERTITLE 1
+.    \}
 .    ie \\n[#NUM_ARGS]=0 \{\
 .       nr argc 0 1
 .       while \\n+[argc]<=3 \{\
