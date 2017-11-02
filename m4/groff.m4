@@ -1646,7 +1646,7 @@ AC_DEFUN([GROFF_UCHARDET],
                                AC_MSG_FAILURE([Could not found uchardet library])
                              else
                                AC_MSG_WARN([uchardet library not found, preconv \
-                                            might not work properly])
+might not work properly])
                              fi
                              groff_have_uchardet=no])],
           [groff_have_uchardet=no]
