@@ -10,9 +10,9 @@ groff_filenames \(em filename extensions for roff and groff
 .\" --------------------------------------------------------------------
 .
 .de co
-Copyright \(co 2013-2015 Free Software Foundation, Inc.
+Copyright \[co] 2013\[en]2015 Free Software Foundation, Inc.
 
-Last update: 22 Aug 2015
+Last update: 2017-11-02
 
 This file is part of groff, a free software project.  You can
 redistribute it and/or modify it under the terms of the GNU General
@@ -26,7 +26,7 @@ The license text can be found in the internet at
 .
 .de au
 This file was written by
-.MT groff\-bernd.warken-72@web.de
+.MT groff\-bernd.warken\-72@web.de
 Bernd Warken
 .ME .
 ..
@@ -57,8 +57,9 @@ Later on,
 .B groff
 added some more extensions.
 .
-We will now write a
-.I man\-page about these filename extensions.
+This
+.I man page
+is about these filename extensions.
 .
 .
 .\" --------------------------------------------------------------------
@@ -76,11 +77,11 @@ ends with a
 .IR "compressor name" .
 .
 So the whole filename has the structure
-.IR <name> \f(CB.\fP <extension>[ \f(CB.\fP <compression>] .
+.IR <name> . <extension>[ . <compression>] .
 .
 .
 .P
-Mostly known are the
+Best-known are the
 .I compressor extensions
 .BR .Z ,
 .BR .gz ,
@@ -99,16 +100,16 @@ and only comment the structure
 .
 .
 .\" --------------------------------------------------------------------
-.SH MAN\-PAGES
+.SH MAN PAGES
 .\" --------------------------------------------------------------------
 .
 The
 .I Unix manual pages
-are shortly named
-.IR "man\-pages" .
+are widely called
+.IR "man pages" .
 .
 The
-.I man\-page
+.I man page
 style is the best known part of the
 .I roff
 language.
@@ -130,11 +131,11 @@ language use the following extension:
 .
 .
 .\" --------------------------------------------------------------------
-.SS Man-page Sections
+.SS Man page Sections
 .\" --------------------------------------------------------------------
 .
 The traditional
-.I man\-page <section>
+.I man page <section>
 is a digit from
 .B 1
 to
@@ -157,22 +158,24 @@ to
 .IB <name> .7
 .TQ
 .IB <name> .8
-Classic man\-page
+Classic man page
 .IR sections .
 .
 .
 .P
-Linux added the section number
-.B 9
-for kernel man\-pages.
-.
-.
-.TP
-.IB <name> .9
-.I Linux
-kernel man-pages
-.
-.
+.\" NOTE: There was once a feeble attempt in this direction, but it
+.\" hasn't been true in any sense for a long time.
+.\"Linux added the section number
+.\".B 9
+.\"for kernel man pages.
+.\".
+.\".
+.\".TP
+.\".IB <name> .9
+.\".I Linux
+.\"kernel man pages
+.\".
+.\".
 .P
 In older commercial
 .I Unix
@@ -197,12 +200,12 @@ but there are still documents in this format.
 .TQ
 .IB <name> .o
 .I Deprecated
-old
-.IR "man\-page sections" .
+man page sections, which stood for \[lq]local[rq], \[lq]new\[rq], and
+\[lq]old\[rq], respectively.
 .
 .
 .\" --------------------------------------------------------------------
-.SS Man\-page Group Extensions
+.SS Man page Group Extensions
 .\" --------------------------------------------------------------------
 .
 The
@@ -228,7 +231,7 @@ Examples:
 .
 .TP
 .B groff.1
-is the man-page for
+is the man page for
 .B groff
 in
 .I section
@@ -239,7 +242,7 @@ without a
 .
 .TP
 .B xargs.1posix.gz
-is the man\-page for the program
+is the man page for the program
 .B xargs
 in
 .I section
@@ -266,8 +269,8 @@ with
 .
 .
 .TP
-.B dpkg-reconfigure.8cdebconf
-man\-page for the program
+.B dpkg\-reconfigure.8cdebconf
+man page for the program
 .B dpkg\-reconfigure
 in
 .I section
@@ -278,12 +281,12 @@ and
 .
 .
 .\" --------------------------------------------------------------------
-.SS Source of Man\-pages
+.SS Source of man pages
 .\" --------------------------------------------------------------------
 .
 There are 2
 .I roff
-languages for writing man\-pages:
+languages for writing man pages:
 .B man
 and
 .BR mdoc .
@@ -292,7 +295,7 @@ and
 .P
 The names of these 2 styles are taken as
 .I extensions
-for the source code files of man\-pages in the
+for the source code files of man pages in the
 .I groff
 package.
 .
@@ -300,14 +303,14 @@ package.
 .TP
 .IB <name> .man
 .I traditional
-Unix\-like man\-page format within groff source files.
+Unix-like man page format within groff source files.
 .
 .
 .TP
-.IB <name> .n
-A temporary man-page file produced from a
+.IB <name> . n
+A temporary man page file produced from a
 .IB name .man
-man\-page by a run of
+man page by a run of
 .B make
 within the
 .B groff
@@ -316,18 +319,18 @@ source package.
 .
 .TP
 .IB <name> .mdoc
-Man-page format in BSD.
+Man page format in BSD.
 .
 .
 .TP
 .IB <name> .1b
-Man-page format in
+Man page format in
 .IR "heirloom roff ".
 .
 .
 .TP
 .IB <name> .mandoc
-Files using this extension recognize both man\-page formats in
+Files using this extension recognize both man page formats in
 .B groff
 and other processors.
 .
@@ -554,7 +557,7 @@ files written in the
 .TP
 .IB <name> .www
 files written in
-.BR HTML \-like
+.BR HTML -like
 .I groff
 .IR macros .
 .
@@ -565,9 +568,8 @@ files written in
 .
 .TP
 .IB <name> .hdtbl
-a new
-.I tbl
-format.
+Heidelberger tables, an alternative to the preprocessor
+.IR tbl .
 .
 See
 .BR groff_hdtbl (@MAN7EXT@).
@@ -590,7 +592,7 @@ pictures, see
 .
 .TP
 .IB <name> .pdfroff
-ransform this file with
+transform this file with
 .B pdfroff
 of the
 .I groff
@@ -619,7 +621,7 @@ History and future
 .
 .
 .P
-A man-page of the naming form
+A man page of the naming form
 .IB name ( n )
 can be read in text mode by
 .RS
@@ -665,3 +667,4 @@ You can get this package with the shell command:
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:

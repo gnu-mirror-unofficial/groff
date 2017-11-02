@@ -1,6 +1,6 @@
 .TH glilypond @MAN1EXT@ "@MDATE@" "Groff Version @VERSION@"
 .SH NAME
-glilypond \(em integrate lilypond parts into groff
+glilypond \- integrate lilypond parts into groff
 .
 .\" This .SH was moved to this place in order to appease `apropos'.
 .
@@ -8,13 +8,14 @@ glilypond \(em integrate lilypond parts into groff
 .\" Source file position:  <groff_source_top>/contrib/glilypond.man
 .\" Installed position:    <prefix>/share/man/man1/glilypond.1
 .
+.\" TODO: This page needs a thorough edit by a native English speaker.
 .
 .\" --------------------------------------------------------------------
 .\" Legalese
 .\" --------------------------------------------------------------------
 .
 .de co
-Copyright \(co 2013-2015 Free Software Foundation, Inc.
+Copyright \[co] 2013\[en]2015 Free Software Foundation, Inc.
 
 Last update: 10 Sep 2015
 
@@ -26,7 +27,7 @@ General Public License version 2 (GPL2) as published by the Free
 Software Foundation.
 
 The license text is available in the internet at
-.UR http://\%www.gnu.org/\%licenses/\%gpl-2.0.html
+.UR http://\%www.gnu.org/\%licenses/\%gpl\-2.0.html
 .UE .
 ..
 .
@@ -46,18 +47,16 @@ Bernd Warken
 .el .ds EL \&.\|.\|.\&\"
 .\" called with \*(EL
 .
-.ad l
-.
 .
 .\" --------------------------------------------------------------------
 .SH SYNOPSIS
 .\" --------------------------------------------------------------------
 .
 .SY glilypond
-.OP \& options
+.OP options
 .OP \-
 .OP \-\-
-.OP \& "\%filespec \*(EL"
+.OP "\%filespec \*(EL"
 .YS
 .
 .
@@ -107,11 +106,11 @@ devices.
 I.e. the following
 .B groff
 devices work,
-.BR -Tps ,
-.BR -Tdvi ,
-.BR -Thtml ,
+.BR \-Tps ,
+.BR \-Tdvi ,
+.BR \-Thtml ,
 and
-.BR -Txhtml .
+.BR \-Txhtml .
 .
 .
 .P
@@ -127,18 +126,18 @@ In
 .BR groffer ,
 it is easier to use the following device options, either
 .
-.BR --ps ,
-.BR --div ,
-.BR --html,
+.BR \-\-ps ,
+.BR \-\-div ,
+.BR \-\-html,
 or
-.BR --xhtml .
+.BR \-\-xhtml .
 .
 .
 .P
 Unfortunately, the
 .B groff
 option
-.B -Tpdf
+.B \-Tpdf
 does not work and the
 .B groffer
 default
@@ -159,7 +158,7 @@ It is based on the
 in
 .B groff
 and is called through
-.B groffer --pdf2
+.B groffer \-\-pdf2
 .IR roff-file-with-lilypond .
 .
 .
@@ -238,7 +237,7 @@ So at last, the temporary directory can be removed.
 .
 .
 .TP
-.BR -p | --prefix "\fI begin_of_name\fP"
+.BR \-p | \-\-prefix "\fI begin_of_name\fP"
 Normally all temporary files get names that start with the
 .BI ly \*(EL
 prefix.
@@ -247,7 +246,7 @@ With this option, you can freely change this prefix.
 .
 .
 .TP
-.BR -k | --keep_all
+.BR \-k | \-\-keep_all
 Normally all temporary files without the
 .I eps
 files are deleted.
@@ -258,7 +257,7 @@ program or other format transposers are kept.
 .
 .
 .TP
-.BR -t | --temp_dir "\fI dir\fP"
+.BR \-t | \-\-temp_dir "\fI dir\fP"
 With this option, you call a directory that is the base for the
 temporary directory.
 .
@@ -277,7 +276,7 @@ In this temporary directory, the temporary files are stored.
 .\" --------------------------------------------------------------------
 .
 .TP
-.BR -o | --output "\fI file_name\fP"
+.BR \-o | \-\-output "\fI file_name\fP"
 Normally all
 .I groff
 output of this program is sent to
@@ -289,7 +288,7 @@ into a file named in the option argument
 .
 .
 .TP
-.BR -v | -V | --verbose
+.BR \-v | \-V | \-\-verbose
 A lot more of information is sent to STDERR.
 .
 .
@@ -631,7 +630,7 @@ This process can be changed by command-line options.
 .
 The temporary directory for this program is either created
 automatically or can be named by the option
-.BR -t | --temp_dir
+.BR \-t | \-\-temp_dir
 .IR dir .
 .
 .
@@ -644,7 +643,7 @@ command in the final
 .I groff
 output can be stored in a different directory that can be set by the
 command-line option
-.BR -e | --eps_dir
+.BR \-e | \-\-eps_dir
 .IR directory_name .
 .
 With this option, the temporary directory can be removed completely at
@@ -654,7 +653,7 @@ the end of the program.
 .P
 The beginning of the names of the temporary files can be set by the
 command-line option
-.OP -p | --prefix
+.OP \-p | \-\-prefix
 .IR begin_of_name .
 .
 .
@@ -664,7 +663,7 @@ All of the temporary files except the
 files are deleted finally.
 .
 This can be changed by setting the command-line option
-.OP -k | --keep_files .
+.OP \-k | \-\-keep_files .
 .
 With this, all temporary files and directories are kept, not deleted.
 .
@@ -689,7 +688,7 @@ are needed for the display which can take a long time.
 .\" --------------------------------------------------------------------
 .
 This mode is the actual default and can also be chosen by the option
-.BR --pdf2eps .
+.BR \-\-pdf2eps .
 .
 .
 .P
@@ -787,7 +786,7 @@ But now it does not work any more, so accept the new default
 For testing, this mode can also be chosen by the
 .B glilypond
 option
-.BR --ly2eps .
+.BR \-\-ly2eps .
 .
 .
 .P
@@ -952,3 +951,4 @@ format.
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:

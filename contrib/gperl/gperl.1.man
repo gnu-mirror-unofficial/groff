@@ -10,13 +10,13 @@ gperl \- groff preprocessor for Perl parts in roff files
 .
 .de au
 This file was written by
-.MT groff\-bernd.warken-72@web.de
+.MT groff\-bernd.warken\-72@web.de
 Bernd Warken
 .ME .
 ..
 .
 .de co
-Copyright \(co 2014 Free Software Foundation, Inc.
+Copyright \[co] 2014 Free Software Foundation, Inc.
 .
 .P
 This file is part of
@@ -27,7 +27,7 @@ a free software project.
 .
 You can redistribute it and/or modify it under the terms of the
 .nh
-.B "GNU General Public License"
+.B GNU General Public License
 .hy
 as published by the
 .nh
@@ -37,7 +37,7 @@ version\~2.
 .
 .P
 The license text is available in the internet at
-.UR http://www.gnu.org/licenses/gpl-2.0.html
+.UR http://www.gnu.org/licenses/gpl\-2.0.html
 .UE .
 ..
 .
@@ -66,9 +66,9 @@ The license text is available in the internet at
 .OP \& "\%filespec \*(EL"
 .YS
 .
-.BR "gperl -h" | --help
+.BR "gperl \-h" | \-\-help
 .br
-.BR "gperl -v" | --version
+.BR "gperl \-v" | \-\-version
 .
 .
 .\" --------------------------------------------------------------------
@@ -131,13 +131,13 @@ These
 options are here
 .
 .TP
-.B -h\~\fR|\fB\~--help
+.B \-h\~\fR|\fB\~\-\-help
 Print help information with a short explanation of options to
 standard output.
 .
 .
 .TP
-.B -v\~\fR|\fB\~--version
+.B \-v\~\fR|\fB\~\-\-version
 Print version information to standard output.
 .
 .
@@ -168,9 +168,9 @@ can either be without arguments, or by a request that has the term
 as its only argument.
 .RS
 .IP \*(BU 2m
-.B \&.Perl
+.B .Perl
 .IP \*(BU 2m
-.B \&.Perl start
+.B .Perl start
 .RE
 .
 .
@@ -191,9 +191,9 @@ that's possible, but not necessary.
 .
 .RS
 .IP \*(BU 2m
-.B \&.Perl stop
+.B .Perl stop
 .IP \*(BU 2m
-.BI \&.Perl " other_than_start"
+.BI .Perl " other_than_start"
 .RE
 .
 The argument
@@ -288,7 +288,7 @@ generates a
 storage line
 .RS
 .EX
-\&\fB.ds \fIvar_name content
+\fB.ds \fIvar_name content
 .EE
 .RE
 .
@@ -297,7 +297,7 @@ In
 the following groff command is generated
 .RS
 .EX
-\&\fB.nr \fIvar_name content
+\fB.nr \fIvar_name content
 .EE
 .RE
 .
@@ -308,7 +308,7 @@ We present argument collections in the following.
 You can add as first argument for all
 .BR stop .
 .
-We omit this additional element. 
+We omit this additional element.
 .
 .
 .P
@@ -460,7 +460,7 @@ with several outputs is:
 print \(rqfirst\(rsn\(rq;
 print \(rqsecond line\(rsn\(rq;
 print \(rq3\(rsn\(rq;
-\&.Perl var1 var2 .nr var3 
+\&.Perl var1 var2 .nr var3
 .EE
 .RE
 .
@@ -486,7 +486,7 @@ command lines are created:
 .\" --------------------------------------------------------------------
 .
 .P
-Man\-pages related to
+Man pages related to
 .I groff
 are
 .BR \%groff (@MAN1EXT@),
@@ -521,3 +521,4 @@ are
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:

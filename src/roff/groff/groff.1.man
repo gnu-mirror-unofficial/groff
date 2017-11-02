@@ -17,7 +17,7 @@ groff \- front-end for the groff document formatting system
 .de co
 Copyright \[co] 1989-2014 Free Software Foundation, Inc.
 
-Rewritten in 2002 by Bernd Warken <groff-bernd.warken-72@web.de>
+Rewritten in 2002 by Bernd Warken <groff\-bernd.warken\-72@web.de>
 
 This document is part of groff, a free GNU software project.
 
@@ -46,7 +46,7 @@ James Clark
 .UE .
 .
 It was rewritten, enhanced, and put under the FDL license by
-Bernd Warken <groff-bernd.warken-72@web.de>.
+Bernd Warken <groff\-bernd.warken\-72@web.de>.
 .
 It is maintained by
 .MT wl@gnu.org
@@ -551,13 +551,13 @@ as the \[oq]postprocessor\[cq] (it is rather a viewing program):
 X75
 75\|dpi resolution, 10\|pt document base font.
 .TP
-X75-12
+X75\-12
 75\|dpi resolution, 12\|pt document base font.
 .TP
 X100
 100\|dpi resolution, 10\|pt document base font.
 .TP
-X100-12
+X100\-12
 100\|dpi resolution, 12\|pt document base font.
 .RE
 .RE
@@ -622,10 +622,10 @@ action and the corresponding menu entry to that value.
 only produces good results with
 .BR \-Tps ,
 .BR \-TX75 ,
-.BR \-TX75-12 ,
+.BR \-TX75\-12 ,
 .BR \-TX100 ,
 and
-.BR \-TX100-12 .
+.BR \-TX100\-12 .
 .
 The default resolution for previewing
 .B \-Tps
@@ -638,7 +638,7 @@ for example
 .RS
 .IP
 .EX
-groff \-X \-P-resolution \-P100 \-man foo.1
+groff \-X \-P\-resolution \-P100 \-man foo.1
 .EE
 .RE
 .
@@ -849,7 +849,7 @@ A4 paper in landscape orientation for the PS device:
 .
 .IP
 .EX
-groff \-Tps \-P-pa4 \-P-l ...
+groff \-Tps \-P\-pa4 \-P\-l ...
 .EE
 .
 .
@@ -883,7 +883,7 @@ command line to format a file.
 .P
 The
 .BR \%groffer (@MAN1EXT@)
-program is an allround-viewer for
+program is an all-around viewer for
 .I groff
 files and man pages.
 .
@@ -1251,7 +1251,7 @@ for printers compatible to the HP LaserJet\~4 and PCL5,
 .TP
 .BR \%grotty (@MAN1EXT@)
 for text output using various encodings, e.g., on text-oriented
-terminals or line-printers.
+terminals or line printers.
 .
 .
 .P
@@ -1539,7 +1539,7 @@ If this is not set but the environment variable
 instead, temporary files are created in the directory
 .EnvVar $TMPDIR .
 .
-On MS-DOS and Windows\~32 platforms, the environment variables
+On MS-DOS and Windows platforms, the environment variables
 .EnvVar TMP
 and
 .EnvVar TEMP
@@ -1769,7 +1769,7 @@ before reading the macro sets and any input.
 .
 .
 .TP
-.B troffrc-end
+.B troffrc\-end
 Final startup file for
 .IR troff .
 .
@@ -1904,22 +1904,22 @@ or
 .
 .P
 But there are special sections of
-.IR man-pages .
+.IR "man pages" .
 .
 .I groff
-has man\-pages in sections
+has man pages in sections
 .BR 1 , " 5" , and " 7" .
 .
 When there are several
-.I man\-pages
+.I man pages
 with the same name in the same
 .I man
 section, the one with the lowest section is should as first.
 .
-The other man\-pages can be shown anyway by adding the section number
-as argument before the man-page name.
+The other man pages can be shown anyway by adding the section number
+as argument before the man page name.
 .
-Reading the man-page about the
+Reading the man page about the
 .I groff
 language is done by one of
 .RS
@@ -2042,3 +2042,4 @@ The following utilities are available:
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:
