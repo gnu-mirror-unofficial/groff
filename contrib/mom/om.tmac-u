@@ -265,6 +265,13 @@ end
 .nr #L_MARGIN \n[.o]  \" Tabs, etc require #L_MARGIN
 .cflags 4 /\[en]      \" So slash and en-dashes get broken
 \#
+\# 'END' is used throughout as the 2nd arg to 'MAC' (alias of .de)
+\# Defining it as a macro here prevents groff from complaining
+\# that 'END' isn't defined.
+\#
+.de END
+..
+\#
 \# ====================================================================
 \#
 \# +++PAGE LAYOUT+++
@@ -4032,8 +4039,6 @@ y\R'#DESCENDER \\n[.cdp]'
 .ALIAS TB                TAB
 .ALIAS UNDERSCORE_2      UNDERSCORE2
 .ALIAS XCOLOUR           XCOLOR
-.ALIAS PDF_LINK_COLOUR   PDF_LINK_COLOR
-.ALIAS AUTO_TOC_RELOCATE AUTO_RELOCATE_TOC
 \#
 \# ====================================================================
 \#
@@ -5307,7 +5312,8 @@ y\R'#DESCENDER \\n[.cdp]'
 .    ds $STYLE_TYPE \\$0
 .    substring $STYLE_TYPE 0 -7
 .    ds $HDR_FTR \\*[$STYLE_TYPE]
-.    substring $HDR_FTR 0 5 \" HEADER or FOOTER
+.    length #HDR_FTR_STRING $HDR_FTR
+.    if \\n[#HDR_FTR_STRING]<=5 .substring $HDR_FTR 0 5 \" HEADER or FOOTER
 .    if '\\*[$HDR_FTR]'HEADER' .ds $HDR_FTR HEADER
 .    if '\\*[$HDR_FTR]'FOOTER' .ds $HDR_FTR FOOTER
 .    ds $POS \\$0
@@ -11569,11 +11575,6 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    \}
 .    if \\n[#PP_STYLE]=2 \{\
 \!.     br
-.       if \\n[#BROKEN_QUOTE] \{\
-.          ie \\n[nl]=\\n[#PAGE_TOP] .nr #Q_PP 1
-.          el .nr #Q_PP 0
-.          rr #BROKEN_QUOTE
-.       \}
 .       ie \\n[#Q_PP]=0 \{\
 .          if \\n[#INDENT_FIRST_PARAS] \
 .             ti \\n[#PP_INDENT]u/2u
@@ -11762,7 +11763,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .             ps \\n[#EN_PS]u\\*[$QUOTE_SIZE_CHANGE]
 .             ie !r #EN_Q_AUTOLEAD .vs \\n[#EN_Q_LEAD]u
 .             el \{\
-.                vs \\n[.ps]u+\n[#EN_Q_AUTOLEAD]u
+.                vs \\n[.ps]u+\\n[#EN_Q_AUTOLEAD]u
 .                nr #EN_Q_LEAD \\n[.v]
 .             \}
 .          \}
@@ -12247,7 +12248,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .                   \}
 .                \}
 .                el \{\
-.                   if !\\n[#NO_SHIM] .SHIM
+.                   ie !\\n[#NO_SHIM] .SHIM
 .                   el \
 .                      if !\\n[#NO_FLEX] .FLEX
 .\" Make sure that Q_LEAD_DIFF is not added to the first line of
@@ -12314,6 +12315,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    nr #QUOTE_4_HD 1
 .    rr #\\*[BQ]_LEAD_REAL
 .    rm BQ
+.    if '\\n[.z]'FLOAT*DIV' \!.po \\n[#L_MARGIN]u
 .END
 .
 .ALIAS DO_BLOCKQUOTE DO_QUOTE
@@ -17486,9 +17488,6 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \# Create aliases to make life easier for users: synonyms, short forms
 \# and alternate spellings.
 \#
-.ALIAS BREAK_BLOCKQUOTE    BREAK_QUOTE
-.ALIAS BREAK_CITATION      BREAK_QUOTE
-.ALIAS BREAK_CITE          BREAK_QUOTE
 .ALIAS CITATION            BLOCKQUOTE
 .ALIAS CITE                BLOCKQUOTE
 .ALIAS DOC_R_MARGIN        DOC_RIGHT_MARGIN
@@ -17504,7 +17503,6 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .ALIAS PAGENUM             PAGENUMBER
 .ALIAS PAGINATION          PAGINATE
 .ALIAS PP_FT               PP_FONT
-.ALIAS REF_INDENT          INDENT_REFS
 .ALIAS TOC_PS              TOC_PT_SIZE
 \#
 \# HEADER and FOOTER macros
@@ -20969,6 +20967,8 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .    if '\\$1'BIBLIO'   .ds $REF_BIB_INDENT \\$2
 .END
 \#
+.ALIAS REF_INDENT INDENT_REFS
+\#
 \# Hyphenation of references
 \# -------------------------
 \# *Argument:
@@ -22192,6 +22192,8 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .       nr PDFHREF_COLOR_SET 1
 .END
 \#
+.ALIAS PDF_LINK_COLOUR PDF_LINK_COLOR
+\#
 \# AUTO_RELOCATE_TOC
 \# -----------------
 \#
@@ -22206,6 +22208,8 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .    if '\\$1'BEFORE_COVER'    .nr TOC.RELOCATE 5
 .    if '\\$1'AFTER_COVER'     .nr TOC.RELOCATE 6
 .END
+\#
+.ALIAS AUTO_TOC_RELOCATE AUTO_RELOCATE_TOC
 \#
 \# PDF_BOOKMARK
 \# ------------
