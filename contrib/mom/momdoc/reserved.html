@@ -660,8 +660,6 @@ support and &#8220;Lists of&#8221; are not included.
   TS/TE                   Begin/end a tbl block
 
 <span style="display: block; margin-top: -.75em; margin-bottom: -1em;">*Headers/footers</span>
-  BREAK_QUOTE          Manually break a footnoted quote that crosses
-                         a page/column
   DO_FOOTER            Prints footer (after footnote processing, if any)
   FOOTER_ON_FIRST_PAGE Print footer on first page? (boolean)
   FOOTER               Trap-invoked footer macro
@@ -1124,7 +1122,6 @@ support and &#8220;Lists of&#8221; are not included.
   #BQ_LEAD                   Leading of blockquotes
   #BQUOTE_COLOR              Colorize blockquotes? (boolean)
   #BQUOTE_LN                 Number blockquotes? (boolean)
-  #BROKEN_QUOTE              Did we invoke BREAK_QUOTE? (boolean)
   #CAP_HEIGHT_ADJUST         Tallest cap height of strings LEFT, CENTER,
                                and RIGHT in footers; used to place rule
                                over footer
@@ -2460,9 +2457,6 @@ docelement control macros that end in _COLOR.
 <span style="display: block; margin-top: -1.5em; margin-bottom: -2.5em;">+++These aliases are for convenience, and header/footer management+++</span>
 
   BIBLIOGRAPHY_STRING_UNDERSCORE    BIBLIOGRAPHY_STRING_UNDERLINE
-  BREAK_BLOCKQUOTE                  BREAK_QUOTE
-  BREAK_CITATION                    BREAK_QUOTE
-  BREAK_CITE                        BREAK_QUOTE
   CITATION                          BLOCKQUOTE
   CITE                              BLOCKQUOTE
   COL_BREAK                         COL_NEXT
