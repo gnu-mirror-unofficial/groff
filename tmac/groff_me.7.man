@@ -33,51 +33,63 @@ groff_me \- \(lqme\(rq macro package for formatting documents with GNU roff
 .\" --------------------------------------------------------------------
 .
 .B "groff \-me"
-[ options ]
-file ...
+.RI [ option
+\&.\|.\|.\&]
+.RI [ input-file
+\&.\|.\|.\&]
+.
 .br
 .B "groff \-m\ me"
-[ options ]
-file ...
-.
+.RI [ option
+\&.\|.\|.\&]
+.RI [ input-file
+\&.\|.\|.\&]
 .
 .\" --------------------------------------------------------------------
 .SH DESCRIPTION
 .\" --------------------------------------------------------------------
 .
-This manual page describes the GNU version of the \-me macros,
-which is part of the groff document formatting system.
+The
+.I me
+package of macro definitions for the
+.I roff
+language provides a convenient facility for preparing technical papers
+in various formats.
 .
-This version can be used with both GNU troff and Unix troff.
+This manual page describes the GNU version of the
+.I me
+macros, which is
+part of the
+.I groff
+document formatting system.
 .
-This package of
+This version can be used with both GNU
 .I troff
-macro definitions provides a canned formatting
-facility for technical papers in various formats.
+and Unix
+.IR troff .
 .
 .
 .PP
-The macro requests are defined below.
-.
 Many
-.I troff
-requests are unsafe in conjunction with this package, however, these
-requests may be used with impunity after the first \&.pp:
+.I roff
+requests are unsafe in conjunction with this package; however, the
+following requests may be used with impunity after the first
+.BR .pp :
 .TS
 l l.
-\&.bp	begin new page
-\&.br	break output line here
-\&.sp n	insert n spacing lines
-\&.ls n	(line spacing) n=1 single, n=2 double space
-\&.na	no alignment of right margin
-\&.ce n	center next n lines
-\&.ul n	underline next n lines
+\fB.bp\fP	begin new page
+\fB.br\fP	break output line here
+\fB.sp\fP \fIn\fP	insert \fIn\fP spacing lines
+\fB.ls\fP \fIn\fP	(line spacing) \fIn\fP=1 single, \fIn\fP=2 double space
+\fB.na\fP	no alignment of right margin
+\fB.ce\fP \fIn\fP	center next \fIn\fP lines
+\fB.ul\fP \fIn\fP	underline next \fIn\fP lines
 .TE
 .PP
 Output of the
-.I pic,
-.I eqn,
-.I refer,
+.IR pic ,
+.IR eqn ,
+.IR refer ,
 and
 .I tbl
 preprocessors
@@ -88,30 +100,93 @@ is acceptable as input.
 .SH FILES
 .\" --------------------------------------------------------------------
 .
-/usr/share/groff/1.21/tmac/me.tmac (a wrapper file for e.tmac)
+.I /usr/share/groff/@VERSION@/tmac/me.tmac
+(a wrapper file for
+.IR e.tmac )
 .br
-/usr/share/groff/1.21/tmac/e.tmac
+.I /usr/share/groff/@VERSION@/tmac/e.tmac
 .
 .
 .\" --------------------------------------------------------------------
-.SH "SEE ALSO"
+.SH SEE ALSO
 .\" --------------------------------------------------------------------
 .
 .BR groff (1),
 .BR troff (1)
-.br
-\-me Reference Manual, Eric P.\& Allman
-.br
-Writing Papers with Groff Using \-me
+.TP
+.IR "\-me Reference Manual" ", "\c
+Eric P.\& Allman and James Clark
+may be available at
+.I /usr/share/doc/groff\-base/meref.ps.gz
+(on Debian-based systems).
+.TP
+.IR "Writing Papers with Groff Using \-me" ", "\c
+Eric P.\& Allman and James Clark
+may be available at
+.I /usr/share/doc/groff\-base/meintro.ps.gz
+(on Debian-based systems).
+.
+.
+.PP
+For preprocessors supported by
+.IR me ,
+see
+.BR eqn (1),
+.BR grn (1),
+.BR pic (1),
+.BR refer (1),
+and
+.BR tbl (1).
 .
 .
 .\" --------------------------------------------------------------------
 .SH REQUESTS
 .\" --------------------------------------------------------------------
 .
+Numeric arguments to macros are denoted with lowercase letters and
+string arguments with uppercase.
+.
+An optional macro argument such as
+.I x
+appears in brackets,
+.BI [ x \c
+.BR ] .
+.
+Note that arguments to macros generally must be quoted if they contain
+whitespace.
+.
+An exception is the argument to header and footer macros, which require
+some explanation.
+They take the form
+.RI \(lq c
+.I left c middle c right
+.IR c \(rq,
+with spaces added here for clarity.
+The strings
+.IR left ,
+.IR middle ,
+and
+.I right
+correspond to their page placement and can contain unprotected
+whitespace, but must not contain the (non-space) character
+.IR c ,
+which delimits them.
+For brevity, the table presents header and footer arguments as
+.IR clcmcrc .
+Popular choices for
+.I c
+are the ASCII apostrophe
+.RB \(lq \(aq \(rq
+and the ASCII double quote
+.RB \(lq \(dq \(rq.
+.
+.
+.PP
 This list is incomplete;
-see
-.I "The \-me Reference Manual"
+some requests are too complex to summarize in a table, and some that
+are listed below accept additional arguments not shown.
+See the
+.I \-me Reference Manual
 for interesting details.
 .
 .
@@ -123,68 +198,77 @@ Request	Initial	Causes	Explanation
 	Value	Break
 _
 \&.(c	\-	yes	T{
-Begin centered block
+Begin centered block.
 T}
 \&.(d	\-	no	T{
-Begin delayed text
+Begin delayed text.
 T}
-\&.(f	\-	no	Begin footnote
-\&.(l	\-	yes	Begin list
+\&.(f	\-	no	T{
+Begin footnote.
+T}
+\&.(l	\-	yes	Begin list.
 \&.(q	\-	yes	T{
-Begin major quote
+Begin major quote.
 T}
-\&.(x \fIx\fR	\-	no	T{
-Begin indexed item in index
+\&.(x [\fIX\fP]	\-	no	T{
+Begin item in index (named
+.IR X ).
 T}
 \&.(z	\-	no	T{
-Begin floating keep
+Begin floating keep.
 T}
 \&.)c	\-	yes	T{
-End centered block
+End centered block.
 T}
 \&.)d	\-	yes	T{
-End delayed text
+End delayed text.
 T}
-\&.)f	\-	yes	End footnote
-\&.)l	\-	yes	End list
+\&.)f	\-	yes	T{
+End footnote.
+T}
+\&.)l	\-	yes	End list.
 \&.)q	\-	yes	T{
-End major quote
+End major quote.
 T}
 \&.)x	\-	yes	T{
-End index item
+End index item.
 T}
 \&.)z	\-	yes	T{
-End floating keep
+End floating keep.
 T}
-\&.++ \fIm H\fR	\-	no	T{
-Define paper section.
-.I m
-defines the part of the paper, and can be
+\&.++ \fIM\fP [\fIclcmcrc\fP]	\-	no	T{
+Define paper section as
+.IR M ,
+which must be one of
 .B C
 (chapter),
 .B A
 (appendix),
 .B P
-(preliminary, e.g., abstract, table of contents, etc.),
+(preliminary, i.e., front matter or table of contents),
+.B AB
+(abstract),
 .B B
 (bibliography),
 .B RC
 (chapters renumbered from page one each chapter),
 or
 .B RA
-(appendix renumbered from page one).
+(appendix renumbered from page one)
+(and set page header to
+.IR clcmcrc ).
 T}
-\&.+c \fIT\fR	\-	yes	T{
-Begin chapter (or appendix, etc., as
-set by \&.++).
-.I T
-is the chapter title.
+\&.+c [\fIT\fP]	\-	yes	T{
+Begin chapter (or appendix, etc., as set by
+.BR .++ )
+(with title
+.IR T ).
 T}
 \&.1c	1	yes	T{
-One column format on a new page.
+One-column format on a new page.
 T}
 \&.2c	1	yes	T{
-Two column format.
+Two-column format.
 T}
 \&.EN	\-	yes	T{
 Space after equation
@@ -193,19 +277,19 @@ produced by
 or
 .IR neqn .
 T}
-\&.EQ \fIx y\fR	\-	yes	T{
-Precede equation; break out and
-add space.
-Equation number is
-.IR y .
-The optional argument \fIx\fR
-may be
-.I I
-to indent equation (default),
-.I L
-to left-adjust the equation, or
-.I C
-to center the equation.
+\&.EQ [\fIM\fP [\fIT\fP]]	\-	yes	T{
+Begin displayed equation (with indentation
+.IR M ,
+which must be one of
+.B C
+(centered, default),
+.B I
+(indented),
+or
+.B L
+(justified left) (and title
+.I T
+in right margin)).
 T}
 \&.GE	\-	yes	T{
 End \fIgremlin\fP picture.
@@ -219,134 +303,172 @@ T}
 \&.PS	\-	yes	T{
 Begin \fIpic\fP picture.
 T}
-\&.TE	\-	yes	End table.
+\&.TE	\-	yes	T{
+End
+.I tbl
+table.
+T}
 \&.TH	\-	yes	T{
-End heading section of table.
+End heading of
+.I tbl
+table.
 T}
-\&.TS \fIx\fR	\-	yes	T{
-Begin table; if \fIx\fR is
-.I H
-table has repeated heading.
+\&.TS [\fBH\fP]	\-	yes	T{
+Begin
+.I tbl
+table; if
+.BR H ,
+table repeats heading on each page.
 T}
-\&.b \fIx\fR	no	no	T{
+\&.b [\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
-.I x
-in boldface; if no argument switch to boldface.
+.I X
+in bold (appending
+.I Y
+in the previous font); if no arguments, switch to bold.
 T}
-\&.ba \fI+n\fR	0	yes	T{
-Augments the base indent by
-.I n.
-This indent is used to set the indent on regular text
-(like paragraphs).
+\&.ba \fIn\fP	0	yes	T{
+Augment the base indent (for regular text, like paragraphs)
+by
+.IR n .
 T}
-\&.bc	no	yes	T{
-Begin new column
+\&.bc	\-	yes	T{
+Begin new column.
 T}
-\&.bi \fIx\fR	no	no	T{
+\&.bi [\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
-.I x
-in bold italics (nofill only)
+.I X
+in bold italics (appending
+.I Y
+in the previous font); if no arguments, switch to bold italics.
 T}
 \&.bu	\-	yes	T{
-Begin bulleted paragraph
+Begin bulleted paragraph.
 T}
-\&.bx \fIx\fR	no	no	T{
-Print \fIx\fR in a box (nofill only).
+\&.bx [\fIX\fP [\fIY\fP]]	\-	no	T{
+Print \fIX\fP in a box (with Y appended).
+Renders reliably only in no-fill mode.
 T}
-\&.ef \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set even footer to x  y  z
+\&.ef \fIclcmcrc\fP	""""	no	T{
+Set even-numbered page footer.
 T}
-\&.eh \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set even header to x  y  z
+\&.eh \fIclcmcrc\fP	""""	no	T{
+Set even-numbered page header.
 T}
-\&.fo \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set footer to x  y  z
+\&.fo \fIclcmcrc\fP	""""	no	T{
+Set page footer.
 T}
 \&.hx	\-	no	T{
 Suppress headers and footers on next page.
 T}
-\&.he \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set header to x  y  z
+\&.he \fIclcmcrc\fP	""""	no	T{
+Set page header.
 T}
 \&.hl	\-	yes	T{
-Draw a horizontal line
+Draw a horizontal line.
 T}
-\&.i \fIx\fR	no	no	T{
-Italicize
-.I x;
-if
-.I x
-missing, italic text follows.
+\&.i [\fIX\fP [\fIY\fP]]	\-	no	T{
+Print
+.I X
+in italics (appending
+.I Y
+in the previous font); if no arguments, switch to italics.
 T}
-\&.ip \fIx y\fR	no	yes	T{
-Start indented paragraph,
-with hanging tag
-.IR x .
-Indentation is
-.I y
-ens (default 5).
+\&.ip [\fIX\fP [\fIn\fP]]	\fIn\fP=5n	yes	T{
+Start indented paragraph (with hanging tag
+.I X
+(and indentation
+.IR n )).
 T}
-\&.lp	yes	yes	T{
-Start left-blocked paragraph.
+\&.lp	\-	yes	T{
+Begin paragraph with first line flush left.
 T}
 \&.np	1	yes	T{
 Start numbered paragraph.
 T}
-\&.of \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set odd footer to x  y  z
+\&.of \fIclcmcrc\fP	""""	no	T{
+Set odd-numbered page footer.
 T}
-\&.oh \fI\'x\'y\'z\'\fR	\'\'\'\'	no	T{
-Set odd header to x  y  z
+\&.oh \fIclcmcrc\fP	""""	no	T{
+Set odd-numbered page header.
 T}
 \&.pd	\-	yes	T{
 Print delayed text.
 T}
-\&.pp	no	yes	T{
-Begin paragraph.
-First line indented.
+\&.pp	\-	yes	T{
+Begin paragraph with indented first line.
 T}
-\&.r	yes	no	T{
-Roman text follows.
+\&.r [\fIX\fP [\fIY\fP]]	\-	no	T{
+Print
+.I X
+in roman (appending
+.I Y
+in the previous font); if no arguments, switch to roman.
 T}
-\&.re	\-	no	T{
+\&.re	0.5i	no	T{
 Reset tabs to default values.
 T}
-\&.sh \fIn x\fR	\-	yes	T{
-Section head follows,
-font automatically bold.
+\&.sh [\fIn\fP [\fIT\fP]]	\fIn\fP=1	yes	T{
+Start numbered section; print section number (set to
 .I n
-is level of section,
-.I x
-is title of section.
+(and title
+.IR T ))
+in bold.
 T}
-\&.sk	no	no	T{
+\&.sk	\-	no	T{
 Leave the next page blank.
 Only one page is remembered ahead.
 T}
-\&.sm \fIx\fR	\-	no	T{
-Set
-.I x
-in a smaller pointsize.
+\&.sm \fIX\fP [\fIY\fP]	\-	no	T{
+Print
+.I X
+in a smaller point size (appending
+.I Y
+at the previous size).
 T}
-\&.sz \fI+n\fR	10p	no	T{
+\&.sz \fIn\fP	10p	no	T{
 Augment the point size by
 .I n
 points.
 T}
-\&.tp	no	yes	T{
+\&.tp	\-	yes	T{
 Begin title page.
 T}
-\&.u \fIx\fR	\-	no	T{
-Underline argument (even in \fItroff\fR).
-(Nofill only).
+\&.u \fIX\fP [\fIY\fP]	\-	no	T{
+Underline
+.I X
+(appending
+.I Y
+without underlining).
+Renders reliably only in no-fill mode.
 T}
-\&.uh	\-	yes	T{
-Like .sh but unnumbered.
+\&.uh [\fIT\fP]	\-	yes	T{
+Start unnumbered section (and print title
+.I T
+in bold).
 T}
-\&.xp \fIx\fR	\-	no	Print index.
+\&.xp [\fIX\fP]	\-	no	T{
+Print index (named
+.IR X ).
+T}
 .TE
 .ad
-
+.\" --------------------------------------------------------------------
+.SH NOTES
+.\" --------------------------------------------------------------------
+Early
+.I roff
+macro packages limited themselves to a single-letter namespace
+.RI ( mm ,
+.IR ms ,
+.IR mv ,
+.IR mn ,
+etc.).
+.
+It is not known for certain what the \(lqe\(rq in \(lqme\(rq stands for,
+but one can infer a derivation from the first initial of Eric P. Allman
+(then of the University of California), who wrote the original technical
+papers documenting the package.
 .
 .\" Local Variables:
 .\" mode: nroff
