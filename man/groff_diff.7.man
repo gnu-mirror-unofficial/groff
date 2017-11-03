@@ -120,7 +120,7 @@ The names of number registers, fonts, strings/\:macros/\:diversions,
 special characters (glyphs), and colors can be of any length.
 .
 In escape sequences, additionally to the classical
-\[oq]\fB(\fP\fIxx\fP\[cq] construction for a two-character glyph name,
+\[oq]\fB(\fP\,\fIxx\/\fP\[cq] construction for a two-character glyph name,
 you can use \[oq]\fB[\fP\,\fIxxx\/\fP\fB]\fP\[cq] for a name of
 arbitrary length.
 .
@@ -1776,7 +1776,7 @@ Variant of
 .B .it
 for which a line interrupted with
 .B \[rs]c
-counts as one input line.
+is not counted as an input line.
 .
 .TP
 .BI .kern\  n
@@ -2010,7 +2010,7 @@ with a positive value which are applied after the line is output.
 Remove the definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]
+.I \*[ellipsis]\ \"Add a sentence space
 This undoes the effect of a
 .B char
 request.
@@ -2029,7 +2029,7 @@ No effect otherwise.
 Remove the font-specific definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]
+.I \*[ellipsis]\ \"Add a sentence space
 This undoes the effect of a
 .B fschar
 request.
