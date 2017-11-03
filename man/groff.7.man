@@ -13,9 +13,9 @@ groff \- a short reference for the GNU roff language
 .de co
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright \(co 2000-2015 Free Software Foundation, Inc.
+Copyright \[co] 2000\[en]2015 Free Software Foundation, Inc.
 
-Last update: 23 Jul 2015
+Last update: 2017-11-02
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -31,7 +31,7 @@ available in the internet at
 .
 .de au
 This documentation was written by
-.MT groff\-bernd.warken-72@web.de
+.MT groff\-bernd.warken\-72@web.de
 Bernd Warken
 .ME
 and is appended and maintained by
@@ -1235,7 +1235,7 @@ Print a backtrace of the input on stderr.
 Embolden
 .I font
 by
-.IR N \\-1
+.IR N \-1
 units.
 .
 .TPx
@@ -1961,7 +1961,7 @@ Change to the previous value of additional intra-line skip.
 Set additional intra-line skip value to
 .IR N ,
 i.e.,
-.IR N \\-1
+.IR N \-1
 blank lines are inserted after each text output line.
 .
 .TPx
@@ -2018,7 +2018,7 @@ vertical space (default scaling indicator\~\c
 .
 .TPx
 .REQ .nf
-No filling or adjusting of output-lines.
+No filling or adjusting of output lines.
 .
 .TPx
 .REQ .nh
@@ -2661,7 +2661,7 @@ end of the argument.
 .P
 This is done by enclosing names (escape name and arguments consisting
 of a variable name) by a pair of brackets
-.BI \[lB] name \[rB] 
+.BI \[lB] name \[rB]
 and constant arguments (number expressions and characters) by
 apostrophes (ASCII 0x27) like
 .BI \[cq] constant \[cq] \f[R].
@@ -2829,7 +2829,7 @@ The grave accent \[ga]; same as
 Unescaped: left quote, backquote (ASCII 0x60).
 .
 .TP
-.ESC -
+.ESC \-
 The \- (minus) sign in the current font.
 .
 .TP
@@ -3586,7 +3586,7 @@ for the letter
 .BR A ,
 thus
 .BR \e[u0041] .
-. 
+.
 .
 .TP
 .BI \e[u yyyyy ]
@@ -3654,7 +3654,7 @@ escape sequence.
 Strings share their name space with macros.
 .
 So strings and macros without arguments are roughly equivalent; it is
-possible to call a string like a macro and vice-versa, but this often
+possible to call a string like a macro and vice versa, but this often
 leads to unpredictable results.
 .
 The following string is the only one predefined in groff.
@@ -4370,14 +4370,14 @@ for writing a useful new macro, something like
 \&.de UNDERLINE
 \&. ie n \[rs]\[rs]$1\[rs]f[I]\[rs]\[rs]$2\[rs]f[P]\[rs]\[rs]$3
 \&. el \[rs]\[rs]$1\[rs]Z\[aq]\[rs]\[rs]$2\[aq]\[rs]v\[aq].25m\[aq]\
-\[rs]D\[aq]l \[rs]w\[aq]\[rs]\[rs]$2\[aq]u 0\[aq]\[rs]v\[aq]-.25m\
-\[aq]\\[rs]\[rs]$3
+\[rs]D\[aq]l \[rs]w\[aq]\[rs]\[rs]$2\[aq]u 0\[aq]\[rs]v\[aq]\-.25m\
+\[aq]\[rs]\[rs]$3
 \&..
 .EE
 .RE
 .
 If
-.B doclifter (1)
+.BR doclifter (1)
 makes trouble, change the macro name
 .B UNDERLINE
 into some 2-letter word, like
@@ -4404,7 +4404,7 @@ gets lost, use the following:
 \&.ds u3 after
 \&.ie n \[rs]*[u1]\[rs]f[I]\[rs]*[u2]\[rs]f[P]\[rs]*[u3]
 \&.el \[rs]*[u1]\[rs]Z\[aq]\[rs]*[u2]\[aq]\[rs]v\[aq].25m\[aq]\[rs]D\
-\[aq]l \[rs]w\[aq]\[rs]*[u2]\[aq]u 0\[aq]\[rs]v\[aq]-.25m\[aq]\[rs]*[u3]
+\[aq]l \[rs]w\[aq]\[rs]*[u2]\[aq]u 0\[aq]\[rs]v\[aq]\-.25m\[aq]\[rs]*[u3]
 .EE
 .RE
 .
@@ -4430,7 +4430,7 @@ Then these lines could look like
 \&.ds u3 after
 \&.ie n \[rs]*[u1]\[rs]fI\[rs]*(u2\[rs]fP\[rs]*(u3
 \&.el \[rs]*(u1\[rs]Z\[aq]\[rs]*(u2\[aq]\[rs]v\[aq].25m'\[rs]D\[aq]l \
-\[rs]w\[aq]\[rs]*(u2\[aq]u 0\[aq]\[rs]v\[aq]-.25m\[aq]\[rs]*(u3
+\[rs]w\[aq]\[rs]*(u2\[aq]u 0\[aq]\[rs]v\[aq]\-.25m\[aq]\[rs]*(u3
 .EE
 .RE
 .
@@ -4591,7 +4591,7 @@ pointers to further documentation.
 .
 .TP
 .I [CSTR\~#54]
-.UR http://\:cm.bell-labs.com/\:cm/\:cs/\:cstr/\:54.ps.gz
+.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:54.ps.gz
 Nroff/\:Troff User's Manual by Ossanna & Kernighan
 .UE
 \[em] the bible for classical troff.
@@ -4635,3 +4635,4 @@ documentations and other information.
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
+.\" vim: set filetype=groff:
