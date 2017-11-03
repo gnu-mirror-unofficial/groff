@@ -569,11 +569,15 @@ task in certain conditions.
 \&\f[CB].\f[]
 A dot is only special at the beginning of a line or after the
 condition in the requests
-.request if ,
-.request ie ,
-.request el ,
+.request if\c
+,
+.request ie\c
+,
+.request el\c
+,
 and
-.request while .
+.request while\c
+\&.
 There it is the control character that introduces a request (or macro).
 .
 By using the
@@ -737,32 +741,32 @@ language defines the following scaling indicators.
 .
 .TPx
 .B c
-Centimeter
+centimeter
 .
 .TPx
 .B i
-Inch
+inch
 .
 .TPx
 .B P
-Pica\ \[eq]\ 1/6\ inch
+pica\ \[eq]\ 1/6\ inch
 .
 .TPx
 .B p
-Point\ \[eq]\ 1/72\ inch
+point\ \[eq]\ 1/72\ inch
 .
 .TPx
 .B m
-Em\ \[eq]\ \f[R]the font size in points (approx.\& width of letter
+em\ \[eq]\ \f[R]the font size in points (approx.\& width of letter
 \[oq]\f[CR]m\f[R]\[cq])
 .
 .TPx
 .B M
-100\^th \f[R]of an \f[CR]Em
+100\^th \f[R]of an \f[CR]em
 .
 .TPx
 .B n
-En\ \[eq]\ Em/2
+en\ \[eq]\ em/2
 .
 .TPx
 .B u
@@ -771,6 +775,9 @@ Basic unit for actual output device
 .TPx
 .B v
 Vertical line space in basic units
+.
+.TPx
+.B s
 scaled point\ \[eq]\ 1/\f[CI]sizescale\f[R] of a point (defined in
 font \f[I]DESC\f[] file)
 .
@@ -905,8 +912,10 @@ For details see the groff info file.
 .
 .B Conditions
 occur in tests raised by the
-.request if ,
-.request ie ,
+.request if\c
+,
+.request ie\c
+,
 and the
 .request while
 requests.
@@ -1577,7 +1586,8 @@ Set escape character to
 .TPx
 .REQ .ecr
 Restore escape character saved with
-.request .ecs .
+.request .ecs\c
+\&.
 .
 .TPx
 .REQ .ecs
@@ -1586,7 +1596,8 @@ Save current escape character.
 .TPx
 .REQ .el "anything"
 Else part for if-else (\c
-.request ie )
+.request .ie\c
+)
 request.
 .
 .TPx
@@ -1715,9 +1726,10 @@ are special.
 .REQ .ft
 Return to previous font.
 Same as
-.request \[rs]f[]
+.request \[rs]
 or
-.request \[rs]fP .
+.request \[rs]\c
+\&.
 .
 .TPx
 .REQ .ft "font"
@@ -1798,7 +1810,8 @@ Append hyphenation patterns from
 .TPx
 .REQ .hpfcode "a b c d .\|.\|.\&"
 Set input mapping for
-.request .hpf .
+.request .hpf\c
+\&.
 .
 .TPx
 .REQ .hw "words"
@@ -1830,7 +1843,8 @@ If
 then
 .I anything
 else goto
-.request .el .
+.request .el\c
+\&.
 .
 .TPx
 .REQ .if "cond anything"
@@ -2132,7 +2146,8 @@ Pipe output to
 Set page length to default
 .scalednumber 11 i .
 The current page length is stored in
-.register .p .
+.register .p\c
+\&.
 .
 .TPx
 .REQ .pl "\[+-]N"
@@ -2164,7 +2179,8 @@ on stderr.
 Change to previous page offset.
 .
 The current page offset is available in
-.register .o .
+.register .o\c
+\&.
 .
 .TPx
 .REQ .po "\[+-]N"
@@ -2520,7 +2536,8 @@ false.
 Set underline font to
 .I font
 (to be switched to by
-.request .ul ).
+.request .ul\c
+).
 .
 .TPx
 .REQ .ul "N"
@@ -3792,7 +3809,8 @@ the center of an accent over that glyph should be placed.
 .TPx
 .REG .d
 Current vertical place in current diversion; equal to
-.register nl .
+.register nl\c
+\&.
 .
 .TPx
 .REG .ev
@@ -3835,7 +3853,8 @@ Available horizontal resolution in basic units.
 .TPx
 .REG .height
 The current font height as set with
-.request \[rs]H .
+.request \[rs]H\c
+\&.
 .
 .TPx
 .REG .hla
@@ -3905,7 +3924,8 @@ Current line length.
 .TPx
 .REG .L
 The current line spacing setting as set by
-.request .ls .
+.request .ls\c
+\&.
 .
 .TPx
 .REG .lg
@@ -3948,7 +3968,8 @@ The amount of space that was needed in the last
 request that caused a trap to be sprung.
 .
 Useful in conjunction with
-.register .trunc .
+.register .trunc\c
+\&.
 .
 .TPx
 .REG .ns
@@ -4013,7 +4034,8 @@ Current point size as a decimal fraction.
 .TPx
 .REG .slant
 The slant of the current font as set with
-.request \eS .
+.request \eS\c
+\&.
 .
 .TPx
 .REG .sr
@@ -4060,10 +4082,12 @@ The amount of vertical space truncated by the most recently sprung
 vertical position trap, or, if the trap was sprung by a
 .request ne
 request, minus the amount of vertical motion produced by
-.request .ne .
+.request .ne\c
+\&.
 .
 Useful in conjunction with the
-.register .ne .
+.register .ne\c
+\&.
 .
 .TPx
 .REG .u
@@ -4170,13 +4194,15 @@ Current horizontal position at input line.
 .REG llx
 Lower left x-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb ).
+.request .psbb\c
+).
 .
 .TPx
 .REG lly
 Lower left y-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb ).
+.request .psbb\c
+).
 .
 .TPx
 .REG ln
@@ -4223,13 +4249,15 @@ or
 .TPx
 .REG rsb
 Like
-.register sb ,
+.register sb\c
+,
 but takes account of the heights and depths of glyphs.
 .
 .TPx
 .REG rst
 Like
-.register st ,
+.register st\c
+,
 but takes account of the heights and depths of glyphs.
 .
 .TPx
@@ -4280,13 +4308,15 @@ request.
 .REG urx
 Upper right x-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb ).
+.request .psbb\c
+).
 .
 .TPx
 .REG ury
 Upper right y-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb ).
+.request .psbb\c
+).
 .
 .TPx
 .REG year
