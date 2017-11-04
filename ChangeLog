@@ -1,3 +1,75 @@
+2017-11-02  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	man/groff_diff.7.man: Correct the explanation of the request
+	".itc"--it was backwards.
+
+	Fix bug https://savannah.gnu.org/bugs/?51502.
+
+2017-11-02  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	test-groff.in: Recognize additional contrib tmacs.
+
+	Fix bug https://savannah.gnu.org/bugs/?51598.
+
+2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Makefile.am: Force build to generate test-groff script.
+
+2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	font/devpdf/devpdf.am: Silence warning from grep during build.
+
+2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	doc/doc.am: Fix build of pic.html from clean tree.
+
+2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	m4/groff.m4: Kill whitespace in macro diagnostic.
+
+2017-11-01  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	hdtbl.tmac-u: Fix ignored escape sequence.
+
+	The escape '\c' ignores everything after it, except "\R...".
+
+	Fix bug https://savannah.gnu.org/bugs/?51609.
+
+2017-11-01  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	src/roff/grog/subs.pl: Fix typo in usage message.
+
+	Fix bug https://savannah.gnu.org/bugs/?51540.
+
+2017-10-28  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	m.tmac: Fix some formatting and textual issues.
+	* Protect full stops in strings \*[Letns!{1,2,10,11}].
+	* Remove extraneous whitespace from string \*[Pg_type!1].
+
+	Fix bug https://savannah.gnu.org/bugs/?51610.
+
+2017-10-22  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	refer-mm.tmac: Protect full stop in abbreviation of "ed.".
+
+	Fix bug https://savannah.gnu.org/bugs/?51611.
+
+2017-10-22  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	pdfpic: Suppress warning if in compatibility mode.
+
+	Fix bug https://savannah.gnu.org/bugs/?51945.
+
+2017-10-22  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	www.tmac: Rename font 'C' to 'CR'; define 'CR'.
+
+	The font name 'C' ('CW') is not a part of groff's fonts.
+
+	Fix bug https://savannah.gnu.org/bugs/?51417.
+	Also see https://savannah.gnu.org/bugs/?51426.
+
 2017-10-04  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Fix build on MacOS X
