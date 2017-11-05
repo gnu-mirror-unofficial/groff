@@ -1005,56 +1005,64 @@ char *
 detect_file_encoding(FILE *fp)
 {
 #ifdef HAVE_UCHARDET
-  uchardet_t ud;
+  uchardet_t ud = NULL;
   struct stat stat_buf;
   size_t len, read_bytes;
-  char *data;
+  char *data = NULL;
   int res, current_position;
   const char *charset;
-  char *ret;
+  char *ret = NULL;
 
   current_position = ftell(fp);
   /* due to BOM and tag detection we are not at the begining of the file */
   rewind(fp);
   if (fstat(fileno(fp), &stat_buf) != 0) {
     fprintf(stderr, "fstat: %s\n", strerror(errno));
-    return NULL;
+    goto end;
   }
   len = stat_buf.st_size;
   if (debug_flag)
     fprintf(stderr, "  len: %zu\n", len);  
   if (len == 0)
-    return NULL;
+    goto end;
   data = (char *)calloc(len, 1);
   read_bytes = fread(data, 1, len, fp);
   if (read_bytes == 0) {
     fprintf(stderr, "fread: %s\n", strerror(errno));
-    return NULL;
+    goto end;
   }
   /* We rewind back to the original position */
   if (fseek(fp, current_position, SEEK_SET) != 0) {
     fprintf(stderr, "Fatal error: fseek: %s\n", strerror(errno));
-    return NULL;
+    goto end;
   }
   ud = uchardet_new();
   res = uchardet_handle_data(ud, data, len);
   if (res != 0) {
     fprintf(stderr, "uchardet_handle_data: %d\n", res);
-    uchardet_delete(ud);
-    return NULL;
+    goto end;
   }
   if (debug_flag)
     fprintf(stderr, "  uchardet read: %zu bytes\n", read_bytes);
   uchardet_data_end(ud);
   charset = uchardet_get_charset(ud);
-  if (debug_flag)
-    fprintf(stderr, "  charset: %s\n", charset);
-  if (charset) {
-    ret = (char *)calloc(strlen(charset) + 1, 1);
+  if (debug_flag) {
+    if (charset)
+       fprintf(stderr, "  charset: %s\n", charset);
+    else
+       fprintf(stderr, "  charset is NULL\n");
+  }
+  /* uchardet 0.0.1 could return an empty string instead of NULL */
+  if (charset && *charset) {
+    ret = (char *)malloc(strlen(charset) + 1);
     strcpy(ret, charset);
   }
-  uchardet_delete(ud);
-  free(data);
+
+end:
+  if (ud)
+     uchardet_delete(ud);
+  if (data)
+     free(data);
 
   return ret;
 #else /* not HAVE_UCHARDET */
