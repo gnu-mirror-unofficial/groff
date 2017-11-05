@@ -23,7 +23,7 @@
 
 devpdf_srcdir = $(top_srcdir)/font/devpdf
 GROFF_FONT_FILES=`cd $(top_builddir)/font/devpdf \
-  && grep -l internalname [A-CEG-Z]*`
+  && grep -ls internalname [A-CEG-Z]*`
 ENC_FILES=`cd $(top_builddir)/font/devpdf; ls enc/*`
 MAP_FILES=`cd $(top_builddir)/font/devpdf; ls map/*`
 
