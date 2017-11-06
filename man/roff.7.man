@@ -1096,21 +1096,30 @@ request (a line consisting of a dot only) after each sentence.
 .
 .
 .P
-The following example shows how optimal
+The following example shows judicious line breaking in a
 .I roff
-editing could look.
+input file.
 .
 .RS
 .P
 .EX
-This is an example for a \&.I roff document.  \&.
+.\" Keep the text width to 65 columns or fewer in this example so that
+.\" it doesn't overrun the right margin when set in Courier (-Tps,
+.\" -Tpdf).
+This is an example of a
+\&.I roff
+document that you can type into your text editor.
+\&.
 .
-This is the next sentence in the same paragraph.  \&.
+This is the next sentence in the same paragraph.
+\&.
 .
-This is a longer sentence stretching over several lines; abbreviations
-like \[oq]cf.\[cq] are easily identified because the dot is not
-followed by a line break.  \&.  In the output, this will still go to
-the same paragraph.
+This is a longer sentence stretching over several input lines;
+abbreviations like cf. are easily identified because the dot is
+not followed by a line break.
+\&.
+.
+In the output, this sentence continues the same paragraph.
 .EE
 .RE
 .
