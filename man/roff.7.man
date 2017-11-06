@@ -984,78 +984,6 @@ can be found at
 .SH "EDITING ROFF"
 .\" ====================================================================
 .
-The best program for editing a
-.I roff
-document is Emacs (or Xemacs), see
-.BR emacs (1).
-.
-It provides an
-.I nroff
-mode that is suitable for all kinds of
-.I roff
-dialects.
-.
-This mode can be activated by the following methods.
-.
-.
-.P
-When editing a file within Emacs the mode can be changed by typing
-.RI \[oq] "M-x nroff\-mode" \[cq],
-where
-.B M-x
-means to hold down the
-.B Meta
-key (or
-.BR Alt )
-and hitting the
-.BR x\~ key
-at the same time.
-.
-.
-.P
-But it is also possible to have the mode automatically selected when
-the file is loaded into the editor.
-.
-.IP \(bu
-The most general method is to include the following 3 comment lines at
-the end of the file.
-.
-.RS
-.IP
-.EX
-\&.\[rs]" Local Variables:
-\&.\[rs]" mode: nroff
-\&.\[rs]" End:
-.EE
-.RE
-.
-.IP \(bu
-There is a set of file name extensions, e.g.\& the man pages that
-trigger the automatic activation of the
-.I nroff
-mode.
-.
-.IP \(bu
-Theoretically, it is possible to write the sequence
-.
-.RS
-.IP
-.EX
-\&.\[rs]" \%\-*\-\ nroff\ \-*\-\""
-.EE
-.RE
-.
-.IP
-as the first line of a file to have it started in
-.I nroff
-mode when loaded.
-.
-Unfortunately, some applications such as the
-.B man
-program are confused by this; so this is deprecated.
-.
-.
-.P
 All
 .I roff
 formatters provide automated line breaks and horizontal and vertical
@@ -1124,7 +1052,87 @@ In the output, this sentence continues the same paragraph.
 .RE
 .
 .
+.\" ====================================================================
+.SS "Editing with Emacs"
+.\" ====================================================================
+.
+The best program for editing a
+.I roff
+document is Emacs (or XEmacs); see
+.BR emacs (1).
+.
+It provides an
+.I nroff
+mode that is suitable for all kinds of
+.I roff
+dialects.
+.
+This mode can be activated by the following methods.
+.
+.
 .P
+When editing a file within Emacs the mode can be changed by typing
+.RI \[oq] "M-x nroff\-mode" \[cq],
+where
+.B M-x
+means to hold down the
+.B Meta
+key (or
+.BR Alt )
+and press the
+.BR x\~ key
+at the same time.
+.
+.
+.P
+But it is also possible to have the mode automatically selected when
+the file is loaded into the editor.
+.
+.IP \(bu
+The most general method is to include the following 3 comment lines at
+the end of the file.
+.
+.RS
+.IP
+.EX
+\&.\[rs]" Local Variables:
+\&.\[rs]" mode: nroff
+\&.\[rs]" End:
+.EE
+.RE
+.
+.IP \(bu
+There is a set of file name extensions, e.g.\& the man pages that
+trigger the automatic activation of the
+.I nroff
+mode.
+.
+.IP \(bu
+Theoretically, it is possible to write the sequence
+.
+.RS
+.IP
+.EX
+\&.\[rs]" \%\-*\-\ nroff\ \-*\-\""
+.EE
+.RE
+.
+.IP
+as the first line of a file to have it started in
+.I nroff
+mode when loaded.
+.
+Unfortunately, some applications such as the
+.B man
+program are confused by this; so this is deprecated.
+.
+.
+.\" ====================================================================
+.SS "Editing with Vim"
+.\" ====================================================================
+.
+.\" TODO: elvis, vile.  Nvi does not support highlighting at all, and
+.\" gedit does but has no rules for roff yet.  Other editors TBD.
 Besides Emacs, some other editors provide
 .I nroff
 style files too, e.g.\&
@@ -1132,6 +1140,45 @@ style files too, e.g.\&
 an extension of the
 .BR vi (1)
 program.
+.
+Vim's highlighting can be made to recognize
+.I roff
+files by setting the
+.I filetype
+option in a Vim
+.IR modeline .
+.
+For this feature to work, your copy of
+.B vim
+must be built with support for, and configured to enable, several
+features; consult the editor's online help topics
+\[lq]auto\-setting\[rq], \[lq]filetype\[rq], and \[lq]syntax\[rq].
+.
+Then put the following at the end of your
+.I roff
+files, after any Emacs configuration:
+.\" ...because Emacs pattern-matches against ~3000 bytes from the end of
+.\" the buffer for "Local variables:", but Vim only checks as many lines
+.\" as its 'modelines' variable tells it to.  A common default is "5",
+.\" but Emacs settings can be longer than that.
+.
+.P
+.
+.RS
+.IP
+.EX
+\&.\[rs]" vim: set filetype=groff:
+.EE
+.RE
+.
+.
+.P
+Replace \[lq]groff\[rq] in the above with \[lq]nroff\[rq] if you want
+highlighing that does
+.I not
+recognize many of the \f[CR]GNU\f[] extensions to
+.IR roff ,
+such as request, register, and string names longer than two characters.
 .
 .
 .\" ====================================================================
