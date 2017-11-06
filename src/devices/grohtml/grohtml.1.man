@@ -1,6 +1,6 @@
 .TH GROHTML @MAN1EXT@ "@MDATE@" "Groff Version @VERSION@"
 .SH NAME
-grohtml \- html driver for groff
+grohtml \- HTML driver for groff
 .
 .
 .\" license
@@ -50,7 +50,7 @@ grohtml \- html driver for groff
 .OP \-o \%image-vertical-offset
 .OP \-s size
 .OP \-S level
-.OP \-x \%html-dialect
+.OP \-x \%HTML-dialect
 .RI "[\ " files\|.\|.\|. "\ ]"
 .br
 .ad \na
@@ -68,7 +68,7 @@ and a device driver,
 .BR post-grohtml )
 translates the output of GNU
 .B troff
-to html.
+to HTML.
 .
 Users should always invoke
 .B grohtml
@@ -133,7 +133,7 @@ appear inside a table or equation.
 .BI \-a aa-text-bits
 Number of bits of antialiasing information to be used by
 .I text
-when generating png images.
+when generating PNG images.
 .
 The default is\~4 but valid values are 0, 1, 2, and\~4.
 .
@@ -192,7 +192,7 @@ is the name of the device, usually
 .BI \-g aa-graphic-bits
 Number of bits of antialiasing information to be used by
 .I graphics
-when generating png images.
+when generating PNG images.
 .
 The default is\~4 but valid values are 0, 1, 2, and\~4.
 .
@@ -242,7 +242,7 @@ is the process ID).
 .BI \-j filename
 Inform
 .B grohtml
-to split the html output into multiple files.
+to split the HTML output into multiple files.
 .
 The
 .I filename
@@ -279,14 +279,14 @@ only displays a page number when an image is required.
 .
 .TP
 .B \-r
-Turn off the automatic header and footer line (html rule).
+Turn off the automatic header and footer line (HTML rule).
 .
 .TP
 .B \-s size
 Set the base point size of the source file.
 .
 Thereafter when this point size is used in the source it will
-correspond to the html base size.
+correspond to the HTML base size.
 .
 Every increase of two points in the source will yield a
 .B <big>
@@ -296,7 +296,7 @@ tag is emitted.
 .
 .TP
 .BI \-S level
-When splitting html output,
+When splitting HTML output,
 split at the heading level (or higher) defined by
 .IR level .
 .
@@ -359,7 +359,7 @@ mounted at font positions 1 to\~4.
 .\" ====================================================================
 .
 .B grohtml
-is dependent upon the png utilities
+is dependent upon the PNG utilities
 .RB ( \%pnmcut ,
 .BR \%pnmcrop ,
 .BR \%pnmtopng )

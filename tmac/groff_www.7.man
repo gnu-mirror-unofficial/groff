@@ -56,7 +56,7 @@ file ...
 This manual page describes the GNU \-mwww macro package, which is part of
 the groff document formatting system.
 .
-The manual page is very a basic guide, and the html device driver
+The manual page is very a basic guide, and the HTML device driver
 .RB ( \%grohtml )
 has been completely rewritten but still remains as in an alpha state.
 .
@@ -86,14 +86,14 @@ l l.
 \&.HX@automatic heading level cut off
 \&.BCL@specify colours on a web page
 \&.BGIMG@specify background image
-\&.URL@create a url using two parameters
-\&.FTP@create an ftp reference
-\&.MTO@create a html email address
-\&.FTP@create an ftp reference
-\&.TAG@generate an html name
+\&.URL@create a URL using two parameters
+\&.FTP@create an FTP reference
+\&.MTO@create a HTML email address
+\&.FTP@create an FTP reference
+\&.TAG@generate an HTML name
 \&.IMG@include an image file
-\&.PIMG@include png image
-\&.MPIMG@place png on the margin and wrap text around it
+\&.PIMG@include PNG image
+\&.MPIMG@place PNG on the margin and wrap text around it
 \&.HnS@begin heading
 \&.HnE@end heading
 \&.LK@emit automatically collected links.
@@ -109,13 +109,13 @@ l l.
 \&.DLE@definition list end
 \&.LI@insert a list item
 \&.DC@generate a drop capital
-\&.HTML@pass an html raw request to the device driver
+\&.HTML@pass an HTML raw request to the device driver
 \&.CDS@code example begin
 \&.CDE@code example end
 \&.ALN@place links on left of main text.
 \&.LNS@start a new two-column table with links in the left.
 \&.LNE@end the two-column table.
-\&.LINKSTYLE@initialize default url attributes.
+\&.LINKSTYLE@initialize default URL attributes.
 .TE
 .
 .
@@ -201,7 +201,7 @@ If
 and
 .B after
 are absent then the
-.B url
+.B URL
 becomes the anchor text.
 .
 Hyphenation is disabled while printing the actual URL;
@@ -238,7 +238,7 @@ by:
 .
 .TP
 .B .MTO address [description] [after]
-Generate an email html reference.
+Generate an email HTML reference.
 .
 The first argument is mandatory as the email address.
 .
@@ -276,9 +276,9 @@ or
 .
 .TP
 .B .FTP url [description] [after]
-indicates that data can be obtained via ftp.
+indicates that data can be obtained via FTP.
 .
-The first argument is the url and the second is the browser text.
+The first argument is the URL and the second is the browser text.
 .
 A third argument, similar to the macros above, is intended for stuff
 printed immediately afterwards.
@@ -288,17 +288,17 @@ The second and the third parameter are optional.
 Hyphenation is disabled while printing the actual URL.
 .
 As an example, here the location of the
-.FTP ftp://\:ftp.gnu.org/ "GNU ftp server" .
+.FTP ftp://\:ftp.gnu.org/ "GNU FTP server" .
 .
 The macro example above was specified by:
 .RS
 .IP
-.B .FTP ftp://\[rs]:ftp.gnu.org/ \[dq]GNU ftp server\[dq] .
+.B .FTP ftp://\[rs]:ftp.gnu.org/ \[dq]GNU FTP server\[dq] .
 .RE
 .
 .TP
 .B .TAG name
-Generates an html name tag from its argument.
+Generates an HTML name tag from its argument.
 .
 This can then be referenced using the
 .URL #URL URL
@@ -344,9 +344,9 @@ If the width is absent it defaults to 1\~inch.
 .
 If the height is absent it defaults to the width.
 .
-This maps onto an html img tag.
+This maps onto an HTML img tag.
 .
-If you are including a png image then it is advisable to use the
+If you are including a PNG image then it is advisable to use the
 .B PIMG
 macro.
 .
@@ -356,7 +356,7 @@ Include an image in PNG format.
 .
 This macro takes exactly the same parameters as the
 .B IMG
-macro; it has the advantage of working with PostScript and html devices
+macro; it has the advantage of working with PostScript and HTML devices
 also since it can automatically convert the image into the EPS format,
 using the following programs of the
 .B netpbm
@@ -544,7 +544,7 @@ Example:
 .
 .TP
 .B .HTML
-All text after this macro is treated as raw html.
+All text after this macro is treated as raw HTML.
 .
 If the document is processed without
 .B \-Thtml
@@ -629,7 +629,7 @@ This should be called at the end of the document if \&.ALN was used.
 .
 .TP
 .B ".LINKSTYLE color [ fontstyle [ openglyph closeglyph ] ]"
-Initialize default url attributes to be used if this macro set is not
+Initialize default URL attributes to be used if this macro set is not
 used with the HTML device.
 .
 The macro set initializes itself with the following call
@@ -653,7 +653,7 @@ but these values will be superseded by a user call to LINKSTYLE.
 By default
 .B \%grohtml
 generates links to all section headings and places these at the top of the
-html document.
+HTML document.
 .
 (See
 .URL #LK LINKS
