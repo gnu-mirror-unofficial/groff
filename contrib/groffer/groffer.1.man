@@ -141,8 +141,9 @@ available for
 .IR \%groff .
 .
 This includes the
+X Window System-based
 .I \%groff
-native \%\f(CRX\~Window\fP viewer
+program
 .BR \%gxditview (@MAN1EXT@),
 each
 .IR \%PostScript ,
@@ -295,7 +296,7 @@ are accepted as well.
 .
 .
 .TP
-.I X Window Toolkit options
+.I options mapped to X Window System Toolkit Intrinsics options
 .RS
 .P
 .SY
@@ -519,7 +520,7 @@ The default modes are
 .IR "mode x" ,
 and
 .I "mode dvi"
-in \%\f(CRX\~Window\fP with different viewers and
+in the X Window System with different viewers and
 .I mode tty
 with device
 .I utf8
@@ -530,25 +531,25 @@ default mode do not exist.
 .
 .
 .P
-In \%\f(CRX\~Window\fP, many programs create their own window when
+In the X Window System, many programs create their own window when
 called.
 .
 .B \%groffer
 can run these viewers as an independent program in the background.
 .
 As this does not work in text mode on a terminal (tty) there must be a
-way to know which viewers are \%\f(CRX\~Window\fP graphical
+way to know which viewers are X Window System-based graphical
 programs.
 .
 The
 .B \%groffer
-script has a small set of information on some viewer names.
+script has a small amount of information on some viewer names.
 .
 If a viewer argument of the command\-line chooses an element that is
-kept as \%\f(CRX\~Window\fP program in this list it is treated as a
-viewer that can run in the background.
+recognized as an X Window System-based program in this list, it is
+treated as a viewer that can run in the background.
 .
-All other, unknown viewer calls are not run in the background.
+Unrecognized viewers are not run in the background.
 .
 .
 .P
@@ -592,8 +593,8 @@ to the comma separated list given in the argument.
 .
 See
 .B \-\-mode
-for details on modes.  Display in the default manner; actually, this
-means to try the modes
+for details on modes.
+Display in the default manner; actually, this means to try the modes
 .IR x ,
 .IR ps ,
 and
@@ -607,9 +608,9 @@ in this sequence.
 Equivalent to
 .BR \-\-mode=\%dvi .
 .
-Known \%\f(CRX\~Window\fP
+Known
 .I \%DVI
-viewers include
+viewers for the X Window System include
 .BR \%xdvi (1)
 and
 .BR \%dvilx (1).
@@ -765,7 +766,7 @@ by default, can be chosen with option
 Format in a
 .I \%groff\~text\~mode
 and write the result to standard output using a text pager program,
-even when in \%\f(CRX\~Window\fP.
+even when in the X Window System.
 .
 .
 .TP
@@ -784,7 +785,7 @@ By default, the formatted input is displayed with the
 .BR \%gxditview (@MAN1EXT@)
 program being distributed together with
 .BR \%groff .
-But the standard \%\f(CRX\~Window\fP tool
+But the legacy X Window System application
 .BR \%xditview (1)
 can also be chosen with the option
 .BR \-\-viewer .
@@ -1486,15 +1487,15 @@ Equivalent to
 .
 .
 .\" ====================================================================
-.SS "X\~\%Window\~\%Toolkit Options"
+.SS "X Window System Toolkit Intrinsics Options"
 .\" ====================================================================
 .
 The following long options were adapted from the corresponding
-\%\f(CRX\~Window\~Toolkit\fP options.
+X Window System Toolkit Intrinsics options.
 .
 .B \%groffer
 will pass them to the actual viewer program if it is an
-\%\f(CRX\~Window\fP program.
+X Window System program.
 .
 Otherwise these options are ignored.
 .
@@ -1510,14 +1511,15 @@ options, for example,
 .B \%groffer
 uses the option
 .B \-\-font
-for the \%\f(CRX\~Window\fP option
+for the X Window System Toolkit Intrinsics option
 .BR \-font .
 .
 .
 .P
 See
 .BR X (7)
-and the documentation on the \%\f(CRX\~Window\~Toolkit\fP options
+and the manual
+.I "X Toolkit Intrinsics \(en C Language Interface"
 for more details on these options and their arguments.
 .
 .
@@ -1557,9 +1559,12 @@ window.
 .
 .TP
 .BI \-\-display \ X-display
-Set the \%\f(CRX\~Window\fP display on which the viewer program
-shall be started, see the \%\f(CRX\~Window\fP documentation for the
-syntax of the argument.
+Set the X Window System display on which the viewer program
+shall be started, see
+.BR X (7),
+section
+.IR "Display Names" ,
+for the syntax of the argument.
 .
 .
 .TP
@@ -1583,7 +1588,7 @@ This is equivalent to
 .BI \-\-font \ font_name
 Set the font used by the viewer window.
 .
-The argument is an \%\f(CRX\~Window\fP font name.
+The argument is an X Window System font name.
 .
 .
 .TP
@@ -1598,13 +1603,15 @@ Set the geometry of the display window, that means its size and its
 starting position.
 .
 See
-.BR \%X (7)
+.BR \%X (7),
+section
+.IR "Geometry Management" ,
 for the syntax of the argument.
 .
 .
 .TP
 .BI \-\-resolution \ value
-Set \%\f(CRX\~Window\fP resolution in dpi (dots per inch) in some
+Set X Window System resolution in dpi (dots per inch) in some
 viewer programs.
 .
 The only supported dpi values are
@@ -1632,7 +1639,7 @@ Set the title for the viewer window.
 .
 .TP
 .BI \-\-xrm \ 'resource'
-Set \f(CR\%X\~Window\fP resource.
+Set the X Window System server resource to the given value.
 .
 .
 .\" ====================================================================
@@ -2001,8 +2008,8 @@ option
 .
 .
 .P
-Several different modes are offered, graphical modes for
-\f(CR\%X\~Window\fP,
+Several different modes are offered: graphical modes for
+the X Window System,
 .IR \%text\~modes ,
 and some direct
 .I \%groff\~modes
@@ -2036,7 +2043,7 @@ and the decompression of the input are active in every mode.
 .SS "Graphical Display Modes"
 .\" ====================================================================
 .
-The graphical display modes work mostly in the \%\f(CRX\~Window\fP
+The graphical display modes work mostly in the X Window System
 environment (or similar implementations within other windowing
 environments).
 .
@@ -2045,11 +2052,11 @@ The environment variable
 .B \%$DISPLAY
 and the option
 .B \-\-display
-are used for specifying the \%\f(CRX\~Window\fP display to be used.
+are used for specifying the X Window System display to be used.
 .
-If this environment variable is empty
+If this environment variable is empty,
 .B \%groffer
-assumes that no \%\f(CRX\~Window\fP is running and changes to a
+assumes that the X Window System is not running and changes to a
 .IR \%text\~mode .
 .
 You can change this automatic behavior by the option
@@ -2058,7 +2065,7 @@ You can change this automatic behavior by the option
 .
 .P
 Known viewers for the graphical display modes and their standard
-\%\f(CRX\~Window\fP viewer programs are
+X Window System viewer programs are
 .
 .IP \*(BU 2m
 in a PDF viewer
@@ -2083,7 +2090,7 @@ in a PostScript viewer
 .hy
 .
 .IP \*(BU 2m
-\%\f(CRX\~Window\fP
+X Window System
 .I roff
 viewers such as
 .BR \%gxditview (@MAN1EXT@)
@@ -2112,12 +2119,12 @@ format, so it was not chosen as the major mode.
 .
 .P
 These graphical viewers can be customized by options of the
-\%\f(CRX\~Window\~Toolkit\fP.
+X Window System Toolkit Intrinsics.
 .
 But the
 .B \%groffer
 options use a leading double minus instead of the single minus used by
-the \%\f(CRX\~Window\~Toolkit\fP.
+the X Window System Toolkit Intrinsics.
 .
 .
 .\" ====================================================================
@@ -2949,8 +2956,7 @@ The following variables have a special meaning for
 .TP
 .SM
 .B \%$DISPLAY
-If this variable is set this indicates that the \%\f(CRX\~Window\fP
-system is running.
+If set, this variable indicates that the X Window System is running.
 .
 Testing this variable decides on whether graphical or text output is
 generated.
@@ -2958,7 +2964,7 @@ generated.
 This variable should not be changed by the user carelessly, but it can
 be used to start the graphical
 .B \%groffer
-on a remote \%\f(CRX\~Window\fP terminal.
+on a remote X Window System terminal.
 .
 For example, depending on your system,
 .B \%groffer
@@ -3383,9 +3389,9 @@ in the directory
 .BR /usr/local/share/doc/groff ,
 using the standard viewer
 .B \%gxditview
-as graphical viewer when in \%\f(CRX\~Window\fP, or the
+as graphical viewer when in the X Window System, or the
 .BR \%less (1)
-pager program when not in \%\f(CRX\~Window\fP.
+pager program otherwise.
 .
 .sp
 .EX
