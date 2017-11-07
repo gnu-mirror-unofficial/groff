@@ -2524,3 +2524,7 @@ troff completely ignores it.
 .LNE
 .
 .\" EOF
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
+.\" vim: filetype=groff:

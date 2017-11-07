@@ -3275,4 +3275,7 @@ Van Wyk, C. J.
 \fBA high-level language for specifying pictures\fP.
 \fIACM Transactions On Graphics\fP 1,2 (1982) 163-182.
 .
-.\" end of pic.ms
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
+.\" vim: filetype=groff:

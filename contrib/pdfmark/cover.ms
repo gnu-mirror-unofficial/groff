@@ -1,4 +1,3 @@
-.\" -*- nroff -*-
 .\" Copyright (C) 2004-2014  Free Software Foundation, Inc.
 .\"
 .\" Copying and distribution of this file, with or without modification,
@@ -62,3 +61,7 @@
 .rr HM*SAVED
 .fam
 ..
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
+.\" vim: filetype=groff:
