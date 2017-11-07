@@ -41,12 +41,6 @@ pdfroff \- create PDF documents using groff
 .
 .hw pdfmark
 .
-.de NH
-.  hy 0
-\&\\$*
-.  hy
-..
-.
 .
 .\" ====================================================================
 .
@@ -534,12 +528,11 @@ If unspecified,
 .B \%PDFROFF_POSTPROCESSOR_COMMAND
 defaults to
 .
-.RS 2
-.IP
-.I
-.ad l
-.NH gs \-dBATCH \-dQUIET \-dNOPAUSE \-dSAFER \-sDEVICE=pdfwrite \-sOutputFile=\-
-.ad
+.RS 12n
+.EX
+gs \-dBATCH \-dQUIET \-dNOPAUSE \-dSAFER \-sDEVICE=pdfwrite \e
+	\-sOutputFile=\-
+.EE
 .RE
 .
 .TP
