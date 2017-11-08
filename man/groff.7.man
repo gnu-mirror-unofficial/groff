@@ -107,10 +107,10 @@ groff \- a short reference for the GNU roff language
 .\" .ESC name [arg]
 .\"
 .\" Synopsis of an escape sequence, optionally with argument
-.\" Args   : 1 or 2; `name' obligatory, `arg' optional
+.\" Args   : 1 or 2; 'name' obligatory, 'arg' optional
 .\"   name : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg  : arbitrary word
-.\" Result : prints \namearg, where `name' is in CB, `arg' in I
+.\" Result : prints \namearg, where 'name' is in CB, 'arg' in I
 .\"
 .de ESC
 .  Text "\f[CB]\e\\$1\,\f[I]\\$2\/\fR"
@@ -122,7 +122,7 @@ groff \- a short reference for the GNU roff language
 .\" Args   : 2 obligatory
 .\"   name : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg  : arbitrary text
-.\" Result : prints \name[arg], where `name' is in CB, `arg' in I
+.\" Result : prints \name[arg], where 'name' is in CB, 'arg' in I
 .\"
 .de ESC[]
 .  Text "\f[CB]\e\\$1\[lB]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[rB]\f[]"
@@ -134,7 +134,7 @@ groff \- a short reference for the GNU roff language
 .\" Args   : 2 obligatory
 .\"   name : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg  : arbitrary text
-.\" Result : prints \name'arg', where `name' is in CB, `arg' in I
+.\" Result : prints \name'arg', where 'name' is in CB, 'arg' in I
 .\"
 .de ESCq
 .  Text "\f[CB]\e\\$1\[cq]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[cq]\f[]"
@@ -145,7 +145,7 @@ groff \- a short reference for the GNU roff language
 .\" Synopsis for escape sequence with a bracketed long argument
 .\" Args   : 1 obligatory
 .\"   arg  : arbitrary text
-.\" Result : prints `\?arg?', where the `?' are in CB, `arg' in I
+.\" Result : prints '\?arg?', where the '?' are in CB, 'arg' in I
 .\"
 .de ESC?
 .  Text "\f[CB]\e?\,\f[I]\\$1\/\f[CB]?\f[R]"
@@ -157,7 +157,7 @@ groff \- a short reference for the GNU roff language
 .\" Args    : 1 obligatory
 .\"   name  : suitable name for an escape sequence (c, (xy, [long])
 .\"   punct : arbitrary
-.\" Result  : prints \name, where `name' is in B, `punct' in R
+.\" Result  : prints \name, where 'name' is in B, 'punct' in R
 .\"
 .de esc
 .  BR "\e\\$1" \\$2
@@ -170,7 +170,7 @@ groff \- a short reference for the GNU roff language
 .\"   name  : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg   : arbitrary word
 .\" Result  : prints \namearg, where
-.\"           `name' is in B, `arg' in I
+.\"           'name' is in B, 'arg' in I
 .\"
 .de escarg
 .  Text \f[B]\e\\$1\f[]\,\f[I]\\$2\/\f[]\\$3
@@ -182,7 +182,7 @@ groff \- a short reference for the GNU roff language
 .\" Args   : 2 obligatory
 .\"   name : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg  : arbitrary text
-.\" Result : prints \name[arg], where `name' is in CB, `arg' in CI
+.\" Result : prints \name[arg], where 'name' is in CB, 'arg' in CI
 .\"
 .de esc[]
 .  Text \f[CB]\e\\$1\[lB]\f[]\,\f[CI]\\$2\/\f[]\f[CB]\[rB]\f[]\\$3
@@ -195,7 +195,7 @@ groff \- a short reference for the GNU roff language
 .\" Args   : 2 obligatory
 .\"   name : suitable name for an escape sequence (c, (xy, [long])
 .\"   arg  : arbitrary text
-.\" Result : prints \name'arg', where `name' is in CB, `arg' in CI
+.\" Result : prints \name'arg', where 'name' is in CB, 'arg' in CI
 .\"
 .de escq
 .  Text \f[CB]\e\\$1\[cq]\f[]\,\f[CI]\\$2\/\f[]\f[CB]\[cq]\f[]\\$3

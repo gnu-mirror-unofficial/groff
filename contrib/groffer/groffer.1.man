@@ -2,13 +2,14 @@
 .SH NAME
 groffer \- display groff files and man\~pages on X and tty
 .
-.\" The .SH was moved to this place in order to appease `apropos'.
+.\" The .SH was moved to this place in order to appease 'apropos'.
 .
 .
 .\"*********************************************************************
 .\"
 .\" This man page doesn't use extended groff syntax!
-.\" Formatting it with and without groff's option `-C' should always
+.\" XXX: Yes, it does--"\~" is ubiquitous.  "\/" and "\," also occur.
+.\" Formatting it with and without groff's option '-C' should always
 .\" give the same result.
 .\"
 .\"*********************************************************************
@@ -45,7 +46,7 @@ groffer \- display groff files and man\~pages on X and tty
 .\" Bullet
 .ie t .ds BU \(bu
 .el .ds BU *
-.\" used in `.IP \*(BU 2m' (former .Topic)
+.\" used in '.IP \*(BU 2m' (former .Topic)
 .
 .
 .\" ====================================================================
@@ -186,7 +187,7 @@ Option handling is done in \f(CRGNU\fP style.
 Options and file names can be mixed freely.
 .
 The option
-.RB ` \-\- '
+.RB \[lq] \-\- \[rq]
 closes the option handling, all following arguments are treated as
 file names.
 .
@@ -2936,8 +2937,9 @@ Store options for a run of
 The options specified in this variable are overridden by the options
 given on the command line.
 .
-The content of this variable is run through the shell builtin `eval';
-so arguments containing white-space or special shell characters should
+The content of this variable is run through the shell builtin
+\[lq]eval\[rq],
+so arguments containing whitespace or special shell characters should
 be quoted.
 .
 Do not forget to export this variable, otherwise it does not exist
@@ -3225,12 +3227,12 @@ without an argument.
 .
 So each line with configuration information starts with a minus
 character
-.RB ` \- ';
+.RB \[lq] \- \[rq];
 a line with a long option starts with two minus characters
-.RB ` \-\- ',
+.RB \[lq] \-\- \[rq],
 a line with a short option or short option cluster starts with a
 single minus
-.RB ` \- '.
+.RB \[lq] \- \[rq].
 .
 .
 .P
@@ -3241,7 +3243,7 @@ they must be exact.
 .P
 The argument for a long option can be separated from the option name
 either by an equal sign
-.RB ` = '
+.RB \[lq] = \[rq]
 or by whitespace, i.e.\& one or several space or tab characters.
 .
 An argument for a short option or short option cluster can be directly
@@ -3262,7 +3264,7 @@ separating equal sign or whitespace; with a short option, the
 separator can be omitted as well.
 .
 For a long option with a separating equal sign
-.RB ` = ',
+.RB \[lq] = \[rq],
 the pair of quotes can be omitted, thus ending the line with the
 separating equal sign.
 .
@@ -3274,13 +3276,13 @@ In the configuration files, arbitrary whitespace is allowed at the
 beginning of each line, it is just ignored.
 .
 Each whitespace within a line is replaced by a single space character
-` ' internally.
+\[lq] \[rq] internally.
 .
 .
 .P
 All lines of the configuration lines that do not start
 with a minus character are ignored, such that comments starting with
-.RB ` # '
+.RB \[lq] # \[rq]
 are possible.
 .
 So there are no shell commands in the configuration files.
@@ -3317,7 +3319,7 @@ are just ignored, so they act as command lines.
 This configuration sets four
 .B \%groffer
 options (the lines starting with
-.RB ` \- ').
+.RB \[lq] \- \[rq]).
 This has the following effects:
 .
 .
@@ -3662,7 +3664,7 @@ that ends option processing as soon as the first non-option argument
 has been reached.
 .
 The end of option processing can be forced by the option
-.RB ` \-\- '
+.RB \[lq] \-\- \[rq]
 anyway.
 .
 .
