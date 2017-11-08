@@ -34,21 +34,11 @@ afmtodit \- create font files for use with groff \-Tps and \-Tpdf
 .  el .TP "\\$1"
 ..
 .
-.de OP
-.  ie \\n(.$-1 .RI "[\ \fB\\$1\fP\ " "\\$2" "\ ]"
-.  el .RB "[\ " "\\$1" "\ ]"
-..
-.
 .\" ====================================================================
 .SH SYNOPSIS
 .\" ====================================================================
 .
-.nr a \n(.j
-.ad l
-.nr i \n(.i
-.in +\w'\fBafmtodit 'u
-.ti \niu
-.B afmtodit
+.SY afmtodit
 .OP \-ckmnsvx
 .OP \-a n
 .OP \-d desc_file
@@ -59,8 +49,7 @@ afmtodit \- create font files for use with groff \-Tps and \-Tpdf
 .I afm_file
 .I map_file
 .I font
-.br
-.ad \na
+.YS
 .
 .
 .LP
