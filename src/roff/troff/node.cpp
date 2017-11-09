@@ -1552,7 +1552,7 @@ void troff_output_file::really_copy_file(hunits x, vunits y,
   errno = 0;
   FILE *ifp = include_search_path.open_file_cautious(filename);
   if (ifp == 0)
-    error("can't open `%1': %2", filename, strerror(errno));
+    error("can't open '%1': %2", filename, strerror(errno));
   else {
     int c;
     while ((c = getc(ifp)) != EOF)
@@ -1668,13 +1668,13 @@ real_output_file::~real_output_file()
     if (result < 0)
       fatal("pclose failed");
     if (!WIFEXITED(result))
-      error("output process `%1' got fatal signal %2",
+      error("output process '%1' got fatal signal %2",
 	    pipe_command,
 	    WIFSIGNALED(result) ? WTERMSIG(result) : WSTOPSIG(result));
     else {
       int exit_status = WEXITSTATUS(result);
       if (exit_status != 0)
-	error("output process `%1' exited with status %2",
+	error("output process '%1' exited with status %2",
 	      pipe_command, exit_status);
     }
   }
@@ -4016,7 +4016,7 @@ int get_reg_int(const char *p)
   if (r && (r->get_value(&prev_value)))
     return (int)prev_value;
   else
-    warning(WARN_REG, "number register `%1' not defined", p);
+    warning(WARN_REG, "number register '%1' not defined", p);
   return 0;
 }
 
@@ -4026,7 +4026,7 @@ const char *get_reg_str(const char *p)
   if (r)
     return r->get_string();
   else
-    warning(WARN_REG, "register `%1' not defined", p);
+    warning(WARN_REG, "register '%1' not defined", p);
   return 0;
 }
 
@@ -4913,7 +4913,7 @@ node *make_glyph_node(charinfo *s, environment *env, int no_error_message = 0)
 	unsigned char input_code = s->get_ascii_code();
 	if (input_code != 0) {
 	  if (csgraph(input_code))
-	    warning(WARN_CHAR, "can't find character `%1'", input_code);
+	    warning(WARN_CHAR, "can't find character '%1'", input_code);
 	  else
 	    warning(WARN_CHAR, "can't find character with input code %1",
 		    int(input_code));
@@ -4921,7 +4921,7 @@ node *make_glyph_node(charinfo *s, environment *env, int no_error_message = 0)
 	else if (s->nm.contents()) {
 	  const char *nm = s->nm.contents();
 	  const char *backslash = (nm[1] == 0) ? "\\" : "";
-	  warning(WARN_CHAR, "can't find special character `%1%2'",
+	  warning(WARN_CHAR, "can't find special character '%1%2'",
 		  backslash, nm);
 	}
       }
@@ -5899,7 +5899,7 @@ static int mount_font_no_translate(int n, symbol name, symbol external_name,
       return fm != 0;
     if (!fm) {
       if (not_found)
-	warning(WARN_FONT, "can't find font `%1'", external_name.contents());
+	warning(WARN_FONT, "can't find font '%1'", external_name.contents());
       (void)font_dictionary.lookup(external_name, &a_char);
       return 0;
     }
@@ -5907,7 +5907,7 @@ static int mount_font_no_translate(int n, symbol name, symbol external_name,
   }
   else if (p == &a_char) {
 #if 0
-    error("invalid font `%1'", external_name.contents());
+    error("invalid font '%1'", external_name.contents());
 #endif
     return 0;
   }

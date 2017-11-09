@@ -308,7 +308,7 @@ string:
 		    $$ = new format_expr($2);
 		    break;
 		  default:
-		    command_error("unrecognized format `%1'", char($2));
+		    command_error("unrecognized format '%1'", char($2));
 		    $$ = new format_expr('a');
 		    break;
 		  }
@@ -344,7 +344,7 @@ string:
 		    break;
 		  default:
 		    $$ = $1;
-		    command_error("unknown function `%1'", char($4));
+		    command_error("unknown function '%1'", char($4));
 		    break;
 		  }
 		}
@@ -494,7 +494,7 @@ int set_short_label_spec(const char *label_spec)
 void yyerror(const char *message)
 {
   if (spec_cur < spec_end)
-    command_error("label specification %1 before `%2'", message, spec_cur);
+    command_error("label specification %1 before '%2'", message, spec_cur);
   else
     command_error("label specification %1 at end of string",
 		  message, spec_cur);

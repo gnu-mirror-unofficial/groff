@@ -75,8 +75,8 @@ char *searchpath(const char *name, const char *pathp)
   if (!name || !*name)
     return 0;
 #if DEBUG
-  fprintf(stderr, "searchpath: pathp: `%s'\n", pathp);
-  fprintf(stderr, "searchpath: trying `%s'\n", name);
+  fprintf(stderr, "searchpath: pathp: '%s'\n", pathp);
+  fprintf(stderr, "searchpath: trying '%s'\n", name);
 #endif
   // Try first NAME as such; success if NAME is an absolute filename,
   // or if NAME is found in the current directory.
@@ -88,7 +88,7 @@ char *searchpath(const char *name, const char *pathp)
     path = realpath(name, path);
 #endif
 #if DEBUG
-    fprintf(stderr, "searchpath: found `%s'\n", path);
+    fprintf(stderr, "searchpath: found '%s'\n", path);
 #endif
     return path;
   }
@@ -107,11 +107,11 @@ char *searchpath(const char *name, const char *pathp)
       path[end - p] = '/';
     strcpy(path + (end - p) + need_slash, name);
 #if DEBUG
-    fprintf(stderr, "searchpath: trying `%s'\n", path);
+    fprintf(stderr, "searchpath: trying '%s'\n", path);
 #endif
     if (!access(path, F_OK)) {
 #if DEBUG
-      fprintf(stderr, "searchpath: found `%s'\n", name);
+      fprintf(stderr, "searchpath: found '%s'\n", name);
 #endif
       return path;
     }

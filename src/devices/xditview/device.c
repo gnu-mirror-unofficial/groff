@@ -416,7 +416,7 @@ int read_charset_section(DeviceFont *f, FILE *fp)
 	    break;
 	if (strcmp(p, "\"") == 0) {
 	    if (!last_charinfo) {
-		error("first line of charset section cannot use `\"'");
+		error("first line of charset section cannot use '\"'");
 		return 0;
 	    }
 	    else
@@ -532,7 +532,7 @@ FILE *open_device_file(const char *device_name, const char *file_name,
   sprintf(buf, "dev%s/%s", device_name, file_name);
   fp = find_file(buf, result);
   if (!fp) {
-      fprintf(stderr, "can't find device file `%s'\n", file_name);
+      fprintf(stderr, "can't find device file '%s'\n", file_name);
       fflush(stderr);
   }
   XtFree(buf);

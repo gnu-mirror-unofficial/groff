@@ -149,17 +149,17 @@ int index_search_item::load(int fd)
   unused(&fd_closer);
   struct stat sb;
   if (fstat(fd, &sb) < 0) {
-    error("can't fstat `%1': %2", name, strerror(errno));
+    error("can't fstat '%1': %2", name, strerror(errno));
     return 0;
   }
   if (!S_ISREG(sb.st_mode)) {
-    error("`%1' is not a regular file", name);
+    error("'%1' is not a regular file", name);
     return 0;
   }
   mtime = sb.st_mtime;
   int size = int(sb.st_size);
   if (size == 0) {
-    error("`%1' is an empty file", name);
+    error("'%1' is an empty file", name);
     return 0;
   }
   char *addr;
@@ -171,7 +171,7 @@ int index_search_item::load(int fd)
   else {
     addr = buffer = (char *)malloc(size);
     if (buffer == 0) {
-      error("can't allocate buffer for `%1'", name);
+      error("can't allocate buffer for '%1'", name);
       return 0;
     }
     char *ptr = buffer;
@@ -179,11 +179,11 @@ int index_search_item::load(int fd)
     while (bytes_to_read > 0) {
       int nread = read(fd, ptr, bytes_to_read);
       if (nread == 0) {
-	error("unexpected EOF on `%1'", name);
+	error("unexpected EOF on '%1'", name);
 	return 0;
       }
       if (nread < 0) {
-	error("read error on `%1': %2", name, strerror(errno));
+	error("read error on '%1': %2", name, strerror(errno));
 	return 0;
       }
       bytes_to_read -= nread;
@@ -192,11 +192,11 @@ int index_search_item::load(int fd)
   }
   header = *(index_header *)addr;
   if (header.magic != INDEX_MAGIC) {
-    error("`%1' is not an index file: wrong magic number", name);
+    error("'%1' is not an index file: wrong magic number", name);
     return 0;
   }
   if (header.version != INDEX_VERSION) {
-    error("version number in `%1' is wrong: was %2, should be %3",
+    error("version number in '%1' is wrong: was %2, should be %3",
 	  name, header.version, INDEX_VERSION);
     return 0;
   }
@@ -206,7 +206,7 @@ int index_search_item::load(int fd)
 	    + header.strings_size
 	    + sizeof(header));
   if (sz != size) {
-    error("size of `%1' is wrong: was %2, should be %3",
+    error("size of '%1' is wrong: was %2, should be %3",
 	  name, size, sz);
     return 0;
   }
@@ -258,7 +258,7 @@ int index_search_item::verify()
   const char *reason = do_verify();
   if (!reason)
     return 1;
-  error("`%1' is bad: %2", name, reason);
+  error("'%1' is bad: %2", name, reason);
   return 0;
 }
 
@@ -309,7 +309,7 @@ index_search_item_iterator::index_search_item_iterator(index_search_item *ind,
   found_list = indx->search(q, strlen(q), &temp_list);
   if (!found_list) {
     found_list = &minus_one;
-    warning("all keys would have been discarded in constructing index `%1'",
+    warning("all keys would have been discarded in constructing index '%1'",
 	    indx->name);
   }
 }
@@ -364,7 +364,7 @@ int index_search_item_iterator::get_tag(int tagno,
   const char *filename = indx->munge_filename(indx->pool + tp->filename_index);
   int fd = open(filename, O_RDONLY | O_BINARY);
   if (fd < 0) {
-    error("can't open `%1': %2", filename, strerror(errno));
+    error("can't open '%1': %2", filename, strerror(errno));
     return 0;
   }
   struct stat sb;
@@ -387,17 +387,17 @@ int index_search_item_iterator::get_tag(int tagno,
     return 0;
   }
   if (tp->start != 0 && fseek(fp, long(tp->start), 0) < 0)
-    error("can't seek on `%1': %2", filename, strerror(errno));
+    error("can't seek on '%1': %2", filename, strerror(errno));
   else {
     int length = tp->length;
     int err = 0;
     if (length == 0) {
       if (fstat(fileno(fp), &sb) < 0) {
-	error("can't stat `%1': %2", filename, strerror(errno));
+	error("can't stat '%1': %2", filename, strerror(errno));
 	err = 1;
       }
       else if (!S_ISREG(sb.st_mode)) {
-	error("`%1' is not a regular file", filename);
+	error("'%1' is not a regular file", filename);
 	err = 1;
       }
       else
@@ -410,7 +410,7 @@ int index_search_item_iterator::get_tag(int tagno,
 	buf = new char[buflen];
       }
       if (fread(buf + 1, 1, length, fp) != (size_t)length)
-	error("fread on `%1' failed: %2", filename, strerror(errno));
+	error("fread on '%1' failed: %2", filename, strerror(errno));
       else {
 	buf[0] = '\n';
 	// Remove the CR characters from CRLF pairs.
@@ -568,7 +568,7 @@ void index_search_item::read_common_words_file()
   errno = 0;
   FILE *fp = fopen(common_words_file, "r");
   if (!fp) {
-    error("can't open `%1': %2", common_words_file, strerror(errno));
+    error("can't open '%1': %2", common_words_file, strerror(errno));
     return;
   }
   common_words_table_size = 2*header.common + 1;
@@ -618,7 +618,7 @@ void index_search_item::add_out_of_date_file(int fd, const char *filename,
     if ((*pp)->is_named(filename))
       return;
   *pp = make_linear_search_item(fd, filename, fid);
-  warning("`%1' modified since `%2' created", filename, name);
+  warning("'%1' modified since '%2' created", filename, name);
 }
 
 void index_search_item::check_files()
@@ -630,11 +630,11 @@ void index_search_item::check_files()
     const char *path = munge_filename(ptr);
     struct stat sb;
     if (stat(path, &sb) < 0)
-      error("can't stat `%1': %2", path, strerror(errno));
+      error("can't stat '%1': %2", path, strerror(errno));
     else if (sb.st_mtime > mtime) {
       int fd = open(path, O_RDONLY | O_BINARY);
       if (fd < 0)
-	error("can't open `%1': %2", path, strerror(errno));
+	error("can't open '%1': %2", path, strerror(errno));
       else
 	add_out_of_date_file(fd, path, filename_id + (ptr - pool));
     }

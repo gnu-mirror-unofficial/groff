@@ -420,7 +420,7 @@ void tty_printer::special(char *arg, const environment *env, char type)
   for (; *p != '\0' && *p != ':' && *p != ' ' && *p != '\n'; p++)
     ;
   if (*p == '\0' || strncmp(tag, "tty", p - tag) != 0) {
-    error("X command without `tty:' tag ignored");
+    error("X command without 'tty:' tag ignored");
     return;
   }
   p++;

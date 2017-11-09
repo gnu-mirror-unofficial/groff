@@ -146,7 +146,7 @@ xtmpfile_list_init::~xtmpfile_list_init()
   xtmpfile_list *x = xtmpfiles_to_delete;
   while (x != 0) {
     if (unlink(x->fname) < 0)
-      error("cannot unlink `%1': %2", x->fname, strerror(errno));
+      error("cannot unlink '%1': %2", x->fname, strerror(errno));
     xtmpfile_list *tmp = x;
     x = x->next;
     a_delete tmp->fname;

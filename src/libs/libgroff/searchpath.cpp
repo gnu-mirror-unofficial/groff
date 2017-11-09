@@ -118,12 +118,12 @@ FILE *search_path::open_file(const char *name, char **pathp)
       origpath[end - p] = '/';
     strcpy(origpath + (end - p) + need_slash, name);
 #if 0
-    fprintf(stderr, "origpath `%s'\n", origpath);
+    fprintf(stderr, "origpath '%s'\n", origpath);
 #endif
     char *path = relocate(origpath);
     a_delete origpath;
 #if 0
-    fprintf(stderr, "trying `%s'\n", path);
+    fprintf(stderr, "trying '%s'\n", path);
 #endif
     FILE *fp = fopen(path, "r");
     if (fp) {
@@ -175,12 +175,12 @@ FILE *search_path::open_file_cautious(const char *name, char **pathp,
       origpath[end - p] = '/';
     strcpy(origpath + (end - p) + need_slash, name);
 #if 0
-    fprintf(stderr, "origpath `%s'\n", origpath);
+    fprintf(stderr, "origpath '%s'\n", origpath);
 #endif
     char *path = relocate(origpath);
     a_delete origpath;
 #if 0
-    fprintf(stderr, "trying `%s'\n", path);
+    fprintf(stderr, "trying '%s'\n", path);
 #endif
     FILE *fp = fopen(path, mode);
     if (fp) {

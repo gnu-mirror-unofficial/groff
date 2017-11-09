@@ -929,7 +929,7 @@ int get_token(int lookup_flag)
 	  break;
 	}
 	else if (c == EOF) {
-	  error("missing `\"'");
+	  error("missing '\"'");
 	  break;
 	}
 	else if (c == '"') {
@@ -1404,7 +1404,7 @@ int for_input::get()
     }
     double val;
     if (!lookup_variable(var, &val)) {
-      lex_error("body of `for' terminated enclosing block");
+      lex_error("body of 'for' terminated enclosing block");
       return EOF;
     }
     if (by_is_multiplicative)
@@ -1465,7 +1465,7 @@ void do_copy(const char *filename)
   errno = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == 0) {
-    lex_error("can't open `%1': %2", filename, strerror(errno));
+    lex_error("can't open '%1': %2", filename, strerror(errno));
     return;
   }
   input_stack::push(new file_input(fp, filename));
@@ -1711,7 +1711,7 @@ void copy_file_thru(const char *filename, const char *body, const char *until)
   errno = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == 0) {
-    lex_error("can't open `%1': %2", filename, strerror(errno));
+    lex_error("can't open '%1': %2", filename, strerror(errno));
     return;
   }
   input *in = new copy_file_thru_input(new simple_file_input(fp, filename),
@@ -2019,7 +2019,7 @@ void yyerror(const char *s)
       if (context[0] == '\n' && context[1] == '\0')
 	error("%1 before newline", s);
       else
-	error("%1 before `%2'", s, context);
+	error("%1 before '%2'", s, context);
     }
     else
       error("%1 at end of picture", s);
@@ -2029,7 +2029,7 @@ void yyerror(const char *s)
       if (context[0] == '\n' && context[1] == '\0')
 	error_with_file_and_line(filename, lineno, "%1 before newline", s);
       else
-	error_with_file_and_line(filename, lineno, "%1 before `%2'",
+	error_with_file_and_line(filename, lineno, "%1 before '%2'",
 				 s, context);
     }
     else

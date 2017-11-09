@@ -428,7 +428,7 @@ void tpic_output::command(const char *s, const char *filename, int lineno)
       int temp = (int)strtol(p, &ptr, 10);
       if (temp == 0 && ptr == p)
 	error_with_file_and_line(filename, lineno,
-				 "argument to `.ps' not an integer");
+				 "argument to '.ps' not an integer");
       else if (temp < 0)
 	error_with_file_and_line(filename, lineno,
 				 "negative pen size");

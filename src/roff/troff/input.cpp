@@ -401,7 +401,7 @@ int file_iterator::get_location(int /*allow_macro*/,
 
 void file_iterator::backtrace()
 {
-  errprint("%1:%2: backtrace: %3 `%1'\n", filename, lineno,
+  errprint("%1:%2: backtrace: %3 '%1'\n", filename, lineno,
 	   popened ? "process" : "file");
 }
 
@@ -810,7 +810,7 @@ void next_file()
     errno = 0;
     FILE *fp = include_search_path.open_file_cautious(nm.contents());
     if (!fp)
-      error("can't open `%1': %2", nm.contents(), strerror(errno));
+      error("can't open '%1': %2", nm.contents(), strerror(errno));
     else
       input_stack::next_file(fp, nm.contents());
   }
@@ -1218,7 +1218,7 @@ static color *lookup_color(symbol nm)
     return &default_color;
   color *c = (color *)color_dictionary.lookup(nm);
   if (c == 0)
-    warning(WARN_COLOR, "color `%1' not defined", nm.contents());
+    warning(WARN_COLOR, "color '%1' not defined", nm.contents());
   return c;
 }
 
@@ -1283,7 +1283,7 @@ static color *read_rgb(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_rgb(s)) {
-      warning(WARN_COLOR, "expecting rgb color definition not `%1'", s);
+      warning(WARN_COLOR, "expecting rgb color definition not '%1'", s);
       delete col;
       return 0;
     }
@@ -1312,7 +1312,7 @@ static color *read_cmy(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_cmy(s)) {
-      warning(WARN_COLOR, "expecting cmy color definition not `%1'", s);
+      warning(WARN_COLOR, "expecting cmy color definition not '%1'", s);
       delete col;
       return 0;
     }
@@ -1341,7 +1341,7 @@ static color *read_cmyk(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_cmyk(s)) {
-      warning(WARN_COLOR, "`expecting a cmyk color definition not `%1'", s);
+      warning(WARN_COLOR, "expecting a cmyk color definition not '%1'", s);
       delete col;
       return 0;
     }
@@ -1371,7 +1371,7 @@ static color *read_gray(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_gray(s)) {
-      warning(WARN_COLOR, "`expecting a gray definition not `%1'", s);
+      warning(WARN_COLOR, "expecting a gray definition not '%1'", s);
       delete col;
       return 0;
     }
@@ -1427,7 +1427,7 @@ static void define_color()
     col = read_cmy();
   else {
     warning(WARN_COLOR,
-	    "unknown color space `%1'; use rgb, cmyk, gray or cmy",
+	    "unknown color space '%1'; use rgb, cmyk, gray or cmy",
 	    style.contents());
     skip_line();
     return;
@@ -2352,7 +2352,7 @@ int token::delimiter(int err)
     case ')':
     case '.':
       if (err)
-	error("cannot use character `%1' as a starting delimiter", char(c));
+        error("cannot use character '%1' as a starting delimiter", char(c));
       return 0;
     default:
       return 1;
@@ -2383,55 +2383,55 @@ const char *token::description()
   case TOKEN_BACKSPACE:
     return "a backspace character";
   case TOKEN_CHAR:
-    buf[0] = '`';
+    buf[0] = '\'';
     buf[1] = c;
     buf[2] = '\'';
     buf[3] = '\0';
     return buf;
   case TOKEN_DUMMY:
-    return "`\\&'";
+    return "'\\&'";
   case TOKEN_ESCAPE:
-    return "`\\e'";
+    return "'\\e'";
   case TOKEN_HYPHEN_INDICATOR:
-    return "`\\%'";
+    return "'\\%'";
   case TOKEN_INTERRUPT:
-    return "`\\c'";
+    return "'\\c'";
   case TOKEN_ITALIC_CORRECTION:
-    return "`\\/'";
+    return "'\\/'";
   case TOKEN_LEADER:
     return "a leader character";
   case TOKEN_LEFT_BRACE:
-    return "`\\{'";
+    return "'\\{'";
   case TOKEN_MARK_INPUT:
-    return "`\\k'";
+    return "'\\k'";
   case TOKEN_NEWLINE:
     return "newline";
   case TOKEN_NODE:
     return "a node";
   case TOKEN_NUMBERED_CHAR:
-    return "`\\N'";
+    return "'\\N'";
   case TOKEN_RIGHT_BRACE:
-    return "`\\}'";
+    return "'\\}'";
   case TOKEN_SPACE:
     return "a space";
   case TOKEN_SPECIAL:
     return "a special character";
   case TOKEN_SPREAD:
-    return "`\\p'";
+    return "'\\p'";
   case TOKEN_STRETCHABLE_SPACE:
-    return "`\\~'";
+    return "'\\~'";
   case TOKEN_UNSTRETCHABLE_SPACE:
-    return "`\\ '";
+    return "'\\ '";
   case TOKEN_HORIZONTAL_SPACE:
     return "a horizontal space";
   case TOKEN_TAB:
     return "a tab character";
   case TOKEN_TRANSPARENT:
-    return "`\\!'";
+    return "'\\!'";
   case TOKEN_TRANSPARENT_DUMMY:
-    return "`\\)'";
+    return "'\\)'";
   case TOKEN_ZERO_WIDTH_BREAK:
-    return "`\\:'";
+    return "'\\:'";
   case TOKEN_EOF:
     return "end of input";
   default:
@@ -2691,7 +2691,7 @@ static int transparent_translate(int cc)
       int c = ci->get_ascii_code();
       if (c != '\0')
 	return c;
-      error("can't translate %1 to special character `%2'"
+      error("can't translate %1 to special character '%2'"
 	    " in transparent throughput",
 	    input_char_description(cc),
 	    ci->nm.contents());
@@ -3574,7 +3574,7 @@ void string_iterator::backtrace()
     errprint("%1:%2: backtrace", mac.filename, mac.lineno + lineno - 1);
     if (how_invoked) {
       if (!nm.is_null())
-	errprint(": %1 `%2'\n", how_invoked, nm.contents());
+	errprint(": %1 '%2'\n", how_invoked, nm.contents());
       else
 	errprint(": %1\n", how_invoked);
     }
@@ -3786,13 +3786,13 @@ static void interpolate_macro(symbol nm, int no_next)
 	macro *m = r->to_macro();
 	if (!m || !m->empty())
 	  warned = warning(WARN_SPACE,
-			   "macro `%1' not defined "
-			   "(possibly missing space after `%2')",
+			   "macro '%1' not defined "
+			   "(possibly missing space after '%2')",
 			   nm.contents(), buf);
       }
     }
     if (!warned) {
-      warning(WARN_MAC, "macro `%1' not defined", nm.contents());
+      warning(WARN_MAC, "macro '%1' not defined", nm.contents());
       p = new macro;
       request_dictionary.define(nm, p);
     }
@@ -3865,7 +3865,7 @@ static void decode_string_args(macro_iterator *mi)
     while (c == ' ')
       c = get_copy(&n);
     if (c == '\n' || c == EOF) {
-      error("missing `]'");
+      error("missing ']'");
       break;
     }
     if (c == ']')
@@ -3964,7 +3964,7 @@ void composite_request()
     if (!from_gn) {
       from_gn = check_unicode_name(from.contents());
       if (!from_gn) {
-	error("invalid composite glyph name `%1'", from.contents());
+	error("invalid composite glyph name '%1'", from.contents());
 	skip_line();
 	return;
       }
@@ -3980,7 +3980,7 @@ void composite_request()
       if (!to_gn) {
 	to_gn = check_unicode_name(to.contents());
 	if (!to_gn) {
-	  error("invalid composite glyph name `%1'", to.contents());
+	  error("invalid composite glyph name '%1'", to.contents());
 	  skip_line();
 	  return;
 	}
@@ -4006,7 +4006,7 @@ static symbol composite_glyph_name(symbol nm)
   if (!gn) {
     gn = check_unicode_name(nm.contents());
     if (!gn) {
-      error("invalid base glyph `%1' in composite glyph name", nm.contents());
+      error("invalid base glyph '%1' in composite glyph name", nm.contents());
       return EMPTY_SYMBOL;
     }
   }
@@ -4027,7 +4027,7 @@ static symbol composite_glyph_name(symbol nm)
     if (!u) {
       u = check_unicode_name(gl.contents());
       if (!u) {
-	error("invalid component `%1' in composite glyph name",
+	error("invalid component '%1' in composite glyph name",
 	      gl.contents());
 	return EMPTY_SYMBOL;
       }
@@ -4403,7 +4403,7 @@ static void interpolate_arg(symbol nm)
     for (p = s; *p && csdigit(*p); p++)
       ;
     if (*p)
-      copy_mode_error("bad argument name `%1'", s);
+      copy_mode_error("bad argument name '%1'", s);
     else
       input_stack::push(input_stack::get_arg(atoi(s)));
   }
@@ -4565,10 +4565,10 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
       if (mode == DEFINE_NORMAL || mode == DEFINE_APPEND) {
 	if (have_start_location)
 	  error_with_file_and_line(start_filename, start_lineno,
-				   "end of file while defining macro `%1'",
+				   "end of file while defining macro '%1'",
 				   nm.contents());
 	else
-	  error("end of file while defining macro `%1'", nm.contents());
+	  error("end of file while defining macro '%1'", nm.contents());
       }
       else {
 	if (have_start_location)
@@ -4671,7 +4671,7 @@ void alias_macro()
     symbol s2 = get_name(1);
     if (!s2.is_null()) {
       if (!request_dictionary.alias(s1, s2))
-	warning(WARN_MAC, "macro `%1' not defined", s2.contents());
+	warning(WARN_MAC, "macro '%1' not defined", s2.contents());
     }
   }
   skip_line();
@@ -4725,7 +4725,7 @@ void substring_request()
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
     if (!m)
-      error("cannot apply `substring' on a request");
+      error("cannot apply 'substring' on a request");
     else {
       int end = -1;
       if (!has_arg() || get_integer(&end)) {
@@ -5049,7 +5049,7 @@ static int read_size(int *x)
       return 0;
     if (!(start.ch() == '[' && tok.ch() == ']') && start != tok) {
       if (start.ch() == '[')
-	error("missing `]'");
+	error("missing ']'");
       else
 	error("missing closing delimiter");
       return 0;
@@ -5515,7 +5515,7 @@ static node *do_suppress(symbol nm)
     }
     break;
   default:
-    error("`%1' is an invalid argument to \\O", *s);
+    error("'%1' is an invalid argument to \\O", *s);
   }
   return 0;
 }
@@ -5887,7 +5887,7 @@ void source()
     if (fp)
       input_stack::push(new file_iterator(fp, nm.contents()));
     else
-      error("can't open `%1': %2", nm.contents(), strerror(errno));
+      error("can't open '%1': %2", nm.contents(), strerror(errno));
     tok.next();
   }
 }
@@ -5934,7 +5934,7 @@ void pipe_source()
       if (fp)
 	input_stack::push(new file_iterator(fp, symbol(buf).contents(), 1));
       else
-	error("can't open pipe to process `%1': %2", buf, strerror(errno));
+	error("can't open pipe to process '%1': %2", buf, strerror(errno));
       a_delete buf;
     }
     tok.next();
@@ -6037,7 +6037,7 @@ filename(fname), llx(0), lly(0), urx(0), ury(0), lastc(EOF)
       // ...except in the case of an empty file, which we are
       // unable to process further.
       //
-      error("`%1' is empty", filename);
+      error("'%1' is empty", filename);
 
 # if 0
     else if (context_args("%PDF-")) {
@@ -6079,7 +6079,7 @@ filename(fname), llx(0), lly(0), urx(0), ury(0), lastc(EOF)
 		  // ...we must ensure it is not a further attempt to defer
 		  // assignment to a trailer, (which we are already parsing).
 		  //
-		  error("`(atend)' not allowed in trailer of `%1'", filename);
+		  error("'(atend)' not allowed in trailer of '%1'", filename);
 	      }
 	    }
 	    else
@@ -6094,7 +6094,7 @@ filename(fname), llx(0), lly(0), urx(0), ury(0), lastc(EOF)
 	    // we were unable to extract a valid set of range values from
 	    // it; all we can do is diagnose this.
 	    //
-	    error("the arguments to the %%%%BoundingBox comment in `%1' are bad",
+	    error("the arguments to the %%%%BoundingBox comment in '%1' are bad",
 		  filename);
 	  }
 	}
@@ -6104,13 +6104,13 @@ filename(fname), llx(0), lly(0), urx(0), ury(0), lastc(EOF)
 	// Conversely, this arises when no value specifying %%BoundingBox
 	// comment has been found, in any appropriate location...
 	//
-	error("%%%%BoundingBox comment not found in `%1'", filename);
+	error("%%%%BoundingBox comment not found in '%1'", filename);
     }
     else
       // ...while this indicates that there was no appropriate file format
       // identifier, on the first line of the input file.
       //
-      error("`%1' does not conform to the Document Structuring Conventions",
+      error("'%1' does not conform to the Document Structuring Conventions",
 	    filename);
 
     // Regardless of success or failure of bounding box property acquisition,
@@ -6121,7 +6121,7 @@ filename(fname), llx(0), lly(0), urx(0), ury(0), lastc(EOF)
   else
     // ...but in this case, we did not successfully open any input file.
     //
-    error("can't open `%1': %2", filename, strerror(errno));
+    error("can't open '%1': %2", filename, strerror(errno));
 
   // Irrespective of whether or not we were able to successfully acquire the
   // bounding box properties, we ALWAYS update the associated gtroff registers.
@@ -6207,7 +6207,7 @@ int psbb_locator::get_line(int dscopt)
 	//
 	// ...rejecting any which may be designated as invalid.
 	//
-	error("invalid input character code %1 in `%2'", int(c), filename);
+	error("invalid input character code %1 in '%2'", int(c), filename);
 
       // On reading a valid input character, and when there is
       // room in caller's buffer...
@@ -6226,7 +6226,7 @@ int psbb_locator::get_line(int dscopt)
 	// ...diagnose and truncate.
 	//
 	dscopt = DSC_LINE_MAX_CHECKED;
-	error("PostScript file `%1' is non-conforming "
+	error("PostScript file '%1' is non-conforming "
 	      "because length of line exceeds 255", filename);
       }
     }
@@ -6515,7 +6515,7 @@ const char *input_char_description(int c)
   if (invalid_input_char(c)) {
     const char *s = asciify(c);
     if (*s) {
-      buf[0] = '`';
+      buf[0] = '\'';
       strcpy(buf + 1, s);
       strcat(buf, "'");
       return buf;
@@ -6524,7 +6524,7 @@ const char *input_char_description(int c)
     return buf;
   }
   if (csprint(c)) {
-    buf[0] = '`';
+    buf[0] = '\'';
     buf[1] = c;
     buf[2] = '\'';
     return buf;
@@ -6629,7 +6629,7 @@ void do_open(int append)
       errno = 0;
       FILE *fp = fopen(filename.contents(), append ? "a" : "w");
       if (!fp) {
-	error("can't open `%1' for %2: %3",
+	error("can't open '%1' for %2: %3",
 	      filename.contents(),
 	      append ? "appending" : "writing",
 	      strerror(errno));
@@ -6670,7 +6670,7 @@ void close_request()
   if (!stream.is_null()) {
     FILE *fp = (FILE *)stream_dictionary.remove(stream);
     if (!fp)
-      error("no stream named `%1'", stream.contents());
+      error("no stream named '%1'", stream.contents());
     else
       fclose(fp);
   }
@@ -6688,7 +6688,7 @@ void do_write_request(int newline)
   }
   FILE *fp = (FILE *)stream_dictionary.lookup(stream);
   if (!fp) {
-    error("no stream named `%1'", stream.contents());
+    error("no stream named '%1'", stream.contents());
     skip_line();
     return;
   }
@@ -6724,7 +6724,7 @@ void write_macro_request()
   }
   FILE *fp = (FILE *)stream_dictionary.lookup(stream);
   if (!fp) {
-    error("no stream named `%1'", stream.contents());
+    error("no stream named '%1'", stream.contents());
     skip_line();
     return;
   }
@@ -6766,7 +6766,7 @@ void warnscale_request()
       warn_scale = (double)units_per_inch / 6.0;
     else {
       warning(WARN_SCALE,
-	      "invalid scaling indicator `%1', using `i' instead", c);
+	      "invalid scaling indicator '%1', using 'i' instead", c);
       c = 'i';
     }
     warn_scaling_indicator = c;
@@ -6985,7 +6985,7 @@ void define_class()
       child2 = tok.get_char(1);
       if (!child2) {
 	warning(WARN_MISSING,
-		"missing end of character range in class `%1'",
+		"missing end of character range in class '%1'",
 		nm.contents());
 	skip_line();
 	return;
@@ -7026,7 +7026,7 @@ void define_class()
 	int u1 = child1->get_unicode_code();
 	if (u1 < 0) {
 	  warning(WARN_SYNTAX,
-		  "invalid character value in class `%1'",
+		  "invalid character value in class '%1'",
 		  nm.contents());
 	  skip_line();
 	  return;
@@ -7056,7 +7056,7 @@ void define_class()
       int u1 = child1->get_unicode_code();
       if (u1 < 0) {
 	warning(WARN_SYNTAX,
-		"invalid character value in class `%1'",
+		"invalid character value in class '%1'",
 		nm.contents());
 	skip_line();
 	return;
@@ -7067,7 +7067,7 @@ void define_class()
   }
   if (!ci->is_class()) {
     warning(WARN_SYNTAX,
-	    "empty class definition for `%1'",
+	    "empty class definition for '%1'",
 	    nm.contents());
     skip_line();
     return;
@@ -7088,7 +7088,7 @@ charinfo *token::get_char(int required)
     if (escape_char != 0)
       return charset_table[escape_char];
     else {
-      error("`\\e' used while no current escape character");
+      error("'\\e' used while no current escape character");
       return 0;
     }
   }
@@ -7546,7 +7546,7 @@ void transparent_file()
     errno = 0;
     FILE *fp = include_search_path.open_file_cautious(filename.contents());
     if (!fp)
-      error("can't open `%1': %2", filename.contents(), strerror(errno));
+      error("can't open '%1': %2", filename.contents(), strerror(errno));
     else {
       int bol = 1;
       for (;;) {
@@ -7724,7 +7724,7 @@ void macro_source()
       a_delete path;
     }
     else
-      warning(WARN_FILE, "can't find macro file `%1'", nm.contents());
+      warning(WARN_FILE, "can't find macro file '%1'", nm.contents());
     tok.next();
   }
 }
@@ -7740,7 +7740,7 @@ static void process_input_file(const char *name)
     errno = 0;
     fp = include_search_path.open_file_cautious(name);
     if (!fp)
-      fatal("can't open `%1': %2", name, strerror(errno));
+      fatal("can't open '%1': %2", name, strerror(errno));
   }
   input_stack::push(new file_iterator(fp, name));
   tok.next();
@@ -7948,13 +7948,13 @@ int main(int argc, char **argv)
       break;
     case 'd':
       if (*optarg == '\0')
-	error("`-d' requires non-empty argument");
+	error("'-d' requires non-empty argument");
       else
 	add_string(optarg, &string_assignments);
       break;
     case 'r':
       if (*optarg == '\0')
-	error("`-r' requires non-empty argument");
+	error("'-r' requires non-empty argument");
       else
 	add_string(optarg, &register_assignments);
       break;
@@ -8285,7 +8285,7 @@ static request_or_macro *lookup_request(symbol nm)
   assert(!nm.is_null());
   request_or_macro *p = (request_or_macro *)request_dictionary.lookup(nm);
   if (p == 0) {
-    warning(WARN_MAC, "macro `%1' not defined", nm.contents());
+    warning(WARN_MAC, "macro '%1' not defined", nm.contents());
     p = new macro;
     request_dictionary.define(nm, p);
   }
@@ -8534,7 +8534,7 @@ static void enable_warning(const char *name)
   if (mask)
     warning_mask |= mask;
   else
-    error("unknown warning `%1'", name);
+    error("unknown warning '%1'", name);
 }
 
 static void disable_warning(const char *name)
@@ -8543,7 +8543,7 @@ static void disable_warning(const char *name)
   if (mask)
     warning_mask &= ~mask;
   else
-    error("unknown warning `%1'", name);
+    error("unknown warning '%1'", name);
 }
 
 static void copy_mode_error(const char *format,
@@ -8599,7 +8599,7 @@ static void do_error(error_type type,
     if (topdiv != curdiv) {
       double fromtop1 = curdiv->get_vertical_position().to_units()
 			/ warn_scale;
-      fprintf(stderr, ", div `%s', %.1f%c",
+      fprintf(stderr, ", div '%s', %.1f%c",
 	      curdiv->get_diversion_name(), fromtop1, warn_scaling_indicator);
     }
     fprintf(stderr, "]: ");

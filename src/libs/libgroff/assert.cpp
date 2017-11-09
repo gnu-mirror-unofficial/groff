@@ -26,7 +26,7 @@ void assertion_failed(int lineno, const char *filename)
 {
   if (program_name != 0)
     fprintf(stderr, "%s: ", program_name);
-  fprintf(stderr, "Failed assertion at line %d, file `%s'.\n",
+  fprintf(stderr, "Failed assertion at line %d, file '%s'.\n",
 	  lineno, filename);
   fflush(stderr);
   abort();

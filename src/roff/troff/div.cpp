@@ -547,7 +547,7 @@ void top_level_diversion::print_traps()
 void end_diversions()
 {
   while (curdiv != topdiv) {
-    error("automatically ending diversion `%1' on exit",
+    error("automatically ending diversion '%1' on exit",
 	    curdiv->nm.contents());
     diversion *tem = curdiv;
     curdiv = curdiv->prev;

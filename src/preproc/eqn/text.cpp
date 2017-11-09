@@ -550,7 +550,7 @@ void box::set_spacing_type(char *type)
 {
   int t = lookup_spacing_type(type);
   if (t < 0)
-    error("unrecognised type `%1'", type);
+    error("unrecognised type '%1'", type);
   else
     spacing_type = t;
   free(type);
@@ -700,7 +700,7 @@ void set_char_type(const char *type, char *ch)
   int st = lookup_spacing_type(type);
   int ft = lookup_font_type(type);
   if (st < 0 && ft < 0) {
-    error("bad character type `%1'", type);
+    error("bad character type '%1'", type);
     a_delete ch;
     return;
   }

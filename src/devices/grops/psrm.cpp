@@ -317,7 +317,7 @@ void resource_manager::output_prolog(ps_output &out)
   char *prologue = getenv("GROPS_PROLOGUE");
   FILE *fp = font::open_file(prologue, &path);
   if (!fp)
-    fatal("can't find `%1'", prologue);
+    fatal("can't find '%1'", prologue);
   fputs("%%BeginResource: ", outfp);
   procset_resource->print_type_and_name(outfp);
   putc('\n', outfp);
@@ -340,7 +340,7 @@ void resource_manager::supply_resource(resource *r, int rank, FILE *outfp,
 {
   if (r->flags & resource::BUSY) {
     r->name += '\0';
-    fatal("loop detected in dependency graph for %1 `%2'",
+    fatal("loop detected in dependency graph for %1 '%2'",
 	  resource_table[r->type],
 	  r->name.contents());
   }
@@ -353,7 +353,7 @@ void resource_manager::supply_resource(resource *r, int rank, FILE *outfp,
     if (r->type == RESOURCE_FONT) {
       fp = font::open_file(r->filename, &path);
       if (!fp) {
-	error("can't find `%1'", r->filename);
+	error("can't find '%1'", r->filename);
 	a_delete r->filename;
 	r->filename = 0;
       }
@@ -362,7 +362,7 @@ void resource_manager::supply_resource(resource *r, int rank, FILE *outfp,
       errno = 0;
       fp = include_search_path.open_file_cautious(r->filename);
       if (!fp) {
-	error("can't open `%1': %2", r->filename, strerror(errno));
+	error("can't open '%1': %2", r->filename, strerror(errno));
 	a_delete r->filename;
 	r->filename = 0;
       }
@@ -810,7 +810,7 @@ int resource_manager::do_begin_data(const char *ptr, int, FILE *fp,
     if (*ptr != '\0') {
       unit = read_one_of(&ptr, units, 2);
       if (unit < 0) {
-	error("expected `Bytes' or `Lines'");
+	error("expected 'Bytes' or 'Lines'");
 	return 0;
       }
     }
@@ -928,7 +928,7 @@ static unsigned parse_extensions(const char *ptr)
     if (i >= NEXTENSIONS) {
       string s(name, ptr - name);
       s += '\0';
-      error("unknown extension `%1'", s.contents());
+      error("unknown extension '%1'", s.contents());
     }
   }
   return flags;
@@ -1077,7 +1077,7 @@ void resource_manager::read_download_file()
   char *path = 0;
   FILE *fp = font::open_file("download", &path);
   if (!fp)
-    fatal("can't find `download'");
+    fatal("can't find 'download'");
   char buf[512];
   int lineno = 0;
   while (fgets(buf, sizeof(buf), fp)) {

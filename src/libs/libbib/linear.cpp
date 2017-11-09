@@ -303,9 +303,9 @@ int file_buffer::load(int fd, const char *filename)
 {
   struct stat sb;
   if (fstat(fd, &sb) < 0)
-    error("can't fstat `%1': %2", filename, strerror(errno));
+    error("can't fstat '%1': %2", filename, strerror(errno));
   else if (!S_ISREG(sb.st_mode))
-    error("`%1' is not a regular file", filename);
+    error("'%1' is not a regular file", filename);
   else {
     // We need one character extra at the beginning for an additional newline
     // used as a sentinel.  We get 4 instead so that the read buffer will be
@@ -316,16 +316,16 @@ int file_buffer::load(int fd, const char *filename)
     buffer = new char[size + 4 + 1];
     int nread = read(fd, buffer + 4, size);
     if (nread < 0)
-      error("error reading `%1': %2", filename, strerror(errno));
+      error("error reading '%1': %2", filename, strerror(errno));
     else if (nread != size)
-      error("size of `%1' decreased", filename);
+      error("size of '%1' decreased", filename);
     else {
       char c;
       nread = read(fd, &c, 1);
       if (nread != 0)
-	error("size of `%1' increased", filename);
+	error("size of '%1' increased", filename);
       else if (memchr(buffer + 4, '\0', size < 1024 ? size : 1024) != 0)
-	error("database `%1' is a binary file", filename);
+	error("database '%1' is a binary file", filename);
       else {
 	close(fd);
 	buffer[3] = '\n';

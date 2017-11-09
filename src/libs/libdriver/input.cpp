@@ -612,7 +612,7 @@ void delete_current_env(void)
 void
 fatal_command(char command)
 {
-  fatal("`%1' command invalid before first `p' command", command);
+  fatal("'%1' command invalid before first 'p' command", command);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1296,7 +1296,7 @@ parse_color_command(color *col)
     col->set_rgb(red, green, blue);
     break;
   default:
-    error("invalid color scheme `%1'", (int) subcmd);
+    error("invalid color scheme '%1'", (int) subcmd);
     break;
   } // end of color subcommands
 }
@@ -1464,7 +1464,7 @@ parse_x_command(void)
     {
       char *str_arg = get_extended_arg();
       if (str_arg == 0)
-	warning("empty argument for `x F' command");
+	warning("empty argument for 'x F' command");
       else {
 	remember_source_filename(str_arg);
 	a_delete str_arg;
@@ -1478,14 +1478,14 @@ parse_x_command(void)
     skip_line_x();
     break;
   case 'i':			// x init: initialize device
-    error("duplicate `x init' command");
+    error("duplicate 'x init' command");
     skip_line_x();
     break;
   case 'p':			// x pause: pause device
     skip_line_x();
     break;
   case 'r':			// x res: set resolution
-    error("duplicate `x res' command");
+    error("duplicate 'x res' command");
     skip_line_x();
     break;
   case 's':			// x stop: stop device
@@ -1500,7 +1500,7 @@ parse_x_command(void)
     skip_line_x();
     break;
   case 'T':			// x Typesetter: set typesetter
-    error("duplicate `x T' command");
+    error("duplicate 'x T' command");
     skip_line();
     break;
   case 'u':			// x underline: from .cu
@@ -1515,7 +1515,7 @@ parse_x_command(void)
     {
       char *str_arg = get_extended_arg(); // includes line skip
       if (npages <= 0)
-	error("`x X' command invalid before first `p' command");
+	error("'x X' command invalid before first 'p' command");
       else if (str_arg && (strncmp(str_arg, "devtag:",
 				   strlen("devtag:")) == 0))
 	pr->devtag(str_arg, current_env);
@@ -1525,7 +1525,7 @@ parse_x_command(void)
       break;
     }
   default:			// ignore unknown x commands, but warn
-    warning("unknown command `x %1'", subcmd);
+    warning("unknown command 'x %1'", subcmd);
     skip_line();
   }
   a_delete subcmd_str;
@@ -1565,7 +1565,7 @@ do_file(const char *filename)
     errno = 0;
     current_file = fopen(filename, "r");
     if (errno != 0 || current_file == 0) {
-      error("can't open file `%1'", filename);
+      error("can't open file '%1'", filename);
       return;
     }
   }
@@ -1593,10 +1593,10 @@ do_file(const char *filename)
     if ((int) command == EOF)
       return;
     if ((int) command != 'x')
-      fatal("the first command must be `x T'");
+      fatal("the first command must be 'x T'");
     str_arg = get_string_arg();
     if (str_arg[0] != 'T')
-      fatal("the first command must be `x T'");
+      fatal("the first command must be 'x T'");
     a_delete str_arg;
     char *tmp_dev = get_string_arg();
     if (pr == 0) {		// note: `pr' initialized after prologue
@@ -1615,10 +1615,10 @@ do_file(const char *filename)
     // 2nd command `x res'
     command = next_command();
     if ((int) command != 'x')
-      fatal("the second command must be `x res'");
+      fatal("the second command must be 'x res'");
     str_arg = get_string_arg();
     if (str_arg[0] != 'r')
-      fatal("the second command must be `x res'");
+      fatal("the second command must be 'x res'");
     a_delete str_arg;
     int_arg = get_integer_arg();
     EnvInt font_res = font::res;
@@ -1635,10 +1635,10 @@ do_file(const char *filename)
     // 3rd command `x init'
     command = next_command();
     if (command != 'x')
-      fatal("the third command must be `x init'");
+      fatal("the third command must be 'x init'");
     str_arg = get_string_arg();
     if (str_arg[0] != 'i')
-      fatal("the third command must be `x init'");
+      fatal("the third command must be 'x init'");
     a_delete str_arg;
     skip_line_x();
   }
@@ -1705,7 +1705,7 @@ do_file(const char *filename)
 	  fatal_command(command);
 	Char c = next_arg_begin();
 	if (c == '\n' || c == EOF)
-	  error("missing argument to `c' command");
+	  error("missing argument to 'c' command");
 	else
 	  pr->set_ascii_char((unsigned char) c, current_env);
 	break;
@@ -1812,7 +1812,7 @@ do_file(const char *filename)
       stopped = parse_x_command();
       break;
     default:
-      warning("unrecognized command `%1'", (unsigned char) command);
+      warning("unrecognized command '%1'", (unsigned char) command);
       skip_line();
       break;
     } // end of switch
@@ -1826,6 +1826,6 @@ do_file(const char *filename)
   fclose(current_file);
   // If `stopped' is not `true' here then there wasn't any `x stop'.
   if (!stopped)
-    warning("no final `x stop' command");
+    warning("no final 'x stop' command");
   delete_current_env();
 }

@@ -155,7 +155,7 @@ void input_stack::push_file(const char *fn)
     errno = 0;
     fp = fopen(fn, "r");
     if (fp == 0) {
-      error("can't open `%1': %2", fn, strerror(errno));
+      error("can't open '%1': %2", fn, strerror(errno));
       return;
     }
   }
@@ -697,7 +697,7 @@ static int check_args(const char *types, const char *name,
 	break;
       }
       else {
-	input_stack::error("missing argument for command `%1'", name);
+	input_stack::error("missing argument for command '%1'", name);
 	return 0;
       }
     }
@@ -710,7 +710,7 @@ static int check_args(const char *types, const char *name,
 	long n = strtol(argv->s, &ptr, 10);
 	if ((n == 0 && ptr == argv->s)
 	    || *ptr != '\0') {
-	  input_stack::error("argument %1 for command `%2' must be an integer",
+	  input_stack::error("argument %1 for command '%2' must be an integer",
 			     argno + 1, name);
 	  return 0;
 	}
@@ -721,7 +721,7 @@ static int check_args(const char *types, const char *name,
       {
 	for (const char *ptr = argv->s; *ptr != '\0'; ptr++)
 	  if (!cs_field_name(*ptr)) {
-	    input_stack::error("argument %1 for command `%2' must be a list of fields",
+	    input_stack::error("argument %1 for command '%2' must be a list of fields",
 			     argno + 1, name);
 	    return 0;
 	  }
@@ -730,7 +730,7 @@ static int check_args(const char *types, const char *name,
     case 'F':
       if (argv->s[0] == '\0' || argv->s[1] != '\0'
 	  || !cs_field_name(argv->s[0])) {
-	input_stack::error("argument %1 for command `%2' must be a field name",
+	input_stack::error("argument %1 for command '%2' must be a field name",
 			   argno + 1, name);
 	return 0;
       }
@@ -747,7 +747,7 @@ static int check_args(const char *types, const char *name,
     ++argno;
   }
   if (argc > 0) {
-    input_stack::error("too many arguments for command `%1'", name);
+    input_stack::error("too many arguments for command '%1'", name);
     return 0;
   }
   return 1;
@@ -762,7 +762,7 @@ static void execute_command(const char *name, int argc, argument *argv)
 	(*command_table[i].func)(argc, argv);
       return;
     }
-  input_stack::error("unknown command `%1'", name);
+  input_stack::error("unknown command '%1'", name);
 }
 
 static void command_loop()

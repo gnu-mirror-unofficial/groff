@@ -56,7 +56,7 @@ void search_list::add_file(const char *filename, int silent)
     int fd = open(filename, O_RDONLY | O_BINARY);
     if (fd < 0) {
       if (!silent)
-	error("can't open `%1': %2", filename, strerror(errno));
+        error("can't open '%1': %2", filename, strerror(errno));
     }
     else
       p = make_linear_search_item(fd, filename, next_fid);

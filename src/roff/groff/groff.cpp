@@ -340,9 +340,9 @@ int main(int argc, char **argv)
   }
   font::set_unknown_desc_command_handler(handle_unknown_desc_command);
   if (!font::load_desc())
-    fatal("invalid device `%1'", device);
+    fatal("invalid device '%1'", device);
   if (!postdriver)
-    fatal("no `postpro' command in DESC file for device `%1'", device);
+    fatal("no 'postpro' command in DESC file for device '%1'", device);
   if (predriver && !zflag) {
     commands[TROFF_INDEX].insert_arg(commands[TROFF_INDEX].get_name());
     commands[TROFF_INDEX].set_name(predriver);
@@ -411,7 +411,7 @@ int main(int argc, char **argv)
   if (strcmp(device, "html") == 0) {
     if (is_xhtml) {
       if (oflag)
-	fatal("`-o' option is invalid with device `xhtml'");
+	fatal("'-o' option is invalid with device 'xhtml'");
       if (zflag)
 	commands[EQN_INDEX].append_arg("-Tmathml:xhtml");
       else if (eflag)
@@ -419,7 +419,7 @@ int main(int argc, char **argv)
     }
     else {
       if (oflag)
-	fatal("`-o' option is invalid with device `html'");
+	fatal("'-o' option is invalid with device 'html'");
       // html renders equations as images via ps
       commands[EQN_INDEX].append_arg("-Tps:html");
     }
@@ -515,19 +515,19 @@ void handle_unknown_desc_command(const char *command, const char *arg,
   if (strcmp(command, "print") == 0) {
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`print' command requires an argument");
+			       "'print' command requires an argument");
     else
       spooler = strsave(arg);
   }
   if (strcmp(command, "prepro") == 0) {
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`prepro' command requires an argument");
+			       "'prepro' command requires an argument");
     else {
       for (const char *p = arg; *p; p++)
 	if (csspace(*p)) {
 	  error_with_file_and_line(filename, lineno,
-				   "invalid `prepro' argument `%1'"
+				   "invalid 'prepro' argument '%1'"
 				   ": program name required", arg);
 	  return;
 	}
@@ -537,12 +537,12 @@ void handle_unknown_desc_command(const char *command, const char *arg,
   if (strcmp(command, "postpro") == 0) {
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`postpro' command requires an argument");
+			       "'postpro' command requires an argument");
     else {
       for (const char *p = arg; *p; p++)
 	if (csspace(*p)) {
 	  error_with_file_and_line(filename, lineno,
-				   "invalid `postpro' argument `%1'"
+				   "invalid 'postpro' argument '%1'"
 				   ": program name required", arg);
 	  return;
 	}

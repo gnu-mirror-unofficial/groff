@@ -117,7 +117,7 @@ void lbp_font::handle_unknown_font_command(const char *command,
   if (strcmp(command, "lbpname") == 0) {
     if (arg == 0)
       fatal_with_file_and_line(filename, lineno,
-			       "`%1' command requires an argument",
+			       "'%1' command requires an argument",
 			       command);
     this->lbpname = new char[strlen(arg) + 1];
     strcpy(this->lbpname, arg);
@@ -540,7 +540,7 @@ void lbp_printer::draw(int code, int *p, int np, const environment *env)
     // not implemented yet
     break;
   default:
-    error("unrecognised drawing command `%1'", char(code));
+    error("unrecognised drawing command '%1'", char(code));
     break;
   }
   return;
@@ -590,7 +590,7 @@ static void handle_unknown_desc_command(const char *command, const char *arg,
       return;
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`orientation' command requires an argument");
+			       "'orientation' command requires an argument");
     else {
       if (strcasecmp(arg, "portrait") == 0)
 	orientation = 0;
@@ -599,7 +599,7 @@ static void handle_unknown_desc_command(const char *command, const char *arg,
 	  orientation = 1;
 	else
 	  error_with_file_and_line(filename, lineno,
-				   "invalid argument to `orientation' command");
+				   "invalid argument to 'orientation' command");
       }
     }
   }
@@ -657,7 +657,7 @@ int main(int argc, char **argv)
 	const char *s;
 	if (!font::scan_papersize(optarg, &s,
 				  &user_paperlength, &user_paperwidth))
-	  error("invalid paper size `%1' ignored", optarg);
+	  error("invalid paper size '%1' ignored", optarg);
 	else
 	  user_papersize = set_papersize(s);
 	break;

@@ -301,7 +301,7 @@ static void define_extensible_string(char *delim, int uid,
 	&& (left_or_right & d->flags) != 0)
       break;
   if (i >= DELIM_TABLE_SIZE) {
-    error("there is no `%1' delimiter", delim);
+    error("there is no '%1' delimiter", delim);
     printf(".nr " DELIM_WIDTH_REG " 0\n");
     return;
   }

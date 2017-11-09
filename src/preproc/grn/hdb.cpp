@@ -98,7 +98,7 @@ DBRead(register FILE *file)
   (void) fscanf(file, "%" MAXSTRING_S "s%*[^\n]\n", string);
   if (strcmp(string, "gremlinfile")) {
     if (strcmp(string, "sungremlinfile")) {
-      error("`%1' is not a gremlin file", gremlinfile);
+      error("'%1' is not a gremlin file", gremlinfile);
       return (elist);
     }
     SUNFILE = TRUE;
@@ -113,7 +113,7 @@ DBRead(register FILE *file)
     /* I changed the scanf format because the element */
     /* can have two words (e.g. CURVE SPLINE)         */
     if (fscanf(file, "\n%" MAXSTRING_S "[^\n]%*[^\n]\n", string) == EOF) {
-      error("`%1', error in file format", gremlinfile);
+      error("'%1', error in file format", gremlinfile);
       return (elist);
     }
 

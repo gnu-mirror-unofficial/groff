@@ -344,7 +344,7 @@ main(int argc, char **argv)
   current_lineno = -1;		// no line numbers
   if (!debug_flag && !equal(argv[optind + 2], "-"))
     if (freopen(argv[optind + 2], "w", stdout) == NULL)
-      fatal("cannot open `%1': %2", argv[optind + 2], strerror(errno));
+      fatal("cannot open '%1': %2", argv[optind + 2], strerror(errno));
   current_filename = argv[optind];
 
   check_units(f, tfm_type, &ppi, &upem);
@@ -403,7 +403,7 @@ File::File(const char *s)
   // on byte counts.
   int fd = open(s, O_RDONLY | O_BINARY);
   if (fd < 0)
-    fatal("cannot open `%1': %2", s, strerror(errno));
+    fatal("cannot open '%1': %2", s, strerror(errno));
   current_filename = s;
   struct stat sb;
   if (fstat(fd, &sb) < 0)
@@ -1339,7 +1339,7 @@ read_map(const char *file, const int tfm_type)
   errno = 0;
   FILE *fp = fopen(file, "r");
   if (!fp) {
-    error("can't open `%1': %2", file, strerror(errno));
+    error("can't open '%1': %2", file, strerror(errno));
     return 0;
   }
   current_filename = file;

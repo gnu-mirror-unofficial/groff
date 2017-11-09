@@ -131,23 +131,23 @@ void lj4_font::handle_unknown_font_command(const char *command,
     if (strcmp(command, command_table[i].s) == 0) {
       if (arg == 0)
 	fatal_with_file_and_line(filename, lineno,
-				 "`%1' command requires an argument",
+				 "'%1' command requires an argument",
 				 command);
       char *ptr;
       long n = strtol(arg, &ptr, 10);
       if (n == 0 && ptr == arg)
 	fatal_with_file_and_line(filename, lineno,
-				 "`%1' command requires numeric argument",
+				 "'%1' command requires numeric argument",
 				 command);
       if (n < command_table[i].min) {
 	error_with_file_and_line(filename, lineno,
-				 "argument for `%1' command must not be less than %2",
+				 "argument for '%1' command must not be less than %2",
 				 command, command_table[i].min);
 	n = command_table[i].min;
       }
       else if (n > command_table[i].max) {
 	error_with_file_and_line(filename, lineno,
-				 "argument for `%1' command must not be greater than %2",
+				 "argument for '%1' command must not be greater than %2",
 				 command, command_table[i].max);
 	n = command_table[i].max;
       }
@@ -230,7 +230,7 @@ lj4_printer::lj4_printer(int ps)
   if (font::papersize) {
     int n = lookup_paper_size(font::papersize);
     if (n < 0)
-      error("unknown paper size `%1'", font::papersize);
+      error("unknown paper size '%1'", font::papersize);
     else
       paper_size = n;
   }
@@ -532,7 +532,7 @@ void lj4_printer::draw(int code, int *p, int np, const environment *env)
       break;
     }
   default:
-    error("unrecognised drawing command `%1'", char(code));
+    error("unrecognised drawing command '%1'", char(code));
     break;
   }
 }
@@ -640,7 +640,7 @@ int main(int argc, char **argv)
       {
 	int n = lookup_paper_size(optarg);
 	if (n < 0)
-	  error("unknown paper size `%1'", optarg);
+	  error("unknown paper size '%1'", optarg);
 	else
 	  user_paper_size = n;
 	break;

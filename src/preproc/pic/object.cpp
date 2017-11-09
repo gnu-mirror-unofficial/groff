@@ -2031,7 +2031,7 @@ int path::follow(const place &pl, place *result) const
   const place *p = &pl;
   for (string_list *lb = label_list; lb; lb = lb->next)
     if (p->obj == 0 || (p = p->obj->find_label(lb->str)) == 0) {
-      lex_error("object does not contain a place `%1'", lb->str);
+      lex_error("object does not contain a place '%1'", lb->str);
       return 0;
     }
   if (crn == 0 || p->obj == 0)

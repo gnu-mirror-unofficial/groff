@@ -110,7 +110,7 @@ int text_file::next()
       if (c == EOF)
 	break;
       if (invalid_input_char(c))
-	error("invalid input character code `%1'", int(c));
+	error("invalid input character code '%1'", int(c));
       else {
 	if (i + 1 >= size) {
 	  char *old_buf = buf;
@@ -764,7 +764,7 @@ int font::load(int *not_found, int head_only)
     if (not_found)
       *not_found = 1;
     else
-      error("`DESC' is not a valid font file name");
+      error("'DESC' is not a valid font file name");
     return 0;
   }
   char *path;
@@ -773,7 +773,7 @@ int font::load(int *not_found, int head_only)
     if (not_found)
       *not_found = 1;
     else
-      error("can't find font file `%1'", name);
+      error("can't find font file '%1'", name);
     return 0;
   }
   text_file t(fp, path);
@@ -792,7 +792,7 @@ int font::load(int *not_found, int head_only)
       p = strtok(0, WS);
       int n;
       if (p == 0 || sscanf(p, "%d", &n) != 1 || n <= 0) {
-	t.error("bad argument for `spacewidth' command");
+	t.error("bad argument for 'spacewidth' command");
 	return 0;
       }
       space_width = n;
@@ -801,7 +801,7 @@ int font::load(int *not_found, int head_only)
       p = strtok(0, WS);
       double n;
       if (p == 0 || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
-	t.error("bad argument for `slant' command", p);
+	t.error("bad argument for 'slant' command", p);
 	return 0;
       }
       slant = n;
@@ -822,7 +822,7 @@ int font::load(int *not_found, int head_only)
 	else if (strcmp(p, "ffl") == 0)
 	  ligatures |= LIG_ffl;
 	else {
-	  t.error("unrecognised ligature `%1'", p);
+	  t.error("unrecognised ligature '%1'", p);
 	  return 0;
 	}
       }
@@ -830,7 +830,7 @@ int font::load(int *not_found, int head_only)
     else if (strcmp(p, "internalname") == 0) {
       p = strtok(0, WS);
       if (!p) {
-	t.error("`internalname' command requires argument");
+	t.error("'internalname' command requires argument");
 	return 0;
       }
       internalname = new char[strlen(p) + 1];
@@ -880,7 +880,7 @@ int font::load(int *not_found, int head_only)
 	  }
 	  int n;
 	  if (sscanf(p, "%d", &n) != 1) {
-	    t.error("bad kern amount `%1'", p);
+	    t.error("bad kern amount '%1'", p);
 	    return 0;
 	  }
 	  glyph *g1 = name_to_glyph(c1);
@@ -931,33 +931,33 @@ int font::load(int *not_found, int head_only)
 				&metric.pre_math_space,
 				&metric.subscript_correction);
 	    if (nparms < 1) {
-	      t.error("bad width for `%1'", nm);
+	      t.error("bad width for '%1'", nm);
 	      return 0;
 	    }
 	    p = strtok(0, WS);
 	    if (p == 0) {
-	      t.error("missing character type for `%1'", nm);
+	      t.error("missing character type for '%1'", nm);
 	      return 0;
 	    }
 	    int type;
 	    if (sscanf(p, "%d", &type) != 1) {
-	      t.error("bad character type for `%1'", nm);
+	      t.error("bad character type for '%1'", nm);
 	      return 0;
 	    }
 	    if (type < 0 || type > 255) {
-	      t.error("character type `%1' out of range", type);
+	      t.error("character type '%1' out of range", type);
 	      return 0;
 	    }
 	    metric.type = type;
 	    p = strtok(0, WS);
 	    if (p == 0) {
-	      t.error("missing code for `%1'", nm);
+	      t.error("missing code for '%1'", nm);
 	      return 0;
 	    }
 	    char *ptr;
 	    metric.code = (int)strtol(p, &ptr, 0);
 	    if (metric.code == 0 && ptr == p) {
-	      t.error("bad code `%1' for character `%2'", p, nm);
+	      t.error("bad code '%1' for character '%2'", p, nm);
 	      return 0;
 	    }
 	    if (is_unicode) {
@@ -991,8 +991,8 @@ int font::load(int *not_found, int head_only)
 	}
       }
       else {
-	t.error("unrecognised command `%1' "
-		"after `kernpairs' or `charset' command",
+	t.error("unrecognised command '%1' "
+		"after 'kernpairs' or 'charset' command",
 		  command);
 	return 0;
       }
@@ -1000,7 +1000,7 @@ int font::load(int *not_found, int head_only)
     compact();
   }
   if (!is_unicode && !had_charset) {
-    t.error("missing `charset' command");
+    t.error("missing 'charset' command");
     return 0;
   }
   if (space_width == 0) {
@@ -1034,7 +1034,7 @@ int font::load_desc()
   FILE *fp;
   char *path;
   if ((fp = open_file("DESC", &path)) == 0) {
-    error("can't find `DESC' file");
+    error("can't find 'DESC' file");
     return 0;
   }
   text_file t(fp, path);
@@ -1050,13 +1050,13 @@ int font::load_desc()
     if (found) {
       char *q = strtok(0, WS);
       if (!q) {
-	t.error("missing value for command `%1'", p);
+	t.error("missing value for command '%1'", p);
 	return 0;
       }
       //int *ptr = &(this->*(table[idx-1].ptr));
       int *ptr = table[idx-1].ptr;
       if (sscanf(q, "%d", ptr) != 1) {
-	t.error("bad number `%1'", q);
+	t.error("bad number '%1'", q);
 	return 0;
       }
     }
@@ -1073,7 +1073,7 @@ int font::load_desc()
     else if (strcmp("fonts", p) == 0) {
       p = strtok(0, WS);
       if (!p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
-	t.error("bad number of fonts `%1'", p);
+	t.error("bad number of fonts '%1'", p);
 	return 0;
       }
       font_name_table = (const char **)new char *[nfonts+1]; 
@@ -1132,7 +1132,7 @@ int font::load_desc()
 	p = strtok(0, WS);
 	while (p == 0) {
 	  if (!t.next()) {
-	    t.error("list of sizes must be terminated by `0'");
+	    t.error("list of sizes must be terminated by '0'");
 	    return 0;
 	  }
 	  p = strtok(t.buf, WS);
@@ -1147,7 +1147,7 @@ int font::load_desc()
 	    break;
 	  // fall through
 	default:
-	  t.error("bad size range `%1'", p);
+	  t.error("bad size range '%1'", p);
 	  return 0;
 	}
 	if (i + 2 > n) {
@@ -1217,31 +1217,31 @@ int font::load_desc()
     }
   }
   if (res == 0) {
-    t.error("missing `res' command");
+    t.error("missing 'res' command");
     return 0;
   }
   if (unitwidth == 0) {
-    t.error("missing `unitwidth' command");
+    t.error("missing 'unitwidth' command");
     return 0;
   }
   if (font_name_table == 0) {
-    t.error("missing `fonts' command");
+    t.error("missing 'fonts' command");
     return 0;
   }
   if (sizes == 0) {
-    t.error("missing `sizes' command");
+    t.error("missing 'sizes' command");
     return 0;
   }
   if (sizescale < 1) {
-    t.error("bad `sizescale' value");
+    t.error("bad 'sizescale' value");
     return 0;
   }
   if (hor < 1) {
-    t.error("bad `hor' value");
+    t.error("bad 'hor' value");
     return 0;
   }
   if (vert < 1) {
-    t.error("bad `vert' value");
+    t.error("bad 'vert' value");
     return 0;
   }
   return 1;

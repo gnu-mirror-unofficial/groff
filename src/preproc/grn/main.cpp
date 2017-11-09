@@ -922,7 +922,7 @@ interpret(char *line)
     break;
 
   default:
-    error("unknown command `%1' on line %2", str1, linenum);
+    error("unknown command '%1' on line %2", str1, linenum);
     exit(8);
     break;
   };

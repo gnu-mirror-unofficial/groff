@@ -306,7 +306,7 @@ static unsigned int get_resolution(void)
       return res;
     }
   }
-  fatal("can't find `res' keyword in devps/DESC");
+  fatal("can't find 'res' keyword in devps/DESC");
   return 0;
 }
 
@@ -341,9 +341,9 @@ void html_system(const char *s, int redirect_stdout)
     if (redirect_stdout)
       dup2(save_stdout, 1);
     if (status == -1)
-      fprintf(stderr, "Calling `%s' failed\n", s);
+      fprintf(stderr, "Calling '%s' failed\n", s);
     else if (status)
-      fprintf(stderr, "Calling `%s' returned status %d\n", s, status);
+      fprintf(stderr, "Calling '%s' returned status %d\n", s, status);
     close(save_stderr);
     close(save_stdout);
   }
@@ -519,12 +519,12 @@ static void writeString(const char *s)
 static void makeFileName(void)
 {
   if ((image_dir != NULL) && (strchr(image_dir, '%') != NULL)) {
-    error("cannot use a `%%' within the image directory name");
+    error("cannot use a '%%' within the image directory name");
     exit(1);
   }
 
   if ((image_template != NULL) && (strchr(image_template, '%') != NULL)) {
-    error("cannot use a `%%' within the image template");
+    error("cannot use a '%%' within the image template");
     exit(1);
   }
 
@@ -579,7 +579,7 @@ static void checkImageDir(void)
 {
   if (image_dir != NULL && strcmp(image_dir, "") != 0)
     if (!(mkdir(image_dir, 0777) == 0 || errno == EEXIST)) {
-      error("cannot create directory `%1'", image_dir);
+      error("cannot create directory '%1'", image_dir);
       exit(1);
     }
 }
@@ -1557,8 +1557,8 @@ static void usage(FILE *stream)
     "it is part of the groff pipeline to produce HTML output.\n"
     "\n"
     "If there is ever the need to call it manually (e.g., for\n"
-    "debugging purposes), add command-line option `-V' while calling\n"
-    "the `groff' program to see which arguments are passed to it.\n"
+    "debugging purposes), add command-line option '-V' while calling\n"
+    "the 'groff' program to see which arguments are passed to it.\n"
     "\n");
 }
 
@@ -1818,7 +1818,7 @@ static int do_file(const char *filename)
   else {
     fp = fopen(filename, "r");
     if (fp == 0) {
-      error("can't open `%1': %2", filename, strerror(errno));
+      error("can't open '%1': %2", filename, strerror(errno));
       return 0;
     }
   }

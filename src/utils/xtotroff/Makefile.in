@@ -31,7 +31,7 @@ DPIS=75 100
 RM=rm -f
 
 all:
-	@echo "Say \`make fonts' to generate fonts for gxditview."
+	@echo "Say 'make fonts' to generate fonts for gxditview."
 
 fonts: $(xtotroff) $(driverdir)/DESC.in $(driverdir)/FontMap
 	fonts=`sed -e 's/[	 ].*//' $(driverdir)/FontMap`; \

@@ -110,12 +110,12 @@ int main(int argc, char **argv)
     size_t j;
     for (j = 0;; j++) {
       if (j >= sizeof(param_table)/sizeof(param_table[0]))
-	fatal("parameter `%1' not recognized", argv[i] + 1);
+	fatal("parameter '%1' not recognized", argv[i] + 1);
       if (strcmp(param_table[j].name, argv[i] + 1) == 0)
 	break;
     }
     if (sscanf(argv[i+1], "%d", &(param.*(param_table[j].par))) != 1)
-      fatal("invalid argument `%1'", argv[i+1]);
+      fatal("invalid argument '%1'", argv[i+1]);
     i++;
   }    
   if (argc - i != 3)
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
   errno = 0;
   FILE *infp = fopen(font, "r");
   if (infp == 0)
-    fatal("can't open `%1': %2", font, strerror(errno));
+    fatal("can't open '%1': %2", font, strerror(errno));
   convert_font(param, infp, stdout);
   return 0;
 }

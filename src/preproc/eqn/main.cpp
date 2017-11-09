@@ -55,7 +55,7 @@ int read_line(FILE *fp, string *p)
     if (!invalid_input_char(c))
       *p += char(c);
     else
-      error("invalid input character code `%1'", c);
+      error("invalid input character code '%1'", c);
     if (c == '\n')
       break;
   }
@@ -152,7 +152,7 @@ static int inline_equation(FILE *fp, string &linebuf, string &str)
   inline_flag = 1;
   for (;;) {
     if (no_newline_in_delim_flag && strchr(start + 1, end_delim) == 0) {
-      error("missing `%1'", end_delim);
+      error("missing '%1'", end_delim);
       char *nl = strchr(start + 1, '\n');
       if (nl != 0)
 	*nl = '\0';
@@ -174,7 +174,7 @@ static int inline_equation(FILE *fp, string &linebuf, string &str)
       }
       str += ptr;
       if (!read_line(fp, &linebuf))
-	fatal("unterminated `%1' at line %2, looking for `%3'",
+	fatal("unterminated '%1' at line %2, looking for '%3'",
 	      start_delim, start_lineno, end_delim);
       linebuf += '\0';
       ptr = &linebuf[0];
@@ -304,9 +304,9 @@ int main(int argc, char **argv)
       if (optarg[0] == '\0' || optarg[1] == '\0')
 	error("-d requires two character argument");
       else if (invalid_input_char(optarg[0]))
-	error("bad delimiter `%1'", optarg[0]);
+	error("bad delimiter '%1'", optarg[0]);
       else if (invalid_input_char(optarg[1]))
-	error("bad delimiter `%1'", optarg[1]);
+	error("bad delimiter '%1'", optarg[1]);
       else {
 	start_delim = optarg[0];
 	end_delim = optarg[1];
@@ -334,7 +334,7 @@ int main(int argc, char **argv)
       break;
     case 's':
       if (!set_gsize(optarg))
-	error("invalid size `%1'", optarg);
+	error("invalid size '%1'", optarg);
       break;
     case 'p':
       {
@@ -342,7 +342,7 @@ int main(int argc, char **argv)
 	if (sscanf(optarg, "%d", &n) == 1)
 	  set_script_reduction(n);
 	else
-	  error("bad size `%1'", optarg);
+	  error("bad size '%1'", optarg);
       }
       break;
     case 'm':
@@ -351,14 +351,14 @@ int main(int argc, char **argv)
 	if (sscanf(optarg, "%d", &n) == 1)
 	  set_minimum_size(n);
 	else
-	  error("bad size `%1'", optarg);
+	  error("bad size '%1'", optarg);
       }
       break;
     case 'r':
       one_size_reduction_flag = 1;
       break;
     case 'D':
-      warning("-D option is obsolete: use `set draw_lines 1' instead");
+      warning("-D option is obsolete: use 'set draw_lines 1' instead");
       draw_flag = 1;
       break;
     case 'N':
@@ -383,11 +383,11 @@ int main(int argc, char **argv)
     printf(".if !'\\*(.T'%s' "
 	   ".if !'\\*(.T'html' "	// the html device uses `-Tps' to render
 				  // equations as images
-	   ".tm warning: %s should have been given a `-T\\*(.T' option\n",
+	   ".tm warning: %s should have been given a '-T\\*(.T' option\n",
 	   device, program_name);
     printf(".if '\\*(.T'html' "
 	   ".if !'%s'ps' "
-	   ".tm warning: %s should have been given a `-Tps' option\n",
+	   ".tm warning: %s should have been given a '-Tps' option\n",
 	   device, program_name);
     printf(".if '\\*(.T'html' "
 	   ".if !'%s'ps' "
@@ -413,7 +413,7 @@ int main(int argc, char **argv)
 	errno = 0;
 	FILE *fp = fopen(argv[i], "r");
 	if (!fp)
-	  fatal("can't open `%1': %2", argv[i], strerror(errno));
+	  fatal("can't open '%1': %2", argv[i], strerror(errno));
 	else {
 	  do_file(fp, argv[i]);
 	  fclose(fp);

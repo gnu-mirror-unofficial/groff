@@ -663,7 +663,7 @@ conversion_iconv(FILE *fp, const string &data, char *enc)
   iconv_t handle = iconv_open(UNICODE, enc);
   if (handle == (iconv_t)-1) {
     if (errno == EINVAL) {
-      error("encoding system `%1' not supported by iconv()", enc);
+      error("encoding system '%1' not supported by iconv()", enc);
       return;
     }
     fatal("iconv_open failed");
@@ -1082,10 +1082,10 @@ do_file(const char *filename)
   string BOM, data;
   if (strcmp(filename, "-")) {
     if (debug_flag)
-      fprintf(stderr, "file `%s':\n", filename);
+      fprintf(stderr, "file '%s':\n", filename);
     fp = fopen(filename, FOPEN_RB);
     if (!fp) {
-      error("can't open `%1': %2", filename, strerror(errno));
+      error("can't open '%1': %2", filename, strerror(errno));
       return 0;
     }
   }
@@ -1101,11 +1101,11 @@ do_file(const char *filename)
   int must_free_encoding = 0;
   if (user_encoding[0]) {
     if (debug_flag) {
-      fprintf(stderr, "  user-specified encoding `%s', "
+      fprintf(stderr, "  user-specified encoding '%s', "
 		      "no search for coding tag\n",
 		      user_encoding);
       if (BOM_encoding && strcmp(BOM_encoding, user_encoding))
-	fprintf(stderr, "  but BOM in data stream implies encoding `%s'!\n",
+	fprintf(stderr, "  but BOM in data stream implies encoding '%s'!\n",
 			BOM_encoding);
     }
     encoding = (char *)user_encoding;
@@ -1132,7 +1132,7 @@ do_file(const char *filename)
     }
     else
       if (debug_flag)
-	fprintf(stderr, "  file encoding: `%s'\n", file_encoding);
+	fprintf(stderr, "  file encoding: '%s'\n", file_encoding);
     encoding = file_encoding;
   }
   strncpy(encoding_string, encoding, MAX_VAR_LEN - 1);
@@ -1143,12 +1143,12 @@ do_file(const char *filename)
   // Translate from MIME & Emacs encoding names to locale encoding names.
   encoding = emacs2mime(encoding_string);
   if (encoding[0] == '\0') {
-    error("encoding `%1' not supported, not a portable encoding",
+    error("encoding '%1' not supported, not a portable encoding",
 	  encoding_string);
     return 0;
   }
   if (debug_flag)
-    fprintf(stderr, "  encoding used: `%s'\n", encoding);
+    fprintf(stderr, "  encoding used: '%s'\n", encoding);
   if (!raw_flag) {
     string fn(filename);
     fn += '\0';
@@ -1167,7 +1167,7 @@ do_file(const char *filename)
 #if HAVE_ICONV
     conversion_iconv(fp, BOM + data, encoding);
 #else
-    error("encoding system `%1' not supported", encoding);
+    error("encoding system '%1' not supported", encoding);
     success = 0;
 #endif /* HAVE_ICONV */
   }
@@ -1191,7 +1191,7 @@ usage(FILE *stream)
 		  "-r           don't add .lf requests\n"
 		  "-v           print version number\n"
 		  "\n"
-		  "The default encoding is `%s'.\n",
+		  "The default encoding is '%s'.\n",
 		  program_name, default_encoding);
 }
 
@@ -1274,7 +1274,7 @@ main(int argc, char **argv)
     }
   int nbad = 0;
   if (debug_flag)
-    fprintf(stderr, "default encoding: `%s'\n", default_encoding);
+    fprintf(stderr, "default encoding: '%s'\n", default_encoding);
   if (optind >= argc)
     nbad += !do_file("-");
   else

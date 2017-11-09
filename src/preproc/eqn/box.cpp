@@ -131,7 +131,7 @@ void set_param(const char *name, int value)
       *param_table[i].ptr = value;
       return;
     }
-  error("unrecognised parameter `%1'", name);
+  error("unrecognised parameter '%1'", name);
 }
 
 int script_style(int style)

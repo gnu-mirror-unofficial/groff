@@ -85,7 +85,7 @@ void dvi_font::handle_unknown_font_command(const char *command,
   if (strcmp(command, "checksum") == 0) {
     if (arg == 0)
       fatal_with_file_and_line(filename, lineno,
-			       "`checksum' command requires an argument");
+			       "'checksum' command requires an argument");
     checksum = int(strtol(arg, &ptr, 10));
     if (checksum == 0 && ptr == arg) {
       fatal_with_file_and_line(filename, lineno, "bad checksum");
@@ -94,7 +94,7 @@ void dvi_font::handle_unknown_font_command(const char *command,
   else if (strcmp(command, "designsize") == 0) {
     if (arg == 0)
       fatal_with_file_and_line(filename, lineno,
-			       "`designsize' command requires an argument");
+			       "'designsize' command requires an argument");
     design_size = int(strtol(arg, &ptr, 10));
     if (design_size == 0 && ptr == arg) {
       fatal_with_file_and_line(filename, lineno, "bad design size");
@@ -885,7 +885,7 @@ void draw_dvi_printer::draw(int code, int *p, int np, const environment *env)
       break;
     }
   default:
-    error("unrecognised drawing command `%1'", char(code));
+    error("unrecognised drawing command '%1'", char(code));
     break;
   }
 }
@@ -935,7 +935,7 @@ int main(int argc, char **argv)
     case 'p':
       if (!font::scan_papersize(optarg, 0,
 				&user_paper_length, &user_paper_width))
-	error("invalid custom paper size `%1' ignored", optarg);
+	error("invalid custom paper size '%1' ignored", optarg);
       break;
     case 'v':
       {

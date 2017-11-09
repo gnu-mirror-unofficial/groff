@@ -65,7 +65,7 @@ my (@encoding, %in_encoding);
 my (%width, %height, %depth);
 my (%left_side_bearing, %right_side_bearing);
 
-open(AFM, $afm) || die "$prog: can't open \`$ARGV[0]': $!\n";
+open(AFM, $afm) || die "$prog: can't open '$ARGV[0]': $!\n";
 
 while (<AFM>) {
     chomp;
@@ -179,7 +179,7 @@ my ($sizescale, $resolution, $unitwidth);
 $sizescale = 1;
 
 open(DESC, $desc) || open(DESC, $sys_desc) ||
-    die "$prog: can't open \`$desc' or \`$sys_desc': $!\n";
+    die "$prog: can't open '$desc' or '$sys_desc': $!\n";
 while (<DESC>) {
     next if /^#/;
     chop;
@@ -203,7 +203,7 @@ if ($opt_e) {
 
     my $sys_opt_e = $groff_sys_fontdir . "/devps/" . $opt_e;
     open(ENCODING, $opt_e) || open(ENCODING, $sys_opt_e) ||
-	die "$prog: can't open \`$opt_e' or \`$sys_opt_e': $!\n";
+	die "$prog: can't open '$opt_e' or '$sys_opt_e': $!\n";
     while (<ENCODING>) {
 	next if /^#/;
 	chop;
@@ -224,7 +224,7 @@ if ($opt_e) {
 my (%nmap, %map);
 
 open(MAP, $map) || open(MAP, $sys_map) ||
-    die "$prog: can't open \`$map' or \`$sys_map': $!\n";
+    die "$prog: can't open '$map' or '$sys_map': $!\n";
 while (<MAP>) {
     next if /^#/;
     chop;
@@ -235,11 +235,11 @@ while (<MAP>) {
 	    # The PostScript character "space" is automatically mapped
 	    # to the groff character "space"; this is for grops.
 	    warn "you are not allowed to map to " .
-		 "the groff character \`space'";
+		 "the groff character 'space'";
 	}
 	elsif ($field[0] eq "space") {
 	    warn "you are not allowed to map " .
-		 "the PostScript character \`space'";
+		 "the PostScript character 'space'";
 	}
 	else {
 	    $nmap{$field[0]} += 0;
@@ -415,7 +415,7 @@ while (my ($lig, $components) = each %default_ligatures) {
 
 # print it all out
 
-open(FONT, ">$outfile") || die "$prog: can't open \`$outfile' for output: $!\n";
+open(FONT, ">$outfile") || die "$prog: can't open '$outfile' for output: $!\n";
 select(FONT);
 
 print("# This file has been generated with " .

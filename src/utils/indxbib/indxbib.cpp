@@ -221,7 +221,7 @@ int main(int argc, char **argv)
     name_max = file_name_max(".");
   const char *filename = p ? p + 1 : base_name;
   if (strlen(filename) + sizeof(INDEX_SUFFIX) - 1 > name_max)
-    fatal("`%1.%2' is too long for a filename", filename, INDEX_SUFFIX);
+    fatal("'%1.%2' is too long for a filename", filename, INDEX_SUFFIX);
   if (p) {
     p++;
     temp_index_file = new char[p - base_name + sizeof(TEMP_INDEX_TEMPLATE)];
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
       errno = 0;
       fp = fopen(foption, "r");
       if (!fp)
-	fatal("can't open `%1': %2", foption, strerror(errno));
+	fatal("can't open '%1': %2", foption, strerror(errno));
     }
     string path;
     int lineno = 1;
@@ -307,7 +307,7 @@ int main(int argc, char **argv)
   ignore_fatal_signals();
   if (unlink(index_file) < 0) {
     if (errno != ENOENT)
-      fatal("can't unlink `%1': %2", index_file, strerror(errno));
+      fatal("can't unlink '%1': %2", index_file, strerror(errno));
   }
   if (link(temp_index_file, index_file) < 0)
     fatal("can't link temporary index file: %1", strerror(errno));
@@ -379,7 +379,7 @@ static void read_common_words_file()
   errno = 0;
   FILE *fp = fopen(common_words_file, "r");
   if (!fp)
-    fatal("can't open `%1': %2", common_words_file, strerror(errno));
+    fatal("can't open '%1': %2", common_words_file, strerror(errno));
   common_words_table = new word_list * [hash_table_size];
   for (int i = 0; i < hash_table_size; i++)
     common_words_table[i] = 0;
@@ -416,7 +416,7 @@ static int do_whole_file(const char *filename)
   errno = 0;
   FILE *fp = fopen(filename, "r");
   if (!fp) {
-    error("can't open `%1': %2", filename, strerror(errno));
+    error("can't open '%1': %2", filename, strerror(errno));
     return 0;
   }
   int count = 0;
@@ -453,7 +453,7 @@ static int do_file(const char *filename)
   // byte counts to be consistent with fseek.
   FILE *fp = fopen(filename, FOPEN_RB);
   if (fp == 0) {
-    error("can't open `%1': %2", filename, strerror(errno));
+    error("can't open '%1': %2", filename, strerror(errno));
     return 0;
   }
   int filename_index = filenames.length();

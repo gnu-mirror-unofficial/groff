@@ -173,7 +173,7 @@ int main(int argc, char **argv)
 	      --argc;
 	    }
 	    else {
-	      error("option `f' requires an argument");
+	      error("option 'f' requires an argument");
 	      usage(stderr);
 	      exit(1);
 	    }
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 	  const char *ptr;
 	  for (ptr = num; *ptr; ptr++)
 	    if (!csdigit(*ptr)) {
-	      error("bad character `%1' in argument to -f option", *ptr);
+	      error("bad character '%1' in argument to -f option", *ptr);
 	      break;
 	    }
 	  if (*ptr == '\0') {
@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 	    buf[0] = *opt++;
 	  else {
 	    if (*opt != '\0')
-	      error("bad field name `%1'", *opt++);
+	      error("bad field name '%1'", *opt++);
 	    buf[0] = 'L';
 	  }
 	  buf[1] = '~';
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 	  const char *ptr;
 	  for (ptr = ++opt; *ptr; ptr++)
 	    if (!csdigit(*ptr)) {
-	      error("argument to `a' option not a number");
+	      error("argument to 'a' option not a number");
 	      break;
 	    }
 	  if (*ptr == '\0') {
@@ -256,7 +256,7 @@ int main(int argc, char **argv)
 	    char *ptr;
 	    long n = strtol(opt, &ptr, 10);
 	    if (n == 0 && ptr == opt) {
-	      error("bad integer `%1' in `l' option", opt);
+	      error("bad integer '%1' in 'l' option", opt);
 	      opt = 0;
 	      break;
 	    }
@@ -272,7 +272,7 @@ int main(int argc, char **argv)
 	    char *ptr;
 	    long n = strtol(opt, &ptr, 10);
 	    if (n == 0 && ptr == opt) {
-	      error("bad integer `%1' in `l' option", opt);
+	      error("bad integer '%1' in 'l' option", opt);
 	      opt = 0;
 	      break;
 	    }
@@ -281,7 +281,7 @@ int main(int argc, char **argv)
 	    sprintf(strchr(buf, '\0'), "-%ld", n);
 	    opt = ptr;
 	    if (*opt != '\0')
-	      error("argument to `l' option not of form `m,n'");
+	      error("argument to 'l' option not of form 'm,n'");
 	  }
 	  strcat(buf, "%a");
 	  if (!set_label_spec(buf))
@@ -302,7 +302,7 @@ int main(int argc, char **argv)
 	      argc--;
 	    }
 	    else {
-	      error("option `p' requires an argument");
+	      error("option 'p' requires an argument");
 	      usage(stderr);
 	      exit(1);
 	    }
@@ -328,7 +328,7 @@ int main(int argc, char **argv)
 	  char *ptr;
 	  long n = strtol(opt, &ptr, 10);
 	  if (n == 0 && ptr == opt) {
-	    error("bad integer `%1' in `t' option", opt);
+	    error("bad integer '%1' in 't' option", opt);
 	    opt = 0;
 	    break;
 	  }
@@ -357,7 +357,7 @@ int main(int argc, char **argv)
 	}
 	// fall through
       default:
-	error("unrecognized option `%1'", *opt);
+	error("unrecognized option '%1'", *opt);
 	usage(stderr);
 	exit(1);
 	break;
@@ -428,7 +428,7 @@ static void do_file(const char *filename)
     errno = 0;
     fp = fopen(filename, "r");
     if (fp == 0) {
-      error("can't open `%1': %2", filename, strerror(errno));
+      error("can't open '%1': %2", filename, strerror(errno));
       return;
     }
   }
@@ -470,7 +470,7 @@ static void do_file(const char *filename)
 	int c = getc(fp);
 	if (c == EOF) {
 	  error_with_file_and_line(current_filename, start_lineno,
-				   "missing `.]' line");
+				   "missing '.]' line");
 	  break;
 	}
 	if (start_of_line)
@@ -500,7 +500,7 @@ static void do_file(const char *filename)
 	if (accumulate)
 	  output_references();
 	else
-	  error("found `$LIST$' but not accumulating references");
+	  error("found '$LIST$' but not accumulating references");
       }
       else {
 	unsigned flags = (accumulate
@@ -580,7 +580,7 @@ static void do_file(const char *filename)
 	}
 	if (c == EOF) {
 	  error_with_file_and_line(current_filename, start_lineno,
-				   "missing `.R2' line");
+				   "missing '.R2' line");
 	  break;
 	}
 	if (invalid_input_char(c))
@@ -943,7 +943,7 @@ void output_references()
   assert(accumulate);
   if (!hash_table_size) {
     if (have_bibliography)
-      error("nothing to reference (probably `bibliography' before `sort')");
+      error("nothing to reference (probably 'bibliography' before 'sort')");
     accumulate = 0;
     nreferences = 0;
     return;
@@ -1013,7 +1013,7 @@ static reference *find_reference(const char *query, int query_len)
   const char *start;
   int len;
   if (!iter.next(&start, &len, &rid)) {
-    error("no matches for `%1'", str.contents());
+    error("no matches for '%1'", str.contents());
     return 0;
   }
   const char *end = start + len;
@@ -1024,13 +1024,13 @@ static reference *find_reference(const char *query, int query_len)
       ;
   }
   if (start >= end) {
-    error("found a reference for `%1' but it didn't contain any fields",
+    error("found a reference for '%1' but it didn't contain any fields",
 	  str.contents());
     return 0;
   }
   reference *result = new reference(start, end - start, &rid);
   if (iter.next(&start, &len, &rid))
-    warning("multiple matches for `%1'", str.contents());
+    warning("multiple matches for '%1'", str.contents());
   return result;
 }
 
@@ -1110,7 +1110,7 @@ void do_bib(const char *filename)
     errno = 0;
     fp = fopen(filename, "r");
     if (fp == 0) {
-      error("can't open `%1': %2", filename, strerror(errno));
+      error("can't open '%1': %2", filename, strerror(errno));
       return;
     }
     current_filename = filename;

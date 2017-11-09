@@ -546,7 +546,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 #if defined _LIBC && defined USE_IN_LIBIO
 	      char *buf;
 
-	      if (__asprintf (&buf, _("%s: option `%s' is ambiguous\n"),
+	      if (__asprintf (&buf, _("%s: option '%s' is ambiguous\n"),
 			      argv[0], argv[d->optind]) >= 0)
 		{
 		  _IO_flockfile (stderr);
@@ -565,7 +565,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		  free (buf);
 		}
 #else
-	      fprintf (stderr, _("%s: option `%s' is ambiguous\n"),
+	      fprintf (stderr, _("%s: option '%s' is ambiguous\n"),
 		       argv[0], argv[d->optind]);
 #endif
 	    }
@@ -599,11 +599,11 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			  /* --option */
 #if defined _LIBC && defined USE_IN_LIBIO
 			  n = __asprintf (&buf, _("\
-%s: option `--%s' doesn't allow an argument\n"),
+%s: option '--%s' doesn't allow an argument\n"),
 					  argv[0], pfound->name);
 #else
 			  fprintf (stderr, _("\
-%s: option `--%s' doesn't allow an argument\n"),
+%s: option '--%s' doesn't allow an argument\n"),
 				   argv[0], pfound->name);
 #endif
 			}
@@ -612,12 +612,12 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			  /* +option or -option */
 #if defined _LIBC && defined USE_IN_LIBIO
 			  n = __asprintf (&buf, _("\
-%s: option `%c%s' doesn't allow an argument\n"),
+%s: option '%c%s' doesn't allow an argument\n"),
 					  argv[0], argv[d->optind - 1][0],
 					  pfound->name);
 #else
 			  fprintf (stderr, _("\
-%s: option `%c%s' doesn't allow an argument\n"),
+%s: option '%c%s' doesn't allow an argument\n"),
 				   argv[0], argv[d->optind - 1][0],
 				   pfound->name);
 #endif
@@ -663,7 +663,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		      char *buf;
 
 		      if (__asprintf (&buf, _("\
-%s: option `%s' requires an argument\n"),
+%s: option '%s' requires an argument\n"),
 				      argv[0], argv[d->optind - 1]) >= 0)
 			{
 			  _IO_flockfile (stderr);
@@ -684,7 +684,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			}
 #else
 		      fprintf (stderr,
-			       _("%s: option `%s' requires an argument\n"),
+			       _("%s: option '%s' requires an argument\n"),
 			       argv[0], argv[d->optind - 1]);
 #endif
 		    }
@@ -722,10 +722,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		{
 		  /* --option */
 #if defined _LIBC && defined USE_IN_LIBIO
-		  n = __asprintf (&buf, _("%s: unrecognized option `--%s'\n"),
+		  n = __asprintf (&buf, _("%s: unrecognized option '--%s'\n"),
 				  argv[0], d->__nextchar);
 #else
-		  fprintf (stderr, _("%s: unrecognized option `--%s'\n"),
+		  fprintf (stderr, _("%s: unrecognized option '--%s'\n"),
 			   argv[0], d->__nextchar);
 #endif
 		}
@@ -733,10 +733,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		{
 		  /* +option or -option */
 #if defined _LIBC && defined USE_IN_LIBIO
-		  n = __asprintf (&buf, _("%s: unrecognized option `%c%s'\n"),
+		  n = __asprintf (&buf, _("%s: unrecognized option '%c%s'\n"),
 				  argv[0], argv[d->optind][0], d->__nextchar);
 #else
-		  fprintf (stderr, _("%s: unrecognized option `%c%s'\n"),
+		  fprintf (stderr, _("%s: unrecognized option '%c%s'\n"),
 			   argv[0], argv[d->optind][0], d->__nextchar);
 #endif
 		}
@@ -930,7 +930,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 #if defined _LIBC && defined USE_IN_LIBIO
 		char *buf;
 
-		if (__asprintf (&buf, _("%s: option `-W %s' is ambiguous\n"),
+		if (__asprintf (&buf, _("%s: option '-W %s' is ambiguous\n"),
 				argv[0], argv[d->optind]) >= 0)
 		  {
 		    _IO_flockfile (stderr);
@@ -949,7 +949,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		    free (buf);
 		  }
 #else
-		fprintf (stderr, _("%s: option `-W %s' is ambiguous\n"),
+		fprintf (stderr, _("%s: option '-W %s' is ambiguous\n"),
 			 argv[0], argv[d->optind]);
 #endif
 	      }
@@ -974,7 +974,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			char *buf;
 
 			if (__asprintf (&buf, _("\
-%s: option `-W %s' doesn't allow an argument\n"),
+%s: option '-W %s' doesn't allow an argument\n"),
 					argv[0], pfound->name) >= 0)
 			  {
 			    _IO_flockfile (stderr);
@@ -995,7 +995,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			  }
 #else
 			fprintf (stderr, _("\
-%s: option `-W %s' doesn't allow an argument\n"),
+%s: option '-W %s' doesn't allow an argument\n"),
 				 argv[0], pfound->name);
 #endif
 		      }
@@ -1016,7 +1016,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			char *buf;
 
 			if (__asprintf (&buf, _("\
-%s: option `%s' requires an argument\n"),
+%s: option '%s' requires an argument\n"),
 					argv[0], argv[d->optind - 1]) >= 0)
 			  {
 			    _IO_flockfile (stderr);
@@ -1037,7 +1037,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 			  }
 #else
 			fprintf (stderr,
-				 _("%s: option `%s' requires an argument\n"),
+				 _("%s: option '%s' requires an argument\n"),
 				 argv[0], argv[d->optind - 1]);
 #endif
 		      }
@@ -1214,7 +1214,7 @@ main (int argc, char **argv)
 	  break;
 
 	case 'c':
-	  printf ("option c with value `%s'\n", optarg);
+	  printf ("option c with value '%s'\n", optarg);
 	  break;
 
 	case '?':

@@ -1609,13 +1609,13 @@ void table::add_entry(int r, int c, const string &str, const entry_format *f,
     case FORMAT_HLINE:
       if (str.length() != 0)
 	error_with_file_and_line(fn, ln,
-				 "non-empty data entry for `_' format ignored");
+				 "non-empty data entry for '_' format ignored");
       e = new single_line_entry(this, f);
       break;
     case FORMAT_DOUBLE_HLINE:
       if (str.length() != 0)
 	error_with_file_and_line(fn, ln,
-				 "non-empty data entry for `=' format ignored");
+				 "non-empty data entry for '=' format ignored");
       e = new double_line_entry(this, f);
       break;
     default:
@@ -2132,7 +2132,7 @@ void table::compute_expand_width()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tm1 \"warning: file `\\n[.F]', around line \\n[.c]:\n"
+    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
 	   ".tm1 \"  table wider than line width\n");
     prints(".ig\n"
 	   ".EQ\n"
@@ -2184,7 +2184,7 @@ void table::compute_separation_factor()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tm1 \"warning: file `\\n[.F]', around line \\n[.c]:\n"
+    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
 	   ".tm1 \"  column separation set to zero\n"
 	   ".nr " SEPARATION_FACTOR_REG " 0\n");
   }
@@ -2192,7 +2192,7 @@ void table::compute_separation_factor()
 	 ".el .if \\n[" SEPARATION_FACTOR_REG "]<1n \\{\\\n");
   entry_list->set_location();
   if (!(flags & NOWARN)) {
-    prints(".tm1 \"warning: file `\\n[.F]', around line \\n[.c]:\n"
+    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
 	   ".tm1 \"  table squeezed horizontally to fit line length\n");
     prints(".ig\n"
 	   ".EQ\n"

@@ -159,7 +159,7 @@ int do_file(const char *filename)
   whole_filename += '\0';
   free(file_name_in_path);
   if (fp == 0) {
-    error("can't open `%1': %2", whole_filename.contents(), strerror(err));
+    error("can't open '%1': %2", whole_filename.contents(), strerror(err));
     return 0;
   }
   normalize_for_lf(whole_filename);

@@ -1742,7 +1742,7 @@ void assert_state::add (assert_pos **h,
 	l = "<none>";
       if (v == NULL)
 	v = "no value at all";
-      fprintf(stderr, "%s:%s:error in assert format of id=%s expecting value to be prefixed with an `=' got %s\n",
+      fprintf(stderr, "%s:%s:error in assert format of id=%s expecting value to be prefixed with an '=' got %s\n",
 	      f, l, i, v);
     }
     t->id = i;
@@ -4240,7 +4240,7 @@ void html_printer::draw(int code, int *p, int np, const environment *env)
     break;
 
   default:
-    error("unrecognised drawing command `%1'", char(code));
+    error("unrecognised drawing command '%1'", char(code));
     break;
   }
 }
@@ -4703,7 +4703,7 @@ void html_printer::set_char(glyph *g, font *f, const environment *env,
   style sty(f, env->size, env->height, env->slant, env->fontno, *env->col);
   if (sty.slant != 0) {
     if (sty.slant > 80 || sty.slant < -80) {
-      error("silly slant `%1' degrees", sty.slant);
+      error("silly slant '%1' degrees", sty.slant);
       sty.slant = 0;
     }
   }
@@ -4741,16 +4741,16 @@ void html_printer::set_numbered_char(int num, const environment *env,
   glyph *g = number_to_glyph(num);
   int fn = env->fontno;
   if (fn < 0 || fn >= nfonts) {
-    error("bad font position `%1'", fn);
+    error("bad font position '%1'", fn);
     return;
   }
   font *f = font_table[fn];
   if (f == 0) {
-    error("no font mounted at `%1'", fn);
+    error("no font mounted at '%1'", fn);
     return;
   }
   if (!f->contains(g)) {
-    error("font `%1' does not contain numbered character %2",
+    error("font '%1' does not contain numbered character %2",
 	  f->get_name(),
 	  num);
     return;
@@ -4772,21 +4772,21 @@ glyph *html_printer::set_char_and_width(const char *nm, const environment *env,
   glyph *g = name_to_glyph(nm);
   int fn = env->fontno;
   if (fn < 0 || fn >= nfonts) {
-    error("bad font position `%1'", fn);
+    error("bad font position '%1'", fn);
     return UNDEFINED_GLYPH;
   }
   *f = font_table[fn];
   if (*f == 0) {
-    error("no font mounted at `%1'", fn);
+    error("no font mounted at '%1'", fn);
     return UNDEFINED_GLYPH;
   }
   if (!(*f)->contains(g)) {
     if (nm[0] != '\0' && nm[1] == '\0')
-      error("font `%1' does not contain ascii character `%2'",
+      error("font '%1' does not contain ascii character '%2'",
 	    (*f)->get_name(),
 	    nm[0]);
     else
-      error("font `%1' does not contain special character `%2'",
+      error("font '%1' does not contain special character '%2'",
 	    (*f)->get_name(),
 	    nm);
     return UNDEFINED_GLYPH;

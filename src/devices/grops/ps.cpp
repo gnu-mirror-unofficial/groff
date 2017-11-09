@@ -441,7 +441,7 @@ void ps_font::handle_unknown_font_command(const char *command, const char *arg,
   if (strcmp(command, "encoding") == 0) {
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`encoding' command requires an argument");
+			       "'encoding' command requires an argument");
     else
       encoding = strsave(arg);
   }
@@ -453,7 +453,7 @@ static void handle_unknown_desc_command(const char *command, const char *arg,
   if (strcmp(command, "broken") == 0) {
     if (arg == 0)
       error_with_file_and_line(filename, lineno,
-			       "`broken' command requires an argument");
+			       "'broken' command requires an argument");
     else if (!bflag)
       broken_flags = atoi(arg);
   }
@@ -694,7 +694,7 @@ void ps_printer::set_char(glyph *g, font *f, const environment *env, int w,
   style sty(f, sub, env->size, env->height, env->slant);
   if (sty.slant != 0) {
     if (sty.slant > 80 || sty.slant < -80) {
-      error("silly slant `%1' degrees", sty.slant);
+      error("silly slant '%1' degrees", sty.slant);
       sty.slant = 0;
     }
   }
@@ -786,7 +786,7 @@ void ps_printer::define_encoding(const char *encoding, int encoding_index)
   char *path;
   FILE *fp = font::open_file(encoding, &path);
   if (fp == 0)
-    fatal("can't open encoding file `%1'", encoding);
+    fatal("can't open encoding file '%1'", encoding);
   int lineno = 1;
   const int BUFFER_SIZE = 512;
   char buf[BUFFER_SIZE];
@@ -880,7 +880,7 @@ void ps_printer::set_style(const style &sty)
   out.put_literal_symbol(buf);
   const char *psname = sty.f->get_internal_name();
   if (psname == 0)
-    fatal("no internalname specified for font `%1'", sty.f->get_name());
+    fatal("no internalname specified for font '%1'", sty.f->get_name());
   char *encoding = ((ps_font *)sty.f)->encoding;
   if (sty.sub == 0) {
     if (encoding != 0) {
@@ -1243,7 +1243,7 @@ void ps_printer::draw(int code, int *p, int np, const environment *env)
     }
     break;
   default:
-    error("unrecognised drawing command `%1'", char(code));
+    error("unrecognised drawing command '%1'", char(code));
     break;
   }
   output_hpos = output_vpos = -1;
@@ -1354,7 +1354,7 @@ void ps_printer::end_page(int)
   set_color(&default_color);
   out.put_symbol("EP");
   if (invis_count != 0) {
-    error("missing `endinvis' command");
+    error("missing 'endinvis' command");
     invis_count = 0;
   }
 }
@@ -1541,7 +1541,7 @@ void ps_printer::special(char *arg, const environment *env, char type)
   for (; *p != '\0' && *p != ':' && *p != ' ' && *p != '\n'; p++)
     ;
   if (*p == '\0' || strncmp(tag, "ps", p - tag) != 0) {
-    error("X command without `ps:' tag ignored");
+    error("X command without 'ps:' tag ignored");
     return;
   }
   p++;
@@ -1562,7 +1562,7 @@ void ps_printer::special(char *arg, const environment *env, char type)
       (this->*(proc_table[i].proc))(p, env);
       return;
     }
-  error("X command `%1' not recognised", command);
+  error("X command '%1' not recognised", command);
 }
 
 // A conforming PostScript document must not have lines longer
@@ -1658,7 +1658,7 @@ void ps_printer::do_mdef(char *arg, const environment *)
     return;
   }
   if (n < 0) {
-    error("out of range argument `%1' to X mdef command", int(n));
+    error("out of range argument '%1' to X mdef command", int(n));
     return;
   }
   arg = p;
@@ -1702,11 +1702,11 @@ void ps_printer::do_import(char *arg, const environment *env)
     if (*p == '\0')
       error("too few arguments for X import command");
     else
-      error("invalid argument `%1' for X import command", p);
+      error("invalid argument '%1' for X import command", p);
     return;
   }
   if (*p != '\0') {
-    error("superfluous argument `%1' for X import command", p);
+    error("superfluous argument '%1' for X import command", p);
     return;
   }
   int llx = parms[0];
@@ -1716,12 +1716,12 @@ void ps_printer::do_import(char *arg, const environment *env)
   int desired_width = parms[4];
   int desired_height = parms[5];
   if (desired_width <= 0) {
-    error("bad width argument `%1' for X import command: must be > 0",
+    error("bad width argument '%1' for X import command: must be > 0",
 	  desired_width);
     return;
   }
   if (nparms == 6 && desired_height <= 0) {
-    error("bad height argument `%1' for X import command: must be > 0",
+    error("bad height argument '%1' for X import command: must be > 0",
 	  desired_height);
     return;
   }
@@ -1767,7 +1767,7 @@ void ps_printer::do_invis(char *, const environment *)
 void ps_printer::do_endinvis(char *, const environment *)
 {
   if (invis_count == 0)
-    error("unbalanced `endinvis' command");
+    error("unbalanced 'endinvis' command");
   else
     --invis_count;
 }
@@ -1802,7 +1802,7 @@ int main(int argc, char **argv)
       break;
     case 'c':
       if (sscanf(optarg, "%d", &ncopies) != 1 || ncopies <= 0) {
-	error("bad number of copies `%1'", optarg);
+	error("bad number of copies '%1'", optarg);
 	ncopies = 1;
       }
       break;
@@ -1824,7 +1824,7 @@ int main(int argc, char **argv)
     case 'p':
       if (!font::scan_papersize(optarg, 0,
 				&user_paper_length, &user_paper_width))
-	error("invalid custom paper size `%1' ignored", optarg);
+	error("invalid custom paper size '%1' ignored", optarg);
       break;
     case 'P':
       env = "GROPS_PROLOGUE";
@@ -1840,7 +1840,7 @@ int main(int argc, char **argv)
       break;
     case 'w':
       if (sscanf(optarg, "%d", &linewidth) != 1 || linewidth < 0) {
-	error("bad linewidth `%1'", optarg);
+	error("bad linewidth '%1'", optarg);
 	linewidth = -1;
       }
       break;

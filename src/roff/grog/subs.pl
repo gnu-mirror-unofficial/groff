@@ -325,7 +325,7 @@ sub handle_file_ext {
     # test for each file name in the arguments
     unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
       print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	"$Prog: can't open \`$file\': $!";
+	"$Prog: can't open \'$file\': $!";
       next;
     }
 
@@ -430,7 +430,7 @@ sub handle_whole_files {
   foreach my $file ( @filespec ) {
     unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
       print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	"$Prog: can't open \`$file\': $!";
+	"$Prog: can't open \'$file\': $!";
       next;
     }
     my $line = <FILE>; # get single line
@@ -942,11 +942,11 @@ sub make_groff_device {
     } else {	# no --ligature argument
       if ( $with_warnings ) {
 	print STDERR <<EOF;
-If you have trouble with ligatures like `fi' in the `groff' output, you
+If you have trouble with ligatures like 'fi' in the 'groff' output, you
 can proceed as one of
-- add `grog' option `--with_ligatures' or
-- use the `grog' option combination `-P-y -PU' or
-- try to remove the font named similar to `fonts-texgyre' from your system.
+- add 'grog' option '--with_ligatures' or
+- use the 'grog' option combination '-P-y -PU' or
+- try to remove the font named similar to 'fonts-texgyre' from your system.
 EOF
       }	# end of warning
     }	# end of ligature
@@ -1154,7 +1154,7 @@ sub make_groff_line_rest {
     # ignore other -m arguments and the found ones
     $last_m_arg = $Mparams[-1];	# take the last -m argument
     print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-      $Prog . ": more than 1 `-m' argument: @Mparams";
+      $Prog . ": more than 1 '-m' argument: @Mparams";
     print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
       'We take the last one: ' . $last_m_arg;
   } elsif ( $nr_m_args == 1 ) {
@@ -1222,24 +1222,24 @@ sub help {
 usage: grog [option]... [--] [filespec]...
 
 "filespec" is either the name of an existing, readable file or "-" for
-standard input.  If no `filespec' is specified, standard input is
-assumed automatically.  All arguments after a `--' are regarded as file
-names, even if they start with a `-' character.
+standard input.  If no 'filespec' is specified, standard input is
+assumed automatically.  All arguments after a '--' are regarded as file
+names, even if they start with a '-' character.
 
-`option' is either a `groff' option or one of these:
+'option' is either a 'groff' option or one of these:
 
 -h|--help	print this uasge message and exit
 -v|--version	print version information and exit
 
 -C		compatibility mode
---ligatures	include options `-P-y -PU' for internal font, which
-		preserves the ligatures like `fi'
+--ligatures	include options '-P-y -PU' for internal font, which
+		preserves the ligatures like 'fi'
 --run		run the checked-out groff command
 --warnings	display more warnings to standard error
 
-All other options should be `groff' 1-character options.  These are then
-appended to the generated `groff' command line.  The `-m' options will
-be checked by `grog'.
+All other options should be 'groff' 1-character options.  These are then
+appended to the generated 'groff' command line.  The '-m' options will
+be checked by 'grog'.
 
 EOF
   exit 0;

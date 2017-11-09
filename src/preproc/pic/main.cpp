@@ -241,7 +241,7 @@ void do_picture(FILE *fp)
     if (c == '\n') 
       current_lineno++;
     if (filename.length() == 0)
-      error("missing filename after `<'");
+      error("missing filename after '<'");
     else {
       filename += '\0';
       const char *old_filename = current_filename;
@@ -307,7 +307,7 @@ void do_file(const char *filename)
     fp = fopen(filename, "r");
     if (fp == 0) {
       delete out;
-      fatal("can't open `%1': %2", filename, strerror(errno));
+      fatal("can't open '%1': %2", filename, strerror(errno));
     }
   }
   string fn(filename);
@@ -467,7 +467,7 @@ void do_whole_file(const char *filename)
     errno = 0;
     fp = fopen(filename, "r");
     if (fp == 0)
-      fatal("can't open `%1': %2", filename, strerror(errno));
+      fatal("can't open '%1': %2", filename, strerror(errno));
   }
   lex_init(new file_input(fp, filename));
   if (yyparse())

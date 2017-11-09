@@ -695,7 +695,7 @@ environment::environment(symbol nm)
   if (!is_good_fontno(1))
     fatal("font number 1 not a valid font");
   if (family->make_definite(1) < 0)
-    fatal("invalid default family `%1'", default_family.contents());
+    fatal("invalid default family '%1'", default_family.contents());
   prev_fontno = fontno;
 }
 
@@ -1259,7 +1259,7 @@ void override_sizes()
 	break;
       // fall through
     default:
-      warning(WARN_RANGE, "bad size range `%1'", p);
+      warning(WARN_RANGE, "bad size range '%1'", p);
       return;
     }
     if (i + 2 > n) {
@@ -2229,15 +2229,15 @@ node *environment::make_tag(const char *nm, int i)
 void environment::dump_troff_state()
 {
 #define SPACES "                                            "
-  fprintf(stderr, SPACES "register `in' = %d\n", curenv->indent.to_units());
+  fprintf(stderr, SPACES "register 'in' = %d\n", curenv->indent.to_units());
   if (curenv->have_temporary_indent)
-    fprintf(stderr, SPACES "register `ti' = %d\n",
+    fprintf(stderr, SPACES "register 'ti' = %d\n",
 	    curenv->temporary_indent.to_units());
-  fprintf(stderr, SPACES "centered lines `ce' = %d\n", curenv->center_lines);
-  fprintf(stderr, SPACES "register `ll' = %d\n",
+  fprintf(stderr, SPACES "centered lines 'ce' = %d\n", curenv->center_lines);
+  fprintf(stderr, SPACES "register 'll' = %d\n",
 	  curenv->line_length.to_units());
-  fprintf(stderr, SPACES "fill `fi=1/nf=0' = %d\n", curenv->fill);
-  fprintf(stderr, SPACES "page offset `po' = %d\n",
+  fprintf(stderr, SPACES "fill 'fi=1/nf=0' = %d\n", curenv->fill);
+  fprintf(stderr, SPACES "page offset 'po' = %d\n",
 	  topdiv->get_page_offset().to_units());
   fprintf(stderr, SPACES "seen_break = %d\n", curenv->seen_break);
   fprintf(stderr, SPACES "seen_space = %d\n", curenv->seen_space);
@@ -2487,7 +2487,7 @@ void adjust()
 	  warning(WARN_RANGE, "negative adjustment mode");
 	else if (n > 5) {
 	  curenv->adjust_mode = 5;
-	  warning(WARN_RANGE, "adjustment mode `%1' out of range", n);
+	  warning(WARN_RANGE, "adjustment mode '%1' out of range", n);
 	}
 	else
 	  curenv->adjust_mode = n;
@@ -3225,8 +3225,8 @@ void environment::print_env()
   errprint("  requested size: %1s\n", requested_size);
   errprint("  previous font number: %1\n", prev_fontno);
   errprint("  font number: %1\n", fontno);
-  errprint("  previous family: `%1'\n", prev_family->nm.contents());
-  errprint("  family: `%1'\n", family->nm.contents());
+  errprint("  previous family: '%1'\n", prev_family->nm.contents());
+  errprint("  family: '%1'\n", family->nm.contents());
   errprint("  space size: %1/36 em\n", space_size);
   errprint("  sentence space size: %1/36 em\n", sentence_space_size);
   errprint("  previous line interrupted: %1\n",
@@ -3266,7 +3266,7 @@ void environment::print_env()
     errprint("  underline spaces: %1\n", underline_spaces ? "yes" : "no");
   }
   if (input_trap.contents()) {
-    errprint("  input trap macro: `%1'\n", input_trap.contents());
+    errprint("  input trap macro: '%1'\n", input_trap.contents());
     errprint("  input trap line counter: %1\n", input_trap_count);
     errprint("  continued input trap: %1\n",
 	     continued_input_trap ? "yes" : "no");
@@ -3806,7 +3806,7 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
   char *path = 0;
   FILE *fp = mac_path->open_file(name, &path);
   if (fp == 0) {
-    error("can't find hyphenation patterns file `%1'", name);
+    error("can't find hyphenation patterns file '%1'", name);
     return;
   }
   int c = hpf_getc(fp);
@@ -3903,7 +3903,7 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
       }
       else if (c == '{') {
 	if (have_patterns || have_hyphenation)
-	  error("`{' not allowed within %1 group",
+	  error("'{' not allowed within %1 group",
 		have_patterns ? "\\patterns" : "\\hyphenation");
 	c = hpf_getc(fp);		// skipped if not starting \patterns
 					// or \hyphenation

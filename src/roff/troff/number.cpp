@@ -226,7 +226,7 @@ static int start_number()
     return 0;
   }
   if (tok.right_brace()) {
-    warning(WARN_RIGHT_BRACE, "`\\}' where number expected");
+    warning(WARN_RIGHT_BRACE, "'\\}' where number expected");
     return 0;
   }
   return 1;
@@ -461,7 +461,7 @@ static int parse_term(units *v, int scale_indicator,
 	scale_indicator = c;
       }
       else {
-	error("expected `;' after scale-indicator (got %1)",
+	error("expected ';' after scale-indicator (got %1)",
 	      tok.description());
 	return 0;
       }
@@ -476,7 +476,7 @@ static int parse_term(units *v, int scale_indicator,
     if (tok.ch() != ')') {
       if (rigid)
 	return 0;
-      warning(WARN_SYNTAX, "missing `)' (got %1)", tok.description());
+      warning(WARN_SYNTAX, "missing ')' (got %1)", tok.description());
     }
     else
       tok.next();
@@ -556,7 +556,7 @@ static int parse_term(units *v, int scale_indicator,
     case 'z':
       if (c != 'u' && c != 'z') {
 	warning(WARN_SCALE,
-		"only `z' and `u' scale indicators valid in this context");
+		"only 'z' and 'u' scale indicators valid in this context");
 	break;
       }
       si = c;
@@ -569,7 +569,7 @@ static int parse_term(units *v, int scale_indicator,
       break;
     default:
       if (c == 'z') {
-	warning(WARN_SCALE, "`z' scale indicator invalid in this context");
+	warning(WARN_SCALE, "'z' scale indicator invalid in this context");
 	break;
       }
       si = c;

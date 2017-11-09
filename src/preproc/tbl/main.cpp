@@ -421,7 +421,7 @@ options *process_options(table_input &in)
       while (*q != ')' && *q != '\0')
 	q++;
       if (*q == '\0')
-	error("missing `)'");
+	error("missing ')'");
       else
 	*q++ = '\0';
     }
@@ -431,20 +431,20 @@ options *process_options(table_input &in)
     }
     else if (strieq(p, "tab")) {
       if (!arg)
-	error("`tab' option requires argument in parentheses");
+	error("'tab' option requires argument in parentheses");
       else {
 	if (arg[0] == '\0' || arg[1] != '\0')
-	  error("argument to `tab' option must be a single character");
+	  error("argument to 'tab' option must be a single character");
 	else
 	  opt->tab_char = arg[0];
       }
     }
     else if (strieq(p, "linesize")) {
       if (!arg)
-	error("`linesize' option requires argument in parentheses");
+	error("'linesize' option requires argument in parentheses");
       else {
 	if (sscanf(arg, "%d", &opt->linesize) != 1)
-	  error("bad linesize `%s'", arg);
+	  error("bad linesize '%s'", arg);
 	else if (opt->linesize <= 0) {
 	  error("linesize must be positive");
 	  opt->linesize = 0;
@@ -453,9 +453,9 @@ options *process_options(table_input &in)
     }
     else if (strieq(p, "delim")) {
       if (!arg)
-	error("`delim' option requires argument in parentheses");
+	error("'delim' option requires argument in parentheses");
       else if (arg[0] == '\0' || arg[1] == '\0' || arg[2] != '\0')
-	error("argument to `delim' option must be two characters");
+	error("argument to 'delim' option must be two characters");
       else {
 	opt->delim[0] = arg[0];
 	opt->delim[1] = arg[1];
@@ -463,50 +463,50 @@ options *process_options(table_input &in)
     }
     else if (strieq(p, "center") || strieq(p, "centre")) {
       if (arg)
-	error("`center' option does not take an argument");
+	error("'center' option does not take an argument");
       opt->flags |= table::CENTER;
     }
     else if (strieq(p, "expand")) {
       if (arg)
-	error("`expand' option does not take an argument");
+	error("'expand' option does not take an argument");
       opt->flags |= table::EXPAND;
     }
     else if (strieq(p, "box") || strieq(p, "frame")) {
       if (arg)
-	error("`box' option does not take an argument");
+	error("'box' option does not take an argument");
       opt->flags |= table::BOX;
     }
     else if (strieq(p, "doublebox") || strieq(p, "doubleframe")) {
       if (arg)
-	error("`doublebox' option does not take an argument");
+	error("'doublebox' option does not take an argument");
       opt->flags |= table::DOUBLEBOX;
     }
     else if (strieq(p, "allbox")) {
       if (arg)
-	error("`allbox' option does not take an argument");
+	error("'allbox' option does not take an argument");
       opt->flags |= table::ALLBOX;
     }
     else if (strieq(p, "nokeep")) {
       if (arg)
-	error("`nokeep' option does not take an argument");
+	error("'nokeep' option does not take an argument");
       opt->flags |= table::NOKEEP;
     }
     else if (strieq(p, "nospaces")) {
       if (arg)
-	error("`nospaces' option does not take an argument");
+	error("'nospaces' option does not take an argument");
       opt->flags |= table::NOSPACES;
     }
     else if (strieq(p, "nowarn")) {
       if (arg)
-	error("`nowarn' option does not take an argument");
+	error("'nowarn' option does not take an argument");
       opt->flags |= table::NOWARN;
     }
     else if (strieq(p, "decimalpoint")) {
       if (!arg)
-	error("`decimalpoint' option requires argument in parentheses");
+	error("'decimalpoint' option requires argument in parentheses");
       else {
 	if (arg[0] == '\0' || arg[1] != '\0')
-	  error("argument to `decimalpoint' option must be a single character");
+	  error("argument to 'decimalpoint' option must be a single character");
 	else
 	  opt->decimal_point_char = arg[0];
       }
@@ -515,7 +515,7 @@ options *process_options(table_input &in)
       opt->flags |= table::EXPERIMENTAL;
     }
     else {
-      error("unrecognised global option `%1'", p);
+      error("unrecognised global option '%1'", p);
       // delete opt;
       // return 0;
     }
@@ -835,7 +835,7 @@ format *process_format(table_input &in, options *opt,
       default:
 	if (c == opt->tab_char)
 	  break;
-	error("unrecognised format `%1'", char(c));
+	error("unrecognised format '%1'", char(c));
 	free_input_entry_format_list(list);
 	return 0;
       }
@@ -902,7 +902,7 @@ format *process_format(table_input &in, options *opt,
 	  for (;;) {
 	    c = in.get();
 	    if (c == EOF || c == ' ' || c == '\t') {
-	      error("missing `)'");
+	      error("missing ')'");
 	      break;
 	    }
 	    if (c == ')') {
@@ -941,7 +941,7 @@ format *process_format(table_input &in, options *opt,
 	  for (;;) {
 	    c = in.get();
 	    if (c == EOF || c == ' ' || c == '\t') {
-	      error("missing `)'");
+	      error("missing ')'");
 	      break;
 	    }
 	    if (c == ')') {
@@ -972,7 +972,7 @@ format *process_format(table_input &in, options *opt,
 	  c = in.get();
 	}
 	if (c == EOF || !csdigit(c)) {
-	  error("`p' modifier must be followed by number");
+	  error("'p' modifier must be followed by number");
 	  list->point_size.inc = 0;
 	}
 	else {
@@ -1009,7 +1009,7 @@ format *process_format(table_input &in, options *opt,
 	  c = in.get();
 	}
 	if (c == EOF || !csdigit(c)) {
-	  error("`v' modifier must be followed by number");
+	  error("'v' modifier must be followed by number");
 	  list->vertical_spacing.inc = 0;
 	}
 	else {
@@ -1036,7 +1036,7 @@ format *process_format(table_input &in, options *opt,
 	  c = in.get();
 	  while (c != ')') {
 	    if (c == EOF || c == '\n') {
-	      error("missing `)'");
+	      error("missing ')'");
 	      free_input_entry_format_list(list);
 	      return 0;
 	    }
@@ -1053,7 +1053,7 @@ format *process_format(table_input &in, options *opt,
 	  else
 	    list->width = "";
 	  if (c == EOF || !csdigit(c))
-	    error("bad argument for `w' modifier");
+	    error("bad argument for 'w' modifier");
 	  else {
 	    do {
 	      list->width += char(c);
@@ -1108,7 +1108,7 @@ format *process_format(table_input &in, options *opt,
       c = in.get();
     } while (c == ' ' || c == '\t');
     if (c != '\n') {
-      error("`.' not last character on line");
+      error("'.' not last character on line");
       free_input_entry_format_list(list);
       return 0;
     }
@@ -1225,7 +1225,7 @@ format *process_format(table_input &in, options *opt,
     return 0;
   }
   if (have_expand && (opt->flags & table::EXPAND)) {
-    error("ignoring global `expand' option because of `x' specifiers");
+    error("ignoring global 'expand' option because of 'x' specifiers");
     opt->flags &= ~table::EXPAND;
   }
   return f;
@@ -1435,7 +1435,7 @@ table *process_data(table_input &in, format *f, options *opt)
 		  if (c == '\n')
 		    in.unget(c);
 		  input_entry += '\0';
-		  error("excess data entry `%1' discarded",
+		  error("excess data entry '%1' discarded",
 			input_entry.contents());
 		  if (c == '\n')
 		    (void)in.get();
@@ -1612,7 +1612,7 @@ int main(int argc, char **argv)
 	errno = 0;
 	FILE *fp = fopen(argv[i], "r");
 	if (fp == 0)
-	  fatal("can't open `%1': %2", argv[i], strerror(errno));
+	  fatal("can't open '%1': %2", argv[i], strerror(errno));
 	else {
 	  current_lineno = 1;
 	  string fn(argv[i]);

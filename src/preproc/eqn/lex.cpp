@@ -850,15 +850,15 @@ int get_token(int lookup_flag = 0)
 	    quoted = 0;
 	    switch (c) {
 	    case EOF:
-	      lex_error("`\\' ignored at end of equation");
+	      lex_error("'\\' ignored at end of equation");
 	      done = 1;
 	      break;
 	    case '\n':
-	      lex_error("`\\' ignored because followed by newline");
+	      lex_error("'\\' ignored because followed by newline");
 	      done = 1;
 	      break;
 	    case '\t':
-	      lex_error("`\\' ignored because followed by tab");
+	      lex_error("'\\' ignored because followed by tab");
 	      done = 1;
 	      break;
 	    case '"':
@@ -932,7 +932,7 @@ void do_include()
   errno = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == 0) {
-    lex_error("can't open included file `%1'", filename);
+    lex_error("can't open included file '%1'", filename);
     return;
   }
   current_input = new file_input(fp, filename, current_input);
@@ -992,7 +992,7 @@ void do_gsize()
   }
   token_buffer += '\0';
   if (!set_gsize(token_buffer.contents()))
-    lex_error("invalid size `%1'", token_buffer.contents());
+    lex_error("invalid size '%1'", token_buffer.contents());
 }
 
 void do_gfont()
@@ -1039,7 +1039,7 @@ void do_space()
   char *ptr;
   long n = strtol(token_buffer.contents(), &ptr, 10);
   if (n == 0 && ptr == token_buffer.contents())
-    lex_error("bad argument `%1' to space command", token_buffer.contents());
+    lex_error("bad argument '%1' to space command", token_buffer.contents());
   else
     set_space(int(n));
 }
@@ -1071,7 +1071,7 @@ void do_delim()
     c = get_char();
   int d;
   if (c == EOF || (d = get_char()) == EOF)
-    lex_error("end of file while reading argument to `delim'");
+    lex_error("end of file while reading argument to 'delim'");
   else {
     if (c == 'o' && d == 'f' && peek_char() == 'f') {
       (void)get_char();
@@ -1125,7 +1125,7 @@ void do_set()
   token_buffer += '\0';
   int n;
   if (sscanf(&token_buffer[0], "%d", &n) != 1) {
-    lex_error("bad number `%1'", token_buffer.contents());
+    lex_error("bad number '%1'", token_buffer.contents());
     return;
   }
   set_param(param.contents(), n);
