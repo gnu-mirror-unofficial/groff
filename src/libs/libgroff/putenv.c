@@ -43,7 +43,7 @@ PTR malloc();
 
 extern char **environ;
 
-/* Put STRING, which is of the form `NAME=VALUE', in the environment.  */
+/* Put STRING, which is of the form 'NAME=VALUE', in the environment.  */
 
 int putenv(const char *string)
 {

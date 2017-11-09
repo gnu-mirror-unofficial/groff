@@ -36,8 +36,8 @@ public:
 };
 
 /* The idea is that the script should attach to the rightmost box
-of a list. For example, given `2x sup 3', the superscript should
-attach to `x' rather than `2x'. */
+of a list. For example, given '2x sup 3', the superscript should
+attach to 'x' rather than '2x'. */
 
 box *make_script_box(box *nuc, box *sub, box *sup)
 {

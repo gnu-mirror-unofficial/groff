@@ -166,7 +166,7 @@ const char *system_shell_dash_c(void)
 
   shell_name = system_shell_name();
 
-  /* Assume that if the shell name ends in `sh', it's Unixy */
+  /* Assume that if the shell name ends in 'sh', it's Unixy */
   if (strcasecmp(shell_name + strlen(shell_name) - strlen("sh"), "sh") == 0)
     dash_c = "-c";
   else
@@ -340,7 +340,7 @@ int run_pipeline(int ncommands, char ***commands, int no_pipe)
 
 #else  /* not _WIN32 */
 
-/* MSDOS doesn't have `fork', so we need to simulate the pipe by running
+/* MSDOS doesn't have 'fork', so we need to simulate the pipe by running
    the programs in sequence with standard streams redirected to and
    from temporary files.
 */
@@ -364,16 +364,16 @@ int run_pipeline(int ncommands, char ***commands, int no_pipe)
   int i, f, ret = 0;
 
   /* Choose names for a pair of temporary files to implement the pipeline.
-     Microsoft's `tempnam' uses the directory specified by `getenv("TMP")'
+     Microsoft's 'tempnam' uses the directory specified by 'getenv("TMP")'
      if it exists; in case it doesn't, try the GROFF alternatives, or
-     `getenv("TEMP")' as last resort -- at least one of these had better
+     'getenv("TEMP")' as last resort -- at least one of these had better
      be set, since Microsoft's default has a high probability of failure. */
   char *tmpdir;
   if ((tmpdir = getenv("GROFF_TMPDIR")) == NULL
       && (tmpdir = getenv("TMPDIR")) == NULL)
     tmpdir = getenv("TEMP");
 
-  /* Don't use `tmpnam' here: Microsoft's implementation yields unusable
+  /* Don't use 'tmpnam' here: Microsoft's implementation yields unusable
      file names if current directory is on network share with read-only
      root. */
   tmpfiles[0] = tempnam(tmpdir, NULL);

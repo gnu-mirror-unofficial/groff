@@ -595,7 +595,7 @@ public:
   void end_of_line();
 };
 
-// `pl' is in inches
+// 'pl' is in inches
 ps_printer::ps_printer(double pl)
 : out(0, MAX_LINE_LENGTH),
   pages_output(0),

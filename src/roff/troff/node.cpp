@@ -1176,7 +1176,7 @@ void troff_output_file::put_char(charinfo *ci, tfont *tf,
   }
 }
 
-// set_font calls `flush_tbuf' if necessary.
+// set_font calls 'flush_tbuf' if necessary.
 
 void troff_output_file::set_font(tfont *tf)
 {
@@ -1241,7 +1241,7 @@ void troff_output_file::set_font(tfont *tf)
   current_tfont = tf;
 }
 
-// fill_color calls `flush_tbuf' and `do_motion' if necessary.
+// fill_color calls 'flush_tbuf' and 'do_motion' if necessary.
 
 void troff_output_file::fill_color(color *col)
 {
@@ -1294,7 +1294,7 @@ void troff_output_file::fill_color(color *col)
   put('\n');
 }
 
-// glyph_color calls `flush_tbuf' and `do_motion' if necessary.
+// glyph_color calls 'flush_tbuf' and 'do_motion' if necessary.
 
 void troff_output_file::glyph_color(color *col)
 {

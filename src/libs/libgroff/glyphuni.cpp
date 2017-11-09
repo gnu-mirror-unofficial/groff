@@ -334,9 +334,9 @@ struct S {
   { "*f", "03D5" },
   { "+p", "03D6" },
   { "+e", "03F5" },
-  // `-' and `hy' denote a HYPHEN, usually a glyph with a smaller width than
+  // '-' and 'hy' denote a HYPHEN, usually a glyph with a smaller width than
   // the MINUS sign.  Users who are viewing broken man pages that assume
-  // that `-' denotes a U+002D character can either fix the broken man pages
+  // that '-' denotes a U+002D character can either fix the broken man pages
   // or apply the workaround described in the PROBLEMS file.
   { "-", "2010" },
   { "hy", "2010" },
@@ -397,8 +397,8 @@ struct S {
   { "product", "220F" },
   { "coproduct", "2210" },
   { "sum", "2211" },
-  // `mi' and `\-' represent a MINUS sign.  But it is used in many man pages
-  // to denote the U+002D character that introduces a command-line option. 
+  // 'mi' and '\-' represent a MINUS sign.  But it is used in many man pages
+  // to denote the U+002D character that introduces a command-line option.
   // For devices that support copy&paste, such as devhtml and devutf8, the
   // user can apply the workaround described in the PROBLEMS file.
   { "\\-", "2212" },
@@ -484,17 +484,17 @@ struct S {
   { "HE", "2665" },
   { "DI", "2666" },
   { "OK", "2713" },
-  // The `left angle bracket' and `right angle bracket' could be mapped to
+  // The 'left angle bracket' and 'right angle bracket' could be mapped to
   // either U+2329,U+232A or U+3008,U+3009 or U+27E8,U+27E9.  But the first
   // and second possibility are double-width characters (see Unicode's
-  // `DerivedEastAsianWidth.txt' file) and are therefore not suitable for
+  // 'DerivedEastAsianWidth.txt' file) and are therefore not suitable for
   // general use, whereas the third possibility is single-width.
   //
   // The devhtml device overrides this mapping, because
   //
   //   http://www.w3.org/TR/html401/sgml/entities.html
   //
-  // says that in HTML, `&lang;' and `&rang;' are U+2329,U+232A,
+  // says that in HTML, '&lang;' and '&rang;' are U+2329,U+232A,
   // respectively.
   { "la", "27E8" },
   { "ra", "27E9" },

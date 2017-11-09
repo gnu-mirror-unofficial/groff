@@ -886,7 +886,7 @@ format *process_format(table_input &in, options *opt,
       case 'E':
 	c = in.get();
 	list->equal = 1;
-	// `e' and `x' are mutually exclusive
+	// 'e' and 'x' are mutually exclusive
 	list->expand = 0;
 	break;
       case 'f':
@@ -1061,16 +1061,16 @@ format *process_format(table_input &in, options *opt,
 	    } while (c != EOF && csdigit(c));
 	  }
 	}
-	// `w' and `x' are mutually exclusive
+	// 'w' and 'x' are mutually exclusive
 	list->expand = 0;
 	break;
       case 'x':
       case 'X':
 	c = in.get();
 	list->expand = 1;
-	// `x' and `e' are mutually exclusive
+	// 'x' and 'e' are mutually exclusive
 	list->equal = 0;
-	// `x' and `w' are mutually exclusive
+	// 'x' and 'w' are mutually exclusive
 	list->width = "";
 	break;
       case 'z':

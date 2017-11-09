@@ -268,7 +268,7 @@ inline position troff_output::transform(const position &pos)
 // if the aligned attribute is used.
 #define GROPS_REG "0p"
 
-// If this register is defined, geqn won't produce `\x's.
+// If this register is defined, geqn won't produce '\x's.
 #define EQN_NO_EXTRA_SPACE_REG "0x"
 
 void troff_output::start_picture(double sc,

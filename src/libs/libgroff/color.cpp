@@ -153,7 +153,7 @@ void color::set_gray(const unsigned int g)
 
 /*
  *  atoh - computes the decimal value of a hexadecimal number string.
- *         `length' characters of `s' are read.  Returns 1 if successful.
+ *         'length' characters of 's' are read.  Returns 1 if successful.
  */
 
 static int atoh(unsigned int *result,
@@ -179,7 +179,7 @@ static int atoh(unsigned int *result,
 /*
  *  read_encoding - set color from a hexadecimal color string.
  *
- *  Use color scheme `cs' to parse `n' color components from string `s'.
+ *  Use color scheme 'cs' to parse 'n' color components from string 's'.
  *  Returns 1 if successful.
  */
 
@@ -339,7 +339,7 @@ void color::get_cmyk(unsigned int *c, unsigned int *m,
   }
 }
 
-// we use `0.222r + 0.707g + 0.071b' (this is the ITU standard)
+// we use '0.222r + 0.707g + 0.071b' (this is the ITU standard)
 // as an approximation for gray
 
 void color::get_gray(unsigned int *g) const

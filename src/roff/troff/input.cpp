@@ -5570,7 +5570,7 @@ static void troff_request()
 static void skip_alternative()
 {
   int level = 0;
-  // ensure that ``.if 0\{'' works as expected
+  // ensure that ".if 0\{" works as expected
   if (tok.left_brace())
     level++;
   int c;
@@ -6323,7 +6323,7 @@ inline bool psbb_locator::get_header_comment(void)
     //
     get_line(DSC_LINE_MAX_ENFORCE) != 0
 
-    // In header comments, `%X' (`X' any printable character
+    // In header comments, '%X' ('X' any printable character
     // except whitespace) is also acceptable.
     //
     && (buf[0] == '%') && !white_space(buf[1])
@@ -8899,9 +8899,9 @@ charinfo *get_charinfo_by_number(int n)
 }
 
 // This overrides the same function from libgroff; while reading font
-// definition files it puts single-letter glyph names into `charset_table'
-// and converts glyph names of the form `\x' (`x' a single letter) into `x'. 
-// Consequently, symbol("x") refers to glyph name `\x', not `x'.
+// definition files it puts single-letter glyph names into 'charset_table'
+// and converts glyph names of the form '\x' ('x' a single letter) into 'x'.
+// Consequently, symbol("x") refers to glyph name '\x', not 'x'.
 
 glyph *name_to_glyph(const char *nm)
 {

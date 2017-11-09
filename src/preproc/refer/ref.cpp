@@ -365,7 +365,7 @@ void sortify_date(const char *s, int len, string &key)
   const char *year_end;
   const char *year_start = find_year(s, s + len, &year_end);
   if (!year_start) {
-    // Things without years are often `forthcoming', so it makes sense
+    // Things without years are often 'forthcoming', so it makes sense
     // that they sort after things with explicit years.
     key += 'A';
     sortify_words(s, s + len, 0, key);

@@ -709,7 +709,7 @@ void set_char_type(const char *type, char *ch)
   delete b;
 }
 
-/* We give primes special treatment so that in ``x' sub 2'', the ``2''
+/* We give primes special treatment so that in "x' sub 2", the "2"
 will be tucked under the prime */
 
 class prime_box : public pointer_box {

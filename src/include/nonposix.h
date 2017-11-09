@@ -133,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #if defined(_WIN32) && !defined(_UWIN) && !defined(__CYGWIN__)
 /* Win32 implementations which use the Microsoft runtime library
  * are prone to hanging when a pipe reader quits with unread data in the pipe.
- * `gtroff' avoids this, by invoking `FLUSH_INPUT_PIPE()', defined as ... */
+ * 'gtroff' avoids this, by invoking 'FLUSH_INPUT_PIPE()', defined as ... */
 # define FLUSH_INPUT_PIPE(fd)		      \
  do if (!isatty(fd))			      \
  {					      \
@@ -144,9 +144,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 /* The Microsoft runtime library also has a broken argument passing mechanism,
  * which may result in improper grouping of arguments passed to a child process
- * by the `spawn()' family of functions.  In `groff', only the `spawnvp()'
+ * by the 'spawn()' family of functions.  In 'groff', only the 'spawnvp()'
  * function is affected; we work around this defect, by substituting a
- * wrapper function in place of `spawnvp()' calls. */
+ * wrapper function in place of 'spawnvp()' calls. */
 
 # ifdef __cplusplus
   extern "C" {
@@ -164,7 +164,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #else
 /* Other implementations do not suffer from Microsoft runtime bugs,
- * but `gtroff' requires a dummy definition for FLUSH_INPUT_PIPE() */
+ * but 'gtroff' requires a dummy definition for FLUSH_INPUT_PIPE() */
 # define FLUSH_INPUT_PIPE(fd)	do {} while(0)
 #endif
 

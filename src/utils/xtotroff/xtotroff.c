@@ -64,7 +64,7 @@ int charExists(XFontStruct * fi, int c)
 {
   XCharStruct *p;
 
-  /* `c' is always >= 0 */
+  /* 'c' is always >= 0 */
   if ((unsigned int) c < fi->min_char_or_byte2
       || (unsigned int) c > fi->max_char_or_byte2)
     return 0;

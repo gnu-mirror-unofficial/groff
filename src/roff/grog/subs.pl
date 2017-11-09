@@ -10,18 +10,18 @@
 # This file was split from grog.pl and put under GPL2 by
 #               Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph
-# Corderoy's `grog.sh' of 2006.
+# Corderoy's 'grog.sh' of 2006.
 
 # Last update: 10 Sep 2015
 
-# This file is part of `grog', which is part of `groff'.
+# This file is part of 'grog', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -52,16 +52,16 @@ $\ = "\n";
 # my $Sp = '' if $arg eq '-C';
 my $Sp = '';
 
-# from `src/roff/groff/groff.cpp' near `getopt_long'
+# from 'src/roff/groff/groff.cpp' near 'getopt_long'
 my $groff_opts =
   'abcCd:D:eEf:F:gGhiI:jJkK:lL:m:M:n:No:pP:r:RsStT:UvVw:W:XzZ';
 
 my @Command = ();		# stores the final output
-my @Mparams = ();		# stores the options `-m*'
+my @Mparams = ();		# stores the options '-m*'
 my @devices = ();		# stores -T
 
-my $do_run = 0;			# run generated `groff' command
-my $pdf_with_ligatures = 0;	# `-P-y -PU' for `pdf' device
+my $do_run = 0;			# run generated 'groff' command
+my $pdf_with_ligatures = 0;	# '-P-y -PU' for 'pdf' device
 my $with_warnings = 0;
 
 my $Prog = $0;
@@ -225,7 +225,7 @@ sub handle_args {
       next;
     }
 
-    # now $arg starts with `-'
+    # now $arg starts with '-'
 
     if ($arg eq '-') {
       unless ($was_minus) {
@@ -329,7 +329,7 @@ sub handle_file_ext {
       next;
     }
 
-    next unless ( $file =~ /\./ ); # file name has no dot `.'
+    next unless ( $file =~ /\./ ); # file name has no dot '.'
 
 ##### handle_file_ext()
     # get extension
@@ -371,9 +371,9 @@ sub handle_file_ext {
 		      n|
 		      1b
 		    )$/x ) {
-      # `man|n' from `groff' source
-      # `1b' from `heirloom'
-      # `[1-9lno]' from man-pages
+      # 'man|n' from 'groff' source
+      # '1b' from 'heirloom'
+      # '[1-9lno]' from man-pages
       if ( $tmac_ext && $tmac_ext ne 'man' ) {
 	# found tmac is not 'man'
 	print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
@@ -464,13 +464,13 @@ sub handle_whole_files {
 # do_first_line()
 ########################################################################
 
-# As documented for the `man' program, the first line can be
+# As documented for the 'man' program, the first line can be
 # used as a groff option line.  This is done by:
 # - start the line with '\" (apostrophe, backslash, double quote)
 # - add a space character
-# - a word using the following characters can be appended: `egGjJpRst'.
+# - a word using the following characters can be appended: 'egGjJpRst'.
 #     Each of these characters means an option for the generated
-#     `groff' command line, e.g. `-t'.
+#     'groff' command line, e.g. '-t'.
 
 sub do_first_line {
   my ( $line, $file ) = @_;
@@ -591,12 +591,12 @@ sub do_line {
   ######################################################################
   # soelim
   if ( $line =~ /^\.(do)?\s*(so|mso|PS\s*<|SO_START).*$/ ) {
-    # `.so', `.mso', `.PS<...', `.SO_START'
+    # '.so', '.mso', '.PS<...', '.SO_START'
     $Groff{'soelim'}++;
     return;
   }
   if ( $line =~ /^\.(do)?\s*(so|mso|PS\s*<|SO_START).*$/ ) {
-    # `.do so', `.do mso', `.do PS<...', `.do SO_START'
+    # '.do so', '.do mso', '.do PS<...', '.do SO_START'
     $Groff{'soelim'}++;
     return;
   }
@@ -708,8 +708,8 @@ sub do_line {
   }
 
 ####### do_line()
-  # In the old version of -mdoc `Oo' is a toggle, in the new it's
-  # closed by `Oc'.
+  # In the old version of -mdoc 'Oo' is a toggle, in the new it's
+  # closed by 'Oc'.
   if ( $command =~ /^\.Oc$/ ) {
     $Groff{'Oc'}++;		# only for modern mdoc
     return;
@@ -902,7 +902,7 @@ my $correct_tmac = '';
 sub make_groff_device {
   # globals: @devices
 
-  # default device is `ps' when without `-T'
+  # default device is 'ps' when without '-T'
   my $device;
   push @devices, 'ps' unless ( @devices );
 
@@ -961,7 +961,7 @@ EOF
 sub make_groff_preproc {
   # globals: %Groff, @preprograms, @Command
 
-  # preprocessors without `groff' option
+  # preprocessors without 'groff' option
   if ( $Groff{'lilypond'} ) {
     push @preprograms, 'glilypond';
   }
@@ -972,7 +972,7 @@ sub make_groff_preproc {
     push @preprograms, 'gpinyin';
   }
 
-  # preprocessors with `groff' option
+  # preprocessors with 'groff' option
   if ( ( $Groff{'PS'} ||  $Groff{'PF'} ) &&  $Groff{'PE'} ) {
     $Groff{'pic'} = 1;
   }
@@ -1010,7 +1010,7 @@ sub make_groff_preproc {
 sub make_groff_tmac_man_ms {
   # globals: @filespec, $tmac_ext, %Groff
 
-  # `man' requests, not from `ms'
+  # 'man' requests, not from 'ms'
   if ( $Groff{'SS'} || $Groff{'SY'} || $Groff{'OP'} ||
        $Groff{'TH_first'} || $Groff{'TP'} || $Groff{'UR'} ) {
     $Groff{'man'} = 1;
@@ -1024,7 +1024,7 @@ sub make_groff_tmac_man_ms {
   }
 
 ###### make_groff_tmac_man_ms()
-  # `ms' requests, not from `man'
+  # 'ms' requests, not from 'man'
   if (
       $Groff{'1C'} || $Groff{'2C'} ||
       $Groff{'AB'} || $Groff{'AE'} || $Groff{'AI'} || $Groff{'AU'} ||
@@ -1045,7 +1045,7 @@ sub make_groff_tmac_man_ms {
 
 ###### make_groff_tmac_man_ms()
 
-  # both `man' and `ms' requests
+  # both 'man' and 'ms' requests
   if ( $Groff{'P'} || $Groff{'IP'}  ||
        $Groff{'LP'} || $Groff{'PP'} || $Groff{'SH'} ) {
     if ( $tmac_ext eq 'man' ) {
@@ -1200,7 +1200,7 @@ sub make_groff_line_rest {
   push(@Command, @filespec) unless ( $file_args_included );
 
   #########
-  # execute the `groff' command here with option `--run'
+  # execute the 'groff' command here with option '--run'
   if ( $do_run ) { # with --run
     print STDERR __FILE__ . ' ' .  __LINE__ . ': ' . "@Command";
     my $cmd = join ' ', @Command;

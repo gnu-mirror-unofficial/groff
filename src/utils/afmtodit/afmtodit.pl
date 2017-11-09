@@ -247,7 +247,7 @@ while (<MAP>) {
 	    $nmap{$field[0]} += 1;
 
 	    # There is more than one way to make a PS glyph name;
-	    # let us try Unicode names with both `uni' and `u' prefixes.
+	    # let us try Unicode names with both 'uni' and 'u' prefixes.
 	    my $utmp = $AGL_to_unicode{$field[0]};
 	    if (defined $utmp && $utmp =~ /^[0-9A-F]{4}$/) {
 		foreach my $unicodepsname ("uni" . $utmp, "u" . $utmp) {
@@ -295,19 +295,19 @@ if (!$opt_x) {
 	    #   Drop all characters from the glyph name starting with the
 	    #   first occurrence of a period (U+002E FULL STOP), if any.
 	    #   ?? We avoid mapping of glyphs with periods, since they are
-	    #   likely to be variant glyphs, leading to a `many ps glyphs --
+	    #   likely to be variant glyphs, leading to a 'many ps glyphs --
 	    #   one groff glyph' conflict.
 	    #
 	    #   If multiple glyphs in the font represent the same character
-	    #   in the Unicode standard, as do `A' and `A.swash', for example,
+	    #   in the Unicode standard, as do 'A' and 'A.swash', for example,
 	    #   they can be differentiated by using the same base name with
 	    #   different suffixes.  This suffix (the part of glyph name that
 	    #   follows the first period) does not participate in the
 	    #   computation of a character sequence.  It can be used by font
 	    #   designers to indicate some characteristics of the glyph.  The
 	    #   suffix may contain periods or any other permitted characters.
-	    #   Small cap A, for example, could be named `uni0041.sc' or
-	    #   `A.sc'.
+	    #   Small cap A, for example, could be named 'uni0041.sc' or
+	    #   'A.sc'.
 
 	    next if $ch =~ /\./;
 
@@ -331,7 +331,7 @@ if (!$opt_x) {
 		    $utmp = "U+" . $utmp;
 		}
 
-		#   * Otherwise, if the component is of the form `uni'
+		#   * Otherwise, if the component is of the form 'uni'
 		#     (U+0075 U+006E U+0069) followed by a sequence of
 		#     uppercase hexadecimal digits (0 .. 9, A .. F, i.e.,
 		#     U+0030 .. U+0039, U+0041 .. U+0046), the length of
@@ -354,7 +354,7 @@ if (!$opt_x) {
 		    }
 		}
 
-		#   * Otherwise, if the component is of the form `u' (U+0075)
+		#   * Otherwise, if the component is of the form 'u' (U+0075)
 		#     followed by a sequence of four to six uppercase
 		#     hexadecimal digits {0 .. 9, A .. F} (U+0030 .. U+0039,
 		#     U+0041 .. U+0046), and those digits represent a number
@@ -397,7 +397,7 @@ if (!$opt_x) {
 }
 
 # Check explicitly for groff's standard ligatures -- many afm files don't
-# have proper `L' entries.
+# have proper 'L' entries.
 
 my %default_ligatures = (
   "fi", "f i",

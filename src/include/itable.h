@@ -27,14 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 # define name2x(a,b) a ## b
 #endif /* not TRADITIONAL_CPP */
 
-// `class ITABLE(T)' is the type of a hash table mapping an integer (int >= 0)
+// 'class ITABLE(T)' is the type of a hash table mapping an integer (int >= 0)
 // to an object of type T.
 //
-// `struct IASSOC(T)' is the type of a association (pair) between an integer
+// 'struct IASSOC(T)' is the type of a association (pair) between an integer
 // (int >= 0) and an object of type T.
 //
-// `class ITABLE_ITERATOR(T)' is the type of an iterator iterating through a
-// `class ITABLE(T)'.
+// 'class ITABLE_ITERATOR(T)' is the type of an iterator iterating through a
+// 'class ITABLE(T)'.
 //
 // Nowadays one would use templates for this; this code predates the addition
 // of templates to C++.
@@ -50,8 +50,8 @@ extern unsigned next_ptable_size(unsigned);	// Return the first suitable
 				// value.
 #endif
 
-// Declare the types `class ITABLE(T)', `struct IASSOC(T)', and `class
-// ITABLE_ITERATOR(T)' for the type `T'.
+// Declare the types 'class ITABLE(T)', 'struct IASSOC(T)', and 'class
+// ITABLE_ITERATOR(T)' for the type 'T'.
 #define declare_itable(T)						      \
 									      \
 struct IASSOC(T) {							      \
@@ -100,8 +100,8 @@ public:									      \
 // Values must be allocated by the caller (always using new[], not new)
 // and are freed by ITABLE.
 
-// Define the implementations of the members of the types `class ITABLE(T)',
-// `struct IASSOC(T)', `class ITABLE_ITERATOR(T)' for the type `T'.
+// Define the implementations of the members of the types 'class ITABLE(T)',
+// 'struct IASSOC(T)', 'class ITABLE_ITERATOR(T)' for the type 'T'.
 #define implement_itable(T)						      \
 									      \
 IASSOC(T)::IASSOC(T)()							      \

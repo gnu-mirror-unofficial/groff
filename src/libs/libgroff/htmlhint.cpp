@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
  *  the image name and suppression escapes.
  *
  *  pre-html runs troff twice, once with -Thtml (or -Txhtml) and once
- *  with -Tps.  `troff -Thtml' (and `troff -Txhtml') emits a
+ *  with -Tps.  'troff -Thtml' (and 'troff -Txhtml') emits a
  *  <src='image'.png> tag and the postscript device driver works out
  *  the min/max limits of the graphic region.  These region limits are
  *  read by pre-html and an image is generated via

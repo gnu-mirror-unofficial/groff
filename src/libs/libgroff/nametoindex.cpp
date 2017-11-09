@@ -35,11 +35,11 @@ public:
   friend class character_indexer;
 };
 
-// PTABLE(charinfo) is a hash table mapping `const char *' to `charinfo *'.
+// PTABLE(charinfo) is a hash table mapping 'const char *' to 'charinfo *'.
 declare_ptable(charinfo)
 implement_ptable(charinfo)
 
-// ITABLE(charinfo) is a hash table mapping `int >= 0' to `charinfo *'.
+// ITABLE(charinfo) is a hash table mapping 'int >= 0' to 'charinfo *'.
 declare_itable(charinfo)
 implement_itable(charinfo)
 
@@ -95,7 +95,7 @@ glyph *character_indexer::ascii_char_glyph(unsigned char c)
 
 inline glyph *character_indexer::named_char_glyph(const char *s)
 {
-  // Glyphs with name `charNNN' are only stored in ascii_glyph[], not
+  // Glyphs with name 'charNNN' are only stored in ascii_glyph[], not
   // in the table.  Therefore treat them specially here.
   if (s[0] == 'c' && s[1] == 'h' && s[2] == 'a' && s[3] == 'r') {
     char *val;

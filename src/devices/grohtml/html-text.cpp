@@ -756,7 +756,7 @@ html_indent *html_text::remove_indent (HTML_TAG tag)
 
 /*
  *  remove_para_space - removes the leading space to a paragraph
- *                      (effectively this trims off a leading `.sp' tag).
+ *                      (effectively this trims off a leading '.sp' tag).
  */
 
 void html_text::remove_para_space (void)

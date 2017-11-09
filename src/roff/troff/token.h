@@ -41,18 +41,18 @@ class token {
     TOKEN_ITALIC_CORRECTION,	// \/
     TOKEN_LEADER,		// ^A
     TOKEN_LEFT_BRACE,
-    TOKEN_MARK_INPUT,		// \k -- `nm' is the name of the register
+    TOKEN_MARK_INPUT,		// \k -- 'nm' is the name of the register
     TOKEN_NEWLINE,		// newline
     TOKEN_NODE,
     TOKEN_NUMBERED_CHAR,
     TOKEN_PAGE_EJECTOR,
     TOKEN_REQUEST,
     TOKEN_RIGHT_BRACE,
-    TOKEN_SPACE,		// ` ' -- ordinary space
+    TOKEN_SPACE,		// ' ' -- ordinary space
     TOKEN_SPECIAL,		// a special character -- \' \` \- \(xx \[xxx]
-    TOKEN_SPREAD,		// \p -- break and spread output line 
+    TOKEN_SPREAD,		// \p -- break and spread output line
     TOKEN_STRETCHABLE_SPACE,	// \~
-    TOKEN_UNSTRETCHABLE_SPACE,	// `\ '
+    TOKEN_UNSTRETCHABLE_SPACE,	// '\ '
     TOKEN_HORIZONTAL_SPACE,	// \|, \^, \0, \h
     TOKEN_TAB,			// tab
     TOKEN_TRANSPARENT,		// \!

@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 // The target device.  Once initialized, the device doesn't change during
-// the entire program run.  Sample devices are `ps' (for Postscript), `html'
-// (for HTML), and `ascii', `latin1', `utf8' for TTY output.
+// the entire program run.  Sample devices are 'ps' (for Postscript), 'html'
+// (for HTML), and 'ascii', 'latin1', 'utf8' for TTY output.
 extern const char *device;
 
 // end of device.h

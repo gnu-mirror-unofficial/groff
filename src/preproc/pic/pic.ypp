@@ -219,7 +219,7 @@ box "foo" above ljust == box ("foo" above ljust)
 
 %left LEFT RIGHT
 /* Give attributes that take an optional expression a higher
-precedence than left and right, so that, e.g., `line chop left'
+precedence than left and right, so that, e.g., 'line chop left'
 parses properly. */
 %left CHOP SOLID DASHED DOTTED UP DOWN FILL COLORED OUTLINED
 %left XSLANTED YSLANTED
@@ -233,7 +233,7 @@ parses properly. */
 /* these need to be lower than '-' */
 %left HEIGHT RADIUS WIDTH DIAMETER FROM TO AT THICKNESS
 
-/* these must have higher precedence than CHOP so that `label %prec CHOP'
+/* these must have higher precedence than CHOP so that 'label %prec CHOP'
 works */
 %left DOT_N DOT_E DOT_W DOT_S DOT_NE DOT_SE DOT_NW DOT_SW DOT_C
 %left DOT_START DOT_END TOP BOTTOM LEFT_CORNER RIGHT_CORNER
@@ -1786,14 +1786,14 @@ void reset(const char *nm)
       define_variable(defaults_table[i].name, val);
       return;
     }
-  lex_error("`%1' is not a predefined variable", nm);
+  lex_error("'%1' is not a predefined variable", nm);
 }
 
 void reset_all()
 {
   // We only have to explicitly reset the pre-defined variables that
-  // aren't scaled because `scale' is not scaled, and changing the
-  // value of `scale' will reset all the pre-defined variables that
+  // aren't scaled because 'scale' is not scaled, and changing the
+  // value of 'scale' will reset all the pre-defined variables that
   // are scaled.
   for (unsigned int i = 0;
        i < sizeof(defaults_table)/sizeof(defaults_table[0]); i++)

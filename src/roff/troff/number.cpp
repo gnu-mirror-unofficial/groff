@@ -602,7 +602,7 @@ static int parse_term(units *v, int scale_indicator,
     break;
   case 'm':
     {
-      // Convert to hunits so that with -Tascii `m' behaves as in nroff.
+      // Convert to hunits so that with -Tascii 'm' behaves as in nroff.
       hunits em = curenv->get_size();
       *v = scale(*v, em.is_zero() ? hresolution : em.to_units(), divisor);
     }
@@ -615,7 +615,7 @@ static int parse_term(units *v, int scale_indicator,
     break;
   case 'n':
     {
-      // Convert to hunits so that with -Tascii `n' behaves as in nroff.
+      // Convert to hunits so that with -Tascii 'n' behaves as in nroff.
       hunits en = curenv->get_size()/2;
       *v = scale(*v, en.is_zero() ? hresolution : en.to_units(), divisor);
     }

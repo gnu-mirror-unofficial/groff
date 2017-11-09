@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <vector>
 #include <utility>
 
-extern int class_flag;	// set if there was a call to `.class'
+extern int class_flag;	// set if there was a call to '.class'
 extern void get_flags();
 
 class macro;
@@ -45,7 +45,7 @@ class charinfo : glyph {
   std::vector<charinfo *> nested_classes;
 public:
   enum {		// Values for the flags bitmask.  See groff
-			// manual, description of the `.cflags' request.
+			// manual, description of the '.cflags' request.
     ENDS_SENTENCE = 0x01,
     BREAK_BEFORE = 0x02,
     BREAK_AFTER = 0x04,

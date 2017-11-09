@@ -172,7 +172,7 @@ int glyph_to_unicode(glyph *g)
       char *ignore;
       return (int)strtol(nm + 1, &ignore, 16);
     }
-    // If `nm' is a single letter `x', the glyph name is `\x'.
+    // If 'nm' is a single letter 'x', the glyph name is '\x'.
     char buf[] = { '\\', '\0', '\0' };
     if (nm[1] == '\0') {
       buf[1] = nm[0];
@@ -561,7 +561,7 @@ int font::get_code(glyph *g)
     if (n >= 0)
       return n;
   }
-  // The caller must check `contains(g)' before calling get_code(g).
+  // The caller must check 'contains(g)' before calling get_code(g).
   abort();
 }
 

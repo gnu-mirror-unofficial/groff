@@ -93,9 +93,9 @@ static unsigned char bold_underline_mode;
 #define SGR_NO_UNDERLINE CSI "24m"
 #define SGR_REVERSE CSI "7m"
 #define SGR_NO_REVERSE CSI "27m"
-// many terminals can't handle `CSI 39 m' and `CSI 49 m' to reset
+// many terminals can't handle 'CSI 39 m' and 'CSI 49 m' to reset
 // the foreground and background color, respectively; we thus use
-// `CSI 0 m' exclusively
+// 'CSI 0 m' exclusively
 #define SGR_DEFAULT CSI "0m"
 
 #define DEFAULT_COLOR_IDX -1
@@ -625,9 +625,9 @@ void tty_printer::put_color(schar color_index, int back)
 
 // The possible Unicode combinations for crossing characters.
 //
-// `  ' = 0, ` -' = 4, `- ' = 8, `--' = 12,
+// '  ' = 0, ' -' = 4, '- ' = 8, '--' = 12,
 //
-// `  ' = 0, ` ' = 1, `|' = 2, `|' = 3
+// '  ' = 0, ' ' = 1, '|' = 2, '|' = 3
 //            |                 |
 
 static output_character crossings[4*4] = {

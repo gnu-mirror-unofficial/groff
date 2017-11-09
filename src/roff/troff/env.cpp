@@ -777,7 +777,7 @@ environment::environment(const environment *e)
   suppress_next_eol(e->suppress_next_eol),
   seen_break(e->seen_break),
   tabs(e->tabs),
-  name(e->name),		// so that, e.g., `.if "\n[.ev]"0"' works
+  name(e->name),		// so that, e.g., '.if "\n[.ev]"0"' works
   control_char(e->control_char),
   no_break_control_char(e->no_break_control_char),
   hyphen_indicator_char(e->hyphen_indicator_char)
@@ -3729,28 +3729,28 @@ void hyphen_trie::do_delete(void *v)
 
 /* We use very simple rules to parse TeX's hyphenation patterns.
 
-   . `%' starts a comment even if preceded by `\'.
+   . '%' starts a comment even if preceded by '\'.
 
-   . No support for digraphs and like `\$'.
+   . No support for digraphs and like '\$'.
 
-   . `^^xx' (`x' is 0-9 or a-f), and `^^x' (character code of `x' in the
-     range 0-127) are recognized; other use of `^' causes an error.
+   . '^^xx' ('x' is 0-9 or a-f), and '^^x' (character code of 'x' in the
+     range 0-127) are recognized; other use of '^' causes an error.
 
    . No macro expansion.
 
-   . We check for the expression `\patterns{...}' (possibly with
+   . We check for the expression '\patterns{...}' (possibly with
      whitespace before and after the braces).  Everything between the
-     braces is taken as hyphenation patterns.  Consequently, `{' and `}'
+     braces is taken as hyphenation patterns.  Consequently, '{' and '}'
      are not allowed in patterns.
 
-   . Similarly, `\hyphenation{...}' gives a list of hyphenation
+   . Similarly, '\hyphenation{...}' gives a list of hyphenation
      exceptions.
 
-   . `\endinput' is recognized also.
+   . '\endinput' is recognized also.
 
-   . For backwards compatibility, if `\patterns' is missing, the
+   . For backwards compatibility, if '\patterns' is missing, the
      whole file is treated as a list of hyphenation patterns (only
-     recognizing `%' as the start of a comment.
+     recognizing '%' as the start of a comment.
 
 */
 
@@ -3830,7 +3830,7 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
     if (c == EOF) {
       if (have_keyword || traditional)	// we are done
 	break;
-      else {				// rescan file in `traditional' mode
+      else {				// rescan file in 'traditional' mode
 	rewind(fp);
 	traditional = 1;
 	c = hpf_getc(fp);

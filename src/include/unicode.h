@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 // Convert a groff glyph name to a string containing an underscore-separated
 // list of Unicode code points.  For example,
 //
-//   `-'   ->  `2010'
-//   `,c'  ->  `00E7'
-//   `fl'  ->  `0066_006C'
+//   '-'   ->  '2010'
+//   ',c'  ->  '00E7'
+//   'fl'  ->  '0066_006C'
 //
 // Return NULL if there is no equivalent.
 const char *glyph_name_to_unicode(const char *);
@@ -30,8 +30,8 @@ const char *glyph_name_to_unicode(const char *);
 // Convert a string containing an underscore-separated list of Unicode code
 // points to a groff glyph name.  For example,
 //
-//   `2010'       ->  `hy'
-//   `0066_006C'  ->  `fl'
+//   '2010'       ->  'hy'
+//   '0066_006C'  ->  'fl'
 //
 // Return NULL if there is no equivalent.
 const char *unicode_to_glyph_name(const char *);
@@ -41,22 +41,22 @@ const char *unicode_to_glyph_name(const char *);
 // representing its canonical decomposition.  Also perform compatibility
 // equivalent replacement.  For example,
 //
-//   `1F3A' -> `0399_0313_0300'
-//   `FA6A' -> `983B'
+//   '1F3A' -> '0399_0313_0300'
+//   'FA6A' -> '983B'
 //
 // Return NULL if there is no equivalent.
 const char *decompose_unicode(const char *);
 
 // Test whether the given string denotes a Unicode character.  It must
-// be of the form `uNNNN', obeying the following rules.
+// be of the form 'uNNNN', obeying the following rules.
 //
-//   - `NNNN' must consist of at least 4 hexadecimal digits in upper case.
+//   - 'NNNN' must consist of at least 4 hexadecimal digits in upper case.
 //   - If there are more than 4 hexadecimal digits, the leading one must not
 //     be zero,
-//   - `NNNN' must denote a valid Unicode code point (U+0000..U+10FFFF,
+//   - 'NNNN' must denote a valid Unicode code point (U+0000..U+10FFFF,
 //     excluding surrogate code points.
 //
-// Return a pointer to `NNNN' (skipping the leading `u' character) in case
+// Return a pointer to 'NNNN' (skipping the leading 'u' character) in case
 // of success, NULL otherwise.
 const char *check_unicode_name(const char *);
 

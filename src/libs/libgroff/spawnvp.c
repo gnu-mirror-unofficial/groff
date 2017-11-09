@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* Define the default mechanism, and messages, for error reporting
  * (user may substitute a preferred alternative, by defining his own
  *  implementation of the macros REPORT_ERROR and ARGV_MALLOC_ERROR,
- *  in the header file `nonposix.h').
+ *  in the header file 'nonposix.h').
  */
 
 #include "nonposix.h"
@@ -56,19 +56,19 @@ extern void purge_quoted_args(char **argv);
 int
 spawnvp_wrapper(int mode, char *path, char **argv)
 {
-  /* Invoke the system `spawnvp' service
+  /* Invoke the system 'spawnvp' service
    * enclosing the passed arguments in double quotes, as required,
    * so that the (broken) default parsing in the MSVC runtime doesn't
    * split them at whitespace. */
 
-  char **quoted_argv;	/* used to build a quoted local copy of `argv' */
+  char **quoted_argv;	/* used to build a quoted local copy of 'argv' */
 
-  int i;		/* used as an index into `argv' or `quoted_argv' */
+  int i;		/* used as an index into 'argv' or 'quoted_argv' */
   int status = -1;	/* initialise return code, in case we fail */
   int argc = 0;		/* initialise argument count; may be none  */
 
   /* First count the number of arguments
-   * which are actually present in the passed `argv'. */
+   * which are actually present in the passed 'argv'. */
 
   if (argv)
     for (quoted_argv = argv; *quoted_argv; ++argc, ++quoted_argv)
@@ -76,10 +76,10 @@ spawnvp_wrapper(int mode, char *path, char **argv)
 
   /* If we do not now have an argument count,
    * then we must fall through and fail. */
-  
+
   if (argc) {
     /* We do have at least one argument:
-     * We will use a copy of the `argv', in which to do the quoting,
+     * We will use a copy of the 'argv', in which to do the quoting,
      * so we must allocate space for it. */
 
     if ((quoted_argv = (char **)malloc(++argc * sizeof(char **))) == NULL) {
@@ -90,26 +90,26 @@ spawnvp_wrapper(int mode, char *path, char **argv)
       exit(1);
     }
 
-    /* Now copy the passed `argv' into our new vector,
+    /* Now copy the passed 'argv' into our new vector,
      * quoting its contents as required. */
-    
+
     for (i = 0; i < argc; i++)
       quoted_argv[i] = quote_arg(argv[i]);
 
-    /* Invoke the MSVC `spawnvp' service
-     * passing our now appropriately quoted copy of `argv'. */
+    /* Invoke the MSVC 'spawnvp' service
+     * passing our now appropriately quoted copy of 'argv'. */
 
     status = spawnvp(mode, path, quoted_argv);
 
     /* Clean up our memory allocations
-     * for the quoted copy of `argv', which is no longer required. */
+     * for the quoted copy of 'argv', which is no longer required. */
 
     purge_quoted_args(quoted_argv);
     free(quoted_argv);
   }
 
   /* Finally,
-   * return the status code returned by `spawnvp',
+   * return the status code returned by 'spawnvp',
    * or a failure code if we fell through. */
 
   return status;

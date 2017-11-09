@@ -28,14 +28,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 # define name2x(a,b) a ## b
 #endif /* not TRADITIONAL_CPP */
 
-// `class PTABLE(T)' is the type of a hash table mapping a string
+// 'class PTABLE(T)' is the type of a hash table mapping a string
 // (const char *) to an object of type T.
 //
-// `struct PASSOC(T)' is the type of a association (pair) between a
+// 'struct PASSOC(T)' is the type of a association (pair) between a
 // string (const char *) and an object of type T.
 //
-// `class PTABLE_ITERATOR(T)' is the type of an iterator iterating through a
-// `class PTABLE(T)'.
+// 'class PTABLE_ITERATOR(T)' is the type of an iterator iterating through a
+// 'class PTABLE(T)'.
 //
 // Nowadays one would use templates for this; this code predates the addition
 // of templates to C++.
@@ -55,8 +55,8 @@ extern unsigned long hash_string(const char *);	// Return a hash code of the
 				// given string.  The hash function is
 				// platform dependent.  */
 
-// Declare the types `class PTABLE(T)', `struct PASSOC(T)', and `class
-// PTABLE_ITERATOR(T)' for the type `T'.
+// Declare the types 'class PTABLE(T)', 'struct PASSOC(T)', and 'class
+// PTABLE_ITERATOR(T)' for the type 'T'.
 #define declare_ptable(T)						      \
 									      \
 struct PASSOC(T) {							      \
@@ -115,8 +115,8 @@ public:									      \
 // Values must be allocated by the caller (always using new[], not new)
 // and are freed by PTABLE.
 
-// Define the implementations of the members of the types `class PTABLE(T)',
-// `struct PASSOC(T)', `class PTABLE_ITERATOR(T)' for the type `T'.
+// Define the implementations of the members of the types 'class PTABLE(T)',
+// 'struct PASSOC(T)', 'class PTABLE_ITERATOR(T)' for the type 'T'.
 #define implement_ptable(T)						      \
 									      \
 PASSOC(T)::PASSOC(T)()							      \
@@ -135,7 +135,7 @@ PTABLE(T)::~PTABLE(T)()							      \
   for (unsigned i = 0; i < size; i++) {					      \
     free(v[i].key);							      \
     /* XXX leak, because we don't know whether */			      \
-    /* `free', `delete', or `delete[]' should be used */		      \
+    /* 'free', 'delete', or 'delete[]' should be used */		      \
     /* a_delete v[i].val; */						      \
   }									      \
   a_delete v;								      \
@@ -151,7 +151,7 @@ const char *PTABLE(T)::define(const char *key, T *val)			      \
        n = (n == 0 ? size - 1 : n - 1))					      \
     if (strcmp(v[n].key, key) == 0) {					      \
       /* XXX leak, because we don't know whether */			      \
-      /* `free', `delete', or `delete[]' should be used */		      \
+      /* 'free', 'delete', or 'delete[]' should be used */		      \
       /* a_delete v[n].val; */						      \
       v[n].val = val;							      \
       return v[n].key;							      \

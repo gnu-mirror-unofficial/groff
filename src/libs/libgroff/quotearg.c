@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* Define the default mechanism, and messages, for error reporting
  * (user may substitute a preferred alternative, by defining his own
  *  implementation of the macros REPORT_ERROR, QUOTE_ARG_MALLOC_FAILED
- *  and QUOTE_ARG_REALLOC_FAILED, in the header file `nonposix.h').
+ *  and QUOTE_ARG_REALLOC_FAILED, in the header file 'nonposix.h').
  */
 
 #include "nonposix.h"
@@ -51,7 +51,7 @@ extern char *program_name;	/* main program must define this */
 static int
 needs_quoting(const char *string)
 {
-  /* Scan `string' to see whether it needs quoting for MSVC `spawn'/`exec'
+  /* Scan 'string' to see whether it needs quoting for MSVC 'spawn'/'exec'
    * (i.e., whether it contains whitespace or embedded quotes).
    */
 
@@ -75,7 +75,7 @@ needs_quoting(const char *string)
   }
 
   /* Fall through, if no quotes or white space found,
-   * in which case, return `FALSE'.
+   * in which case, return 'FALSE'.
    */
 
   return FALSE;
@@ -93,11 +93,11 @@ quote_arg(char *string)
   char *quoted, *p, *q;
 
   if (needs_quoting(string)) {
-    /* Need to create a quoted copy of `string';
+    /* Need to create a quoted copy of 'string';
      * maximum buffer space needed is twice the original length,
-     * plus two enclosing quotes and one `\0' terminator.
+     * plus two enclosing quotes and one '\0' terminator.
      */
-    
+
     if ((quoted = (char *)malloc(2 * strlen(string) + 3)) == NULL) {
       /* Couldn't get a buffer for the quoted string,
        * so complain, and bail out gracefully.
@@ -177,7 +177,7 @@ quote_arg(char *string)
     }
   }
 
-  /* `string' now refers to the argument,
+  /* 'string' now refers to the argument,
    * quoted and escaped, as required.
    */
 
@@ -188,16 +188,16 @@ void
 purge_quoted_args(char **argv)
 {
   /* To avoid memory leaks,
-   * free all memory previously allocated by `quoted_arg()',
-   * within the scope of the referring argument vector, `argv'.
+   * free all memory previously allocated by 'quoted_arg()',
+   * within the scope of the referring argument vector, 'argv'.
    */
 
   if (argv)
     while (*argv) {
       /* Any argument beginning with a double quote
-       * SHOULD have been allocated by `quoted_arg()'.
+       * SHOULD have been allocated by 'quoted_arg()'.
        */
-      
+
       if (**argv == '"')
         free( *argv );		/* so free its allocation */
       ++argv;			/* and continue to the next argument */

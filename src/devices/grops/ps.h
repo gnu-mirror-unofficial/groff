@@ -52,7 +52,7 @@ inline FILE *ps_output::get_file()
   return fp;
 }
 
-// this must stay in sync with `resource_table' in `psrm.cpp'
+// this must stay in sync with 'resource_table' in 'psrm.cpp'
 enum resource_type {
   RESOURCE_FONT,
   RESOURCE_FONTSET,

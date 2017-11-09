@@ -202,9 +202,9 @@ macro_diversion::macro_diversion(symbol s, int append)
       .a
       .di
 
-       will work and will make `a' contain two copies of what it contained
-       before; in troff, `a' would contain nothing. */
-    request_or_macro *rm 
+       will work and will make 'a' contain two copies of what it contained
+       before; in troff, 'a' would contain nothing. */
+    request_or_macro *rm
       = (request_or_macro *)request_dictionary.remove(s);
     if (!rm || (mac = rm->to_macro()) == 0)
       mac = new macro;
@@ -217,7 +217,7 @@ macro_diversion::macro_diversion(symbol s, int append)
   // stored in the macro. When we detect this, we copy the contents.
   mac = new macro(1);
   if (append) {
-    request_or_macro *rm 
+    request_or_macro *rm
       = (request_or_macro *)request_dictionary.lookup(s);
     if (rm) {
       macro *m = rm->to_macro();

@@ -1162,7 +1162,7 @@ graphic_object *object_spec::make_move(position *curpos, direction *dirp)
   static position last_move;
   static int have_last_move = 0;
   *dirp = dir;
-  // No need to look at at since `at' attribute sets `from' attribute.
+  // No need to look at at since 'at' attribute sets 'from' attribute.
   position startpos = (flags & HAS_FROM) ? from : *curpos;
   if (!(flags & HAS_SEGMENT)) {
     if ((flags & IS_SAME) && have_last_move)
@@ -1449,8 +1449,8 @@ linear_object *object_spec::make_line(position *curpos, direction *dirp)
   static position last_line;
   static int have_last_line = 0;
   *dirp = dir;
-  // We handle `at' only in conjunction with `with', otherwise it is
-  // the same as the `from' attribute.
+  // We handle 'at' only in conjunction with 'with', otherwise it is
+  // the same as the 'from' attribute.
   position startpos;
   if ((flags & HAS_AT) && (flags & HAS_WITH))
     // handled later -- we need the end position
@@ -1504,7 +1504,7 @@ linear_object *object_spec::make_line(position *curpos, direction *dirp)
       s->is_absolute = 1;	// to avoid confusion
     }
   if ((flags & HAS_AT) && (flags & HAS_WITH)) {
-    // `tmpobj' works for arrows and splines too -- we only need positions
+    // 'tmpobj' works for arrows and splines too -- we only need positions
     line_object tmpobj(startpos, endpos, 0, 0);
     position pos = at;
     place offset;
@@ -1962,13 +1962,13 @@ string_list::~string_list()
 {
   free(str);
 }
-  
-/* A path is used to hold the argument to the `with' attribute.  For
-   example, `.nw' or `.A.s' or `.A'.  The major operation on a path is to
-   take a place and follow the path through the place to place within the
-   place.  Note that `.A.B.C.sw' will work.
 
-   For compatibility with DWB pic, `with' accepts positions also (this
+/* A path is used to hold the argument to the 'with' attribute.  For
+   example, '.nw' or '.A.s' or '.A'.  The major operation on a path is to
+   take a place and follow the path through the place to place within the
+   place.  Note that '.A.B.C.sw' will work.
+
+   For compatibility with DWB pic, 'with' accepts positions also (this
    is incorrectly documented in CSTR 116). */
 
 path::path(corner c)

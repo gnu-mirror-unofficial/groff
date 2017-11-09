@@ -10,18 +10,18 @@
 # Written by James Clark, maintained by Werner Lemberg.
 # Rewritten with Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph
-# Corderoy's `grog.sh' of 2006.
+# Corderoy's 'grog.sh' of 2006.
 
 # Last update: 19 Jul 2015
 
-# This file is part of `grog', which is part of `groff'.
+# This file is part of 'grog', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -40,7 +40,7 @@ use strict;
 # $Bin is the directory where this script is located
 use FindBin;
 
-my $before_make;	# script before run of `make'
+my $before_make;	# script before run of 'make'
 {
   my $at = '@';
   $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";

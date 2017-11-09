@@ -381,7 +381,7 @@ int main(int argc, char **argv)
 	 ".if !dEN .ds EN\n");
   if (output_format == troff) {
     printf(".if !'\\*(.T'%s' "
-	   ".if !'\\*(.T'html' "	// the html device uses `-Tps' to render
+	   ".if !'\\*(.T'html' "	// the html device uses '-Tps' to render
 				  // equations as images
 	   ".tm warning: %s should have been given a '-T\\*(.T' option\n",
 	   device, program_name);

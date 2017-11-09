@@ -144,7 +144,7 @@ int charExists (XFontStruct *fi, int c)
 {
 	XCharStruct *p;
 
-	/* `c' is always >= 0 */
+	/* 'c' is always >= 0 */
 	if (fi->per_char == NULL
 	    || (unsigned int)c < fi->min_char_or_byte2
 	    || (unsigned int)c > fi->max_char_or_byte2)
@@ -154,7 +154,7 @@ int charExists (XFontStruct *fi, int c)
 		|| p->ascent != 0 || p->descent != 0 || p->attributes != 0);
 }
 
-/* `wid' is in device units */
+/* 'wid' is in device units */
 static void
 DoCharacter (DviWidget dw, int c, int wid)
 {

@@ -276,14 +276,14 @@ int tfm::load(const char *file)
   errno = 0;
   FILE *fp = fopen(file, FOPEN_RB);
   if (!fp) {
-    error("can't open `%1': %2", file, strerror(errno));
+    error("can't open '%1': %2", file, strerror(errno));
     return 0;
   }
   int c1 = getc(fp);
   int c2 = getc(fp);
   if (c1 == EOF || c2 == EOF) {
     fclose(fp);
-    error("unexpected end of file on `%1'", file);
+    error("unexpected end of file on '%1'", file);
     return 0;
   }
   int lf = (c1 << 8) + c2;
@@ -291,16 +291,16 @@ int tfm::load(const char *file)
   unsigned char *buf = new unsigned char[toread];
   if (fread(buf, 1, toread, fp) != (size_t)toread) {
     if (feof(fp))
-      error("unexpected end of file on `%1'", file);
+      error("unexpected end of file on '%1'", file);
     else
-      error("error on file `%1'", file);
+      error("error on file '%1'", file);
     a_delete buf;
     fclose(fp);
     return 0;
   }
   fclose(fp);
   if (lf < 6) {
-    error("bad tfm file `%1': impossibly short", file);
+    error("bad tfm file '%1': impossibly short", file);
     a_delete buf;
     return 0;
   }
@@ -317,12 +317,12 @@ int tfm::load(const char *file)
   int ne = read2(ptr);
   np = read2(ptr);
   if (6 + lh + (ec - bc + 1) + nw + nh + nd + ni + nl + nk + ne + np != lf) {
-    error("bad tfm file `%1': lengths do not sum", file);
+    error("bad tfm file '%1': lengths do not sum", file);
     a_delete buf;
     return 0;
   }
   if (lh < 2) {
-    error("bad tfm file `%1': header too short", file);
+    error("bad tfm file '%1': header too short", file);
     a_delete buf;
     return 0;
   }
@@ -416,7 +416,7 @@ int gf::load(const char *file)
   errno = 0;
   FILE *fp = fopen(file, FOPEN_RB);
   if (!fp) {
-    error("can't open `%1': %2", file, strerror(errno));
+    error("can't open '%1': %2", file, strerror(errno));
     return 0;
   }
   if (getc(fp) != pre || getc(fp) != gf_id_byte) {
@@ -533,7 +533,7 @@ int gf::load(const char *file)
 	goto eof;
       break;
     default:
-      fatal("unrecognized opcode `%1'", op);
+      fatal("unrecognized opcode '%1'", op);
       break;
     }
   }
@@ -602,7 +602,7 @@ int read_map(const char *file, char_list **table)
   errno = 0;
   FILE *fp = fopen(file, "r");
   if (!fp) {
-    error("can't open `%1': %2", file, strerror(errno));
+    error("can't open '%1': %2", file, strerror(errno));
     return 0;
   }
   for (int i = 0; i < 256; i++)
@@ -645,8 +645,8 @@ int read_map(const char *file, char_list **table)
 
 
 /* Every character that can participate in a ligature appears in the
-lig_chars table. `ch' gives the full-name of the character, `name'
-gives the groff name of the character, `i' gives its index in
+lig_chars table. 'ch' gives the full-name of the character, 'name'
+gives the groff name of the character, 'i' gives its index in
 the encoding, which is filled in later  (-1 if it does not appear). */
 
 struct S {
@@ -752,7 +752,7 @@ int main(int argc, char **argv)
     return 1;
   errno = 0;
   if (!freopen(font_file, "w", stdout)) {
-    error("can't open `%1' for writing: %2", font_file, strerror(errno));
+    error("can't open '%1' for writing: %2", font_file, strerror(errno));
     return 1;
   }
   printf("name %s\n", font_file);

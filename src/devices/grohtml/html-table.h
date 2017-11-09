@@ -101,7 +101,7 @@ private:
   cols          *columns;      /* column entries */
   int            linelength;
   cols          *last_col;     /* last column started */
-  int            start_space;  /* have we seen a `.sp' tag? */
+  int            start_space;  /* have we seen a '.sp' tag? */
 
   void  remove_cols (cols *c);
 };

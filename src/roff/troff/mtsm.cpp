@@ -366,7 +366,7 @@ mtsm::~mtsm()
 }
 
 /*
- *  push_state - push the current troff state and use `n' as
+ *  push_state - push the current troff state and use 'n' as
  *               the new troff state.
  */
 

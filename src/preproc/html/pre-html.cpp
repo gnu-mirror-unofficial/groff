@@ -67,18 +67,18 @@
 
 #if defined(__MSDOS__) || defined(_WIN32)
 
-// Most MS-DOS and Win32 environments will be missing the `fork' capability
+// Most MS-DOS and Win32 environments will be missing the 'fork' capability
 // (some like Cygwin have it, but it is best avoided).
 
 # define MAY_FORK_CHILD_PROCESS 0
 
-// On these systems, we use `spawn...', instead of `fork' ... `exec...'.
-# include <process.h>	// for `spawn...'
+// On these systems, we use 'spawn...', instead of 'fork' ... 'exec...'.
+# include <process.h>	// for 'spawn...'
 # include <fcntl.h>	// for attributes of pipes
 
 # if defined(__CYGWIN__) || defined(_UWIN) || defined(_WIN32)
 
-// These Win32 implementations allow parent and `spawn...'ed child to
+// These Win32 implementations allow parent and 'spawn...'ed child to
 // multitask asynchronously.
 
 #  define MAY_SPAWN_ASYNCHRONOUS_CHILD 1
@@ -86,7 +86,7 @@
 # else
 
 // Others may adopt MS-DOS behaviour where parent must sleep,
-// from `spawn...' until child terminates.
+// from 'spawn...' until child terminates.
 
 #  define MAY_SPAWN_ASYNCHRONOUS_CHILD 0
 
@@ -97,14 +97,14 @@
    where to put intermediate files (the DEBUGGING version will preserve
    these on exit).
 
-   On a UNIX host, we might simply use `/tmp', but MS-DOS and Win32 will
+   On a UNIX host, we might simply use '/tmp', but MS-DOS and Win32 will
    probably not have this on all disk drives, so default to using
-   `c:/temp' instead.  (Note that user may choose to override this by
+   'c:/temp' instead.  (Note that user may choose to override this by
    supplying a definition such as
 
      -DDEBUG_FILE_DIR=d:/path/to/debug/files
 
-   in the CPPFLAGS to `make'.) */
+   in the CPPFLAGS to 'make'.) */
 
 #  define DEBUG_FILE_DIR c:/temp
 # endif
@@ -112,13 +112,13 @@
 #else /* not __MSDOS__ or _WIN32 */
 
 // For non-Microsoft environments assume UNIX conventions,
-// so `fork' is required and child processes are asynchronous.
+// so 'fork' is required and child processes are asynchronous.
 # define MAY_FORK_CHILD_PROCESS 1
 # define MAY_SPAWN_ASYNCHRONOUS_CHILD 1
 
 # if defined(DEBUGGING) && !defined(DEBUG_FILE_DIR)
 /* For a DEBUGGING version, on the UNIX host, we can also usually rely
-   on being able to use `/tmp' for temporary file storage.  (Note that,
+   on being able to use '/tmp' for temporary file storage.  (Note that,
    as in the __MSDOS__ or _WIN32 case above, the user may override this
    by defining
 
@@ -153,7 +153,7 @@ extern "C" const char *Version_string;
 #define INLINE_LEADER_CHAR '\\'
 
 // Don't use colour names here!  Otherwise there is a dependency on
-// a file called `rgb.txt' which maps names to colours.
+// a file called 'rgb.txt' which maps names to colours.
 #define TRANSPARENT "-background rgb:f/f/f -transparent rgb:f/f/f"
 #define MIN_ALPHA_BITS 0
 #define MAX_ALPHA_BITS 4
@@ -215,7 +215,7 @@ static int eqn_flag = FALSE;            // must we preprocess via eqn?
 
 static char *linebuf = NULL;		// for scanning devps/DESC
 static int linebufsize = 0;
-static const char *image_gen = NULL;    // the `gs' program
+static const char *image_gen = NULL;    // the 'gs' program
 
 const char *const FONT_ENV_VAR = "GROFF_FONT_PATH";
 static search_path font_path(FONT_ENV_VAR, FONTPATH, 0, 0);
@@ -778,7 +778,7 @@ void char_buffer::skip_until_newline(char_block **t, int *i)
 void char_buffer::emit_troff_output(int device_format_selector)
 {
   // Handle output for BOTH html and image device formats
-  // if `device_format_selector' is passed as
+  // if 'device_format_selector' is passed as
   //
   //   HTML_FORMAT(HTML_OUTPUT_FILTER)
   //     Buffer data is written to the output stream
@@ -1134,7 +1134,7 @@ static void generateImages(char *region_file_name)
 
 static void set_redirection(int was, int willbe)
 {
-  // Nothing to do if `was' and `willbe' already have same handle.
+  // Nothing to do if 'was' and 'willbe' already have same handle.
   if (was != willbe) {
     // Otherwise attempt the specified redirection.
     if (dup2 (willbe, was) < 0) {
@@ -1147,9 +1147,9 @@ static void set_redirection(int was, int willbe)
     }
 
     // When redirection has been successfully completed assume redundant
-    // handle `willbe' is no longer required, so close it.
+    // handle 'willbe' is no longer required, so close it.
     if (close(willbe) < 0)
-      // Issue diagnostic if `close' fails.
+      // Issue diagnostic if 'close' fails.
       sys_fatal("close");
   }
 }
@@ -1166,7 +1166,7 @@ static int save_and_redirect(int was, int willbe)
     return (was);
 
   // Proceeding with redirection so first save and verify our duplicate
-  // handle for `was'.
+  // handle for 'was'.
   int saved = dup(was);
   if (saved < 0) {
     fprintf(stderr, "unable to get duplicate handle for %d\n", was);
@@ -1177,7 +1177,7 @@ static int save_and_redirect(int was, int willbe)
   set_redirection(was, willbe);
 
   // Finally return the saved duplicate descriptor for the
-  // original `was' stream.
+  // original 'was' stream.
   return saved;
 }
 
@@ -1313,13 +1313,13 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
 
 #if MAY_FORK_CHILD_PROCESS
   // This is the UNIX process model.  To invoke our post-processor,
-  // we must `fork' the current process.
+  // we must 'fork' the current process.
 
   if ((child_pid = fork()) < 0)
     sys_fatal("fork");
 
   else if (child_pid == 0) {
-    // This is the child process fork.  We redirect its `stdin' stream
+    // This is the child process fork.  We redirect its 'stdin' stream
     // to read data emerging from our pipe.  There is no point in saving,
     // since we won't be able to restore later!
 
@@ -1334,7 +1334,7 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
     // The IMAGE_OUTPUT_FILTER needs special output redirection...
 
     if (filter == IMAGE_OUTPUT_FILTER) {
-      // with BOTH `stdout' AND `stderr' diverted to files.
+      // with BOTH 'stdout' AND 'stderr' diverted to files.
 
       set_redirection(STDOUT_FILENO, PS_OUTPUT_STREAM);
       set_redirection(STDERR_FILENO, REGION_OUTPUT_STREAM);
@@ -1344,7 +1344,7 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
 
     execvp(argv[0], argv);
 
-    // If we get to here then the `exec...' request for the output filter
+    // If we get to here then the 'exec...' request for the output filter
     // failed.  Diagnose it and bail out.
 
     error("couldn't exec %1: %2", argv[0], strerror(errno), ((char *)0));
@@ -1360,7 +1360,7 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
     if (close(pipedes[0]) < 0)
       sys_fatal("close");
 
-    // Now we redirect the `stdout' stream to the inlet end of the pipe,
+    // Now we redirect the 'stdout' stream to the inlet end of the pipe,
     // and push out the appropiately formatted data to the filter.
 
     pipedes[1] = save_and_redirect(STDOUT_FILENO, pipedes[1]);
@@ -1379,19 +1379,19 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
 
 #elif MAY_SPAWN_ASYNCHRONOUS_CHILD
 
-  // We do not have `fork', (or we prefer not to use it),
+  // We do not have 'fork', (or we prefer not to use it),
   // but asynchronous processes are allowed, passing data through pipes.
-  // This should be ok for most Win32 systems and is preferred to `fork'
+  // This should be ok for most Win32 systems and is preferred to 'fork'
   // for starting child processes under Cygwin.
 
-  // Before we start the post-processor we bind its inherited `stdin'
-  // stream to the readable end of our pipe, saving our own `stdin' stream
-  // in `pipedes[0]'.
+  // Before we start the post-processor we bind its inherited 'stdin'
+  // stream to the readable end of our pipe, saving our own 'stdin' stream
+  // in 'pipedes[0]'.
 
   pipedes[0] = save_and_redirect(STDIN_FILENO, pipedes[0]);
 
   // for the Win32 model,
-  // we need special provision for saving BOTH `stdout' and `stderr'.
+  // we need special provision for saving BOTH 'stdout' and 'stderr'.
 
   int saved_stdout = dup(STDOUT_FILENO);
   int saved_stderr = STDERR_FILENO;
@@ -1399,8 +1399,8 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
   // The IMAGE_OUTPUT_FILTER needs special output redirection...
 
   if (filter == IMAGE_OUTPUT_FILTER) {
-    // with BOTH `stdout' AND `stderr' diverted to files while saving a
-    // duplicate handle for `stderr'.
+    // with BOTH 'stdout' AND 'stderr' diverted to files while saving a
+    // duplicate handle for 'stderr'.
 
     set_redirection(STDOUT_FILENO, PS_OUTPUT_STREAM);
     saved_stderr = save_and_redirect(STDERR_FILENO, REGION_OUTPUT_STREAM);
@@ -1415,19 +1415,19 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
     exit(1);
   }
 
-  // Once the post-processor has been started we revert our `stdin'
+  // Once the post-processor has been started we revert our 'stdin'
   // to its original saved source, which also closes the readable handle
   // for the pipe.
 
   set_redirection(STDIN_FILENO, pipedes[0]);
 
-  // if we redirected `stderr', for use by the image post-processor,
+  // if we redirected 'stderr', for use by the image post-processor,
   // then we also need to reinstate its original assignment.
 
   if (filter == IMAGE_OUTPUT_FILTER)
     set_redirection(STDERR_FILENO, saved_stderr);
 
-  // Now we redirect the `stdout' stream to the inlet end of the pipe,
+  // Now we redirect the 'stdout' stream to the inlet end of the pipe,
   // and push out the appropiately formatted data to the filter.
 
   set_redirection(STDOUT_FILENO, pipedes[1]);
@@ -1471,7 +1471,7 @@ int char_buffer::do_html(int argc, char *argv[])
   s = (char *)"-dwww-image-template=";
   s += macroset_template;	// do not combine these statements,
 				// otherwise they will not work
-  s += '\0';                	// the trailing `\0' is ignored
+  s += '\0';                	// the trailing '\0' is ignored
   argv = addRegDef(argc, argv, s.contents());
   argc++;
 

@@ -505,7 +505,7 @@ void left_text_entry::simple_print(int)
   print_contents();
 }
 
-// The only point of this is to make `\a' ``work'' as in Unix tbl.  Grrr.
+// The only point of this is to make '\a' "work" as in Unix tbl.  Grrr.
 
 void left_text_entry::add_tab()
 {
@@ -621,7 +621,7 @@ void alphabetic_text_entry::simple_print(int)
   print_contents();
 }
 
-// The only point of this is to make `\a' ``work'' as in Unix tbl.  Grrr.
+// The only point of this is to make '\a' "work" as in Unix tbl.  Grrr.
 
 void alphabetic_text_entry::add_tab()
 {
@@ -1030,7 +1030,7 @@ void restore_inline_modifier(const entry_modifier *m)
 
 struct stuff {
   stuff *next;
-  int row;			// occurs before row `row'
+  int row;			// occurs before row 'row'
   char printed;			// has it been printed?
 
   stuff(int);

@@ -229,7 +229,7 @@ struct S {
   { "00AC", "no" },
 //{ "00AC", "tno" },
   // In groff, U+00AD is an input character only; it is not mapped to
-  // a glyph but to `\%'.
+  // a glyph but to '\%'.
   { "00AE", "rg" },
   { "00AF", "a-" },
   { "00B0", "de" },

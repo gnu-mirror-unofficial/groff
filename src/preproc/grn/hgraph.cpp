@@ -381,7 +381,7 @@ HGSetFont(int font,
  |		style of subsequent lines.  Does nothing if no change is
  |              needed.
  |
- | Side Efct:	Sets `linmode' and `linethicknes'.
+ | Side Efct:	Sets 'linmode' and 'linethicknes'.
  *----------------------------------------------------------------------------*/
 
 void
@@ -409,9 +409,9 @@ HGSetBrush(int mode)
  | Routine:	deltax (x_destination)
  |
  | Results:	Scales and outputs a number for delta x (with a leading
- |		space) given `lastx' and x_destination.
+ |		space) given 'lastx' and x_destination.
  |
- | Side Efct:	Resets `lastx' to x_destination.
+ | Side Efct:	Resets 'lastx' to x_destination.
  *----------------------------------------------------------------------------*/
 
 void
@@ -428,10 +428,10 @@ deltax(double x)
  | Routine:	deltay (y_destination)
  |
  | Results:	Scales and outputs a number for delta y (with a leading
- |		space) given `lastyline' and y_destination.
+ |		space) given 'lastyline' and y_destination.
  |
- | Side Efct:	Resets `lastyline' to y_destination.  Since `line' vertical
- |		motions don't affect `page' ones, `lasty' isn't updated.
+ | Side Efct:	Resets 'lastyline' to y_destination.  Since 'line' vertical
+ |		motions don't affect 'page' ones, 'lasty' isn't updated.
  *----------------------------------------------------------------------------*/
 
 void
@@ -502,10 +502,10 @@ tmove(POINT * ptr)
 /*----------------------------------------------------------------------------*
  | Routine:	cr ( )
  |
- | Results:	Ends off an input line.  `.sp -1' is also added to counteract
+ | Results:	Ends off an input line.  '.sp -1' is also added to counteract
  |		the vertical move done at the end of text lines.
  |
- | Side Efct:	Sets `lastx' to `xleft' for troff's return to left margin.
+ | Side Efct:	Sets 'lastx' to 'xleft' for troff's return to left margin.
  *----------------------------------------------------------------------------*/
 
 void
@@ -567,7 +567,7 @@ drawwig(POINT * ptr,
  | Routine:	HGArc (xcenter, ycenter, xstart, ystart, angle)
  |
  | Results:	This routine plots an arc centered about (cx, cy) counter
- |		clockwise starting from the point (px, py) through `angle'
+ |		clockwise starting from the point (px, py) through 'angle'
  |		degrees.  If angle is 0, a full circle is drawn.  It does so
  |		by creating a draw-path around the arc whose density of
  |		points depends on the size of the arc.
@@ -628,7 +628,7 @@ HGArc(register int cx,
  | Routine:	picurve (xpoints, ypoints, num_of_points)
  |
  | Results:	Draws a curve delimited by (not through) the line segments
- |		traced by (xpoints, ypoints) point list.  This is the `Pic'
+ |		traced by (xpoints, ypoints) point list.  This is the 'Pic'
  |		style curve.
  *----------------------------------------------------------------------------*/
 
@@ -668,7 +668,7 @@ picurve(register int *x,
     nseg = (int) groff_hypot((double) xp, (double) yp);
     xp = x[1] - x[2];
     yp = y[1] - y[2];
-				/* `nseg' is the number of line    */
+				/* 'nseg' is the number of line    */
 				/* segments that will be drawn for */
 				/* each curve segment.             */
     nseg = (int) ((double) (nseg + (int) groff_hypot((double) xp, (double) yp)) /
@@ -697,7 +697,7 @@ picurve(register int *x,
  |
  | Results:	This routine generates a smooth curve through a set of
  |		points.  The method used is the parametric spline curve on
- |		unit knot mesh described in `Spline Curve Techniques' by
+ |		unit knot mesh described in 'Spline Curve Techniques' by
  |		Patrick Baudelaire, Robert Flegal, and Robert Sproull --
  |		Xerox Parc.
  *----------------------------------------------------------------------------*/
@@ -803,7 +803,7 @@ Paramaterize(int x[],
  | Results:	This routine solves for the cubic polynomial to fit a spline
  |		curve to the points specified by the list of values.
  |		The Curve generated is periodic.  The algorithms for this
- |		curve are from the `Spline Curve Techniques' paper cited
+ |		curve are from the 'Spline Curve Techniques' paper cited
  |		above.
  *----------------------------------------------------------------------------*/
 
@@ -875,7 +875,7 @@ PeriodicSpline(double h[],	/* paramaterization  */
  |
  | Results:	This routine solves for the cubic polynomial to fit a spline
  |		curve the points specified by the list of values.  The
- |		algorithms for this curve are from the `Spline Curve
+ |		algorithms for this curve are from the 'Spline Curve
  |		Techniques' paper cited above.
  *----------------------------------------------------------------------------*/
 

@@ -43,7 +43,7 @@ extern "C" const char *program_name;
 char *curr_prefix = 0;
 size_t curr_prefix_len = 0;
 
-// Return the directory part of a filename, or `.' if no path separators.
+// Return the directory part of a filename, or '.' if no path separators.
 char *xdirname(char *s)
 {
   static const char dot[] = ".";

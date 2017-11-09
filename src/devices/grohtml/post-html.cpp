@@ -80,7 +80,7 @@ static int manufacture_headings = FALSE;             /* default is to use the Hn
                                                      /* rather than manufacture our own.         */
 static color *default_background = NULL;             /* has user requested initial bg color?     */
 static string job_name;                              /* if set then the output is split into     */
-                                                     /* multiple files with `job_name'-%d.html   */
+                                                     /* multiple files with 'job_name'-%d.html   */
 static int multiple_files = FALSE;                   /* must we the output be divided into       */
                                                      /* multiple html files, one for each        */
                                                      /* heading?                                 */
@@ -2867,7 +2867,7 @@ void html_printer::do_eol (void)
 }
 
 /*
- *  do_check_center - checks to see whether we have seen a `.ce' tag
+ *  do_check_center - checks to see whether we have seen a '.ce' tag
  *                    during the previous line.
  */
 
@@ -4821,7 +4821,7 @@ void html_printer::write_title (int in_head)
       }
     }
   } else if (in_head) {
-    // place empty title tags to help conform to `tidy'
+    // place empty title tags to help conform to 'tidy'
     html.put_string("<title></title>").nl();
   }
 }
@@ -5365,7 +5365,7 @@ void html_printer::special(char *s, const environment *env, char type)
 }
 
 /*
- *  devtag - handles device troff tags sent from the `troff'.
+ *  devtag - handles device troff tags sent from the 'troff'.
  *           These include the troff state machine tags:
  *           .br, .sp, .in, .tl, .ll etc
  *

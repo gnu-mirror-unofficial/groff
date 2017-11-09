@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "troff.h"
 #include "dictionary.h"
-  
-// is `p' a good size for a hash table
+
+// is 'p' a good size for a hash table
 
 static int is_good_size(unsigned int p)
 {

@@ -65,22 +65,22 @@ struct conversion {
 //
 // For encodings which don't have a MIME tag we use GNU iconv's encoding
 // names (which also work with the portable GNU libiconv package).  They
-// are marked with `*'.
+// are marked with '*'.
 //
 // Encodings specific to XEmacs and Emacs are marked as such; no mark means
 // that they are used by both Emacs and XEmacs.
 //
-// Encodings marked with `--' are special to Emacs, XEmacs, or other
+// Encodings marked with '--' are special to Emacs, XEmacs, or other
 // applications and shouldn't be used for data exchange.
 //
-// `Not covered' means that the encoding can be handled neither by GNU iconv
+// 'Not covered' means that the encoding can be handled neither by GNU iconv
 // nor by libiconv, or just one of them has support for it.
 //
 // A special case is VIQR encoding: Despite of having a MIME tag it is
 // missing in both libiconv 1.10 and iconv (coming with GNU libc 2.3.6).
 //
-// Finally, we add all aliases of GNU iconv for `ascii', `latin1', and
-// `utf8' to catch those encoding names before iconv is called.
+// Finally, we add all aliases of GNU iconv for 'ascii', 'latin1', and
+// 'utf8' to catch those encoding names before iconv is called.
 //
 // Note that most entries are commented out -- only a small, (rather)
 // reliable and stable subset of encodings is recognized (for coding tags)
@@ -417,7 +417,7 @@ unicode_entity(int u)
 }
 
 // ---------------------------------------------------------
-// Conversion functions.  All functions take `data', which
+// Conversion functions.  All functions take 'data', which
 // normally holds the first two lines, and a file pointer.
 // ---------------------------------------------------------
 
@@ -672,7 +672,7 @@ conversion_iconv(FILE *fp, const string &data, char *enc)
   int outbuf[BUFSIZ];
   char *outptr = (char *)outbuf;
   size_t outbytes_left = BUFSIZ * sizeof (int);
-  // Handle `data'.
+  // Handle 'data'.
   char *inptr = (char *)data.contents();
   size_t inbytes_left = data.length();
   char *limit;
@@ -696,13 +696,13 @@ conversion_iconv(FILE *fp, const string &data, char *enc)
 	outbytes_left = BUFSIZ * sizeof (int) - outbytes_left;
       }
       else if (errno == EINVAL) {
-	// `data' ends with partial input sequence.
+	// 'data' ends with partial input sequence.
 	memcpy(inbuf, inptr, inbytes_left);
 	break;
       }
     }
   }
-  // Handle `fp' and switch to `inbuf'.
+  // Handle 'fp' and switch to 'inbuf'.
   size_t read_bytes;
   char *read_start = inbuf + inbytes_left;
   while ((read_bytes = fread(read_start, 1, BUFSIZ - inbytes_left, fp)) > 0) {
@@ -728,7 +728,7 @@ conversion_iconv(FILE *fp, const string &data, char *enc)
 	  outbytes_left = BUFSIZ * sizeof (int) - outbytes_left;
 	}
 	else if (errno == EINVAL) {
-	  // `inbuf' ends with partial input sequence.
+	  // 'inbuf' ends with partial input sequence.
 	  memmove(inbuf, inptr, inbytes_left);
 	  break;
 	}
@@ -753,7 +753,7 @@ conversion_iconv(FILE *fp, const string &data, char *enc)
 // that any normal text file (regardless of the encoding)
 // starts with the bytes which represent a BOM.
 //
-// Return the BOM in string `BOM'; `data' then starts with
+// Return the BOM in string 'BOM'; 'data' then starts with
 // the byte after the BOM.  This function reads (at most)
 // four bytes from the data stream.
 //
@@ -809,9 +809,9 @@ get_BOM(FILE *fp, string &BOM, string &data)
 // ---------------------------------------------------------
 // Get first two lines from input stream.
 //
-// Return string (allocated with `new') without zero bytes
+// Return string (allocated with 'new') without zero bytes
 // or NULL in case no coding tag can occur in the data
-// (which is stored unmodified in `data').
+// (which is stored unmodified in 'data').
 // ---------------------------------------------------------
 char *
 get_tag_lines(FILE *fp, string &data)
@@ -892,7 +892,7 @@ is_comment_line(char *s)
 //   <variable1>: <value1>; <variable2>: <value2>; ...
 //
 // Leading and trailing blanks are ignored.  There might be
-// more than one blank after `:' and `;'.
+// more than one blank after ':' and ';'.
 //
 // Return position of next value/variable pair or NULL if
 // at end of data.
@@ -910,7 +910,7 @@ get_variable_value_pair(char *d1, char **variable, char **value)
   while (l < MAX_VAR_LEN - 1 && *d1 && !strchr(";: \t", *d1))
     var[l++] = *(d1++);
   var[l] = 0;
-  // Skip everything until `:', `;', or end of data.
+  // Skip everything until ':', ';', or end of data.
   while (*d1 && *d1 != ':' && *d1 != ';')
     d1++;
   val[0] = 0;
@@ -926,7 +926,7 @@ get_variable_value_pair(char *d1, char **variable, char **value)
   while (l < MAX_VAR_LEN - 1 && *d1 && !strchr("; \t", *d1))
     val[l++] = *(d1++);
   val[l] = 0;
-  // Skip everything until `;' or end of data.
+  // Skip everything until ';' or end of data.
   while (*d1 && *d1 != ';')
     d1++;
   if (*d1 == ';')
@@ -941,14 +941,14 @@ get_variable_value_pair(char *d1, char **variable, char **value)
 //
 //   <comment> ... -*-<local variables list>-*-
 //
-// (`...' might be anything).
+// ('...' might be anything).
 //
 // <comment> can be one of the following syntax forms at the
 // beginning of the line:
 //
 //   .\"   .\#   '\"   '\#   \#
 //
-// There can be whitespace after the leading `.' or "'".
+// There can be whitespace after the leading '.' or "'".
 //
 // The local variables list must occur within the first
 // comment block at the very beginning of the data stream.
@@ -1071,7 +1071,7 @@ end:
 }
 
 // ---------------------------------------------------------
-// Handle an input file.  If filename is `-' handle stdin.
+// Handle an input file.  If filename is '-' handle stdin.
 //
 // Return 1 on success, 0 otherwise.
 // ---------------------------------------------------------
@@ -1116,7 +1116,7 @@ do_file(const char *filename)
     encoding = (char *)BOM_encoding;
   }
   else {
-    // `check_coding_tag' returns a pointer to a static array (or NULL).
+    // 'check_coding_tag' returns a pointer to a static array (or NULL).
     char *file_encoding = check_coding_tag(fp, data);
     if (!file_encoding) {
       if (debug_flag)

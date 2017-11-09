@@ -30,7 +30,7 @@
 
    All parsed information is processed within the function do_file().
    A device postprocessor just needs to fill in the methods for the class
-   `printer' (or rather a derived class) without having to worry about
+   'printer' (or rather a derived class) without having to worry about
    the syntax of the intermediate output format.  Consequently, the
    programming of groff postprocessors is similar to the development of
    device drivers.
@@ -48,15 +48,15 @@
    making groff fully compatible with classical troff without pain.
 
    Bugs fixed
-   - Unknown subcommands of `D' and `x' are now ignored like in the
+   - Unknown subcommands of 'D' and 'x' are now ignored like in the
      classical case, but a warning is issued.  This was also
      implemented for the other commands.
-   - A warning is emitted if `x stop' is missing.
-   - `DC' and `DE' commands didn't position to the right end after
+   - A warning is emitted if 'x stop' is missing.
+   - 'DC' and 'DE' commands didn't position to the right end after
      drawing (now they do), see discussion below.
-   - So far, `x stop' was ignored.  Now it terminates the processing
+   - So far, 'x stop' was ignored.  Now it terminates the processing
      of the current intermediate output file like the classical troff.
-   - The command `c' didn't check correctly on white-space.
+   - The command 'c' didn't check correctly on white-space.
    - The environment stack wasn't suitable for the color extensions
      (replaced by a class).
    - The old groff parser could only handle a prologue with the first
@@ -71,9 +71,9 @@
    - Range checks for numbers implemented.
 
    New and improved features
-   - The color commands `m' and `DF' are added.
-   - The old color command `Df' is now converted and delegated to `DFg'.
-   - The command `F' is implemented as `use intended file name'.  It
+   - The color commands 'm' and 'DF' are added.
+   - The old color command 'Df' is now converted and delegated to 'DFg'.
+   - The command 'F' is implemented as 'use intended file name'.  It
      checks whether its argument agrees with the file name used so far,
      otherwise a warning is issued.  Then the new name is remembered
      and used for the following error messages.
@@ -83,12 +83,12 @@
      It extends the rule of the classical troff output language in a
      logical way instead of the rather strange actual positioning.
      For details, see the discussion below.
-   - For the `D' commands that only set the environment, the calling of
+   - For the 'D' commands that only set the environment, the calling of
      pr->send_draw() was removed because this doesn't make sense for
-     the `DF' commands; the (changed) environment is sent with the
+     the 'DF' commands; the (changed) environment is sent with the
      next command anyway.
    - Error handling was clearly separated into warnings and fatal.
-   - The error behavior on additional arguments for `D' and `x'
+   - The error behavior on additional arguments for 'D' and 'x'
      commands with a fixed number of arguments was changed from being
      ignored (former groff) to issue a warning and ignore (now), see
      skip_line_x().  No fatal was chosen because both string and
@@ -100,13 +100,13 @@
    - All D commands with a variable number of args expect an even
      number of trailing integer arguments, so fatal on error was
      implemented.
-   - Disable environment stack and the commands `{' and `}' by making
+   - Disable environment stack and the commands '{' and '}' by making
      them conditional on macro USE_ENV_STACK; actually, this is
      undefined by default.  There isn't any known application for these
      features.
 
    Cosmetics
-   - Nested `switch' commands are avoided by using more functions.
+   - Nested 'switch' commands are avoided by using more functions.
      Dangerous 'fall-through's avoided.
    - Commands and functions are sorted alphabetically (where possible).
    - Dynamic arrays/buffers are now implemented as container classes.
@@ -114,55 +114,55 @@
      streamlined by using classes.
    - Use standard C math functions for number handling, so getting rid
      of differences to '0'.
-   - The macro `IntArg' has been created for an easier transition
-     to guaranteed 32 bits integers (`int' is enough for GNU, while
-     ANSI only guarantees `long int' to have a length of 32 bits).
-   - The many usages of type `int' are differentiated by using `Char',
-     `bool', and `IntArg' where appropriate.
+   - The macro 'IntArg' has been created for an easier transition
+     to guaranteed 32 bits integers ('int' is enough for GNU, while
+     ANSI only guarantees 'long int' to have a length of 32 bits).
+   - The many usages of type 'int' are differentiated by using 'Char',
+     'bool', and 'IntArg' where appropriate.
    - To ease the calls of the local utility functions, the parser
-     variables `current_file', `npages', and `current_env'
+     variables 'current_file', 'npages', and 'current_env'
      (formerly env) were made global to the file (formerly they were
      local to the do_file() function)
    - Various comments were added.
 
    TODO
    - Get rid of the stupid drawing positioning.
-   - Can the `Dt' command be completely handled by setting environment
+   - Can the 'Dt' command be completely handled by setting environment
      within do_file() instead of sending to pr?
    - Integer arguments must be >= 32 bits, use conditional #define.
    - Add scaling facility for classical device independence and
      non-groff devices.  Classical troff output had a quasi device
      independence by scaling the intermediate output to the resolution
      of the postprocessor device if different from the one specified
-     with `x T', groff have not.  So implement full quasi device
+     with 'x T', groff have not.  So implement full quasi device
      indepedence, including the mapping of the strange classical
      devices to the postprocessor device (seems to be reasonably
      easy).
    - The external, global pointer variables are not optimally handled.
-     - The global variables `current_filename',
-       `current_source_filename', and `current_lineno' are only used for
-       error reporting.  So implement a static class `Error'
-       (`::' calls).
-     - The global `device' is the name used during the formatting
+     - The global variables 'current_filename',
+       'current_source_filename', and 'current_lineno' are only used for
+       error reporting.  So implement a static class 'Error'
+       ('::' calls).
+     - The global 'device' is the name used during the formatting
        process; there should be a new variable for the device name used
        during the postprocessing.
-  - Implement the B-spline drawing `D~' for all graphical devices.
-  - Make `environment' a class with an overflow check for its members
+  - Implement the B-spline drawing 'D~' for all graphical devices.
+  - Make 'environment' a class with an overflow check for its members
     and a delete method to get rid of delete_current_env().
-  - Implement the `EnvStack' to use `new' instead of `malloc'.
+  - Implement the 'EnvStack' to use 'new' instead of 'malloc'.
   - The class definitions of this document could go into a new file.
-  - The comments in this section should go to a `Changelog' or some
-    `README' file in this directory.
+  - The comments in this section should go to a 'Changelog' or some
+    'README' file in this directory.
 */
 
 /*
   Discussion of the positioning by drawing commands
 
   There was some confusion about the positioning of the graphical
-  pointer at the printout after having executed a `D' command.
+  pointer at the printout after having executed a 'D' command.
   The classical troff manual of Ossanna & Kernighan specified,
 
-    `The position after a graphical object has been drawn is
+    'The position after a graphical object has been drawn is
      at its end; for circles and ellipses, the "end" is at the
      right side.'
 
@@ -187,7 +187,7 @@
 
   The former groff_out(5) specified to use the alternative arguments
   sum displacement for calculating the drawing positioning of
-  non-classical commands, including the `Dt' command (setting-only)
+  non-classical commands, including the 'Dt' command (setting-only)
   and closed polygons.  Applying this to the new groff color commands
   will lead to disaster.  For their arguments can take large values (>
   65000).  On low resolution devices, the displacement of such large
@@ -195,7 +195,7 @@
   nonsense specification has come to a natural end anyway.
 
   The groff source code, however, had no positioning for the
-  setting-only commands (esp. `Dt'), the right-end positioning for
+  setting-only commands (esp. 'Dt'), the right-end positioning for
   outlined circles and ellipses, and the alternative argument sum
   displacement for all other commands (including filled circles and
   ellipses).
@@ -203,9 +203,9 @@
   The reason why no one seems to have suffered from this mayhem so
   far is that the graphical objects are usually generated by
   preprocessors like pic that do not depend on the automatic
-  positioning.  When using the low level `\D' escape sequences or `D'
+  positioning.  When using the low level '\D' escape sequences or 'D'
   output commands, the strange positionings can be circumvented by
-  absolute positionings or by tricks like `\Z'.
+  absolute positionings or by tricks like '\Z'.
 
   So doing an exorcism on the strange, incompatible displacements might
   not harm any existing documents, but will make the usage of the
@@ -217,10 +217,10 @@
   provided for testing the funny former behavior.
 
   The new rule implies the following behavior.
-  - Setting commands (`Dt', `Df', `DF') and polygons (`Dp' and `DP')
+  - Setting commands ('Dt', 'Df', 'DF') and polygons ('Dp' and 'DP')
     do not change position now.
-  - Filled circles and ellipses (`DC' and `DE') position at their
-    most right point (outlined ones `Dc' and `De' did this anyway).
+  - Filled circles and ellipses ('DC' and 'DE') position at their
+    most right point (outlined ones 'Dc' and 'De' did this anyway).
   - As before, all open graphical objects position to their final
     drawing point (alternate sum of the command arguments).
 
@@ -232,7 +232,7 @@
 #define STUPID_DRAWING_POSITIONING
 #endif
 
-// Decide whether the commands `{' and `}' for different environments
+// Decide whether the commands '{' and '}' for different environments
 // should be used.
 #undef USE_ENV_STACK
 
@@ -304,12 +304,12 @@ class StringBuf {
 public:
   StringBuf(void);		// allocate without storing
   ~StringBuf(void);
-  void append(const Char);	// append character to `data'
-  char *make_string(void);	// return new copy of `data' with '\0'
+  void append(const Char);	// append character to 'data'
+  char *make_string(void);	// return new copy of 'data' with '\0'
   bool is_empty(void) {		// true if none stored
     return (num_stored > 0) ? false : true;
   }
-  void reset(void);		// set `num_stored' to 0
+  void reset(void);		// set 'num_stored' to 0
 };
 
 #ifdef USE_ENV_STACK
@@ -344,7 +344,7 @@ printer *pr;
 
 // Note:
 //
-//   We rely on an implementation of the `new' operator which aborts
+//   We rely on an implementation of the 'new' operator which aborts
 //   gracefully if it can't allocate memory (e.g. from libgroff/new.cpp).
 
 
@@ -355,7 +355,7 @@ printer *pr;
 FILE *current_file = 0;		// current input stream for parser
 
 // npages: number of pages processed so far (including current page),
-//         _not_ the page number in the printout (can be set with `p').
+//         _not_ the page number in the printout (can be set with 'p').
 int npages = 0;
 
 const ColorArg
@@ -392,7 +392,7 @@ IntArray *get_D_fixed_args_odd_dummy(const size_t);
 				// arguments plus optional dummy
 IntArray *get_D_variable_args(void);
                                 // variable, even number of int args
-char *get_extended_arg(void);	// argument for `x X' (several lines)
+char *get_extended_arg(void);	// argument for 'x X' (several lines)
 IntArg get_integer_arg(void);	// read in next integer argument
 IntArray *get_possibly_integer_args();
 				// 0 or more integer arguments
@@ -654,8 +654,8 @@ get_color_arg(void)
 
    number: In-parameter, the number of arguments to be retrieved.
    ignore: In-parameter, ignore next argument -- GNU troff always emits
-           pairs of parameters for `D' extensions added by groff.
-           Default is `false'.
+           pairs of parameters for 'D' extensions added by groff.
+           Default is 'false'.
 
    Return: New IntArray containing the arguments.
 */
@@ -732,7 +732,7 @@ get_D_variable_args()
 
 //////////////////////////////////////////////////////////////////////
 /* get_extended_arg():
-   Retrieve extended arg for `x X' command.
+   Retrieve extended arg for 'x X' command.
 
    - Skip leading spaces and tabs, error on EOL or newline.
    - Return everything before the next NL or EOF ('#' is not a comment);
@@ -1175,7 +1175,7 @@ skip_line_warn(void)
 
 //////////////////////////////////////////////////////////////////////
 /* skip_line_D ():
-   Skip line in `D' commands.
+   Skip line in 'D' commands.
 
    Decide whether in case of an additional argument a fatal error is
    raised (the documented classical behavior), only a warning is
@@ -1192,7 +1192,7 @@ skip_line_D(void)
 
 //////////////////////////////////////////////////////////////////////
 /* skip_line_x ():
-   Skip line in `x' commands.
+   Skip line in 'x' commands.
 
    Decide whether in case of an additional argument a fatal error is
    raised (the documented classical behavior), only a warning is
@@ -1377,7 +1377,7 @@ parse_D_command()
 	current_env->fill = new color(current_env->col);
       }
       pr->change_fill_color(current_env);
-      // skip unused `vertical' component (\D'...' always emits pairs)
+      // skip unused 'vertical' component (\D'...' always emits pairs)
       (void) get_integer_arg();
 #   ifdef STUPID_DRAWING_POSITIONING
       current_env->hpos += arg;
@@ -1440,8 +1440,8 @@ parse_D_command()
    - current_env: is set by many subcommands.
    - npages: page counting variable
 
-   Return: boolean in the meaning of `stopped'
-           - true if parsing should be stopped (`x stop').
+   Return: boolean in the meaning of 'stopped'
+           - true if parsing should be stopped ('x stop').
            - false if parsing should continue.
 */
 bool
@@ -1556,8 +1556,8 @@ do_file(const char *filename)
   // setup of global variables
   npages = 0;
   current_lineno = 1;
-  // `pr' is initialized after the prologue.
-  // `device' is set by the 1st prologue command.
+  // 'pr' is initialized after the prologue.
+  // 'device' is set by the 1st prologue command.
 
   if (filename[0] == '-' && filename[1] == '\0')
     current_file = stdin;
@@ -1588,8 +1588,8 @@ do_file(const char *filename)
     char *str_arg;
     IntArg int_arg;
 
-    // 1st command `x T'
-    command = next_command();	
+    // 1st command 'x T'
+    command = next_command();
     if ((int) command == EOF)
       return;
     if ((int) command != 'x')
@@ -1599,7 +1599,7 @@ do_file(const char *filename)
       fatal("the first command must be 'x T'");
     a_delete str_arg;
     char *tmp_dev = get_string_arg();
-    if (pr == 0) {		// note: `pr' initialized after prologue
+    if (pr == 0) {		// note: 'pr' initialized after prologue
       device = tmp_dev;
       if (!font::load_desc())
 	fatal("couldn't load DESC file, can't continue");
@@ -1612,7 +1612,7 @@ do_file(const char *filename)
     skip_line_x();		// ignore further arguments
     current_env->size = 10 * font::sizescale;
 
-    // 2nd command `x res'
+    // 2nd command 'x res'
     command = next_command();
     if ((int) command != 'x')
       fatal("the second command must be 'x res'");
@@ -1632,7 +1632,7 @@ do_file(const char *filename)
       fatal("minimum vertical motion does not match");
     skip_line_x();		// ignore further arguments
 
-    // 3rd command `x init'
+    // 3rd command 'x init'
     command = next_command();
     if (command != 'x')
       fatal("the third command must be 'x init'");
@@ -1727,7 +1727,7 @@ do_file(const char *filename)
     case 'f':			// f: set font to number
       current_env->fontno = get_integer_arg();
       break;
-    case 'F':			// F: obsolete, replaced by `x F'
+    case 'F':			// F: obsolete, replaced by 'x F'
       {
 	char *str_arg = get_extended_arg();
 	remember_source_filename(str_arg);
@@ -1824,7 +1824,7 @@ do_file(const char *filename)
   delete pr;
   pr = 0;
   fclose(current_file);
-  // If `stopped' is not `true' here then there wasn't any `x stop'.
+  // If 'stopped' is not 'true' here then there wasn't any 'x stop'.
   if (!stopped)
     warning("no final 'x stop' command");
   delete_current_env();

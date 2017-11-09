@@ -47,7 +47,7 @@ troff_SOURCES = \
   src/roff/troff/request.h \
   src/roff/troff/hvunits.h
 
-nodist_troff_SOURCES = src/roff/troff/majorminor.cpp 
+nodist_troff_SOURCES = src/roff/troff/majorminor.cpp
 
 src/roff/troff/input.$(OBJEXT): defs.h
 CLEANFILES += src/roff/troff/majorminor.cpp
@@ -64,7 +64,11 @@ src/roff/troff/majorminor.cpp: $(top_srcdir)/VERSION $(top_srcdir)/REVISION
 
 
 ########################################################################
-### Emacs settings
+# Editor settings
+########################################################################
+#
 # Local Variables:
 # mode: makefile-automake
+# fill-column: 72
 # End:
+# vim: set filetype=automake textwidth=72:

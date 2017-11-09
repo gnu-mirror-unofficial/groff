@@ -360,7 +360,7 @@ void box::top_level()
   next_uid = 0;
 }
 
-// gpic defines this register so as to make geqn not produce `\x's
+// gpic defines this register so as to make geqn not produce '\x's
 #define EQN_NO_EXTRA_SPACE_REG "0x"
 
 void box::extra_space()
