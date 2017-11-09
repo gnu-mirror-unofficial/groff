@@ -40,7 +40,7 @@ groff \- a short reference for the GNU roff language
 .de TPx
 .  TP 10n
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .Text anything ...
 .\"
 .\" All arguments are printed as text.
@@ -103,7 +103,7 @@ groff \- a short reference for the GNU roff language
 .
 .\" ========= escape sequences =========
 .
-.\" =====================================================================
+.\" ====================================================================
 .\" .ESC name [arg]
 .\"
 .\" Synopsis of an escape sequence, optionally with argument
@@ -115,7 +115,7 @@ groff \- a short reference for the GNU roff language
 .de ESC
 .  Text "\f[CB]\e\\$1\,\f[I]\\$2\/\fR"
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .ESC[] name arg
 .\"
 .\" Synopsis for escape sequence with a bracketed long argument
@@ -127,7 +127,7 @@ groff \- a short reference for the GNU roff language
 .de ESC[]
 .  Text "\f[CB]\e\\$1\[lB]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[rB]\f[]"
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .ESCq name arg
 .\"
 .\" Synopsis for escape sequence with a bracketed long argument
@@ -139,7 +139,7 @@ groff \- a short reference for the GNU roff language
 .de ESCq
 .  Text "\f[CB]\e\\$1\[cq]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[cq]\f[]"
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .ESC? arg
 .\"
 .\" Synopsis for escape sequence with a bracketed long argument
@@ -150,7 +150,7 @@ groff \- a short reference for the GNU roff language
 .de ESC?
 .  Text "\f[CB]\e?\,\f[I]\\$1\/\f[CB]?\f[R]"
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .esc name [punct]
 .\"
 .\" Reference of an escape sequence (no args), possibly punctuation
@@ -162,7 +162,7 @@ groff \- a short reference for the GNU roff language
 .de esc
 .  BR "\e\\$1" \\$2
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .escarg name arg [punct]
 .\"
 .\" Reference of an escape sequence (no args)
@@ -175,7 +175,7 @@ groff \- a short reference for the GNU roff language
 .de escarg
 .  Text \f[B]\e\\$1\f[]\,\f[I]\\$2\/\f[]\\$3
 ..
-.\" =====================================================================
+.\" ====================================================================
 .\" .esc[] name arg [punct]
 .\"
 .\" Reference for escape sequence with a bracketed long argument
@@ -188,7 +188,7 @@ groff \- a short reference for the GNU roff language
 .  Text \f[CB]\e\\$1\[lB]\f[]\,\f[CI]\\$2\/\f[]\f[CB]\[rB]\f[]\\$3
 ..
 .
-.\" =====================================================================
+.\" ====================================================================
 .\" .escq name arg
 .\"
 .\" Reference for escape sequence with a bracketed long argument
@@ -668,8 +668,8 @@ Otherwise, it is non-special.
 \f[CI]space\f[]
 Space characters are only functional characters.
 .
-They separate the arguments in requests, macros, and strings, and the words
-in text lines.
+They separate the arguments in requests, macros, and strings, and the
+words in text lines.
 .
 They are subject to groff's horizontal spacing calculations.
 .
@@ -1080,8 +1080,8 @@ If an expression defined as
 starts with a
 .squoted_char +
 sign the resulting value of the expression is added to an already
-existing value inherent to the related request, e.g.\& adding to a number
-register.
+existing value inherent to the related request, e.g.\& adding to a
+number register.
 .
 If the expression starts with a
 .squoted_char -
@@ -1483,7 +1483,8 @@ can't be redefined.
 .
 .TPx
 .REQ .dei "macro"
-Define or redefine a macro whose name is contained in the string register
+Define or redefine a macro whose name is contained in the string
+register
 .I macro
 until
 .B ..\&
@@ -2227,8 +2228,8 @@ Return from a macro.
 .
 .TPx
 .REQ .return "anything"
-Return twice, namely from the macro at the current level and from the macro
-one level higher.
+Return twice, namely from the macro at the current level and from the
+macro one level higher.
 .
 .TPx
 .REQ .rfschar "f c1 c2 .\|.\|.\&"
@@ -2452,7 +2453,8 @@ Enable track kerning for
 .IR font .
 .
 .TPx
-.REQ .tl "\f[CB]\[cq]\f[]left\f[CB]\[cq]\f[]center\f[CB]\[cq]\f[]right\f[CB]\[cq]\f[]"
+.REQ .tl "\f[CB]\[cq]\f[]left\f[CB]\[cq]\f[]center\f[CB]\[cq]\f[]right\
+\f[CB]\[cq]\f[]"
 Three-part title.
 .
 .TPx
@@ -2643,7 +2645,8 @@ gpinyin@.pinyin start@.pinyin stop
 .
 .
 .P
-Note that the \[oq]ideal\[cq] preprocessor is not available in groff yet.
+Note that the \[oq]ideal\[cq] preprocessor is not available in groff
+yet.
 .
 .
 .\" ====================================================================
@@ -2844,8 +2847,9 @@ the underline character.
 .
 .TP
 .ESC .
-The same as a dot (\[oq].\[cq]).  Necessary in nested macro
-definitions so that \[oq]\[rs]\[rs]..\[cq] expands to \[oq]..\[cq].
+The same as a dot (\[oq].\[cq]).
+Necessary in nested macro definitions so that \[oq]\[rs]\[rs]..\[cq]\&
+expands to \[oq]..\[cq].
 .
 .TP
 .ESC %
@@ -3899,7 +3903,8 @@ It can be stored and used to set adjustment.
 .
 .TPx
 .REG .k
-The current horizontal output position (relative to the current indentation).
+The current horizontal output position (relative to the current
+indentation).
 .TPx
 .REG .kern
 1\~if pairwise kerning is enabled, 0\~otherwise.
@@ -3977,7 +3982,8 @@ Current page length.
 .
 .TPx
 .REG .P
-1\~if the current page is being printed, 0\~otherwise (as determined by the
+1\~if the current page is being printed, 0\~otherwise (as determined by
+the
 .option \-o
 command-line option).
 .
@@ -4226,8 +4232,8 @@ Vertical position of last printed text base-line.
 .REG opminx
 .TPx
 .REG opminy
-These four registers mark the top left and bottom right hand corners of a box
-which encompasses all written glyphs.
+These four registers mark the top left and bottom right hand corners of
+a box which encompasses all written glyphs.
 They are reset to \-1 by
 .escarg O 0
 or
@@ -4421,7 +4427,8 @@ gets lost, use the following:
 \&.ds u3 after
 \&.ie n \[rs]*[u1]\[rs]f[I]\[rs]*[u2]\[rs]f[P]\[rs]*[u3]
 \&.el \[rs]*[u1]\[rs]Z\[aq]\[rs]*[u2]\[aq]\[rs]v\[aq].25m\[aq]\[rs]D\
-\[aq]l \[rs]w\[aq]\[rs]*[u2]\[aq]u 0\[aq]\[rs]v\[aq]\-.25m\[aq]\[rs]*[u3]
+\[aq]l \[rs]w\[aq]\[rs]*[u2]\[aq]u 0\[aq]\[rs]v\[aq]\-.25m\[aq]\[rs]*\
+[u3]
 .EE
 .RE
 .
@@ -4646,10 +4653,11 @@ documentations and other information.
 .
 .
 .\" ====================================================================
-.\" Emacs Setup
+.\" Editor settings
 .\" ====================================================================
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

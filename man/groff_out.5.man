@@ -64,7 +64,8 @@ after these commands, otherwise the position is not changed.
 .RI ( \,\\$1\/ ,\  \,\\$2\/ )\\$3
 ..
 .de indexed_offset
-.offset \fI\\$1\/\fP\d\s-3\\$2\s+3\u\x'\n[.v]/4' \fI\\$3\/\fP\d\s-3\\$4\s+3\u\x'\n[.v]/4' \\$5\x'\n[.v]/4'
+.offset \fI\\$1\/\fP\d\s-3\\$2\s+3\u\x'\n[.v]/4' \fI\\$3\/\fP\
+\d\s-3\\$4\s+3\u\x'\n[.v]/4' \\$5\x'\n[.v]/4'
 ..
 .\" format: .command <name> "<arguments>" <punctuation>
 .de command
@@ -659,8 +660,8 @@ If
 .B \-T\~html
 or
 .B \-T\~xhtml
-is used, negative values are emitted also to indicate an unbreakable space
-with given width.
+is used, negative values are emitted also to indicate an unbreakable
+space with given width.
 .
 For example,
 .B N\~\-193
@@ -2004,10 +2005,11 @@ CSTR\~#54
 .
 .
 .\" ====================================================================
-.\" Emacs settings
+.\" Editor settings
 .\" ====================================================================
-.\"
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

@@ -98,9 +98,11 @@ The names of number registers, fonts, strings/\:macros/\:diversions,
 special characters (glyphs), and colors can be of any length.
 .
 In escape sequences, additionally to the classical
-\[oq]\fB(\fP\,\fIxx\/\fP\[cq] construction for a two-character glyph name,
-you can use \[oq]\fB[\fP\,\fIxxx\/\fP\fB]\fP\[cq] for a name of
-arbitrary length.
+\[oq]\fB(\fP\,\fIxx\/\fP\[cq]
+construction for a two-character glyph name,
+you can use
+\[oq]\fB[\fP\,\fIxxx\/\fP\fB]\fP\[cq]
+for a name of arbitrary length.
 .
 .TP
 .BI \[rs][ xxx ]
@@ -298,8 +300,8 @@ or\~\c
 .BR 0 ,
 depending on whether
 .I anything
-is or is not acceptable as the name of a string, macro, diversion, number
-register, environment, font, or color.
+is or is not acceptable as the name of a string, macro, diversion,
+number register, environment, font, or color.
 .
 It returns\~\c
 .B 0
@@ -685,7 +687,8 @@ Thus
 \&.nr x 1
 \&.nf
 \&.di d
-\&\[rs]?\[rs]\[rs]?\[rs]\[rs]\[rs]\[rs]?\[rs]\[rs]\[rs]\[rs]\[rs]\[rs]\[rs]\c
+\&\[rs]?\[rs]\[rs]?\[rs]\[rs]\[rs]\[rs]?\[rs]\[rs]\[rs]\[rs]\[rs]\[rs]\
+\[rs]\c
 \&\[rs]nx\[rs]\[rs]\[rs]\[rs]?\[rs]\[rs]?\[rs]?
 \&.di
 \&.nr x 2
@@ -1028,8 +1031,8 @@ Use this in combination with values 2 and\~4 (initially no characters
 have this property).
 .
 .IP 128
-Prohibit a line break before the character, but allow a line break after the
-character.
+Prohibit a line break before the character, but allow a line break after
+the character.
 This works only in combination with flags 256 and 512 and has no effect
 otherwise.
 .
@@ -1050,9 +1053,10 @@ Contrary to flag values 2 and\~4, the flags 128, 256, and 512 work
 pairwise.
 .
 If, for example, the left character has value 512, and the right
-character 128, no line break gets inserted.  If we use value\~6
-instead for the left character, a line break after the character
-can't be suppressed since the right neighbour character
+character 128, no line break gets inserted.
+.
+If we use value\~6 instead for the left character, a line break after
+the character can't be suppressed since the right neighbour character
 doesn't get examined.
 .
 .TP
@@ -1507,8 +1511,8 @@ for font\~\c
 .IR f .
 .I zoom
 must a non-negative integer multiple of 1/1000th.
-If it is missing or is equal to zero, it means the same as 1000, namely no
-magnification.
+If it is missing or is equal to zero, it means the same as 1000, namely
+no magnification.
 .IR f \~\c
 must be a real font name, not a style.
 .
@@ -1535,9 +1539,9 @@ and so on.
 A hyphenation code must be a single input character (not a special
 character) other than a digit or a space.
 .
-Initially each lower-case letter \%a\[en]z has a hyphenation code, which is
-itself, and each upper-case letter \%A\[en]Z has a hyphenation code which is
-the lower-case version of itself.
+Initially each lower-case letter \%a\[en]z has a hyphenation code, which
+is itself, and each upper-case letter \%A\[en]Z has a hyphenation code
+which is the lower-case version of itself.
 .
 See also the
 .B hpf
@@ -1699,7 +1703,8 @@ The arguments of
 .B hpfcode
 must be integers in the range 0 to\~255.
 .
-Note that it is even possible to use character codes which are invalid in
+Note that it is even possible to use character codes which are invalid
+in
 .B groff
 otherwise.
 .
@@ -1905,7 +1910,8 @@ exists, append to it instead of truncating it.
 .BI .output\  string
 Emit
 .I string
-directly to the intermediate output (subject to copy-mode interpretation);
+directly to the intermediate output (subject to copy-mode
+interpretation);
 this is similar to
 .B \[rs]!\&
 used at the top level.
@@ -1997,8 +2003,8 @@ request.
 .B .return
 Within a macro, return immediately.
 .
-If called with an argument, return twice, namely from the current macro and
-from the macro one level higher.
+If called with an argument, return twice, namely from the current macro
+and from the macro one level higher.
 .
 No effect otherwise.
 .
@@ -3185,8 +3191,8 @@ and
 .BR \[rs]Z .
 .
 When decoding a macro or string argument that is delimited by double
-quotes, a character that appears at a different input level to the starting
-delimiter character is not recognized as the closing delimiter
+quotes, a character that appears at a different input level to the
+starting delimiter character is not recognized as the closing delimiter
 character.
 .
 The implementation of
@@ -3276,8 +3282,8 @@ If there is a glyph named
 .B \[rs]|
 or
 .BR \[rs]^ ,
-respectively (note the leading backslash), defined in the current font file,
-use this glyph's width instead of the default value.
+respectively (note the leading backslash), defined in the current font
+file, use this glyph's width instead of the default value.
 .
 .P
 It is now possible to have whitespace between the first and second dot
@@ -3349,8 +3355,9 @@ commands.
 is any sequence of characters terminated by a space or a newline (to
 be more precise, it is a sequence of glyphs which are accessed with
 the corresponding characters); the first character should be printed at
-the current position, the current horizontal position should be increased
-by the width of the first character, and so on for each character.
+the current position, the current horizontal position should be
+increased by the width of the first character, and so on for each
+character.
 .
 The width of the glyph is that given in the font file,
 appropriately scaled for the current point size, and rounded so that
@@ -3484,7 +3491,8 @@ delim $$
 .EN
 .
 .TP
-\f[B]Dp\f[R] $dx sub 1$ $dy sub 1$ $dx sub 2$ $dy sub 2$ $...$ $dx sub n$ $dy sub n$\[rs]n
+\f[B]Dp\f[R] $dx sub 1$ $dy sub 1$ $dx sub 2$ $dy sub 2$ $...$ \
+$dx sub n$ $dy sub n$\[rs]n
 Draw a polygon with, for $i = 1 ,..., n+1$, the
 .IR i -th
 vertex at the current position
@@ -3495,7 +3503,8 @@ At the moment, GNU pic only uses this command to generate triangles
 and rectangles.
 .
 .TP
-\f[B]DP\f[R] $dx sub 1$ $dy sub 1$ $dx sub 2$ $dy sub 2$ $...$ $dx sub n$ $dy sub n$\[rs]n
+\f[B]DP\f[R] $dx sub 1$ $dy sub 1$ $dx sub 2$ $dy sub 2$ $...$ \
+$dx sub n$ $dy sub n$\[rs]n
 .
 Like
 .B Dp
@@ -3527,7 +3536,8 @@ does not depend on this.
 .
 Given a drawing command of the form
 .IP
-\f[B]\[rs]D'\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ $...$ $x sub n$ $y sub n$\f[B]'\f[R]
+\f[B]\[rs]D'\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ $...$ \
+$x sub n$ $y sub n$\f[B]'\f[R]
 .
 .P
 where
@@ -3570,7 +3580,8 @@ Thus after executing a
 .BR D \~\c
 command of the form
 .IP
-\f[B]D\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ $...$ $x sub n$ $y sub n$\[rs]n
+\f[B]D\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ $...$ \
+$x sub n$ $y sub n$\[rs]n
 .
 .P
 the current position should be increased by
@@ -3962,5 +3973,6 @@ classical troff documentation
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:
