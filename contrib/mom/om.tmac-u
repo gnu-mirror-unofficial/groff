@@ -45,20 +45,20 @@ extensions, and float management).
 \#
 \# ====================================================================
 \#
+.if \n(.C \
+.   ab [mom]: The groff mom macros do not work in compatibility mode.
+\# Check that GNU troff is being run
+.if !\n[.g]=1 \
+.   ab [mom]: The mom macros require that you be running GNU troff.
+\# Check which version of groff is being run
+.if (\n[.x]\n[.y] < 118) \
+.   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
 .ds version 2.2-a
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
 \#
-\# Check which version of groff is being run
-.if (\n[.x]\n[.y] < 118) \
-.   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
-\# Check that GNU troff is being run
-.if !\n[.g]=1 \
-.   ab [mom]: The mom macros require that you be running GNU troff.
-.if \n[.C] \
-.   ab [mom]: The groff mom macros do not work in compatibility mode.
 \# Add supplementary styles
 .sty \n[.fp] UL      \"  Ultra Light
 .sty \n[.fp] ULI     \"  Ultra Light Italic
