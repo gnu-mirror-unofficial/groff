@@ -31,31 +31,31 @@ Usage () {
 
 Usage:  ${CMD} [ OPTIONS ] FILE1 FILE2 [ OUTPUT ]
 Place difference marks into the new version of a groff/nroff/troff document.
-FILE1 and FILE2 are compared, using \`diff', and FILE2 is output with
-groff \`.mc' requests added to indicate how it is different from FILE1.
+FILE1 and FILE2 are compared, using 'diff', and FILE2 is output with
+groff '.mc' requests added to indicate how it is different from FILE1.
 
-  FILE1   Previous version of the groff file.  \`-' means standard input.
-  FILE2   Current version of the groff file.   \`-' means standard input.
+  FILE1   Previous version of the groff file.  '-' means standard input.
+  FILE2   Current version of the groff file.   '-' means standard input.
           Either FILE1 or FILE2 can be standard input, but not both.
-  OUTPUT  Copy of FILE2 with \`.mc' commands added.
-          \`-' means standard output (the default).
+  OUTPUT  Copy of FILE2 with '.mc' commands added.
+          '-' means standard output (the default).
           If the shell's 'test' does not support option -ef, OUTPUT
           can only be the standard output.
 
 OPTIONS:
-  -a ADDMARK     Mark for added groff source lines.    Default: \`+'.
-  -c CHANGEMARK  Mark for changed groff source lines.  Default: \`|'.
-  -d DELETEMARK  Mark for deleted groff source lines.  Default: \`*'.
+  -a ADDMARK     Mark for added groff source lines.    Default: '+'.
+  -c CHANGEMARK  Mark for changed groff source lines.  Default: '|'.
+  -d DELETEMARK  Mark for deleted groff source lines.  Default: '*'.
 
   -D             Show the deleted portions from changed and deleted text.
-                  Default delimiting marks:  \`[[' .... \`]]'.
-  -B             By default, the deleted texts marked by the \`-D' option end
-                  with an added troff \`.br' command.  This option prevents
-                  the added \`.br'.
-  -M MARK1 MARK2 Change the delimiting marks for the \`-D' option.
+                  Default delimiting marks:  '[[' .... ']]'.
+  -B             By default, the deleted texts marked by the '-D' option end
+                  with an added troff '.br' command.  This option prevents
+                  the added '.br'.
+  -M MARK1 MARK2 Change the delimiting marks for the '-D' option.
 
   -x DIFFCMD     Use a different diff(1) command;
-                  one that accepts the \`-Dname' option, such as GNU diff.
+                  one that accepts the '-Dname' option, such as GNU diff.
   -s SEDCMD      Use a different sed(1) command;
                   such as GNU sed.
   --version      Print version information on the standard output and exit.
@@ -89,11 +89,11 @@ FileRead () {
 
 	if test ! -f "$2"
 	then
-		Exit $1 "File \`$2' not found."
+		Exit $1 "File '$2' not found."
 	fi
 	if test ! -r "$2"
 	then
-		Exit $1 "File \`$2' not readable."
+		Exit $1 "File '$2' not readable."
 	fi
 }
 
@@ -114,10 +114,10 @@ FileCreate () {
 	then
 		if test ! -f "$2"
 		then
-			Exit $1 "File \`$2' not created; " \
-			  "Cannot write directory \``dirname "$2"`'."
+			Exit $1 "File '$2' not created; " \
+			  "Cannot write directory '`dirname "$2"`'."
 		fi
-		Exit $1 "File \`$2' not writeable."
+		Exit $1 "File '$2' not writeable."
 	fi
 }
 
@@ -139,7 +139,7 @@ WouldClobber () {
 		then
 			Exit 3 \
 			"The $2 and OUTPUT arguments both point to the same file," \
-			"\`$1', and it would be overwritten."
+			"'$1', and it would be overwritten."
 		fi
 	fi
 }
@@ -162,7 +162,7 @@ RequiresArgument () {
 
 	if test $# -lt 2
 	then
-		Exit 255 "Option \`$1' requires a value."
+		Exit 255 "Option '$1' requires a value."
 	fi
 
 	echo "$2"
@@ -200,7 +200,7 @@ do
 			shift
 		if [ $# -lt 2 ]
 		then
-			Usage "Option \`-M' is missing the MARK2 value."
+			Usage "Option '-M' is missing the MARK2 value."
 		fi
 		MARK2="$2"
 		shift
@@ -232,7 +232,7 @@ do
 		break
 		;;
 	-*)
-		BADOPTION="${CMD}:  invalid option \`$1'"
+		BADOPTION="${CMD}:  invalid option '$1'"
 		;;
 	*)
 		break
@@ -242,9 +242,9 @@ do
 done
 
 ${DIFFCMD} -Dx /dev/null /dev/null >/dev/null 2>&1  ||
-	Usage "The \`${DIFFCMD}' program does not accept"	\
-		"the required \`-Dname' option.
-Use GNU diff instead.  See the \`-x DIFFCMD' option.  You can also
+	Usage "The '${DIFFCMD}' program does not accept"	\
+		"the required '-Dname' option.
+Use GNU diff instead.  See the '-x DIFFCMD' option.  You can also
 install GNU diff as gdiff on your system"
 
 if test -n "${BADOPTION}"
@@ -259,7 +259,7 @@ fi
 
 if test "1$1" = "1-"  -a  "2$2" = "2-"
 then
-	Usage "Both FILE1 and FILE2 are \`-'."
+	Usage "Both FILE1 and FILE2 are '-'."
 fi
 
 FILE1="$1"

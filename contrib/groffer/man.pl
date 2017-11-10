@@ -148,7 +148,7 @@ sub is_man {
   my $n = @_;
   die "is_man(): one argument is needed, you used $n;"
     unless $n == 1;
-  die "is_man(): the argument is not a hash reference `$_[0]';"
+  die "is_man(): the argument is not a hash reference '$_[0]';"
     if ref($_[0]) ne 'HASH';
   die 'is_man(): temporary directory is not set;' unless $main::tmpdir;
   die 'is_man(): man_setup() must be run first;' unless $main::Man{'IS_SETUP'};
@@ -207,11 +207,11 @@ sub man_get {
   my $n = @_;
   die "man_get(): one argument is needed, you used $n;"
     unless $n == 1;
-  die "man_get(): the argument is not a hash reference `$_[0]';"
+  die "man_get(): the argument is not a hash reference '$_[0]';"
     if ref($_[0]) ne 'HASH';
   die "man_get(): is_man() must be run first on the argument;"
     unless $main::Manspec;
-  die "man_get(): wrong hash reference `$_[0]', no 'name' key;"
+  die "man_get(): wrong hash reference '$_[0]', no 'name' key;"
     unless exists $_[0]->{'name'};
 
   my ($name, $sec, $ext, $f, $path);

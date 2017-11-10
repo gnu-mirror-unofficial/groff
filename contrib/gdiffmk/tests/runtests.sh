@@ -38,7 +38,7 @@ case "$#-$1" in
 	;;
 * )
 	echo >&2 "$0 [ clean | run ]
-Run a few simple tests on \`${command}'."'
+Run a few simple tests on '${command}'."'
 
 clean	Remove the result? and tmp_file? files.
 run	Run the tests.

@@ -197,12 +197,12 @@ usage: $Name [option]... [--] [filespec]...
 -h | --help     print usage information
 -v | --version  print version information
 
-All other options are arbitrary options of `groffer'; the options
+All other options are arbitrary options of 'groffer'; the options
 override the behavior of this program.
 
-filespec's are the same as in `groffer': either the names of existing,
-readable files or `-' for standard input or a search pattern for man
-pages.  No `filespec' assumes standard input automatically.
+filespec's are the same as in 'groffer': either the names of existing,
+readable files or '-' for standard input or a search pattern for man
+pages.  No 'filespec' assumes standard input automatically.
 EOF
 }
 
@@ -213,10 +213,10 @@ usage: $Name [option]... [--] [filespec]...
 -h | --help     print usage information
 -v | --version  print version information
 
-No other options are allowed because `groffer' is not available.
+No other options are allowed because 'groffer' is not available.
 
-The only `filespec's allowed are the names of existing, readable files
-or `-' for standard input.  No `filespec' assumes standard input
+The only 'filespec's allowed are the names of existing, readable files
+or '-' for standard input.  No 'filespec' assumes standard input
 automatically.
 EOF
 }

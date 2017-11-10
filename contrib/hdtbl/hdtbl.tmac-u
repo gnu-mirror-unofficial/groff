@@ -121,7 +121,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \B\\*[cols] \
 .      nr t*cols\\n[t*#] \\*[cols]
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid number of columns value `\\*[cols]'.
+.      tm \\n[.F]:\\n[.c]: Invalid number of columns value '\\*[cols]'.
 .  \}
 .
 .  t*getarg cpd \\*[args]                 \"	cell padding
@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \B\\*[cpd] \
 .      nr t*cpd\\n[t*#] \\*[cpd]
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid cell padding value `\\*[cpd]'.
+.      tm \\n[.F]:\\n[.c]: Invalid cell padding value '\\*[cpd]'.
 .  \}
 .
 .  t*getarg csp \\*[args]                 \"	cell spacing
@@ -141,7 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \B\\*[csp] \
 .      nr t*csp\\n[t*#] \\*[csp]
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid cell spacing value `\\*[csp]'.
+.      tm \\n[.F]:\\n[.c]: Invalid cell spacing value '\\*[csp]'.
 .  \}
 .
 .  t*getarg border \\*[args]              \"	border thickness
@@ -154,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      ie \B\\*[border] \
 .        nr t*b\\n[t*#] \\*[border]
 .      el \
-.        tm \\n[.F]:\\n[.c]: Invalid border thickness value `\\*[border]'.
+.        tm \\n[.F]:\\n[.c]: Invalid border thickness value '\\*[border]'.
 .  \}\}
 .
 .  t*getarg bc \\*[args]                  \"	border color
@@ -166,7 +166,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      ie "\\*[bc]"=" \
 .        ds t*bc\\n[t*#] =\"
 .      el \
-.        tm \\n[.F]:\\n[.c]: Invalid border color `\\*[bc]'.
+.        tm \\n[.F]:\\n[.c]: Invalid border color '\\*[bc]'.
 .  \}\}
 .  ie "\\*[bc]"=" \
 .    ds t*bc\\n[t*#]
@@ -193,7 +193,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             - ((2 * \\n[cscp\\n[t*#]]) \
                                 + (3 * \\n[b/2\\n[t*#]])))
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid height value `\\*[height]'.
+.      tm \\n[.F]:\\n[.c]: Invalid height value '\\*[height]'.
 .  \}
 .
 .  t*cl \\*[width]                      \"	get cell widths and offsets
@@ -211,8 +211,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      ie "\\*[tal]"r" \
 .        nr in\\n[t*#] (\\n[.l] - \\n[ll\\n[t*#]] + \\n[.i])
 .      el \{\
-.        tmc \\n[.F]:\\n[.c]: Invalid horizontal table alignment `\\*[tal]':
-.        tm1 " must be `l', `c' or `r'.
+.        tmc \\n[.F]:\\n[.c]: Invalid horizontal table alignment '\\*[tal]':
+.        tm1 " must be 'l', 'c' or 'r'.
 .  \}\}\}
 .
 .  nr t*r#\\n[t*#] 0		        \"	initialize row index
@@ -230,8 +230,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .  if "\\$0"CPTN" \
 .    if \\n[t*r#\\n[t*#]] \{\
-.      tmc \\n[.F]:\\n[.c]: Invalid placement of `.CPTN';
-.      tm1 " must be called immediately after `.TBL'.
+.      tmc \\n[.F]:\\n[.c]: Invalid placement of '.CPTN';
+.      tm1 " must be called immediately after '.TBL'.
 .      return
 .    \}
 .
@@ -297,7 +297,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \B\\*[height] \
 .      nr t*height\\*[#t#r] \\*[height]
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid table row height `\\*[height]'.
+.      tm \\n[.F]:\\n[.c]: Invalid table row height '\\*[height]'.
 .  \}
 .
 .  \"	If there is a TR with height `height', the total height of the table
@@ -351,7 +351,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      nr *rsp*\\*[*#trc*] (\\n[rowspan] - 1)
 .    \}
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid value of `rowspan' keyword.
+.      tm \\n[.F]:\\n[.c]: Invalid value of 'rowspan' keyword.
 .  \}
 .
 .  t*getarg colspan \\*[args]
@@ -360,7 +360,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \B\\*[colspan] \
 .      nr colspan (\\*[colspan] >? 1)
 .    el \
-.      tm \\n[.F]:\\n[.c]: Invalid value of `colspan' keyword.
+.      tm \\n[.F]:\\n[.c]: Invalid value of 'colspan' keyword.
 .  \}
 .
 .  t*args \\*[#trc] \\*[#t#r]           \"  look for common arguments
@@ -503,7 +503,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de t*free
 .  if "\\$0"CPTN" \
 .    if \\n[t*r#\\n[t*#]] \{\
-.      tmc \\n[.F]:\\n[.c]: Invalid placement of `.t*free' within a table;
+.      tmc \\n[.F]:\\n[.c]: Invalid placement of '.t*free' within a table;
 .      tm1 " it must be called outside of any table.
 .      return
 .    \}
@@ -749,13 +749,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .        ie \B\\*[**] \
 .          nr $\\n[*] (\\*[**] * \\n[.l] / 100)
 .        el \
-.          tm \\n[.F]:\\n[.c]: Invalid relative cell width `\\*[**]%'.
+.          tm \\n[.F]:\\n[.c]: Invalid relative cell width '\\*[**]%'.
 .      \}
 .      el \{\
 .        ie \B\\$[\\n[*]] \
 .          nr $\\n[*] \\$[\\n[*]]
 .        el \
-.          tm \\n[.F]:\\n[.c]: Invalid cell width `\\$[\\n[*]]'.
+.          tm \\n[.F]:\\n[.c]: Invalid cell width '\\$[\\n[*]]'.
 .    \}\}
 .
 .    nr ll\\n[t*#] +\\n[$\\n[*]]
@@ -901,7 +901,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      ie "\\*[bgc]"=" \
 .        ds t*bgc\\$1 =\"
 .      el \
-.        tm \\n[.F]:\\n[.c]: Invalid background color `\\*[bgc]'.
+.        tm \\n[.F]:\\n[.c]: Invalid background color '\\*[bgc]'.
 .  \}\}
 .  if "\\*[args]"" \
 .    return
@@ -914,7 +914,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      ie "\\*[fgc]"=" \
 .        ds t*fgc\\$1 =\"
 .      el \
-.        tm \\n[.F]:\\n[.c]: Invalid foreground color `\\*[fgc]'.
+.        tm \\n[.F]:\\n[.c]: Invalid foreground color '\\*[fgc]'.
 .  \}\}
 .  if "\\*[args]"" \
 .    return
@@ -937,8 +937,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \\n[t*index] \
 .      ds t*hal\\$1 \\*[hal]\"
 .    el \{\
-.      tmc \\n[.F]:\\n[.c]: Invalid horizontal alignment `\\*[hal]':
-.      tm1 " must be `b', `c', `l' or `r'.
+.      tmc \\n[.F]:\\n[.c]: Invalid horizontal alignment '\\*[hal]':
+.      tm1 " must be 'b', 'c', 'l' or 'r'.
 .  \}\}
 .  if "\\*[args]"" \
 .    return
@@ -949,8 +949,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie \\n[t*index] \
 .      ds t*val\\$1 \\*[val]\"
 .    el \{\
-.      tmc \\n[.F]:\\n[.c]: Invalid vertical alignment `\\*[val]':
-.      tm1 " must be `t', `m' or `b'.
+.      tmc \\n[.F]:\\n[.c]: Invalid vertical alignment '\\*[val]':
+.      tm1 " must be 't', 'm' or 'b'.
 .  \}\}
 .  if "\\*[args]"" \
 .    return

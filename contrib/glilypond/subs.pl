@@ -3,31 +3,31 @@ my $License = q*
 # Legalese
 ########################################################################
 
-Subroutines for `glilypond'.
+Subroutines for 'glilypond'.
 
-Source file position: `<groff-source>/contrib/glilypond/subs.pl'
-Installed position: `<prefix>/lib/groff/glilypond/subs.pl'
+Source file position: '<groff-source>/contrib/glilypond/subs.pl'
+Installed position: '<prefix>/lib/groff/glilypond/subs.pl'
 
 Copyright (C) 2013-2015  Free Software Foundation, Inc.
   Written by Bernd Warken <groff-bernd.warken-72@web.de>
 
 Last update: 10 Sep 2015
 
-This file is part of `glilypond', which is part of `GNU groff'.
+This file is part of 'glilypond', which is part of 'GNU groff'.
 
-  `GNU groff' is free software: you can redistribute it and/or modify it
-under the terms of the `GNU General Public License' as published by the
-`Free Software Foundation', either version 3 of the License, or (at your
+  'GNU groff' is free software: you can redistribute it and/or modify it
+under the terms of the 'GNU General Public License' as published by the
+'Free Software Foundation', either version 3 of the License, or (at your
 option) any later version.
 
-  `GNU groff' is distributed in the hope that it will be useful, but
+  'GNU groff' is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the `GNU
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 'GNU
 General Public License' for more details.
 
-  You should have received a copy of the 'GNU General Public License`
-along with `groff', see the files `COPYING' and `LICENSE' in the top
-directory of the `groff' source package.  If not, see
+  You should have received a copy of the 'GNU General Public License'
+along with 'groff', see the files 'COPYING' and 'LICENSE' in the top
+directory of the 'groff' source package.  If not, see
 <http://www.gnu.org/licenses/>.
 *;
 
@@ -63,13 +63,13 @@ sub create_ly2eps {		       # `--ly2eps' default
   &run_lilypond("$opts");
 
   Cwd::chdir $Temp->{'cwd'} or
-      die "Could not change to former directory `" .
+      die "Could not change to former directory '" .
 	$Temp->{'cwd'} . "': $!";
 
   my $eps_dir = $Temp->{'eps_dir'};
   my $dir = $Temp->{'temp_dir'};
   opendir( my $dh, $dir ) or
-    die "could not open temporary directory `$dir': $!";
+    die "could not open temporary directory '$dir': $!";
 
   my $re = qr<
 	       ^
@@ -113,25 +113,25 @@ sub create_pdf2eps {		       # `--pdf2eps'
 
   # pdf2ps in temp dir
   my $temp_file = &next_temp_file;
-  $v->print( "\n##### run of `pdf2ps'" );
+  $v->print( "\n##### run of 'pdf2ps'" );
   # `$ pdf2ps file.pdf file.ps'
   my $output = `pdf2ps $file_pdf $file_ps 2> $temp_file`;
   die 'Program pdf2ps does not work.' if ( $? );
   &shell_handling($output, $temp_file);
-  $v->print( "##### end run of `pdf2ps'\n" );
+  $v->print( "##### end run of 'pdf2ps'\n" );
 
   # ps2eps in temp dir
   $temp_file = &next_temp_file;
-  $v->print( "\n##### run of `ps2eps'" );
+  $v->print( "\n##### run of 'ps2eps'" );
   # `$ ps2eps file.ps'
   $output = `ps2eps $file_ps 2> $temp_file`;
   die 'Program ps2eps does not work.' if ( $? );
   &shell_handling($output, $temp_file);
-  $v->print( "##### end run of `ps2eps'\n" );
+  $v->print( "##### end run of 'ps2eps'\n" );
 
   # change back to former dir
   Cwd::chdir $Temp->{'cwd'} or
-      die "Could not change to former directory `" .
+      die "Could not change to former directory '" .
 	$Temp->{'cwd'} . "': $!";
 
   # handling of .eps file
@@ -211,13 +211,13 @@ sub make_dir {			# make directory or check if it exists
     next DIRPARTS if ( -d $dir_grow );
 
     if ( -e $dir_grow ) {  # exists, but not a dir, so must be removed
-      die "Couldn't create dir `$dir_arg', it is blocked by `$dir_grow'."
+      die "Couldn't create dir '$dir_arg', it is blocked by '$dir_grow'."
 	unless ( -w $dir_grow );
 
       # now it's writable, but not a dir, so it can be removed
       unlink ( $dir_grow ) or
-	die "Couldn't remove `$dir_grow', " .
-	  "so I cannot create dir `$dir_arg': $!";
+	die "Couldn't remove '$dir_grow', " .
+	  "so I cannot create dir '$dir_arg': $!";
     }
 
     # $dir_grow does no longer exist, so the former dir must be writable
@@ -225,8 +225,8 @@ sub make_dir {			# make directory or check if it exists
     pop @dir_grow;
     $dir_grow = File::Spec->catdir(@dir_grow);
 
-    die "`$dir_grow' is not writable, " .
-      "so directory `$dir_arg' can't be createdd."
+    die "'$dir_grow' is not writable, " .
+      "so directory '$dir_arg' can't be createdd."
 	unless ( -w $dir_grow );
 
     # former directory is writable, so `$dir_arg' can be created
@@ -237,12 +237,12 @@ sub make_dir {			# make directory or check if it exists
 			    verbose => $Args->{'verbose'},
 			   }
 			 )	#  `mkdir -P'
-	or die "Could not create directory `$dir_arg': $!";
+	or die "Could not create directory '$dir_arg': $!";
 
     last DIRPARTS;
   }
 
-  die "`$dir_arg' is not a writable directory"
+  die "'$dir_arg' is not a writable directory"
     unless ( -d $dir_arg && -w $dir_arg );
 
   return $dir_arg;
@@ -257,7 +257,7 @@ sub next_temp_file {
   my $temp_basename = $Args->{'prefix'} . '_temp_' . $number;
   my $temp_file = File::Spec->catfile( $Temp->{'temp_dir'} ,
 				       $temp_basename );
-  $v->print( "next temporary file: `$temp_file'" );
+  $v->print( "next temporary file: '$temp_file'" );
   return $temp_file;
 }				# end sub next_temp_file()
 
@@ -341,16 +341,16 @@ sub run_lilypond {
 
   # change to temp dir
   Cwd::chdir $Temp->{'temp_dir'} or
-      die "Could not change to temporary directory `" .
+      die "Could not change to temporary directory '" .
 	$Temp->{'temp_dir'} . "': $!";
 
-  $v->print( "\n##### run of `lilypond " . $opts . "'" );
+  $v->print( "\n##### run of 'lilypond " . $opts . "'" );
   $output = `lilypond $opts 2>$temp_file`;
-  die "Program lilypond does not work, see `$temp_file': $?"
+  die "Program lilypond does not work, see '$temp_file': $?"
     if ( $? );
   chomp $output;
   &shell_handling($output, $temp_file);
-  $v->print( "##### end run of `lilypond'\n" );
+  $v->print( "##### end run of 'lilypond'\n" );
 
   # stay in temp dir
 } # end sub run_lilypond()
@@ -401,12 +401,12 @@ sub usage {			# for `--help'
   my $usage = EMPTYSTRING;
   $usage = '###### usage:' . "\n" if ( $Args->{'verbose'} );
   $usage .= qq*Options for $p:
-Read a `roff' file or standard input and transform `lilypond' parts
-(everything between `.lilypond start' and `.lilypond end') into
-`EPS'-files that can be read by groff using `.PSPIC'.
+Read a 'roff' file or standard input and transform 'lilypond' parts
+(everything between '.lilypond start' and '.lilypond end') into
+'EPS'-files that can be read by groff using '.PSPIC'.
 
-There is also a command `.lilypond include <file_name>' that can
-include a complete `lilypond' file into the `groff' document.
+There is also a command '.lilypond include <file_name>' that can
+include a complete 'lilypond' file into the 'groff' document.
 
 
 # Breaking options:
@@ -418,10 +418,10 @@ $p --license               # the license is GPL >= 3
 # Normal options:
 $p [options] [--] [filename ...]
 
-There are 2 options for influencing the way how the `EPS' files for the
-`roff' display are generated:
---ly2eps           `lilypond' generates `EPS' files directly (default)
---pdf2eps          `lilypond' generates a `PDF' file that is transformed
+There are 2 options for influencing the way how the 'EPS' files for the
+'roff' display are generated:
+--ly2eps           'lilypond' generates 'EPS' files directly (default)
+--pdf2eps          'lilypond' generates a 'PDF' file that is transformed
 
 -k|--keep_all      do not delete any temporary files
 -v|--verbose       print much information to STDERR
@@ -454,8 +454,8 @@ sub version { # for `--version'
 
   my $output = EMPTYSTRING;
   $output = "###### version:\n" if ( $Args->{'verbose'} );
-  $output .= "`" . $Globals->{'prog'} . "' version `" .
-    $Legalese->{'version'} . "' is part of `GNU groff'" . $end;
+  $output .= "'" . $Globals->{'prog'} . "' version '" .
+    $Legalese->{'version'} . "' is part of 'GNU groff'" . $end;
 
   $stdout->print($output);
 } # end sub version()

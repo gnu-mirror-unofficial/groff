@@ -48,7 +48,7 @@ sub cat_z {
     unless $n == 1;
 
   my $file = $_[0];
-  die "cat_z(): `$file' is not a readable file;" unless -f $file && -r $file;
+  die "cat_z(): '$file' is not a readable file;" unless -f $file && -r $file;
   return () if -z $file;
 
   my @res;
@@ -527,8 +527,8 @@ on-the-fly with all formats that gzip can handle.
   "name.n"	man page "name" in section "n"
   "n name"	man page "name" in section "n"
   "name"	man page "name" in first section found
-where `section' is a single character out of [1-9on], optionally followed
-by some more letters that are called the `extension'.
+where 'section' is a single character out of [1-9on], optionally followed
+by some more letters that are called the 'extension'.
 
 -h --help         print this usage message.
 -T --device=name  pass to groff using output device "name".

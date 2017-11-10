@@ -348,14 +348,14 @@ sub main_config_params {	# handle configuration files
 	  next;
 	}
 	if ( $line =~ /^--[ =]/ ) {
-	  warn "No option name in `$line' in configuration " .
+	  warn "No option name in '$line' in configuration " .
 	    "file $f.\n";
 	  next;
 	}
 	push @Starting_Conf, $line;
 	# -- or -
 	if ($line =~ /^--?$/) {
-	  warn "`$line' is not allowed in configuration files.\n";
+	  warn "'$line' is not allowed in configuration files.\n";
 	  next; }
 ### main_config_params()
 	if ($line =~ /^--/) {		# line is long option
@@ -369,7 +369,7 @@ sub main_config_params {	# handle configuration files
 	  } $name =~ s/[\'\"]//g;
 	  unless (exists $Opts_Cmdline_Long{$name}) {
 	    # option does not exist
-	    warn "Option `$name' does not exist.\n";
+	    warn "Option '$name' does not exist.\n";
 	    next LINE;
 	  }
 	  # option exists
@@ -377,13 +377,13 @@ sub main_config_params {	# handle configuration files
 	    if (defined $arg) {
 	      push @conf_args, $name, $arg;
 	      next LINE;
-	    } else { warn "Option `$name' needs an argument in " .
+	    } else { warn "Option '$name' needs an argument in " .
 		       "configuration file $f\n";
 		     next LINE;
 		   }
 	  } else { # option has no arg
 	    if (defined $arg) {
-	      warn "Option `$name' may not have an argument " .
+	      warn "Option '$name' may not have an argument " .
 		"in configuration file $f\n";
 	      next LINE;
 	    } else {
@@ -398,7 +398,7 @@ sub main_config_params {	# handle configuration files
 	    my $opt = "-$1";
 	    next if ($opt =~ /\'\"/);
 	    if ($opt =~ /- /) {
-	      warn "Option `$conf_args[$#conf_args]' does not " .
+	      warn "Option '$conf_args[$#conf_args]' does not " .
 		"have an argument.\n";
 	      next LINE;
 	    }
@@ -415,7 +415,7 @@ sub main_config_params {	# handle configuration files
 		next;
 	      }
 	    } else { # short option does not exist
-	      warn "Wrong short option `-$opt' from " .
+	      warn "Wrong short option '-$opt' from " .
 		"configuration.  Rest of line ignored.\n";
 	      next LINE;
 	    }
@@ -470,11 +470,11 @@ sub main_config_params {	# handle configuration files
       }
 
       if ($elt =~ /^--[ =]/) { # no option name
-	warn "No option name in `$elt' at $s[$j].\n";
+	warn "No option name in '$elt' at $s[$j].\n";
 	next ELT;
       }
       if ($elt =~ /^---/) { # wrong with three minus
-	warn "Wrong option `$elt' at $s[$j].\n";
+	warn "Wrong option '$elt' at $s[$j].\n";
 	next ELT;
       }
 
@@ -503,7 +503,7 @@ sub main_config_params {	# handle configuration files
 	  my $n0 = $1;
 	  if ( $Opts_Cmdline_Long_Str =~
 	       /\s(${match}[^-\s]*)\s.*\s(${match}[^-\s]*) / ) {
-	    warn "Option name `--$abbrev' is not unique: " .
+	    warn "Option name '--$abbrev' is not unique: " .
 	      "--$1 --$2 \n";
 	    next ELT;
 	  }
@@ -514,14 +514,14 @@ sub main_config_params {	# handle configuration files
 	  my $n0 = $1;
 	  if ( $Opts_Cmdline_Long_Str =~
 	       /\s(${match}[^\s]*)\s.*\s(${match}[^\s]*)\s/ ) {
-	    warn "Option name `--$abbrev' is not unique: " .
+	    warn "Option name '--$abbrev' is not unique: " .
 	      "--$1 --$2 \n";
 	    next ELT;
 	  }
 	  $name = $n0;
 	  $opt = "--$n0";
 	} else {
-	  warn "Option `--$abbrev' does not exist.\n";
+	  warn "Option '--$abbrev' does not exist.\n";
 	  next ELT;
 	}
 ### main_config_params()
@@ -532,7 +532,7 @@ sub main_config_params {	# handle configuration files
 	  } else { # $arg not defined, argument at next	element
 	    if (($i == $n1) || ($i > $n)) {
 	      warn "No argument left for option " .
-		"`$elt' at $s[$j].\n";
+		"'$elt' at $s[$j].\n";
 	      next ELT; }
 	    # add argument as next element
 	    push @argv, "--$name", $argv0[$i];
@@ -541,7 +541,7 @@ sub main_config_params {	# handle configuration files
 	  }		# if (defined $arg)
 	} else {	# option has no arg
 	  if (defined $arg) {
-	    warn "Option `$abbrev' may not have an argument " .
+	    warn "Option '$abbrev' may not have an argument " .
 	      "at $s[$j].\n";
 	    next ELT;
 	  } else {
@@ -567,7 +567,7 @@ sub main_config_params {	# handle configuration files
 	      } else { # argument at next element
 		if (($i == $n1) || ($i > $n)) {
 		  warn "No argument left for option " .
-		    "`$opt' at $s[$j].\n";
+		    "'$opt' at $s[$j].\n";
 		  next ELT; }
 ### main_config_params()
 		# add argument as next element
@@ -579,7 +579,7 @@ sub main_config_params {	# handle configuration files
 	      push @argv, $opt; next;
 	    }
 	  } else { # short option does not exist
-	    warn "Wrong short option `$opt' at $s[$j].\n";
+	    warn "Wrong short option '$opt' at $s[$j].\n";
 	    next ELT;
 	  }		# if (exists $Opts_Cmdline_Short{$opt})
 	}		# while ($cluster)
@@ -774,7 +774,7 @@ sub main_parse_params {
 	       delete $Opt{'MODE'};
 	     }
 	   } else {
-	     warn "Unknown mode in `$arg' for --mode\n";
+	     warn "Unknown mode in '$arg' for --mode\n";
 	   }
 	 },
 ### main_parse_params()
@@ -819,7 +819,7 @@ sub main_parse_params {
 	     if ($Man{'AUTO_SEC_CHARS'} =~ /$c/) {
 	       $s .= $c;
 	     } else {
-	       warn "main_parse_params(): not a man section `$c';";
+	       warn "main_parse_params(): not a man section '$c';";
 	     }
 	   }
 	   $Opt{'SECTIONS'} = $s; },
@@ -946,7 +946,7 @@ sub main_parse_params {
   }
 
   if ( $Opt{'WHATIS'} ) {
-    die "main_parse_params(): cannot handle both `whatis' and `apropos';"
+    die "main_parse_params(): cannot handle both 'whatis' and 'apropos';"
       if $Opt{'APROPOS'};
     $Man{'ALL'} = 1;
     delete $Opt{'APROPOS_SECTIONS'};
@@ -1123,7 +1123,7 @@ sub _get_prog_args {
     my %prog = &where_is_prog($opt);
     my $prog_ref = \%prog;
     unless (%prog) {
-      warn "_get_prog_args(): `$opt' is not an existing program;";
+      warn "_get_prog_args(): '$opt' is not an existing program;";
       return 0;
     }
 
@@ -1985,7 +1985,7 @@ sub main_display {
     };
 
     /^.*$/ and do {
-      die "main_display(): unknown mode `$Display{'MODE'}';";
+      die "main_display(): unknown mode '$Display{'MODE'}';";
     };
 
   }				# SWITCH

@@ -339,7 +339,7 @@ my $Line = '';
     if ($line =~ /^[\.']\s*cstart\s*$/) {
       # line: `.cstart'
       if ($is_chem) {
-	&error("additional `.cstart'; chem is already active.");
+	&error("additional '.cstart'; chem is already active.");
 	return 1;
       }
       unless ($is_pic) {
@@ -355,7 +355,7 @@ my $Line = '';
       # line: `begin chem'
       if ($is_pic) {
 	if ($is_chem) {
-	  &error("additional `begin chem'; chem is already active.");
+	  &error("additional 'begin chem'; chem is already active.");
 	  return 1;
 	}
 	$is_chem = 'begin chem';
@@ -368,7 +368,7 @@ my $Line = '';
     if ($line =~ /^[\.']\s*cend\s*/) {
       # line `.cend'
       if ($is_chem) {
-	&error("you end chem with `.cend', but started it with `begin chem'.")
+	&error("you end chem with '.cend', but started it with 'begin chem'.")
 	  if $is_chem eq 'begin chem';
 	if ($is_pic eq 'by chem') {
 	  &print_pe();
@@ -383,7 +383,7 @@ my $Line = '';
     if ($line =~ /^\s*end\s*$/) {
       # line: `end'
       if ($is_chem) {
-	&error("you end chem with `end', but started it with `.cstart'.")
+	&error("you end chem with 'end', but started it with '.cstart'.")
 	  if $is_chem eq '.cstart';
 	if ($is_pic eq 'by chem') {
 	  &print_pe();
@@ -421,10 +421,10 @@ my $Line = '';
 
     if ($Words[0] eq 'textht') {
       if ($#Words == 0) {
-	&error("`textht' needs a single argument.");
+	&error("'textht' needs a single argument.");
 	return 0;
       }
-      &error("only the last argument is taken for `textht', " .
+      &error("only the last argument is taken for 'textht', " .
 	     "all others are ignored.")
 	unless $#Words <= 1 or ($#Words == 2 && $Words[1] =~ /^=/);
       $Params{'textht'} = $Words[$#Words];
@@ -433,10 +433,10 @@ my $Line = '';
 ### main_line()
     if ($Words[0] eq 'cwid') {	# character width
       if ($#Words == 0) {
-	&error("`cwid' needs a single argument.");
+	&error("'cwid' needs a single argument.");
 	return 0;
       }
-      &error("only the last argument is taken for `cwid', " .
+      &error("only the last argument is taken for 'cwid', " .
 	     "all others are ignored.")
 	unless $#Words <= 1 or ($#Words == 2 && $Words[1] =~ /^=/);
       $Params{'cwid'} = $Words[$#Words];
@@ -444,10 +444,10 @@ my $Line = '';
     }
     if ($Words[0] eq 'db') {	# bond length
       if ($#Words == 0) {
-	&error("`db' needs a single argument.");
+	&error("'db' needs a single argument.");
 	return 0;
       }
-      &error("only the last argument is taken for `db', " .
+      &error("only the last argument is taken for 'db', " .
 	     "all others are ignored.")
 	unless $#Words <= 1 or ($#Words == 2 && $Words[1] =~ /^=/);
       $Params{'db'} = $Words[$#Words];
@@ -456,10 +456,10 @@ my $Line = '';
     if ($Words[0] eq 'size') {	# size for all parts of the whole diagram
       my $size;
       if ($#Words == 0) {
-	&error("`size' needs a single argument.");
+	&error("'size' needs a single argument.");
 	return 0;
       }
-      &error("only the last argument is taken for `size', " .
+      &error("only the last argument is taken for 'size', " .
 	     "all others are ignored.")
 	unless $#Words <= 1 or ($#Words == 2 && $Words[1] =~ /^=/);
       if ($Words[$#Words] <= 4) {
@@ -578,7 +578,7 @@ my $Line = '';
     return 1 unless $line;
 #    print STDERR "# $Line\n";
 #    &error('This is not a chem command.  To include a command for pic, ' .
-#	   "add `pic' as the first word to the command.");
+#           "add 'pic' as the first word to the command.");
     print $line, "\n";
     $Last_Type = $Types{'OTHER'};
     1;
@@ -636,7 +636,7 @@ sub bond {
   $moiety = '';
   for ($i = 1; $i <= $#Words; $i++) {
     if ($Words[$i] eq ';') {
-      &error("a colon `;' must be followed by a space and a single word.")
+      &error("a colon ';' must be followed by a space and a single word.")
        if $i != $#Words - 1;
       $moiety = $Words[$i + 1] if $#Words > $i;
       $#Words = $i - 1;

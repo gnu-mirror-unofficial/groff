@@ -28,31 +28,31 @@ our $Legalese;
 
 ### This constant `LICENSE' is the license for this file `GPL' >= 2
   use constant LICENSE => q*
-glilypond - integrate `lilypond' into `groff' files
+glilypond - integrate 'lilypond' into 'groff' files
 
-Source file position: `<groff-source>/contrib/glilypond/glilypond.pl'
-Installed position: `<prefix>/bin/glilypond'
+Source file position: '<groff-source>/contrib/glilypond/glilypond.pl'
+Installed position: '<prefix>/bin/glilypond'
 
 Copyright (C) 2013-2015 Free Software Foundation, Inc.
   Written by Bernd Warken <groff-bernd.warken-72@web.de>
 
 Last update: 10 Sep 2015
 
-This file is part of `GNU groff'.
+This file is part of 'GNU groff'.
 
-  `GNU groff' is free software: you can redistribute it and/or modify it
-under the terms of the `GNU General Public License' as published by the
-`Free Software Foundation', either version 2 of the License, or (at your
+  'GNU groff' is free software: you can redistribute it and/or modify it
+under the terms of the 'GNU General Public License' as published by the
+'Free Software Foundation', either version 2 of the License, or (at your
 option) any later version.
 
-  `GNU groff' is distributed in the hope that it will be useful, but
+  'GNU groff' is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the `GNU
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 'GNU
 General Public License' for more details.
 
-  You should have received a copy of the 'GNU General Public License`
-along with `groff', see the files `COPYING' and `LICENSE' in the top
-directory of the `groff' source package.  If not, see
+  You should have received a copy of the 'GNU General Public License'
+along with 'groff', see the files 'COPYING' and 'LICENSE' in the top
+directory of the 'groff' source package.  If not, see
 <http://www.gnu.org/licenses/>.
 *;
 
@@ -237,13 +237,13 @@ our $Temp =
 
     $dir = &path2abs($dir);
     $dir = &make_dir($dir) or
-      die "The directory `$dir' cannot be used temporarily: $!";
+      die "The directory '$dir' cannot be used temporarily: $!";
 
 
     # now `$dir' is a writable directory
 
     opendir( my $dh, $dir ) or
-      die "Could not open temporary directory `$dir': $!";
+      die "Could not open temporary directory '$dir': $!";
     my $file_name;
     my $found = FALSE;
     my $prefix = $Args->{'prefix'};
@@ -357,8 +357,8 @@ our $Temp =
 
   } # end temporary directory
 
-  $v->print( "Temporary directory: `" . $Temp->{'temp_dir'} . "'\n" );
-  $v->print( "file_prefix: `" . $Args->{'prefix'} . "'" );
+  $v->print( "Temporary directory: '" . $Temp->{'temp_dir'} . "'\n" );
+  $v->print( "file_prefix: '" . $Args->{'prefix'} . "'" );
 
 
   #----------
@@ -408,7 +408,7 @@ our $Temp =
 	  $Temp->{'eps_dir'} = $dir;
 	  $make_dir = TRUE;
 	} else { # could not remove
-	  $stderr->print( "Could not use EPS dir `" . $dir .
+	  $stderr->print( "Could not use EPS dir '" . $dir .
 			  "', use temp dir." );
 	} # end of unlink
       } # end test of -d $dir
@@ -423,9 +423,9 @@ our $Temp =
 
       if ( $made ) {
 	$Temp->{'eps_dir'} = $dir;
-	$v->print( "Directory for useful EPS files is `" . $dir . "'." );
+	$v->print( "Directory for useful EPS files is '" . $dir . "'." );
       } else {
-	$v->print( "The EPS directory `" . $dir . "' cannot be used: $!" );
+	$v->print( "The EPS directory '" . $dir . "' cannot be used: $!" );
       }
     } else { # `--eps_dir' was not set, so take the temporary directory
       $Temp->{'eps_dir'} = $Args->{'temp_dir'};
@@ -436,7 +436,7 @@ our $Temp =
     # EPS-dir not set or available, use temp dir,
     # but leave $Temp->{'}eps_dir'} empty
     $v->print( "Directory for useful EPS files is the " .
-      "temporary directory `" . $Temp->{'temp_dir'} . "'." );
+      "temporary directory '" . $Temp->{'temp_dir'} . "'." );
   }
 
 } # end `Temp'
@@ -470,11 +470,11 @@ our $Read =
     my $file = shift; # argument is a file name
     $file = &path2abs($file);
     unless ( $file ) {
-      die "Line `.lilypond include' without argument";
+      die "Line '.lilypond include' without argument";
       return '';
     }
     unless ( -f $file && -r $file ) {
-      die "Argument `$file' in `.lilypond include' is not a readable file";
+      die "Argument '$file' in '.lilypond include' is not a readable file";
     }
 
     return $file;
@@ -503,21 +503,21 @@ our $Read =
     (
 
      'start' => sub {
-       $v->print( "\nline: `.lilypond start'" );
-       die "Line `.lilypond stop' expected." if ( $lilypond_mode );
+       $v->print( "\nline: '.lilypond start'" );
+       die "Line '.lilypond stop' expected." if ( $lilypond_mode );
 
        $lilypond_mode = TRUE;
        &$increase_ly_number;
 
-       $v->print( "ly-file: `" . $path_ly . "'" );
+       $v->print( "ly-file: '" . $path_ly . "'" );
 
        $ly = new FH_FILE($path_ly);
      },
 
 
      'end' => sub {
-       $v->print( "line: `.lilypond end'\n" );
-       die "Expected line `.lilypond start'." unless ( $lilypond_mode );
+       $v->print( "line: '.lilypond end'\n" );
+       die "Expected line '.lilypond start'." unless ( $lilypond_mode );
 
        $lilypond_mode = FALSE;
        $ly->close();
@@ -558,7 +558,7 @@ our $Read =
        if ( exists $eps_subs{ $Args->{'eps_func'} } ) {
 	 $eps_subs{ $Args->{'eps_func'} }->();
        } else {
-	 die "Wrong argument for \$eps_subs: `" . $Args->{'eps_func'} . "'";
+	 die "Wrong argument for \$eps_subs: '" . $Args->{'eps_func'} . "'";
        }
      }, # end `.lilypond include'
 
@@ -607,7 +607,7 @@ our $Read =
 	next;
       } else {
 	# not a suitable argument of `.lilypond'
-	$stderr->print( "Unknown command: `$arg1' `$arg2':  `$line'" );
+	$stderr->print( "Unknown command: '$arg1' '$arg2':  '$line'" );
       }
 
       next LILYPOND;
@@ -645,7 +645,7 @@ END {
 
   if ( $Args->{'keep_all'} ) {
     # With --keep_all, no temporary files are removed.
-    $v->print( "keep_all: `TRUE'" );
+    $v->print( "keep_all: 'TRUE'" );
     $v->print( "No temporary files will be deleted:" );
 
     opendir my $dh_temp, $Temp->{'temp_dir'} or
@@ -671,7 +671,7 @@ END {
   } else { # keep_all is not set
     # Remove all temporary files except the eps files.
 
-    $v->print( "keep_all: `FALSE'" );
+    $v->print( "keep_all: 'FALSE'" );
     $v->print( "All temporary files except *.eps will be deleted" );
 
 
@@ -681,7 +681,7 @@ END {
       if ( &is_subdir( $Temp->{'eps_dir'}, $Temp->{'temp_dir'} ) ) {
 	$v->print( "EPS dir is subdir of temp dir, so keep both." );
       } else { # remove temp dir
-	$v->print( "Try to remove temporary directory `" .
+	$v->print( "Try to remove temporary directory '" .
 	  $Temp->{'temp_dir'} ."':" );
 	if ( File::Path::remove_tree($Temp->{'temp_dir'}) ) {
 	  # remove succeeds
@@ -710,8 +710,8 @@ END {
 	       _
 	     /x ) { # this includes `PREFIX_temp*'
 	  my $file = File::Spec->catfile( $Temp->{'temp_dir'},  $_ );
-	  $v->print( "Remove `" . $file . "'" );
-	  unlink $file or $stderr->print( "Could not remove `$file': $!" );
+	  $v->print( "Remove '" . $file . "'" );
+	  unlink $file or $stderr->print( "Could not remove '$file': $!" );
 	  next;
 	} # end if prefix
 	next;
@@ -723,11 +723,11 @@ END {
 
   if ( $Temp->{'eps_dir'} ) {
     # EPS files in $Temp->{'eps_dir'} are always kept
-    $v->print( "As EPS directrory is set as `" .
+    $v->print( "As EPS directrory is set as '" .
       $Temp->{'eps_dir'} . "', no EPS files there will be deleted." );
 
     opendir my $dh_temp, $Temp->{'eps_dir'} or
-      die "Cannot open `" . $Temp->{'eps_dir'} . ": $!";
+      die "Cannot open '" . $Temp->{'eps_dir'} . ": $!";
     for ( sort readdir $dh_temp ) {
       next if ( /         # omit files starting with a dot
 		  ^

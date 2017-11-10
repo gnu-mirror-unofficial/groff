@@ -96,15 +96,15 @@ require 'subs.pl';
 
 foreach (@ARGV) {
   if ( /^(-h|--h|--he|--hel|--help)$/ ) {
-    print q(Usage for the `gpinyin' program:);
+    print q(Usage for the 'gpinyin' program:);
     print 'gpinyin [-] [--] [filespec...] normal file name arguments';
     print 'gpinyin [-h|--help]            gives usage information';
     print 'gpinyin [-v|--version]         displays the version number';
-    print q(This program is a `groff' preprocessor that handles ) .
-      q(pinyin parts in `roff' files.);
+    print q(This program is a 'groff' preprocessor that handles ) .
+      q(pinyin parts in 'roff' files.);
     exit;
   } elsif (/^(-v|--v|--ve|--ver|--vers|--versi|--versio|--version)$/) {
-    print q(`gpinyin' version ) . $version;
+    print q('gpinyin' version ) . $version;
     exit;
   }
 }
@@ -137,7 +137,7 @@ foreach (<>) {	# get line from input
   if ( $line =~ /^[.']\s*pinyin\s+(start|begin)$/ ) {
     if ( $pinyin_mode ) {
       # `.pinyin' was started twice, ignore
-      &err( q[`.pinyin' starter was run several times] );
+      &err( q['.pinyin' starter was run several times] );
     } else {	# new pinyin start
       $pinyin_mode = 1;
     }

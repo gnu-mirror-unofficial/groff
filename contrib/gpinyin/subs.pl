@@ -477,7 +477,7 @@ sub handle_syll {
   }
 
 #  unless ( $vowel =~ /^[aeiouAEIOU]$/ ) {
-#    print STDERR q(The argument `) . $vowel . q(' is not a vowel!);
+#    print STDERR q(The argument ') . $vowel . q(' is not a vowel!);
 #    return {};
 #  }
 

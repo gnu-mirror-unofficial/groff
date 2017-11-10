@@ -185,7 +185,7 @@ my $split_short = sub {
        my $c = shift @chars;
 
        unless ( exists $short_opts{$c} ) {
-	 $stderr->print( "Unknown short option `-$c'." );
+	 $stderr->print( "Unknown short option '-$c'." );
 	 next CHARS;
        }
 
@@ -274,8 +274,8 @@ my $split_long = sub {
     } # end of if %opts_with_arg
 
     # not with and without option, so is not permitted
-    $stderr->print( "`" . $transopt .
-		    "' is unknown long option from `" . $from_arg . "'" );
+    $stderr->print( "'" . $transopt .
+		    "' is unknown long option from '" . $from_arg . "'" );
     return TRUE; # use `next SPLIT' afterwards
   } # end of for N
   return FALSE; # do nothing
@@ -339,7 +339,7 @@ sub run_first {
   }				# end of foreach SPLIT
 
 				# all args are considered
-  $stderr->print( "Option `$has_arg' needs an argument." )
+  $stderr->print( "Option '$has_arg' needs an argument." )
     if ( $has_arg );
 
 
@@ -365,8 +365,8 @@ sub install_verbose {
       }
     }
     # verbose output is now active (into STDERR)
-    $v->print( "Option `-v' means `--verbose'." );
-    $v->print( "Version information is printed by option `--version'." );
+    $v->print( "Option '-v' means '--verbose'." );
+    $v->print( "Version information is printed by option '--version'." );
     $v->print( "#" x 72 );
 
   } else { # `--verbose' was not used
@@ -389,11 +389,11 @@ sub install_verbose {
   $v->print( 'The command-line options are:' );
 
   $s = "  options:";
-  $s .= " `" . $_ . "'" for ( @ARGV );
+  $s .= " '" . $_ . "'" for ( @ARGV );
   $v->print( $s );
 
   $s = "  file names:";
-  $s .= " `" . $_ . "'\n" for ( @files );
+  $s .= " '" . $_ . "'\n" for ( @files );
   $v->print( $s );
 } # end install_verbose()
 
@@ -415,7 +415,7 @@ sub run_second {
 
       if ( $has_arg ) {
 	unless ( exists $opts_with_arg{$has_arg} ) {
-	  $stderr->print( "`\%opts_with_args' does not have key `" .
+	  $stderr->print( "'\%opts_with_args' does not have key '" .
 			    $has_arg . "'." );
 	  next ARGS;
 	}
@@ -436,14 +436,14 @@ sub run_second {
       }
 
       # not a suitable option
-      $stderr->print( "Wrong option `" . $arg . "'." );
+      $stderr->print( "Wrong option '" . $arg . "'." );
       next ARGS;
 
     } # end of for ARGS:
 
 
     if ( $has_arg ) { # after last argument
-      die "Option `$has_arg' needs an argument.";
+      die "Option '$has_arg' needs an argument.";
     }
 
   }; # end of second run
@@ -459,32 +459,32 @@ sub handle_args {
 
     my ( $file, $dir );
     ( $file, $dir ) = File::Basename::fileparse($out_path)
-      or die "Could not handle output file path `" . $out_path . "': " .
-	"directory name `" . $dir . "' and file name `" . $file . "'.";
+      or die "Could not handle output file path '" . $out_path . "': " .
+	"directory name '" . $dir . "' and file name '" . $file . "'.";
 
-    die "Could not find output directory for `" . $Args->{'output'} . "'"
+    die "Could not find output directory for '" . $Args->{'output'} . "'"
       unless ( $dir );
-    die "Could not find output file: `" . $Args->{'output'} .
+    die "Could not find output file: '" . $Args->{'output'} .
       "'" unless ( $file );
 
     if ( -d $dir ) {
-      die "Could not write to output directory `" . $dir . "'."
+      die "Could not write to output directory '" . $dir . "'."
 	unless ( -w $dir );
     } else {
       $dir = &make_dir($dir);
-      die "Could not create output directory in: `" . $out_path . "'."
+      die "Could not create output directory in: '" . $out_path . "'."
 	unless ( $dir );
     }
 
     # now $dir is a writable directory
 
     if ( -e $out_path ) {
-      die "Could not write to output file `" . $out_path . "'."
+      die "Could not write to output file '" . $out_path . "'."
 	unless ( -w $out_path );
     }
 
     $out = new FH_FILE( $out_path );
-    $v->print( "Output goes to file `" . $out_path . "'." );
+    $v->print( "Output goes to file '" . $out_path . "'." );
   } else { # `--output' was not set
     $out = new FH_STDOUT();
   }

@@ -91,15 +91,15 @@ if ($before_make) {
 
 foreach (@ARGV) {
   if ( /^(-h|--h|--he|--hel|--help)$/ ) {
-    print q(Usage for the `gperl' program:);
+    print q(Usage for the 'gperl' program:);
     print 'gperl [-] [--] [filespec...] normal file name arguments';
     print 'gperl [-h|--help]        gives usage information';
     print 'gperl [-v|--version]     displays the version number';
-    print q(This program is a `groff' preprocessor that handles Perl ) .
-      q(parts in `roff' files.);
+    print q(This program is a 'groff' preprocessor that handles Perl ) .
+      q(parts in 'roff' files.);
     exit;
   } elsif ( /^(-v|--v|--ve|--ver|--vers|--versi|--versio|--version)$/ ) {
-    print q(`gperl' version ) . $version;
+    print q('gperl' version ) . $version;
     exit;
   }
 }
@@ -164,7 +164,7 @@ foreach (<>) {
     # Everything else means an ending command.
     if ( $perl_mode ) {
       # `.Perl' was started twice, ignore
-      print STDERR q(`.Perl' starter was run several times);
+      print STDERR q('.Perl' starter was run several times);
       next;
     } else {	# new Perl start
       $perl_mode = 1;
