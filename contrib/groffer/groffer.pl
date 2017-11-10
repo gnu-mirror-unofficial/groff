@@ -12,14 +12,14 @@
 
 # Last update: 27 Aug 2015
 
-# This file is part of `groffer', which is part of `groff'.
+# This file is part of 'groffer', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -40,7 +40,7 @@ use File::Temp qw/ tempfile tempdir /;
 # needed for temporary dir
 use File::Spec;
 
-# for `copy' and `move'
+# for 'copy' and 'move'
 use File::Copy;
 
 # for fileparse, dirname and basename
@@ -108,7 +108,7 @@ our $File_split_env_sh;
 our $File_version_sh;
 our $Groff_Version;
 
-my $before_make;		# script before run of `make'
+my $before_make;		# script before run of 'make'
 {
   my $at = '@';
   $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";

@@ -1,4 +1,3 @@
-.\"	-*-	mode: nroff	-*-
 .ig
 
 hdmisc.tmac
@@ -46,28 +45,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"					<val> must not contain spaces.
 .\"			<key>='<val>'	Assign <val> to string <key>.
 .\"					<val> can contain spaces.
-.\"			<key>=		Assign `=' to string <key>.
-.\"			<key>		Assign `key' to string <key>.
+.\"			<key>=		Assign '=' to string <key>.
+.\"			<key>		Assign 'key' to string <key>.
 .\"
-.\"		After return, the string `args' contains the remaining
+.\"		After return, the string 'args' contains the remaining
 .\"		arguments.
 .\"
-.\"		Example: With the definition of string `foo' as
+.\"		Example: With the definition of string 'foo' as
 .\"
 .\"			.ds foo aaa=xxx bbb ccc='yyy zzz' ddd= eee
 .\"
-.\"		a call to `getarg' with
+.\"		a call to 'getarg' with
 .\"
 .\"			.getarg ccc \*[foo]
 .\"
-.\"		sets string `ccc' to value `yyy zzz'.  The string `args'
-.\"		now contains `aaa=xxx bbb ddd= eee'.  An additional call
+.\"		sets string 'ccc' to value 'yyy zzz'.  The string 'args'
+.\"		now contains 'aaa=xxx bbb ddd= eee'.  An additional call
 .\"		like
 .\"
 .\"			.getarg ddd \*[args]
 .\"
-.\"		sets string `ddd' to value `=', and `args' contains
-.\"		`aaa=xxx bbb eee'.
+.\"		sets string 'ddd' to value '=', and 'args' contains
+.\"		'aaa=xxx bbb eee'.
 .de t*getarg
 .  ds \\$1
 .  ds args
@@ -99,7 +98,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .        ds \\*[$1] \\*[$1]\"			return key as string
 .      el \{\
 .        ie "\?\\*[**]\?"\?\\*[$1]=\?" \
-.          ds \\*[$1] =\"			return `='
+.          ds \\*[$1] =\"			return '='
 .        el \{\
 .          substring ** (\\n[*] + 1) -1
 .          ds * \\*[**]\"
@@ -146,9 +145,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"	Utility macro:	.index <string1> <string2>
 .\"
 .\"		Check whether <string2> is a substring of <string1> and
-.\"		return its position in number register `t*index', starting
+.\"		return its position in number register 't*index', starting
 .\"		with 1.  If not found, return 0.  If <string2> is empty,
-.\"		set `t*index' to -999.
+.\"		set 't*index' to -999.
 .de t*index
 .  if "\\$2"" \{\
 .    nr t*index -999
@@ -219,7 +218,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"	**			P1 is nestable				**
 .\"	******************************************************************
 .de t*P1
-.  \" `while' command is about five times faster than recursion!
+.  \" 'while' command is about five times faster than recursion!
 .  while \\n[.$] \{\
 .    nop \\$1
 .    shift
@@ -322,4 +321,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    tm hdtbl: Missing '.ETB' macro; last .TBL in \\*[t*FN] at line \\*[t*LN].
 ..
 .
-.\" EOF
+.
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

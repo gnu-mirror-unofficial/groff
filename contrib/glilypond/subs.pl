@@ -50,12 +50,12 @@ $P_PIC = '.PSPIC';
 # subs for using several times
 ########################################################################
 
-sub create_ly2eps {		       # `--ly2eps' default
+sub create_ly2eps {		       # '--ly2eps' default
   our ( $out, $Read, $Temp );
 
   my $prefix = $Read->{'file_numbered'};   # with dir change to temp dir
 
-  # `$ lilypond --ps -dbackend=eps -dgs-load-fonts \
+  # '$ lilypond --ps -dbackend=eps -dgs-load-fonts \
   #      output=file_without_extension file.ly'
   # extensions are added automatically
   my $opts = '--ps -dbackend=eps -dinclude-eps-fonts -dgs-load-fonts ' .
@@ -101,7 +101,7 @@ sub create_ly2eps {		       # `--ly2eps' default
 }				# end sub create_ly2eps()
 
 
-sub create_pdf2eps {		       # `--pdf2eps'
+sub create_pdf2eps {		       # '--pdf2eps'
   our ( $v, $stdout, $stderr, $out, $Read, $Temp );
 
   my $prefix = $Read->{'file_numbered'};   # with dir change to temp dir
@@ -114,7 +114,7 @@ sub create_pdf2eps {		       # `--pdf2eps'
   # pdf2ps in temp dir
   my $temp_file = &next_temp_file;
   $v->print( "\n##### run of 'pdf2ps'" );
-  # `$ pdf2ps file.pdf file.ps'
+  # '$ pdf2ps file.pdf file.ps'
   my $output = `pdf2ps $file_pdf $file_ps 2> $temp_file`;
   die 'Program pdf2ps does not work.' if ( $? );
   &shell_handling($output, $temp_file);
@@ -123,7 +123,7 @@ sub create_pdf2eps {		       # `--pdf2eps'
   # ps2eps in temp dir
   $temp_file = &next_temp_file;
   $v->print( "\n##### run of 'ps2eps'" );
-  # `$ ps2eps file.ps'
+  # '$ ps2eps file.ps'
   $output = `ps2eps $file_ps 2> $temp_file`;
   die 'Program ps2eps does not work.' if ( $? );
   &shell_handling($output, $temp_file);
@@ -229,14 +229,14 @@ sub make_dir {			# make directory or check if it exists
       "so directory '$dir_arg' can't be createdd."
 	unless ( -w $dir_grow );
 
-    # former directory is writable, so `$dir_arg' can be created
+    # former directory is writable, so '$dir_arg' can be created
 
     File::Path::make_path( $dir_arg,
 			   {
 			    mask => oct('0700'),
 			    verbose => $Args->{'verbose'},
 			   }
-			 )	#  `mkdir -P'
+			 )	#  'mkdir -P'
 	or die "Could not create directory '$dir_arg': $!";
 
     last DIRPARTS;
@@ -278,7 +278,7 @@ sub path2abs {
 
   die "path2abs(): argument is empty." unless ( $path );
 
-  # Perl does not support shell `~' for home dir
+  # Perl does not support shell '~' for home dir
   if ( $path =~ /
 		  ^
 		  ~
@@ -328,7 +328,7 @@ sub path2abs {
 
 
 sub run_lilypond {
-  # arg is the options collection for `lilypond' to run
+  # arg is the options collection for 'lilypond' to run
   # either from ly or pdf
 
   our ( $Temp, $v );
@@ -394,7 +394,7 @@ sub string2array {
 } # end string2array()
 
 
-sub usage {			# for `--help'
+sub usage {			# for '--help'
   our ( $Globals, $Args );
 
   my $p = $Globals->{'prog'};
@@ -443,7 +443,7 @@ The directories set are created when they do not exist.
 } # end sub usage()
 
 
-sub version { # for `--version'
+sub version { # for '--version'
   our ( $Globals, $Legalese, $stdout, $Args );
   my $end;
   if ( $Globals->{'groff_version'} ) {

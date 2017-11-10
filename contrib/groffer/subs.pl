@@ -10,14 +10,14 @@
 
 # Last update: 27 Aug 2015
 
-# This file is part of `groffer', which is part of `groff'.
+# This file is part of 'groffer', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -59,7 +59,7 @@ sub cat_z {
 	@res = `bzip2 -c -d $file 2>$main::Dev_Null`;
 	return @res;
       }
-      # if not compressed with gz, gzip will act like `cat'
+      # if not compressed with gz, gzip will act like 'cat'
       @res = `gzip -c -d -f $file 2>$main::Dev_Null`;
       return @res;
     }
@@ -659,7 +659,7 @@ EOF
 # in $PATH.
 #
 # Arguments : 1, <program> can have spaces and arguments.
-# Return    : a hash with `dir', `file', `fullname', `args' if
+# Return    : a hash with 'dir', 'file', 'fullname', 'args' if
 #             argument exists or is a program in $PATH, empty hash else.
 #
 sub where_is_prog {

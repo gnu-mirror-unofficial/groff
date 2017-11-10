@@ -33,7 +33,7 @@ HDTBLGROFF = \
   $(GROFFBIN) $(FFLAG) $(TFLAG) $(HDTBL_TFLAG) $(HDTLB_PFLAG)
 
 # Files installed in $(tmacdir).
-# These files are generated with `strip.sed' from their unstripped source file 
+# These files are generated with 'strip.sed' from their unstripped source file
 # equivalent (e.g. hdtbl.tmac is generated from hdtbl.tmac-u)
 HDTBLSTRIPFILES = \
   contrib/hdtbl/hdtbl.tmac \
@@ -45,7 +45,7 @@ hdtbltmac_DATA = $(HDTBLSTRIPFILES)
 # located in the source tree, while HDTBLPROCESSEDEXAMPLEFILES are
 # generated in the build tree.
 
-# These files are handled by the `.in.roff' rule.
+# These files are handled by the '.in.roff' rule.
 HDTBLGENFILES = \
   contrib/hdtbl/examples/fonts_n.roff \
   contrib/hdtbl/examples/fonts_x.roff
@@ -129,7 +129,11 @@ uninstall-hdtbl-hook:
 
 
 ########################################################################
-### Emacs settings
+# Editor settings
+########################################################################
+#
 # Local Variables:
 # mode: makefile-automake
+# fill-column: 72
 # End:
+# vim: set filetype=automake textwidth=72:

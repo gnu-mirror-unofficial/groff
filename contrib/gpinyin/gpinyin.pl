@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 
-# gpinyin - European-like Chinese writing `pinyin' into `groff'
+# gpinyin - European-like Chinese writing 'pinyin' into 'groff'
 
 # Source file position: <groff-source>/contrib/gpinyin/gpinyin.pl
 # Installed position: <prefix>/bin/gpinyin
@@ -11,14 +11,14 @@
 
 my $version = '1.0.4';
 
-# This file is part of `gpinyin', which is part of `groff'.
+# This file is part of 'gpinyin', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -38,7 +38,7 @@ use File::Temp qw/ tempfile tempdir /;
 # needed for temporary dir
 use File::Spec;
 
-# for `copy' and `move'
+# for 'copy' and 'move'
 use File::Copy;
 
 # for fileparse, dirname and basename
@@ -65,7 +65,7 @@ our $File_split_env_sh;
 our $File_version_sh;
 our $Groff_Version;
 
-my $before_make;		# script before run of `make'
+my $before_make;		# script before run of 'make'
 {
   my $at = '@';
   $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";
@@ -136,7 +136,7 @@ foreach (<>) {	# get line from input
   # .pinyin start or begin line
   if ( $line =~ /^[.']\s*pinyin\s+(start|begin)$/ ) {
     if ( $pinyin_mode ) {
-      # `.pinyin' was started twice, ignore
+      # '.pinyin' was started twice, ignore
       &err( q['.pinyin' starter was run several times] );
     } else {	# new pinyin start
       $pinyin_mode = 1;
@@ -176,7 +176,7 @@ foreach (<>) {	# get line from input
 
 
 ########################################################################
-# end of file without stopping `pinyin' mode
+# end of file without stopping 'pinyin' mode
 if ( $pinyin_mode ) {
   &finish_pinyin_mode( \@output_n, \@output_t );
 }

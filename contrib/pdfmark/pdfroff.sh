@@ -38,7 +38,7 @@
 #
 # To ensure that prerequisite helper programs are available, and are
 # executable, a [fairly] portable method of detecting such programs is
-# provided by function `searchpath'.
+# provided by function 'searchpath'.
 #
   searchpath(){
   #
@@ -49,8 +49,8 @@
     do
       for ext in '' '.exe'
       #
-      # try `progname' with all well known extensions
-      # (e.g. Win32 may require `progname.exe')
+      # try 'progname' with all well known extensions
+      # (e.g. Win32 may require 'progname.exe')
       #
       do
         try="$dir/$1$ext"

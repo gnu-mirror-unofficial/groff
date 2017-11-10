@@ -8,13 +8,13 @@
 my $Copyright = 'Copyright (C) 2006-2014 Free Software Foundation, Inc.';
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
-# This file is part of `chem', which is part of `groff'.
+# This file is part of 'chem', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License (GPL) version 2 as
 # published by the Free Software Foundation.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -57,7 +57,7 @@ my $File_pic_tmac;
 
 BEGIN {
   {
-    my $before_make;		# script before run of `make'
+    my $before_make;		# script before run of 'make'
     {
       my $at = '@';
       $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";
@@ -337,7 +337,7 @@ my $Line = '';
       return 1;
     }
     if ($line =~ /^[\.']\s*cstart\s*$/) {
-      # line: `.cstart'
+      # line: '.cstart'
       if ($is_chem) {
 	&error("additional '.cstart'; chem is already active.");
 	return 1;
@@ -352,7 +352,7 @@ my $Line = '';
     }
 ### main_line()
     if ($line =~ /^\s*begin\s+chem\s*$/) {
-      # line: `begin chem'
+      # line: 'begin chem'
       if ($is_pic) {
 	if ($is_chem) {
 	  &error("additional 'begin chem'; chem is already active.");
@@ -366,7 +366,7 @@ my $Line = '';
       return 1;
     }
     if ($line =~ /^[\.']\s*cend\s*/) {
-      # line `.cend'
+      # line '.cend'
       if ($is_chem) {
 	&error("you end chem with '.cend', but started it with 'begin chem'.")
 	  if $is_chem eq 'begin chem';
@@ -381,7 +381,7 @@ my $Line = '';
       return 1;
     }
     if ($line =~ /^\s*end\s*$/) {
-      # line: `end'
+      # line: 'end'
       if ($is_chem) {
 	&error("you end chem with 'end', but started it with '.cstart'.")
 	  if $is_chem eq '.cstart';

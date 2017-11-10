@@ -10,14 +10,14 @@
 
 # LAst update: 27 Aug 2015
 
-# This file is part of `groffer', which is part of `groff'.
+# This file is part of 'groffer', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -27,7 +27,7 @@
 # <http://www.gnu.org/licenses/gpl-2.0.html>.
 
 ########################################################################
-# This file contains the main functions formerly in `groff.pl'
+# This file contains the main functions formerly in 'groff.pl'
 
 use strict;
 use warnings;
@@ -739,7 +739,7 @@ sub main_parse_params {
      '--locale' =>		# set language for man pages, arg
      # argument is xx[_territory[.codeset[@modifier]]] (ISO 639,...)
      sub { $Opt{'LANG'} = &_get_arg(); },
-     '--local-file' =>		# force local files; same as `--no-man'
+     '--local-file' =>		# force local files; same as '--no-man'
      sub { delete $Man{'ENABLE'}; delete $Man{'FORCE'}; },
      '--location' =>		# print file locations to stderr
      sub { $Opt{'LOCATION'} = 1; },
@@ -778,7 +778,7 @@ sub main_parse_params {
 	   }
 	 },
 ### main_parse_params()
-     '--no-location' =>		# disable former call to `--location'
+     '--no-location' =>		# disable former call to '--location'
      sub { delete $Opt{'LOCATION'}; },
      '--no-man' =>		# disable search for man pages
      sub { delete $Man{'ENABLE'}; delete $Man{'FORCE'}; },
@@ -809,7 +809,7 @@ sub main_parse_params {
 ### main_parse_params()
      '--rv' => sub { $Opt{'RV'} = 1; },
      '--sections' =>		# specify sections for man pages, arg
-     # arg is a `:'-separated (colon) list of section names
+     # arg is a ':'-separated (colon) list of section names
      sub { my $arg = &_get_arg();
 	   my @arg = split /:/, $arg;
 	   my $s;
@@ -1166,7 +1166,7 @@ sub _get_prog_args {
 #
 # Local function of main_set_mode().
 #
-# Return  : `0' if not a part of the list, `1' if found in the list.
+# Return  : '0' if not a part of the list, '1' if found in the list.
 #
 sub _get_first_prog {
   our %Display;
@@ -1198,7 +1198,7 @@ sub _get_first_prog {
 #
 # Arguments: 2
 #
-# Return  : `0' if not a part of the list, `1' if found in the list.
+# Return  : '0' if not a part of the list, '1' if found in the list.
 # Output  : none
 #
 # Globals in    : $Viewer_X{<MODE>}, $Viewer_tty{<MODE>}
@@ -1468,7 +1468,7 @@ sub main_do_fileargs {
 	warn "main_do_fileargs: the argument $filespec is not a file;";
       }
       next FILESPEC;
-    } else {			# neither `-' nor has dir
+    } else {			# neither '-' nor has dir
       # check whether filespec is an existing file
       unless ( $Man{'FORCE'} ) {
 	if (-f $filespec && -r $filespec) {
@@ -1504,7 +1504,7 @@ sub main_do_fileargs {
     $Filespec_Is_Man = 1;
 
 ### main_do_fileargs()
-    # test filespec with `man:...' or `...(...)' on man page
+    # test filespec with 'man:...' or '...(...)' on man page
 
     my @names = ($filespec);
     if ($filespec =~ /^man:(.*)$/) {
@@ -1810,7 +1810,7 @@ sub main_display {
       }
 
 ### main_display()
-      # mode is not 'text', but `tty'
+      # mode is not 'text', but 'tty'
       my %pager;
       my @p;
       push @p, $Opt{'PAGER'} if $Opt{'PAGER'};
@@ -1998,7 +1998,7 @@ sub main_display {
 #
 # Perform the generation of the output and view the result.  If an
 # argument is given interpret it as a function name that is called in
-# the midst (actually only for `pdf').
+# the midst (actually only for 'pdf').
 #
 sub _do_display {
   our ( %Display, %Debug, %Opt );
@@ -2049,7 +2049,7 @@ sub _do_display {
 #############
 # _do_opt_V ()
 #
-# Check on option `-V'; if set print the corresponding output and leave.
+# Check on option '-V'; if set print the corresponding output and leave.
 #
 # Globals: @ARGV, $Display{MODE}, $Display{PROG},
 #          $Display{ARGS}, $groggy,  $modefile, $addopts

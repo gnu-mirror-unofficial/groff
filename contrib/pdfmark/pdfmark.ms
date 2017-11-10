@@ -17,7 +17,7 @@ Sections:--
     a)  This "Legal Matters" section, extending from the start of
         the document, to the end of the enclosing ".ig" section.
 
-    b)  The two lines below starting with `.AU' and `.AI'.
+    b)  The two lines below starting with '.AU' and '.AI'.
 
 A copy of the Free Documentation License is included as a file called
 FDL in the main directory of the groff source package.

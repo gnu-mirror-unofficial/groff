@@ -6,7 +6,7 @@ package main;
 # debugging
 ########################################################################
 
-# See `Mastering Perl', chapter 4.
+# See 'Mastering Perl', chapter 4.
 
 # use strict;
 # use warnings;
@@ -26,7 +26,7 @@ our $Legalese;
 {
   use constant VERSION => 'v1.3.1'; # version of glilypond
 
-### This constant `LICENSE' is the license for this file `GPL' >= 2
+### This constant 'LICENSE' is the license for this file 'GPL' >= 2
   use constant LICENSE => q*
 glilypond - integrate 'lilypond' into 'groff' files
 
@@ -104,8 +104,8 @@ BEGIN {
   {
     ( my $volume, my $directory, $Globals->{'prog'} ) =
       File::Spec->splitpath($0);
-    # $Globals->{'prog'} is `glilypond' when installed,
-    # `glilypond.pl' when not
+    # $Globals->{'prog'} is 'glilypond' when installed,
+    # 'glilypond.pl' when not
   }
 
 
@@ -116,7 +116,7 @@ BEGIN {
 
   {
     {
-      # script before run of `make'
+      # script before run of 'make'
       my $at = '@';
       $Globals->{'before_make'} = TRUE if '@VERSION@' eq "${at}VERSION${at}";
     }
@@ -136,7 +136,7 @@ BEGIN {
 
     unshift(@INC, $glilypond_libdir);
 
-    umask 0077; # octal output: `printf "%03o", umask;'
+    umask 0077; # octal output: 'printf "%03o", umask;'
   }
 
   require 'subs.pl';
@@ -152,7 +152,7 @@ require 'oop_fh.pl';
 our $stdout = new FH_STDOUT();
 our $stderr = new FH_STDERR();
 
-# verbose printing, not clear wether this will be set by `--verbose',
+# verbose printing, not clear wether this will be set by '--verbose',
 # so store this now into a string, which can be gotten later on, when
 # it will become either STDERR or /dev/null
 our $v = new FH_STRING();
@@ -168,37 +168,37 @@ our $out;
 ########################################################################
 
 # command-line arguments are handled in 2 runs:
-# 1) split short option collections, `=' optargs, and transfer abbrevs
+# 1) split short option collections, '=' optargs, and transfer abbrevs
 # 2) handle the transferred options with subs
 
 our $Args =
   {
-   'eps_dir' => EMPTYSTRING, # can be overwritten by `--eps_dir'
+   'eps_dir' => EMPTYSTRING, # can be overwritten by '--eps_dir'
 
-   # `eps-func' has 2 possible values:
-   # 1) `pdf' `--pdf2eps' (default)
-   # 2) `ly' from `--ly2eps'
+   # 'eps-func' has 2 possible values:
+   # 1) 'pdf' '--pdf2eps' (default)
+   # 2) 'ly' from '--ly2eps'
    'eps_func' => 'pdf',
 
    # files names of temporary files start with this string,
-   # can be overwritten by `--prefix'
+   # can be overwritten by '--prefix'
    'prefix' => 'ly',
 
    # delete or do not delete temporary files
    'keep_all' => FALSE,
 
-   # the roff output goes normally to STDOUT, can be a file with `--output'
+   # the roff output goes normally to STDOUT, can be a file with '--output'
    'output' => EMPTYSTRING,
 
-   # temporary directory, can be overwritten by `--temp_dir',
+   # temporary directory, can be overwritten by '--temp_dir',
    # empty for default of the program
    'temp_dir' => EMPTYSTRING,
 
-   # regulates verbose output (on STDERR), overwritten by `--verbose'
+   # regulates verbose output (on STDERR), overwritten by '--verbose'
    'verbose' => FALSE,
   };
 
-{ # `Args'
+{ # 'Args'
   require 'args.pl';
   &run_first();
   &install_verbose();
@@ -206,7 +206,7 @@ our $Args =
   &handle_args();
 }
 
-# end `Args'
+# end 'Args'
 
 
 ########################################################################
@@ -225,12 +225,12 @@ our $Temp =
    'temp_dir' => EMPTYSTRING,
   };
 
-{ # `Temp'
+{ # 'Temp'
 
   if ( $Args->{'temp_dir'} ) {
 
     #----------
-    # temporary directory was set by `--temp_dir'
+    # temporary directory was set by '--temp_dir'
     #----------
 
     my $dir = $Args->{'temp_dir'};
@@ -240,7 +240,7 @@ our $Temp =
       die "The directory '$dir' cannot be used temporarily: $!";
 
 
-    # now `$dir' is a writable directory
+    # now '$dir' is a writable directory
 
     opendir( my $dh, $dir ) or
       die "Could not open temporary directory '$dir': $!";
@@ -277,7 +277,7 @@ our $Temp =
     $Temp->{'temp_dir'} = $dir;
 
 
-  } else { # $Args->{'temp_dir'} not given by `--temp_dir'
+  } else { # $Args->{'temp_dir'} not given by '--temp_dir'
 
     #----------
     # temporary directory was not set
@@ -290,7 +290,7 @@ our $Temp =
 	my $tmpdir = File::Spec->tmpdir();
 	push @tempdirs, $tmpdir if ( $tmpdir && -d $tmpdir && -w $tmpdir );
 
-	my $root_dir = File::Spec->rootdir(); # `/' in Unix
+	my $root_dir = File::Spec->rootdir(); # '/' in Unix
 	my $root_tmp = File::Spec->catdir($root_dir, 'tmp');
 	push @tempdirs, $root_tmp
 	  if ( $root_tmp ne $tmpdir && -d $root_tmp && -w $root_tmp );
@@ -300,7 +300,7 @@ our $Temp =
 	my $home_tmp = File::Spec->catdir($home, 'tmp');
 	push @tempdirs, $home_tmp if ( -d $home_tmp && -w $home_tmp );
 
-	# `/var/tmp' in Unix
+	# '/var/tmp' in Unix
 	my $var_tmp = File::Spec->catdir('', 'var', 'tmp');
 	push @tempdirs, $var_tmp if ( -d $var_tmp && -w $var_tmp );
       }
@@ -308,8 +308,8 @@ our $Temp =
 
       my @path_extension = qw( groff ); # TEMPDIR/groff/USER/lilypond/<NUMBER>
       {
-	# `$<' is UID of actual user,
-	# `getpwuid' gets user name in scalar context
+	# '$<' is UID of actual user,
+	# 'getpwuid' gets user name in scalar context
 	my $user = getpwuid($<);
 	push @path_extension, $user if ( $user );
 
@@ -319,7 +319,7 @@ our $Temp =
 
     TEMPS: foreach ( @tempdirs ) {
 
-	my $dir; # final directory name in `while' loop
+	my $dir; # final directory name in 'while' loop
 	$dir = &path2abs($_);
 	next TEMPS unless ( $dir );
 
@@ -366,7 +366,7 @@ our $Temp =
   #----------
 
   my $make_dir = FALSE;
-  if ( $Args->{'eps_dir'} ) { # set by `--eps_dir'
+  if ( $Args->{'eps_dir'} ) { # set by '--eps_dir'
     my $dir = $Args->{'eps_dir'};
 
     $dir = &path2abs($dir);
@@ -374,7 +374,7 @@ our $Temp =
     if ( -e $dir ) {
       goto EMPTY unless ( -w $dir );
 
-      # `$dir' is writable
+      # '$dir' is writable
       if ( -d $dir ) {
 	my $upper_dir = $dir;
 
@@ -403,8 +403,8 @@ our $Temp =
 	}
 	$make_dir = TRUE;
 	$Temp->{'eps_dir'} = $dir;
-      } else { # `$dir' is not a dir, so unlink it to create it as dir
-	if ( unlink $dir ) { # could remove `$dir'
+      } else { # '$dir' is not a dir, so unlink it to create it as dir
+	if ( unlink $dir ) { # could remove '$dir'
 	  $Temp->{'eps_dir'} = $dir;
 	  $make_dir = TRUE;
 	} else { # could not remove
@@ -417,7 +417,7 @@ our $Temp =
     } # end of if -e $dir
 
 
-    if ( $make_dir ) { # make directory `$dir'
+    if ( $make_dir ) { # make directory '$dir'
       my $made = FALSE;
       $dir = &make_dir($dir) and $made = TRUE;
 
@@ -427,7 +427,7 @@ our $Temp =
       } else {
 	$v->print( "The EPS directory '" . $dir . "' cannot be used: $!" );
       }
-    } else { # `--eps_dir' was not set, so take the temporary directory
+    } else { # '--eps_dir' was not set, so take the temporary directory
       $Temp->{'eps_dir'} = $Args->{'temp_dir'};
     } # end of make dir
   }
@@ -439,7 +439,7 @@ our $Temp =
       "temporary directory '" . $Temp->{'temp_dir'} . "'." );
   }
 
-} # end `Temp'
+} # end 'Temp'
 
 
 ########################################################################
@@ -449,24 +449,24 @@ our $Temp =
 our $Read =
   {
    'file_numbered' => EMPTYSTRING,
-   'file_ly' => EMPTYSTRING, # `$file_numbered.ly'
+   'file_ly' => EMPTYSTRING, # '$file_numbered.ly'
   };
 
 { # read files or stdin
 
   my $ly_number = 0; # number of lilypond file
 
-  # `$Args->{'prefix'}_[0-9]'
+  # '$Args->{'prefix'}_[0-9]'
 
   my $lilypond_mode = FALSE;
 
-  my $arg1; # first argument for `.lilypond'
-  my $arg2; # argument for `.lilypond include'
+  my $arg1; # first argument for '.lilypond'
+  my $arg2; # argument for '.lilypond include'
 
   my $path_ly; # path of ly-file
 
 
-  my $check_file = sub { # for argument of `.lilypond include'
+  my $check_file = sub { # for argument of '.lilypond include'
     my $file = shift; # argument is a file name
     $file = &path2abs($file);
     unless ( $file ) {
@@ -495,7 +495,7 @@ our $Read =
      'pdf' => \&create_pdf2eps, # lilypond creates PDF file
     );
 
-  # about lines starting with `.lilypond'
+  # about lines starting with '.lilypond'
 
   my $ly;
   my $fh_include_file;
@@ -530,7 +530,7 @@ our $Read =
      },
 
 
-     'include' => sub { # `.lilypond include file...'
+     'include' => sub { # '.lilypond include file...'
 
        # this may not be used within lilypond mode
        next LILYPOND if ( $lilypond_mode );
@@ -542,7 +542,7 @@ our $Read =
        # file can be read now
 
 
-       # `$fh_write_ly' must be opened
+       # '$fh_write_ly' must be opened
        &$increase_ly_number;
 
        $ly = new FH_FILE($path_ly);
@@ -560,7 +560,7 @@ our $Read =
        } else {
 	 die "Wrong argument for \$eps_subs: '" . $Args->{'eps_func'} . "'";
        }
-     }, # end `.lilypond include'
+     }, # end '.lilypond include'
 
     ); # end definition %lilypond_args
 
@@ -598,15 +598,15 @@ our $Read =
 		  )
 		  \s*
 		//x;
-      my $arg1 = $1; # `start', `end' or `include'
+      my $arg1 = $1; # 'start', 'end' or 'include'
       $args =~ s/["'`]//g;
-      my $arg2 = $args; # file argument for `.lilypond include'
+      my $arg2 = $args; # file argument for '.lilypond include'
 
       if ( exists $lilypond_args{$arg1} ) {
 	$lilypond_args{$arg1}->($arg2);
 	next;
       } else {
-	# not a suitable argument of `.lilypond'
+	# not a suitable argument of '.lilypond'
 	$stderr->print( "Unknown command: '$arg1' '$arg2':  '$line'" );
       }
 
@@ -615,7 +615,7 @@ our $Read =
 
 
     if ( $lilypond_mode ) { # do lilypond-mode
-      # see `.lilypond start'
+      # see '.lilypond start'
       $ly->print( $line );
       next LILYPOND;
     } # do lilypond-mode
@@ -626,7 +626,7 @@ our $Read =
 	       [.']
 	       \s*
 	       lilypond
-	     /x ) { # not a `.lilypond' line
+	     /x ) { # not a '.lilypond' line
       $out->print($line);
       next LILYPOND;
     }
@@ -708,7 +708,7 @@ END {
 	       ^
 	       $Args->{'prefix'}
 	       _
-	     /x ) { # this includes `PREFIX_temp*'
+	     /x ) { # this includes 'PREFIX_temp*'
 	  my $file = File::Spec->catfile( $Temp->{'temp_dir'},  $_ );
 	  $v->print( "Remove '" . $file . "'" );
 	  unlink $file or $stderr->print( "Could not remove '$file': $!" );

@@ -8,14 +8,14 @@
 # Copyright (C) 2006-2014  Free Software Foundation, Inc.
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
-# This file is part of `groffer', which is part of `groff'.
+# This file is part of 'groffer', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -334,8 +334,8 @@ sub man_get {
 #           $main::Man{SEC}, $main::Man{ALL}
 #   in/out: $main::Man{ENABLE}
 #
-# The precedence for the variables related to `man' is that of GNU
-# `man', i.e.
+# The precedence for the variables related to 'man' is that of GNU
+# 'man', i.e.
 #
 # $LANG; overridden by
 # $LC_MESSAGES; overridden by
@@ -462,7 +462,7 @@ sub man_setup {
 # Globals:
 #   in:     $main::Man{SYS}: a list of names of operating systems.
 #           $main::Man{LANG} and $main::Man{LANG2}: each a single name
-#   in/out: @{$main::Man{PATH}}: list of directories which shall have the `man?'
+#   in/out: @{$main::Man{PATH}}: list of directories which shall have the 'man?'
 #           subdirectories.
 #
 sub manpath_add_lang_sys {
@@ -512,7 +512,7 @@ sub manpath_add_lang_sys {
 #
 # Determine basic search path for man pages from $PATH.
 #
-# Return:    `1' if a valid man path was retrieved.
+# Return:    '1' if a valid man path was retrieved.
 # Output:    none
 # Globals:
 #   in:  $PATH
@@ -587,7 +587,7 @@ sub special_setup {
 ##########
 # whatis_filename(<filename>)
 #
-# Interpret <filename> as a man page and display its `whatis'
+# Interpret <filename> as a man page and display its 'whatis'
 # information as a fragment written in the groff language.
 #
 # Globals:  in: $main::Opt{'WHATIS'}, $main::Special_Setup, $main::Special_Filespec,
@@ -628,7 +628,7 @@ sub whatis_filename {
     }
   }
 
-  # traditional man style; grep the line containing `.TH' macro, if any
+  # traditional man style; grep the line containing '.TH' macro, if any
   my @catz = &cat_z($_[0]);
   my $res;
   my $test;
@@ -640,7 +640,7 @@ sub whatis_filename {
   }				# foreach (@catz)
 ### whatis_filename()
   if ($test) {			# traditional man style
-    # get the first line after the first `.SH' macro before the next `.SH'
+    # get the first line after the first '.SH' macro before the next '.SH'
     my $test1;
     foreach (@catz) {
       if ($test1) {
@@ -675,7 +675,7 @@ sub whatis_filename {
     return 1;
   }				# if ($test)
 
-  # mdoc style (BSD doc); grep the line containing `.Nd' macro, if any
+  # mdoc style (BSD doc); grep the line containing '.Nd' macro, if any
   foreach (@catz) {
     if (/^[\.']\s*Nd\s/) {		# BSD doc style
       $res =~ s/^(.*)$/$name ($section) \\[em] $1/;

@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .\"	******************************************************************
 .\"	**	some of the following macros use system commands	**
-.\"	**	and are therefore `unsafe': they need the `-U' argument **
+.\"	**	and are therefore 'unsafe': they need the '-U' argument **
 .\"	**	when calling groff/troff				**
 .\"	******************************************************************
 .
@@ -112,16 +112,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .\"	Utility macro:	.d2x decimal_number [base [string_name]]
 .\"
-.\"		Convert `decimal_number' to another base `base' (in the
-.\"		range 1..16) and store the result in string `string_name'.
-.\"		If `base' is missing or empty, convert to a hexadecimal
-.\"		number.  If `string_name' is missing or empty, return value
-.\"		in string `hex#', otherwise return the value in both
-.\"		`string_name' and `hex#'.
+.\"		Convert 'decimal_number' to another base 'base' (in the
+.\"		range 1..16) and store the result in string 'string_name'.
+.\"		If 'base' is missing or empty, convert to a hexadecimal
+.\"		number.  If 'string_name' is missing or empty, return value
+.\"		in string 'hex#', otherwise return the value in both
+.\"		'string_name' and 'hex#'.
 .\"
 .\"		The base value 1 is handled specially: The returned
-.\"		string contains the character `|' `decimal_number' times
-.\"		(for example, input value 4 yields `||||').
+.\"		string contains the character '|' 'decimal_number' times
+.\"		(for example, input value 4 yields '||||').
 .ds d2x-0 0\"
 .ds d2x-1 1\"
 .ds d2x-2 2\"
@@ -210,18 +210,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"			.random-seed seed1 seed2
 .\"
 .\"		Return pseudo-random numbers in the range 0..0xFFFFFF,
-.\"		represented as the concatenation of `#' and six
-.\"		hexadecimal digits, in the string `#random'.  The
-.\"		macro `random-seed' can be used to set seed values,
+.\"		represented as the concatenation of '#' and six
+.\"		hexadecimal digits, in the string '#random'.  The
+.\"		macro 'random-seed' can be used to set seed values,
 .\"		which should be integers in the range 1..2147483562 and
-.\"		1..2147483398 for `seed1' and `seed2', respectively
+.\"		1..2147483398 for 'seed1' and 'seed2', respectively
 .\"		(the macro applies a modulo operation to assure this
-.\"		range).  If `random-seed' isn't called the registers
-.\"		`seconds', `minutes', `hours', `dy', `mo', `year', and
-.\"		`$$' are used to compute it.
+.\"		range).  If 'random-seed' isn't called the registers
+.\"		'seconds', 'minutes', 'hours', 'dy', 'mo', 'year', and
+.\"		'$$' are used to compute it.
 .\"
 .\"		The used generator is presented in L'Ecuyer's 1988 paper
-.\"		`Efficient and Portable Combined Random Number
+.\"		'Efficient and Portable Combined Random Number
 .\"		Generators', which combines two Multiplicative Linear
 .\"		Congruential Generators (MLCGs) to achieve a period of
 .\"		2.3*10^18.

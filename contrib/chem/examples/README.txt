@@ -1,23 +1,23 @@
-This directory contains examples for the `chem' language.
+This directory contains examples for the 'chem' language.
 
 You can view the graphical display of the examples by calling
 
     groffer <file>
 
-`groffer' calls `chem' automatically.
+'groffer' calls 'chem' automatically.
 
 If you want to transform example files to a different format use the
-`roff2*' programs:
+'roff2*' programs:
 
-`roff2dvi' prints dvi format to standard output,
-`roff2html' generates html output,
-`roff2pdf' outputs pdf mode,
-`roff2ps' produces PostScript output,
-`roff2text' generates text output in the groff device `latin1',
-`roff2x' prints the output  in  the  groff  device  X  that  is
-         suitable  for programs  like `gxditview' or `xditview'.
+'roff2dvi' prints dvi format to standard output,
+'roff2html' generates html output,
+'roff2pdf' outputs pdf mode,
+'roff2ps' produces PostScript output,
+'roff2text' generates text output in the groff device 'latin1',
+'roff2x' prints the output  in  the  groff  device  X  that  is
+         suitable  for programs  like 'gxditview' or 'xditview'.
 
-To get a suitable `groff' output run
+To get a suitable 'groff' output run
 
     @g@chem <file> | groff -p ...
 
@@ -40,14 +40,14 @@ chemically.
 Copyright (C) 2006-2014 Free Software Foundation, Inc.
 Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
-This file is part of `chem', which is part of `groff'.
+This file is part of 'chem', which is part of 'groff'.
 
-`groff' is free software; you can redistribute it and/or modify it
+'groff' is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-`groff' is distributed in the hope that it will be useful, but WITHOUT
+'groff' is distributed in the hope that it will be useful, but WITHOUT
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.

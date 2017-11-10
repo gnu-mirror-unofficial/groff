@@ -114,7 +114,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  ds t*FN \\[.F]\"
 .  ds t*LN \\[.c]\"
 .
-.  t*getarg cols \\$@\"	from here string `args' contains the rest of \\$@
+.  t*getarg cols \\$@\"	from here string 'args' contains the rest of \\$@
 .  ie "\\*[cols]"" \
 .    nr t*cols\\n[t*#] \\n[t*cols]
 .  el \{\
@@ -300,8 +300,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      tm \\n[.F]:\\n[.c]: Invalid table row height '\\*[height]'.
 .  \}
 .
-.  \"	If there is a TR with height `height', the total height of the table
-.  \"	is too high by 3/2 b, independent of the number of TR with `height'.
+.  \"	If there is a TR with height 'height', the total height of the table
+.  \"	is too high by 3/2 b, independent of the number of TR with 'height'.
 .  t*args \\*[#t#r] \\n[t*#]            \"	look for common arguments
 .
 .  t*P1 \\*[args]
@@ -382,7 +382,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  nr *c \\n[c#\\*[#t#r]]
 .
 .  if (\\n[colspan] - 1) \{\
-.    nr vline\\*[*#trc*] 0-1		\"	set `no vl' flag
+.    nr vline\\*[*#trc*] 0-1		\"	set 'no vl' flag
 .
 .    while (\\n+[*] <= \\n[colspan]) \{\
 .      nr *c +1
@@ -543,7 +543,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"		Nested tables are processed from inside to outside.
 .
 .de t*divs
-.  ll (\\n[t*l]u + 1c)			\"	avoid warning `can't break line'
+.  ll (\\n[t*l]u + 1c)			\"	avoid warning 'can't break line'
 .  nf
 .
 .  nr b/2 \\n[b/2\\n[t*#]]		\"	some abbreviations
@@ -583,7 +583,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      \" and position of lower horizontal line
 .      if \\n[*rsp*\\*[#trc]] \{\
 .        nr * \\n[#r] 1
-.        nr rspan\\*[#trc] 0-1		\"	set `no hl' flag
+.        nr rspan\\*[#trc] 0-1		\"	set 'no hl' flag
 .        nr corr (\\n[dn\\*[#trc]] - \\n[dntr\\n[t*#]*\\n[#r]])
 .
 .        \" clear row span flags in following rows and update row height
@@ -623,9 +623,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .      \" double and single lines have the same thickness;
 .      \" the double lines' distance is the line thickness.
 .      \"
-.      \" `border=x': horizontal/vertical lines x/2 thick, minimum .1n
-.      \" `border=0': no border; horizontal/vertical lines .1n thick
-.      \" `border=': neither border nor horizontal/vertical lines
+.      \" 'border=x': horizontal/vertical lines x/2 thick, minimum .1n
+.      \" 'border=0': no border; horizontal/vertical lines .1n thick
+.      \" 'border=': neither border nor horizontal/vertical lines
 .
 .      nr *t (.1n >? \\n[b/2])		\"	thickness of hl/vl; min. .1n
 .      in +\\n[cscp]u
@@ -740,7 +740,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  while (\\n[t*cols\\n[t*#]] >= \\n+[*]) \{\
 .    nr $\\n[*] \\n[**]
 .    if !"\\$[\\n[*]]"" \{\
-.      \" check for `%' pseudo scaling indicator
+.      \" check for '%' pseudo scaling indicator
 .      ds * \\$\\n[*]\"
 .      substring * -1 -1
 .      ie "\\*[*]"%" \{\
@@ -999,7 +999,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  ev
 ..
 .
-.\" EOF
 .\" Local Variables:
 .\" mode: nroff
 .\" End:

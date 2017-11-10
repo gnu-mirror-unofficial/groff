@@ -11,14 +11,14 @@
 
 my $version = '1.2.6';
 
-# This file is part of `gperl', which is part of `groff'.
+# This file is part of 'gperl', which is part of 'groff'.
 
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -38,7 +38,7 @@ use File::Temp qw/ tempfile tempdir /;
 # needed for temporary dir
 use File::Spec;
 
-# for `copy' and `move'
+# for 'copy' and 'move'
 use File::Copy;
 
 # for fileparse, dirname and basename
@@ -65,7 +65,7 @@ our $File_split_env_sh;
 our $File_version_sh;
 our $Groff_Version;
 
-my $before_make;		# script before run of `make'
+my $before_make;		# script before run of 'make'
 {
   my $at = '@';
   $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";
@@ -138,7 +138,7 @@ foreach (<>) {
   my $line = $_;
   my $is_dot_Perl = $line =~ /^[.']\s*Perl(|\s+.*)$/;
 
-  unless ( $is_dot_Perl ) {	# not a `.Perl' line
+  unless ( $is_dot_Perl ) {	# not a '.Perl' line
     if ( $perl_mode ) {		# is running in Perl mode
       print OUT $line;
     } else {			# normal line, not Perl-related
@@ -149,7 +149,7 @@ foreach (<>) {
 
 
   ##########
-  # now the line is a `.Perl' line
+  # now the line is a '.Perl' line
 
   my $args = $line;
   $args =~ s/\s+$//;	# remove final spaces
@@ -160,10 +160,10 @@ foreach (<>) {
   ##########
   # start Perl mode
   if ( @args == 0 || @args == 1 && $args[0] eq 'start' ) {
-    # For `.Perl' no args or first arg `start' means opening `Perl' mode.
+    # For '.Perl' no args or first arg 'start' means opening 'Perl' mode.
     # Everything else means an ending command.
     if ( $perl_mode ) {
-      # `.Perl' was started twice, ignore
+      # '.Perl' was started twice, ignore
       print STDERR q('.Perl' starter was run several times);
       next;
     } else {	# new Perl start
@@ -183,15 +183,15 @@ foreach (<>) {
     next;
   }
 
-  $perl_mode = 0;	# `Perl' stop calling is correct
-  close OUT;		# close the storing of `Perl' commands
+  $perl_mode = 0;	# 'Perl' stop calling is correct
+  close OUT;		# close the storing of 'Perl' commands
 
   ##########
-  # run this `Perl' part, later on about storage of the result
+  # run this 'Perl' part, later on about storage of the result
   # array stores prints with \n
   my @print_res = `perl $out_file`;
 
-  # remove `stop' arg if exists
+  # remove 'stop' arg if exists
   shift @args if ( $args[0] eq 'stop' );
 
   if ( @args == 0 ) {
