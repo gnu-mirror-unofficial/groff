@@ -230,4 +230,6 @@ DeviceFont	*QueryDeviceFont (DviWidget, int);
 
 char *GetWord(DviWidget, char *, int);
 char *GetLine(DviWidget, char *, int);
+
+void SetDevice (DviWidget dw, const char *name);
 #endif /* _XtDviP_h */

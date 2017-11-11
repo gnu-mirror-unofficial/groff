@@ -9,7 +9,9 @@
 #include <X11/StringDefs.h>
 #include <stdio.h>
 #include <ctype.h>
+
 #include "DviP.h"
+#include "page.h"
 
 #ifdef X_NOT_STDC_ENV
 extern long	ftell();

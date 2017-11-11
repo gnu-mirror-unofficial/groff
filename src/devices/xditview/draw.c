@@ -20,22 +20,28 @@
 #endif
 
 #include "DviP.h"
+#include "draw.h"
+#include "font.h"
 
 #define DeviceToX(dw, n) ((int)((n) * (dw)->dvi.scale_factor + .5))
 #define XPos(dw) (DeviceToX((dw), (dw)->dvi.state->x - \
                   (dw)->dvi.text_device_width) + (dw)->dvi.text_x_width)
 #define YPos(dw) (DeviceToX((dw), (dw)->dvi.state->y))
 
+/* forward reference */
 static int FakeCharacter(DviWidget, char *, int);
 
 /* font.c */
 extern int MaxFontPosition(DviWidget);
 
-void
+// shadowed by a macro definition in parse.c, and unused elsewhere
+#if 0
+static void
 HorizontalMove(DviWidget dw, int delta)
 {
 	dw->dvi.state->x += delta;
 }
+#endif
 
 void
 HorizontalGoto(DviWidget dw, int NewPosition)
@@ -55,7 +61,7 @@ VerticalGoto(DviWidget dw, int NewPosition)
 	dw->dvi.state->y = NewPosition;
 }
 
-void
+static void
 AdjustCacheDeltas (DviWidget dw)
 {
 	int extra;
@@ -274,7 +280,8 @@ int FindCharWidth (DviWidget dw, char *buf, int *widp)
 
 /* Return the width of the character in device units. */
 
-int PutCharacter (DviWidget dw, char *buf)
+int
+PutCharacter (DviWidget dw, char *buf)
 {
 	int		prevFont;
 	int		c = -1;
@@ -382,11 +389,14 @@ PutNumberedCharacter (DviWidget dw, int c)
 	}
 }
 
-void
+// unused
+#if 0
+static void
 ClearPage (DviWidget dw)
 {
 	XClearWindow (XtDisplay (dw), XtWindow (dw));
 }
+#endif
 
 static void
 setGC (DviWidget dw)

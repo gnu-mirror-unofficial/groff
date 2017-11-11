@@ -10,11 +10,13 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
+
 #include "DviP.h"
 #include "XFontName.h"
+#include "font.h"
 
+// forward reference
 static void DisposeFontSizes(DviWidget, DviFontSizeList *);
-void DestroyFontMap(DviFontMap *);
 
 static char *
 savestr (const char *s)
@@ -135,7 +137,7 @@ ConvertFontNameToEncoding (char *n)
 	return n;
 }
 
-DviFontSizeList *
+static DviFontSizeList *
 InstallFontSizes (DviWidget dw, const char *x_name, Boolean *scalablep)
 {
 	char	fontNameString[2048];

@@ -20,7 +20,11 @@ static char Xrcsid[] = "$XConsortium: Dvi.c,v 1.9 89/12/10 16:12:25 rws Exp $";
 #include <X11/Xmu/Converters.h>
 #include <stdio.h>
 #include <ctype.h>
+
 #include "DviP.h"
+#include "font.h"
+#include "page.h"
+#include "parse.h"
 
 /****************************************************************
  *
@@ -115,20 +119,6 @@ static void		OpenFile (DviWidget);
 static void		FindPage (DviWidget);
 
 static void		SaveToFile (Widget, FILE *);
-
-/* font.c */
-extern void ParseFontMap(DviWidget);
-extern void DestroyFontMap(DviFontMap *);
-extern void ForgetFonts(DviWidget);
-
-/* page.c */
-extern void DestroyFileMap(DviFileMap *);
-extern long SearchPagePosition(DviWidget, int);
-extern void FileSeek(DviWidget, long);
-extern void ForgetPagePositions(DviWidget);
-
-/* parse.c */
-extern int ParseInput(register DviWidget);
 
 DviClassRec dviClassRec = {
 {

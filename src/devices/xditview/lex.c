@@ -2,7 +2,9 @@
 #include <X11/IntrinsicP.h>
 #include <X11/StringDefs.h>
 #include <stdio.h>
+
 #include "DviP.h"
+#include "lex.h"
 
 int
 DviGetAndPut(DviWidget dw, int *cp)

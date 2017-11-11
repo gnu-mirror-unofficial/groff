@@ -9,44 +9,19 @@
 #include <X11/StringDefs.h>
 #include <stdio.h>
 #include <ctype.h>
+
 #include "DviP.h"
+#include "draw.h"
+#include "font.h"
+#include "lex.h"
+#include "page.h"
+#include "parse.h"
 
 static int StopSeen = 0;
 static void ParseDrawFunction(DviWidget, char *);
 static void ParseDeviceControl(DviWidget);
 static void push_env(DviWidget);
 static void pop_env(DviWidget);
-
-/* draw.c */
-extern int PutCharacter(DviWidget, char *);
-extern int PutNumberedCharacter(DviWidget, int);
-extern void HorizontalGoto(DviWidget, int);
-extern void Word(DviWidget);
-extern void VerticalGoto(DviWidget, int);
-extern void VerticalMove(DviWidget, int);
-extern void FlushCharCache(DviWidget);
-extern void Newline(DviWidget);
-extern void DrawLine(DviWidget, int, int);
-extern void DrawCircle(DviWidget, int);
-extern void DrawFilledCircle(DviWidget, int);
-extern void DrawEllipse(DviWidget, int, int);
-extern void DrawFilledEllipse(DviWidget, int, int);
-extern void DrawArc(DviWidget, int, int, int, int);
-extern void DrawPolygon(DviWidget, int *, int);
-extern void DrawFilledPolygon(DviWidget, int *, int);
-extern void DrawSpline(DviWidget, int *, int);
-
-/* Dvi.c */
-extern void SetDevice(DviWidget, const char *);
-
-/* page.c */
-extern void RememberPagePosition(DviWidget, int);
-
-/* font.c */
-extern void SetFontPosition(DviWidget, int, const char *, const char *);
-
-/* lex.c */
-extern int GetNumber(DviWidget);
 
 #define HorizontalMove(dw, delta)	((dw)->dvi.state->x += (delta))
 
