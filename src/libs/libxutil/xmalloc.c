@@ -18,6 +18,8 @@ internet at <http://www.gnu.org/licenses/gpl-2.0.txt>. */
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
 
+char *xmalloc(int n);
+
 char *xmalloc(int n)
 {
     return XtMalloc(n);
