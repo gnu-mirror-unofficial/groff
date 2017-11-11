@@ -60,7 +60,7 @@ Display *dpy;
 unsigned resolution = 75;
 unsigned point_size = 10;
 
-int charExists(XFontStruct * fi, int c)
+static int charExists(XFontStruct * fi, int c)
 {
   XCharStruct *p;
 
