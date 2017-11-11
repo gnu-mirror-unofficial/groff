@@ -1,3 +1,14 @@
+2017-11-11  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	* src/devices/grolbp/lbp.cpp (lbp_printer::setfillmode): Address
+	  misleading indentation warning.
+
+	* src/roff/troff/mtsm.cpp (mtsm::push_state, mtsm::pop_state):
+	  Same.  Only flush standard error if we just wrote to it,
+	  instead of unconditionally.
+
+	Fix bug https://savannah.gnu.org/bugs/?51483.
+
 2017-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	src/utils/xtotroff/xtotroff.c: Mark private function static.

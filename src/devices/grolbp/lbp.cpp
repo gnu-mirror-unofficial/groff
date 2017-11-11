@@ -388,9 +388,10 @@ inline void lbp_printer::setfillmode(int mode)
     if (mode != 1)
       vdmsetfillmode(mode, 1, 0);
     else
-      vdmsetfillmode(mode, 1, 1);	// To get black we must use white
-					// inverted
-      fill_mode = mode;
+      // To get black, we must use white inverted.
+      vdmsetfillmode(mode, 1, 1);
+
+    fill_mode = mode;
   }
 }
 

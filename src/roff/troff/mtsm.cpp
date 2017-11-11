@@ -374,8 +374,10 @@ void mtsm::push_state(statem *n)
 {
   if (is_html) {
 #if defined(DEBUGGING)
-    if (debug_state)
-      fprintf(stderr, "--> state %d pushed\n", n->issue_no) ; fflush(stderr);
+    if (debug_state) {
+      fprintf(stderr, "--> state %d pushed\n", n->issue_no);
+      fflush(stderr);
+    }
 #endif
     sp = new stack(n, sp);
   }
@@ -385,8 +387,10 @@ void mtsm::pop_state()
 {
   if (is_html) {
 #if defined(DEBUGGING)
-    if (debug_state)
-      fprintf(stderr, "--> state popped\n") ; fflush(stderr);
+    if (debug_state) {
+      fprintf(stderr, "--> state popped\n");
+      fflush(stderr);
+    }
 #endif
     if (sp == 0)
       fatal("empty state machine stack");
