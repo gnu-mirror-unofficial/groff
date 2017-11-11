@@ -248,8 +248,10 @@ exchange (char **argv, struct _getopt_data *d)
 /* Initialize the internal data when the first call is made.  */
 
 static const char *
-_getopt_initialize (int argc, char **argv, const char *optstring,
-		    int posixly_correct, struct _getopt_data *d)
+_getopt_initialize (__attribute__((__unused__)) int argc,
+		    __attribute__((__unused__)) char **argv,
+		    const char *optstring, int posixly_correct,
+		    struct _getopt_data *d)
 {
   /* Start processing options with ARGV-element 1 (since ARGV-element 0
      is the program name); the sequence of previously skipped
