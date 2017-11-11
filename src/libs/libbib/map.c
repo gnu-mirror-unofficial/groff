@@ -36,6 +36,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 extern "C" {
 #endif
 
+/* Prototypes */
+char *mapread(int, int);
+int unmap(char *, int);
+
 char *mapread(int fd, int nbytes)
 {
   char *p = (char *)mmap((void *)0, (size_t)nbytes, PROT_READ,

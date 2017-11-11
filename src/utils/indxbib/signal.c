@@ -35,6 +35,9 @@ that is correct for C++, so we implement all signal handling in C. */
 extern "C" {
 #endif
 
+/* Prototype */
+void catch_fatal_signals(void);
+
 extern void cleanup(void);
 
 static RETSIGTYPE handle_fatal_signal(int signum)

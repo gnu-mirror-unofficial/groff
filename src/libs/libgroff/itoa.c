@@ -23,6 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 extern "C" {
 #endif
 
+/* Prototypes */
+char *i_to_a(int);
+char *ui_to_a(unsigned int);
+
 char *i_to_a(int i)
 {
   /* Room for INT_DIGITS digits, - and '\0' */

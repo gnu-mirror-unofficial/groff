@@ -22,10 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 extern "C" {
 #endif
 
+/* Prototype */
+char *if_to_a(int, int);
+
 char *if_to_a(int i, int decimal_point)
 {
   /* room for a -, INT_DIGITS digits, a decimal point, and a terminating '\0' */
-  static char buf[INT_DIGITS + 3];			
+  static char buf[INT_DIGITS + 3];
   char *p = buf + INT_DIGITS + 2;
   int point = 0;
   buf[INT_DIGITS + 2] = '\0';

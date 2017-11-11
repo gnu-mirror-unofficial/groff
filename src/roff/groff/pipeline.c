@@ -77,6 +77,9 @@ extern char *strerror();
 
 #define error c_error
 
+/* Prototype */
+int run_pipeline(int, char ***, int);
+
 #ifdef __cplusplus
 extern "C" {
 #endif

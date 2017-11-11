@@ -43,6 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 extern char *program_name;	/* main program must define this */
 
+/* Prototypes */
+char *quote_arg(char *);
+void purge_quoted_args(char **);
+
 #undef FALSE
 #undef TRUE
 #define FALSE 0
