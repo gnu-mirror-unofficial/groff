@@ -18,7 +18,7 @@
 # for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 use strict;
 use Getopt::Long qw(:config bundling);
@@ -542,26 +542,36 @@ sub Load_Config
 sub LoadDownload
 {
     my $f;
+    my $found=0;
 
-    OpenFile(\$f,$fontdir,"download");
-    Msg(1,"Failed to open 'download'") if !defined($f);
+    my (@dirs)=split($cfg{RT_SEP},$fontdir);
 
-    while (<$f>)
+    foreach my $dir (@dirs)
     {
-	chomp;
-	s/#.*$//;
-	next if $_ eq '';
-	my ($foundry,$name,$file)=split(/\t+/);
-	if (substr($file,0,1) eq '*')
+	$f=undef;
+	OpenFile(\$f,$dir,"download");
+	next if !defined($f);
+	$found++;
+	
+	while (<$f>)
 	{
-	    next if !$embedall;
-	    $file=substr($file,1);
+	    chomp;
+	    s/#.*$//;
+	    next if $_ eq '';
+	    my ($foundry,$name,$file)=split(/\t+/);
+	    if (substr($file,0,1) eq '*')
+	    {
+		next if !$embedall;
+		$file=substr($file,1);
+	    }
+
+	    $download{"$foundry $name"}=$file;
 	}
 
-	$download{"$foundry $name"}=$file;
+	close($f);
     }
 
-    close($f);
+    Msg(1,"Failed to open 'download'") if !$found;
 }
 
 sub OpenFile
@@ -3281,7 +3291,7 @@ sub RemapChr
     }
 
     if (--$unused <= 255)
-    {
+	{
 	$fnt->{GNM}->{$chnm}=$unused++;
 	$fnt->{GNO}->[$unused]=$fnt->{GNO}->[$ch+1];
 	$fnt->{WID}->[$unused]=$fnt->{WID}->[$ch];
@@ -3312,11 +3322,11 @@ sub do_N
 
     if ($par > 255)
     {
-	my $fnt=$fontlst{$cft}->{FNT};
+    my $fnt=$fontlst{$cft}->{FNT};
 	my $chnm='';
 
 	foreach my $c (keys %{$fnt->{GNM}})
-	{
+    {
 	    $chnm=$c,last if $fnt->{GNM}->{$c} == $par;
 	}
 
