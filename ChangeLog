@@ -1,3 +1,15 @@
+2017-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/strip.sed: Stop rewriting symbol names.
+
+	A substitution originally intended to strip the "doc-" prefix
+	off of mdoc macro and string names unintentionally caught some
+	mom stuff.  Harmlessly in this instance, but with potentially
+	surprising future effects.  Remove (only) this substitution per
+	discussion in
+	https://lists.gnu.org/archive/html/groff/2017-11/msg00055.html
+	et sequentia.
+
 2017-11-11  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
 	* src/devices/grolbp/lbp.cpp (lbp_printer::setfillmode): Address
