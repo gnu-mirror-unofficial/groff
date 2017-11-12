@@ -401,7 +401,8 @@ static DviCharNameMap ISO8859_1_map = {
 {	"'y",			/* 253 */},
 {	"Tp",			/* 254 */},
 {	":y",			/* 255 */},
-}};
+},
+	{0} /* buckets */};
 
 static DviCharNameMap Adobe_Symbol_map = {
 	"adobe-fontspecific",
@@ -663,7 +664,8 @@ static DviCharNameMap Adobe_Symbol_map = {
 {	"bracerightmid", "rk",				/* 253 */},
 {	"bracerightbt", "rb",				/* 254 */},
 {	0,						/* 255 */},
-}};
+},
+	{0} /* buckets */};
 
 
 static void
