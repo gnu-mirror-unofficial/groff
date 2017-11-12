@@ -23,6 +23,15 @@
 use strict;
 use Getopt::Long qw(:config bundling);
 
+use constant
+{
+    WIDTH		=> 0,
+    CHRCODE		=> 1,
+    PSNAME		=> 2,
+    ASSIGNED		=> 3,
+    USED		=> 4,
+};
+
 my $gotzlib=0;
 
 my $rc = eval
@@ -184,7 +193,7 @@ my @idirs;
 
 #Load_Config();
 
-GetOptions("F=s" => \$fd, 'I=s' => \@idirs, 'l' => \$frot, 'p=s' => \$fpsz, 'd!' => \$debug, 'v' => \$version, 'e' => \$embedall, 'y=s' => \$Foundry, 's' => \$stats, 'u:s' => \$unicodemap);
+GetOptions("F=s" => \$fd, 'I=s' => \@idirs, 'l' => \$frot, 'p=s' => \$fpsz, 'd!' => \$debug, 'v' => \$version, 'version' => \$version, 'e' => \$embedall, 'y=s' => \$Foundry, 's' => \$stats, 'u:s' => \$unicodemap);
 
 unshift(@idirs,'.');
 
@@ -339,13 +348,24 @@ PutObj($objct);
 foreach my $fontno (keys %fontlst)
 {
     my $o=$fontlst{$fontno}->{FNT};
+
+    foreach my $ch (@{$o->{NO}})
+    {
+	my $psname=$o->{NAM}->{$ch->[1]}->[PSNAME] || '/.notdef';
+	my $wid=$o->{NAM}->{$ch->[1]}->[WIDTH] || 0;
+
+	push(@{$o->{DIFF}},$psname);
+	push(@{$o->{WIDTH}},$wid);
+	last if $#{$o->{DIFF}} >= 255;
+    }
+    unshift(@{$o->{DIFF}},0);
     my $p=GetObj($fontlst{$fontno}->{OBJ});
 
     if (exists($p->{LastChar}) and $p->{LastChar} > 255)
     {
 	$p->{LastChar} = 255;
-	splice(@{$o->{GNO}},256);
-	splice(@{$o->{WID}},256);
+	splice(@{$o->{DIFF}},256);
+	splice(@{$o->{WIDTH}},256);
     }
 }
 
@@ -2053,6 +2073,7 @@ sub LoadFont
     my @fntbbox=(0,0,0,0);
     my $capheight=0;
     my $lastchr=0;
+    my $lastnm;
     my $t1flags=0;
     my $fixwid=-1;
     my $ascent=0;
@@ -2081,7 +2102,7 @@ sub LoadFont
 	    $stg=3,next if lc($_) eq 'charset';
 
 	    my ($ch1,$ch2,$k)=split;
-	    $fnt{KERN}->{$ch1}->{$ch2}=$k;
+# 	    $fnt{KERN}->{$ch1}->{$ch2}=$k;
 	}
 	else
 	{
@@ -2090,15 +2111,16 @@ sub LoadFont
 
 	    if ($r[1] eq '"')
 	    {
-		$fnt{GNM}->{$r[0]}=$lastchr;
+		$fnt{NAM}->{$r[0]}=$fnt{NAM}->{$lastnm};
 		next;
 	    }
 
 	    $r[0]='u0020' if $r[3] == 32;
+	    $r[0]="u00".hex($r[3]) if $r[0] eq '---';
 #	    next if $r[3] >255;
-	    $fnt{GNM}->{$r[0]}=$r[3];
-	    $fnt{GNO}->[$r[3]]='/'.$r[4];
-	    $fnt{WID}->[$r[3]]=$p[0];
+	    $fnt{NAM}->{$r[0]}=[$p[0],$r[3],'/'.$r[4],$r[3],0];
+	    $fnt{NO}->[$r[3]]=[$r[0],$r[0]];
+	    $lastnm=$r[0];
 	    $lastchr=$r[3] if $r[3] > $lastchr;
 	    $fixwid=$p[0] if $fixwid == -1;
 	    $fixwid=-2 if $fixwid > 0 and $p[0] != $fixwid;
@@ -2114,20 +2136,16 @@ sub LoadFont
 
     close($f);
 
-    unshift(@{$fnt{GNO}},0);
-
-    foreach my $glyph (@{$fnt{GNO}})
+    foreach my $j (0..$lastchr)
     {
-	$glyph='/.notdef' if !defined($glyph);
-    }
-
-    foreach my $w (@{$fnt{WID}})
-    {
-	$w=0 if !defined($w);
+	$fnt{NO}->[$j]=['',''] if !defined($fnt{NO}->[$j]);
     }
 
     my $fno=0;
     my $slant=0;
+    $fnt{DIFF}=[];
+    $fnt{WIDTH}=[];
+    $fnt{NAM}->{''}=[0,-1,'/.notdef',-1,0];
     $slant=-$fnt{'slant'} if exists($fnt{'slant'});
     $fnt{'spacewidth'}=700 if !exists($fnt{'spacewidth'});
 
@@ -2146,12 +2164,12 @@ sub LoadFont
 			{'Type' => '/Font',
 			'Subtype' => '/Type1',
 			'BaseFont' => '/'.$fnt{internalname},
-			'Widths' => $fnt{WID},
+			'Widths' => $fnt{WIDTH},
 			'FirstChar' => 0,
 			'LastChar' => $lastchr,
 			'Encoding' => BuildObj($objct+1,
 				    {'Type' => '/Encoding',
-				    'Differences' => $fnt{GNO}
+				    'Differences' => $fnt{DIFF}
 				    }
 				    ),
 			'FontDescriptor' => BuildObj($objct+2,
@@ -2164,7 +2182,7 @@ sub LoadFont
 					'Descent' => $fntbbox[1],
 					'CapHeight' => $capheight,
 					'StemV' => 0,
-					'CharSet' => "($charset)",
+#					'CharSet' => "($charset)",
 					'FontFile' => BuildObj($objct+3,
 						    {'Length1' => $l1,
 						    'Length2' => $l2,
@@ -2190,12 +2208,12 @@ sub LoadFont
 			{'Type' => '/Font',
 			'Subtype' => '/Type1',
 			'BaseFont' => '/'.$fnt{internalname},
-			'Widths' => $fnt{WID},
+			'Widths' => $fnt{WIDTH},
 			'FirstChar' => 0,
 			'LastChar' => $lastchr,
 			'Encoding' => BuildObj($objct+1,
 				    {'Type' => '/Encoding',
-				    'Differences' => $fnt{GNO}
+				    'Differences' => $fnt{DIFF}
 				    }
 				    ),
 			'FontDescriptor' => BuildObj($objct+2,
@@ -2399,14 +2417,21 @@ sub do_p
 sub do_f
 {
     my $par=shift;
+    my $fnt=$fontlst{$par}->{FNT};
 
 #	IsText();
     $cft="$par";
     $fontchg=1;
 #	$stream.="/F$cft $cftsz Tf\n" if $cftsz;
     $widtbl=CacheWid($par);
-    $origwidtbl=$fontlst{$par}->{FNT}->{WID};
-    $krntbl=$fontlst{$par}->{FNT}->{KERN};
+    $origwidtbl=[];
+
+    foreach my $w (@{$fnt->{NO}})
+    {
+	push(@{$origwidtbl},$fnt->{NAM}->{$w->[1]}->[WIDTH]);
+    }
+
+#     $krntbl=$fnt->{KERN};
 }
 
 sub CacheWid
@@ -2415,7 +2440,7 @@ sub CacheWid
 
     if (!defined($fontlst{$par}->{CACHE}->{$cftsz}))
     {
-	$fontlst{$par}->{CACHE}->{$cftsz}=BuildCache($fontlst{$par}->{FNT}->{WID});
+	$fontlst{$par}->{CACHE}->{$cftsz}=BuildCache($fontlst{$par}->{FNT});
     }
 
     return($fontlst{$par}->{CACHE}->{$cftsz});
@@ -2423,13 +2448,15 @@ sub CacheWid
 
 sub BuildCache
 {
-    my $wid=shift;
-    return([]);
+    my $fnt=shift;
     my @cwid;
+    $origwidtbl=[];
 
-    foreach my $w (@{$wid})
+    foreach my $w (@{$fnt->{NO}})
     {
-	push(@cwid,$w*$cftsz);
+	my $wid=(defined($w) and defined($w->[1]))?$fnt->{NAM}->{$w->[1]}->[WIDTH]:0;
+	push(@cwid,$wid*$cftsz);
+	push(@{$origwidtbl},$wid);
     }
 
     return(\@cwid);
@@ -3100,9 +3127,9 @@ sub do_v
 sub TextWid
 {
     my $txt=shift;
+    my $fnt=shift;
     my $w=0;
     my $ck=0;
-    $txt=~s/^!\|!\|(\d\d\d)/chr($1)/e;
 
     foreach my $c (split('',$txt))
     {
@@ -3119,6 +3146,7 @@ sub TextWid
 sub do_t
 {
     my $par=shift;
+    my $fnt=$fontlst{$cft}->{FNT};
 
     if ($kernadjust != $curkern)
     {
@@ -3127,9 +3155,44 @@ sub do_t
 	$curkern=$kernadjust;
     }
 
-    my $wid=TextWid($par);
+    my $par2=$par;
+    $par2=~s/^!\|!\|(\d\d\d)/chr(oct($1))/e;
 
-    $par=reverse(split('',$par)) if $xrev;
+    foreach my $j (0..length($par2)-1)
+    {
+	my $cn=ord(substr($par2,$j,1));
+	my $chnm=$fnt->{NAM}->{$fnt->{NO}->[$cn]->[1]};
+
+	if ($chnm->[USED]==0)
+	{
+	    $chnm->[USED]=1;
+	}
+	elsif ($fnt->{NO}->[$cn]->[0] ne $fnt->{NO}->[$cn]->[1])
+	{
+	    # A glyph has already been remapped to this char, so find a spare
+
+	    my $cn2=RemapChr($cn,$fnt,$fnt->{NO}->[$cn]->[0]);
+	    $stream.="% MMM Remap $cn to $cn2\n" if $debug;
+
+	    if ($cn2)
+	    {
+		substr($par2,$j,1)=chr($cn2);
+
+		if ($par=~m/^!\|!\|(\d\d\d)/)
+		{
+		    substr($par,4,3)=sprintf("%03o",$cn2);
+		}
+		else
+		{
+		    substr($par,$j,1)=chr($cn2);
+		}
+	    }
+	}
+    }
+    my $wid=TextWid($par2,$fnt);
+
+    $par=reverse(split('',$par)) if $xrev and $par!~m/^!\|!\|(\d\d\d)/;
+
     if ($n_flg and defined($mark))
     {
 	$mark->{ypos}=$ypos;
@@ -3252,12 +3315,11 @@ sub do_H
 sub do_C
 {
     my $par=shift;
-    my $nm;
 
-    ($par,$nm)=FindChar($par);
+    my ($par2,$nm)=FindChar($par);
 
-    do_t($par);
-    $nomove=$nm;
+    do_t($par2);
+    $nomove=$fontlst{$cft}->{FNT}->{NAM}->{$par}->[WIDTH]*$cftsz ;
 }
 
 sub FindChar
@@ -3265,12 +3327,13 @@ sub FindChar
     my $chnm=shift;
     my $fnt=$fontlst{$cft}->{FNT};
 
-    if (exists($fnt->{GNM}->{$chnm}))
+    if (exists($fnt->{NAM}->{$chnm}))
     {
-	my $ch=$fnt->{GNM}->{$chnm};
+	my $ch=$fnt->{NAM}->{$chnm}->[ASSIGNED];
 	$ch=RemapChr($ch,$fnt,$chnm) if ($ch > 255);
+	$fnt->{NAM}->{$chnm}->[USED]=0 if $fnt->{NO}->[$ch]->[1] eq $chnm;
 
-	return(($ch<32)?sprintf("!|!|%03o",$ch):chr($ch),$fnt->{WID}->[$ch]*$cftsz);
+	return(($ch<32)?sprintf("!|!|%03o",$ch):chr($ch),$widtbl->[$ch]);
     }
     else
     {
@@ -3285,17 +3348,33 @@ sub RemapChr
     my $chnm=shift;
     my $unused=0;
 
-    foreach my $un (2..$#{$fnt->{GNO}})
+    foreach my $un (0..$#{$fnt->{NO}})
     {
-	$unused=$un,last if $fnt->{GNO}->[$un] eq '/.notdef' and $un ne 14;
+	next if $un >= 139 and $un <= 144;
+	$unused=$un,last if $fnt->{NO}->[$un]->[1] eq '';
     }
 
-    if (--$unused <= 255)
+    if (!$unused)
+    {
+	foreach my $un (128..255)
 	{
-	$fnt->{GNM}->{$chnm}=$unused++;
-	$fnt->{GNO}->[$unused]=$fnt->{GNO}->[$ch+1];
-	$fnt->{WID}->[$unused]=$fnt->{WID}->[$ch];
-	$ch=$unused-1;
+	    next if $un >= 139 and $un <= 144;
+	    my $glyph=$fnt->{NO}->[$un]->[1];
+	    $unused=$un,last if $fnt->{NAM}->{$glyph}->[USED] == 0;
+	}
+    }
+
+    if ($unused && $unused <= 255)
+    {
+	my $glyph=$fnt->{NO}->[$unused]->[1];
+	delete($fontlst{$cft}->{CACHE}->{$cftsz});
+	$fnt->{NAM}->{$chnm}->[ASSIGNED]=$unused;
+	$fnt->{NO}->[$unused]->[1]=$chnm;
+	$widtbl=CacheWid($cft);
+
+	$stream.="% AAA Assign $chnm ($ch) to $unused\n" if $debug;
+
+	$ch=$unused;
 	return($ch);
     }
     else
@@ -3313,28 +3392,21 @@ sub do_c
     $par=substr($par,0,1);
     my $ch=ord($par);
     do_N($ch);
-    $nomove=$fontlst{$cft}->{FNT}->{WID}->[$ch]*$cftsz;
 }
 
 sub do_N
 {
     my $par=shift;
-
-    if ($par > 255)
-    {
     my $fnt=$fontlst{$cft}->{FNT};
-	my $chnm='';
 
-	foreach my $c (keys %{$fnt->{GNM}})
+    if (!defined($fnt->{NO}->[$par]))
     {
-	    $chnm=$c,last if $fnt->{GNM}->{$c} == $par;
-	}
-
-	$par=RemapChr($par,$fnt,$chnm);
+	Msg(0,"No chr($par) in font $fnt->{internalname}");
+	return;
     }
 
-    do_t(chr($par));
-    $nomove=$fontlst{$cft}->{FNT}->{WID}->[$par]*$cftsz;
+    my $chnm=$fnt->{NO}->[$par]->[0];
+    do_C($chnm);
 }
 
 sub do_n
