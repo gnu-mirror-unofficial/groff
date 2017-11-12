@@ -293,6 +293,7 @@ int main(int argc, char **argv)
       break;
     case 'o':
       oflag = 1;
+      // fall through
     case 'f':
     case 'm':
     case 'r':

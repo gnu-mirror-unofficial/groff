@@ -245,6 +245,7 @@ DBGetType(register char *s)
       return (CENTRIGHT);
     default:
       fatal("unknown element type");
+      // fatal() does not return
     }
   case 'B':
     switch (s[3]) {
@@ -256,6 +257,7 @@ DBGetType(register char *s)
       return (BOTRIGHT);
     default:
       fatal("unknown element type");
+      // fatal() does not return
     }
   case 'T':
     switch (s[3]) {
@@ -267,6 +269,7 @@ DBGetType(register char *s)
       return (TOPRIGHT);
     default:
       fatal("unknown element type");
+      // fatal() does not return
     }
   default:
     fatal("unknown element type");
