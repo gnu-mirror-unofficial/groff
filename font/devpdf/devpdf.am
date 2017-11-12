@@ -1,5 +1,4 @@
 # Copyright (C) 2011-2015 Free Software Foundation, Inc.
-#      Free Software Foundation, Inc.
 #      Original Makefile.sub written
 #      by Deri James <deri@chuzzlewit.demon.co.uk>
 #      Automake migration by Bertrand Garrigues
@@ -10,11 +9,11 @@
 #
 # groff is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
-# Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -70,7 +69,8 @@ $(DEVPDFFONTMAP_1):
 	@cp -f $(top_srcdir)/font/devps/generate/`basename $@` \
 	  $(top_builddir)/font/devpdf/map
 
-font/devpdf/util/BuildFoundries: shdeps.sed $(devpdf_srcdir)/util/BuildFoundries.pl
+font/devpdf/util/BuildFoundries: shdeps.sed \
+  $(devpdf_srcdir)/util/BuildFoundries.pl
 	@echo Making $@
 	@$(MKDIR_P) $(top_builddir)/font/devpdf/util
 	@$(RM) $(top_builddir)/font/devpdf/util/BuildFoundries
@@ -104,19 +104,23 @@ font/devpdf/DESC: $(devpdf_srcdir)/DESC.in
 
 font/devpdf/Foundry:
 	@$(RM) $(top_builddir)/font/devpdf/Foundry
-	@sed "s|[@]urwfontsdir[@]|$(urwfontsdir)|" $(devpdf_srcdir)/Foundry.in >$(top_builddir)/font/devpdf/Foundry
+	@sed "s|[@]urwfontsdir[@]|$(urwfontsdir)|" \
+	  $(devpdf_srcdir)/Foundry.in >$(top_builddir)/$@
 
 all: font/devpdf/build_font_files
 
-# PATH : path to find afmtodit. We add $(abs_top_builddir) because afmtodit is
-# built in the top builddir.
-font/devpdf/build_font_files: afmtodit font/devpdf/DESC $(devpdffontenc_DATA) $(devpdffontmap_DATA) $(devpdffont_DATA) font/devpdf/util/BuildFoundries
+# PATH: path to find afmtodit. We add $(abs_top_builddir) because
+# afmtodit is built in the top builddir.
+font/devpdf/build_font_files: afmtodit font/devpdf/DESC \
+  $(devpdffontenc_DATA) $(devpdffontmap_DATA) $(devpdffont_DATA) \
+  font/devpdf/util/BuildFoundries
 	@echo Making all fonts
 	@$(RM) $@
 	@$(MKDIR_P) $(top_builddir)/font/devpdf
 	@echo "# foundry	ps name	psfile" > $(top_builddir)/font/devpdf/download
 	PATH="$(abs_top_builddir)$(GROFF_PATH_SEPARATOR)$(abs_top_builddir)/build-aux$(GROFF_PATH_SEPARATOR)$(PATH)" \
-	  $(abs_top_builddir)/font/devpdf/util/BuildFoundries $(abs_top_builddir)/font/devpdf \
+	  $(abs_top_builddir)/font/devpdf/util/BuildFoundries \
+	  $(abs_top_builddir)/font/devpdf \
 	    '$(abs_top_srcdir)/font/devps : $(abs_top_builddir)/font/devps' \
 	   >> $(top_builddir)/font/devpdf/download
 	@touch $@
@@ -124,7 +128,8 @@ font/devpdf/build_font_files: afmtodit font/devpdf/DESC $(devpdffontenc_DATA) $(
 mostlyclean-local: mostlyclean_devpdf_extra
 mostlyclean_devpdf_extra:
 	@echo Cleaning font/devpdf
-	rm -rf $(top_builddir)/font/devpdf/enc $(top_builddir)/font/devpdf/map;
+	rm -rf $(top_builddir)/font/devpdf/enc \
+	  $(top_builddir)/font/devpdf/map;
 	if test -d $(top_builddir)/font/devpdf; then \
 	  for f in $(GROFF_FONT_FILES); do \
 	    rm -f $(top_builddir)/font/devpdf/$$f; \
@@ -141,10 +146,12 @@ install_devpdf:
 	  if test -f $$f; then \
 	    $(INSTALL_DATA) $$f $(DESTDIR)$(devpdffontdir)/$$f; \
 	  else \
-	    $(INSTALL_DATA) $(top_builddir)/font/devpdf/$$f $(DESTDIR)$(devpdffontdir)/$$f; \
+	    $(INSTALL_DATA) $(top_builddir)/font/devpdf/$$f \
+	      $(DESTDIR)$(devpdffontdir)/$$f; \
 	  fi; \
 	done
-	$(INSTALL_DATA) $(top_builddir)/font/devpdf/download $(DESTDIR)$(devpdffontdir)/
+	$(INSTALL_DATA) $(top_builddir)/font/devpdf/download \
+	  $(DESTDIR)$(devpdffontdir)/
 
 uninstall_groffdirs: uninstall_devpdf
 uninstall_devpdf:
@@ -165,8 +172,11 @@ uninstall_devpdf:
 
 
 ########################################################################
-### Emacs settings
+# Editor settings
+########################################################################
+#
 # Local Variables:
 # mode: makefile-automake
+# fill-column: 72
 # End:
-# vim: set filetype=automake:
+# vim: set filetype=automake textwidth=72:

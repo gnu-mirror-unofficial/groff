@@ -1,16 +1,15 @@
-# Copyright (C) 2014-15
-#   Free Software Foundation, Inc.
+# Copyright (C) 2014-2015 Free Software Foundation, Inc.
 #
 # Last update: 13 Aug 2015
 #
-# This file is part of `groff'
+# This file is part of 'groff'.
 #
-# `groff' is free software; you can redistribute it and/or modify it
+# 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# `groff' is distributed in the hope that it will be useful, but
+# 'groff' is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
@@ -151,11 +150,11 @@ font/devps/DESC: $(devps_srcdir)/DESC.in
 	@test -z '$(PSPRINT)' ||	echo print '$(PSPRINT)' >>$@
 
 fonts: devps_fonts
-# We add top_builddir to the PATH in case the only afmtodit available is the 
-# one in the current build.
+# We add top_builddir to the PATH in case the only afmtodit available is
+# the one in the current build.
 devps_fonts: afmtodit font/devps/DESC
 	PATH=$(top_builddir)$(GROFF_PATH_SEPARATOR)$(PATH) \
-        $(MAKE) -f $(devps_srcdir)/generate/Makefile \
+	  $(MAKE) -f $(devps_srcdir)/generate/Makefile \
 	  srcdir=$(devps_srcdir)/generate DESC=$(devps_srcdir)/DESC.in
 
 font/devps/prologue: $(devps_srcdir)/prologue.ps
@@ -173,7 +172,11 @@ font/devps/symbolsl.pfa: $(devps_srcdir)/symbolsl.ps
 
 
 ########################################################################
-### Emacs settings
+# Editor settings
+########################################################################
+#
 # Local Variables:
 # mode: makefile-automake
+# fill-column: 72
 # End:
+# vim: set filetype=automake textwidth=72:

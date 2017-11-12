@@ -10,8 +10,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -27,12 +27,12 @@
 SHELL = /bin/sh
 
 # Directory containing AFM files.  Must not be current directory.
-# Either long names (e.g., Times-Roman.afm) or short names (e.g., timesr.afm)
-# may be used. See the afmname script.
+# Either long names (e.g., Times-Roman.afm) or short names (e.g.,
+# timesr.afm) may be used. See the afmname script.
 afmdir=/usr/local/lib/afm
 
-# The symbol font which fits to `Symbol.afm'.  For the creation of
-# `symbolsl.afm' we need the `printafm' script from ghostscript.
+# The symbol font which fits to 'Symbol.afm'.  For the creation of
+# 'symbolsl.afm' we need the 'printafm' script from ghostscript.
 symbolfont=/usr/local/lib/fonts/Symbol.pfb
 
 PRINTAFM=printafm
@@ -42,8 +42,15 @@ srcdir=generate
 SPECIALFONTS=S
 DINGBATSFONTS=ZD ZDR
 GREEKFONTS=SS
-TEXTFONTS=AB ABI AI AR BMB BMBI BMI BMR CB CBI CI CR HB HBI HI HR HNB HNBI \
-  HNI HNR NB NBI NI NR PB PBI PI PR TB TBI TI TR ZCMI
+TEXTFONTS=AB ABI AI AR \
+	BMB BMBI BMI BMR \
+	CB CBI CI CR \
+	HB HBI HI HR \
+	HNB HNBI HNI HNR \
+	NB NBI NI NR \
+	PB PBI PI PR \
+	TB TBI TI TR \
+	ZCMI
 
 FONTS=$(TEXTFONTS) $(SPECIALFONTS) $(GREEKFONTS) $(DINGBATSFONTS) EURO
 
@@ -63,139 +70,173 @@ all: $(FONTS)
 
 TR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Times-Roman.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Times-Roman.afm` \
+	  $(TEXTMAP) $@
 
 TB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Times-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Times-Bold.afm` \
+	  $(TEXTMAP) $@
 
 TI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) -a 7 \
-	  `$(AFMNAME) $(afmdir)/Times-Italic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Times-Italic.afm` \
+	  $(TEXTMAP) $@
 
 TBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Times-BoldItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Times-BoldItalic.afm` \
+	  $(TEXTMAP) $@
 
 HR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica.afm` \
+	  $(TEXTMAP) $@
 
 HB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Bold.afm` \
+	  $(TEXTMAP) $@
 
 HI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Oblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Oblique.afm` \
+	  $(TEXTMAP) $@
 
 HBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-BoldOblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-BoldOblique.afm` \
+	  $(TEXTMAP) $@
 
 CR:
 	$(AFMTODIT) $(NOLIGFLAG) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Courier.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Courier.afm` \
+	  $(TEXTMAP) $@
 
 CB:
 	$(AFMTODIT) $(NOLIGFLAG) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Courier-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Courier-Bold.afm` \
+	  $(TEXTMAP) $@
 
 CI:
 	$(AFMTODIT) $(NOLIGFLAG) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Courier-Oblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Courier-Oblique.afm` \
+	  $(TEXTMAP) $@
 
 CBI:
 	$(AFMTODIT) $(NOLIGFLAG) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Courier-BoldOblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Courier-BoldOblique.afm` \
+	  $(TEXTMAP) $@
 
 PR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Palatino-Roman.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Palatino-Roman.afm` \
+	  $(TEXTMAP) $@
 
 PB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Palatino-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Palatino-Bold.afm` \
+	  $(TEXTMAP) $@
 
 PI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Palatino-Italic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Palatino-Italic.afm` \
+	  $(TEXTMAP) $@
 
 PBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Palatino-BoldItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Palatino-BoldItalic.afm` \
+	  $(TEXTMAP) $@
 
 NR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Roman.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Roman.afm` \
+	  $(TEXTMAP) $@
 
 NB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Bold.afm` \
+	  $(TEXTMAP) $@
 
 NI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Italic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-Italic.afm` \
+	  $(TEXTMAP) $@
 
 NBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-BoldItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/NewCenturySchlbk-BoldItalic.afm` \
+	  $(TEXTMAP) $@
 
 BMR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Bookman-Light.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Bookman-Light.afm` \
+	  $(TEXTMAP) $@
 
 BMB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Bookman-Demi.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Bookman-Demi.afm` \
+	  $(TEXTMAP) $@
 
 BMI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Bookman-LightItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Bookman-LightItalic.afm` \
+	  $(TEXTMAP) $@
 
 BMBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Bookman-DemiItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Bookman-DemiItalic.afm` \
+	  $(TEXTMAP) $@
 
 AR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/AvantGarde-Book.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/AvantGarde-Book.afm` \
+	  $(TEXTMAP) $@
 
 AB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/AvantGarde-Demi.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/AvantGarde-Demi.afm` \
+	  $(TEXTMAP) $@
 
 AI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/AvantGarde-BookOblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/AvantGarde-BookOblique.afm` \
+	  $(TEXTMAP) $@
 
 ABI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/AvantGarde-DemiOblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/AvantGarde-DemiOblique.afm` \
+	  $(TEXTMAP) $@
 
 HNR:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow.afm` \
+	  $(TEXTMAP) $@
 
 HNB:
 	$(AFMTODIT) $(EFLAG) $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-Bold.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-Bold.afm` \
+	  $(TEXTMAP) $@
 
 HNI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-Oblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-Oblique.afm` \
+	  $(TEXTMAP) $@
 
 HNBI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-BoldOblique.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/Helvetica-Narrow-BoldOblique.afm` \
+	  $(TEXTMAP) $@
 
 ZCMI:
 	$(AFMTODIT) $(EFLAG) $(IFLAG) \
-	  `$(AFMNAME) $(afmdir)/ZapfChancery-MediumItalic.afm` $(TEXTMAP) $@
+	  `$(AFMNAME) $(afmdir)/ZapfChancery-MediumItalic.afm` \
+	  $(TEXTMAP) $@
 
 ZD:
 	$(AFMTODIT) -s $(RFLAG) \
-	  `$(AFMNAME) $(afmdir)/ZapfDingbats.afm` $(srcdir)/dingbats.map $@
+	  `$(AFMNAME) $(afmdir)/ZapfDingbats.afm` \
+	  $(srcdir)/dingbats.map $@
 
 SS: symbolsl.afm
 	$(AFMTODIT) -s -x $(IFLAG) \
@@ -219,7 +260,8 @@ freeeuro.afm freeeuro.pfa: $(srcdir)/freeeuro.sfd
 
 symbol.afm: $(srcdir)/symbol.sed
 	$(RM) $@
-	sed -f $(srcdir)/symbol.sed `$(AFMNAME) $(afmdir)/Symbol.afm` >$@
+	sed -f $(srcdir)/symbol.sed `$(AFMNAME) $(afmdir)/Symbol.afm` \
+	  >$@
 
 symbolsl.afm: $(srcdir)/symbolsl.awk $(srcdir)/../symbolsl.ps
 	$(RM) $@ Fontmap
@@ -260,9 +302,11 @@ extraclean: realclean
 .PHONY: all clean realclean extraclean
 
 ########################################################################
-# Emacs settings
+# Editor settings
 ########################################################################
 #
 # Local Variables:
 # mode: makefile
+# fill-column: 72
 # End:
+# vim: set textwidth=72:

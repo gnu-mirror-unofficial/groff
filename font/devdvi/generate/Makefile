@@ -1,4 +1,4 @@
-# Makefile for `font devdvi/generate'
+# Makefile for 'font devdvi/generate'
 #
 # File position: <groff-source>/font/devdvi/generate/Makefile
 #
@@ -12,8 +12,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -24,8 +24,8 @@
 #   make -f generate/Makefile
 # in the parent directory of the directory containing this file.
 
-# Note that the following font files have manually added kerning values for
-# `` and '': B, BI, I, R.
+# Note manually-added kerning values for `` and '' in the font files:
+#   B, BI, I, R.
 
 srcdir=generate
 tfmdir=/usr/local/lib/groff-tfm
