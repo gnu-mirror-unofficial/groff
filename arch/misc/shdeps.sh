@@ -1,29 +1,29 @@
 #! /bin/sh
-# shdeps.sh: Generate OS dependency fixups, for `groff' shell scripts
+# shdeps.sh: Generate OS dependency fixups, for 'groff' shell scripts
 #
 # Copyright (C) 2004-2014 Free Software Foundation, Inc.
 #      Written by Keith Marshall (keith.d.marshall@ntlworld.com)
 #
-# Invoked only by `make', as:
+# Invoked only by 'make', as:
 #    $(SHELL) shdeps.sh "$(RT_SEP)" "$(SH_SEP)" "$(bindir)" > shdeps.sed
-# 
+#
 # This file is part of groff.
-# 
+#
 # groff is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # groff is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cat << ETX
-# shdeps.sed: Script generated automatically by \`make' -- do not modify!
+# shdeps.sed: Script generated automatically by 'make' -- do not modify!
 
 /^$/N
 /@GROFF_BIN_PATH_SETUP@/c\\
@@ -31,10 +31,10 @@ ETX
 
 if [ "$1$2" = "::" ]
 then
-  # `PATH_SEPARATOR' is `:' both at `groff' run time, and in `make',
+  # 'PATH_SEPARATOR' is ':' both at 'groff' run time, and in 'make',
   # implying an implementation which is completely POSIX compliant.
-  # Simply apply the `GROFF_BIN_PATH' and `PATH_SEPARATOR' values
-  # determined by `configure', in all cases.
+  # Simply apply the 'GROFF_BIN_PATH' and 'PATH_SEPARATOR' values
+  # determined by 'configure', in all cases.
 
   cat << ETX
 \\
@@ -43,13 +43,13 @@ GROFF_RUNTIME="\${GROFF_BIN_PATH=$3}:"
 ETX
 
 else
-  # `PATH_SEPARATOR' is NOT always `:',
+  # 'PATH_SEPARATOR' is NOT always ':',
   # which suggests an implementation for a Microsoft platform.
-  # We need to choose the `GROFF_BIN_PATH' format and `PATH_SEPARATOR'
+  # We need to choose the 'GROFF_BIN_PATH' format and 'PATH_SEPARATOR'
   # which will suit the user's choice of shell.
   #
-  # Note that some Windows users may specify the `--prefix' path
-  # using backslash characters, instead of `/', preferred by POSIX,
+  # Note that some Windows users may specify the '--prefix' path
+  # using backslash characters, instead of '/', preferred by POSIX,
   # so we will also fix that up.
 
   POSIX_BINDIR=`echo $3 | tr '\\\\' /`

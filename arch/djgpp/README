@@ -1,12 +1,12 @@
     Copyright (C) 2000-2014 Free Software Foundation, Inc.
 
-    Copying and distribution of this file, with or without modification,
-    are permitted in any medium without royalty provided the copyright
-    notice and this notice are preserved.
+    Copying and distribution of this file, with or without
+    modification, are permitted in any medium without royalty provided
+    the copyright notice and this notice are preserved.
 
 This is a port of GNU Groff to DJGPP v2.03 or later.
 Groff is the GNU version of document formatting tools related to
-`troff'.
+'troff'.
 
 This README file describes how to build and install Groff on MS-DOS or
 MS-Windows systems using the DJGPP port of GNU C/C++ compiler and
@@ -19,8 +19,8 @@ I.  Installing the pre-compiled binary package
     1. Unzip the file groNNNb.zip (where NNN is the version number)
        preserving the directory structure (-d switch to PKUNZIP) from
        the main DJGPP installation directory.  If you will use Groff
-       on Windows 9X or Windows2000, use an unzip program which
-       supports long filenames.
+       on Windows 9x, Windows 2000, or later, use an unzip program
+       which supports long filenames.
 
     2. Groff binaries were configured so that they will look for their
        standard directories under the directory pointed to by the
@@ -34,7 +34,7 @@ I.  Installing the pre-compiled binary package
         GROFF_TYPESETTER=ascii
         GROFF_FONT_PATH=%DJDIR%/share/groff/<version>/font
 
-       <version> is something like `1.16.1' or `1.17'.
+       <version> is something like '1.16.1' or '1.17'.
 
        In addition, you can set the variable GROFF_TMPDIR to point to
        a directory where you want Groff to create temporary files it
@@ -48,7 +48,7 @@ I.  Installing the pre-compiled binary package
        installed.
 
        Note that the GROFF_TYPESETTER variable sets the default Groff
-       device to be `ascii', which is suitable for formatting man
+       device to be 'ascii', which is suitable for formatting man
        pages to be viewed on the terminal.  Use the -T switch to
        generate output for other devices (e.g., -Tps for PostScript).
 
@@ -72,7 +72,7 @@ I.  Installing the pre-compiled binary package
        under construction, so some sections are empty.
 
        If you want to add a Groff entry to the main Info menu in the
-       file DIR, chdir to the `info' subdirectory of the main Groff
+       file DIR, chdir to the 'info' subdirectory of the main Groff
        installation directory and run this command:
 
          install-info --dir-file=dir groff.info
@@ -84,14 +84,14 @@ I.  Installing the pre-compiled binary package
 
                   groff -man -s foo.1 > foo.man
 
-       where `foo.1' is the troff source of the man page and `foo.man'
+       where 'foo.1' is the troff source of the man page and 'foo.man'
        is the formatted page.  If you need to view the man page, say
        this:
 
                   groff -man -s foo.1 | less
 
-       You can also use the DJGPP clone of the Unix `man' command, in
-       which case `man' runs the above command for you automatically.
+       You can also use the DJGPP clone of the Unix 'man' command, in
+       which case 'man' runs the above command for you automatically.
 
        Here's how you print man pages on a PostScript printer:
 
@@ -103,20 +103,20 @@ I.  Installing the pre-compiled binary package
 
        Printing the documents produced by Groff is possible either by
        redirecting Groff's standard output to the local printer
-       device, like shown above, or by using the `-l' switch to Groff.
+       device, like shown above, or by using the '-l' switch to Groff.
        The latter possibility causes Groff to pipe its output to a
        program whose name and arguments appear in the files named
-       `DESC' in each of the `devFOO' subdirectories of the
+       'DESC' in each of the 'devFOO' subdirectories of the
        %DJDIR%/share/groff/<version>/font directory; for example, the
        file devps/DESC is used by "groff -Tps".  The relevant line in
        these files begins with the word "print".
 
-       As configured, when invoked with the `-l' switch, Groff will
-       call `cat' (from GNU Textutils) to pipe its output to the
+       As configured, when invoked with the '-l' switch, Groff will
+       call 'cat' (from GNU Textutils) to pipe its output to the
        default printer device for -Tps, -Tlbp and -Tlj4 options, and
-       it will call `dvilj4' (from the dvljNNNb.zip package) for -Tdvi
+       it will call 'dvilj4' (from the dvljNNNb.zip package) for -Tdvi
        option.  If you don't have these programs installed, you can
-       edit the respective `DESC' files to replace these commands with
+       edit the respective 'DESC' files to replace these commands with
        something else.  The replacement program must be able to read
        its standard input and send its output to whatever printer you
        want.  The "print" entry is assumed to be a shell command, so
@@ -149,7 +149,7 @@ I.  Installing the pre-compiled binary package
                  - egrep
                  - sed
 
-       The `afmtodit' and `mmroff' utilities are Perl scripts, so you
+       The 'afmtodit' and 'mmroff' utilities are Perl scripts, so you
        will need a Perl port to run them.
 
        All of these ports should be available from the DJGPP sites.
@@ -171,8 +171,8 @@ I.  Installing the pre-compiled binary package
 
     8. The package does not include the directories under
        share/groff/<version>/font whose names begin with "devX": these
-       are needed on X-Windows for running the gxditview program, which
-       is not supported by this port.
+       are needed on the X Window System for running the gxditview
+       program, which is not supported by this port.
 
     9. Due to 8+3 limitations of DOS filesystems, several files were
        renamed:
@@ -215,22 +215,22 @@ II. Building Groff from sources
        Special considerations apply if you have GCC 2.8.1 installed,
        and cannot upgrade to a later version.  See paragraph 4 below.
 
-       After you install these tools, make sure you have a ``symlink''
-       to bash.exe called sh.exe and a ``symlink'' to gawk.exe called
+       After you install these tools, make sure you have a "symlink"
+       to bash.exe called sh.exe and a "symlink" to gawk.exe called
        awk.exe.  If not, go to the DJGPP bin/ subdirectory and type
        the following words of wisdom from the DOS prompt:
 
                      ln -s bash.exe sh.exe
                      ln -s gawk.exe awk.exe
 
-       (`ln' is part of GNU Fileutils, see above.)
+       ('ln' is part of GNU Fileutils, see above.)
 
     2. Unzip the source distribution groXYZs.zip (where XYZ is the
        version number) preserving the directory structure (-d switch
        to PKUNZIP) from the main DJGPP installation directory.  (If
-       you are building Groff on Windows 9X or Windows 2000, use an
-       unzip program which supports long filenames.)  This creates
-       directory gnu/groff-X.YZ and unzips the sources there.
+       you are building Groff on Windows 9x, Windows 2000, or later,
+       use an unzip program which supports long filenames.)  This
+       creates directory gnu/groff-X.YZ and unzips the sources there.
 
        If you are building from the official GNU distribution, unpack
        the .tar.gz archive like this:
@@ -286,7 +286,7 @@ II. Building Groff from sources
 
        The problem with redefining NULL should not happen with DJGPP
        v2.03 or later.  But if you still see compilation errors which
-       say "`NULL' undeclared", comment out the line in _G_config.h
+       say "'NULL' undeclared", comment out the line in _G_config.h
        that says this:
 
           #undef NULL
@@ -313,7 +313,7 @@ II. Building Groff from sources
        read it to make yourself familiar with the programs.)
 
        Note that the batch file sets a lot of environment variables;
-       if you get ``Out of environment space'' messages, launch a
+       if you get "Out of environment space" messages, launch a
        subsidiary COMMAND.COM with plenty of environment space, like
        so:
 
@@ -330,7 +330,7 @@ II. Building Groff from sources
        be installed under the top DJGPP installation directory.
 
        Alternatively, you could instruct Make explicitly where to
-       install the package by setting the `prefix' variable.  For
+       install the package by setting the 'prefix' variable.  For
        example:
 
                make install prefix=c:/groff
@@ -341,7 +341,7 @@ II. Building Groff from sources
        will need to format them.  Use the commands shown in chapter I,
        section 5 above to do that, and redirect its output to the
        appropriate catN subdirectory.  Alternatively, you could format
-       the pages when you need to view them (the DJGPP clone of `man'
+       the pages when you need to view them (the DJGPP clone of 'man'
        will automatically format them).
 
        Consult the installation instructions for pre-compiled binaries
@@ -349,10 +349,13 @@ II. Building Groff from sources
 
     8. You can safely delete the directories under
        share/groff/<version>/font whose names begin with "devX": these
-       are needed on X-Windows which is not supported by this port.
+       are used by the X Window System client 'gxditview', which is
+       not supported by this port.
 
 
-##### Emacs settings
+##### Editor settings
 Local Variables:
 mode: text
+fill-column: 70
 End:
+vim: set autoindent textwidth=70:

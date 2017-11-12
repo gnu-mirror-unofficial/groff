@@ -31,7 +31,7 @@ if not "%CONFIG_SITE%" == "%XSRC%/arch/djgpp/config.site" goto SmallEnv
 
 Rem This is required because DOS/Windows are case-insensitive
 Rem to file names, and "make install" will do nothing if Make
-Rem finds a file called `install'.
+Rem finds a file called 'install'.
 if exist INSTALL ren INSTALL INSTALL.txt
 
 Rem Set HOSTNAME so it shows in config.status
