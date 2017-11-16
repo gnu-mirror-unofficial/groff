@@ -1,3 +1,13 @@
+2017-11-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/new.cpp: Quieten compiler warning.
+
+	Define sized version of overloaded delete operator.  Duplicate
+	code from unsized delete operator because simply calling through
+	to it provokes another warning, -Wdelete-incomplete.
+
+	Fix rest of https://savannah.gnu.org/bugs/?52335.
+
 2017-11-12  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Better handle glyphs in font positions > 255

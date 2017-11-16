@@ -67,3 +67,22 @@ void operator delete(void *p)
     free(p);
 #endif /* COOKIE_BUG */
 }
+
+void operator delete(void *p,
+		     __attribute__((__unused__)) long unsigned int size)
+{
+  // It's ugly to duplicate the code from delete(void *) above, but if
+  // we don't, g++ 6.3 can't figure out we're calling through it to
+  // free().
+  //
+  // In function 'void operator delete(void*, long unsigned int)':
+  //   warning: deleting 'void*' is undefined [-Wdelete-incomplete]
+  //delete p;
+#ifdef COOKIE_BUG
+  if (p)
+    free((void *)((char *)p - 8));
+#else
+  if (p)
+    free(p);
+#endif /* COOKIE_BUG */
+}
