@@ -214,7 +214,7 @@ AC_DEFUN([AM_ICONV_LINK],
 
 dnl Define AM_ICONV using AC_DEFUN_ONCE for Autoconf >= 2.64, in order to
 dnl avoid warnings like
-dnl "warning: AC_REQUIRE: `AM_ICONV' was expanded before it was required".
+dnl "warning: AC_REQUIRE: 'AM_ICONV' was expanded before it was required".
 dnl This is tricky because of the way 'aclocal' is implemented:
 dnl - It requires defining an auxiliary macro whose name ends in AC_DEFUN.
 dnl   Otherwise aclocal's initial scan pass would miss the macro definition.

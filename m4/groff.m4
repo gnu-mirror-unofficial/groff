@@ -81,9 +81,9 @@ AC_DEFUN([GROFF_DOC_CHECK],
   [AC_ARG_WITH([doc],
     [AS_HELP_STRING([--with-doc[[=TYPE]]],
       [choose which manuals (beside man pages) are desirable. \
-       TYPE can be `yes' or `no', or a comma-separated list of \
-       one or multiple of `html', `info', `other', `pdf', and \
-       `examples', to restrict what is produced])],
+       TYPE can be 'yes' or 'no', or a comma-separated list of \
+       one or multiple of 'html', 'info', 'other', 'pdf', and \
+       'examples', to restrict what is produced])],
     [doc="$withval"],
     [doc=yes])
   test "x$doc" = xno && doc=''
@@ -113,7 +113,7 @@ AC_DEFUN([GROFF_DOC_CHECK],
       test "x$i" = xother    && { docadd_other=yes; continue; }
       test "x$i" = xpdf      && { docadd_pdf=yes; continue; }
       test "x$i" = xexamples && { docadd_examples=yes; continue; }
-      AC_MSG_WARN([Invalid `--with-doc' argument:] $i)
+      AC_MSG_WARN([Invalid '--with-doc' argument:] $i)
     done
   fi
   if test $docadd_html = yes; then
@@ -163,7 +163,7 @@ AC_DEFUN([GROFF_MAKEINFO],
      missing=
      AC_CHECK_PROG([MAKEINFO], [makeinfo], [makeinfo])
      if test -z "$MAKEINFO"; then
-       missing="\`makeinfo' is missing."
+       missing="'makeinfo' is missing."
      else
        AC_MSG_CHECKING([for makeinfo version])
        # We need an additional level of quoting to make sed's regexps work.
@@ -176,7 +176,7 @@ AC_DEFUN([GROFF_MAKEINFO],
        makeinfo_version_numeric=`
          expr ${makeinfo_version_major}000 \+ ${makeinfo_version_minor}`
        if test $makeinfo_version_numeric -lt 4008; then
-         missing="\`makeinfo' is too old."
+         missing="'makeinfo' is too old."
        fi
      fi
 
@@ -186,11 +186,11 @@ AC_DEFUN([GROFF_MAKEINFO],
        if test ! -f ${infofile} \
 	|| test ${srcdir}/doc/groff.texi -nt ${infofile}; then
 	 AC_MSG_ERROR($missing
-[Get the `texinfo' package version 4.8 or newer.])
+[Get the 'texinfo' package version 4.8 or newer.])
        else
 	 AC_MSG_WARN($missing
-[Get the `texinfo' package version 4.8 or newer if you want to convert
-`groff.texi' into a PDF or HTML document.])
+[Get the 'texinfo' package version 4.8 or newer if you want to convert
+'groff.texi' into a PDF or HTML document.])
        fi
      fi
 
@@ -225,10 +225,10 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
      [pnmcut pnmcrop pnmtopng psselect pnmtops],
      [AC_CHECK_PROG(groff_prog, groff_prog, [found], [missing])
       if test $[]groff_prog = missing; then
-	missing="$missing \`groff_prog'"
+	missing="$missing 'groff_prog'"
       fi;])
 
-   test "$GHOSTSCRIPT" = "missing" && missing="$missing \`gs'"
+   test "$GHOSTSCRIPT" = "missing" && missing="$missing 'gs'"
 
    if test -z "$missing"; then
      if test $docadd_html = yes; then
@@ -291,8 +291,8 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
    AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
 
    missing=""
-   test "$AWK" = missing && missing="\`awk'"
-   test "$GHOSTSCRIPT" = missing && missing="$missing \`gs'"
+   test "$AWK" = missing && missing="'awk'"
+   test "$GHOSTSCRIPT" = missing && missing="$missing 'gs'"
    if test -z "$missing"; then
      if test $docadd_pdf = yes; then
        make_pdfdoc=pdfdoc
@@ -367,17 +367,17 @@ AC_DEFUN([GROFF_URW_FONTS_CHECK],
   [if test "$groff_have_urw_fonts" = no; then
   AC_MSG_NOTICE([
   No URW fonts in .pfb format were found on your system, URW fonts
-  generation for `devpdf' will not work properly.  These fonts can be
+  generation for 'devpdf' will not work properly.  These fonts can be
   downloaded here:
 
     http://downloads.ghostscript.com/public/fonts/urw-base35-v1.10.zip
 
   By default groff will search these fonts in the paths given by `gs
   -h' and in these 2 default directories:
-  `/usr/share/fonts/type1/gsfonts/' and
-  `/opt/local/share/fonts/urw-fonts/' (paths used by
+  '/usr/share/fonts/type1/gsfonts/' and
+  '/opt/local/share/fonts/urw-fonts/' (paths used by
   font/devpdf/Foundry.in).  You can also pass the option
-  `--with-urw-fonts-dir=DIR' to 'configure' to set a custom path.  You
+  '--with-urw-fonts-dir=DIR' to 'configure' to set a custom path.  You
   would need to re-run the 'configure' script after installing these
   fonts.
   
@@ -400,7 +400,7 @@ AC_DEFUN([GROFF_PNMTOPS_NOSETPAGE],
    AC_SUBST([pnmtops_nosetpage])])
 
 
-# Check location of `gs'; allow `--with-gs=PROG' option to override.
+# Check location of 'gs'; allow '--with-gs=PROG' option to override.
 
 AC_DEFUN([GROFF_GHOSTSCRIPT_PATH],
   [AC_REQUIRE([GROFF_GHOSTSCRIPT_PREFS])
@@ -411,7 +411,7 @@ AC_DEFUN([GROFF_GHOSTSCRIPT_PATH],
      [AC_CHECK_TOOLS(GHOSTSCRIPT, [$ALT_GHOSTSCRIPT_PROGS], [missing])])
    test "$GHOSTSCRIPT" = "no" && GHOSTSCRIPT=missing])
 
-# Preferences for choice of `gs' program...
+# Preferences for choice of 'gs' program...
 # (allow --with-alt-gs="LIST" to override).
 
 AC_DEFUN([GROFF_GHOSTSCRIPT_PREFS],
@@ -423,7 +423,7 @@ AC_DEFUN([GROFF_GHOSTSCRIPT_PREFS],
    AC_SUBST([ALT_GHOSTSCRIPT_PROGS])])
 
 
-# Check location of `awk'; allow `--with-awk=PROG' option to override.
+# Check location of 'awk'; allow '--with-awk=PROG' option to override.
 
 AC_DEFUN([GROFF_AWK_PATH],
   [AC_REQUIRE([GROFF_AWK_PREFS])
@@ -435,7 +435,7 @@ AC_DEFUN([GROFF_AWK_PATH],
    test "$AWK" = "no" && AWK=missing])
 
 
-# Preferences for choice of `awk' program; allow --with-alt-awk="LIST"
+# Preferences for choice of 'awk' program; allow --with-alt-awk="LIST"
 # to override.
 
 AC_DEFUN([GROFF_AWK_PREFS],
@@ -554,12 +554,12 @@ int i;
      AC_MSG_RESULT([void])
      AC_DEFINE([RETSIGTYPE], [void],
        [Define as the return type of signal handlers
-	(`int' or `void').])
+	('int' or 'void').])
    else
      AC_MSG_RESULT([int])
      AC_DEFINE([RETSIGTYPE], [int],
        [Define as the return type of signal handlers
-	(`int' or `void').])
+	('int' or 'void').])
    fi])
 
 
@@ -710,7 +710,7 @@ delete [] p;
      [AC_MSG_RESULT([yes])],
      [AC_MSG_RESULT([no])
       AC_DEFINE([ARRAY_DELETE_NEEDS_SIZE], [1],
-	[Define if your C++ doesn't understand `delete []'.])])
+	[Define if your C++ doesn't understand 'delete []'.])])
    AC_LANG_POP([C++])])
 
 AC_DEFUN([GROFF_TRADITIONAL_CPP],
@@ -812,7 +812,7 @@ AC_DEFUN([GROFF_PAGE],
 	 dom=`(hostname) 2>/dev/null | grep '\.'`
        fi
      fi
-     # If the top-level domain is two letters and it's not `us' or `ca'
+     # If the top-level domain is two letters and it's not 'us' or 'ca'
      # then they probably use A4 paper.
      case "$dom" in
      [*.[Uu][Ss]|*.[Cc][Aa])]
@@ -1080,21 +1080,21 @@ AC_DEFUN([GROFF_WITH_COMPATIBILITY_WRAPPERS],
     [AS_HELP_STRING([--with-compatibility-wrappers[[=VALUE]]],
       [choose whether and how groff compatibility wrappers for \
        vendor-provided non-GNU macro sets are installed. VALUE can be \
-       `check', `yes', `no' or `manual'. \
-       `check' (the default) checks for the existence of vendor-provided \
-       non-GNU macro sets, and implements the `yes' or `no' option \
+       'check', 'yes', 'no' or 'manual'. \
+       'check' (the default) checks for the existence of vendor-provided \
+       non-GNU macro sets, and implements the 'yes' or 'no' option \
        accordingly. \
-       `yes' generates compatibility wrappers for vendor-provided non-GNU \
+       'yes' generates compatibility wrappers for vendor-provided non-GNU \
        macro sets to allow their use with groff-based tools. The \
        compatibility wrappers are installed with the original macro set name, \
        while groff implementation of these macro sets are installed with a \
-       `g' prefix. Thus use of the groff implementation of these macro sets \
-       requires use of the `-mg<macro>' option (example: -mgan). \
-       `no' only installs the groff implementation of macro sets. \
-       `manual' generates compatibility wrappers for vendor-provided non-GNU \
-       macro sets as `<macro>-os'. Use of these groff compatibility wrappers \
+       'g' prefix. Thus use of the groff implementation of these macro sets \
+       requires use of the '-mg<macro>' option (example: -mgan). \
+       'no' only installs the groff implementation of macro sets. \
+       'manual' generates compatibility wrappers for vendor-provided non-GNU \
+       macro sets as '<macro>-os'. Use of these groff compatibility wrappers \
        (for vendor-provided non-GNU macro sets) requires the use of the \
-       `-m<macro>-os' option (example: -man-os).])],
+       '-m<macro>-os' option (example: -man-os).])],
     [compatibility_wrappers="$withval"],
     [compatibility_wrappers="check"])
 
@@ -1103,7 +1103,7 @@ AC_DEFUN([GROFF_WITH_COMPATIBILITY_WRAPPERS],
             "x$compatibility_wrappers" != "xno"     -a \
             "x$compatibility_wrappers" != "xmanual"
     then
-         AC_MSG_WARN([Invalid `--with-compatibility-wrappers' argument: `$compatibility_wrappers' - assuming `check' requested.])
+         AC_MSG_WARN([Invalid '--with-compatibility-wrappers' argument: '$compatibility_wrappers' - assuming 'check' requested.])
          compatibility_wrappers="check"
     fi
 
@@ -1121,7 +1121,7 @@ AC_DEFUN([GROFF_WITH_COMPATIBILITY_WRAPPERS],
             : # No action required
         elif test "x$compatibility_wrappers" = "xmanual"
         then
-            # `manual' allows quiet conversion to `no' to support
+            # 'manual' allows quiet conversion to 'no' to support
             # cross-platform build instructions
             compatibility_wrappers="no"
         fi
@@ -1214,7 +1214,7 @@ AC_DEFUN([GROFF_OS390],
    fi])
 
 
-# Check whether Windows scripts like `afmtodit.cmd' should be installed.
+# Check whether Windows scripts like 'afmtodit.cmd' should be installed.
 
 AC_DEFUN([GROFF_CMD_FILES],
   [AC_MSG_CHECKING([whether to install .cmd wrapper scripts for Windows])
@@ -1333,7 +1333,7 @@ uintmax_t i = (uintmax_t)-1;
    AC_LANG_POP([C++])])
 
 
-# Test for working `unsigned long long'.  Taken from the fileutils package.
+# Test for working 'unsigned long long'.  Taken from the fileutils package.
 
 AC_DEFUN([GROFF_UNSIGNED_LONG_LONG],
   [AC_LANG_PUSH([C++])
@@ -1358,7 +1358,7 @@ return ull << i | ull >> i | ullmax / ull | ullmax % ull;
    AC_LANG_POP([C++])])
 
 
-# Define uintmax_t to `unsigned long' or `unsigned long long'
+# Define uintmax_t to 'unsigned long' or 'unsigned long long'
 # if <inttypes.h> does not exist.  Taken from the fileutils package.
 
 AC_DEFUN([GROFF_UINTMAX_T],
@@ -1369,7 +1369,7 @@ AC_DEFUN([GROFF_UINTMAX_T],
 	  && ac_type='unsigned long long' \
 	  || ac_type='unsigned long'
      AC_DEFINE_UNQUOTED([uintmax_t], [$ac_type],
-       [Define uintmax_t to `unsigned long' or `unsigned long long' if
+       [Define uintmax_t to 'unsigned long' or 'unsigned long long' if
 	<inttypes.h> does not exist.])
    fi])
 
@@ -1379,7 +1379,7 @@ AC_DEFUN([GROFF_UINTMAX_T],
 # MS-DOS/Win32=';').
 #
 # The logic to resolve this test is already encapsulated in
-# `${srcdir}/src/include/nonposix.h'.
+# '${srcdir}/src/include/nonposix.h'.
 
 AC_DEFUN([GROFF_TARGET_PATH_SEPARATOR],
   [AC_MSG_CHECKING([separator character to use in groff search paths])
@@ -1466,7 +1466,7 @@ AC_DEFUN([GROFF_X11],
    AC_SUBST([XLIBDIRS])])
 
 
-# Set up the `--with-appresdir' command-line option.
+# Set up the '--with-appresdir' command-line option.
 
 # Don't quote AS_HELP_STRING!
 AC_DEFUN([GROFF_APPRESDIR_OPTION],
@@ -1477,13 +1477,13 @@ AC_DEFUN([GROFF_APPRESDIR_OPTION],
 
 # Get a default value for the application resource directory.
 #
-# We ignore the `XAPPLRES' and `XUSERFILESEARCHPATH' environment variables.
+# We ignore the 'XAPPLRES' and 'XUSERFILESEARCHPATH' environment variables.
 #
 # By default if --with-appresdir is not used, we will install the
 # gxditview resources in $prefix/lib/X11/app-defaults.
 #
-# Note that if --with-appresdir was passed to `configure', no prefix is
-# added to `appresdir'.
+# Note that if --with-appresdir was passed to 'configure', no prefix is
+# added to 'appresdir'.
 
 AC_DEFUN([GROFF_APPRESDIR_DEFAULT],
   [if test -z "$groff_no_x"; then
@@ -1510,13 +1510,13 @@ AC_DEFUN([GROFF_APPRESDIR_CHECK],
 
     $appresdir
 
-  (existing files will be saved by appending `.old' to the file
+  (existing files will be saved by appending '.old' to the file
   name).
 
   To install them into a different directory, say,
-  `/etc/X11/app-defaults', add
-  `--with-appresdir=/etc/X11/app-defaults' to the configure script
-  command-line options and rerun it (`prefix' value has no effect on
+  '/etc/X11/app-defaults', add
+  '--with-appresdir=/etc/X11/app-defaults' to the configure script
+  command-line options and rerun it ('prefix' value has no effect on
   a --with-appresdir option).
 
   If the gxditview resources are installed in a directory that is not
@@ -1525,13 +1525,13 @@ AC_DEFUN([GROFF_APPRESDIR_CHECK],
   /usr/share/X11/app-defaults and /etc/X11/app-defaults), you will
   have to set the environment variable XFILESEARCHPATH to this
   path.  More details can be found in the X(7) manual page, or in "X
-  Toolkit Intrinsics - C Language Interface manual"
+  Toolkit Intrinsics - C Language Interface manual".
        ])
      fi
    fi])
 
 
-# Set up the `--with-grofferdir' command-line option.
+# Set up the '--with-grofferdir' command-line option.
 
 AC_DEFUN([GROFF_GROFFERDIR_OPTION],
   [AC_ARG_WITH([grofferdir],
@@ -1612,7 +1612,7 @@ AC_DEFUN([GROFF_DIFF_D],
   AC_MSG_RESULT([$groff_has_diff_d_option])
   AC_SUBST([DIFF_PROG])])
 
-# Check if `test' supports the option -ef.
+# Check if 'test' supports the option -ef.
 AC_DEFUN([GROFF_HAVE_TEST_EF_OPTION],
   [AC_MSG_CHECKING(whether test supports option -ef)
   HAVE_TEST_EF_OPTION=no
@@ -1633,7 +1633,7 @@ AC_DEFUN([GROFF_BASH],
 AC_DEFUN([GROFF_UCHARDET],
   [AC_ARG_WITH([uchardet],
                AS_HELP_STRING([--with-uchardet],
-                              [Build `preconv' with uchardet library for file \
+                              [Build 'preconv' with uchardet library for file \
                                encoding automatic detection [=auto|no|yes]]))
    AS_IF([test "x$with_uchardet" != "xno"],
          [PKG_CHECK_MODULES([UCHARDET],
@@ -1656,9 +1656,9 @@ might not work properly])
 AC_DEFUN([GROFF_UCHARDET_CHECK],
   [if test "x$groff_have_uchardet" = "xno" -a "x$with_uchardet" != "xno"; then
   AC_MSG_WARN([
-  uchardet library was not found, preprocessor `preconv', which uses it to detect
+  uchardet library was not found; preprocessor 'preconv', which uses it to detect
   the input file encoding, might not work properly (to check how and in which
-  order `preconv' tries to determine the file encoding see its man page).
+  order 'preconv' tries to determine the file encoding, see its man page).
   ])
   fi
   ])
