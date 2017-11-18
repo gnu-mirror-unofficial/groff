@@ -1,5 +1,3 @@
-.\" -*- nroff -*-
-.\"
 .\"	@(#)e.tmac	2.31 (Berkeley) 5/21/88
 .\"	Modified by James Clark for use with groff.
 .\"
@@ -8,30 +6,30 @@
 .\"
 .\" Redistribution and use in source and binary forms are permitted
 .\" provided that this notice is preserved and that due credit is given
-.\" to the University of California at Berkeley. The name of the University
-.\" may not be used to endorse or promote products derived from this
-.\" software without specific prior written permission. This software
-.\" is provided ``as is'' without express or implied warranty.
+.\" to the University of California at Berkeley.  The name of the
+.\" University may not be used to endorse or promote products derived
+.\" from this software without specific prior written permission.  This
+.\" software is provided "as is" without express or implied warranty.
 .\"	%beginstrip%
 .\"
-.\"**********************************************************************
-.\"*									*
-.\"*	******  - M E   N R O F F / T R O F F   M A C R O S  ******	*
-.\"*									*
-.\"*	Produced for your edification and enjoyment by:			*
-.\"*		Eric Allman						*
-.\"*		Electronics Research Laboratory				*
-.\"*		U.C. Berkeley.						*
-.\"*	current address:						*
-.\"*		Britton-Lee, Inc.					*
-.\"*		1919 Addison Street Suite 105				*
-.\"*		Berkeley, California  94704				*
-.\"*									*
-.\"*	VERSION 2.31	First Release: 11 Sept 1978			*
-.\"*									*
-.\"*	Documentation is available.					*
-.\"*									*
-.\"**********************************************************************
+.\"**************************************************************
+.\"*								*
+.\"*	****  - M E   N R O F F / T R O F F   M A C R O S  ****	*
+.\"*								*
+.\"*	Produced for your edification and enjoyment by:		*
+.\"*		Eric Allman					*
+.\"*		Electronics Research Laboratory			*
+.\"*		U.C. Berkeley.					*
+.\"*	current address:					*
+.\"*		Britton-Lee, Inc.				*
+.\"*		1919 Addison Street Suite 105			*
+.\"*		Berkeley, California  94704			*
+.\"*								*
+.\"*	VERSION 2.31	First Release: 11 Sept 1978		*
+.\"*								*
+.\"*	Documentation is available.				*
+.\"*								*
+.\"**************************************************************
 .\"
 .\"	Code on .de commands:
 .\"		***	a user interface macro.
@@ -49,7 +47,7 @@
 .do mso devtag.tmac
 .
 .if !\n(.g .ig
-.de @R			\" --- initialize number register to 0, if undefined
+.de @R		\" --- initialize number register to 0, if undefined
 .if !r\\$1 .nr \\$1 0
 ..
 .
@@ -82,7 +80,7 @@
 .if \n(pf .nx
 .
 .if !\n(.g .ig
-.de @S			\" --- initialize string/macro to empty, if undefined
+.de @S		\" --- initialize string/macro to empty, if undefined
 .if !d\\$1 .ds \\$1 \" empty
 ..
 .
@@ -117,7 +115,7 @@
 'ce 0
 ..
 .
-.de @D			\" --- determine display type (Indent, Left, Center)
+.de @D		\" --- determine display type (Indent, Left, Center)
 .ds |p "\\$3
 .nr _d 0
 .if "\\$2"C" \
@@ -230,7 +228,7 @@
 .	ds |7 "\*($*
 ..
 .
-.de ep			\" *** end page (must always be followed by a .bp)
+.de ep			\" *** end page (must be followed by a .bp)
 .if \\n(nl>0 \
 \{\
 .	wh 0
@@ -292,7 +290,8 @@
 .	nr bm \\n(.Vu
 .if (\\n(_w<=\\n($l)&(\\n(?W=0) \
 \{\
-.	nr _b (\\n(ppp*\\n($vu)/200u	\" compute fudge factor (must be < 1P)
+.	\" Compute fudge factor (must be < 1P).
+.	nr _b (\\n(ppp*\\n($vu)/200u
 .	if \\n(_bu>((\\n(bmu-\\n(fmu-((\\n(tpp*\\n($vu)/100u))/2u) \
 .		nr _b (\\n(ppp*\\n($vu)/100u-\n(.Vu
 .	nr _b +\\n(bmu
@@ -300,12 +299,12 @@
 .nr _B \\n(_bu
 .ch @f
 .wh -\\n(_bu @f
-.nr _b +(\\n(ppp*\\n($vu)/100u \" add 1 paragraph v in case of sweep past
+.nr _b +(\\n(ppp*\\n($vu)/100u \" add 1 paragraph v in case sweep past
 .if \n@>2 .tm @n .p=\\n(.p bm=\\n(bm _b=\\n(_b _B=\\n(_B
 .nr ?f 0			\" reset footnote flag
 .if \\n(?o \
 \{\
-.	(f _\"			\" reprocess footnotes which run off page
+.	(f _\"		\" reprocess footnotes which run off page
 .	nf
 .	|o
 .	fi
@@ -347,8 +346,8 @@
 .ec
 .if \\n(?T \
 \{\
-.	nr T. 1			\" for tbl commands (to output bottom line)
-.	T# 1\"			\" output the sides and bottom lines
+.	nr T. 1		\" for tbl commands (to output bottom line)
+.	T# 1\"		\" output the sides and bottom lines
 .	br
 .\}
 .ev 2
@@ -409,7 +408,8 @@
 .if \n@>2 .tm	>> @e
 .@O \\n(_ou
 .rs
-.sp |\\n(.pu-\\n(fmu-((\\n(tpp*\\n($vu)/100u)	\" move to footer position
+.\" Move to footer position.
+.sp |\\n(.pu-\\n(fmu-((\\n(tpp*\\n($vu)/100u)
 .@t $f\"			\" output footer title
 .nr ?h 0
 .bp
@@ -559,7 +559,8 @@
 \{\
 .		ds |i \\$1
 .		ds |j \\$1
-.		do substring |i 0 0  \" pick off leading char and rest to check
+.		\" Pick off leading char and rest to check.
+.		do substring |i 0 0  \"
 .		do substring |j 1    \" for +N / -N
 .		ie `\\*(|i`+` \
 .			nr ln (\\n[_ln])+\\*(|j
@@ -632,7 +633,7 @@
 .
 .
 .if !\n(.g .ig
-.de re			\" *** reset tabs (TROFF defines 15 stops default)
+.de re		\" *** reset tabs (TROFF defines 15 stops default)
 .ta T 0.5i
 ..
 .
@@ -941,7 +942,7 @@
 .rr _0
 .if !\\n(?b \
 .	nr dn +(\\n(ppp*\\n($vu)/200u+\\n(zsu
-.nr dl -\n(.H			\" fudge factor necessary to make it work
+.nr dl -\n(.H		\" fudge factor necessary to make it work
 .ie ((\\n(dn+\n(.V)>=\\n(.t):(\\n(?a):((\\n(dl>\\n($l)&(\\n($c>1)) \
 \{\
 .	nr ?a 1
@@ -1309,7 +1310,7 @@
 .\"
 .\"	PIC
 .\"
-.de PS		\" *** start picture: $1=height, $2=width in units or inches
+.de PS	\" *** start picture: $1=height, $2=width in units or inches
 .sp 0.3
 .do HTML-IMAGE
 .nr g7 \\$2
@@ -1319,9 +1320,9 @@
 .ls 1
 .if \\n(?n \
 \{\
-.	de PS_nm_check &&        \" define macro to emit .nm at top diversion
+.	de PS_nm_check && \" define macro to emit .nm at top diversion
 .	if \n@>4 .tm -- PS: \\\\$1 \\\\$2 .z=\\\\n(.z PS_nm_cnt=\\\\n[PS_nm_cnt]
-.	\"                       \" multiple .PS/.PE in a keep.
+.	\" Multiple .PS/.PE in a keep.
 .	if `\\\\$2`init` \
 .		do nr PS_nm_cnt \\\\n[PS_nm_cnt]+1
 .	ie `\\\\n(.z`` \
@@ -1341,7 +1342,7 @@
 .\}
 .el \!.PS_nm_check \\\\$1
 .&&
-.	mk _q                    \" emit a single numbered line for PS picture
+.	mk _q		\" emit a single numbered line for PS picture
 .	rs
 \&\ 
 .	br
@@ -1415,7 +1416,7 @@
 .if (1i>=240u)&(1p<=\\n($R)&(\\n($R<=4p) .nr $V \\n($R00/1p
 ..
 .
-.de @E			\" --- store in _F argument to \f for restoring font
+.de @E		\" --- store in _F argument to \f for restoring font
 .ie \\n(.f<10 \
 .	ds _F \\n(.f
 .el \
@@ -1529,7 +1530,7 @@
 .		if !\\n(?f \
 .			rm |f
 .		da |f
-.\" next five lines could be dropped if headers had their own environment
+.\" Next 5 lines could be dropped if headers had their own environment.
 .		in 0		\" reset everything from .bc
 .		xl \\n($lu-\\n(fuu
 .		@F \\n(ff
@@ -1562,7 +1563,7 @@
 .\}
 ..
 .
-.de @N			\" --- set no fill mode in the top-level diversion
+.de @N		\" --- set no fill mode in the top-level diversion
 .ie "\\n(.z"" .nf
 .el \!.@N
 ..
@@ -1828,7 +1829,7 @@
 .	pn 1			\" must do before .ep
 .if !\\n(_0=\\n(_M .if \\n(_M=3 \
 .	pn 1			\" must do before .ep
-.ep\"				\" end page for correct page number types
+.ep\"			\" end page for correct page number types
 .if \\n(_0=1 \
 \{\
 .	af ch 1
@@ -1910,7 +1911,7 @@
 .
 .
 .rr x
-.nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as percentage of ps for .sz request
+.nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
 .nr $V \n($v			\" same for displays & footnotes
 .nr hm 4v			\" header margin
 .nr tm 7v			\" top margin
@@ -1937,7 +1938,8 @@
 .\"		*** OTHER INITIALIZATION ***
 .
 .
-.\" GNU pic sets this register to 1, to indicate that \x should not be used.
+.\" GNU pic sets this register to 1 to indicate that \x should not be
+.\" used.
 .@R 0x
 .ds { \v'-0.4m'\x'\\n(0x=0*-0.2m'\s-3
 .ds } \s+3\v'0.4m'
@@ -1966,30 +1968,30 @@
 .@S $9
 .@S ..
 .
-.@R po\"			\" simulated page offset
-.@R $0\"			\" section depth
-.@R $i\"			\" paragraph base indent
-.@R $p\"			\" numbered paragraph number
-.@R $r\"			\" ratio of vs to ps (may override $v)
-.@R $R\"			\" same for displays (may override $V)
-.@R df\"			\" display font: same as surrounding text
-.@R so\"			\" additional section title offset
-.@R fu\"			\" footnote undent
-.@R bt\"			\" block keep threshold
-.@R *\"				\" has \** been referenced?
-.@R ?a\"			\" pending floating keep at page top?
-.@R ?b\"			\" pending floating keep at page bottom?
-.@R ?C\"			\" at chapter header?
-.@R ?e\"			\" in equation?
-.@R ?H\"			\" suppress headers and footers next page?
-.@R ?I\"			\" has the header trap been sprung?
-.@R ?n\"			\" n1 mode?
-.@R ?o\"			\" footnote overflow?
-.@R ?R\"			\" renumbered chapter?
-.@R ?s\"			\" skip next page?
-.@R ?T\"			\" inside .TS H?
-.@R ?W\"			\" wide floating keep at page bottom?
-.@R ?w\"			\" wide floating keep at page top?
+.@R po\"		\" simulated page offset
+.@R $0\"		\" section depth
+.@R $i\"		\" paragraph base indent
+.@R $p\"		\" numbered paragraph number
+.@R $r\"		\" ratio of vs to ps (may override $v)
+.@R $R\"		\" same for displays (may override $V)
+.@R df\"		\" display font: same as surrounding text
+.@R so\"		\" additional section title offset
+.@R fu\"		\" footnote undent
+.@R bt\"		\" block keep threshold
+.@R *\"			\" has \** been referenced?
+.@R ?a\"		\" pending floating keep at page top?
+.@R ?b\"		\" pending floating keep at page bottom?
+.@R ?C\"		\" at chapter header?
+.@R ?e\"		\" in equation?
+.@R ?H\"		\" suppress headers and footers next page?
+.@R ?I\"		\" has the header trap been sprung?
+.@R ?n\"		\" n1 mode?
+.@R ?o\"		\" footnote overflow?
+.@R ?R\"		\" renumbered chapter?
+.@R ?s\"		\" skip next page?
+.@R ?T\"		\" inside .TS H?
+.@R ?W\"		\" wide floating keep at page bottom?
+.@R ?w\"		\" wide floating keep at page top?
 .
 .nr fi 0.3i
 .nr _o \n(.o
@@ -2065,4 +2067,12 @@
 .@U ac
 ..
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=nroff textwidth=72:

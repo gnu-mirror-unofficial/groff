@@ -9,11 +9,11 @@
 #
 # groff is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
-# Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -155,34 +155,40 @@ tmac/www.tmac: tmac/www.tmac.in
 	sed -e "s;[@]PNMTOPS_NOSETPAGE[@];$(pnmtops_nosetpage);g" \
 	  $(tmac_srcdir)/www.tmac.in > $(top_builddir)/tmac/www.tmac
 
-# The installation of groff compatibility wrappers for vendor-provided non-GNU
-# macro sets is controlled by `compatibility_wrappers' (see the commentary
-# surrounding m4/groff.m4's GROFF_WITH_COMPATIBILITY_WRAPPERS).  Collision
-# detection variables of the form `tmac_<macro>_prefix' are defined in
-# Makefile.am, to assist in the installation of groff-provided macro sets.
+# The installation of groff compatibility wrappers for vendor-provided
+# non-GNU macro sets is controlled by 'compatibility_wrappers' (see the
+# commentary surrounding m4/groff.m4's
+# GROFF_WITH_COMPATIBILITY_WRAPPERS).  Collision detection variables of
+# the form 'tmac_<macro>_prefix' are defined in Makefile.am, to assist
+# in the installation of groff-provided macro sets.
 #
-# When `compatibility_wrappers' is `no', one step is performed:
+# When 'compatibility_wrappers' is 'no', one step is performed:
 #   - the groff-provided macro set implementations are installed in
-#     <prefix>/share/groff/<version>/tmac/ with the original macro set name
+#     <prefix>/share/groff/<version>/tmac/ with the original macro set
+#     name
 #
-# When `compatibility_wrappers' is `yes', two steps are performed:
+# When 'compatibility_wrappers' is 'yes', two steps are performed:
 #   - the groff-provided macro set implementations are installed in
-#     <prefix>/share/groff/<version>/tmac/ with a prefix of $(tmac_prefix)
-#     (which is usually `g', via the appropriate collision detection variable)
+#     <prefix>/share/groff/<version>/tmac/ with a prefix of
+#     $(tmac_prefix) (which is usually 'g', via the appropriate
+#     collision detection variable)
 #   - the generated compatibility wrappers are installed in
 #     <prefix>/lib/groff/site-tmac, with the original macro set name
 #
-# When `compatibility_wrappers' is `manual', two steps are performed:
+# When 'compatibility_wrappers' is 'manual', two steps are performed:
 #   - the groff-provided macro set implementations are installed in
-#     <prefix>/share/groff/<version>/tmac/ with the original macro set name
+#     <prefix>/share/groff/<version>/tmac/ with the original macro set
+#     name
 #   - the generated compatibility wrappers are installed in
-#     <prefix>/lib/groff/site-tmac, with a name of <macro><wrapper_suffix>,
-#     (which is usually `-os', see `wrapper_suffix_default' in Makefile.am)
+#     <prefix>/lib/groff/site-tmac, with a name of
+#     <macro><wrapper_suffix>, (which is usually '-os', see
+#     'wrapper_suffix_default' in Makefile.am)
 
 
 all: tmac/stamp-wrap
 
-# Generate groff compatibility wrappers for all non-GNU OS provided macro sets
+# Generate groff compatibility wrappers for all non-GNU OS provided
+# macro sets.
 tmac/stamp-wrap:
 	$(MKDIR_P) $(top_builddir)/tmac;
 	if test -n "$(tmac_wrap)"; then \
@@ -197,7 +203,8 @@ tmac/stamp-wrap:
 	fi
 	touch $@
 
-# Install groff compatibility wrappers into <prefix>/lib/groff/site-tmac
+# Install groff compatibility wrappers into
+# <prefix>/lib/groff/site-tmac.
 install-data-local: install_tmac_wrap
 install_tmac_wrap:
 	$(MKDIR_P) $(DESTDIR)$(systemtmacdir);
@@ -210,7 +217,8 @@ install_tmac_wrap:
 	  fi; \
 	fi
 
-# Rename the groff implementations of colliding macro sets to have a prefix
+# Rename the groff implementations of colliding macro sets to have a
+# prefix.
 install-data-hook: install_tmac_wrap_hook
 install_tmac_wrap_hook:
 	if test "$(compatibility_wrappers)" = "yes"; then \
@@ -229,7 +237,7 @@ install_tmac_wrap_hook:
 	fi
 
 # Uninstall groff compatibility wrappers & renamed groff implementation
-# macro sets
+# macro sets.
 uninstall_groffdirs: uninstall_tmac_hook
 uninstall_tmac_hook:
 	if test -n "$(tmac_wrap)"; then \
@@ -253,7 +261,11 @@ uninstall_tmac_hook:
 
 
 ########################################################################
-### Emacs settings
+# Editor settings
+########################################################################
+#
 # Local Variables:
 # mode: makefile-automake
+# fill-column: 72
 # End:
+# vim: set filetype=automake textwidth=72:

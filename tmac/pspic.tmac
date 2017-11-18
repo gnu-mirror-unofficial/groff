@@ -1,11 +1,9 @@
-.\" -*- nroff -*-
-.\"
 .\" pspic.tmac
 .\"
 .\" Define the PSPIC macro.
 .\"
-.\" When used other than with -Tps, -Tdvi, -Thtml, or -Txhtml it draws a box
-.\" around where the picture would go.
+.\" When used other than with -Tps, -Tdvi, -Thtml, or -Txhtml it draws a
+.\" box around where the picture would go.
 .\"
 .\" Usage:
 .\"
@@ -119,10 +117,11 @@
 .    \}
 .    el \{\
 .      ie '\*[.T]'ps' \{\
-.        \" prepare values for grops; the `ps-invis' and `ps-endinvis' escapes
-.        \" are for groff's -X switch to provide a PS preview with xditview:
-.        \" it uses -Tps for formatting but xditview can't handle EPS files,
-.        \" thus alternative code is enclosed between those two escapes
+.        \" prepare values for grops; the 'ps-invis' and 'ps-endinvis'
+.        \" escapes are for groff's -X switch to provide a PS preview
+.        \" with xditview: it uses -Tps for formatting but xditview
+.        \" can't handle EPS files, thus alternative code is enclosed
+.        \" between those two escapes
 .        ds ps-invis \X'ps: invis'
 .        ds ps-endinvis \X'ps: endinvis'
 .        ds ps-import \X'ps: import \E$1 \En[llx] \En[lly] \En[urx] \En[ury] \
@@ -146,7 +145,8 @@
 \Z'\D'p 0 \\n[ps-desht]u \
         (\\n[ps-deswid]u - \\n[.H]u) 0 \
         0 -\\n[ps-desht]u''\
-\# for convenience we also display the image file name (centered vertically);
+\# for convenience we also display the image file name (centered
+\# vertically);
 \Z'\v'((\\n[ps-desht]u / 2u) \
        + (\w'\\$1'u * 0) \
        + ((\\n[rst]u + \\n[rsb]u) / 2u))'\h'1m'\\$1'\
@@ -163,4 +163,12 @@
 .
 .cp \n[_C]
 .
-.\" end of pspic.tmac
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

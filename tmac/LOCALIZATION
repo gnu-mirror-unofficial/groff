@@ -10,24 +10,24 @@ The localization process involves two files.
   - A locale independent file (trans.tmac) responsible for activating those
     localized strings.
 
-All you have to do is to create a new file named `LL.tmac' where `LL' is
-your country code (`de' for Germany, `el' for Greece, ...), maybe using
-`fr.tmac' as a template.
+All you have to do is to create a new file named 'LL.tmac' where 'LL' is
+your country code ('de' for Germany, 'el' for Greece, ...), maybe using
+'fr.tmac' as a template.
 
-The first thing to do is to redefine the string `locale' to your language.
+The first thing to do is to redefine the string 'locale' to your language.
 
   .ds locale german\"
 
 Then change all the translations in the predefined strings.  Don't forget
 the \" at the end of each string, preventing spaces from lurking around.
 
-After `trans.tmac' has been called by
+After 'trans.tmac' has been called by
 
   .mso trans.tmac
 
 you must redefine the date strings in order to use the day and month names
 translated earlier.  If you don't feel comfortable with groff maybe you
-should use the definitions used in `fr.tmac'.  Nevertheless, you should take
+should use the definitions used in 'fr.tmac'.  Nevertheless, you should take
 care of the order of the date elements.
 
   - If your date format is MM/DD/YY:
@@ -44,11 +44,11 @@ care of the order of the date elements.
 
 Other date formats can be handled similarly.
 
-NOTE: For the mm package, in the `ISODATE' macro, only the first definition
-      of `cov*new-date' must be changed (see `fr.tmac').
+NOTE: For the mm package, in the 'ISODATE' macro, only the first definition
+      of 'cov*new-date' must be changed (see 'fr.tmac').
 
 Finally, change groff behaviour in order to comply with your locale.  For
-example, `fr.tmac' changes the default encoding, sets the sentence spaces,
+example, 'fr.tmac' changes the default encoding, sets the sentence spaces,
 and final activates hyphenation, provided there are hyphenation patterns
-available (which should be put into files named `hyphen.LL' for
+available (which should be put into files named 'hyphen.LL' for
 consistency).

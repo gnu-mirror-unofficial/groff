@@ -1,7 +1,5 @@
-.\" -*- nroff -*-
-.\"
 .\" Copyright (c) 1991, 1993
-.\"	The Regents of the University of California.  All rights reserved.
+.\"   The Regents of the University of California.  All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -9,24 +7,26 @@
 .\" 1. Redistributions of source code must retain the above copyright
 .\"    notice, this list of conditions and the following disclaimer.
 .\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\"    notice, this list of conditions and the following disclaimer in
+.\"    the documentation and/or other materials provided with the
+.\"    distribution.
 .\" 3. [Deleted.  See
 .\"     ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change]
-.\" 4. Neither the name of the University nor the names of its contributors
-.\"    may be used to endorse or promote products derived from this software
-.\"    without specific prior written permission.
+.\" 4. Neither the name of the University nor the names of its
+.\"    contributors may be used to endorse or promote products derived
+.\"    from this software without specific prior written permission.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS"
+.\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+.\" TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+.\" PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR
+.\" CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+.\" SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+.\" LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+.\" USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+.\" ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+.\" OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+.\" OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)doc-common	8.1 (Berkeley) 06/08/93
@@ -34,8 +34,8 @@
 .\"     %beginstrip%
 .
 .
-.\" Macro Identifiers.  For each user macro a corresponding register with
-.\" the same name must exist.  Its value must not be zero.
+.\" Macro Identifiers.  For each user macro a corresponding register
+.\" with the same name must exist.  Its value must not be zero.
 .
 .nr %A 1
 .nr %B 1
@@ -154,7 +154,7 @@
 .nr Xr 10n
 .
 .
-.\" macros which must be processed after the closing delimiter of `Op'
+.\" macros which must be processed after the closing delimiter of 'Op'
 .\" and friends
 .ds doc-after-Ao
 .ds doc-after-Bo
@@ -230,7 +230,7 @@
 .\" NS   doc-volume-as-XXX
 .\" NS   doc-volume-ds-XXX
 .\" NS
-.\" NS width register `Dt' set above
+.\" NS width register 'Dt' set above
 .
 .\" an alternative, more detailed scheme for naming the manual sections
 .\"
@@ -400,7 +400,7 @@
 .\" NS doc-default-operating-system global string
 .\" NS   the exact (default) version of the operating system
 .\" NS
-.\" NS override this in `mdoc.local', if necessary
+.\" NS override this in 'mdoc.local', if necessary
 .
 .ds doc-default-operating-system BSD
 .
@@ -421,7 +421,7 @@
 .\" NS local variables:
 .\" NS   doc-operating-system-XXX-XXX
 .\" NS
-.\" NS width register `Os' set above
+.\" NS width register 'Os' set above
 .
 .ds doc-operating-system-ATT-7   7th\~Edition
 .als doc-operating-system-ATT-7th doc-operating-system-ATT-7
@@ -766,7 +766,7 @@
 .
 .
 .\" NS doc-date-string global string
-.\" NS   the manual page date as set by `Dd'
+.\" NS   the manual page date as set by 'Dd'
 .
 .ds doc-date-string
 .
@@ -781,7 +781,7 @@
 .\" NS local variables:
 .\" NS   doc-date-XXX
 .\" NS
-.\" NS width register `Dd' set above
+.\" NS width register 'Dd' set above
 .
 .ds doc-date-1  January
 .ds doc-date-2  February
@@ -815,9 +815,9 @@
 .
 .
 .\" NS doc-hyphen-flags global register
-.\" NS   the parameter for the `.hy' request
+.\" NS   the parameter for the '.hy' request
 .\" NS
-.\" NS override this in `mdoc.local', if necessary.
+.\" NS override this in 'mdoc.local', if necessary.
 .
 .nr doc-hyphen-flags 12
 .
@@ -900,13 +900,13 @@
 .\" NS   finish output
 .
 .de doc-end-macro
-.  \" We may still have a partial line in the environment.  If this is the
-.  \" case, and we happen to be on the last line of the page, the `.fl'
-.  \" request will cause the page to be ejected and troff will immediately
-.  \" exit.  If we are in nroff mode, this would be unfortunate, since we
-.  \" would never get a chance to output the footer.  So we fudge the page
-.  \" length to make sure that the last page is never ejected until we want
-.  \" it to be.
+.  \" We may still have a partial line in the environment.  If this is
+.  \" the case, and we happen to be on the last line of the page, the
+.  \" '.fl' request will cause the page to be ejected and troff will
+.  \" immediately exit.  If we are in nroff mode, this would be
+.  \" unfortunate, since we would never get a chance to output the
+.  \" footer.  So we fudge the page length to make sure that the last
+.  \" page is never ejected until we want it to be.
 .
 .  if \n[cR] \
 .    pl +3v
@@ -937,7 +937,7 @@
 .\" NS Pp user macro (not parsed, not callable)
 .\" NS   new paragraph
 .\" NS
-.\" NS width register `Pp' set above
+.\" NS width register 'Pp' set above
 .
 .als Pp doc-paragraph
 .
@@ -945,7 +945,7 @@
 .\" NS Lp user macro (not parsed, not callable)
 .\" NS   same as .Pp
 .\" NS
-.\" NS width register `Lp' set above
+.\" NS width register 'Lp' set above
 .
 .als Lp doc-paragraph
 .
@@ -973,7 +973,7 @@
 .\" NS Nd user macro (not parsed, not callable)
 .\" NS   print name description
 .\" NS
-.\" NS width register `Nd' set above
+.\" NS width register 'Nd' set above
 .
 .de Nd
 .  nop \[em] \$*
@@ -981,31 +981,31 @@
 .
 .
 .\" NS doc-in-synopsis-section global register (bool)
-.\" NS   whether we are in the `synopsis' section
+.\" NS   whether we are in the 'synopsis' section
 .
 .nr doc-in-synopsis-section 0
 .
 .
 .\" NS doc-in-library-section global register (bool)
-.\" NS   whether we are in the `library' section
+.\" NS   whether we are in the 'library' section
 .
 .nr doc-in-library-section 0
 .
 .
 .\" NS doc-in-see-also-section global register (bool)
-.\" NS   whether we are in the `see also' section
+.\" NS   whether we are in the 'see also' section
 .
 .nr doc-in-see-also-section 0
 .
 .
 .\" NS doc-in-files-section global register (bool)
-.\" NS   whether we are in the `files' section
+.\" NS   whether we are in the 'files' section
 .
 .nr doc-in-files-section 0
 .
 .
 .\" NS doc-in-authors-section global register (bool)
-.\" NS   whether we are in the `authors' section
+.\" NS   whether we are in the 'authors' section
 .
 .nr doc-in-authors-section 0
 .
@@ -1042,7 +1042,7 @@
 .\" NS   doc-reg-Sh1
 .\" NS   doc-section-XXX
 .\" NS
-.\" NS width register `Sh' set in doc-common
+.\" NS width register 'Sh' set in doc-common
 .
 .ds doc-section-name        NAME
 .ds doc-section-synopsis    SYNOPSIS
@@ -1054,8 +1054,8 @@
 .
 .de Sh
 .  ie \n[doc-arg-limit] \{\
-.    \" we only allow `Sh' within `Sh'; it will change the font back to
-.    \" `doc-Sh-font'
+.    \" we only allow 'Sh' within 'Sh'; it will change the font back to
+.    \" 'doc-Sh-font'
 .    ie "\*[doc-macro-name]"Sh" \{\
 .      nr doc-arg-ptr +1
 .      ie (\n[doc-arg-limit] >= \n[doc-arg-ptr]) \{\
@@ -1084,7 +1084,7 @@
 .    if t \
 .      ad
 .
-.    \" this resolves e.g. `.Sh "SEE ALSO"'
+.    \" this resolves e.g. '.Sh "SEE ALSO"'
 .    doc-first-parameter \$*
 .
 .    ie "\*[doc-str-dfp]"\*[doc-section-name]" \{\
@@ -1167,12 +1167,12 @@
 .\" NS   doc-reg-Ss
 .\" NS   doc-reg-Ss1
 .\" NS
-.\" NS width register `Ss' set above
+.\" NS width register 'Ss' set above
 .
 .de Ss
 .  ie \n[doc-arg-limit] \{\
-.    \" we only allow `Ss' within `Ss'; it will change the font back to
-.    \" `doc-Sh-font'
+.    \" we only allow 'Ss' within 'Ss'; it will change the font back to
+.    \" 'doc-Sh-font'
 .    ie "\*[doc-macro-name]"Ss" \{\
 .      nr doc-arg-ptr +1
 .      ie (\n[doc-arg-limit] >= \n[doc-arg-ptr]) \{\
@@ -1373,4 +1373,12 @@
 .
 .ec
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

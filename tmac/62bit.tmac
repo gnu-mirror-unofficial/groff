@@ -1,33 +1,33 @@
-.\" -*- nroff -*-
-.\"
 .\" 62bit.tmac
 .\"
-.\" Copyright (C) 2003-2014  Free Software Foundation, Inc.
+.\" Copyright (C) 2003-2014 Free Software Foundation, Inc.
 .\"      Written by Werner Lemberg (wl@gnu.org)
 .\"
 .\" This file is part of groff.
 .\"
-.\" groff is free software; you can redistribute it and/or modify it under
-.\" the terms of the GNU General Public License as published by the Free
-.\" Software Foundation, either version 3 of the License, or
+.\" groff is free software; you can redistribute it and/or modify it
+.\" under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
 .\" (at your option) any later version.
 .\"
-.\" groff is distributed in the hope that it will be useful, but WITHOUT ANY
-.\" WARRANTY; without even the implied warranty of MERCHANTABILITY or
-.\" FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-.\" for more details.
+.\" groff is distributed in the hope that it will be useful, but WITHOUT
+.\" ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+.\" or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+.\" License for more details.
 .\"
 .\" You should have received a copy of the GNU General Public License
-.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\" along with this program.  If not, see
+.\" <http://www.gnu.org/licenses/>.
 .\"
 .\"
+.\" This file provides macros for addition, multiplication, and division
+.\" of 62-bit signed integers.  Its main application is to 'scale'
+.\" 31-bit values--namely, to perform the operation 'a * b / c'
+.\" accurately.
 .\"
-.\" This file provides macros for addition, multiplication, and division of
-.\" 62-bit signed integers.  Its main application is to `scale' 31-bit
-.\" values, namely, to perform the operation `a * b / c' accurately.
-.\"
-.\" Note that it is the duty of the user to check whether the input values
-.\" fit within 31 bits (this is the range [-1073741824,1073741823]).
+.\" Note that it is the duty of the user to check whether the input
+.\" values fit within 31 bits (this is the range
+.\" [-1073741824,1073741823]).
 .\"
 .
 .if d add31to62 \
@@ -190,4 +190,12 @@
 .  nr \\$3 \\n[62bit-3]
 ..
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

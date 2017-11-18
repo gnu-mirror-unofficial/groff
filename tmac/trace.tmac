@@ -1,47 +1,45 @@
-.\" -*- nroff -*-
-.\"
 .\" trace.tmac
 .\"
 .\" Load this before a macro package that you want to trace.
 .\"
 .\"
-.\" Copyright (C) 1989-2014  Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2014 Free Software Foundation, Inc.
 .\"      Written by James Clark (jjc@jclark.com)
 .\"
 .\" This file is part of groff.
 .\"
-.\" groff is free software; you can redistribute it and/or modify it under
-.\" the terms of the GNU General Public License as published by the Free
-.\" Software Foundation, either version 3 of the License, or
+.\" groff is free software; you can redistribute it and/or modify it
+.\" under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
 .\" (at your option) any later version.
 .\"
-.\" groff is distributed in the hope that it will be useful, but WITHOUT ANY
-.\" WARRANTY; without even the implied warranty of MERCHANTABILITY or
-.\" FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-.\" for more details.
+.\" groff is distributed in the hope that it will be useful, but WITHOUT
+.\" ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+.\" or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+.\" License for more details.
 .\"
 .\" You should have received a copy of the GNU General Public License
-.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\" along with this program.  If not, see
+.\" <http://www.gnu.org/licenses/>.
 .\"
 .
 .
 .\" Tracing within groff means replacing the original macros or requests
-.\" with special versions which act as wrappers to emit tracing information.
-.\" A natural consequence of creating such wrappers is that arguments must
-.\" be expanded once more.  In most cases it doesn't matter, however,
-.\" sometimes it makes a difference.
+.\" with special versions which act as wrappers to emit tracing
+.\" information.  A natural consequence of creating such wrappers is
+.\" that arguments must be expanded once more.  In most cases it doesn't
+.\" matter, however, sometimes it makes a difference.
 .\"
 .\" To limit side effects, only macros are traced by default, together
-.\" with some requests like `.return' which don't take (user) arguments.
+.\" with some requests like '.return' which don't take (user) arguments.
 .\" If you want more tracing, especially of number and string register
-.\" assignments, add the `-r trace-full=1' command-line option.
+.\" assignments, add the '-r trace-full=1' command-line option.
 .
 .
-.\" Regarding the usage of `.do': All lines of macros which should
-.\" work in compatibility mode must be protected if they contain
-.\" GNU troff extensions and are defined with `.de'.  Example: `.ds',
-.\" but not `.ds1', since the latter can't be called in compatibility
-.\" mode.
+.\" Regarding the usage of '.do': All lines of macros which should work
+.\" in compatibility mode must be protected if they contain GNU troff
+.\" extensions and are defined with '.de'.  Example: '.ds', but not
+.\" '.ds1', since the latter can't be called in compatibility mode.
 .
 .
 .do if d !!!sp \
@@ -143,9 +141,9 @@
 .    do ecr
 .  .
 .
-.  !!c We must use `.de' for the redefinition of .mso to avoid
+.  !!c We must use '.de' for the redefinition of .mso to avoid
 .  !!c side effects; for example, it might be called with
-.  !!c `.do mso ...'.
+.  !!c '.do mso ...'.
 .
 .  rn mso !!mso
 .
@@ -210,15 +208,15 @@
 .  do ecr
 ..
 .
-.!!c Now the central tracing macros.  The redefined `de' macros
-.!!c create wrapper macros `foo' which emit tracing messages
-.!!c before and after the call to the traced macro `!!foo'.
+.!!c Now the central tracing macros.  The redefined 'de' macros
+.!!c create wrapper macros 'foo' which emit tracing messages
+.!!c before and after the call to the traced macro '!!foo'.
 .!!c
-.!!c Note that we define `!!foo' in advance so that an alias to
-.!!c `!!!!foo' is possible.  The latter occurs if `foo' is
+.!!c Note that we define '!!foo' in advance so that an alias to
+.!!c '!!!!foo' is possible.  The latter occurs if 'foo' is
 .!!c called as \\[foo].
 .!!c
-.!!c The call to `dei' must be the last instruction in the macro
+.!!c The call to 'dei' must be the last instruction in the macro
 .!!c (since it continues the definition of the macro to trace).
 .
 .!!rn de !!de
@@ -340,4 +338,12 @@
 .
 .cp \n(_C
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

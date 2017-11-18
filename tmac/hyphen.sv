@@ -1,12 +1,14 @@
-% --------------------------------------------------------------------------
-% Swedish hyphenation patterns. 
+% ----------------------------------------------------------------------
+% Swedish hyphenation patterns.
 %
 % Copyright 1994 by Jan Michael Rynning. All rights reserved.
-% This program may be distributed and/or modified under the conditions of
-% the LaTeX Project Public License, either version 1.2 of this license or
-% (at your option) any later version.  The latest version of this license
-% is in http://www.latex-project.org/lppl.txt and version 1.2 or later is
-% part of all distributions of LaTeX version 1999/12/01 or later.
+%
+% This program may be distributed and/or modified under the conditions
+% of the LaTeX Project Public License, either version 1.2 of this
+% license or (at your option) any later version.  The latest version of
+% this license is in http://www.latex-project.org/lppl.txt and version
+% 1.2 or later is part of all distributions of LaTeX version 1999/12/01
+% or later.
 %
 % Last update: 1994-03-03 (March 3, 1994).
 % Revision history:
@@ -24,10 +26,11 @@
 % 1991-11-13: Added another some 6500 compound words, all of which were
 %             incorrectly hyphenated by the old patterns.
 % 1992-01-30: Changed macros to ^^, for use with LaTeX and dc fonts.
-% 1994-03-03: The hyphenated dictionary now contains about 118,000 words.
-%             The hyphenation now works much better for compound words.
-%             Patgen parameters: 1 2 20, 2 1 8, 1 4 7, 3 2 1, 1 10000 4.
-%             
+% 1994-03-03: The hyphenated dictionary now contains about 118,000
+%             words.  The hyphenation now works much better for compound
+%             words.  Patgen parameters: 1 2 20, 2 1 8, 1 4 7, 3 2 1, 1
+%             10000 4.
+%
 % This file contains Swedish hyphenation patterns for TeX.  It assumes
 % that you have fonts with the Swedish letters in the positions where
 % they occur in ISO Latin 1 (ISO 8859/1):
@@ -41,13 +44,13 @@
 % correctly if \lefthyphenmin>=1 and \righthyphenmin>=2.
 %
 % These hyphenation patterns work quite well for simple words, but not
-% quite as well for compound words.  I'm working on improving the quality,
-% by adding more words.  If you know any Swedish words which are not
-% correctly hypheneted using these patterns, or if you have questions or
-% comments, please contact me:
+% quite as well for compound words.  I'm working on improving the
+% quality, by adding more words.  If you know any Swedish words which
+% are not correctly hypheneted using these patterns, or if you have
+% questions or comments, please contact me:
 %
 % Jan Michael Rynning <jmr@incolumitas.se>
-% --------------------------------------------------------------------------
+% ----------------------------------------------------------------------
 \message{Swedish hyphenation patterns, Jan Michael Rynning, 1994-03-03.}
 {
 % Set \catcode, \uccode, and \lccode for the Swedish letters.
@@ -4755,3 +4758,12 @@ z4zin
 }
 }
 
+% ======================================================================
+% Editor settings
+% ======================================================================
+%
+% Local Variables:
+% mode: tex
+% fill-column: 72
+% End:
+% vim: set filetype=tex textwidth=72:

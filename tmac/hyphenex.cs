@@ -10,7 +10,13 @@
   úhlo-pøíè-ky
 }
 
-%%% Local Variables:
-%%% mode: tex
-%%% coding: latin-2
-%%% End:
+% ======================================================================
+% Editor settings
+% ======================================================================
+%
+% Local Variables:
+% mode: tex
+% coding: latin-2
+% fill-column: 72
+% End:
+% vim: set filetype=tex textwidth=72:

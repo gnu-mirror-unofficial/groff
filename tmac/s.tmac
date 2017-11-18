@@ -1,9 +1,8 @@
-.\" -*- nroff -*-
 .ig
 
 s.tmac
 
-Copyright (C) 1989-2014  Free Software Foundation, Inc.
+Copyright (C) 1989-2014 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -132,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .als AI cov*err-not-before-tl
 .als AB cov*err-not-before-tl
 .de cov*first-page-init
-.\" Invoked by `.wh 0' trap on first page.
+.\" Invoked by '.wh 0' trap on first page.
 .\" We should not come here again, but at short page length,
 .\" recursion may occur; remove trap and macro to avoid it.
 .ch cov*first-page-init
@@ -367,8 +366,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .als FS @FS
 .als FE @FE
 .CHECK-FOOTER-AND-KEEP
-.\" If anything was printed below where the footer line is normally printed,
-.\" then that's an overflow.
+.\" If anything was printed below where the footer line is normally
+.\" printed, then that's an overflow.
 .if -\\n[FM]/2+1v+\\n[cov*page-length]<\\n[nl] .@error cover sheet overflow
 .pl \\n[cov*page-length]u
 .bp 1
@@ -576,7 +575,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .de pg*end-page
 .po \\n[PO]u
-.\" Make sure we don't exit if there are still floats or footnotes left-over.
+.\" Make sure we don't exit if there are still floats or footnotes
+.\" left-over.
 .ie \\n[kp@head]<\\n[kp@tail]:\\n[fn@have-overflow] \{\
 .	\" Switching environments ensures that we don't get an unnecessary
 .	\" blank line at the top of the page.
@@ -585,7 +585,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	ev
 .\}
 .el \{\
-.	\" If the text has ended and there are no more footnotes or keeps, exit.
+.	\" If the text has ended and there are no more footnotes or
+.	\" keeps, exit.
 .	if \\n[pg@text-ended] .ex
 .	if r pg*next-number \{\
 .		pn \\n[pg*next-number]
@@ -619,8 +620,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de pg@super-eject
 .br
 .if !'\\n(.z'' .@error-recover diversion open while ejecting page
-.\" Make sure we stay in the end macro while there is still footnote overflow
-.\" left, or floating keeps.
+.\" Make sure we stay in the end macro while there is still footnote
+.\" overflow left, or floating keeps.
 .while \\n[kp@tail]>\\n[kp@head]:\\n[pg@fn-flag] \{\
 .	rs
 .	bp
@@ -656,7 +657,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	el .fn*do-FS
 .\}
 ..
-.\" Second argument of `no' means don't embellish the first argument.
+.\" Second argument of 'no' means don't embellish the first argument.
 .de fn*do-FS
 .if \\n[fn*open] .@error-recover nested FS
 .nr fn*open 1
@@ -796,7 +797,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 .el \!.fn*embed-end
 ..
-.\" It's important that fn@print-sep use up exactly fn@sep-dist vertical space.
+.\" It's important that fn@print-sep use up exactly fn@sep-dist vertical
+.\" space.
 .de fn@print-sep
 .ev fn
 .in 0
@@ -878,8 +880,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 ..
 .de kp*do-top
-.\" If the first keep won't fit, only force it out if we haven't had a footnote
-.\" and we're at the top of the page.
+.\" If the first keep won't fit, only force it out if we haven't had a
+.\" footnote and we're at the top of the page.
 .nr kp*force \\n[pg@fn-flag]=0&(\\n[nl]<=\\n[pg@header-bottom])
 .nr kp*fits 1
 .while \\n[kp@tail]>\\n[kp@head]&\\n[kp*fits] \{\
@@ -1333,8 +1335,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .B2
 ..
 .\" end boxed text
-.\" Postpone the drawing of the box until we're in the top-level diversion,
-.\" in case there's a footnote inside the box.
+.\" Postpone the drawing of the box until we're in the top-level
+.\" diversion, in case there's a footnote inside the box.
 .de B2
 .ie '\\n(.z'par*box-div' \{\
 .	br
@@ -1393,20 +1395,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .if !rHORPHANS .nr HORPHANS 1
 .
 .\" \n[GROWPS] and \n[PSINCR] cause auto-increment of header point size.
-.\" Initialise them, so they have no effect, unless explicitly set by the user.
+.\" Initialise them, so they have no effect, unless explicitly set by
+.\" the user.
 .if !rGROWPS .nr GROWPS 0
 .if !rPSINCR .nr PSINCR 1p
 .
 .de SH-NO-TAG
 .par@finish
-.\" Keep the heading and the first few lines of the next paragraph together.
-.\" (\n[HORPHANS] defines "first few" -- default = 1; user may redefine it).
+.\" Keep the heading and the first few lines of the next paragraph
+.\" together.  (\n[HORPHANS] defines "first few" -- default = 1; user
+.\" may redefine it).
 .nr sh*minvs \\n[HORPHANS]v
 .if \\n[sh*psincr]<0 .nr sh*psincr 0
 .ie \\n(VS<1000 .par*vs \\n(VSp+\\n[sh*psincr]u
 .el .par*vs \\n(VSp/1000u+\\n[sh*psincr]u
 .ne 2v+\\n[sh*minvs]u+\\n[\\n[.ev]:PD]u+\\n(.Vu
-.\" Adjust point size for heading text, as specified by \n[GROWPS] and \n[PSINCR].
+.\" Adjust point size for heading text, as specified by \n[GROWPS] and
+.\" \n[PSINCR].
 .ie \\n(PS<1000 .ps \\n(PS+\\n[sh*psincr]u
 .el .ps \\n(PSz/1000u+\\n[sh*psincr]u
 .sp 1
@@ -1498,8 +1503,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" footnote paragraphs
 .\" FF is the footnote format
 .nr FF 0
-.\" This can be redefined. It gets a second argument of `no' if the first
-.\" argument was supplied by the user, rather than automatically.
+.\" This can be redefined. It gets a second argument of 'no' if the
+.\" first argument was supplied by the user, rather than automatically.
 .de FP
 .br
 .if !d par*fp!\\n[FF] \{\
@@ -1724,8 +1729,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .		nf
 .		ie \\n[dl] \{\
 .\"                     --fixme-- this really should not be necessary
-.\"                     and indicates that there is extra space creeping into
-.\"                     an equation when ps4html is enabled..
+.\"                     and indicates that there is extra space creeping
+.\"                     into an equation when ps4html is enabled..
 .			ie r ps4html .ds@need \\n[dn]u-1v+\n[.V]u+1i
 .			el .ds@need \\n[dn]u-1v+\n[.V]u
 .			chop eqn*div
@@ -1877,7 +1882,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ds U \(rq
 .ds - \(em
 .\" Characters
-.\" The idea of this definition is for the top of the 3 to be at the x-height.
+.\" The idea of this definition is for the top of the 3 to be at the
+.\" x-height.
 .if !c\[yogh] .char \[yogh] \Z'\v'\w'x'*0-\En[rst]u'\s[\En[.s]*8u/10u]\
 \v'\w'3'*0+\En[rst]u'3\s0'\h'\w'\s[\En[.s]*8u/10u]3'u'
 .\" Accents
@@ -1952,15 +1958,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" ******** module bell ********
 .\" ****************************
 .\" Emulate Bell Labs localisms. Note, (a) they're not documented, and
-.\" (b) the .P1 and .UC macros collide with different ones in Berkeley ms.
-.\" We hack around this by conditionalizing the behavior of P1; UC was
-.\" not defined by groff and will be a no-op if called Berkeley style
-.\" with no arguments, so there is no problem with hijacking it here.
+.\" (b) the .P1 and .UC macros collide with different ones in Berkeley
+.\" ms.  We hack around this by conditionalizing the behavior of P1; UC
+.\" was not defined by groff and will be a no-op if called Berkeley
+.\" style with no arguments, so there is no problem with hijacking it
+.\" here.
 .\"
-.\" What's done here is sufficient to give back the Guide to EQN (1976) its
-.\" section headings and restore some text that had gone missing as macro
-.\" arguments; no warranty express or implied is given as to how well the
-.\" typographic details these produce match the original Bell Labs macros.
+.\" What's done here is sufficient to give back the Guide to EQN (1976)
+.\" its section headings and restore some text that had gone missing as
+.\" macro arguments; no warranty express or implied is given as to how
+.\" well the typographic details these produce match the original Bell
+.\" Labs macros.
 .\"
 .\" P1 is now defined in module pg.
 .de SC
@@ -1977,4 +1985,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	DE
 .\}
 ..
-.\" Make sure that no blank lines creep in at the end of this file.
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

@@ -10,23 +10,23 @@ Installed position: groff's main macro directory.
 
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2001-2014  Free Software Foundation, Inc.
+Copyright (C) 2001-2014 Free Software Foundation, Inc.
 written by Gaius Mulley <gaius@glam.ac.uk>, with additions by
 Werner Lemberg <wl@gnu.org> and
 Bernd Warken <groff-bernd.warken-72@web.de>.
 
 groff is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free
-Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Software Foundation, either version 3 of the License, or (at your
+option) any later version.
 
-groff is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+groff is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along
+with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 ------------------------------------------------------------------------
@@ -34,8 +34,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------
 
 A simple set of macros to provide HTML (or XHTML) documents with basic
-www functionality.  It should work with any macro set.  In the following,
-HTML always denotes XHTML also.
+www functionality.  It should work with any macro set.  In the
+following, HTML always denotes XHTML also.
 ..
 .
 .
@@ -87,7 +87,7 @@ HTML always denotes XHTML also.
 .
 .
 .\" --------------------------------------------------------------------
-.\" Test for `.substring'; result in register `www.substring_ok'.
+.\" Test for '.substring'; result in register 'www.substring_ok'.
 .\" The automated break points in .URL addresses are only added if
 .\" this register is non-zero.
 .\"
@@ -170,7 +170,7 @@ HTML always denotes XHTML also.
 .\"
 .\" Add a space character between any two adjacent characters in string
 .\" <name> and restore result into the string variable <name>; space
-.\" characters are first replaced by the word `space'.
+.\" characters are first replaced by the word 'space'.
 .\"
 .de www:splitstr
 .  if !(\\n[.$] == 1) \
@@ -203,9 +203,9 @@ HTML always denotes XHTML also.
 .\" --------------------------------------------------------------------
 .\" www:url_breaks (<string_name>)
 .\"
-.\" Add `\:' (possible break point) within URL strings after `/'.
+.\" Add '\:' (possible break point) within URL strings after '/'.
 .\"
-.\" Smart about multiple `/', existing `\:', and space characters;
+.\" Smart about multiple '/', existing '\:', and space characters;
 .\" does not set a break point if less than 5 characters would go to
 .\" the next line.
 .\"
@@ -224,12 +224,12 @@ HTML always denotes XHTML also.
 .\" --------------------------------------------------------------------
 .\" www:url_breaks_split (<result> <char> [<char>...])
 .\"
-.\" Add `\:' within URL strings, but arguments are a split string.
+.\" Add '\:' within URL strings, but arguments are a split string.
 .\"
 .\" Arguments: >=2: <result> <char> [<char>...]
 .\"
 .de www:url_breaks_split
-.  nr \\$0:min 5             \" minimal number of characters for next line
+.  nr \\$0:min 5        \" minimal number of characters for next line
 .  if (\\n[.$] < 2) \
 .    www:error .\\$0 expects at least 2 arguments.
 .  ds \\$0:res \\$1\"
@@ -254,7 +254,7 @@ HTML always denotes XHTML also.
 .      shift
 .      continue
 .    \}
-.    \" we are at a `/' character
+.    \" we are at a '/' character
 .    while '\\$1'/' \{\
 .      as \\$0:s /\"
 .      if (\\n[.$] == 0) \{\
@@ -291,7 +291,7 @@ HTML always denotes XHTML also.
 .    \" was implemented via .nop \&\X^html:\\$*^ but
 .    \" is now implemented using HTML-NS to utilize code factoring.
 .    \"
-.    \" the `\&' makes the vertical mode leave, so to say
+.    \" the '\&' makes the vertical mode leave, so to say
 .    \"
 .    nop \&\c
 .    HTML-NS \\$*
@@ -311,7 +311,7 @@ HTML always denotes XHTML also.
 .\"
 .de HTML</p>
 .  ie \\n[www-html] \{\
-.    \" the `\&' makes the vertical mode leave, so to say
+.    \" the '\&' makes the vertical mode leave, so to say
 .    nop \&\X^html</p>:\\$*^
 .  \}
 .  el \
@@ -346,8 +346,8 @@ HTML always denotes XHTML also.
 .\"   Automatic heading level cut off.
 .\"
 .\"   N is the depth limit of automatically linked headings.  So a depth
-.\"   of 2 would cause grohtml to generate a list of links for `.NH 1'
-.\"   and `.NH 2' but not for `.NH 3'.
+.\"   of 2 would cause grohtml to generate a list of links for '.NH 1'
+.\"   and '.NH 2' but not for '.NH 3'.
 .\"
 .de HX
 .  if \\n[www-html] \
@@ -469,7 +469,7 @@ HTML always denotes XHTML also.
 .\" --------------------------------------------------------------------
 .\" MTO address description [after]
 .\"
-.\"   ADDRESS is the email address (without the `mailto:' prefix).
+.\"   ADDRESS is the email address (without the 'mailto:' prefix).
 .\"
 .\"   DESCRIPTION is the optional name.  If an empty argument is given,
 .\"   ADDRESS is used instead.
@@ -581,7 +581,7 @@ HTML always denotes XHTML also.
 .\"   The default value for WIDTH and HEIGHT is zero; the default
 .\"   alignment is centering (-C).
 .\"
-.\" Note: This macro can only be used with the `-U' option of groff,
+.\" Note: This macro can only be used with the '-U' option of groff,
 .\"       activating unsafe mode, if not used with -Thtml; the PNG image
 .\"       is then converted to the EPS format using netpbm utilities.
 .\"
@@ -703,13 +703,13 @@ HTML always denotes XHTML also.
 ..
 .
 .\" www-handle-percent arg N1 N2 S1
-.\"                    arg - input string (number or number%)
-.\"                    output parameters:
-.\"                    N1 - name of number register 1=absolute 0=percentage
-.\"                    N2 - number register name for absolute value
-.\"                    S1 - string register name for percentage value
+.\"     arg - input string (number or number%)
+.\"     output parameters:
+.\"         N1 - name of number register 1=absolute 0=percentage
+.\"         N2 - number register name for absolute value
+.\"         S1 - string register name for percentage value
 .\"
-.de www-handle-percent 
+.de www-handle-percent
 .  ds www-percent \\$1\"
 .  substring www-percent -1 -1
 .
@@ -737,9 +737,9 @@ HTML always denotes XHTML also.
 .\"   The height and width can also be given as a percentage.
 .\"   The PostScript device converts the percentage width into an
 .\"   absolute value by using \\n[.l], and the height by using \\n[.p].
-.\"   
 .\"
-.\" Note: This macro can only be used with the `-U' option of groff,
+.\"
+.\" Note: This macro can only be used with the '-U' option of groff,
 .\"       activating unsafe mode, if not used with -Thtml; the PNG image
 .\"       is then converted to the EPS format using netpbm utilities.
 .\"
@@ -905,8 +905,8 @@ HTML always denotes XHTML also.
 .\"   End heading.
 .\"
 .\" If your heading contains URL, FTP, MTO macros you might wish to
-.\" disable automatic links to headings.  This can be done via `-P-l'
-.\" from the command line or by using a cakk to `.HX 0'.
+.\" disable automatic links to headings.  This can be done via '-P-l'
+.\" from the command line or by using a cakk to '.HX 0'.
 .\"
 .nr www-heading-no -1
 .
@@ -968,8 +968,8 @@ HTML always denotes XHTML also.
 .\"   Generate an HTML title only.  This differs from the -ms .TL macro
 .\"   which generates both an HTML title and an H1 heading.
 .\"
-.\"   This is useful when an author wishes to use an HTML title as search
-.\"   engine fodder but a graphic title in the document.
+.\"   This is useful when an author wishes to use an HTML title as
+.\"   search engine fodder but a graphic title in the document.
 .\"
 .\"   The macro terminates when a space or break is seen (.sp, .br).
 .\"
@@ -1247,8 +1247,8 @@ HTML always denotes XHTML also.
 .\"
 .\"   L is the letter to be dropped and enlarged.
 .\"
-.\"   TEXT is the following text whose height the first letter should not
-.\"   exceed.
+.\"   TEXT is the following text whose height the first letter should
+.\"   not exceed.
 .\"
 .\"   COLOR is the optional color of the dropped letter (default black).
 .\"
@@ -1264,10 +1264,10 @@ HTML always denotes XHTML also.
 .  el \{\
 .    ie r ps4html \{\
 .      www-make-unique-name
-.      \" To avoid interferences with another DC macro call which is located
-.      \" very near to the current one, we draw the glyph on a separate page.
-.      \" Otherwise it could theoretically happen that the dropped capital
-.      \" glyphs overlap.
+.      \" To avoid interferences with another DC macro call which is
+.      \" located very near to the current one, we draw the glyph on a
+.      \" separate page.  Otherwise it could theoretically happen that
+.      \" the dropped capital glyphs overlap.
 .      bp
 .      ev www-DC
 .      vs 320p
@@ -1324,7 +1324,7 @@ HTML always denotes XHTML also.
 .
 .\" --------------------------------------------------------------------
 .\" www-make-unique-name - generate another unique name in string
-.\"                        `www-unique-name'
+.\"                        'www-unique-name'
 .\"
 .de www-make-unique-name
 .  nr www-png-no +1
@@ -1419,9 +1419,9 @@ HTML always denotes XHTML also.
 .\"
 .\" now set up TS, TE, EQ, EN default macros
 .\"
-.\" we must not use `.als': the definition of .TE in s.tmac, for example,
-.\" calls .HTML-IMAGE-END, which would refer to itself due to the alias,
-.\" causing an endless loop
+.\" we must not use '.als': the definition of .TE in s.tmac, for
+.\" example, calls .HTML-IMAGE-END, which would refer to itself due to
+.\" the alias, causing an endless loop
 .\"
 .if !d TS \{\
 .  de TS
@@ -1580,8 +1580,8 @@ HTML always denotes XHTML also.
 .\" LINKSTYLE color [fontstyle [openglyph closeglyph]]
 .\"
 .\"   Initialize www.tmac so that when this macro set is used with
-.\"   non-HTML devices the urls are rendered the user defined attributes.
-.\"   For example:
+.\"   non-HTML devices the urls are rendered the user defined
+.\"   attributes.  For example:
 .\"
 .\"   LINKSTYLE blue CR < >
 .\"
@@ -1624,11 +1624,12 @@ HTML always denotes XHTML also.
 .
 .\" now set
 .
-.\" --------------------------------------------------------------------
-.\" Emacs settings
-.\" --------------------------------------------------------------------
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" EOF
+.\" vim: set filetype=groff textwidth=72:

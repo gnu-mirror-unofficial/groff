@@ -1,5 +1,3 @@
-.\" -*- nroff -*-
-.\"
 .\" papersize.tmac
 .\"
 .\" Set up groff for various paper sizes.
@@ -8,17 +6,17 @@
 .\"
 .\"   groff ... -dpaper=<format> ...
 .\"
-.\" Possible values for `format' are the same as the predefined `papersize'
-.\" values (see the groff_font man page) except a7-d7.  An appended `l'
-.\" (ell) character denotes landscape orientation.  Examples: `a4', `c3l',
-.\" `letterl'.
+.\" Possible values for 'format' are the same as the predefined
+.\" 'papersize' values (see the groff_font man page) except a7-d7.  An
+.\" appended 'l' (ell) character denotes landscape orientation.
+.\" Examples: 'a4', 'c3l', 'letterl'.
 .\"
-.\" Most output drivers need additional command-line switches `-p' and
-.\" `-l' to override the default paper length and orientation as set in
+.\" Most output drivers need additional command-line switches '-p' and
+.\" '-l' to override the default paper length and orientation as set in
 .\" the driver specific DESC file.
 .\"
-.\" For example, use the following for PS output on A4 paper in landscape
-.\" orientation::
+.\" For example, use the following for PS output on A4 paper in
+.\" landscape orientation:
 .\"
 .\"   groff -Tps -dpaper=a4l -P-pa4 -P-l -ms foo.ms > foo.ps
 .
@@ -96,8 +94,8 @@
 .  ds paper-ledger-width 17i
 .  ds paper-statement-length 8.5i
 .  ds paper-statement-width 5.5i
-.  \" These dimensions for executive paper format is what all
-.  \" printer manufacturers use.
+.  \" These dimensions for executive paper format are what all printer
+.  \" manufacturers use.
 .  ds paper-executive-length 10.5i
 .  ds paper-executive-width 7.25i
 .
@@ -160,4 +158,12 @@
 .
 .cp \n[_C]
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

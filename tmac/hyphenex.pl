@@ -40,13 +40,13 @@ while (<>) {
   s/\\[^123456\s{]+//g;
   # remove all paired { ... }
   1 while s/{(.*?)}/\1/g;
-  # skip lines which now have only whitespace before `&'
+  # skip lines which now have only whitespace before '&'
   next if m/^\s*&/;
   # remove comments
   s/%.*//;
   # remove trailing whitespace
   s/\s*$//;
-  # remove trailing `*' (used as a marker in the document)
+  # remove trailing '*' (used as a marker in the document)
   s/\*$//;
   # split at whitespace
   @field = split(' ');
@@ -69,7 +69,7 @@ while (<>) {
     }
   }
   else {
-    # for `&', split at `&' with trailing whitespace
+    # for '&', split at '&' with trailing whitespace
     @field = split(/&\s*/);
     print "  $field[1]\n";
   }

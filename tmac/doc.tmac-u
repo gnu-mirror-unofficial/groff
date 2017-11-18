@@ -1,7 +1,5 @@
-.\" -*- nroff -*-
-.\"
 .\" Copyright (c) 1991, 1993
-.\"	The Regents of the University of California.  All rights reserved.
+.\"   The Regents of the University of California.  All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -9,32 +7,34 @@
 .\" 1. Redistributions of source code must retain the above copyright
 .\"    notice, this list of conditions and the following disclaimer.
 .\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\"    notice, this list of conditions and the following disclaimer in
+.\"    the documentation and/or other materials provided with the
+.\"    distribution.
 .\" 3. [Deleted.  See
 .\"     ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change]
-.\" 4. Neither the name of the University nor the names of its contributors
-.\"    may be used to endorse or promote products derived from this software
-.\"    without specific prior written permission.
+.\" 4. Neither the name of the University nor the names of its
+.\"    contributors may be used to endorse or promote products derived
+.\"    from this software without specific prior written permission.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS"
+.\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+.\" TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+.\" PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR
+.\" CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+.\" SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+.\" LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+.\" USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+.\" ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+.\" OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+.\" OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)doc	8.1 (Berkeley) 06/08/93
 .\"
-.\" Modified by jjc@jclark.com as follows: the doc-* files are assumed to be
-.\" installed as mdoc/doc-* rather than tmac.doc-* (the filename
-.\" `tmac.doc-common' would be too long); when using groff, the doc-* files
-.\" are loaded using the `mso' request.
+.\" Modified by jjc@jclark.com as follows: the doc-* files are assumed
+.\" to be installed as mdoc/doc-* rather than tmac.doc-* (the filename
+.\" 'tmac.doc-common' would be too long); when using groff, the doc-*
+.\" files are loaded using the 'mso' request.
 .\"
 .\" Modified by
 .\"
@@ -89,7 +89,7 @@
 .
 .\" NS doc-num-args global register
 .\" NS   number of arguments to handle (must be set to \n[.$] prior to
-.\" NS   `doc-parse-arg-vector' request)
+.\" NS   'doc-parse-arg-vector' request)
 .
 .nr doc-num-args 0
 .
@@ -129,7 +129,7 @@
 .
 .
 .\" NS doc-parse-args macro
-.\" NS   parse arguments (recursively) (`.doc-parse-args arg ...')
+.\" NS   parse arguments (recursively) ('.doc-parse-args arg ...')
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-limit
@@ -156,7 +156,7 @@
 .
 .  nr doc-arg-limit +1
 .
-.  \" handle `|' and `...' specially
+.  \" handle '|' and '...' specially
 .  ie        "\$1"|" \
 .    ds doc-arg\n[doc-arg-limit] \f[R]|\f[]
 .  el \{ .ie "\$1"..." \
@@ -253,7 +253,7 @@
 .
 .\" NS doc-remaining-args macro
 .\" NS   output remaining arguments as-is, separated by spaces (until
-.\" NS   `doc-num-args' is exhausted)
+.\" NS   'doc-num-args' is exhausted)
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -277,7 +277,7 @@
 .
 .\" NS doc-append-arg macro
 .\" NS   append one argument to argument vector:
-.\" NS   `.doc-append-arg [arg] [type]'
+.\" NS   '.doc-append-arg [arg] [type]'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-limit
@@ -336,7 +336,7 @@
 .
 .
 .\" NS Fl user macro
-.\" NS   handle flags (appends `-' and prints flags): `.Fl [arg ...]'
+.\" NS   handle flags (appends '-' and prints flags): '.Fl [arg ...]'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -347,7 +347,7 @@
 .\" NS local variables:
 .\" NS   doc-reg-Fl (for communication with doc-flag-recursion)
 .\" NS
-.\" NS width register `Fl' set in doc-common
+.\" NS width register 'Fl' set in doc-common
 .
 .de Fl
 .  nr doc-curr-font \n[.f]
@@ -388,7 +388,7 @@
 .
 .
 .\" NS doc-flag-recursion macro
-.\" NS   `Fl' flag recursion routine (special handling)
+.\" NS   'Fl' flag recursion routine (special handling)
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -411,7 +411,7 @@
 .
 .    ie (\n[doc-reg-dfr1] == 2) \{\
 .      \" handle vertical bar -- doc-reg-Fl is set for the first call of
-.      \" doc-flag-recursion only; we need this to make `.Fl | ...' work
+.      \" doc-flag-recursion only; we need this to make '.Fl | ...' work
 .      \" correctly
 .      ie "\*[doc-str-dfr]"\*[Ba]" \{\
 .        if \n[doc-reg-Fl] \
@@ -483,7 +483,7 @@
 .  el \{\
 .    nr doc-reg-dpr \n[doc-arg-ptr]
 .
-.    \" the `\%' prevents hyphenation on a dash (`-')
+.    \" the '\%' prevents hyphenation on a dash ('-')
 .    ie (\n[doc-reg-dpr1] == 2) \
 .      nop \%\*[doc-str-dpr]\&\c
 .    el \{\
@@ -573,7 +573,7 @@
 .
 .
 .\" NS Ar user macro
-.\" NS   command-line `argument' macro: `.Ar [args ...]'
+.\" NS   command-line 'argument' macro: '.Ar [args ...]'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -584,7 +584,7 @@
 .\" NS local variable:
 .\" NS   doc-str-Ar-default
 .\" NS
-.\" NS width register `Ar' set in doc-common
+.\" NS width register 'Ar' set in doc-common
 .
 .ds doc-str-Ar-default "file\ .\|.\|.
 .
@@ -632,7 +632,7 @@
 .\" NS Ad user macro
 .\" NS   Addresses
 .\" NS
-.\" NS width register `Ad' set in doc-common
+.\" NS width register 'Ad' set in doc-common
 .
 .als Ad doc-generic-macro
 .ds doc-Ad-usage address
@@ -653,7 +653,7 @@
 .\" NS Cd user macro
 .\" NS   config declaration (for section 4 SYNOPSIS)
 .\" NS
-.\" NS   this function causes a break; it uses the `Nm' font
+.\" NS   this function causes a break; it uses the 'Nm' font
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -662,7 +662,7 @@
 .\" NS   doc-indent-synopsis
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Cd' set in doc-common
+.\" NS width register 'Cd' set in doc-common
 .
 .de Cd
 .  if !\n[doc-arg-limit] \{\
@@ -713,7 +713,7 @@
 .\" NS Cm user macro
 .\" NS   interactive command modifier (flag)
 .\" NS
-.\" NS width register `Cm' set in doc-common
+.\" NS width register 'Cm' set in doc-common
 .
 .als Cm doc-generic-macro
 .ds doc-Cm-usage interactive_command_modifier
@@ -722,9 +722,9 @@
 .\" NS Dv user macro
 .\" NS   defined variable
 .\" NS
-.\" NS   this function uses the `Er' font
+.\" NS   this function uses the 'Er' font
 .\" NS
-.\" NS width register `Dv' set in doc-common
+.\" NS width register 'Dv' set in doc-common
 .
 .als Dv doc-generic-macro
 .ds doc-Dv-usage defined_variable
@@ -734,7 +734,7 @@
 .\" NS Em user macro
 .\" NS   emphasis
 .\" NS
-.\" NS width register `Em' set in doc-common
+.\" NS width register 'Em' set in doc-common
 .
 .als Em doc-generic-macro
 .ds doc-Em-usage text
@@ -743,7 +743,7 @@
 .\" NS Er user macro
 .\" NS   errno type
 .\" NS
-.\" NS width register `Er' set in doc-common
+.\" NS width register 'Er' set in doc-common
 .
 .als Er doc-generic-macro
 .ds doc-Er-usage text
@@ -752,7 +752,7 @@
 .\" NS Ev user macro
 .\" NS   environment variable
 .\" NS
-.\" NS width register `Ev' set in doc-common
+.\" NS width register 'Ev' set in doc-common
 .
 .als Ev doc-generic-macro
 .ds doc-Ev-usage text
@@ -806,7 +806,7 @@
 .\" NS
 .\" NS   this function causes a break
 .\" NS
-.\" NS width register `Fd' set in doc-common
+.\" NS width register 'Fd' set in doc-common
 .
 .de Fd
 .  ie ((\n[.$] >= 1) & (\n[doc-arg-limit] == 0)) \{\
@@ -827,7 +827,7 @@
 .\" NS   #include statement in SYNOPSIS
 .\" NS   <header.h> if not in SYNOPSIS
 .\" NS
-.\" NS   this function causes a break; it uses the `Fd' font
+.\" NS   this function causes a break; it uses the 'Fd' font
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -836,7 +836,7 @@
 .\" NS   doc-indent-synopsis
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `In' set in doc-common
+.\" NS width register 'In' set in doc-common
 .
 .de In
 .  if !\n[doc-arg-limit] \{\
@@ -890,9 +890,9 @@
 .\" NS Fr user macro
 .\" NS   function return value
 .\" NS
-.\" NS   this function uses the `Ar' font
+.\" NS   this function uses the 'Ar' font
 .\" NS
-.\" NS width register `Fr' set in doc-common
+.\" NS width register 'Fr' set in doc-common
 .
 .als Fr doc-generic-macro
 .ds doc-Fr-usage function_return_value
@@ -902,7 +902,7 @@
 .\" NS Ic user macro
 .\" NS   interactive command
 .\" NS
-.\" NS width register `Ic' set in doc-common
+.\" NS width register 'Ic' set in doc-common
 .
 .als Ic doc-generic-macro
 .ds doc-Ic-usage interactive_command
@@ -911,7 +911,7 @@
 .\" NS Li user macro
 .\" NS   literals
 .\" NS
-.\" NS width register `Li' set in doc-common
+.\" NS width register 'Li' set in doc-common
 .
 .als Li doc-generic-macro
 .ds doc-Li-usage argument
@@ -920,9 +920,9 @@
 .\" NS Ms user macro
 .\" NS   math symbol
 .\" NS
-.\" NS   this function uses the `Sy' font
+.\" NS   this function uses the 'Sy' font
 .\" NS
-.\" NS width register `Ms' set in doc-common
+.\" NS width register 'Ms' set in doc-common
 .
 .als Ms doc-generic-macro
 .ds doc-Ms-usage math_symbol
@@ -947,7 +947,7 @@
 .\" NS   doc-indent-synopsis-active
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Nm' set in doc-common
+.\" NS width register 'Nm' set in doc-common
 .
 .de Nm
 .  if !\n[doc-arg-limit] \{\
@@ -996,7 +996,7 @@
 .        doc-parse-space-vector
 .    \}\}
 .    el \{\
-.      \" handle `.Nm ...' in SYNOPSIS
+.      \" handle '.Nm ...' in SYNOPSIS
 .      if \n[doc-in-synopsis-section] \{\
 .        if "\*[doc-macro-name]"Nm" \{\
 .          br
@@ -1021,7 +1021,7 @@
 .
 .
 .\" NS Pa user macro
-.\" NS   pathname: `.Pa [arg ...]'
+.\" NS   pathname: '.Pa [arg ...]'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -1029,7 +1029,7 @@
 .\" NS   doc-curr-size
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Pa' set in doc-common
+.\" NS width register 'Pa' set in doc-common
 .
 .de Pa
 .  if !\n[doc-arg-limit] \{\
@@ -1074,7 +1074,7 @@
 .\" NS Sy user macro
 .\" NS   symbolics
 .\" NS
-.\" NS width register `Sy' set in doc-common
+.\" NS width register 'Sy' set in doc-common
 .
 .als Sy doc-generic-macro
 .ds doc-Sy-usage symbolic_text
@@ -1083,7 +1083,7 @@
 .\" NS Me user macro
 .\" NS   menu entries
 .\" NS
-.\" NS width register `Me' set in doc-common
+.\" NS width register 'Me' set in doc-common
 .
 .als Me doc-generic-macro
 .ds doc-Me-usage menu_entry
@@ -1098,7 +1098,7 @@
 .\" NS   doc-curr-size
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Tn' set in doc-common
+.\" NS width register 'Tn' set in doc-common
 .
 .de Tn
 .  if !\n[doc-arg-limit] \{\
@@ -1135,7 +1135,7 @@
 .\" NS Va user macro
 .\" NS   variable name
 .\" NS
-.\" NS width register `Va' set in doc-common
+.\" NS width register 'Va' set in doc-common
 .
 .als Va doc-generic-macro
 .ds doc-Va-usage variable_name
@@ -1144,22 +1144,22 @@
 .\" NS No user macro
 .\" NS   normal text macro (default text style if mess up)
 .\" NS
-.\" NS width register `No' set in doc-common
+.\" NS width register 'No' set in doc-common
 .
 .als No doc-generic-macro
 .ds doc-No-usage normal_text
 .
 .
 .\" NS doc-quote-left global string
-.\" NS   left quotation character for `doc-enclose-string' and
-.\" NS   `doc-enclose-open'
+.\" NS   left quotation character for 'doc-enclose-string' and
+.\" NS   'doc-enclose-open'
 .
 .ds doc-quote-left
 .
 .
 .\" NS doc-quote-right global string
-.\" NS   right quotation character for `doc-enclose-string' and
-.\" NS   `doc-enclose-close'
+.\" NS   right quotation character for 'doc-enclose-string' and
+.\" NS   'doc-enclose-close'
 .
 .ds doc-quote-right
 .
@@ -1172,7 +1172,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Op' set in doc-common
+.\" NS width register 'Op' set in doc-common
 .
 .de Op
 .  if !\n[doc-arg-limit] \
@@ -1193,7 +1193,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Aq' set in doc-common
+.\" NS width register 'Aq' set in doc-common
 .
 .de Aq
 .  if !\n[doc-arg-limit] \
@@ -1220,7 +1220,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Bq' set in doc-common
+.\" NS width register 'Bq' set in doc-common
 .
 .de Bq
 .  if !\n[doc-arg-limit] \
@@ -1241,7 +1241,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Brq' set in doc-common
+.\" NS width register 'Brq' set in doc-common
 .
 .de Brq
 .  if !\n[doc-arg-limit] \
@@ -1262,7 +1262,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Dq' set in doc-common
+.\" NS width register 'Dq' set in doc-common
 .
 .de Dq
 .  if !\n[doc-arg-limit] \
@@ -1283,7 +1283,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Eq' set in doc-common
+.\" NS width register 'Eq' set in doc-common
 .
 .de Eq
 .  if !\n[doc-arg-limit] \
@@ -1305,7 +1305,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Pq' set in doc-common
+.\" NS width register 'Pq' set in doc-common
 .
 .de Pq
 .  if !\n[doc-arg-limit] \
@@ -1332,7 +1332,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Qq' set in doc-common
+.\" NS width register 'Qq' set in doc-common
 .
 .de Qq
 .  if !\n[doc-arg-limit] \
@@ -1353,7 +1353,7 @@
 .\" NS   doc-quote-left
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Sq' set in doc-common
+.\" NS width register 'Sq' set in doc-common
 .
 .de Sq
 .  if !\n[doc-arg-limit] \
@@ -1367,8 +1367,8 @@
 .
 .
 .\" NS Es user macro
-.\" NS   set up arguments (i.e., the left and right quotation character as
-.\" NS   first and second argument) for .En call
+.\" NS   set up arguments (i.e., the left and right quotation character
+.\" NS   as first and second argument) for .En call
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -1403,7 +1403,7 @@
 .
 .
 .\" NS doc-have-slot global register (bool)
-.\" NS   set if `doc-enclose-string' has created a slot for closing
+.\" NS   set if 'doc-enclose-string' has created a slot for closing
 .\" NS   delimiter
 .
 .nr doc-have-slot 0
@@ -1445,7 +1445,7 @@
 .
 .  nr doc-arg-ptr +1
 .  doc-print-prefixes
-.  \" the final `\)' prevents hyphenation in case the next character is `\%'
+.  \" the final '\)' prevents hyphenation in case next character is '\%'
 .  nop \)\*[doc-quote-left]\)\c
 .  ie (\n[doc-arg-limit] < \n[doc-arg-ptr]) \{\
 .    \" last argument
@@ -1480,8 +1480,8 @@
 .      ie (\n[doc-reg-des] == \n[doc-arg-limit]) \
 .        doc-append-arg "\)\*[doc-quote-right]\)" 3
 .      el \{\
-.        \" if a previous call to `doc-enclose-string' has already created
-.        \" a slot, prepend argument
+.        \" if a previous call to 'doc-enclose-string' has already
+.        \" created a slot, prepend argument
 .        ie \n[doc-have-slot] \
 .          ds doc-arg\n[doc-reg-des] "\*[doc-quote-right]\)\*[doc-arg\n[doc-reg-des]]
 .        el \{\
@@ -1517,7 +1517,7 @@
 .
 .
 .\" NS En user macro
-.\" NS   enclose arguments with quotation characters set up with `.Es'
+.\" NS   enclose arguments with quotation characters set up with '.Es'
 .
 .als En doc-enclose-string
 .
@@ -1529,7 +1529,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Ao' set in doc-common
+.\" NS width register 'Ao' set in doc-common
 .
 .de Ao
 .  if !\n[doc-arg-limit] \
@@ -1551,7 +1551,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Ac' set in doc-common
+.\" NS width register 'Ac' set in doc-common
 .
 .de Ac
 .  if !\n[doc-arg-limit] \
@@ -1573,7 +1573,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Bo' set in doc-common
+.\" NS width register 'Bo' set in doc-common
 .
 .de Bo
 .  if !\n[doc-arg-limit] \
@@ -1592,7 +1592,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Bc' set in doc-common
+.\" NS width register 'Bc' set in doc-common
 .
 .de Bc
 .  if !\n[doc-arg-limit] \
@@ -1611,7 +1611,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Bro' set in doc-common
+.\" NS width register 'Bro' set in doc-common
 .
 .de Bro
 .  if !\n[doc-arg-limit] \
@@ -1630,7 +1630,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Brc' set in doc-common
+.\" NS width register 'Brc' set in doc-common
 .
 .de Brc
 .  if !\n[doc-arg-limit] \
@@ -1649,7 +1649,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Do' set in doc-common
+.\" NS width register 'Do' set in doc-common
 .
 .de Do
 .  if !\n[doc-arg-limit] \
@@ -1668,7 +1668,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Dc' set in doc-common
+.\" NS width register 'Dc' set in doc-common
 .
 .de Dc
 .  if !\n[doc-arg-limit] \
@@ -1687,7 +1687,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Eo' set in doc-common
+.\" NS width register 'Eo' set in doc-common
 .
 .de Eo
 .  if !\n[doc-arg-limit] \
@@ -1707,7 +1707,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Ec' set in doc-common
+.\" NS width register 'Ec' set in doc-common
 .
 .de Ec
 .  if !\n[doc-arg-limit] \
@@ -1727,7 +1727,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Oo' set in doc-common
+.\" NS width register 'Oo' set in doc-common
 .
 .de Oo
 .  if !\n[doc-arg-limit] \
@@ -1746,7 +1746,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Oc' set in doc-common
+.\" NS width register 'Oc' set in doc-common
 .
 .de Oc
 .  if !\n[doc-arg-limit] \
@@ -1765,7 +1765,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Po' set in doc-common
+.\" NS width register 'Po' set in doc-common
 .
 .de Po
 .  if !\n[doc-arg-limit] \
@@ -1784,7 +1784,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Pc' set in doc-common
+.\" NS width register 'Pc' set in doc-common
 .
 .de Pc
 .  if !\n[doc-arg-limit] \
@@ -1803,7 +1803,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Qo' set in doc-common
+.\" NS width register 'Qo' set in doc-common
 .
 .de Qo
 .  if !\n[doc-arg-limit] \
@@ -1822,7 +1822,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Qc' set in doc-common
+.\" NS width register 'Qc' set in doc-common
 .
 .de Qc
 .  if !\n[doc-arg-limit] \
@@ -1841,7 +1841,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `So' set in doc-common
+.\" NS width register 'So' set in doc-common
 .
 .de So
 .  if !\n[doc-arg-limit] \
@@ -1860,7 +1860,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Sc' set in doc-common
+.\" NS width register 'Sc' set in doc-common
 .
 .de Sc
 .  if !\n[doc-arg-limit] \
@@ -1879,7 +1879,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Xo' set in doc-common
+.\" NS width register 'Xo' set in doc-common
 .
 .de Xo
 .  if !\n[doc-arg-limit] \
@@ -1898,7 +1898,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-quote-right
 .\" NS
-.\" NS width register `Xc' set in doc-common
+.\" NS width register 'Xc' set in doc-common
 .
 .de Xc
 .  if !\n[doc-arg-limit] \
@@ -1911,7 +1911,7 @@
 .
 .
 .\" NS doc-nesting-level global register
-.\" NS   used by `doc-enclose-open' and `doc-enclose-close'
+.\" NS   used by 'doc-enclose-open' and 'doc-enclose-close'
 .
 .nr doc-nesting-level 0
 .
@@ -2007,14 +2007,14 @@
 .
 .
 .\" NS Pf user macro
-.\" NS   prefix: `.Pf prefix arg ...'
+.\" NS   prefix: '.Pf prefix arg ...'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
 .\" NS   doc-macro-name
 .\" NS   doc-quote-left
 .\" NS
-.\" NS width register `Pf' set in doc-common
+.\" NS width register 'Pf' set in doc-common
 .
 .de Pf
 .  if !\n[doc-arg-limit] \
@@ -2049,13 +2049,13 @@
 .
 .
 .\" NS Ns user macro
-.\" NS   remove space (space removal done by `doc-parse-args')
+.\" NS   remove space (space removal done by 'doc-parse-args')
 .\" NS
 .\" NS modifies:
 .\" NS   doc-argXXX
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Ns' set in doc-common
+.\" NS width register 'Ns' set in doc-common
 .
 .de Ns
 .  if !\n[doc-arg-limit] \{\
@@ -2080,7 +2080,7 @@
 .\" NS Ap user macro
 .\" NS   append an apostrophe
 .\" NS
-.\" NS width register `Ap' set in doc-common
+.\" NS width register 'Ap' set in doc-common
 .
 .de Ap
 .  ie !\n[doc-arg-limit] \
@@ -2147,7 +2147,7 @@
 .
 .
 .\" NS doc-saved-space global string
-.\" NS   saved value of `doc-space'
+.\" NS   saved value of 'doc-space'
 .
 .ds doc-saved-space "\*[doc-space]
 .
@@ -2159,7 +2159,7 @@
 .
 .
 .\" NS Sm user macro
-.\" NS   space mode (`.Sm'/`.Sm on'/`.Sm off')
+.\" NS   space mode ('.Sm'/'.Sm on'/'.Sm off')
 .\" NS
 .\" NS   without argument, toggle space mode
 .\" NS
@@ -2177,7 +2177,7 @@
 .\" NS local variables:
 .\" NS   doc-reg-Sm
 .\" NS
-.\" NS width register `Sm' set in doc-common
+.\" NS width register 'Sm' set in doc-common
 .
 .de Sm
 .  ie \n[doc-have-space] \
@@ -2200,7 +2200,7 @@
 .        ds doc-space "\*[doc-saved-space]
 .        nr doc-space-mode 1
 .
-.        \" finish line only if it is interrupted and `doc-have-space'
+.        \" finish line only if it is interrupted and 'doc-have-space'
 .        \" isn't set
 .        if \n[doc-reg-Sm] \
 .          if \n[.int] \
@@ -2213,7 +2213,7 @@
 .
 .  nr doc-arg-ptr +1
 .
-.  \" avoid a warning message in case `Sm' is the last parameter
+.  \" avoid a warning message in case 'Sm' is the last parameter
 .  if !d doc-arg\n[doc-arg-ptr] \
 .    ds doc-arg\n[doc-arg-ptr]
 .
@@ -2248,7 +2248,7 @@
 .    if \n[doc-num-args] \
 .      doc-parse-space-vector
 .
-.    \" finish line only if it is interrupted and `doc-have-space'
+.    \" finish line only if it is interrupted and 'doc-have-space'
 .    \" isn't set
 .    if \n[doc-reg-Sm] \
 .      if \n[.int] \
@@ -2260,13 +2260,13 @@
 .    while (\n[doc-reg-Sm] <= \n[doc-arg-limit]) \{\
 .      ds doc-space\n[doc-reg-Sm]
 .      nr doc-reg-Sm +1
-.      \" the body of a `while' request must end with the fitting `\}'!
+.      \" the body of a 'while' request must end with the fitting '\}'!
 .    \}
 .  \}
 .
 .  \" do we have parameters to print?
 .  ie (\n[doc-arg-limit] > \n[doc-arg-ptr]) \{\
-.    \" skip `Sm' argument
+.    \" skip 'Sm' argument
 .    nr doc-arg-ptr +1
 .    doc-print-recursive
 .  \}
@@ -2285,7 +2285,7 @@
 .\" NS doc-get-arg-type macro
 .\" NS   get argument type
 .\" NS
-.\" NS   this macro expects the width of the argument in `doc-width'
+.\" NS   this macro expects the width of the argument in 'doc-width'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-type
@@ -2307,10 +2307,10 @@
 .
 .
 .\" NS doc-get-arg-type* macro
-.\" NS   similar to as `doc-get-arg-type' but uses doc-argXXX strings
+.\" NS   similar to as 'doc-get-arg-type' but uses doc-argXXX strings
 .\" NS
-.\" NS   this macro sets the `doc-width' register using the `length' request
-.\" NS   to get the number of characters in a string literally
+.\" NS   this macro sets the 'doc-width' register using the 'length'
+.\" NS   request to get the number of characters in a string literally
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-type
@@ -2346,8 +2346,8 @@
 .de doc-set-spacing-1
 .  nr doc-reg-dssfm1 \n[\*[doc-arg\n[doc-arg-limit]]]
 .
-.  \" closing macros like .Ac, Bc., etc. have value 3 (remove space before
-.  \" argument)
+.  \" closing macros like .Ac, Bc., etc. have value 3 (remove space
+.  \" before argument)
 .  ie (\n[doc-reg-dssfm1] == 3) \{\
 .    if \n[doc-arg-limit] \{\
 .      nr doc-reg-dssfm (\n[doc-arg-limit] - 1)
@@ -2356,8 +2356,8 @@
 .    ds doc-space\n[doc-arg-limit] "\*[doc-space]
 .  \}
 .  el \{\
-.    \" macros like .Ap and .Ns have value 2 (remove space before and after
-.    \" argument)
+.    \" macros like .Ap and .Ns have value 2 (remove space before and
+.    \" after argument)
 .    ie (\n[doc-reg-dssfm1] == 2) \{\
 .      if \n[doc-arg-limit] \{\
 .        nr doc-reg-dssfm (\n[doc-arg-limit] - 1)
@@ -2448,7 +2448,7 @@
 .
 .
 .\" NS doc-fontmode-font-stackXXX global register
-.\" NS   stack of saved current font values from `Bf' macro
+.\" NS   stack of saved current font values from 'Bf' macro
 .\" NS
 .\" NS limit:
 .\" NS   doc-fontmode-depth
@@ -2457,7 +2457,7 @@
 .
 .
 .\" NS doc-fontmode-size-stackXXX global register
-.\" NS   stack of saved current size values from `Bf' macro
+.\" NS   stack of saved current size values from 'Bf' macro
 .\" NS
 .\" NS limit:
 .\" NS   doc-fontmode-depth
@@ -2474,7 +2474,7 @@
 .\" NS   doc-fontmode-size-stackXXX
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Bf' set in doc-common
+.\" NS width register 'Bf' set in doc-common
 .
 .de Bf
 .  ds doc-macro-name Bf
@@ -2513,7 +2513,7 @@
 .\" NS modifies:
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Ef' set in doc-common
+.\" NS width register 'Ef' set in doc-common
 .
 .de Ef
 .  ds doc-macro-name Ef
@@ -2535,7 +2535,7 @@
 .
 .
 .\" NS doc-keep-type global register
-.\" NS   current keep type; 1 is `-words', 2 is `-lines', 3 is unknown
+.\" NS   current keep type; 1 is '-words', 2 is '-lines', 3 is unknown
 .
 .nr doc-keep-type 0
 .
@@ -2547,7 +2547,7 @@
 .\" NS   doc-keep-type
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Bk' set in doc-common
+.\" NS width register 'Bk' set in doc-common
 .
 .de Bk
 .  ds doc-macro-name Bk
@@ -2584,7 +2584,7 @@
 .\" NS   doc-keep-type
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Ek' set in doc-common
+.\" NS width register 'Ek' set in doc-common
 .
 .de Ek
 .  ds doc-macro-name Ek
@@ -2617,7 +2617,7 @@
 .
 .
 .\" NS doc-is-compact global register (bool)
-.\" NS   set if the `compact' keyword is given
+.\" NS   set if the 'compact' keyword is given
 .
 .nr doc-is-compact 0
 .
@@ -2679,7 +2679,7 @@
 .\" NS Bd user macro
 .\" NS   begin display
 .\" NS
-.\" NS width register `Bd' set in doc-common
+.\" NS width register 'Bd' set in doc-common
 .\" NS
 .\" NS modifies:
 .\" NS   doc-curr-font
@@ -2832,9 +2832,9 @@
 .        warn (\n[.warn] - (\n[.warn] / 32 % 2 * 32))
 .
 .        \" values without a scaling indicator are taken as strings;
-.        \" we test whether the parameter string with and without the last
-.        \" character yields identical numerical results (ignoring the
-.        \" scaling indicator)
+.        \" we test whether the parameter string with and without the
+.        \" last character yields identical numerical results (ignoring
+.        \" the scaling indicator)
 .        ds doc-str-ddBa "\$2
 .        substring doc-str-ddBa 0 -2
 .        if \B(\*[doc-str-ddBa]) \{\
@@ -2895,7 +2895,7 @@
 .\" NS   doc-display-type-stackXXX
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Ed' set in doc-common
+.\" NS width register 'Ed' set in doc-common
 .
 .de Ed
 .  ds doc-macro-name Ed
@@ -2957,7 +2957,7 @@
 .\" NS Bl user macro
 .\" NS   begin list
 .\" NS
-.\" NS width register `Bl' set in doc-common
+.\" NS width register 'Bl' set in doc-common
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -3124,7 +3124,7 @@
 .  if (\n[doc-arg-limit] < \n[doc-arg-ptr]) \
 .    return
 .
-.  \" avoid a warning message in case e.g. `-offset' has no parameter
+.  \" avoid a warning message in case e.g. '-offset' has no parameter
 .  nr doc-reg-dBla (\n[doc-arg-ptr] + 1)
 .  if (\n[doc-arg-limit] < \n[doc-reg-dBla]) \
 .    ds doc-arg\n[doc-reg-dBla]
@@ -3192,9 +3192,9 @@
 .        warn (\n[.warn] - (\n[.warn] / 32 % 2 * 32))
 .
 .        \" values without a scaling indicator are taken as strings;
-.        \" we test whether the parameter string with and without the last
-.        \" character yields identical numerical results (ignoring the
-.        \" scaling indicator)
+.        \" we test whether the parameter string with and without the
+.        \" last character yields identical numerical results (ignoring
+.        \" the scaling indicator)
 .        ds doc-str-dBla1 "\*[doc-str-dBla]
 .        substring doc-str-dBla1 0 -2
 .        if \B(\*[doc-str-dBla1]) \{\
@@ -3617,7 +3617,7 @@
 .\" NS local variables:
 .\" NS   doc-str-El
 .\" NS
-.\" NS width register `El' set in doc-common
+.\" NS width register 'El' set in doc-common
 .
 .de El
 .  if \n[.$] \{\
@@ -3690,7 +3690,7 @@
 .\" NS   doc-str-It
 .\" NS   doc-XXX-list-type
 .\" NS
-.\" NS width register `It' set in doc-common
+.\" NS width register 'It' set in doc-common
 .
 .nr doc-bullet-list-type 1
 .nr doc-column-list-type 0
@@ -3777,8 +3777,9 @@
 .    \}
 .  \}
 .
-.  \" the previous call of `.doc-print-recursive' can contain calls to
-.  \" opening macros like `.Ao'; we then defer the call of `doc-xxx-list'
+.  \" the previous call of '.doc-print-recursive' can contain calls to
+.  \" opening macros like '.Ao'; we then defer the call of
+.  \" 'doc-xxx-list'
 .  if !\n[doc-nesting-level] \
 .    doc-\*[doc-str-It]
 ..
@@ -3996,7 +3997,7 @@
 .
 .
 .\" NS doc-tag-list macro
-.\" NS   .It item of list-type `tag'
+.\" NS   .It item of list-type 'tag'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-have-space
@@ -4014,7 +4015,7 @@
 .  box
 .  unformat doc-item-box\n[doc-list-depth]
 .
-.  \" we use a box without `.nf' to compute the tag width (via `dl' register)
+.  \" we use a box without '.nf' to compute the tag width (via 'dl' register)
 .  box doc-box-dtl
 .  ev doc-env-dtl
 .  evc 0
@@ -4115,8 +4116,8 @@
 .
 .
 .\" NS doc-end-list macro
-.\" NS   list end function; resets indentation (and offset if argument is
-.\" NS   non-zero)
+.\" NS   list end function; resets indentation (and offset if argument
+.\" NS   is non-zero)
 .\" NS
 .\" NS modifies:
 .\" NS   doc-list-depth
@@ -4196,7 +4197,7 @@
 .\" NS local variables:
 .\" NS   doc-reg-Xr
 .\" NS
-.\" NS width register `Xr' set in doc-common
+.\" NS width register 'Xr' set in doc-common
 .
 .de Xr
 .  if !\n[doc-arg-limit] \{\
@@ -4250,7 +4251,7 @@
 .\" NS Sx user macro
 .\" NS   cross section reference
 .\" NS
-.\" NS width register `Sx' set in doc-common
+.\" NS width register 'Sx' set in doc-common
 .
 .als Sx doc-generic-macro
 .ds doc-Sx-usage section_header
@@ -4279,7 +4280,7 @@
 .
 .
 .\" NS doc-set-column-tab macro
-.\" NS   establish tabs for list-type column: `.doc-set-column-tab num_cols'
+.\" NS   establish tabs for list-type column: '.doc-set-column-tab num_cols'
 .\" NS
 .\" NS modifies:
 .\" NS   doc-column-indent-width
@@ -4360,7 +4361,7 @@
 .\" NS modifies:
 .\" NS   doc-arg-ptr
 .\" NS
-.\" NS width register `Ta' set in doc-common
+.\" NS width register 'Ta' set in doc-common
 .
 .de Ta
 .  ie \n[doc-arg-limit] \{\
@@ -4381,7 +4382,7 @@
 .\" NS Dl user macro
 .\" NS   display (one line) literal
 .\" NS
-.\" NS   this function uses the `Li' font
+.\" NS   this function uses the 'Li' font
 .\" NS
 .\" NS modifies:
 .\" NS   doc-arg-ptr
@@ -4389,7 +4390,7 @@
 .\" NS   doc-curr-size
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Dl' set in doc-common
+.\" NS width register 'Dl' set in doc-common
 .
 .de Dl
 .  ta T .5i
@@ -4424,7 +4425,7 @@
 .\" NS   doc-arg-ptr
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `D1' set in doc-common
+.\" NS width register 'D1' set in doc-common
 .
 .de D1
 .  ta T .5i
@@ -4461,7 +4462,7 @@
 .\" NS   doc-have-var
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Vt' set in doc-common
+.\" NS width register 'Vt' set in doc-common
 .
 .de Vt
 .  if !\n[doc-arg-limit] \{\
@@ -4533,7 +4534,7 @@
 .\" NS   doc-is-func
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Ft' set in doc-common
+.\" NS width register 'Ft' set in doc-common
 .
 .de Ft
 .  if !\n[doc-arg-limit] \{\
@@ -4578,7 +4579,7 @@
 .
 .
 .\" NS doc-have-old-func global register (bool)
-.\" NS   set if `Ot' has been called
+.\" NS   set if 'Ot' has been called
 .
 .nr doc-have-old-func 0
 .
@@ -4592,7 +4593,7 @@
 .\" NS   doc-have-var
 .\" NS   doc-is-func
 .\" NS
-.\" NS width register `Ot' set in doc-common
+.\" NS width register 'Ot' set in doc-common
 .
 .de Ot
 .  nr doc-have-old-func 1
@@ -4627,7 +4628,7 @@
 .\" NS   doc-curr-size
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Fa' set in doc-common
+.\" NS width register 'Fa' set in doc-common
 .
 .de Fa
 .  if !\n[doc-arg-limit] \{\
@@ -4745,7 +4746,7 @@
 .\" NS   doc-is-func
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Fn' set in doc-common
+.\" NS width register 'Fn' set in doc-common
 .
 .de Fn
 .  if !\n[doc-arg-limit] \{\
@@ -4905,7 +4906,7 @@
 .\" NS   doc-macro-name
 .\" NS   doc-saved-nesting-level
 .\" NS
-.\" NS width register `Fo' set in doc-common
+.\" NS width register 'Fo' set in doc-common
 .
 .de Fo
 .  if (\n[doc-in-func-enclosure]) \{\
@@ -4989,7 +4990,7 @@
 .\" NS   doc-saved-nesting-level
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `Fc' set in doc-common
+.\" NS width register 'Fc' set in doc-common
 .
 .de Fc
 .  if !\n[doc-in-func-enclosure] \{\
@@ -5072,12 +5073,12 @@
 ..
 .
 .
-.\" Very crude references: Stash all reference info into boxes, print out
-.\" reference on .Re macro and clean up.  Ordering very limited, no fancy
-.\" citations, but can do articles, journals, and books -- need to add
-.\" several missing options (like city etc).  Should be able to grab a refer
-.\" entry, massage it a wee bit (prefix a `.' to the %[A-Z]) and not worry
-.\" (ha!).
+.\" Very crude references: Stash all reference info into boxes, print
+.\" out reference on .Re macro and clean up.  Ordering very limited, no
+.\" fancy citations, but can do articles, journals, and books -- need to
+.\" add several missing options (like city etc).  Should be able to grab
+.\" a refer entry, massage it a wee bit (prefix a '.' to the %[A-Z]) and
+.\" not worry (ha!).
 .
 .
 .\" NS doc-is-reference global register (bool)
@@ -5099,7 +5100,7 @@
 .\" NS   doc-is-reference
 .\" NS   doc-reference-count
 .\" NS
-.\" NS width register `Rs' set in doc-common
+.\" NS width register 'Rs' set in doc-common
 .
 .de Rs
 .  ie \n[.$] \
@@ -5120,7 +5121,7 @@
 .\" NS modifies:
 .\" NS   doc-is-reference
 .\" NS
-.\" NS width register `Re' set in doc-common
+.\" NS width register 'Re' set in doc-common
 .
 .de Re
 .  ie \n[.$] \
@@ -5403,7 +5404,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%A
 .\" NS
-.\" NS width register `%A' set in doc-common
+.\" NS width register '%A' set in doc-common
 .
 .de %A
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5457,7 +5458,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%B
 .\" NS
-.\" NS width register `%B' set in doc-common
+.\" NS width register '%B' set in doc-common
 .
 .de %B
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5520,7 +5521,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%C
 .\" NS
-.\" NS width register `%C' set in doc-common
+.\" NS width register '%C' set in doc-common
 .
 .de %C
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5574,7 +5575,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%D
 .\" NS
-.\" NS width register `%D' set in doc-common
+.\" NS width register '%D' set in doc-common
 .
 .de %D
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5628,7 +5629,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%I
 .\" NS
-.\" NS width register `%I' set in doc-common
+.\" NS width register '%I' set in doc-common
 .
 .de %I
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5683,7 +5684,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%J
 .\" NS
-.\" NS width register `%J' set in doc-common
+.\" NS width register '%J' set in doc-common
 .
 .de %J
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5738,7 +5739,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%N
 .\" NS
-.\" NS width register `%N' set in doc-common
+.\" NS width register '%N' set in doc-common
 .
 .de %N
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5792,7 +5793,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%O
 .\" NS
-.\" NS width register `%O' set in doc-common
+.\" NS width register '%O' set in doc-common
 .
 .de %O
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5846,7 +5847,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%P
 .\" NS
-.\" NS width register `%P' set in doc-common
+.\" NS width register '%P' set in doc-common
 .
 .de %P
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5900,7 +5901,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%Q
 .\" NS
-.\" NS width register `%Q' set in doc-common
+.\" NS width register '%Q' set in doc-common
 .
 .de %Q
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -5954,7 +5955,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%R
 .\" NS
-.\" NS width register `%R' set in doc-common
+.\" NS width register '%R' set in doc-common
 .
 .de %R
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -6015,7 +6016,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%T
 .\" NS
-.\" NS width register `%T' set in doc-common
+.\" NS width register '%T' set in doc-common
 .
 .de %T
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -6104,7 +6105,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%U
 .\" NS
-.\" NS width register `%U' set in doc-common
+.\" NS width register '%U' set in doc-common
 .
 .de %U
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -6146,7 +6147,7 @@
 .\" NS local variables:
 .\" NS   doc-env-%V
 .\" NS
-.\" NS width register `%V' set in doc-common
+.\" NS width register '%V' set in doc-common
 .
 .de %V
 .  if (\n[doc-arg-limit] : (\n[.$] == 0)) \{\
@@ -6222,7 +6223,7 @@
 .\" NS   doc-curr-font
 .\" NS   doc-curr-size
 .\" NS
-.\" NS width register `Hf' set in doc-common
+.\" NS width register 'Hf' set in doc-common
 .
 .de Hf
 .  ie ((\n[.$] == 1) & (\n[doc-arg-limit] == 0)) \{\
@@ -6242,7 +6243,7 @@
 .
 .
 .\" NS doc-have-author global register (bool)
-.\" NS   set in `An'
+.\" NS   set in 'An'
 .
 .nr doc-have-author 0
 .
@@ -6257,7 +6258,7 @@
 .\" NS   doc-have-author
 .\" NS   doc-macro-name
 .\" NS
-.\" NS width register `An' set in doc-common
+.\" NS width register 'An' set in doc-common
 .
 .de An
 .  if !\n[doc-arg-limit] \{\
@@ -6299,7 +6300,7 @@
 .\" NS Rv user macro
 .\" NS   return values
 .\" NS
-.\" NS width register `Rv' set in doc-common
+.\" NS width register 'Rv' set in doc-common
 .\" NS
 .\" NS local variables:
 .\" NS   doc-str-Rv-std-prefix
@@ -6329,7 +6330,7 @@
 .
 .de Rv
 .
-.\" XXX: what does this function without `-std'?
+.\" XXX: what does this function without '-std'?
 .
 .  if \n[doc-arg-limit] \{\
 .    tm Usage: .Rv not callable by other macros (#\n[.c])
@@ -6376,7 +6377,7 @@
 .\" NS Ex user macro
 .\" NS   exit status
 .\" NS
-.\" NS width register `Ex' set in doc-common
+.\" NS width register 'Ex' set in doc-common
 .\" NS
 .\" NS local variables:
 .\" NS   doc-str-Ex-std-prefix
@@ -6393,7 +6394,7 @@
 .
 .de Ex
 .
-.\" XXX: what does this function without `-std'?
+.\" XXX: what does this function without '-std'?
 .
 .  if \n[doc-arg-limit] \{\
 .    tm Usage: .Ex not callable by other macros (#\n[.c])
@@ -6546,8 +6547,8 @@
 .ec
 .
 .
-.\" For UTF-8, map some characters conservatively for the sake
-.\" of easy cut and paste.
+.\" For UTF-8, map some characters conservatively for the sake of easy
+.\" cut and paste.
 .
 .if '\*[.T]'utf8' \{\
 .  rchar \- - ' `
@@ -6562,4 +6563,12 @@
 .\" load local modifications
 .mso mdoc.local
 .
-.\" EOF
+.\" ====================================================================
+.\" Editor settings
+.\" ====================================================================
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:

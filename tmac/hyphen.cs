@@ -1,23 +1,24 @@
-% This is the groff hyphenation pattern file `hyphen.cs' for Czech.
+% This is the groff hyphenation pattern file 'hyphen.cs' for Czech.
 %
-% It is based on the TeX pattern file `czhyphen.tex', version 3 (1995),
+% It is based on the TeX pattern file 'czhyphen.tex', version 3 (1995),
 % prepared by Pavel ©eveèek <pavel@lingea.cz>.
 %
 % Here is the copyright message:
 %
-%   This is free software; you can redistribute it and/or modify
-%   it under the terms of the GNU General Public License as published by
+%   This is free software; you can redistribute it and/or modify it
+%   under the terms of the GNU General Public License as published by
 %   the Free Software Foundation; either version 2 of the License, or
 %   (at your option) any later version.
 %
-%   This file is distributed in the hope that it will be useful,
-%   but WITHOUT ANY WARRANTY; without even the implied warranty of
-%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%   GNU General Public License for more details.
+%   This file is distributed in the hope that it will be useful, but
+%   WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+%   General Public License for more details.
 %
 %   You should have received a copy of the GNU General Public License
 %   along with this program; if not, write to the Free Software
-%   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+%   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+%   02110-1301 USA.
 %
 % Please check the original file for more details.
 %
@@ -3663,8 +3664,13 @@ zù3s
 ¾¹4tì
 }
 
-% Local Variables:
-% coding: latin-2
-% End:
+% ======================================================================
+% Editor settings
+% ======================================================================
 %
-% End of file `hyphen.cs'.
+% Local Variables:
+% mode: tex
+% coding: latin-2
+% fill-column: 72
+% End:
+% vim: set filetype=tex textwidth=72:
