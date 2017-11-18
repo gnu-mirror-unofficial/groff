@@ -715,7 +715,7 @@
 .      ie d doc-operating-system-BSD-\$2 \
 .        ds doc-operating-system "\*[doc-operating-system-BSD-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown BSD version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown BSD version '\$2' (#\n[.c])
 .  \}\}
 .  el \{ .ie "\$1"FreeBSD" \{\
 .    ds doc-operating-system FreeBSD
@@ -723,7 +723,7 @@
 .      ie d doc-operating-system-FreeBSD-\$2 \
 .        as doc-operating-system \~\*[doc-operating-system-FreeBSD-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown FreeBSD version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown FreeBSD version '\$2' (#\n[.c])
 .  \}\}
 .  el \{ .ie "\$1"DragonFly" \{\
 .    ds doc-operating-system DragonFly
@@ -731,7 +731,7 @@
 .      ie d doc-operating-system-DragonFly-\$2 \
 .        as doc-operating-system \~\*[doc-operating-system-DragonFly-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown DragonFly version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown DragonFly version '\$2' (#\n[.c])
 .  \}\}
 .  el \{ .ie "\$1"NetBSD" \{\
 .    ds doc-operating-system NetBSD
@@ -739,7 +739,7 @@
 .      ie d doc-operating-system-NetBSD-\$2 \
 .        as doc-operating-system \~\*[doc-operating-system-NetBSD-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown NetBSD version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown NetBSD version '\$2' (#\n[.c])
 .  \}\}
 .  el \{ .ie "\$1"OpenBSD" \{\
 .    ds doc-operating-system OpenBSD
@@ -747,7 +747,7 @@
 .      ie d doc-operating-system-OpenBSD-\$2 \
 .        as doc-operating-system \~\*[doc-operating-system-OpenBSD-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown OpenBSD version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown OpenBSD version '\$2' (#\n[.c])
 .  \}\}
 .  el \{ .ie "\$1"Darwin" \{\
 .    ds doc-operating-system Darwin
@@ -755,7 +755,7 @@
 .      ie d doc-operating-system-Darwin-\$2 \
 .        as doc-operating-system \~\*[doc-operating-system-Darwin-\$2]
 .      el \
-.        tm mdoc warning: .Os: Unknown Darwin version `\$2' (#\n[.c])
+.        tm mdoc warning: .Os: Unknown Darwin version '\$2' (#\n[.c])
 .  \}\}
 .  el \{\
 .    ds doc-operating-system \$1
@@ -1234,16 +1234,16 @@
 .
 .de Rd
 .  tm MDOC GLOBAL REGISTER DUMP
-.  tm doc-macro-name == `\*[doc-macro-name]'
+.  tm doc-macro-name == '\*[doc-macro-name]'
 .  tm doc-arg-limit == \n[doc-arg-limit]
 .  tm doc-num-args == \n[doc-num-args]
 .  tm doc-arg-ptr == \n[doc-arg-ptr]
 .
 .  nr doc-reg-Rd 1
 .  while (\n[doc-reg-Rd] <= \n[doc-arg-limit]) \{\
-.    tm doc-arg\n[doc-reg-Rd] == `\*[doc-arg\n[doc-reg-Rd]]'
+.    tm doc-arg\n[doc-reg-Rd] == '\*[doc-arg\n[doc-reg-Rd]]'
 .    tm doc-type\n[doc-reg-Rd] == \n[doc-type\n[doc-reg-Rd]]
-.    tm doc-space\n[doc-reg-Rd] == `\*[doc-space\n[doc-reg-Rd]]'
+.    tm doc-space\n[doc-reg-Rd] == '\*[doc-space\n[doc-reg-Rd]]'
 .    nr doc-reg-Rd +1
 .  \}
 .
@@ -1253,13 +1253,13 @@
 .  tm doc-indent-synopsis-active == \n[doc-indent-synopsis-active]
 .  tm doc-have-decl == \n[doc-have-decl]
 .  tm doc-have-var == \n[doc-have-var]
-.  tm doc-command-name == `\*[doc-command-name]'
-.  tm doc-quote-left == `\*[doc-quote-left]'
-.  tm doc-quote-right == `\*[doc-quote-right]'
+.  tm doc-command-name == '\*[doc-command-name]'
+.  tm doc-quote-left == '\*[doc-quote-left]'
+.  tm doc-quote-right == '\*[doc-quote-right]'
 .  tm doc-nesting-level == \n[doc-nesting-level]
 .  tm doc-in-list == \n[doc-in-list]
-.  tm doc-space == `\*[doc-space]'
-.  tm doc-saved-space == `\*[doc-saved-space]'
+.  tm doc-space == '\*[doc-space]'
+.  tm doc-saved-space == '\*[doc-saved-space]'
 .  tm doc-space-mode == \n[doc-space-mode]
 .  tm doc-have-space == \n[doc-have-space]
 .  tm doc-have-slot == \n[doc-have-slot]
@@ -1269,7 +1269,7 @@
 .
 .  nr doc-reg-Rd 0
 .  while (\n[doc-reg-Rd] <= \n[doc-display-depth]) \{\
-.    tm doc-display-type-stack\n[doc-reg-Rd] == `\*[doc-display-type-stack\n[doc-reg-Rd]]'
+.    tm doc-display-type-stack\n[doc-reg-Rd] == '\*[doc-display-type-stack\n[doc-reg-Rd]]'
 .    tm doc-display-indent-stack\n[doc-reg-Rd] == \n[doc-display-indent-stack\n[doc-reg-Rd]]
 .    tm doc-display-ad-stack\n[doc-reg-Rd] == \n[doc-display-ad-stack\n[doc-reg-Rd]]
 .    tm doc-display-fi-stack\n[doc-reg-Rd] == \n[doc-display-fi-stack\n[doc-reg-Rd]]
@@ -1282,8 +1282,8 @@
 .
 .  nr doc-reg-Rd 1
 .  while (\n[doc-reg-Rd] <= \n[doc-fontmode-depth]) \{\
-.    tm doc-fontmode-font-stack\n[doc-reg-Rd] == `\n[doc-fontmode-font-stack\n[doc-reg-Rd]]'
-.    tm doc-fontmode-size-stack\n[doc-reg-Rd] == `\n[doc-fontmode-size-stack\n[doc-reg-Rd]]'
+.    tm doc-fontmode-font-stack\n[doc-reg-Rd] == '\n[doc-fontmode-font-stack\n[doc-reg-Rd]]'
+.    tm doc-fontmode-size-stack\n[doc-reg-Rd] == '\n[doc-fontmode-size-stack\n[doc-reg-Rd]]'
 .    nr doc-reg-Rd +1
 .  \}
 .
@@ -1291,27 +1291,27 @@
 .
 .  nr doc-reg-Rd 1
 .  while (\n[doc-reg-Rd] <= \n[doc-list-depth]) \{\
-.    tm doc-list-type-stack\n[doc-reg-Rd] == `\*[doc-list-type-stack\n[doc-reg-Rd]]'
+.    tm doc-list-type-stack\n[doc-reg-Rd] == '\*[doc-list-type-stack\n[doc-reg-Rd]]'
 .    tm doc-list-have-indent-stack\n[doc-reg-Rd] == \n[doc-list-have-indent-stack\n[doc-reg-Rd]]
 .    tm doc-list-indent-stack\n[doc-reg-Rd] == \n[doc-list-indent-stack\n[doc-reg-Rd]]
 .    tm doc-compact-list-stack\n[doc-reg-Rd] == \n[doc-compact-list-stack\n[doc-reg-Rd]]
-.    tm doc-tag-prefix-stack\n[doc-reg-Rd] == `\*[doc-tag-prefix-stack\n[doc-reg-Rd]]'
-.    tm doc-tag-width-stack\n[doc-reg-Rd] == `\*[doc-tag-width-stack\n[doc-reg-Rd]]'
+.    tm doc-tag-prefix-stack\n[doc-reg-Rd] == '\*[doc-tag-prefix-stack\n[doc-reg-Rd]]'
+.    tm doc-tag-width-stack\n[doc-reg-Rd] == '\*[doc-tag-width-stack\n[doc-reg-Rd]]'
 .    tm doc-list-offset-stack\n[doc-reg-Rd] == \n[doc-list-offset-stack\n[doc-reg-Rd]]
 .    tm doc-enum-list-count-stack\n[doc-reg-Rd] == \n[doc-enum-list-count-stack\n[doc-reg-Rd]]
 .    nr doc-reg-Rd +1
 .  \}
 .
-.  tm doc-saved-Pa-font == `\*[doc-saved-Pa-font]'
+.  tm doc-saved-Pa-font == '\*[doc-saved-Pa-font]'
 .  tm doc-curr-type == \n[doc-curr-type]
-.  tm doc-curr-arg == `\*[doc-curr-arg]'
+.  tm doc-curr-arg == '\*[doc-curr-arg]'
 .  tm doc-diag-list-input-line-count == \n[doc-diag-list-input-line-count]
 .  tm doc-num-columns == \n[doc-num-columns]
 .  tm doc-column-indent-width == \n[doc-column-indent-width]
 .  tm doc-is-func == \n[doc-is-func]
 .  tm doc-have-old-func == \n[doc-have-old-func]
 .  tm doc-func-arg-count == \n[doc-func-arg-count]
-.  tm doc-func-arg == `\*[doc-func-arg]'
+.  tm doc-func-arg == '\*[doc-func-arg]'
 .  tm doc-num-func-args == \n[doc-num-func-args]
 .  tm doc-func-args-processed == \n[doc-func-args-processed]
 .  tm doc-have-func == \n[doc-have-func]
@@ -1321,46 +1321,46 @@
 .
 .  nr doc-reg-Rd 0
 .  while (\n[doc-reg-Rd] <= \n[doc-author-count]) \{\
-.    tm doc-author-name\n[doc-reg-Rd] == `\*[doc-author-name\n[doc-reg-Rd]]'
+.    tm doc-author-name\n[doc-reg-Rd] == '\*[doc-author-name\n[doc-reg-Rd]]'
 .    nr doc-reg-Rd +1
 .  \}
 .
 .  tm doc-book-count == \n[doc-book-count]
-.  tm doc-book-name == `\*[doc-book-name]'
+.  tm doc-book-name == '\*[doc-book-name]'
 .  tm doc-date-count == \n[doc-date-count]
-.  tm doc-date == `\*[doc-date]'
+.  tm doc-date == '\*[doc-date]'
 .  tm doc-publisher-count == \n[doc-publisher-count]
-.  tm doc-publisher-name == `\*[doc-publisher-name]'
+.  tm doc-publisher-name == '\*[doc-publisher-name]'
 .  tm doc-journal-count == \n[doc-journal-count]
-.  tm doc-journal-name == `\*[doc-journal-name]'
+.  tm doc-journal-name == '\*[doc-journal-name]'
 .  tm doc-issue-count == \n[doc-issue-count]
-.  tm doc-issue-name == `\*[doc-issue-name]'
+.  tm doc-issue-name == '\*[doc-issue-name]'
 .  tm doc-optional-count == \n[doc-optional-count]
-.  tm doc-optional-string == `\*[doc-optional-string]'
+.  tm doc-optional-string == '\*[doc-optional-string]'
 .  tm doc-page-number-count == \n[doc-page-number-count]
-.  tm doc-page-number-string == `\*[doc-page-number-string]'
+.  tm doc-page-number-string == '\*[doc-page-number-string]'
 .  tm doc-corporate-count == \n[doc-corporate-count]
-.  tm doc-corporate-name == `\*[doc-corporate-name]'
+.  tm doc-corporate-name == '\*[doc-corporate-name]'
 .  tm doc-report-count == \n[doc-report-count]
-.  tm doc-report-name == `\*[doc-report-name]'
+.  tm doc-report-name == '\*[doc-report-name]'
 .  tm doc-reference-title-count == \n[doc-reference-title-count]
-.  tm doc-reference-title-name == `\*[doc-reference-title-name]'
-.  tm doc-reference-title-name-for-book == `\*[doc-reference-title-name-for-book]'
+.  tm doc-reference-title-name == '\*[doc-reference-title-name]'
+.  tm doc-reference-title-name-for-book == '\*[doc-reference-title-name-for-book]'
 .  tm doc-url-count == \n[doc-url-count]
-.  tm doc-url-name == `\*[doc-url-name]'
+.  tm doc-url-name == '\*[doc-url-name]'
 .  tm doc-volume-count == \n[doc-volume-count]
-.  tm doc-volume-name == `\*[doc-volume-name]'
+.  tm doc-volume-name == '\*[doc-volume-name]'
 .  tm doc-have-author == \n[doc-have-author]
 .
-.  tm doc-document-title == `\*[doc-document-title]'
-.  tm doc-volume == `\*[doc-volume]'
-.  tm doc-section == `\*[doc-section]'
-.  tm doc-operating-system == `\*[doc-operating-system]'
-.  tm doc-date-string == `\*[doc-date-string]'
+.  tm doc-document-title == '\*[doc-document-title]'
+.  tm doc-volume == '\*[doc-volume]'
+.  tm doc-section == '\*[doc-section]'
+.  tm doc-operating-system == '\*[doc-operating-system]'
+.  tm doc-date-string == '\*[doc-date-string]'
 .  tm doc-header-space == \n[doc-header-space]
 .  tm doc-footer-space == \n[doc-footer-space]
 .  tm doc-display-vertical == \n[doc-display-vertical]
-.  tm doc-header-string == `\*[doc-header-string]'
+.  tm doc-header-string == '\*[doc-header-string]'
 .  tm doc-in-synopsis-section == \n[doc-in-synopsis-section]
 .  tm doc-in-library-section == \n[doc-in-library-section]
 .  tm doc-in-see-also-section == \n[doc-in-see-also-section]

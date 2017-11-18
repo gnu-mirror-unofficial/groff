@@ -2084,7 +2084,7 @@
 .
 .de Ap
 .  ie !\n[doc-arg-limit] \
-.    tm Usage: `Ap' cannot be first macro on a line (no `.Ap') (#\n[.c])
+.    tm Usage: 'Ap' cannot be first macro on a line (no '.Ap') (#\n[.c])
 .  el \{\
 .    nop \)'\)\c
 .    nr doc-arg-ptr +1
@@ -2499,7 +2499,7 @@
 .    el \{ .ie "\$1"-symbolic" \
 .      nop \*[doc-Sy-font]\c
 .    el \{\
-.      tmc mdoc warning: Unknown keyword `\$1' in .Bf macro
+.      tmc mdoc warning: Unknown keyword '\$1' in .Bf macro
 .      tm1 " (#\n[.c])
 .  \}\}\}\}\}\}\}
 .  el \
@@ -2569,7 +2569,7 @@
 .    doc-set-hard-space
 .  \}
 .  el \{\
-.    tm mdoc warning: Unknown keyword `\$1' in .Bk macro (#\n[.c])
+.    tm mdoc warning: Unknown keyword '\$1' in .Bk macro (#\n[.c])
 .    nr doc-keep-type 3
 .  \}\}\}
 .
@@ -2747,7 +2747,7 @@
 .    nf
 .  \}
 .  el \{\
-.    tm1 "mdoc warning: Unknown keyword `\$1' (or missing display type)
+.    tm1 "mdoc warning: Unknown keyword '\$1' (or missing display type)
 .    tm1 "              in .Bd macro (#\n[.c])
 .    nr doc-reg-Bd 0
 .  \}\}\}\}\}
@@ -2873,10 +2873,10 @@
 .      nr doc-reg-ddBa 2
 .    \}
 .    el \
-.      tm mdoc warning: .Bd `-file' keyword requires argument (#\n[.c])
+.      tm mdoc warning: .Bd '-file' keyword requires argument (#\n[.c])
 .  \}
 .  el \
-.      tm mdoc warning: Unknown keyword `\$1' in .Bd macro (#\n[.c])
+.      tm mdoc warning: Unknown keyword '\$1' in .Bd macro (#\n[.c])
 .  \}\}
 .
 .  if (\n[doc-reg-ddBa] < \n[.$]) \{\
@@ -3033,7 +3033,7 @@
 .    linetabs 1
 .  \}
 .  el \{\
-.    tm1 "mdoc warning: Unknown list type `\$1' (or missing list type)
+.    tm1 "mdoc warning: Unknown list type '\$1' (or missing list type)
 .    tm1 "              in .Bl macro
 .    tm
 .    nr doc-arg-ptr 0
@@ -3143,7 +3143,7 @@
 .      nr doc-list-indent-stack\n[doc-list-depth] +\n[doc-reg-dBla1]n
 .    \}
 .    el \
-.      tm mdoc warning: `-nested' allowed with nested .Bl macros only (#\n[.c])
+.      tm mdoc warning: '-nested' allowed with nested .Bl macros only (#\n[.c])
 .  \}
 .
 .  el \{ .ie "\*[doc-arg\n[doc-arg-ptr]]"-width" \{\
@@ -3312,7 +3312,7 @@
 .        ds doc-arg\n[doc-num-columns] "\*[doc-arg\n[doc-arg-ptr]]
 .    \}
 .    el \{\
-.      tmc mdoc warning: Unknown keyword `\*[doc-arg\n[doc-arg-ptr]]'
+.      tmc mdoc warning: Unknown keyword '\*[doc-arg\n[doc-arg-ptr]]'
 .      tm1 " in .Bl macro (#\n[.c])
 .  \}\}
 .
@@ -3745,7 +3745,7 @@
 .
 .  ie (\n[doc-reg-It] == 1) \{\
 .    if \n[.$] \{\
-.      tm1 "mdoc warning: .It macros in lists of type `\*[doc-str-It]'
+.      tm1 "mdoc warning: .It macros in lists of type '\*[doc-str-It]'
 .      tm1 "              don't take arguments (#\n[.c])
 .  \}\}
 .  el \{\
@@ -3772,7 +3772,7 @@
 .          doc-print-recursive
 .    \}\}\}
 .    el \{\
-.      tm1 "mdoc warning: .It macros in lists of type `\*[doc-str-It]'
+.      tm1 "mdoc warning: .It macros in lists of type '\*[doc-str-It]'
 .      tm1 "              require arguments (#\n[.c])
 .    \}
 .  \}
@@ -6517,7 +6517,7 @@
 .als Ds doc-defunct-macro
 .
 .als Or doc-defunct-macro
-.ds doc-Or-usage use `|'
+.ds doc-Or-usage use '|'
 .
 .als Sf doc-defunct-macro
 .ds doc-Sf-usage use .Pf or .Ns
@@ -6527,7 +6527,7 @@
 .
 .de em
 .  tm1 "mdoc error: end-macro (.em) respecification is not allowed. (#\n[.c])
-.  tm1 "            Should this have been `.Em ...'?
+.  tm1 "            Should this have been '.Em ...'?
 .  ab
 ..
 .
