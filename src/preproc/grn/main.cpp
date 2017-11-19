@@ -842,7 +842,7 @@ interpret(char *line)
   stipplecommand:		/* set stipple name */
     stipple = (char *) malloc(strlen(str2) + 1);
     strcpy(stipple, str2);
-    /* if its a 'known' font (currently only 'cf'), set indices    */
+    /* if it's a 'known' font (currently only 'cf'), set indices    */
     if (strcmp(stipple, "cf") == 0)
       defstipple_index = cf_stipple_index;
     else
