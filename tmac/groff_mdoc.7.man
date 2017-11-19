@@ -726,20 +726,20 @@ used.
 .
 .Pp
 Under
-.Tn \*[operating-system] ,
+.Tn \*[doc-operating-system] ,
 the following sections are defined:
 .Pp
 .TS
 l l l.
-1	\*[volume-operating-system] \*[volume-ds-1]
-2	\*[volume-operating-system] \*[volume-ds-2]
-3	\*[volume-operating-system] \*[volume-ds-3]
-4	\*[volume-operating-system] \*[volume-ds-4]
-5	\*[volume-operating-system] \*[volume-ds-5]
-6	\*[volume-operating-system] \*[volume-ds-6]
-7	\*[volume-operating-system] \*[volume-ds-7]
-8	\*[volume-operating-system] \*[volume-ds-8]
-9	\*[volume-operating-system] \*[volume-ds-9]
+1	\*[doc-volume-operating-system] \*[doc-volume-ds-1]
+2	\*[doc-volume-operating-system] \*[doc-volume-ds-2]
+3	\*[doc-volume-operating-system] \*[doc-volume-ds-3]
+4	\*[doc-volume-operating-system] \*[doc-volume-ds-4]
+5	\*[doc-volume-operating-system] \*[doc-volume-ds-5]
+6	\*[doc-volume-operating-system] \*[doc-volume-ds-6]
+7	\*[doc-volume-operating-system] \*[doc-volume-ds-7]
+8	\*[doc-volume-operating-system] \*[doc-volume-ds-8]
+9	\*[doc-volume-operating-system] \*[doc-volume-ds-9]
 .TE
 .Pp
 .
@@ -748,16 +748,16 @@ A volume name may be arbitrary or one of the following:
 .Pp
 .TS
 l l.
-USD	\*[volume-ds-USD]
-PS1	\*[volume-ds-PS1]
-AMD	\*[volume-ds-AMD]
-SMM	\*[volume-ds-SMM]
-URM	\*[volume-ds-URM]
-PRM	\*[volume-ds-PRM]
-KM 	\*[volume-ds-KM]
-IND	\*[volume-ds-IND]
-LOCAL	\*[volume-ds-LOCAL]
-CON	\*[volume-ds-CON]
+USD	\*[doc-volume-ds-USD]
+PS1	\*[doc-volume-ds-PS1]
+AMD	\*[doc-volume-ds-AMD]
+SMM	\*[doc-volume-ds-SMM]
+URM	\*[doc-volume-ds-URM]
+PRM	\*[doc-volume-ds-PRM]
+KM 	\*[doc-volume-ds-KM]
+IND	\*[doc-volume-ds-IND]
+LOCAL	\*[doc-volume-ds-LOCAL]
+CON	\*[doc-volume-ds-CON]
 .TE
 .Pp
 .
@@ -806,16 +806,16 @@ prevents the digit\~7 from being a valid numeric expression.
 .Bl -tag -width ".Li .Dt\ FOO\ 2\ i386" -compact -offset indent
 .It Li ".Dt FOO 7"
 .Ql FOO(7)
-.Ql \*[volume-operating-system] \*[volume-ds-7]
+.Ql \*[doc-volume-operating-system] \*[doc-volume-ds-7]
 .It Li ".Dt FOO 7 bar"
 .Ql FOO(7)
-.Ql \*[volume-operating-system] \*[volume-ds-7]
+.Ql \*[doc-volume-operating-system] \*[doc-volume-ds-7]
 .It Li ".Dt FOO \e&7 bar"
 .Ql FOO(7)
 .Ql bar
 .It Li ".Dt FOO 2 i386"
 .Ql FOO(2)
-.Ql \*[volume-operating-system]/\*[volume-as-i386] \*[volume-ds-2]
+.Ql \*[doc-volume-operating-system]/\*[doc-volume-as-i386] \*[doc-volume-ds-2]
 .It Li ".Dt FOO \*[q]\*[q] bar"
 .Ql FOO
 .Ql bar
@@ -843,7 +843,7 @@ This macro is neither callable nor parsed.
 .Xc
 If the first parameter is empty,
 the default
-.Sq Tn "\*[operating-system]"
+.Sq Tn "\*[doc-operating-system]"
 is used.
 This may be overridden in the local configuration file,
 .Pa mdoc.local .
@@ -1629,10 +1629,10 @@ produces:
 .
 .Bd -ragged -offset indent
 \# a small hack to suppress a warning message
-.ds section-old "\*[section]
-.ds section 3
+.ds doc-section-old "\*[doc-section]
+.ds doc-section 3
 .Rv -std atexit
-.ds section "\*[section-old]
+.ds doc-section "\*[doc-section-old]
 .Ed
 .Pp
 .
@@ -1659,10 +1659,10 @@ produces:
 .
 .Bd -ragged -offset indent
 \# a small hack to suppress a warning message
-.ds section-old "\*[section]
-.ds section 1
+.ds doc-section-old "\*[doc-section]
+.ds doc-section 1
 .Ex -std cat
-.ds section "\*[section-old]
+.ds doc-section "\*[doc-section-old]
 .Ed
 .Pp
 .
