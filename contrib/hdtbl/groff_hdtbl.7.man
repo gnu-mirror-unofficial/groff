@@ -649,9 +649,10 @@ Horizontal alignment of the table, if it is smaller than the line width.
 Widths of table cells.
 .
 .CI w1\c
-,
+.RI , ""
 .CI w2\c
-, \[ell] are either numbers of type\~\c
+.RI , ""
+\[ell] are either numbers of type\~\c
 .CI n
 or natural numbers with the pseudo-scaling indicator
 .CR \[oq]%\[cq]\c
@@ -681,7 +682,8 @@ Height of the table.
 .
 If the table with its contents is lower than\~\c
 .CI n\c
-, the last row is stretched to this value.
+.RI , ""
+the last row is stretched to this value.
 .RE
 .RE
 .
@@ -734,10 +736,12 @@ Begin a new table row.
 The height of the row.
 .
 If a cell in the row is higher than\~\c
-.CI n
-this value is ignored; otherwise the row height is stretched to\~\c
 .CI n\c
-\&.
+.RI , ""
+this value is ignored;
+otherwise the row height is stretched to\~\c
+.CI n\c
+.RI . ""
 .RE
 .RE
 .
@@ -935,8 +939,9 @@ This argument is ignored for inner (nested) tables.
 .TP
 .CBI ".t*free " \[lB]n\[rB]
 Free the next held table or
-.CI n\c
-\~held tables.
+.CI n\~\c
+.RI held ""
+tables.
 .
 Call this utility macro to print tables which are held by using the
 .CR \[oq]hold\[cq]
@@ -1043,9 +1048,11 @@ The font style in use right before the table (string
 .XAA "fsz=\[aq]" "d1 \[lB]d2\[rB]" \[aq]
 A decimal or fractional factor
 .CI d1\c
-, by which the point size for the table is changed, and
+.RI , ""
+by which the point size for the table is changed, and
 .CI d2\c
-, by which the vertical line spacing is changed.
+.RI , ""
+by which the vertical line spacing is changed.
 .
 If
 .CI d2
