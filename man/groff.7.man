@@ -2615,37 +2615,38 @@ for an overview) or from a preprocessor.
 .
 .
 .P
-Preprocessor macros are easy to be recognized.
+Preprocessor macros are to recognize.
 .
-They enclose their code into a pair of characteristic macros.
+They enclose their code between a pair of characteristic macros.
 .
 .
 .P
 .TS
-box, center, tab (@);
+box, center, tab (^);
 c | c | c
 CfCB | CfCB | CfCB.
-preprocessor@start macro@ end macro
+preprocessor^start macro^ end macro
 =
-chem@.cstart@.cend
-eqn@.EQ@.EN
-gideal@.IS@.IE
-grap@.G1@.G2
-grn@.GS@.GE
-@@.IF
-pic@.PS@.PE
-refer@.R1@.R2
-soelim@\f[I]none@\f[I]none
-tbl@.TS@.TE
+@g@chem^.cstart^.cend
+@g@eqn^.EQ^.EN
+grap^.G1^.G2
+@g@grn^.GS^.GE
+.\" Keep the .IF line below the @g@ideal line.
+@g@ideal^.IS^.IE
+^^.IF
+@g@pic^.PS^.PE
+@g@refer^.R1^.R2
+@g@soelim^\f[I]none^\f[I]none
+@g@tbl^.TS^.TE
 _
-glilypond@.lilypond start@.lilypond stop
-gperl@.Perl start@.Perl stop
-gpinyin@.pinyin start@.pinyin stop
+glilypond^.lilypond start^.lilypond stop
+gperl^.Perl start^.Perl stop
+gpinyin^.pinyin start^.pinyin stop
 .TE
 .
 .
 .P
-Note that the \[oq]ideal\[cq] preprocessor is not available in groff
+Note that the \[oq]@g@ideal\[cq] preprocessor is not available in groff
 yet.
 .
 .
