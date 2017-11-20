@@ -878,7 +878,7 @@ SUFFIXES += .man
 	     -e "s|[@]EXAMPLEDIR[@]|$(exampledir)|g" \
 	     -e "s|[@]FONTDIR[@]|$(fontdir)|g" \
 	     -e "s|[@]g[@]|$(g)|g" \
-	     -e "s![@]G[@]!`echo $(g) | tr [a-z] [A-Z]`!g" \
+	     -e "s![@]G[@]!`echo $(g) | tr '[a-z]' '[A-Z]'`!g" \
 	     -e "s|[@]HTMLDOCDIR[@]|$(htmldocdir)|g" \
 	     -e "s|[@]INDEX_SUFFIX[@]|$(indexext)|g" \
 	     -e "s|[@]LEGACYFONTDIR[@]|$(legacyfontdir)|g" \

@@ -1,5 +1,14 @@
 2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Makefile.am: Protect arguments to "tr" from globbing.
+
+	Prevents errors from tr during man page generation and possible
+	incorrect program prefixing in those pages if, for example, some
+	doofus has directories called "A", "B", ...  hanging around in
+	the build tree.
+
+2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	contrib/hdtbl/examples/*.roff: Seed RNG.
 
 	* contrib/hdtbl/examples/col_rowspan_colors.roff:
