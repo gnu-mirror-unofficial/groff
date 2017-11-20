@@ -30,7 +30,7 @@ Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 This file is part of 'chem', which is part of 'groff'.
 
 'groff' is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License (GPL) vbersion 2 as
+under the terms of the GNU General Public License (GPL) version 2 as
 published by the Free Software Foundation.
 
 'groff' is distributed in the hope that it will be useful, but WITHOUT
