@@ -1,3 +1,15 @@
+2017-11-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	man pages: Fix compatibility-mode problems.
+
+	* contrib/gperl/gperl.1.man: Use idiomatic .BI macro instead of
+	  leading an input line with a font escape followed by a dot,
+	  the interpretation of which differs based on compatibility
+	  mode.
+
+	* src/preproc/soelim/soelim.1.man: Make .mso request only after
+	  compatibility mode is turned off.
+
 2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Makefile.am: Protect arguments to "tr" from globbing.
