@@ -15662,18 +15662,17 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    if !'\\*[$1ST_LETTER]'' .substring $1ST_LETTER 0 0
 .    if '\\*[$1ST_LETTER]'r' .ds $1ST_LETTER R
 .    ie '\\*[$1ST_LETTER]'R' \{\
+.       if r #ROMAN_LIST .rr #ROMAN_LIST
+.       if '\\$1'ROMAN'  .nr #ROMAN_LIST 1
+.       if '\\$1'roman'  .nr #ROMAN_LIST 1
 .       ds $LAST_CHAR \\$1
 .       substring $LAST_CHAR -1
 .       if !\B'\\*[$LAST_CHAR]' \{\
-.          if !'\\$1'ROMAN' \{\
+.          if !r #ROMAN_LIST \{\
 .             LIST OFF
 .             return
 .          \}
-.          if !'\\$1'roman' \{\
-.             LIST OFF
-.             return
-.          \}
-.          tm1 "[mom]: You must append a number to the \\$1 argument to \\$0.
+.          tm1 "[mom]: You must append a number to the '\\$1' argument to \\$0.
 .          tm1 "       The number should be the total number of items in this list.
 .          tm1 "       See the documentation.
 .          ab   [mom]: Aborting '\\n[.F]' at \\$0, line \\n[.c].
@@ -15807,6 +15806,19 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          ds $SEPARATOR\\n[#DEPTH]
 .          ds $PREFIX\\n[#DEPTH]
 .       \}
+.       if '\\*[$LIST_ARG_1]'VARIABLE' \{\
+.          if \\n[#NUM_ARGS]<2 \{\
+.             tm1 "[mom]: You must follow the \\$1 argument to \\$0 with the widest
+.             tm1 "       enumerator to be used.  See the documentation.
+.             ab   [mom]: Aborting '\\n[.F]' at \\$0, line \\n[.c].
+.          \}
+.          nr #ARGS_TO_LIST 1
+.          ds $ENUMERATOR\\n+[#DEPTH]
+.          ds $ENUMERATOR_TYPE\\n[#DEPTH] variable
+.          ds $ENUMERATOR_WIDTH\\n[#DEPTH] \w'\\$2\ '
+.          ds $SEPARATOR\\n[#DEPTH]
+.          ds $PREFIX\\n[#DEPTH]
+.       \}
 .       if '\\*[$LIST_ARG_1]'PLAIN' \{\
 .          nr #ARGS_TO_LIST 1
 .          ds $ENUMERATOR\\n+[#DEPTH]
@@ -15848,6 +15860,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       GET_ROMAN_INDENT
 .    if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'other' \
 .       nr #LIST_INDENT\\n[#DEPTH] \w'\\*[$ENUMERATOR\\n[#DEPTH]]\ '
+.    if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'variable' \
+.       nr #LIST_INDENT\\n[#DEPTH] \\*[$ENUMERATOR_WIDTH\\n[#DEPTH]]
 .    ll \\n[#CURRENT_L_LENGTH]u
 .    ie \\n[#DEPTH]=1 \{\
 .       ie \\n[#INDENT_ACTIVE]=1 \{\
@@ -16007,6 +16021,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       \}
 .       if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'other' \
 .          PRINT \\*[$ENUMERATOR\\n[#DEPTH]]\\*[$SEPARATOR\\n[#DEPTH]]
+.       if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'variable' \
+.          PRINT  \\$1
 .    \}
 .    rr #SEP_TYPE
 .    EOL
