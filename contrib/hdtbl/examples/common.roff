@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .
 .
+.ds common common.roff\"		name for diagnostic messages
 .mso hdtbl.tmac\"			load table macros
 .
 .\"	******************************************************************
@@ -66,7 +67,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"	******************************************************************
 .de date
 .  pso sh -c "echo -n .ds *date\ ;date"
-.  tm \\*[*date] ***
+.  tm \\*[common]: \\*[*date] ***
 ..
 .
 .
@@ -88,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  el \{\
 .   pso sh -c "echo -n .nr *time -;date +%s"
 .   nr *time 0-\\n[*time]
-.   tm elapsed time: \\n[*time] seconds
+.   tm \\*[common]: elapsed time: \\n[*time] seconds
 .  \}
 ..
 .
@@ -142,8 +143,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .de d2x
 .  if !\B\\$1 \{\
-.    tm \\n[.F]:\\n[.c]: invalid or missing first argument
-.    tm1 "     usage: '.d2x decimal_number [base [string_name]]'
+.    tmc \\*[common]: \\n[.F]:\\n[.c]: d2x: invalid or missing first
+.    tm argument
+.    tm \\*[common]: usage: '.d2x decimal_number [base [string_name]]'
 .    return
 .  \}
 .
@@ -157,10 +159,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .  ie !"\\$2"" \{\
 .    ie !\B\\$2 \
-.      tm \\n[.F]:\\n[.c]: invalid base '\\$2'
+.      tm \\*[common]: \\n[.F]:\\n[.c]: d2x: invalid base '\\$2'
 .    el \
 .      ie ((\\$2 < 1) : (\\$2 > 16)) \
-.        tm \\n[.F]:\\n[.c]: invalid base '\\$2'
+.        tm \\*[common]: \\n[.F]:\\n[.c]: d2x: invalid base '\\$2'
 .      el \
 .        nr b# \\$2
 .  \}\}
@@ -199,7 +201,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .  if !"\\$3"" \{\
 .    ie !\A\\$3 \
-.      tm \\n[.F]:\\n[.c]: invalid string name '\\$3'
+.      tm \\*[common]: \\n[.F]:\\n[.c]: d2x: invalid string name '\\$3'
 .    el \
 .      ds \\$3 \\*[hex#]\"
 .  \}
@@ -242,8 +244,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .de random-seed
 .  if !(\\n[.$] == 2) \{\
-.    tm1 "random-seed: Invalid number of arguments.
-.    tm1 "             usage: '.random-seed seed1 seed2'
+.    tm \\*[common]: random-seed: Invalid number of arguments.
+.    tm \\*[common]: usage: '.random-seed seed1 seed2'
 .    return
 .  \}
 .

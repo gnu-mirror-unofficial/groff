@@ -23,6 +23,7 @@
 
 use strict;
 
+(my $progname = $0) =~s @.*/@@;
 my $where=shift||'';
 my $devps=shift||'../devps';
 chdir $where if $where ne '';
@@ -45,7 +46,7 @@ sub LoadFoundry
     my $fn=shift;
     my $foundrypath='';
 
-    open(F,"<$fn") or die "No $fn file found";
+    open(F,"<$fn") or Die("No $fn file found");
 
     while (<F>)
     {
@@ -106,16 +107,16 @@ sub LoadFoundry
 			{
 			    $gotf=0;
 			    my $fns=join(',',split('!',$r[5]));
-			    Msg(0,"Unable to locate font(s) $fns on the given path(s)");
+			    Warn("Unable to locate font(s) $fns on the given path(s)");
 			    unlink $gfont;	# Unable to find the postscript file for the font just created by afmtodit
 			}
 		    }
-		    print STDERR "Copied grops font $gfont...\n" if $gotf;
+		    Notice("Copied grops font $gfont...") if $gotf;
 
 		}
 		else
 		{
-		    Msg(0,"Can't read grops font '$r[0]' for Foundry '$foundry'");
+		    Warn("Can't read grops font '$r[0]' for Foundry '$foundry'");
 		}
 	    }
 	    else
@@ -131,12 +132,12 @@ sub LoadFoundry
 		    }
 		    else
 		    {
-			print STDERR "Generated $gfont...\n";
+			Notice("Generated $gfont...");
 		    }
 		}
 		else
 		{
-		    Msg(0,"Failed to create groff font '$gfont' by running afmtodit");
+		    Warn("Failed to create groff font '$gfont' by running afmtodit");
 		}
 	    }
 	}
@@ -163,7 +164,7 @@ sub RunAfmtodit
     {
 	if (!exists($flg{$f}))
 	{
-	    Msg(0,"Can't use undefined flag '$f' in calling afmtodit for groff font '$gfont'");
+	    Warn("Can't use undefined flag '$f' in calling afmtodit for groff font '$gfont'");
 	    return('');
 	}
 
@@ -189,7 +190,7 @@ sub RunAfmtodit
 	}
 	else
 	{
-	    Msg(0,"Unexpected format for grops font '$gfont' for Foundry '$foundry' - ignoring");
+	    Warn("Unexpected format for grops font '$gfont' for Foundry '$foundry' - ignoring");
 	}
 
 	close(GF);
@@ -329,7 +330,7 @@ sub UseGropsVersion
 	}
 	else
 	{
-	    Msg(0,"Unexpected format for grops font '$gfont' for Foundry '$foundry' - ignoring");
+	    Warn("Unexpected format for grops font '$gfont' for Foundry '$foundry' - ignoring");
 	}
 
 	close(GF);
@@ -345,19 +346,19 @@ sub UseGropsVersion
 	    else
 	    {
 		$psfont='';
-		Msg(0,"Failed to create new font '$gfont' for Foundry '$foundry'");
+		Warn("Failed to create new font '$gfont' for Foundry '$foundry'");
 	    }
 	}
 	else
 	{
-	    Msg(0,"Failed to locate postscript internalname in grops font '$gfont' for Foundry '$foundry'");
+	    Warn("Failed to locate postscript internalname in grops font '$gfont' for Foundry '$foundry'");
 	}
 
 	close(GF);
     }
     else
     {
-	Msg(0,"Failed to open grops font '$gfont' for Foundry '$foundry'");
+	Warn("Failed to open grops font '$gfont' for Foundry '$foundry'");
     }
 
     return($psfont);
@@ -417,7 +418,7 @@ sub WriteDownload
     my $fn=shift;
     my $top=1;
 
-    open(F,">$fn") or die "Can't Create new file '$fn'";
+    open(F,">$fn") or Die("Can't Create new file '$fn'");
 
     print F join("\n",@downloadpreamble),"\n";
 
@@ -430,19 +431,24 @@ sub WriteDownload
     close(F);
 }
 
-sub Msg
-{
-    my $sev=shift;
+sub Notice {
     my $msg=shift;
+    Msg("notice: $msg");
+}
 
-    if ($sev)
-    {
-	print STDERR "Error: line $lct: $msg\n";
-	exit 2;
-    }
-    else
-    {
-	print STDERR "Warning: line $lct: $msg\n";
-	$warn=1;
-    }
+sub Warn {
+    my $msg=shift;
+    Msg("warning: line $lct: $msg");
+    $warn=1;
+}
+
+sub Die {
+    my $msg=shift;
+    Msg("error: line $lct: $msg");
+    exit 2;
+}
+
+sub Msg {
+    my $msg=shift;
+    print STDERR "$progname: $msg\n";
 }

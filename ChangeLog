@@ -1,3 +1,18 @@
+2017-11-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* contrib/hdtbl/examples/common.roff:
+	* contrib/hdtbl/examples/fonts_n.in:
+	* contrib/hdtbl/examples/fonts_x.in:
+	* src/roff/troff/input.cpp:
+	Make writers to stderr identify themselves.
+
+	* font/devpdf/util/BuildFoundries.pl:
+	Same; also refactor all diagnostics into Notice(), Warn(), and
+	Die() functions, which delegate their common message-printing to
+	Msg().
+
+	Fix part of bug https://savannah.gnu.org/bugs/?52463.
+
 2017-11-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	man pages: Fix compatibility-mode problems.

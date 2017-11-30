@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"	**		without arg: glyphs and codes of active font.	**
 .\"	******************************************************************
 .
+.ds fonts_n fonts_n.roff\"		name for diagnostic messages
+.
 .if !d sopath \
 .  ds sopath
 .
@@ -75,13 +77,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .    ie (\\n[.y] > 18) \
 .      if !F \\*[*$1] \{\
-.        tm \\n[.F]:\\n[.c]: Font \\*[*$1] not found.
-.        continue 
+.        tm \\*[fonts_n]: \\n[.F]:\\n[.c]: Font \\*[*$1] not found.
+.        continue
 .      \}
 .    el \{\
 .      if !\\n[t*index] \{\
-.        tm \\n[.F]:\\n[.c]: Font \\*[*$1] not found.
-.        continue 
+.        tm \\*[fonts_n]: \\n[.F]:\\n[.c]: Font \\*[*$1] not found.
+.        continue
 .      \}
 .
 .      nr * \\n[.f]
@@ -96,7 +98,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    if \\n[t*cptn] \
 .      bp
 .
-.    tm listing font '\\*[*$1]'...
+.    tm \\*[fonts_n]: listing font '\\*[*$1]'...
 .
 .    TBL border=.1n bc=red cpd=0 csp=.1n bgc=
 .      CPTN groff font \\*[*$1] \
