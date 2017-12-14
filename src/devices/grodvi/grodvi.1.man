@@ -22,6 +22,7 @@ grodvi \- convert groff output to TeX DVI format
 .\" instead of in the original English.
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
 .do nr grodvi_C \n[.C]
 .cp 0
 .
@@ -460,6 +461,7 @@ and widths of rules be rounded.
 .BR groff_tmac (@MAN5EXT@)
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
 .cp \n[grodvi_C]
 .\" Local Variables:
 .\" mode: nroff
