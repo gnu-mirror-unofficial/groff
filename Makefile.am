@@ -608,8 +608,9 @@ endif
 GROFFBIN = $(abs_top_builddir)/groff
 GROFF_BIN_PATH = $(abs_top_builddir)
 PDFMOMBIN = $(abs_top_builddir)/pdfmom
-FFLAG=-F$(abs_top_builddir)/font
-TFLAG=-M$(abs_top_builddir)/tmac
+# The second directories are needed for the case "cd build; ../configure".
+FFLAG=-F$(abs_top_builddir)/font -F$(abs_top_srcdir)/font
+TFLAG=-M$(abs_top_builddir)/tmac -M$(abs_top_srcdir)/tmac
 
 # make builtin variable RM
 if MAKE_DONT_HAVE_RM
