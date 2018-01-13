@@ -6447,54 +6447,62 @@
 .\" NS Lk user macro
 .\" NS   link (for conversion to HTML)
 .\" NS
+.\" NS modifies:
+.\" NS   doc-arg-ptr
+.\" NS   doc-curr-font
+.\" NS   doc-curr-size
+.\" NS   doc-macro-name
+.\" NS
 .\" NS local variables:
-.\" NS   doc-delim-Lk
-.\" NS   doc-reg-Lk
+.\" NS   doc-lasttext-Lk
 .\" NS   doc-target-Lk
-.\" NS   doc-text-Lk
 .
 .de Lk
-.  \" The first argument is the target URI.
-.  ds doc-target-Lk \$1
-.  shift
+.  if !\n[doc-arg-limit] \{\
+.    ds doc-macro-name Lk
+.    doc-parse-args \$@
+.  \}
 .
-.  \" Split the remaining arguments into link text and delimiters.
-.  ds doc-text-Lk
-.  ds doc-delim-Lk
-.  while \n[.$] \{\
-.    doc-get-width "\$1"
-.    doc-get-arg-type \$1
-.    ie (\n[doc-arg-type] > 2) \
-.      as doc-delim-Lk \$1
-.    el \{\
-.      if !'\*[doc-delim-Lk]'' \{\
-.        \" More text follows delimiter(s); go back to text mode.
-.        as doc-text-Lk \*[doc-delim-Lk]
-.        ds doc-delim-Lk
-.      \}
-.      ie '\*[doc-text-Lk]'' \
-.        ds doc-text-Lk \$1
-.      el \
-.        as doc-text-Lk " \$1
-.    \}
-.    shift
+.  if !\n[doc-arg-limit] \
+.    return
+.
+.  \" The first argument is the target URI.
+.  nr doc-arg-ptr +1
+.  ds doc-target-Lk "\*[doc-arg\n[doc-arg-ptr]]
+.  nr doc-arg-ptr +1
+.
+.  \" Search backwards for the first closing punctuation.
+.  nr doc-lasttext-Lk \n[doc-arg-limit]
+.  while (\n[doc-lasttext-Lk] >= \n[doc-arg-ptr]) \{\
+.    if !(\n[doc-type\n[doc-lasttext-Lk]] == 3) \
+.      break
+.    nr doc-lasttext-Lk -1
 .  \}
 .
 .  \" Print the link text, if any.
-.  if !'\*[doc-text-Lk]'' \
-.      Em \*[doc-text-Lk] Ns :
+.  nr doc-curr-font \n[.f]
+.  nr doc-curr-size \n[.ps]
+.  if (\n[doc-arg-ptr] <= \n[doc-lasttext-Lk]) \{\
+.    nop \*[doc-Em-font]\c
+.    while (\n[doc-arg-ptr] < \n[doc-lasttext-Lk]) \{\
+.      nop \*[doc-arg\n[doc-arg-ptr]]
+.      nr doc-arg-ptr +1
+.    \}
+.    nop \*[doc-arg\n[doc-arg-ptr]]\f[\n[doc-curr-font]]\s[\n[doc-curr-size]u]:
+.    nr doc-arg-ptr +1
+.  \}
 .
 .  \" Print the link target.
-.  ie n \
-.    nr doc-reg-Lk 26
-.  el \
-.    nr doc-reg-Lk 38
-.  doc-get-width "\*[doc-target-Lk]"
-.  ie (\n[doc-width] >= \n[doc-reg-Lk]) \
-.    D1 Sy \*[doc-target-Lk] Ns \*[doc-delim-Lk]\&
-.  el .ie \n[doc-width] \
-.    Sy \*[doc-target-Lk] Ns \*[doc-delim-Lk]\&
-.  el \*[doc-delim-Lk]\&
+.  nop \*[doc-Sy-font]\*[doc-target-Lk]\c
+.  nop \f[\n[doc-curr-font]]\s[\n[doc-curr-size]u]\c
+.
+.  \" Print the delimiters, if any.
+.  while (\n[doc-arg-ptr] <= \n[doc-arg-limit]) \{\
+.    nop \*[doc-arg\n[doc-arg-ptr]]\c
+.    nr doc-arg-ptr +1
+.  \}
+.  nop \&
+.  doc-reset-args
 ..
 .
 .

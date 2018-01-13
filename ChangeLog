@@ -1,3 +1,26 @@
+2018-01-13  Ingo Schwarze <schwarze@openbsd.org>
+
+	[mdoc]: rewrite the implementation of the .Lk macro
+
+	* tmac/doc.tmac-u (Lk): Rewrite.
+
+	The old implementation was written before the big mdoc
+	rewrite for groff-1.17.  In contrast to most other macros,
+	it was never updated to use the new techniques.
+	This new implementation makes .Lk callable, makes trailing
+	punctuation work in the normal way, and makes the style of
+	the implementation consistent with other macros.
+
+	It also removes the feature of automatically switching
+	between in-line and displayed rendering depending on the
+	length of the link because that was inconsistent across
+	output modes and counter-intuitive, resulting in ugly
+	output for many existing real-world manual pages.
+	It now always renders in-line.  Use .D1 Lk where desired.
+
+	Merging http://savannah.gnu.org/bugs/?52849
+	OK wl@gnu, jmc@openbsd, bentley@openbsd
+
 2017-12-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	man pages: Comment compatibility-mode switching.
