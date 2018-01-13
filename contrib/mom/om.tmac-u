@@ -58,6 +58,9 @@ extensions, and float management).
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
+\# Groff revision
+.ds short_revision \n[.Y]
+.substring short_revision 0 0
 \#
 \# Add supplementary styles
 .sty \n[.fp] UL      \"  Ultra Light
@@ -552,10 +555,10 @@ end
 .       fam \\*[$TYPEWRITER_FAM]
 .       return
 .    \}
-.    if (\\n[.x]\\n[.y]\\n[.Y] >= 1192) .ds $SAVED_STYLE \\n[.sty]
+.    if (\\n[.x]\\n[.y]\\*[short_revision] >= 1192) .ds $SAVED_STYLE \\n[.sty]
 .    ft 0
 .    fam \\*[$FAMILY]
-.    if (\\n[.x]\\n[.y]\\n[.Y] >= 1192) \{\
+.    if (\\n[.x]\\n[.y]\\*[short_revision] >= 1192) \{\
 .       ft \\*[$SAVED_STYLE]
 .       if !F\\n[.fn] .ft 0
 .    \}
@@ -592,7 +595,7 @@ end
 .    \}
 .    ft 0
 .    ft \\*[$FONT]
-.    if (\\n[.x]\\n[.y]\\n[.Y] >= 1192) \{\
+.    if (\\n[.x]\\n[.y]\\*[short_revision] >= 1192) \{\
 .       if '\\n[.sty]'' \{\
 .          if !F\\n[.fn] \{\
 .             if !S\\*[$FONT] \{\

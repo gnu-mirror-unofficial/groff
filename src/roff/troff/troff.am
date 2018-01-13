@@ -52,15 +52,12 @@ nodist_troff_SOURCES = src/roff/troff/majorminor.cpp
 src/roff/troff/input.$(OBJEXT): defs.h
 CLEANFILES += src/roff/troff/majorminor.cpp
 
-src/roff/troff/majorminor.cpp: $(top_srcdir)/VERSION $(top_srcdir)/REVISION
+src/roff/troff/majorminor.cpp: $(top_srcdir)/.version
 	@echo Making $@
 	@$(RM) $@
-	@echo const char \*major_version = \
-	  \"`sed -e 's/^\([^.]*\)\..*$$/\1/' $(top_srcdir)/VERSION`\"\; >$@
-	@echo const char \*minor_version = \
-	   \"`sed -e 's/^[^.]*\.\([0-9]*\).*$$/\1/' $(top_srcdir)/VERSION`\"\; \
-	   >>$@
-	@echo const char \*revision = \"`cat $(top_srcdir)/REVISION`\"\; >>$@
+	@echo const char \*major_version = \"$(MAJOR_VERSION)\"\; >$@
+	@echo const char \*minor_version = \"$(MINOR_VERSION)\"\; >>$@
+	@echo const char \*revision = \"$(REVISION)\"\; >>$@
 
 
 ########################################################################

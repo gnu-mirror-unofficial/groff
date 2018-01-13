@@ -96,9 +96,6 @@ EXTRA_DIST += \
   src/libs/libgroff/make-uniuni \
   src/libs/snprintf/snprintf.c
 
-src_version=`cat $(top_srcdir)/VERSION`
-src_revision=`cat $(top_srcdir)/REVISION`
-
 CLEANFILES += \
   src/libs/libgroff/version.cpp \
   charset.alias \
@@ -111,12 +108,12 @@ src/libs/libgroff/libgroff_a-fontfile.$(OBJEXT): defs.h
 src/libs/libgroff/libgroff_a-macropath.$(OBJEXT): defs.h
 src/libs/libgroff/libgroff_a-relocate.$(OBJEXT): defs.h
 
-src/libs/libgroff/version.cpp: $(top_srcdir)/VERSION $(top_srcdir)/REVISION
+src/libs/libgroff/version.cpp: $(top_srcdir)/.version
 	@echo Making version.cpp
-	@echo const char \*version_string = \"$(src_version)\"\; >$@
-	@echo const char \*revision_string = \"$(src_revision)\"\; >>$@
+	@echo const char \*version_string = \"$(MAJOR_VERSION).$(MINOR_VERSION)\"\; >$@
+	@echo const char \*revision_string = \"$(REVISION)\"\; >>$@
 	@echo extern \"C\" { >>$@
-	@echo const char \*Version_string = \"$(src_version).$(src_revision)\"\; >>$@
+	@echo const char \*Version_string = \"$(VERSION)\"\; >>$@
 	@echo } >>$@ \
 	  | sed -e 's/\.0\"/\"/' >>$@
 
