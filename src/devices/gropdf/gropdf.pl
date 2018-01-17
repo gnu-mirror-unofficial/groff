@@ -331,9 +331,9 @@ while (<>)
 
 if ($cpageno > 0)
 {
-    $cpage->{MediaBox}=\@mediabox if $custompaper;
-    PutObj($cpageno);
-    OutStream($cpageno+1);
+	$cpage->{MediaBox}=\@mediabox if $custompaper;
+	PutObj($cpageno);
+	OutStream($cpageno+1);
 }
 
 
@@ -1940,12 +1940,12 @@ sub PutXY
 
     if ($frot)
     {
-	return("$y $x");
+	return(d3($y)." ".d3($x));
     }
     else
     {
 	$y=$mediabox[3]-$y;
-	return("$x $y");
+	return(d3($x)." ".d3($y));
     }
 }
 
@@ -2603,22 +2603,22 @@ sub set_col
     if ($mcmd eq 'c')
     {
 	# Text CMY
-	return(($c[0]/65535).' '.($c[1]/65535).' '.($c[2]/65535)." 0 $oper[1]");
+	return(d3($c[0]/65535).' '.d3($c[1]/65535).' '.d3($c[2]/65535)." 0 $oper[1]");
     }
     elsif ($mcmd eq 'k')
     {
 	# Text CMYK
-	return(($c[0]/65535).' '.($c[1]/65535).' '.($c[2]/65535).' '.($c[3]/65535)." $oper[1]");
+	return(d3($c[0]/65535).' '.d3($c[1]/65535).' '.d3($c[2]/65535).' '.d3($c[3]/65535)." $oper[1]");
     }
     elsif ($mcmd eq 'g')
     {
 	# Text Grey
-	return(($c[0]/65535)." $oper[0]");
+	return(d3($c[0]/65535)." $oper[0]");
     }
     elsif ($mcmd eq 'r')
     {
 	# Text RGB0
-	return(($c[0]/65535).' '.($c[1]/65535).' '.($c[2]/65535)." $oper[2]");
+	return(d3($c[0]/65535).' '.d3($c[1]/65535).' '.d3($c[2]/65535)." $oper[2]");
     }
 }
 
@@ -2964,6 +2964,7 @@ sub PutLine
 	$wd->[0]=~s/\(/\\(/g;
 	$wd->[0]=~s/\)/\\)/g;
 	$wd->[0]=~s/!\|!\|/\\/g;
+	$wd->[1]=d3($wd->[1]);
     }
     
     if (0)
@@ -3065,6 +3066,11 @@ sub PutLine
     $pendmv=0;
     $nomove=0;
     $wt=-1;
+}
+
+sub d3
+{
+    return(sprintf("%.3f",shift || 0));
 }
 
 sub  LoadAhead
