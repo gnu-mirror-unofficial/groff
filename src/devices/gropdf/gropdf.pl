@@ -1981,7 +1981,7 @@ sub PutObj
 	if ($gotzlib && !$debug && !exists($obj[$ono]->{DATA}->{'Filter'}))
 	{
 	    $obj[$ono]->{STREAM}=Compress::Zlib::compress($obj[$ono]->{STREAM});
-	    $obj[$ono]->{DATA}->{'Filter'}=['/FlateDecode'];
+	    $obj[$ono]->{DATA}->{'Filter'}='/FlateDecode';
 	}
 
 	$obj[$ono]->{DATA}->{'Length'}=length($obj[$ono]->{STREAM});
