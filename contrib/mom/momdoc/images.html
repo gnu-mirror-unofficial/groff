@@ -290,6 +290,22 @@ optical centering between surrounding blocks of type.  A unit of
 measure is required.
 </p>
 
+<div class="box-tip">
+<p class="tip-top">
+<span class="note">Tip:</span>
+You may sometimes find that a PDF_IMAGE at the bottom of a page
+doesn&#8217;t sit flush on the bottom margin, however attempts to lower it
+by adding space beforehand result in it being deferred to the next
+page.
+</p>
+
+<p class="tip-bottom">
+The solution is to introduce <i>negative</i> space before the image
+so that it displays on the page, then lower it to the bottom margin
+with PDF_IMAGE&#8217;s ADJUST argument.
+</p>
+</div>
+
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_SHIM'</h5>
 
 <p>
@@ -1675,7 +1691,7 @@ fit, if any, are output in order immediately after the first.
 <p>
 Lastly, if your diagrams contain text, you may set all the type
 parameters for the text (family, font, size, leading) separately
-from the <b>pic</b> block with the macro,
+from the <b>pic</b> block with the macro
 <a href="#pic-text-style">PIC_TEXT_STYLE</a>.
 If you need to change the type parameters within the block
 on-the-fly, you must use <b>pic</b>&#8217;s native facilities for
@@ -2179,7 +2195,7 @@ pdf images) and tables.  This behaviour may be modified with the
 macro
 <a href="#caption-after-label">CAPTION_AFTER_LABEL</a>.
 Equations always have their captions set underneath.  All aspects of
-the text style for captions may be set with the macro,
+the text style for captions may be set with the macro
 <a href="#captions-labels-sources">CAPTIONS</a>.
 </p>
 
@@ -2191,10 +2207,10 @@ above the table, per MLA style, and the source for the table, if
 any, appears underneath.  Labels for figures are set underneath.
 Equation labels, by default, are set on the same baseline as the
 last line of the equation.  Like captions, all aspects of text style
-for labels may be established with a single macro,
-<a href="#labels">LABELS</a>.  Furthermore, mom can autolabel
-figures, tables, and equations, with or without a prefixed chapter
-number.
+for labels may be established with a single macro
+<a href="#labels">LABELS</a>.
+Furthermore, mom can autolabel figures, tables, and equations, with
+or without a prefixed chapter number.
 </p>
 
 <div class="macro-id-overline">

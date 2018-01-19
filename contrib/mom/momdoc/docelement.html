@@ -813,8 +813,8 @@ italic.  Neither persists past the end of the paragraph.
 
 <p>
 Mom has no special control macro for colourizing paragraphs.  If you
-wish a colourized paragraph, you must use the macro,
-<a href="color.html#color">COLOR</a>,
+wish a colourized paragraph, you must use the macro
+<a href="color.html#color">COLOR</a>
 or the
 <a href="definitions.html#inline">inline escape</a>,
 <a href="color.html#color-inline"><kbd>\*[&lt;colourname&gt;]</kbd></a>,
@@ -1019,8 +1019,8 @@ that first paragraphs will once again not be indented.
 
 <p>
 By default, mom does not insert a blank line between
-paragraphs.  If you would like her to do so, invoke the macro,
-<kbd>.PARA_SPACE</kbd>, without an argument, either before or after
+paragraphs.  If you would like her to do so, invoke the macro
+<kbd>.PARA_SPACE</kbd> without an argument, either before or after
 <a href="docprocessing.html#start">START</a>.
 PARA_SPACE is a toggle macro, therefore passing it any argument
 (<b>OFF, QUIT, Q, X</b>...) cancels its effect, meaning that
@@ -1106,7 +1106,7 @@ expect the blank line to appear.
 
 <p>
 Heads, subheads, and deeper levels of section headings are handled by 
-a single macro, HEADING, to which you pass an argument stating the
+a single macro HEADING to which you pass an argument stating the
 desired level.  <kbd>.HEADING 1 &quot;&lt;text&gt;&quot;</kbd>, for
 example, would be a main head; <kbd>.HEADING 2
 &quot;&lt;text&gt;&quot;</kbd> would be a subhead; etc.
@@ -1302,7 +1302,7 @@ A single blank line precedes all levels of heading.
 <h4 id="heading-style" class="docs" style="margin-bottom: -.5em">The HEADING_STYLE macro</h4>
 
 <p>
-Styling heads is accomplished with a single macro,
+Styling heads is accomplished with a single macro
 <br/>
 <span class="pre-in-pp">
   .HEADING_STYLE&nbsp;&lt;level&gt;
@@ -1527,8 +1527,8 @@ the chapter number, it&#8217;s use need not be restricted to
 You can use it with any document type.  Furthermore, even if
 your doctype isn&#8217;t <kbd>CHAPTER</kbd>, you can identify
 the document as a chapter for the purposes of numbering head
-elements by invoking the macro,
-<a href="docprocessing.html#chapter"><kbd>.CHAPTER</kbd></a>,
+elements by invoking the macro
+<a href="docprocessing.html#chapter"><kbd>.CHAPTER</kbd></a>
 with a
 <a href="definitions.html#numericargument">numeric argument</a>
 in your document setup. 
@@ -1592,7 +1592,7 @@ otherwise kept mom's settings, you need only do
 <div id="parahead" class="box-important">
 <p class="tip-top">
 <span class="important">Important:</span>
-The macro, PARAHEAD, is no longer available.  You must create paragraph
+The macro PARAHEAD is no longer available.  You must create paragraph
 heads using the
 <a href="#heading">HEADING</a>
 macro.  Mom will abort with an informational message whenever she
@@ -1717,7 +1717,7 @@ The former style defaults for HEAD were:
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-The macro, NUMBER_HEADS, from pre-2.0 versions of mom, can still be
+The macro NUMBER_HEADS from pre-2.0 versions of mom, can still be
 used, though it is now a wrapper for
 <br/>
 <span class="pre-in-pp">
@@ -1758,7 +1758,7 @@ The former style defaults for SUBHEAD were:
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-The macro, NUMBER_SUBHEADS, from pre-2.0 versions of mom, can still be
+The macro NUMBER_SUBHEADS from pre-2.0 versions of mom, can still be
 used, though it is now a wrapper for
 <br/>
 <span class="pre-in-pp">
@@ -1800,7 +1800,7 @@ The former style defaults for SUBSUBHEAD were:
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-The macro, NUMBER_SUBSUBHEADS, from pre-2.0 versions of mom, can still be
+The macro NUMBER_SUBSUBHEADS from pre-2.0 versions of mom, can still be
 used, though it is now a wrapper for
 <br/>
 <span class="pre-in-pp">
@@ -2491,7 +2491,7 @@ Inline escape: <b><kbd>\*[CODE]</kbd></b>
 </p>
 
 <p>
-When you invoke the macro, <kbd>.CODE</kbd>, or insert <kbd>\*[CODE]</kbd> into
+When you invoke the macro <kbd>.CODE</kbd> or insert <kbd>\*[CODE]</kbd> into
 running text, mom switches to a
 <a href="definitions.html#fixedwidthfont">fixed-width font</a>
 (Courier, by default) and turns
@@ -2502,7 +2502,7 @@ off.
 <p>
 If your code includes the backslash character, which is
 groff&#8217;s escape character, you will have to change the
-escape character temporarily to something else with the macro,
+escape character temporarily to something else with the macro
 <a href="goodies.html#esc-char">ESC_CHAR</a>.
 Mom has no way of knowing what special characters you&#8217;re going
 to use in code snippets, therefore she cannot automatically replace
@@ -2722,7 +2722,7 @@ digits and letters.
 <p>
 Setting lists with mom is easy.  First, you initialize a list with
 the LIST macro.  Then, for every item in the list, you invoke
-the macro, <kbd>.ITEM</kbd>, followed by the text of the item.
+the macro <kbd>.ITEM</kbd> followed by the text of the item.
 When a list is finished, you exit the list with
 <kbd>.LIST&nbsp;OFF</kbd> (or <kbd>QUIT, END, BACK,</kbd> etc.)
 </p>
@@ -2745,7 +2745,7 @@ left margin of running text that comes before it, like this:
   o a couple of hours at the piano
 </span>
 In other words, mom does not, by default, indent entire lists.
-Indenting a list is controlled by the macro,
+Indenting a list is controlled by the macro
 <a href="#shift-list">SHIFT_LIST</a>.
 (This is a design decision; there are too many instances where a
 default indent is not desirable.)  Equally, mom does not add any
@@ -2764,6 +2764,21 @@ and returns you to the left margin of running text.
 </p>
 
 <p>
+If
+<kbd><a href="typesetting.html#quad">QUAD CENTER</a></kbd>
+is in effect when LIST is invoked, the list is set quad left but
+centered on the page as a block, based on the longest line of list
+text.  Equally, if <kbd>QUAD RIGHT</kbd> in in effect, the list is
+set flush left but quadded right as a block.  If you want a centered
+or right-quadded list in an otherwise left-quadded or justified
+document, simply invoke <kbd>.QUAD&nbsp;&lt;direction&gt;</kbd> 
+before the list and reset it afterwards.  Do not use
+<kbd><a href="typesetting.html#lrc">CENTER</a></kbd>
+or
+<kbd><a href="typesetting.html#lrc">RIGHT</a></kbd>
+</p>
+
+<p>
 Finally, lists can be used in documents created with either the
 <a href="docprocessing.html#top">document processing macros</a>
 or the
@@ -2777,7 +2792,7 @@ or the
 </div>
 
 <div class="box-macro-args">
-Macro: <b>LIST</b> <kbd class="macro-args">[ BULLET | DASH | DIGIT | ALPHA | alpha | ROMAN&lt;n&gt; | roman&lt;n&gt; | USER &lt;user-defined enumerator&gt;  | PLAIN ] [ &lt;separator&gt; ] [ &lt;prefix&gt; ] [ &lt;anything&gt; ]</kbd>
+Macro: <b>LIST</b> <kbd class="macro-args">[ BULLET | DASH | DIGIT | ALPHA | alpha | ROMAN&lt;n&gt; | roman&lt;n&gt; | USER &lt;user-defined enumerator&gt;  | PLAIN | VARIABLE &lt;character&gt;] [ &lt;separator&gt; ] [ &lt;prefix&gt; ] [ &lt;anything&gt; ]</kbd>
 </div>
 
 <p>
@@ -2849,13 +2864,41 @@ up like this:
 </p>
 
 <p>
-The argument, <kbd>USER</kbd>, lets you make up your own enumerator,
-and must be followed by a second argument: what you&#8217;d like the
-enumerator to look like.
+The argument <kbd>VARIABLE&nbsp;&lt;character&gt;</kbd> lets
+you choose different enumerators for the items in a list.
+<kbd>&lt;character&gt;</kbd> is the widest enumerator to
+be used.  Thus, if you have a list enumerated by both bullets
+and em-dashes, you&#8217;d set it up with
+<br/>
+<span class="pre-in-pp">
+  .LIST VARIABLE \[em]
+</span>
+and select the enumerator you want with
+<br/>
+<span class="pre-in-pp">
+  .ITEM \[em]
+</span>
+or
+<br/>
+<span class="pre-in-pp">
+  .ITEM \[bu]
+</span>
+If your enumerator contains spaces, you must enclose the
+<kbd>&lt;character&gt;</kbd> argument in both LIST and ITEM in
+double-quotes,
+e.g.
+<br/>
+<span class="pre-in-pp">
+  .LIST VARIABLE "\*[UP 1p]\[bu]\*[DOWN 1p]"
+  .ITEM "\*[UP 1p]\[bu]\*[DOWN 1p]"
+</span>
 </p>
 
 <p>
-For example, if you want a list enumerated with <kbd>=&gt;</kbd>,
+The argument <kbd>USER</kbd> lets you make up your own enumerator,
+and must be followed by a second argument: what you&#8217;d like the
+enumerator to look like.  For example, if you want a list enumerated
+with <kbd>=&gt;</kbd>,
 <br/>
 <span class="pre-in-pp">
   .LIST USER =&gt;
@@ -2885,8 +2928,12 @@ of <kbd>\[sq]</kbd> slightly, you might do
 <span class="pre-in-pp">
   .LIST USER "\*[UP .25p]\[sq]\*[DOWN .25p]"
     or
-  .LIST USER \v'-.25p]\[sq]\[\v'.25p']
+  .LIST USER \v'-.25p'\[sq]\v'.25p'
 </span>
+</p>
+
+<p>
+The argument <kbd>PLAIN</kbd> initializes a list with no enumerator.
 </p>
 
 <div class="box-tip">
@@ -3040,7 +3087,7 @@ is created like this:
   Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
   sed diam nonumy eirmod tempor invidunt ut labore.
 </span>
-Alternatively, you may use the single-purpose macro,
+Alternatively, you may use the single-purpose macro
 <kbd>.QUIT_LISTS</kbd>, to get yourself out of a list structure.  In
 the example above, the two <kbd>.LIST&nbsp;OFF</kbd> lines could be
 replaced with a single <kbd>.QUIT_LISTS</kbd>.
@@ -3051,7 +3098,7 @@ replaced with a single <kbd>.QUIT_LISTS</kbd>.
 </div>
 
 <div class="box-macro-args">
-Macro: <b>ITEM</b>
+Macro: <b>ITEM</b> <kbd class="macro-args">[&lt;enumerator&gt;]</kbd>
 </div>
 
 <p>
@@ -3059,7 +3106,9 @@ After you&#8217;ve initialized a list with
 <a href="#list">LIST</a>,
 precede each item you want in the list with <kbd>.ITEM</kbd>.  Mom
 takes care of everything else with respect to setting the item
-appropriate to the list you&#8217;re in.
+appropriate to the list you&#8217;re in.  If you&#8217;ve chosen the
+<kbd>VARIABLE</kbd> argument when invoking LIST, ITEM must be
+followed by an enumerator character.
 </p>
 
 <p>
@@ -3199,7 +3248,7 @@ normal state of affairs for the alpha'ed list under
 </span>
 would be d), e) and f).  The solution, in such a case, is simply
 to reset the enumerator&mdash;before <kbd>.ITEM</kbd>&mdash;with
-the macro, <kbd>.RESET_LIST</kbd>.  By default, with no argument,
+the macro <kbd>.RESET_LIST</kbd>.  By default, with no argument,
 <kbd>.RESET_LIST</kbd> resets the enumerator to 1, A, a, I or i
 depending on the style of enumerator.  You may, if you wish, pass
 <kbd>.RESET_LIST</kbd> a
@@ -3221,7 +3270,7 @@ the right or the left of the single-numeral digits?
 </p>
 
 <p>
-If you want the extra space to the right, invoke the macro,
+If you want the extra space to the right, invoke the macro
 <kbd>.PAD_LIST_DIGITS</kbd> (with no argument), after
 <kbd>.LIST</kbd> and before <kbd>.ITEM</kbd>.  This will produce
 something like
@@ -4352,7 +4401,7 @@ macros:
 
 <p style="margin-left: .5em;">
 Mom, by default, surrounds footnote line numbers with square
-brackets.  The style of the brackets may be changed with the macro,
+brackets.  The style of the brackets may be changed with the macro
 <br/>
 <span class="pre-in-pp">
   .FOOTNOTE_LINENUMBER_BRACKETS
@@ -5772,7 +5821,7 @@ numbers are flush right with each other.
 <p class="tip-bottom">
 If you need less space (the total number of endnotes is less than 10) or
 more (the total number of endnotes is greater than 99), use the
-macro,
+macro
 <a href="docelement.html#endnote-numbers-align">ENDNOTE_NUMBERS_ALIGN</a>,
 to set the desired amount of reserved space, e.g.,
 <br/>
@@ -5802,9 +5851,9 @@ When your
 <a href="#endnote-marker-style">ENDNOTE_MARKER_STYLE</a>
 is <kbd>LINE</kbd>, mom, by default, inserts a space equal to
 1/2-<a href="definitions.html#em">en</a>
-between the linenumber and the text of an endnote.  For aesthetic reasons, you may want 
-to change the size of the gap, which is done with the macro,
-ENDNOTE_LINENUMBER_GAP.
+between the linenumber and the text of an endnote.  For aesthetic
+reasons, you may want to change the size of the gap, which is done
+with the macro ENDNOTE_LINENUMBER_GAP.
 </p>
 
 <p>
@@ -5828,7 +5877,7 @@ Macro: <b>ENDNOTE_LINENUMBER_BRACKETS</b> <kbd class="macro-args">PARENS | SQUAR
 
 <p>
 By default, mom puts endnote line numbers inside square brackets.
-The style of the brackets may be changed with the macro,
+The style of the brackets may be changed with the macro
 ENDNOTE_LINENUMBER_BRACKETS, which takes one of three possible
 arguments: <kbd>PARENS</kbd> (&#8220;round&#8221; brackets),
 <kbd>SQUARE</kbd> (the default) or <kbd>BRACES</kbd> (curly braces).
@@ -6362,7 +6411,7 @@ document, mom will alert you on stderr.
 
 <p>
 If you&#8217;re writing in a language other than English, you can
-change what mom prints for END with the control macro,
+change what mom prints for END with the control macro
 <a href="#finis-string">FINIS_STRING</a>.
 </p>
 
@@ -6456,7 +6505,7 @@ it&#8217;s a short, dashed line composed of four hyphens.)
 <p>
 By default, mom sets the string you pass to FINIS all-caps.
 If you&#8217;d prefer that she not do so, but rather respect
-the FINIS string exactly as you enter it, invoke the macro,
+the FINIS string exactly as you enter it, invoke the macro
 <kbd>.FINIS_STRING_CAPS</kbd> with the <kbd>OFF</kbd> argument, like
 this:
 <br/>
@@ -6472,7 +6521,7 @@ this:
 <h4 id="finis-color" class="docs">Changing the FINIS colour</h4>
 
 <p>
-Invoking the control macro, <kbd>.FINIS_COLOR</kbd>, with a
+Invoking the control macro <kbd>.FINIS_COLOR</kbd> with a
 pre-defined (or &#8220;initalized&#8221;) colour changes the colour
 of both the FINIS string and the em-dashes that surround it.  If you
 use the
