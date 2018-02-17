@@ -1,4 +1,4 @@
-     -*- text -*-
+    -*- mode: text; coding: utf-8; -*-
     Copyright (C) 2004-2017  Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
@@ -18,11 +18,11 @@ I haven't included the PDF output because I want to keep the mom
 archive as lean as possible.  To view the PDF output, process the
 files with pdfmom(1).
 
-    pdfmom -k letter.mom > letter.pdf
     pdfmom mom-pdf.mom > mom-pdf.pdf
-    pdfmom -k mon_premier_doc.mom > mon_premier_doc.pdf
     pdfmom sample_docs.mom > sample_docs.pdf
-    pdfmom typesetting.mom > typesetting.pdf
+    pdfmom -k letter.mom > letter.pdf
+    pdfmom -k mon_premier_doc.mom > mon_premier_doc.pdf
+    pdfmom -k typesetting.mom > typesetting.pdf
 
 The files themselves
 --------------------
