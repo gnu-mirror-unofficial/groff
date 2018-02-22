@@ -299,8 +299,11 @@ done the wrong.
 Example 3:
 .ALD .25v
 .UNDERSCORE 3.5p "A \*[BU2]recipe for enumerated lists using indents"
-.SP .5v        \" Add an extra half line space
-.FAM      N    \" New Century Schoolbook family
+.SP .5v         \" Add an extra half line space
+.ie '\*[.T]'ps' \
+.FAM      N     \" New Century Schoolbook family
+.el .if '\*[.T]'pdf' \
+.FAM      U-N 
 .FT       R
 .PT_SIZE 11
 .LS      13
@@ -393,7 +396,10 @@ Example 4:
 .ALD .25v
 .UNDERSCORE 3.5p "A \*[BU 2]recipe for nested lists using string tabs"
 .SP .5v
+.ie '\*[.T]'ps' \
 .FAM N
+.el .if '\*[.T]'pdf' \
+.FAM U-N
 .FT  R
 .PT_SIZE 11
 .LS  13
@@ -507,7 +513,10 @@ Example 5:
 .ALD .25v
 .UNDERSCORE 3.5p "Word spacing"
 .ALD 8p
-.FAM P         \" Palatino family
+.ie '\*[.T]'ps' \
+.FAM P          \" Palatino family
+.el .if '\*[.T]'pdf' \
+.FAM U-P
 .PT_SIZE 11
 .LS  14
 \#
@@ -550,7 +559,10 @@ Example 6:
 .ALD .25v
 .UNDERSCORE 3.5p "Line kerning"
 .ALD 8p
-.FAM     P     \" Palatino family
+.ie '\*[.T]'ps' \
+.FAM P          \" Palatino family
+.el .if '\*[.T]'pdf' \
+.FAM     U-P
 .FT      R
 .PT_SIZE 11
 .LS      15
