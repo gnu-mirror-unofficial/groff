@@ -1,4 +1,4 @@
-    Copyright 1997-2014 Free Software Foundation, Inc.
+    Copyright 1997-2018 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -76,8 +76,8 @@ For instructions how to build groff with the MinGW tools for
 MS-Windows, see the file README.MinGW.
 
 
-Miscellaneous
-=============
+Dependencies
+============
 
 groff is written in C++, so you need a C++ compiler.  The C++ source
 files use a suffix of `.cpp', so your C++ compiler must be able to
@@ -97,6 +97,19 @@ Many programs within the `groff' system are written in the Perl
 language.  So you need a `perl' program with the least version of
 `v5.6.1'.
 
+In order to build the documentation you would need `makeinfo' from the
+'texinfo' package, in fact `configure' will fail if this program is
+not found unless you pass the option `with-doc=no'.
+
+The `uchardet' library is an optional dependency of the `preconv'
+program: if this library is found by `configure' it will be
+automatically used by `preconv'.  In order to discover the presence of
+the `uchardet' library you would also need to have the `pkg-config'
+program installed on your system.
+
+
+Miscellaneous
+=============
 
 If you want A4 or letter paper format and the configure script produces
 an incorrect guess, say

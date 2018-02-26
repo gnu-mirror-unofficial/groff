@@ -863,7 +863,6 @@ EXTRA_DIST += \
   gendef.sh \
   INSTALL.REPO \
   INSTALL.extra \
-  INSTALL.gen \
   LICENSES \
   MANIFEST \
   mdate.sh \
@@ -871,7 +870,6 @@ EXTRA_DIST += \
   PROBLEMS \
   PROJECTS \
   README.MinGW \
-  TESTS \
   arch/djgpp \
   font/util/make-Rproto
 
