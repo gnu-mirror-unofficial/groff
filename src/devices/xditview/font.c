@@ -15,7 +15,7 @@
 #include "XFontName.h"
 #include "font.h"
 
-// forward reference
+/* forward reference */
 static void DisposeFontSizes(DviWidget, DviFontSizeList *);
 
 static char *
