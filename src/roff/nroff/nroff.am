@@ -26,11 +26,13 @@ EXTRA_DIST += \
   src/roff/nroff/nroff.sh
 
 nroff: $(nroff_srcdir)/nroff.sh $(SH_DEPS_SED_SCRIPT)
-	rm -f $@
-	sed -f $(SH_DEPS_SED_SCRIPT) \
-	    -e $(SH_SCRIPT_SED_CMD) \
-	    -e "s|[@]VERSION[@]|$(VERSION)|" $(nroff_srcdir)/nroff.sh >$@
-	chmod +x $@
+	$(AM_V_GEN)rm -f $@ \
+	&& sed -f $(SH_DEPS_SED_SCRIPT) \
+	       -e $(SH_SCRIPT_SED_CMD) \
+	       -e "s|[@]VERSION[@]|$(VERSION)|" \
+	       $(nroff_srcdir)/nroff.sh \
+	       >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

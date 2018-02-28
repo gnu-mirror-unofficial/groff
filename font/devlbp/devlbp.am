@@ -44,15 +44,15 @@ EXTRA_DIST += $(DEVLBPFONTFILES) font/devlbp/DESC.in
 MOSTLYCLEANFILES += font/devlbp/DESC
 
 font/devlbp/DESC: $(devlbp_srcdir)/DESC.in
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@cat $(devlbp_srcdir)/DESC.in >$@
-	@if test "$(PAGE)" = A4; then \
-	  echo "papersize a4" >>$@; \
-	else \
-	  echo "papersize letter" >>$@; \
-	fi
-	@test -z '$(LBPPRINT)' || echo print '$(LBPPRINT)' >>$@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& cat $(devlbp_srcdir)/DESC.in >$@ \
+	&& if test "$(PAGE)" = A4; then \
+	     echo "papersize a4" >>$@; \
+	   else \
+	     echo "papersize letter" >>$@; \
+	   fi \
+	&& (test -z '$(LBPPRINT)' \
+	    || echo print '$(LBPPRINT)' >>$@)
 
 
 ########################################################################

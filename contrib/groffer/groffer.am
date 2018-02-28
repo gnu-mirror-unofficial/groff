@@ -80,26 +80,28 @@ man1_MANS += \
 MOSTLYCLEANFILES += $(ROFF2MAN)
 
 $(ROFF2PROGS): $(groffer_srcdir)/roff2.pl
-	cp $(groffer_srcdir)/roff2.pl $@;
+	cp $(groffer_srcdir)/roff2.pl $@
 
 # we take roff2.man and replace the @ROFF2MODE@ by the type of file
 # (dvi, pdf, html etc ...)
 $(ROFF2MAN):  $(groffer_srcdir)/roff2.1.man
-	@$(MKDIR_P) contrib/groffer
-	FILEMODE=`echo $@ | sed 's|contrib/groffer/roff2\([a-z][a-z]*\)\.1\.man|\1|g'` \
-	  && sed -e 's/[@]ROFF2MODE[@]/'"$$FILEMODE"'/g' $(groffer_srcdir)/roff2.1.man > $@;
+	$(AM_V_GEN)$(MKDIR_P) contrib/groffer \
+	&& FILEMODE=`echo $@ | sed 's|contrib/groffer/roff2\([a-z][a-z]*\)\.1\.man|\1|g'` \
+	&& sed -e 's/[@]ROFF2MODE[@]/'"$$FILEMODE"'/g' \
+	       $(groffer_srcdir)/roff2.1.man \
+	       > $@;
 
 groffer: $(GROFFER_PERL) $(GROFFER_REST) $(SH_DEPS_SED_SCRIPT)
-	echo "Using perl version of groffer."; \
-	sed -f "$(SH_DEPS_SED_SCRIPT)" \
+	$(AM_V_GEN)sed -f "$(SH_DEPS_SED_SCRIPT)" \
 	   -e "s|[@]g[@]|$(g)|g" \
 	   -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
 	   -e "s|[@]libdir[@]|$(DESTDIR)$(libdir)|g" \
 	   -e "s|[@]groffer_dir[@]|$(DESTDIR)$(groffer_dir)|g" \
 	   -e "s|[@]VERSION[@]|$(VERSION)|g" \
 	   -e "$(SH_SCRIPT_SED_CMD)" \
-	    $(groffer_srcdir)/groffer.pl >$@; \
-	chmod +x $@;
+	   $(groffer_srcdir)/groffer.pl \
+	   >$@ \
+	&& chmod +x $@;
 
 uninstall_groffdirs: uninstall-groffer-hook
 uninstall-groffer-hook:

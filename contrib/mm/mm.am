@@ -70,8 +70,10 @@ EXTRA_DIST += \
 
 
 mmroff: $(mm_srcdir)/mmroff.pl
-	$(SED) -e 's;/usr/bin/perl;$(PERL);' $(mm_srcdir)/mmroff.pl >$@
-	chmod +x $@
+	$(AM_V_GEN)$(SED) -e 's;/usr/bin/perl;$(PERL);' \
+	    $(mm_srcdir)/mmroff.pl \
+	    >$@ \
+	&& chmod +x $@
 
 # Special installation rules for m.tmac, mse.tmac, mmse.tmac, mm.tmac
 # and MMLOCALE

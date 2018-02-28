@@ -59,11 +59,13 @@ CLEANFILES += \
   src/preproc/eqn/eqn.output
 
 neqn: $(top_srcdir)/src/preproc/eqn/neqn.sh $(SH_DEPS_SED_SCRIPT)
-	$(RM) $@
-	sed -e 's/[@]g[@]/$(g)/g' \
-	    -f $(SH_DEPS_SED_SCRIPT) \
-	    -e $(SH_SCRIPT_SED_CMD) $(top_srcdir)/src/preproc/eqn/neqn.sh >$@
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -e 's/[@]g[@]/$(g)/g' \
+	       -f $(SH_DEPS_SED_SCRIPT) \
+	       -e $(SH_SCRIPT_SED_CMD) \
+	       $(top_srcdir)/src/preproc/eqn/neqn.sh \
+	       >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

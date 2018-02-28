@@ -34,21 +34,23 @@ EXTRA_DIST += \
   src/utils/afmtodit/make-afmtodit-tables
 
 afmtodit: $(afmtodit_srcdir)/afmtodit.pl $(afmtodit_srcdir)/afmtodit.tables
-	if test -n "$(PERL)"; then \
+	$(AM_V_GEN)if test -n "$(PERL)"; then \
 	  sed -e "s|/usr/bin/perl|$(PERL)|" \
 	      -e "s|[@]VERSION[@]|$(VERSION)|" \
 	      -e "s|[@]FONTDIR[@]|$(fontdir)|" \
 	      -e "/[@]afmtodit.tables[@]/ r $(afmtodit_srcdir)/afmtodit.tables" \
 	      -e "/[@]afmtodit.tables[@]/ d" \
-	      $(afmtodit_srcdir)/afmtodit.pl >afmtodit; \
+	      $(afmtodit_srcdir)/afmtodit.pl \
+	      >afmtodit; \
 	else \
 	  sed -e "s|[@]VERSION[@]|$(VERSION)|" \
 	      -e "s|[@]FONTDIR[@]|$(fontdir)|" \
 	      -e "/[@]afmtodit.tables[@]/ r $(afmtodit_srcdir)/afmtodit.tables" \
 	      -e "/[@]afmtodit.tables[@]/ d" \
-	      $(afmtodit_srcdir)/afmtodit.pl >afmtodit; \
-	fi
-	chmod +x afmtodit
+	      $(afmtodit_srcdir)/afmtodit.pl \
+	      >afmtodit; \
+	fi \
+	&& chmod +x afmtodit
 
 
 ########################################################################

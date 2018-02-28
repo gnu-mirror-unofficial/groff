@@ -36,17 +36,15 @@ EXTRA_DIST += \
   font/devutf8/R.in
 
 $(DEVUTF8FONTSFILES): $(devutf8_srcdir)/R.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(RM) $@
-	@$(SHELL) $(GENFONTSSH) $(devutf8_srcdir)/R.proto \
-	 $(DEVUTF8RES) $(DEVUTF8CPI) `basename $@` > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(RM) $@ \
+	&& $(SHELL) $(GENFONTSSH) $(devutf8_srcdir)/R.proto \
+	     $(DEVUTF8RES) $(DEVUTF8CPI) `basename $@` > $@
 
 font/devutf8/DESC: $(devutf8_srcdir)/DESC.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(SHELL) $(GENDESCSH) $(devutf8_srcdir)/DESC.proto \
-	 $(DEVUTF8RES) $(DEVUTF8CPI) $(DEVUTF8LPI) $(DEVUTF8FONTS) > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(SHELL) $(GENDESCSH) $(devutf8_srcdir)/DESC.proto \
+	     $(DEVUTF8RES) $(DEVUTF8CPI) $(DEVUTF8LPI) $(DEVUTF8FONTS) > $@
 
 
 ########################################################################

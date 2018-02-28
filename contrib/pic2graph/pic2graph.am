@@ -26,11 +26,13 @@ bin_SCRIPTS += pic2graph
 EXTRA_DIST += \
   contrib/pic2graph/pic2graph.sh \
   contrib/pic2graph/pic2graph.1.man
+
 pic2graph: $(pic2graph_srcdir)/pic2graph.sh
-	sed -e "s|[@]g[@]|$(g)|g" \
+	$(AM_V_GEN)sed -e "s|[@]g[@]|$(g)|g" \
 	    -e "s|[@]VERSION[@]|$(VERSION)|" \
-	    -e $(SH_SCRIPT_SED_CMD) $(pic2graph_srcdir)/pic2graph.sh >$@
-	chmod +x $@
+	    -e $(SH_SCRIPT_SED_CMD) $(pic2graph_srcdir)/pic2graph.sh \
+	    >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

@@ -32,15 +32,17 @@ EXTRA_DIST += \
   contrib/gperl/ChangeLog \
   contrib/gperl/gperl.1.man \
   contrib/gperl/gperl.pl
+
 gperl: $(top_srcdir)/contrib/gperl/gperl.pl shdeps.sed
-	$(RM) $@
-	sed -f "$(SH_DEPS_SED_SCRIPT)" \
-	    -e "s|[@]g[@]|$(g)|g" \
-	    -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
-	    -e "s|[@]VERSION[@]|$(VERSION)|g" \
-	    -e "$(SH_SCRIPT_SED_CMD)" \
-	     $(top_srcdir)/contrib/gperl/gperl.pl >$@; \
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -f "$(SH_DEPS_SED_SCRIPT)" \
+	       -e "s|[@]g[@]|$(g)|g" \
+	       -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
+	       -e "s|[@]VERSION[@]|$(VERSION)|g" \
+	       -e "$(SH_SCRIPT_SED_CMD)" \
+	       $(top_srcdir)/contrib/gperl/gperl.pl \
+	       >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

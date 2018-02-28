@@ -87,17 +87,17 @@ EXTRA_DIST += font/devlj4/DESC.in
 MOSTLYCLEANFILES += font/devlj4/DESC
 
 font/devlj4/DESC: $(devlj4_srcdir)/DESC.in
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@echo "res $(LJ4RES)" >$@
-	@echo "unitwidth `expr 7620000 / $(LJ4RES)`" >>$@
-	@cat $(devlj4_srcdir)/DESC.in >>$@
-	@if test "$(PAGE)" = A4; then \
-	   echo "papersize a4" >>$@; \
-	else \
-	   echo "papersize letter" >>$@; \
-	fi
-	@test -z '$(LJ4PRINT)' || echo print '$(LJ4PRINT)' >>$@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& echo "res $(LJ4RES)" >$@ \
+	&& echo "unitwidth `expr 7620000 / $(LJ4RES)`" >>$@ \
+	&& cat $(devlj4_srcdir)/DESC.in >>$@ \
+	&& if test "$(PAGE)" = A4; then \
+	     echo "papersize a4" >>$@; \
+	   else \
+	     echo "papersize letter" >>$@; \
+	   fi \
+	&& (test -z '$(LJ4PRINT)' \
+	    || echo print '$(LJ4PRINT)' >>$@)
 
 fonts: devlj4_fonts
 devlj4_fonts: hpftodit font/devlj4/DESC

@@ -80,15 +80,15 @@ EXTRA_DIST += $(DEVDVIFONTFILES) $(DEVDVIGENFILES) font/devdvi/DESC.in
 MOSTLYCLEANFILES += font/devdvi/DESC
 
 font/devdvi/DESC: $(devdvi_srcdir)/DESC.in
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@cat $(devdvi_srcdir)/DESC.in >$@
-	@if test "$(PAGE)" = A4; then \
-	  echo "papersize a4" >>$@; \
-	else \
-	  echo "papersize letter" >>$@; \
-	fi
-	@test -z '$(DVIPRINT)' || echo print '$(DVIPRINT)' >>$@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& cat $(devdvi_srcdir)/DESC.in >$@ \
+	&& if test "$(PAGE)" = A4; then \
+	     echo "papersize a4" >>$@; \
+	   else \
+	     echo "papersize letter" >>$@; \
+	   fi \
+	&& (test -z '$(DVIPRINT)' \
+	    || echo print '$(DVIPRINT)' >>$@)
 
 
 ########################################################################

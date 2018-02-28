@@ -29,10 +29,11 @@ EXTRA_DIST += \
   contrib/eqn2graph/eqn2graph.sh
 
 eqn2graph: $(top_srcdir)/contrib/eqn2graph/eqn2graph.sh
-	sed -e "s|[@]g[@]|$(g)|g" \
+	$(AM_V_GEN)sed -e "s|[@]g[@]|$(g)|g" \
 	    -e "s|[@]VERSION[@]|$(VERSION)|" \
-	    -e $(SH_SCRIPT_SED_CMD) $(eqn2graph_srcdir)/eqn2graph.sh >$@
-	chmod +x $@
+	    -e $(SH_SCRIPT_SED_CMD) $(eqn2graph_srcdir)/eqn2graph.sh \
+	    >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

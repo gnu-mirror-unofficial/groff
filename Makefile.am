@@ -883,10 +883,9 @@ MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
 # substitution of the variable by automake.
 SUFFIXES += .man
 .man:
-	@echo Making $@ from $<
-	rm -f $@
-	$(MKDIR_P) `dirname $@`
-	@LC_ALL=C \
+	$(AM_V_GEN)rm -f $@ \
+	&& $(MKDIR_P) `dirname $@` \
+	&& LC_ALL=C \
 	 sed -e "s|[@]APPRESDIR[@]|$(appresdir)|g" \
 	     -e "s|[@]BINDIR[@]|$(bindir)|g" \
 	     -e "s|[@]BROKEN_SPOOLER_FLAGS[@]|$(BROKEN_SPOOLER_FLAGS)|g" \
@@ -918,7 +917,8 @@ SUFFIXES += .man
 	     -e "s|[@]TMAC_MDIR[@]|$(tmacdir)/mm|g" \
 	     -e "s|[@]TMAC_S_PREFIX[@]|$(tmac_s_prefix)|g" \
 	     -e "s|[@]VERSION[@]|$(VERSION)|g" \
-	 $< >$@
+	     $< \
+	     >$@
 
 # Version files - see script 'build-aux/git-gen-version'
 EXTRA_DIST += $(top_srcdir)/.version

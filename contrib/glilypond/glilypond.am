@@ -49,14 +49,15 @@ EXTRA_DIST += \
 
 # create perl executable 'glilypond', being stored into 'bindir'
 glilypond: $(glilypond_srcdir)/glilypond.pl shdeps.sed
-	$(RM) $@
-	sed -f "$(SH_DEPS_SED_SCRIPT)" \
-	    -e "s|[@]g[@]|$(g)|g" \
-	    -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
-	    -e "s|[@]glilypond_dir[@]|$(DESTDIR)$(glilypond_dir)|g" \
-	    -e "s|[@]VERSION[@]|$(VERSION)|g" \
-	    $(glilypond_srcdir)/glilypond.pl >$@
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -f "$(SH_DEPS_SED_SCRIPT)" \
+	       -e "s|[@]g[@]|$(g)|g" \
+	       -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
+	       -e "s|[@]glilypond_dir[@]|$(DESTDIR)$(glilypond_dir)|g" \
+	       -e "s|[@]VERSION[@]|$(VERSION)|g" \
+	       $(glilypond_srcdir)/glilypond.pl \
+	       >$@ \
+	&& chmod +x $@
 
 uninstall_groffdirs: uninstall-glilypond-hook
 uninstall-glilypond-hook:

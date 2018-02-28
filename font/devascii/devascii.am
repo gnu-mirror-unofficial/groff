@@ -34,18 +34,16 @@ EXTRA_DIST += \
   font/devascii/DESC.proto
 
 $(DEVASCIIFONTSFILES): $(devascii_srcdir)/R.proto
-	@echo Making $@
-	$(MKDIR_P) `dirname $@`
-	$(RM) $@
-	$(SHELL) $(GENFONTSSH) $(devascii_srcdir)/R.proto \
-	  $(DEVASCIIRES) $(DEVASCIICPI) `basename $@` > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(RM) $@ \
+	&& $(SHELL) $(GENFONTSSH) $(devascii_srcdir)/R.proto \
+	     $(DEVASCIIRES) $(DEVASCIICPI) `basename $@` > $@
 
 font/devascii/DESC: $(devascii_srcdir)/DESC.proto
-	@echo Making $@
-	$(MKDIR_P) `dirname $@`
-	$(SHELL) $(GENDESCSH) $(devascii_srcdir)/DESC.proto \
-	  $(DEVASCIIRES) $(DEVASCIICPI) $(DEVASCIILPI) \
-	  $(DEVASCIIFONTS) > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(SHELL) $(GENDESCSH) $(devascii_srcdir)/DESC.proto \
+	     $(DEVASCIIRES) $(DEVASCIICPI) $(DEVASCIILPI) \
+	     $(DEVASCIIFONTS) > $@
 
 
 ########################################################################

@@ -35,21 +35,23 @@ man1_MANS += \
   src/devices/gropdf/pdfmom.1
 
 gropdf: $(gropdf_dir)/gropdf.pl $(SH_DEPS_SED_SCRIPT)
-	$(RM) $@
-	sed -f $(SH_DEPS_SED_SCRIPT) \
-	    -e "s|[@]VERSION[@]|$(VERSION)|" \
-	    -e "s|[@]PERL[@]|$(PERL)|" \
-	    -e "s|[@]GROFF_FONT_DIR[@]|$(fontpath)|" \
-	    -e "s|[@]RT_SEP[@]|$(RT_SEP)|" $(gropdf_dir)/gropdf.pl >$@
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -f $(SH_DEPS_SED_SCRIPT) \
+	       -e "s|[@]VERSION[@]|$(VERSION)|" \
+	       -e "s|[@]PERL[@]|$(PERL)|" \
+	       -e "s|[@]GROFF_FONT_DIR[@]|$(fontpath)|" \
+	       -e "s|[@]RT_SEP[@]|$(RT_SEP)|" $(gropdf_dir)/gropdf.pl \
+	       >$@ \
+	&& chmod +x $@
 
 pdfmom: $(gropdf_dir)/pdfmom.pl $(SH_DEPS_SED_SCRIPT)
-	$(RM) $@
-	sed -f $(SH_DEPS_SED_SCRIPT) \
-	    -e "s|[@]VERSION[@]|$(VERSION)|" \
-	    -e "s|[@]RT_SEP[@]|$(RT_SEP)|" \
-	    -e "s|[@]PERL[@]|$(PERL)|" $(gropdf_dir)/pdfmom.pl >$@
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -f $(SH_DEPS_SED_SCRIPT) \
+	       -e "s|[@]VERSION[@]|$(VERSION)|" \
+	       -e "s|[@]RT_SEP[@]|$(RT_SEP)|" \
+	       -e "s|[@]PERL[@]|$(PERL)|" $(gropdf_dir)/pdfmom.pl \
+	       >$@ \
+	&& chmod +x $@
 
 
 ########################################################################

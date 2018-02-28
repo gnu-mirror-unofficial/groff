@@ -43,18 +43,16 @@ EXTRA_DIST += \
   font/devhtml/R.in
 
 $(DEVHTMLFONTSFILES): $(devhtml_srcdir)/R.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(RM) $@
-	@$(SHELL) $(GENFONTSSH) $(devhtml_srcdir)/R.proto \
-	 $(DEVHTMLRES) $(DEVHTMLCPI) `basename $@` > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(RM) $@ \
+	&& $(SHELL) $(GENFONTSSH) $(devhtml_srcdir)/R.proto \
+	     $(DEVHTMLRES) $(DEVHTMLCPI) `basename $@` > $@
 
 font/devhtml/DESC: $(devhtml_srcdir)/DESC.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(SHELL) $(GENDESCSH) $(devhtml_srcdir)/DESC.proto \
-	 $(DEVHTMLRES) $(DEVHTMLCPI) $(DEVHTMLLPI) $(DEVHTMLFONTS) > $@
-	@echo "image_generator $(GHOSTSCRIPT)" >> $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(SHELL) $(GENDESCSH) $(devhtml_srcdir)/DESC.proto \
+	     $(DEVHTMLRES) $(DEVHTMLCPI) $(DEVHTMLLPI) $(DEVHTMLFONTS) > $@ \
+	&& echo "image_generator $(GHOSTSCRIPT)" >> $@
 
 
 ########################################################################

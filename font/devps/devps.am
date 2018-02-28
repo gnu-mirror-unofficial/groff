@@ -139,15 +139,16 @@ EXTRA_DIST += \
   font/devps/generate/zapfdr.sed
 
 font/devps/DESC: $(devps_srcdir)/DESC.in
-	@$(MKDIR_P) font/devps
-	@cat $(devps_srcdir)/DESC.in >$@
-	@echo broken $(BROKEN_SPOOLER_FLAGS) >>$@
-	@if test "$(PAGE)" = A4; then \
-	  echo "papersize a4" >>$@; \
-	else \
-	  echo "papersize letter" >>$@; \
-	fi
-	@test -z '$(PSPRINT)' ||	echo print '$(PSPRINT)' >>$@
+	$(AM_V_GEN)$(MKDIR_P) font/devps \
+	&& cat $(devps_srcdir)/DESC.in >$@ \
+	&& echo broken $(BROKEN_SPOOLER_FLAGS) >>$@ \
+	&& if test "$(PAGE)" = A4; then \
+	     echo "papersize a4" >>$@; \
+	   else \
+	     echo "papersize letter" >>$@; \
+	   fi \
+	&& (test -z '$(PSPRINT)' \
+	    || echo print '$(PSPRINT)' >>$@)
 
 fonts: devps_fonts
 # We add top_builddir to the PATH in case the only afmtodit available is
@@ -158,17 +159,17 @@ devps_fonts: afmtodit font/devps/DESC
 	  srcdir=$(devps_srcdir)/generate DESC=$(devps_srcdir)/DESC.in
 
 font/devps/prologue: $(devps_srcdir)/prologue.ps
-	@$(MKDIR_P) font/devps
-	$(RM) $@
-	sed -f $(devps_srcdir)/psstrip.sed $? >$@
+	$(AM_V_GEN)$(MKDIR_P) font/devps \
+	&& $(RM) $@ \
+	&& sed -f $(devps_srcdir)/psstrip.sed $? >$@
 font/devps/zapfdr.pfa: $(devps_srcdir)/zapfdr.ps
-	@$(MKDIR_P) font/devps
-	$(RM) $@
-	sed -f $(devps_srcdir)/psstrip.sed $? >$@
+	$(AM_V_GEN)$(MKDIR_P) font/devps \
+	&& $(RM) $@ \
+	&& sed -f $(devps_srcdir)/psstrip.sed $? >$@
 font/devps/symbolsl.pfa: $(devps_srcdir)/symbolsl.ps
-	@$(MKDIR_P) font/devps
-	$(RM) $@
-	sed -f $(devps_srcdir)/psstrip.sed $? >$@
+	$(AM_V_GEN)$(MKDIR_P) font/devps \
+	&& $(RM) $@ \
+	&& sed -f $(devps_srcdir)/psstrip.sed $? >$@
 
 
 ########################################################################

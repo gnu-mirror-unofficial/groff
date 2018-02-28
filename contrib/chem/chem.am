@@ -71,28 +71,29 @@ MOSTLYCLEANFILES += $(CHEM_GENEXAMPLES) $(nodist_chemexample122_DATA) \
 all: contrib/chem/README
 
 contrib/chem/README: $(chem_srcdir)/README.txt
-	@$(MKDIR_P) contrib/chem/
-	sed -e "s|[@]g[@]|$(g)|g" $? >$@
+	$(AM_V_GEN)$(MKDIR_P) contrib/chem/ \
+	&& sed -e "s|[@]g[@]|$(g)|g" $? >$@
 
 contrib/chem/examples/README: $(chem_srcdir)/examples/README.txt
-	@$(MKDIR_P) contrib/chem/examples
-	sed -e "s|[@]g[@]|$(g)|g" $? >$@
+	$(AM_V_GEN)$(MKDIR_P) contrib/chem/examples \
+	&& sed -e "s|[@]g[@]|$(g)|g" $? >$@
 
 contrib/chem/examples/122/README: $(chem_srcdir)/examples/122/README.txt
-	@$(MKDIR_P) contrib/chem/examples/122
-	sed -e "s|[@]g[@]|$(g)|g" $? >$@
+	$(AM_V_GEN)$(MKDIR_P) contrib/chem/examples/122 \
+	&& sed -e "s|[@]g[@]|$(g)|g" $? >$@
 
 chem: $(chem_srcdir)/chem.pl $(SH_DEPS_SED_SCRIPT)
-	$(RM) $@
-	sed -f "$(SH_DEPS_SED_SCRIPT)" \
-	    -e "s|[@]g[@]|$(g)|g" \
-	    -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
-	    -e "s|[@]MACRODIR[@]|$(DESTDIR)$(tmacdir)|g" \
-	    -e "s|[@]PICDIR[@]|$(DESTDIR)$(datasubdir)/pic|g" \
-	    -e "s|[@]VERSION[@]|$(VERSION)|g" \
-	    -e "$(SH_SCRIPT_SED_CMD)" \
-	    $(chem_srcdir)/chem.pl >$@
-	chmod +x $@
+	$(AM_V_GEN)$(RM) $@ \
+	&& sed -f "$(SH_DEPS_SED_SCRIPT)" \
+	       -e "s|[@]g[@]|$(g)|g" \
+	       -e "s|[@]BINDIR[@]|$(DESTDIR)$(bindir)|g" \
+	       -e "s|[@]MACRODIR[@]|$(DESTDIR)$(tmacdir)|g" \
+	       -e "s|[@]PICDIR[@]|$(DESTDIR)$(datasubdir)/pic|g" \
+	       -e "s|[@]VERSION[@]|$(VERSION)|g" \
+	       -e "$(SH_SCRIPT_SED_CMD)" \
+	       $(chem_srcdir)/chem.pl \
+	       >$@ \
+	&& chmod +x $@
 
 install-data-local: install_chem_extra
 install_chem_extra:

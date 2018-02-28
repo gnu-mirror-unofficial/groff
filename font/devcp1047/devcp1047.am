@@ -32,18 +32,16 @@ MOSTLYCLEANFILES += $(DEVCP1047FONTSFILES) font/devcp1047/DESC
 EXTRA_DIST += font/devcp1047/R.proto font/devcp1047/DESC.proto
 
 $(DEVCP1047FONTSFILES): $(devcp1047_srcdir)/R.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(RM) $@
-	@$(SHELL) $(GENFONTSSH) $(devcp1047_srcdir)/R.proto \
-	 $(DEVCP1047RES) $(DEVCP1047CPI) `basename $@` > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(RM) $@ \
+	&& $(SHELL) $(GENFONTSSH) $(devcp1047_srcdir)/R.proto \
+	     $(DEVCP1047RES) $(DEVCP1047CPI) `basename $@` > $@
 
 font/devcp1047/DESC: $(devcp1047_srcdir)/DESC.proto
-	@echo Making $@
-	@$(MKDIR_P) `dirname $@`
-	@$(SHELL) $(GENDESCSH) $(devcp1047_srcdir)/DESC.proto \
-	 $(DEVCP1047RES) $(DEVCP1047CPI) $(DEVCP1047LPI) \
-	 $(DEVCP1047FONTS) > $@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& $(SHELL) $(GENDESCSH) $(devcp1047_srcdir)/DESC.proto \
+	     $(DEVCP1047RES) $(DEVCP1047CPI) $(DEVCP1047LPI) \
+	     $(DEVCP1047FONTS) > $@
 
 
 ########################################################################
