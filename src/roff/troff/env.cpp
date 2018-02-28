@@ -38,7 +38,11 @@ symbol default_family("T");
 
 enum { ADJUST_LEFT = 0, ADJUST_BOTH = 1, ADJUST_CENTER = 3, ADJUST_RIGHT = 5 };
 
-enum { HYPHEN_LAST_LINE = 2, HYPHEN_LAST_CHARS = 4, HYPHEN_FIRST_CHARS = 8 };
+enum {
+  HYPHEN_NOT_LAST_LINE = 2,
+  HYPHEN_NOT_LAST_CHARS = 4,
+  HYPHEN_NOT_FIRST_CHARS = 8
+};
 
 struct env_list {
   environment *env;
@@ -2020,12 +2024,12 @@ void environment::hyphenate_line(int start_here)
   if (hyphenation_flags != 0
       && !inhibit
       // this may not be right if we have extra space on this line
-      && !((hyphenation_flags & HYPHEN_LAST_LINE)
+      && !((hyphenation_flags & HYPHEN_NOT_LAST_LINE)
 	   && (curdiv->distance_to_next_trap()
 	       <= vertical_spacing + total_post_vertical_spacing()))
       && i >= (2
-	       + (hyphenation_flags & HYPHEN_FIRST_CHARS ? 1 : 0)
-	       + (hyphenation_flags & HYPHEN_LAST_CHARS ? 1 : 0)))
+	       + (hyphenation_flags & HYPHEN_NOT_FIRST_CHARS ? 1 : 0)
+	       + (hyphenation_flags & HYPHEN_NOT_LAST_CHARS ? 1 : 0)))
     hyphenate(sl, hyphenation_flags);
   while (forward != 0) {
     node *tem1 = forward;
@@ -3304,11 +3308,11 @@ void environment::print_env()
     errprint("  lines not to enumerate: %1\n", no_number_count);
   }
   string hf = hyphenation_flags ? "on" : "off";
-  if (hyphenation_flags & HYPHEN_LAST_LINE)
+  if (hyphenation_flags & HYPHEN_NOT_LAST_LINE)
     hf += ", not last line";
-  if (hyphenation_flags & HYPHEN_LAST_CHARS)
+  if (hyphenation_flags & HYPHEN_NOT_LAST_CHARS)
     hf += ", not last two chars";
-  if (hyphenation_flags & HYPHEN_FIRST_CHARS)
+  if (hyphenation_flags & HYPHEN_NOT_FIRST_CHARS)
     hf += ", not first two chars";
   hf += '\0';
   errprint("  hyphenation_flags: %1\n", hf.contents());
@@ -3967,9 +3971,9 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	int num[WORD_MAX + 3];
 	current_language->patterns.hyphenate(hbuf, len + 2, num);
 	int i;
-	if (flags & HYPHEN_FIRST_CHARS)
+	if (flags & HYPHEN_NOT_FIRST_CHARS)
 	  num[2] = 0;
-	if (flags & HYPHEN_LAST_CHARS)
+	if (flags & HYPHEN_NOT_LAST_CHARS)
 	  --len;
 	for (i = 2, tem = h; i < len && tem; tem = tem->next, i++)
 	  if (num[i] & 1)
