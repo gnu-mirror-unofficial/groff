@@ -6273,16 +6273,16 @@ inline const char *psbb_locator::context_args(const char *tag)
 //
 // Inputs:
 //   tag   literal text to be matched at start of buffer
-//   buf   pointer to text to be checked for "tag" match
+//   p     pointer to text to be checked for "tag" match
 //
 // Returns a pointer to the trailing substring of the specified
 // text buffer, following an initial substring matching the "tag"
 // argument, or NULL if "tag" is not matched.
 //
-inline const char *psbb_locator::context_args(const char *tag, const char *buf)
+inline const char *psbb_locator::context_args(const char *tag, const char *p)
 {
   size_t len = strlen(tag);
-  return (strncmp(tag, buf, len) == 0) ? buf + len : NULL;
+  return (strncmp(tag, p, len) == 0) ? p + len : NULL;
 }
 
 // psbb_locator::bounding_box_args()

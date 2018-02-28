@@ -31,9 +31,6 @@
 /* forward reference */
 static int FakeCharacter(DviWidget, char *, int);
 
-/* font.c */
-extern int MaxFontPosition(DviWidget);
-
 /* shadowed by a macro definition in parse.c, and unused elsewhere */
 #if 0
 static void
