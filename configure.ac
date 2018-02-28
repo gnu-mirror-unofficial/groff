@@ -36,6 +36,8 @@ AC_USE_SYSTEM_EXTENSIONS
 
 AM_INIT_AUTOMAKE([subdir-objects])
 
+AM_SILENT_RULES([yes])
+
 # checks for programs
 AC_PROG_CC
 AC_PROG_CXX
