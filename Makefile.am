@@ -539,6 +539,11 @@ AM_CPPFLAGS = \
   -I$(top_builddir)/src/include \
   -I$(top_builddir)/lib
 
+# Define a custom string for rules that call groff in make's silence mode.
+GROFF_V = $(GROFF_V_@AM_V@)
+GROFF_V_ = $(GROFF_V_@AM_DEFAULT_V@)
+GROFF_V_0 = @echo "  GROFF   " $@;
+
 # The following Automake variables will be overloaded by the various
 # .am files
 bin_PROGRAMS =

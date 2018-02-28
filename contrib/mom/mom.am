@@ -131,8 +131,8 @@ MOSTLYCLEANFILES += \
 # Rule to generated .pdf files from .mom files
 SUFFIXES += .mom .pdf
 .mom.pdf:
-	@$(MKDIR_P) `dirname $@`
-	LC_ALL=C $(MOMPDFMOM) $< >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& LC_ALL=C $(MOMPDFMOM) $< >$@
 
 $(MOMPROCESSEDEXAMPLEFILES): $(MOMSTRIPFILES) $(MOMNORMALFILES) \
   groff troff gropdf pdfmom penguin.ps penguin.pdf \

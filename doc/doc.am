@@ -127,22 +127,22 @@ SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 
 # For simplicity, we always call preconv, grn, and eqn.
 .me.txt:
-	@$(MKDIR_P) `dirname $@`
-	$(DOC_GROFF) -k -Tutf8 -ge -me >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -k -Tutf8 -ge -me >$@
 .me.ps:
-	@$(MKDIR_P) `dirname $@`
-	$(DOC_GROFF) -k -Tps -ge -me >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -k -Tps -ge -me >$@
 
 .ms.html:
-	@$(MKDIR_P) `dirname $@`
-	$(DOC_GROFF) -P-p -P-b -P-I`basename $< | sed -e 's|.ms$$||'` \
-	         -P-D$(imagedir) -P-V -Thtml -ms >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -P-p -P-b -P-I`basename $< | sed -e 's|.ms$$||'` \
+	                -P-D$(imagedir) -P-V -Thtml -ms >$@
 .ms.txt:
-	@$(MKDIR_P) `dirname $@`
-	$(DOC_GROFF) -Tascii -ms -mwww >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -Tascii -ms -mwww >$@
 .ms.ps:
-	@$(MKDIR_P) `dirname $@`
-	$(DOC_GROFF) -Tps -ms -mwww >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -Tps -ms -mwww >$@
 
 $(PROCESSEDEXAMPLEFILES): $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS) gnu.eps
 $(PROCESSEDEXAMPLEFILES): $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA) $(hdtbltmac_DATA)
@@ -154,11 +154,11 @@ doc/pic.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/pic.html: doc/examples.stamp
 doc/pic.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
 doc/pic.html: $(doc_srcdir)/pic.ms $(devhtmlfont_DATA)
-	@$(MKDIR_P) $(doc_builddir)
-	cd $(doc_builddir) && \
-	$(DOC_SED) $(doc_srcdir)/pic.ms | \
-		$(DOC_GROFF_ONLY) -P-p -P-Ipic -P-D$(imagedir) -P-jpic \
-	         -Thtml -P-V -ms > pic.html
+	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
+	&& cd $(doc_builddir) \
+	&& $(DOC_SED) $(doc_srcdir)/pic.ms \
+	   | $(DOC_GROFF_ONLY) -P-p -P-Ipic -P-D$(imagedir) -P-jpic \
+	                       -Thtml -P-V -ms > pic.html
 
 doc/examples.stamp: doc/groff.css
 	@$(MKDIR_P) $(doc_builddir)
@@ -169,11 +169,11 @@ doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/webpage.html: doc/examples.stamp $(devhtmlfont_DATA)
 doc/webpage.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA) 
 doc/webpage.html: $(doc_srcdir)/webpage.ms gnu.eps $(doc_srcdir)/groff.css
-	@$(MKDIR_P) doc
-	cd $(doc_builddir) && \
-	$(DOC_SED) $(doc_srcdir)/webpage.ms | \
-		$(DOC_GROFF_ONLY) -P-jwebpage -P-nrpb -P-Iwebpage \
-	         -P-D$(imagedir) -Thtml -ms > webpage.html
+	$(GROFF_V)$(MKDIR_P) doc \
+	&& cd $(doc_builddir) \
+	&& $(DOC_SED) $(doc_srcdir)/webpage.ms \
+	   | $(DOC_GROFF_ONLY) -P-jwebpage -P-nrpb -P-Iwebpage \
+	                       -P-D$(imagedir) -Thtml -ms > webpage.html
 
 doc/grnexmpl.ps: doc/grnexmpl.me doc/grnexmpl.g
 

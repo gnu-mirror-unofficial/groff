@@ -105,13 +105,15 @@ EXTRA_DIST += \
 SUFFIXES += .roff .in .ps
 
 .roff.ps:
-	@$(MKDIR_P) `dirname $@`
-	$(HDTBLGROFF) -Tps -dfontpath=$(top_srcdir)/font -dsopath=$(hdtbl_srcdir)/ \
-	         -mhdtbl $< >$@
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(HDTBLGROFF) -Tps \
+	     -dfontpath=$(top_srcdir)/font \
+	     -dsopath=$(hdtbl_srcdir)/ \
+	     -mhdtbl $< >$@
 .in.roff:
-	@$(MKDIR_P) `dirname $@`
-	sed -e "s|[@]fontdir[@]|$(fontdir)|" \
-	    -e "s|[@]EGREP[@]|$(EGREP)|" $< >$@
+	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
+	&& sed -e "s|[@]fontdir[@]|$(fontdir)|" \
+	       -e "s|[@]EGREP[@]|$(EGREP)|" $< >$@
 
 
 $(HDTBLPROCESSEDEXAMPLEFILES): gnu.eps groff troff pic tbl \
