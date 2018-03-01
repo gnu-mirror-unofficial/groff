@@ -121,12 +121,23 @@ my $wt=-1;
 my $thislev=1;
 my $mark=undef;
 my $suspendmark=undef;
+
+
+
 my $n_flg=1;
 my $pginsert=-1;    # Growth point for kids array
 my %pgnames;        # 'names' of pages for switchtopage
 my @outlines=();    # State of Bookmark Outlines at end of each page
 my $custompaper=0;  # Has there been an X papersize
 my $textenccmap=''; # CMap for groff text.enc encoding
+my @XOstream=();
+my @PageAnnots={};
+my $noslide=0;
+my $transition={PAGE => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I', Di => 0, SS => 1.0, B => 0},
+		BLOCK => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I', Di => 0, SS => 1.0, B => 0}};
+my $firstpause=0;
+
+$noslide=1 if exists($ENV{GROPDF_NOSLIDE}) and $ENV{GROPDF_NOSLIDE};
 
 my %ppsz=(	'ledger'=>[1224,792],
 	'legal'=>[612,1008],
@@ -328,10 +339,29 @@ while (<>)
 
 }
 
+exit 0 if $lct==0;
 
 if ($cpageno > 0)
 {
+	my $trans='BLOCK';
+
+	$trans='PAGE' if $firstpause;
+
+	if (scalar(@XOstream))
+	{
+	    MakeXO() if $stream;
+	    $stream=join("\n",@XOstream)."\n";
+	}
+
+	my %t=%{$transition->{$trans}};
 	$cpage->{MediaBox}=\@mediabox if $custompaper;
+	$cpage->{Trans}=FixTrans(\%t) if $t{S};
+
+	if ($#PageAnnots >= 0)
+	{
+	    @{$cpage->{Annots}}=@PageAnnots;
+	}
+
 	PutObj($cpageno);
 	OutStream($cpageno+1);
 }
@@ -572,7 +602,7 @@ sub LoadDownload
 	OpenFile(\$f,$dir,"download");
 	next if !defined($f);
 	$found++;
-	
+
 	while (<$f>)
 	{
 	    chomp;
@@ -756,6 +786,53 @@ sub do_x
 		$linecap=$1;
 		$stream.="$linecap J\n";
 	    }
+	    elsif ($par=~m/exec %%%%PAUSE/i and !$noslide)
+	    {
+		my $trans='BLOCK';
+
+		if ($firstpause)
+		{
+		    $trans='PAGE';
+		    $firstpause=0;
+		}
+		MakeXO();
+		NewPage($trans);
+		$cat->{PageMode}='/FullScreen';
+	    }
+	    elsif ($par=~m/exec %%%%BEGINONCE/)
+	    {
+		if ($noslide)
+		{
+		    $suppress=1;
+		}
+		else
+		{
+		    my $trans='BLOCK';
+
+		    if ($firstpause)
+		    {
+			$trans='PAGE';
+			$firstpause=0;
+		    }
+		    MakeXO();
+		    NewPage($trans);
+		    $cat->{PageMode}='/FullScreen';
+		}
+	    }
+	    elsif ($par=~m/exec %%%%ENDONCE/)
+	    {
+		if ($noslide)
+		{
+		    $suppress=0;
+		}
+		else
+		{
+		    MakeXO();
+		    NewPage('BLOCK');
+		    $cat->{PageMode}='/FullScreen';
+		    pop(@XOstream);
+		}
+	    }
 	    elsif ($par=~m/\[(.+) pdfmark/)
 	    {
 		my $pdfmark=$1;
@@ -814,7 +891,7 @@ sub do_x
 		    $annot->{DATA}->{Type}='/Annot';
 		    FixRect($annot->{DATA}->{Rect}); # Y origin to ll
 		    FixPDFColour($annot->{DATA});
-		    push(@{$cpage->{Annots}},$annotno);
+		    push(@PageAnnots,$annotno);
 		}
 		elsif ($pdfmark=~m/(.+) \/OUT/)
 		{
@@ -1118,6 +1195,31 @@ sub do_x
 		    }
 		}
 	    }
+	    elsif (lc($xprm[1]) eq 'transition')
+	    {
+		if (uc($xprm[2]) eq 'PAGE' or uc($xprm[2] eq 'SLIDE'))
+		{
+		    $transition->{PAGE}->{S}='/'.ucfirst($xprm[3]) if $xprm[3] and $xprm[3] ne '.';
+		    $transition->{PAGE}->{D}=$xprm[4] if $xprm[4] and $xprm[4] ne '.';
+		    $transition->{PAGE}->{Dm}='/'.$xprm[5] if $xprm[5] and $xprm[5] ne '.';
+		    $transition->{PAGE}->{M}='/'.$xprm[6] if $xprm[6] and $xprm[6] ne '.';
+		    $xprm[7]='/None' if $xprm[7] and uc($xprm[7]) eq 'NONE';
+		    $transition->{PAGE}->{Di}=$xprm[7] if $xprm[7] and $xprm[7] ne '.';
+		    $transition->{PAGE}->{SS}=$xprm[8] if $xprm[8] and $xprm[8] ne '.';
+		    $transition->{PAGE}->{B}=$xprm[9] if $xprm[9] and $xprm[9] ne '.';
+		}
+		elsif (uc($xprm[2]) eq 'BLOCK')
+		{
+		    $transition->{BLOCK}->{S}='/'.ucfirst($xprm[3]) if $xprm[3] and $xprm[3] ne '.';
+		    $transition->{BLOCK}->{D}=$xprm[4] if $xprm[4] and $xprm[4] ne '.';
+		    $transition->{BLOCK}->{Dm}='/'.$xprm[5] if $xprm[5] and $xprm[5] ne '.';
+		    $transition->{BLOCK}->{M}='/'.$xprm[6] if $xprm[6] and $xprm[6] ne '.';
+		    $xprm[7]='/None' if $xprm[7] and uc($xprm[7]) eq 'NONE';
+		    $transition->{BLOCK}->{Di}=$xprm[7] if $xprm[7] and $xprm[7] ne '.';
+		    $transition->{BLOCK}->{SS}=$xprm[8] if $xprm[8] and $xprm[8] ne '.';
+		    $transition->{BLOCK}->{B}=$xprm[9] if $xprm[9] and $xprm[9] ne '.';
+		}
+	    }
 	}
 	elsif (lc(substr($xprm[0],0,9)) eq 'papersize')
 	{
@@ -1190,7 +1292,7 @@ sub PutHotSpot
     $annot->{DATA}->{Rect}=[$mark->{xpos},$mark->{ypos}-$mark->{rsb},$endx+$mark->{lead},$mark->{ypos}-$mark->{rst}];
     FixPDFColour($annot->{DATA});
     FixRect($annot->{DATA}->{Rect}); # Y origin to ll
-    push(@{$cpage->{Annots}},$annotno);
+    push(@PageAnnots,$annotno);
 }
 
 sub sgn
@@ -1358,14 +1460,14 @@ sub OpenInc
 	foreach my $dir (@idirs)
 	{
 	    $fnm="$dir/$fn";
-	    
+
 	    if (-r "$fnm" and open($F,"<$fnm"))
 	    {
 		return($F,$fnm);
 	    }
 	}
     }
-    
+
     return(undef,$fn);
 }
 
@@ -1384,7 +1486,7 @@ sub LoadPDF
     my $cont;
 
     my ($PD,$PDnm)=OpenInc($pdfnm);
-    
+
     if (!defined($PD))
     {
 	Msg(0,"Failed to open PDF '$pdfnm'");
@@ -2284,59 +2386,59 @@ sub GetChunk
     my ($type,$hdr,$chunk,@msg);
     binmode($F);
     my $enc="ascii";
-    
+
     while (1)
     {
 	# There may be multiple chunks of the same type
-	
+
 	my $ct=read($F,$hdr,2);
-	
+
 	if ($ct==2)
 	{
 	    if (substr($hdr,0,1) eq "\x80")
 	    {
 		# binary chunk
-		
+
 		my $chunktype=ord(substr($hdr,1,1));
 		$enc="binary";
-		
+
 		if (defined($type) and $type != $chunktype)
 		{
 		    seek($F,-2,1);
 		    last;
 		}
-		
+
 		$type=$chunktype;
 		return if $chunktype == 3;
-		
+
 		$ct=read($F,$hdr,4);
-		
+
 		Msg(1,"Failed to read binary segment length"), return if $ct != 4;
-		
+
 		my $sl=unpack('L',$hdr);
 		my $data;
 		my $chk=read($F,$data,$sl);
-		
+
 		Msg(1 ,"Failed to read binary segment"), return if $chk != $sl;
-		
+
 		$chunk.=$data;
 	    }
 	    else
 	    {
 		# ascii chunk
-		
+
 		my $hex=0;
 		seek($F,-2,1);
 		my $ct=0;
-		
+
 		while (1)
 		{
 		    my $lin=<$F>;
-		    
+
 		    last if !$lin;
-		    
+
 		    $hex=1,$enc.=" hex" if $segno == 2 and !$ct and $lin=~m/^[A-F0-9a-f]{4,4}/;
-		    
+
 		    if ($segno !=2 and $lin=~m/^(.*$ascterm\n?)(.*)/)
 		    {
 			$chunk.=$1;
@@ -2349,11 +2451,11 @@ sub GetChunk
 			seek($F,-length($2)-1,1) if $2;
 			last;
 		    }
-		    
+
 		    chomp($lin), $lin=pack('H*',$lin) if $hex;
 		    $chunk.=$lin; $ct++;
 		}
-		
+
 		last;
 	    }
 	}
@@ -2362,7 +2464,7 @@ sub GetChunk
 	    push(@msg,"Failed to read 2 header bytes");
 	}
     }
-    
+
     return $chunk;
 }
 
@@ -2380,11 +2482,54 @@ sub OutStream
 
 sub do_p
 {
+    my $trans='BLOCK';
+
+    $trans='PAGE' if $firstpause;
+    NewPage($trans);
+    @XOstream=();
+    @PageAnnots=();
+    $firstpause=1;
+}
+
+sub FixTrans
+{
+    my $t=shift;
+    my $style=$t->{S};
+
+    if ($style)
+    {
+	delete($t->{Dm}) if $style ne '/Split' and $style ne '/Blinds';
+	delete($t->{M})  if !($style eq '/Split' or $style eq '/Box' or $style eq '/Fly');
+	delete($t->{Di}) if !($style eq '/Wipe' or $style eq '/Glitter' or $style eq '/Fly' or $style eq '/Cover' or $style eq '/Uncover' or $style eq '/Push') or ($style eq '/Fly' and $t->{Di} eq '/None' and $t->{SS} != 1);
+	delete($t->{SS}) if !($style eq '/Fly');
+	delete($t->{B})  if !($style eq '/Fly');
+    }
+
+    return($t);
+}
+
+sub NewPage
+{
+    my $trans=shift;
     # Start of pages
 
     if ($cpageno > 0)
     {
+	if ($#XOstream>=0)
+	{
+	    MakeXO() if $stream;
+	    $stream=join("\n",@XOstream,'');
+	}
+
+	my %t=%{$transition->{$trans}};
 	$cpage->{MediaBox}=\@mediabox if $custompaper;
+	$cpage->{Trans}=FixTrans(\%t) if $t{S};
+
+	if ($#PageAnnots >= 0)
+	{
+	    @{$cpage->{Annots}}=@PageAnnots;
+	}
+
 	PutObj($cpageno);
 	OutStream($cpageno+1);
     }
@@ -2412,6 +2557,20 @@ sub do_p
     $mode='g';
     $curfill='';
 #    @mediabox=@defaultmb;
+}
+
+sub MakeXO
+{
+    $stream.="%mode=$mode\n";
+    IsGraphic();
+    $stream.="Q\n";
+    my $xobj=++$objct;
+    my $xonm="XO$xobj";
+    $pages->{'Resources'}->{'XObject'}->{$xonm}=BuildObj($xobj,{'Type' => '/XObject', 'BBox' => \@mediabox, 'Name' => "/$xonm", 'FormType' => 1, 'Subtype' => '/Form', 'Length' => 0, 'Type' => "/XObject"});
+    $obj[$xobj]->{STREAM}=$stream;
+    $stream='';
+    push(@XOstream,"q") if $#XOstream==-1;
+    push(@XOstream,"/$xonm Do");
 }
 
 sub do_f
@@ -2966,7 +3125,7 @@ sub PutLine
 	$wd->[0]=~s/!\|!\|/\\/g;
 	$wd->[1]=d3($wd->[1]);
     }
-    
+
     if (0)
     {
 	if (scalar(@lin) == 1 and (!defined($lin[0]->[1]) or $lin[0]->[1] == 0))

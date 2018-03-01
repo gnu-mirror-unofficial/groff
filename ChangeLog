@@ -1,3 +1,18 @@
+2018-03-01  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Add page transitions to pdfs created with gropdf.
+
+	* src/devices/gropdf.pl: Handle new '\X' commands to support page
+	transitions in presentation mode pdfs. These commands are a subset
+	of the commands used in present.tmac allowing slideshows to be
+	directly produced from -Tpdf without using postscript -> gpresent.pl
+	-> ghostscript.
+
+	* tmac/pdf.tmac: New macros '.pdfpause' and '.pdftransition' to
+	support page transitions.
+
+	* src/devices/gropdf.1.man: Document the '\X' commands supported.
+
 2018-03-01  Werner LEMBERG  <wl@gnu.org>
 
 	Use $(AM_V_GEN) and $(AM_V_P) to silence even more file generation.
