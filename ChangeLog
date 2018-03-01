@@ -1,3 +1,26 @@
+2018-03-01  Werner LEMBERG  <wl@gnu.org>
+
+	Fix some problems related to hyphenation.
+
+	Introduce values 16 (allow hyphenation before last character) and 32
+	(allow hyphenation before first character) to the `hy' request
+	(#48904).
+
+	Really fix problem reported in issue #48904.
+
+	Fix #53243, which is a regression introduced in 2016-09-09.
+
+	* src/roff/troff/env.cpp (HYPHEN_LAST_CHAR, HYPHEN_FIRST_CHAR): New
+	enumeration values.
+	(hyphenate_request): Check for contradicting values.
+	(environment::hyphenate_line): Fix minimum word length considered
+	for hyphenation.
+	(environment::print_env): Updated.
+	(hyphenate): Fix and extend logic.  The original patch to handle
+	#48904 was bad.
+
+	* doc/groff.texi, man/groff_diff.7.man, NEWS: Updated.
+
 2018-03-01  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Add page transitions to pdfs created with gropdf.

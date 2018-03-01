@@ -41,7 +41,9 @@ enum { ADJUST_LEFT = 0, ADJUST_BOTH = 1, ADJUST_CENTER = 3, ADJUST_RIGHT = 5 };
 enum {
   HYPHEN_NOT_LAST_LINE = 2,
   HYPHEN_NOT_LAST_CHARS = 4,
-  HYPHEN_NOT_FIRST_CHARS = 8
+  HYPHEN_NOT_FIRST_CHARS = 8,
+  HYPHEN_LAST_CHAR = 16,
+  HYPHEN_FIRST_CHAR = 32
 };
 
 struct env_list {
@@ -1655,8 +1657,13 @@ void no_hyphenate()
 void hyphenate_request()
 {
   int n;
-  if (has_arg() && get_integer(&n))
-    curenv->hyphenation_flags = n;
+  if (has_arg() && get_integer(&n)) {
+    if (((n & HYPHEN_FIRST_CHAR) && (n & HYPHEN_NOT_FIRST_CHARS))
+	|| ((n & HYPHEN_LAST_CHAR) && (n & HYPHEN_NOT_LAST_CHARS)))
+      warning(WARN_SYNTAX, "contradicting hyphenation flags, ignored");
+    else
+      curenv->hyphenation_flags = n;
+  }
   else
     curenv->hyphenation_flags = 1;
   skip_line();
@@ -1694,8 +1701,8 @@ void environment::newline()
       prev_fontno = fontno;
       fontno = pre_underline_fontno;
       if (underline_spaces) {
-        underline_spaces = 0;
-        add_node(do_underline_special(0));
+	underline_spaces = 0;
+	add_node(do_underline_special(0));
       }
     }
   }
@@ -2027,7 +2034,9 @@ void environment::hyphenate_line(int start_here)
       && !((hyphenation_flags & HYPHEN_NOT_LAST_LINE)
 	   && (curdiv->distance_to_next_trap()
 	       <= vertical_spacing + total_post_vertical_spacing()))
-      && i >= (2
+      && i >= (4
+	       - (hyphenation_flags & HYPHEN_FIRST_CHAR ? 1 : 0)
+	       - (hyphenation_flags & HYPHEN_LAST_CHAR ? 1 : 0)
 	       + (hyphenation_flags & HYPHEN_NOT_FIRST_CHARS ? 1 : 0)
 	       + (hyphenation_flags & HYPHEN_NOT_LAST_CHARS ? 1 : 0)))
     hyphenate(sl, hyphenation_flags);
@@ -3310,8 +3319,12 @@ void environment::print_env()
   string hf = hyphenation_flags ? "on" : "off";
   if (hyphenation_flags & HYPHEN_NOT_LAST_LINE)
     hf += ", not last line";
+  if (hyphenation_flags & HYPHEN_LAST_CHAR)
+    hf += ", last char";
   if (hyphenation_flags & HYPHEN_NOT_LAST_CHARS)
     hf += ", not last two chars";
+  if (hyphenation_flags & HYPHEN_FIRST_CHAR)
+    hf += ", first char";
   if (hyphenation_flags & HYPHEN_NOT_FIRST_CHARS)
     hf += ", not first two chars";
   hf += '\0';
@@ -3953,7 +3966,7 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	break;
     }
     hyphen_list *nexth = tem;
-    if (len > 2) {
+    if (len >= 2) {
       buf[len] = 0;
       unsigned char *pos
 	= (unsigned char *)current_language->exceptions.lookup(buf);
@@ -3970,11 +3983,20 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	hbuf[0] = hbuf[len + 1] = '.';
 	int num[WORD_MAX + 3];
 	current_language->patterns.hyphenate(hbuf, len + 2, num);
-	int i;
-	if (flags & HYPHEN_NOT_FIRST_CHARS)
+	// The position of a hyphenation point gets marked with an odd
+	// number.  Example:
+	//
+	//   hbuf:  . h e l p f u l .
+	//   num:  0 0 0 0 0 1 0 0 0 0
+	if (!(flags & HYPHEN_FIRST_CHAR))
 	  num[2] = 0;
+	if (flags & HYPHEN_NOT_FIRST_CHARS)
+	  num[3] = 0;
+	if (flags & HYPHEN_LAST_CHAR)
+	  ++len;
 	if (flags & HYPHEN_NOT_LAST_CHARS)
 	  --len;
+	int i;
 	for (i = 2, tem = h; i < len && tem; tem = tem->next, i++)
 	  if (num[i] & 1)
 	    tem->hyphen = 1;

@@ -7015,8 +7015,9 @@ Enable hyphenation.  The request has an optional numeric argument,
 
 @table @code
 @item 1
-The default argument if @var{mode} is omitted.  Hyphenate without
-restrictions.  This is also the start-up value of @code{gtroff}.
+The default argument if @var{mode} is omitted: Hyphenation is enabled,
+and the first and the last character of a word is not hyphenated.  This
+is also the start-up value of @code{gtroff}.
 
 @item 2
 Do not hyphenate the last word on a page or column.
@@ -7026,11 +7027,30 @@ Do not hyphenate the last two characters of a word.
 
 @item 8
 Do not hyphenate the first two characters of a word.
+
+@item 16
+Allow hyphenation before the last character of a word.
+
+@item 32
+Allow hyphenation after the first character of a word.
 @end table
 
-Values in the previous table are additive.  For example, the
+The values in the previous table are additive.  For example,
 value@tie{}12 causes @code{gtroff} to neither hyphenate the last two nor
-the first two characters of a word.
+the first two characters of a word.  Note that value@tie{}13 would do
+exactly the same; in other words, value@tie{}1 need not be added if the
+value is larger than@tie{}1.
+
+Using values 4 and@tie{}16 can't be used together since they contradict
+each other; the same holds for values 8 and@tie{}32.
+
+For historical reasons the default value of the @code{hy} request
+doesn't fit the American English hyphenation patterns that are used by
+groff as the default.  These patterns expect that neither the first
+character nor the last two characters are to be hyphenated; this
+corresponds to value@tie{}4.  Consequently, @code{hy}'s default
+value@tie{}1 or even setting values 16 or@tie{}32 might lead to
+(additional) incorrect hyphenation points.
 
 @cindex hyphenation restrictions register (@code{.hy})
 The current hyphenation restrictions can be found in the read-only
@@ -7084,6 +7104,10 @@ Besides the space character, any character whose hyphenation code value
 is zero can be used to separate the arguments of @code{hw} (see the
 documentation for the @code{hcode} request below for more information).
 In addition, this request can be used more than once.
+
+@cindex @code{hw} request, and @code{hy} restrictions
+Hyphenation points specified with @code{hw} are not subject to the
+restrictions given by the @code{hy} request.
 
 Hyphenation exceptions specified with the @code{hw} request are
 associated with the current hyphenation language; it causes an error if
