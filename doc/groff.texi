@@ -7052,6 +7052,10 @@ corresponds to value@tie{}4.  Consequently, @code{hy}'s default
 value@tie{}1 or even setting values 16 or@tie{}32 might lead to
 (additional) incorrect hyphenation points.
 
+Hyphenation exceptions within pattern files (i.e., the words within a
+@code{\hyphenation} group) also obey the hyphenation restrictions given
+by @code{hy}.  However, exceptions specified with the @code{hw} do not.
+
 @cindex hyphenation restrictions register (@code{.hy})
 The current hyphenation restrictions can be found in the read-only
 number register @samp{.hy}.

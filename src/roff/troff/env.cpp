@@ -3685,7 +3685,7 @@ void hyphen_trie::insert_pattern(const char *pat, int patlen, int *num)
 void hyphen_trie::insert_hyphenation(dictionary *ex, const char *pat,
 				     int patlen)
 {
-  char buf[WORD_MAX + 1];
+  char buf[WORD_MAX + 2];
   unsigned char pos[WORD_MAX + 2];
   int i = 0, j = 0;
   int npos = 0;
@@ -3695,6 +3695,8 @@ void hyphen_trie::insert_hyphenation(dictionary *ex, const char *pat,
       if (i > 0 && (npos == 0 || pos[npos - 1] != i))
 	pos[npos++] = i;
     }
+    else if (c == ' ')
+      buf[i++] = ' ';
     else
       buf[i++] = hpf_code_table[c];
   }
@@ -3815,10 +3817,10 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
 {
   if (!append)
     clear();
-  char buf[WORD_MAX];
-  for (int i = 0; i < WORD_MAX; i++)
+  char buf[WORD_MAX + 1];
+  for (int i = 0; i < WORD_MAX + 1; i++)
     buf[i] = 0;
-  int num[WORD_MAX+1];
+  int num[WORD_MAX + 1];
   errno = 0;
   char *path = 0;
   FILE *fp = mac_path->open_file(name, &path);
@@ -3938,6 +3940,9 @@ void hyphen_trie::read_patterns_file(const char *name, int append,
 	final_pattern = 0;
       }
       else if (have_hyphenation || final_hyphenation) {
+	// hyphenation exceptions in a pattern file are subject to `.hy'
+	// restrictions; we mark such entries with a trailing space
+	buf[i++] = ' ';
 	insert_hyphenation(ex, buf, i);
 	final_hyphenation = 0;
       }
@@ -3967,6 +3972,7 @@ void hyphenate(hyphen_list *h, unsigned flags)
     }
     hyphen_list *nexth = tem;
     if (len >= 2) {
+      // check `.hw' entries
       buf[len] = 0;
       unsigned char *pos
 	= (unsigned char *)current_language->exceptions.lookup(buf);
@@ -3980,26 +3986,61 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	  }
       }
       else {
-	hbuf[0] = hbuf[len + 1] = '.';
-	int num[WORD_MAX + 3];
-	current_language->patterns.hyphenate(hbuf, len + 2, num);
-	// The position of a hyphenation point gets marked with an odd
-	// number.  Example:
-	//
-	//   hbuf:  . h e l p f u l .
-	//   num:  0 0 0 0 0 1 0 0 0 0
-	if (!(flags & HYPHEN_FIRST_CHAR))
-	  num[2] = 0;
-	if (flags & HYPHEN_NOT_FIRST_CHARS)
-	  num[3] = 0;
-	if (flags & HYPHEN_LAST_CHAR)
-	  ++len;
-	if (flags & HYPHEN_NOT_LAST_CHARS)
-	  --len;
-	int i;
-	for (i = 2, tem = h; i < len && tem; tem = tem->next, i++)
-	  if (num[i] & 1)
-	    tem->hyphen = 1;
+	// check `\hyphenation' entries from pattern files;
+	// such entries are marked with a trailing space
+	buf[len] = ' ';
+	buf[len + 1] = 0;
+	pos = (unsigned char *)current_language->exceptions.lookup(buf);
+	if (pos != 0) {
+	  int j = 0;
+	  int i = 1;
+	  tem = h;
+	  if (pos[j] == i) {
+	    if (flags & HYPHEN_FIRST_CHAR)
+	      tem->hyphen = 1;
+	    j++;
+	  }
+	  tem = tem->next;
+	  i++;
+	  if (pos[j] == i) {
+	    if (!(flags & HYPHEN_NOT_FIRST_CHARS))
+	      tem->hyphen = 1;
+	    j++;
+	  }
+	  tem = tem->next;
+	  i++;
+	  if (!(flags & HYPHEN_LAST_CHAR))
+	    --len;
+	  if (flags & HYPHEN_NOT_LAST_CHARS)
+	    --len;
+	  for (; i < len && tem; tem = tem->next, i++)
+	    if (pos[j] == i) {
+	      tem->hyphen = 1;
+	      j++;
+	    }
+	}
+	else {
+	  hbuf[0] = hbuf[len + 1] = '.';
+	  int num[WORD_MAX + 3];
+	  current_language->patterns.hyphenate(hbuf, len + 2, num);
+	  // The position of a hyphenation point gets marked with an odd
+	  // number.  Example:
+	  //
+	  //   hbuf:  . h e l p f u l .
+	  //   num:  0 0 0 0 0 1 0 0 0 0
+	  if (!(flags & HYPHEN_FIRST_CHAR))
+	    num[2] = 0;
+	  if (flags & HYPHEN_NOT_FIRST_CHARS)
+	    num[3] = 0;
+	  if (flags & HYPHEN_LAST_CHAR)
+	    ++len;
+	  if (flags & HYPHEN_NOT_LAST_CHARS)
+	    --len;
+	  int i;
+	  for (i = 2, tem = h; i < len && tem; tem = tem->next, i++)
+	    if (num[i] & 1)
+	      tem->hyphen = 1;
+	}
       }
     }
     h = nexth;

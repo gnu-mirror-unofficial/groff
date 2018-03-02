@@ -1,3 +1,14 @@
+2018-03-02  Werner LEMBERG  <wl@gnu.org>
+
+	Hyphenation exceptions in pattern files now obey `.hy' (#53196).
+
+	* src/roff/troff/env.cpp (hyphen_trie::read_patterns_file): Mark
+	`\hyphenation' entries with a trailing space.
+	(hyphen_trie::insert_hyphenation): Updated.
+	(hyphenate): Make `\hyphenation' entries obey `.hy' restrictions.
+
+	* doc/groff.texi (.hy): Updated.
+
 2018-03-01  Werner LEMBERG  <wl@gnu.org>
 
 	Adjust `.hy' values.
