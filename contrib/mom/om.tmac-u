@@ -1,7 +1,7 @@
 .ig
 Mom -- a typesetting/document-processing macro set for groff.
 
-Copyright (C) 2002-2017  Free Software Foundation, Inc.
+Copyright (C) 2002-2018  Free Software Foundation, Inc.
  Written by Peter Schaffter <peter@schaffter.ca>
  PDF integration contributed by Deri James <deri.james@chuzzlewit.co.uk>
 
@@ -20,8 +20,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.2-a
--------------
+Version 2.3
+-----------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -456,8 +456,11 @@ end
 \#   breaks to a new page.
 \#
 .MAC NEWPAGE END
+.    if \\n[#DOC_TYPE]=5 \{\
+.       if \\n[#NUM_ARGS]>0 \
+.       pdftransition PAGE \\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+.    \}
 .    if !\\n[defer] .nr #NEWPAGE 1
-.    nr @TOP 1
 .    ie !\\n[#DOCS]=1 \
 .       if \\n[#B_MARGIN_SET]=1 .DO_B_MARGIN
 .    el \{\
@@ -471,12 +474,14 @@ end
 .       if \\n[#FLEX_ACTIVE] \
 .          if !\\n[#NO_FLEX] \
 .             tm .ds pre-newpage-\\n% \\n%@\\n[#COL_NUM]
-.    bp
+.    if !\\n[@TOP] .bp
 .    if \\n[#RESET_FN_OVERFLOW_TRAP] \{\
 .       wh -\\n[#FN_OVERFLOW_TRAP_POS]u FN_OVERFLOW_TRAP
 .       rr #RESET_FN_OVERFLOW_TRAP_POS
 .   \}
 .END
+\#
+.ALIAS NEWSLIDE NEWPAGE
 \#
 \# =====================================================================
 \#
@@ -1067,6 +1072,7 @@ end
 .       nr #ALD (u;\\$1)
 .       rs
 .       nop \&
+.       br
 .       sp |\\n[#T_MARGIN]u-1v+\\n[#ALD]u
 .       rr @TOP
 .       nr #SPACE_ADDED 1
@@ -1442,9 +1448,11 @@ end
 \#   mode is enabled.
 \#
 .MAC QUAD END
+.    br
 .    if \\n[#COVERTEXT_PP] \
 .       ds $RESTORE_DOC_QUAD \\*[$QUAD_VALUE]
 .    ds $QUAD_VALUE \\$1
+.    substring $QUAD_VALUE 0 0
 .    if \\n[#TAB_ACTIVE]=0 \{\
 .       nr #QUAD 1
 .       ds $RESTORE_QUAD_VALUE \\*[$QUAD_VALUE]
@@ -1455,15 +1463,7 @@ end
 .       nr #JUSTIFY 0
 .       ad l
 .    \}
-.    if '\\*[$QUAD_VALUE]'LEFT' \{\
-.       nr #JUSTIFY 0
-.       ad l
-.    \}
 .    if '\\*[$QUAD_VALUE]'R' \{\
-.       nr #JUSTIFY 0
-.       ad r
-.    \}
-.    if '\\*[$QUAD_VALUE]'RIGHT' \{\
 .       nr #JUSTIFY 0
 .       ad r
 .    \}
@@ -1471,19 +1471,7 @@ end
 .       nr #JUSTIFY 0
 .       ad c
 .    \}
-.    if '\\*[$QUAD_VALUE]'CENTER' \{\
-.       nr #JUSTIFY 0
-.       ad c
-.    \}
-.    if '\\*[$QUAD_VALUE]'CENTRE' \{\
-.       nr #JUSTIFY 0
-.       ad c
-.    \}
 .    if '\\*[$QUAD_VALUE]'J' \{\
-.       nr #JUSTIFY 1
-.       ad b
-.    \}
-.    if '\\*[$QUAD_VALUE]'JUSTIFY' \{\
 .       nr #JUSTIFY 1
 .       ad b
 .    \}
@@ -1550,7 +1538,7 @@ end
 \# *Argument:
 \#   <none>
 \# *Function:
-\#   Turns fill on.  Allows user to center lines without
+\#   Turns fill off.  Allows user to center lines without
 \#   requiring the .BR or .br macro.
 \# *Notes:
 \#   Lines that exceed the current LL will be broken, with the excess
@@ -1565,6 +1553,31 @@ end
 .    ce 100000
 .    nr #PSEUDO_FILL 1
 .END
+\#
+\# CENTER BLOCKS OF TYPE
+\# ---------------------
+\# *Arguments:
+\#   <none> | <anything>
+\# *Function:
+\#   Allows users to centre blocks of type on the page without
+\#   altering their quad.
+\#
+.MAC CENTER_BLOCK END
+.    br
+.    ie !\\n[.$] .di CENTER*BLOCK
+.    el \{\
+.       di
+.       in \\n[.l]u-\\n[dl]u/2u
+.       if \\n[.u] .nr #FILLED 1
+.       nf
+.       CENTER*BLOCK
+.       if \\n[#FILLED] .fi
+.       rr #FILLED
+.       in
+.    \}
+.END
+\#
+.ALIAS CENTRE_BLOCK CENTER_BLOCK
 \#
 \# =====================================================================
 \#
@@ -2725,21 +2738,9 @@ end
 \#
 \# +++GRAPHICAL OBJECTS+++
 \#
-\# HORIZONTAL RULE - DRH
-\# ---------------------
-\# *Arguments:
-\#   <none> | <rule weight> <indent> <length> [ <color> ]
-\# *Function:
-\#   With no arg, draws a full measure rule.  With args, draws
-\#   described horizontal rule.
-\# *Notes:
-\#   Rules are drawn left-to-right, from the baseline down, and
-\#   return to their point of origin.  Color must be set in the
-\#   macro; otherwise the color will be black, regardless of current
-\#   .gcolor.  If no arg given, the rule weight is the one set by
-\#   RULE_WEIGHT.
+\# Set params for graphical objects.
 \#
-.MAC DRH END
+.MAC GRAPHICAL_OBJ END
 .    rr #FILLED
 .    rr #FILL_MODE
 .    rr #NOFILL
@@ -2765,6 +2766,24 @@ end
 .       rj 0
 .    \}
 .    nf
+.END
+\#
+\# HORIZONTAL RULE - DRH
+\# ---------------------
+\# *Arguments:
+\#   <none> | <rule weight> <indent> <length> [ <color> ]
+\# *Function:
+\#   With no arg, draws a full measure rule.  With args, draws
+\#   described horizontal rule.
+\# *Notes:
+\#   Rules are drawn left-to-right, from the baseline down, and
+\#   return to their point of origin.  Color must be set in the
+\#   macro; otherwise the color will be black, regardless of current
+\#   .gcolor.  If no arg given, the rule weight is the one set by
+\#   RULE_WEIGHT.
+\#
+.MAC DRH END
+.    GRAPHICAL_OBJ
 .    ds $RL_WEIGHT \\$1
 .    ds $RL_INDENT \\$2
 .    ds $RL_LENGTH \\$3
@@ -2775,7 +2794,7 @@ end
 .    di NULL
 .       if \\n[#NUM_ARGS]>=1 .RULE_WEIGHT \\*[$RL_WEIGHT]
 .    di
-.    gcolor \\*[$RL_COLOR]
+.    COLOR \\*[$RL_COLOR]
 .    ie \\n[#NUM_ARGS]=0 \{\
 .       ie \\n[#INDENT_ACTIVE] \{\
 .          nr #RESTORE_L_LENGTH \\n[.l]
@@ -2887,31 +2906,7 @@ end
 \#   .gcolor.
 \#
 .MAC DRV END
-.    rr #FILLED
-.    rr #FILL_MODE
-.    rr #NOFILL
-.    rr #NOFILL_MODE
-.    if \\n[.vpt]=1 \{\
-.       vpt 0
-.       nr #RESTORE_TRAP 1
-.    \}
-.    ie !\\n[#NO_ADVANCE]=1 .br
-.    el \{\
-.       sp -1v
-.       rr #NO_ADVANCE
-.    \}
-.    ie \\n[.u]=1 \{\
-.       nr #FILLED 1
-.       nr #FILL_MODE \\n[.j]
-.    \}
-.    el \{\
-.       nr #NOFILL 1
-.       if \\n[.ce]>0 .nr #NOFILL_MODE 3
-.       if \\n[.rj]>0 .nr #NOFILL_MODE 5
-.       ce 0
-.       rj 0
-.    \}
-.    nf
+.    GRAPHICAL_OBJ
 .    ds $RL_WEIGHT \\$1
 .    ds $RL_INDENT \\$2
 .    ds $RL_DEPTH  \\$3
@@ -2921,7 +2916,7 @@ end
 .    nr #SAVED_WEIGHT     \\n[#RULE_WEIGHT]
 .    nr #SAVED_WEIGHT_ADJ \\n[#RULE_WEIGHT_ADJ]
 .    RULE_WEIGHT \\*[$RL_WEIGHT]
-.    gcolor \\*[$RL_COLOR]
+.    COLOR \\*[$RL_COLOR]
 \D't \\n[#RULE_WEIGHT]'\
 \h'\\*[$RL_INDENT]-\\n[#RULE_WEIGHT_ADJ]u'\
 \D'l 0 \\*[$RL_DEPTH]'\
@@ -2963,31 +2958,7 @@ end
 \#   arg given, the rule weight is the one set by RULE_WEIGHT.
 \#
 .MAC DBX END
-.    rr #FILLED
-.    rr #FILL_MODE
-.    rr #NOFILL
-.    rr #NOFILL_MODE
-.    if \\n[.vpt]=1 \{\
-.       vpt 0
-.       nr #RESTORE_TRAP 1
-.    \}
-.    ie !\\n[#NO_ADVANCE]=1 .br
-.    el \{\
-.       sp -1v
-.       rr #NO_ADVANCE
-.    \}
-.    ie \\n[.u]=1 \{\
-.       nr #FILLED 1
-.       nr #FILL_MODE \\n[.j]
-.    \}
-.    el \{\
-.       nr #NOFILL 1
-.       if \\n[.ce]>0 .nr #NOFILL_MODE 3
-.       if \\n[.rj]>0 .nr #NOFILL_MODE 5
-.       ce 0
-.       rj 0
-.    \}
-.    nf
+.    GRAPHICAL_OBJ
 .    ie '\\$1'SOLID' .nr #BX_SOLID 1
 .    el              .ds $BX_WEIGHT \\$1
 .    ds $BX_INDENT \\$2
@@ -3010,7 +2981,7 @@ end
 .       rr #BX_SOLID
 .    \}
 .    el \{\
-.       gcolor \\*[$BX_COLOR]
+.       COLOR \\*[$BX_COLOR]
 \D't \\n[#RULE_WEIGHT]'\
 \h'\\*[$BX_INDENT]'\
 \v'\\n[#WEIGHT_ADJ]u'\
@@ -3057,31 +3028,7 @@ end
 \#   RULE_WEIGHT.
 \#
 .MAC DCL END
-.    rr #FILLED
-.    rr #FILL_MODE
-.    rr #NOFILL
-.    rr #NOFILL_MODE
-.    if \\n[.vpt]=1 \{\
-.       vpt 0
-.       nr #RESTORE_TRAP 1
-.    \}
-.    ie !\\n[#NO_ADVANCE]=1 .br
-.    el \{\
-.       sp -1v
-.       rr #NO_ADVANCE
-.    \}
-.    ie \\n[.u]=1 \{\
-.       nr #FILLED 1
-.       nr #FILL_MODE \\n[.j]
-.    \}
-.    el \{\
-.       nr #NOFILL 1
-.       if \\n[.ce]>0 .nr #NOFILL_MODE 3
-.       if \\n[.rj]>0 .nr #NOFILL_MODE 5
-.       ce 0
-.       rj 0
-.    \}
-.    nf
+.    GRAPHICAL_OBJ
 .    ie '\\$1'SOLID' .nr #CL_SOLID 1
 .    el              .ds $CL_WEIGHT \\$1
 .    ds $CL_INDENT \\$2
@@ -3106,7 +3053,7 @@ end
 .       rr #CL_SOLID
 .    \}
 .    el \{\
-.       gcolor \\*[$CL_COLOR]
+.       COLOR \\*[$CL_COLOR]
 \D't \\n[#RULE_WEIGHT]'\
 \h'\\*[$CL_INDENT]'\
 \v'\\*[$CL_DEPTH]/2u'\
@@ -3446,16 +3393,21 @@ end
 .    nr #INDENT_BOTH_ACTIVE 1
 .    ie '\\$1'' \{\
 .       br
-.       ll \\n[.l]u-\\n[#BR_INDENT]u
+.       ie \\n[#DOCS] \
+.          ll \\n[#DOC_L_LENGTH]u-\\n[#BR_INDENT]u
+.       el .ll \\n[.l]u-\\n[#BR_INDENT]u
 .       in \\n[#BL_INDENT]u
-.       ta \\n[.l]u-\\n[#BR_INDENT]u
+.       ta \\n[.l]u
 .    \}
 .    el \{\
 .       br
 .       nr #BL_INDENT (\\n[#INDENT]+\\$1)
 .       ie \\n[#NUM_ARGS]=2 .nr #BR_INDENT +(\\$2)
+.       ll
+.       in
 .       el .nr #BR_INDENT \\n[#BL_INDENT]
-.       ll \\n[.l]u+\\n[.i]u-\\n[#BR_INDENT]u
+.       ie \\n[#DOCS] .ll \\n[#DOC_L_LENGTH]u-\\n[#BR_INDENT]u
+.       el .ll \\n[#L_LENGTH]u-\\n[#BR_INDENT]u
 .       in \\n[#BL_INDENT]u
 .       ta \\n[.l]u-\\n[#BR_INDENT]u
 .    \}
@@ -3524,6 +3476,7 @@ end
 .MAC IBX END
 .    br
 .    in 0
+.    rr #INDENT_ACTIVE
 .    rr #INDENT_BOTH_ACTIVE
 .    ie \\n[#TAB_ACTIVE] .TAB\\n[#CURRENT_TAB]
 .    el \{\
@@ -3621,6 +3574,62 @@ end
 .       rr #INDENT_STYLE_RIGHT
 .       rr #INDENT_STYLE_BOTH
 .    \}
+.END
+\#
+\# =====================================================================
+\#
+\# +++HANGING CHARACTERS+++
+\#
+\#   LEFT_HANG hangs its argument to the left of the left margin.
+\#   If enclosed in double-quotes, the argument may contain local
+\#   horizontal motions.  Input text after LEFT_HANG must begin
+\#   by repeating the text of the argument including horizontal
+\#   motions.  If the hung character is a left double-quote,
+\#   \[lq] must be used in the argument and the usual keyboard
+\#   double-quote (") used for the input text (so as not to confuse
+\#   SMARTQUOTES).
+\#
+\#   HANG is called inline with \*[HANG <character>].  Hangs its
+\#   single-character argument, typically a punctuation mark, to the
+\#   right of the right margin in justified copy.  Unlike LEFT_HANG,
+\#   does not require repeating the character as part of input text.
+\#
+\#   Except for hung hyphens, HANG may be used mid-line in input
+\#   text.  Hung hyphens must come at the end of input lines.  If
+\#   the hung character is a right double-quote, "\[rq]" must be
+\#   used as the argument (that is, the rq character surrounded by
+\#   double-quotes).  The double-quotes are required for all special
+\#   characters that have the form \[c].
+\#
+.MAC LEFT_HANG END
+.    ie '\\$0'LEFT_HANG' \{\
+.       vpt 0
+.       sp -1
+.       nr #HANG \w'\\$1'
+.       in +\\n[#HANG]u
+.       ll +\\n[#HANG]u
+.       ie !\\n[.z] .po -\\n[#HANG]u
+.       el \!.po -\\n[#HANG]u
+.       ti -\\n[#HANG]u
+.       vpt
+.    \}
+.    el \{\
+.       vpt 0
+.       in
+.       ll
+.       po
+.       vpt
+.    \}
+.END
+\#
+.ALIAS NO_HANG LEFT_HANG
+\#
+.MAC HANG END
+\c
+.if '\\$1'\[rq]' .nr #OPEN_CLOSE 0
+\c
+\&\\$1\c
+\h'-\w'\\$1'u'\c
 .END
 \#
 \# =====================================================================
@@ -4162,8 +4171,10 @@ y\R'#DESCENDER \\n[.cdp]'
 .       if !d$PAPER .PAPER LETTER
 .       if '\\$1'TYPEWRITE' \{\
 .          nr #PRINT_STYLE 1
-.          if !\\n[#DOC_TYPE]=4 .L_MARGIN 6P
-.          if !\\n[#DOC_TYPE]=4 .R_MARGIN 6P
+.          if !\\n[#DOC_TYPE]=4 \{\
+.             L_MARGIN 6P
+.             R_MARGIN 6P
+.          \}
 .          ds $TYPEWRITER_FAM C
 .          ds $TYPEWRITER_PS  12
 .          TYPEWRITER
@@ -4206,8 +4217,12 @@ y\R'#DESCENDER \\n[.cdp]'
 .       \}
 .       if '\\$1'TYPESET' \{\
 .          nr #PRINT_STYLE 2
-.          if !\\n[#DOC_TYPE]=4 .L_MARGIN 6P
-.          if !\\n[#DOC_TYPE]=4 .R_MARGIN 6P
+.          if !\\n[#DOC_TYPE]=5 \{\
+.             if !\\n[#DOC_TYPE]=4 \{\
+.                L_MARGIN 6P
+.                R_MARGIN 6P
+.             \}
+.          \}
 .          FAMILY  T
 .          FT      R
 .          if !\\n[#DOC_TYPE]=4 .ps 12.5
@@ -4878,6 +4893,105 @@ y\R'#DESCENDER \\n[.cdp]'
 .       FOOTER_ON_FIRST_PAGE
 .       em ALL_DONE
 .    \}
+.    if '\\$1'SLIDES' \{\
+.       shift
+.       nr #DOC_TYPE 5
+.       PRINTSTYLE TYPESET
+.       FAMILY H
+.       QUAD CENTER
+.       QUOTE_STYLE QUAD CENTER
+.       BLOCKQUOTE_STYLE \
+          QUAD J \
+          INDENT \\n[.l]u/5u
+.       PARA_INDENT 0
+.       NO_SHIM
+.       NO_FLEX
+.       HEADING_STYLE 1 \
+          SIZE +8 \
+          QUAD CENTER
+.       HEADING_STYLE 2 \
+          SIZE +4 \
+          QUAD CENTER
+.       HEADING_STYLE 3 \
+          SIZE +2 \
+          QUAD CENTER
+.       DOCHEADER off
+.       PAGINATION off
+.       PAGENUM_HYPHENS off
+.       HEADERS off
+.       FOOTERS off
+.       HEADERS_PLAIN
+.       FOOTERS_PLAIN
+.       nr loop-count 0 1
+.       nr loop-counter \\n[#NUM_ARGS]
+.\" Default 16:9 setup if no ASPECT
+.       PAGE 11i 6.1875i 36p 36p 80p 72p
+.       PT_SIZE 14
+.       AUTOLEAD 4
+.       HEADER_SIZE  -2
+.       while \\n+[loop-count]<=\\n[loop-counter] \{\
+.          if '\\$1'ASPECT' \{\
+.             if '\\$2'4:3' \{\
+.                PAGE 11i 8.25i 36p 36p 90p 84p
+.                PT_SIZE 16
+.                AUTOLEAD 6
+.                HEADER_SIZE  -3
+.             \}
+.             if '\\$2'16:9' \{\
+.                PAGE 11i 6.1875i 36p 36p 80p 72p
+.                PT_SIZE 14
+.                AUTOLEAD 4
+.                HEADER_SIZE  -2
+.             \}
+.             shift 2
+.          \}
+.          if '\\$1'HEADER' \{\
+.             shift 1
+.             nr #SLIDE_HEADERS 1
+.             ds $SLIDE_HDR_L \\$1
+.             ds $SLIDE_HDR_C \\$2
+.             ds $SLIDE_HDR_R \\$3
+.             HEADER_MARGIN 45p
+.             shift 3
+.          \}
+.          if '\\$1'FOOTER' \{\
+.             shift 1
+.             nr #SLIDE_FOOTERS 1
+.             ds $SLIDE_FTR_L \\$1
+.             ds $SLIDE_FTR_C \\$2
+.             ds $SLIDE_FTR_R \\$3
+.             shift 3
+.          \}
+.          if '\\$1'TRANSITION' \{\
+.             shift 1
+.             ds $TRANS_TYPE \\$1
+.             shift 1
+.          \}
+.          if '\\$1'PAUSE' \{\
+.             shift 1
+.             ds $PAUSE_TYPE \\$1
+.             shift 1
+.          \}
+.       \}
+.       if d $TRANS_TYPE \
+.          pdftransition PAGE \\*[$TRANS_TYPE]
+.       if d $PAUSE_TYPE \
+.          pdftransition BLOCK \\*[$PAUSE_TYPE]
+.    \}
+.    ie \\n[#SLIDE_HEADERS]+\\n[#SLIDE_FOOTERS]=2 \{\
+.       HEADERS_AND_FOOTERS L "^\\*[$SLIDE_HDR_L]#\\*[$SLIDE_HDR_C]#\\*[$SLIDE_HDR_R]^" \
+                            L "^\\*[$SLIDE_FTR_L]#\\*[$SLIDE_FTR_C]#\\*[$SLIDE_FTR_R]^"
+.    \}
+.    el \{\
+.       if \\n[#SLIDE_HEADERS] \{\
+.          HEADERS
+.          HEADER_RECTO L "^\\*[$SLIDE_HDR_L]#\\*[$SLIDE_HDR_C]#\\*[$SLIDE_HDR_R]^" \
+.       \}
+.       if \\n[#SLIDE_FOOTERS] \{\
+.          FOOTERS
+.          FOOTER_RECTO L "^\\*[$SLIDE_FTR_L]#\\*[$SLIDE_FTR_C]#\\*[$SLIDE_FTR_R]^"
+.       \}
+.    \}
 .END
 \#
 \# +++LETTER MACROS+++
@@ -5312,6 +5426,7 @@ y\R'#DESCENDER \\n[.cdp]'
 \# using 'KEYWORD value' pairs.
 \#
 .MAC _STYLE END
+.    SILENT \" Some of the invoked macros cause unwanted breaks
 .    ds $STYLE_TYPE \\$0
 .    substring $STYLE_TYPE 0 -7
 .    ds $HDR_FTR \\*[$STYLE_TYPE]
@@ -5483,7 +5598,6 @@ SMALLCAPS takes precedence.
 .          shift
 .       \}
 .    \}
-.    br
 .    rm $STYLE_TYPE
 .    rm $HDR_FTR
 .    rm $POS
@@ -5492,6 +5606,7 @@ SMALLCAPS takes precedence.
 .    rm $HEADER_RIGHT
 .    rm $BIB-EN-TOC
 .    rm ul-args
+.    SILENT off
 .END
 .
 .ds STYLE_TYPE_1  ATTRIBUTE
@@ -5621,7 +5736,10 @@ SMALLCAPS takes precedence.
 \#   $REVISION_STRING are in the COPYSTYLE macro.
 \#
 .MAC DEFAULTS END
-.    if !d $PAPER .PAPER LETTER
+.    if !\\n[#DOC_TYPE]=5 \{\
+.       ie !d $PAPER .PAPER LETTER
+.       el .PAPER \\*[$PAPER]
+.    \}
 .    if !\\n[#DOC_TYPE] .DOCTYPE DEFAULT
 .    if !r #CH_NUM .nr #CH_NUM 1 
 .    ie \\n[#PAGENUM_STYLE_SET] .PAGENUM_STYLE \\*[$PAGENUM_STYLE]
@@ -5671,8 +5789,8 @@ SMALLCAPS takes precedence.
 .    if !r #FOOTER_GAP    .FOOTER_GAP 3P
 .    if !r #B_MARGIN \
 .       B_MARGIN \\n[#FOOTER_MARGIN]u+\\n[#FOOTER_GAP]u
-.    if !r #HEADER_RULE_GAP .HEADER_RULE_GAP 4p
-.    if !r #FOOTER_RULE_GAP .FOOTER_RULE_GAP 4p
+.    if !\\n[#HEADER_RULE_GAP] .HEADER_RULE_GAP 4p
+.    if !\\n[#FOOTER_RULE_GAP] .FOOTER_RULE_GAP 4p
 .    if !r #HDRFTR_RULE     .HDRFTR_RULE
 .    if !r #PAGE_NUM_SET    .PAGENUMBER 1
 .\" Read in number registers and strings for type parameters
@@ -5753,7 +5871,15 @@ SMALLCAPS takes precedence.
 .    if !d $EN_PN_STYLE     .ENDNOTES_PAGENUM_STYLE digit
 .    if !d $EN_FAM          .ENDNOTE_FAMILY \\*[$DOC_FAM]
 .    if !d $EN_FT           .ENDNOTE_FONT R
-.    if !d $EN_QUAD         .ENDNOTE_QUAD \\*[$DOC_QUAD]
+.    if !d $EN_QUAD \{\
+.       ds quad-check \\*[$DOC_QUAD]
+.       substring quad-check 0 0
+.       if '\\*[$DOC_QUAD]'C' .nr quad-check 1
+.       if '\\*[$DOC_QUAD]'R' .nr quad-check 1
+.       ie \\n[quad-check] .ENDNOTE_QUAD J
+.       el .ENDNOTE_QUAD \\*[$DOC_QUAD]
+.       rr quad-check
+.    \}
 .    if !d $EN_STRING       .ENDNOTES_HEADER_STRING "Endnotes"
 .    if !d $EN_STRING_FAM   .ENDNOTES_HEADER_FAMILY \\*[$EN_FAM]
 .    if !d $EN_STRING_QUAD  .ENDNOTES_HEADER_QUAD CENTER
@@ -5786,7 +5912,15 @@ SMALLCAPS takes precedence.
 .    if !d $BIB_PN_STYLE         .BIBLIOGRAPHY_PAGENUM_STYLE digit
 .    if !d $BIB_FAM              .BIBLIOGRAPHY_FAMILY \\*[$DOC_FAM]
 .    if !d $BIB_FT               .BIBLIOGRAPHY_FONT R
-.    if !d $BIB_QUAD             .BIBLIOGRAPHY_QUAD \\*[$DOC_QUAD]
+.    if !d $BIB_QUAD \{\
+.       ds quad-check \\*[$DOC_QUAD]
+.       substring quad-check 0 0
+.       if '\\*[$DOC_QUAD]'C' .nr quad-check 1
+.       if '\\*[$DOC_QUAD]'R' .nr quad-check 1
+.       ie \\n[quad-check] .BIBLIOGRAPHY_QUAD J
+.       el .BIBLIOGRAPHY_QUAD \\*[$DOC_QUAD]
+.       rr quad-check
+.    \}
 .    if !d $BIB_STRING           .BIBLIOGRAPHY_STRING "Bibliography"
 .    if !d $BIB_STRING_FAM       .BIBLIOGRAPHY_STRING_FAMILY \\*[$BIB_FAM]
 .    if !d $BIB_STRING_QUAD      .BIBLIOGRAPHY_STRING_QUAD CENTER
@@ -6387,7 +6521,7 @@ SMALLCAPS takes precedence.
 .          \}
 .          if \\n[#CHAPTER+TITLE]=1 .ALD \\n[.v]u/4u \" A little space before the chapter title
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_COLOR]=1 \
-.             gcolor \\*[$\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_COLOR]
+.             COLOR \\*[$\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_COLOR]
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_CAPS]=1 .CAPS
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_SMALLCAPS]=1 .SMALLCAPS
 .       \}
@@ -6442,7 +6576,7 @@ SMALLCAPS takes precedence.
 .    ft     \\*[$\\*[DOC_]COVER_CHAPTER_FT]
 .    ps \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_CHAPTER_SIZE_CHANGE]
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_COLOR]=1 \
-.       gcolor \\*[$\\*[DOC_]COVER_CHAPTER_COLOR]
+.       COLOR \\*[$\\*[DOC_]COVER_CHAPTER_COLOR]
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_CAPS]=1 .CAPS
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_SMALLCAPS]=1 .SMALLCAPS
 .    ie \\n[#\\*[DOC_]COVER_CHAPTER_UNDERLINE] \{\
@@ -6467,7 +6601,7 @@ SMALLCAPS takes precedence.
 .    ft     \\*[$\\*[DOC_]COVER_CHAPTER_FT]
 .    ps \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_CHAPTER_SIZE_CHANGE]
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_COLOR]=1 \
-.       gcolor \\*[$\\*[DOC_]COVER_CHAPTER_COLOR]
+.       COLOR \\*[$\\*[DOC_]COVER_CHAPTER_COLOR]
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_CAPS]=1 .CAPS
 .    if \\n[#\\*[DOC_]COVER_CHAPTER_SMALLCAPS]=1 .SMALLCAPS
 .    ie \\n[#\\*[DOC_]COVER_CHAPTER_UNDERLINE] \{\
@@ -6508,7 +6642,7 @@ SMALLCAPS takes precedence.
 .    vs \\n[#DOCHEADER_LEAD]u
 .    if \\n[#PRINT_STYLE]=2 \
 .       if \\n[#DOCHEADER_COLOR]=1 \
-.          gcolor \\*[$DOCHEADER_COLOR]
+.          COLOR \\*[$DOCHEADER_COLOR]
 .    DO_TITLE
 .    rr #DOCHEADER
 .    if !'\\*[$SUBTITLE_1]'' \{\
@@ -6516,7 +6650,7 @@ SMALLCAPS takes precedence.
 .       if !'\\*[$SUBTITLE_SPACER]'' .sp \\*[$SUBTITLE_SPACER]
 .       if \\n[#PRINT_STYLE]=2 \
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .       DO_SUBTITLE
 .       rm $PRFX
 .    \}
@@ -6535,9 +6669,9 @@ SMALLCAPS takes precedence.
 .             ps \
 \\n[#DOC_PT_SIZE]u\\*[$ATTRIBUTE_SIZE_CHANGE]
 .             if \\n[#DOCHEADER_COLOR]=1 \
-.                gcolor \\*[$DOCHEADER_COLOR]
+.                COLOR \\*[$DOCHEADER_COLOR]
 .             if \\n[#ATTRIBUTE_COLOR]=1 \
-.                gcolor \\*[$ATTRIBUTE_COLOR]
+.                COLOR \\*[$ATTRIBUTE_COLOR]
 .             if \\n[#ATTRIBUTE_CAPS]=1 .CAPS
 .             if !'\\*[$ATTRIBUTE_SPACER]'' \
 .                sp \\*[$ATTRIBUTE_SPACER]
@@ -6554,7 +6688,7 @@ SMALLCAPS takes precedence.
 .          \}
 .          if !'\\*[$AUTHOR_SPACER]'' .sp \\*[$AUTHOR_SPACER]
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .          DO_AUTHORS
 .       \}
 .    \}
@@ -6604,7 +6738,7 @@ SMALLCAPS takes precedence.
 .    ie '\\*[$CHAPTER]'' \{\
 .       if \\n[#PRINT_STYLE]=2 \
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .       if !'\\*[$CHAPTER_TITLE_1]'' \{\
 .          ds $PRFX CHAPTER_
 .          nr #DOCHEADER 1
@@ -6617,9 +6751,9 @@ SMALLCAPS takes precedence.
 .    el \{\
 .       if \\n[#PRINT_STYLE]=2 \{\
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .          if \\n[#CHAPTER_COLOR]=1 \
-.             gcolor \\*[$CHAPTER_COLOR]
+.             COLOR \\*[$CHAPTER_COLOR]
 .       \}
 .       if \\n[#CHAPTER_CAPS]=1 .CAPS
 .       ie \\n[#CHAPTER_UNDERLINE] \{\
@@ -6639,7 +6773,7 @@ SMALLCAPS takes precedence.
 .          if \\n[#PRINT_STYLE]=2 \{\
 .             nr #CHAPTER+TITLE 1
 .             if \\n[#DOCHEADER_COLOR]=1 \
-.                gcolor \\*[$DOCHEADER_COLOR]
+.                COLOR \\*[$DOCHEADER_COLOR]
 .          \}
 .          if !'\\*[$CHAPTER_TITLE_SPACER]'' \
 .             sp \\*[$CHAPTER_TITLE_SPACER]
@@ -6703,9 +6837,9 @@ SMALLCAPS takes precedence.
 .       vs \\n[#DOCHEADER_LEAD]u
 .       ALD     \\n[#DOCHEADER_LEAD]u
 .       if \\n[#DOCHEADER_COLOR]=1 \
-.          gcolor \\*[$DOCHEADER_COLOR]
+.          COLOR \\*[$DOCHEADER_COLOR]
 .       if \\n[#DOCTYPE_COLOR]=1 \
-.          gcolor \\*[$DOCTYPE_COLOR]
+.          COLOR \\*[$DOCTYPE_COLOR]
 .       if \\n[#DOCTYPE_CAPS]=1 .CAPS
 .       if !'\\*[$DOCTYPE_SPACER]'' .sp \\*[$DOCTYPE_SPACER]
 .       ie \\n[#DOCTYPE_UNDERLINE] \{\
@@ -7165,7 +7299,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    sp |\\n[#\\*[DOC_]COVER_START_POS]u-1v
 .    if !\\n[#PRINT_STYLE]=1 \
 .       if \\n[#\\*[DOC_]COVER_COLOR]=1 \
-.          gcolor \\*[$\\*[DOC_]COVER_COLOR]
+.          COLOR \\*[$\\*[DOC_]COVER_COLOR]
 .    \\*[DOC_]COVER_H_POS
 .    if \\n[#\\*[DOC_]COVER_TITLE]=2 .ds DOC DOC
 .    fam \\*[$\\*[DOC_]COVER_\\*[DOC]TITLE_FAM]
@@ -7361,7 +7495,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          ps \
 \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_ATTRIBUTE_SIZE_CHANGE]
 .          if \\n[#\\*[DOC_]COVER_ATTRIBUTE_COLOR]=1 \
-.             gcolor \\*[$\\*[DOC_]COVER_ATTRIBUTE_COLOR]
+.             COLOR \\*[$\\*[DOC_]COVER_ATTRIBUTE_COLOR]
 .          if \\n[#\\*[DOC_]COVER_ATTRIBUTE_CAPS]=1 .CAPS
 .          if \\n[#\\*[DOC_]COVER_ATTRIBUTE_SMALLCAPS]=1 .SMALLCAPS
 .          if !'\\*[$\\*[DOC_]COVER_ATTRIBUTE_SPACER]'' \
@@ -7403,7 +7537,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .             ps \
 \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_DOCTYPE_SIZE_CHANGE]
 .             if \\n[#\\*[DOC_]COVER_DOCTYPE_COLOR]=1 \
-.                gcolor \\*[$\\*[DOC_]COVER_DOCTYPE_COLOR]
+.                COLOR \\*[$\\*[DOC_]COVER_DOCTYPE_COLOR]
 .          sp
 .          if \\n[#\\*[DOC_]COVER_DOCTYPE_CAPS]=1 .CAPS
 .          if \\n[#\\*[DOC_]COVER_DOCTYPE_SMALLCAPS]=1 .SMALLCAPS
@@ -7454,7 +7588,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    if \\n[#\\*[DOC_]COVER_COPYRIGHT]=1 \{\
 .       QUAD \\*[$\\*[DOC_]COVER_COPYRIGHT_QUAD]
 .       if \\n[#\\*[DOC_]COVER_COPYRIGHT_COLOR]=1 \
-.          gcolor \\*[$\\*[DOC_]COVER_COPYRIGHT_COLOR]
+.          COLOR \\*[$\\*[DOC_]COVER_COPYRIGHT_COLOR]
 .       ie !'\\*[$COPYRIGHT_V_ADJ]'' \
 .          PRINT \v'\\*[$COPYRIGHT_V_ADJ]'\\*[$\\*[DOC_]COVER_COPYRIGHT]
 .       el \
@@ -7471,7 +7605,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          ps \\n[#DOC_PT_SIZE]u\\*[$\\*[DOC_]COVER_MISC_SIZE_CHANGE]
 .          vs \\*[$\\*[DOC_]COVER_MISC_LEAD]
 .          if \\n[#\\*[DOC_]COVER_MISC_COLOR]=1 \
-.             gcolor \\*[$\\*[DOC_]COVER_MISC_COLOR]
+.             COLOR \\*[$\\*[DOC_]COVER_MISC_COLOR]
 .       \}
 .       ie !'\\*[$\\*[DOC_]COVER_MISC_1]'' \{\
 .          QUAD \\*[$\\*[DOC_]COVER_MISC_QUAD]
@@ -7525,8 +7659,9 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    EOL
 .    TRAP
 .    if '\\*[$COVER_TYPE]'DOC_COVER_' .ds DOC DOC
+.    if \\n[#DOC_TYPE]=5 .nr #SKIP 1
 .    NEWPAGE
-.    rm $COVER_TYPE
+.    rr #SKIP
 .    if \\n[#PAGINATION_WAS_ON]=1 .nr % +1
 .    ie \\n[#\\*[DOC]COVER_BLANKPAGE]=1 \{\
 .       if \\n[TOC.RELOCATE] \
@@ -7778,7 +7913,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          ev DOCHEADER
 .          evc 0
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .          L_MARGIN \\n[#DOC_L_MARGIN]u
 .          LL       \\n[#DOC_L_LENGTH]u
 .          ta \\n[.l]u
@@ -7796,7 +7931,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          ev DOCHEADER
 .          evc 0
 .          if \\n[#DOCHEADER_COLOR]=1 \
-.             gcolor \\*[$DOCHEADER_COLOR]
+.             COLOR \\*[$DOCHEADER_COLOR]
 .          L_MARGIN \\n[#DOC_L_MARGIN]u
 .          LL       \\n[#DOC_L_LENGTH]u
 .          ta \\n[.l]u
@@ -7874,7 +8009,17 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          \}
 .       \}
 .    \}
-.    RESTORE_SPACE
+.    if \\n[#DOC_TYPE]=5 \{\
+.       if \\n[#HDRFTR_BOTH] \
+.          HEADER_RECTO \\*[$HDR_RECTO_QUAD] "\\*[$HDR_RECTO_STRING]"
+.       if \\n[#SLIDE_HEADERS] .HEADER
+.       if \\n[#HDRFTR_BOTH] \
+.          FOOTER_RECTO \\*[$FTR_RECTO_QUAD] "\\*[$FTR_RECTO_STRING]"
+.       if \\n[#SLIDE_FOOTERS] \
+.          PRINT_FOOTER
+.       sp |\\n[#T_MARGIN]u-\\n[#DOC_LEAD]u
+.       vpt
+.    \}
 .END
 \#
 .MAC RR_ADVANCE_FROM_TOP END
@@ -8212,7 +8357,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       nr #NO_FLEX 1
 .       if \\n[#FLEX_ACTIVE] .rr #FLEX_ACTIVE
 .    \}
-.    el .rr #NO_FLEX
+.    el \
+.       if !\\n[#DOC_TYPE]=5 .rr #NO_FLEX
 .END
 \#
 \# CALCULATE FLEX SPACES
@@ -8809,7 +8955,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       el .PRINT "\\*[$FINIS_STRING]
 .    \}
 .    if \\n[#PRINT_STYLE]=2 \{\
-.       if \\n[#FINIS_COLOR]=1 .gcolor \\*[$FINIS_COLOR]
+.       if \\n[#FINIS_COLOR]=1 .COLOR \\*[$FINIS_COLOR]
 .       ie !\\n[#FINIS_NO_DASHES] .ds $FINIS_DASH \
 \v'-\\n[#EM_ADJUST]u'\[em]\v'+\\n[#EM_ADJUST]u'
 .       el .rm $FINIS_DASH
@@ -8843,8 +8989,10 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \# not the same thing as using the shortform # in hdrftr strings.
 \#
 .ds PAGE# \En[#PAGENUMBER]
+.ALIAS SLIDE# PAGE#
 \#
 .MAC RESTORE_SPACE END
+.   vpt 0
 .   if \\n[@TOP] \{\
 .      ch RR_@TOP
 .      rr @TOP
@@ -8858,6 +9006,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .      fi
 .      rr #FILLED
 .   \}
+.   vpt
 .END
 \#
 \# HDRFTR RULE GAP
@@ -9379,6 +9528,10 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    if \\n[#FOOTERS_ON] \{\
 .       if \\n[#START_FOR_FOOTERS] \{\
 .          rr #START_FOR_FOOTERS
+.          if \\n[#DOC_TYPE]=5 \{\
+.             if !\\n[#HDRFTR_BOTH] .PRINT_USERDEF_HDRFTR
+.             return
+.          \}
 .          if !\\n[#PRINT_FOOTER_ON_PAGE_1] \{\
 .             ie !\\n[#HDRFTR_BOTH] .return
 .             el \{\
@@ -9648,7 +9801,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       if \\n[#USERDEF_HDRFTR_RECTO_QUAD]=3 .RIGHT
 .       if \\n[#HDRFTR_RECTO_CAPS]=1 .CAPS
 .       if '\\n[.ev]'FOOTER' .vs 0
-.       PRINT \\*[$USERDEF_HDRFTR_RECTO]
+.       if !r #SKIP .PRINT \\*[$USERDEF_HDRFTR_RECTO]
 .       if '\\n[.ev]'FOOTER' .vs
 .       if \\n[#HDRFTR_RECTO_CAPS]=1 .CAPS OFF
 .       EOL
@@ -9727,6 +9880,13 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 .MAC HEADER END
 .    vpt 0
+.    if \\n[#DOC_TYPE]=5 \{\
+.       if \\n[#SLIDE_FOOTERS] \{\
+.          PRINT_FOOTER
+.       if \\n[#HDRFTR_BOTH] \
+.          HEADER_RECTO \\*[$HDR_RECTO_QUAD] "\\*[$HDR_RECTO_STRING]"
+.       \}
+.    \}
 .    nr flex-spaces 0
 .    nr flex +1
 .    if \\n[#NEW_DOC_PT_SIZE] .nr #DOC_PT_SIZE \\n[#NEW_DOC_PT_SIZE]
@@ -9788,6 +9948,18 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    \}
 .    if !n .nop \X'ps: exec 0 setlinejoin'\X'ps: exec 0 setlinecap'
 .    sp -1v
+.    if \\n[#DOC_TYPE]=5 \{\
+.       if \\n[#SLIDE_HEADERS] \{\
+.          HEADERS
+.          if \\n[#SLIDE_FOOTERS] \{\
+.             FOOTERS off
+.             if !r #SKIP_RULE \{\ \"So rule prints after header on first page
+.                if \\n[#HEADER_RULE] .HEADER_RULE
+.                nr #SKIP_RULE 1
+.             \}
+.          \}
+.       \}
+.    \}
 .    ie \\n[#HEADERS_ON] .PRINT_HDRFTR
 .    el \{\
 .       if \\n[#PAGE_NUM_V_POS]=1 \
@@ -9821,6 +9993,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       \}
 .       if \\n[#PRINT_STYLE]=2 .sp \\n[#Q_LEAD_DIFF]u
 .    \}
+.    if \\n[#IN_LIST] \
+.       po +\\n[#LIST_OFFSET_VALUE]u
 .    if \\n[#RESET_FN_COUNTERS]=1 \{\
 .       rr #RESET_FN_COUNTERS
 .       PROCESS_FN_IN_DIVER
@@ -10045,6 +10219,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   PAGENUMBER.
 \#
 .MAC FOOTER END
+.    if r #START .rr #START
 .    CALCULATE_FLEX
 .    if \\n[#DOING_COVERTEXT] \{\
 .       tm1 "[mom]: COVERTEXT exceeds cover page depth.
@@ -10264,7 +10439,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          nr ref*last 1
 .       \}
 .    \}
-.    PRINT_FOOTER
+.    ie !\\n[#DOC_TYPE]=5 .PRINT_FOOTER
+.    el .vpt
 .    if !\\n[ref*last] \{\
 .       ie \\n[defer]>0 \{\
 \c
@@ -10306,6 +10482,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       if !\\n[#SKIP_FOOTER]>0 .PRINT_HDRFTR
 .       if \\n[#HDRFTR_BOTH] \
 .          HEADER_RECTO \\*[$HDR_RECTO_QUAD] "\\*[$HDR_RECTO_STRING]"
+.       if \\n[#DOC_TYPE]=5 .FOOTERS
 .    \}
 .    el \{\
 .       if \\n[#PAGINATE] \{\
@@ -10369,8 +10546,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    ds $FTR_VERSO_STRING \\$8
 .am START DONE
 .   if \\\\n[#HDRFTR_BOTH]=1 \{\
-.      FOOTER_RECTO \\*[$FTR_RECTO_QUAD] "\\*[$FTR_RECTO_STRING]"
-.      FOOTER_VERSO \\*[$FTR_VERSO_QUAD] "\\*[$FTR_VERSO_STRING]"
+.      FOOTER_RECTO \\\\*[$FTR_RECTO_QUAD] "\\\\*[$FTR_RECTO_STRING]"
+.      FOOTER_VERSO \\\\*[$FTR_VERSO_QUAD] "\\\\*[$FTR_VERSO_STRING]"
 .      if \\\\n[#HEADER_RULE]=1 .HEADER_RULE
 .      ie \\\\n[#FOOTER_RULE]=1 .FOOTER_RULE
 .      el .FOOTER_RULE OFF
@@ -10488,7 +10665,11 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .             if !\\n[#SPACE_ADDED] .if !\\n[#LINEBREAK] .sp
 .          \}
 .          el \{\
-.             ie !\\n[#PP] .rr #START
+.             ie !\\n[#PP] \{\
+.                rr #START
+.                RESTORE_SPACE
+.                if !\\n[#SPACE_ADDED] .sp
+.             \}
 .             el .sp
 .          \}
 .          if \\n[#EPIGRAPH] \
@@ -11442,7 +11623,6 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       el .ti \\n[#PP_INDENT]u
 .       return
 .    \}
-.    br
 .    if \\n[#DOC_TYPE]=4 \{\
 .       if !'\\n[.z]'' .di
 .       nr #TOTAL_FIELDS \\n[#FIELD]
@@ -11706,19 +11886,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   diverted so its depth can be measured (in DO_QUOTE) for determining
 \#   how much space to put before and after.
 \#
-\# QUOTE
-\# -----
-\# *Arguments:
-\#   <none> | <anything>
-\# *Function:
-\#   Indents quoted text on a line for line basis, or turns QUOTE off.
-\# *Notes:
-\#   Owing to the need to bottom align TYPESET pages, quoted text gets
-\#   diverted so its depth can be measured (in DO_QUOTE) for determining
-\#   how much space to put before and after.
-\#
 .MAC QUOTE END
-.    br
+'    br
 .    if \\n[#PP]>0 .rr #START
 .    if \\n[#LINENUMBERS]=1 \{\
 .       nr #LINENUMBERS 2
@@ -11774,7 +11943,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          nr #Q_LEAD_REAL \\n[.v]
 .          if \\n[#QUOTE_COLOR]=1 \{\
 .             nf
-.             gcolor \\*[$QUOTE_COLOR]
+.             COLOR \\*[$QUOTE_COLOR]
 .          \}
 .          \\*[$Q_QUAD]
 .       \}
@@ -11850,9 +12019,12 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .             CODE_FONT R
 .             ft \\*[$CODE_FT]
 .          \}
-.          if \\n[#CODE_COLOR]=1 .gcolor \\*[$CODE_COLOR]
+.          if \\n[#CODE_COLOR]=1 .COLOR \\*[$CODE_COLOR]
 .          char ' \[aq]
-.          if !\\n[#CODE_SIZE_ADJ]=0 .ps \\n[#PT_SIZE]u*\\n[#CODE_SIZE_ADJ]u/100u
+.          if !\\n[#CODE_SIZE_ADJ]=0 \{\
+.nr #RESTORE_SIZE \\n[.s]
+.ps \\n[#PT_SIZE]u*\\n[#CODE_SIZE_ADJ]u/100u
+.\}
 .          if \\n[#SQ_ON] \{\
 .             nr #SQ_WAS_ON 1
 .             SMARTQUOTES OFF
@@ -11862,9 +12034,10 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    el \{\
 .       fam \\*[#RESTORE_FAM]
 .       ft  \\*[#RESTORE_FT]
+.       if !\\n[#CODE_SIZE_ADJ]=0 .ps \\n[#RESTORE_SIZE]
 .       rm $RESTORE_FAM
 .       rm $RESTORE_FT
-.       if !\\n[#CODE_SIZE_ADJ]=0 .ps
+.       rm $RESTORE_SIZE
 .       if \\n[#PRINT_STYLE]=2 .char ' \[cq]
 .       if !'\\n[.z]'' \
 .          if \\n[#LINENUMBERS] .nn
@@ -12000,7 +12173,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          nr #BQ_LEAD_REAL \\n[.v]
 .          if \\n[#BQUOTE_COLOR]=1 \{\
 .             nf
-.             gcolor \\*[$BQUOTE_COLOR]
+.             COLOR \\*[$BQUOTE_COLOR]
 .          \}
 .          QUAD \\*[$BQUOTE_QUAD]
 .          nr #DIVERSIONS_HY_MARGIN (p;\\n[.ps]u*2.75)/1000
@@ -12077,16 +12250,14 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    REMOVE_INDENT
 .    ev
 .    nr #Q_LEAD_DIFF \\n[#LEAD]-\\n[#\\*[BQ]_LEAD_REAL]
-.    if !\\n[#NO_SHIM] \{\
-.       if !'\\n[.z]'FLOAT*DIV' \{\
-.          br
-.          nr #CALCULATE_ONLY 1
-.          nr #CURRENT_V_POS \\n[nl]+\\n[#Q_DEPTH]
-.          SHIM
-.          rr #CALCULATE_ONLY
-.          nr #Q_SPACE_EQ (\\n[#SHIM]/2)
-.          nr #TRAP \\n[.t]-1
-.       \}
+.    if !'\\n[.z]'FLOAT*DIV' \{\
+.       br
+.       nr #CALCULATE_ONLY 1
+.       nr #CURRENT_V_POS \\n[nl]+\\n[#Q_DEPTH]
+.       SHIM
+.       rr #CALCULATE_ONLY
+.       nr #Q_SPACE_EQ (\\n[#SHIM]/2)
+.       nr #TRAP \\n[.t]-1
 .    \}
 .    if \\n[#ENDNOTE] \{\
 .       nr #RESET_QUOTE_SPACING \\n[#FULLSPACE_QUOTES]
@@ -12139,7 +12310,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       \}
 .    \}
 .    ie !'\\*[$\\*[BQ]_OFFSET_VALUE]'' \
-.       nr #\\*[BQ]_OFFSET \\n[#L_MARGIN]+\\*[$\\*[BQ]_OFFSET_VALUE]
+.       nr #\\*[BQ]_OFFSET \\n[#L_MARGIN]+(\\*[$\\*[BQ]_OFFSET_VALUE])
 .    el \
 .       nr #\\*[BQ]_OFFSET \
 \\n[#L_MARGIN]+(\\n[#PP_INDENT]*\\n[#\\*[BQ]_OFFSET_VALUE])
@@ -12319,6 +12490,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    nr #QUOTE_4_HD 1
 .    rr #\\*[BQ]_LEAD_REAL
 .    rm BQ
+.    if \\n[#DOC_TYPE]=5 .NO_SHIM
 .    if '\\n[.z]'FLOAT*DIV' \!.po \\n[#L_MARGIN]u
 .END
 .
@@ -14383,7 +14555,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .             FAMILY  \\*[$EN_TITLE_FAM]
 .             FT      \\*[$EN_TITLE_FT]
 .             ps \\n[#EN_PS]u\\*[$EN_TITLE_SIZE_CHANGE]
-.             if \\n[#EN_TITLE_COLOR] .gcolor \\*[$EN_TITLE_COLOR]
+.             if \\n[#EN_TITLE_COLOR] .COLOR \\*[$EN_TITLE_COLOR]
 .             if \\n[#ENDNOTE_TITLE_SMALLCAPS] .SMALLCAPS
 .             if \\n[#ENDNOTE_TITLE_CAPS] .CAPS
 .          \}
@@ -14715,7 +14887,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       if '\\*[$\\*[EN-OR-BIB]_STRING_QUAD]'R'      .RIGHT
 .       if '\\*[$\\*[EN-OR-BIB]_STRING_QUAD]'RIGHT'  .RIGHT
 .       EOL
-.       if \\n[#\\*[EN-OR-BIB]_STRING_COLOR]=1 .gcolor \\*[$\\*[EN-OR-BIB]_STRING_COLOR]
+.       if \\n[#\\*[EN-OR-BIB]_STRING_COLOR]=1 .COLOR \\*[$\\*[EN-OR-BIB]_STRING_COLOR]
 .       if \\n[#\\*[EN-OR-BIB]_STRING_CAPS] .CAPS
 .       if \\n[#\\*[EN-OR-BIB]_STRING_SMALLCAPS] .SMALLCAPS
 .       ie \\n[#\\*[EN-OR-BIB]_STRING_UNDERLINE] \{\
@@ -15527,7 +15699,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       FT     \\*[$TOC_HEADER_FT]
 .       ps \\n[#TOC_PS]u\\*[$TOC_HEADER_SIZE_CHANGE]
 .       if \\n[#TOC_HEADER_COLOR]=1 \
-.          gcolor \\*[$TOC_HEADER_COLOR]
+.          COLOR \\*[$TOC_HEADER_COLOR]
 .    \}
 .    QUAD \\*[$TOC_HEADER_QUAD]
 .    if \\n[#TOC_STRING_CAPS] .CAPS
@@ -15709,19 +15881,41 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          if \\n[#INDENT_LEFT_ACTIVE]=1 \
 .             nr #RESTORE_PREV_INDENT 1
 .          if \\n[#INDENT_BOTH_ACTIVE]=1 \{\
-.             IBX
+.             ie \\n[#DOC_TYPE]=5 .IBX CLEAR
+.             el .IBX
 .             nr #ORIG_L_LENGTH \\n[.l]
 .             IB
 .             nr #RESTORE_PREV_INDENT 2
 .          \}
 .          if \\n[#INDENT_RIGHT_ACTIVE]=1 \{\
-.             IRX
+.             ie \\n[#DOC_TYPE]=5 .IRX CLEAR
+.             el .IRX
 .             nr #ORIG_L_LENGTH \\n[.l]
 .             IR
 .             nr #RESTORE_PREV_INDENT 3
 .             if \\n[#INDENT_LEFT_ACTIVE]=1 \
 .                nr #RESTORE_PREV_INDENT 4
 .          \}
+.       \}
+.    \}
+.    ds pre-list-quad \\*[$QUAD_VALUE]
+.    substring pre-list-quad 0 0
+.    if '\\*[pre-list-quad]'C' \{\
+.       if !'\\n[.z]'LIST*DIV' \{\
+.          nr #PRE_LIST_QUAD \\n[.j]
+.          nr #LIST_CENTER 1
+.          if !'\\n[.z]'LIST*DIV' .di LIST*DIV
+\!.        nr #IN_LIST 1
+.          ad l
+.       \}
+.    \}
+.    if '\\*[pre-list-quad]'R' \{\
+.       if !'\\n[.z]'LIST*DIV' \{\
+.          nr #PRE_LIST_QUAD \\n[.j]
+.          nr #LIST_RIGHT 1
+.          if !'\\n[.z]'LIST*DIV' .di LIST*DIV
+\!.        nr #IN_LIST 1
+.          ad l
 .       \}
 .    \}
 .    if \\n[#NUM_ARGS]=0 \{\
@@ -15902,12 +16096,15 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \# ITEM
 \# ----
 \# *Arguments:
-\#   none
+\#   <none> | <space before item>
 \# *Function:
 \#   Prints enumerator for a given list depth and prepares mom to
 \#   receive the text of an item.
 \#
 .MAC ITEM END
+.    ie \\n[#NUM_ARGS]=2 .sp \\$2
+.    el \
+.       if \B'\\$1' .sp \\$1
 .    if '\\*[$ENUMERATOR_TYPE\\n[#DEPTH]]'plain' .nop 
 .    if !r#DEPTH .return
 .    if \\n[#LINENUMBERS]=1 \{\
@@ -15922,7 +16119,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    IL
 .    nr #IN_ITEM 1
 .    ll \\n[#CURRENT_L_LENGTH]u \" Set ll again because IL turns IB off.
-.    TRAP OFF
+.    ie !'\\n[.z]'' \!.TRAP OFF
+.    el .TRAP OFF
 .    HI \\n[#HL_INDENT\\n[#DEPTH]]u
 .    if '\\*[$SEPARATOR\\n[#DEPTH]]')' .nr #SEP_TYPE 1
 .    if '\\*[$SEPARATOR\\n[#DEPTH]]']' .nr #SEP_TYPE 1
@@ -16033,7 +16231,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       IL +\\n[#REF_BIB_INDENT]u
 .       ti \\n[#L_INDENT]u-\\n[#REF_BIB_INDENT]u
 .    \}
-.    TRAP
+.    ie !'\\n.z]'' \!.TRAP
+.    el .TRAP
 .    if \\n[#KERN_WAS_ON]=1 \{\
 .       KERN
 .       rr #KERN_WAS_ON
@@ -16312,6 +16511,9 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#   effect prior to LIST.
 \#
 .MAC QUIT_LISTS END
+.   br
+\!. rr #IN_LIST
+.   di
 .   IQ CLEAR
 .   nr #HL_INDENT \\n[#STORED_HL_INDENT]
 .   nr #T_INDENT  \\n[#STORED_T_INDENT]
@@ -16320,6 +16522,20 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .   nr #BL_INDENT \\n[#STORED_BL_INDENT]
 .   nr #BR_INDENT \\n[#STORED_BR_INDENT]
 .   rr #STORED_HL_INDENT
+.   if \\n[#LIST_CENTER] \
+.      nr #LIST_OFFSET_VALUE \\n[.l]-\\n[dl]/2
+.   if \\n[#LIST_RIGHT] \
+.      nr #LIST_OFFSET_VALUE \\n[.l]-\\n[dl]
+.   po +\\n[#LIST_OFFSET_VALUE]u
+.   if \\n[.u] .nr #FILLED 1
+.   nf
+.   LIST*DIV
+.   rm LIST*DIV
+.   if \\n[#FILLED] .fi
+.   if !\\n[#PRE_LIST_QUAD]=\\n[.j] .ad \\n[#PRE_LIST_QUAD]
+.   rr #FILLED
+.   po
+.   rr #PRE_LIST_QUAD
 .   if \\n[#RESTORE_PREV_INDENT]=1 \
 .      IL
 .   if \\n[#RESTORE_PREV_INDENT]=2 \{\
@@ -16378,6 +16594,24 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    nr #NEXT_DEPTH_BACK \\n[#DEPTH]-1
 .    if \\n[#NEXT_DEPTH_BACK]=0 \{\
 .       nr #QUIT 1
+.       if \\n[#INDENT_ACTIVE]=1 \{\
+.          if \\n[#INDENT_STYLE_BOTH]=1 \{\
+.             ie \\n[#DOCS] \
+.                ll \\n[#DOC_L_LENGTH]u-\\n[#STORED_BR_INDENT]u
+.             el \
+.                ll \\n[#L_LENGTH]u-\\n[#STORED_BR_INDENT]u
+.          in \\n[#BL_INDENT]u
+.       \}
+.       if \\n[#INDENT_STYLE_LEFT] \{\
+.          in \\n[#STORED_L_INDENT]u
+.       \}
+.       if \\n[#INDENT_STYLE_RIGHT] \{\
+.          ie \\n[#DOCS] \
+.             ll \\n[#DOC_L_LENGTH]u-\\n[#STORED_R_INDENT]u
+.          el \
+.             ll \\n[#L_LENGTH]u-\\n[#STORED_R_INDENT]u
+.       \}
+.    \}
 .       return
 .    \}
 .    nr #L_INDENT -\\n[#LIST_INDENT\\n[#DEPTH]]+\\n[#SHIFT_LIST\\n[#DEPTH]]
@@ -16612,7 +16846,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    el .ft \\n[.sty]
 .    ie d$LN_SIZE_CHANGE .ps \\*[$LN_SIZE_CHANGE]
 .    el .ps \\n[.s]
-.    ie d$LN_COLOR .gcolor \\*[$LN_COLOR]
+.    ie d$LN_COLOR .COLOR \\*[$LN_COLOR]
 .    el .gcolor \\n[.m]
 .END
 \#
@@ -18310,7 +18544,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    fam \\*[\\*[label-type]*\\*[spec-type]-family]
 .    ft \\*[\\*[label-type]*\\*[spec-type]-font]
 .    ps \\n[#DOC_PT_SIZE]u\\*[\\*[label-type]*\\*[spec-type]-size-change]
-.    gcolor \\*[\\*[label-type]*\\*[spec-type]-color]
+.    COLOR \\*[\\*[label-type]*\\*[spec-type]-color]
 .END
 \#
 .ALIAS tbl*caption-style style
@@ -19433,18 +19667,16 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .ds T&
 \#
 .MAC TS END
-.    br
 .    rr tbl*have-header
 .    rr float*tbl
 .    rr tbl*boxed
 .    if '\\n[.z]'FLOAT*DIV' .nr float*tbl 1
 .    if !'\\n[.z]'FLOAT*DIV' \{\
 .       if \\n[.t]=1 \{\
-.          ie !\\n[@TOP] \{\
+.          if !\\n[@TOP] \{\
 .             ie \\n[#COLUMNS] .COL_NEXT internal
 .             el .NEWPAGE
 .          \}
-.          el .RESTORE_SPACE
 .       \}
 .    \}
 .    rr tbl*boxed
@@ -19463,6 +19695,18 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          shift
 .       \}
 .       if '\\$1'CENTER' \{\
+.          if \\n[#INDENT_BOTH_ACTIVE] \{\
+.             IBX
+.             nr #RESTORE_INDENT_BOTH 1
+.          \}
+.          nr tbl*center 1
+.          shift
+.       \}
+.       if '\\$1'CENTRE' \{\
+.          if \\n[#INDENT_BOTH_ACTIVE] \{\
+.             IBX
+.             nr #RESTORE_INDENT_BOTH 1
+.          \}
 .          nr tbl*center 1
 .          shift
 .       \}
@@ -20119,6 +20363,10 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .    rr tbl*have-label
 .    rr tbl*plain
 .    if '\\*[tbl*label-sffx-tmp]'.' .ds tbl*label-sffx .
+.    if \\n[#RESTORE_INDENT_BOTH] \{\
+.       IB
+.       rr #RESTORE_INDENT_BOTH
+.    \}
 .    if \\n[#RESTORE_FLEX] \{\
 .       NO_FLEX off
 .       rr #RESTORE_FLEX
@@ -20217,6 +20465,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       if !\\n[pgnum] .nr pgnum \\n%+\\n[#PAGE_NUM_ADJ]
 .       br
 .       if \\n[.u] .nr fill 1
+.       na
 .       rr float*eqn
 .       if '\\n[.z]'FLOAT*DIV' .nr float*eqn 1
 .       nr eqn*restore-adj \\n[.j]
@@ -20497,7 +20746,10 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       ta \\*[eqn*tabs]
 .\" if continuing (ie is a multi-line equation), don't space and SHIM
 .       if !\\n[continued] \{\
-.          sp \\*[DD]
+.          br
+.          if !\\n[@TOP] \
+.             if !\\n[.t]<(\\*[DD]+1) \
+.                sp \\*[DD]
 .          if !'\\*[eqn*space-adj]'' .sp -\\*[eqn*space-adj]u
 .          ie !\\n[eqn*no-shim] \{\
 .             ie !\\n[#NO_SHIM] \
@@ -20540,8 +20792,8 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       if !\\n[eqn-cutaround] .rm eqn*space-adj
 .    \}
 .    nr eqn*copy-in 1
-.    if \\n[fill] .fi
 .    ad \\n[eqn*restore-adj]
+.    if \\n[fill] .fi
 .    rr fill
 .END
 \#
@@ -20754,7 +21006,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .    el .vs \\n[.ps]u
 .    nr pic@text-lead \\n[.v]
 .    nr pic@text-size \\n[.ps]
-.    if !'\\*[pic*text-color]'' .gcolor \\*[pic*text-color]
+.    if !'\\*[pic*text-color]'' .COLOR \\*[pic*text-color]
 .    if \\n[@TOP] \{\
 .       RESTORE_SPACE
 .       nr pic*top-lead-adj 1
@@ -22707,7 +22959,7 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 \#   must be entered as "".
 \#
 .MAC PDF_IMAGE_FRAME END
-.    if !'\\$1''\{\
+.    ie !'\\$1''\{\
 .       ds frame-arg \\$1
 .       substring frame-arg -1
 .       ie \B'\\*[frame-arg]' \{\
@@ -22715,10 +22967,13 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .          tm1 "       of '\\n[.F]' requires a unit of measure.
 .          tm1 "       Default 6 point inset will be used instead.
 .       \}
-.       el .nr pdf-img:frame-inset \\$1
+.       el \{\
+.          nr pdf-img:frame-inset \\$1
+.          shift
+.       \}
 .    \}
-.    shift
-.    if !'\\$1'' \{\
+.    el .shift
+.    ie !'\\$1'' \{\
 .       ds frame-arg \\$1
 .       substring frame-arg -1
 .       ie \B'\\*[frame-arg]' \{\
@@ -22737,6 +22992,7 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .          \}
 .       \}
 .    \}
+.    el .shift
 .    if !'\\$1'' \{\
 .       ie m \\$1 .ds pdf-img:frame-color \\$1
 .       el \{\
@@ -22796,6 +23052,27 @@ No room to start \\*[MN-pos] margin note #\\n[MN-curr] on page \\n[#P].
 .    \}
 .    el .nop \!.pdfmomclean \\$@
 ..
+\#
+.MAC PAUSE END
+.    vpt 0
+.    br
+.    vpt
+.    ie !'\\n[.z]'' \{\
+\!.     pdfpause
+\!.     pdftransition BLOCK \\$1
+.    \}
+.    el \{\
+.       pdfpause
+.       pdftransition BLOCK \\$1
+.    \}
+.END
+\#
+.MAC TRANSITION END
+.    ie !'\\n[.z]'' \
+\!.     pdftransition PAGE \\$1
+.    el .pdftransition PAGE \\$1
+.END
+\#
 \# Local Variables:
 \# mode: nroff
 \# End:
