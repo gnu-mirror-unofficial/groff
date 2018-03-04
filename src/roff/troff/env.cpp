@@ -4027,7 +4027,7 @@ void hyphenate(hyphen_list *h, unsigned flags)
 	  // number.  Example:
 	  //
 	  //   hbuf:  . h e l p f u l .
-	  //   num:  0 0 0 0 0 1 0 0 0 0
+	  //   num:  0 0 0 2 4 3 0 0 0 0
 	  if (!(flags & HYPHEN_FIRST_CHAR))
 	    num[2] = 0;
 	  if (flags & HYPHEN_NOT_FIRST_CHARS)
