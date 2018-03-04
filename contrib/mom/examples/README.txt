@@ -20,6 +20,7 @@ files with pdfmom(1).
 
     pdfmom mom-pdf.mom > mom-pdf.pdf
     pdfmom sample_docs.mom > sample_docs.pdf
+    pdfmom slide-demo.mom > slide-demo.pdf
     pdfmom -k letter.mom > letter.pdf
     pdfmom -k mon_premier_doc.mom > mon_premier_doc.pdf
     pdfmom -k typesetting.mom > typesetting.pdf
@@ -64,6 +65,14 @@ the file.
 
 This is just the tutorial example from the momdocs, ready for
 previewing.
+
+***slide-demo.mom***
+
+The file, slide-demo.mom, demonstrates a slide presentation with
+PAUSE and TRANSITION effects.  The .pdf created by pdfmom should be
+opened in Presentation Mode in a PDF reader (e.g. Okular, Evince,
+Acroread).  Note that not all transition effects are available in
+all PDF readers.
 
 ***mon_premier_doc.mom***
 
