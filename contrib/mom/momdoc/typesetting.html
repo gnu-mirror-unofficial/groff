@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2017 Free Software Foundation, Inc.
+Copyright (C) 2004-2018 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -4179,6 +4179,20 @@ the
 <a href="docprocessing.html#columns">COLUMNS</a>
 macro in the
 <a href="docprocessing.html#docprocessing">document processing macros</a>.
+</p>
+</div>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Additional Note:</span>
+Do not use multi-columns with
+<a href="docprocessing.html#slide">DOCTYPE SLIDES</a>
+because MCX uses the lowest line on the page to determine column
+depth.  Owing to the fact that both headers and footers are printed
+prior to slides receiving text, MCX will always go to the
+footer position.  If you need functionality similar to MCO/MCX, use
+the groff requests <kbd>.mk</kbd> and <kbd>.rt</kbd>.  See
+<kbd>info groff --index-search=mk</kbd>.
 </p>
 </div>
 

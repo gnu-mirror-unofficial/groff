@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2017 Free Software Foundation, Inc.
+Copyright (C) 2004-2018 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -50,7 +50,10 @@ nearly indispensable) routines to simplify typesetting.
 <ul class="no-enumerator">
 <li class="list-head-goodies"><a href="#alias">ALIAS</a> <span class="normal-smaller">&ndash; rename macros</span></li>
 <li class="list-head-goodies"><a href="#caps">CAPS</a> <span class="normal-smaller">&ndash; convert to upper case</span></li>
+<li class="list-head-goodies"><a href="#center-block">CENTER_BLOCK</a> <span class="normal-smaller">&ndash; centre blocks of type with quad intact</span></li>
 <li class="list-head-goodies"><a href="#esc-char">ESC_CHAR</a> <span class="normal-smaller">&ndash; change the escape character to something other than a backslash</span></li>
+<li class="list-head-goodies"><a href="#hang">HANG</a> <span class="normal-smaller">&ndash; hang character(s) outside right margin (inline escape)</span></li>
+<li class="list-head-goodies"><a href="#left-hang">LEFT_HANG</a> <span class="normal-smaller">&ndash; hang character(s) outside left margin</span></li>
 <li class="list-head-goodies"><a href="#silent">SILENT</a> <span class="normal-smaller">&ndash; hide input lines from output</span></li>
 <li class="list-head-goodies"><a href="#sizespecs">SIZESPECS</a> <span class="normal-smaller">&ndash; get cap-height, x-height and descender depth of a font</span></li>
 <li class="list-head-goodies"><a href="#smartquotes">SMARTQUOTES</a> <span class="normal-smaller">&ndash; convert typewriter doublequotes to proper doublequotes</span></li>
@@ -125,8 +128,7 @@ Macro: <b>ALIAS</b> <kbd class="macro-args">&lt;new name&gt; &lt;old name&gt;</k
 <p>
 The ALIAS macro may well be your best friend.  With it, you can
 change the name of a macro to anything you like (provided the new
-name is not already being used by mom; see the
-<a href="reserved.html#reserved">list of reserved words</a>).
+name is not already being used by mom).
 </p>
 
 <p>
@@ -1460,7 +1462,9 @@ If your running type is
 or
 <a href="typesetting.html#ext-inline">pseudo-extended</a>
 and you want your superscripts to be equivalently pseudo-condensed
-or -extended, use <kbd>\*[CONDSUP]...\*[CONDSUPX]</kbd> or
+or -extended, use
+<br/>
+<kbd>\*[CONDSUP]...\*[CONDSUPX]</kbd> or
 <kbd>\*[EXTSUP]...\*[EXTSUPX]</kbd>.
 </p>
 
@@ -1500,6 +1504,100 @@ instead of 1/3 em, you&#8217;d do
 and all subsequent superscripts would be raised by 3 points.
 </p>
 
+<!-- -CENTER BLOCK- -->
+
+<div class="macro-id-overline">
+<h3 id="center-block" class="macro-id">Centre blocks of type</h3>
+</div>
+
+<div class="box-macro-args">
+Macro: <b>CENTER_BLOCK</b> <kbd class="macro-args">&lt;toggle&gt;</kbd>
+</div>
+
+<p>
+Blocks of type sometimes need to be centred on the page with their quad
+direction (left, centre, right) left intact.  The
+document processing macros
+<a href="docelement.html#quote">QUOTE</a>
+and
+<a href="docelement.html#blockquote">BLOCKQUOTE</a>
+take care of this automatically, but there are other situations
+where you may want to centre blocks of type.  An example might be
+left-quadded
+<a href="docelement.html#list-intro">nested lists</a>.
+</p>
+
+<p>
+Whenever you want to centre a block of type on the page, surround it with
+<kbd>.CENTER_BLOCK/.CENTER_BLOCK OFF</kbd> (or QUIT, X, etc.).
+</p>
+
+<div class="macro-id-overline">
+<h3 id="left-hang" class="macro-id">Hanging characters</h3>
+</div>
+<br/>
+<div class="box-macro-args">
+Macro: <b>LEFT_HANG</b> <kbd class="macro-args">&lt;character&gt;</kbd>
+</div>
+
+<div class="box-macro-args" style="margin-top: 1em">
+Inline: <b>\*[HANG <kbd class="macro-args">&lt;character&gt;</kbd>]</b>
+</div>
+
+
+<p>
+LEFT_HANG hangs its argument to the left of the left margin.
+If enclosed in double-quotes, the argument may contain local
+horizontal motions.
+</p>
+
+<p>
+Input text after LEFT_HANG must begin by repeating the text of the
+argument, including horizontal motions.  If the hung character is
+a left double-quote, <kbd>\[lq]</kbd> must be used in the argument
+and the usual keyboard double-quote (<kbd>"</kbd>) used for the
+input text so as not to confuse SMARTQUOTES.
+</p>
+
+<p>
+The following example demonstrates:
+<br>
+<span class="pre-in-pp">
+  .LEFT_HANG "\[lq]\*[FU3]"
+  "\*[FU3]This line will have its opening double-quote
+  plus three kern units of space hung outside the
+  left margin."
+</span>
+</p>
+
+<p style="margin-top: -1em">
+The <kbd>\*[HANG]</kbd> inline escape hangs its single-character
+argument, typically a punctuation mark, outside the right margin of
+justified copy, like this:
+<br>
+<span class="pre-in-pp">
+  This line will have its closing period hung outside
+  the right margin\*[HANG .]
+</span>
+For the exceptionally fussy, <kbd>\*[HANG]</kbd> may also be used
+with centred text to centre the text visually without taking the
+hung punctuation into account.
+</p>
+
+<p>
+If the hung character is a right double-quote, <kbd>"\[rq]"</kbd>
+must be used as the argument (that is, the <kbd>\[rq]</kbd> character surrounded
+by double-quotes).  The double-quotes are required for all special
+characters of the form <kbd>\[xx]</kbd>.
+</p>
+
+<p>
+If the hung character is a hyphen, <kbd>\*[HANG&nbsp;-]</kbd> must
+come at the end of an
+<a href="definitions.html#inputline">input line</a>.
+All other characters may be used mid-line if groff breaks the line
+naturally at the point the hung character is introduced.
+</p>
 <div class="rule-long"><hr/></div>
 
 <!-- Navigation links -->

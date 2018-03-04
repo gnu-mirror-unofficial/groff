@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2017 Free Software Foundation, Inc.
+Copyright (C) 2004-2018 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -68,7 +68,13 @@ FDL in the main directory of the groff source package.
   </ul></li>
   <li><a href="#docstyle-macros"><b>The docstyle macros (templates)</b></a>
   <ul class="toc-docproc">
-    <li><a href="#doctype">DOCTYPE</a></li>
+    <li><a href="#doctype">DOCTYPE (default, chapter, letter, named, slides)</a></li>
+    <li><a href="#slides">DOCTYPE SLIDES</a></li>
+    <ul class="toc-docproc">
+    <li><a href="#newslide">NEWSLIDE</a></li>
+      <li><a href="#pause">PAUSE</a></li>
+      <li><a href="#transition">TRANSITION</a></li>
+    </ul>
     <li><a href="#printstyle">PRINTSTYLE</a></li>
     <li><a href="#copystyle">COPYSTYLE</a></li>
   </ul></li>
@@ -1717,7 +1723,7 @@ and revision information in the headers) or a final copy.
 </div>
 
 <div class="box-macro-args">
-Macro: <b>DOCTYPE</b> <kbd class="macro-args">DEFAULT | CHAPTER | NAMED &quot;&lt;name&gt;&quot; | LETTER</kbd>
+Macro: <b>DOCTYPE</b> <kbd class="macro-args">DEFAULT | CHAPTER | NAMED &quot;&lt;name&gt;&quot; | LETTER | SLIDES</kbd>
 </div>
 
 <p>
@@ -1726,7 +1732,8 @@ The arguments <kbd>DEFAULT,</kbd> <kbd>CHAPTER</kbd> and
 <a href="definitions.html#docheader">docheader</a>
 and
 <a href="definitions.html#header">page headers</a>.
-<kbd>LETTER</kbd> tells her that you want to write a letter.
+<kbd>LETTER</kbd> and <kbd>SLIDES</kbd> tells her you want to write
+a letter or create slides.
 </p>
 
 <p>
@@ -1734,7 +1741,7 @@ Mom&#8217;s default DOCTYPE is <kbd>DEFAULT</kbd>.  If that&#8217;s
 what you want, you don&#8217;t have to give a DOCTYPE command.
 </p>
 
-<p>
+<p id="default-doctype">
 <kbd>DEFAULT</kbd> prints a
 <a href="definitions.html#docheader">docheader</a>
 containing the title, subtitle and author information given to the
@@ -1809,6 +1816,268 @@ section
 for instructions on using mom to format letters.
 </p>
 
+<h4 id="slides" class="docs" style="font-size: 100%; text-transform: uppercase">Slides</h4>
+
+<p>
+PDF slides are a special kind of mom document, formatted for viewing
+in a PDF reader&#8217;s presentation mode.  In most respects, they
+behave identically to the other document types.  Key differences
+are:
+</p>
+<ul style="margin-top: -.5em">
+<li>headers, footers, and pagination are disabled by default</li>
+<li>type is set
+<a href="typesetting.html#quad">QUAD CENTER</a>
+by default</li>
+<li>
+<a href="#flex">flex-spacing</a>
+and
+<a href="#shim">shimming</a>
+are disabled by default; shimming may
+be re-enabled (with <kbd>NO_SHIM OFF</kbd>), but not flex-spacing</li>
+<li>there&#8217;s no need for
+<a href="#printstyle">PRINTSTYLE</a></li>
+</ul>
+
+<p>
+DOCTYPE SLIDES takes up to five optional arguments, which come
+immediately after SLIDES. They may be entered in any order.
+<br/>
+<span class="pre-in-pp">
+  DOCTYPE SLIDES \
+   ASPECT 4:3 | 16:9 \
+   HEADER "left" "centre" "right" \
+   FOOTER  "left" "centre" "right" \
+   TRANSITION "&lt;slide transition effect&gt;" (mode + parameters) \
+   PAUSE "&lt;text reveal effect&gt;" (mode + parameters)
+</span>
+For convenience, you many want to enter each argument on a single
+line as shown above; all but the last must be terminated by a
+backslash.
+</p>
+
+<h5 class="docs" style="margin-top: .5em">Aspect</h5>
+
+<p>
+Slides can be formatted for one of two aspect ratios common to
+monitors and screens: 4:3 and 16:9.  The default is 16:9.
+<span class="pre-in-pp">
+ 4:3                              16:9
+ media size: 11" x 8.25"          media size: 11" x 8.1875"
+ left/right margins: 36 points    left/right margins: 36 points
+ top margin: 90 points            top margin: 80 points
+ bottom margin: 84 points         bottom margin: 72 points
+ base text size: 16 points        base text size: 14 points
+ autoleading: 6 points, adjusted  autoleading: 4 points, adjusted
+ (header/footer size: -3 points)  (header/footer size: -2 points)
+</span>
+Note that both media sizes fit on either A4 or US LETTER papersizes.
+</p>
+
+<h5 class="docs" style="margin-top: .5em">Headers, footers, and pagination</h5>
+
+<p>
+If you want a header, footer, or both for your slides, pass SLIDES
+the <kbd>HEADER</kbd> and/or <kbd>FOOTER</kbd> argument(s).  Both
+take three additional
+<a href="definitions.html#stringargument">string arguments</a>,
+which must be enclosed in double-quotes, defining the left, centre,
+and right parts of the header/footer.  Any parts you want left blank
+should be entered as two double-quotes.  For example,
+<span class="pre-in-pp">
+  HEADER "" "My slide presentation" ""  
+</span>
+will result in a header with only the centre part.
+</p>
+
+<p>
+Normal pagination is disabled for slides.  If you want your slides
+numbered, the slide number must be given to one of the header/footer
+parts with the
+<a href="definitions.html#inlines">inline escape</a>
+<br/>
+<kbd>\*[SLIDE#]</kbd>.  For example:
+<span class="pre-in-pp">
+  HEADER "" "My slide presentation" "" \
+  FOOTER "" "" "\*[SLIDE#]"
+</span>
+will give you a centred header with numbering at the bottom right of
+the slide.
+</p>
+
+<p>
+The overall family, size, and colour of headers may be set with
+HEADER_FAMILY, HEADER_SIZE, and HEADER_COLOR.  If you request
+FOOTERS, you may use the FOOTER_ equivalent of these macros.
+If you request both headers and footers, use one or the other but
+not both.  For example, in a header/footer situation, HEADER_FAMILY
+would determine the family for both headers and footers, but if you
+attempted to do this
+<span class="pre-in-pp">
+  .HEADER_FAMILY T
+  .FOOTER_FAMILY H
+</span>
+FOOTER_FAMILY would take precedence, and your header family would be
+&#8220;<kbd>H</kbd>&#8221;.
+</p>
+
+<p>
+All other formatting of individual header/footer parts must be
+entered as inline escapes inside the double-quotes.  If you want,
+say, your headers to be red but your footer page numbering to be
+black and two points larger, this is how you&#8217;d do it:
+<span class="pre-in-pp">
+  .HEADER_COLOR red
+  .DOCTYPE SLIDES \
+    HEADER "" "My slide presentation" "" \
+    FOOTER "" "" "\*[black]\*S[+2]\*[SLIDE#]\*S[-2]"
+</span>
+</p>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+Do not use mom&#8217;s
+<a href="inlines.html#inline-size-mom"><kbd>\*[SIZE &plusmn;n]</kbd></a>
+inline escape to change point size in the strings passed to HEADER
+or FOOTER.  Prefer either mom&#8217;s <kbd>\*S[&plusmn;n]</kbd> or
+groff's <kbd>\s[&plusmn;n]</kbd>.
+</span>
+</p>
+</div>
+
+<h5 class="docs" style="margin-top: .5em">Transition</h5>
+
+<p>
+&#8220;Transition&#8221; refers to how new slides appear during a
+presentation.  The official PDF specification lists a number of modes,
+each with a choice of configurable parameters.  Modes include Box,
+Blinds, Wipe, Fade, and several others.  Parameters include things
+like duration, dimension, and direction.  There are a total of
+twelve modes; for each one there are from one to six configurable
+parameters.  Consult <kbd>man gropdf(1)</kbd> for a complete listing
+of modes and parameters.
+</p>
+
+<p>
+If you pass SLIDES the <kbd>TRANSTION</kbd> argument, you must
+at a minimum follow it with a mode.  Afterwards, you may give as
+many or as few parameters as you wish.  Parameters are, in order,
+<span class="pre-in-pp">
+  1. duration
+  2. dimension
+  3. motion
+  4. direction
+  5. scale
+  6. bool
+</span>
+You don't have to fill them all out.  If you only need the first
+three, that's all you need to input.  If you need the first and
+third, enter the second as a period (dot), which is used any time
+you want to leave a parameter at its current default or when it
+isn&#8217;t applicable.  For example, if you want a Box transition
+that lasts 1 second, filling the screen from the centre outwards,
+you'd enter
+<span class="pre-in-pp">
+  TRANSITION "Box 1 . O"
+</span>
+because Box does not take a &#8220;dimension&#8221; parameter but it
+does take a motion parameter.
+</p>
+
+<p>
+Notice that the entire string (mode+parameters) must be enclosed in
+double-quotes.
+</p>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+Not all PDF viewers support all modes.  Any that are not supported
+are replaced by the &#8220;R&#8221; mode, which simply replaces one
+slide with the next unless the PDF viewer has a different default
+transition mode.
+</span>
+</p>
+</div>
+
+<h5 class="docs" style="margin-top: .5em">Pause</h5>
+
+<p>
+A &#8220;pause&#8221; occurs when material on a slide is halted (see
+<a href="#pause">PAUSE</a>),
+awaiting a mouse click, PgDown, Next, or the spacebar to reveal 
+subsequent material.  All the same modes and parameters as
+<kbd>TRANSITION</kbd> may be used.  The manner of entering them is
+is identical, including that the entire mode+parameter string must
+be enclosed in double-quotes.
+</p>
+
+<div class="macro-id-overline">
+<h3 id="slide-macros" class="macro-id">SLIDE MACROS</h3>
+</div>
+
+<div id="newslide" class="box-macro-args">
+Macro: <b>NEWSLIDE</b> <kbd class="macro-args">["&lt;transition mode and parameters&gt;"]</kbd>
+</div>
+
+<p>
+Unless you want material from one slide to flow onto the next, you
+need to tell mom when to start a new slide with the macro NEWSLIDE.
+Without any arguments, the new slide will appear with the default
+TRANSTION you gave to DOCTYPE SLIDES.
+</p>
+
+<p>
+If you would like a different transition, you may pass NEWSLIDE a
+new mode and associated parameters, following the same rules as the
+TRANSITION argument to DOCTYPE.  Note that the new effect becomes
+the default.  If you wish to return to the original transition, you
+must give it explicitly to the appropriate NEWSLIDE.
+</p>
+
+<div id="pause" class="box-macro-args">
+Macro: <b>PAUSE</b> <kbd class="macro-args">["&lt;pause mode and parameters&gt;"]</kbd>
+</div>
+
+<p>
+Pauses in slides are accomplished by entering the macro PAUSE at
+desired locations in your input file.  Subsequent material will be
+revealed using the pause mode given to DOCTYPE SLIDES.
+</p>
+
+<p>
+If you would like a different mode, you may pass PAUSE a
+new mode and associated parameters, following the same rules as the
+PAUSE argument to DOCTYPE.
+</p>
+
+<div id="transition" class="box-macro-args">
+Macro: <b>TRANSITION</b> <kbd class="macro-args">["&lt;transition mode and parameters&gt;"]</kbd>
+</div>
+
+<p>
+If for some reason you have material that flows from one slide to
+the next <i>and</i> you want the next slide to have a transition
+different from the current one, you can tell mom about the new
+transition with the macro TRANSITION anywhere prior to the break to
+the next slide.
+</p>
+
+<h4 id="slide-printing" class="docs" style="font-size: 100%; text-transform: uppercase">Printing slides</h4>
+
+<p>
+If you want to print slides as handouts, you have to tell
+<kbd>pdfmom</kbd> or <kbd>gropdf</kbd>, otherwise printing will
+stop at the first pause.  Simply precede <kbd>pdfmom</kbd> or
+<kbd>gropdf</kbd> with GROPDF_NOSLIDE=1, like this:
+<br/>
+<span class="pre-in-pp">
+ GROPDF_NOSLIDE=1 pdfmom &lt;options&gt; slidefile.mom &gt; slidefile.pdf
+</span>
+
+</p>
+
 <!-- -PRINTSTYLE- -->
 
 <div class="macro-id-overline">
@@ -1820,7 +2089,8 @@ Macro: <b>PRINTSTYLE</b> <kbd class="macro-args">TYPESET | TYPEWRITE [ SINGLESPA
 </div>
 
 <p class="requires">
-&bull;&nbsp;Required for document processing
+&bull;&nbsp;Required for document processing, except in the case of
+slides
 <br/>
 Must come before any changes to default document style
 </p>
@@ -2473,7 +2743,7 @@ The macro
 <a href="color.html#color">COLOR</a>
 and the
 <a href="definitions.html#inlines">inline escape</a>,
-<a href="color.html#color-inline"><kbd>\[&lt;colorname&gt;]</kbd></a>
+<a href="color.html#color-inline"><kbd>\*[&lt;colorname&gt;]</kbd></a>
 can be used at any time during document processing for occasional
 colour effects.  However, consistent and reliable colourizing of
 various document elements (the docheader, heads, linebreaks,
@@ -2489,7 +2759,7 @@ If you plan to have mom generate a
 <a href="docelement.html#toc">table of contents</a>,
 do not embed colour
 <a href="definitions.html#inlines">inline escapes</a>
-(<a href="color.html#color-inline"><kbd>\[&lt;colorname&gt;]</kbd></a>)
+(<a href="color.html#color-inline"><kbd>\*[&lt;colorname&gt;]</kbd></a>)
 in the
 <a href="definitions.html#stringargument">string arguments</a>
 given to any of the
@@ -2819,9 +3089,9 @@ to place them where you want.
 <h5 id="docheader-quad" class="docs">Change the quad direction of the docheader</h5>
 
 <p>
-By default, mom centers the docheader.  If you&#8217;d prefer to
+By default, mom centres the docheader.  If you&#8217;d prefer to
 have your docheaders set flush left or right, or need to restore
-the default centering, invoke <kbd>.DOCHEADER_QUAD</kbd> with the
+the default centreing, invoke <kbd>.DOCHEADER_QUAD</kbd> with the
 quad direction you want, either <kbd>LEFT</kbd> (or <kbd>L</kbd>),
 <kbd>RIGHT</kbd> (or <kbd>R</kbd>) or <kbd>CENTER</kbd> (or
 <kbd>C</kbd>).
@@ -3222,7 +3492,7 @@ disabled with
 <a href="#no-shim">NO_SHIM</a>.
 If your document is being flex-spaced, do not use
 <a href="docprocessing.html#flex">FLEX</a>.
-Rather, disable flex-spacing with temporarily with
+Rather, disable flex-spacing temporarily with
 <br/>
 <span class="pre-in-pp">
   .NO_FLEX
@@ -3558,10 +3828,12 @@ Macro: <b>RESTORE_SPACE</b>
 </p>
 
 <p>
-ADD_SPACE takes as its single argument the distance
-you want mom to advance from the normal
-baseline position at the top of any page after the first
-(ie the one on which the docheader is normally printed).  A
+If your
+<a href="#doctype">DOCTYPE</a>
+is DEFAULT, CHAPTER, NAMED, or LETTER, ADD_SPACE takes as its
+single argument the distance you want mom to advance from the normal
+baseline position at the top of any page <i>after the first</i> (ie
+the one on which the docheader is normally printed).  A
 <a href="definitions.html#unitofmeasure">unit of measure</a> is
 required.
 </p>
@@ -3592,6 +3864,13 @@ macro immediately after ADD_SPACE, which will add the space plus
 whatever correction is required by the
 <a href="docprocessing.html#vertical-whitespace-management">vertical whitespace management</a>
 strategy in effect.
+</p>
+
+<p>
+If your
+<a href="#doctype">DOCTYPE</a>
+is SLIDES, ADD_SPACE may be used on any slide <i>including the
+first</i> to introduce additional white space at the top.
 </p>
 
 <h4 class="docs doc-param-macros" style="margin-top: .5em">RESTORE_SPACE</h4>

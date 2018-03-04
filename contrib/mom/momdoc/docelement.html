@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2017 Free Software Foundation, Inc.
+Copyright (C) 2004-2018 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -556,7 +556,7 @@ do so before invoking <kbd>.EPIGRAPH</kbd>, like this:
 If you&#8217;re setting a document in
 <a href="docprocessing.html#columns">columns</a>
 and you&#8217;d like to add or subtract space <i>after</i> the
-epigraph, which is centered over the top of both columns, the place
+epigraph, which is centred over the top of both columns, the place
 to do it is inside the epigraph, like this:
 <br/>
 <span class="pre-in-pp">
@@ -1436,7 +1436,7 @@ Here's an example of how you might style a level 1 heading:
   BASELINE_ADJUST 3p \
   NUMBER
 </span>
-This creates a level-1 heading style that's bold, centered,
+This creates a level-1 heading style that's bold, centred,
 underscored and numbered, raised by 3 points from the baseline.
 </p>
 </div>
@@ -1581,7 +1581,7 @@ the changes with the
 <a href="#heading-style">HEADING_STYLE</a>
 macro.  The entire style need not be recreated, only those
 parameters that differed from mom's defaults.  Thus, if your HEADs
-were set flush left, instead of the oldstyle default, centered, but
+were set flush left, instead of the oldstyle default, centred, but
 otherwise kept mom's settings, you need only do
 <br/>
 <span class="pre-in-pp">
@@ -2767,21 +2767,32 @@ and returns you to the left margin of running text.
 If
 <kbd><a href="typesetting.html#quad">QUAD CENTER</a></kbd>
 is in effect when LIST is invoked, the list is set quad left but
-centered on the page as a block, based on the longest line of list
+centred on the page as a block, based on the longest line of list
 text.  Equally, if <kbd>QUAD RIGHT</kbd> in in effect, the list is
-set flush left but quadded right as a block.  If you want a centered
+set flush left but quadded right as a block.  If you want a centred
 or right-quadded list in an otherwise left-quadded or justified
 document, simply invoke <kbd>.QUAD&nbsp;&lt;direction&gt;</kbd> 
-before the list and reset it afterwards.  Do not use
+before the list and reset the quad afterwards.  Do not use
 <kbd><a href="typesetting.html#lrc">CENTER</a></kbd>
 or
-<kbd><a href="typesetting.html#lrc">RIGHT</a></kbd>
+<kbd><a href="typesetting.html#lrc">RIGHT</a></kbd>.
 </p>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+Mom centres lists over the entire line length, disregarding
+<a href="typesetting.html#ib">IB</a>
+if it is in effect.  If there are lines in the list that exceed
+the the margins of IB, they must be broken manually with
+<kbd>.BR</kbd> if you wish to keep them within the indented margins.
+</p>
+</div>
 
 <p>
 Finally, lists can be used in documents created with either the
 <a href="docprocessing.html#top">document processing macros</a>
-or the
+or just the
 <a href="typesetting.html#top">typesetting macros</a>.
 </p>
 
@@ -3098,17 +3109,30 @@ replaced with a single <kbd>.QUIT_LISTS</kbd>.
 </div>
 
 <div class="box-macro-args">
-Macro: <b>ITEM</b> <kbd class="macro-args">[&lt;enumerator&gt;]</kbd>
+Macro: <b>ITEM</b> <kbd class="macro-args">[&lt;enumerator&gt;] [&lt;space&gt;]</kbd>
 </div>
+<p class="requires">
+&bull;&nbsp;The argument to <kbd style="font-style: normal">&lt;space&gt;</kbd> requires a
+<a href="definitions.html#unitofmeasure">unit of measure</a>
+</p>
 
 <p>
 After you&#8217;ve initialized a list with
 <a href="#list">LIST</a>,
 precede each item you want in the list with <kbd>.ITEM</kbd>.  Mom
 takes care of everything else with respect to setting the item
-appropriate to the list you&#8217;re in.  If you&#8217;ve chosen the
-<kbd>VARIABLE</kbd> argument when invoking LIST, ITEM must be
-followed by an enumerator character.
+appropriate to the list you&#8217;re in.
+</p>
+
+<p>
+If you&#8217;ve chosen the <kbd>VARIABLE</kbd> argument when
+invoking LIST, ITEM must be followed by an enumerator character.
+</p>
+
+<p>
+If you give ITEM a space argument, either by itself or after a
+variable enumerator character, the item will be spaced by the amount
+of the argument.
 </p>
 
 <p>
@@ -6091,7 +6115,7 @@ it&#8217;s impossible for mom to guess whether to align
 the first lines of margin notes with a document
 <a href="definitions.html#baseline">baseline</a>,
 whether to align the last lines of margin notes with a document
-baseline, or whether to center them, vertically, so that neither
+baseline, or whether to centre them, vertically, so that neither
 first nor last line aligns with anything!
 </p>
 
