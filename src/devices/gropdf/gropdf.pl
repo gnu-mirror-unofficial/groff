@@ -136,6 +136,7 @@ my $noslide=0;
 my $transition={PAGE => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I', Di => 0, SS => 1.0, B => 0},
 		BLOCK => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I', Di => 0, SS => 1.0, B => 0}};
 my $firstpause=0;
+my $present=0;
 
 $noslide=1 if exists($ENV{GROPDF_NOSLIDE}) and $ENV{GROPDF_NOSLIDE};
 
@@ -366,6 +367,7 @@ if ($cpageno > 0)
 	OutStream($cpageno+1);
 }
 
+$cat->{PageMode}='/FullScreen' if $present;
 
 PutOutlines(\@outlev);
 
@@ -797,7 +799,7 @@ sub do_x
 		}
 		MakeXO();
 		NewPage($trans);
-		$cat->{PageMode}='/FullScreen';
+		$present=1;
 	    }
 	    elsif ($par=~m/exec %%%%BEGINONCE/)
 	    {
@@ -816,7 +818,7 @@ sub do_x
 		    }
 		    MakeXO();
 		    NewPage($trans);
-		    $cat->{PageMode}='/FullScreen';
+		    $present=1;
 		}
 	    }
 	    elsif ($par=~m/exec %%%%ENDONCE/)
@@ -1219,6 +1221,8 @@ sub do_x
 		    $transition->{BLOCK}->{SS}=$xprm[8] if $xprm[8] and $xprm[8] ne '.';
 		    $transition->{BLOCK}->{B}=$xprm[9] if $xprm[9] and $xprm[9] ne '.';
 		}
+
+		$present=1;
 	    }
 	}
 	elsif (lc(substr($xprm[0],0,9)) eq 'papersize')
