@@ -1197,7 +1197,7 @@ sub do_x
 		    }
 		}
 	    }
-	    elsif (lc($xprm[1]) eq 'transition')
+	    elsif (lc($xprm[1]) eq 'transition' and !$noslide)
 	    {
 		if (uc($xprm[2]) eq 'PAGE' or uc($xprm[2] eq 'SLIDE'))
 		{
