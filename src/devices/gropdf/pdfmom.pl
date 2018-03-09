@@ -123,11 +123,11 @@ if ($readstdin)
 
 if ($dev eq 'pdf')
 {
-    system("groff -Tpdf -dLABEL.REFS=1 -mom -z $cmdstring 2>&1 | grep '^\\. *ds' | groff -Tpdf -dPDF.EXPORT=1 -dLABEL.REFS=1 -mom -z - $cmdstring 2>&1 | grep '^\\. *ds' | groff -Tpdf -mom $preconv - $cmdstring");
+    system("groff -Tpdf -dLABEL.REFS=1 -mom -z $cmdstring 2>&1 | LC_ALL=C grep '^\\. *ds' | groff -Tpdf -dPDF.EXPORT=1 -dLABEL.REFS=1 -mom -z - $cmdstring 2>&1 | LC_ALL=C grep '^\\. *ds' | groff -Tpdf -mom $preconv - $cmdstring");
 }
 elsif ($dev eq 'ps')
 {
-    system("groff -Tpdf -dLABEL.REFS=1 -mom -z $cmdstring 2>&1 | grep '^\\. *ds' | pdfroff -mpdfmark -mom --no-toc - $preconv $cmdstring");
+    system("groff -Tpdf -dLABEL.REFS=1 -mom -z $cmdstring 2>&1 | LC_ALL=C grep '^\\. *ds' | pdfroff -mpdfmark -mom --no-toc - $preconv $cmdstring");
 }
 elsif ($dev eq '-z') # pseudo dev - just compile for warnings
 {
