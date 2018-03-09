@@ -458,7 +458,7 @@ end
 .MAC NEWPAGE END
 .    if \\n[#DOC_TYPE]=5 \{\
 .       if \\n[#NUM_ARGS]>0 \
-.       pdftransition PAGE \\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+.       pdftransition PAGE \\$1
 .    \}
 .    if !\\n[defer] .nr #NEWPAGE 1
 .    ie !\\n[#DOCS]=1 \
@@ -474,7 +474,9 @@ end
 .       if \\n[#FLEX_ACTIVE] \
 .          if !\\n[#NO_FLEX] \
 .             tm .ds pre-newpage-\\n% \\n%@\\n[#COL_NUM]
-.    if !\\n[@TOP] .bp
+.    if (\\n[@TOP]=0):(\\n[#END_COVER]=1) \
+.       bp
+.    rr #END_COVER
 .    if \\n[#RESET_FN_OVERFLOW_TRAP] \{\
 .       wh -\\n[#FN_OVERFLOW_TRAP_POS]u FN_OVERFLOW_TRAP
 .       rr #RESET_FN_OVERFLOW_TRAP_POS
@@ -7660,6 +7662,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    TRAP
 .    if '\\*[$COVER_TYPE]'DOC_COVER_' .ds DOC DOC
 .    if \\n[#DOC_TYPE]=5 .nr #SKIP 1
+.    nr #END_COVER 1
 .    NEWPAGE
 .    rr #SKIP
 .    if \\n[#PAGINATION_WAS_ON]=1 .nr % +1
@@ -16231,7 +16234,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       IL +\\n[#REF_BIB_INDENT]u
 .       ti \\n[#L_INDENT]u-\\n[#REF_BIB_INDENT]u
 .    \}
-.    ie !'\\n.z]'' \!.TRAP
+.    ie !'\\n[.z]'' \!.TRAP
 .    el .TRAP
 .    if \\n[#KERN_WAS_ON]=1 \{\
 .       KERN
