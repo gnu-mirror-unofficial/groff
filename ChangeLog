@@ -1,3 +1,20 @@
+2018-03-09  Colin Watson  <cjwatson@debian.org>
+
+	doc: stop generating W3C validation icons
+
+	Debian's `lintian' tool says:
+
+	  These badges may be displayed to tell readers that care has been
+	  taken to make a page compliant with W3C standards.  Unfortunately,
+	  downloading the image from www.w3.org might expose the reader's IP
+	  address to potential tracking.
+
+	I think the risk is a small one, but I also don't think the badges
+	are especially valuable, so it doesn't seem like much to ask to just
+	drop them at least for groff's own documentation.
+
+	* doc/doc.am (.ms.html, doc/pic.html): Remove `-P-V' option.
+
 2018-03-01  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Place pdf in presentation mode if new commands used.

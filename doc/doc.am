@@ -136,7 +136,7 @@ SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 .ms.html:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -P-p -P-b -P-I`basename $< | sed -e 's|.ms$$||'` \
-	                -P-D$(imagedir) -P-V -Thtml -ms >$@
+	                -P-D$(imagedir) -Thtml -ms >$@
 .ms.txt:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -Tascii -ms -mwww >$@
@@ -158,7 +158,7 @@ doc/pic.html: $(doc_srcdir)/pic.ms $(devhtmlfont_DATA)
 	&& cd $(doc_builddir) \
 	&& $(DOC_SED) $(doc_srcdir)/pic.ms \
 	   | $(DOC_GROFF_ONLY) -P-p -P-Ipic -P-D$(imagedir) -P-jpic \
-	                       -Thtml -P-V -ms > pic.html
+	                       -Thtml -ms > pic.html
 
 doc/examples.stamp: doc/groff.css
 	@$(MKDIR_P) $(doc_builddir)
