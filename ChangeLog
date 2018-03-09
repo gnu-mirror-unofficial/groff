@@ -1,5 +1,24 @@
 2018-03-09  Colin Watson  <cjwatson@debian.org>
 
+	mdate.sh: rewrite in Perl
+
+	groff already requires perl to build.  This version is much shorter
+	and easier to understand than the shell/awk version: we don't have
+	to worry about convincing ls to produce output that we can parse,
+	and we don't have to play games with the way that the same field may
+	contain either the year or the time depending on how old the file
+	is.
+
+	While I'm at it, this version also adds `SOURCE_DATE_EPOCH' support
+	for reproducible builds: when `SOURCE_DATE_EPOCH' is set, files are
+	considered to have been last modified at that time.
+
+	* mdate.sh: Rewrite in Perl, moving to ...
+	* mdate.pl: ... this new file.
+	* Makefile.am (EXTRA_DIST, .man): Update references.
+
+2018-03-09  Colin Watson  <cjwatson@debian.org>
+
 	Remove #! lines from non-executable files
 
 	These are always invoked by the build system (either in-tree or via

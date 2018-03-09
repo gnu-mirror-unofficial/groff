@@ -870,7 +870,7 @@ EXTRA_DIST += \
   INSTALL.extra \
   LICENSES \
   MANIFEST \
-  mdate.sh \
+  mdate.pl \
   MORE.STUFF \
   PROBLEMS \
   PROJECTS \
@@ -913,7 +913,7 @@ SUFFIXES += .man
 	     -e "s|[@]MAN1EXT[@]|$(man1ext)|g" \
 	     -e "s|[@]MAN5EXT[@]|$(man5ext)|g" \
 	     -e "s|[@]MAN7EXT[@]|$(man7ext)|g" \
-	     -e "s|[@]MDATE[@]|`$(SHELL) $(top_srcdir)/mdate.sh $<`|g" \
+	     -e "s|[@]MDATE[@]|`$(PERL) $(top_srcdir)/mdate.pl $<`|g" \
 	     -e "s|[@]OLDFONTDIR[@]|$(oldfontdir)|g" \
 	     -e "s|[@]PDFDOCDIR[@]|$(pdfdocdir)|g" \
 	     -e "s|[@]SYSTEMMACRODIR[@]|$(systemtmacdir)|g" \
