@@ -9956,7 +9956,9 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          HEADERS
 .          if \\n[#SLIDE_FOOTERS] \{\
 .             FOOTERS off
-.             if !r #SKIP_RULE \{\ \"So rule prints after header on first page
+.\" So rule prints after header on first page
+.             if !r #SKIP_RULE \{\
+.                sp
 .                if \\n[#HEADER_RULE] .HEADER_RULE
 .                nr #SKIP_RULE 1
 .             \}
@@ -10864,7 +10866,8 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .\" Non-numbered heads
 .    el \{\
 .       nr @LEVEL \\n[#LEVEL] 1
-.       ie \\n[#FROM_STYLE_\\n+[@LEVEL]] \{\    \" increments @LEVEL even if false
+.\" increments @LEVEL even if false
+.       ie \\n[#FROM_STYLE_\\n+[@LEVEL]] \{\
 .          if !\\n[#TOC_HEAD_\\n[@LEVEL]_INDENT_SET] \{\
 .             nr #TOC_HEAD_\\n[@LEVEL]_INDENT \
 \\n[#TOC_HEAD_\\n[#LEVEL]_INDENT]+\
