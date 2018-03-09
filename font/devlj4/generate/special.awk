@@ -1,5 +1,3 @@
-#! /bin/awk -f
-
 # Correct Intellifont-based height metrics for several glyphs in
 # special font for TrueType CG Times (LaserJet 4000 and later).
 

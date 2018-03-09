@@ -1,4 +1,3 @@
-#! /bin/sed -f
 # Set up uniform vertical dimensions for extensible glyphs (needed by eqn).
 /^C .*[ ;]N bracketlefttp[ ;]/bx
 /^C .*[ ;]N bracketleftex[ ;]/bx

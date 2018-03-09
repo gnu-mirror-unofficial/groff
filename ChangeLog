@@ -1,5 +1,18 @@
 2018-03-09  Colin Watson  <cjwatson@debian.org>
 
+	Remove #! lines from non-executable files
+
+	These are always invoked by the build system (either in-tree or via
+	the installed Makefiles) using the necessary program, so the #!
+	lines were unnecessary.  They were harmless except that they caused
+	Debian's `lintian` tool to complain about installed non-executable
+	scripts.
+
+	* font/devlj4/generate/special.awk: Remove #! line.
+	* font/devps/generate/symbol.sed: Likewise.
+
+2018-03-09  Colin Watson  <cjwatson@debian.org>
+
 	doc: stop generating W3C validation icons
 
 	Debian's `lintian' tool says:
