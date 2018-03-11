@@ -1,3 +1,13 @@
+2018-03-11  Colin Watson  <cjwatson@debian.org>
+
+	Remove unnecessary randomness from example output.
+
+	The hdtbl examples don't need good randomness, as they're only
+	example output; removing the process ID from consideration allows
+	better integration with reproducible builds.
+
+	* contrib/hdtbl/examples/common.roff (random-s1): Remove process ID.
+
 2018-03-09  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	PDF must not open in presentation mode.

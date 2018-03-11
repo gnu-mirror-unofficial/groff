@@ -234,7 +234,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .af mo 00
 .af dy 00
 .
-.ds random-s1 \n[minutes]\n[seconds]\n[$$]\n[hours]\"
+.\" Since this just generates example output, we don't need good randomness;
+.\" basing this purely on the time and not on the process ID allows better
+.\" integration with reproducible builds.
+.\" .ds random-s1 \n[minutes]\n[seconds]\n[$$]\n[hours]\"
+.ds random-s1 \n[minutes]\n[seconds]\n[hours]\"
 .\" prevent overflow
 .substring random-s1 0 8
 .
