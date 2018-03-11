@@ -1,5 +1,26 @@
 2018-03-11  Colin Watson  <cjwatson@debian.org>
 
+	Switch to Gnulib implementation of snprintf
+
+	This is more actively maintained, straightforward to integrate now
+	that we have Gnulib integration, and simplifies groff's overall
+	licensing.
+
+	* bootstrap.conf (gnulib_modules): Add `snprintf' and `vsnprintf'.
+	* configure.ac: Remove local checks for `snprintf' and `vsnprintf'.
+	* Makefile.am: Remove various comments related to local checks for
+	`snprintf' and `vsnprintf'.
+	* src/include/lib.h: Remove declarations of `snprintf' and
+	`vsnprintf'.
+	* src/libs/libgroff/libgroff.am (EXTRA_DIST): Remove
+	`src/libs/snprintf/snprintf.c'.
+	* src/libs/snprintf/snprintf.c: Remove.
+
+	* LICENSES: Remove section about `src/libs/snprintf/snprintf.c'.
+	* MANIFEST: Remove entry for `src/libs/libxutil'.
+
+2018-03-11  Colin Watson  <cjwatson@debian.org>
+
 	Remove unnecessary randomness from example output.
 
 	The hdtbl examples don't need good randomness, as they're only

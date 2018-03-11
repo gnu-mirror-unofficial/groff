@@ -93,12 +93,10 @@ GROFF_NEED_DECLARATION([popen])
 GROFF_NEED_DECLARATION([pclose])
 GROFF_NEED_DECLARATION([putenv])
 GROFF_NEED_DECLARATION([rand])
-GROFF_NEED_DECLARATION([snprintf])
 GROFF_NEED_DECLARATION([srand])
 GROFF_NEED_DECLARATION([strcasecmp])
 GROFF_NEED_DECLARATION([strncasecmp])
 GROFF_NEED_DECLARATION([vfprintf])
-GROFF_NEED_DECLARATION([vsnprintf])
 GROFF_SYS_NERR
 GROFF_SYS_ERRLIST
 GROFF_OSFCN_H
@@ -130,10 +128,8 @@ AC_SUBST([LIBEXT],[$acl_libext])
 AC_FUNC_MMAP
 saved_libs="$LIBS"
 LIBS="$LIBS $LIBC $LIBM"
-AC_REPLACE_FUNCS([fmod getcwd putenv snprintf strcasecmp \
+AC_REPLACE_FUNCS([fmod getcwd putenv strcasecmp \
                   strerror strncasecmp strtol])
-# vsnprintf is in the same source file as snprintf
-AC_CHECK_FUNCS([vsnprintf], [], [AC_LIBOBJ([snprintf])])
 LIBS="$saved_libs"
 AC_CHECK_FUNCS([gettimeofday isatty kill rename setlocale strsep])
 GROFF_MKSTEMP

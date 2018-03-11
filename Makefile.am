@@ -397,14 +397,12 @@ man7dir=$(manroot)/man$(man7ext)
 # HAVE_PUTENV			if you have putenv()
 # HAVE_RENAME			if you have rename()
 # HAVE_SETLOCALE		if you have setlocale()
-# HAVE_SNPRINTF		if you have snprintf()
 # HAVE_STRCASECMP		if you have strcasecmp()
 # HAVE_STRNCASECMP		if you have strncasecmp()
 # HAVE_STRERROR		if you have strerror()
 # HAVE_STRSEP			if you have strsep()
 # HAVE_STRTOL			if you have strtol()
 # HAVE_SYMLINK		if you have symlink()
-# HAVE_VSNPRINTF		if you have vsnprintf()
 #
 # NEED_DECLARATION_GETTIMEOFTODAY
 #				if your C++ <sys/time.h> doesn't declare
@@ -415,8 +413,6 @@ man7dir=$(manroot)/man$(man7ext)
 # NEED_DECLARATION_PUTENV	if your C++ <stdlib.h> doesn't declare
 #				putenv()
 # NEED_DECLARATION_RAND	if your C++ <stdlib.h> doesn't declare rand()
-# NEED_DECLARATION_SNPRINTF	if your C++ <stdio.h> doesn't declare
-# 				snprintf()
 # NEED_DECLARATION_SRAND	if your C++ <stdlib.h> doesn't declare srand()
 # NEED_DECLARATION_STRCASECMP	if your C++ <string.h> doesn't declare
 #				strcasecmp()
@@ -425,8 +421,6 @@ man7dir=$(manroot)/man$(man7ext)
 #				strncasecmp()
 # NEED_DECLARATION_VFPRINTF	if your C++ <stdio.h> doesn't declare
 #				vfprintf()
-# NEED_DECLARATION_VSNPRINTF	if your C++ <stdio.h> doesn't declare
-#				vsnprintf()
 #
 # HAVE_DECL_GETC_UNLOCKED	if you have getc_unlocked()
 # HAVE_DECL_SYS_SIGLIST	if you have sys_siglist[]
@@ -461,12 +455,11 @@ man7dir=$(manroot)/man$(man7ext)
 
 # Include
 #
-#   {fmod,getcwd,mkstemp,putenv,snprintf,strcasecmp,
+#   {fmod,getcwd,mkstemp,putenv,strcasecmp,
 #    strerror,strncasecmp,strtol}.$(OBJEXT)
 #
 # LIBOBJS
 # in LIBOBJS if your C library is missing the corresponding function.
-# vsnprintf is defined in the snprintf.$(OBJEXT) module.
 
 # `CCC' is the compiler for C++ (.cpp) files.
 CCC=@CXX@

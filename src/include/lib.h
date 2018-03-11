@@ -59,16 +59,6 @@ double groff_hypot(double, double);
 
 #include <stdarg.h>
 
-/* HP-UX 10.20 and LynxOS 4.0.0 don't declare snprintf() */
-#if !defined(HAVE_SNPRINTF) || defined(NEED_DECLARATION_SNPRINTF)
-extern "C" { int snprintf(char *, size_t, const char *, /*args*/ ...); }
-#endif
-
-/* LynxOS 4.0.0 has snprintf() but no vsnprintf() */
-#if !defined(HAVE_VSNPRINTF) || defined(NEED_DECLARATION_VSNPRINTF)
-extern "C" { int vsnprintf(char *, size_t, const char *, va_list); }
-#endif
-
 /* LynxOS 4.0.0 doesn't declare vfprintf() */
 #ifdef NEED_DECLARATION_VFPRINTF
 extern "C" { int vfprintf(FILE *, const char *, va_list); }
