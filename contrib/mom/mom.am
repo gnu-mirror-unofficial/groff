@@ -36,14 +36,11 @@ man7_MANS += contrib/mom/groff_mom.7
 
 # Files installed in $(tmacdir).
 # MOMNORMALFILES are located in the source tree.
-# om.tmac is generated in the build tree from the unstripped file om.tmac-u with
-#  strip.sed
 MOMNORMALFILES = \
-  contrib/mom/mom.tmac
-MOMSTRIPFILES = \
+  contrib/mom/mom.tmac \
   contrib/mom/om.tmac
 momtmacdir = $(tmacdir)
-nodist_momtmac_DATA = $(MOMSTRIPFILES)
+nodist_momtmac_DATA = $(MOMNORMALFILES)
 dist_momtmac_DATA = $(MOMNORMALFILES)
 
 # Files installed in htmldocdir/mom
@@ -121,12 +118,10 @@ EXTRA_DIST += $(MOMHTMLDOCFILES) $(MOMEXAMPLEFILES) \
   contrib/mom/NEWS \
   contrib/mom/TODO \
   contrib/mom/copyright \
-  contrib/mom/groff_mom.7.man \
-  contrib/mom/om.tmac-u
+  contrib/mom/groff_mom.7.man
 
 MOSTLYCLEANFILES += \
   $(MOMPROCESSEDEXAMPLEFILES) \
-  contrib/mom/om.tmac \
   penguin.ps \
   penguin.pdf
 
@@ -136,7 +131,7 @@ SUFFIXES += .mom .pdf
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& LC_ALL=C $(MOMPDFMOM) $< >$@
 
-$(MOMPROCESSEDEXAMPLEFILES): $(MOMSTRIPFILES) $(MOMNORMALFILES) \
+$(MOMPROCESSEDEXAMPLEFILES): $(MOMNORMALFILES) \
   groff troff gropdf pdfmom penguin.ps penguin.pdf \
   gnu.eps font/devpdf/build_font_files
 
@@ -144,11 +139,6 @@ penguin.ps:
 	cp $(mom_srcdir)/examples/penguin.ps $@
 penguin.pdf:
 	cp $(mom_srcdir)/examples/penguin.pdf $@
-
-$(MOMSTRIPFILES): $(top_srcdir)/tmac/strip.sed
-	@$(MKDIR_P) `dirname $@`
-	LANG=C LC_ALL=C \
-	sed -f $(top_srcdir)/tmac/strip.sed $(mom_srcdir)/`basename $@`-u > $@;
 
 install-data-hook: install_mom
 install_mom:
