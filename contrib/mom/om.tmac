@@ -3388,13 +3388,13 @@ end
 \# +++INDENT BOTH+++
 \#
 .MAC IB END
+.    br
 .    if \\n[#INDENT_STYLE_LEFT]  .ILX
 .    if \\n[#INDENT_STYLE_RIGHT] .IRX
 .    nr #INDENT_STYLE_BOTH  1
 .    nr #INDENT_ACTIVE      1
 .    nr #INDENT_BOTH_ACTIVE 1
 .    ie '\\$1'' \{\
-.       br
 .       ie \\n[#DOCS] \
 .          ll \\n[#DOC_L_LENGTH]u-\\n[#BR_INDENT]u
 .       el .ll \\n[.l]u-\\n[#BR_INDENT]u
@@ -3402,14 +3402,11 @@ end
 .       ta \\n[.l]u
 .    \}
 .    el \{\
-.       br
 .       nr #BL_INDENT (\\n[#INDENT]+\\$1)
 .       ie \\n[#NUM_ARGS]=2 .nr #BR_INDENT +(\\$2)
-.       ll
-.       in
 .       el .nr #BR_INDENT \\n[#BL_INDENT]
-.       ie \\n[#DOCS] .ll \\n[#DOC_L_LENGTH]u-\\n[#BR_INDENT]u
-.       el .ll \\n[#L_LENGTH]u-\\n[#BR_INDENT]u
+.       if '\\n[.z]'' .ll
+.       ll \\n[.l]u-\\n[#BR_INDENT]u
 .       in \\n[#BL_INDENT]u
 .       ta \\n[.l]u-\\n[#BR_INDENT]u
 .    \}
@@ -8763,7 +8760,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    nr #EPI_DEPTH \\n[#DIVER_DEPTH]-\\n[#EPI_LEAD]
 .    nr #EPI_LINES \\n[#EPI_DEPTH]/\\n[#EPI_LEAD]
 .    ie \\n[#START] \{\
-.       RLD \\n[#SHIM]u
+.       if !\\n[#NO_SHIM] .RLD \\n[#SHIM]u
 .       nr #EPI_WHITESPACE (\\n[#DOC_LEAD]*\\n[#EPI_LINES])-\\n[#EPI_DEPTH]
 .       while \\n[#EPI_WHITESPACE]>\\n[#DOC_LEAD] \{\
 .          nr #EPI_WHITESPACE -\\n[#DOC_LEAD]
@@ -8829,18 +8826,22 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .       \}
 .    \}
 .    if \\n[#EPIGRAPH]=2 \{\
-.       ie \\n[#EPI_OFFSET_VALUE] \
+.       ie !\\n[#EPI_OFFSET_VALUE]=0 \
 .          nr #EPI_OFFSET \
 \\n[#L_MARGIN]+(\\n[#PP_INDENT]*\\n[#EPI_OFFSET_VALUE])
-.       el .nr #EPI_OFFSET \\n[#L_MARGIN]+\\*[$EPI_OFFSET_VALUE]
+.       el \
+.          if !'\\*[$EPI_OFFSET_VALUE]'' \
+.             nr #EPI_OFFSET \\n[#L_MARGIN]+\\*[$EPI_OFFSET_VALUE]
 .       if \\n[#COLUMNS] \{\
-.          ie r#EPI_OFFSET_VALUE \
+.          ie !\\n[#EPI_OFFSET_VALUE]=0 \
 .             nr #EPI_OFFSET \
 \\n[#COL_\\n[#COL_NUM]_L_MARGIN]+(\\n[#PP_INDENT]*\\n[#EPI_OFFSET_VALUE])
-.          el .nr #EPI_OFFSET \
+.          el \
+.             if !'\\*[$EPI_OFFSET_VALUE]'' \
+.                nr #EPI_OFFSET \
 \\n[#COL_\\n[#COL_NUM]_L_MARGIN]+\\*[$EPI_OFFSET_VALUE]
 .       \}
-.       po \\n[#EPI_OFFSET]u
+.       if !\\n[#EPI_OFFSET]=0 .po \\n[#EPI_OFFSET]u
 .    \}
 .    nf
 .    EPI_TEXT
@@ -10148,9 +10149,6 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .      \}
 .    el .if !r tbl*no-top-hook .tbl@top-hook
 .    rr tbl*no-top-hook
-.    if \\n[#QUOTE]=1 \
-.       if '\\*[$Q_QUAD]'LEFT' .po \\n[#Q_OFFSET]u
-.    if \\n[#QUOTE]=2 .po \\n[#BQ_OFFSET]u
 .    if r flex:force .rr flex:force
 .END
 \#
@@ -11893,7 +11891,9 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   how much space to put before and after.
 \#
 .MAC QUOTE END
-'    br
+.    ie \\n[@TOP] \
+.       br
+.    el 'br
 .    if \\n[#PP]>0 .rr #START
 .    if \\n[#LINENUMBERS]=1 \{\
 .       nr #LINENUMBERS 2
@@ -12532,6 +12532,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .                Q_TEMP
 .                di
 .                rm Q_TEMP
+.                sp \\n[#DOC_LEAD]u/2u
 .             \}
 .             el \
 .                sp \\n[#DOC_LEAD]u/2u
