@@ -97,6 +97,7 @@ script:
 .QUOTE
 .CODE
 $ ./bootstrap
+.CODE OFF
 .QUOTE OFF
 This will:
 .
@@ -153,6 +154,7 @@ to build the groff project.  You can do it in the source tree:
 .CODE
 $ ./configure
 $ make
+.CODE OFF
 .QUOTE OFF
 You can also build groff in an out-of-source build tree, which is
 cleaner:
@@ -162,6 +164,7 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
+.CODE OFF
 .QUOTE OFF
 Note that parallel build is also supported and `make' can be invoked
 with the -j option, which will greatly speed up the build.
@@ -249,6 +252,7 @@ The file starts with:
 .QUOTE ADJUST -4p
 .CODE
 bin_PROGRAMS += grolbp
+.CODE OFF
 .QUOTE OFF
 This says that a program named `grolbp' is added to the list of the
 programs that should be built.  Note that \*[CODE]bin_PROGRAMS\*[CODE OFF]
@@ -267,6 +271,7 @@ grolbp_SOURCES = \\
 src/devices/grolbp/lbp.cpp \\
 src/devices/grolbp/lbp.h \\
 src/devices/grolbp/charset.h
+.CODE OFF
 .QUOTE OFF
 .ILQ
 As you added `grolbp' to \*[CODE]bin_PROGRAMS\*[CODE OFF],
@@ -323,6 +328,7 @@ grolbp_LDADD = $(LIBM) \\
 libdriver.a \\
 libgroff.a \\
 lib/libgnu.a
+.CODE OFF
 .QUOTE OFF
 .ILQ
 Again, we use the variable \*[CODE]grolbp_LDADD\*[CODE OFF] because
@@ -346,6 +352,7 @@ gxditview and are added like this:
 .CODE
 gxditview_CPPFLAGS = $(AM_CPPFLAGS) $(X_CFLAGS) -Dlint \\
 -I$(top_builddir)/src/devices/xditview
+.CODE OFF
 .QUOTE OFF
 .ILQ
 .PP
@@ -397,6 +404,7 @@ generated header.  We just add in src/roff/groff/groff.am:
 .QUOTE
 .CODE
 src/roff/groff/groff.$(OBJEXT): defs.h
+.CODE OFF
 .QUOTE OFF
 .
 .HEADING 2 "Scripts"
@@ -465,6 +473,7 @@ top-level Makefile.am:
 .CODE
 SUBDIRS = src/devices/grolbp \\
 \&... (and all the dir that build a program or a script)
+.CODE OFF
 .QUOTE OFF
 and in src/devices/grolbp, we would have a file Makefile.am that
 contains:
@@ -472,6 +481,7 @@ contains:
 .CODE
 bin_PROGRAMS = grolbp
 grolbp_SOURCES = lbp.cpp lbp.h charset.h
+.CODE OFF
 .QUOTE OFF
 .PP
 Only `grolbp' is affected to the variable \*[CODE]bin_PROGRAMS\*[CODE OFF]\&.
@@ -512,6 +522,7 @@ We first say in this top-level Makefile.am:
 .QUOTE
 .CODE 
 bin_PROGAMS = 
+.CODE OFF
 .QUOTE OFF
 and then all the .am files that define a program to be built (e.g.
 src/devices/grolbp/grolbp.am, src/roff/troff/troff.am, and so on)
@@ -553,6 +564,7 @@ devX100font_DATA = $(DEVX100FONTS)
 endif
 .SP
 EXTRA_DIST += $(DEVX100FONTS)
+.CODE OFF
 .QUOTE OFF
 .WS -4
 \*[CODE]DEVX100FONTS\*[CODE OFF] is just a list of font files,
@@ -568,6 +580,7 @@ We first define where we wants to install the devX100 fonts with:
 .QUOTE
 .CODE
 devX100fontdir = $(fontdir)/devX100
+.CODE OFF
 .QUOTE OFF
 Because we declared a variable ending with `dir', we are allowed
 to define \*[CODE]devX100font_DATA\*[CODE OFF] (you remove the
@@ -591,6 +604,7 @@ the default automake rules.
 .QUOTE
 .CODE
   EXTRA_DIST += $(DEVX100FONTS)
+.CODE OFF
 .QUOTE OFF
 Another possibility would have been to add a `dist' prefix to the
 \*[CODE]devX100font_DATA\*[CODE OFF] variable, in this case the use
@@ -605,6 +619,7 @@ dist_devX100font_DATA = $(DEVX100FONTS)
 else
 EXTRA_DIST += $(DEVX100FONTS)
 endif
+.CODE OFF
 .QUOTE OFF
 .
 .HEADING 2 "Dealing with generated files"
@@ -630,11 +645,13 @@ prefixes:
 devpsfontdir = $(fontdir)/devps
 dist_devpsfont_DATA = $(DEVPSFONTFILES) 
 nodist_devpsfont_DATA = $(DEVPSFONTFILES_GENERATED)
+.CODE OFF
 .QUOTE OFF
 The generated files are not cleaned by default, thus we add:
 .QUOTE
 .CODE
 MOSTLYCLEANFILES += $(DEVPSFONTFILES_GENERATED)
+.CODE OFF
 .QUOTE OFF
 .
 .HEADING 1 "Extending Automake's rules"
@@ -666,6 +683,7 @@ mostlyclean_devpdf_extra:
             rm -f $(top_builddir)/font/devpdf/$$f; \\
           done; \\
         fi
+.CODE OFF
 .QUOTE OFF
 .
 .NO_FLEX OFF \" Prevent upcoming NEWPAGE from disabling flex-spacing.
@@ -717,8 +735,8 @@ install_xditview: $(xditview_srcdir)/GXditview.ad
         [...]
         $(INSTALL_DATA) $(xditview_srcdir)/GXditview.ad \\
           $(DESTDIR)$(appresdir)/GXditview
+.CODE OFF
 .QUOTE OFF
-.NEWPAGE
 .PP
 Hooks, on the other hand, are garanteed to be executed after all the
 standard targets have been executed.
@@ -758,6 +776,7 @@ uninstall_groffdirs:
           rmdir $(DESTDIR)$(datasubdir); \\
         fi
         [...]
+.CODE OFF
 .QUOTE OFF
 .TOC
 .\" Local Variables:
