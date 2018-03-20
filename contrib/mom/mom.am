@@ -21,10 +21,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 mom_srcdir = $(top_srcdir)/contrib/mom
-mom_builddir = $(top_builddir)/contrib/mom
 
 # pdfmom command used to generated .pdf
-MOM_TFLAG = -M$(mom_builddir)
+MOM_TFLAG = -M$(mom_srcdir)
 MOM_KFLAG = -k -p -e -t
 MOMPDFMOM = \
   GROFF_COMMAND_PREFIX= \
@@ -40,7 +39,6 @@ MOMNORMALFILES = \
   contrib/mom/mom.tmac \
   contrib/mom/om.tmac
 momtmacdir = $(tmacdir)
-nodist_momtmac_DATA = $(MOMNORMALFILES)
 dist_momtmac_DATA = $(MOMNORMALFILES)
 
 # Files installed in htmldocdir/mom
