@@ -7073,6 +7073,21 @@ the end; this means that value@tie{}4 of @code{hy} is mandatory.
 Value@tie{}8 is possible as an additional restriction, but values@tie{}1
 (the default!), 16, and@tie{}32 should be avoided.
 
+Here is a table of left and right minimum values for hyphenation as needed
+by the patterns distributed with groff; see the @cite{groff_tmac(5) man
+page} (type @command{man groff_tmac} at the command line) for more
+information on groff's language macro files.
+
+@multitable {German traditional}    {pattern name}    {left min}    {right min}
+@headitem    language           @tab pattern name @tab left min @tab right min
+@item        Czech              @tab cs           @tab 2        @tab 2
+@item        US English         @tab us           @tab 2        @tab 3
+@item        French             @tab fr           @tab 2        @tab 3
+@item        German traditional @tab det          @tab 2        @tab 2
+@item        German reformed    @tab den          @tab 2        @tab 2
+@item        Swedish            @tab sv           @tab 1        @tab 2
+@end multitable
+
 Hyphenation exceptions within pattern files (i.e., the words within a
 @code{\hyphenation} group) also obey the hyphenation restrictions given
 by @code{hy}.  However, exceptions specified with the @code{hw} do not.
