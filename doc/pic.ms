@@ -526,7 +526,7 @@ with standard-sized boxes.
 # Draw a demonstration up left arrow with grid box overlay
 define gridarrow
 {
-	move right 0.1
+	move right 0.5
 	[
 		{arrow up left $1;}
 		box wid 0.5 ht 0.5 dotted with .nw at last arrow .end;
@@ -535,11 +535,7 @@ define gridarrow
 		}
 		move down from last arrow .center;
 		[
-			if ( $1 == boxht ) then {
-				"\fBline up left\fP"
-			} else {
-				sprintf("\fBarrow up left %g\fP", $1)
-			}
+			sprintf("\fBarrow up left %g\fP", $1)
 		]
 	]
 	move right 0.1 from last [] .e;
@@ -1370,7 +1366,7 @@ For an example, consider these two programs:
 		box wid 0.5 ht 0.5;
 		box wid 0.75 ht 0.75;
 	]
-	move down 0.3 from last [] .s 0.1;
+	move 0.1 down 0.3 from last [] .s;
 	"\fBbox wid 0.5 ht 0.5; box wid 0.75 ht 0.75\fP"
 ]
 move from last [].e 1.5
@@ -1379,7 +1375,7 @@ move from last [].e 1.5
 		box wid 0.5 ht 0.5;
 		box wid 0.75 ht 0.75 with .sw at last box .se;
 	]
-	move down 0.3 from last [] .s 0.1;
+	move 0.1 down 0.3 from last [] .s;
 	box invisible "\fBbox wid 0.5 ht 0.5;\fP" \
 	  "\fBbox wid 0.75 ht 0.75 with .sw at last box .se;\fP"
 ]
@@ -1533,7 +1529,7 @@ positive:
 		box wid -0.5 ht 0.5
 		box wid 0.75 ht 0.75
 	]
-	move down 0.3 from last [].s 0.1
+	move 0.1 down 0.3 from last [].s
 	"\fBbox wid -0.5 ht 0.5; box wid 0.75 ht 0.75\fP"
 ]
 move from last [].e 2
@@ -1542,7 +1538,7 @@ move from last [].e 2
 		[ box wid -0.5 ht 0.5 ]
 		box wid 0.75 ht 0.75
 	]
-	move down 0.3 from last [].s 0.1
+	move 0.1 down 0.3 from last [].s
 	"\fB[box wid -0.5 ht 0.5]; box wid 0.75 ht 0.75\fP"
 ]
 .PE
@@ -2397,9 +2393,7 @@ define gridarrow
         }
         move down from last arrow .center;
         [
-            if ( $1 == boxht ) \e
-            then { "\efBline up left\efP" } \e
-            else { sprintf("\efBarrow up left %g\efP", $1) };
+            sprintf("\efBarrow up left %g\efP", $1)
         ]
     ]
     move right 0.1 from last [] .e;
@@ -2420,19 +2414,16 @@ undef gridarrow
 # Draw a demonstration up left arrow with grid box overlay
 define gridarrow
 {
-	move right 0.1
+	move right 0.5
 	[
 		{arrow up left $1;}
 		box wid 0.5 ht 0.5 dotted with .nw at last arrow .end;
-		for i = 2 to ($1 / 0.5) do
-		{
+		for i = 2 to ($1 / 0.5) do {
 			box wid 0.5 ht 0.5 dotted with .sw at last box .se;
 		}
 		move down from last arrow .center;
 		[
-			if ( $1 == boxht ) \
-			then { "\fBline up left\fP" } \
-			else { sprintf("\fBarrow up left %g\fP", $1) };
+			sprintf("\fBarrow up left %g\fP", $1)
 		]
 	]
 	move right 0.1 from last [] .e;
