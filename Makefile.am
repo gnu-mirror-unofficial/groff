@@ -154,7 +154,7 @@ TTYDEVDIRS=@TTYDEVDIRS@ font/devutf8
 # datadir
 # datarootdir
 dataprogramdir=$(datadir)/groff
-datasubdir=$(dataprogramdir)/$(VERSION)
+datasubdir=$(dataprogramdir)/$(SHORT_VERSION)
 
 # infodir
 # `infodir' says where to install info files.
@@ -162,7 +162,7 @@ datasubdir=$(dataprogramdir)/$(VERSION)
 # docdir
 # `docdir' says where to install documentation files.  The default
 # location is ${datarootdir}/doc/${PACKAGE}, but we add the version
-docdir=$(datarootdir)/doc/${PACKAGE}-$(VERSION)
+docdir=$(datarootdir)/doc/${PACKAGE}-$(SHORT_VERSION)
 
 # `exampledir' says where to install example files.
 exampledir=$(docdir)/examples
@@ -633,6 +633,11 @@ endif
 #
 # REVISION is the full revision given by git-version-gen, which can
 # have non-alphanumeric symbols.
+#
+# SHORT_REVISION contains only the number of REVISION before the first
+# '.', e.g. if REVISION is '3.real.434-5aafd' then SHORT_REVISION is
+# '3'.
+
 MAJOR_VERSION =`echo $(VERSION) | sed 's/\([0-9]\+\)\.[0-9]\+.*/\1/'`
 MINOR_VERSION =`echo $(VERSION) | sed 's/[0-9]\+\.\([0-9]\+\).*/\1/'`
 REVISION = `echo $(VERSION) | sed 's/[0-9]\+\.[0-9]\+\.\(.*\)/\1/'`
@@ -770,7 +775,7 @@ install-data-hook: create_current_symlink
 create_current_symlink:
 	cd $(DESTDIR)$(dataprogramdir); \
 	  rm -f current; \
-	  $(LN_S) $(VERSION) current
+	  $(LN_S) $(SHORT_VERSION) current
 
 # Hook to move the binaries that potentially have a prefix from
 # prefixexecbindir to bindir.

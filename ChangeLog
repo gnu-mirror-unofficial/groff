@@ -1,3 +1,18 @@
+2018-03-27  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Define a short version for data installation dir name.
+
+	This is the full version stripped of any characters after the
+	third digit.  Used for installation of font, macro and various
+	data (by default in /usr/local/share/groff).  The various programs
+	and scripts still use the full version from gnulib script
+	'git-version-gen' .
+
+	* configure.ac (SHORT_VERSION): short version definition.
+
+	* Makefile.am: use 'SHORT_VERSION' for 'docdir' and 'datasubdir'
+	definitions.
+
 2018-03-11  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Remove doc/automake_migration_tests.txt

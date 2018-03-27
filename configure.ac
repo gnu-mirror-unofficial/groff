@@ -25,6 +25,11 @@ AC_INIT([GNU Troff],
 
 AC_PREREQ([2.62])
 
+# Version consisting of exactly MAJOR.MINOR.PATCH, striped of any
+# digit after PATCH.
+AC_SUBST([SHORT_VERSION],
+	m4_bregexp(AC_PACKAGE_VERSION,[^\(\w+\.\w+\.\w+\).*$],[\1]))
+
 # Directories where the helper scripts should be found. This must be consistent
 # with the variable build_aux in bootstrap.conf
 AC_CONFIG_AUX_DIR([build-aux])
