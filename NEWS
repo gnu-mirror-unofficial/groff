@@ -19,6 +19,33 @@ o The `hy' request has been extended.  Value 16 enables hyphenation before
   character.
 
 
+PDFPIC
+------
+
+o PDFPIC has now been corrected, so the behaviour is the same whether you
+  use the postscript or pdf drivers. However, this means that any documents
+  which were written using the old behaviour will not be rendered correctly
+  if using the pdf driver with the new version.
+
+  The change would mean that documents which relied on the previous behaviour
+  are likely to have a gap underneath the image which was not there before.
+  If you see this effect there are three ways you can restore the previous
+  0behaviour:-
+
+  Add the line ".nr PDFPIC_NOSPACE 1" to the document before the first call
+  to .PDFPIC.
+
+  If it is just a single document which exhibits this behaviour you can run
+  groff adding "- rPDFPIC_NOSPACE=1" to the command-line.
+
+  If you have many documents which rely on the previous behaviour you can
+  set an environment variable "export GROFF_PDFPIC_NOSPACE=1" which will
+  restore the previous behaviour for all runs.
+
+  Note that this change has no effect it you were using .PDFPIC with the
+  postscript driver, only if you used it with the pdf driver.
+
+
 Miscellaneous
 -------------
 

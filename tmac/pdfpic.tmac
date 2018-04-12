@@ -132,6 +132,16 @@ sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .
 \h'\\n[pdf-offset]u'\
 \X'pdf: pdfpic \\$1 -L \\n[pdf-deswid]z \\n[pdf-desht]z'
+.  if !r PDFPIC_NOSPACE \{\
+.    sy echo ".nr PDFPIC_NOSPACE 0$GROFF_PDFPIC_NOSPACE" > /tmp/x\n[$$]
+.    so /tmp/x\n[$$]
+.    sy rm /tmp/x\n[$$]
+.  \}
+.  if \\n[PDFPIC_NOSPACE]==0 \{\
+.    br
+.    sp \\n[pdf-desht]u
+.  \}
+..
 ..
 .
 .cp \n[_C]

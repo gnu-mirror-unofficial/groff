@@ -1,3 +1,17 @@
+2018-04-12  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Make PDFPIC behave the same whether -Tps or -Tpdf used.
+
+	Previously the -Tpdf version did not cause a break nor position
+	to the line beneath the imported picture, whilst the -Tps
+	version did.
+
+	* tmac/pdfpic.tmac: Corrected behavior.
+
+	* NEWS: Explain the change of behaviour and how to reinstate
+	the previous behaviour using register PDFPIC_NOSPACE or the
+	environment variable GROFF_PDFPIC_NOSPACE.
+
 2018-03-27  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Define a short version for data installation dir name.
