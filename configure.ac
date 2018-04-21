@@ -25,7 +25,7 @@ AC_INIT([GNU Troff],
 
 AC_PREREQ([2.62])
 
-# Version consisting of exactly MAJOR.MINOR.PATCH, striped of any
+# Version consisting of exactly MAJOR.MINOR.PATCH, stripped of any
 # digit after PATCH.
 AC_SUBST([SHORT_VERSION],
 	m4_bregexp(AC_PACKAGE_VERSION,[^\(\w+\.\w+\.\w+\).*$],[\1]))
