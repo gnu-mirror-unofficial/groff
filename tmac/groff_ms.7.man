@@ -240,7 +240,7 @@ _
 FL	Footnote length	next footnote	\[rs]n[LL]*5/6
 FI	Footnote indent	next footnote	2n
 FF	Footnote format	next footnote	0
-FPS	Point size	next footnote	\[rs]n[PS]-2
+FPS	Point size	next footnote	\[rs]n[PS]\-2
 FVS	Vert.\& spacing	next footnote	\[rs]n[FPS]+2
 FPD	Para.\& spacing	next footnote	\[rs]n[PD]/2
 _
@@ -272,7 +272,7 @@ Use the following macros to create a cover page for your document
 in the order shown.
 .
 .TP
-.B .RP [no]
+.BR ".RP " [ no ]
 Specifies the report format for your document.
 .
 The report format creates a separate cover page.
@@ -301,7 +301,8 @@ on page\~1 of the document.
 The default is to suppress the header.
 .
 .TP
-.BI ".DA [" xxx ]
+.B .DA\c
+.RI " [" xxx ]
 (optional) Print the current date,
 or the arguments to the macro if any,
 on the title page (if specified)
@@ -311,7 +312,8 @@ This is the default for
 .IR nroff .
 .
 .TP
-.BI ".ND [" xxx ]
+.B .ND\c
+.RI " [" xxx ]
 (optional) Print the current date,
 or the arguments to the macro if any,
 on the title page (if specified)
@@ -344,7 +346,7 @@ Specifies the author's institution.
 You can specify multiple institutions.
 .
 .TP
-.B .AB [no]
+.BR ".AB " [ no ]
 Begins the abstract.
 .
 The default is to print the word
@@ -379,10 +381,11 @@ macro indents all text at both left and right margins
 by the amount of the register
 .BR QI .
 .
-The effect is identical to the HTML
+The effect is reminiscent of the HTML
 .B <BLOCKQUOTE>
+tag.
 .
-The next paragraph or heading returns margins to normal.
+The next paragraph or heading returns the margins to normal.
 .
 .B QP
 inserts the vertical space specified in register
@@ -406,7 +409,7 @@ and
 .B QE
 insert the inter-paragraph spacing specified in
 .B PD
-and the text is indented on both sides by the amount of
+and the text is indented on both sides by the amount of register
 .BR QI .
 .
 The text between
@@ -422,7 +425,8 @@ or
 .PP
 The
 .B XP
-macro produces an exdented paragraph.
+macro produces an \(lqexdented\(rq paragraph; that is, one with a
+hanging indent.
 .
 The first line of the paragraph begins at
 the left margin,
@@ -488,8 +492,8 @@ macros print headings in
 using the same font family and point size as the body text.
 .
 For output devices which support scalable fonts,
-this behaviour may be modified,
-by defining the document control registers,
+this behaviour may be modified by defining the document control
+registers
 .B GROWPS
 and
 .BR PSINCR .
@@ -580,44 +584,44 @@ is interpreted in
 basic units;
 the
 .I p
-scaling factor should be employed,
-when assigning a value specified in points.
+scaling factor should be employed when assigning a value specified in
+points.
 .
 .IP
 The style used to represent the section number,
 within a numbered heading,
 is controlled by the
-.B SN-STYLE
+.B SN\-STYLE
 string;
 this may be set to either the
-.B SN-DOT
+.B SN\-DOT
 or the
-.B SN-NO-DOT
+.B SN\-NO\-DOT
 style,
 (described below),
 by aliasing
-.B SN-STYLE
+.B SN\-STYLE
 accordingly.
 .
 By default,
-.B SN-STYLE
+.B SN\-STYLE
 is initialised by defining the alias
 .RS
 .nf
 .IP
-\&.als SN-STYLE SN-DOT
+\&.als SN\-STYLE SN\-DOT
 .fi
 .RE
 .IP
 it may be changed to the
-.B SN-NO-DOT
+.B SN\-NO\-DOT
 style,
 if preferred,
 by defining the alternative alias
 .RS
 .nf
 .IP
-\&.als SN-STYLE SN-NO-DOT
+\&.als SN\-STYLE SN\-NO\-DOT
 .fi
 .RE
 .IP
@@ -630,28 +634,28 @@ the new alias is defined.
 After invoking
 .BR .NH ,
 the assigned heading number is available in the strings
-.B SN-DOT
+.B SN\-DOT
 (as it appears in the default formatting style for numbered headings,
 with a terminating period following the number),
 and
-.B SN-NO-DOT
+.B SN\-NO\-DOT
 (with this terminating period omitted).
 .
 The string
 .B SN
 is also defined,
 as an alias for
-.BR SN-DOT ;
+.BR SN\-DOT ;
 if preferred,
 the user may redefine it as an alias for
-.BR SN-NO-DOT ,
+.BR SN\-NO\-DOT ,
 'ne 10
 by including the initialisation:
 .
 .RS
 .nf
 .IP
-\&.als SN SN-NO-DOT
+\&.als SN SN\-NO\-DOT
 .fi
 .RE
 .
@@ -663,8 +667,10 @@ the change becomes effective with the next use of
 the new alias is defined.
 .
 .TP
-.BI .SH\ [ xx ]
+.B .SH\c
+.RI " [" xx ]
 Unnumbered subheading.
+.
 The use of the optional
 .I xx
 argument is a GNU extension,
@@ -713,7 +719,8 @@ macros provide a variety of methods to highlight
 or emphasize text:
 .
 .TP
-.B ".B [\fItxt\fP [\fIpost\fP [\fIpre\fP]]]"
+.B .B\c
+.RI " [" txt " [" post " [" pre ]]]
 Sets its first argument in
 .BR "bold type" .
 .
@@ -739,7 +746,7 @@ For example,
 .
 .IP
 prints
-.RB ( foo ).
+.RB \(lq( foo )\(rq.
 .
 .IP
 If you give this macro no arguments,
@@ -748,7 +755,8 @@ prints all text following in bold until
 the next highlighting, paragraph, or heading macro.
 .
 .TP
-.B ".R [\fItxt\fP [\fIpost\fP [\fIpre\fP]]]"
+.B .R\c
+.RI " [" txt " [" post " [" pre ]]]
 Sets its first argument in
 roman (or regular) type.
 .
@@ -757,7 +765,8 @@ It operates similarly to the
 macro otherwise.
 .
 .TP
-.B ".I [\fItxt\fP [\fIpost\fP [\fIpre\fP]]]"
+.B .I\c
+.RI " [" txt " [" post " [" pre ]]]
 Sets its first argument in
 .IR "italic type" .
 It operates similarly to the
@@ -765,15 +774,17 @@ It operates similarly to the
 macro otherwise.
 .
 .TP
-.B ".CW [\fItxt\fP [\fIpost\fP [\fIpre\fP]]]"
-Sets its first argument in a constant width face.
+.B .CW\c
+.RI " [" txt " [" post " [" pre ]]]
+Sets its first argument in a constant-width face.
 .
 It operates similarly to the
 .B B
 macro otherwise.
 .
 .TP
-.B ".BI [\fItxt\fP [\fIpost\fP [\fIpre\fP]]]"
+.B .BI\c
+.RI " [" txt " [" post " [" pre ]]]
 Sets its first argument in bold italic type.
 .
 It operates similarly to the
@@ -781,14 +792,16 @@ It operates similarly to the
 macro otherwise.
 .
 .TP
-.BI ".BX [" txt ]
+.B .BX\c
+.RI " [" txt ]
 Prints its argument and draws a box around it.
 .
 If you want to box a string that contains spaces,
 use a digit-width space (\[rs]0).
 .
 .TP
-.BI ".UL [" txt " [" post ]]
+.B .UL\c
+.RI " [" txt " [" post ]]
 Prints its first argument with an underline.
 .
 If you specify a second argument,
@@ -870,9 +883,8 @@ macro handles duties for all lists.
 Its syntax is as follows:
 .
 .TP
-.BI ".IP [" marker " [" width ]]
-.
-.IP
+.B .IP\c
+.RI " [" marker " [" width ]]
 The
 .I marker
 is usually a bullet character
@@ -938,7 +950,7 @@ Display macro	Type of display
 With keep	No keep
 _
 \&.DS L	\&.LD	Left-justified.
-\&.DS I [\fIindent\fP]	\&.ID	T{
+\&.DS I [\,\fIindent\/\fP]	\&.ID	T{
 Indented (default indent in the \fBDI\fP register).
 T}
 \&.DS B	\&.BD	T{
@@ -1039,7 +1051,7 @@ Text in the box is automatically placed in a diversion
 .\" ====================================================================
 .
 The
-.I \-ms
+.I ms
 macros support the standard
 .I groff
 preprocessors:
@@ -1053,8 +1065,8 @@ Mark text meant for preprocessors by enclosing it
 in pairs of tags as follows:
 .
 .TP
-.BR ".TS [H]" " and " .TE
-Denotes a table, to be processed by the
+.BR .TS " [" H "] and " .TE
+Denote a table to be processed by the
 .I tbl
 preprocessor.
 .
@@ -1075,7 +1087,7 @@ prints the header on the next page as well.
 .
 .TP
 .BR .PS " and " .PE
-Denotes a graphic, to be processed by the
+Denote a graphic to be processed by the
 .I pic
 preprocessor.
 .
@@ -1089,8 +1101,10 @@ or by using a graphics program such as
 .IR xfig .
 .
 .TP
-.BR ".EQ [\fI\,align\/\fP]" " and " .EN
-Denotes an equation, to be processed by the
+.B .EQ\c
+.RI " [" align "] and "\c
+.B .EN
+Denote an equation to be processed by the
 .I eqn
 preprocessor.
 .
@@ -1102,11 +1116,11 @@ argument can be
 or\~\c
 .B I
 to center (the default), left-justify, or indent
-the equation.
+the equation, respectively.
 .
 .TP
 .BR .[ " and " .]
-Denotes a reference, to be processed by the
+Denote a reference to be processed by the
 .I refer
 preprocessor.
 .
@@ -1159,11 +1173,12 @@ register as follows:
 .
 .TP
 0
-Prints the footnote number as a superscript; indents the footnote (default).
+Prints the footnote number as a superscript; indents the footnote
+(default).
 .
 .TP
 1
-Prints the number followed by a period (like\~1.\&)
+Prints the number followed by a period (that is,\~\(lq1.\(rq\&)
 and indents the footnote.
 .
 .TP
@@ -1172,10 +1187,11 @@ Like\~1, without an indent.
 .
 .TP
 3
-Like\~1, but prints the footnote number as a hanging paragraph.
+Like\~1, but prints the footnote number as a paragraph with a hanging
+indent.
 .
-.LP
 .RE
+.LP
 You can use footnotes safely within keeps and displays,
 but avoid using numbered footnotes within floating keeps.
 .
@@ -1209,22 +1225,24 @@ Use the strings
 .BR CH ,
 and
 .B RH
-to set the left, center, and right headers; use
+to set the left, center, and right headers.
+Use
 .BR LF ,
 .BR CF ,
 and
 .B RF
 to set the left, center, and right footers.
 .
-This works best for documents that do not distinguish
-between odd and even pages.
+The string-setting approach works best for documents that do not
+distinguish between odd and even pages.
 .
 .IP \(bu
 Use the
 .B OH
 and
 .B EH
-macros to define headers for the odd and even pages; and
+macros to define headers for the odd and even pages,
+and
 .B OF
 and
 .B EF
@@ -1236,16 +1254,25 @@ The syntax for these macros is as follows:
 .RS
 .
 .IP
-.B ".OH '\fIleft\/\fP'\,\fIcenter\/\fP'\,\fIright\/\fP'"
+.BI . XX " \[aq]" left \[aq] center \[aq] right \[aq]
 .RE
 .
 .IP
+where
+.I XX
+is one of the foregoing four macros and each of
+.IR left ,
+.IR center ,
+and
+.I right
+is text of your choice.
+.
 You can replace the quote (\[aq]) marks with any character not
 appearing in the header or footer text.
 .
 .
-.PP
-You can also redefine the
+.IP \(bu
+You can redefine the
 .B PT
 and
 .B BT
@@ -1255,7 +1282,7 @@ the header and footer, respectively.
 The header process also calls the (undefined)
 .B HD
 macro after
-.B PT ;
+.BR PT ;
 you can define this macro if you need additional processing
 after printing the header
 (for example, to draw a line below the header).
@@ -1320,7 +1347,8 @@ Single-column mode.
 Two-column mode.
 .
 .TP
-.BI ".MC [" width " [" gutter ]]
+.B .MC\c
+.RI " [" column-width " [" gutter-width ]]
 Multi-column mode.
 .
 If you specify no arguments, it is equivalent to the
@@ -1328,9 +1356,9 @@ If you specify no arguments, it is equivalent to the
 macro.
 .
 Otherwise,
-.I width
+.I column-width
 is the width of each column and
-.I gutter
+.I gutter-width
 is the space between columns.
 .
 The
@@ -1586,7 +1614,7 @@ macro is evaluated.
 This implies that
 .B PO
 should not be used early in the document, unless it is changed also:
-Remember that accessing an undefined register automatically defines it.
+remember that accessing an undefined register automatically defines it.
 .br
 .ne 23
 .
@@ -1625,8 +1653,8 @@ _
 .
 .PP
 The
-.B \[rs]*-
-string produces an em dash \[em] like this.
+.B \[rs]*\-
+string produces an em dash\[em]like this.
 .
 .
 .PP
@@ -1701,7 +1729,7 @@ produces an n with a tilde over it.
 .SH "NAMING CONVENTIONS"
 .\" ====================================================================
 .
-The following conventions are used for names of macros, strings and
+The following conventions are used for names of macros, strings, and
 number registers.
 .
 External names available to documents that use the
