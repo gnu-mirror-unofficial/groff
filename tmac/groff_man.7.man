@@ -843,18 +843,22 @@ installation.
 .PP
 These macros are a convenience for authors.
 .
+Together, they produce the traditional look of a Unix command synopsis.
+.
 They also assist automated translation tools and help browsers in
 recognizing command synopses and treating them differently from
 running text.
 .
 .
 .TP
-.BI .OP " key value"
-Describe an optional command argument.
+.BI .OP " option-name"\c
+.RI " [" option-argument ]
+Indicate an optional command parameter called
+.IR option-name .
 .
-The arguments of this macro are set surrounded by option braces
-in the default Roman font; the first argument is printed with
-a bold face, while the second argument is typeset as italic.
+If the option takes an argument, specify
+.I option-argument
+using a noun, abbreviation, or hyphenated noun phrase.
 .
 .
 .TP
@@ -865,50 +869,49 @@ Takes a single argument, the name of a command.
 .
 Text following, until closed by
 .BR .YS ,
-is set with a hanging indentation with the width of
+is set with a hanging indentation of the width of
 .I command
 plus a space.
-.
-This produces the traditional look of a Unix command synopsis.
 .
 .
 .TP
 .B .YS
-This macro restores normal indentation at the end of a command
-synopsis.
+End synopsis.
+.
+Restore normal indentation.
 .
 .
 .PP
-Here is a real example:
+For example,
 .
 .
 .IP
 .EX
 \&.SY groff
-\&.OP \e-abcegiklpstzCEGNRSUVXZ
-\&.OP \e-d cs
-\&.OP \e-f fam
-\&.OP \e-F dir
-\&.OP \e-I dir
-\&.OP \e-K arg
-\&.OP \e-L arg
-\&.OP \e-m name
-\&.OP \e-M dir
-\&.OP \e-n num
-\&.OP \e-o list
-\&.OP \e-P arg
-\&.OP \e-r cn
-\&.OP \e-T dev
-\&.OP \e-w name
-\&.OP \e-W name
+\&.OP \e\-abcegiklpstzCEGNRSUVXZ
+\&.OP \e\-d cs
+\&.OP \e\-f fam
+\&.OP \e\-F dir
+\&.OP \e\-I dir
+\&.OP \e\-K arg
+\&.OP \e\-L arg
+\&.OP \e\-m name
+\&.OP \e\-M dir
+\&.OP \e\-n num
+\&.OP \e\-o list
+\&.OP \e\-P arg
+\&.OP \e\-r cn
+\&.OP \e\-T dev
+\&.OP \e\-w name
+\&.OP \e\-W name
 \&.RI [ file
-\&.IR .\e|.\e|. ]
+\e&.\e|.\e|.\e&]
 \&.YS
 .EE
 .
 .
 .PP
-produces the following output:
+produces the following output.
 .
 .
 .RS
@@ -931,18 +934,78 @@ produces the following output:
 .OP \-w name
 .OP \-W name
 .RI [ file
-.IR .\|.\|. ]
+\&.\|.\|.\&]
 .YS
 .RE
 .
 .
 .PP
-If necessary, you might use
-.B br
-requests to control line breaking.
+Multiple
+.B .SY/.YS
+blocks can be specified,
+for instance to distinguish differing modes of operation of a complex
+command like
+.BR tar (1);
+each will be separated by a paragraph space.
 .
-You can insert plain text as well; this looks like the traditional
-(unornamented) syntax for a required command argument or filename.
+If necessary, you can use a
+.B br
+request to insert a mandatory line break.
+.
+.
+.PP
+Several features of the above example are of note.
+.
+.
+.IP \(bu
+The command and option names are presented in
+.B boldface
+to cue the user that they should be input literally.
+.
+.
+.IP \(bu
+Option dashes are specified with the \(lq\e\-\(rq escape sequence;
+this is an important practice to make them clearly visible and to
+facilitate cut-and-paste from the rendered man page to a shell prompt or
+text file.
+.
+.
+.IP \(bu
+Option arguments and command operands are presented in
+.I italics
+(underlined on some output devices, such as terminals and emulators),
+to cue the user that they must be replaced with appropriate text.
+.
+.
+.IP \(bu
+Symbols that are neither to be typed literally nor simply replaced
+appear in plain (roman) style;
+brackets surround optional arguments,
+and an ellipsis indicates that the previous syntactical element may be
+repeated arbitrarily.
+.
+.
+.IP
+Some man pages use a brace-and-pipe notation such as
+.RB \(lq{ \-\-diff | \-\-compare }\(rq
+to indicate that one and only one of the \(lq|\(rq-separated items
+within the braces must be input.
+.
+If this braced construct were furthermore surrounded by brackets,
+then the meaning is that at most one of the items would be accepted.
+.
+.
+.IP
+Authors of man pages should note the use of the zero-width space
+escape sequence \(lq\e&\(rq on both sides of the ellipsis;
+this is a good practice to avoid surprises in the event the ellipsis
+gets reflowed in your text editor.
+.
+See \(lqPORTABILITY AND TROFF REQUESTS\(rq, below.
+.
+The morbidly curious may consult
+.BR groff (7)
+regarding the narrow-space escape sequence \(lq\e|\(rq.
 .
 .
 .\" ====================================================================
