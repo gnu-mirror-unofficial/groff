@@ -25,8 +25,9 @@ AC_INIT([GNU Troff],
 
 AC_PREREQ([2.62])
 
-# Version consisting of exactly MAJOR.MINOR.PATCH, stripped of any
-# digit after PATCH.
+# SHORT_VERSION contains only the number of REVISION before the first '.',
+# e.g. if REVISION is '3.real.434-5aafd' then SHORT_VERSION is 'x.yy.3',
+# where x and yy are MAJOR_VERSION and MINOR_VERSION, respectively.
 AC_SUBST([SHORT_VERSION],
 	m4_bregexp(AC_PACKAGE_VERSION,[^\(\w+\.\w+\.\w+\).*$],[\1]))
 
