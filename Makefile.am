@@ -634,9 +634,9 @@ endif
 # REVISION is the full revision given by git-version-gen, which can
 # have non-alphanumeric symbols.
 #
-# SHORT_REVISION contains only the number of REVISION before the first
-# '.', e.g. if REVISION is '3.real.434-5aafd' then SHORT_REVISION is
-# '3'.
+# SHORT_VERSION (defined in configure.ac) contains only the number of
+# REVISION before the first '.', e.g. if REVISION is '3.real.434-5aafd'
+# then SHORT_VERSION is '3'.
 
 MAJOR_VERSION =`echo $(VERSION) | sed 's/\([0-9]\+\)\.[0-9]\+.*/\1/'`
 MINOR_VERSION =`echo $(VERSION) | sed 's/[0-9]\+\.\([0-9]\+\).*/\1/'`
