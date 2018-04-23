@@ -33,7 +33,6 @@
 # intended as a pic translator; we can live with eqn defaults. 
 #
 groffpic_opts=""
-gs_opts=""
 convert_opts=""
 format="png"
 eqndelim='$$'
