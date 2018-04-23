@@ -1,5 +1,16 @@
 2018-04-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	man pages: Shorten version footer.
+
+	* **/*.man: Replace "Groff Version" with "groff" in the fourth
+	  argument to .TH in all man pages.  This suffices to keep that
+	  part of the footer from overruning the date, even in dirty
+	  trees.
+
+	Fixes https://savannah.gnu.org/bugs/index.php?53721.
+
+2018-04-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	pic2graph: Adapt to old convert(1) programs.
 
 	* contrib/pic2graph/pic2graph.sh: Grep convert's -help output
