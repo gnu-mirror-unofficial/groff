@@ -14,89 +14,75 @@ pic2graph \- convert a PIC diagram into a cropped image
 .SH SYNOPSIS
 .\" ====================================================================
 .
-.B pic2graph
-[
-.B \-unsafe
-]
-[
-.BI "\-format " fmt
-]
-[
-.BI "\-eqn " delim
-]
+.SY pic2graph
+.OP \-unsafe
+.OP \-format output-format
+.OP \-eqn delimeters
+.RI [ \%convert-arguments ]
+.YS
+.
+.SY "pic2graph \-\-help"
+.SY "pic2graph \-\-version"
+.YS
 .
 .
 .\" ====================================================================
 .SH DESCRIPTION
 .\" ====================================================================
 .
-Reads a PIC program as input; produces an image file (by default in
-Portable Network Graphics format) suitable for the Web as output.
+.I pic2graph
+reads a
+.BR @g@pic (@MAN1EXT@)
+program from the standard input and and writes an image file,
+by default in Portable Network Graphics (PNG) format,
+to the standard output.
 .
-Also translates
+It furthermore translates
 .BR @g@eqn (@MAN1EXT@)
 constructs, so it can be used for generating images of mathematical
 formulae.
 .
 .
-.P
-PIC is a rather expressive graphics minilanguage suitable for
-producing box-and-arrow diagrams of the kind frequently used in
-technical papers and textbooks.
-.
-The language is sufficiently flexible to be quite useful for state
-charts, Petri-net diagrams, flow charts, simple circuit schematics,
-jumper layouts, and other kinds of illustration involving repetitive
-uses of simple geometric forms and splines.
-.
-Because PIC descriptions are procedural and object-based, they are
-both compact and easy to modify.
-.
-.
-.P
-The PIC language is fully documented in
-.IR "Making Pictures With GNU PIC" ,
-a document which is part of the
-.BR groff (@MAN1EXT@)
-distribution.
-.
-.
-.P
-Your input PIC code should
+.PP
+The input
+.I PIC
+code should
 .I not
-be wrapped with the \&.PS and \&.PE macros that normally guard it within
+be wrapped with the
+.B \&.PS
+and
+.B \&.PE
+macros that normally guard it within
 .BR groff (@MAN1EXT@)
-macros.
+documents.
 .
 .
-.P
-The output image will be clipped to the smallest possible bounding box
-that contains all the black pixels.
+.\" FIXME: How old?  This text hasn't been touched since 2008 at latest.
+.\" Older versions of
+.\" .I \%convert
+.\" will produce a black-on-white graphic; newer ones may produce a
+.\" black-on-transparent graphic.
 .
-Older versions of
-.BR \%convert (1)
-will produce a black-on-white graphic; newer ones may produce a
-black-on-transparent graphic.
-.
-By specifying command-line options to be passed to
-.BR \%convert (1)
-you can give it a border, force the background transparent, set the
-image's pixel density, or perform other useful transformations.
+.PP
+Arguments not recognized by
+.I pic2graph
+are passed to the ImageMagick or GraphicsMagick program
+.BR \%convert (1).
 .
 .
-.P
-This program uses
-.BR @g@pic (@MAN1EXT@),
-.BR @g@eqn (@MAN1EXT@),
-.BR groff (@MAN1EXT@),
-.BR gs (1),
-and the ImageMagick
-.BR \%convert (1)
-program.
-These programs must be installed on your system and accessible on your
-$PATH for
-.B pic2graph
-to work.
+By specifying these, you can give your image a border,
+.\" Transparent backgrounds are the default in 2018.
+.\" force the background transparent,
+set the image's pixel density,
+or perform other useful transformations.
+.
+.
+.PP
+The output image is clipped using
+.IR convert 's
+.B \-trim
+option to the smallest possible bounding box that contains all the black
+pixels.
 .
 .
 .\" ====================================================================
@@ -106,53 +92,57 @@ to work.
 .TP
 .B \-unsafe
 Run
-.BR @g@pic (@MAN1EXT@)
-and
-.BR groff (@MAN1EXT@)
-in the \(oqunsafe\(cq mode enabling the PIC macro
+.I groff
+in
+.I unsafe
+mode, enabling the
+.I PIC
+command
 .B sh
-to execute arbitrary commands.
+to execute arbitrary Unix shell commands.
 .
-The default is to forbid this.
+The
+.I groff
+default is to forbid this.
 .
-.TP
-.BI "\-format " fmt
-Specify an output format; the default is PNG (Portable Network Graphics).
-.
-Any format that
-.BR \%convert (1)
-can emit is supported.
 .
 .TP
-.BI "\-eqn " delim
-Change the fencepost characters that delimit
-.BR @g@eqn (@MAN1EXT@)
-directives
-.RB ( $
-and
-.BR $ ,
-by default).
+.BI "\-format " output-format
+Write the image in
+.IR output-format ,
+which must be understood by
+.IR convert ;
+the default is PNG.
 .
-This option requires an argument, but an empty string is accepted as a
-directive to disable
-.BR @g@eqn (@MAN1EXT@)
+.
+.TP
+.BI "\-eqn " delimeters
+Use
+.I delimeters
+as the opening and closing
+characters that delimit
+.I @g@eqn
+directives;
+the default is \(lq$$\(rq.
+.
+The option argument
+.I delimeters
+should be a two-character string,
+but an empty string (\(dq\(dq) is accepted as a directive to disable
+.I @g@eqn
 processing.
 .
 .
-.PP
-Command-line switches and arguments not listed above are passed to
-.BR \%convert (1).
+.TP
+.B \-\-help
+Display a brief usage message and exit.
 .
-.
-.\" ====================================================================
-.SH FILES
-.\" ====================================================================
 .
 .TP
-.B @MACRODIR@/eqnrc
-The
-.BR @g@eqn (@MAN1EXT@)
-initialization file.
+.B \-\-version
+Display
+.IR pic2graph 's
+version string and exit.
 .
 .
 .\" ====================================================================
@@ -160,26 +150,25 @@ initialization file.
 .\" ====================================================================
 .
 .TP
-.B GROFF_TMPDIR
-The directory in which temporary files will be created.
+.B \%GROFF_TMPDIR
+.TQ
+.B \%TMPDIR
+.TQ
+.B \%TMP
+.TQ
+.B \%TEMP
+These environment variables are searched in the given order to determine
+the directory where temporary files will be created.
 .
-If this is not set
-.B pic2graph
-searches the environment variables
-.BR \%TMPDIR ,
-.BR TMP ,
-and
-.B TEMP
-(in that order).
-.
-Otherwise, temporary files will be created in
-.BR /tmp .
+If none are set,
+.I /tmp
+is used.
 .
 .
 .\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
-.B pic2graph
+.I pic2graph
 was written by
 .MT esr@\:thyrsus.com
 Eric S.\& Raymond
@@ -196,8 +185,14 @@ based on a recipe by W.\& Richard Stevens.
 .BR @g@pic (@MAN1EXT@),
 .BR @g@eqn (@MAN1EXT@),
 .BR groff (@MAN1EXT@),
-.BR gs (1),
-.BR \%convert (1).
+.BR \%convert (1)
+.
+.
+.PP
+W.\& Richard Stevens,
+.UR http://\:www.kohala.com/\:start/\:troff/\:pic2html.html
+.I Turning PIC into HTML
+.UE
 .
 .
 .\" Local Variables:
