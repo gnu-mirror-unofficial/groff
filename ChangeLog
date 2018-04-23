@@ -1,3 +1,22 @@
+2018-04-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	pic2graph: Adapt to old convert(1) programs.
+
+	* contrib/pic2graph/pic2graph.sh: Grep convert's -help output
+	  for the string "-trim".  If it is not found, the old method
+	  for image trimming documented in pic2graph's man page, "-crop
+	  0x0", is used.  I am motivated by the fact that the warning
+	  about this in our man page is very old (10 years or more), and
+	  I wanted to get rid of it.
+
+	  pic2graph emits a warning when performing this fallback, in
+	  the event the ImageMagick and/or GraphicsMagick teams surprise
+	  the world again.
+
+	* contrib/pic2graph/pic2graph.1.man: Remove BUGS section, the
+	  entire contents of which was dedicated to convert's change in
+	  behavior.
+
 2018-04-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	groff_man(7): Expand command synopsis section.

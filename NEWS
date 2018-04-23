@@ -27,10 +27,10 @@ o PDFPIC has now been corrected, so the behaviour is the same whether you
   which were written using the old behaviour will not be rendered correctly
   if using the pdf driver with the new version.
 
-  The change would mean that documents which relied on the previous behaviour
-  are likely to have a gap underneath the image which was not there before.
-  If you see this effect there are three ways you can restore the previous
-  0behaviour:-
+  The change would mean that documents which relied on the previous
+  behaviour are likely to have a gap underneath the image which was not
+  there before.  If you see this effect there are three ways you can restore
+  the previous 0behaviour:-
 
   Add the line ".nr PDFPIC_NOSPACE 1" to the document before the first call
   to .PDFPIC.
@@ -50,9 +50,15 @@ Miscellaneous
 -------------
 
 o New 'configure' option --with-compatibility-wrappers to control how groff
-  compatibility wrappers for vendor-provided non-GNU macro sets are installed
-  (See: ./configure --help).
+  compatibility wrappers for vendor-provided non-GNU macro sets are
+  installed (See: ./configure --help).
 
+o pic2graph now attempts to adapt to very old installed versions of the
+  ImageMagick and GraphicsMagick programs "convert".  pic2graph searches the
+  output of convert's "-help" option, and uses "-trim" if that string is
+  found; otherwise, the old "-crop 0x0" method (which produces incompatible
+  results on versions that _do_ support "-trim") is used.  pic2graph emits a
+  warning to standard error if the search fails and the old method is used.
 
 VERSION 1.22.3
 ==============
@@ -1427,8 +1433,8 @@ Eqn2graph
 ---------
 
 o A new script contributed by Eric S. Raymond <esr@thyrsus.com>.  It
-  converts an EQN diagram into a cropped image.  Since it uses gs and the PNM
-  library, virtually all graphics formats are available for output.
+  converts an EQN diagram into a cropped image.  Since it uses gs and the
+  PNM library, virtually all graphics formats are available for output.
 
 Groffer
 -------
@@ -2006,9 +2012,9 @@ configure script).
 Documentation
 -------------
 
-Three new man pages are available: groff_tmac.5 (documenting how troff macros
-are accessed and where they are found), groff.7 (a short reference of the GNU
-roff language), and roff.7 (a general survey on GNU troff).
+Three new man pages are available: groff_tmac.5 (documenting how troff
+macros are accessed and where they are found), groff.7 (a short reference of
+the GNU roff language), and roff.7 (a general survey on GNU troff).
 
 Miscellaneous
 -------------
@@ -2030,10 +2036,10 @@ Bug fixes only; no user-visible changes.
 VERSION 1.12
 ============
 
-Finally, there are new maintainers for groff.  Mailing lists and a development
-repository are available also. See the file README for details.  Not all
-reported bugs could be fixed, so please send mails again if something is
-still not working.
+Finally, there are new maintainers for groff.  Mailing lists and a
+development repository are available also. See the file README for details.
+Not all reported bugs could be fixed, so please send mails again if
+something is still not working.
 
 Most of the installation problems should have vanished now (most
 notably the $(tmac_wrap) bug).
@@ -2765,8 +2771,8 @@ containing the hyphenation patterns.
 
 There is a `\C'xxx'' escape sequence equivalent to `\[xxx]'.
 
-Characters ", ', ), ], *, \(dg are now initially transparent for the purposes
-of end of sentence recognition.
+Characters ", ', ), ], *, \(dg are now initially transparent for the
+purposes of end of sentence recognition.
 
 There is an anti-recursion feature in the `char' request, so you can
 say `.char \(bu \s+2\(bu\s-2'.
@@ -2846,5 +2852,7 @@ definitions.
 Local Variables:
 version-control: never
 coding: latin-1
+fill-column: 76
 mode: text
 End:
+# vim: set autoindent textwidth=76:

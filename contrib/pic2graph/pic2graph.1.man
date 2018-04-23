@@ -177,32 +177,6 @@ Otherwise, temporary files will be created in
 .
 .
 .\" ====================================================================
-.SH BUGS
-.\" ====================================================================
-.
-Due to changes in the behavior of ImageMagick
-.BR \%convert (1)
-that are both forward and backward-incompatible,
-mismatches between your
-.B pic2graph
-and
-.BR \%convert (1)
-versions may produce zero-sized or untrimmed output images.
-.
-For this version of
-.B pic2graph
-you will need a version of
-.BR \%convert (1)
-that supports the
-.B \-trim
-option; older versions of
-.B pic2graph
-used
-.BR \-crop\~0x0 ,
-which no longer has trimming behavior.
-.
-.
-.\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
 .B pic2graph

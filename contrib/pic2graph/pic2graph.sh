@@ -34,6 +34,7 @@
 #
 groffpic_opts=""
 convert_opts=""
+convert_trim_arg="-trim"
 format="png"
 eqndelim='$$'
 
@@ -83,6 +84,15 @@ if test -z "$tmp"; then
     { (exit 1); exit 1; }
 fi
 
+# See if the installed version of convert(1) is new enough to support the -trim
+# option.  Versions that didn't were described as "old" as early as 2008.
+is_convert_recent=`convert -help | grep -e -trim`
+if test -z "$is_convert_recent"
+then
+    echo "$0: warning: falling back to old '-crop 0x0' trim method" >&2
+    convert_trim_arg="-crop 0x0"
+fi
+
 trap 'exit_status=$?; rm -rf $tmp && exit $exit_status' EXIT INT TERM
 
 # Here goes:
@@ -92,7 +102,8 @@ trap 'exit_status=$?; rm -rf $tmp && exit $exit_status' EXIT INT TERM
 # 4. Use convert(1) to crop the PostScript and turn it into a bitmap.
 (echo ".EQ"; echo $eqndelim; echo ".EN"; echo ".PS"; cat; echo ".PE") | \
     groff -e -p $groffpic_opts -Tps -P-pletter > $tmp/pic2graph.ps \
-    && convert -trim $convert_opts $tmp/pic2graph.ps $tmp/pic2graph.$format \
+    && convert $convert_trim_arg $convert_opts $tmp/pic2graph.ps \
+       $tmp/pic2graph.$format \
     && cat $tmp/pic2graph.$format
 
 # End
