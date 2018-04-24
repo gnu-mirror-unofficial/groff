@@ -1027,8 +1027,11 @@ sub do_x
 		    if ($fil=~m/\.pdf$/)
 		    {
 			my $bbox=$incfil{$fil}->[1];
-			my $xscale=$wid/($bbox->[2]-$bbox->[0]+1);
-			my $yscale=($hgt<=0)?$xscale:($hgt/($bbox->[3]-$bbox->[1]+1));
+			my $xscale=d3($wid/($bbox->[2]-$bbox->[0]+1));
+			my $yscale=d3(($hgt<=0)?$xscale:($hgt/($bbox->[3]-$bbox->[1]+1)));
+			$wid=($bbox->[2]-$bbox->[0])*$xscale;
+			$hgt=($bbox->[3]-$bbox->[1])*$yscale;
+			$ypos+=$hgt;
 			$stream.="q $xscale 0 0 $yscale ".PutXY($xpos,$ypos)." cm";
 			$stream.=" 0 1 -1 0 0 0 cm" if $rot;
 			$stream.=" /$incfil{$fil}->[0] Do Q\n";
@@ -1058,8 +1061,8 @@ sub do_x
 		    IsGraphic();
 		    my $bbox=$incfil{$fil}->[1];
 		    $wid=($bbox->[2]-$bbox->[0]) if $wid <= 0;
-		    my $xscale=$wid/($bbox->[2]-$bbox->[0]);
-		    my $yscale=($hgt<=0)?$xscale:($hgt/($bbox->[3]-$bbox->[1]));
+		    my $xscale=d3($wid/($bbox->[2]-$bbox->[0]));
+		    my $yscale=d3(($hgt<=0)?$xscale:($hgt/($bbox->[3]-$bbox->[1])));
 		    $xscale=($wid<=0)?$yscale:$xscale;
 		    $xscale=$yscale if $yscale < $xscale;
 		    $yscale=$xscale if $xscale < $yscale;
@@ -1488,6 +1491,8 @@ sub LoadPDF
     my $curobj=-1;
     my $instream=0;
     my $cont;
+    my $adj=0;
+    my $keepsep=$/;
 
     my ($PD,$PDnm)=OpenInc($pdfnm);
 
@@ -1499,7 +1504,7 @@ sub LoadPDF
 
     my $hdr=<$PD>;
 
-    $/="\r" if (length($hdr) > 10);
+    $/="\r",$adj=1 if (length($hdr) > 10);
 
     while (<$PD>)
     {
@@ -1538,7 +1543,7 @@ sub LoadPDF
 	{
 	    if ($curobj > -1)
 	    {
-		$pdf->[$curobj]->{STREAMPOS}=[tell($PD),$strmlen];
+		$pdf->[$curobj]->{STREAMPOS}=[tell($PD)+$adj,$strmlen];
 		seek($PD,$strmlen,1);
 		$instream=1;
 	    }
@@ -1622,8 +1627,8 @@ sub LoadPDF
     $BBox=[0,0,595,842] if !defined($BBox);
 
     $wid=($BBox->[2]-$BBox->[0]+1) if $wid==0;
-    my $xscale=abs($wid)/($BBox->[2]-$BBox->[0]+1);
-    my $yscale=($hgt<=0)?$xscale:(abs($hgt)/($BBox->[3]-$BBox->[1]+1));
+    my $xscale=d3(abs($wid)/($BBox->[2]-$BBox->[0]+1));
+    my $yscale=d3(($hgt<=0)?$xscale:(abs($hgt)/($BBox->[3]-$BBox->[1]+1)));
     $hgt=($BBox->[3]-$BBox->[1]+1)*$yscale;
 
     if ($type eq "import")
@@ -1657,6 +1662,7 @@ sub LoadPDF
 
     BuildStream($xobj,$pdf,$pdf->[$page]->{OBJ}->{Contents});
 
+    $/=$keepsep;
     return([$xonm,$BBox] );
 }
 
