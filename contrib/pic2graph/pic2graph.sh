@@ -68,20 +68,33 @@ fi
 
 # create temporary directory
 tmp=
-for d in "$GROFF_TMPDIR" "$TMPDIR" "$TMP" "$TEMP" /tmp; do
-    test -z "$d" && continue
+for d in "$GROFF_TMPDIR" "$TMPDIR" "$TMP" "$TEMP" /tmp
+do
+    test -n "$d" && break
+done
 
-    tmp=`(umask 077 && mktemp -d -q "$d/pic2graph-XXXXXX") 2> /dev/null` \
-    && test -n "$tmp" && test -d "$tmp" \
-    && break
+if ! test -d "$d"
+then
+    echo "$0: error: temporary directory \"$d\" does not exist or is" \
+        "not a directory" >&2
+    exit 1
+fi
 
-    tmp="$d/pic2graph$$-$RANDOM"
-    (umask 077 && mkdir "$tmp") 2> /dev/null \
-    && break
-done;
-if test -z "$tmp"; then
-    echo "$0: cannot create temporary directory" >&2
-    { (exit 1); exit 1; }
+if ! tmp=`(umask 077 && mktemp -d -q "$d/pic2graph-XXXXXX") 2> /dev/null`
+then
+    # mktemp failed--not installed or is a version that doesn't support those
+    # flags?  Fall back to older method which uses more predictable naming.
+    #
+    # $RANDOM is a Bashism.  The fallback of $PPID is not good pseudorandomness,
+    # but is supported by the stripped-down dash shell, for instance.
+    tmp="$d/pic2graph$$-${RANDOM:-$PPID}"
+    (umask 077 && mkdir "$tmp") 2> /dev/null
+fi
+
+if ! test -d "$tmp"
+then
+    echo "$0: error: cannot create temporary directory \"$tmp\"" >&2
+    exit 1
 fi
 
 # See if the installed version of convert(1) is new enough to support the -trim
