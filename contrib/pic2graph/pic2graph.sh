@@ -75,8 +75,8 @@ for d in "$GROFF_TMPDIR" "$TMPDIR" "$TMP" "$TEMP" /tmp; do
     && test -n "$tmp" && test -d "$tmp" \
     && break
 
-    tmp=$d/pic2graph$$-$RANDOM
-    (umask 077 && mkdir $tmp) 2> /dev/null \
+    tmp="$d/pic2graph$$-$RANDOM"
+    (umask 077 && mkdir "$tmp") 2> /dev/null \
     && break
 done;
 if test -z "$tmp"; then
@@ -93,7 +93,7 @@ then
     convert_trim_arg="-crop 0x0"
 fi
 
-trap 'exit_status=$?; rm -rf $tmp && exit $exit_status' EXIT INT TERM
+trap 'exit_status=$?; rm -rf "$tmp" && exit $exit_status' EXIT INT TERM
 
 # Here goes:
 # 1. Wrap the input in dummy .PS/PE macros (and add possibly null .EQ/.EN)
@@ -101,9 +101,9 @@ trap 'exit_status=$?; rm -rf $tmp && exit $exit_status' EXIT INT TERM
 # 3. Process through groff to emit Postscript.
 # 4. Use convert(1) to crop the PostScript and turn it into a bitmap.
 (echo ".EQ"; echo $eqndelim; echo ".EN"; echo ".PS"; cat; echo ".PE") | \
-    groff -e -p $groffpic_opts -Tps -P-pletter > $tmp/pic2graph.ps \
-    && convert $convert_trim_arg $convert_opts $tmp/pic2graph.ps \
-       $tmp/pic2graph.$format \
-    && cat $tmp/pic2graph.$format
+    groff -e -p $groffpic_opts -Tps -P-pletter > "$tmp"/pic2graph.ps \
+    && convert $convert_trim_arg $convert_opts "$tmp"/pic2graph.ps \
+       "$tmp"/pic2graph.$format \
+    && cat "$tmp"/pic2graph.$format
 
 # End
