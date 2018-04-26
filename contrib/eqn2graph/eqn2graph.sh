@@ -8,7 +8,6 @@
 #
 # Take an eqn equation on stdin, emit cropped bitmap on stdout.
 # The eqn markup should *not* be wrapped in .EQ/.EN, this script will do that.
-# A -U option on the command line enables gpic/groff "unsafe" mode.
 # A -format FOO option changes the image output format to any format
 # supported by convert(1).  All other options are passed to convert(1).
 # The default format is PNG.
@@ -25,14 +24,11 @@
 #
 # 1. None of the options of eqn(1) are relevant.
 #
-# 2. Only the -U option of groff(1) is relevant.
-#
-# 3. Many options of convert(1) are potentially relevant, (especially 
+# 2. Many options of convert(1) are potentially relevant, (especially
 # -density, -interlace, -transparency, -border, and -comment).
 #
-# Thus, we pass -U to groff(1), and everything else to convert(1).
+# Thus, we pass everything except -format to convert(1).
 #
-groff_opts=""
 convert_opts=""
 convert_trim_arg="-trim"
 format="png"
@@ -40,8 +36,6 @@ format="png"
 while [ "$1" ]
 do
     case $1 in
-    -unsafe)
-	groff_opts="-U";;
     -format)
 	format=$2
 	shift;;
@@ -106,7 +100,7 @@ trap 'exit_status=$?; rm -rf "$tmp" && exit $exit_status' EXIT INT TERM
 # 4. Use convert(1) to crop the Postscript and turn it into a bitmap.
 read equation
 (echo ".EQ"; echo 'delim $$'; echo ".EN"; echo '$'"$equation"'$') | \
-	groff -e $groff_opts -Tps -P-pletter > "$tmp"/eqn2graph.ps \
+	groff -e -Tps -P-pletter > "$tmp"/eqn2graph.ps \
 	&& convert $convert_trim_arg $convert_opts "$tmp"/eqn2graph.ps \
 	   "$tmp"/eqn2graph.$format \
 	&& cat "$tmp"/eqn2graph.$format

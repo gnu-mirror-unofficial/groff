@@ -1,5 +1,20 @@
 2018-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	eqn2graph: Remove -unsafe option.
+
+	contrib/eqn2graph/eqn2graph.sh:
+	* Unrecognize "-unsafe" option and eliminate $groff_opts
+	variable.  As far as I can tell, this option had no effect
+	because (1) pic is not run on the input stream (no -p argument
+	to groff); (2) eqn doesn't support "shelling out" as pic does;
+	and (3) there is no way to embed *roff requests inside a
+	sequence of eqn commands.  If I'm wrong, let me know.
+
+	contrib/eqn2graph/eqn2graph.1.man:
+	* Undocument "-unsafe" option.
+
+2018-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	eqn2graph: Parallelize changes with pic2graph.
 
 	contrib/eqn2graph/eqn2graph.sh:
