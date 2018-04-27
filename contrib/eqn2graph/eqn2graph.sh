@@ -65,14 +65,14 @@ then
     exit 1
 fi
 
-if ! tmp=`(umask 077 && mktemp -d -q "$d/pic2graph-XXXXXX") 2> /dev/null`
+if ! tmp=`(umask 077 && mktemp -d -q "$d/eqn2graph-XXXXXX") 2> /dev/null`
 then
     # mktemp failed--not installed or is a version that doesn't support those
     # flags?  Fall back to older method which uses more predictable naming.
     #
     # $RANDOM is a Bashism.  The fallback of $PPID is not good pseudorandomness,
     # but is supported by the stripped-down dash shell, for instance.
-    tmp="$d/pic2graph$$-${RANDOM:-$PPID}"
+    tmp="$d/eqn2graph$$-${RANDOM:-$PPID}"
     (umask 077 && mkdir "$tmp") 2> /dev/null
 fi
 
