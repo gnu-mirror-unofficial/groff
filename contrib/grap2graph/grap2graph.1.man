@@ -1,8 +1,12 @@
 .TH GRAP2GRAPH @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
-grap2graph \- convert a grap diagram into a cropped bitmap image
+grap2graph \- convert a GRAP diagram into a cropped image
 .
 .
+.\" ====================================================================
+.\" Legalese
+.\" ====================================================================
+.\"
 .\" This documentation is released to the public domain.
 .
 .
@@ -10,54 +14,71 @@ grap2graph \- convert a grap diagram into a cropped bitmap image
 .SH SYNOPSIS
 .\" ====================================================================
 .
-.B grap2graph
-[
-.B \-unsafe
-]
-[
-.BI \-format\  fmt
-]
+.SY grap2graph
+.OP \-unsafe
+.OP \-format output-format
+.RI [ \%convert-arguments ]
+.YS
+.
+.SY grap2graph
+.B \-\-help
+.SY grap2graph
+.RB { \-v | \-\-version }
+.YS
 .
 .
 .\" ====================================================================
 .SH DESCRIPTION
 .\" ====================================================================
 .
-Reads a grap program as input; produces an image file (by default in
-Portable Network Graphics format) suitable for the Web as output.
+.I grap2graph
+reads a
+.BR grap (1)
+program from the standard input and writes an image file,
+by default in Portable Network Graphics (PNG) format,
+to the standard output.
 .
-For a description of the grap language, see
-.BR grap (1).
 .
-.
-.P
-Your graph specification should \fInot\fR be wrapped with the \&.G1 and
-\&.G2 macros that normally guard it within
+.PP
+The input
+.I GRAP
+code should
+.I not
+be wrapped with the
+.B \&.G1
+and
+.B \&.G2
+macros that normally guard it within
 .BR groff (@MAN1EXT@)
-macros.
+documents.
 .
 .
-.P
-The output image will be a black-on-white graphic clipped to the
-smallest possible bounding box that contains all the black pixels.
+.\" FIXME: How old?  This text hasn't been touched since 2008 at latest.
+.\" Older versions of
+.\" .I \%convert
+.\" will produce a black-on-white graphic; newer ones may produce a
+.\" black-on-transparent graphic.
 .
-By specifying command-line options to be passed to
-.BR convert (1)
-you can give it a border, set the background transparent, set the
-image's pixel density, or perform other useful transformations.
+.PP
+Arguments not recognized by
+.I grap2graph
+are passed to the ImageMagick or GraphicsMagick program
+.BR \%convert (1).
 .
 .
-.P
-This program uses
-.BR grap (1),
-.BR @g@pic (@MAN1EXT@),
-.BR groff (@MAN1EXT@),
-and the ImageMagick
-.BR convert (1)
-program.
+By specifying these, you can give your image a border,
+.\" Transparent backgrounds are the default in 2018.
+.\" force the background transparent,
+set the image's pixel density,
+or perform other useful transformations.
 .
-These programs must be installed on your system and accessible on your
-$PATH for \fBgrap2graph\fR to work.
+.
+.PP
+The output image is clipped using
+.IR convert 's
+.B \-trim
+option to the smallest possible bounding box that contains all the black
+pixels.
 .
 .
 .\" ====================================================================
@@ -67,27 +88,41 @@ $PATH for \fBgrap2graph\fR to work.
 .TP
 .B \-unsafe
 Run
-.BR @g@pic (@MAN1EXT@)
-and
-.BR groff (@MAN1EXT@)
-in the \[lq]unsafe\[rq] mode enabling the PIC macro
+.I groff
+in
+.I unsafe
+mode, enabling the
+.I PIC
+command
 .B sh
-to execute arbitrary commands.
+to execute arbitrary Unix shell commands.
 .
-The default is to forbid this.
+The
+.I groff
+default is to forbid this.
+.
 .
 .TP
-.BI \-format\  fmt
-Specify an output format; the default is PNG (Portable Network Graphics).
+.BI "\-format " output-format
+Write the image in
+.IR output-format ,
+which must be understood by
+.IR convert ;
+the default is PNG.
 .
-Any format that
-.BR convert (1)
-can emit is supported.
+.
+.TP
+.B \-\-help
+Display a brief usage message and exit.
 .
 .
-.PP
-Command-line switches and arguments not listed above are passed to
-.BR convert (1).
+.TP
+.B \-v
+.TQ
+.B \-\-version
+Display
+.IR grap2graph 's
+version string and exit.
 .
 .
 .\" ====================================================================
@@ -95,20 +130,19 @@ Command-line switches and arguments not listed above are passed to
 .\" ====================================================================
 .
 .TP
-.B GROFF_TMPDIR
-The directory in which temporary files will be created.
+.B \%GROFF_TMPDIR
+.TQ
+.B \%TMPDIR
+.TQ
+.B \%TMP
+.TQ
+.B \%TEMP
+These environment variables are searched in the given order to determine
+the directory where temporary files will be created.
 .
-If this is not set
-.B grap2graph
-searches the environment variables
-.BR \%TMPDIR ,
-.BR TMP ,
-and
-.B TEMP
-(in that order).
-.
-Otherwise, temporary files will be created in
-.BR /tmp .
+If none are set,
+.I /tmp
+is used.
 .
 .
 .\" ====================================================================
@@ -119,20 +153,22 @@ Otherwise, temporary files will be created in
 was written by
 .MT esr@\:thyrsus.com
 Eric S.\& Raymond
-.ME .
+.ME ,
+based on a recipe for
+.BR pic2graph (@MAN1EXT@),
+by W.\& Richard Stevens.
 .
 .
-.na
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
 .
 .BR pic2graph (@MAN1EXT@),
 .BR eqn2graph (@MAN1EXT@),
+.BR grap (1),
 .BR @g@pic (@MAN1EXT@),
 .BR groff (@MAN1EXT@),
-.BR gs (1),
-.BR convert (1).
+.BR convert (1)
 .
 .
 .\" Local Variables:

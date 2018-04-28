@@ -53,13 +53,13 @@ o New 'configure' option --with-compatibility-wrappers to control how groff
   compatibility wrappers for vendor-provided non-GNU macro sets are
   installed (See: ./configure --help).
 
-o eqn2graph and pic2graph now attempt to adapt to very old installed
-  versions of the ImageMagick and GraphicsMagick programs "convert".  They
-  search the output of convert(1)'s "-help" option, and use "-trim" if that
-  string is found; otherwise, the old "-crop 0x0" method (which produces
-  incompatible results on versions that _do_ support "-trim") is used.  The
-  programs emit a warning to standard error if the search fails and the old
-  method is used.
+o eqn2graph, grap2graph, and pic2graph now attempt to adapt to very old
+  installed versions of the ImageMagick and GraphicsMagick programs
+  "convert".  They search the output of convert's "-help" option, and use
+  "-trim" if that string is found; otherwise, the old "-crop 0x0" method
+  (which produces incompatible results on versions that _do_ support
+  "-trim") is used.  The programs emit a warning to standard error if the
+  search fails and the old method is used.
 
 o eqn2graph no longer supports the "-unsafe" option.  It did nothing.
 
