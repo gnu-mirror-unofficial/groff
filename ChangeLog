@@ -1,3 +1,13 @@
+2018-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Improve diagnostics on bad hyphenation requests.
+
+	src/roff/troff/env.cpp:
+	* Warn about hyphenation request values that are completely out
+	  out of range; report accepted range (caveat: much of the
+	  "legal" range is still rejected due to bad semantics).
+	* Report bad hyphenation request value in diagnostic messages.
+
 2018-04-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	grap2graph: Parallelize changes with pic2graph.

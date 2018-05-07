@@ -39,11 +39,15 @@ symbol default_family("T");
 enum { ADJUST_LEFT = 0, ADJUST_BOTH = 1, ADJUST_CENTER = 3, ADJUST_RIGHT = 5 };
 
 enum {
+  // Not all combinations are legal; see hyphenate_request() below.
+  HYPHEN_NONE = 0,
+  HYPHEN_DEFAULT = 1,
   HYPHEN_NOT_LAST_LINE = 2,
   HYPHEN_NOT_LAST_CHARS = 4,
   HYPHEN_NOT_FIRST_CHARS = 8,
   HYPHEN_LAST_CHAR = 16,
-  HYPHEN_FIRST_CHAR = 32
+  HYPHEN_FIRST_CHAR = 32,
+  HYPHEN_MAX = 63,
 };
 
 struct env_list {
@@ -1658,9 +1662,16 @@ void hyphenate_request()
 {
   int n;
   if (has_arg() && get_integer(&n)) {
-    if (((n & HYPHEN_FIRST_CHAR) && (n & HYPHEN_NOT_FIRST_CHARS))
+    if (n < HYPHEN_NONE) {
+      warning(WARN_RANGE, "negative hyphenation flags ignored: %1", n);
+    } else if (n > HYPHEN_MAX) {
+      warning(WARN_RANGE, "unknown hyphenation flags ignored (maximum "
+	"%1): %2", HYPHEN_MAX, n);
+    } else if (((n & HYPHEN_DEFAULT) && (n & ~HYPHEN_DEFAULT))
+	|| ((n & HYPHEN_FIRST_CHAR) && (n & HYPHEN_NOT_FIRST_CHARS))
 	|| ((n & HYPHEN_LAST_CHAR) && (n & HYPHEN_NOT_LAST_CHARS)))
-      warning(WARN_SYNTAX, "contradicting hyphenation flags, ignored");
+      warning(WARN_SYNTAX, "contradictory hyphenation flags ignored: "
+	"%1", n);
     else
       curenv->hyphenation_flags = n;
   }
