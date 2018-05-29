@@ -70,9 +70,9 @@ CW: $(srcdir)/textt.map
 	$(TFMTODIT) $(SPECIALFLAG) \
 	  $(tfmdir)/cmtt10.tfm $(srcdir)/textt.map $@
 
-CWI: $(srcdir)/textt.map
+CWI: $(srcdir)/texitt.map
 	$(TFMTODIT) \
-	  $(tfmdir)/cmitt10.tfm $(srcdir)/textt.map $@
+	  $(tfmdir)/cmitt10.tfm $(srcdir)/texitt.map $@
 
 MI: $(srcdir)/texmi.map
 	$(TFMTODIT) $(SPECIALFLAG) -k 0177 \

@@ -1,3 +1,19 @@
+2018-05-29  Werner LEMBERG  <wl@gnu.org>
+
+	[dvi] Fix glyph map for `cmitt10'.
+
+	Problem reported by Pali Rohár <pali.rohar@gmail.com>.
+
+	  http://lists.gnu.org/archive/html/groff/2018-05/msg00088.html
+
+	* font/devdvi/texitt.map: New file.  This is identical to
+	`textt.map' except the dollar glyph, which gets replaced by the
+	pound glyph.
+
+	* font/devdvi/generate/Makefile (CWI): Use `texitt.map'.
+
+	* font/devdvi/CWI: Regenerated.
+
 2018-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Improve diagnostics on bad hyphenation requests.
