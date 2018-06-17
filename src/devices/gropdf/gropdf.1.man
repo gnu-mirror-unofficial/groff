@@ -707,7 +707,8 @@ BLOCKS
 BLOCKE
 .
 .LP
-Which allows you to create presentation type PDFs. Many of the other
+Which allows you to create presentation type PDFs.
+Many of the other
 commands are already available in other macro packages.
 .LP
 These commands are implemented with
@@ -717,18 +718,21 @@ X commands:-
 .TP
 .BI "\[rs]X'ps: exec %%%%PAUSE"
 The section before this is treated as a block and is introduced using the
-current BLOCK transition setting (see \[oq]pdf: transition\[cq] below). This command
+current BLOCK transition setting (see \[oq]pdf: transition\[cq] below).
+This command
 can be introduced using the macro
 .BR .pdfpause .
 .TP
 .B "\[rs]X'ps: exec %%%%BEGINONCE"
 Any text following this command (up to %%%%ENDONCE) is shown only once,
-the next %%%%PAUSE will remove it. If producing a non presentation pdf, i.e.
+the next %%%%PAUSE will remove it.
+If producing a non presentation pdf, i.e.
 ignoring the pauses, see GROPDF_NOSLIDE below, this text is ignored.
 .LP
 .TP
 .B "\[rs]X'ps: exec %%%%ENDONCE"
-This terminates the block defined by %%%%BEGINONCE. This pair of commands
+This terminates the block defined by %%%%BEGINONCE.
+This pair of commands
 is what implements the .BLOCKS Once/.BLOCKE commands in present.tmac.
 .LP
 The
@@ -871,7 +875,8 @@ These macros must only be used within page traps.)
 where
 .IP
 .I feature
-can be either SLIDE or BLOCK. When it is SLIDE the transition is used
+can be either SLIDE or BLOCK.
+When it is SLIDE the transition is used
 when a new slide is introduced to the screen, if BLOCK then this transition
 is used for the individual blocks which make up the slide.
 .br
@@ -880,7 +885,8 @@ is the transition type between slides:-
 .RS
 .IP
 .B Split
-- Two lines sweep across the screen, revealing the new page. The lines
+- Two lines sweep across the screen, revealing the new page.
+The lines
 may be either horizontal or vertical and may move inward from the
 edges of the page or outward from the center, as specified by the
 .I dimension
@@ -890,10 +896,12 @@ entries, respectively.
 .br
 .B Blinds
 - Multiple lines, evenly spaced across the screen, synchronously
-sweep in the same direction to reveal the new page. The lines may be
+sweep in the same direction to reveal the new page.
+The lines may be
 either horizontal or vertical, as specified by the
 .I dimension
- entry. Horizontal
+ entry.
+Horizontal
 lines move downward; vertical lines move to the right.
 .br
 .B Box
@@ -1022,13 +1030,15 @@ is not 1.0.
 (Optional; PDF 1.5;
 .B Fly
 transition style only) The starting or ending scale at
-which the changes shall be drawn. If
+which the changes shall be drawn.
+If
 .I motion
 specifies an inward transition, the scale
 of the changes drawn shall progress from
 .I scale
 to 1.0 over the course of the
-transition. If
+transition.
+If
 .I motion
 specifies an outward transition, the scale of the changes drawn
 shall progress from 1.0 to
@@ -1047,7 +1057,8 @@ in is rectangular and opaque.
 .IP
 This command can be used by calling the macro
 .B .pdftransition
-using the parameters described above. Any of the parameters may be
+using the parameters described above.
+Any of the parameters may be
 replaced with a "." which signifies the parameter retains its
 previous value, also any trailing missing parameters are ignored.
 .LP
