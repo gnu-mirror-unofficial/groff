@@ -34,13 +34,6 @@
 .\" Definitions
 .\" ====================================================================
 .
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.el .TP "\\$1"
-..
-.
 .ie t \{\
 .  ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 .  ds lx L\h'-0.36m'\v'-0.22v'\s-2A\s0\h'-0.15m'\v'0.22v'\*(tx
@@ -1254,7 +1247,7 @@ package.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@MACRODIR@/pic.tmac'u+3n
+.TP
 .B
 @MACRODIR@/pic.tmac
 Example definitions of the

@@ -28,13 +28,6 @@ grops \- PostScript driver for groff
 .\" instead of in the original English.
 .
 .
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.  ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.  el .TP "\\$1"
-..
-.
 .de FT
 .  if '\\*(.T'ps' .ft \\$1
 .  if '\\*(.T'pdf' .ft \\$1
@@ -1434,7 +1427,7 @@ creation timestamp in place of the current time.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@FONTDIR@/devps/download'u+2n
+.TP
 .B @FONTDIR@/devps/DESC
 Device description file.
 .

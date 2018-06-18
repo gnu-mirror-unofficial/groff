@@ -26,16 +26,6 @@
 .
 .
 .\" ====================================================================
-.\" Macro Definitions
-.\" ====================================================================
-.
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.  ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.  el .TP "\\$1"
-..
-.
-.\" ====================================================================
 .SH SYNOPSIS
 .\" ====================================================================
 .
@@ -844,7 +834,7 @@ is used for an arbitrary string;
 is used for the name of a file.
 .
 .
-.Tp \w'\fBabbreviate-label-ranges'u+2n
+.TP
 .BI abbreviate\*n\  fields\ string1\ string2\ string3\ string4
 Abbreviate the first names of
 .IR fields .
@@ -1717,7 +1707,7 @@ macro.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@DEFAULT_INDEX@'u+2n
+.TP
 .B @DEFAULT_INDEX@
 Default database.
 .
@@ -1740,7 +1730,7 @@ man page for details where such files are created.
 .SH ENVIRONMENT
 .\" ====================================================================
 .
-.Tp \w'\fBREFER'u+2n
+.TP
 .B REFER
 If set, overrides the default database.
 .

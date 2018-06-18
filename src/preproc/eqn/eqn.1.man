@@ -1,3 +1,4 @@
+'\" t
 .TH @G@EQN @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
 @g@eqn \- format equations for troff or MathML
@@ -32,14 +33,6 @@
 .  ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 .el \
 .  ds tx TeX
-.
-.
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.  ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.  el .TP "\\$1"
-..
 .
 .
 .\" ====================================================================
@@ -310,49 +303,29 @@ If delimiters haven't been specified, the call has no effect.
 gives each component of an equation a type, and adjusts the spacing
 between components using that type.
 .
-Possible types are:
+Possible types are described in the table below.
 .
-.RS
-.TP \w'punctuation'u+2n
-ordinary
+.
+.TS
+lB l.
+ordinary	T{
 an ordinary character such as \[oq]1\[cq] or
-.RI \[oq] x \[cq];
-.
-.TP
-operator
+.RI \[oq] x \[cq]
+T}
+operator	T{
 a large operator such as
 .ds Su \[oq]\s+5\(*S\s0\[cq]
 .if \n(.g .if !c\(*S .ds Su the summation operator
-\*(Su;
-.
-.TP
-binary
-a binary operator such as \[oq]\[pl]\[cq];
-.
-.TP
-relation
-a relation such as \[oq]=\[cq];
-.
-.TP
-opening
-a opening bracket such as \[oq](\[cq];
-.
-.TP
-closing
-a closing bracket such as \[oq])\[cq];
-.
-.TP
-punctuation
-a punctuation character such as \[oq],\[cq];
-.
-.TP
-inner
-a subformula contained within brackets;
-.
-.TP
-suppress spacing
-that suppresses automatic spacing adjustment.
-.RE
+\*(Su
+T}
+binary	a binary operator such as \[oq]\[pl]\[cq]
+relation	a relation such as \[oq]=\[cq]
+opening	a opening bracket such as \[oq](\[cq]
+closing	a closing bracket such as \[oq])\[cq]
+punctuation	a punctuation character such as \[oq],\[cq]
+inner	a subformula contained within brackets
+suppress	a type that suppresses automatic spacing adjustment
+.TE
 .
 .
 .LP
@@ -834,10 +807,7 @@ Values are in units of hundredths of an em unless otherwise stated.
 These descriptions are intended to be expository rather than
 definitive.
 .
-.ie t \
-.  TP \w'\fBdefault_rule_thickness'u+2n
-.el \
-.  TP
+.TP
 .B minimum_size
 .B eqn
 doesn't set anything at a smaller point-size than this.
@@ -1289,7 +1259,7 @@ causes a character to be set in roman type.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@MACRODIR@/eqnrc'u+2n
+.TP
 .B @MACRODIR@/eqnrc
 Initialization file.
 .
@@ -1402,5 +1372,6 @@ This is allowed by the specification, but inefficient.
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" tab-width: 12
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff tabstop=12:

@@ -31,12 +31,6 @@ tfmtodit \- create font files for use with groff \-Tdvi
 .
 .ie t .ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 .el .ds tx TeX
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.el .TP "\\$1"
-..
 .
 .
 .\" ====================================================================
@@ -223,7 +217,7 @@ commands giving additional font metric information.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@FONTDIR@/devdvi/DESC'u+2n
+.TP
 .B @FONTDIR@/devdvi/DESC
 Device description file.
 .

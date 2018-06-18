@@ -29,13 +29,6 @@ grodvi \- convert groff output to TeX DVI format
 .ie t .ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 .el .ds tx TeX
 .
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.  ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.  el .TP "\\$1"
-..
-.
 .de FT
 .  if '\\*(.T'dvi' .ft \\$1
 ..
@@ -140,7 +133,7 @@ can be created from tfm files using
 The font description file should contain the following
 additional commands:
 .
-.Tp \w'\fBinternalname'u+2n
+.TP
 .BI internalname\   name
 The name of the tfm file (without the
 .B .tfm

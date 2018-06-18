@@ -26,17 +26,6 @@ lkbib \- search bibliographic databases
 .
 .
 .\" ====================================================================
-.\" Definitions
-.\" ====================================================================
-.
-.\" Like TP, but if specified indent is more than half
-.\" the current line-length - indent, use the default indent.
-.de Tp
-.  ie \\n(.$=0:((0\\$1)*2u>(\\n(.lu-\\n(.iu)) .TP
-.  el .TP "\\$1"
-..
-.
-.\" ====================================================================
 .SH SYNOPSIS
 .\" ====================================================================
 .
@@ -129,7 +118,7 @@ is\~6.
 .SH ENVIRONMENT
 .\" ====================================================================
 .
-.TP \w'\fBREFER'u+2n
+.TP
 .SB REFER
 Default database.
 .
@@ -138,7 +127,7 @@ Default database.
 .SH FILES
 .\" ====================================================================
 .
-.Tp \w'\fB@DEFAULT_INDEX@'u+2n
+.TP
 .B @DEFAULT_INDEX@
 Default database to be used if the
 .SB REFER
