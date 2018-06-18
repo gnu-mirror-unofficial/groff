@@ -2991,7 +2991,16 @@ to\~0 otherwise.
 .
 .TP
 .ESC c
-Interrupt text processing.
+Continue output line at next input line.
+Anything after this escape on the same line is ignored except
+.ESC R
+(which works as usual).
+Anything before
+.ESC c
+on the same line is appended to the current partial output line.
+The next non-command line after a line interrupted with
+.ESC c
+counts as a new input line.
 .
 .TP
 .ESCq C glyph
