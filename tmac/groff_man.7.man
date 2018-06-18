@@ -1385,16 +1385,46 @@ in a single word, for example:
 .RE
 .
 .IP
+Note that when using this trick with the
+.B .BI
+or
+.B .RI
+macros, you will need to manually add an italic correction escape
+.B \e/
+before the
+.B \ec
+due to way macros expand their arguments.
+.
+.
+.RS
+.IP
+.EX
+Files processed with
+\&.B groff \e\-mom
+(or
+\&.BI "\e\-m " mom\e/\ec
+) produce PostScript output by default.
+.EE
+.RE
+.
+.
+.IP
 Alternatively, and perhaps with better portability, the
 .B \ef
 font escape sequence can be used; see below.
-.sp
+.
 Attempting to use
 .B \ec
-to include the output from more than one macro line into the head of a
+to include the output from more than one macro line into the next-line
+argument of a
 .B .TP
-macro will misrender with groff-1.22.3, mandoc-1.14.1, older versions of
-these programs, and perhaps with some other formatters.
+macro will misrender with
+.I groff
+1.22.3,
+.I mandoc
+1.14.1,
+older versions of these programs,
+and perhaps with some other formatters.
 .
 .TP
 .B \ee
@@ -1429,9 +1459,21 @@ It can also be used if three different fonts are needed in a
 single word.
 It may be more portable than
 .BR \ec .
+.
+It is up to you to account for italic corrections with
+.B \e/
+and
+.BR \e, ,
+which are themselves
+.I groff
+extensions,
+if desired and if supported by your implementation.
+.
+.
 .IP
-As long as only two fonts are needed, using font alternation
-macros like
+As long as at most two fonts are needed in any one whitespace-delimited
+word,
+using font alternation macros like
 .B .BR
 usually results in more readable source code.
 .
