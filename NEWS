@@ -46,6 +46,20 @@ o PDFPIC has now been corrected, so the behaviour is the same whether you
   postscript driver, only if you used it with the pdf driver.
 
 
+Gropdf
+------
+
+  o Type 1 font loading fixed to handle newer ghostscript versions.
+
+  o Handling of glyphs above position 255 improved to allow many more glyphs
+    to be used.
+
+  o New macros .pdftransition and .pdfpause introduced to allow creation of
+    presentation slides. Partially backward compatible with present.tmac,
+    specifically the PAUSE, BLOCKS and BLOCKE commands. Supports all the
+    transition types introduced in PDF v1.5. (See gropdf man page)
+
+
 Miscellaneous
 -------------
 
@@ -65,6 +79,7 @@ o eqn2graph no longer supports the "-unsafe" option.  It did nothing.
 
 o groffer now supports the output of XHTML.  Use the "--xhtml" or
   "--mode=xhtml" command-line options to generate it.
+
 
 VERSION 1.22.3
 ==============
