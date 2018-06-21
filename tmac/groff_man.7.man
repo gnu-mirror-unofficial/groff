@@ -1551,6 +1551,45 @@ Local changes and customizations should be put into this file.
 .
 .
 .\" ====================================================================
+.SH NOTES
+.\" ====================================================================
+.
+Some tips on troubleshooting your man pages follow.
+
+.TP
+.RB \(bu " .RE" " doesn't reset the indent to the expected level
+.TQ
+\(bu warning: scale indicator invalid in this context
+.TQ
+\(bu warning: number register 'an\-saved\-margin2' not defined
+.TQ
+\(bu warning: number register 'an\-saved\-prevailing\-indent2' not \
+defined
+The
+.B .RS
+macro takes an indentation
+.I amount
+as an argument;
+the
+.B .RE
+macro's argument is an indentation
+.IR level .
+In other words,
+.BR .RE 's
+argument tells it the number of previous
+.B .RS
+calls you want to undo.
+.
+If you desire symmetry in your macro calls,
+simply issue one
+.B .RE
+without an argument
+for each
+.B .RS
+that precedes it.
+.
+.
+.\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
 The GNU version of the
