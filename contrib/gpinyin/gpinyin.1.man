@@ -1,11 +1,10 @@
+'\" t
 .TH GPINYIN @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
-gpinyin \- Chinese European-like writing within groff
+gpinyin \- use Hanyu Pinyin Chinese in roff
 .
 .SH "SYNOPSIS"
 .\" The .SH was moved to this place in order to appease 'apropos'.
-.
-.\" TODO: This page needs a thorough edit by a native English speaker.
 .
 .\" ====================================================================
 .\" Legalese
@@ -24,14 +23,16 @@ gpinyin \- Chinese European-like writing within groff
 .\" <http://www.gnu.org/licenses/gpl-2.0.html>.
 .
 .\" ====================================================================
-.\" Characters
+.\" Local definitions
 .\" ====================================================================
 .
+.\" Define a string for the TeX logo.
+.ie t .ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
+.el   .ds TeX TeX
+.
+.\" Define a string for an ellipsis.
 .ie t .ds EL \f[S]\N'188'\f[P]\"
 .el .ds EL \&.\|.\|.\&\"
-.\" ie t .char \[Ellipsis] \f[S]\N'188'\f[P]
-.\" el .char \[Ellipsis] \&.\|.\|.\&\
-.\" called with \[Ellipsis]
 .
 .
 .\" ====================================================================
@@ -39,257 +40,215 @@ gpinyin \- Chinese European-like writing within groff
 .\" ====================================================================
 .
 .SY gpinyin
-.OP \-
-.OP \-\-
-.OP "\%filespec \*(EL"
+.RI [ input-file
+\*(EL]
 .YS
 .
-.BR "gpinyin \-h" | \-\-help
-.br
-.BR "gpinyin \-v" | \-\-version
+.SY gpinyin
+.B \-h
+.SY gpinyin
+.B \-\-help
+.YS
+.
+.SY gpinyin
+.B \-v
+.SY gpinyin
+.B \-\-version
+.YS
 .
 .
 .\" ====================================================================
 .SH DESCRIPTION
 .\" ====================================================================
 .
-This is a preprocessor for
-.BR \%groff (@MAN1EXT@).
-.
-It allows use of the Chinese European-like language
-.I Pinyin
-into
+.B gpinyin
+is a preprocessor for
+.BR \%groff (@MAN1EXT@)
+that facilitates use of the Hanyu Pinyin
 .BR groff (7)
 files.
 .
+Pinyin is a method for writing the Chinese language with the Latin
+alphabet.
 .
-.\" ====================================================================
-.SH "OPTIONS"
-.\" ====================================================================
+The Chinese language consists of more than four hundred syllables,
+each with one of five different tones.
 .
-.\" ====================================================================
-.SS "Breaking Options"
-.\" ====================================================================
-.
-An option is
-.IR breaking ,
-when the program just writes the information that was asked for and
-then stops.
-.
-All other arguments will be ignored by that.
-.
-The
-.I breaking
-options are here
-.
-.TP
-.B \-h\~\fR|\fB\~\-\-help
-Print help information with a short explanation of options to standard
-output.
-.
-.
-.TP
-.B \-v\~\fR|\fB\~\-\-version
-Print version information to standard output.
-.
-.
-.\" ====================================================================
-.SS "Filespec Options"
-.\" ====================================================================
-.
-So far, there are only
-.I filespec
-and
-.I breaking
-options.
+In Pinyin,
+a syllable is written in the Latin alphabet and a numeric tone indicator
+can be appended to each syllable.
 .
 .
 .P
-.I filespec
-arguments are file names or the minus sign
-.B \-
-for standard input.
+Each
+.I input-file
+is a file name or the hyphen-minus character \[lq]\-\[rq] to indicate
+that standard input should be read.
 .
-As usual, the argument
-.B \-\-
-can be used in order to let all following arguments mean file names,
-even if the names begin with a minus character
-.BR \- .
+As usual,
+the argument \[lq]\-\-\[rq] can be used in order to force interpretation
+of all remaining arguments as file names,
+even if an
+.I input-file
+argument begins with the hyphen-minus character.
 .
 .
 .\" ====================================================================
-.SH "PINYIN PARTS"
+.SS "Pinyin Sections"
 .\" ====================================================================
 .
-.I Pinyin
-parts in
-.I groff files
-are enclosed by two
+Pinyin sections in
+.I groff
+files are enclosed by two
 .B .pinyin
 requests with different arguments.
 .
 The starting request is
 .RS
 .EX
-\e.pinyin start
+\&.pinyin start
 .EE
 .RE
 or
 .RS
 .EX
-\e.pinyin begin
+\&.pinyin begin
 .EE
 .RE
 and the ending request is
 .RS
 .EX
-\e.pinyin stop
+\&.pinyin stop
 .EE
 .RE
 or
 .RS
 .EX
-\e.pinyin end
+\&.pinyin end
 .EE
 .RE
-.
-.
-.\" ====================================================================
-.SH "PINYIN DETAILS"
-.\" ====================================================================
-.
-.I Pinyin
-is used for writing the Chinese language in a European-like
-(romanization) way.
-.
-The Chinese language consists of more than 400 syllables, each with
-one of 5 different tones.
-.
-In
-.IR Pinyin ,
-such toned syllables can be appended to word-like connections.
+\&.
 .
 .
 .\" ====================================================================
 .SS "Syllables"
 .\" ====================================================================
 .
-The Chinese language is based on about 411 defined
-.IR syllables ,
+The spoken Chinese language is based on about 411
+.IR syllables ;
 see
 .UR http://\:en.wikipedia.org/\:wiki/\:Pinyin_table
 .UE .
 .
 .
 .P
-In
-.IR Pinyin ,
-each syllable consists of 1 to 6 European-like letters, the normal
-ASCII characters in upper and lower case, the only unusual characters
-are the
-.BR "U dieresis " ( umlaut )
-in both cases, i.e.\&
-.BR [a\(enzA\(enZüÜ] .
+In Pinyin,
+each syllable consists of one to six letters from the Latin alphabet;
+these letters comprise the fifty-two upper- and lowercase letters from
+the ASCII character set,
+plus the letter \[lq]U\[rq] with dieresis (umlaut) in both cases\[em]in
+other words,
+the members of the set \[lq][a\[en]zA\[en]Z\[:u]\[:U]]\[rq].
 .
 .
 .P
-In the
-.B groff gpinyin
+In
+.I groff
 input,
-all ASCII letters are written as usual.
+all ASCII letters are written as themselves.
 .
-But the
-.BR u / U
-.B dieresis
-can be written as either as
-.B \e[\[aq]u] or
-.B ue
-in lower case or
-.BR \e[\[aq]U] ,
-.BR Ue ,
-.B UE
-in upper case.
+The \[lq]u with dieresis\[rq] can be written as
+\[lq]\e[:u]\[rq]
+in lowercase or
+\[lq]\e[:U]\[rq]
+in uppercase.
+.
+Within
+.B .pinyin
+sections,
+.I gpinyin
+supports the form
+\[lq]ue\[rq]
+for lowercase and the forms
+\[lq]Ue\[rq]
+and
+\[lq]UE\[rq]
+for uppercase.
 .
 .
 .\" ====================================================================
 .SS "Tones"
 .\" ====================================================================
 .
-Each syllable has exactly one of 5 defined
+Each syllable has exactly one of five
 .IR tones .
 .
-The 5th tone is not written at all, but each tone 1 to 4 is written
-as an accent above a defined vowel within the syllable.
+The fifth tone is not explicitly written at all,
+but each of the first through fourth tones is indicated with a diacritic
+above a specific vowel within the syllable.
 .
 .
 .P
-In the source file, these tones are written by adding a number 0 to 5
-after the syllable name.
+In a
+.I gpinyin
+source file,
+these tones are written by adding a numeral in the range 0 to 5 after
+the syllable.
+.
+The tone numbers 1 to 4 are transformed into accents above vowels in the
+output.
+.
+The tone numbers 0 and 5 are synonymous.
 .
 .
 .P
-In each writing, the tone numbers 1 to 4 are transformed into accents
-above vowels.
+The following table summarizes the tones.
+.
+Some output devices will not be able to render every output example.
 .
 .
 .P
-The 1st tone is the horizontal macron
-.BR \e[a\-]
-.B \[a-] ,
-similar to a minus or sub character, but on top of the vowel.
-.
-In each source file, write the 1st tone as
-.IB "syllable" 1\fR.
-.
-.
-.P
-The 2nd tone is the accute accent
-.B \e[aa]
-.BR \[aa] .
-.
-In each source file, write the 2nd tone as
-.IB "syllable" 2\fR.
+.if t .ne 8 \" Try to keep the table on one page for printed output.
+.TS
+l l l l l.
+Tone	Description	Diacritic	Example Input	Example Output
+_
+first	flat	\[a-]	ma1	m\[u0061_0304]
+second	rising	\[aa]	ma2	m\[u0061_0301]
+third	falling-rising	\[ah]	ma3	m\[u0061_030C]
+fourth	falling	\[ga]	ma4	m\[u0061_0300]
+fifth	neutral	(none)	ma0	ma
+\^	\^	\^	ma5	\^
+.TE
 .
 .
 .P
-The 3rd tone is the caron sign,
-.BR \e[ah]
-.B \[ah] ,
-which looks a bit like a small
-.B v
-above the vowel.
-.
-In each source file, write the 3rd tone as
-.IB "syllable" 3\fR.
+The neutral tone number can be omitted from a word-final syllable,
+but not otherwise.
 .
 .
-.P
-The 4th tone is the grave accent
-.B \e[ga]
-.BR \[ga] .
+.\" ====================================================================
+.SH OPTIONS
+.\" ====================================================================
 .
-In each source file, write the 4th tone as
-.IB "syllable" 4\fR.
+.TP
+.B \-h
+.TQ
+.B \-\-help
+Print usage information and exit.
 .
 .
-.P
-The 5th tone is the no-tone.
-.
-The numbers 0 and 5 can be used for the
-.BR ( no-tone ).
-.
-The
-.B no-tone
-number can be omitted, when the syllable is the end of some word.
-.
-But within a word of syllables, one of the
-.B no-tone
-numbers 0 or 5 must be written.
+.TP
+.B \-v
+.TQ
+.B \-\-version
+Print version information and exit.
 .
 .
 .\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
+.
 .B gpinyin
 was written by
 .MT <groff\-bernd.warken\-72@\:web.de>
@@ -301,6 +260,65 @@ Bernd Warken
 .SH "SEE ALSO"
 .\" ====================================================================
 .
+Useful documents on the World Wide Web related to Pinyin include
+.RS 4n
+.br
+.UR http://\:en.wikipedia.org/\:wiki/\:Pinyin
+\[lq]Pinyin\[rq] (Wikipedia)
+.UE ,
+.
+.br
+.UR http://\:en.wikipedia.org/\:wiki/\:Pinyin_table
+\[lq]Pinyin table\[rq] (Wikipedia)
+.UE ,
+.
+.\" XXX: dead link
+.\".br
+.\".UR http://\:www.sino.uni\-heidelberg.de/\:course_resources/\:s02/\:\
+.\"py\-vowels.htm
+.\".I Unicode vowels for Pinyin
+.\".UE ,
+.\".
+.br
+.UR http://\:www.foolsworkshop.com/\:ptou/\:index.html
+.I Pinyin to Unicode
+.UE ,
+.
+.br
+.UR http://\:www.mandarintools.com/
+.I On-line Chinese Tools
+.UE ,
+.
+.br
+.UR http://\:www.pinyin.info/\:index.html
+.I Pinyin.info: a guide to the writing of Mandarin Chinese in \
+romanization
+.UE ,
+.
+.br
+.UR http://\:www.pinyin.info/\:rules/\:where.html
+\[lq]Where do the tone marks go?\[rq] (Pinyin.info)
+.UE ,
+.
+.br
+.UR http://\:git.savannah.gnu.org/\:gitweb/\:\
+?p=cjk.git;a=blob_plain;f=doc/\:pinyin.txt;hb=HEAD
+pinyin.txt from the CJK macro package for \*[TeX]
+.UE ,
+.br
+.RS -4n
+and
+.RE
+.
+.br
+.UR http://\:git.savannah.gnu.org/\:gitweb/\:\
+?p=cjk.git;a=blob_plain;f=texinput/p\:inyin.sty;hb=HEAD
+pinyin.sty from the CJK macro package for \*[TeX]
+.UE .
+.
+.RE
+.
+.P
 .BR \%groff (@MAN1EXT@),
 .BR \%grog (@MAN1EXT@),
 and
@@ -316,71 +334,15 @@ and
 .BR \%groff_char (@MAN7EXT@)
 are comprehensive references covering the language elements of GNU
 .I roff
-and the available glyph repetoire, respectively.
-.
-.
-.P
-Internet documents related to
-.I pinyin
-are
-.RS
-.br
-.UR http://\:en.wikipedia.org/\:wiki/\:Pinyin
-.I Wikipedia pinyin
-.UE ,
-.
-.br
-.UR http://\:en.wikipedia.org/\:wiki/\:Pinyin_table
-.I Pinyin Table
-.UE ,
-.
-.br
-.UR http://\:www.sino.uni\-heidelberg.de/\:course_resources/\:s02/\:\
-py\-vowels.htm
-.I Unicode vowels for Pinyin
-.UE ,
-.
-.br
-.UR http://\:www.foolsworkshop.com/\:ptou/\:index.html
-.I pinyin to Unicode
-.UE ,
-.
-.br
-.UR http://\:www.mandarintools.com/
-.I Online Chinese Tools
-.UE ,
-.
-.br
-.UR http://\:www.pinyin.info/\:index.html
-.I Main pinyin website
-.UE ,
-.
-.br
-.UR http://\:www.pinyin.info/\:rules/\:where.html
-.I Where do the tone marks go?
-.UE ,
-.
-.br
-.UR http://\:git.savannah.gnu.org/\:gitweb/\:\
-?p=cjk.git;a=blob_plain;f=doc/\:pinyin.txt;hb=HEAD
-.I Pinyin for TeX 1
-.UE ,
-.
-.br
-.UR http://\:git.savannah.gnu.org/\:gitweb/\:\
-?p=cjk.git;a=blob_plain;f=texinput/p\:inyin.sty;hb=HEAD
-.I Pinyin for TeX 2
-.UE .
-.
-.RE
+and the available glyph repertoire,
+respectively.
 .
 .
 .\" ====================================================================
-.\" Emacs settings
+.\" Editor settings
 .\" ====================================================================
 .
 .\" Local Variables:
 .\" mode: nroff
-.\" coding: latin-1
 .\" End:
 .\" vim: set filetype=groff:
