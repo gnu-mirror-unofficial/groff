@@ -50,11 +50,6 @@ gropdf \- PDF driver for groff
 .YS
 .
 .
-.LP
-It is possible to have whitespace between a command-line option and its
-parameter.
-.
-.
 .\" ====================================================================
 .SH DESCRIPTION
 .\" ====================================================================
@@ -106,11 +101,23 @@ below for a guide how to install fonts for
 .SH OPTIONS
 .\" ====================================================================
 .
+.LP
+Whitespace is optional between a command-line option and its parameter.
+.
+.
 .TP
 .B \-d
 Include debug information as comments within the PDF.
 .
 Also produces an uncompressed PDF.
+.
+.
+.TP
+.B \-e
+Forces
+.B gropdf
+to embed ALL fonts (even the 14 base PDF fonts).
+.
 .
 .TP
 .BI \-F dir
@@ -159,28 +166,6 @@ See
 .B groff_font (@MAN5EXT@)
 for details.
 .
-.\" .TP
-.\" .BI \-w n
-.\" Lines should be drawn using a thickness of
-.\" .IR n \~\c
-.\" thousandths of an em.
-.\" .
-.\" If this option is not given, the line thickness defaults to 0.04\~em.
-.\" .
-.
-.TP
-.B \-v
-Print the version number.
-.
-.TP
-.BI \-y foundry
-Set the foundry to use for selecting fonts of the same name.
-.
-.TP
-.B \-e
-Forces
-.B gropdf
-to embed ALL fonts (even the 14 base PDF fonts).
 .
 .TP
 .B \-s
@@ -190,6 +175,7 @@ i.e.\& number of pages in document.
 Ghostscript's
 .B ps2pdf
 complains about this line if it is included, but works anyway.
+.
 .
 .TP
 .B \-u
@@ -204,6 +190,25 @@ this makes it easier to search for words which contain ligatures.
 You can include your own CMap by specifying a
 .I cmapfilename
 or have no CMap at all by omitting the argument.
+.
+.
+.TP
+.B \-v
+Print the version number.
+.
+.
+.\" .TP
+.\" .BI \-w n
+.\" Lines should be drawn using a thickness of
+.\" .IR n \~\c
+.\" thousandths of an em.
+.\" .
+.\" If this option is not given, the line thickness defaults to 0.04\~em.
+.\" .
+.\" .
+.TP
+.BI \-y foundry
+Set the foundry to use for selecting fonts of the same name.
 .
 .
 .\" ====================================================================
