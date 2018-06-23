@@ -116,11 +116,13 @@ Also produces an uncompressed PDF.
 .B \-e
 Forces
 .B gropdf
-to embed ALL fonts (even the 14 base PDF fonts).
+to embed
+.I all
+fonts (even the 14 base PDF fonts).
 .
 .
 .TP
-.BI \-F dir
+.BI \-F " dir"
 Prepend directory
 .IB dir /dev name
 to the search path for font, and device description files;
@@ -129,7 +131,7 @@ is the name of the device, usually
 .BR pdf .
 .
 .TP
-.BI \-I dir
+.BI \-I " dir"
 This option may be used to add a directory to the search path for
 files named in
 .B \[rs]X'pdf: pdfpic'
@@ -145,10 +147,10 @@ No directory search is performed for files with an absolute file name.
 .
 .TP
 .B \-l
-Print the document in landscape format.
+Orient the document in landscape format.
 .
 .TP
-.BI \-p paper-size
+.BI \-p " paper-size"
 Set physical dimension of output medium.
 .
 This overrides the
@@ -163,7 +165,7 @@ file; it accepts the same arguments as the
 command.
 .
 See
-.B groff_font (@MAN5EXT@)
+.BR groff_font (@MAN5EXT@)
 for details.
 .
 .
@@ -178,9 +180,8 @@ complains about this line if it is included, but works anyway.
 .
 .
 .TP
-.B \-u
-.TQ
-.BI \-u cmapfilename
+.B \-u\c
+.RI " [" cmapfile ]
 .B Gropdf
 normally includes a ToUnicode CMap with any font created using
 .B text.enc
@@ -188,13 +189,15 @@ as the encoding file,
 this makes it easier to search for words which contain ligatures.
 .
 You can include your own CMap by specifying a
-.I cmapfilename
+.I cmapfile
 or have no CMap at all by omitting the argument.
 .
 .
 .TP
 .B \-v
-Print the version number.
+.TQ
+.B \-\-version
+Print the version number and exit.
 .
 .
 .\" .TP
@@ -207,7 +210,7 @@ Print the version number.
 .\" .
 .\" .
 .TP
-.BI \-y foundry
+.BI \-y " foundry"
 Set the foundry to use for selecting fonts of the same name.
 .
 .
