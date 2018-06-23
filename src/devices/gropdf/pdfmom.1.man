@@ -1,6 +1,6 @@
 .TH PDFMOM @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
-pdfmom \- Produce PDF documents using the mom macro set
+pdfmom \- produce PDF documents using the mom macro package for groff
 .
 .
 .\" ====================================================================
@@ -30,15 +30,22 @@ pdfmom \- Produce PDF documents using the mom macro set
 .\" ====================================================================
 .
 .SY pdfmom
-.OP \-Tps "\fR[pdfroff options]"
-[groff options]
-.I files .\|.\|.
+.OP \-Tpdf
+.RI [ groff-options ]
+.I file
+\&.\|.\|.\&
 .YS
 .
 .SY pdfmom
-.OP \-Tpdf
-[groff options]
-.I files .\|.\|.
+.B \-Tps
+.RI [ pdfroff-options ]
+.RI [ groff-options ]
+.I file
+\&.\|.\|.\&
+.YS
+.
+.SY pdfmom
+.B \-v
 .YS
 .
 .
@@ -55,8 +62,9 @@ formatted with the mom macros.
 .
 .P
 .B pdfmom
-prints to stdout, so output must be redirected to a destination
-file.  The size of the final PDF can be reduced by piping the output
+prints to the standard output,
+so output must usually be redirected to a destination file.
+The size of the final PDF can be reduced by piping the output
 through
 .BR ps2pdf .
 .
@@ -97,6 +105,7 @@ calls
 .BR pdfroff ,
 the
 .
+.
 .P
 .RS
 .B \-mpdfmark \-mom \-\-no-toc
@@ -123,6 +132,14 @@ macros is discussed in full in the PDF manual,
 .IR "Producing PDFs with groff and mom" .
 .
 .
+.P
+If called with the
+.B \-v
+option,
+.B pdfmom
+simply prints its version information and exits.
+.
+.
 .\" ====================================================================
 .SH BUGS
 .\" ====================================================================
@@ -130,11 +147,13 @@ macros is discussed in full in the PDF manual,
 .B pdfmom
 sometimes issues warnings of the type
 .
+.
 .P
 .RS 2
 \&.\|.\|.:
 .B can't transparently output node at top level
 .RE
+.
 .
 .P
 This is more of an annoyance than a bug, and may safely be ignored.
