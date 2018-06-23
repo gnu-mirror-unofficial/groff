@@ -3,7 +3,7 @@
 .TH GROLBP @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
 grolbp \- groff driver for Canon CAPSL printers (LBP-4 and LBP-8 \
-series laser printers).
+series laser printers)
 .\" Modified by Francisco Andrés Verdú <pandres@dragonet.es> for the
 .\" grolbp program.
 .
@@ -34,22 +34,41 @@ series laser printers).
 .
 .SY grolbp
 .OP \-l
-.OP \-\-landscape
-.OP \-v
-.OP \-\-version
-.OP \-c n
-.OP \-\-copies= numcopies
-.OP \-p paper_size
-.OP \-\-papersize= paper_size
+.OP \-c num-copies
+.OP \-F font-directory
 .OP \-o orientation
-.OP \-\-orientation= orientation
+.OP \-p paper-size
 .OP \-w width
-.OP \-\-linewidth= width
-.OP \-F dir
-.OP \-\-fontdir= dir
-.OP \-h
-.OP \-\-help
-.RI "[\ " files\|.\|.\|. "\ ]"
+.RI [ file
+\&.\|.\|.\&]
+.SY grolbp
+[\c
+.BI \-\-copies= num-copies\c
+] [\c
+.BI \-\-fontdir= font-directory\c
+] [\c
+.BI \-\-landscape\c
+] [\c
+.BI \-\-linewidth= width\c
+] [\c
+.BI \-\-orientation= orientation\c
+] [\c
+.BI \-\-papersize= paper-size\c
+]
+.RI [ file
+\&.\|.\|.\&]
+.YS
+.
+.SY grolbp
+.B \-h
+.SY grolbp
+.B \-\-help
+.YS
+.
+.SY grolbp
+.B \-v
+.SY grolbp
+.B \-\-version
 .YS
 .
 .
@@ -60,18 +79,22 @@ series laser printers).
 .B grolbp
 is a driver for
 .B groff
-that produces output in CAPSL and VDM format suitable for Canon LBP\-4 and
-LBP\-8 printers.
+that produces output in CAPSL and VDM format suitable for Canon LBP-4
+and LBP-8 printers.
 .
 .
 .LP
-For compatibility with grolj4 there is an additional drawing command
-available:
+For compatibility with
+.BR grolj4 (@MAN1EXT@)
+there is an additional drawing command available:
 .
 .TP
 .BI \eD'R\  dh\ dv '
-Draw a rule (i.e.\ a solid black rectangle), with one corner at the current
-position, and the diagonally opposite corner at the current position
+Draw a rule
+(i.e., a solid black rectangle),
+with one corner at the current position,
+and the diagonally opposite corner at the current
+position
 .RI +( dh , dv ).
 .
 .
@@ -80,16 +103,19 @@ position, and the diagonally opposite corner at the current position
 .\" ====================================================================
 .
 Note that there can be whitespace between a one-letter option and its
-argument; on the other hand, there must be whitespace and/or an equal sign
+argument;
+on the other hand, there must be whitespace and/or an equal sign
 (\(oq=\(cq) between a long-name option and its argument.
 .
+.
 .TP
-.BI \-c numcopies
+.BI \-c " num-copies"
 .TQ
-.BI \-\-copies= numcopies
+.BI \-\-copies= num-copies
 Print
-.I numcopies
+.I num-copies
 copies of each page.
+.
 .
 .TP
 .B \-l
@@ -97,25 +123,28 @@ copies of each page.
 .B \-\-landscape
 Print the document with a landscape orientation.
 .
+.
 .TP
-.BI \-p paper_size
+.BI \-p " paper-size"
 .TQ
-.BI \-\-papersize= paper_size
+.BI \-\-papersize= paper-size
 Set the paper size to
-.IR paper_size ,
+.IR paper-size ,
 which must be a valid paper size description as indicated in the section
 .BR "PAPER SIZES" .
 .
+.
 .TP
-.BI \-o orientation
+.BI \-o " orientation"
 .TQ
 .BI \-\-orientation= orientation
 Print the document with
 .I orientation
 orientation, which must be \(oqportrait\(cq or \(oqlandscape\(cq.
 .
+.
 .TP
-.BI \-w width
+.BI \-w " width"
 .TQ
 .BI \-\-linewidth= width
 Set the default line thickness to
@@ -124,22 +153,25 @@ thousandths of an em.
 .
 If this option isn't specified, the line thickness defaults to 0.04\~em.
 .
+.
 .TP
 .B \-v
 .TQ
 .B \-\-version
 Print the version number.
 .
+.
 .TP
-.BI \-F dir
+.BI \-F " font-directory"
 .TQ
-.BI \-\-fontdir= dir
+.BI \-\-fontdir= font-directory
 Prepend directory
-.IB dir /dev name
+.IB font-directory /dev name
 to the search path for font and device description files;
 .I name
 is the name of the device, usually
 .BR lbp .
+.
 .
 .TP
 .B \-h
@@ -152,17 +184,17 @@ Print a short help text.
 .SH TYPEFACES
 .\" ====================================================================
 .
-The driver supports the Dutch, Swiss and Swiss-Narrow scalable typefaces,
-each one in the Regular, Bold, Italic and Bold-Italic styles.
+The driver supports the Dutch, Swiss and Swiss-Narrow scalable
+typefaces, each one in the Regular, Bold, Italic and Bold-Italic styles.
 .
-Additionally, the Courier and Elite monospaced typefaces at the sizes 8 and
-12 points (for Courier) resp.\& 8 and 10 points (for Elite) are supported,
-each one in the Regular, Bold and Italic styles.
+Additionally, the Courier and Elite monospaced typefaces at the sizes 8
+and 12 points (for Courier) resp.\& 8 and 10 points (for Elite) are
+supported, each one in the Regular, Bold and Italic styles.
 .
 .
 .PP
-The following chart summarizes the font names you can use to access these
-fonts:
+The following chart summarizes the font names you can use to access
+these fonts:
 .
 .
 .PP
@@ -329,9 +361,9 @@ font description file is
 .IP
 Note that you may need to modify
 .B grolbp
-to add support for new bitmapped fonts, since the available font names and
-font sizes of bitmapped fonts (as documented above) are hard-coded into the
-program.
+to add support for new bitmapped fonts, since the available font names
+and font sizes of bitmapped fonts (as documented above) are hard-coded
+into the program.
 .
 .IP \(bu
 For scalable fonts,
