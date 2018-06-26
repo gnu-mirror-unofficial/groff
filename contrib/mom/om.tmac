@@ -20,8 +20,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.3
------------
+Version 2.3-a
+-------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.2-a
+.ds version 2.3-a
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -20921,6 +20921,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 \# Main macros
 \#
 .MAC PS END
+.    if !\\n[#PP] .nop
 .    br
 .    have-adjust \\$@ \" Adjusting is handled by FLOAT
 .    ds ev-current \\n[.ev]
@@ -21059,7 +21060,9 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       br
 .       ev
 .    \}
-.    if !\\n[pic*left] .in \\n[ll-pre-pic]u-\\n[pic*div-width]u/2u
+.\"
+.\" .if !\\n[pic*left] .in \\n[ll-pre-pic]u-\\n[pic*div-width]u/2u
+.\"
 .    pic*div
 .    sp
 .    if (\\n[pic*have-label]=1):(\\n[pic*autolabel]=1):(\\n[pic*caption-after-label]=1) \{\
