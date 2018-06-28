@@ -32,25 +32,27 @@ gdiffmk \- mark differences between groff/nroff/troff files
 .\" ====================================================================
 .
 .SY gdiffmk
-.OP \-a \%addmark
-.OP \-c \%changemark
-.OP \-d \%deletemark
-[\ \c
-.B \-D
-.OP \-B
-.OP \-M "mark1 mark2"
-]
-.OP \-x \%diffcmd
+.OP \-a addmark
+.OP \-c changemark
+.OP \-d deletemark
+.RB [ \-D
+.RB [ \-B ]
+.RB [ \-M
+.IR "mark1 mark2" ]]
+.OP \-x diffcmd
 .OP \-\-
-.OP \-\-help
-.OP \%\-\-version
-.I \%file1
-.I \%file2
-[\ \c
-.IR \%output \ \c
-]
+.I file1
+.I file2
+.RI [ output ]
 .YS
 .
+.SY gdiffmk
+.B \-\-help
+.YS
+.
+.SY gdiffmk
+.B \-\-version
+.YS
 .
 .\" ====================================================================
 .SH DESCRIPTION
