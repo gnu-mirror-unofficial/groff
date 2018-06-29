@@ -13,7 +13,7 @@ groff_man \- GNU roff macro package for formatting man pages
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1999-2017 Free Software Foundation, Inc.
+.\" Copyright (C) 1999-2018 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -56,14 +56,15 @@ groff_man \- GNU roff macro package for formatting man pages
 .
 The
 .B man
-macros used to generate
-.I man\~pages
-with
+macro package for
 .I groff
-were written by James Clark.
+is used to produce manual pages
+.RI (\(lq man\~pages \(rq)
+like the one you are reading.
 .
-This document provides a brief summary of the use of each macro in that
-package.
+GNU
+.IR roff 's
+implementation was written by James Clark.
 .
 .
 .PP
@@ -138,6 +139,43 @@ package.
 .\" ====================================================================
 .SS "Document structure macros"
 .\" ====================================================================
+.
+The highest level of organization of a man page is determined by this
+group of macros.
+.
+.B .TH
+(title heading) identifies the document as a man page and defines
+fundamental information enabling its indexing by
+.BR mandb (8).
+.
+Sections
+.RB ( .SH ),
+one of which is mandatory and many of which are standardized,
+facilitate quick location of relevant information by the reader and aid
+the man page writer to comprehensively discuss all essential aspects of
+the topic.
+.
+Subsections
+.RB ( .SS )
+are optional and permit sections that grow long to develop in a
+controlled way.
+.
+Many technical discussions require examples;
+lengthy ones,
+especially those reflecting multiple lines of input to or output from
+the system,
+are usefully bracketed by
+.B .EX
+and
+.BR .EE .
+.
+When none of the foregoing meets a structural demand,
+a section of the discussion can be manually indented within
+.B .RS
+and
+.B .RE
+macros.
+.
 .
 .TP
 .BI .TH " title section \fR[\fPextra1\fR]\fP \fR[\fPextra2\fR]\fP \fR[\fPextra3\fR]"
@@ -294,33 +332,30 @@ yet) has number\~1, and each call to
 increases the level by\~1.
 .
 .
-.PP
-To summarize, the following macros cause a line break with the
-insertion of vertical space (which amount can be changed with the
-.B PD
-macro):
-.BR SH ,
-.BR SS ,
-.BR TP ,
-.BR TQ ,
-.B LP
-.RB ( PP ,
-.BR P ),
-.BR IP ,
-and
-.BR HP .
-The macros
-.BR RS ,
-.BR RE ,
-.BR EX ,
-and
-.B EE
-also cause a break but no insertion of vertical space.
-.
-.
 .\" ====================================================================
 .SS "Paragraph macros"
 .\" ====================================================================
+.
+A typical paragraph
+.RB ( .PP )
+is set left at the prevailing indent.
+.
+In man pages and other technical literature,
+definition lists are frequently encountered;
+these can be set as \(lqtagged paragraphs\(rq
+.RB ( .TP
+and
+.BR .TQ ),
+which have one or more leading tags followed by a paragraph that has an
+additional left indent.
+.
+The \(lqindented paragraph\(rq
+.RB ( .IP )
+macro is useful to continue the indented content of a narrative started
+with
+.BR .TP ,
+or to set up an itemized or ordered list.
+.
 .
 .TP
 .B .LP
@@ -869,16 +904,81 @@ The text must be on the same line as the macro call.
 .
 .
 .\" ====================================================================
-.SS Miscellaneous
+.SS "Horizontal and vertical spacing"
 .\" ====================================================================
 .
-The default indentation is 7.2n in troff mode and 7n in nroff mode
+The default indentation,
+exhibited by ordinary
+.B .PP
+paragraphs not within an
+.BR .RS / .RE
+relative indent,
+is 7.2n in
+.I troff
+mode and 7n in
+.I nroff
+mode,
 except for
 .BR grohtml ,
 which ignores indentation.
 .
+Section headings
+.RB ( .SH )
+are set flush with the left margin,
+and subsection headings
+.RB ( .SS )
+are indented 3n.
+.
 .
 .PP
+Resist the temptation to mock up tabular or multi-column output with
+ASCII tab characters or the indentation arguments to
+.BR .IP ,
+.BR .TP ,
+.BR .RS ,
+or the deprecated
+.BR .HP ;
+the result may not render comprehensibly on an output device you fail to
+check,
+or which is developed in the future.
+.
+The table preprocessor
+.BR tbl (1)
+can likely meet your needs.
+.
+.
+.PP
+The following macros cause a line break with the
+insertion of vertical space:
+.BR SH ,
+.BR SS ,
+.BR TP ,
+.BR TQ ,
+.B LP
+.RB ( PP ,
+.BR P ),
+.BR IP ,
+and the deprecated
+.BR HP .
+.
+(The deprecated macro
+.B .PD
+can change this vertical spacing,
+but its use is discouraged.)
+.
+The macros
+.BR RS ,
+.BR RE ,
+.BR EX ,
+and
+.B EE
+also cause a break but no insertion of vertical space.
+.
+.
+.\" ====================================================================
+.SS "String registers"
+.\" ====================================================================
+.
 The following strings are defined:
 .
 .
@@ -913,36 +1013,64 @@ The default is \[oq]B\[cq].
 The \[oq]trademark\[cq] sign.
 .
 .
-.PP
-If a preprocessor like
-.B @g@tbl
+.\" ====================================================================
+.SS "Interaction with preprocessors"
+.\" ====================================================================
+.
+When a preprocessor like
+.I @g@tbl
 or
-.B @g@eqn
-is needed, it has become common to make the first line of the
-.I \%man\~page
-look like this:
+.I @g@eqn
+is needed,
+a hint can be given to the man page formatter by making the first line
+of a man page look like this:
 .
 .
 .PP
 .RS
-.BI '\e"\  word
+.BI \(aq\e"\  word
 .RE
 .
 .
 .PP
-Note the single space character after the double quote.
+Note that the line starts with an apostrophe (\(aq),
+not a dot,
+and that a single space character follows the double quote.
+The
 .I word
-consists of letters for the needed preprocessors: \[oq]e\[cq] for
+consists of one letter for each needed preprocessor:
+\[oq]e\[cq] for
 .BR @g@eqn ,
 \[oq]r\[cq] for
 .BR @g@refer ,
-and \[oq]t\[cq] for
+and
+\[oq]t\[cq] for
 .BR @g@tbl .
 .
 Modern implementations of the
-.B man
-program read this first line and automatically call the right
+.I man
+program interpret this first line and automatically call the right
 preprocessor(s).
+.
+.
+.PP
+The usual
+.I tbl
+and
+.I eqn
+macros for table and equation inclusion,
+.BR .TS ,
+.BR .T& ,
+.BR .TE ,
+.BR .EQ ,
+and
+.BR .EN ,
+may be used freely.
+.
+Note that
+.I nroff
+output devices are extremely limited in presentation of mathematical
+equations.
 .
 .
 .\" ====================================================================
@@ -1252,6 +1380,9 @@ not listed above are better avoided in manual pages.
 .\" ====================================================================
 .SS "Deprecated features"
 .\" ====================================================================
+.
+Use of the following is discouraged.
+.
 .
 .TP
 .BI .AT " \fR[\fPsystem \fR[\fPrelease\fR]]\fP"
