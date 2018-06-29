@@ -66,164 +66,6 @@ package.
 .
 .
 .\" ====================================================================
-.SH OPTIONS
-.\" ====================================================================
-.
-The
-.B man
-macros understand the following command-line options (which define
-various registers).
-.
-.
-.TP
-.B \-rcR=1
-This option (the default if in nroff mode) creates a single, very
-long page instead of multiple pages.
-.
-Say
-.B \-rcR=0
-to disable it.
-.
-.
-.TP
-.B \-rC1
-If more than one manual page is given on the command line, number the
-pages continuously, rather than starting each at\~1.
-.
-.
-.TP
-.B \-rD1
-Double-sided printing.
-.
-Footers for even and odd pages are formatted differently.
-.
-.
-.TP
-.BI \-rFT= dist
-Set distance of the footer relative to the bottom of the page if
-negative or relative to the top if positive.
-.
-The default is \-0.5i.
-.
-.
-.TP
-.BI \-rHY= flags
-Set hyphenation flags.
-.
-Possible values are 1\~to not hyphenate the first and last character
-of a word, 2\~to not hyphenate the last word on a page, 4\~to not
-hyphenate the last two characters of a word, 8\~to not hyphenate the
-first two characters of a word, 16\~to enable hyphenation before the
-last character of a word, and 32 to enable hyphenation after the
-first character of a word.
-.
-These values are additive; the default is\~6.  Using values 4 and\~16
-can't be used together since they contradict each other; the same
-holds for values 8 and\~32.
-.
-.
-.TP
-.BI \-rIN= width
-Set body text indentation to
-.IR width .
-.
-The default is 7n for
-.IR nroff ,
-7.2n for
-.IR troff .
-.
-For
-.IR nroff ,
-this value should always be an integer multiple of unit \[oq]n\[cq] to
-get consistent indentation.
-.
-.
-.TP
-.BI \-rLL= line-length
-Set line length.
-.
-If this option is not given, the line length is set to respect any
-value set by a prior \[oq].ll\[cq] request (which
-.I must
-be in effect when the \[oq].TH\[cq] macro is invoked),
-if this differs from the built\-in default for the formatter;
-otherwise it defaults to 78n in
-.I nroff
-mode and 6.5i in
-.I troff
-mode.
-.
-.
-.IP
-Note that the use of a \[oq].ll\[cq] request to initialize the line
-length is supported for backward compatibility with some versions of
-the
-.B man
-program;
-direct initialization of the \[oq]LL\[cq] register should
-.I always
-be preferred to the use of such a request.
-.
-In particular, note that a \[oq].ll\ 65n\[cq] request does
-.I not
-preserve the normal
-.I nroff
-default line length,
-(the
-.B man
-default initialization to 78n prevails), whereas, the
-\[oq]\-rLL=65n\[cq] option, or an equivalent \[oq].nr\ LL\ 65n\[cq]
-request preceding the use of the \[oq]TH\[cq] macro,
-.I does
-set a line length of 65n.
-.
-.
-.TP
-.BI \-rLT= title-length
-Set title length.
-.
-If this option is not given, the title length defaults to the line
-length.
-.
-.
-.TP
-.BI \-rP nnn
-Enumeration of pages start with
-.I nnn
-rather than with\~1.
-.
-.
-.TP
-.BI \-rS xx
-Base document font size is
-.I xx
-points
-.RI ( xx
-can be 10, 11, or\~12) rather than 10\~points.
-.
-.
-.TP
-.BI \-rSN= width
-Set sub-subheading indentation to
-.IR width .
-The default is 3n.
-.
-.
-.TP
-.BI \-rX nnn
-After page\~\c
-.IR nnn ,
-number pages as
-.IR nnn a,
-.IR nnn b,
-.IR nnn c,
-etc.
-.
-For example, the option \[oq]\-rX2\[cq] produces the following page
-numbers: 1, 2, 2a, 2b, 2c, etc.
-.
-.
-.\" ====================================================================
 .SH USAGE
 .\" ====================================================================
 .
@@ -1483,6 +1325,164 @@ usually results in more readable source code.
 .PP
 For maximum portability, escape sequences and special characters
 not listed above are better avoided in manual pages.
+.
+.
+.\" ====================================================================
+.SH OPTIONS
+.\" ====================================================================
+.
+The
+.B man
+macros understand the following command-line options (which define
+various registers).
+.
+.
+.TP
+.B \-rcR=1
+This option (the default if in nroff mode) creates a single, very
+long page instead of multiple pages.
+.
+Say
+.B \-rcR=0
+to disable it.
+.
+.
+.TP
+.B \-rC1
+If more than one manual page is given on the command line, number the
+pages continuously, rather than starting each at\~1.
+.
+.
+.TP
+.B \-rD1
+Double-sided printing.
+.
+Footers for even and odd pages are formatted differently.
+.
+.
+.TP
+.BI \-rFT= dist
+Set distance of the footer relative to the bottom of the page if
+negative or relative to the top if positive.
+.
+The default is \-0.5i.
+.
+.
+.TP
+.BI \-rHY= flags
+Set hyphenation flags.
+.
+Possible values are 1\~to not hyphenate the first and last character
+of a word, 2\~to not hyphenate the last word on a page, 4\~to not
+hyphenate the last two characters of a word, 8\~to not hyphenate the
+first two characters of a word, 16\~to enable hyphenation before the
+last character of a word, and 32 to enable hyphenation after the
+first character of a word.
+.
+These values are additive; the default is\~6.  Using values 4 and\~16
+can't be used together since they contradict each other; the same
+holds for values 8 and\~32.
+.
+.
+.TP
+.BI \-rIN= width
+Set body text indentation to
+.IR width .
+.
+The default is 7n for
+.IR nroff ,
+7.2n for
+.IR troff .
+.
+For
+.IR nroff ,
+this value should always be an integer multiple of unit \[oq]n\[cq] to
+get consistent indentation.
+.
+.
+.TP
+.BI \-rLL= line-length
+Set line length.
+.
+If this option is not given, the line length is set to respect any
+value set by a prior \[oq].ll\[cq] request (which
+.I must
+be in effect when the \[oq].TH\[cq] macro is invoked),
+if this differs from the built\-in default for the formatter;
+otherwise it defaults to 78n in
+.I nroff
+mode and 6.5i in
+.I troff
+mode.
+.
+.
+.IP
+Note that the use of a \[oq].ll\[cq] request to initialize the line
+length is supported for backward compatibility with some versions of
+the
+.B man
+program;
+direct initialization of the \[oq]LL\[cq] register should
+.I always
+be preferred to the use of such a request.
+.
+In particular, note that a \[oq].ll\ 65n\[cq] request does
+.I not
+preserve the normal
+.I nroff
+default line length,
+(the
+.B man
+default initialization to 78n prevails), whereas, the
+\[oq]\-rLL=65n\[cq] option, or an equivalent \[oq].nr\ LL\ 65n\[cq]
+request preceding the use of the \[oq]TH\[cq] macro,
+.I does
+set a line length of 65n.
+.
+.
+.TP
+.BI \-rLT= title-length
+Set title length.
+.
+If this option is not given, the title length defaults to the line
+length.
+.
+.
+.TP
+.BI \-rP nnn
+Enumeration of pages start with
+.I nnn
+rather than with\~1.
+.
+.
+.TP
+.BI \-rS xx
+Base document font size is
+.I xx
+points
+.RI ( xx
+can be 10, 11, or\~12) rather than 10\~points.
+.
+.
+.TP
+.BI \-rSN= width
+Set sub-subheading indentation to
+.IR width .
+The default is 3n.
+.
+.
+.TP
+.BI \-rX nnn
+After page\~\c
+.IR nnn ,
+number pages as
+.IR nnn a,
+.IR nnn b,
+.IR nnn c,
+etc.
+.
+For example, the option \[oq]\-rX2\[cq] produces the following page
+numbers: 1, 2, 2a, 2b, 2c, etc.
 .
 .
 .\" ====================================================================
