@@ -127,15 +127,6 @@ and
 are described in subsection \(lqDeprecated features\(rq, below.
 .
 .
-.PP
-For further customization, put additional macros and requests into the
-file
-.BR man.local ,
-which is loaded immediately after the
-.B man
-package.
-.
-.
 .\" ====================================================================
 .SS "Document structure macros"
 .\" ====================================================================
@@ -1692,63 +1683,92 @@ numbers: 1, 2, 2a, 2b, 2c, etc.
 .\" ====================================================================
 .
 .TP
-.B man.tmac
+.I @MACRODIR@/\:man.tmac
 .TQ
-.B an.tmac
+.I @MACRODIR@/\:an.tmac
 These are wrapper files to call
-.BR andoc.tmac .
+.IR andoc.tmac .
 .
 .
 .TP
-.B andoc.tmac
-Use this file in case you don't know whether the
-.B man
-macros or the
-.B mdoc
-package should be used.
-Multiple man pages (in either format) can be handled.
+.I @MACRODIR@/\:andoc.tmac
+This brief
+.I groff
+program detects whether the
+.I man
+or
+.I mdoc
+macro package is being used by a document and loads the correct macro
+definitions,
+taking advantage of the fact that pages using them must call
+.B .TH
+or
+.BR .Dd ,
+respectively,
+as their first macro.
+.
+Because the wrappers above load this file,
+a
+.I man
+program or user typing,
+for example,
+\(lqgroff \-man page.1\(rq,
+need not know which package the file
+.I page.1
+uses.
+.
+Multiple man pages, in either format, can be handled.
 .
 .
 .TP
-.B an-old.tmac
+.I @MACRODIR@/\:an\-old.tmac
 Most
-.B man
+.I man
 macros are contained in this file.
 .
+It also loads the GNU extensions from
+.I an\-ext.tmac
+(see below).
+.
 .
 .TP
-.B an-ext.tmac
+.I @MACRODIR@/\:an\-ext.tmac
 The extension macro definitions for
 .BR .SY ,
 .BR .OP ,
 .BR .YS ,
 .BR .TQ ,
-.BR .EX/.EE ,
-.BR .UR/.UE ,
+.BR .EX / .EE ,
+.BR .UR / .UE ,
 and
-.BR .MT/.ME
-are contained in this file.
+.BR .MT / .ME
+are contained in this file,
+which is written in classic
+.I troff
+and permissively licensed\(emnot copylefted.
 .
-It is written in classic troff, and released for free re-use,
-and not copylefted; manual page authors concerned about
-portability to legacy Unix systems are encouraged to copy these
-definitions into their pages, and maintainers of troff
-or its workalikes are encouraged to re-use them.
+Man page authors concerned about portability to legacy Unix systems are
+encouraged to copy these definitions into their pages,
+and maintainers of
+.I troff
+implementations or work-alike systems that format man pages are
+encouraged to re-use them.
 .
 .
 .IP
 Note that the definitions for these macros are read after the call of
-.BR TH ,
-so they will replace macros of the same names given at the beginning of
-your file.
+.BR .TH ,
+so they will replace any macros of the same names preceding it in your
+file.
 .
-If you must use your own definitions for these macros, they must be
-given after calling
-.BR TH .
+If you use your own implementations of these macros,
+they must be defined after calling
+.B .TH
+to have any effect.
 .
 .
 .TP
-.B man.local
+.I @LOCALMACRODIR@/\:man.local
 Local changes and customizations should be put into this file.
 .
 .
