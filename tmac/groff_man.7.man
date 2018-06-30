@@ -58,8 +58,11 @@ The
 .B man
 macro package for
 .I groff
-is used to produce manual pages (\(lqman\~pages\(rq) like the one you
-are reading.
+is used to produce manual pages
+.\" We use an unbreakable space \~ here to keep the phrase intact for
+.\" its introduction, in subsequent discussion that is not important.
+(\(lqman\~pages\(rq)
+like the one you are reading.
 .
 GNU
 .IR roff 's
@@ -169,9 +172,7 @@ macros.
 .
 .TP
 .BI .TH " title section \fR[\fPextra1\fR]\fP \fR[\fPextra2\fR]\fP \fR[\fPextra3\fR]"
-Set the title of the
-.I man\~page
-to
+Set the title of the man page to
 .I title
 and the section to
 .IR section ,
@@ -179,9 +180,8 @@ which must take on a value between 1 and\~8.
 .
 The value
 .I section
-may also have a string appended, e.g.\& \[oq].pm\[cq], to indicate a
-specific subsection of the
-.IR \%man\~pages .
+may also have a string appended, e.g.\& \[oq]pm\[cq], to indicate a
+specific subsection of the man pages.
 .
 Both
 .I title
@@ -211,11 +211,10 @@ For HTML output, headers and footers are completely suppressed.
 .IP
 Additionally, this macro starts a new page; the new line number is\~1
 again (except if the \[oq]\-rC1\[cq] option is given on the command
-line) -- this feature is intended only for formatting multiple
-.IR \%man\~pages ;
-a single
-.I \%man\~page
-should contain exactly one
+line).
+.
+This feature is intended only for formatting multiple man pages;
+a single man page should contain exactly one
 .B TH
 macro at the beginning of the file.
 .
@@ -280,7 +279,7 @@ running classic troff.
 .
 To be certain your page will be portable to those systems, copy
 their definitions from the
-.B \%an-ext.tmac
+.I \%an\-ext.tmac
 file of a
 .BR groff
 installation.
@@ -402,9 +401,12 @@ font settings.
 .
 .
 .IP
-The
-.B TP
-macro is the macro used for the explanations you are just reading.
+.B .TP
+was used to write the first paragraph of this description of
+.BR .TP,
+and
+.B .IP
+the subsequent ones.
 .
 .
 .TP
@@ -433,7 +435,7 @@ troff.
 .
 To be certain your page will be portable to those systems,
 copy its definition from the
-.B \%an-ext.tmac
+.I \%an\-ext.tmac
 file of a
 .BR groff
 installation.
@@ -510,7 +512,7 @@ running classic troff.
 .
 To be certain your page will be portable to those systems, copy their
 definitions from the
-.B \%an-ext.tmac
+.I \%an\-ext.tmac
 file of a
 .BR groff
 installation.
@@ -695,7 +697,7 @@ running classic troff.
 .
 To be certain your page will be portable to those systems, copy
 their definitions from the
-.B \%an-ext.tmac
+.I \%an\-ext.tmac
 file of a
 .BR groff
 installation.
@@ -1376,9 +1378,9 @@ Use of the following is discouraged.
 .
 .TP
 .BI .AT " \fR[\fPsystem \fR[\fPrelease\fR]]\fP"
-Alter the footer for use with \f[CR]AT&T\f[]
-.IR \%man\~pages .
-This command exists only for compatibility; don't use it.
+Alter the footer for use with AT&T man pages.
+.
+This macro exists only for compatibility; don't use it.
 .
 See the
 .I groff
@@ -1508,9 +1510,9 @@ Redefine this macro to get control of the header.
 .
 .TP
 .BI .UC " \fR[\fPversion\fR]\fP"
-Alter the footer for use with \f[CR]BSD\f[]
-.IR man\~pages .
-This command exists only for compatibility; don't use it.
+Alter the footer for use with BSD man pages.
+.
+This macro exists only for compatibility; don't use it.
 .
 See the
 .I groff
