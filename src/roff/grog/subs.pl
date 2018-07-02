@@ -6,7 +6,7 @@
 # Source file position: <groff-source>/src/roff/grog/subs.pl
 # Installed position: <prefix>/lib/grog/subs.pl
 
-# Copyright (C) 1993-2015  Free Software Foundation, Inc.
+# Copyright (C) 1993-2018 Free Software Foundation, Inc.
 # This file was split from grog.pl and put under GPL2 by
 #               Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph

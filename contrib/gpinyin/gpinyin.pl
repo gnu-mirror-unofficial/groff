@@ -5,7 +5,7 @@
 # Source file position: <groff-source>/contrib/gpinyin/gpinyin.pl
 # Installed position: <prefix>/bin/gpinyin
 
-# Copyright (C) 2014  Free Software Foundation, Inc.
+# Copyright (C) 2014-2018 Free Software Foundation, Inc.
 
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 

@@ -5,7 +5,7 @@
 # Source file position: <groff-source>/contrib/groffer/roff2.pl
 # Installed position: <prefix>/bin/roff2*
 
-# Copyright (C) 2006-2014  Free Software Foundation, Inc.
+# Copyright (C) 2006-2018 Free Software Foundation, Inc.
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
 # This file is part of 'groffer', which is part of 'groff'.

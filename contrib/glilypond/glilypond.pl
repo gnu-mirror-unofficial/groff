@@ -33,7 +33,7 @@ glilypond - integrate 'lilypond' into 'groff' files
 Source file position: '<groff-source>/contrib/glilypond/glilypond.pl'
 Installed position: '<prefix>/bin/glilypond'
 
-Copyright (C) 2013-2015 Free Software Foundation, Inc.
+Copyright (C) 2013-2018 Free Software Foundation, Inc.
   Written by Bernd Warken <groff-bernd.warken-72@web.de>
 
 Last update: 10 Sep 2015

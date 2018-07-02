@@ -5,7 +5,7 @@
 # Source file position: <groff-source>/contrib/groffer/version.sh
 # Installed position: <prefix>/lib/groff/groffer/version.sh
 
-# Copyright (C) 2001-2014  Free Software Foundation, Inc.
+# Copyright (C) 2001-2018 Free Software Foundation, Inc.
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
 # This file is part of 'groffer', which is part of 'groff'.

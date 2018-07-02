@@ -2,7 +2,7 @@
 #
 # File position: <groff-source>/font/devdvi/generate/Makefile
 #
-# Copyright (C) 1989-2002, 2009 Free Software Foundation, Inc.
+# Copyright (C) 1989-2018 Free Software Foundation, Inc.
 #      Written by James Clark (jjc@jclark.com)
 #
 # This file is part of groff.
