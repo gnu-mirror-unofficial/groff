@@ -128,6 +128,41 @@ are described in subsection \(lqDeprecated features\(rq, below.
 .
 .
 .\" ====================================================================
+.SS "Macro reference preliminaries"
+.\" ====================================================================
+.
+Each macro is described in a tagged paragraph.
+Closely related macros,
+such as
+.B .EX
+and
+.BR .EE ,
+are grouped together.
+.
+.
+.PP
+Optional macro arguments are indicated by surrounding them with square
+brackets.
+.
+If a macro accepts multiple arguments,
+arguments containing whitespace must be double-quoted ("one two"),
+to be interpreted correctly.
+.
+Most macro arguments are strings that will be output as text;
+exceptions are noted.
+.
+.
+.PP
+Bear in mind that
+.I groff
+is fundamentally a programming language for typesetting.
+.
+Consequently,
+the verb \(lqset\(rq is frequently used below in the sense of \(lqto
+typeset\(rq.
+.
+.
+.\" ====================================================================
 .SS "Document structure macros"
 .\" ====================================================================
 .
@@ -901,6 +936,57 @@ The text must be on the same line as the macro call.
 .\" ====================================================================
 .SS "Horizontal and vertical spacing"
 .\" ====================================================================
+.
+The
+.I indent
+argument accepted by
+.BR .RS ,
+.BR .IP ,
+.BR .TP ,
+and the deprecated
+.B .HP
+is a number plus an optional scaling indicator.
+.
+If no scaling indicator is given,
+the
+.I man
+package assumes \(oqn\(cq;
+that is,
+the width of a letter \(lqn\(rq in the font current when the macro is
+called.
+.
+See section \(lqNUMERICAL EXPRESSIONS\(rq in
+.IR groff (7)
+for further details.
+.
+An indent specified in a call to
+.BR .IP ,
+.BR .TP ,
+or the deprecated
+.B .HP
+persists until
+(1) another of these macros is called with an explicit indent
+argument,
+or (2)
+.BR .SH ,
+.BR .SS ,
+or
+.B .PP
+or its synonyms is made;
+these clear the indent entirely.
+.
+.
+.PP
+Indents set by
+.B .RS
+move the left margin and persist until
+.BR .RS ,
+.BR .RE ,
+.BR .SH ,
+or
+.B .SS
+is called.
+.
 .
 The default indentation,
 exhibited by ordinary
