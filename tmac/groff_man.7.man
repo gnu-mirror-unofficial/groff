@@ -325,7 +325,7 @@ increases the level by\~1.
 .
 A typical paragraph
 .RB ( .PP )
-is set left at the prevailing indent.
+is set at the current left margin.
 .
 In man pages and other technical literature,
 definition lists are frequently encountered;
@@ -336,12 +336,12 @@ and
 which have one or more leading tags followed by a paragraph that has an
 additional left indent.
 .
-The \(lqindented paragraph\(rq
+The indented paragraph
 .RB ( .IP )
 macro is useful to continue the indented content of a narrative started
 with
 .BR .TP ,
-or to set up an itemized or ordered list.
+or to present an itemized or ordered list.
 .
 .
 .TP
@@ -917,9 +917,16 @@ except for
 .BR grohtml ,
 which ignores indentation.
 .
+This same indentation is used again (additively) for the defaults of
+.BR .IP ,
+.BR .TP ,
+.BR .RS ,
+and the deprecated
+.BR HP .
+.
 Section headings
 .RB ( .SH )
-are set flush with the left margin,
+are set flush with the left margin of the output device,
 and subsection headings
 .RB ( .SS )
 are indented 3n.
@@ -1781,16 +1788,46 @@ Local changes and customizations should be put into this file.
 .\" ====================================================================
 .
 Some tips on troubleshooting your man pages follow.
-
+.
+.
 .TP
-.RB \(bu " .RE" " doesn't reset the indent to the expected level
+.RB \(bu " .RS" " doesn't indent relative to my indented paragraph"
+The
+.B .RS
+macro sets the indentation relative to the amount of a
+.I normal
+paragraph
+.RB ( .PP
+and its synonyms).
+.
+The same default indentation amount is used for
+.BR .RS ,
+.BR .IP ,
+.BR .TP ,
+and the deprecated
+.BR .HP .
+.
+If you need to start an indent relative to an indented paragraph,
+give
+.B .RS
+an indentation argument that is at least as much as the paragraph's
+indentation amount relative to an adjacent
+.B .PP
+paragraph.
+.
+See \(lqHorizontal and vertical spacing\(rq above for the values.
+.
+.
+.TP
+.RB \(bu " .RE" " doesn't reset the indent to the expected level"
 .TQ
 \(bu warning: scale indicator invalid in this context
 .TQ
-\(bu warning: number register 'an\-saved\-margin2' not defined
+\(bu warning: number register \(aqan\-saved\-margin\c
+.IR n "\(aq not defined"
 .TQ
-\(bu warning: number register 'an\-saved\-prevailing\-indent2' not \
-defined
+\(bu warning: number register 'an\-saved\-prevailing\-indent\c
+.IR n "\(aq not defined"
 The
 .B .RS
 macro takes an indentation
@@ -1798,13 +1835,17 @@ macro takes an indentation
 as an argument;
 the
 .B .RE
-macro's argument is an indentation
+macro's argument is a specific indentation
 .IR level .
-In other words,
-.BR .RE 's
-argument tells it the number of previous
+.B .RE\~1
+goes to the level before any
 .B .RS
-calls you want to undo.
+macros were called,
+.B .RE\~2
+goes to the level of the first
+.B RS
+call you made,
+and so forth.
 .
 If you desire symmetry in your macro calls,
 simply issue one
@@ -1813,6 +1854,17 @@ without an argument
 for each
 .B .RS
 that precedes it.
+.
+.
+.IP
+After calls to the
+.B .SH
+and
+.B SS
+sectioning macros,
+all relative indents are cleared and calls to
+.B .RE
+have no effect.
 .
 .
 .\" ====================================================================
