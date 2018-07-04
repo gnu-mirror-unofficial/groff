@@ -38,8 +38,6 @@ groff_ms \- GNU roff manuscript macro package for formatting documents
 \&.\|.\|.\&]
 .RI [ input-file
 \&.\|.\|.\&]
-.YS
-.
 .SY "groff -m ms"
 .RI [ option
 \&.\|.\|.\&]
@@ -154,7 +152,6 @@ macro.
 .ne 12
 .B Margin settings
 .RS
-.na
 .TS
 cb   cb cb cb
 lfCW l  l  l.
@@ -260,7 +257,6 @@ DD	Display, table, eqn, pic spacing	next para.	0.5v
 MINGW	Minimum width between columns	next page	2n
 _
 .TE
-.ad
 .RE
 .
 .
@@ -1626,8 +1622,8 @@ remember that accessing an undefined register automatically defines it.
 You can redefine the following strings to adapt the
 .I "groff ms"
 macros to languages other than English:
+.RS
 .TS
-center;
 cb   cb
 lfCW l.
 String	Default Value
@@ -1649,6 +1645,7 @@ MONTH11	November
 MONTH12	December
 _
 .TE
+.RE
 .
 .
 .PP
