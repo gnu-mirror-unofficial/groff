@@ -2562,7 +2562,7 @@ sub NewPage
     $objct+=1;
     $cpage=$obj[$cpageno]->{DATA};
     $pages->{'Count'}++;
-    $stream="q 1 0 0 1 0 0 cm\n$linejoin J\n$linecap j\n";
+    $stream="q 1 0 0 1 0 0 cm\n$linejoin J\n$linecap j\n0.4 w\n";
     $stream.=$strkcol."\n", $curstrk=$strkcol if $strkcol ne '';
     $mode='g';
     $curfill='';
@@ -2943,7 +2943,7 @@ sub do_D
 	$ypos+=$p[1];
 	$stream.=PutXY($xpos,$ypos)." l\n";
 
-	$stream.="s\n";
+	$stream.="S\n";
 	$poschg=1;
     }
     elsif ($Dcmd eq 't')
@@ -3292,7 +3292,7 @@ sub do_v
 {
     my $par=shift;
 
-    PutLine();
+    PutLine() if $mode eq 't';
 
     $ypos+=$par/$unitwidth;
 
@@ -3587,7 +3587,7 @@ sub do_N
 sub do_n
 {
     $gotT=0;
-    PutLine();
+    PutLine(0);
     $pendmv=$nomove=0;
     $n_flg=1;
     @lin=();
