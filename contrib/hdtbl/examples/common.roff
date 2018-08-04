@@ -31,12 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"	******************************************************************
 .
 .\"	******************************************************************
-.\"	**	some of the following macros use system commands	**
-.\"	**	and are therefore 'unsafe': they need the '-U' argument **
-.\"	**	when calling groff/troff				**
-.\"	******************************************************************
-.
-.\"	******************************************************************
 .\"	**		Header macro for the examples			**
 .\"	******************************************************************
 .de H
@@ -55,42 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  t*P1 \\$*
 .  ETB
 .  SP
-..
-.
-.
-.\"	******************************************************************
-.\"	**	Utility macro for the date, requires UNIX date.		**
-.\"	**	**** Requires unsafe mode ("groff -U").			**
-.\"	**	after return string *date contains the date in the	**
-.\"	**	standard form of the Unix date-command,			**
-.\"	**	for example "Sun Dec  5 22:27:57     2004"		**
-.\"	******************************************************************
-.de date
-.  pso sh -c "echo -n .ds *date\ ;date"
-.  tm \\*[common]: \\*[*date] ***
-..
-.
-.
-.\"	******************************************************************
-.\"	**	Utility macro for time measurement, requires UNIX date.	**
-.\"	**	**** Requires unsafe mode ("groff -U").			**
-.\"	**	.time s[tart]|[end]					**
-.\"	**		.time start:					**
-.\"	**			reg *time gets the start-time (seconds) **
-.\"	**		.time [end]:					**
-.\"	**			reg *time gets the difference of the	**
-.\"	**				end- and start-time (seconds)	**
-.\"	******************************************************************
-.de time
-.  ds * \\$1\"
-.  substring * 0 0
-.  ie "\\*[*]"s" \
-.    pso sh -c "echo -n .nr *time 0+;date +%s"
-.  el \{\
-.   pso sh -c "echo -n .nr *time -;date +%s"
-.   nr *time 0-\\n[*time]
-.   tm \\*[common]: elapsed time: \\n[*time] seconds
-.  \}
 ..
 .
 .
