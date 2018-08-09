@@ -177,32 +177,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\"		1..2147483398 for 'seed1' and 'seed2', respectively
 .\"		(the macro applies a modulo operation to assure this
 .\"		range).  If 'random-seed' isn't called the registers
-.\"		'seconds', 'minutes', 'hours', 'dy', 'mo', 'year', and
-.\"		'$$' are used to compute it.
+.\"		start at some constant, arbitrary values.
 .\"
 .\"		The used generator is presented in L'Ecuyer's 1988 paper
 .\"		'Efficient and Portable Combined Random Number
 .\"		Generators', which combines two Multiplicative Linear
 .\"		Congruential Generators (MLCGs) to achieve a period of
 .\"		2.3*10^18.
-.af hours 00
-.af minutes 00
-.af seconds 00
-.af year 0000
-.af mo 00
-.af dy 00
-.
-.\" Since this just generates example output, we don't need good randomness;
-.\" basing this purely on the time and not on the process ID allows better
-.\" integration with reproducible builds.
-.\" .ds random-s1 \n[minutes]\n[seconds]\n[$$]\n[hours]\"
-.ds random-s1 \n[minutes]\n[seconds]\n[hours]\"
-.\" prevent overflow
-.substring random-s1 0 8
-.
-.nr random-s1 (\*[random-s1] % 2147483562)
-.nr random-s2 \n[dy]\n[year]\n[mo]
-.
+.\"
+.\"		Since this just generates example output,
+.\"		we don't need good randomness.
 .
 .de random-seed
 .  if !(\\n[.$] == 2) \{\
@@ -214,6 +198,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  nr random-s1 (\\$1 % 2147483562)
 .  nr random-s2 (\\$2 % 2147483398)
 ..
+.random-seed 131545532 19201711
 .
 .
 .de random#
