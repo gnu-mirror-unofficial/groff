@@ -636,9 +636,9 @@ endif
 #
 # Also see configure.ac for the related SHORT_VERSION macro.
 
-MAJOR_VERSION =`echo $(VERSION) | sed 's/\([0-9]\+\)\.[0-9]\+.*/\1/'`
-MINOR_VERSION =`echo $(VERSION) | sed 's/[0-9]\+\.\([0-9]\+\).*/\1/'`
-REVISION = `echo $(VERSION) | sed 's/[0-9]\+\.[0-9]\+\.\(.*\)/\1/'`
+MAJOR_VERSION = `echo $(VERSION) | cut -d . -f 1`
+MINOR_VERSION = `echo $(VERSION) | cut -d . -f 2`
+REVISION      = `echo $(VERSION) | cut -d . -f 3`
 
 # Non-recursive makefile system. See Automake manual '7.3 An
 # Alternative Approach to Subdirectories'. We use a single Makefile.am
