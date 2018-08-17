@@ -1214,15 +1214,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .rj 0
 .ul 0
 .fi
-.ie \\n[pg@ncols]>1 \{\
-.	ll (u;\\n[\\n[.ev]:MCLL]-\\n[\\n[.ev]:ri]-\\n[\\n[.ev]:pri])
-.	lt \\n[\\n[.ev]:MCLT]u
-.\}
-.el \{\
-.	ll (u;\\n[\\n[.ev]:LL]-\\n[\\n[.ev]:ri]-\\n[\\n[.ev]:pri])
-.	lt \\n[\\n[.ev]:LT]u
-.\}
-.in (u;\\n[\\n[.ev]:li]+\\n[\\n[.ev]:pli])
 .ft 1
 .ie '\\n[.ev]'fn' .fam \\*[fn@font-family]
 .el .fam \\*[FAM]
@@ -1235,6 +1226,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .el \
 .	par*vs \\n[\\n[.ev]:VS]
 .ls 1
+.if !'\\$1'' .nr \\n[.ev]:pli (n;\\$1)
+.if !'\\$2'' .nr \\n[.ev]:pri (n;\\$2)
+.ie \\n[pg@ncols]>1 \{\
+.	ll (u;\\n[\\n[.ev]:MCLL]-\\n[\\n[.ev]:ri]-\\n[\\n[.ev]:pri])
+.	lt \\n[\\n[.ev]:MCLT]u
+.\}
+.el \{\
+.	ll (u;\\n[\\n[.ev]:LL]-\\n[\\n[.ev]:ri]-\\n[\\n[.ev]:pri])
+.	lt \\n[\\n[.ev]:LT]u
+.\}
+.in (u;\\n[\\n[.ev]:li]+\\n[\\n[.ev]:pli])
 .TA
 .hy \\n[HY]
 ..
@@ -1249,9 +1251,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .de par*start
 .ds@auto-end
-.nr \\n[.ev]:pli \\$1
-.nr \\n[.ev]:pri \\$2
-.par@reset
+.par@reset \\$1 \\$2
 .sp \\n[\\n[.ev]:PD]u
 .ne \\n[PORPHANS]v+\\n(.Vu
 ..
@@ -1259,7 +1259,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr \\n[.ev]:ai \\n[\\n[.ev]:PI]
 .nr \\n[.ev]:pli 0
 .nr \\n[.ev]:pri 0
-.par@reset
+.par@reset 0 0
 ..
 .als @RT par@finish
 .\" normal LP
@@ -1281,8 +1281,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ti -\\n[\\n[.ev]:PI]u
 ..
 .de @IP
-.if \\n[.$]>1 .nr \\n[.ev]:ai (n;\\$2)
-.par*start \\n[\\n[.ev]:ai] 0
+.ie \\n[.$]>1 \{\
+.par*start \\$2 0
+.nr \\n[.ev]:ai \\n[\\n[.ev]:pli]
+.\}
+.el .par*start \\n[\\n[.ev]:ai]u 0
 .if !'\\$1'' \{\
 .	\" Divert the label so as to freeze any spaces.
 .	di par*label
