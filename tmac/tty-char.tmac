@@ -108,7 +108,8 @@
 .tty-char \[dA] \z=v
 .if c\[md] .tty-char \[pc] \[md]
 .if c\[pc] .tty-char \[md] \[pc]
-.if c\[pc] .tty-char \[a.] \[pc]
+.ie c\[pc] .tty-char \[a.] \[pc]
+.el .tty-char \[a.] .
 .tty-char \[Im] <Im>
 .tty-char \[Re] <Re>
 .tty-char \[/L] \z/L
@@ -149,6 +150,10 @@
 .tty-char \[rk] }
 .tty-char \[lt] ,-
 .tty-char \[rt] -.
+.tty-char \[CL] C
+.tty-char \[SP] S
+.tty-char \[HE] H
+.tty-char \[DI] D
 .\" Latin characters
 .tty-char \[r!] !
 .tty-char \[Po] \z-L
