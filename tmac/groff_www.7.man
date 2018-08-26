@@ -92,7 +92,6 @@ l l.
 \&.URL@create a URL using two parameters
 \&.FTP@create an FTP reference
 \&.MTO@create an HTML email address
-\&.FTP@create an FTP reference
 \&.TAG@generate an HTML name
 \&.IMG@include an image file
 \&.PIMG@include PNG image
@@ -213,7 +212,9 @@ explicit breakpoints should be inserted with the
 escape.
 .
 Here is how to encode
-.URL http://\:foo.\:org/ "foo" :
+.UR http://\:foo.\:org/
+foo
+.UE :
 .RS
 .IP
 .B .URL http://\[rs]:foo.\[rs]:org/ "foo" :
@@ -232,7 +233,9 @@ foo \[la]\f[CR]http://foo.org\f[]\[ra]:
 .
 .IP
 The URL macro can be of any type; for example we can reference
-.URL pic.html "Eric Raymond's pic guide"
+.UR pic.html
+Eric Raymond's pic guide
+.UE
 by:
 .RS
 .IP
@@ -256,8 +259,10 @@ An optional third argument is stuff printed immediately afterwards.
 Hyphenation is disabled while printing the actual email address.
 .
 For example,
-.MTO joe@user.org "Joe User"
-was achieved by the following macro:
+.MT joe@user.org
+Joe User
+.ME
+can be achieved by the following macro:
 .RS
 .IP
 .B .MTO joe@user.org \[dq]Joe User\[dq]
@@ -290,10 +295,12 @@ The second and the third parameter are optional.
 .
 Hyphenation is disabled while printing the actual URL.
 .
-As an example, here the location of the
-.FTP ftp://\:ftp.gnu.org/ "GNU FTP server" .
+As an example, here is the location of the
+.UR ftp://\:ftp.gnu.org/
+GNU FTP server
+.UE .
 .
-The macro example above was specified by:
+The macro example above can be specified as:
 .RS
 .IP
 .B .FTP ftp://\[rs]:ftp.gnu.org/ \[dq]GNU FTP server\[dq] .
@@ -304,7 +311,9 @@ The macro example above was specified by:
 Generates an HTML name tag from its argument.
 .
 This can then be referenced using the
-.URL #URL URL
+.UR #URL
+URL
+.UE
 macro.
 .
 As you can see, you must precede the tag name with
@@ -659,7 +668,9 @@ generates links to all section headings and places these at the top of the
 HTML document.
 .
 (See
-.URL #LK LINKS
+.UR #LK
+LINKS
+.UE
 for details of how to switch this off or alter the position).
 .
 .
@@ -683,7 +694,9 @@ information is currently rendered as a PNG image.
 .\" ====================================================================
 .
 Report bugs to the
-.MTO bug\-groff@\:gnu.org "Groff Bug Mailing List" .
+.MT bug\-groff@\:gnu.org
+Groff Bug Mailing List
+.ME .
 .
 Include a complete, self-contained example that will allow the bug to
 be reproduced, and say which version of groff you are using.
@@ -696,11 +709,17 @@ The
 .I www
 macro package
 was written by
-.MTO gaius@\:glam.ac.uk "Gaius Mulley" ,
+.MT gaius@\:glam.ac.uk
+Gaius Mulley ,
+.ME ,
 with additions by
-.MTO wl@\:gnu.org "Werner Lemberg"
+.MT wl@\:gnu.org
+Werner Lemberg
+.ME
 and
-.MTO groff\-bernd.warken\-72@\:web.de "Bernd Warken" .
+.MT groff\-bernd.warken\-72@\:web.de
+Bernd Warken
+.ME .
 .
 .
 .\" ====================================================================
