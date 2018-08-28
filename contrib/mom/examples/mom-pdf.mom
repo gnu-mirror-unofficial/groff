@@ -104,19 +104,19 @@ If not, see:
 .char \[gropdf]           \*[BD]gropdf\*[PREV]
 .char \[grops]            \*[BD]grops\*[PREV]
 .char \[man]              \*[BD]man\*[PREV]
-.char \[-mom]             \*[BD]-mom\*[PREV]
+.char \[-mom]             \*[BD]\-mom\*[PREV]
 .char \[mom]              \*[BD]mom\*[PREV]
-.char \[-mpdfmark]        \*[BD]-mpdfmark\*[PREV]
+.char \[-mpdfmark]        \*[BD]\-mpdfmark\*[PREV]
 .char \[ms]               \*[BD]ms\*[PREV]
 .char \[pdfmom]           \*[BD]pdfmom\*[PREV]
 .char \[pdfroff]          \*[BD]pdfroff\*[PREV]
-.char \[-P-e]             \*[BD]-P-e\*[PREV]
-.char \[-P-p<papersize>]  \*[BD]-P-p<papersize>\*[PREV]
+.char \[-P-e]             \*[BD]\-P\-e\*[PREV]
+.char \[-P-p<papersize>]  \*[BD]\-P\-p<papersize>\*[PREV]
 .char \[ps2pdf]           \*[BD]ps2pdf\*[PREV]
 .char \[psselect]         \*[BD]psselect\*[PREV]
-.char \[-T]               \*[BD]-T\*[PREV]
-.char \[-Tpdf]            \*[BD]-Tpdf\*[PREV]
-.char \[-Tps]             \*[BD]-Tps\*[PREV]
+.char \[-T]               \*[BD]\-T\*[PREV]
+.char \[-Tpdf]            \*[BD]\-Tpdf\*[PREV]
+.char \[-Tps]             \*[BD]\-Tps\*[PREV]
 .\" Strings for inline code
 .ds cod  \E*[CODE]\&\E*[COND]
 .ds codx \E*[CONDX]\E*[CODE off]\&
@@ -177,13 +177,13 @@ when the document is viewed at the screen (see
 Groff provides more than one way to generate PDF documents from
 files formatted with the \[mom] macros.  One is to call \[groff]
 directly, either with
-.COD "groff [-Tps] -mom -m pdfmark doc.mom | ps2pdf - doc.pdf
+.COD "groff [\-Tps] \-mom \-m pdfmark doc.mom | ps2pdf \- doc.pdf
 which pipes output from the \[grops] PostScript driver through
 \[ps2pdf], or
-.COD "groff -Tpdf -mom doc.mom > doc.pdf
+.COD "groff \-Tpdf \-mom doc.mom > doc.pdf
 which uses the native PDF driver, \[gropdf].  Alternatively, one may
 call the wrapper
-.COD "pdfroff -mom -mpdfmark --no-toc doc.mom > doc.pdf
+.COD "pdfroff \-mom \-mpdfmark \-\-no-toc doc.mom > doc.pdf
 A fourth, preferred method is to use
 .PDF_LINK pdfmom SUFFIX , "\[pdfmom]"
 which is strongly recommended since it implements the full range
@@ -530,7 +530,7 @@ If a \[-Tps] option is supplied, \[pdfmom] hands control over to
 \[pdfroff], and both \[groff] and \[pdfroff] options may given.
 The resulting PDF is produced from PostScript output fed into
 \[ghostscript].
-.COD "pdfmom -Tps [pdfroff opts [groff opts]] doc.mom > doc.pdf
+.COD "pdfmom \-Tps [pdfroff opts [groff opts]] doc.mom > doc.pdf
 For either invocation, it is not necessary to add \[-mom] or
 \[-mpdfmark], as these are implied.
 .PP
@@ -579,7 +579,7 @@ only accepts colour definitions in decimal notation.
 .LIST OFF
 .IQ
 .HEADING 1 \
-"Comparison of -Tps\*[FU4]/\*[FU2]-mpdfmark with -Tpdf\*[FU4]/\*[FU2]-mom
+"Comparison of \-Tps\*[FU4]/\*[FU2]\-mpdfmark with \-Tpdf\*[FU4]/\*[FU2]\-mom
 .SP .25v
 .IB
 \[-Tps]\*[FU4]/\*[FU2]\[-mpdfmark]
