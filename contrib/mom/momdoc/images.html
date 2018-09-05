@@ -79,6 +79,9 @@ FDL in the main directory of the groff source package.
       <li><a href="#ps-pe">.PS / .PE macros and arguments</a></li>
       <li><a href="#pic-text-style">PIC_TEXT_STYLE</a>&mdash;set parameters for text used in diagrams</li>
     </ul></li>
+    <li><a href="#grap">grap</a>
+    <ul style="margin-left: -1.25em;">
+    </ul></li>
     <li><a href="#refer">refer</a></li>
   </ul>
   <li><a href="#captions-and-labels">Captions and labels</a>
@@ -1187,7 +1190,8 @@ preprocessor, <b>tbl</b>.  If you are unfamiliar with <b>tbl</b>, I
 recommend downloading a copy of
 <a href="http://plan9.bell-labs.com/10thEdMan/tbl.pdf">Tbl - A Program to Format Tables</a>,
 which, in addition to providing a thorough introduction, contains
-some fine examples.
+some fine examples.  If you use <b>tbl</b>, you must pass groff or
+pdfmom the <b>-t</b> flag when you process the file.
 </p>
 
 <p>
@@ -1658,6 +1662,9 @@ preprocessor, <b>pic</b>.  If you are unfamiliar with <b>pic</b>, I
 recommend downloading a copy of
 <a href="http://www.kohala.com/start/troff/gpic.raymond.ps">Making Pictures with GNU PIC</a>
 which provides a thorough introduction and contains many examples.
+If you use <b>pic</b>, you must pass groff or pdfmom the <b>-p</b>
+flag when you process the file.
+
 </p>
 
 <p>
@@ -1728,7 +1735,7 @@ required)
 &nbsp;&nbsp;[ SHORT_CAPTION "&lt;short caption&gt;" ]
 <br/>
 &nbsp;&nbsp;[ LABEL "&lt;label&gt;" ]
-</kbd>
+<br/>
 &nbsp;&nbsp;[ TARGET "&lt;name&gt;" ]
 </kbd>
 <br/>
@@ -1917,6 +1924,37 @@ preprocessor itself, not groff or mom.
 
 <div class="rule-medium"><hr/></div>
 
+<h3 id="grap" class="docs">grap support</h3>
+
+<p>
+Grap is a <b>pic</b> preprocessor for creating graphs.  Grap
+usage is covered in the <kbd>grap(1)</kbd> manpage.  Its mom
+implementation is the same as for <b>pic</b> except that instead of
+enclosing directives between
+<a href="#ps-pe">.PS&nbsp;/&nbsp;.PE</a>,
+they are enclosed between <b>.G1/.G2</b>.  If you use <b>grap</b>,
+you must pass groff or pdfmom the <b>-G</b> flag when you process
+the file.
+
+</p>
+
+<p>
+<b>.G1</b> takes all the same arguments as
+<a href="#ps-pe">PS</a>
+with one exception: the argument <b>GRAP</b> must always be given to
+<b>.G1</b>.  So, for example, a skeleton grap block raised 2 points
+and with a caption would be entered:
+<br/>
+<span class="pre-in-pp">
+  .G1 GRAP ADJUST +2p CAPTION "Graph caption"
+  &lt;grap directives&gt;
+  .G2
+</span>
+
+</p>
+
+<div class="rule-medium"><hr/></div>
+
 <h3 id="eqn" class="docs">eqn support</h3>
 
 <p>
@@ -1927,7 +1965,9 @@ the scope of this documentation, but is covered in the manpage
 Harding&#8217;s
 <!--- edit me -->
 <a href="http://www.zen89632.zen.co.uk/Groff/Eqn/eqnguide.pdf">A Guide to Typesetting Mathematics Using GNU eqn</a>,
-which contains useful examples.
+which contains useful examples.  If you use <b>eqn</b>, you must give groff or
+pdfmom the <b>-e</b> flag.
+
 </p>
 
 <div class="macro-id-overline">
