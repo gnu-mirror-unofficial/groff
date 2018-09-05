@@ -9025,14 +9025,10 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 .MAC HDRFTR_RULE_GAP END
 .    nr #HDRFTR_RULE_GAP (\\$1)
-.    if '\\$0'HEADER_RULE_GAP' \{\
+.    if '\\$0'HEADER_RULE_GAP' \
 .       nr #HEADER_RULE_GAP \\n[#HDRFTR_RULE_GAP]
-.       if r #FOOTER_RULE_GAP .nr #FOOTER_RULE_GAP \\n[#FOOTER_RULE_GAP]
-.    \}
-.    if '\\$0'FOOTER_RULE_GAP' \{\
+.    if '\\$0'FOOTER_RULE_GAP' \
 .       nr #FOOTER_RULE_GAP \\n[#HDRFTR_RULE_GAP]
-.       if r #HEADER_RULE_GAP .nr #HEADER_RULE_GAP \\n[#HEADER_RULE_GAP]
-.    \}
 .END
 \#
 \# HDRFTR LEFT
@@ -20985,6 +20981,10 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .          nr @no-flex 1
 .          shift 1
 .       \}
+.       if '\\$1'GRAP' \{\
+.          nr grap 1
+.          shift 1
+.       \}
 .    \}
 .    ds pic*label-sffx-tmp \\*[pic*label-sffx]
 .    substring pic*label-sffx-tmp -1
@@ -21042,7 +21042,13 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       nh
 .       ie \\n[#PRINT_STYLE]=1 .TYPEWRITER
 .       el \{\
+.          if \\n[.u] \{\
+.             nr fill 1
+.             nf
+.          \}
 .          pic*caption-style
+.          if \\n[fill] .fi
+.          rr fill
 .          nr lead-current \\n[.v]
 .          vs \\n[.ps]u+\\n[pic*caption-autolead]u
 .          nr pic*caption-lead-diff \\n[lead-current]-\\n[.v]
@@ -21058,13 +21064,13 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       if !'\\*[pic*caption-space]'' \
 .          sp \\*[pic*caption-space]
 .       br
+.       if \\n[grap] \!.sp -2v
 .       ev
 .    \}
-.\"
-.\" .if !\\n[pic*left] .in \\n[ll-pre-pic]u-\\n[pic*div-width]u/2u
-.\"
+.    if !\\n[pic*left] \!.in \\n[ll-pre-pic]u-\\n[pic*div-width]u/2u
+\!.  if (\\n[grap]=1)&(\\n[pic*caption-after-label]=1) .sp -2
 .    pic*div
-.    sp
+.    br
 .    if (\\n[pic*have-label]=1):(\\n[pic*autolabel]=1):(\\n[pic*caption-after-label]=1) \{\
 .       nr lead-pre-label \\n[.v]
 .       ev label
@@ -21080,10 +21086,12 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .       if \\n[pic*label-with-chapter] \
 .          ds chapno \\n[#CH_NUM].
 .       PIC*SET_LABEL_QUAD \\*[pic*label-quad]
+.       EL
 \!.     in -\\n[ind-pre-pic]u
 .       sp \\n[lead-pre-label]u-\\n[.v]u
 .       if !'\\*[pic*label-space]'' .sp \\*[pic*label-space]
 .       if \\n[#PRINT_STYLE]=1 .sp .5v
+.       if \\n[#PRINT_STYLE]=2 .sp .25v
 .       ie \\n[pic*autolabel] \{\
 .          nop \
 \\*[pic*label-prfx]\\*[chapno]\\n+[fig*label-num]\\*[pic*label-sffx]\|
@@ -21121,6 +21129,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .    if !\\n[cutaround] .rm pic*space-adj
 .    if !\\n[defer] .rr pic*have-caption
 .    rr pic*have-label
+.    rr grap
 .    rr float*pic
 .    if '\\*[pic*label-sffx-tmp]'.' .ds pic*label-sffx .
 .END
