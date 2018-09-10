@@ -1998,8 +1998,9 @@ with control macros.
   <li><a href="#paginate">PAGINATE</a> &ndash; pagination on or off</li>
   <li><a href="#pagenumber">PAGENUMBER</a> &ndash; user-defined (starting) page number</li>
   <li><a href="#pagenum-style">PAGENUM_STYLE</a> &ndash; digits, roman numerals, etc</li>
-  <li><a href="#pagenum-on-first-page">PAGENUM_ON_FIRST_PAGE</a> &ndash; applies only when footers are enabled</li>
+  <li><a href="#pagenum-on-first-page">PAGENUM_ON_FIRST_PAGE</a> &ndash; put page number on first page when numbering is at the top of the page</li>
   <li><a href="#draft-with-pagenumber">DRAFT_WITH_PAGENUMBER</a> &ndash; attach draft/revision information to page numbers</li>
+  <li><a href="#pagenumber-string">PAGENUMBER_STRING</a> &ndash; user-defined page number string</li>
   <li><a href="#index-paginate-control">Pagination control macros and defaults</a></li>
 </ul>
 </div>
@@ -2136,6 +2137,33 @@ See the note in
 </a>
 for other ways of dealing with crowded page headers when formatting
 draft-style copy.
+</p>
+
+<!-- -PAGENUMBER_STRING- -->
+
+<div id="pagenumber-string" class="box-macro-args">
+Macro: <b>PAGENUMBER_STRING</b> "&lt;text of page number string&gt;"
+</div>
+
+<p>
+If you want page numbering to contain text in addition to the page
+number itself, use PAGENUMBER_STRING.
+</p>
+
+<p>
+The most common use for PAGENUMBER_STRING is to include the total
+number of pages along with the page number, for example
+&#8220;Page 1 of 10, Page 2 of 10...&#8221;  To accomplish this,
+you&#8217;d enter
+<br/>
+<span class="pre-in-pp">
+  .PAGENUMBER_STRING "Page \*[PAGE#] of 10"
+</span>
+Notice that the page number is entered symbolically with the
+<a href="definitions.html#inlines">inline escape</a>
+<span style="white-space:nowrap"><kbd>\*[PAGE#]</kbd>,</span>
+while the total number of pages must be entered explicitly after the
+document is complete and the total number of pages known.
 </p>
 
 <!-- -PAGINATE_CONTROL- -->
