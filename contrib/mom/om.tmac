@@ -456,6 +456,7 @@ end
 \#   breaks to a new page.
 \#
 .MAC NEWPAGE END
+.    br
 .    if \\n[#DOC_TYPE]=5 \{\
 .       if \\n[#NUM_ARGS]>0 \
 .       pdftransition PAGE \\$1
@@ -4841,11 +4842,17 @@ y\R'#DESCENDER \\n[.cdp]'
 .    \}
 .END
 \#
-.MAC PAGENUMBER END \"Page # that appears on page one.
+\# Page number that appears on page one.
+.MAC PAGENUMBER END
 .    nr #n%_AT_PAGENUM_SET \\n%
 .    nr #PAGE_NUM_ADJ \\$1-\\n[#n%_AT_PAGENUM_SET]
 .    rr #n%_AT_PAGENUM_SET
 .    nr #PAGE_NUM_SET 1
+.END
+\#
+\# Replacement string for pagenumber.
+.MAC PAGENUMBER_STRING END
+.    ds $PAGENUM_STRING \\$1
 .END
 \#
 \# ====================================================================
@@ -5855,7 +5862,8 @@ SMALLCAPS takes precedence.
 .       if \\n[#PAGE_NUM_HYPHENS]=0 .PAGENUM_HYPHENS OFF
 .       if \\n[#PAGE_NUM_HYPHENS]=1 .PAGENUM_HYPHENS
 .    \}
-.    el .PAGENUM_HYPHENS
+.    el \
+.       if !d$PAGENUM_STRING .PAGENUM_HYPHENS
 .    if !d $FN_FAM     .FOOTNOTE_FAMILY \\*[$DOC_FAM]
 .    if !d $FN_FT      .FOOTNOTE_FONT R
 .    if !d $FN_QUAD    .FOOTNOTE_QUAD \\*[$DOC_QUAD]
@@ -12821,7 +12829,10 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          if '\\*[$PAGENUM_STYLE]'alpha' \
 .             PRINT \m[\\*[$PAGE_NUM_COLOR]]-\|\\n[#PAGENUMBER]\|-
 .       \}
-.       el .PRINT \m[\\*[$PAGE_NUM_COLOR]]\\n[#PAGENUMBER]
+.       el \{\
+.          ie !d$PAGENUM_STRING .PRINT \m[\\*[$PAGE_NUM_COLOR]]\\n[#PAGENUMBER]
+.          el .PRINT \m[\\*[$PAGE_NUM_COLOR]]\\*[$PAGENUM_STRING]
+.       \}
 .    \}
 .    ev
 .    nr #DIVER_DEPTH 0
@@ -16953,10 +16964,12 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       \}
 .       if \\n[#PAGE_NUM_V_POS]=1 \{\
 .          if \\n[#PAGINATE]=1 .nr #PAGINATE_WAS_ON 1
+.          nr #RESTORE_PN_V_POS \\n[#PAGE_NUM_V_POS]
 .          PAGINATION OFF
 .       \}
 .       NEWPAGE \" Break to blank page
 .       nop \&
+.       br
 .       if \\n[#FOOTERS_ON]=1 \{\
 .          nr #FOOTERS_WERE_ON 1
 .          FOOTERS OFF
@@ -16997,6 +17010,11 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    \}
 .    if \\n[#PAGINATE]=1 \
 .       if '\\$1'NULL' .nr #PAGE_NUM_ADJ -\\n[#HOW_MANY]
+.       if \\n[#RESTORE_PN_V_POS]=1 \{\
+.          RESTORE_SPACE
+.          sp |\\n[#HEADER_MARGIN]u
+.          PRINT_PAGE_NUMBER
+.       \}
 .    if \\n[#LINENUMBERS_WERE_ON] .NUMBER_LINES RESUME
 .    rr #HOW_MANY
 .    rr #HEADERS_WERE_ON
@@ -17725,7 +17743,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       LEFT
 .       ie !'\\*[$CLOSE_INDENT]'' .IL \\*[$CLOSE_INDENT]
 .       el .IL \\n[#DOC_L_LENGTH]u/2u
-.       SP
+.       sp
 .       if \\n[#CLOSING] \{\
 .          CLOSING_TEXT
 .          br
