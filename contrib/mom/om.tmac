@@ -688,7 +688,8 @@ end
 .       rr #AUTOLEADING
 .    \}
 .    vs \\$1
-.    if \\n[.t]<\\n[.v] 'bp
+.    if !\\n[#START] \
+.       if \\n[.t]<\\n[.v] 'bp
 .END
 \#
 \# AUTOLEAD
@@ -16526,8 +16527,10 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .MAC QUIT_LISTS END
 .   br
-\!. rr #IN_LIST
-.   di
+.   if '\\n.z]'LIST*DIV' \{\
+\!.    rr #IN_LIST
+.      di
+.   \}
 .   IQ CLEAR
 .   nr #HL_INDENT \\n[#STORED_HL_INDENT]
 .   nr #T_INDENT  \\n[#STORED_T_INDENT]
