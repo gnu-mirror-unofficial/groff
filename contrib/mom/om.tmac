@@ -16546,8 +16546,10 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .   po +\\n[#LIST_OFFSET_VALUE]u
 .   if \\n[.u] .nr #FILLED 1
 .   nf
-.   LIST*DIV
-.   rm LIST*DIV
+.   if dLIST*DIV \{\
+.      LIST*DIV
+.      rm LIST*DIV
+.   \}
 .   if \\n[#FILLED] .fi
 .   if !\\n[#PRE_LIST_QUAD]=\\n[.j] .ad \\n[#PRE_LIST_QUAD]
 .   rr #FILLED
