@@ -728,11 +728,6 @@ BUILT_SOURCES += defs.h
 # Force generation of test-groff even though we don't ship it.
 BUILT_SOURCES += test-groff
 
-# Same thing for gnulib's localcharset.c and configmake.h: gnulib uses
-# BUILT_SOURCES only, adding the following makes 'make lib/libgnu.a'
-# possible
-lib/localcharset.$(OBJEXT): lib/configmake.h
-
 # if there is a name prefix we install the man pages by hand
 all: generate_man_files
 install-data-hook: install-prefix-man
