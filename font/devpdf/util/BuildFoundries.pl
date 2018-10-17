@@ -45,6 +45,7 @@ sub LoadFoundry
 {
     my $fn=shift;
     my $foundrypath='';
+    my $notFoundFont=0;
 
     open(F,"<$fn") or Die("No $fn file found");
 
@@ -69,9 +70,11 @@ sub LoadFoundry
 
 	if (lc($r[0]) eq 'foundry')
 	{
+	    Warn("\nThe path(s) used for searching:\n$foundrypath\n") if $notFoundFont;
 	    $foundry=uc($r[1]);
 	    $foundrypath=$r[2].' : '.$devps;
 	    $foundrypath=~s/\(gs\)/$GSpath /;
+	    $notFoundFont=0;
 	}
 	else
 	{
@@ -107,7 +110,8 @@ sub LoadFoundry
 			{
 			    $gotf=0;
 			    my $fns=join(',',split('!',$r[5]));
-			    Warn("Unable to locate font(s) $fns on the given path(s)");
+			    Warn("Unable to locate font(s) $fns");
+			    $notFoundFont=1;
 			    unlink $gfont;	# Unable to find the postscript file for the font just created by afmtodit
 			}
 		    }
@@ -138,12 +142,14 @@ sub LoadFoundry
 		else
 		{
 		    Warn("Failed to create groff font '$gfont' by running afmtodit");
+		    $notFoundFont=1;
 		}
 	    }
 	}
     }
 
     close();
+    Warn("\nThe path(s) used for searching:\n$foundrypath\n") if $notFoundFont;
 }
 
 sub RunAfmtodit
