@@ -6838,11 +6838,16 @@ The adjustment mode status is associated with the current environment
 
 @DefreqList {brp, }
 @DefescListEndx {\\p, , , }
-Adjust the current line and cause a break.
+Break, adjusting the current line per the current adjustment mode.
+
+With @code{\p}, this break will happen at the next word boundary.  The
+@code{\p} itself is removed entirely, adding neither a break nor a space
+where it appears in input; it can thus be placed in the middle of a word
+to cause a break at the end of that word.
 
 In most cases this produces very ugly results since @code{gtroff}
 doesn't have a sophisticated paragraph building algorithm (as @TeX{}
-have, for example); instead, @code{gtroff} fills and adjusts a paragraph
+has, for example); instead, @code{gtroff} fills and adjusts a paragraph
 line by line:
 
 @Example
@@ -17237,4 +17242,6 @@ accessed as @samp{\[xxx]}.
 @c Local Variables:
 @c mode: texinfo
 @c coding: latin-1
+@c fill-column: 72
 @c End:
+@c vim: set textwidth=72:
