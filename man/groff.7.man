@@ -1990,9 +1990,12 @@ from right margin (default scaling indicator\~\c
 .scaleindicator m ).
 .
 .TPx
-.REQ .mk "register"
+.REQ .mk "\fR[\fPregister\fR]\fP"
 Mark current vertical position in
-.IR register .
+.IR register ,
+or in an internal register used by
+.BR .rt
+if no argument.
 .
 .TPx
 .REQ .mso "file"
@@ -2274,10 +2277,19 @@ Remove
 Restore spacing; turn no-space mode off.
 .
 .TPx
+.REQ .rt
+Return
+.I (upward only)
+to vertical position marked by
+.B .mk
+on the current page.
+.
+.TPx
 .REQ .rt "\[+-]N"
 Return
 .I (upward only)
-to marked vertical place (default scaling indicator\~\c
+to specified distance from the top of the page (default scaling
+indicator\~\c
 .scaleindicator v ).
 .
 .TPx
