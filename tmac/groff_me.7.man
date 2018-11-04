@@ -1,7 +1,6 @@
 '\" t
 .hc %
 .TH GROFF_ME @MAN7EXT@ "@MDATE@" "@VERSION@"
-.UC 3
 .SH NAME
 groff_me \- \(lqme\(rq macro package for formatting documents with GNU roff
 .
@@ -86,6 +85,20 @@ l l.
 \fB.ce\fP \fIn\fP	center next \fIn\fP lines
 \fB.ul\fP \fIn\fP	underline next \fIn\fP lines
 .TE
+.PP
+.I Note:
+In contrast to its behavior with other macro packages and \(lqraw\(rq
+.IR roff ,
+when using the
+.I me
+package,
+the
+.B .sp
+request will
+.I not
+put space at the top of a page.
+.
+.
 .PP
 Output of the
 .IR pic ,
