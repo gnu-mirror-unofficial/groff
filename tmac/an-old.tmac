@@ -44,7 +44,10 @@
 .cp 0
 .
 .if (\n[.x]\n[.y] < 118) \
-.  ab You need GNU troff version 1.18 or higher to run this version of man!
+.  ab You need GNU troff 1.18 or higher to run this version of man!
+.
+.\" Define a string for use in diagnostic messages.
+.ds an-old an-old.tmac
 .
 .if !r D .nr D 0
 .if !r C .nr C 0
@@ -644,7 +647,8 @@
 .de1 R
 \c
 .  ie \\n[.$] \{\
-.    tm \\n[.F]: line \\n[.c]: 'R' is a string (producing the registered sign), not a macro.
+.    tmc \\*[an-old]: \\n[.F]: line \\n[.c]: 'R' is a string
+.    tm1 " (producing the registered sign), not a macro.
 .    nop \\$*
 .  \}
 .  el \{\
