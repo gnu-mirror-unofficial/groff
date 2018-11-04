@@ -5052,6 +5052,12 @@ fractional basic units are always rounded to integers.
 Some of the measurement units are completely independent of any of the
 current settings (e.g.@: type size) of @code{gtroff}.
 
+Although groff's basic unit is device-dependent, it may still be smaller
+than the smallest unit the device is capable of producing.  The register
+@code{.H} specifies how many groff basic units constitute the current
+device's basic unit horizontally, and the register @code{.V} specifies
+this value vertically.
+
 @table @code
 @item i
 @cindex inch unit (@code{i})
@@ -6479,7 +6485,8 @@ This string-valued register returns the current input file name.
 @cindex horizontal resolution register (@code{.H})
 @cindex resolution, horizontal, register (@code{.H})
 @vindex .H
-Horizontal resolution in basic units.
+Number of basic units per horizontal unit of output device resolution.
+@xref{Measurements}.
 
 @item \n[.R]
 @cindex number of registers register (@code{.R})
@@ -6502,7 +6509,8 @@ and to zero otherwise.  @xref{Groff Options}.
 @cindex vertical resolution register (@code{.V})
 @cindex resolution, vertical, register (@code{.V})
 @vindex .V
-Vertical resolution in basic units.
+Number of basic units per vertical unit of output device resolution.
+@xref{Measurements}.
 
 @item \n[seconds]
 @cindex seconds, current time (@code{seconds})
