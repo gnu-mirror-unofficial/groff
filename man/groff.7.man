@@ -1329,11 +1329,11 @@ Copy contents of file
 unprocessed to stdout or to the diversion.
 .
 .TPx
-.REQ .cflags "mode c1 c2 .\|.\|.\&"
+.REQ .cflags "mode c1 c2 \fR\&.\|.\|.\&\fP"
 Treat characters
 .IR c1 ,
 .IR c2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 according to
 .I mode
 number.
@@ -1359,11 +1359,11 @@ Chop the last character off macro, string, or diversion
 .IR object .
 .
 .TPx
-.REQ .class "name c1 c2 .\|.\|.\&"
+.REQ .class "name c1 c2 \fR\&.\|.\|.\&\fP"
 Assign a set of characters, character ranges, or classes
 .IR c1 ,
 .IR c2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 to
 .IR name .
 .
@@ -1700,13 +1700,13 @@ Reset list of special fonts for
 to be empty.
 .
 .TPx
-.REQ .fspecial "font s1 s2 .\|.\|.\&"
+.REQ .fspecial "font s1 s2 \fR\&.\|.\|.\&\fP"
 When the current font is
 .IR font ,
 then the fonts
 .IR s1 ,
 .IR s2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 are special.
 .
 .TPx
@@ -1763,7 +1763,7 @@ Set up additional hyphenation indicator character\~\c
 .IR c .
 .
 .TPx
-.REQ .hcode "c1 code1 c2 code2 .\|.\|.\&"
+.REQ .hcode "c1 code1 \fR[\fPc2 code2\fR]\fP \fR\&.\|.\|.\&\fP"
 Set the hyphenation code of character
 .I c1
 to
@@ -1795,7 +1795,7 @@ Append hyphenation patterns from
 .IR file .
 .
 .TPx
-.REQ .hpfcode "a b c d .\|.\|.\&"
+.REQ .hpfcode "a b c d \fR\&.\|.\|.\&\fP"
 Set input mapping for
 .request .hpf\c
 \&.
@@ -2214,11 +2214,11 @@ Change post-vertical line spacing according to
 .scaleindicator p ).
 .
 .TPx
-.REQ .rchar "c1 c2 .\|.\|.\&"
+.REQ .rchar "c1 c2 \fR\&.\|.\|.\&\fP"
 Remove the definitions of entities
 .IR c1 ,
 .IR c2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 .
 .TPx
 .REQ .rd "prompt"
@@ -2234,11 +2234,11 @@ Return twice, namely from the macro at the current level and from the
 macro one level higher.
 .
 .TPx
-.REQ .rfschar "f c1 c2 .\|.\|.\&"
+.REQ .rfschar "f c1 c2 \fR\&.\|.\|.\&\fP"
 Remove the definitions of entities
 .IR c1 ,
 .IR c2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 for font
 .IR f .
 .
@@ -2316,7 +2316,7 @@ In a macro, shift the arguments by
 positions.
 .
 .TPx
-.REQ .sizes "s1 s2 .\|.\|.\& sn \fB[0]\fP"
+.REQ .sizes "s1 s2 \fR\&.\|.\|.\&\fP s\fRn\fP \fR[\fB0\fP\fR]\fP"
 Set available font sizes similar to the
 .B sizes
 command in a
@@ -2345,7 +2345,7 @@ up or down according to sign of
 Reset global list of special fonts to be empty.
 .
 .TPx
-.REQ .special "s1 s2 .\|.\|.\&"
+.REQ .special "s1 s2 \fR\&.\|.\|.\&\fR"
 Fonts
 .IR s1 ,
 .IR s2 ,
@@ -2419,23 +2419,20 @@ Set tabs after every position that is a multiple of
 (default scaling indicator\~\c
 .scaleindicator m ).
 .TPx
-.REQ .ta "n1 n2 .\|.\|.\& nn \f[CB]T\f[] r1 r2 .\|.\|.\& rn"
+.REQ .ta "n1 n2 \fR\&.\|.\|.\&\fP n\fRn\fP \f[CB]T\f[] r1 r2 \
+\fR\&.\|.\|.\&\fP r\fRn\fP"
 Set tabs at positions
 .IR n1 ,
 .IR n2 ,
-.Text .\|.\|.,
-.IR nn ,
+\&.\|.\|.\&,
+.IR n n,
 then set tabs at
-.IR nn + r1 ,
-.IR nn + r2 ,
-.Text .\|.\|.,
-.IR nn + rn ,
-then at
-.IR nn + rn + r1 ,
-.IR nn + rn + r2 ,
-.Text .\|.\|.,
-.IR nn + rn + rn ,
-and so on.
+.IR n n+ m \[tmu] r n+ r1
+through
+.IR n n+ m \[tmu] r n+ r n,
+where
+.I m
+increments from 0, 1, 2, \&.\|.\|.\& to infinity.
 .
 .\".TPx
 .\".REQ .tar
@@ -2491,7 +2488,7 @@ Similar to
 without emitting a final newline.
 .
 .TPx
-.REQ .tr "abcd.\|.\|.\&"
+.REQ .tr "abcd\fR\&.\|.\|.\&\fP"
 Translate
 .I a
 to
@@ -2507,7 +2504,7 @@ Transparently output the contents of file
 .IR filename .
 .
 .TPx
-.REQ .trin "abcd.\|.\|.\&"
+.REQ .trin "abcd\fR\&.\|.\|.\&\fP"
 This is the same as the
 .request tr
 request except that the
@@ -2516,7 +2513,7 @@ request uses the character code (if any) before the character
 translation.
 .
 .TPx
-.REQ .trnt "abcd.\|.\|.\&"
+.REQ .trnt "abcd\fR\&.\|.\|.\&\fP"
 This is the same as the
 .request tr
 request except that the translations do not apply to text that is
@@ -2766,13 +2763,13 @@ The string stored in the string variable with name
 (with arbitrary length).
 .
 .TP
-.ESC[] * "stringvar arg1 arg2 .\|.\|."
+.ESC[] * "stringvar arg1 arg2 \fR\&.\|.\|.\fP"
 The string stored in the string variable with arbitrarily long name
 .IR stringvar ,
 taking
 .IR arg1 ,
 .IR arg2 ,
-.I .\|.\|.\&
+\&.\|.\|.\&
 as arguments.
 .
 .\" ========= macro arguments =========
@@ -2969,11 +2966,11 @@ A glyph with name
 (of arbitrary length).
 .
 .TP
-.ESC[] "" "comp1 comp2 .\|.\|."
+.ESC[] "" "comp1 comp2 \fR\&.\|.\|.\&\fP"
 A composite glyph with components
 .IR comp1 ,
 .IR comp2 ,
-.I .\|.\|.
+\&.\|.\|.\&
 .
 .\" ========= alphabetical escapes =========
 .
@@ -2989,7 +2986,7 @@ is acceptable as a name of a string, macro, diversion, register,
 environment or font it expands to\~1, and to\~0 otherwise.
 .
 .TP
-.ESCq b abc.\|.\|.\&
+.ESCq b abc\fR\&.\|.\|.\&\fP
 Bracket building function.
 .
 .TP
@@ -3212,7 +3209,7 @@ Useful for adding (named) entities to a document using the
 request and friends.
 .
 .TP
-.ESCq o abc.\|.\|.\&
+.ESCq o abc\fR\&.\|.\|.\&\fP
 Overstrike glyphs
 .IR a ,
 .IR b ,
