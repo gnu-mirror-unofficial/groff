@@ -1,5 +1,15 @@
 2018-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/meintro_fr.me: Add encoding hint to top of file so preconv
+	works correctly even if the build environment's encoding is not
+	UTF-8.  Adapted from Bjarni Ingi Gislason's patch.  Also add
+	long-form Emacs coding declaration at end of file.  Vim's
+	auto-detection seems to be fine, so did not update its modeline.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?54530>.
+
+2018-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/groff_man.7.man: Reorganize and largely rewrite to more
 	precisely document the macro package's behavior and to be more
 	helpful and accessible to man page writers who may never read
