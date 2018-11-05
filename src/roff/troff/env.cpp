@@ -39,7 +39,7 @@ symbol default_family("T");
 enum { ADJUST_LEFT = 0, ADJUST_BOTH = 1, ADJUST_CENTER = 3, ADJUST_RIGHT = 5 };
 
 enum {
-  // Not all combinations are legal; see hyphenate_request() below.
+  // Not all combinations are valid; see hyphenate_request() below.
   HYPHEN_NONE = 0,
   HYPHEN_DEFAULT = 1,
   HYPHEN_NOT_LAST_LINE = 2,
