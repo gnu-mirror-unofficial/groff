@@ -34,9 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "posix.h"
 #include "nonposix.h"
 
-extern "C" {
-  const char *Version_string;
-}
+extern "C" const char *Version_string;
 
 static void usage(FILE *stream)
 {
