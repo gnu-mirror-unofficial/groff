@@ -4,6 +4,12 @@
 .SH NAME
 grolbp \- groff driver for Canon CAPSL printers (LBP-4 and LBP-8 \
 series laser printers)
+.
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr grolbp_c \n[.C]
+.cp 0
+.
+.
 .\" Modified by Francisco Andrés Verdú <pandres@dragonet.es> for the
 .\" grolbp program.
 .
@@ -436,6 +442,10 @@ Macros for use with
 .BR groff_out (@MAN5EXT@),
 .BR groff_font (@MAN5EXT@),
 .BR groff_char (@MAN7EXT@)
+.
+.
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[grolbp_c]
 .
 .
 .\"
