@@ -26,13 +26,8 @@ Publishing with GNU Troff
 .CE
 .\"
 .\" Specify the Internet address for the groff web site.
-.\" Currently, there are two available addresses; a copy is maintained at ...
 .\"
 .ds GROFF-WEBSITE http://www.gnu.org/software/groff
-.\"
-.\" ... but the official home site is at ...
-.\"
-.ds GROFF-WEBSITE http://groff.ffii.org
 .\"
 .\" Set the PDF default document view attribute, to ensure that the document
 .\" outline is visible, each time the document is opened in Acrobat Reader.
