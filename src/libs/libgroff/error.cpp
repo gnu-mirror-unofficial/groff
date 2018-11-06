@@ -50,6 +50,10 @@ static void do_error_with_file_and_line(const char *filename,
       fprintf(stderr, "%s:%d:", filename, lineno);
     need_space = 1;
   }
+  if (need_space) {
+    fputc(' ', stderr);
+    need_space = 0;
+  }
   switch (type) {
   case FATAL:
     fputs("fatal error:", stderr);
