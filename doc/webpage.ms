@@ -71,7 +71,7 @@ Users may also write their own macros.
 All three may be combined.
 
 Present on most Unix systems owing to its long association
-with Unix manuals (manpages),
+with Unix manuals (man pages),
 groff is capable of producing typographically sophisticated documents
 while consuming only minimal system resources.
 
@@ -100,10 +100,8 @@ For a special version of groff on the Microsoft operating systems, see
 (version 1.21).
 
 Groff was originally written and maintained by James Clark; it
-is now maintained by
-.MTO Ted.Harding@\:nessie.mcc.ac.uk "Ted Harding"
-and
-.MTO wl@\:gnu.org "Werner Lemberg" .
+is now maintained by the team at
+.MTO groff@\:gnu.org "" .
 .
 .HR
 .
@@ -239,21 +237,21 @@ Three mailing lists are available:
 
 .ULS
 .LI
-.MTO bug\-groff@gnu.org bug\-groff@gnu.org
-for reporting bugs and following bug reports
+.MTO bug\-groff@\:gnu.org
+for following bug reports;
 
 .LI
-.MTO groff@gnu.org groff@gnu.org
-for general discussion of groff
+.MTO groff@\:gnu.org
+for general discussion of groff; and
 
 .LI
-.MTO groff\-commit@gnu.org groff\-commit@gnu.org
-a read-only list showing commits to the git repository
+.MTO groff\-commit@\:gnu.org "" ,
+a read-only list showing commits to the git repository.
 .ULE
 
 To subscribe, send a mail to \[la]list\[ra]-request@\[la]domain\[ra]
 (example:
-.MTO groff\-request@\:gnu.org groff\-request@\:gnu.org
+.MTO groff\-request@\:gnu.org
 for the `groff' list) with the word `subscribe' in either the
 subject or body of the e-mail (don't include the quotes).
 Alternatively, you may subscribe by visiting the web pages at
@@ -476,9 +474,9 @@ gropdf
 .ULS
 .LI
 A new driver for generating PDF output directly, contributed by
-.MTO deri@chuzzlewit.myzen.co.uk "Deri James" .
+.MTO deri@\:chuzzlewit.myzen.co.uk "Deri James" .
 
-Note that this driver is written in Perl, thus you need a working Perl
+Note that this driver is written in Perl; you need a working Perl
 installation to run this output device.
 .ULE
 .
@@ -1318,7 +1316,7 @@ grap2graph
 .ULS
 .LI
 A new script contributed by
-.MTO esr@\:thyrsus.com "Eric S. Raymond" .
+.MTO esr@\:thyrsus.com "Eric S.\& Raymond" .
 It converts a grap diagram into a cropped image.
 Since it uses gs and the PNM library, virtually all graphics formats
 are available for output.
@@ -2309,7 +2307,7 @@ Pic2graph
 .ULS
 .LI
 A new script contributed by
-.MTO esr@\:thyrsus.com "Eric S.\~Raymond" .
+.MTO esr@\:thyrsus.com "Eric S.\& Raymond" .
 It converts a PIC diagram into a cropped image.
 Since it uses gs and the PNM library, virtually all graphics formats
 are available for output.
@@ -2322,7 +2320,7 @@ Eqn2graph
 .ULS
 .LI
 A new script contributed by
-.MTO esr@\:thyrsus.com "Eric S.\~Raymond" .
+.MTO esr@\:thyrsus.com "Eric S.\& Raymond" .
 It converts an EQN diagram into a cropped image.
 Since it uses gs and the PNM library, virtually all graphics formats
 are available for output.
