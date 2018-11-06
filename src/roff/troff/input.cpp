@@ -7701,7 +7701,7 @@ void macro_source()
     // FOOBAR.tmac and vice versa
     if (!fp) {
       const char *fn = nm.contents();
-      int fnlen = strlen(fn);
+      size_t fnlen = strlen(fn);
       if (strncasecmp(fn, MACRO_PREFIX, sizeof(MACRO_PREFIX) - 1) == 0) {
 	char *s = new char[fnlen + sizeof(MACRO_POSTFIX)];
 	strcpy(s, fn + sizeof(MACRO_PREFIX) - 1);
