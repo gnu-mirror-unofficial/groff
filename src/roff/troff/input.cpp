@@ -7701,19 +7701,20 @@ void macro_source()
     // FOOBAR.tmac and vice versa
     if (!fp) {
       const char *fn = nm.contents();
+      int fnlen = strlen(fn);
       if (strncasecmp(fn, MACRO_PREFIX, sizeof(MACRO_PREFIX) - 1) == 0) {
-	char *s = new char[strlen(fn) + sizeof(MACRO_POSTFIX)];
+	char *s = new char[fnlen + sizeof(MACRO_POSTFIX)];
 	strcpy(s, fn + sizeof(MACRO_PREFIX) - 1);
 	strcat(s, MACRO_POSTFIX);
 	fp = mac_path->open_file(s, &path);
 	a_delete s;
       }
       if (!fp) {
-	if (strncasecmp(fn + strlen(fn) - sizeof(MACRO_POSTFIX) + 1,
+	if (strncasecmp(fn + fnlen - sizeof(MACRO_POSTFIX) + 1,
 			MACRO_POSTFIX, sizeof(MACRO_POSTFIX) - 1) == 0) {
-	  char *s = new char[strlen(fn) + sizeof(MACRO_PREFIX)];
+	  char *s = new char[fnlen + sizeof(MACRO_PREFIX)];
 	  strcpy(s, MACRO_PREFIX);
-	  strncat(s, fn, strlen(fn) - sizeof(MACRO_POSTFIX) + 1);
+	  strncat(s, fn, fnlen - sizeof(MACRO_POSTFIX) + 1);
 	  fp = mac_path->open_file(s, &path);
 	  a_delete s;
 	}
