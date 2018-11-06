@@ -1,3 +1,25 @@
+2018-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/utils/lookbib/lookbib.cpp: Doesn't make much sense to mark
+	Version_string as a C extern if you're just going to hide it in
+	a throwaway scope again.  Remove braces, exposing it.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?54972>.
+
+2018-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
+	If:
+	  a program name is known;
+	but
+	  no file is being processed or the line number is negative,
+	then there was no space between the program name (with colon),
+	and the succeeding diagnostic message.
+
+	Example: lookbib:fatal error: no databases
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?54971>.
+
 2018-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an-old.tmac: When emitting diagnostics, report the name
