@@ -220,14 +220,12 @@ Bug reports
 Please report bugs using the project's
 .URL https://\:savannah.gnu.org/\:projects/\:groff "bug tracker" .
 
-Alternatively, but less preferable, you may use the form in the file
-`BUG-REPORT'; the idea of this is to make sure that FSF has all the
-information it needs to fix the bug.
+You may use the form in the file `BUG-REPORT'; the idea of this is to
+make sure that FSF has all the information it needs to fix the bug.
 At the very least, read the `BUG-REPORT' form and make sure that you supply
 all the information that it asks for.
-Even if you are not sure that something is a bug, report it using
-`BUG-REPORT': this enables us to determine whether it really is a bug or
-not.
+Even if you are not sure that something is a bug, report it:
+this enables us to determine whether it really is a bug.
 .
 .
 .SH
