@@ -51,7 +51,8 @@ HDTBLGENFILES = \
   contrib/hdtbl/examples/fonts_x.roff
 EXTRA_DIST += \
   contrib/hdtbl/examples/fonts_n.in \
-  contrib/hdtbl/examples/fonts_x.in
+  contrib/hdtbl/examples/fonts_x.in \
+  contrib/hdtbl/examples/test-hdtbl.sh.in
 
 HDTBLEXAMPLEFILES = \
   contrib/hdtbl/examples/common.roff \
@@ -100,6 +101,14 @@ EXTRA_DIST += \
   contrib/hdtbl/groff_hdtbl.7.man \
   contrib/hdtbl/hdtbl.tmac-u \
   contrib/hdtbl/hdmisc.tmac-u
+
+TESTS += contrib/hdtbl/examples/test-hdtbl.sh
+contrib/hdtbl/examples/test-hdtbl.sh: $(top_builddir)/config.status \
+	$(HDTBLPROCESSEDEXAMPLEFILES) $(top_srcdir)/contrib/hdtbl/examples/test-hdtbl.sh.in
+	sed -e "s|[@]abs_top_builddir[@]|$(abs_top_builddir)|g" \
+	    -e "s|[@]GHOSTSCRIPT[@]|$(GHOSTSCRIPT)|g" \
+	    	$(top_srcdir)/contrib/hdtbl/examples/test-hdtbl.sh.in > $@
+	chmod +x $@
 
 # Rule to generate ps and roff files
 SUFFIXES += .roff .in .ps
