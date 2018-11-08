@@ -44,56 +44,42 @@ mmroff \- cross-reference preprocessor for GNU roff mm macro package
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B mmroff
+.I mmroff
 is a simple preprocessor for
-.BR groff ;
-it is used for expanding cross references in
-.BR m@TMAC_M_PREFIX@m ,
+.IR groff ,
+used for expanding cross references in
+.IR m@TMAC_M_PREFIX@m ;
 see
-.BR groff_mm (@MAN7EXT@).
+.IR groff_mm (@MAN7EXT@).
 .
-.B groff
+.I groff
 is executed twice, first with
 .B \-z
 and
 .B \-rRef=1
 to collect all cross references and then to do the real processing
-when the cross reference file is up to date.
+when the cross-reference file is up to date.
 .
+.
+.\" ====================================================================
+.SH OPTIONS
+.\" ====================================================================
 .
 .TP
 .B \-x
-Just create the cross reference file.
+Just create the cross-reference file.
 .
-This can be used to refresh the cross reference file; it isn't
+This can be used to refresh the cross-reference file; it isn't
 always needed to have accurate cross references and by using this
 option
-.B groff
+.I groff
 will only be run once.
-.
-.
-.\" ====================================================================
-.\".SH BUGS
-.\" ====================================================================
-.
-.
-.\" ====================================================================
-.SH FILES
-.\" ====================================================================
-.
-.TP
-.B @MACRODIR@/@TMAC_M_PREFIX@m.tmac
-.TP
-.B @TMAC_MDIR@/*.cov
-.TP
-.B @TMAC_MDIR@/*.MT
-.TP
-.B @TMAC_MDIR@/locale
 .
 .
 .\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
+.
 .B mmroff
 was written by
 .MT jh@\:axis.se
@@ -102,18 +88,17 @@ Jörgen Hägg
 of Lund, Sweden.
 .
 .
-.na
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
 .
-.BR groff_mm (@MAN7EXT@),
-.BR groff_mmse (@MAN7EXT@),
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR @g@tbl (@MAN1EXT@),
-.BR @g@pic (@MAN1EXT@),
-.BR @g@eqn (@MAN1EXT@)
+.IR groff_mm (@MAN7EXT@),
+.IR groff_mmse (@MAN7EXT@),
+.IR groff (@MAN1EXT@),
+.IR @g@troff (@MAN1EXT@),
+.IR @g@tbl (@MAN1EXT@),
+.IR @g@pic (@MAN1EXT@),
+.IR @g@eqn (@MAN1EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
