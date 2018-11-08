@@ -36,21 +36,19 @@ eqn2graph \- convert an EQN equation into a cropped image
 .
 .I eqn2graph
 reads a one-line
-.BR @g@eqn (@MAN1EXT@)
+.IR @g@eqn (@MAN1EXT@)
 equation from the standard input and writes an image file,
 by default in Portable Network Graphics (PNG) format,
 to the standard output.
 .
 .
 .PP
-The input
-.I EQN
-code should
+The input EQN code should
 .I not
 be preceded by the
 .B \&.EQ
 macro that normally precedes it within
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 macros;
 nor do you need to have dollar-sign or other delimiters around the
 equation.
@@ -66,7 +64,7 @@ equation.
 Arguments not recognized by
 .I eqn2graph
 are passed to the ImageMagick or GraphicsMagick program
-.BR \%convert (1).
+.IR \%convert (1).
 .
 .
 By specifying these, you can give your image a border,
@@ -78,7 +76,7 @@ or perform other useful transformations.
 .
 .PP
 The output image is clipped using
-.IR convert 's
+.IR \%convert 's
 .B \-trim
 option to the smallest possible bounding box that contains all the black
 pixels.
@@ -93,22 +91,20 @@ pixels.
 Write the image in
 .IR output-format ,
 which must be understood by
-.IR convert ;
+.IR \%convert ;
 the default is PNG.
 .
 .
 .TP
 .B \-\-help
-Display a brief usage message and exit.
+Display a usage message and exit.
 .
 .
 .TP
 .B \-v
 .TQ
 .B \-\-version
-Display
-.IR pic2graph 's
-version string and exit.
+Display version information and exit.
 .
 .
 .\" ====================================================================
@@ -116,13 +112,13 @@ version string and exit.
 .\" ====================================================================
 .
 .TP
-.B \%GROFF_TMPDIR
+.I \%GROFF_TMPDIR
 .TQ
-.B \%TMPDIR
+.I \%TMPDIR
 .TQ
-.B \%TMP
+.I TMP
 .TQ
-.B \%TEMP
+.I TEMP
 These environment variables are searched in the given order to determine
 the directory where temporary files will be created.
 .
@@ -141,7 +137,7 @@ was written by
 Eric S.\& Raymond
 .ME ,
 based on a recipe for
-.BR pic2graph (@MAN1EXT@),
+.IR pic2graph (@MAN1EXT@),
 by W.\& Richard Stevens.
 .
 .
@@ -149,11 +145,11 @@ by W.\& Richard Stevens.
 .SH "SEE ALSO"
 .\" ====================================================================
 .
-.BR pic2graph (@MAN1EXT@),
-.BR grap2graph (@MAN1EXT@),
-.BR @g@eqn (@MAN1EXT@),
-.BR groff (@MAN1EXT@),
-.BR convert (1)
+.IR pic2graph (@MAN1EXT@),
+.IR grap2graph (@MAN1EXT@),
+.IR @g@eqn (@MAN1EXT@),
+.IR groff (@MAN1EXT@),
+.IR \%convert (1)
 .
 .
 .\" Local Variables:

@@ -37,23 +37,21 @@ grap2graph \- convert a GRAP diagram into a cropped image
 .
 .I grap2graph
 reads a
-.BR grap (1)
+.IR grap (1)
 program from the standard input and writes an image file,
 by default in Portable Network Graphics (PNG) format,
 to the standard output.
 .
 .
 .PP
-The input
-.I GRAP
-code should
+The input GRAP code should
 .I not
 be wrapped with the
 .B \&.G1
 and
 .B \&.G2
 macros that normally guard it within
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 documents.
 .
 .
@@ -67,7 +65,7 @@ documents.
 Arguments not recognized by
 .I grap2graph
 are passed to the ImageMagick or GraphicsMagick program
-.BR \%convert (1).
+.IR \%convert (1).
 .
 .
 By specifying these, you can give your image a border,
@@ -79,7 +77,7 @@ or perform other useful transformations.
 .
 .PP
 The output image is clipped using
-.IR convert 's
+.IR \%convert 's
 .B \-trim
 option to the smallest possible bounding box that contains all the black
 pixels.
@@ -90,14 +88,26 @@ pixels.
 .\" ====================================================================
 .
 .TP
+.BI "\-format " output-format
+Write the image in
+.IR output-format ,
+which must be understood by
+.IR \%convert ;
+the default is PNG.
+.
+.
+.TP
+.B \-\-help
+Display a usage message and exit.
+.
+.
+.TP
 .B \-unsafe
 Run
 .I groff
 in
 .I unsafe
-mode, enabling the
-.I PIC
-command
+mode, enabling the PIC command
 .B sh
 to execute arbitrary Unix shell commands.
 .
@@ -107,26 +117,10 @@ default is to forbid this.
 .
 .
 .TP
-.BI "\-format " output-format
-Write the image in
-.IR output-format ,
-which must be understood by
-.IR convert ;
-the default is PNG.
-.
-.
-.TP
-.B \-\-help
-Display a brief usage message and exit.
-.
-.
-.TP
 .B \-v
 .TQ
 .B \-\-version
-Display
-.IR grap2graph 's
-version string and exit.
+Display version information and exit.
 .
 .
 .\" ====================================================================
@@ -138,9 +132,9 @@ version string and exit.
 .TQ
 .B \%TMPDIR
 .TQ
-.B \%TMP
+.B TMP
 .TQ
-.B \%TEMP
+.B TEMP
 These environment variables are searched in the given order to determine
 the directory where temporary files will be created.
 .
@@ -159,7 +153,7 @@ was written by
 Eric S.\& Raymond
 .ME ,
 based on a recipe for
-.BR pic2graph (@MAN1EXT@),
+.IR pic2graph (@MAN1EXT@),
 by W.\& Richard Stevens.
 .
 .
@@ -167,12 +161,12 @@ by W.\& Richard Stevens.
 .SH "SEE ALSO"
 .\" ====================================================================
 .
-.BR pic2graph (@MAN1EXT@),
-.BR eqn2graph (@MAN1EXT@),
-.BR grap (1),
-.BR @g@pic (@MAN1EXT@),
-.BR groff (@MAN1EXT@),
-.BR convert (1)
+.IR pic2graph (@MAN1EXT@),
+.IR eqn2graph (@MAN1EXT@),
+.IR grap (1),
+.IR @g@pic (@MAN1EXT@),
+.IR groff (@MAN1EXT@),
+.IR \%convert (1)
 .
 .
 .\" Local Variables:
