@@ -53,36 +53,38 @@ pdfmom \- produce PDF documents using the mom macro package for groff
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B pdfmom
+.I pdfmom
 is a wrapper around
-.B groff
+.IR groff (@MAN1EXT@)
 that facilitates the production of PDF documents from files
-formatted with the mom macros.
+formatted with the
+.I mom
+macros.
 .
 .
 .P
-.B pdfmom
+.I pdfmom
 prints to the standard output,
 so output must usually be redirected to a destination file.
 The size of the final PDF can be reduced by piping the output
 through
-.BR ps2pdf .
+.IR ps2pdf (1).
 .
 .
 .P
 If called with the
 .B \-Tpdf
 option (which is the default),
-.B pdfmom
+.I pdfmom
 processes files using groff's native PDF driver,
-.BR gropdf .
+.IR gropdf (@MAN1EXT@).
 .
 If
 .B \-Tps
 is given, processing is passed over to
-.BR pdfroff ,
+.IR pdfroff ,
 which uses
-.BR groff 's
+.IR groff 's
 PostScript driver.
 .
 In either case, multiple runs of the source file are performed in
@@ -90,29 +92,23 @@ order to satisfy any forward references in the document.
 .
 .
 .P
-.B pdfmom
+.I pdfmom
 accepts all the same options as
-.BR groff .
+.IR groff .
 If
 .B \-Tps
 is given, the options associated with
-.B pdfroff
+.I pdfroff
 are accepted as well.
 .
 Please note that when
-.B pdfmom
+.I pdfmom
 calls
-.BR pdfroff ,
+.IR pdfroff ,
 the
-.
-.
-.P
 .RS
 .B \-mpdfmark \-mom \-\-no-toc
 .RE
-.
-.
-.P
 options are implied and should not be given on the
 command line.
 .
@@ -127,42 +123,40 @@ is absent.
 .
 .P
 PDF integration with the
-.B mom
-macros is discussed in full in the PDF manual,
-.IR "Producing PDFs with groff and mom" .
+.I mom
+macros is discussed in full in the manual
+.IR "Producing PDFs with groff and mom" ,
+which was itself produced with
+.IR pdfmom .
 .
 .
 .P
 If called with the
 .B \-v
 option,
-.B pdfmom
-simply prints its version information and exits.
+.I pdfmom
+simply displays its version information and exits.
 .
 .
 .\" ====================================================================
 .SH BUGS
 .\" ====================================================================
 .
-.B pdfmom
+.I pdfmom
 sometimes issues warnings of the type
-.
-.
-.P
-.RS 2
+.RS
 \&.\|.\|.:
-.B can't transparently output node at top level
+can't transparently output node at top level
 .RE
 .
-.
-.P
-This is more of an annoyance than a bug, and may safely be ignored.
+but this is more of an annoyance than a bug, and may safely be ignored.
 .
 .
 .\" ====================================================================
 .SH AUTHORS
 .\" ====================================================================
-.B pfdmom
+.
+.I pfdmom
 was written by
 .MT deri@\:chuzzlewit.demon.co.uk
 Deri James
@@ -177,9 +171,17 @@ Peter Schaffter
 .SH "SEE ALSO"
 .\" ====================================================================
 .
-.BR groff (@MAN1EXT@),
-.BR pdfroff (@MAN1EXT@),
-.BR ps2pdf (@MAN1EXT@)
+.IR "Producing PDFs with groff and mom" ,
+by Deri James and Peter Schaffter;
+a copy is installed at
+.IR \%@PDFDOCDIR@/\:mom\-pdf.pdf .
+.
+.
+.P
+.IR groff (@MAN1EXT@),
+.IR gropdf (@MAN1EXT@),
+.IR pdfroff (@MAN1EXT@),
+.IR ps2pdf (1)
 .
 .
 .\" Local Variables:
