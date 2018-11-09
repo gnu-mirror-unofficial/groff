@@ -21,14 +21,14 @@
 # Test generated files 'font_n.ps' and 'font_x.ps'.  Both should have
 # 38 pages.
 
-builddir=@abs_top_builddir@
-gs_program=@GHOSTSCRIPT@
+builddir="@abs_top_builddir@"
+gs_program="@GHOSTSCRIPT@"
 ret=0
 # $1 file, $2 expected number of lines
 check_number_pages()
 {
     echo "Checking $1"
-    res=`$gs_program -o /dev/null/ -sDEVICE=bbox $1 2>&1 | grep HiResBoundingBox | wc -l`
+    res=`$gs_program -o /dev/null/ -sDEVICE=bbox "$1" 2>&1 | grep HiResBoundingBox | wc -l`
     if test $res != $2; then
         echo "  Error: expected $2 pages, found $res pages"
         ret=255
