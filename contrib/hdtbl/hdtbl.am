@@ -26,11 +26,11 @@ man7_MANS += contrib/hdtbl/groff_hdtbl.7
 
 # Groff command used to generate .ps files
 HDTBL_TFLAG = -M$(hdtbl_srcdir) -M$(hdtbl_builddir)
-HDTLB_PFLAG=-t -p -e
+HDTBL_PFLAG=-t -p -e -U
 HDTBLGROFF = \
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
-  $(GROFFBIN) $(FFLAG) $(TFLAG) $(HDTBL_TFLAG) $(HDTLB_PFLAG)
+  $(GROFFBIN) $(FFLAG) $(TFLAG) $(HDTBL_TFLAG) $(HDTBL_PFLAG)
 
 # Files installed in $(tmacdir).
 # These files are generated with 'strip.sed' from their unstripped source file
