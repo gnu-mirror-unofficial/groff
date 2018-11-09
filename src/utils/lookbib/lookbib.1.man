@@ -51,13 +51,13 @@
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B @g@lookbib
+.I @g@lookbib
 prints a prompt on the standard error (unless the standard input is not
 a terminal),
 reads from the standard input a line containing a set of keywords,
 searches the bibliographic databases
-.IR filename \|.\|.\|.\&
-for references containing those keywords,
+.I filename
+\&.\|.\|.\& for references containing those keywords,
 prints any references found on the standard output,
 and repeats this process until the end of input.
 .
@@ -65,9 +65,9 @@ For each database
 .I filename
 to be searched,
 if an index
-.IB filename @INDEX_SUFFIX@
+.RI filename @INDEX_SUFFIX@
 created by
-.BR @g@indxbib (@MAN1EXT@)
+.IR @g@indxbib (@MAN1EXT@)
 exists, then it will be searched instead;
 each index can cover multiple databases.
 .
@@ -80,14 +80,16 @@ Whitespace is permitted between a command-line option and its argument.
 .
 .
 .TP
-.B \-v
-Print the version number.
+.B \-\-help
+Display a usage message and exit.
+.
 .
 .TP
 .BI \-i string
 When searching files for which no index exists,
 ignore the contents of fields whose names are in
 .IR string .
+.
 .
 .TP
 .BI \-t n
@@ -99,21 +101,28 @@ Initially
 is\~6.
 .
 .
+.TP
+.B \-v
+.TQ
+.B \-\-version
+Display version information and exit.
+.
+.
 .\" ====================================================================
 .SH FILES
 .\" ====================================================================
 .
 .TP
-.IB filename @INDEX_SUFFIX@
+.RI filename @INDEX_SUFFIX@
 Index files.
 .
 .
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
-.BR @g@refer (@MAN1EXT@),
-.BR lkbib (@MAN1EXT@),
-.BR @g@indxbib (@MAN1EXT@)
+.IR @g@refer (@MAN1EXT@),
+.IR lkbib (@MAN1EXT@),
+.IR @g@indxbib (@MAN1EXT@)
 .
 .
 .\" Local Variables:

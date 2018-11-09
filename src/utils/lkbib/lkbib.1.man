@@ -53,29 +53,29 @@ lkbib \- search bibliographic databases
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B lkbib
+.I lkbib
 searches bibliographic databases for references that contain the keys
-.IR key \|.\|.\|.\&
-and prints any references found on the standard output.
+.I key
+\&.\|.\|.\& and prints any references found on the standard output.
 .
-.B lkbib
+.I lkbib
 will search any databases given by
 .B \-p
 options, and then a default database.
 .
 The default database is taken from the
-.SB REFER
+.I REFER
 environment variable if it is set,
 otherwise it is
-.BR @DEFAULT_INDEX@ .
+.IR @DEFAULT_INDEX@ .
 .
 For each database
 .I filename
 to be searched,
 if an index
-.IB filename @INDEX_SUFFIX@
+.RI filename @INDEX_SUFFIX@
 created by
-.BR @g@indxbib (@MAN1EXT@)
+.IR @g@indxbib (@MAN1EXT@)
 exists, then it will be searched instead;
 each index can cover multiple databases.
 .
@@ -88,8 +88,16 @@ Whitespace is permitted between a command-line option and its argument.
 .
 .
 .TP
-.B \-v
-Print the version number.
+.B \-\-help
+Display a usage message and exit.
+.
+.
+.TP
+.BI \-i string
+When searching files for which no index exists,
+ignore the contents of fields whose names are in
+.IR string .
+.
 .
 .TP
 .BI \-p filename
@@ -100,11 +108,6 @@ Multiple
 .B \-p
 options can be used.
 .
-.TP
-.BI \-i string
-When searching files for which no index exists,
-ignore the contents of fields whose names are in
-.IR string .
 .
 .TP
 .BI \-t n
@@ -117,12 +120,19 @@ Initially
 is\~6.
 .
 .
+.TP
+.B \-v
+.TQ
+.B \-\-version
+Display version information and exit.
+.
+.
 .\" ====================================================================
 .SH ENVIRONMENT
 .\" ====================================================================
 .
 .TP
-.SB REFER
+.I REFER
 Default database.
 .
 .
@@ -131,22 +141,23 @@ Default database.
 .\" ====================================================================
 .
 .TP
-.B @DEFAULT_INDEX@
+.I @DEFAULT_INDEX@
 Default database to be used if the
-.SB REFER
+.I REFER
 environment variable is not set.
 .
+.
 .TP
-.IB filename @INDEX_SUFFIX@
+.RI filename @INDEX_SUFFIX@
 Index files.
 .
 .
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
-.BR @g@refer (@MAN1EXT@),
-.BR @g@lookbib (@MAN1EXT@),
-.BR @g@indxbib (@MAN1EXT@)
+.IR @g@refer (@MAN1EXT@),
+.IR @g@lookbib (@MAN1EXT@),
+.IR @g@indxbib (@MAN1EXT@)
 .
 .
 .\" Local Variables:

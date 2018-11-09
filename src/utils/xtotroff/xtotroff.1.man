@@ -32,7 +32,7 @@ xtotroff \- convert X font metrics into GNU troff font metrics
 .SY xtotroff
 .OP \-r resolution
 .OP \-s point-size
-.I FontMap
+.I font-map
 .YS
 .
 .SY xtotroff
@@ -50,30 +50,33 @@ xtotroff \- convert X font metrics into GNU troff font metrics
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B xtotroff
+.I xtotroff
 takes a
-.IR FontMap ,
+.IR font-map ,
 which maps
-.B groff
+.IR groff (@MAN1EXT@)
 fonts to X11 fonts,
 creates GNU
-.B troff
+.IR troff (@MAN1EXT@)
 metric files for all fonts listed.
 .
 Each line in
-.I FontMap
-consists of GNU
-.B troff
-font name and an X font name (XLFD) pattern, separated by whitespace.
+.I font-map
+consists of a
+.I groff
+font name and an X font name as a X Logical Font Description (XLFD)
+pattern,
+separated by whitespace.
 .
 Example:
 .
+.
 .PP
-.in +2n
-.nf
-TB   -adobe-times-bold-r-normal--*-*-*-*-p-*-iso8859-1
-.fi
-.in
+.RS
+.EX
+TB \-adobe\-times\-bold\-r\-normal\-\-*\-*\-*\-*\-p\-*\-iso8859\-1
+.EE
+.RE
 .
 .
 .PP
@@ -84,7 +87,7 @@ and
 switches.
 .
 If a font name is still ambiguous,
-.B xtotroff
+.I xtotroff
 aborts.
 .
 .
@@ -96,37 +99,48 @@ Whitespace is permitted between a command-line option and its argument.
 .
 .
 .TP
+.B \-\-help
+Display a usage message and exit.
+.
+.
+.TP
 .BI \-r resolution
 Set the resolution for all font patterns in
-.IR FontMap .
+.IR font-map .
 .
 The value is used for both the horizontal and vertical resolution.
 .
 If not specified, a resolution of 75dpi is assumed.
 .
+.
 .TP
 .BI \-s point-size
 Set the point size for all font patterns in
-.IR FontMap .
+.IR font-map .
 .
 If not specified, a size of 10pt is assumed.
 .
+.
 .TP
 .B \-v
-Print the version number.
+.TQ
+.B \-\-version
+Display version information and exit.
 .
 .
 .\" ====================================================================
 .SH BUGS
 .\" ====================================================================
-The only supported font encodings are \(oqiso8859-1\(cq and
-\(cqadobe-fontspecific\(cq.
+The only supported font encodings are \(lqiso8859\-1\(rq and
+\(lqadobe\-fontspecific\(rq.
 .
 .
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
-.BR gxditview (@MAN1EXT@)
+.IR groff (@MAN1EXT@),
+.IR gxditview (@MAN1EXT@),
+.IR troff (@MAN1EXT@)
 .
 .
 .\" Local Variables:

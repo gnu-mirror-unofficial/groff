@@ -1,6 +1,6 @@
 .TH PFBTOPS @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
-pfbtops \- translate a PostScript font in .pfb format to ASCII
+pfbtops \- translate Printer Font Binary files to PostScript ASCII
 .
 .
 .\" ====================================================================
@@ -30,7 +30,7 @@ pfbtops \- translate a PostScript font in .pfb format to ASCII
 .\" ====================================================================
 .
 .SY pfbtops
-.RI [ pfb_file ]
+.RI [ pfb-file ]
 .YS
 .
 .SY pfbtops
@@ -47,45 +47,49 @@ pfbtops \- translate a PostScript font in .pfb format to ASCII
 .SH DESCRIPTION
 .\" ====================================================================
 .
-.B pfbtops
-translates a PostScript font in
-.B .pfb
-format to ASCII, splitting overlong lines in text packets into smaller
-chunks.
+.I pfbtops
+translates a PostScript font in Printer Font Binary (PFB) format to
+ASCII, splitting overlong lines in text packets into smaller chunks.
 .
 If
-.I pfb_file
-is omitted the pfb file will be read from the standard input.
+.I pfb-file
+is omitted, the PFB file will be read from the standard input.
 .
 The ASCII format PostScript font will be written on the standard output.
 .
-PostScript fonts for MS-DOS are normally supplied in
-.B .pfb
-format.
+PostScript fonts for MS-DOS are normally supplied in PFB format.
 .
 .
 .LP
-The resulting ASCII format PostScript font can be used with groff.
-.
-It must first be listed in
-.B @FONTDIR@/devps/download
+The resulting ASCII format PostScript font can be used with groff,
+if it is first listed in
+.I @FONTDIR@/\:devps/\:download
 and
-.BR @FONTDIR@/devpdf/download .
+.IR @FONTDIR@/\:devpdf/\:download .
 .
 .
 .\" ====================================================================
 .SH OPTIONS
 .\" ====================================================================
+.
+.TP
+.B \-\-help
+Display a usage message and exit.
+.
+.
 .TP
 .B \-v
-Print the version number.
+.TQ
+.B \-\-version
+Display version information and exit.
 .
 .
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
-.BR grops (@MAN1EXT@),
-.BR gropdf (@MAN1EXT@)
+.
+.IR grops (@MAN1EXT@),
+.IR gropdf (@MAN1EXT@)
 .
 .
 .\" Local Variables:
