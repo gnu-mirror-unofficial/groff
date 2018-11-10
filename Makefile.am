@@ -877,37 +877,61 @@ MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
 # Suffix rule to build .1, .5 and .7 files from .1.man, .5.man and
 # .7.man files.  The brackets around the @ are used to prevent the
 # substitution of the variable by automake.
+#
+# The sed script transforms - to \-, ~ to \(ti, and so forth, (with an
+# extra layer of backslashes--see below) so that Makefile variables
+# containing ASCII characters that do not represent themselves literally
+# in *roff (see groff_char(7)) are correctly interpolated into man page
+# text.
+#
+# Note that while the script, combined with this target, will transform
+# ` to \(ga, including grave accents in Makefile variables is likely to
+# fail when the shell lexes the argument to echo within the old-style
+# command substitution `` below.  Testing shows that grave accents
+# should work* if POSIX-style command substitution $() is done instead.
+# However, $() is less portable.  (Triple-escaping grave accents \\\`
+# inside the interpolated Makefile variable will work, but is not
+# attempted here.)
+#
+# Note also that the amount of backslash-escaping in the sed script is
+# excessive (and incorrect) for normal purposes, but required here
+# because a command substitution is being nested inside yet another
+# invocation of sed.
+#
+# * For this target; no assurances about the good behavior of unusual
+#   characters in Makefile variables in other aspects of the groff build
+#   are offered.
+makevarescape=$(top_srcdir)/makevarescape.sed
 SUFFIXES += .man
 .man:
 	$(AM_V_GEN)rm -f $@ \
 	&& $(MKDIR_P) `dirname $@` \
 	&& LC_ALL=C \
-	 sed -e "s|[@]APPRESDIR[@]|$(appresdir)|g" \
-	     -e "s|[@]BINDIR[@]|$(bindir)|g" \
-	     -e "s|[@]BROKEN_SPOOLER_FLAGS[@]|$(BROKEN_SPOOLER_FLAGS)|g" \
-	     -e "s|[@]COMMON_WORDS_FILE[@]|$(common_words_file)|g" \
-	     -e "s|[@]DATASUBDIR[@]|$(datasubdir)|g" \
-	     -e "s|[@]DEFAULT_INDEX[@]|$(indexdir)/$(indexname)|g" \
-	     -e "s|[@]DEFAULT_INDEX_NAME[@]|$(indexname)|g" \
+	 sed -e "s|[@]APPRESDIR[@]|`echo $(appresdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]BINDIR[@]|`echo $(bindir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]COMMON_WORDS_FILE[@]|`echo $(common_words_file) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]DATASUBDIR[@]|`echo $(datasubdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]DEFAULT_INDEX[@]|`echo $(indexdir)/$(indexname) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]DEFAULT_INDEX_NAME[@]|`echo $(indexname) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]DEVICE[@]|$(DEVICE)|g" \
-	     -e "s|[@]DOCDIR[@]|$(docdir)|g" \
-	     -e "s|[@]EXAMPLEDIR[@]|$(exampledir)|g" \
-	     -e "s|[@]FONTDIR[@]|$(fontdir)|g" \
+	     -e "s|[@]DOCDIR[@]|`echo $(docdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]EXAMPLEDIR[@]|`echo $(exampledir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]FONTDIR[@]|`echo $(fontdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]g[@]|$(g)|g" \
 	     -e "s![@]G[@]!`echo $(g) | tr '[a-z]' '[A-Z]'`!g" \
-	     -e "s|[@]HTMLDOCDIR[@]|$(htmldocdir)|g" \
+	     -e "s|[@]HTMLDOCDIR[@]|`echo $(htmldocdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]INDEX_SUFFIX[@]|$(indexext)|g" \
-	     -e "s|[@]LEGACYFONTDIR[@]|$(legacyfontdir)|g" \
-	     -e "s|[@]LOCALFONTDIR[@]|$(localfontdir)|g" \
-	     -e "s|[@]LOCALMACRODIR[@]|$(localtmacdir)|g" \
-	     -e "s|[@]MACRODIR[@]|$(tmacdir)|g" \
+	     -e "s|[@]LEGACYFONTDIR[@]|`echo $(legacyfontdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]LOCALFONTDIR[@]|`echo $(localfontdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]LOCALMACRODIR[@]|`echo $(localtmacdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]MACRODIR[@]|`echo $(tmacdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]MAN1EXT[@]|$(man1ext)|g" \
 	     -e "s|[@]MAN5EXT[@]|$(man5ext)|g" \
 	     -e "s|[@]MAN7EXT[@]|$(man7ext)|g" \
 	     -e "s|[@]MDATE[@]|`$(PERL) $(top_srcdir)/mdate.pl $<`|g" \
-	     -e "s|[@]OLDFONTDIR[@]|$(oldfontdir)|g" \
-	     -e "s|[@]PDFDOCDIR[@]|$(pdfdocdir)|g" \
-	     -e "s|[@]SYSTEMMACRODIR[@]|$(systemtmacdir)|g" \
+	     -e "s|[@]OLDFONTDIR[@]|`echo $(oldfontdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]PDFDOCDIR[@]|`echo $(pdfdocdir) | sed -f $(makevarescape)`|g" \
+	     -e "s|[@]SYSTEMMACRODIR[@]|`echo $(systemtmacdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]TMAC_AN_PREFIX[@]|$(tmac_an_prefix)|g" \
 	     -e "s|[@]TMAC_M_PREFIX[@]|$(tmac_m_prefix)|g" \
 	     -e "s|[@]TMAC_MDIR[@]|$(tmacdir)/mm|g" \

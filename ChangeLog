@@ -1,3 +1,37 @@
+2018-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	man pages: Escape interpolated Make variables.
+
+	* makevarescape.sed: Transform - to \-, ~ to \(ti, and so forth,
+	(with an extra layer of backslashes--see below) so that Makefile
+	variables containing ASCII characters that do not represent
+	themselves literally in *roff (see groff_char(7)) are correctly
+	interpolated into man page text.
+
+	* Makefile.am (.man): Transform Makefile variables with the
+	above script when interpolating them into man page text.
+
+	Note that while the script, combined with this target, will
+	transform ` to \(ga, including grave accents in Makefile
+	variables is likely to fail when the shell lexes the argument to
+	echo within the old-style command substitution ``.  Testing
+	shows that grave accents should work[1] if POSIX-style command
+	substitution $() is done instead.  However, $() is less
+	portable.  (Triple-escaping grave accents \\\` inside the
+	interpolated Makefile variable will work, but is not attempted
+	at present.)
+
+	Note also that the amount of backslash-escaping in the sed
+	script is excessive (and incorrect) for normal purposes, but
+	required here because a command substitution is being nested
+	inside yet another invocation of sed.
+
+	[1] For this target; no assurances about the good behavior of
+	unusual characters in Makefile variables in other aspects of the
+	groff build are offered.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?55004>.
+
 2018-11-07  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Add a sanity check on 2 hdtbl examples.
