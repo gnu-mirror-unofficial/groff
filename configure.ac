@@ -20,7 +20,7 @@
 
 AC_INIT([GNU Troff],
         m4_esyscmd([build-aux/git-version-gen --prefix "" .tarball-version]),
-        [bug-groff@gnu.org],
+        http://savannah.gnu.org/bugs/?group=groff,
         [groff])
 
 AC_PREREQ([2.62])
