@@ -3,7 +3,7 @@
 	man pages: Escape interpolated Make variables.
 
 	* makevarescape.sed: Transform - to \-, ~ to \(ti, and so forth,
-	(with an extra layer of backslashes--see below) so that Makefile
+	{with an extra layer of backslashes--see below} so that Makefile
 	variables containing ASCII characters that do not represent
 	themselves literally in *roff (see groff_char(7)) are correctly
 	interpolated into man page text.
@@ -26,7 +26,7 @@
 	required here because a command substitution is being nested
 	inside yet another invocation of sed.
 
-	[1] For this target; no assurances about the good behavior of
+	{1} For this target; no assurances about the good behavior of
 	unusual characters in Makefile variables in other aspects of the
 	groff build are offered.
 
@@ -196,55 +196,55 @@
 
 	Improve diagnostics on bad hyphenation requests.
 
-	src/roff/troff/env.cpp:
-	* Warn about hyphenation request values that are completely out
-	  of range.
-	* Report bad hyphenation request value in diagnostic messages.
+	* src/roff/troff/env.cpp:
+	  - Warn about hyphenation request values that are completely
+	    out of range.
+	  - Report bad hyphenation request value in diagnostic messages.
 
 2018-04-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	grap2graph: Parallelize changes with pic2graph.
 
-	contrib/grap2graph/grap2graph.sh:
-	* Refactor temp directory handling.
-	* Handle embedded whitespace in temp dir.
-	* Adapt to old convert(1) programs.
+	* contrib/grap2graph/grap2graph.sh:
+	  - Refactor temp directory handling.
+	  - Handle embedded whitespace in temp dir.
+	  - Adapt to old convert(1) programs.
 
-	contrib/grap2graph/grap2graph.1.man:
-	* Make editorial/style changes and minor corrections.
+	* contrib/grap2graph/grap2graph.1.man: Make editorial/style
+	changes and minor corrections.
 
 2018-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	eqn2graph: Remove -unsafe option.
 
-	contrib/eqn2graph/eqn2graph.sh:
-	* Unrecognize "-unsafe" option and eliminate $groff_opts
-	variable.  As far as I can tell, this option had no effect
-	because (1) pic is not run on the input stream (no -p argument
-	to groff); (2) eqn doesn't support "shelling out" as pic does;
-	and (3) there is no way to embed *roff requests inside a
-	sequence of eqn commands.  If I'm wrong, let me know.
+	* contrib/eqn2graph/eqn2graph.sh: Unrecognize "-unsafe" option
+	and eliminate $groff_opts variable.  As far as I can tell, this
+	option had no effect because (1) pic is not run on the input
+	stream (no -p argument to groff); (2) eqn doesn't support
+	"shelling out" as pic does; and (3) there is no way to embed
+	*roff requests inside a sequence of eqn commands.  If I'm wrong,
+	let me know.
 
-	contrib/eqn2graph/eqn2graph.1.man:
-	* Undocument "-unsafe" option.
+	* contrib/eqn2graph/eqn2graph.1.man: Undocument "-unsafe"
+	option.
 
 2018-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	eqn2graph: Parallelize changes with pic2graph.
 
-	contrib/eqn2graph/eqn2graph.sh:
-	* Refactor temp directory handling.
-	* Handle embedded whitespace in temp dir.
-	* Adapt to old convert(1) programs.
+	* contrib/eqn2graph/eqn2graph.sh:
+	  - Refactor temp directory handling.
+	  - Handle embedded whitespace in temp dir.
+	  - Adapt to old convert(1) programs.
 
-	contrib/eqn2graph/eqn2graph.1.man:
-	* Make editorial/style changes and minor corrections.
+	* contrib/eqn2graph/eqn2graph.1.man: Make editorial/style
+	changes and minor corrections.
 
 2018-04-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	pic2graph: Refactor temp directory handling.
 
-	contrib/pic2graph/pic2graph.sh: Issue a diagnostic and give up
+	* contrib/pic2graph/pic2graph.sh: Issue a diagnostic and give up
 	if the user's desired temporary directory does not exist.  Also
 	document the Bashism $RANDOM and work around its absence.
 
@@ -252,25 +252,24 @@
 
 	pic2graph: Handle embedded whitespace in temp dir.
 
-	contrib/pic2graph/pic2graph.sh: Quote shell variables having to
-	do with the temporary directory's location; without quotation,
-	temporary directory names with embedded whitespace are wrongly
-	handled.
+	* contrib/pic2graph/pic2graph.sh: Quote shell variables having
+	to do with the temporary directory's location; without
+	quotation, temporary directory names with embedded whitespace
+	are wrongly handled.
 
 2018-04-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi: Bump end of copyright range to 2018.  Werner
-	  added substantial text this year about hyphenation.
+	added substantial text this year about hyphenation.
 
 2018-04-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Set version to 1.22.4 in the few places that hard-code it.
 
-	arch/mingw/grap2graph.cmd:
-	contrib/groffer/version.sh:
-	doc/groff.texi:
-	doc/webpage.ms:
-	* Bump from 1.22.3 to 1.22.4.
+	* arch/mingw/grap2graph.cmd:
+	* contrib/groffer/version.sh:
+	* doc/groff.texi:
+	* doc/webpage.ms: Bump from 1.22.3 to 1.22.4.
 
 2018-04-24  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
@@ -285,34 +284,35 @@
 	man pages: Shorten version footer.
 
 	* **/*.man: Replace "Groff Version" with "groff" in the fourth
-	  argument to .TH in all man pages.  This suffices to keep that
-	  part of the footer from overrunning the date, even in dirty
-	  trees on 80-column terminals.
+	argument to .TH in all man pages.  This suffices to keep that
+	part of the footer from overrunning the date, even in dirty
+	trees on 80-column terminals.
 
 	Fixes https://savannah.gnu.org/bugs/index.php?53721.
 
 2018-04-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	pic2graph(1): Make editorial/style changes and minor corrections.
+	pic2graph(1): Make editorial/style changes and minor
+	corrections.
 
 2018-04-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	pic2graph: Adapt to old convert(1) programs.
 
 	* contrib/pic2graph/pic2graph.sh: Grep convert's -help output
-	  for the string "-trim".  If it is not found, the old method
-	  for image trimming documented in pic2graph's man page, "-crop
-	  0x0", is used.  I am motivated by the fact that the warning
-	  about this in our man page is very old (10 years or more), and
-	  I wanted to get rid of it.
+	for the string "-trim".  If it is not found, the old method for
+	image trimming documented in pic2graph's man page, "-crop 0x0",
+	is used.  I am motivated by the fact that the warning about this
+	in our man page is very old (10 years or more), and I wanted to
+	get rid of it.
 
-	  pic2graph emits a warning when performing this fallback, in
-	  the event the ImageMagick and/or GraphicsMagick teams surprise
-	  the world again.
+	pic2graph emits a warning when performing this fallback, in the
+	event the ImageMagick and/or GraphicsMagick teams surprise the
+	world again.
 
 	* contrib/pic2graph/pic2graph.1.man: Remove BUGS section, the
-	  entire contents of which was dedicated to convert's change in
-	  behavior.
+	entire contents of which was dedicated to convert's change in
+	behavior.
 
 2018-04-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -727,7 +727,7 @@
 
 2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Makefile.am: Protect arguments to "tr" from globbing.
+	* Makefile.am: Protect arguments to "tr" from globbing.
 
 	Prevents errors from tr during man page generation and possible
 	incorrect program prefixing in those pages if, for example, some
@@ -736,7 +736,7 @@
 
 2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	contrib/hdtbl/examples/*.roff: Seed RNG.
+	* contrib/hdtbl/examples/*.roff: Seed RNG.
 
 	* contrib/hdtbl/examples/col_rowspan_colors.roff:
 	* contrib/hdtbl/examples/color_boxes.roff:
@@ -749,13 +749,13 @@
 
 2017-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/groff_mdoc.7.man: Use unstripped symbol names.
+	* tmac/groff_mdoc.7.man: Use unstripped symbol names.
 
 	Fix bug https://savannah.gnu.org/bugs/?52442.
 
 2017-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	src/include/.gitignore: Ignore config.hin~ files.
+	* src/include/.gitignore: Ignore config.hin~ files.
 
 2017-11-18  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
@@ -765,7 +765,7 @@
 
 2017-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac: Migrate macro package diagnostics away from `quotes'.
+	* tmac/**: Migrate macro package diagnostics away from `quotes'.
 
 2017-11-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -794,19 +794,18 @@
 2017-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/libs/libxutil/DviChar.c: Initialize "buckets" field of
-	  structs.
+	structs.
 
 	Resolves missing-field-initializers warnings.
 
 2017-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/strip.sed: Stop rewriting symbol names.
-
-	A substitution originally intended to strip the "doc-" prefix
-	off of mdoc macro and string names unintentionally caught some
-	mom stuff.  Harmlessly in this instance, but with potentially
-	surprising future effects.  Remove (only) this substitution per
-	discussion in
+	* tmac/strip.sed: Stop rewriting symbol names.  A substitution
+	originally intended to strip the "doc-" prefix off of mdoc macro
+	and string names unintentionally caught some mom stuff.
+	Harmlessly in this instance, but with potentially surprising
+	future effects.  Remove (only) this substitution per discussion
+	in
 	https://lists.gnu.org/archive/html/groff/2017-11/msg00055.html
 	et sequentia.
 
@@ -823,14 +822,12 @@
 
 2017-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	src/utils/xtotroff/xtotroff.c: Mark private function static.
+	* src/utils/xtotroff/xtotroff.c: Mark private function static.
 
 2017-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	src/libs/libxutil/xmalloc.c: Quieten gcc warning.
-
-	Mollify -Wmissing-prototypes for xmalloc() in single-function
-	file.
+	* src/libs/libxutil/xmalloc.c: Quieten gcc warning.  Mollify
+	-Wmissing-prototypes for xmalloc() in single-function file.
 
 2017-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -852,17 +849,17 @@
 
 2017-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	contrib: Migrate diagnostics away from `quotes'.
+	* contrib/**: Migrate diagnostics away from `quotes'.
 
 2017-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	src: Migrate diagnostics away from `these quotes'.
+	* src/**: Migrate diagnostics away from `these quotes'.
 
 	Fix bug https://savannah.gnu.org/bugs/?52374.
 
 2017-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/strip.sed: Remove nilpotent capture from address.
+	* tmac/strip.sed: Remove nilpotent capture from address.
 
 2017-11-05  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
@@ -875,11 +872,12 @@
 
 2017-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	font/devpdf/devpdf.am: Silence warning from grep during clean.
+	* font/devpdf/devpdf.am: Silence warning from grep during clean.
 
 2017-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Makefile.am: Drop unnecessary -F and -M flags from pdfmom call.
+	* Makefile.am: Drop unnecessary -F and -M flags from pdfmom
+	call.
 
 2017-11-02  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
@@ -896,19 +894,19 @@
 
 2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Makefile.am: Force build to generate test-groff script.
+	* Makefile.am: Force build to generate test-groff script.
 
 2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	font/devpdf/devpdf.am: Silence warning from grep during build.
+	* font/devpdf/devpdf.am: Silence warning from grep during build.
 
 2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	doc/doc.am: Fix build of pic.html from clean tree.
+	* doc/doc.am: Fix build of pic.html from clean tree.
 
 2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	m4/groff.m4: Kill whitespace in macro diagnostic.
+	* m4/groff.m4: Kill whitespace in macro diagnostic.
 
 2017-11-01  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
@@ -940,8 +938,7 @@
 
 2017-10-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	src/preproc/html/pre-html.cpp: Fix grammar in usage message.
-
+	* src/preproc/html/pre-html.cpp: Fix grammar in usage message.
 	When used attributively, e.g. as an adjectival phrase,
 	"command-line" should be hyphenated.
 
