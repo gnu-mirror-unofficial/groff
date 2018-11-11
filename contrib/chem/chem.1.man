@@ -43,43 +43,6 @@
 .el .ds EL \&.\|.\|.\&\"
 .\" called with \*(EL
 .
-.\" Bullet
-.ie t .ds BU \[bu]
-.el .ds BU *
-.\" used in '.IP \*(BU 2m' (former .Topic)
-.
-.
-.\" ====================================================================
-.\" Macro definitions
-.
-.\" ====================================================================
-.\" .FONT (<font name> <text> [<font name> <text> ...])
-.\"
-.\"  in different fonts: R, I, B, CR, CI, CB
-.\"
-.de FONT
-.  if (\\n[.$] = 0) \{\
-.	\" compatibility to .ft
-.	nop \&\f[P]\&
-.	return
-.  \}
-.  ds result \&
-.  while (\\n[.$] >= 2) \{\
-.	as result \,\f[\\$1]\\$2
-.	if !"\\$1"P" .as result \f[P]
-.       \" the double-quote " after P above is now ignored in Emacs
-.	shift 2
-.  \}
-.  if (\\n[.$] = 1) .as result \,\f[\\$1]
-.\"  nh
-.  nop \\*[result]\&
-.\"  hy
-.  rm result
-..
-.
-.
-.\" End of macro definitions
-.
 .
 .\" ====================================================================
 .SH "SYNOPSIS"
