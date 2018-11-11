@@ -105,32 +105,6 @@
 .
 .
 .\" ====================================================================
-.SH OPTION USAGE
-.\" ====================================================================
-.
-There are no other options than
-.BR \-h ,
-.BR \-\-help ,
-.BR \-v ,
-and
-.BR \%\-\-version ;
-these options provoke the printing of a version or usage information,
-respectively, and all
-.I filespec
-arguments are ignored.
-.
-A
-.I filespec
-argument is either a file name of an existing file or a minus
-character
-.BR \- ,
-meaning standard input.
-.
-If no argument is specified then standard input is taken
-automatically.
-.
-.
-.\" ====================================================================
 .SH DESCRIPTION
 .\" ====================================================================
 .
@@ -156,6 +130,18 @@ output such that all
 parts are translated into diagrams of the
 .I pic
 language.
+.
+.
+.P
+A
+.I filespec
+argument is either a file name of an existing file or a minus
+character
+.BR \- ,
+meaning standard input.
+.
+If no argument is specified then standard input is taken
+automatically.
 .
 .
 .P
@@ -880,6 +866,24 @@ Text (quoted strings) doesn't work very well.
 .
 .P
 A squiggle bond is needed.
+.
+.
+.\" ====================================================================
+.SH OPTIONS
+.\" ====================================================================
+.
+.TP
+.B \-h
+.TQ
+.B \-\-help
+Display a usage message and exit.
+.
+.
+.TP
+.B \-v
+.TQ
+.B \-\-version
+Display version information and exit.
 .
 .
 .\" ====================================================================
