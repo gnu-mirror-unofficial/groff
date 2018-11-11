@@ -115,7 +115,7 @@
   In the case of building with MinGW, the default behaviour of configure is
   not appropriate for the following reasons.
 
-  o The MSYS environment creates a virtual UNIX-like file system, with its
+  o The MSYS environment creates a virtual Unix-like file system, with its
     root mapped to the actual MS-Windows directory where MSYS itself is
     installed; /usr is also mapped to this MSYS installation directory.
 
@@ -131,7 +131,7 @@
 
   o Knowledge of the MSYS virtual file system is not imparted to groff; it
     expects the compiled-in path to its components to be a fully qualified
-    MS-Windows path name (although UNIX-style slashes are permitted, and
+    MS-Windows path name (although Unix-style slashes are permitted, and
     preferred to the MS-Windows style backslashes, to demarcate the directory
     hierarchy).  Thus, when configuring groff, if
     --prefix=<win32-install-path> is not correctly specified, then the
@@ -161,7 +161,7 @@
     ./configure --prefix=D:/MSYS/1.0/local ...
 
   Note that the backslash characters, which appear in the native MS-Windows
-  form of the path name, are replaced by UNIX-style slashes in the argument to
+  form of the path name, are replaced by Unix-style slashes in the argument to
   configure; this is the preferred syntax.
 
   Also note that the MS-Windows device designator (D: in this instance) is
@@ -238,9 +238,9 @@
   -------------------------
 
   The runtime environment, provided to groff by MSYS, is essentially the same
-  as would be provided under a UNIX or GNU/Linux operating system; thus, any
+  as would be provided under a Unix or GNU/Linux operating system; thus, any
   environment variables which may be used to customize the groff runtime
-  environment have similar effects under MSYS, as they would in UNIX or
+  environment have similar effects under MSYS, as they would in Unix or
   GNU/Linux, with the exception that any variable specifying a path should
   adopt the same syntax as a native MS-Windows PATH specification.
 
@@ -254,7 +254,7 @@
   creating temporary files.  When these conditions arise, groff fails with a
   `permission denied' error, as soon as it tries to create any temporary file.
 
-  To specify the location for creating temporary files, the standard UNIX or
+  To specify the location for creating temporary files, the standard Unix or
   GNU/Linux implementation of groff provides the GROFF_TMPDIR or TMPDIR
   environment variables, whereas MS-Windows applications generally use TMP or
   TEMP; furthermore, the MS-Windows implementations of Ghostscript apparently
@@ -271,7 +271,7 @@
   ----------------
 
   There are two known issues, observed when running groff in the MinGW/MSYS
-  environment, which would not affect groff in its native UNIX environment:
+  environment, which would not affect groff in its native Unix environment:
 
   o Running groff with the working directory set to a subdirectory of a
     network share, where the user does not have write permission in the root
@@ -295,7 +295,7 @@
       cat | groff ...
 
     in which case <Ctrl-D> terminates the standard input stream, in just the
-    same way it does on a UNIX system; the cat executable provided with MSYS
+    same way it does on a Unix system; the cat executable provided with MSYS
     does seem to trap the end-of-file condition, and properly signals groff
     that the input stream has terminated.
 

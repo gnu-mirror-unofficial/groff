@@ -1023,7 +1023,7 @@ AC_DEFUN([GROFF_G],
 #     groff implementation of the 'an' macro set.
 #
 #     With groff being the principal (but not the only) full-featured *roff
-#     implementation in use today, and most FLOSS UNIX-like Operating Systems
+#     implementation in use today, and most FLOSS Unix-like Operating Systems
 #     using groff as their *roff implementation, the automatic implementation
 #     of compatibility wrappers on systems having their own macro sets needs to
 #     be revisited. Most FLOSS software is now developed on systems having no
@@ -1153,7 +1153,7 @@ AC_DEFUN([GROFF_INSTALL_INFO],
    fi])
 
 
-# At least one UNIX system, Apple Macintosh Rhapsody 5.5,
+# At least one Unix system, Apple Macintosh Rhapsody 5.5,
 # does not have -lm ...
 
 AC_DEFUN([GROFF_LIBM],

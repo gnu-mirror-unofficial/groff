@@ -2114,7 +2114,7 @@ Additionally `\e\ ' and `\e~' are converted to single space characters.
 
 .LI
 The default tab distance in nroff mode is now 0.8i to be compatible
-with UNIX troff.
+with Unix troff.
 
 .LI
 Using the latin-1 input character 0xAD (soft hyphen) for the `shc'
@@ -2158,7 +2158,7 @@ exit status.
 
 .LI
 `troff.man' has been split.
-Differences to UNIX troff are now documented in the new man page
+Differences to Unix troff are now documented in the new man page
 `groff_diff.man'.
 
 .LI
@@ -2172,7 +2172,7 @@ Additionally, it works in compatibility mode.
 
 .LI
 `troff.1' has been split.
-Differences to UNIX troff are now documented in the new man page
+Differences to Unix troff are now documented in the new man page
 `groff_diff.7'.
 
 .LI

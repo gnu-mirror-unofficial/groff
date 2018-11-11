@@ -97,7 +97,7 @@
    where to put intermediate files (the DEBUGGING version will preserve
    these on exit).
 
-   On a UNIX host, we might simply use '/tmp', but MS-DOS and Win32 will
+   On a Unix host, we might simply use '/tmp', but MS-DOS and Win32 will
    probably not have this on all disk drives, so default to using
    'c:/temp' instead.  (Note that user may choose to override this by
    supplying a definition such as
@@ -111,13 +111,13 @@
 
 #else /* not __MSDOS__ or _WIN32 */
 
-// For non-Microsoft environments assume UNIX conventions,
+// For non-Microsoft environments assume Unix conventions,
 // so 'fork' is required and child processes are asynchronous.
 # define MAY_FORK_CHILD_PROCESS 1
 # define MAY_SPAWN_ASYNCHRONOUS_CHILD 1
 
 # if defined(DEBUGGING) && !defined(DEBUG_FILE_DIR)
-/* For a DEBUGGING version, on the UNIX host, we can also usually rely
+/* For a DEBUGGING version, on the Unix host, we can also usually rely
    on being able to use '/tmp' for temporary file storage.  (Note that,
    as in the __MSDOS__ or _WIN32 case above, the user may override this
    by defining
@@ -1312,7 +1312,7 @@ int char_buffer::run_output_filter(int filter, int argc, char **argv)
     sys_fatal("pipe");
 
 #if MAY_FORK_CHILD_PROCESS
-  // This is the UNIX process model.  To invoke our post-processor,
+  // This is the Unix process model.  To invoke our post-processor,
   // we must 'fork' the current process.
 
   if ((child_pid = fork()) < 0)

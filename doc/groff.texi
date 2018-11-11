@@ -599,8 +599,7 @@ developing GNU and promoting software freedom.''
 
 GNU @code{troff} (or @code{groff}) is a system for typesetting
 documents.  @code{troff} is very flexible and has been used extensively
-for some thirty years.  It is well entrenched in the @acronym{UNIX}
-community.
+for some thirty years.  It is well entrenched in the Unix community.
 
 @menu
 * What Is groff?::
@@ -645,7 +644,7 @@ Most of the @acronym{WYSIWYG} systems are either non-free or are not
 very portable.
 
 @item
-@code{troff} is firmly entrenched in all @acronym{UNIX} systems.
+@code{troff} is firmly entrenched in all Unix systems.
 
 @item
 It is difficult to have a wide range of capabilities within the confines
@@ -691,12 +690,12 @@ document'', meaning to print it out.
 @c
 Bob Morris ported it to the 635 architecture and called the program
 @code{roff} (an abbreviation of @code{runoff}).  It was rewritten as
-@code{rf} for the @w{PDP-7} (before having @acronym{UNIX}), and at the
+@code{rf} for the @w{PDP-7} (before having Unix), and at the
 same time (1969), Doug McIlroy rewrote an extended and simplified
 version of @code{roff} in the @acronym{BCPL} programming language.
 
 @cindex @code{roff}, the program
-In 1971, the UNIX developers wanted to get a @w{PDP-11}, and to justify
+In 1971, the Unix developers wanted to get a @w{PDP-11}, and to justify
 the cost, proposed the development of a document formatting system for
 the @acronym{AT&T} patents division.  This first formatting program was
 a reimplementation of McIlroy's @code{roff}, written by J.@tie{}F.@:
@@ -722,7 +721,7 @@ changes).
 Since there are several things that cannot be done easily in
 @code{troff}, work on several preprocessors began.  These programs would
 transform certain parts of a document into @code{troff}, which made a
-very natural use of pipes in @acronym{UNIX}.
+very natural use of pipes in Unix.
 
 The @code{eqn} preprocessor allowed mathematical formulae to be specified
 in a much simpler and more intuitive manner.  @code{tbl} is a
@@ -896,12 +895,12 @@ understand their own language and produce the necessary @code{groff}
 operations.  These preprocessors are able to differentiate their own
 input from the rest of the document via markers.
 
-To use a preprocessor, @acronym{UNIX} pipes are used to feed the output
-from the preprocessor into @code{groff}.  Any number of preprocessors
-may be used on a given document; in this case, the preprocessors are
-linked together into one pipeline.  However, with @code{groff}, the user
-does not need to construct the pipe, but only tell @code{groff} what
-preprocessors to use.
+To use a preprocessor, Unix pipes are used to feed the output from the
+preprocessor into @code{groff}.  Any number of preprocessors may be used
+on a given document; in this case, the preprocessors are linked together
+into one pipeline.  However, with @code{groff}, the user does not need
+to construct the pipe, but only tell @code{groff} what preprocessors to
+use.
 
 @code{groff} currently has preprocessors for producing tables
 (@code{tbl}), typesetting equations (@code{eqn}), drawing pictures
@@ -1676,11 +1675,11 @@ Preview @file{file} with @code{gxditview}, using the @file{me} macro
 package.  Since no @option{-T} option is specified, use the default
 device (@samp{ps}).  Note that you can either say @w{@samp{-m me}} or
 @w{@samp{-me}}; the latter is an anachronism from the early days of
-@acronym{UNIX}.@footnote{The same is true for the other main macro
-packages that come with @code{groff}: @file{man}, @file{mdoc},
-@file{ms}, @file{mm}, and @file{mandoc}.  This won't work in general;
-for example, to load @file{trace.tmac}, either @samp{-mtrace} or
-@w{@samp{-m trace}} must be used.}
+Unix.@footnote{The same is true for the other main macro packages that
+come with @code{groff}: @file{man}, @file{mdoc}, @file{ms}, @file{mm},
+and @file{mandoc}.  This won't work in general; for example, to load
+@file{trace.tmac}, either @samp{-mtrace} or @w{@samp{-m trace}} must be
+used.}
 
 @Example
 groff -man -rD1 -z file
@@ -1726,7 +1725,7 @@ grog -Tdvi paper.ms
 guesses the appropriate command to print @file{paper.ms} and then prints
 it to the command line after adding the @option{-Tdvi} option.  For
 direct execution, enclose the call to @code{grog} in backquotes at the
-@acronym{UNIX} shell prompt:
+Unix shell prompt:
 
 @Example
 `grog -Tdvi paper.ms` > paper.dvi
@@ -4440,10 +4439,10 @@ Multiple line spacing is not supported.  Use a larger vertical spacing
 instead.
 
 @item
-Some @acronym{UNIX} @code{ms} documentation says that the @code{CW} and
-@code{GW} number registers can be used to control the column width and
-gutter width, respectively.  These number registers are not used in
-@code{groff -ms}.
+Some Unix @code{ms} documentation says that the @code{CW} and @code{GW}
+number registers can be used to control the column width and gutter
+width, respectively.  These number registers are not used in @code{groff
+-ms}.
 
 @item
 Macros that cause a reset (paragraphs, headings, etc.@:) may change the
@@ -5739,8 +5738,8 @@ Use the double quote glyph @code{\(dq}.  This works with and without
 compatibility mode enabled since @code{gtroff} doesn't convert
 @code{\(dq} back to a double quote input character.
 
-Note that this method won't work with @acronym{UNIX} @code{troff} in
-general since the glyph `dq' isn't defined normally.
+Note that this method won't work with Unix @code{troff} in general since
+the glyph `dq' isn't defined normally.
 @end itemize
 
 @cindex @code{ds} request, and double quotes
@@ -6435,8 +6434,8 @@ The following example produces @samp{10, X, j, 010}:
 @cindex maximum values of Roman numerals
 @cindex minimum values of Roman numerals
 The largest number representable for the @samp{i} and @samp{I} formats
-is 39999 (or @minus{}39999); @acronym{UNIX} @code{troff} uses @samp{z}
-and @samp{w} to represent 10000 and 5000 in Roman numerals, and so does
+is 39999 (or @minus{}39999); Unix @code{troff} uses @samp{z} and
+@samp{w} to represent 10000 and 5000 in Roman numerals, and so does
 @code{gtroff}.  Currently, the correct glyphs of Roman numeral five
 thousand and Roman numeral ten thousand (Unicode code points
 @code{U+2182} and @code{U+2181}, respectively) are not available.
@@ -6564,9 +6563,9 @@ The current year.
 @item \n[yr]
 @vindex yr
 The current year minus@tie{}1900.  Unfortunately, the documentation of
-@acronym{UNIX} Version@tie{}7's @code{troff} had a year@tie{}2000 bug:
-It incorrectly claimed that @code{yr} contains the last two digits of
-the year.  That claim has never been true of either @acronym{AT&T}
+Unix Version@tie{}7's @code{troff} had a year@tie{}2000 bug: It
+incorrectly claimed that @code{yr} contains the last two digits of the
+year.  That claim has never been true of either @acronym{AT&T}
 @code{troff} or GNU @code{troff}.  Old @code{troff} input that looks
 like this:
 
@@ -6898,9 +6897,9 @@ the end of a line in fill mode, then both an inter-word space and a
 sentence space are added; if two spaces follow the end of a sentence in
 the middle of a line, then the second space is a sentence space.  If a
 second argument is never given to the @code{ss} request, the behaviour
-of @acronym{UNIX} @code{troff} is the same as that exhibited by GNU
-@code{troff}.  In GNU @code{troff}, as in @acronym{UNIX} @code{troff}, a
-sentence should always be followed by either a newline or two spaces.
+of Unix @code{troff} is the same as that exhibited by GNU @code{troff}.
+In GNU @code{troff}, as in Unix @code{troff}, a sentence should always
+be followed by either a newline or two spaces.
 
 The read-only number registers @code{.ss} and @code{.sss} hold the
 values of the parameters set by the first and second arguments of the
@@ -8294,8 +8293,8 @@ the former for TTY output, the latter for everything else.  With GNU
 @code{troff}, both programs are merged into one executable, sending its
 output to a device driver (@code{grotty} for TTY devices, @code{grops}
 for @sc{PostScript}, etc.)@: which interprets the intermediate output of
-@code{gtroff}.  For @acronym{UNIX} @code{troff} it makes sense to talk
-about @dfn{Nroff mode} and @dfn{Troff mode} since the differences are
+@code{gtroff}.  For Unix @code{troff} it makes sense to talk about
+@dfn{Nroff mode} and @dfn{Troff mode} since the differences are
 hardcoded.  For GNU @code{troff}, this distinction is not appropriate
 because @code{gtroff} simply takes the information given in the font
 files for a particular device without handling requests specially if a
@@ -8420,8 +8419,7 @@ cause a break, so changing the page offset in the middle of text being
 filled may not yield the expected result.  The initial value is
 1@dmn{i}.  For TTY output devices, it is set to 0 in the startup file
 @file{troffrc}; the default scaling indicator is @samp{m} (and not
-@samp{v} as incorrectly documented in the original @acronym{UNIX} troff
-manual).
+@samp{v} as incorrectly documented in the original Unix troff manual).
 
 The current page offset can be found in the read-only number register
 @samp{.o}.
@@ -10062,8 +10060,8 @@ a single character as an argument) to change the font on the fly:
 .mc \S'20'x\S'0'
 @endExample
 
-This request is incorrectly documented in the original @acronym{UNIX}
-troff manual; the slant is always set to an absolute value.
+This request is incorrectly documented in the original Unix troff
+manual; the slant is always set to an absolute value.
 @endDefesc
 
 @Defreq {ul, [@Var{lines}]}
@@ -10780,7 +10778,7 @@ This means that comments on a line with such a request can introduce
 unwanted space into a string.
 
 @Example
-.ds UX \s-1UNIX\s0\u\s-3tm\s0\d \" UNIX trademark
+.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X \" Knuth's TeX
 @endExample
 
 @noindent
@@ -10788,7 +10786,7 @@ Instead the comment should be put on another line or have the comment
 escape adjacent with the end of the string.
 
 @Example
-.ds UX \s-1UNIX\s0\u\s-3tm\s0\d\"  UNIX trademark
+.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X\" Knuth's TeX
 @endExample
 
 @cindex trailing quotes
@@ -10918,7 +10916,7 @@ test
 @endExample
 
 Usually, it is not predictable whether a diversion contains one or more
-output lines, so this mechanism should be avoided.  With @acronym{UNIX}
+output lines, so this mechanism should be avoided.  With Unix
 @code{troff}, this was the only solution to strip off a final newline
 from a diversion.  Another disadvantage is that the spaces in the copied
 string are already formatted, making them unstretchable.  This can cause
@@ -11254,7 +11252,7 @@ false
 @endExample
 
 A whitespace after @samp{!} always evaluates to zero (this bizarre
-behaviour is due to compatibility with @acronym{UNIX} @code{troff}).
+behaviour is due to compatibility with Unix @code{troff}).
 
 @Example
 .nr xxx 1
@@ -11394,9 +11392,9 @@ parsed and stored again as a temporary macro.
 @cindex recursive macros
 @cindex macros, recursive
 @noindent
-The traditional and often better solution (@acronym{UNIX} @code{troff}
-doesn't have the @code{while} request) is to use a recursive macro
-instead that is parsed only once during its definition.
+The traditional and often better solution (Unix @code{troff} doesn't
+have the @code{while} request) is to use a recursive macro instead that
+is parsed only once during its definition.
 
 @Example
 .de yyy
@@ -13685,8 +13683,8 @@ becomes part of the diversion.
 Both @code{trf} and @code{cf}, when used in a diversion, embeds an
 object in the diversion which, when reread, causes the contents of
 @var{file} to be transparently copied through to the output.  In
-@acronym{UNIX} @code{troff}, the contents of @var{file} is immediately
-copied through to the output regardless of whether there is a current
+Unix @code{troff}, the contents of @var{file} is immediately copied
+through to the output regardless of whether there is a current
 diversion; this behaviour is so anomalous that it must be considered a
 bug.
 
@@ -14010,9 +14008,9 @@ However, the contents of the string or macro @var{name} are not
 interpreted; also it is permitted for @var{name} to have been defined as
 a macro and thus contain newlines (it is not permitted for the argument
 to @code{\X} to contain newlines).  The inclusion of newlines requires
-an extension to the @acronym{UNIX} @code{troff} output format, and
-confuses drivers that do not know about this extension (@pxref{Device
-Control Commands}).
+an extension to the Unix @code{troff} output format, and confuses
+drivers that do not know about this extension (@pxref{Device Control
+Commands}).
 @endDefesc
 
 @xref{Output Devices}.
@@ -14440,10 +14438,10 @@ macros, strings, and diversions are print together with their size in
 bytes.  Since @code{gtroff} sometimes adds nodes by itself, the returned
 size can be larger than expected.
 
-This request differs from @acronym{UNIX} @code{troff}: @code{gtroff}
-reports the sizes of diversions, ignores an additional argument to print
-only the total of the sizes, and the size isn't returned in blocks of
-128 characters.
+This request differs from Unix @code{troff}: @code{gtroff} reports the
+sizes of diversions, ignores an additional argument to print only the
+total of the sizes, and the size isn't returned in blocks of 128
+characters.
 @endDefreq
 
 @Defreq {pnr, }
@@ -14469,9 +14467,9 @@ subsequently planted traps.
 @cindex @code{gtroff}, interactive use
 Instruct @code{gtroff} to flush its output immediately.  The intent is
 for interactive use, but this behaviour is currently not implemented in
-@code{gtroff}.  Contrary to @acronym{UNIX} @code{troff}, TTY output is
-sent to a device driver also (@code{grotty}), making it non-trivial to
-communicate interactively.
+@code{gtroff}.  Contrary to Unix @code{troff}, TTY output is sent to a
+device driver also (@code{grotty}), making it non-trivial to communicate
+interactively.
 
 This request causes a line break.
 @endDefreq
@@ -14731,8 +14729,7 @@ with documents written with old versions of @code{troff}.
 
 @cindex long names
 @cindex names, long
-Long names cause some incompatibilities.  @acronym{UNIX} @code{troff}
-interprets
+Long names cause some incompatibilities.  Unix @code{troff} interprets
 
 @Example
 .dsabcd
@@ -14743,12 +14740,11 @@ interprets
 @noindent
 as defining a string @samp{ab} with contents @samp{cd}.  Normally, GNU
 @code{troff} interprets this as a call of a macro named @code{dsabcd}.
-Also @acronym{UNIX} @code{troff} interprets @code{\*[} or @code{\n[} as
-references to a string or number register called @samp{[}.  In GNU
-@code{troff}, however, this is normally interpreted as the start of a
-long name.  In compatibility mode GNU @code{troff} interprets long names
-in the traditional way (which means that they are not recognized as
-names).
+Also Unix @code{troff} interprets @code{\*[} or @code{\n[} as references
+to a string or number register called @samp{[}.  In GNU @code{troff},
+however, this is normally interpreted as the start of a long name.  In
+compatibility mode GNU @code{troff} interprets long names in the
+traditional way (which means that they are not recognized as names).
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, cmd}
@@ -14833,9 +14829,9 @@ GNU @code{troff} does not allow the use of the escape sequences
 @code{\|}, @code{\^}, @code{\&}, @code{\@{}, @code{\@}},
 @code{\@key{SP}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
 @code{\%}, and @code{\c} in names of strings, macros, diversions, number
-registers, fonts or environments; @acronym{UNIX} @code{troff} does.  The
-@code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
-avoiding use of these escape sequences in names.
+registers, fonts or environments; Unix @code{troff} does.  The @code{\A}
+escape sequence (@pxref{Identifiers}) may be helpful in avoiding use of
+these escape sequences in names.
 
 @cindex fractional point sizes
 @cindex fractional type sizes
@@ -14844,8 +14840,8 @@ avoiding use of these escape sequences in names.
 @cindex sizes, fractional
 @cindex @code{ps} request, incompatibilities with @acronym{AT&T} @code{troff}
 Fractional point sizes cause one noteworthy incompatibility.  In
-@acronym{UNIX} @code{troff} the @code{ps} request ignores scale
-indicators and thus
+Unix @code{troff} the @code{ps} request ignores scale indicators and
+thus
 
 @Example
 .ps 10u
@@ -14897,18 +14893,18 @@ character from which it was constructed might have had.  For example,
 prints @samp{\\} in GNU @code{troff}; each pair of input backslashes is
 turned into one output backslash and the resulting output backslashes
 are not interpreted as escape characters when they are reread.
-@acronym{UNIX} @code{troff} would interpret them as escape characters
-when they were reread and would end up printing one @samp{\}.  The
-correct way to obtain a printable backslash is to use the @code{\e}
-escape sequence: This always prints a single instance of the current
-escape character, regardless of whether or not it is used in a
-diversion; it also works in both GNU @code{troff} and @acronym{UNIX}
-@code{troff}.@footnote{To be completely independent of the current
-escape character, use @code{\(rs}, which represents a reverse solidus
-(backslash) glyph.}  To store, for some reason, an escape sequence in a
-diversion that is interpreted when the diversion is reread, either use
-the traditional @code{\!} transparent output facility, or, if this is
-unsuitable, the new @code{\?} escape sequence.
+Unix @code{troff} would interpret them as escape characters when they
+were reread and would end up printing one @samp{\}.  The correct way to
+obtain a printable backslash is to use the @code{\e} escape sequence:
+This always prints a single instance of the current escape character,
+regardless of whether or not it is used in a diversion; it also works in
+both GNU @code{troff} and Unix @code{troff}.@footnote{To be completely
+independent of the current escape character, use @code{\(rs}, which
+represents a reverse solidus (backslash) glyph.}  To store, for some
+reason, an escape sequence in a diversion that is interpreted when the
+diversion is reread, either use the traditional @code{\!} transparent
+output facility, or, if this is unsuitable, the new @code{\?} escape
+sequence.
 
 @xref{Diversions}, and @ref{Gtroff Internals}, for more information.
 
@@ -16071,7 +16067,7 @@ current page.
 
 @item h @var{n}
 Move @var{n} (a non-negative integer) basic units @samp{u} horizontally
-to the right.  The original @acronym{UNIX} troff manual allows negative
+to the right.  The original Unix troff manual allows negative
 values for @var{n} also, but @code{gtroff} doesn't use this.
 
 @item m @var{color-scheme} @r{[}@var{component} @dots{}@r{]}
@@ -16161,8 +16157,8 @@ integer in basic units @samp{u}) relative to upper edge of current page.
 
 @item v @var{n}
 Move @var{n}@tie{}basic units @samp{u} down (@var{n} is a non-negative
-integer).  The original @acronym{UNIX} troff manual allows negative
-values for @var{n} also, but @code{gtroff} doesn't use this.
+integer).  The original Unix troff manual allows negative values for
+@var{n} also, but @code{gtroff} doesn't use this.
 
 @item w
 Informs about a paddable white space to increase readability.  The
@@ -16403,7 +16399,7 @@ Initialize device.  This is the third command of the prologue.
 @item xp@angles{line break}
 The @samp{p} stands for @var{pause}.
 
-Parsed but ignored.  The original @acronym{UNIX} troff manual writes
+Parsed but ignored.  The original Unix troff manual writes
 
 @display
 pause device, can be restarted
@@ -16625,9 +16621,9 @@ Due to the obsolete jump-and-write command, the text clusters in the
 @subsection Output Language Compatibility
 
 The intermediate output language of @acronym{AT&T} @code{troff} was
-first documented in the @acronym{UNIX} troff manual, with later
-additions documented in @cite{A Typesetter-independent TROFF}, written
-by Brian Kernighan.
+first documented in the Unix troff manual, with later additions
+documented in @cite{A Typesetter-independent TROFF}, written by Brian
+Kernighan.
 
 The @code{gtroff} intermediate output format is compatible with this
 specification except for the following features.

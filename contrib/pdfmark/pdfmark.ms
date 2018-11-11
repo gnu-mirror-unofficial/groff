@@ -245,8 +245,7 @@ for information and availability.
 .FE
 Other tools employed, which should be readily available on
 .EM any
-.SM
-UNIX\(tm
+Unix\(tm
 .LG
 or GNU/Linux system, are
 .CW sed ,
@@ -274,8 +273,7 @@ but comprehensive
 POSIX
 .LG
 emulation environment and
-.SM
-UNIX\(tm
+Unix\(tm
 .LG
 toolkit for 32\(hybit Microsoft\*(rg Windows\(tm platforms; see
 .pdfhref W http://cygwin.com
@@ -284,8 +282,7 @@ for information and download.
 or MSYS.\**
 .FS
 Another free, but minimal suite of common
-.SM
-UNIX\(tm
+Unix\(tm
 .LG
 tools for 32\(hybit Microsoft\*(rg Windows\(tm, available for download from
 .pdfhref W -A ; http://www.mingw.org
@@ -1198,8 +1195,7 @@ be separated from the preceding option flag by one or more
 be used).
 It may be noted that this paradigm for specifying options
 is reminiscent of most
-.SM
-UNIX\(tm
+Unix\(tm
 .LG
 shells; however, in the case of the
 .CW pdfhref
@@ -1489,7 +1485,7 @@ option.
 .IP \*[= -UF\0 unix\(hyfile > <]
 Specifies the name of the file in which a link destination is defined,
 using the file naming semantics of the
-.CW UNIX \(tm
+.CW Unix \(tm
 operating system.
 When the PDF document is read on a machine
 where the operating system uses
@@ -2032,7 +2028,7 @@ for each of the
 .CW MS\(hyDOS \*(rg,
 .CW Apple \*(rg
 .CW Macintosh \*(rg,
-.CW UNIX \(tm
+.CW Unix \(tm
 and
 .CW MS\(hyWindows \*(rg
 operating systems, respectively; see the

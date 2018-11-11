@@ -1,3 +1,57 @@
+2018-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Stop spelling "Unix" as "UNIX".
+
+	Per AT&T Bell Labs veterans Doug McIlroy and Meg McRoberts,
+	spelling "Unix" in full caps was a contrivance insisted upon by
+	AT&T lawyers, and not a practice used in the Unix manuals
+	themselves or the Bell Labs Technical Journal.  See
+	  https://lists.gnu.org/archive/html/groff/2015-01/msg00026.html
+	and
+	  https://lists.gnu.org/archive/html/groff/2015-01/msg00029.html
+	for support.
+
+	There are instances I did _not_ change; they may require further
+	review.
+		ChangeLog.*
+		NEWS
+			One reference relevant to mdoc; see below.
+		doc/meintro{,_fr}.me
+			These documents also give the small caps
+			treatment to groff, troff, and nroff, suggesting
+			a separate changeset.
+		src/preproc/pic/pic.ypp
+			Contains a comment referring to "Compaq Tru64
+			UNIX"; not worth the candle IMO.
+		tmac/s.tmac:
+			{ms macro package} Leaving UX macro definition
+			alone until/unless it can be established that
+			this doesn't change the rendering of historical
+			documents in an objectionable way.
+		tmac/doc-syms-u:
+		tmac/doc-old.tmac-u:
+		tmac/doc-common-u:
+		tmac/groff_mdoc.7.man:
+			{mdoc macro package} Similar; mdoc defines many
+			strings that spit out "UNIX" (albeit not with a
+			font size change).
+
+	* MORE.STUFF:
+	* NEWS:
+	* README.MinGW:
+	* contrib/groffer/README:
+	* contrib/pdfmark/pdfmark.ms:
+	* contrib/pdfmark/pdfroff.1.man:
+	* doc/groff.texi:
+	* doc/webpage.ms:
+	* m4/groff.m4:
+	* man/groff_diff.7.man:
+	* man/groff_tmac.5.man:
+	* man/roff.7.man:
+	* src/preproc/html/pre-html.cpp:
+	* src/roff/troff/troff.1.man: Change "UNIX" to "Unix",
+	discarding markup as necessary.
+
 2018-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	man pages: Escape interpolated Make variables.
