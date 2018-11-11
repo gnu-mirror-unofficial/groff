@@ -5867,7 +5867,7 @@ possible, but it is better not to use this feature to avoid confusion.
 @cindex @code{\r}, used as delimiter
 @cindex @code{\t}, used as delimiter
 @cindex @code{\u}, used as delimiter
-The following escapes sequences (which are handled similarly to
+The following escape sequences (which are handled similarly to
 characters since they don't take a parameter) are also allowed as
 delimiters: @code{\%}, @w{@samp{\ }}, @code{\|}, @code{\^}, @code{\@{},
 @code{\@}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
@@ -7545,7 +7545,7 @@ the values is used.
 
 @cindex extra post-vertical line space register (@code{.a})
 The @code{.a} read-only number register contains the most recent
-(nonnegative) extra vertical line space.
+(non-negative) extra vertical line space.
 
 Using @code{\x} can be necessary in combination with the @code{\b}
 escape, as the following example shows.
@@ -8969,8 +8969,8 @@ to @var{font} (one-character name@tie{}@var{f}, two-character name
 
 If @var{font} is a style name (as set with the @code{sty} request or
 with the @code{styles} command in the @file{DESC} file), use it within
-the current font family (as set with the @code{fam} request, @code{\F}
-escape, or with the @code{family} command in the @file{DESC} file).
+the current font family (as set with the @code{fam} request, the
+@code{\F} escape, or the @code{family} command in the @file{DESC} file).
 
 It is not possible to switch to a font with the name @samp{DESC}
 (whereas this name could be used as a style name; however, this is not
@@ -9316,7 +9316,7 @@ non-negative integer.
 If @var{nnn} is associated with a style (as set with the @code{sty}
 request or with the @code{styles} command in the @file{DESC} file), use
 it within the current font family (as set with the @code{fam} request,
-the @code{\F} escape, or with the @code{family} command in the
+the @code{\F} escape, or the @code{family} command in the
 @file{DESC} file).
 
 @Example
@@ -10324,7 +10324,7 @@ q\,\f[I]f
 
 @Defesc {\\&, , , }
 Insert a zero-width character, which is invisible.  Its intended use is
-to stop interaction of a character with its surrounding.
+to stop interaction of a character with its surroundings.
 
 @itemize @bullet
 @item

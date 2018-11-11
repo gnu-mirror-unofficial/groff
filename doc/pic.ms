@@ -1000,7 +1000,7 @@ Naming Objects
 .PP
 The most natural way to name locations in \fBpic\fP is relative to
 objects.
-In order to do this, you have to be able you have to be able to name
+In order to do this, you have to be able to name
 objects.
 The \fBpic\fP language has rich facilities for this that try to emulate
 the syntax of English.
