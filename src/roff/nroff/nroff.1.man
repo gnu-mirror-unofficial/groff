@@ -85,7 +85,7 @@ to select the output encoding emitted by
 groff's TTY output device.
 .
 If neither the
-.B GROFF_TYPESETTER
+.I GROFF_TYPESETTER
 environment variable nor the
 .B \-T
 command-line option (which overrides the environment variable)
@@ -96,12 +96,12 @@ checks the current locale to select a default output device.
 It first tries the
 .B locale
 program, then the environment variables
-.BR LC_ALL ,
-.BR LC_CTYPE ,
+.IR LC_ALL ,
+.IR LC_CTYPE ,
 and
-.BR LANG ,
+.IR LANG ,
 and finally the
-.B LESSCHARSET
+.I LESSCHARSET
 environment variable.
 .
 .
@@ -169,14 +169,14 @@ prints a help message.
 .
 .TP
 .SM
-.B GROFF_TYPESETTER
+.I GROFF_TYPESETTER
 The default device for
 .BR groff .
 If not set (which is the normal case), it defaults to \(oqps\(cq.
 .
 .TP
 .SM
-.B GROFF_BIN_PATH
+.I GROFF_BIN_PATH
 A colon separated list of directories in which to search for the
 .B groff
 executable before searching in PATH.

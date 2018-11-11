@@ -421,7 +421,7 @@ to modify the behaviour of
 .BR pdfroff .
 .
 .TP
-.B PDFROFF_COLLATE
+.I PDFROFF_COLLATE
 Specifies the program to be used
 for collation of the finished PDF document.
 .
@@ -433,7 +433,7 @@ when formatting with traditional macro packages,
 which print them at the end.
 .
 However, users should not normally need to specify
-.BR \%PDFROFF_COLLATE ,
+.IR \%PDFROFF_COLLATE ,
 (and indeed, are not encouraged to do so).  If unspecified,
 .B pdfroff
 uses
@@ -443,7 +443,7 @@ which normally suffices.
 .
 .IP
 If
-.B \%PDFROFF_COLLATE
+.I \%PDFROFF_COLLATE
 .I is
 specified,
 then it must act as a filter,
@@ -452,17 +452,17 @@ and write its output to the
 .I stdout
 stream,
 whence it is piped to the
-.BR \%PDFROFF_POSTPROCESSOR_COMMAND ,
+.IR \%PDFROFF_POSTPROCESSOR_COMMAND ,
 to produce the finished PDF output.
 .
 .IP
 When specifying
-.BR \%PDFROFF_COLLATE ,
+.IR \%PDFROFF_COLLATE ,
 it is normally necessary to also specify
-.BR \%PDFROFF_KILL_NULL_PAGES .
+.IR \%PDFROFF_KILL_NULL_PAGES .
 .
 .IP
-.B \%PDFROFF_COLLATE
+.I \%PDFROFF_COLLATE
 is ignored,
 if
 .B pdfroff
@@ -471,14 +471,14 @@ is invoked with the
 option.
 .
 .TP
-.B PDFROFF_KILL_NULL_PAGES
+.I PDFROFF_KILL_NULL_PAGES
 Specifies options to be passed to the
-.B \%PDFROFF_COLLATE
+.I \%PDFROFF_COLLATE
 program.
 .
 .IP
 It should not normally be necessary to specify
-.BR \%PDFROFF_KILL_NULL_PAGES .
+.IR \%PDFROFF_KILL_NULL_PAGES .
 .
 The internal default is a
 .BR sed (@MAN1EXT@)
@@ -492,15 +492,15 @@ However,
 if any alternative to
 .BR sed (@MAN1EXT@)
 is specified for
-.BR \%PDFROFF_COLLATE ,
+.IR \%PDFROFF_COLLATE ,
 then it is likely that a corresponding alternative specification for
-.B \%PDFROFF_KILL_NULL_PAGES
+.I \%PDFROFF_KILL_NULL_PAGES
 is required.
 .
 .IP
 As in the case of
-.BR \%PDFROFF_COLLATE ,
-.B \%PDFROFF_KILL_NULL_PAGES
+.IR \%PDFROFF_COLLATE ,
+.I \%PDFROFF_KILL_NULL_PAGES
 is ignored, if
 .B pdfroff
 is invoked with the
@@ -508,7 +508,7 @@ is invoked with the
 option.
 .
 .TP
-.B PDFROFF_POSTPROCESSOR_COMMAND
+.I PDFROFF_POSTPROCESSOR_COMMAND
 Specifies the command to be used for the final document conversion
 from PostScript intermediate output to PDF.
 .
@@ -527,7 +527,7 @@ stream.
 .
 .IP
 If unspecified,
-.B \%PDFROFF_POSTPROCESSOR_COMMAND
+.I \%PDFROFF_POSTPROCESSOR_COMMAND
 defaults to
 .
 .RS 12n
@@ -538,26 +538,26 @@ gs \-dBATCH \-dQUIET \-dNOPAUSE \-dSAFER \-sDEVICE=pdfwrite \e
 .RE
 .
 .TP
-.B GROFF_TMPDIR
+.I GROFF_TMPDIR
 Identifies the directory in which
 .B pdfroff
 should create temporary files.
 .
 If
-.B \%GROFF_TMPDIR
+.I \%GROFF_TMPDIR
 is
 .I not
 specified, then the variables
-.BR TMPDIR ,
-.B TMP
+.IR TMPDIR ,
+.I TMP
 and
-.B TEMP
+.I TEMP
 are considered in turn, as possible temporary file repositories.
 If none of these are set, then temporary files are created
 in the current directory.
 .
 .TP
-.B GROFF_GHOSTSCRIPT_INTERPRETER
+.I GROFF_GHOSTSCRIPT_INTERPRETER
 Specifies the program to be invoked, when
 .B pdfroff
 converts
@@ -565,20 +565,20 @@ converts
 PostScript output to PDF.
 .
 If
-.B \%PDFROFF_POSTPROCESSOR_COMMAND
+.I \%PDFROFF_POSTPROCESSOR_COMMAND
 is specified,
 then the command name it specifies is
 .I implicitly
 assigned to
-.BR \%GROFF_GHOSTSCRIPT_INTERPRETER ,
+.IR \%GROFF_GHOSTSCRIPT_INTERPRETER ,
 overriding any explicit setting specified in the environment.
 .
 If
-.B \%GROFF_GHOSTSCRIPT_INTERPRETER
+.I \%GROFF_GHOSTSCRIPT_INTERPRETER
 is not specified, then
 .B pdfroff
 searches the process
-.BR PATH ,
+.IR PATH ,
 looking for a program with any of the well known names
 for the GhostScript interpreter;
 if no GhostScript interpreter can be found,
@@ -586,7 +586,7 @@ if no GhostScript interpreter can be found,
 aborts.
 .
 .TP
-.B GROFF_AWK_INTERPRETER
+.I GROFF_AWK_INTERPRETER
 Specifies the program to be invoked, when
 .B pdfroff
 is extracting reference dictionary entries from a
@@ -594,11 +594,11 @@ is extracting reference dictionary entries from a
 intermediate message stream.
 .
 If
-.B \%GROFF_AWK_INTERPRETER
+.I \%GROFF_AWK_INTERPRETER
 is not specified, then
 .B pdfroff
 searches the process
-.BR PATH ,
+.IR PATH ,
 looking for any of the preferred programs, \[oq]gawk\[cq],
 \[oq]mawk\[cq], \[oq]nawk\[cq], and \[oq]awk\[cq], in this order; if
 none of these are found,
@@ -607,33 +607,33 @@ issues a warning message, and continue processing;
 however, in this case, no reference dictionary is created.
 .
 .TP
-.B OSTYPE
+.I OSTYPE
 Typically defined automatically by the operating system,
-.B \%OSTYPE
+.I \%OSTYPE
 is used on Microsoft Win32/MS-DOS platforms
 .IR only ,
 to infer the default
-.B \%PATH_SEPARATOR
+.I \%PATH_SEPARATOR
 character,
 which is used when parsing the process
-.B PATH
+.I PATH
 to search for external helper programs.
 .
 .TP
-.B PATH_SEPARATOR
+.I PATH_SEPARATOR
 If set,
-.B \%PATH_SEPARATOR
+.I \%PATH_SEPARATOR
 overrides the default separator character,
 (\[oq]:\[cq] on POSIX/UNIX systems,
 inferred from
-.B \%OSTYPE
+.I \%OSTYPE
 on Microsoft Win32/MS-DOS),
 which is used when parsing the process
-.B PATH
+.I PATH
 to search for external helper programs.
 .
 .TP
-.B SHOW_PROGRESS
+.I SHOW_PROGRESS
 If this is set to a non-empty value, then
 .B pdfroff
 always behaves as if the
