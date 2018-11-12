@@ -110,6 +110,8 @@ contrib/hdtbl/examples/test-hdtbl.sh: $(top_builddir)/config.status \
 	    	$(top_srcdir)/contrib/hdtbl/examples/test-hdtbl.sh.in > $@
 	chmod +x $@
 
+MOSTLYCLEANFILES += $(TESTS)
+
 # Rule to generate ps and roff files
 SUFFIXES += .roff .in .ps
 
