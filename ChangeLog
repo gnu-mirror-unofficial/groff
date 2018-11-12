@@ -1,3 +1,16 @@
+2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* makevarescape.sed:
+	  - Escape plain spaces and double-quotes (ASCII 32 and 34) so
+	    that bad things don't happen if they are embedded in a Make
+	    variable expanded in a man page @THUS@ _and_ given as an
+	    argument to a macro that distinguishes its parameters, such
+	    as .IR.
+	  - Add discretionary breaks after groups of slashes not
+	    preceded by a space; e.g., transform "/usr/bin/groff" into
+	    "/usr/\:bin/\:groff".  Will also work on URLs
+	    {"https://\:example.com/\:page.html"} in case we need that.
+
 2018-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Undocument Werner and Ted as groff maintainers.
