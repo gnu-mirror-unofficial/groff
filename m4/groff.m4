@@ -776,7 +776,7 @@ AC_DEFUN([GROFF_BROKEN_SPOOLER_FLAGS],
 
 AC_DEFUN([GROFF_PAGE],
   [AC_MSG_CHECKING([default paper size])
-   groff_prefix="$prefix"
+   groff_prefix=$prefix
    test "x$prefix" = "xNONE" && groff_prefix=$ac_default_prefix
    if test -z "$PAGE" && test -r /etc/papersize; then
      PAGE=`cat /etc/papersize`
@@ -784,13 +784,13 @@ AC_DEFUN([GROFF_PAGE],
    if test -z "$PAGE"; then
      descfile=
      if test -r "$groff_prefix"/share/groff/font/devps/DESC; then
-       descfile="$groff_prefix"/share/groff/font/devps/DESC
+       descfile=$groff_prefix/share/groff/font/devps/DESC
      elif test -r "$groff_prefix"/lib/groff/font/devps/DESC; then
-       descfile="$groff_prefix"/lib/groff/font/devps/DESC
+       descfile=$groff_prefix/lib/groff/font/devps/DESC
      else
        for f in "$groff_prefix"/share/groff/*/font/devps/DESC; do
 	 if test -r "$f"; then
-	   descfile="$f"
+	   descfile=$f
 	   break
 	 fi
        done
