@@ -1,5 +1,14 @@
 2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* bootstrap.conf: Bump Autoconf dependency to 2.68.  We need it
+	to support our bug-reporting URL, which contains a "?".
+	Strictly, Autoconf 2.65 is fine, but 2.66 and 2.67 broke this.
+	Even 2.69 is over 6 years old now.
+
+	See <https://savannah.gnu.org/support/?107450>.
+
+2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* contrib/hdtbl/hdtbl.am: Remove examples/test-hdtbl.sh on 'make
 	distclean'.
 
