@@ -778,6 +778,9 @@ AC_DEFUN([GROFF_PAGE],
   [AC_MSG_CHECKING([default paper size])
    groff_prefix="$prefix"
    test "x$prefix" = "xNONE" && groff_prefix=$ac_default_prefix
+   if test -z "$PAGE" && test -r /etc/papersize; then
+     PAGE=`cat /etc/papersize`
+   fi
    if test -z "$PAGE"; then
      descfile=
      if test -r "$groff_prefix"/share/groff/font/devps/DESC; then
