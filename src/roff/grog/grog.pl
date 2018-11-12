@@ -7,7 +7,7 @@
 # Installed position: <prefix>/bin/grog
 
 # Copyright (C) 1993-2018 Free Software Foundation, Inc.
-# Written by James Clark, maintained by Werner Lemberg.
+# Written by James Clark.
 # Rewritten with Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph
 # Corderoy's 'grog.sh' of 2006.

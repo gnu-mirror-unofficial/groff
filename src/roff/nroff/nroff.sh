@@ -3,7 +3,7 @@
 #
 # Copyright (C) 1992-2018 Free Software Foundation, Inc.
 #
-# Written by James Clark, maintained by Werner Lemberg.
+# Written by James Clark.
 
 # This file is of 'groff'.
 

@@ -3247,8 +3247,6 @@ integrate in descriptions of the GNU \fIgpic\/\fP(1) and
 .PP
 The GNU \fBgpic\fR implementation was written by James Clark
 \[la]\,\fIjjc@jclark.com\/\fP\[ra].
-It is currently maintained by Werner Lemberg
-\[la]\,\fIwl@gnu.org\/\fP\[ra].
 .PP
 The GNU \fBpic2plot\fR implementation is based on James Clark's parser
 code and maintained by Robert Maier, principal author of \fBplotutils\fP.
