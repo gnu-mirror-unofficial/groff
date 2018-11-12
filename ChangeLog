@@ -1,5 +1,13 @@
 2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_PAGE): Quote shell variables that are under
+	external control and may contain embedded whitespace.  A test
+	shows that our configure script is now robust in this way, but
+	our Automake files are not, starting with
+	src/utils/afmtodit/afmtodit.am.
+
+2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* makevarescape.sed:
 	  - Escape plain spaces and double-quotes (ASCII 32 and 34) so
 	    that bad things don't happen if they are embedded in a Make

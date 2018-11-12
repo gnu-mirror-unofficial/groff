@@ -776,27 +776,27 @@ AC_DEFUN([GROFF_BROKEN_SPOOLER_FLAGS],
 
 AC_DEFUN([GROFF_PAGE],
   [AC_MSG_CHECKING([default paper size])
-   groff_prefix=$prefix
+   groff_prefix="$prefix"
    test "x$prefix" = "xNONE" && groff_prefix=$ac_default_prefix
    if test -z "$PAGE"; then
      descfile=
-     if test -r $groff_prefix/share/groff/font/devps/DESC; then
-       descfile=$groff_prefix/share/groff/font/devps/DESC
-     elif test -r $groff_prefix/lib/groff/font/devps/DESC; then
-       descfile=$groff_prefix/lib/groff/font/devps/DESC
+     if test -r "$groff_prefix"/share/groff/font/devps/DESC; then
+       descfile="$groff_prefix"/share/groff/font/devps/DESC
+     elif test -r "$groff_prefix"/lib/groff/font/devps/DESC; then
+       descfile="$groff_prefix"/lib/groff/font/devps/DESC
      else
-       for f in $groff_prefix/share/groff/*/font/devps/DESC; do
-	 if test -r $f; then
-	   descfile=$f
+       for f in "$groff_prefix"/share/groff/*/font/devps/DESC; do
+	 if test -r "$f"; then
+	   descfile="$f"
 	   break
 	 fi
        done
      fi
 
      if test -n "$descfile"; then
-       if grep ['^paperlength[	 ]\+841890'] $descfile >/dev/null 2>&1; then
+       if grep ['^paperlength[	 ]\+841890'] "$descfile" >/dev/null 2>&1; then
 	 PAGE=A4
-       elif grep ['^papersize[	 ]\+[aA]4'] $descfile >/dev/null 2>&1; then
+       elif grep ['^papersize[	 ]\+[aA]4'] "$descfile" >/dev/null 2>&1; then
 	 PAGE=A4
        fi
      fi
