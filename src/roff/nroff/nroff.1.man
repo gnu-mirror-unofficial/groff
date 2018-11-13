@@ -1,6 +1,6 @@
 .TH @G@NROFF @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH NAME
-@g@nroff \- emulate nroff command with groff
+@g@nroff \- use groff to format documents for TTY devices
 .
 .
 .\" ====================================================================
@@ -29,25 +29,35 @@
 .SH SYNOPSIS
 .\" ====================================================================
 .
-.\" Redefine OP because no spaces are allowed after an option's argument.
-.de OP
-.  ie \\n(.$-1 \
-.    RI "[\fB\\$1\fP" "\\$2" "]"
-.  el \
-.    RB "[" "\\$1" "]"
-..
-
 .SY @g@nroff
-.OP \-CchipStUv
-.OP \-d cs
-.OP \-M dir
-.OP \-m name
-.OP \-n num
-.OP \-o list
-.OP \-r cn
-.OP \-T name
-.OP \-W warning
-.OP \-w warning
+.RB [ \-CchipStUv ]
+[\c
+.BI \-d cs\c
+]
+[\c
+.BI \-M dir\c
+]
+[\c
+.BI \-m name\c
+]
+[\c
+.BI \-n num\c
+]
+[\c
+.BI \-o list\c
+]
+[\c
+.BI \-r cn\c
+]
+[\c
+.BI \-T name\c
+]
+[\c
+.BI \-W warning\c
+]
+[\c
+.BI \-w warning\c
+]
 .RI [ file
 \&.\|.\|.\&]
 .YS
@@ -66,23 +76,36 @@
 .SH DESCRIPTION
 .\" ====================================================================
 .
-The
-.B @g@nroff
-script emulates the
-.B nroff
-command using groff.
+.I @g@nroff
+formats documents written in the
+.IR roff (@MAN7EXT@)
+language for typewriter-like devices such as terminal emulators.
 .
-Only
+.P
+GNU
+.I @g@nroff
+emulates the traditional Unix
+.I nroff
+command using
+.IR groff (@MAN1EXT@).
+.
+.I @g@nroff
+generates output via
+.IR grotty (@MAN1EXT@),
+.IR groff 's
+TTY output device,
+which needs to know the character encoding scheme used by the terminal.
+.
+Consequently,
+acceptable arguments to the
+.B \-T
+option are
 .BR ascii ,
 .BR latin1 ,
 .BR utf8 ,
 and
-.B cp1047
-are devices accepted by
-.BR nroff
-to select the output encoding emitted by
-.BR grotty ,
-groff's TTY output device.
+.BR cp1047 ;
+any others are ignored.
 .
 If neither the
 .I GROFF_TYPESETTER
@@ -90,29 +113,30 @@ environment variable nor the
 .B \-T
 command-line option (which overrides the environment variable)
 specifies a (valid) device,
-.B @g@nroff
-checks the current locale to select a default output device.
+.I @g@nroff
+consults the locale to select an appropriate output device.
 .
 It first tries the
-.B locale
-program, then the environment variables
-.IR LC_ALL ,
-.IR LC_CTYPE ,
-and
-.IR LANG ,
-and finally the
-.I LESSCHARSET
-environment variable.
+.IR locale (1)
+program,
+then checks several locale-related environment variables;
+see \(lqENVIRONMENT\(rq, below.
+.
+If all of the foregoing fail,
+.B \-Tascii
+is implied.
 .
 .
-.PP
+.P
+Whitespace is not permitted between an option and its argument.
+.
 The
 .B \-h
 and
 .B \-c
 options
 are equivalent to
-.BR grotty 's
+.IR grotty 's
 options
 .B \-h
 (using tabs in the output) and
@@ -132,19 +156,19 @@ The
 and
 .B \-W
 options have the effect described in
-.BR @g@troff (@MAN1EXT@).
+.IR @g@troff (@MAN1EXT@).
 .
 In addition,
-.B @g@nroff
-silently ignores the options
+.I @g@nroff
+ignores
 .BR \-e ,
 .BR \-q ,
 and
 .BR \-s
 (which are not implemented in
-.BR @g@troff ).
+.IR @g@troff ).
 .
-Options
+The options
 .B \-p
 (pic),
 .B \-t
@@ -153,14 +177,16 @@ Options
 (safer), and
 .B \-U
 (unsafe) are passed to
-.BR groff .
+.IR groff .
 .
 .B \-v
 and
 .B \-\-version
-show the version number,
+show version information,
+while
 .B \-\-help
-prints a help message.
+displays a usage message;
+all exit afterward.
 .
 .
 .\" ====================================================================
@@ -169,36 +195,58 @@ prints a help message.
 .
 .TP
 .I GROFF_TYPESETTER
-The default device for
-.BR groff .
-If not set (which is the normal case), it defaults to \(oqps\(cq.
+specifies the default output device for
+.IR groff .
+.
 .
 .TP
 .I GROFF_BIN_PATH
-A colon separated list of directories in which to search for the
-.B groff
-executable before searching in PATH.
+is a colon-separated list of directories in which to search for the
+.I groff
+executable before searching in
+.IR PATH .
 .
-If unset, \(oq@BINDIR@\(cq is used.
+If unset,
+.I @BINDIR@
+is used.
+.
+.
+.TP
+.I LC_ALL
+.TQ
+.I LC_CTYPE
+.TQ
+.I LANG
+.TQ
+.I LESSCHARSET
+are pattern-matched in this order for standard character encodings
+supported by
+.I groff
+in the event no
+.B \-T
+option is given and
+.I GROFF_TYPESETTER
+is unset.
 .
 .
 .\" ====================================================================
 .SH NOTES
 .\" ====================================================================
 .
-This shell script is basically intended for use with
-.BR man (1).
-nroff-style character definitions (in the file tty-char.tmac) are also
-loaded to emulate unrepresentable glyphs.
+Character definitions in the file
+.IR @MACRODIR@/\:tty\-char.tmac
+are loaded to replace unrepresentable glyphs.
 .
 .
 .\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
 .
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR grotty (@MAN1EXT@)
+.IR groff (@MAN1EXT@),
+.IR @g@troff (@MAN1EXT@),
+.IR grotty (@MAN1EXT@),
+.IR locale (1),
+.IR roff (@MAN7EXT@)
 .
 .
 .\" Local Variables:
