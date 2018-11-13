@@ -33,11 +33,6 @@ groff \- front-end for the groff document formatting system
 .\" ====================================================================
 .
 .\" ====================================================================
-.\" Environment variable
-.de EnvVar
-.  IR \%\\$1 \\$2
-..
-.\" ====================================================================
 .\" 'char or string'
 .de Quoted
 .  ft CR
@@ -1384,20 +1379,20 @@ For example, DOS and Windows use a semicolon instead.
 .
 .
 .TP
-.EnvVar GROFF_BIN_PATH
+.I GROFF_BIN_PATH
 This search path, followed by
-.EnvVar PATH ,
+.IR PATH ,
 is used for commands that are executed by
 .BR groff .
 .
 If it is not set then the directory where the
 .I groff
 binaries were installed is prepended to
-.EnvVar PATH .
+.IR PATH .
 .
 .
 .TP
-.EnvVar GROFF_COMMAND_PREFIX
+.I GROFF_COMMAND_PREFIX
 When there is a need to run different
 .I roff
 implementations at the same time
@@ -1421,7 +1416,7 @@ version of
 .BR tbl .
 .
 By setting
-.EnvVar GROFF_COMMAND_PREFIX
+.I \%GROFF_COMMAND_PREFIX
 to different values, the different
 .I roff
 installations can be addressed.
@@ -1456,7 +1451,7 @@ package.
 .
 .
 .TP
-.EnvVar GROFF_ENCODING
+.I GROFF_ENCODING
 The value of this environment value is passed to the
 .B preconv
 preprocessor to select the encoding of input files.
@@ -1479,7 +1474,7 @@ without arguments.
 An explicit
 .B \-K
 command-line option overrides the value of
-.EnvVar GROFF_ENCODING .
+.IR \%GROFF_ENCODING .
 .
 See
 .BR preconv (@MAN1EXT@)
@@ -1487,7 +1482,7 @@ for details.
 .
 .
 .TP
-.EnvVar GROFF_FONT_PATH
+.I GROFF_FONT_PATH
 A list of directories in which to search for the
 .BI dev name
 directory in addition to the default ones.
@@ -1500,7 +1495,7 @@ for more details.
 .
 .
 .TP
-.EnvVar GROFF_TMAC_PATH
+.I GROFF_TMAC_PATH
 A list of directories in which to search for macro files in addition
 to the default directories.
 .
@@ -1512,22 +1507,22 @@ for more details.
 .
 .
 .TP
-.EnvVar GROFF_TMPDIR
+.I GROFF_TMPDIR
 The directory in which temporary files are created.
 .
 If this is not set but the environment variable
-.EnvVar TMPDIR
+.I \%TMPDIR
 instead, temporary files are created in the directory
-.EnvVar TMPDIR .
+.IR \%TMPDIR .
 .
 On MS-DOS and Windows platforms, the environment variables
-.EnvVar TMP
+.I TMP
 and
-.EnvVar TEMP
+.I TEMP
 (in that order) are searched also, after
-.EnvVar GROFF_TMPDIR
+.I \%GROFF_TMPDIR
 and
-.EnvVar TMPDIR .
+.IR \%TMPDIR .
 .
 Otherwise, temporary files are created in
 .BR /tmp .
@@ -1542,7 +1537,7 @@ commands use temporary files.
 .
 .
 .TP
-.EnvVar GROFF_TYPESETTER
+.I GROFF_TYPESETTER
 Preset the default device.
 .
 If this is not set the
