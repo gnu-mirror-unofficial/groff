@@ -1,3 +1,16 @@
+2018-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[hdtbl] Don't clean other people's unit tests.
+
+	* contrib/hdtbl/hdtbl.am: test-hdtbl.sh is generated from an .in
+	file, so while we can add it to $(TESTS), we shouldn't then add
+	$(TESTS) to $(MOSTLYCLEANFILES) or we will clobber all tests
+	that ever get defined.  This clobbered gdiffmk's test script on
+	in-tree builds.  Give it its own variable, $(hdtbl_TESTS).  Now
+	it clobbers no more.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?55020>.
+
 2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_PAGE): Try /etc/papersize first.

@@ -102,7 +102,8 @@ EXTRA_DIST += \
   contrib/hdtbl/hdtbl.tmac-u \
   contrib/hdtbl/hdmisc.tmac-u
 
-TESTS += contrib/hdtbl/examples/test-hdtbl.sh
+hdtbl_TESTS = contrib/hdtbl/examples/test-hdtbl.sh
+TESTS += $(hdtbl_TESTS)
 contrib/hdtbl/examples/test-hdtbl.sh: $(top_builddir)/config.status \
 	$(HDTBLPROCESSEDEXAMPLEFILES) $(top_srcdir)/contrib/hdtbl/examples/test-hdtbl.sh.in
 	sed -e "s|[@]abs_top_builddir[@]|$(abs_top_builddir)|g" \
@@ -110,7 +111,7 @@ contrib/hdtbl/examples/test-hdtbl.sh: $(top_builddir)/config.status \
 	    	$(top_srcdir)/contrib/hdtbl/examples/test-hdtbl.sh.in > $@
 	chmod +x $@
 
-MOSTLYCLEANFILES += $(TESTS)
+MOSTLYCLEANFILES += $(hdtbl_TESTS)
 
 # Rule to generate ps and roff files
 SUFFIXES += .roff .in .ps
