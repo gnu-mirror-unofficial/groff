@@ -779,7 +779,7 @@ AC_DEFUN([GROFF_PAGE],
    groff_prefix=$prefix
    test "x$prefix" = "xNONE" && groff_prefix=$ac_default_prefix
    if test -z "$PAGE" && test -r /etc/papersize; then
-     PAGE=`cat /etc/papersize`
+     PAGE=`cat /etc/papersize | sed -e 's/^[ ]*#.*//g' | tr -d "\n" | awk '{ print $1 }'`
    fi
    if test -z "$PAGE"; then
      descfile=

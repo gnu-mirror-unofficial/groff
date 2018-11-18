@@ -1,3 +1,12 @@
+2018-11-19  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Fix build on environment where /etc/papersize contains comments
+
+	Issue introduced on commit efea81c75f831ddc6717c2ef25556e0f49d1f679.
+
+	* m4/groff.m4 (GROFF_PAGE): remove comments and get the 1st string
+	of '/etc/papersize'.
+
 2018-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[hdtbl] Don't clean other people's unit tests.
