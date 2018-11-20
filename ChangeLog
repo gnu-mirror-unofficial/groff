@@ -172,7 +172,7 @@
 
 	* contrib/hdtbl/hdtbl.am: connect 'test-hdtbl.sh' to 'make check'
 
-2018-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+2018-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/utils/lookbib/lookbib.cpp: Doesn't make much sense to mark
 	Version_string as a C extern if you're just going to hide it in
@@ -182,7 +182,7 @@
 
 	Fixes <https://savannah.gnu.org/bugs/index.php?54972>.
 
-2018-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+2018-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
 	If:
@@ -195,6 +195,30 @@
 	Example: lookbib:fatal error: no databases
 
 	Fixes <https://savannah.gnu.org/bugs/index.php?54971>.
+
+2018-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Make strip.sed operate only if given permission.
+
+	* tmac/strip.sed: Do nothing whatsoever to any input file that
+	lacks a line matching "%beginstrip%".  This implements a
+	contract between the macro file writer and the stripper script
+	{roff input is not parseable with crude weaponry like regular
+	expressions}.  In practice, most of the changes performed by the
+	script were already in a block enforcing this.  My changes:
+	- Stop unconditionally inserting a roff comment noting the
+	  reader of stripping at line 2.  Instead, replace the line
+	  matching "%beginstrip%" with this comment if and only if it
+	  is present.
+	- Stop deleting lines containing only the empty request if
+	  they occur before "%beginstrip%".
+	- Tweak the wording of the roff comment.
+	- Remove comment within the sed script; see
+	  https://lists.gnu.org/archive/html/groff/2017-11/msg00057.html
+	  and the sed section of "Limitations of Usual Tools" in the
+	  GNU Autoconf Manual.
+
+	Invalidates <https://savannah.gnu.org/bugs/index.php?53784>.
 
 2018-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -326,7 +350,10 @@
 
 	Improve diagnostics on bad hyphenation requests.
 
-	* src/roff/troff/env.cpp:
+	* src/roff/troff/env.cpp: Add new HYPHEN_* symbols to anonymous
+	enum.
+
+	* src/roff/troff/env.cpp (hyphenate_request):
 	  - Warn about hyphenation request values that are completely
 	    out of range.
 	  - Report bad hyphenation request value in diagnostic messages.
