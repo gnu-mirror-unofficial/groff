@@ -4344,6 +4344,57 @@ instead.
 .
 .
 .\" ====================================================================
+.SH HYPHENATION
+.\" ====================================================================
+.
+The
+.REQ .hy
+request,
+given an integer argument,
+controls when hyphenation applies.
+.
+The default value is
+.BR 1 ,
+which enables hyphenation almost everywhere (see below).
+.
+Macro packages often override this default.
+.
+.
+.TP
+.B 1
+disables hyphenation only after the first and before the last
+character of a word.
+.
+.TP
+.B 2
+disables hyphenation only of the last word on a page or column.
+.
+.TP
+.B 4
+disables hyphenation only before the last two characters of a word.
+.
+.TP
+.B 8
+disables hyphenation only after the first two characters of a word.
+.
+.TP
+.B 16
+enables hyphenation before the last character of a word.
+.
+.TP
+.B 32
+enables hyphenation after the first character of a word.
+.
+.P
+The values are additive.
+.
+Some values cannot be used together because they contradict;
+for instance,
+4 and\~16;
+8 and\~32.
+.
+.
+.\" ====================================================================
 .SH UNDERLINING
 .\" ====================================================================
 .

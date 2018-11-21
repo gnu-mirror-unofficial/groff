@@ -2226,22 +2226,15 @@ The default is \-0.5i.
 .BI \-rHY= flags
 Set hyphenation flags.
 .
-Possible values of
+Permissible values of
 .I flags
-are 1\~to not hyphenate the first and last character of a word,
-2\~to not hyphenate the last word on a page,
-4\~to not hyphenate the last two characters of a word,
-8\~to not hyphenate the first two characters of a word,
-16\~to enable hyphenation before the last character of a word,
-and
-32\~to enable hyphenation after the first character of a word.
+are documented in section \(lqHYPHENATION\(rq of
+.IR groff (7).
 .
-These values are additive;
-the default is\~6.
-.
-Values 4 and\~16 can't be used together since they contradict each
-other;
-the same holds for values 8 and\~32.
+The default is\~4 if continuous rendering is enabled
+.RB ( \-rcR=1
+above),
+and\~6 otherwise.
 .
 .
 .TP
