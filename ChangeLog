@@ -1,3 +1,28 @@
+2018-11-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/sv.tmac: Set hyphenation flags to 48.
+
+	Per _Swedish: A Comprehensive Grammar_, Third Edition, by Philip
+	Holmes and Ian Hinchliffe, Routledge 2013, section 12.4.1.1
+	{page 674}:
+
+	"Compound words may be divided into their separate
+	elements...Prefixes and suffixes may be treated the same way:
+
+		an‐befall‐a	juster‐bar	o‐vän‐lig"
+
+	Note the first and last examples.
+
+	I therefore conclude that the correct hyphenation flags for
+	Swedish are either 48 or 50.  Going with 48 as a closer parallel
+	to the English default of 1 (permitting hyphenation of words at
+	the end of a column or page).
+
+	* doc/groff.texi: Update table for new right-hyphenation minimum
+	for Swedish.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?55066>.
+
 2018-11-19  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Fix build on environment where /etc/papersize contains comments
