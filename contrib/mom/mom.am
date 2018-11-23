@@ -2,7 +2,6 @@
 #      Written by Werner Lemberg (wl@gnu.org)
 #      Automake migration by Bertrand Garrigues
 #
-# Last update: 22 Aug 2015
 #
 # This file is part of groff.
 #
@@ -104,6 +103,19 @@ MOMPROCESSEDEXAMPLEFILES = \
   contrib/mom/examples/slide-demo.pdf
 momprocessedexampledir = $(exampledir)/mom
 nodist_momprocessedexample_DATA = $(MOMPROCESSEDEXAMPLEFILES)
+
+if HAVE_PDFTOOLS
+# Small test suite on mom examples
+mom_TESTS = contrib/mom/examples/tests-mom.sh
+TESTS += $(mom_TESTS)
+contrib/mom/examples/tests-mom.sh: $(top_builddir)/config.status \
+	$(MOMPROCESSEDEXAMPLEFILES)  $(top_srcdir)/contrib/mom/examples/test-mom.sh.in
+	sed -e "s|[@]abs_top_builddir[@]|$(abs_top_builddir)|g" \
+	    	$(top_srcdir)/contrib/mom/examples/test-mom.sh.in > $@
+	chmod +x $@
+MOSTLYCLEANFILES += $(mom_TESTS)
+EXTRA_DIST += contrib/mom/examples/test-mom.sh.in
+endif
 endif
 
 # For this list of files we add a symlink from $(exampledir)/mom to $(pdfdocdir)

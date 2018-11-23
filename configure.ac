@@ -79,6 +79,7 @@ AC_PROG_MKDIR_P
 GROFF_PROG_XPMTOPPM
 PKG_PROG_PKG_CONFIG
 GROFF_UCHARDET
+GROFF_PDFTOOLS
 
 # use a dummy substitution if no csh hack is necessary to avoid errors
 # with non-GNU sed programs
@@ -199,6 +200,7 @@ AM_CONDITIONAL([BUILD_PDFEXAMPLES], [test -n "$make_pdfexamples"])
 AM_CONDITIONAL([BUILD_OTHERDOC], [test -n "$make_otherdoc"])
 AM_CONDITIONAL([BUILD_EXAMPLES], [test -n "$make_examples"])
 AM_CONDITIONAL([INSTALL_SHIPPED_HTML], [test -n "$make_install_shipped_htmldoc"])
+AM_CONDITIONAL([HAVE_PDFTOOLS], [test "x$groff_have_pdftools" = "xyes" ])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([test-groff], [chmod +x test-groff])
@@ -226,7 +228,8 @@ echo "\
 fi
 echo "\
  URW fonts for pdf               : $groff_have_urw_fonts
- Use uchardet library for preconv: $groff_have_uchardet"
+ Use uchardet library for preconv: $groff_have_uchardet
+ pdftools for distcheck          : $groff_have_pdftools"
 echo "\
 ----------------------------------------------------------------------"
 

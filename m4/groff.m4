@@ -1666,4 +1666,14 @@ AC_DEFUN([GROFF_UCHARDET_CHECK],
   fi
   ])
 
-
+# pdftools needed for sanity checks
+AC_DEFUN([GROFF_PDFTOOLS],
+  [AC_CHECK_PROG([PDFINFO], [pdfinfo], [found], [missing])
+   AC_CHECK_PROG([PDFFONTS], [pdffonts], [found], [missing])
+   AC_CHECK_PROG([PDFIMAGES], [pdfimages], [found], [missing])
+   if test "x$PDFINFO" = "xfound" -a "x$PDFFONTS" = "xfound" -a "x$PDFIMAGES" = "xfound"; then
+      groff_have_pdftools=yes;
+   else
+      groff_have_pdftools=no;
+   fi
+   ])
