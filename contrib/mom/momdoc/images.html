@@ -428,10 +428,11 @@ which is to say that if an image doesn&#8217;t fit on the output
 page, she will defer it to the top of the next page while continuing
 to process
 <a href="definitions.html#running">running text</a>.
-<kbd>ADJUST</kbd> is ignored whenever an image is deferred, except
-when moving from column to column on the same page, when the image
-may need to be optically adjusted.  Subsequent images that do not
-fit, if any, are output in order immediately after the first.
+<kbd>ADJUST</kbd> is ignored whenever an image is the first to be
+deferred, except when moving from column to column on the same page,
+when the image may need to be optically adjusted.  Subsequent images
+that do not fit, if any, are output in order immediately after the
+first.
 </p>
 
 <p class="tip-bottom">
@@ -692,7 +693,7 @@ or
 </div>
 
 <div class="box-macro-args">
-Macro: <b>FLOAT</b> <kbd class="macro-args">[ ADJUST +|-&lt;amount&gt; ] [ FORCE ] [ SPAN ] [ NO_SHIM] [ NO_FLEX ] | TARGET "&lt;name&gt;" | &lt;anything&gt;</kbd>
+Macro: <b>FLOAT</b> <kbd class="macro-args">[ ADJUST +|-&lt;amount&gt; ] [ FORCE ] [ SPAN ] [ INDENT &lt;value&gt; ] [ CENTER ] [ RIGHT ] [ NO_SHIM] [ NO_FLEX ] | TARGET "&lt;name&gt;" | &lt;anything&gt;</kbd>
 </div>
 
 <div class="box-tip">
@@ -702,11 +703,40 @@ FLOAT is intended for use with the document processing macros only.
 </p>
 </div>
 
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+As a general rule, avoid consecutive floats that have no intervening
+<a href="definitions.html#running">running text</a>.
+Rather, wrap all the material into a single float.
+</p>
+</div>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+Deferred floats are output with the left indent that was in effect
+when they were input.  If you do not want this behaviour, disable
+the indent prior to inputting the float and re-enable it afterward.
+</p>
+</div>
+
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+Mom treats <b>pic</b> pre-processor directives and pdf images as
+floats so it is not necessary to wrap them inside FLOAT unless
+additional material is included in what is floated.
+</p>
+</div>
+
 <p style="margin-top: -.5em">
 To begin a float, simply invoke <kbd>.FLOAT</kbd> and follow it with
 whatever you want the float to contain.  When you&#8217;re done,
 invoke <kbd>.FLOAT&nbsp;OFF</kbd> (or <kbd>QUIT, END, X</kbd>, etc).
 </p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'ADJUST'</h5>
 
 <p>
 The optional <kbd>ADJUST</kbd> argument tells mom to raise
@@ -724,6 +754,14 @@ floats.
 </p>
 
 <p>
+<kbd>ADJUST</kbd> is ignored for the first float deferred to
+a following page but respected for subsequent deferred floats
+output immediately afterward.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'FORCE'</h5>
+
+<p>
 The <kbd>FORCE</kbd> argument instructs mom to output the float
 exactly where it occurs in the input file.  With <kbd>FORCE</kbd>,
 mom immediately breaks to a new page to output the float if it does
@@ -733,9 +771,12 @@ page), there are circumstances where it may be desirable.
 </p>
 
 <p>
-<kbd>ADJUST</kbd> is ignored whenever a float is deferred to
-the following page.
+If you need to force a page break after completion of a float that
+has been deferred to a subsequent page, insert <kbd>\!.bp</kbd>
+immediately before terminating the float.
 </p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'SPAN'</h5>
 
 <p>
 The <kbd>SPAN</kbd> argument tells mom that a float, if deferred,
@@ -743,6 +784,30 @@ may carry onto multiple pages.  Please note that <kbd>SPAN</kbd> may
 not be used for floats containing a boxed table; mom will abort with
 a warning should this occur.  Unboxed tables, on the other hand, are
 acceptable within floats that are given the <kbd>SPAN</kbd> argument.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'INDENT'</h5>
+
+<p>
+<kbd>INDENT</kbd> allows you to indent a float from the left margin
+by a specified value.  The value must have a
+(<a href="definitions.html#unitofmeasure">unit of measure</a>
+appended to it.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'CENTER'</h5>
+
+<p>
+<kbd>CENTER</kbd> instructs mom to center a float if it is not
+already centered by default.
+</p>
+
+<h5 class="docs" style="margin-top: 1em; text-transform: none">'RIGHT'</h5>
+
+<p>
+<kbd>RIGHT</kbd> instructs mom to place a float a the right of the
+page; the longest line in the float will be flush with the page's
+right margin.
 </p>
 
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_SHIM'</h5>
@@ -1218,12 +1283,12 @@ and do not wrap the table inside a float.
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-If you use <kbd>.TS H</kbd> to create a boxed table that spans
-multiple pages, do not attempt to wrap the table inside a float.
-For the purposes of boxed, multipage tables, <kbd>.TS H</kbd> and
-<kbd>.FLOAT</kbd> should be considered mutually exclusive.  This
-restriction is imposed by the <kbd>tbl</kbd> preprocessor itself,
-not groff or mom.
+If you create a boxed table that will span several pages, do not
+wrap the table inside a float.  Boxed, multipage tables and FLOAT
+should be considered mutually exclusive.  This restriction is
+imposed by the <kbd>tbl</kbd> preprocessor itself, not groff or
+mom.  Unboxed tables that span several pages, however, are
+acceptable within FLOAT.
 </p>
 </div>
 
@@ -1499,11 +1564,11 @@ number of rows.
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'ADJUST'</h5>
 
 <p>
-<kbd>ADJUST</kbd> lets you raise (<kbd>+</kbd>) or lower (<kbd>-</kbd>) the image
-<span style="font-style: italic">within the space allotted for it</span>
-by the amount you specify.  This is useful for achieving good
-optical centering between surrounding blocks of type.  A unit of
-measure is required.
+<kbd>ADJUST</kbd> lets you raise (<kbd>+</kbd>) or lower
+(<kbd>-</kbd>) the table <span style="font-style: italic">within
+the space allotted for it</span> by the amount you specify.  This
+is useful for achieving good optical centering between surrounding
+blocks of type.  A unit of measure is required.
 </p>
 
 <h5 class="docs" style="margin-top: 1em; text-transform: none">'NO_SHIM'</h5>
@@ -1645,11 +1710,9 @@ which, as of version 2.0-c, takes a single, optional argument,
 <kbd>SOURCE</kbd>.  (Formerly, <kbd>TE</kbd> took a label/caption
 argument along with arguments controlling placement.)  The argument
 is followed by the text of the table&#8217;s source, surrounded by
-double-quotes.  The source will appear immediately beneath the label
-and/or caption underneath the table, or, if
+double-quotes.  The SOURCE argument may only be used if
 <a href="#mla">MLA</a>
-(Modern Language Association) is enabled, immediately below the
-table.
+(Modern Language Association) style is enabled.
 </p>
 
 <div class="rule-medium"><hr/></div>
@@ -2353,8 +2416,7 @@ will increment by one as expected.
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-For the purposes of labelling, mom
-treats
+For the purposes of labelling, mom treats
 <a href="docprocessing.html#doctype">DOCTYPE&nbsp;DEFAULT</a>
 as if it were <b>DOCTYPE&nbsp;CHAPTER</b>, hence, with
 <kbd>PREFIX_CHAPTER</kbd>, each collated <b>DEFAULT</b>
