@@ -867,7 +867,8 @@ EXTRA_DIST += \
   PROJECTS \
   README.MinGW \
   arch/djgpp \
-  font/util/make-Rproto
+  font/util/make-Rproto \
+  makevarescape.sed
 
 MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
   $(man1_MANS) $(man5_MANS) $(man7_MANS) \
@@ -902,6 +903,7 @@ MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
 #   characters in Makefile variables in other aspects of the groff build
 #   are offered.
 makevarescape=$(top_srcdir)/makevarescape.sed
+
 SUFFIXES += .man
 .man:
 	$(AM_V_GEN)rm -f $@ \
