@@ -2,7 +2,6 @@
 #      Written by Werner Lemberg (wl@gnu.org)
 #      Automake migration by Bertrand Garrigues
 #
-# Last update: 22 Aug 2015
 #
 # This file is part of groff.
 #
@@ -93,7 +92,7 @@ endif
 $(hdtblexample_DATA): $(HDTBLSTRIPFILES)
 
 MOSTLYCLEANFILES += $(HDTBLGENFILES) $(HDTBLPROCESSEDEXAMPLEFILES) \
-  hdmisc.tmac-s hdtbl.tmac-s $(HDTBLSTRIPFILES)
+  $(HDTBLSTRIPFILES)
 
 EXTRA_DIST += \
   contrib/hdtbl/ChangeLog \
