@@ -77,7 +77,7 @@ Use
 as an example how to adapt the output format to a national standard.
 .
 Localized strings are collected in the file
-.RI \[oq]@MACRODIR@/ xx .tmac\[cq],
+.IR @MACRODIR@/ xx .tmac ,
 where
 .I xx
 denotes the two-letter code for the
@@ -93,9 +93,9 @@ is the ISO 3166 two-letter code for the
 .\"########################################################################
 .LP
 A file called
-.B locale
+.I locale
 or
-.IB country _locale
+.RI country _locale
 is read after the initialization of the global variables.
 .
 It is therefore possible to localize the macros with a different company
@@ -543,11 +543,12 @@ appears before any normal text.
 This macro uses
 .I arg
 to build the filename
-\[oq]@TMAC_MDIR@/\fIarg\fP.cov\[cq].
+.IR @TMAC_MDIR@/ arg .cov .
 .
 Therefore it is possible to create unlimited types of cover sheets.
 .
-\[oq]ms.cov\[cq] is supposed to look like the ms cover sheet.
+.I ms.cov
+is supposed to look like the ms cover sheet.
 .
 .B .COVER
 requires a
@@ -1686,7 +1687,8 @@ T}
 Initialize the cross reference macros.
 .
 Cross references are written to stderr and are supposed to be
-redirected into file \[oq]\fIfilename\fR.qrf\[cq].
+redirected into file
+.RI filename .qrf .
 .
 Requires two passes with groff;
 this is handled by a separate program called
@@ -2123,7 +2125,8 @@ Memorandum type.
 .
 The argument
 .I arg
-is part of a filename in \[oq]@TMAC_MDIR@/*.MT\[cq].
+is part of a filename in
+.IR @TMAC_MDIR@/ * .MT .
 .
 Memorandum types 0 to\~5 are supported, including type
 \[oq]string\[cq] (which gets internally mapped to type\~6).
@@ -3948,13 +3951,13 @@ then assigns the argument to the string variable
 .\" ====================================================================
 .
 .TP
-.B @MACRODIR@/@TMAC_M_PREFIX@m.tmac
+.I @MACRODIR@/@TMAC_M_PREFIX@m.tmac
 .TP
-.B @TMAC_MDIR@/*.cov
+.IR @TMAC_MDIR@/ * .cov
 .TP
-.B @TMAC_MDIR@/*.MT
+.IR @TMAC_MDIR@/ * .MT
 .TP
-.B @TMAC_MDIR@/locale
+.I @TMAC_MDIR@/locale
 .
 .
 .\" ====================================================================
