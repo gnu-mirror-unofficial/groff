@@ -36,7 +36,7 @@ check_number_pages()
     echo "Checking number of pages of $1"
     n_pages=`pdfinfo $1  | grep Pages | awk '{ print $2}'`
     if test "$n_pages" != "$2"; then
-       echo "  Error: expected $2 pages, found $res pages"
+       echo "  Error: expected $2 pages, found $n_pages pages"
        ret=255
     fi
 }
@@ -48,7 +48,7 @@ check_has_images()
     n_lines=`pdfimages -list $1 | wc -l `
     if test $n_lines -le 2; then
         echo " no images found"
-        ret = 255;
+        ret=255
     fi
 }
 
