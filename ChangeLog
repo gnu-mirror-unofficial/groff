@@ -1,3 +1,20 @@
+2018-12-05  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Skip hdtbl and mom tests if needed config is missing.
+
+	* contrib/hdtbl/examples/test-hdtbl.sh.in: exit 77 (indicates
+	automake to skip the result) if 'gs' is missing.
+
+	* contrib/hdtbl/hdtbl.am: flag correctly test program generation.
+
+	* contrib/mom/examples/test-mom.sh.in: exit 77 if URW fonts are
+	not available.
+
+	* contrib/mom/mom.am: distribute inconditionnally test-mom.in.
+
+	* m4/groff.m4 (GROFF_URW_FONTS): check if 'awk' and 'gs' are
+	available, and replace non-portable 'grep' command by awk script.
+
 2018-12-01  Colin Watson  <cjwatson@debian.org>
 
 	Fix error handling in tests of mom examples

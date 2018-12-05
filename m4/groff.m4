@@ -343,24 +343,31 @@ AC_DEFUN([GROFF_URW_FONTS_PATH],
 # expect them), or in the custom path passed to configure.
 AC_DEFUN([GROFF_URW_FONTS],
   [AC_MSG_CHECKING([whether URW fonts in pfb format are available])
-  _list_paths=`gs -h | grep -A 16 "Search path" | grep "^[ ]" | tr : ' ' `
-  _list_paths="$_list_paths /usr/share/fonts/type1/gsfonts/ \
+   AC_REQUIRE([GROFF_AWK_PATH])
+   AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
+   groff_have_urw_fonts=no
+   if test "$AWK" = "missing" -o "$GHOSTSCRIPT" = "missing"; then
+     AC_MSG_WARN([awk and gs are required, can't look for URW fonts])
+   else
+     _list_paths=`$GHOSTSCRIPT -h | $AWK 'BEGIN { found = 0 } /Search path:/ { found = 1 } /^[ ]*\// { print $'0' }'| tr : ' '`
+     _list_paths="$_list_paths /usr/share/fonts/type1/gsfonts/ \
                /opt/local/share/fonts/urw-fonts/"
-  if test -n "$urwfontsdir"; then
-    _list_paths="$ _list_paths $urwfontsdir"
-  fi
-  groff_have_urw_fonts=no
-  for k in $_list_paths; do
-    if test -f $k/a010013l.pfb; then
-      AC_MSG_RESULT([found in $k])
-      groff_have_urw_fonts=yes
-      break
-    fi
-  done 
-  if test $groff_have_urw_fonts = no; then
-    AC_MSG_RESULT([no])
-  fi
-  ])
+     if test -n "$urwfontsdir"; then
+       _list_paths="$ _list_paths $urwfontsdir"
+     fi
+     for k in $_list_paths; do
+       if test -f $k/a010013l.pfb; then
+         AC_MSG_RESULT([found in $k])
+         groff_have_urw_fonts=yes
+         break
+       fi
+     done
+   fi
+   if test $groff_have_urw_fonts = no; then
+     AC_MSG_RESULT([no])
+   fi
+   AC_SUBST([groff_have_urw_fonts])
+   ])
 
 # Warning if URW fonts were not found
 AC_DEFUN([GROFF_URW_FONTS_CHECK],

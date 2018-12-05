@@ -19,6 +19,7 @@
 #
 
 builddir="@abs_top_builddir@"
+have_urw_fonts="@groff_have_urw_fonts@"
 examplesdir="$builddir/contrib/mom/examples"
 ret=0
 list="
@@ -29,6 +30,12 @@ list="
   slide-demo.pdf
   typesetting.pdf
   "
+
+if test "$have_urw_fonts" != "yes"; then
+    echo "No URW fonts, mom examples cannot be correctly generated"
+    exit 77
+fi
+
 # $1: pdf file
 # $2: expected number of pages
 check_number_pages()

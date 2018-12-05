@@ -24,6 +24,12 @@
 builddir="@abs_top_builddir@"
 gs_program="@GHOSTSCRIPT@"
 ret=0
+
+if test "$gs_program" = "missing"; then
+   echo "ghostscript program missing, can't check hdtbl examples"
+   exit 77
+fi
+
 # $1 file, $2 expected number of pages
 check_number_pages()
 {

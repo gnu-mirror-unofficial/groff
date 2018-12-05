@@ -111,12 +111,13 @@ TESTS += $(mom_TESTS)
 contrib/mom/examples/tests-mom.sh: $(top_builddir)/config.status \
 	$(MOMPROCESSEDEXAMPLEFILES)  $(top_srcdir)/contrib/mom/examples/test-mom.sh.in
 	sed -e "s|[@]abs_top_builddir[@]|$(abs_top_builddir)|g" \
+            -e "s|[@]groff_have_urw_fonts[@]|$(groff_have_urw_fonts)|g" \
 	    	$(top_srcdir)/contrib/mom/examples/test-mom.sh.in > $@
 	chmod +x $@
 MOSTLYCLEANFILES += $(mom_TESTS)
+endif
+endif
 EXTRA_DIST += contrib/mom/examples/test-mom.sh.in
-endif
-endif
 
 # For this list of files we add a symlink from $(exampledir)/mom to $(pdfdocdir)
 PDFDOCFILE = mom-pdf.pdf
