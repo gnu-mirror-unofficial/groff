@@ -1,3 +1,15 @@
+2018-12-06  Ingo Schwarze  <schwarze@openbsd.org>
+
+	* examples/fonts_n.in, examples/fonts_x.in:
+	  Make the shell script in the .pso request more portable:
+	  1. POSIX requires "echo -n" to print "-n" followed by
+	     a newline character, so use printf(1) instead.
+	  2. According to POSIX, behaviour of tr(1) is undefined
+	     if string2 contains fewer characters than string1,
+	     and on Oracle Solaris, the excess characters in string1
+	     are not translated.  So make sure string2 contains
+	     a sufficient number of characters.
+
 2018-08-09  Ingo Schwarze  <schwarze@openbsd.org>
 
 	* examples/common.roff: Remove more dead code

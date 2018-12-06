@@ -52,9 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ds *args \\n[.fn]
 .
 .  pso sh -c \
-       "echo -n .ds *f\ ; \
+       "printf '%s' '.ds *f ' ; \
         ls \\*[fontpath]/dev\*[.T] \
-        | tr '[:cntrl:]' ' '"
+        | tr '[:cntrl:]' '[ *32]'"
 .  \"	This dummy line is necessary; the preceding line eats it.
 .
 .  while !"\\*[*args]"" \{\
