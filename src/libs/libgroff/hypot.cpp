@@ -20,10 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <math.h>
 
-#ifdef NEED_DECLARATION_HYPOT
-  double hypot(double, double);
-#endif /* NEED_DECLARATION_HYPOT */
-  
 double groff_hypot(double x, double y)
 {
   double result = hypot(x, y);

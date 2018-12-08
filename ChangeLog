@@ -1,3 +1,18 @@
+2018-12-08 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Use gnulib's 'hypot' module.
+
+	In 'configure.ac', the macro call
+	'GROFF_NEED_DECLARATION([hypot])' checks whether the function
+	'hypot' is correctly declared in 'math.h', but the test is buggy
+	and may yields false results.
+
+	* bootsrap.conf: add 'hypot' module.
+
+	* configure.ac: Remove GROFF_NEED_DECLARATION([hypot]).
+
+	* src/libs/libgroff/hypot.cpp: remove declaration of hypot.
+
 2018-12-07  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Problem running gropdf on big endian (Sparc)
