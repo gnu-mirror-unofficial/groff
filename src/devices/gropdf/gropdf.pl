@@ -2425,7 +2425,7 @@ sub GetChunk
 
 		Msg(1,"Failed to read binary segment length"), return if $ct != 4;
 
-		my $sl=unpack('L<',$hdr);
+		my $sl=unpack('V',$hdr);
 		my $data;
 		my $chk=read($F,$data,$sl);
 
