@@ -48,12 +48,7 @@
 
 2018-12-05  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
-	Skip hdtbl and mom tests if needed config is missing.
-
-	* contrib/hdtbl/examples/test-hdtbl.sh.in: exit 77 (indicates
-	automake to skip the result) if 'gs' is missing.
-
-	* contrib/hdtbl/hdtbl.am: flag correctly test program generation.
+	Skip mom tests if needed config is missing.
 
 	* contrib/mom/examples/test-mom.sh.in: exit 77 if URW fonts are
 	not available.
@@ -79,17 +74,6 @@
 	7a83f7f5003e24f020306f09f4d497e04e82cb14.
 
 	Fixes bug https://savannah.gnu.org/bugs/?54958.
-
-2018-11-25  Bertrand Garrigues <bertrand.garrigues@laposte.net>
-
-	Clean hdtbl.am
-
-	* contrib/hdtbl/hdtbl.am (MOSTLYCLEANFILES): Remove
-	'hdmisc.tmac-s' and 'hdtbl.tmac-s' (these files are no longer
-	present).
-
-	Fixes https://savannah.gnu.org/bugs/index.php?55083, reported by
-	Bjarni Ingi Gislason <bjarniig@rhi.hi.is>.
 
 2018-11-24  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
@@ -125,19 +109,6 @@
 	* m4/groff.m4 (GROFF_PAGE): remove comments and get the 1st string
 	of '/etc/papersize'.
 
-2018-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	[hdtbl] Don't clean other people's unit tests.
-
-	* contrib/hdtbl/hdtbl.am: test-hdtbl.sh is generated from an .in
-	file, so while we can add it to $(TESTS), we shouldn't then add
-	$(TESTS) to $(MOSTLYCLEANFILES) or we will clobber all tests
-	that ever get defined.  This clobbered gdiffmk's test script on
-	in-tree builds.  Give it its own variable, $(hdtbl_TESTS).  Now
-	it clobbers no more.
-
-	Fixes <https://savannah.gnu.org/bugs/index.php?55020>.
-
 2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_PAGE): Try /etc/papersize first.
@@ -152,11 +123,6 @@
 	Even 2.69 is over 6 years old now.
 
 	See <https://savannah.gnu.org/support/?107450>.
-
-2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* contrib/hdtbl/hdtbl.am: Remove examples/test-hdtbl.sh on 'make
-	distclean'.
 
 2018-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -279,16 +245,6 @@
 	groff build are offered.
 
 	Fixes <https://savannah.gnu.org/bugs/index.php?55004>.
-
-2018-11-07  Bertrand Garrigues <bertrand.garrigues@laposte.net>
-
-	Add a sanity check on 2 hdtbl examples.
-
-	* contrib/hdtbl/examples/test-hdtbl.sh.in: new test script that
-	use 'gs' to check the number of pages of 'fonts_x.ps' and
-	'fonts_n.ps'.
-
-	* contrib/hdtbl/hdtbl.am: connect 'test-hdtbl.sh' to 'make check'
 
 2018-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -653,16 +609,6 @@
 	* LICENSES: Remove section about `src/libs/snprintf/snprintf.c'.
 	* MANIFEST: Remove entry for `src/libs/libxutil'.
 
-2018-03-11  Colin Watson  <cjwatson@debian.org>
-
-	Remove unnecessary randomness from example output.
-
-	The hdtbl examples don't need good randomness, as they're only
-	example output; removing the process ID from consideration allows
-	better integration with reproducible builds.
-
-	* contrib/hdtbl/examples/common.roff (random-s1): Remove process ID.
-
 2018-03-09  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	PDF must not open in presentation mode.
@@ -975,9 +921,6 @@
 
 2017-11-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* contrib/hdtbl/examples/common.roff:
-	* contrib/hdtbl/examples/fonts_n.in:
-	* contrib/hdtbl/examples/fonts_x.in:
 	* src/roff/troff/input.cpp:
 	Make writers to stderr identify themselves.
 
@@ -1008,19 +951,6 @@
 	incorrect program prefixing in those pages if, for example, some
 	doofus has directories called "A", "B", ...  hanging around in
 	the build tree.
-
-2017-11-19  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* contrib/hdtbl/examples/*.roff: Seed RNG.
-
-	* contrib/hdtbl/examples/col_rowspan_colors.roff:
-	* contrib/hdtbl/examples/color_boxes.roff:
-	* contrib/hdtbl/examples/color_nested_tables.roff:
-	* contrib/hdtbl/examples/color_table_cells.roff:
-	Support reproducible builds by seeding hdtbl's random number
-	generator (in contrib/hdtbl/examples/common.roff).
-
-	Fix issue https://savannah.gnu.org/bugs/?52462.
 
 2017-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1182,14 +1112,6 @@
 2017-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4: Kill whitespace in macro diagnostic.
-
-2017-11-01  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
-
-	hdtbl.tmac-u: Fix ignored escape sequence.
-
-	The escape '\c' ignores everything after it, except "\R...".
-
-	Fix bug https://savannah.gnu.org/bugs/?51609.
 
 2017-11-01  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
