@@ -552,8 +552,6 @@ CLEANFILES =
 EXTRA_DIST = gnulib_m4/gnulib-cache.m4
 FONTFILES =
 PREFIXMAN1 =
-PREFIXMAN5 =
-PREFIXMAN7 =
 man1_MANS =
 man5_MANS =
 man7_MANS =
@@ -738,26 +736,12 @@ install-prefix-man:
 	for f in $(PREFIXMAN1); do \
 	  cp -f $$f $(DESTDIR)$(man1dir)/$(NAMEPREFIX)`basename $$f`; \
 	done
-	for f in $(PREFIXMAN5); do \
-	  cp -f $$f $(DESTDIR)$(man5dir)/$(NAMEPREFIX)`basename $$f`; \
-	done
-	for f in $(PREFIXMAN7); do \
-	  cp -f $$f $(DESTDIR)$(man7dir)/$(NAMEPREFIX)`basename $$f`; \
-	done
 uninstall-prefix-man:
 	for f in $(PREFIXMAN1); do \
 	  rm -f $(DESTDIR)$(man1dir)/$(NAMEPREFIX)`basename $$f`; \
 	done
-	for f in $(PREFIXMAN5); do \
-	  rm -f $(DESTDIR)$(man5dir)/$(NAMEPREFIX)`basename $$f`; \
-	done
-	for f in $(PREFIXMAN7); do \
-	  rm -f $(DESTDIR)$(man7dir)/$(NAMEPREFIX)`basename $$f`; \
-	done
 else
 man1_MANS += $(PREFIXMAN1)
-man5_MANS += $(PREFIXMAN5)
-man7_MANS += $(PREFIXMAN7)
 install-prefix-man:
 uninstall-prefix-man:
 generate_man_files:
@@ -872,7 +856,7 @@ EXTRA_DIST += \
 
 MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
   $(man1_MANS) $(man5_MANS) $(man7_MANS) \
-  $(PREFIXMAN1) $(PREFIXMAN5) $(PREFIXMAN7) \
+  $(PREFIXMAN1) \
   test-groff
 
 # Suffix rule to build .1, .5 and .7 files from .1.man, .5.man and

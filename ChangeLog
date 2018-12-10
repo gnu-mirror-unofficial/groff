@@ -1,3 +1,9 @@
+2018-12-10 Ingo Schwarze <schwarze@openbsd.org>
+
+	* Makefile.am: Remove the unused variables PREFIXMAN5 and PREFIXMAN7.
+
+	They caused installation failures on Solaris 9.
+
 2018-12-08 Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Remove gnulib's hypot module.
@@ -24,7 +30,6 @@
 	In 'configure.ac', the macro call
 	'GROFF_NEED_DECLARATION([hypot])' checks whether the function
 	'hypot' is correctly declared in 'math.h', but the test is buggy
-
 	and may yields false results.
 
 	* bootsrap.conf: add 'hypot' module.
