@@ -1625,79 +1625,110 @@ is not available on \f[CR]ASCII\f[] based operating systems.
 .
 .
 .\" ====================================================================
-.SH "POSITIONS FROM INSTALLATION"
+.SH "INSTALLATION DIRECTORIES"
 .\" ====================================================================
 .
-There are some directories in which
 .I groff
-installs all of its data files.
+installs files in varying locations depending on its compile-time
+configuration.
 .
-Due to different installation habits on different operating systems,
-their locations are not absolutely fixed, but their function is
-clearly defined and coincides on all systems.
-.
-.
-.\" ====================================================================
-.SS "Collection of Installation Directories"
-.\" ====================================================================
-.
-This section describes the position of all files of the
-.I groff
-package after the installation \[em] got from
-.B Makefile.comm
-at the top of the
-.I groff
-source package.
+On this installation, the following locations are used.
 .
 .
 .TP
-.B @DEFAULT_INDEX@
-index directory and index name
+.I @APPRESDIR@
+Application defaults directory for
+.IR gxditview (@MAN1EXT@).
+.
+.
 .TP
-.B @LEGACYFONTDIR@
-legacy font directory
+.I @BINDIR@
+Directory containing
+.IR groff 's
+executable commands.
+.
+.
 .TP
-.B @BINDIR@
-directory for binary programs
+.I @COMMON_WORDS_FILE@
+List of common words for
+.IR indxbib (@MAN1EXT@).
+.
+.
 .TP
-.B @SYSTEMMACRODIR@
-system tmac directory
+.I @DATASUBDIR@
+Directory for data files.
+.
+.
 .TP
-.B @DOCDIR@
-documentation directory
+.I @DEFAULT_INDEX@
+Default index for
+.IR lkbib (@MAN1EXT@)
+and
+.IR refer (@MAN1EXT@).
+.
+.
 .TP
-.B @EXAMPLEDIR@
-directory for examples
+.I @DOCDIR@
+Documentation directory.
+.
+.
 .TP
-.B @HTMLDOCDIR@
-documentation directory for HTML files
+.I @EXAMPLEDIR@
+Example directory.
+.
+.
 .TP
-.B @PDFDOCDIR@
-documentation directory for PDF files
+.I @FONTDIR@
+Font directory.
+.
+.
 .TP
-.B @DATASUBDIR@
-data subdirectory
+.I @HTMLDOCDIR@
+HTML documentation directory.
+.
+.
 .TP
-.B @COMMON_WORDS_FILE@
-file for common words
+.I @LEGACYFONTDIR@
+Legacy font directory.
+.
+.
 .TP
-.B @FONTDIR@
-directory for fonts
+.I @LOCALFONTDIR@
+Local font directory.
+.
+.
 .TP
-.B @OLDFONTDIR@
-directory for old fonts
+.I @LOCALMACRODIR@
+Local macro package
+.RI ( tmac
+file) directory.
+.
+.
 .TP
-.B @MACRODIR@
-tmac directory
+.I @MACRODIR@
+Macro package
+.RI ( tmac
+file) directory.
+.
+.
 .TP
-.B @TMAC_MDIR@
-mm tmac directory
+.I @OLDFONTDIR@
+Font directory for compatibility with old versions of
+.IR groff ;
+see
+.IR grops (@MAN1EXT@).
+.
+.
 .TP
-.B @LOCALFONTDIR@
-local font directory
+.I @PDFDOCDIR@
+PDF documentation directory.
+.
+.
 .TP
-.B @LOCALMACRODIR@
-local tmac directory
+.I @SYSTEMMACRODIR@
+System macro package
+.RI ( tmac
+file) directory.
 .
 .
 .\" ====================================================================
