@@ -71,6 +71,11 @@ You can also build groff in an out of source build tree, which is cleaner:
 Note that parallel build is also supported and make can be invoked
 with the -j option, which will greatly speed up the build.
 
+When the build is finished you can install the whole groff
+installation with:
+
+    $ make install
+
 Notes:
 
 If you use an old `autoreconf' version < 2.69, there might be an error
@@ -93,6 +98,23 @@ Troff errors of the types
   can't translate character code n to special character 'c' in transparent throughput
 
 may safely be ignored.
+
+A few sanity checks can be done with the command:
+
+    $ make check
+
+This will perform some tests on the generated examples.  However,
+these checks are for the moment quite limited.
+
+The groff texinfo manual can be generated in pdf and html formats
+with:
+
+    $ make doc
+
+and installed with:
+
+    $ make install-doc
+
 
 2. Modification of autotools files
 ----------------------------------

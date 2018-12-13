@@ -1,3 +1,15 @@
+2018-12-08 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	Install texinfo doc on 'make install-pdf' and 'make install-html'
+
+	* doc/doc.am:
+	- Use automake 'install-pdf-local' and 'install-html-local' rules
+	to install groff.pdf and groff.html
+	- New rules 'uninstall_pdf' and 'uninstall_html'.
+	- Use $(RM) instead of 'rm'.
+	- Don't try to build doc if 'BUILD_INFODOC' is not set.
+	* INSTALL.REPO: document texinfo build and installation.
+
 2018-12-10 Ingo Schwarze <schwarze@openbsd.org>
 
 	* Makefile.am: Remove the unused variables PREFIXMAN5 and PREFIXMAN7.

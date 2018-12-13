@@ -249,7 +249,7 @@ endif
 uninstall-hook: uninstall_doc_examples uninstall_doc_htmldoc uninstall_mom
 uninstall_doc_examples:
 if BUILD_EXAMPLES
-	rm -f $(DESTDIR)$(exampledir)/gnu.eps
+	$(RM) -f $(DESTDIR)$(exampledir)/gnu.eps
 endif
 if BUILD_HTMLEXAMPLES
 	-test -d $(DESTDIR)$(docexamplesdir) && \
@@ -345,7 +345,6 @@ EXTRA_DIST += doc/groff.texi doc/fdl.texi
 # blockquote is not properly closed, see fixinfo.sh for more details
 .texi.html:
 	@$(MKDIR_P) $(doc_builddir)/
-	@$(MKDIR_P) $(doc_builddir)/`basename $@`.mono/
 	LANG=C \
 	LC_ALL=C \
 	$(MAKEINFO) --html -I $(doc_srcdir) \
@@ -353,7 +352,7 @@ EXTRA_DIST += doc/groff.texi doc/fdl.texi
 	LANG=C \
 	LC_ALL=C \
 	$(MAKEINFO) --html -I $(doc_srcdir) --no-split \
-	  -o doc/`basename $@`.mono/`basename $@` $<
+	  -o $@ $<
 	if test "$(makeinfo_version_numeric)" -lt 5000; then \
 	  echo "patching $@ with fixinfo.sh"; \
 	  $(SHELL) $(doc_srcdir)/fixinfo.sh \
@@ -365,6 +364,7 @@ EXTRA_DIST += doc/groff.texi doc/fdl.texi
 # install-pdf, install-dvi, install-ps, install-html are standard
 # Automake targets.
 
+if BUILD_INFODOC
 doc: doc_all
 doc_all: doc_txt dvi pdf html
 doc_txt: doc/groff.txt
@@ -374,14 +374,19 @@ pdf: doc_pdf
 doc_pdf: doc/groff.pdf
 html: doc_html
 doc_html: doc/groff.html
+install-doc: install-pdf install-html
+endif
 
 distclean-local: clean_infodoc clean_otherdoc
 maintainer-clean-local: clean_infodoc clean_otherdoc
 clean_infodoc:
 	-$(RM) $(doc_builddir)/groff.info*
+	-$(RM) $(doc_builddir)/groff.pdf
+	-$(RM) $(doc_builddir)/groff.dvi
+	-$(RM) -r $(doc_builddir)/groff.html.*
 clean_otherdoc:
 	-cd $(doc_builddir) && \
-	  rm -rf *.pdf *.html *.txt *.dvi *.html.mono *.t2p *.t2d
+	  $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
 
 install-data-local: install_infodoc
 if BUILD_INFODOC
@@ -389,23 +394,40 @@ install_infodoc: doc/groff.info
 	-test -d $(DESTDIR)$(infodir) || $(mkinstalldirs) $(DESTDIR)$(infodir)
 	  for p in doc/groff.info `ls doc/groff.info*`; do \
 	    f=`basename $$p`; \
-	    rm -f $(DESTDIR)$(infodir)/$$f; \
+	    $(RM) $(DESTDIR)$(infodir)/$$f; \
 	    $(INSTALL_DATA) $$p $(DESTDIR)$(infodir)/$$f; \
 	  done
 	$(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) \
 	  $(DESTDIR)$(infodir)/groff.info
+install-pdf-local: doc/groff.pdf
+	-test -d $(DESTDIR)$(pdfdocdir) || $(mkinstalldirs) $(DESTDIR)$(pdfdocdir)
+	cp $(top_builddir)/doc/groff.pdf $(DESTDIR)$(pdfdocdir)
+install-html-local: doc/groff.html
+	-test -d $(DESTDIR)$(htmldocdir)/groff.html.mono || $(mkinstalldirs) $(DESTDIR)$(htmldocdir)/groff.html.mono
+	cp -r $(top_builddir)/doc/groff.html $(DESTDIR)$(htmldocdir)/groff.html.mono
+	cp -r $(top_builddir)/doc/groff.html.node $(DESTDIR)$(htmldocdir)
 else
 install_infodoc:
 endif
 
-uninstall-local: uninstall_infodoc
+uninstall-local: uninstall_infodoc uninstall-pdf uninstall-html
+uninstall_doc: uninstall-local
+uninstall-doc: uninstall-local
 uninstall_infodoc:
 if BUILD_INFODOC
 	-$(INSTALL_INFO) --remove --info-dir=$(DESTDIR)$(infodir) \
 	  $(DESTDIR)$(infodir)/groff.info
 	-for f in `ls $(DESTDIR)$(infodir)/groff.info*`; do \
-	  rm -f $$f; \
+	  $(RM) $$f; \
 	done
+endif
+uninstall-pdf:
+if BUILD_INFODOC
+	-$(RM) -f $(DESTDIR)$(pdfdocdir)/groff.pdf 
+endif
+uninstall-html:
+if BUILD_INFODOC
+	-$(RM) -r $(DESTDIR)$(htmldocdir)/groff.html.*
 endif
 
 # File used by contrib/hdtbl and contrib/pdfmark. It is distributed in
