@@ -140,7 +140,7 @@ macro package, should the user choose to employ it.
 Specifically, if the
 .I pdfhref
 macro, defined in the
-.B pdfmark.tmac
+.I pdfmark.tmac
 package, is used to define public reference marks, or dynamic links to
 such reference marks, then
 .B pdfroff
@@ -649,14 +649,13 @@ Input and output files for
 may be named according to any convention of the user's choice.
 Typically, input files may be named according to the choice of the
 principal formatting macro package, e.g.,
-.IB file .ms
+.RI file .ms
 might be an input file for formatting using the
 .B ms
 macros
-.RB ( s.tmac );
+.RI ( s.tmac );
 normally, the final output file should be named
-.IB file .pdf\c
-\&.
+.RI file .pdf .
 .
 .
 .P
@@ -672,7 +671,7 @@ is available,
 it is invoked to create a private subdirectory of
 the nominated temporary files directory,
 (with subdirectory name derived from the template
-.BR pdfroff-XXXXXXXXXX );
+.IR pdfroff-XXXXXXXXXX );
 if this subdirectory is successfully created,
 the temporary files will be placed within it,
 otherwise they will be placed directly in the directory
@@ -680,8 +679,8 @@ nominated in the environment.
 .P
 All temporary files themselves
 are named according to the convention
-.BI pdf $$ .*\c
-\&, where
+.IR pdf $$ . *,
+where
 .I $$
 is the standard shell variable representing the process ID of the
 .B pdfroff
@@ -692,7 +691,7 @@ represents any of the extensions used by
 to identify the following temporary and intermediate files.
 .
 .TP
-.BI pdf $$ .tmp
+.IR pdf $$ .tmp
 A scratch pad file,
 used to capture reference data emitted by
 .BR groff ,
@@ -701,7 +700,7 @@ during the
 compilation phase.
 .
 .TP
-.BI pdf $$ .ref
+.IR pdf $$ .ref
 The
 .IR "reference dictionary" ,
 as compiled in the last but one pass of the
@@ -724,11 +723,10 @@ this intermediate file becomes permanent,
 and is named
 .IR name ,
 rather than
-.BI pdf $$ .ref\c
-\&.
+.IR pdf $$ .ref .
 .
 .TP
-.BI pdf $$ .cmp
+.IR pdf $$ .cmp
 Used to collect
 .I reference dictionary
 entries during the active pass of the
@@ -737,10 +735,9 @@ compilation phase.
 .
 At the end of any pass,
 when the content of
-.BI pdf $$ .cmp
+.IR pdf $$ .cmp
 compares as identical to
-.BI pdf $$ .ref\c
-\&,
+.IR pdf $$ .ref ,
 (or the corresponding file named by the
 .BR \%\-\-reference\-dictionary =\c
 .I name
@@ -754,7 +751,7 @@ is appended to this intermediate file,
 for inclusion in the final formatting passes.
 .
 .TP
-.BI pdf $$ .tc
+.IR pdf $$ .tc
 An intermediate
 .I PostScript
 file,
@@ -765,7 +762,7 @@ on ultimate output to the
 postprocessor.
 .
 .TP
-.BI pdf $$ .ps
+.IR pdf $$ .ps
 An intermediate
 .I PostScript
 file,
@@ -774,8 +771,7 @@ in which the body text is collected prior to ultimate output to the
 postprocessor,
 in the proper sequence,
 .I after
-.BI pdf $$ .tc\c
-\&.
+.IR pdf $$ .tc .
 .
 .
 .\" ====================================================================
@@ -820,7 +816,7 @@ the use of any specific
 .B groff
 macro package, a number of supplied macro packages,
 and in particular those associated with the package
-.BR pdfmark.tmac ,
+.IR pdfmark.tmac ,
 are best suited for use with
 .B pdfroff
 as the preferred formatter.
@@ -829,7 +825,7 @@ Detailed documentation on the use of these packages may be found,
 in PDF format, in the reference guide
 .BR "\*(lqPortable Document Format Publishing with GNU Troff\*(rq" ,
 included in the installed documentation set as
-.BR \%@PDFDOCDIR@/pdfmark.pdf .
+.IR @PDFDOCDIR@/pdfmark.pdf .
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

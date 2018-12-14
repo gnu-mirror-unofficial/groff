@@ -135,10 +135,10 @@ as the default font family.
 Search in directory (or directory path)
 .I dir
 for subdirectories
-.BI dev name
+.IR dev name
 .RI ( name
 is the name of the device) and there for the
-.B DESC
+.I DESC
 file and font files.
 .
 .I dir
@@ -172,10 +172,10 @@ No directory search is performed for files with an absolute file name.
 .TP
 .BI \-m name
 Read in the file
-.IB name .tmac\fR.
+.RI name .tmac .
 .
 If it isn't found, try
-.BI tmac. name
+.IR tmac. name
 instead.
 .
 It will be first searched for in directories given with the
@@ -183,8 +183,11 @@ It will be first searched for in directories given with the
 command-line option, then in directories given in the
 .I GROFF_TMAC_PATH
 environment variable, then in the current directory (only if in unsafe
-mode), the home directory, @SYSTEMMACRODIR@, @LOCALMACRODIR@, and
-@MACRODIR@.
+mode), the home directory,
+.IR @SYSTEMMACRODIR@ ,
+.IR @LOCALMACRODIR@ ,
+and
+.IR @MACRODIR@ .
 .
 .TP
 .BI \-M dir
@@ -240,9 +243,9 @@ can be any troff numeric expression.
 .TP
 .B \-R
 Don't load
-.B troffrc
+.I troffrc
 and
-.BR troffrc-end .
+.IR troffrc-end .
 .
 .TP
 .BI \-T name
@@ -521,9 +524,9 @@ will scan directories given in the
 .B \-M
 option before these, and in standard directories (current directory if
 in unsafe mode, home directory,
-.BR @SYSTEMMACRODIR@ ,
-.BR @LOCALMACRODIR@ ,
-.BR @MACRODIR@ )
+.IR @SYSTEMMACRODIR@ ,
+.IR @LOCALMACRODIR@ ,
+.IR @MACRODIR@ )
 after these.
 .
 .TP
@@ -533,16 +536,16 @@ Default device.
 .TP
 .I GROFF_FONT_PATH
 A colon separated list of directories in which to search for the
-.BI dev name
+.IR dev name
 directory.
 .
 .B @g@troff
 will scan directories given in the
 .B \-F
 option before these, and in standard directories
-.RB ( @LOCALFONTDIR@ ,
-.BR @FONTDIR@ ,
-.BR @LEGACYFONTDIR@ )
+.RI ( @LOCALFONTDIR@ ,
+.IR @FONTDIR@ ,
+.IR @LEGACYFONTDIR@ )
 after these.
 .
 .
@@ -551,26 +554,26 @@ after these.
 .\" ====================================================================
 .
 .TP
-.B @MACRODIR@/troffrc
+.I @MACRODIR@/troffrc
 Initialization file (called before any other macro package).
 .
 .TP
-.B @MACRODIR@/troffrc\-end
+.I @MACRODIR@/troffrc\-end
 Initialization file (called after any other macro package).
 .
 .TP
-.BI @MACRODIR@/ name .tmac
+.IR @MACRODIR@/ name .tmac
 .TQ
-.BI @MACRODIR@/tmac. name
+.IR @MACRODIR@/tmac. name
 Macro files
 .
 .TP
-.BI @FONTDIR@/dev name /DESC
+.IR @FONTDIR@/dev name /DESC
 Device description file for device
 .IR name .
 .
 .TP
-.BI @FONTDIR@/dev name / F
+.IR @FONTDIR@/dev name / F
 Font file for font
 .I F
 of device
@@ -579,9 +582,9 @@ of device
 .
 .P
 Note that
-.B troffrc
+.I troffrc
 and
-.B troffrc\-end
+.I troffrc\-end
 are neither searched in the current nor in the home directory by
 default for security reasons (even if the
 .B \-U

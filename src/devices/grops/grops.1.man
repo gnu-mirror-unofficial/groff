@@ -200,7 +200,9 @@ The default value can be specified by a
 .BI broken\  n
 .
 .LP
-command in the DESC file.
+command in the
+.I DESC
+file.
 .
 Otherwise the default value is\~0.
 .RE
@@ -214,7 +216,7 @@ copies of each page.
 .TP
 .BI \-F dir
 Prepend directory
-.IB dir /dev name
+.RI dir /dev name
 to the search path for prologue, font, and device description files;
 .I name
 is the name of the device, usually
@@ -272,7 +274,7 @@ This overrides the
 and
 .B paperwidth
 commands in the
-.B DESC
+.I DESC
 file; it accepts the same arguments as the
 .B papersize
 command.
@@ -415,7 +417,7 @@ to convert a Type\~1 font in PFB format.
 Any downloadable fonts which should, when required, be included by
 .B grops
 must be listed in the file
-.BR @FONTDIR@/devps/download ;
+.IR @FONTDIR@/devps/download ;
 this should consist of lines of the form
 .
 .IP
@@ -439,7 +441,7 @@ is searched for using the same mechanism that is used
 for groff font metric files.
 .
 The
-.B download
+.I download
 file itself is also searched for using this mechanism;
 currently, only the first found file in the font path is used.
 .
@@ -453,7 +455,7 @@ interprets any comments in the files sufficiently to ensure that its
 own output is conforming.
 .
 It also supplies any needed font resources that are listed in the
-.B download
+.I download
 file
 as well as any needed file resources.
 .
@@ -489,7 +491,7 @@ the following lines
 .LP
 In this case both Garamond and Garamond-Outline would need to be listed
 in the
-.B download
+.I download
 file.
 .
 A downloadable font should not include its own name in a
@@ -1196,7 +1198,7 @@ the
 script to create appropriate metric files.
 .
 The resulting font wrappers should be added to the
-.B download
+.I download
 file.
 .B ttftot42
 source code can be downloaded from
@@ -1260,7 +1262,8 @@ Old PS printers might not support it (this is, they don't have a
 built-in TrueType font interpreter).
 .
 .IP
-If your font is in PFB format (such fonts normally have \[oq].pfb\[cq]
+If your font is in PFB format (such fonts normally have
+.I .pfb
 as the file extension), you might use groff's
 .BR \%pfbtops (@MAN1EXT@)
 program to convert it to PFA.
@@ -1286,8 +1289,11 @@ afmtodit Foo-Bar-Bold.afm textmap FBB
 .RE
 .
 .IP
-which converts the metric file \[oq]Foo-Bar-Bold.afm\[cq] to the groff
-font \[oq]FBB\[cq].
+which converts the metric file
+.I Foo-Bar-Bold.afm
+to the groff
+font
+.IR FBB .
 .
 If you have a font family which comes with normal, bold, italic,
 and bold italic faces, it is recommended to use the letters
@@ -1311,7 +1317,8 @@ and
 .
 .LI
 Install both the groff font description files and the fonts in a
-\[oq]devps\[cq] subdirectory of the font path which groff finds.
+.I devps
+subdirectory of the font path which groff finds.
 .
 See section \[lq]Environment\[rq] in
 .BR troff (@MAN1EXT@)
@@ -1322,19 +1329,24 @@ to store them anyway).
 .
 .LI
 Register all fonts which must be downloaded to the printer in the
-\[oq]devps/download\[cq] file.
+.I devps/download
+file.
 .
 Only the first occurrence of this file in the font path is read.
 .
-This means that you should copy the default \[oq]download\[cq] file to
-the first directory in your font path and add your fonts there.
+This means that you should copy the default
+.I download
+file to the first directory in your font path and add your fonts there.
 .
 To continue the above example we assume that the PS font name for
-Foo-Bar-Bold.pfa is \[oq]XY-Foo-Bar-Bold\[cq] (the PS font name is
-stored in the
+.I Foo-Bar-Bold.pfa
+is \[oq]XY-Foo-Bar-Bold\[cq] (the PS font name is stored in the
 .B internalname
-field in the \[oq]FBB\[cq] file), thus the following line should be
-added to \[cq]download\[cq].
+field in the
+.I FBB
+file),
+thus the following line should be added to
+.IR download .
 .
 .RS
 .IP
@@ -1354,7 +1366,7 @@ the 35 Adobe core fonts; the difference is mainly the lack of the
 For backwards compatibility, these old fonts are installed also in the
 .
 .IP
-.B @OLDFONTDIR@/devps
+.I @OLDFONTDIR@/devps
 .
 .LP
 directory.
@@ -1402,7 +1414,7 @@ overrides this environment variable.
 .TP
 .I GROFF_FONT_PATH
 A list of directories in which to search for the
-.BI dev name
+.IR dev name
 directory in addition to the default ones.
 .
 See
@@ -1423,44 +1435,44 @@ creation timestamp in place of the current time.
 .\" ====================================================================
 .
 .TP
-.B @FONTDIR@/devps/DESC
+.I @FONTDIR@/devps/DESC
 Device description file.
 .
 .TP
-.BI @FONTDIR@/devps/ F
+.IR @FONTDIR@/devps/ F
 Font description file for font
 .IR F .
 .
 .TP
-.B @FONTDIR@/devps/download
+.I @FONTDIR@/devps/download
 List of downloadable fonts.
 .
 .TP
-.B @FONTDIR@/devps/text.enc
+.I @FONTDIR@/devps/text.enc
 Encoding used for text fonts.
 .
 .TP
-.B @MACRODIR@/ps.tmac
+.I @MACRODIR@/ps.tmac
 Macros for use with
 .BR grops ;
 automatically loaded by
 .B troffrc
 .
 .TP
-.B @MACRODIR@/pspic.tmac
+.I @MACRODIR@/pspic.tmac
 Definition of
 .B PSPIC
 macro,
 automatically loaded by
-.BR ps.tmac .
+.IR ps.tmac .
 .
 .TP
-.B @MACRODIR@/psold.tmac
+.I @MACRODIR@/psold.tmac
 Macros to disable use of characters not present in older
 PostScript printers (e.g., \[oq]eth\[cq] or \[oq]thorn\[cq]).
 .
 .TP
-.BI /tmp/grops XXXXXX
+.IR /tmp/grops XXXXXX
 Temporary file.
 See
 .BR groff (@MAN1EXT@)

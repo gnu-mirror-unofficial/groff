@@ -37,15 +37,14 @@ font format.
 The font files for device
 .I name
 are stored in a directory
-.BI dev name\/\c
-\&.
+.IR dev name.
 .
-There are two types of file: a device description file called
-.B DESC
-and for each font\~\c
-.I F
-a font file called\~\c
-.IR F .
+There are two types of file:
+a device description file called
+.I DESC
+and for each
+.RI font \~F ,
+a font file called\~F.
 .
 These are text files;
 unlike the ditroff font format,
@@ -56,7 +55,9 @@ there is no associated binary format.
 .SS DESC file format
 .\" ====================================================================
 .
-The DESC file can contain the following types of line as shown below.
+The
+.I DESC
+file can contain the following types of line as shown below.
 .
 Later entries in the file override previous values.
 .
@@ -141,8 +142,9 @@ if it holds predefined paper types.
 .
 Alternatively,
 .I string
-can be a file name (e.g.\& \[oq]/etc/papersize\[cq]); if the file can
-be opened,
+can be a file name (e.g.\&
+.IR /etc/papersize );
+if the file can be opened,
 .B groff
 reads the first line and tests for the above paper sizes.
 .
@@ -346,7 +348,9 @@ and
 .B sizes
 lines are compulsory.
 .
-Not all commands in the DESC file are used by
+Not all commands in the
+.I DESC
+file are used by
 .B troff
 itself; some of the keywords (or even additional ones) are used by
 postprocessors to store arbitrary information about the device.
@@ -663,12 +667,12 @@ Most entries in kernpairs section have a negative value for\~\c
 .\" ====================================================================
 .
 .TP
-.BI @FONTDIR@/dev name /DESC
+.IR @FONTDIR@/dev name /DESC
 Device description file for device
 .IR name .
 .
 .TP
-.BI @FONTDIR@/dev name / F
+.IR @FONTDIR@/dev name / F
 Font file for font\~\c
 .I F
 of device

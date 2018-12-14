@@ -284,8 +284,10 @@ The
 .B paperlength
 and
 .B paperwidth
-commands in the DESC file specify the length and width in machine units
-of the virtual page displayed by
+commands in the
+.I DESC
+file specify the length and width in machine units of the virtual page
+displayed by
 .BR \%gxditview .
 .
 .
@@ -335,7 +337,9 @@ The
 .I groff intermediate output
 file will be displayed at a resolution of
 .I res
-dpi, unless the DESC file contains the
+dpi, unless the
+.I DESC
+file contains the
 .B X11
 command, in which case the device resolution will be used.
 .
@@ -480,7 +484,7 @@ SS	-adobe-symbol-medium-r-normal--*-100-*-*-*-*-adobe-fontspecific\en\e
 .TP
 .I GROFF_FONT_PATH
 A list of directories in which to search for the
-.BI dev name
+.IR dev name
 directory in addition to the default ones.
 .
 See
@@ -495,14 +499,14 @@ for more details.
 .\" ====================================================================
 .
 .TP
-.B @APPRESDIR@/GXditview
+.I @APPRESDIR@/GXditview
 .TQ
-.B @APPRESDIR@/GXditview\-color
+.I @APPRESDIR@/GXditview\-color
 The default resource files of
 .BR \%gxditview .
 .
 Users should override these values in the
-.B .Xdefaults
+.I .Xdefaults
 file, normally located in the user's home directory.
 .
 See

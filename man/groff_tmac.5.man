@@ -96,7 +96,7 @@ or the
 .B man
 macro package.
 See below the description of the
-.B andoc.tmac
+.I andoc.tmac
 file.
 .
 .
@@ -105,16 +105,16 @@ file.
 .\" ====================================================================
 .
 .TP
-.B man
+.I man
 This is the classical macro package for Unix manual pages
 (man\~pages); it is quite handy and easy to use; see
 .BR groff_man (@MAN7EXT@).
 .
 .
 .TP
-.B doc
+.I doc
 .TQ
-.B mdoc
+.I mdoc
 An alternative macro package for man\~pages mainly used in BSD
 systems; it provides many new features, but it is not the standard for
 man\~pages; see
@@ -122,9 +122,9 @@ man\~pages; see
 .
 .
 .TP
-.B andoc
+.I andoc
 .TQ
-.B mandoc
+.I mandoc
 Use this file in case you don't know whether the
 .B man
 macros or the
@@ -145,7 +145,7 @@ to use.
 .
 .
 .TP
-.B me
+.I me
 The classical
 .I me
 macro package; see
@@ -153,7 +153,7 @@ macro package; see
 .
 .
 .TP
-.B mm
+.I mm
 The semi-classical
 .I mm
 macro package; see
@@ -161,7 +161,7 @@ macro package; see
 .
 .
 .TP
-.B mom
+.I mom
 The new
 .I mom
 macro package, only available in groff.
@@ -175,7 +175,7 @@ See
 .
 .
 .TP
-.B ms
+.I ms
 The classical
 .I ms
 macro package; see
@@ -187,27 +187,27 @@ macro package; see
 .\" ====================================================================
 .
 .TP
-.B cs
+.I cs
 This file adds support for Czech localization, including the main macro
 packages (me, mom, mm, and ms).
 .
 .IP
 Note that
-.B cs.tmac
+.I cs.tmac
 sets the input encoding to latin-2.
 .
 .
 .TP
-.B de
+.I de
 .TQ
-.B den
+.I den
 German localization support, including the main macro packages (me, mom,
 mm, and ms).
 .
 .IP
-.B de.tmac
+.I de.tmac
 selects hyphenation patterns for traditional orthography, and
-.B den.tmac
+.I den.tmac
 does the same for the new orthography
 (\[oq]Recht\%schreib\%reform\[cq]).
 .
@@ -215,7 +215,7 @@ It should be used as the last macro package on the command line.
 .
 .
 .TP
-.B fr
+.I fr
 This file adds support for French localization, including the main macro
 packages (me, mom, mm, and ms).
 .
@@ -230,13 +230,13 @@ Example:
 .
 .IP
 Note that
-.B fr.tmac
+.I fr.tmac
 sets the input encoding to latin-9 to get proper support of the
 \[oq]oe\[cq] ligature.
 .
 .
 .TP
-.B sv
+.I sv
 Swedish localization support, including the me, mom, and ms macro
 packages.
 .
@@ -252,13 +252,13 @@ It should be used as the last macro package on the command line.
 .
 .
 .TP
-.B latin1
+.I latin1
 .TQ
-.B latin2
+.I latin2
 .TQ
-.B latin5
+.I latin5
 .TQ
-.B latin9
+.I latin9
 Various input encodings supported directly by groff.
 .
 Normally, this macro is loaded at the very beginning of a document or
@@ -271,7 +271,7 @@ Note that these macro packages don't work on EBCDIC hosts.
 .
 .
 .TP
-.B cp1047
+.I cp1047
 Encoding support for EBCDIC.
 .
 On those platforms it is loaded automatically at start-up.
@@ -313,13 +313,13 @@ macro package or to plain groff.
 .
 .
 .TP
-.B 62bit
+.I 62bit
 Provides macros for addition, multiplication, and division of 62-bit
 integers (allowing safe multiplication of 31-bit integers, for example).
 .
 .
 .TP
-.B ec
+.I ec
 Switch to the EC and TC font families.
 .
 To be used with
@@ -328,17 +328,17 @@ To be used with
 .
 .
 .TP
-.B hdtbl
+.I hdtbl
 The Heidelberger table macros, contributed by Joachim Walsdorff, allow
 the generation of tables through a syntax similar to the HTML table
 model.
 .
 Note that
-.B hdtbl
+.I hdtbl
 is a macro package, not a preprocessor like
 .BR tbl (@MAN1EXT@).
 .
-.B hdtbl
+.I hdtbl
 works only with the
 .B \-Tps
 and
@@ -350,7 +350,7 @@ See
 .
 .
 .TP
-.B papersize
+.I papersize
 This macro file is already loaded at start-up by
 .B @g@troff
 so it isn't necessary to call it explicitly.
@@ -394,20 +394,20 @@ orientation:
 .
 .
 .TP
-.B pdfpic
+.I pdfpic
 A single macro is provided in this file,
 .BR PSPIC ,
 to include a PDF graphic in a document, i.e., under the output device
 .BR \-Tpdf .
 .
 For all other devices,
-.B pspic
+.I pspic
 is used.
 .
 So
-.B pdfpic
+.I pdfpic
 is an extension of
-.B pspic.
+.IR pspic .
 .
 By that you can now even replace all
 .B PSPIC
@@ -423,7 +423,7 @@ options.
 .
 .
 .TP
-.B pic
+.I pic
 This file provides proper definitions for the macros
 .B PS
 and
@@ -439,7 +439,7 @@ definitions for those two macros (actually, most of them already do).
 .
 .
 .TP
-.B pspic
+.I pspic
 A single macro is provided in this file,
 .BR PSPIC ,
 to include a PostScript graphic in a document.
@@ -540,7 +540,7 @@ image's width.
 .
 .
 .TP
-.B ptx
+.I ptx
 A single macro is provided in this file,
 .BR xx ,
 for formatting permuted index entries as produced by the GNU
@@ -552,7 +552,7 @@ your document and adapt it to your needs.
 .
 .
 .TP
-.B trace
+.I trace
 Use this for tracing macro calls.
 .
 It is only useful for debugging.
@@ -562,7 +562,7 @@ See
 .
 .
 .TP
-.B tty-char
+.I tty-char
 Overrides the definition of standard troff characters and some groff
 characters for TTY devices.
 .
@@ -571,7 +571,7 @@ normal TTY formatting to allow processing with critical equipment.
 .
 .
 .TP
-.B www
+.I www
 Additions of elements known from the HTML format, as used in the
 internet (World Wide Web) pages; this includes URL links and mail
 addresses; see
@@ -672,7 +672,8 @@ would not make much sense.
 .
 .P
 A second strange feature of classical troff was to name macro files
-in the form \f[B]tmac.\f[]\,\f[I]name\f[].
+in the form
+.IR tmac. name.
 In modern operating systems, the type of a file is specified as a
 postfix, the file name extension.
 .
@@ -716,9 +717,9 @@ at run-time; this makes the contents of the macro package
 available.
 .
 In groff, the file
-.IB name .tmac
+.RI name .tmac
 is searched within the tmac path; if not found,
-.BI tmac. name
+.IR tmac. name
 is searched for instead.
 .
 .
@@ -805,7 +806,7 @@ to invoke
 .
 .P
 If you want to write your own groff macro file, call it
-.IB whatever .tmac
+.RI whatever .tmac
 and put it in a directory in the tmac path;
 see section \[lq]Files\[rq] below.
 .
@@ -1176,10 +1177,10 @@ the diversion and can be manipulated from within the macros.
 .\" ====================================================================
 .
 All macro package files must be named
-.IB name .tmac
+.RI name .tmac
 to fully use the tmac mechanism.
 .
-.BI tmac. name
+.IR tmac. name
 as with classical packages is possible as well, but deprecated.
 .
 .
@@ -1216,7 +1217,7 @@ a platform-specific directory, being
 .
 .RS
 .IP
-.B @SYSTEMMACRODIR@
+.I @SYSTEMMACRODIR@
 .RE
 .
 .IP
@@ -1227,7 +1228,7 @@ a site-specific (platform-independent) directory, being
 .
 .RS
 .IP
-.B @LOCALMACRODIR@
+.I @LOCALMACRODIR@
 .RE
 .
 .IP
@@ -1238,7 +1239,7 @@ the main tmac directory, being
 .
 .RS
 .IP
-.B @MACRODIR@
+.I @MACRODIR@
 .RE
 .
 .IP
