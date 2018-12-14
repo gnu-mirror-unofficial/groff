@@ -2210,10 +2210,10 @@ groff -m man -m ms foo.man bar.doc
 @menu
 * man::
 * mdoc::
-* ms::
 * me::
 * mm::
 * mom::
+* ms::
 @end menu
 
 
@@ -2849,7 +2849,7 @@ are printed in Helvetica Bold.
 
 @c =====================================================================
 
-@node mdoc, ms, man, Macro Packages
+@node mdoc, me, man, Macro Packages
 @section @file{mdoc}
 @cindex @code{mdoc} macros
 
@@ -2861,7 +2861,70 @@ at the command line).
 
 @c =====================================================================
 
-@node ms, me, mdoc, Macro Packages
+@node me, mm, ms, Macro Packages
+@section @file{me}
+@cindex @code{me} macro package
+
+@c XXX documentation
+@c XXX this is a placeholder until we get stuff knocked into shape
+See the @file{meintro.me} and @file{meref.me} documents in groff's
+@file{doc} directory.
+
+
+@c =====================================================================
+
+@node mm, mom, me, Macro Packages
+@section @file{mm}
+@cindex @code{mm} macro package
+
+@c XXX documentation
+@c XXX this is a placeholder until we get stuff knocked into shape
+See the @cite{groff_mm(7)} man page (type @command{man groff_mm} at the
+command line).
+
+
+@c =====================================================================
+
+@node mom, ms, mm, Macro Packages
+@section @file{mom}
+@cindex @code{mom} macro package
+
+@c XXX documentation
+@c XXX this is a placeholder until we get stuff knocked into shape
+The main documentation files for the @file{mom} macros are in
+@acronym{HTML} format.  Additional, useful documentation is in
+@acronym{PDF} format.  See the @cite{groff(1)} man page, section
+``Installation Directories'', for their location.
+
+@itemize @bullet
+@item
+@file{toc.html}
+@noindent
+Entry point to the full mom manual.
+
+@item
+@file{macrolist.html}
+@noindent
+Hyperlinked index of macros with brief descriptions, arranged by
+category.
+
+@item
+@file{mom-pdf.pdf}
+@noindent
+@acronym{PDF} features and usage.
+@end itemize
+
+The mom macros are in active development between groff releases.
+The most recent version, along with up-to-date documentation, is
+available at @uref{http://www.schaffter.ca/mom/mom-05.html}.
+
+The @cite{groff_mom(7)} man page (type @command{man groff_mom} at the
+command line) contains a partial list of available macros, however their
+usage is best understood by consulting the @acronym{HTML} documentation.
+
+@c =====================================================================
+
+@node ms,  , mom, Macro Packages
 @section @file{ms}
 @cindex @code{ms} macros
 
@@ -4616,69 +4679,6 @@ Names containing the characters @code{*}, @code{@@}, and@tie{}@code{:}.
 Names containing only uppercase letters and digits.
 @end itemize
 
-
-@c =====================================================================
-
-@node me, mm, ms, Macro Packages
-@section @file{me}
-@cindex @code{me} macro package
-
-@c XXX documentation
-@c XXX this is a placeholder until we get stuff knocked into shape
-See the @file{meintro.me} and @file{meref.me} documents in groff's
-@file{doc} directory.
-
-
-@c =====================================================================
-
-@node mm, mom, me, Macro Packages
-@section @file{mm}
-@cindex @code{mm} macro package
-
-@c XXX documentation
-@c XXX this is a placeholder until we get stuff knocked into shape
-See the @cite{groff_mm(7)} man page (type @command{man groff_mm} at the
-command line).
-
-
-@c =====================================================================
-
-@node mom,  , mm, Macro Packages
-@section @file{mom}
-@cindex @code{mom} macro package
-
-@c XXX documentation
-@c XXX this is a placeholder until we get stuff knocked into shape
-The main documentation files for the @file{mom} macros are in
-@acronym{HTML} format.  Additional, useful documentation is in
-@acronym{PDF} format.  See the @cite{groff(1)} man page, section
-``Installation Directories'', for their location.
-
-@itemize @bullet
-@item
-@file{toc.html}
-@noindent
-Entry point to the full mom manual.
-
-@item
-@file{macrolist.html}
-@noindent
-Hyperlinked index of macros with brief descriptions, arranged by
-category.
-
-@item
-@file{mom-pdf.pdf}
-@noindent
-@acronym{PDF} features and usage.
-@end itemize
-
-The mom macros are in active development between groff releases.
-The most recent version, along with up-to-date documentation, is
-available at @uref{http://www.schaffter.ca/mom/mom-05.html}.
-
-The @cite{groff_mom(7)} man page (type @command{man groff_mom} at the
-command line) contains a partial list of available macros, however their
-usage is best understood by consulting the @acronym{HTML} documentation.
 
 @c =====================================================================
 @c =====================================================================
