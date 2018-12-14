@@ -17,6 +17,15 @@
 	- Define TEXI2DVI to 'texi2dvi'.
 	- Print an error message if 'texi2dvi' is not available.
 
+2018-12-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi: Drop documentation of "man" macro package from
+	  Texinfo manual.  The mdoc, me, mm, and mom packages all
+	  maintain their documentation externally to this manual as
+	  well.  Exception: portions not about man proper--which are not
+	  duplicated from groff_man(7)--on use of man.local (including
+	  examples of Ultrix-compatible macros) are retained.
+
 2018-12-08 Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Install texinfo doc on 'make install-pdf' and 'make install-html'
