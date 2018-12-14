@@ -934,7 +934,7 @@ into a postprocessor to produce output for a particular device.
 Currently, @code{groff} has postprocessors for @sc{PostScript} devices,
 character terminals, X@tie{}Windows (for previewing), @TeX{} DVI format,
 HP LaserJet@tie{}4 and Canon LBP printers (which use @acronym{CAPSL}),
-@acronym{HTML}, @acronym{XHTML}, and PDF.
+@acronym{HTML}, @acronym{XHTML}, and @acronym{PDF}.
 
 
 @c =====================================================================
@@ -1267,7 +1267,7 @@ following are the output devices currently available:
 For @sc{PostScript} printers and previewers.
 
 @item pdf
-For PDF viewers or printers.
+For @acronym{PDF} viewers or printers.
 
 @item dvi
 For @TeX{} DVI format.
@@ -4650,9 +4650,9 @@ command line).
 @c XXX documentation
 @c XXX this is a placeholder until we get stuff knocked into shape
 The main documentation files for the @file{mom} macros are in
-@acronym{HTML} format.  Additional, useful documentation is in PDF
-format.  See the @cite{groff(1)} man page, section ``Installation
-Directories'', for their location.
+@acronym{HTML} format.  Additional, useful documentation is in
+@acronym{PDF} format.  See the @cite{groff(1)} man page, section
+``Installation Directories'', for their location.
 
 @itemize @bullet
 @item
@@ -4669,7 +4669,7 @@ category.
 @item
 @file{mom-pdf.pdf}
 @noindent
-PDF features and usage.
+@acronym{PDF} features and usage.
 @end itemize
 
 The mom macros are in active development between groff releases.
@@ -15385,8 +15385,8 @@ This escape sequence is used internally by the macro @code{PSPIC}
 @cindex @code{gropdf}, the program
 
 The postprocessor @command{gropdf} translates the output from GNU
-@command{troff} into a form suitable for Adobe PDF devices.  It is fully
-documented on its manual page, @cite{gropdf(1)}.
+@command{troff} into a form suitable for Adobe @acronym{PDF} devices.
+It is fully documented on its manual page, @cite{gropdf(1)}.
 
 @menu
 * Invoking gropdf::
@@ -15408,7 +15408,7 @@ options:
 Produce uncompressed PDFs that include debugging comments.
 
 @item -e
-This forces @code{gropdf} to embed all used fonts in the PDF,
+This forces @code{gropdf} to embed all used fonts in the @acronym{PDF},
 even if they are one of the 14 base Adobe fonts.
 
 @item -F@var{dir}
@@ -15431,9 +15431,9 @@ file.  See the @cite{groff_font(5)} manual page for details.
 Print the version number.
 
 @item -s
-Append a comment line to end of PDF showing statistics, i.e. number of
-pages in document.  Ghostscript's @cite{ps2pdf(1)} complains about this
-line if it is included, but works anyway.
+Append a comment line to end of @acronym{PDF} showing statistics, i.e.
+number of pages in document.  Ghostscript's @cite{ps2pdf(1)} complains
+about this line if it is included, but works anyway.
 
 @item -u@var{filename}
 @code{gropdf} normally includes a ToUnicode CMap with any font created
@@ -15456,13 +15456,13 @@ The escape sequence
   [@var{linelength}]'}
 
 @noindent
-places a rectangle of the specified @var{width} containing the PDF
-drawing from file @var{file} of desired @var{width} and @var{height} (if
-@var{height} is missing or zero then it is scaled proportionally).  If
-@var{alignment} is @code{-L} the drawing is left aligned.  If it is
-@code{-C} or @code{-R} a @var{linelength} greater than the width of the
-drawing is required as well.  If @var{width} is specified as zero then
-the width is scaled in proportion to the height.
+places a rectangle of the specified @var{width} containing the
+@acronym{PDF} drawing from file @var{file} of desired @var{width} and
+@var{height} (if @var{height} is missing or zero then it is scaled
+proportionally).  If @var{alignment} is @code{-L} the drawing is left
+aligned.  If it is @code{-C} or @code{-R} a @var{linelength} greater
+than the width of the drawing is required as well.  If @var{width} is
+specified as zero then the width is scaled in proportion to the height.
 
 
 @c =====================================================================
