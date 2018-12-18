@@ -70,6 +70,7 @@ AC_PROG_EGREP
 GROFF_PROG_YACC
 GROFF_DOC_CHECK
 GROFF_MAKEINFO
+GROFF_TEXI2DVI
 AC_PROG_RANLIB
 GROFF_INSTALL_SH
 GROFF_INSTALL_INFO
@@ -200,6 +201,7 @@ AM_CONDITIONAL([BUILD_OTHERDOC], [test -n "$make_otherdoc"])
 AM_CONDITIONAL([BUILD_EXAMPLES], [test -n "$make_examples"])
 AM_CONDITIONAL([INSTALL_SHIPPED_HTML], [test -n "$make_install_shipped_htmldoc"])
 AM_CONDITIONAL([HAVE_PDFTOOLS], [test "x$groff_have_pdftools" = "xyes" ])
+AM_CONDITIONAL([HAVE_TEXI2DVI], [test "x$groff_have_texi2dvi" = "xyes" ])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([test-groff], [chmod +x test-groff])

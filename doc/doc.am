@@ -315,6 +315,12 @@ build_infodoc:
 endif
 EXTRA_DIST += doc/groff.texi doc/fdl.texi
 
+# GNU Make has a built-in variable TEXI2DVI but it is not the case of
+# all 'make' implementation.  As it default to 'texi2dvi' we simply
+# redefine it here.
+
+TEXI2DVI = texi2dvi
+texi2dvi_missing = no
 # Rules to generate various doc files from .texi files.
 .texi.txt:
 	@$(MKDIR_P) $(doc_builddir)
@@ -323,20 +329,30 @@ EXTRA_DIST += doc/groff.texi doc/fdl.texi
 	$(MAKEINFO) --enable-encoding -I$(doc_srcdir) --plaintext -o $@ $<
 
 .texi.dvi:
+if HAVE_TEXI2DVI
 	@$(MKDIR_P) $(doc_builddir)
 	LANG=C \
 	LC_ALL=C \
 	TEXINPUTS="$(top_srcdir)/build-aux:$(TEXINPUTS)" \
 	MAKEINFO='$(MAKEINFO) -I $(doc_srcdir)' \
 	$(TEXI2DVI) -e --batch --build-dir=doc/`basename $@`.t2d -o $@ $<
+else
+	@echo "Program texi2dvi is missing, cannot generate dvi doc"; \
+	exit 1
+endif
 
 .texi.pdf:
+if HAVE_TEXI2DVI
 	@$(MKDIR_P) $(doc_builddir)
 	LANG=C \
 	LC_ALL=C \
 	TEXINPUTS="$(top_srcdir)/build-aux:$(TEXINPUTS)" \
 	MAKEINFO='$(MAKEINFO) -I $(doc_srcdir)' \
 	$(TEXI2DVI) -e --batch --pdf --build-dir=doc/`basename $@`.t2p -o $@ $<
+else
+	@echo "Program texi2dvi is missing, cannot generate pdf doc"; \
+	exit 1
+endif
 
 # This will generate both html split into several files and html doc
 # in a single file. If texinfo version < 5.0, we process the resulting
