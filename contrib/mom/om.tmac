@@ -9176,7 +9176,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#
 .MAC HDRFTR_CENTER END
 .    nr #USER_DEF_HDRFTR_CENTER 1
-.    if '\\$0'FOOTER_CENTER' \{\
+.    if '\\$0'HEADER_CENTER' \{\
 .       ds $HDRFTR_CENTER_OLD \\*[$HDRFTR_CENTER]
 .       ds $HDRFTR_CENTER_NEW \\$1
 .    \}
@@ -12628,7 +12628,7 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .          el .sp \\n[#DOC_LEAD]u+\\n[#Q_LEAD_DIFF]u
 .       \}
 .       el \{\
-.          sp \\n[#DOC_LEAD]u
+.          if '\\*[$QUOTE_TYPE]'Q' .sp \\n[#DOC_LEAD]u
 .          if \\n[@TOP] .rs
 .       \}
 .       ie \\n[#Q_LEAD_REAL] \
@@ -14938,7 +14938,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          ps \\n[#\\*[EN-OR-BIB]_PS]u\\*[$\\*[EN-OR-BIB]_STRING_SIZE_CHANGE]
 .          vs      \\n[#\\*[EN-OR-BIB]_LEAD]u
 .       \}
-.       substring $\\*[$EN-OR-BIB]_STRING_QUAD 0 0
+.       substring $\\*[EN-OR-BIB]_STRING_QUAD 0 0
 .       if '\\*[$\\*[EN-OR-BIB]_STRING_QUAD]'L' .LEFT
 .       if '\\*[$\\*[EN-OR-BIB]_STRING_QUAD]'C' .CENTER
 .       if '\\*[$\\*[EN-OR-BIB]_STRING_QUAD]'R' .RIGHT
@@ -15956,13 +15956,23 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    \}
 .    ds pre-list-quad \\*[$QUAD_VALUE]
 .    substring pre-list-quad 0 0
-.    if !'\\n[.z]'LIST*DIV' \{\
-.       if '\\*[pre-list-quad]'C' .nr #LIST_CENTER 1
-.       if '\\*[pre-list-quad]'R' .nr #LIST_RIGHT 1
-.       nr #PRE_LIST_QUAD \\n[.j]
-.       di LIST*DIV
-\!.     nr #IN_LIST 1
-.       ad l
+.    if '\\*[pre-list-quad]'C' \{\
+.       if !'\\n[.z]'LIST*DIV' \{\
+.          nr #PRE_LIST_QUAD \\n[.j]
+.          nr #LIST_CENTER 1
+.          if !'\\n[.z]'LIST*DIV' .di LIST*DIV
+\!.        nr #IN_LIST 1
+.          ad l
+.       \}
+.    \}
+.    if '\\*[pre-list-quad]'R' \{\
+.       if !'\\n[.z]'LIST*DIV' \{\
+.          nr #PRE_LIST_QUAD \\n[.j]
+.          nr #LIST_RIGHT 1
+.          if !'\\n[.z]'LIST*DIV' .di LIST*DIV
+\!.        nr #IN_LIST 1
+.          ad l
+.       \}
 .    \}
 .    ie \\n[#NUM_ARGS]=0 \{\
 .       nr #ARGS_TO_LIST 1 \" So default behaves as if LIST BULLET
