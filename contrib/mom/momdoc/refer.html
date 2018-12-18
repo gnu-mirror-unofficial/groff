@@ -1837,9 +1837,11 @@ on bibliography pages.  Chapters get treated differently in that,
 by default, mom does not print the header/footer centre string
 (normally the chapter number or chapter title.)  In most cases, this
 is what you want.  However, should you not want mom to remove the
-centre string from the bibliography pages headers/footers, invoke
+centre string from the bibliography pages headers/footers, or you
+would like her to add one in cases where there hasn't been one
+before (e.g. DOCTYPE DEFAULT) invoke
 <kbd><a href="#bibliography-hdrftr-center">.BIBLIOGRAPHY_HEADER_CENTER</a></kbd>
-with no argument. 
+with no argument.
 </p>
 
 <p>
@@ -1848,26 +1850,29 @@ An important change you may want to make is to put the word
 do so, invoke
 <br/>
 <span class="pre-in-pp" style="margin-bottom: -1em;">
+  .BIBLIOGRAPHY_HEADER_CENTER
   .HEADER_CENTER "Bibliography"
 </span>
 or
 <span class="pre-in-pp" style="margin-top: -.5em;">
+  .BIBLIOGRAPHY_FOOTER_CENTER
   .FOOTER_CENTER "Bibliography"
 </span>
-prior to invoking <kbd>.BIBLIOGRAPHY</kbd>.
+prior to invoking <kbd>.BIBLIOGRAPHY</kbd>.  
 </p>
 
-<div class="box-tip">
+<div class="box-important">
 <p class="tip">
-<span class="note">Note:</span>
-If your
-<a href="docprocessing.html#doctype">DOCTYPE</a>
-is <kbd>CHAPTER</kbd>, you must also invoke
-<br/>
-<span class="pre-in-pp">
-  <a href="#endnotes-hdrftr-center">BIBLIOGRAPHY_HEADER_CENTER</a>
+<span class="important">Important:</span>
+Unless you have a running centre string in your headers or footers, you must invoke
+<span class="pre-in-pp" style="margin-top: -.5em;">
+  <a href="#endnotes-hdrftr-center">.BIBLIOGRAPHY_HEADER_CENTER</a>
 </span>
-for the BIBLIOGRAPHY_HEADER_CENTER to appear.
+or
+<span class="pre-in-pp" style="margin-top: -.5em;">
+  <a href="#endnotes-hdrftr-center">.BIBLIOGRAPHY_FOOTER_CENTER</a>
+</span>
+in order for the centre string to appear, as demonstrated above.
 </p>
 </div>
 
@@ -1882,9 +1887,12 @@ If your
 <a href="docprocessing.html#doctype">DOCTYPE</a>
 is <kbd>CHAPTER</kbd> and you want mom to include a centre
 string in the headers/footers that appear on bibliography
-pages, invoke <kbd>.BIBLIOGRAPHY_HEADER_CENTER</kbd> (or
-<kbd>.BIBLIOGRAPHY_FOOTER_CENTER</kbd>) with no argument.
-Mom&#8217;s default is NOT to print the centre string.
+pages, or if you do not have a running header/footer
+centre string in the body of the document, invoke
+<kbd>.BIBLIOGRAPHY_HEADER_CENTER</kbd> (or
+<kbd>.BIBLIOGRAPHY_FOOTER_CENTER</kbd>) with no argument before
+defining the centre string .  Mom&#8217;s default is NOT to print the
+centre string.
 </p>
 
 <p>
