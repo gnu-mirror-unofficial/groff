@@ -1,3 +1,12 @@
+2018-12-26  Ingo Schwarze  <schwarze@openbsd.org>
+
+	A missing prerequisite could cause parallel builds to fail.
+
+	* hdtbl.am (HDTBLPROCESSEDEXAMPLEFILES): requires eqn
+	because the .roff.ps target runs HDTBLGROFF =
+	GROFFBIN ... HDTBL_PFLAG = groff ... -t -p -e -U
+	which includes -e.
+
 2018-12-06  Ingo Schwarze  <schwarze@openbsd.org>
 
 	* examples/fonts_n.in, examples/fonts_x.in:

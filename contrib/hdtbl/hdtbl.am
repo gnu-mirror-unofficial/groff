@@ -128,7 +128,7 @@ SUFFIXES += .roff .in .ps
 	       -e "s|[@]EGREP[@]|$(EGREP)|" $< >$@
 
 
-$(HDTBLPROCESSEDEXAMPLEFILES): gnu.eps groff troff pic tbl \
+$(HDTBLPROCESSEDEXAMPLEFILES): gnu.eps groff troff eqn pic tbl \
   contrib/hdtbl/examples/common.roff
 
 $(HDTBLSTRIPFILES): $(top_srcdir)/tmac/strip.sed
