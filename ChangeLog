@@ -1,3 +1,12 @@
+2019-01-12  Ingo Schwarze  <schwarze@openbsd.org>
+
+	Correctly handle groff_mdoc(7) .Lk arguments starting with a dot.
+
+	* tmac/doc.tmac-u: Each argument to the .Lk macro is printed
+	on its own roff input line.  If it happens to start with a dot
+	or apostroph, it was misinterpreted as a request or macro.
+	Force it to be treated as text by adding "\&" in front of it.
+
 2018-12-31  Ingo Schwarze  <schwarze@openbsd.org>
 
 	* man/groff_diff.7.man: remove two stray .RE macros

@@ -6485,10 +6485,11 @@
 .  if (\n[doc-arg-ptr] <= \n[doc-lasttext-Lk]) \{\
 .    nop \*[doc-Em-font]\c
 .    while (\n[doc-arg-ptr] < \n[doc-lasttext-Lk]) \{\
-.      nop \*[doc-arg\n[doc-arg-ptr]]
+.      nop \&\*[doc-arg\n[doc-arg-ptr]]
 .      nr doc-arg-ptr +1
 .    \}
-.    nop \*[doc-arg\n[doc-arg-ptr]]\f[\n[doc-curr-font]]\s[\n[doc-curr-size]u]:
+.    nop \&\*[doc-arg\n[doc-arg-ptr]]\c
+.    nop \f[\n[doc-curr-font]]\s[\n[doc-curr-size]u]:
 .    nr doc-arg-ptr +1
 .  \}
 .
@@ -6498,7 +6499,7 @@
 .
 .  \" Print the delimiters, if any.
 .  while (\n[doc-arg-ptr] <= \n[doc-arg-limit]) \{\
-.    nop \*[doc-arg\n[doc-arg-ptr]]\c
+.    nop \&\*[doc-arg\n[doc-arg-ptr]]\c
 .    nr doc-arg-ptr +1
 .  \}
 .  nop \&
