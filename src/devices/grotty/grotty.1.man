@@ -3,6 +3,11 @@
 grotty \- groff driver for typewriter-like devices
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr grotty_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -23,11 +28,6 @@ grotty \- groff driver for typewriter-like devices
 .\" modified versions, except that this permission notice may be
 .\" included in translations approved by the Free Software Foundation
 .\" instead of in the original English.
-.
-.
-.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
-.do nr grotty_C \n[.C]
-.cp 0
 .
 .
 .\" ====================================================================
@@ -101,29 +101,6 @@ foreground and white for the background).
 .
 .
 .LP
-Use the
-.B \-c
-switch to revert to the old behaviour, printing a bold character
-.I c
-with the sequence
-.RI \[lq] c
-BACKSPACE
-.IR c \[rq]
-and an italic character
-.I c
-by the sequence
-.RB \[lq] _
-BACKSPACE
-.IR c \[rq].
-.
-At the same time, color output is disabled.
-.
-The same effect can be achieved by setting either the
-.I GROFF_NO_SGR
-environment variable or using the \[oq]sgr\[cq] X command (see below).
-.
-.
-.LP
 For SGR support, it is necessary to use the
 .B \-R
 option of
@@ -169,6 +146,29 @@ environment variable instead.
 .
 .
 .LP
+Use the
+.B \-c
+switch to revert to the old behaviour, printing a bold character
+.I c
+with the sequence
+.RI \[lq] c
+BACKSPACE
+.IR c \[rq]
+and an italic character
+.I c
+by the sequence
+.RB \[lq] _
+BACKSPACE
+.IR c \[rq].
+.
+At the same time, color output is disabled.
+.
+The same effect can be achieved by setting either the
+.I GROFF_NO_SGR
+environment variable or using the \[oq]sgr\[cq] X command (see below).
+.
+.
+.LP
 .BR grotty 's
 old output format can be displayed on a terminal
 by piping through
@@ -193,6 +193,40 @@ There is no need to filter the output through
 since
 .B grotty
 never outputs reverse line feeds.
+.
+.
+.\" ====================================================================
+.SH USAGE
+.\" ====================================================================
+.
+.B grotty
+understands a single X command produced using the
+.B \[rs]X
+escape sequence.
+.
+.TP
+.BI \[rs]X'tty:\ sgr\  n '
+.
+If
+.I n
+is non-zero or missing, enable SGR output (this is the default),
+otherwise use the old drawing scheme for bold and underline.
+.
+.
+.LP
+If the
+.I DESC
+file contains the keyword
+.BR unicode ,
+.B grotty
+emits Unicode characters in UTF-8 encoding.
+.
+Otherwise, it emits characters in a single-byte encoding depending on
+the data in the font description files.
+.
+See the
+.BR groff_font (@MAN5EXT@)
+man page for more details.
 .
 .
 .LP
@@ -220,22 +254,6 @@ This code can also be used in the
 .B \[rs]N
 escape sequence in
 .BR troff .
-.
-.
-.LP
-If the
-.I DESC
-file contains the keyword
-.BR unicode ,
-.B grotty
-emits Unicode characters in UTF-8 encoding.
-.
-Otherwise, it emits characters in a single-byte encoding depending on
-the data in the font description files.
-.
-See the
-.BR groff_font (@MAN5EXT@)
-man page for more details.
 .
 .
 .\" ====================================================================
@@ -367,34 +385,8 @@ Print the version number.
 .
 .
 .\" ====================================================================
-.SH USAGE
-.\" ====================================================================
-.
-.B grotty
-understands a single X command produced using the
-.B \[rs]X
-escape sequence.
-.
-.TP
-.BI \[rs]X'tty:\ sgr\  n '
-.
-If
-.I n
-is non-zero or missing, enable SGR output (this is the default),
-otherwise use the old drawing scheme for bold and underline.
-.
-.
-.\" ====================================================================
 .SH ENVIRONMENT
 .\" ====================================================================
-.
-.TP
-.I GROFF_NO_SGR
-If set, the old drawing scheme for bold and underline (using the
-backspace character) is active.
-.
-Colors are disabled.
-.
 .
 .TP
 .I GROFF_FONT_PATH
@@ -407,6 +399,14 @@ See
 and
 .BR \%groff_font (@MAN5EXT@)
 for more details.
+.
+.
+.TP
+.I GROFF_NO_SGR
+If set, the old drawing scheme for bold and underline (using the
+backspace character) is active.
+.
+Colors are disabled.
 .
 .
 .\" ====================================================================
@@ -425,6 +425,20 @@ Font description file for font
 .I F
 of the
 .B ascii
+device.
+.
+.TP
+.I @FONTDIR@/devcp1047/DESC
+Device description file for the
+.B cp1047
+device.
+.
+.TP
+.IR @FONTDIR@/devcp1047/ F
+Font description file for font
+.I F
+of the
+.B cp1047
 device.
 .
 .TP
@@ -453,20 +467,6 @@ Font description file for font
 .I F
 of the
 .B utf8
-device.
-.
-.TP
-.I @FONTDIR@/devcp1047/DESC
-Device description file for the
-.B cp1047
-device.
-.
-.TP
-.IR @FONTDIR@/devcp1047/ F
-Font description file for font
-.I F
-of the
-.B cp1047
 device.
 .
 .TP
