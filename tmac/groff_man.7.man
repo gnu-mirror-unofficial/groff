@@ -62,10 +62,6 @@ is used to produce manual pages
 (\(lqman\~pages\(rq)
 like the one you are reading.
 .
-GNU
-.IR roff 's
-implementation was written by James Clark.
-.
 .
 .PP
 This document presents the macros thematically to aid learners;
@@ -236,6 +232,12 @@ is centered in the footer line.
 is positioned at the left in the footer line (or at the left on
 even pages and at the right on odd pages if double-sided printing is
 active).
+.
+The
+.I title
+and
+.I section
+are set on the inside footer as in the header.
 .
 .I header-middle
 is centered in the header line.
@@ -586,7 +588,8 @@ are
 .RS \" Invisibly move left margin to current .IP indent.
 .RS \" Now indent further, visibly.
 .IP (1) 4n
-to start a new paragraph with the same indentation as the previous
+to start a new paragraph with the same indentation as an immediately
+preceding
 .B .IP
 or
 .B .TP
@@ -789,7 +792,9 @@ which does nothing,
 is used for vertical spacing in the input file for readability by the
 document maintainer.
 .
-Do not put empty lines in a
+Do not put blank
+(i.e., empty)
+lines in a
 .I roff
 source document.
 .
@@ -992,7 +997,7 @@ offering only
 .BR bold \~( .B ),
 .I italic\c
 .RB \~( .I ),
-and roman (the default).
+and roman.
 .
 Italic text is usually set underscored instead on terminals and other
 classical
@@ -1008,8 +1013,7 @@ these differ visually from regular-sized roman or bold text only on
 .IR troff -style
 output devices.
 .
-The foregoing macros cause word breaks before and after their arguments,
-but it is often necessary to set text in different styles without
+It is often necessary to set text in different styles without
 intervening whitespace.
 .
 The macros
@@ -1032,7 +1036,7 @@ conflicting traditions have arisen regarding which font styles should be
 used to mark file or path names,
 environment variables,
 in-line literals,
-and even man page cross-references.
+and man page cross-references.
 .
 .
 .PP
@@ -1067,7 +1071,7 @@ this page uses bold for macro and register names.
 In
 .BR .EX / .EE
 examples of interactive I/O (such as a shell session),
-set only the user-typed input in bold.
+set only user input in bold.
 .
 .
 .
@@ -1090,7 +1094,7 @@ for file and path names,
 for environment variables,
 for enumeration or preprocessor constants in C,
 for variable (user-determined) portions of syntax synopses,
-for the first occurrence only of a technical concept being introduced,
+for the first occurrence (only) of a technical concept being introduced,
 for names of works of software
 (including commands and functions,
 .\" The following is an interesting exception that seems to have arisen
@@ -1221,7 +1225,7 @@ first consider whether the same result could be achieved with as much
 clarity by using the single-style macros on separate input lines.
 .
 When it cannot,
-double-quote an argument with one or more embedded space characters.
+double-quote an argument containing embedded space characters.
 .
 Setting all three different styles within one whitespace-delimited word
 presents challenges;
@@ -1450,7 +1454,6 @@ insertion of vertical space:
 .BR .SH ,
 .BR .SS ,
 .BR .TP ,
-.BR .TQ ,
 .B .PP
 (and its synonyms),
 .BR .IP ,
@@ -1473,8 +1476,9 @@ The macros
 .BR .RS ,
 .BR .RE ,
 .BR .EX ,
+.BR .EE ,
 and
-.B .EE
+.B .TQ
 also cause a break but no insertion of vertical space.
 .
 .
@@ -1616,8 +1620,10 @@ Note,
 however,
 that using raw
 .I groff
-requests is likely to make your page render poorly on the class of
-viewers that transform it to HTML.
+requests
+(apart from the empty request \(oq.\(cq)\&
+is likely to make your page render poorly on the class of viewers that
+transform it to HTML.
 .
 Some requests make implicit assumptions about things like character
 and page sizes that may not hold in an HTML environment;
@@ -1679,8 +1685,21 @@ messages and related purposes),
 a series of lines ending in backslash-newline is transparent to
 .IR groff .
 .
-Use this escape to break excessively input long lines for document
+Use this escape to break excessively long input lines for document
 maintenance.
+.
+.
+.TP
+.B \e%
+Control hyphenation.
+.
+If hyphenation is enabled,
+the location of this escape within a word marks a hyphenation point,
+overriding
+.IR groff 's
+hyphenation patterns.
+.
+Use at the beginning of a word to suppress its hyphenation entirely.
 .
 .
 .TP
@@ -1705,12 +1724,12 @@ CSTR\e\(ti#8 documents the B language.
 .B \e&
 Zero-width space.
 .
-Append to an input line to prevent an end-of-sentence punctuation
-sequence from being recognized as such, or insert at the beginning of an
-input line to prevent a dot or apostrophe from being interpreted as the
-beginning of a
+Insert at the beginning of an input line to prevent a dot or apostrophe
+from being interpreted as the beginning of a
 .I roff
 request.
+Append to an end-of-sentence punctuation sequence to keep it from being
+recognized as such.
 .
 .
 .TP
@@ -1785,7 +1804,8 @@ left single quotation marks.
 .
 .TP
 .B \e(ha
-ASCII circumflex accent.
+ASCII circumflex accent
+(\(lqhat\(rq).
 .
 Use for syntax elements of programming languages because some output
 devices might replace unescaped circumflex accents with non-ASCII glyphs
@@ -1826,7 +1846,7 @@ in a single word.
 .
 .RS
 .IP
-.\" contrib/pdfmark/pdfroff.1.man
+.\" from contrib/pdfmark/pdfroff.1.man
 .EX
 Normally, the final output file should be named
 \&.IB file .pdf\ec
@@ -1926,7 +1946,7 @@ Note that
 the previous \(oq\ef\(cq escape only if no
 sectioning,
 paragraph,
-or font face macro calls have intervened.
+or font style macro calls have intervened.
 .
 .
 .IP
@@ -1934,7 +1954,9 @@ As long as only two fonts are needed in any single whitespace-delimited
 word,
 font alternation macros like
 .B .BI
-usually result in more readable source code than \(oq\ef\(cq escapes do.
+usually result in more readable
+.I roff
+source than \(oq\ef\(cq escapes do.
 .
 .
 .PP
@@ -1953,7 +1975,7 @@ Use of the following is discouraged.
 .TP
 .BR .AT " ["\c
 .IR system " [" release ]]
-Alter the footer for use with AT&T man pages,
+Alter the footer for use with legacy AT&T man pages,
 overriding any definition of the
 .I footer-outside
 argument to
@@ -1992,7 +2014,7 @@ System V
 The optional second argument
 .I release
 specifies the release number,
-such as in \(lqSystem V Release 3\(rq.
+such as in \(lqSystem\~V Release\~3\(rq.
 .
 .
 .TP
@@ -2089,7 +2111,7 @@ Redefine this macro to get control of the header.
 .TP
 .BR .UC " ["\c
 .IR version ]
-Alter the footer for use with BSD man pages,
+Alter the footer for use with legacy BSD man pages,
 overriding any definition of the
 .I footer-outside
 argument to
@@ -2452,20 +2474,20 @@ Some tips on troubleshooting your man pages follow.
 .RB \(bu " .RS" " doesn't indent relative to my indented paragraph"
 The
 .B .RS
-macro sets the indentation relative to the amount of a
+macro sets the indentation relative to that of a
 .I normal
 paragraph
 .RB ( .PP
 and its synonyms).
 .
-The same default indentation amount is used for
 .BR .RS ,
 .BR .IP ,
 .BR .TP ,
 and the deprecated
-.BR .HP .
+.B .HP
+all use the same default indentation.
 .
-If you need to start an indent relative to an indented paragraph,
+To indent relative to an indented paragraph,
 call
 .B .RS
 repeatedly until an acceptable indentation is achieved,
@@ -2525,7 +2547,9 @@ and
 sectioning macros,
 all relative indents are cleared and calls to
 .B .RE
-have no effect.
+have no effect until
+.B .RS
+is used again.
 .
 .
 .\" ====================================================================
