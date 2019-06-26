@@ -7,8 +7,6 @@
 #   Automake migration by 
 #   Bertrand Garrigues <bertrand.garrigues@laposte.net>
 #
-# Latest update: 22 Aug 2015
-#
 # 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -41,6 +39,9 @@ GROFF_OPTS_OUTPUT = \
   groff_opts_with_arg.txt
 groffoptsdir = $(libprogramdir)
 groffopts_DATA = $(GROFF_OPTS_OUTPUT)
+
+groff_TESTS = src/roff/groff/tests/regression-56555.sh
+TESTS += $(groff_TESTS)
 
 MOSTLYCLEANFILES += groff_opts.tmp $(GROFF_OPTS_OUTPUT)
 
