@@ -1,5 +1,44 @@
 2019-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	devlatin1: Map \(oq to ' on output.
+
+	* font/devlatin1/R.proto: Render the output glyph \[oq]
+	{opening quote} as 0x27 (apostrophe) instead of 0x60 (grave
+	accent).  A grave accent is just flat wrong for the Latin-1
+	character set, a.k.a. ISO 8859-1.  The defining document ECMA-94
+	{June 1986} is freely available for perusal.  The ECMA-94 Latin
+	character sets do not define any glyphs for directional
+	{"typographer's"} quotation marks, but the apostrophe is
+	depicted as a neutral (vertical) glyph, whereas the grave accent
+	0x60 and acute accent 0xB4 are mirror-symmetric diacritical
+	marks.
+
+	Note that this change has no effect on _input_ conventions for
+	roff source documents.  You can still get directional single
+	quotes on UTF-8, PostScript, PDF, and other output devices
+	supporting them by typing sequences like `this' in the input
+	{character remapping with ".char" requests and similar
+	notwithstanding}.
+
+	Patch and idea from Ingo Schwarze, who originally proposed it
+	for ASCII as well, and included Latin-1 for parallelism.
+	The groff developers could reach no consensus about the wisdom
+	of such a change for ASCII (which was designed to support
+	ambiguity for some code points, requiring the development of
+	supplementary interpretation conventions between parties).
+	ECMA-94/ISO-8559 is more strongly prescriptive.
+
+	See https://savannah.gnu.org/bugs/?55616 and the groff mailing
+	list archives for 31 January to 23 February 2019 at
+	https://lists.gnu.org/archive/html/groff for lengthy discussion.
+
+	* src/roff/groff/tests/on-latin1-device-oq-is-0x27.sh: Check for
+	correct output glyph.
+
+	* src/roff/groff/groff.am: Add test.
+
+2019-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/unicode.tmac: Execute in compatibility mode since the
 	script uses a GNU extension (.char).
 

@@ -1,4 +1,4 @@
-    Copyright (C) 1992-2018 Free Software Foundation, Inc.
+    Copyright (C) 1992-2019 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -6,6 +6,24 @@
 
 This file describes recent user-visible changes in groff.  Bug fixes are not
 described.  There are more details in the man and info pages.
+
+VERSION 1.22.5
+==============
+
+Troff
+-----
+o On the Latin-1 output device ("groff -T latin1") the output glyph \[oq]
+  (opening quote) is now rendered as code point 0x27 (apostrophe) instead of
+  0x60 (grave accent).  The ECMA-94 Latin character sets do not define any
+  glyphs for directional ("typographer's") quotation marks, but the
+  apostrophe is depicted as a neutral (vertical) glyph, whereas the grave
+  accent 0x60 and acute accent 0xB4 are mirror-symmetric diacritical marks.
+
+  Note that this change has no effect on _input_ conventions for roff source
+  documents.  You can still get directional single quotes on UTF-8,
+  PostScript, PDF, and other output devices supporting them by typing
+  sequences like `this' in the input (character remapping with ".char"
+  requests and similar notwithstanding).
 
 
 VERSION 1.22.4
