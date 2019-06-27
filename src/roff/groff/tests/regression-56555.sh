@@ -18,7 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-groff="${abs_top_builddir:-}/test-groff"
+groff="${abs_top_builddir:-.}/test-groff"
 
 # Check for segfault if we try to write a glyph before setting up.
 "$groff" >/dev/null <<EOF
