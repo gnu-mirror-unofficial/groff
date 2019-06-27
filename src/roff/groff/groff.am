@@ -40,7 +40,9 @@ GROFF_OPTS_OUTPUT = \
 groffoptsdir = $(libprogramdir)
 groffopts_DATA = $(GROFF_OPTS_OUTPUT)
 
-groff_TESTS = src/roff/groff/tests/regression-56555.sh
+groff_TESTS = \
+  src/roff/groff/tests/regression-56555.sh \
+  src/roff/groff/tests/on-latin1-device-oq-is-0x27.sh
 TESTS += $(groff_TESTS)
 
 MOSTLYCLEANFILES += groff_opts.tmp $(GROFF_OPTS_OUTPUT)
