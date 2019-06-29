@@ -5,6 +5,11 @@ groff_me \- \(lqme\(rq macro package for formatting documents with GNU \
 roff
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr groff_me_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -520,8 +525,13 @@ and
 .BR tbl (1).
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[groff_me_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" tab-with: 20
 .\" End:
-.\" vim: set filetype=nroff tabstop=20:
+.\" vim: set filetype=groff tabstop=20 textwidth=72:

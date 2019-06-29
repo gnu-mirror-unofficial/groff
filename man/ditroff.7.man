@@ -3,6 +3,11 @@
 ditroff \- classical device-independent roff
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr ditroff_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -162,9 +167,9 @@ version of the intermediate output language, the basis for
 multi-device output.
 .
 .
-.\" ====================================================================
-.\" Editor settings
-.\" ====================================================================
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[ditroff_C]
+.
 .
 .\" Local Variables:
 .\" mode: nroff

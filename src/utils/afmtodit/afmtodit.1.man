@@ -3,6 +3,11 @@
 afmtodit \- create font files for use with groff \-Tps and \-Tpdf
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr afmtodit_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -439,8 +444,10 @@ Symbols\(aq\(rq.
 .IR perl (1)
 .
 .
-.\" ====================================================================
-.\" ### Emacs settings:
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[afmtodit_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
 .\" fill-column: 72

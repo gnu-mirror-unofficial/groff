@@ -3,6 +3,11 @@
 gxditview \- display groff intermediate output files
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr gxditview_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -557,7 +562,12 @@ which was derived from
 .BR \%suntroff .
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[gxditview_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

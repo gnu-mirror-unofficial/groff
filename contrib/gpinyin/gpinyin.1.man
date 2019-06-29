@@ -3,6 +3,12 @@
 .SH NAME
 gpinyin \- use Hanyu Pinyin Chinese in roff
 .
+.
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr gpinyin_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -335,11 +341,12 @@ and the available glyph repertoire,
 respectively.
 .
 .
-.\" ====================================================================
-.\" Editor settings
-.\" ====================================================================
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[gpinyin_C]
+.
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

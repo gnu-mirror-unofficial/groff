@@ -3,6 +3,11 @@
 @g@refer \- preprocess bibliographic references for groff
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr refer_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -1760,10 +1765,14 @@ expressions.
 .BR @g@indxbib (@MAN1EXT@),
 .BR @g@lookbib (@MAN1EXT@),
 .BR lkbib (@MAN1EXT@)
-.br
+.
+.
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[refer_C]
 .
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

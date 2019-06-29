@@ -3,14 +3,9 @@
 groffer \- display groff files and man pages on X and tty
 .
 .
-.\"*********************************************************************
-.\"
-.\" This man page doesn't use extended groff syntax!
-.\" XXX: Yes, it does--"\~" is ubiquitous.  "\/" and "\," also occur.
-.\" Formatting it with and without groff's option '-C' should always
-.\" give the same result.
-.\"
-.\"*********************************************************************
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr groffer_C \n[.C]
+.cp 0
 .
 .
 .\" ====================================================================
@@ -3802,11 +3797,12 @@ The decompression programs supported by
 .BR \%groffer .
 .
 .
-.\" ====================================================================
-.\" Emacs settings
-.\" ====================================================================
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[groffer_C]
+.
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

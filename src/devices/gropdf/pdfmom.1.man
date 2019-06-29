@@ -3,6 +3,11 @@
 pdfmom \- produce PDF documents using the mom macro package for groff
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr pdfmom_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -184,7 +189,12 @@ a copy is installed at
 .IR ps2pdf (1)
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[pdfmom_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

@@ -2,7 +2,11 @@
 .SH NAME
 groff_filenames \- filename extensions for roff and groff
 .
-.\" ad l
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr groff_filenames_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -646,11 +650,12 @@ You can get this package with the shell command:
 .RE
 .
 .
-.\" ====================================================================
-.\" Emacs settings
-.\" ====================================================================
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[groff_filenames_C]
+.
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

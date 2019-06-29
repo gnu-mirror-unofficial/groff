@@ -3,7 +3,10 @@
 .SH NAME
 @g@troff \- the troff processor of the groff text formatting system
 .
-.\" troff.man -> troff.1
+.
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr troff_C \n[.C]
+.cp 0
 .
 .
 .\" ====================================================================
@@ -672,11 +675,12 @@ manual.
 You can browse it interactively with \(lqinfo groff\(rq.
 .
 .
-.\" ====================================================================
-.\" Emacs variables
-.\" ====================================================================
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[troff_C]
+.
 .
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

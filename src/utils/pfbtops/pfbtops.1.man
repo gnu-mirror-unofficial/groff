@@ -3,6 +3,11 @@
 pfbtops \- translate Printer Font Binary files to PostScript ASCII
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr pfbtops_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -92,7 +97,12 @@ Display version information and exit.
 .IR gropdf (@MAN1EXT@)
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[pfbtops_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

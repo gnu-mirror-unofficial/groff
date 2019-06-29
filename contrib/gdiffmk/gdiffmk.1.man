@@ -3,6 +3,11 @@
 gdiffmk \- mark differences between groff/nroff/troff files
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr gdiffmk_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -254,7 +259,13 @@ Mike Bianchi
 .BR gtroff (@MAN1EXT@),
 .BR diff (@MAN1EXT@)
 .
+.
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[gdiffmk_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:

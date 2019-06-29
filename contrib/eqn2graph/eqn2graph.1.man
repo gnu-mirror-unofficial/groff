@@ -3,6 +3,11 @@
 eqn2graph \- convert an EQN equation into a cropped image
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr eqn2graph_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -152,7 +157,12 @@ by W.\& Richard Stevens.
 .IR \%convert (1)
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[eqn2graph_C]
+.
+.
 .\" Local Variables:
 .\" mode: nroff
+.\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff:
+.\" vim: set filetype=groff textwidth=72:
