@@ -3,6 +3,11 @@
 lkbib \- search bibliographic databases
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr lkbib_C \n[.C]
+.cp 0
+.
+.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -158,6 +163,10 @@ Index files.
 .IR @g@refer (@MAN1EXT@),
 .IR @g@lookbib (@MAN1EXT@),
 .IR @g@indxbib (@MAN1EXT@)
+.
+.
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[lkbib_C]
 .
 .
 .\" Local Variables:
