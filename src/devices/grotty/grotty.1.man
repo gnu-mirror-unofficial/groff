@@ -603,6 +603,83 @@ affecting all subsequent operations.
 .
 .
 .\" ====================================================================
+.SH EXAMPLE
+.\" ====================================================================
+.
+The following
+.I groff
+document exercises several features,
+not all of which may be supported by a given output device:
+(1)\~bold style;
+(2)\~italic (underline) style;
+(3)\~bold-italic style;
+(4)\~character composition by overstriking (\[lq]co\[:o]perate\[rq]);
+(5)\~foreground color;
+(6)\~background color; and
+(7)\~horizontal and vertical line-drawing.
+.
+.
+.LP
+.RS
+.EX
+\&.pl 15v
+You might see \ef[B]bold\ef[] and \ef[I]italic\ef[].
+Some people see \ef[BI]both\ef[].
+If the output device does (not) co\ez\e[ad]operate,
+you might see \em[red]red\em[].
+Black on cyan can have a \eM[cyan]\em[black]prominent\em[]\eM[]
+\eD'l 1i 0'\eD'l 0 2i'\eD'l 1i 0' look.
+.EE
+.RE
+.
+.
+.LP
+Compare and contrast the output of the following:
+.
+.
+.LP
+.RS
+.EX
+$ \c
+.B nroff \c
+.I file
+$ \c
+.B groff \-T ascii \c
+.I file
+$ \c
+.B groff \-T utf8 \-Z \c
+.I file \c
+.B | grotty \-i
+$ \c
+.B groff \-T utf8 \-Z \c
+.I file \c
+.B | grotty \-c | ul
+.EE
+.RE
+.
+.
+.\" I wish this went without saying...
+.LP
+Note that the example file above is a \[lq]raw\[rq]
+.I groff
+document,
+not a man page.
+.
+.\" Yes, using \f[BI] here is slightly hypocritical.
+Use of color escapes in man pages is \f[BI]strongly discouraged\f[].
+.
+Some implementations of
+.IR man (1)
+.\" ...like man-db 2.8.5-2 on Debian Buster...
+completely disable them.
+.
+See subsection \[lq]Portability\[rq] of
+.IR groff_man (7)
+for guidance on writing man pages that are viewable by as many readers
+as possible.
+.
+.
+.\" ====================================================================
 .SH "SEE ALSO"
 .\" ====================================================================
 .
