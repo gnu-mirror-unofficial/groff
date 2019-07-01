@@ -5,7 +5,7 @@
 #
 # Written by James Clark.
 
-# This file is of 'groff'.
+# This file is part of 'groff'.
 
 # 'groff' is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License (GPL) as published
@@ -59,7 +59,7 @@ case "`exec 2>/dev/null ; locale charmap`" in
     esac ;;
 esac
 
-# 'for i; do' doesn't work with some versions of sh
+# 'for i; do' (with the semicolon) doesn't work with some versions of sh
 
 Topt=
 opts=
@@ -73,25 +73,29 @@ for i
     -[eq] | -s*)
       # ignore these options
       ;;
-    -[dMmrnoTwW])
-      echo "$prog: option $1 requires an argument" >&2
+    -[dmMnorTwW])
+      echo "$prog: option '$1' requires an argument" >&2
       exit 1 ;;
-    -[iptSUC] | -[dMmrnowW]*)
+    -[CipStU] | -[dMmrnowW]*)
       opts="$opts $1" ;;
     -T*)
       Topt=$1 ;;
     -u*)
+      # -u is for Solaris compatibility and not otherwise documented.
+      #
       # Solaris 2.2 through at least Solaris 9 'man' invokes
-      # 'nroff -u0 ... | col -x'.  Ignore the -u0,
-      # since 'less' and 'more' can use the emboldening info.
-      # However, disable SGR, since Solaris 'col' mishandles it.
+      # 'nroff -u0 ... | col -x'.  Ignore the -u0, since 'less' and
+      # 'more' can use the emboldening info.  But disable SGR, since
+      # Solaris 'col' mishandles it.
       opts="$opts -P-c" ;;
     -v | --version)
       echo "GNU nroff (groff) version @VERSION@"
       exit 0 ;;
     --help)
-      echo "usage: nroff [-CchipStUv] [-dCS] [-MDIR] [-mNAME] [-nNUM] [-oLIST]"
-      echo "             [-rCN] [-Tname] [-WNAME] [-wNAME] [FILE...]"
+      cat <<EOF
+usage: nroff [-CchipStUv] [-dCS] [-MDIR] [-mNAME] [-nNUM] [-oLIST]
+             [-rCN] [-Tname] [-WNAME] [-wNAME] [FILE ...]
+EOF
       exit 0 ;;
     --)
       shift
@@ -99,7 +103,7 @@ for i
     -)
       break ;;
     -*)
-      echo "$prog: invalid option $1" >&2
+      echo "$prog: invalid option '$1'; see '$prog --help'" >&2
       exit 1 ;;
     *)
       break ;;
@@ -123,14 +127,13 @@ case $T in
     T=-T$Tloc ;;
 esac
 
-# Set up the 'GROFF_BIN_PATH' variable
-# to be exported in the current 'GROFF_RUNTIME' environment.
+# Set up the 'GROFF_BIN_PATH' variable to be exported in the current
+# 'GROFF_RUNTIME' environment.
 
 @GROFF_BIN_PATH_SETUP@
 export GROFF_BIN_PATH
 
 # Load nroff-style character definitions too.
-
 PATH="$GROFF_RUNTIME$PATH" groff -mtty-char $T $opts ${1+"$@"}
 
 # eof
