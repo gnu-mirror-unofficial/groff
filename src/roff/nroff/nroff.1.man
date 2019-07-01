@@ -40,10 +40,10 @@
 .BI \-d cs\c
 ]
 [\c
-.BI \-M dir\c
+.BI \-m name\c
 ]
 [\c
-.BI \-m name\c
+.BI \-M dir\c
 ]
 [\c
 .BI \-n num\c
@@ -58,10 +58,10 @@
 .BI \-T name\c
 ]
 [\c
-.BI \-W warning\c
+.BI \-w warning\c
 ]
 [\c
-.BI \-w warning\c
+.BI \-W warning\c
 ]
 .RI [ file
 \&.\|.\|.\&]
@@ -126,7 +126,7 @@ It first tries the
 .IR locale (1)
 program,
 then checks several locale-related environment variables;
-see \(lqENVIRONMENT\(rq, below.
+see section \[lq]ENVIRONMENT\[rq], below.
 .
 If all of the foregoing fail,
 .B \-Tascii
@@ -145,18 +145,14 @@ and
 options
 are equivalent to
 .IR grotty 's
-options
-.B \-h
-(use horizontal tab characters in the output) and
-.B \-c
-(use the legacy output scheme instead of ISO 6429 SGR escape sequences).
+options of the same names.
 .
 The
-.BR \-d ,
 .BR \-C ,
+.BR \-d ,
 .BR \-i ,
-.BR \-M ,
 .BR \-m ,
+.BR \-M ,
 .BR \-n ,
 .BR \-o ,
 .BR \-r ,
@@ -167,14 +163,15 @@ options have the effect described in
 .IR @g@troff (@MAN1EXT@).
 .
 In addition,
-.I @g@nroff
-ignores
+this implementation ignores the traditional Unix
+.I nroff
+options
 .BR \-e ,
 .BR \-q ,
 and
 .B \-s
-(which are not implemented in GNU
-.IR troff ).
+(which are not implemented in
+.IR groff ).
 .
 The options
 .B \-p
