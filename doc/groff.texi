@@ -10536,7 +10536,7 @@ beginning of the appended string, and a @dfn{compatibility restore}
 input token at the end.
 @endDefreq
 
-Rudimentary string manipulation routines are given with the next two
+Rudimentary string manipulation routines are given with the next several
 requests.
 
 @Defreq {substring, str n1 [@Var{n2}]}
@@ -10575,6 +10575,31 @@ number register @var{reg}.  If @var{reg} doesn't exist, it is created.
 .length yyy \*[xxx]
 \n[yyy]
     @result{} 14
+@endExample
+@endDefreq
+
+@DefreqList {stringdown, str}
+@DefreqListEndx {stringup, str}
+@cindex case-transforming a string (@code{stringdown}, @code{stringup})
+@cindex uppercasing a string (@code{stringup})
+@cindex lowercasing a string (@code{stringdown})
+@cindex up-casing a string (@code{stringup})
+@cindex down-casing a string (@code{stringdown})
+Change the string named @var{str} by replacing each of its bytes with
+its lowercase (@code{stringdown}) or uppercase (@code{stringup}) version
+(if any).  @code{groff} special characters (see the @cite{groff_char(7)}
+man page) can be used and the output will usually transform in the
+expected way due to the regular naming convention of the special
+character escapes.
+
+@Example
+.ds resume R\['e]sum\['e]\"
+\*[resume]
+.stringdown resume
+\*[resume]
+.stringup resume
+\*[resume]
+    @result{} Résumé résumé RÉSUMÉ
 @endExample
 @endDefreq
 

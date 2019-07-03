@@ -2168,6 +2168,40 @@ This request is active only if text is justified to both margins (using
 .BR .ad\ b ).
 .
 .TP
+.BI .stringdown \~stringvar
+.TQ
+.BI .stringup \~stringvar
+Change the string named
+.I stringvar
+by replacing each of its bytes with its
+lowercase
+.RB ( down )
+or uppercase
+.RB ( up )
+version (if any).
+.
+.I groff
+special characters
+(see
+.IR groff_char (@MAN7EXT@))
+can be used and the output will usually transform in the expected way
+due to the regular naming convention of the special character escapes.
+.
+.IP
+.RS
+.RS
+.EX
+\&.ds resume R\e['e]sum\e['e]\e"
+\e*[resume] \e# Résumé
+\&.stringdown resume
+\e*[resume] \e# résumé
+\&.stringup resume
+\e*[resume] \e# RÉSUMÉ
+.EE
+.RE
+.RE
+.
+.TP
 .BI .sty\  n\ f
 Associate style\~\c
 .I f

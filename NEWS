@@ -12,6 +12,13 @@ VERSION 1.22.5
 
 Troff
 -----
+o New requests 'stringdown' and 'stringup' are implemented.  These change
+  the string named in their argument by replacing each of its bytes with its
+  lowercase or uppercase version (if any), respectively.  groff special
+  characters (see the groff_char(7) man page) can be used and the output
+  will usually transform in the expected way due to the regular naming
+  convention of the special character escapes.
+
 o On the Latin-1 output device ("groff -T latin1") the output glyph \[oq]
   (opening quote) is now rendered as code point 0x27 (apostrophe) instead of
   0x60 (grave accent).  The ECMA-94 Latin character sets do not define any
