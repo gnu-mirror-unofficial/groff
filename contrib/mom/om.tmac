@@ -20,8 +20,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4
------------
+Version 2.4-1
+-------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4
+.ds version 2.4-1
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -1076,7 +1076,7 @@ end
 .    \}
 .    if '\\$0'ADD_SPACE' \{\
 .       vpt 0
-.       nr #ALD (u;\\$1)
+.       nr #ALD \\$1
 .       rs
 .       nop \&
 .       br
@@ -17117,7 +17117,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       rr pic*top-lead-diff
 .       rr float*pic
 .    \}
-.    if \\n[float*img] \{\
+.    if \\n[float*img:1] \{\
 .       ie \\n[#COLUMNS] \
 .          sp |\\n[dc]u
 .       el \
@@ -17127,6 +17127,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          rr pdf-img:frame
 .       \}
 .    \}
+.    if \\n[defers] .rr defers
 .    nr loop-count  0 1
 .    nr new-defer   0 1
 .    while \\n+[loop-count]<=\\n[defer-count] \{\
@@ -17144,8 +17145,9 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          ch FN_OVERFLOW_TRAP -\\n[#FN_OVERFLOW_TRAP_POS]u
 .       \}
 .       ie !\\n[float-span:\\n[loop-count]] \{\
-.          ie ((\\n[float-depth:\\n[loop-count]]-\\n[.v])>\\n[.t]):(\\n[D-float:\\n[loop-count]]>\\n[.t]) \{\
+.          ie ((\\n[float-depth:\\n[loop-count]]-\\n[.v])>\\n[.t]):(\\n[D-float:\\n[loop-count]]>\\n[.t]):(\\n[defers]=1) \{\
 .\" Insufficient space, defer to next page
+.             nr defers 1
 .             rn FLOAT*DIV:\\n[loop-count] NEW*FLOAT*DIV:\\n+[new-defer]
 .             rnn float-depth:\\n[loop-count] new-float-depth:\\n[new-defer]
 .             rnn D-float:\\n[loop-count] new-D-float:\\n[new-defer]
@@ -17196,7 +17198,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    rr #TMP_PAGE_OFFSET
 .    ch FOOTER \\n[#VARIABLE_FOOTER_POS]u
 .    ch FN_OVERFLOW_TRAP -\\n[#FN_OVERFLOW_TRAP_POS]u
-.    if !\\n[.t]=1 .if \\n[.t]<\\n[.v] .bp
+.    if \\n[float-depth:1]>\\n[.t] .bp
 .    ie !\\n[#NO_SHIM] .SHIM
 .    el \{\
 .       if !\\n[#NO_FLEX] \
@@ -17235,7 +17237,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 .MAC output-float END
 .    if \\n[float*img] \{\
-.       nr no-top-space:1 1
+.       if \\n[loop-count]=1 .nr no-top-space:1 1
 .    \}
 .    vpt 0
 .    if \\n[.ns] \{\
