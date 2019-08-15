@@ -504,10 +504,10 @@ will print
 </div>
 
 <div class="box-macro-args">
-Macro: <b>DOC_COVERTEXT</b> <kbd class="macro-args">&lt;toggle&gt;</kbd>
+Macro: <b>DOC_COVERTEXT</b> <kbd class="macro-args">[START &lt;starting position&gt;] &lt;toggle&gt;</kbd>
 </div>
 <div class="box-macro-args" style="margin-top: 1em;">
-Macro: <b>COVERTEXT</b> <kbd class="macro-args">&lt;toggle&gt;</kbd>
+Macro: <b>COVERTEXT</b> <kbd class="macro-args">[START &lt;starting position&gt;] &lt;toggle&gt;</kbd>
 </div>
 
 <p class="requires">
@@ -548,16 +548,22 @@ is the only allowed document element tag.
 <p>
 If you do not instruct mom to put anything on doc-cover or cover
 pages except <kbd>DOC_COVERTEXT</kbd> or <kbd>COVERTEXT</kbd>, the
-cover text will begin at the document&#8217;s top margin.  You must
+cover text will begin at the document&#8217;s top margin.
+Equally, if only <kbd>COPYRIGHT</kbd> and/or <kbd>MISC</kbd> are
+to go on the pages, cover text begins at the top margin.  In all
+other cases, cover text begins below the last element on the page
+(excluding COPYRIGHT or MISC), separated by a blank line.
+</p>
+
+<p>
+If you wish to change the starting position of the text, you must
 use
 <a href="typesetting.html#space">SP</a>
 or
 <a href="typesetting.html#ald">ALD</a>
-to move it further down the page.  Equally, if only
-<kbd>COPYRIGHT</kbd> and/or <kbd>MISC</kbd> are to go on the pages,
-cover text begins at the top margin.  In all other cases, cover text
-begins below the last element on the page (excluding COPYRIGHT or
-MISC), separated by a blank line.
+to move it further down the page.  Alternatively, you may use the
+optional START argument to give a precise location for the text to
+begin.
 </p>
 
 <p>
