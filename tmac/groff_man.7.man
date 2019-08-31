@@ -129,7 +129,7 @@ are described in subsection \(lqDeprecated features\(rq, below.
 .
 Each macro is described in a tagged paragraph.
 .
-Closely related macros,
+Closely-related macros,
 such as
 .B .EX
 and
@@ -297,6 +297,10 @@ is given no arguments,
 is set in bold
 (or the font specified by the string register
 .BR HF )
+and,
+on
+.IR troff -style
+output devices,
 slightly larger than the base font size.
 .
 Additionally,
@@ -1109,10 +1113,12 @@ such as file or path names with variable components;
 in such cases,
 follow the convention of mathematical typography:
 set the file or path name in italics as usual
+but use roman for the variable part
 (see
 .B .IR
+and
+.B .RI
 below),
-but use roman for the variable part,
 and italics again in running roman text when referring to the variable
 material.
 .
