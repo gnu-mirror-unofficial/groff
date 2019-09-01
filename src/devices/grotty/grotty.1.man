@@ -148,11 +148,11 @@ When paging
 .IR grotty 's
 output with
 .IR less (1),
-it is necessary to use either the
-.B \-r
-or the
+the program must be instructed to pass SGR sequences through to the
+device;
+its
 .B \-R
-option of the latter for SGR sequences to be rendered correctly.
+option is one way to achieve this.
 .
 Consequently,
 programs like
@@ -161,7 +161,7 @@ which page
 .I roff
 documents with
 .I less
-must pass one of these options to it.
+must call it with an appopriate option.
 .
 .
 .\" ====================================================================
@@ -246,9 +246,9 @@ escape sequence in a document.
 .
 .
 .TP
-.BR "\[rs]X'tty: sgr " [\c
+.BR "\[rs]X\[aq]tty: sgr " [\c
 .IR n ]\c
-.B '
+.B \[aq]
 .
 If
 .I n
