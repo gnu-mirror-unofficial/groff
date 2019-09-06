@@ -2166,15 +2166,11 @@ can be:
 .SS "History"
 .\" ====================================================================
 .
-According to its own
-.IR man (7)
-page,
-Version 7 Unix (1979) supported all of the macros described in this page
-not listed as GNU extensions,
-except
+Version\~7 Unix (1979) supported all of the macros described in this
+page not listed as extensions, except
 .BR .P ,
 .BR .SB ,
-.BR .SS ,
+.\" .SS was implemented in tmac.an but not documented in man(7).
 and the deprecated
 .BR .AT ,
 .BR .BT ,
@@ -2187,6 +2183,30 @@ The only string registers defined were
 and
 .BR S ;
 no number registers were documented.
+.
+.B .UC
+appeared in 3BSD (1980) and
+.B .P
+in AT&T Unix System\~III (1980).
+.
+4BSD (1980) added
+.\" undocumented .VS and .VE macros to mark regions with 12-point box
+.\" rules (\[br]) as margin characters, as well as...
+.B lq
+and
+.B rq
+string registers.
+.
+.
+4.3BSD (1986) added
+.\" undocumented .DS and .DE macros for "displays", which are .RS/.RE
+.\" wrappers with filling disabled and vertical space of 1v before and
+.\" .5v after, as well as...
+.B .AT
+and
+AT&T's
+.BR .P .
+.\" TODO: Determine provenance of .BT, .PT, .SB, \*(HF, and \*(Tm.
 .
 .
 .\" ====================================================================
@@ -2423,7 +2443,7 @@ Most
 .I man
 macros are contained in this file.
 .
-It also loads the GNU extensions from
+It also loads the extensions from
 .I an\-ext.tmac
 (see below).
 .
