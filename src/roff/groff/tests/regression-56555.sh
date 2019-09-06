@@ -24,5 +24,3 @@ groff="${abs_top_builddir:-.}/test-groff"
 "$groff" >/dev/null <<EOF
 \!ta
 EOF
-
-exit $?

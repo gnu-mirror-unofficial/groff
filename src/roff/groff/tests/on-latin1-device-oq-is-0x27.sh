@@ -29,4 +29,3 @@ EOF
 )
 
 diff -u <(echo "$expected") <(echo "$actual")
-exit $?
