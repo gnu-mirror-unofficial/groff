@@ -1,5 +1,16 @@
 2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Add regression test to check behavior of case transformation
+	request on a string containing a Unicode character escape.
+	Right now, this is not supported, so it is an XFAIL test in the
+	parlance of DejaGNU/POSIX 1003.3.
+
+	* src/roff/groff/tests/string_case_xform_unicode_escape.sh: New
+	test.
+	* src/roff/groff/groff.am: Run the test.
+
+2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Implement .stringdown and .stringup requests.
 
 	* src/roff/troff/input.cpp: Add .stringdown and .stringup
