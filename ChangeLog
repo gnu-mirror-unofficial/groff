@@ -1,3 +1,30 @@
+2019-09-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* **/*.man: Downcase man page titles, except for glilypond and
+	roff2*, which did not require it.
+
+	Here's a sed script for the aid of those who have a corpus of
+	man pages to migrate.
+
+		# Downcase man page titles.
+		#
+		# Use the first line to skip any .TH lines that require
+		# special handling, perhaps because the name of the
+		# command gets externally macro-expanded.  In groff, the
+		# "roff2.1.man" page is an example.
+		#
+		# This script operates _only_ on .TH lines.
+		#
+		# usage: sed -i -f this_script.sed your_man_page.1 ...
+		/@ROFF2MODE@/b
+		/^\.\s*TH/{
+		h
+		s/^\.\s*TH \+\([^ ]\+\) .*/\1/
+		y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+		G
+		s/\([^ ]\+\)\n\(^\.\s*TH \+\)[^ ]\+\( .*\)/\2\1\3/
+		}
+
 2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	The an (man) macro package supports new CS and CT number
