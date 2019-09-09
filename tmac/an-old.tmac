@@ -148,6 +148,7 @@
 .
 .  de an-init \" This approach gets multiple man pages right.
 .    ds an-title "\\$1\"
+.    if r CT .if \\\\n[CT] .stringup an-title
 .    ds an-section "\\$2\"
 .    ds an-extra1 "\\$3\"
 .    ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
@@ -361,7 +362,11 @@
 .  ps \\n[PS-SH]u
 .  ft \\*[HF]
 .  ne (2v + 1u)
-.  if \\n[.$] \&\\$*
+.  if \\n[.$] \{\
+.    ds an-section-heading \\$*\"
+.    if r CS .if \\n[CS] .stringup an-section-heading
+\&\\*[an-section-heading]
+.  \}
 ..
 .
 .de1 SS

@@ -136,6 +136,16 @@ EXTRA_DIST += \
   tmac/TODO \
   tmac/www.tmac.in
 
+tmac_TESTS = \
+  tmac/tests/an-old_CS_register_off.sh \
+  tmac/tests/an-old_CS_register_on.sh \
+  tmac/tests/an-old_CS_register_unspecified.sh \
+  tmac/tests/an-old_CT_register_off.sh \
+  tmac/tests/an-old_CT_register_on.sh \
+  tmac/tests/an-old_CT_register_unspecified.sh
+
+TESTS += $(tmac_TESTS)
+
 dist-hook: tmac-dist-hook
 tmac-dist-hook:
 	chmod u+w $(distdir)/tmac
