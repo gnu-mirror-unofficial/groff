@@ -12,7 +12,8 @@ VERSION 1.22.5
 
 Troff
 -----
-o New requests 'stringdown' and 'stringup' are implemented.  These change
+
+o New requests 'stringdown' and 'stringup' are available.  These change
   the string named in their argument by replacing each of its bytes with its
   lowercase or uppercase version (if any), respectively.  groff special
   characters (see the groff_char(7) man page) can be used and the output
@@ -21,10 +22,11 @@ o New requests 'stringdown' and 'stringup' are implemented.  These change
 
 o On the Latin-1 output device ("groff -T latin1") the output glyph \[oq]
   (opening quote) is now rendered as code point 0x27 (apostrophe) instead of
-  0x60 (grave accent).  The ECMA-94 Latin character sets do not define any
-  glyphs for directional ("typographer's") quotation marks, but the
-  apostrophe is depicted as a neutral (vertical) glyph, whereas the grave
-  accent 0x60 and acute accent 0xB4 are mirror-symmetric diacritical marks.
+  0x60 (grave accent).  The ISO 8859/ECMA-94 Latin character sets do not
+  define any glyphs for directional ("typographer's") quotation marks, but
+  the apostrophe is depicted as a neutral (vertical) glyph, whereas the
+  grave accent 0x60 and acute accent 0xB4 are mirror-symmetric diacritical
+  marks.
 
   Note that this change has no effect on _input_ conventions for roff source
   documents.  You can still get directional single quotes on UTF-8,
@@ -32,17 +34,20 @@ o On the Latin-1 output device ("groff -T latin1") the output glyph \[oq]
   sequences like `this' in the input (character remapping with ".char"
   requests and similar notwithstanding).
 
-an (man) Macros
-===============
-o The "an" (man) macro package supports new CS and CT number registers to
-  impose full capitalization on man page section headings and titles,
-  respectively.  These default off (with no visible effect on pages which
-  already fully capitalize these strings in man page sources).  The
-  rationale is to encourage man page authors to preserve and/or restore case
-  distinction information in their titles and section headings, while giving
-  users (including system administrators, distributors, integrators, and
-  maintainers of man(1) implementations) a way to impose full capitalization
-  on these page elements if desired.
+
+Macro Packages
+--------------
+
+o The an (man) macro package supports new CS and CT number registers to
+  control rendering of man page section headings and titles, respectively,
+  in full capitals.  These default off (with no visible effect on pages
+  which already fully capitalize these strings in man page sources).  The
+  rationale is to encourage man page authors to preserve case distinction
+  information in (or restore it to) their titles and section headings, while
+  giving users (including system administrators, distributors, integrators,
+  and maintainers of man(1) implementations) a way to view the rendered page
+  elements in full capitals if desired.
+
 
 VERSION 1.22.4
 ==============

@@ -53,15 +53,15 @@
 2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	The an (man) macro package supports new CS and CT number
-	registers to impose full capitalization on man page section
-	headings and titles, respectively.  These default off (with no
-	visible effect on pages which already fully capitalize these
+	registers to control rendering of man page section headings and
+	titles, respectively, in full capitals.  These default off (with
+	no visible effect on pages which already fully capitalize these
 	strings in man page sources).  The rationale is to encourage man
-	page authors to preserve and/or restore case distinction
-	information in their titles and section headings, while giving
+	page authors to preserve case distinction information in (or
+	restore it to) their titles and section headings, while giving
 	users (including system administrators, distributors,
 	integrators, and maintainers of man(1) implementations) a way to
-	impose full capitalization on these page elements if desired.
+	view the rendered page elements in full capitals if desired.
 
 	* tmac/an-old.tmac (TH/an-init): If number register CT is
 	defined and nonzero, call .stringup on \*[an-title].
