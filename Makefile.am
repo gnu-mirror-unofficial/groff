@@ -565,6 +565,7 @@ SUFFIXES =
 check_SCRIPTS =
 check_PROGRAMS =
 TESTS =
+XFAIL_TESTS =
 AM_TESTS_ENVIRONMENT = \
   abs_top_srcdir=$(abs_top_srcdir) \
   abs_top_builddir=$(abs_top_builddir) \

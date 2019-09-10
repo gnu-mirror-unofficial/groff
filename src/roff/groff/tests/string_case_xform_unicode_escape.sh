@@ -22,11 +22,12 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # The following is what we expect in the future when we support Unicode
 # case transformations.
-#expected="attaché ATTACHÉ"
-#
-# For now, we expect problems.
-expected="<standard input>:4: backtrace: string 'attache'
-troff: <standard input>:5: warning: can't find special character 'U0065_0301'"
+expected="attaché ATTACHÉ"
+
+# For now, we expect problems like this:
+# <standard input>:4: backtrace: string 'attache'
+# troff: <standard input>:5: warning: can't find special character
+#   'U0065_0301'
 
 actual=$("$groff" -Tutf8 2>&1 > /dev/null <<EOF
 .pl 1v
