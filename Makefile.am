@@ -904,7 +904,6 @@ SUFFIXES += .man
 	     -e "s|[@]EXAMPLEDIR[@]|`echo $(exampledir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]FONTDIR[@]|`echo $(fontdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]g[@]|$(g)|g" \
-	     -e "s![@]G[@]!`echo $(g) | tr '[a-z]' '[A-Z]'`!g" \
 	     -e "s|[@]HTMLDOCDIR[@]|`echo $(htmldocdir) | sed -f $(makevarescape)`|g" \
 	     -e "s|[@]INDEX_SUFFIX[@]|$(indexext)|g" \
 	     -e "s|[@]LEGACYFONTDIR[@]|`echo $(legacyfontdir) | sed -f $(makevarescape)`|g" \

@@ -77,7 +77,6 @@ uninstall: groff_mm.n groff_mmse.n
 	     -e "s|@VERSION@|$(version)|g" \
 	     -e "s|@MDATE@|$(mdate)|g" \
 	     -e "s|@g@|$(g)|g" \
-	     -e "s!@G@;`echo $(g) | tr [a-z] [A-Z]`!g" \
 	 $< >$@
 
 ########################################################################

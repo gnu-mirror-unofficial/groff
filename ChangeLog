@@ -1,5 +1,16 @@
 2019-09-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Retire '@G@' build system macro.
+
+	It existed only for forcibly-capitalized man page titles; it was
+	the uppercase-transformed counterpart of @g@.
+
+	* Makefile.am: Delete sed transformation of @G@.
+	* src/preproc/tbl/tbl.1.man: Replace '@G@EQN' in section heading
+	with '@g@eqn'.
+
+2019-09-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* **/*.man: Downcase man page titles, except for glilypond and
 	roff2*, which did not require it.
 
