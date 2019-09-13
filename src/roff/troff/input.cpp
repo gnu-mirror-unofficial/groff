@@ -4738,7 +4738,8 @@ void do_string_case_transform(case_xform_mode mode)
   }
   string_iterator iter1(*m);
   macro *mac = new macro;
-  for (int l = 0; l < m->macro::length(); l++) {
+  int len = m->macro::length();
+  for (int l = 0; l < len; l++) {
     int nc, c = iter1.get(0);
     if (c == PUSH_GROFF_MODE
 	|| c == PUSH_COMP_MODE
