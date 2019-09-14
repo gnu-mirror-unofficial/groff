@@ -1,5 +1,13 @@
 2019-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac: Move test for definitions of CS and CT
+	registers to after man.local is sourced; this way we can both
+	respect any setting of those registers in that file (which is
+	intended for customization by the site administrator) and ensure
+	that the registers are defined when dereferenced later.
+
+2019-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* **/*.man: Put section headings in title case.
 
 2019-09-13  G. Branden Robinson <g.branden.robinson@gmail.com>
