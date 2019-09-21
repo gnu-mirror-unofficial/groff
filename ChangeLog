@@ -1,3 +1,23 @@
+2019-09-21  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Changes to allow configure to check for URW fonts
+
+	* font/devpdf/util/BuildFoundries.pl: Call the program with
+	--dirURW with path provided to ./configure, and --check to do
+	a dry-run just checking if the fonts are available. (bug #56748)
+
+2019-09-21  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Add new ghostscript font names (bug #56748)
+
+	* font/devpdf/Foundry.in: Add changed font names
+
+2019-09-21  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Prevent gropdf executing arbitrary commands
+
+	* src/devices/gropdf/gropdf.pl: See bug #55557
+
 2019-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an-old.tmac: Move test for definitions of CS and CT
