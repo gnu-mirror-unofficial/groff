@@ -287,6 +287,7 @@ my %info=('Creator' => "(groff version $cfg{GROFF_VERSION})",
 				'Producer' => "(gropdf version $cfg{GROFF_VERSION})",
 				'ModDate' => "($dt)",
 				'CreationDate' => "($dt)");
+map { $_="< ".$_."\0" } @ARGV;
 
 while (<>)
 {
