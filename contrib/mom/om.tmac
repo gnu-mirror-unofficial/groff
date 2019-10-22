@@ -20,7 +20,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4-1
+Version 2.4-2
 -------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4-1
+.ds version 2.4-2
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -4809,8 +4809,10 @@ y\R'#DESCENDER \\n[.cdp]'
 .MAC COPYRIGHT END          \"For use on cover pages only
 .   ie \\n[#NUM_ARGS]=1 \
 .       ds $COVER_COPYRIGHT \[co]\\$1
-.    el \
+.    el \{\
+.       if '\\$1'COVER'     .ds $COVER_COPYRIGHT \[co]\\$2
 .       if '\\$1'DOC_COVER' .ds $DOC_COVER_COPYRIGHT \[co]\\$2
+.    \}
 .END
 \#
 .MAC COPYRIGHT_V_ADJUST END
@@ -6523,6 +6525,10 @@ SMALLCAPS takes precedence.
 .MAC DO_TITLE_OR_AUTHOR END
 .    ie '\\$0'DO_AUTHORS' .ds $TTL_AUTH AUTHOR
 .    el .ds $TTL_AUTH TITLE
+.    if '\\*[$\\*[$PRFX]\\*[$TTL_AUTH]_1]'' \{\
+.       if !'\\*[$\\*[$PRFX]DOC\\*[$TTL_AUTH]_1]'' \
+.          ds $\\*[$PRFX]\\*[$TTL_AUTH]_1 "\&"
+.    \}
 .    if !'\\*[$\\*[$PRFX]\\*[$TTL_AUTH]_1]'' \{\
 .       if '\\$0'DO_SUBTITLE' \{\
 .          if '\\*[$PRFX]'\\*[DOC_]COVER_SUB' \{\
@@ -6549,6 +6555,8 @@ SMALLCAPS takes precedence.
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_SMALLCAPS]=1 .SMALLCAPS
 \#.          if (\\n[#COVER]=1):(\\n[#DOC_COVER]=1) \
 \#.             rn $PRFX_SAVED $PRFX
+.       if \\n[#\\*[DOC_]COVER_TITLE]=2 \
+.          ds $PRFX DOC
 .       \}
 .       if \\n[#\\*[DOC_]COVER_SUB] \{\
 .          rr #\\*[DOC_]COVER_SUB
@@ -7337,7 +7345,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       if \\n[#\\*[DOC_]COVER_COLOR]=1 \
 .          COLOR \\*[$\\*[DOC_]COVER_COLOR]
 .    \\*[DOC_]COVER_H_POS
-.    if \\n[#\\*[DOC_]COVER_TITLE]=2 .ds DOC DOC
+.    if (\\n[#\\*[DOC_]COVER_TITLE]=1):(\\n[#\\*[DOC_]COVER_TITLE]=2) .ds DOC DOC
 .    fam \\*[$\\*[DOC_]COVER_\\*[DOC]TITLE_FAM]
 .    ft  \\*[$\\*[DOC_]COVER_\\*[DOC]TITLE_FT]
 .    ps  \\*[$\\*[DOC_]COVER_\\*[DOC]TITLE_SIZE_CHANGE]
@@ -7626,6 +7634,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       rr #COPYRIGHT_V_POS
 .    \}
 .    if \\n[#\\*[DOC_]COVER_COPYRIGHT]=1 \{\
+.       if '\\*[$\\*[DOC_]COVER_COPYRIGHT]'' \
+.          ds $\\*[DOC_]COVER_COPYRIGHT \\*[$COVER_COPYRIGHT]
 .       QUAD \\*[$\\*[DOC_]COVER_COPYRIGHT_QUAD]
 .       if \\n[#\\*[DOC_]COVER_COPYRIGHT_COLOR]=1 \
 .          COLOR \\*[$\\*[DOC_]COVER_COPYRIGHT_COLOR]
@@ -7689,7 +7699,6 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       if \\n[TOC.RELOCATE]==4 \
 .          if !rTOC_BH .TOC_AFTER_HERE
 .    \}
-.    if '\\$0'DO_DOC_COVER' .rm DOC_
 .    END_COVER
 .END
 \#
@@ -7706,7 +7715,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    rr #NEWPAGE
 .    rr #SKIP
 .    if \\n[#PAGINATION_WAS_ON]=1 .nr % +1
-.    ie \\n[#\\*[DOC]COVER_BLANKPAGE]=1 \{\
+.    ie \\n[#\\*[DOC_]COVER_BLANKPAGE]=1 \{\
 .       if \\n[TOC.RELOCATE] \
 .          if !\\n[#TOC_BH] .TOC_AFTER_HERE
 .\" Without the empty PDF_BOOKMARK, (doc)cover BLANKPAGE causes
@@ -7715,8 +7724,9 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       PDF_BOOKMARK 1
 .       nop \&
 .       bp
-.       rr #\\*[DOC]COVER_BLANKPAGE
+.       rr #\\*[DOC_]COVER_BLANKPAGE
 .       if !\\n[#\\*[DOC]COVERS_COUNT]=1 .nr % -2
+.       rm DOC_
 .    \}
 .    el \
 .       if !\\n[#\\*[DOC]COVERS_COUNT]=1 .nr #PAGE_NUM_ADJ -1
@@ -8574,8 +8584,16 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 \#   Forces doccover and cover pages to recto
 \#
 .MAC FORCE_RECTO END
-.    ie '\\$1'' .nr #FORCE_RECTO 1
-.    el .rr #FORCE_RECTO
+.    ie '\\$1'' \{\
+.       nr #FORCE_RECTO 1
+.       nr #DOC_COVER_BLANKPAGE 1
+.       nr #COVER_BLANKPAGE 1
+.    \}
+.    el \{
+.       rr #FORCE_RECTO
+.       rr #DOC_COVER_BLANKPAGE
+.       rr #COVER_BLANKPAGE
+.    \}
 .END
 \#
 .MAC RV_HARD_SET_MARGINS END
@@ -17433,6 +17451,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       ds ev-pre-float \\n[.ev]
 .       ev FLOAT
 .       evc \\*[ev-pre-float]
+.       if \\n[.u] .nr fill-pre-float 1 \" Needed for tbl
 .       di FLOAT*DIV
 .       if !'\\*[float*target]'' .PDF_TARGET "\\*[float*target]
 .       rm float*target
@@ -17689,6 +17708,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .       if \\n[#NO_SHIM] \
 .          if !\\n[#NO_FLEX] .nr post-float 1
 .       ev \\*[ev-pre-float]
+.       rr fill-pre-float
 .       rm ev-pre-float
 .    \}
 .END
@@ -19931,14 +19951,11 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    nr lead-pre-tbl \\n[.v]
 .    nr tbl*needs 1
 .    nr doing-tbl 1
-.    if !'\\n[.z]'FLOAT*DIV' \{\
-.       if \\n[.u] .nr fill 1
-.       nf
-.    \}
+.    nf
 .    if '\\n[.z]'FLOAT*DIV' .nr float*tbl 1
 .    if !'\\n[.z]'FLOAT*DIV' \{\
 .       if \\n[.t]=1 \{\
-.          if !\\n[@TOP] \{\
+.          if (\\n[@TOP]=0)&(\\n[#START]=0) \{\
 .             ie \\n[#COLUMNS] .COL_NEXT internal
 .             el .NEWPAGE
 .          \}
@@ -20065,8 +20082,10 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .      \}
 .    \}
 .    if \\n[nl]=\\n[#PAGE_TOP] .ns
-.    if '\\n[.z]'FLOAT*DIV' \
-.       if \\n[defer]>0 .sp .5v
+.    if '\\n[.z]'FLOAT*DIV' \{\
+.       ie \\n[defer]>0 .sp .5v
+.       el .sp .25v
+.    \}
 .    if \\n[@TOP] .rr @TOP
 .    ds ev-current \\n[.ev]
 .    if (\\n[nl]=\\n[#PAGE_TOP]):(\\n[nl]=\\n[dc]) \
@@ -20079,6 +20098,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .          if (\\n[tbl*caption-after-label]=1):(\\n[tbl*have-caption]=0) \
 .             sp 1n
 .    \}
+.    fi
 .    if \\n[tbl*have-header] \{\
 .       di tbl*header-div
 .       ev table-header
@@ -20502,8 +20522,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .             sp -\\n[tbl*caption-lead-diff]u
 .             rr tbl*label-lead-diff-adj
 .          \}
-.          if \\n[fill] .fi
-.          rr fill
+.          if \\n[fill-pre-float] .fi
 .       \}
 .       el \{\
 .          if (\\n[tbl*have-label]=0) \{\
