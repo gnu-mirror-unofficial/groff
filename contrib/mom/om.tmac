@@ -20,7 +20,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4-2
+Version 2.4-3
 -------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4-2
+.ds version 2.4-3
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -6528,6 +6528,7 @@ SMALLCAPS takes precedence.
 .    if '\\*[$\\*[$PRFX]\\*[$TTL_AUTH]_1]'' \{\
 .       if !'\\*[$\\*[$PRFX]DOC\\*[$TTL_AUTH]_1]'' \
 .          ds $\\*[$PRFX]\\*[$TTL_AUTH]_1 "\&"
+.       if !'\\*[$AUTHOR_1]'' .rm $PRFX
 .    \}
 .    if !'\\*[$\\*[$PRFX]\\*[$TTL_AUTH]_1]'' \{\
 .       if '\\$0'DO_SUBTITLE' \{\
@@ -6537,8 +6538,9 @@ SMALLCAPS takes precedence.
 .          \}
 .       \}
 .       if !\\n[#PRINT_STYLE]=1 \{\
-\#.          if (\\n[#COVER]=1):(\\n[#DOC_COVER]=1) \
-\#.             rn $PRFX $PRFX_SAVED
+.          if (\\n[#COVER]=1):(\\n[#DOC_COVER]=1) \
+.             if !'\\*[$PRFX]'SUB' \
+.                rn $PRFX $PRFX_SAVED
 .          fam  \\*[$\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_FAM]
 .          ft   \\*[$\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_FT]
 .          ps \
@@ -6553,10 +6555,10 @@ SMALLCAPS takes precedence.
 .             COLOR \\*[$\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_COLOR]
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_CAPS]=1 .CAPS
 .          if \\n[#\\*[$COVER_TYPE]\\*[$PRFX]\\*[$TTL_AUTH]_SMALLCAPS]=1 .SMALLCAPS
-\#.          if (\\n[#COVER]=1):(\\n[#DOC_COVER]=1) \
-\#.             rn $PRFX_SAVED $PRFX
-.       if \\n[#\\*[DOC_]COVER_TITLE]=2 \
-.          ds $PRFX DOC
+.          if (\\n[#COVER]=1):(\\n[#DOC_COVER]=1) \
+.             rn $PRFX_SAVED $PRFX
+.          if \\n[#\\*[DOC_]COVER_TITLE]=2 \
+.             ds $PRFX DOC
 .       \}
 .       if \\n[#\\*[DOC_]COVER_SUB] \{\
 .          rr #\\*[DOC_]COVER_SUB
@@ -6914,11 +6916,20 @@ SMALLCAPS takes precedence.
 .       ds DOC_ DOC_
 .    \}
 .    el .nr #COVER 1
-.    nr #ARG_NUM 0 1
-.    nr #COVER_ITEM \\n[#NUM_ARGS]  \"loop count
-.    if \\n[#NUM_ARGS]=1 \
+.    if \\n[#NUM_ARGS]=1 \{\
 .       if '\\$1'\\*[DOC_]COVERTEXT' \
 .          nr #\\*[DOC_]COVERTEXT_ONLY 1
+.    \}
+.    if \\n[#NUM_ARGS]=3 \{\
+.       if '\\$1'\\*[DOC_]COVERTEXT' \
+.          if '\\$2'PDF_OUTLINE_LABEL' \
+.             nr #\\*[DOC_]COVERTEXT_ONLY 1
+.       if '\\$1'PDF_OUTLINE_LABEL' \
+.          if '\\$2'\\*[DOC_]COVERTEXT' \
+.             nr #\\*[DOC_]COVERTEXT_ONLY 1
+.    \}
+.    nr #ARG_NUM 0 1
+.    nr #COVER_ITEM \\n[#NUM_ARGS]  \"loop count
 .    while \\n+[#ARG_NUM]<=\\n[#COVER_ITEM] \{\
 .       if '\\$1'DOCTITLE' \{\
 .          nr #\\*[DOC_]COVER_TITLE 2
@@ -6959,6 +6970,10 @@ SMALLCAPS takes precedence.
 .          shift
 .       \}
 .       if '\\$1'AUTHOR' \{\
+.          nr #\\*[DOC_]COVER_AUTHOR 1
+.          shift
+.       \}
+.       if '\\$1'EDITOR' \{\
 .          nr #\\*[DOC_]COVER_AUTHOR 1
 .          shift
 .       \}
@@ -7004,10 +7019,9 @@ SMALLCAPS takes precedence.
 \#
 .MAC COVERTITLE END
 .    rm DOC_
-.    if '\\$0'DOC_COVERTITLE' \{\
+.    if '\\$0'DOC_COVERTITLE' \
 .       ds DOC_ DOC_
-.       nr #FROM_\\*[DOC_]COVERTITLE 1
-.    \}
+.    nr #FROM_\\*[DOC_]COVERTITLE 1
 .    ie \\n[#NUM_ARGS]=0 \{\
 .       nr argc 0 1
 .       while \\n+[argc]<=3 \{\
@@ -7072,6 +7086,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       nr #COVERTEXT_PP 1
 .       di \\*[DOC_]COVER_TEXT
 .       ev 1
+\!.     if \\\\n[#\\*[DOC_]COVERTEXT_ONLY] \
+.          sp |\\\\n[#T_MARGIN]u-\\\\n[#DOC_LEAD]u
 \!.     ie !\\n[#\\*[DOC_]COVERTEXT_START_POS] \{\
 \!.        sp |\\n[.p]u/3u-1v
 \!.     \}
@@ -7493,10 +7509,16 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .       \}
 .       PDF_BOOKMARK 1 \\*[$PDF_\\*[DOC_]COVER_LABEL] \\*[PDF_BM]
 .    \}
-.    ie !'\\*[DOC_]'' \
-.       if !\\n[#DOC_COVER_TITLE] .PDF_BOOKMARK 1 Cover page
-.    el \
-.       if !\\n[#COVER_TITLE] .PDF_BOOKMARK 1 Title page
+.    ie !'\\*[DOC_]'' \{\
+.       if !\\n[#DOC_COVER_TITLE] \
+.          if '\\*[$PDF_\\*[DOC_]COVER_LABEL]'' \
+.             PDF_BOOKMARK 1 Cover page
+.    \}
+.    el \{\
+.       if !\\n[#COVER_TITLE] \
+.          if '\\*[$PDF_\\*[DOC_]COVER_LABEL]'' \
+.             PDF_BOOKMARK 1 Title page
+.    \}
 .    rr #\\*[DOC_]COVER_TITLE
 .\" Subtitle
 .    if \\n[#\\*[DOC_]COVER_SUBTITLE]=1 \{\
@@ -7564,9 +7586,9 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          if !'\\*[$\\*[DOC_]COVER_AUTHOR_SPACER]'' \
 .             sp \\*[$\\*[DOC_]COVER_AUTHOR_SPACER]
 .       \}
-.       if '\\$0'COVER' \
+.       if '\\$0'DO_COVER' \
 .          ds $PRFX COVER_
-.       if '\\$0'DOC_COVER' \
+.       if '\\$0'DO_DOC_COVER' \
 .          ds $PRFX DOC_COVER_
 .       DO_AUTHORS
 .       rm $PRFX
@@ -7616,6 +7638,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .          \\*[DOC_]COVER_TEXT
 .          ev
 .       \}
+.       if \\n[#\\*[DOC_]COVERTEXT_ONLY] \
+.          PDF_BOOKMARK 1 \\*[$PDF_\\*[DOC_]COVER_LABEL] \\*[PDF_BM]
 .       rr #\\*[DOC_]COVERTEXT
 .       rm \\*[DOC_]COVER_TEXT
 .       rr #DOING_COVERTEXT
@@ -7707,6 +7731,19 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .MAC END_COVER END
 .    EOL
 .    vpt
+.    rr #\\*[DOC_]COVERTEXT_ONLY 
+.    rr #\\*[DOC_]COVER_TITLE 
+.    rr #\\*[DOC_]COVERTITLE 
+.    rr #\\*[DOC_]COVER_SUBTITLE 
+.    rr #\\*[DOC_]COVER_AUTHOR 
+.    rr #\\*[DOC_]COVER_DOCTYPE 
+.    rr #\\*[DOC_]COVER_COPYRIGHT 
+.    rr #\\*[DOC_]COVER_MISC 
+.    rr #\\*[DOC_]COVERTEXT 
+.    rr #\\*[DOC_]COVER_IMAGE 
+.    rr #\\*[DOC_]COVER_BLANKPAGE 
+.    rm $PDF_\\*[DOC_]COVER_LABEL 
+.    rr #\\*[DOC_]COVER
 .    if '\\*[$COVER_TYPE]'DOC_COVER_' .ds DOC DOC
 .    rm $COVER_TYPE
 .    if \\n[#DOC_TYPE]=5 .nr #SKIP 1
@@ -7751,6 +7788,7 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    rr #DOING_COVER
 .    if \\n[.ns] .nop \&
 .    if \\n[#RECTO_VERSO] .nr #RV_POST_COVER 1
+.    rm DOC_
 .END
 \#
 \# +++START THE DOCUMENT+++
@@ -7817,10 +7855,12 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    nr @L_MARGIN \\n[#DOC_L_MARGIN]
 .    nr @R_MARGIN \\n[#DOC_R_MARGIN]
 .\" Covers and doc covers
-.    if \\n[#DOC_COVERS]=1 \
+.    if \\n[#DOC_COVERS]=1 \{\
 .       if \\n[#DOC_COVER]=1 .DO_DOC_COVER
-.    if \\n[#COVERS]=1 \
+.    \}
+.    if \\n[#COVERS]=1 \{\
 .       if \\n[#COVER]=1 .DO_COVER
+.    \}
 .    nr PDFHREF.VIEW.LEADING \\n[PDFHREF.VIEW.LEADING.T]
 .    if !\\n[#TOC] .RV_HARD_SET_MARGINS
 .    if \\n[#COLUMNS] .COLUMNS \\n[#NUM_COLS] \\n[#GUTTER]u
@@ -7888,7 +7928,8 @@ $\\*[DOC_]COVERTITLE_\\n+[#\\*[DOC_]COVERTITLE_NUM] \\$\\n[#\\*[DOC_]COVERTITLE_
 .    if !\\n[#TOC] \{\
 .       if !'\\*[$TOC_TITLE_ITEM]'' \{\
 .          PDF_BOOKMARK 1 \\*[$TOC_TITLE_ITEM]
-.          TITLE_TO_TOC
+.          if !r #NO_TOC_ENTRY .TITLE_TO_TOC
+.          if r #NO_TOC_ENTRY  .rr #NO_TOC_ENTRY
 .       \}
 .    \}
 .    if !\\n[#TOC] .nr #POST_TOP 1
@@ -15250,6 +15291,13 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .ds $TOC_PN_TYPEWRITE \\*[ST102]^\\*[ST102X]\\*[ST103]\
 \h'\w'0'u*\\n[#TOC_PN_PADDING]u'\\*[ST103X]
 \#
+\# Macro to remove titles from the TOC.
+\# Primarily to remove the copyright page from the TOC.
+\#
+.MAC NO_TOC_ENTRY END
+.    nr #NO_TOC_ENTRY 1
+.END
+\#
 \# TOC collector
 \#
 .MAC TO_TOC END
@@ -15257,7 +15305,7 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 .    nr #TOC_CH_NUM_INDENT \w'\\*[$TOC_CH_NUM]'
 .    da TOC_ENTRIES
 \!.  ie \\\\n[#SKIP_ENTRY]=1 \{\
-.     rr #SKIP_ENTRY
+.       rr #SKIP_ENTRY
 \!.  \}
 \!.  el \{\
 .       TQ
