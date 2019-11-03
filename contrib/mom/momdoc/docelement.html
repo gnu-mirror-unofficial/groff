@@ -1355,10 +1355,10 @@ ending in _FAMILY, _FONT, _SIZE, _QUAD, or _COLOR.  See
 <kbd>UNDERSCORE</kbd> and <kbd>UNDERSCORE2</kbd> require that a
 weight for the underscore be given, in points (decimal fractions
 allowed), but without the unit of measure <kbd>p</kbd> appended.
-They also require that the underscore's distance from the baseline
-be supplied; in the case of UNDERSCORE2, an additional gap argument
-representing the distance between the two underscores must be
-provided.
+They also require that the underscore&#8217;s distance from the
+baseline be supplied; in the case of UNDERSCORE2, an additional gap
+argument representing the distance between the two underscores must
+be provided.
 </p>
 
 <p class="defaults" style="margin-bottom: 1em">
@@ -1395,9 +1395,9 @@ should not be appended to the argument.
 <p class="defaults" style="margin-bottom: 1em">
 <kbd>SPACE_AFTER</kbd> inserts a blank line equal to the current
 <a href="definitions.html#leading">leading</a> after a HEADING.
-If you'd like a full linespace after a heading level, use
-<kbd>SPACE_AFTER</kbd>.  If you'd like additional space before a
-heading level, you must introduce it yourself with
+If you&#8217;d like a full linespace after a heading level, use
+<kbd>SPACE_AFTER</kbd>.  If you&#8217;d like additional space before
+a heading level, you must introduce it yourself with
 <a href="typesetting.html#space">SPACE</a>
 or
 <a href="typesetting.html#ald">ALD</a>.
@@ -1426,7 +1426,7 @@ the same way if flex-spacing is enabled.
 <p class="defaults" style="padding-bottom: .5em">
 The argument list is long, so you may want to break it into
 several lines by using the backslash character (<kbd>\</kbd>).
-Here's an example of how you might style a level 1 heading:
+Here&#8217;s an example of how you might style a level 1 heading:
 <br/>
 <span class="pre defaults">
   .HEADING_STYLE 1 \
@@ -1436,7 +1436,7 @@ Here's an example of how you might style a level 1 heading:
   BASELINE_ADJUST 3p \
   NUMBER
 </span>
-This creates a level-1 heading style that's bold, centred,
+This creates a level-1 heading style that&#8217;s bold, centred,
 underscored and numbered, raised by 3 points from the baseline.
 </p>
 </div>
@@ -1570,19 +1570,20 @@ description of the default styles in the sections
 <a href="#subhead">SUBHEAD</a> (now HEADING 2),
 and
 <a href="#subsubhead">SUBSUBHEAD</a> (now HEADING 3).
-Mom also emits a message to stderr alerting you to what she's doing.
+Mom also emits a message to stderr alerting you to what she&#8217;s
+doing.
 </p>
 
 <p>
 The control macros formerly associated with oldstyle headings are no
-longer present in mom's macro file, which means that if you
-made changes to mom's default for those headings, you must recreate
-the changes with the
+longer present in mom&#8217;s macro file, which means that if you
+made changes to mom&#8217;s default for those headings, you must
+recreate the changes with the
 <a href="#heading-style">HEADING_STYLE</a>
 macro.  The entire style need not be recreated, only those
-parameters that differed from mom's defaults.  Thus, if your HEADs
-were set flush left, instead of the oldstyle default, centred, but
-otherwise kept mom's settings, you need only do
+parameters that differed from mom&#8217;s defaults.  Thus, if your
+HEADs were set flush left, instead of the oldstyle default, centred,
+but otherwise kept mom&#8217;s settings, you need only do
 <br/>
 <span class="pre-in-pp">
   .HEADING_STYLE 1 QUAD L
@@ -1606,7 +1607,7 @@ paraheads, the former defaults for PARAHEAD can be set up like this:
 Equally, the macro NUMBER_PARAHEADS is no longer available.  You
 must enable numbering of the correct level for paraheads with
 HEADING_STYLE.  Again assuming a heading level of 3 for paraheads,
-it's simply done:
+it&#8217;s simply done:
 <br/>
 <span class="pre-in-pp">
   .HEADING_STYLE 3 NUMBER
@@ -2688,13 +2689,14 @@ percent sign (<kbd>%</kbd>).  Thus, is you want the point size of your CODE font
 Fixed-width fonts have notoriously whimsical
 <a href="definitions.html#xheight">x-heights</a>,
 meaning that they frequently look bigger (or, in some cases,
-smaller) than the type surrounding them, even if they're technically
-the same point size.  CODE_SIZE lets you choose a percentage of the
-prevailing point size for your fixed-width CODE font so it doesn't look
-gangly or miniscule in relation to the type around it.  All
-invocations of <kbd>.CODE</kbd> or <kbd>\*[CODE]</kbd> will use this
-size, so that if you decide to change the prevailing point size of your
-document, the CODE font will be scaled proportionally.
+smaller) than the type surrounding them, even if they&#8217;re
+technically the same point size.  CODE_SIZE lets you choose a
+percentage of the prevailing point size for your fixed-width
+CODE font so it doesn&#8217;t look gangly or miniscule in relation
+to the type around it.  All invocations of <kbd>.CODE</kbd> or
+<kbd>\*[CODE]</kbd> will use this size, so that if you decide to
+change the prevailing point size of your document, the CODE font
+will be scaled proportionally.
 </p>
 
 <div class="rule-short"><hr/></div>
@@ -3265,7 +3267,7 @@ Consider the following:
 Normally, within a nested list, when you return to an
 incrementally-enumerated list, the enumerator continues incrementing
 from where it left off.  That means, in the example above, the
-normal state of affairs for the alpha'ed list under
+normal state of affairs for the alpha&#8217;ed list under
 <br/>
 <span class="pre-in-pp">
   2.  Feed the cat
@@ -5140,7 +5142,7 @@ Macro: <b>ENDNOTE_SPACING</b> <kbd class="macro-args">&lt;space to insert betwee
 </p>
 
 <p>
-If you'd like some whitespace between endnotes, just invoke
+If you&#8217;d like some whitespace between endnotes, just invoke
 ENDNOTE_SPACING with the amount of space you want, e.g.,
 <br/>
 <span class="pre-in-pp">
