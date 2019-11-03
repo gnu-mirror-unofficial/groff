@@ -89,6 +89,12 @@ TOC_HEADER_STRING is used to modity the Table of Content title to
 indent the first paragraph of a section -- this is the usual
 convention in French typesetting.
 
+***copyright-default.mom/copyright-chapter.mom***
+
+These two files demonstrate the correct way to insert a copyright
+page into mom documents.  "Default" is for DOCTYPE DEFAULT;
+"chapter" is for DOCTYPE CHAPTER.
+
 ***mom-pdf.mom***
 
 The manual, Producing PDFs with mom and groff.
