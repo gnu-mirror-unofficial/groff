@@ -187,7 +187,7 @@ recommended.
 <div class="box-macro-args">
 Macro: <b>PDF_IMAGE</b> <kbd class="macro-args">[ -L | -C | -R | -I &lt;indent&gt; ] \
 <br/>
-&lt;image-file.pdf&gt; &lt;width&gt; &lt;height&gt; [ SCALE &lt;factor&gt; ] \
+&lt;pdf image&gt; &lt;width&gt; &lt;height&gt; [ SCALE &lt;factor&gt; ] \
 <br/>
 [ ADJUST +|-&lt;vertical adjustment&gt; ] [ NO_SHIM ] [ NO_FLEX ] \
 <br/>
@@ -212,8 +212,10 @@ require a
 <div class="box-tip">
 <p class="tip">
 <span class="note">Note:</span>
-Arguments may be broken into several lines using the
-&#8220;line-continued&#8221; backslash (<b>\</b>), as shown above.
+Mom files with embedded PDF images must be processed with
+pdfmom&nbsp;doc.mom&nbsp;&gt;&nbsp;doc.pdf.  Arguments may be broken
+into several lines using the &#8220;line-continued&#8221; backslash
+(<b>\</b>), as shown above.
 </p>
 </div>
 
@@ -223,7 +225,7 @@ Unlike
 which it resembles, PDF_IMAGE requires that the pdf image&#8217;s
 dimensions (the bounding box,
 <a href="#bounding-box">see below</a>)
-be supplied each time it&#8217;s called.
+be supplied each time it&#8217;s called.</p>
 </p>
 
 <p>
@@ -389,6 +391,11 @@ linked to from other places in the file (with PDF_LINK; see
 </p>
 
 <p>
+<b><i>Please note:</b> The following functionality is available
+only with groff 1.22.4 or later.</i>
+</p>
+
+<p>
 When
 <a href="#autolabel">autolabelling</a>
 is enabled and the document is processed with
@@ -407,15 +414,6 @@ anywhere in running text would result in a pdf link that reads
 &#8220;Figure 3&#8221;.  If chapter numbers are being prefixed to
 labels, the same string in, say, chapter 5 would produce the pdf
 link &#8220;Figure 5.3&#8221;.
-</p>
-
-<p>
-Remember that mom files with embedded PDF images must be processed
-with
-<br/>
-<span class="pre-in-pp">
- pdfmom doc.mom &gt; doc.pdf
-</span>
 </p>
 
 <div class="box-tip">
@@ -1650,6 +1648,11 @@ linked to from other places in the file (with PDF_LINK; see
 </p>
 
 <p>
+<b><i>Please note:</b> The following functionality is available
+only with groff 1.22.4 or later.</i>
+</p>
+
+<p>
 When
 <a href="#autolabel">autolabelling</a>
 is enabled and the document is processed with
@@ -1911,6 +1914,11 @@ which, if enabled, overrides the <kbd>LABEL</kbd> argument.
 double-quotes creates a PDF target for the diagram so that it may be
 linked to from other places in the file (with PDF_LINK; see
 <a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+<b><i>Please note:</b> The following functionality is available
+only with groff 1.22.4 or later.</i>
 </p>
 
 <p>
@@ -2200,6 +2208,11 @@ one line, thus centering it vertically on the equation.
 double-quotes creates a PDF target for the equation so that it may
 be linked to from other places in the file (with PDF_LINK; see
 <a href="version-2.html#mom-pdf">Producing PDFs with groff and mom</a>).
+</p>
+
+<p>
+<b><i>Please note:</b> The following functionality is available
+only with groff 1.22.4 or later.</i>
 </p>
 
 <p>
