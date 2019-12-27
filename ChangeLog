@@ -1,3 +1,12 @@
+2019-12-30  Ingo Schwarze  <schwarze@openbsd.org>
+
+	Correct output of sprintf("%%") in pic(1).
+
+	* src/preproc/pic/pic.ypp: Print "%" rather than "%%".
+
+	Bug reported by Doug McIlroy <doug at cs dot dartmouth dot edu>.
+	Patch using feedback from Larry McVoy <lm at mcvoy dot com>.
+
 2019-12-29  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Update man page of gropdf to document \X calls.
