@@ -1722,7 +1722,8 @@ GNU \fBgpic\fP also documents a one-argument form or rand,
 version.
 .PP
 The function \fBsprintf()\fP behaves like a C \fIsprintf\/\fP(3)
-function that only takes %, %e, %f, and %g format strings.
+function that only takes %%, %e, %E, %f, %g, and %G conversion
+specifications.
 .
 .
 .NH 1
