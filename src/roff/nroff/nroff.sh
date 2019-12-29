@@ -93,8 +93,8 @@ for i
       exit 0 ;;
     --help)
       cat <<EOF
-usage: nroff [-CchipStUv] [-dCS] [-MDIR] [-mNAME] [-nNUM] [-oLIST]
-             [-rCN] [-Tname] [-WNAME] [-wNAME] [FILE ...]
+usage: nroff [-CchipStU] [-dCS] [-mNAME] [-MDIR] [-nNUM] [-oLIST]
+             [-rCN] [-Tname] [-wNAME] [-WNAME] [FILE ...]
 EOF
       exit 0 ;;
     --)
