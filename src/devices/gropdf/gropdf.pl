@@ -842,7 +842,7 @@ sub do_x
 		$pdfmark=~s((\d{4,6}) u)(sprintf("%.1f",$1/$desc{sizescale}))eg;
 		$pdfmark=~s(\\\[u00(..)\])(chr(hex($1)))eg;
 
-		if ($pdfmark=~m/(.+) \/DOCINFO/)
+		if ($pdfmark=~m/(.+) \/DOCINFO\s*$/)
 		{
 		    my @xwds=split(' ',"<< $1 >>");
 		    my $docinfo=ParsePDFValue(\@xwds);
@@ -852,7 +852,7 @@ sub do_x
 			$info{$k}=$docinfo->{$k} if $k ne 'Producer';
 		    }
 		}
-		elsif ($pdfmark=~m/(.+) \/DOCVIEW/)
+		elsif ($pdfmark=~m/(.+) \/DOCVIEW\s*$/)
 		{
 		    my @xwds=split(' ',"<< $1 >>");
 		    my $docview=ParsePDFValue(\@xwds);
@@ -862,7 +862,7 @@ sub do_x
 			$cat->{$k}=$docview->{$k} if !exists($cat->{$k});
 		    }
 		}
-		elsif ($pdfmark=~m/(.+) \/DEST/)
+		elsif ($pdfmark=~m/(.+) \/DEST\s*$/)
 		{
 		    my @xwds=split(' ',"<< $1 >>");
 		    my $dest=ParsePDFValue(\@xwds);
@@ -881,7 +881,7 @@ sub do_x
 		    my $k=substr($dest->{Dest},1);
 		    $dests->{$k}=$dest->{View};
 		}
-		elsif ($pdfmark=~m/(.+) \/ANN/)
+		elsif ($pdfmark=~m/(.+) \/ANN\s*$/)
 		{
 		    my $l=$1;
 		    $l=~s/Color/C/;
@@ -896,7 +896,7 @@ sub do_x
 		    FixPDFColour($annot->{DATA});
 		    push(@PageAnnots,$annotno);
 		}
-		elsif ($pdfmark=~m/(.+) \/OUT/)
+		elsif ($pdfmark=~m/(.+) \/OUT\s*$/)
 		{
 		    my $t=$1;
 		    $t=~s/\\\) /\\\\\) /g;

@@ -1,3 +1,11 @@
+2019-12-30  Deri James  <deri@chuzzlewit.myzen.co.uk>
+
+	Certain pdfmark destination names caused gropdf to fail.
+
+	* src/devices/gropdf/gropdf.pl: Look for pdfmark types, (i.e.
+	DEST, OUT, ANN), only preceding 'pdfmark' at end of line, not
+	anywhere else.
+
 2019-12-30  Ingo Schwarze  <schwarze@openbsd.org>
 
 	Correct output of sprintf("%%") in pic(1).
