@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2018 Free Software Foundation, Inc.
+Copyright (C) 2004-2020 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -65,6 +65,7 @@ FDL in the main directory of the groff source package.
     <li><a href="#covertitle">COVERTITLE</a></li>
     <li><a href="#doc-covertitle">DOC_COVERTITLE</a></li>
     <li><a href="#pdftitle">PDF_TITLE</a></li>
+    <li><a href="#toc-heading">TOC_HEADING</li>
   </ul></li>
   <li><a href="#docstyle-macros"><b>The docstyle macros (templates)</b></a>
   <ul class="toc-docproc">
@@ -89,15 +90,15 @@ FDL in the main directory of the groff source package.
     </ul></li>
   </ul></li>
 </ul>
+</div>
+<div class="mini-toc-col-2">
+<br/>
 <h3 class="toc toc-docproc-header"><a class="header-link" href="#start-macro">Initiate document processing</a></h3>
 <ul class="toc-docproc" style="margin-top: .5em;">
   <li><a href="#start"><b>The START macro</b></a></li>
 </ul>
-</div>
-<div class="mini-toc-col-2">
-<br/>
 <h3 class="toc toc-docproc-header"><a class="header-link" href="#style-before-start">Establishing type and formatting<br/><span style="display: block; margin-top: -.3em;">parameters before START</span></a></h3>
-<ul class="toc-docproc" style="margin-top: .5em;">
+<ul class="toc-docproc">
   <li><a href="#type-before-start"><b>Behaviour of the typesetting macros before START</b></a>
   <ul class="toc-docproc">
     <li><a href="docprocessing.html#include">Including (sourcing) style sheets and files</a></li>
@@ -887,6 +888,7 @@ processing macros.
   <li><a href="#covertitle">COVERTITLE</a> &ndash; frontispiece, title page, etc</li>
   <li><a href="#doc-covertitle">DOC_COVERTITLE</a> &ndash; book cover, collated document cover, etc</li>
   <li><a href="#pdftitle">PDF_TITLE</a> &ndash; window title for PDF viewers</li>
+  <li><a href="#toc-heading">TOC_HEADING</a> &ndash; single, non-pagenumbered line of text in table of contents</li>
 </ul>
 </div>
 
@@ -1713,10 +1715,10 @@ itself has two optional arguments that accomplish the same thing.
 </div>
 
 <div id="pdftitle" class="box-macro-args">
-Macro: <b>PDF_TITLE</b> <kbd class="macro-args">&quot;&lt;pdf viewer window title&gt;&quot; </kbd> 
+Macro: <b>PDF_TITLE</b> <kbd class="macro-args">&quot;&lt;pdf viewer window title&gt;&quot;</kbd> 
 </div>
 <p class="requires">
-&bull;&nbsp;Arguments must be enclosed in double-quotes
+&bull;&nbsp;Argument must be enclosed in double-quotes
 </p>
 
 <p>
@@ -1724,6 +1726,93 @@ Except for
 <a href="#doc-title">DOCTITLE</a>,
 mom does not, by default, provide PDF viewers with a document title.
 You may set one, if you like, with PDF_TITLE.
+</p>
+
+<div class="macro-id-overline">
+<h3 class="macro-id">TOC heading</h3>
+</div>
+
+<div id="toc-heading" class="box-macro-args">
+Macro: <b>TOC_HEADING</b> <kbd class="macro-args">&quot;&lt;single line TOC heading&gt;&quot;</kbd> 
+</div>
+<p class="requires">
+&bull;&nbsp;Argument must be enclosed in double-quotes
+</p>
+
+<p>
+Mom generates tables of contents automatically (see
+<a href="tables-of-contents.html#toc">TOC</a>).
+You may sometimes want to insert a line of text into the table of
+contents without it referring to a page number, for example to
+identify a &#8220;Part I&#8221; and a &#8220;Part II&#8221;.
+</p>
+
+<p>
+Placed before any instance of
+<a href="#start">START,</a>
+TOC_HEADING inserts its text into the table of contents with a
+modest amount of whitespace around it to distinguish it easily
+from table of contents entries.
+</p>
+
+<p>
+The appearance of the heading may be controlled with
+the macro 
+<a href="#toc-heading-style">TOC_HEADING_STYLE</a>.
+</p>
+
+<div id="toc-heading-style" class="box-macro-args">
+Macro: <b>TOC_HEADING_STYLE</b> <kbd class="macro-args">&quot;&lt;arguments&gt;&quot;</kbd> 
+</div>
+
+<p>
+TOC_HEADING_STYLE controls the look of TOC headings.  It is a
+<a href="docelement.html#grouping">&#8220;grouping&#8221;</a>
+style macro with multiple arguments.  It is recommended that
+you use the backslash character to separate them into individual
+lines rather than entering a single, very long line.
+</p>
+
+<p>
+TOC_HEADING_STYLE accepts as many or as few arguments as you need:
+<span class="pre-in-pp">
+  FAMILY &lt;family&gt; \
+  FONT &lt;font&gt; \
+  SIZE &lt;+|-n&gt; \
+  COLOR &lt;color name&gt;* \
+  QUAD L | C | R \
+  SPACE_ABOVE &lt;n&gt;** \
+  SPACE_BENEATH &lt;n&gt;**
+</span>
+&nbsp;&nbsp;* <kbd>COLOR</kbd> must be pre-initialized with
+<a href="color.html#newcolor">NEWCOLOR</a>
+or
+<a href="color.html#xcolor">XCOLOR</a>.
+</br>
+** <kbd>SPACE_ABOVE</kbd> and <kbd>SPACE_BENEATH</kbd> require a
+<a href="definitions.html#unitofmeasure">unit of measure</a>
+to be appended to their numeric argument.
+</p>
+
+<p>
+For example, if you want your TOC headings to be bold, slightly
+larger than the rest of the table of contents, centred, and with
+one linespace beforehand,
+<span class="pre-in-pp">
+  FONT B \
+  SIZE +.5 \
+  QUAD C \
+  SPACE_ABOVE 1v
+</span>
+</p>
+
+<p>
+ See
+<a href="docelement.html#control-macro-args">Arguments to the control macros</a>
+for further information about the arguments.  Note that
+<kbd>SPACE_ABOVE</kbd> and <kbd>SPACE_BENEATH</kbd> are unique to
+TOC_HEADING_STYLE.
+
 </p>
 
 <div class="rule-short"><hr/></div>
@@ -1839,9 +1928,9 @@ for how mom outputs each part of the page header.)
 <p id="copystyle-note" class="tip">
 <span class="note">Note: version 2.1 change</span>
 <br/>
-<kbd>DOCTYPE NAMED "string"</kbd> no longer accepts a color argument
-after <kbd>"string"</kbd>.  Setting the color of the string is now
-done with <kbd>DOCTYPE_COLOR &lt;color&gt;</kbd>.  Default
+<kbd>DOCTYPE NAMED "string"</kbd> no longer accepts a colour argument
+after <kbd>"string"</kbd>.  Setting the colour of the string is now
+done with <kbd>DOCTYPE_COLOR &lt;colour&gt;</kbd>.  Default
 underscoring of <kbd>"string"</kbd> in the docheader and on covers
 has been removed.  Use <kbd>DOCTYPE_UNDERLINE</kbd>,
 <kbd>DOC_COVER_DOCTYPE_UNDERLINE</kbd> and/or
@@ -2358,7 +2447,7 @@ To turn underlining of quotes back on, use UNDERLINE_QUOTES without
 an argument.
 </p>
 
-<p class="tip-bottom">
+<p>
 While most of the
 <a href="docelement.html#docelement-control">control macros</a>
 have no effect on <b>PRINTSTYLE TYPEWRITE</b>, there
@@ -2368,9 +2457,27 @@ is an important exception:
 particularly useful for reducing the point size of
 headers/footers should they become crowded (quite likely to
 happen if the title of your document is long and your
-<kbd><a href="#copystyle">COPYSTYLE</a></kbd>
-is DRAFT).
+<a href="#copystyle">COPYSTYLE</a>
+is <kbd>DRAFT</kbd).
 </p>
+
+<p>
+Please note that colour is disabled if your
+<a href="#printstyle">PRINTSTYLE</a>
+is <kbd>TYPEWRITE</kbd>.  If you would like it enabled, for example
+so PDF links are colourzed, invoke the groff
+<a href="definitions.html#primitives">primitive</a>
+'<kbd>.color</kbd>' after PRINTSTYLE.
+</p>
+
+<p class="tip-bottom">
+Finally, note that colour is disabled for <kbd>TYPEWRITE</kbd>.  If
+you would like it enabled, for example so PDF links are colourized,
+invoke the groff
+<a href="definitions.html#primitives">primitive</a>
+'<kbd>.color</kbd>' after PRINTSTYLE.
+</p>
+
 </div>
 
 <!-- -COPYSTYLE- -->
@@ -2787,13 +2894,22 @@ The macro
 <a href="color.html#color">COLOR</a>
 and the
 <a href="definitions.html#inlines">inline escape</a>,
-<a href="color.html#color-inline"><kbd>\*[&lt;colorname&gt;]</kbd></a>
+<a href="color.html#color-inline"><kbd>\*[&lt;colourname&gt;]</kbd></a>
 can be used at any time during document processing for occasional
 colour effects.  However, consistent and reliable colourizing of
 various document elements (the docheader, heads, linebreaks,
 footnotes, pagenumbers, and so on) must be managed through the use
 of the
 <a href="docelement.html#docelement-control">document element control macros</a>.
+</p>
+
+<p>
+Please note that colour is disabled if your
+<a href="#printstyle">PRINTSTYLE</a>
+is <kbd>TYPEWRITE</kbd>.  If you would like it enabled, for example
+so PDF links are colourized, invoke the groff
+<a href="definitions.html#primitives">primitive</a>
+'<kbd>.color</kbd>' after PRINTSTYLE.
 </p>
 
 <div class="box-tip">
@@ -2803,7 +2919,7 @@ If you plan to have mom generate a
 <a href="docelement.html#toc">table of contents</a>,
 do not embed colour
 <a href="definitions.html#inlines">inline escapes</a>
-(<a href="color.html#color-inline"><kbd>\*[&lt;colorname&gt;]</kbd></a>)
+(<a href="color.html#color-inline"><kbd>\*[&lt;colourname&gt;]</kbd></a>)
 in the
 <a href="definitions.html#stringargument">string arguments</a>
 given to any of the
@@ -3169,13 +3285,13 @@ Please note that if you use DOCHEADER_FAMILY, you can still alter
 the family of individual parts of the docheader.
 </p>
 
-<h5 id="docheader-color" class="docs">Change the color of the entire docheader</h5>
+<h5 id="docheader-color" class="docs">Change the colour of the entire docheader</h5>
 
 <p>
-The default color for docheaders is black, as you&#8217;d expect.
+The default colour for docheaders is black, as you&#8217;d expect.
 If you wish to change it, use
-<kbd>.DOCHEADER_COLOR&nbsp;&lt;color&gt;</kbd>, where
-<kbd>&nbsp;&lt;color&gt;</kbd> is a color pre-initialized with
+<kbd>.DOCHEADER_COLOR&nbsp;&lt;colour&gt;</kbd>, where
+<kbd>&nbsp;&lt;colour&gt;</kbd> is a colour pre-initialized with
 <a href="color.html#xcolor">XCOLOR</a>
 or
 <a href="color.html#newcolor">NEWCOLOR</a>.

@@ -2,7 +2,7 @@
 <!--
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2018 Free Software Foundation, Inc.
+Copyright (C) 2004-2020 Free Software Foundation, Inc.
 Written by Peter Schaffter (peter@schaffter.ca).
 
 Permission is granted to copy, distribute and/or modify this document
@@ -1326,7 +1326,8 @@ which may be given in any order:
   CAPS | NO_CAPS \
   SMALLCAPS | NO_SMALLCAPS \
   BASELINE_ADJUST &lt;amount to raise heading from the baseline&gt; \
-  NEEDS &lt;lines of text required beneath the heading &gt;
+  NEEDS &lt;lines of text required beneath the heading&gt; \
+  PREFIX_CHAPTER [&lt;n&gt;] \
   SPACE_AFTER | NO_SPACE_AFTER \
   NUMBER | NO_NUMBER \
   NO_SHIM | SHIM \
@@ -1393,6 +1394,19 @@ should not be appended to the argument.
 </p>
 
 <p class="defaults" style="margin-bottom: 1em">
+<kbd>PREFIX_CHAPTER</kbd> instructs mom to prefix the current
+chapter number to numbered headings.  If mom is unable to determine
+a chapter number, she will ask for one.
+</p>
+
+<p class="defaults" style="margin-bottom: 1em">
+Note that using <kbd>PREFIX_CHAPTER</kbd> with an explicit chapter
+number will also set the chapter number for subsequent
+<a href="images.html#autolabel">automatically-generated image and pre-processor labels</a>
+as well.
+</p>
+
+<p class="defaults" style="margin-bottom: 1em">
 <kbd>SPACE_AFTER</kbd> inserts a blank line equal to the current
 <a href="definitions.html#leading">leading</a> after a HEADING.
 If you&#8217;d like a full linespace after a heading level, use
@@ -1453,15 +1467,24 @@ Macro: <b>PREFIX_CHAPTER_NUMBER</b> <kbd class="macro-args">&lt;none&gt; | &lt;c
 </div>
 
 <p>
-If you&#8217;ve requested numbering for any level of heading and
-you&#8217;d like mom, in addition, to prefix a chapter number to the
-numbering scheme, you can do so with PREFIX_CHAPTER_NUMBER.
+If, in addition to numbering heads, you want mom to prepend the
+chapter number, invoke <kbd>PREFIX_CHAPTER_NUMBER</kbd>.
+</p>
+
+<p>
+When you invoke <kbd>.PREFIX_CHAPTER_NUMBER</kbd> without an
+argument, mom checks to see whether the argument you passed to <a
+href="docprocessing.html#chapter">CHAPTER</a> (if it&#8217;s been
+called) is a digit.  If it isn&#8217;t (say you&#8217;ve numbered your
+chapter &#8220;One&#8221; instead of &#8220;1&#8221;), mom will
+abort with a request that you pass PREFIX_CHAPTER_NUMBER a digit
+representing the chapter number.
 </p>
 
 <p>
 After you invoke <kbd>.PREFIX_CHAPTER_NUMBER</kbd>, mom will prepend
-the current chapter number to all headings you have requested be
-numbered with
+the chapter number to all headings you have requested be numbered
+with
 <a href="#heading-style"><kbd>.HEADING_STYLE &lt;n&gt; NUMBER</a>.
 Thus, assuming chapter number twelve (12):
 <br/>
@@ -1477,31 +1500,27 @@ would become
 </span>
 </p>
 
-<p>
-When you invoke <kbd>.PREFIX_CHAPTER_NUMBER</kbd> without an
-argument, mom checks to see whether the argument you passed to
-<a href="docprocessing.html#chapter">CHAPTER</a>
-is a digit.  If it is, she immediately starts pre-pending the
-current chapter number to numbered head elements.  If it isn&#8217;t
-(say you&#8217;ve called your chapter &#8220;One&#8221; instead
-of &#8220;1&#8221;), mom will abort with a request that you pass
-PREFIX_CHAPTER_NUMBER a digit representing the current chapter
-number.
+<div class="box-tip">
+<p class="tip">
+<span class="note">Note:</span>
+If a chapter number is given to PREFIX_CHAPTER_NUMBER, automatically
+generated labels with a prepended chapter number are also affected.
 </p>
+</div>
 
 <p>
-In collated documents, mom automatically increments
-the digit used by PREFIX_CHAPTER_NUMBER by one
-(current chapter digit + 1) every time you invoke <a
-href="rectoverso.html#collate"><kbd>.COLLATE</kbd></a>, even if
-you&#8217;ve (temporarily) turned off the prefixing of chapter
-numbers.  Thus, even if you call your chapters &#8220;One&#8221;,
-&#8220;Two&#8221;, &#8220;Three&#8221; instead of &#8220;1&#8221;,
-&#8220;2&#8221;, &#8220;3&#8221;, mom will Do The Right Thing
-with respect to numbering head elements in all collated chapters
-following the first invocation of PREFIX_CHAPTER_NUMBER (assuming,
-of course, that the collated chapters are in incrementing order; if
-not, you must must put
+In collated documents, mom automatically increments the digit used
+by PREFIX_CHAPTER_NUMBER by one (current chapter digit + 1) every
+time you invoke
+<a href="rectoverso.html#collate"><kbd>.COLLATE</kbd></a>,
+even if you&#8217;ve (temporarily) turned off the prefixing
+of chapter numbers.  Thus, even if you number your chapters
+&#8220;One&#8221;, &#8220;Two&#8221;, &#8220;Three&#8221; instead of
+&#8220;1&#8221;, &#8220;2&#8221;, &#8220;3&#8221;, mom will Do The
+Right Thing with respect to numbering head (and label) elements
+in all collated chapters following the first invocation of
+PREFIX_CHAPTER_NUMBER (assuming, of course, that the collated
+chapters are in incrementing order; if not, you must must put
 <br/>
 <span class="pre-in-pp">
   .PREFIX_CHAPTER_NUMBER &lt;chapter number&gt;
@@ -1519,7 +1538,8 @@ prefixing of chapter numbers to numbered head elements off and on
 according to your needs or whims.
 </p>
 
-<p>
+<div class="box-tip">
+<p class="tip">
 <span class="note">Note:</span>
 Because PREFIX_CHAPTER_NUMBER takes an (optional) digit representing
 the chapter number, it&#8217;s use need not be restricted to
@@ -1533,7 +1553,7 @@ with a
 <a href="definitions.html#numericargument">numeric argument</a>
 in your document setup. 
 </p>
-
+</div>
 <div class="rule-short"><hr/></div>
 
 <!-- ==================================================================== -->
