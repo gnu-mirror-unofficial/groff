@@ -183,6 +183,8 @@
 .de EX
 .  do ds mF \\n[.fam]
 .  nr mE \\n(.f
+.  nr sP \\n(PD \" Save paragraph distance.
+.  nr PD 1v
 .  nf
 .  nh
 .  do fam C
@@ -194,6 +196,7 @@
 .de EE
 .  do fam \\*(mF
 .  ft \\n(mE
+.  nr PD \\n(sP \" Restore paragraph distance.
 .  fi
 .  hy \\n(HY
 ..

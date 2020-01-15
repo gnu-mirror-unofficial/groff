@@ -44,6 +44,18 @@
 	via Colin Watson <cjwatson@debian.org>, tweaked by me.
 	Fixes: https://bugs.debian.org/867123
 
+2019-09-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Use a vertical spacing of 1v between paragraphs in man page
+	examples.  This looks better (on typesetter devices like
+	PostScript and PDF) with the Courier font family also used in
+	examples.  Typewriter devices (like the terminal) already used
+	an inter-paragraph spacing of 1v.
+
+	* tmac/an-ext.tmac (EX): Save the value of the PD number
+	register (inter-paragraph distance), and set it to 1v.
+	(EE): Restore previous value of the PD register.
+
 2019-09-21  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Changes to allow configure to check for URW fonts
