@@ -20,7 +20,7 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-"$groff" -rCS=1 -Tutf8 -man <<EOF | grep -q NAME
+"$groff" -rCS=1 -Tascii -P-cbou -man <<EOF | grep -q NAME
 .TH sample 1 2019-09-09 "groff test suite"
 .SH Name
 sample \- test subject for groff
