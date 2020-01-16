@@ -1,3 +1,21 @@
+2020-01-16  Ingo Schwarze  <schwarze@openbsd.org>
+
+	Repair .AT and .UC in the groff_man(7) macros.
+
+	* tmac/an-old.tmac:
+	Setting user-defined strings in a macro that will later be called
+	indirectly from page location traps is excessively complicated.
+	Besides, the implementation doesn't work: when the trap is finally
+	sprung, the defaults from the an-init macro clobber what the author
+	specified with .AT or .UC.
+	Instead, all that is needed is setting the strings for the header
+	before triggering the page break, such that they appear right
+	away, while setting the strings for the footer after the page
+	break, such that they don't appear on the previous page.
+
+	This bug was found by Jonathan Gray <jsg@openbsd.org>
+	while he looked at 4.xBSD manual pages.
+
 2020-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_man.7.man: Fix errors in footer description.
