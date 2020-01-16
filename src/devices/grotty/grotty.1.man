@@ -43,7 +43,7 @@ grotty \- groff driver for typewriter-like (terminal) devices
 .YS
 .
 .
-.SY "grotty -c"
+.SY "grotty \-c"
 .OP \-bBdfhouU
 .OP \-F dir
 .RI [ file
@@ -109,7 +109,7 @@ Output is written to the standard output.
 By default,
 .I grotty
 emits SGR escape sequences
-(from ISO 6429,
+(from ISO\~6429,
 popularly called \[lq]ANSI escapes\[rq])
 to change text attributes
 (bold, italic, underline, reverse-video, and colors).
@@ -132,9 +132,10 @@ option below.
 .
 .
 .LP
-The following colors are defined in
+Following ISO\~6429,
+the following colors are defined in
 .IR tty.tmac :
-black, white, red, green, blue, yellow, magenta, cyan.
+black, white, red, green, blue, yellow, magenta, and cyan.
 .
 Unrecognized colors are mapped to the default color,
 which is dependent on the settings of the terminal.
@@ -148,8 +149,8 @@ When paging
 .IR grotty 's
 output with
 .IR less (1),
-the program must be instructed to pass SGR sequences through to the
-device;
+the latter program must be instructed to pass SGR sequences through to
+the device;
 its
 .B \-R
 option is one way to achieve this.
@@ -227,11 +228,14 @@ option.
 .I less
 renders legacy bold and italics without requiring options.
 .
-There is no need to filter the output through
-.IR col (1)
-since
+In contrast to the teletype output drivers of some other
+.I roff
+implementations,
 .I grotty
 never outputs reverse line feeds.
+.
+There is therefore no need to filter its output through
+.IR col (1).
 .
 .
 .\" ====================================================================
@@ -347,7 +351,7 @@ escapes
 By default,
 .I grotty
 renders
-.BR \[rs]D'l \|.\|.\|.\& '
+.BR \[rs]D\[aq]l \|.\|.\|.\& \[aq]
 commands that have at least one zero argument
 (and so are either horizontal or vertical)
 using Unicode box drawing characters
@@ -363,7 +367,7 @@ characters
 In a similar way,
 .I grotty
 handles
-.BR \[rs]D'p \|.\|.\|.\& '
+.BR \[rs]D\[aq]p \|.\|.\|.\& \[aq]
 commands which consist entirely of horizontal and vertical lines.
 .
 .
@@ -622,13 +626,14 @@ not all of which may be supported by a given output device:
 .LP
 .RS
 .EX
-\&.pl 15v
 You might see \ef[B]bold\ef[] and \ef[I]italic\ef[].
 Some people see \ef[BI]both\ef[].
 If the output device does (not) co\ez\e[ad]operate,
 you might see \em[red]red\em[].
 Black on cyan can have a \eM[cyan]\em[black]prominent\em[]\eM[]
-\eD'l 1i 0'\eD'l 0 2i'\eD'l 1i 0' look.
+\eD\[aq]l 1i 0\[aq]\eD\[aq]l 0 2i\[aq]\eD\[aq]l 1i 0\[aq] look.
+\&.\e" If in nroff mode, end page now.
+\&.if n .pl \en[nl]u
 .EE
 .RE
 .
@@ -683,6 +688,21 @@ as possible.
 .SH "See Also"
 .\" ====================================================================
 .
+.TP
+ECMA-48, \c
+\[lq]Control Functions for Coded Character Sets\[rq], \c
+5th\~edition, \c
+June\~1991, \c
+Ecma International.
+A gratis version of ISO\~6429,
+this document includes a normative description of SGR escape sequences.
+Available at
+.UR http://\:www.ecma\-international.org/\:publications/\:files/\:\
+ECMA\-ST/\:Ecma\-048.pdf
+.UE .
+.
+.
+.LP
 .IR groff (@MAN1EXT@),
 .IR @g@troff (@MAN1EXT@),
 .IR groff_out (@MAN5EXT@),
