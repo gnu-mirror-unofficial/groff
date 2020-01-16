@@ -204,7 +204,7 @@ macros.
 .TP
 .BI .TH " title section"\c
 .RI " [" footer-middle ]\c
-.RI " [" footer-outside ]\c
+.RI " [" footer-inside ]\c
 .RI " [" header-middle ]
 Define the title of the man page as
 .I title
@@ -228,16 +228,22 @@ in parentheses immediately appended to
 .I footer-middle
 is centered in the footer line.
 .
-.I footer-outside
-is positioned at the left in the footer line (or at the left on
-even pages and at the right on odd pages if double-sided printing is
-active).
+The arragement of the rest of the footer depends on whether double-sided
+layout is enabled with the option
+.BR \-rD1 .
 .
-The inside footer is the page number,
-except in continuous-rendering mode
-(see
-.B \-rcR=1
-in section \(lqOptions\(rq, below),
+When disabled (the default),
+.I footer-inside
+is positioned at the bottom left.
+.
+Otherwise,
+.I footer-inside
+appears at the bottom left on odd-numbered (recto) pages,
+and at the bottom right on even-numbered (verso) pages.
+.
+The outside footer is the page number,
+except in the continuous-rendering mode enabled by the option
+.BR \-rcR=1 ,
 in which case it is the
 .I title
 and
@@ -255,8 +261,6 @@ there is no need to specify
 .IR header-middle ;
 the macro package will supply text for it.
 .
-.
-.IP
 For HTML output, headers and footers are completely suppressed.
 .
 .
@@ -282,7 +286,7 @@ By convention,
 .I footer-middle
 is the most recent modification date of the man page source document,
 and
-.I footer-outside
+.I footer-inside
 is the name and version or release of the project providing it.
 .
 .
@@ -1987,7 +1991,7 @@ Use of the following is discouraged.
 .IR system " [" release ]]
 Alter the footer for use with legacy AT&T man pages,
 overriding any definition of the
-.I footer-outside
+.I footer-inside
 argument to
 .BR .TH .
 .
@@ -2123,7 +2127,7 @@ Redefine this macro to get control of the header.
 .IR version ]
 Alter the footer for use with legacy BSD man pages,
 overriding any definition of the
-.I footer-outside
+.I footer-inside
 argument to
 .BR .TH .
 .
@@ -2274,9 +2278,9 @@ distinction information.
 .
 .TP
 .B \-rD1
-Enable double-sided printing.
+Enable double-sided layout.
 .
-Footers for even and odd pages are formatted differently;
+Format footers for even and odd pages differently;
 see the description of
 .B .TH
 in \(lqDocument structure macros\(rq,
