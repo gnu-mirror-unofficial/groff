@@ -6863,6 +6863,7 @@ static void init_charset_table()
   charset_table[']']->set_flags(charinfo::TRANSPARENT);
   charset_table['*']->set_flags(charinfo::TRANSPARENT);
   get_charinfo(symbol("dg"))->set_flags(charinfo::TRANSPARENT);
+  get_charinfo(symbol("dd"))->set_flags(charinfo::TRANSPARENT);
   get_charinfo(symbol("rq"))->set_flags(charinfo::TRANSPARENT);
   get_charinfo(symbol("cq"))->set_flags(charinfo::TRANSPARENT);
   get_charinfo(symbol("em"))->set_flags(charinfo::BREAK_AFTER);

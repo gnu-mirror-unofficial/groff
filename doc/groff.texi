@@ -4376,6 +4376,7 @@ in @ref{Input Conventions}.)
 @cindex transparent characters
 @cindex character, transparent
 @cindex @code{dg} glyph, at end of sentence
+@cindex @code{dd} glyph, at end of sentence
 @cindex @code{rq} glyph, at end of sentence
 @cindex @code{cq} glyph, at end of sentence
 @cindex @code{"}, at end of sentence
@@ -4385,8 +4386,8 @@ in @ref{Input Conventions}.)
 @cindex @code{*}, at end of sentence
 In addition, the following characters and symbols are treated
 transparently while handling end-of-sentence characters: @samp{"},
-@samp{'}, @samp{)}, @samp{]}, @samp{*}, @code{\[dg]}, @code{\[rq]}, and
-@code{\[cq]}.
+@samp{'}, @samp{)}, @samp{]}, @samp{*}, @code{\[dg]}, @code{\[dd]},
+@code{\[rq]}, and @code{\[cq]}.
 
 See the @code{cflags} request in @ref{Using Symbols}, for more details.
 
@@ -9291,6 +9292,7 @@ element.  Initially symbol @samp{\[br]} has this property.
 @cindex @code{]}, at end of sentence
 @cindex @code{*}, at end of sentence
 @cindex @code{dg} glyph, at end of sentence
+@cindex @code{dd} glyph, at end of sentence
 @cindex @code{rq} glyph, at end of sentence
 @cindex @code{cq} glyph, at end of sentence
 An end-of-sentence character followed by any number of characters with
@@ -9298,8 +9300,8 @@ this property is treated as the end of a sentence if followed by a
 newline or two spaces; in other words the character is @dfn{transparent}
 for the purposes of end-of-sentence recognition -- this is the same as
 having a zero space factor in @TeX{} (initially characters @samp{"')]*}
-and the symbols @samp{\[dg]}, @samp{\[rq]}, and @samp{\[cq]} have this
-property).
+and the symbols @samp{\[dg]}, @samp{\[dd]}, @samp{\[rq]}, and
+@samp{\[cq]} have this property).
 
 @item 64
 Ignore hyphenation code values of the surrounding characters.  Use this
