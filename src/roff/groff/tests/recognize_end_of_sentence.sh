@@ -23,6 +23,8 @@ groff="${abs_top_builddir:-.}/test-groff"
 # Verify that the characters trailing the period are all transparent for
 # purposes of end-of-sentence recognition.  We use UTF-8 so we won't get
 # warnings about \[dg] and \[dd] missing from other encodings.
+#
+# Also confirm that we get _two_ spaces after the end of a sentence.
 
 "$groff" -Tutf8 <<EOF | grep -qE 'Eat\.[^ ]+  Drink\.'
 .pl 1v
