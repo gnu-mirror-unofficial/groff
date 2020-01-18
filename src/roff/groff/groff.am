@@ -41,12 +41,12 @@ groffoptsdir = $(libprogramdir)
 groffopts_DATA = $(GROFF_OPTS_OUTPUT)
 
 groff_TESTS = \
-  src/roff/groff/tests/regression-56555.sh \
-  src/roff/groff/tests/on-latin1-device-oq-is-0x27.sh \
-  src/roff/groff/tests/string_case_xform_requests.sh \
-  src/roff/groff/tests/string_case_xform_unicode_escape.sh \
+  src/roff/groff/tests/on_latin1_device_oq_is_0x27.sh \
+  src/roff/groff/tests/recognize_end_of_sentence.sh \
+  src/roff/groff/tests/regression_savannah_56555.sh \
   src/roff/groff/tests/string_case_xform_errors.sh \
-  src/roff/groff/tests/transparent_end-of-sentence_chars.sh
+  src/roff/groff/tests/string_case_xform_requests.sh \
+  src/roff/groff/tests/string_case_xform_unicode_escape.sh
 TESTS += $(groff_TESTS)
 
 groff_XFAIL_TESTS = \
