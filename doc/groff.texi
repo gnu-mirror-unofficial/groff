@@ -617,7 +617,7 @@ for some thirty years.  It is well entrenched in the Unix community.
 @node What Is groff?, History, Introduction, Introduction
 @section What Is @code{groff}?
 @cindex what is @code{groff}?
-@cindex @code{groff} -- what is it?
+@cindex @code{groff}---what is it?
 
 @code{groff} belongs to an older generation of document preparation
 systems, which operate more like compilers than the more recent
@@ -1683,7 +1683,7 @@ groff -man -rD1 -z file
 
 @noindent
 Check @file{file} with the @file{man} macro package, forcing
-double-sided printing -- don't produce any output.
+double-sided printing---don't produce any output.
 
 @menu
 * grog::
@@ -1848,12 +1848,12 @@ comma or phrase, since common corrections are to add or delete sentences
 or phrases.
 
 @item
-End each sentence with two spaces -- or better, start each sentence on a
+End each sentence with two spaces---or better, start each sentence on a
 new line.  @code{gtroff} recognizes characters that usually end a
 sentence, and inserts sentence space accordingly.
 
 @item
-Do not hyphenate words at the end of lines -- @code{gtroff} is smart
+Do not hyphenate words at the end of lines---@code{gtroff} is smart
 enough to hyphenate words as needed, but is not smart enough to take
 hyphens out and join a word back together.  Also, words such as
 ``mother-in-law'' should not be broken over a line, since then a space
@@ -4087,7 +4087,7 @@ and @code{UC} macros collide with different macros with the same names
 in the Berkeley version of @code{ms}.
 
 These @code{groff} emulations are sufficient to give back the 1976
-Kernighan@tie{}& Cherry paper @cite{Typesetting Mathematics -- User's
+Kernighan@tie{}& Cherry paper @cite{Typesetting Mathematics---User's
 Guide} its section headings, and restore some text that had gone missing
 as arguments of undefined macros.  No warranty express or implied is
 given as to how well the typographic details these produce match the
@@ -4466,7 +4466,7 @@ at the beginning of the next line.  Note that this space isn't adjusted,
 even in fill mode; however, the behaviour can be modified with the
 leading spaces macro request @code{lsm}.  @xref{Leading Spaces Traps}.
 
-The end of file also causes a break -- otherwise the last line of the
+The end of file also causes a break---otherwise the last line of the
 document may vanish!
 
 Certain requests also cause breaks, implicitly or explicitly.  This is
@@ -5223,7 +5223,7 @@ of the @code{.br} register is inherited from the caller.
 Arguments to requests and macros are processed much like the shell:
 The line is split into arguments according to
 spaces.@footnote{Plan@tie{}9's @code{troff} implementation also allows
-tabs for argument separation -- @code{gtroff} intentionally doesn't
+tabs for argument separation---@code{gtroff} intentionally doesn't
 support this.}
 
 @cindex spaces, in a macro argument
@@ -5323,7 +5323,7 @@ Double quotes in the @code{ds} request are handled differently.
 
 @code{gtroff} has a @dfn{macro} facility for defining a series of lines
 that can be invoked by name.  They are called in the same manner as
-requests -- arguments also may be passed basically in the same manner.
+requests---arguments also may be passed basically in the same manner.
 
 @xref{Writing Macros}, and @ref{Request and Macro Arguments}.
 
@@ -7213,7 +7213,7 @@ For example, the following is equivalent to the previous example.
 @endExample
 
 @code{gtroff} supports an extended syntax to specify repeat values after
-the @samp{T} mark (these values are always taken as relative) -- this is
+the @samp{T} mark (these values are always taken as relative)---this is
 the usual way to specify tabs set at equal intervals.  The following is,
 yet again, the same as the previous examples.  It does even more since
 it defines an infinite number of tab stops separated by one inch.
@@ -7640,7 +7640,7 @@ The result is surprising for most users, expecting @samp{1} since
 @samp{foo} is a valid identifier.  What has happened?  As mentioned
 above, the leading escape character makes the following character
 ordinary.  Written with the default escape character the sequence
-@samp{--} becomes @samp{\-} -- this is the minus sign.
+@samp{--} becomes @samp{\-}---this is the minus sign.
 
 If the escape character followed by itself is a valid escape sequence,
 only @code{\E} yields the expected result:
@@ -7932,19 +7932,19 @@ These dimensions are:
 @cindex margin, left (@code{po})
 @cindex page offset (@code{po})
 @cindex offset, page (@code{po})
-@dfn{Page offset} -- this is the leftmost position of text on the final
+@dfn{Page offset}---this is the leftmost position of text on the final
 output, defining the @dfn{left margin}.
 
 @item in
 @cindex indentation (@code{in})
 @cindex line indentation (@code{in})
-@dfn{Indentation} -- this is the distance from the left margin where
+@dfn{Indentation}---this is the distance from the left margin where
 text is printed.
 
 @item ll
 @cindex line length (@code{ll})
 @cindex length of line (@code{ll})
-@dfn{Line length} -- this is the distance from the left margin to right
+@dfn{Line length}---this is the distance from the left margin to right
 margin.
 @end ftable
 
@@ -8916,7 +8916,7 @@ glyph is something that can be actually seen on screen or paper.  It is
 possible that a character has multiple glyph representation forms (for
 example, the character `A' can be either written in a roman or an italic
 font, yielding two different glyphs); sometimes more than one character
-maps to a single glyph (this is a @dfn{ligature} -- the most common is
+maps to a single glyph (this is a @dfn{ligature}---the most common is
 `fi').
 
 @cindex symbol
@@ -9088,7 +9088,7 @@ example, @code{^E_u0301} is invalid.
 @DefescListEnd {\\, @Lbrack{}, component1 component2 @dots{}, @Rbrack{}}
 Insert a symbol @var{name} (two-character name @var{nm}) or a composite
 glyph with component glyphs @var{component1}, @var{component2},
-@enddots{} There is no special syntax for one-character names -- the
+@enddots{} There is no special syntax for one-character names---the
 natural form @samp{\@var{n}} would collide with escapes.@footnote{Note
 that a one-character symbol is not the same as an input character, i.e.,
 the character @code{a} is not the same as @code{\[a]}.  By default,
@@ -9298,7 +9298,7 @@ element.  Initially symbol @samp{\[br]} has this property.
 An end-of-sentence character followed by any number of characters with
 this property is treated as the end of a sentence if followed by a
 newline or two spaces; in other words the character is @dfn{transparent}
-for the purposes of end-of-sentence recognition -- this is the same as
+for the purposes of end-of-sentence recognition---this is the same as
 having a zero space factor in @TeX{} (initially characters @samp{"')]*}
 and the symbols @samp{\[dg]}, @samp{\[dd]}, @samp{\[rq]}, and
 @samp{\[cq]} have this property).
@@ -11785,7 +11785,7 @@ Here a small useful example:
 Note that this works by outputting a box rule (a vertical line), then
 the text given as an argument and then another box rule.  Finally, the
 line drawing escapes both draw from the current location to the
-beginning of the @emph{input} line -- this works because the line length
+beginning of the @emph{input} line---this works because the line length
 is negative, not moving the current point.
 @endDefesc
 
@@ -12470,8 +12470,8 @@ page, so we have to insert @code{\c} only once.
 
 The next example shows how to append three lines, then starting a new
 page unconditionally.  Since @w{@samp{.ne 1}} doesn't give the desired
-effect -- there is always one line available or we are already at the
-beginning of the next page -- we temporarily increase the page length
+effect---there is always one line available or we are already at the
+beginning of the next page---we temporarily increase the page length
 by one line so that we can use @w{@samp{.ne 2}}.
 
 @Example
@@ -12663,7 +12663,7 @@ After completing a diversion, the read-write number registers @code{dn}
 and @code{dl} contain the vertical and horizontal size of the diversion.
 Note that only the just processed lines are counted: For the computation
 of @code{dn} and @code{dl}, the requests @code{da} and @code{boxa} are
-handled as if @code{di} and @code{box} had been used -- lines that have
+handled as if @code{di} and @code{box} had been used---lines that have
 been already stored in a macro are not taken into account.
 
 @Example
@@ -12781,7 +12781,7 @@ Emit @var{string} directly to the @code{gtroff} intermediate output
 at the top level.  An initial double quote in @var{string} is stripped
 off to allow initial blanks.
 
-This request can't be used before the first page has started -- if you
+This request can't be used before the first page has started---if you
 get an error, simply insert @code{.br} before the @code{output} request.
 
 Without argument, @code{output} is ignored.
@@ -14180,7 +14180,7 @@ the @option{-w} and @option{-W} options; the number is used by the
 @item char
 @itemx 1
 Non-existent glyphs.@footnote{@code{char} is a misnomer since it reports
-missing glyphs -- there aren't missing input characters, only invalid
+missing glyphs---there aren't missing input characters, only invalid
 ones.}  This is enabled by default.
 
 @item number
@@ -15512,7 +15512,7 @@ fortunately, in @code{gtroff}'s intermediate output, every command with
 at least one argument is followed by a line break, thus providing
 excellent readability.
 
-The other commands -- those for drawing and device controlling -- have a
+The other commands---those for drawing and device controlling---have a
 more complicated structure; some recognize long command names, and some
 take a variable number of arguments.  So all @samp{D} and @samp{x}
 commands were designed to request a syntactical line break after their
