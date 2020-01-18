@@ -900,39 +900,12 @@
 .\" NS   doc-date-string
 .\" NS   doc-command-name
 .\" NS
-.\" NS local variables:
-.\" NS   doc-date-XXX
-.\" NS
 .\" NS width register 'Dd' set above
-.
-.ds doc-date-1  January
-.ds doc-date-2  February
-.ds doc-date-3  March
-.ds doc-date-4  April
-.ds doc-date-5  May
-.ds doc-date-6  June
-.ds doc-date-7  July
-.ds doc-date-8  August
-.ds doc-date-9  September
-.ds doc-date-10 October
-.ds doc-date-11 November
-.ds doc-date-12 December
 .
 .de Dd
 .  ds doc-command-name
-.
-.  ie \n[.$] \{\
-.    ie "\$1"$Mdocdate:" \
-.      ds doc-date-string \$2\~\$3, \$4
-.    el \{ .ie (\n[.$] == 3) \
-.      ds doc-date-string \$1\~\$2 \$3
-.    el \{\
-.      ds doc-date-string "\*[doc-date-\n[mo]]
-.      as doc-date-string \~\n[dy], \n[year]
-.    \}\}
-.  \}
-.  el \
-.    ds doc-date-string Epoch
+.  ie "\$1"$Mdocdate:"  .ds doc-date-string \$2\~\$3, \$4
+.  el                   .ds doc-date-string \$*
 ..
 .
 .

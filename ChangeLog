@@ -1,3 +1,28 @@
+2020-01-18  Ingo Schwarze  <schwarze@openbsd.org>
+
+	Accept any number of arguments for .Dd in the groff_mdoc(7) macros.
+
+	* tmac/doc-common-u: The .Dd macro behaved in a weird way:
+	Without arguments, it printed the string "Epoch".
+	With one, two, four, or more arguments, it ignored all arguments
+	and used the current date instead.
+	Only for exactly three arguments, it printed the arguments.
+	None of this made sense.  Giving the date as "Epoch" is
+	absurd, and printing the current date is just misleading:
+	why should a document be considered up-to-date when the author
+	did not even bother to state the date of the last change?
+	Admittedly, the behaviour for 0 and 4 or more arguments
+	already appeared 4.3BSD-Reno, and the behaviour for 2 or 3
+	arguments in 4.4BSD.  But it was already wrong even in those
+	days: several manual pages in 4.4BSD gave .Dd a single, quoted
+	argument, e.g. .Dd "June 9, 1993": cap_mkdb(1), id(1), sed(1),
+	err(3), getcap(3), sysctl(3), amd(8), disklabel(8), and others.
+	Consequently, simply print all the arguments, no matter how
+	many there are.
+
+	This bug was found by Jonathan Gray <jsg@openbsd.org>
+	while he looked at 4.xBSD manual pages.
+
 2020-01-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi: Document initial empty set membership of

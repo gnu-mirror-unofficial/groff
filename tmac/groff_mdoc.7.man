@@ -944,30 +944,32 @@ ugly.
 .Pp
 This macro is neither callable nor parsed.
 .
-.It Li .Dd Oo
-.Aq month
+.It Li .Dd Xo
+.Aq Month
 .Aq day ,
 .Aq year
-.Oc
-If
-.Ql Dd
-has no arguments,
-.Ql Epoch
-is used for the date string.
-If it has exactly three arguments, they are concatenated, separated with
-unbreakable space:
+.Xc
+The document date for display in the page footer.
+This is the mandatory first macro of any
+.Nm \-mdoc
+manual.
+The
+.Aq Month
+is the full English month name, the
+.Aq day
+is an integer number without a leading zero, and the
+.Aq year
+is the full four-digit year, for example:
 .Pp
 .Dl .Dd January 25, 2001
 .Pp
-The month's name shall not be abbreviated.
-.Pp
-With any other number of arguments, the current date is used, ignoring
-the parameters.
+The arguments are concatenated, separated with space characters,
+even if they do not match the recommended format.
 .Pp
 As a special exception, the format
 .Bd -filled -offset indent
 .Li .Dd $Mdocdate:
-.Aq month
+.Aq Month
 .Aq day
 .Aq year
 .Li $
