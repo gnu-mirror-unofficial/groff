@@ -105,7 +105,7 @@ is now maintained by the team at
 .
 .HR
 .
-\s[-4]\f[I]This document was produced using
+\s[-2]\f[I]This document was produced using
 .URL http://\:www.gnu.org/\:software/\:groff groff-\n[.x].\n[.y].\n[.Y] .
 .br
 The image at the top has been contributed by Imogen Mulley,
@@ -210,7 +210,7 @@ The same is true for some other preprocessors like `chem'.
 The `groff' configure script searches for the X11 headers and libraries
 `Xaw' and `Xmu'.
 So the corresponding developer packages of your system must be installed,
-otherwise `groff' does not install `gxditview' and the `-TX*' devices.
+otherwise `groff' does not install `gxditview' and the `\-TX*' devices.
 In Debian, the developer packages are `libxaw7-dev' and `libxmu-dev'.
 .
 .
@@ -342,7 +342,7 @@ option by default, unless a request similar to:
 .fi
 .in
 
-is invoked during input file processing; (`.if !\en[PHASE] ...' ensures
+is invoked during input file processing; (`.if !\en[PHASE] ...\&' ensures
 that the effect of the `.tm' request is restricted to the document setup
 phase of processing, as pdfroff sets it to 1 or\~2 in the output phase,
 but leaves it unset in the setup phase).
@@ -368,7 +368,7 @@ A French introduction to the \-me macro package has been added (file
 `meintro_fr.me').
 
 .LI
-In -mdoc, command %C is now available, providing a city or place reference.
+In \-mdoc, command %C is now available, providing a city or place reference.
 .ULE
 .
 .
@@ -619,7 +619,7 @@ This allows reliable modification of requests.
 \&.de bp
 \&.  tm before bp
 \&.  ie \e\en[.br] .bp@orig
-\&.  el 'bp@orig
+\&.  el \[aq]bp@orig
 \&.  tm after bp
 \&..
 .ft P
@@ -745,7 +745,7 @@ eqn
 
 .ULS
 .LI
-Eric S. Raymond has added a new device type to eqn, MathML.
+Eric S.\& Raymond has added a new device type to eqn, MathML.
 When \-TMathML is enabled, eqn now emits MathML formula markup rather than
 groff commands.
 The new groff \-Txhtml device uses this.
@@ -783,7 +783,7 @@ grotty
 
 .ULS
 .LI
-\eD'p...' is now supported if the polygon consists entirely of horizontal
+\eD'p...\&' is now supported if the polygon consists entirely of horizontal
 and vertical lines.
 .ULE
 .
@@ -869,12 +869,12 @@ Here the same table using a more expanded syntax:
 .nf
 .ft C
 \&.TBL cols=2
-\&.  TR
-\&.    TD 1*1
-\&.    TD 1*2
-\&.  TR
-\&.    TD 2*1
-\&.    TD 2*2
+\&.\&  TR
+\&.\&    TD 1*1
+\&.\&    TD 1*2
+\&.\&  TR
+\&.\&    TD 2*1
+\&.\&    TD 2*2
 \&.ETB
 .ft P
 .fi
@@ -892,7 +892,7 @@ This package currently works with `\-Tps' only.
 Fabrice M\['e]nard contributed locales support.
 In particular, it is now possible to get French localization of the main
 macro packages (\-ms, \-mm, \-me, and \-mom, but not \-man and \-mdoc
-which are localized differently) by appending `-mfr' to the list of macro
+which are localized differently) by appending `\-mfr' to the list of macro
 packages.
 Example:
 
@@ -939,11 +939,11 @@ is loaded in troffrc at start-up.
 
 .LI
 A new auxiliary macro package `62bit' has been added which provides some
-macros for adding, multiplying, and dividing signed 62bit integers (mainly
+macros for adding, multiplying, and dividing signed 62-bit integers (mainly
 to handle normal groff number operations without risking overflow errors).
 
 .LI
-For \-ms, Eric S. Raymond contributed support for ancient Bell Labs
+For \-ms, Eric S.\& Raymond contributed support for ancient Bell Labs
 localisms `.SC', `.UC', `.P1', and `.P2'.
 The latter three are enabled only after .SC is called.
 
@@ -1162,8 +1162,9 @@ same point size as body text.
 Sets the point size increment for each level of heading (set with
 `NH'), below the threshold level set by `GROWPS'; e.g., if
 \en[PS]\~=\~10, \en[GROWPS]\~=\~3 and \en[PSINCR]\~=\~2.0p, then `.NH\~1'
-produces 14pt headings, `.NH\~2' produces 12pt, and all other levels
-remain at 10pt (because \en[PS]\~=\~10).
+produces 14 points (p) headings, `.NH\~2' produces 12 points,
+and all other levels
+remain at 10 points (because \en[PS]\~=\~10).
 
 .LI
 The `SH' macro now accepts a numeric argument, to make heading size
@@ -1352,7 +1353,8 @@ grolj4
 
 .ULS
 .LI
-A new man page `lj4_font(5)' documents how fonts are accessed with
+A new man page `\fBlj4_font\fP (5)'
+documents how fonts are accessed with
 grolj4.
 
 .LI
@@ -1434,7 +1436,7 @@ Example use:
 
 .in 2m
 .ft C
-groff -Tdvi -mlatin9 my_file > my_file.dvi
+groff \-Tdvi \-mlatin9 my_file > my_file.dvi
 .ft P
 .in
 
@@ -1451,7 +1453,7 @@ is used to construct glyph names based on Unicode character codes.
 The existing groff glyph names are frozen; no glyph names which can't be
 constructed algorithmically will be added in the future.
 
-The \e[...] escape sequence has been extended to specify multiple glyph
+The \e[...\&] escape sequence has been extended to specify multiple glyph
 components.
 Example:
 
@@ -1508,16 +1510,16 @@ They are searched after the list of fonts declared with the
 `special' request but before the already mounted special fonts.
 
 .LI
-In groff versions 1.18 and 1.18.1, \eD'f\~...'\& didn't move the current
+In groff versions 1.18 and 1.18.1, \eD'f\~...\&' didn't move the current
 point horizontally.
 Despite of being silly, this change has been reverted for backwards
 compatibility.
 Consequently, the intermediate output command `Df' also moves the
 position horizontally again.
 
-\eD'f\~...'\& is deprecated since it depends on the horizontal resolution
+\eD'f\~...\&' is deprecated since it depends on the horizontal resolution
 of the output device (given with the `hor' parameter in the DESC file).
-Use the new \eD'Fg\~...'\& escape instead.
+Use the new \eD'Fg\~...\&' escape instead.
 
 .LI
 For orthogonality, new \eD subcommands to change the fill color are
@@ -1525,15 +1527,15 @@ available:
 
 .in 2m
 .ft C
-\eD'Fr ...' \f[R](rgb)\f[]
+\eD\[aq]Fr ...\&\[aq] \f[R](rgb)\f[]
 .br
-\eD'Fc ...' \f[R](cmy)\f[]
+\eD\[aq]Fc ...\&\[aq] \f[R](cmy)\f[]
 .br
-\eD'Fg ...' \f[R](gray)\f[]
+\eD\[aq]Fg ...\&\[aq] \f[R](gray)\f[]
 .br
-\eD'Fk ...' \f[R](cmyk)\f[]
+\eD\[aq]Fk ...\&\[aq] \f[R](cmyk)\f[]
 .br
-\eD'Fd' \f[R](default color)\f[]
+\eD\[aq]Fd\[aq] \f[R](default color)\f[]
 .ft R
 .in
 
@@ -1626,8 +1628,9 @@ The glyphs \e[*e] and \e[+e] have been exchanged to be in sync with
 all other devices.
 
 .LI
-The glyph \e[~=] is now called \e[|=].
-Similar to other devices, \e[~=] is now another name for glyph \e[~~].
+The glyph \e[\s'+2'~\s'-2'=] is now called \e[|=].
+Similar to other devices,
+\e[\s'+2'~\s'-2'=] is now another name for glyph \e[\s'+2'~~\s'-2'].
 .ULE
 .
 .
@@ -1726,13 +1729,13 @@ explicitly specified on the command line.
 
 .LI
 troff's start-up file `troffrc' now includes `papersize.tmac' to set
-the paper size with the command-line option `-dpaper=<size>'.
+the paper size with the command-line option `\-dpaper=<size>'.
 
 Possible values for `<size>' are the same as the predefined `papersize'
 values in the DESC file (only lowercase; see the groff_font man page)
-except \%a7-d7.
+except \%a7\[en]d7.
 An appended `l' (ell) character denotes landscape orientation.
-Examples: `a4', `c3l', `letterl'.
+Examples: `a4l', `c3l', `letterl'.
 
 Most output drivers need additional command-line switches `\-p' and
 `\-l' to override the default paper length and orientation as set in
@@ -1743,7 +1746,7 @@ orientation:
 
 .in 2m
 .ft C
-groff -Tps -dpaper=a4l -P-pa4 -P-l -ms foo.ms > foo.ps
+groff \-Tps \-dpaper=a4l \-P\-pa4 \-P\-l \-ms foo.ms > foo.ps
 .ft R
 .in
 .ULE
@@ -1849,7 +1852,7 @@ papersize /etc/papersize a4
 A local font directory has been prepended to the default font path; it
 defaults to /usr/local/share/groff/site-font.
 Similar to the normal font searching process, files must be placed into
-a dev\f[I]XXX\f[] subdirectory, e.g.
+a dev\f[I]XXX\f[] subdirectory, e.g.\&\" not a end of sentence
 
 .in 2m
 .ft C
@@ -1890,7 +1893,7 @@ grops, grodvi, grotty, and grohtml \[en] other preprocessors and drivers will
 follow).
 A new function `defcolor' defines colors; the escape sequence `\em' sets the
 drawing color, the escape sequence `\eM' specifies the background color for
-closed objects created with \eD'.\|.\|.' commands.
+closed objects created with \eD'.\|.\|.\&' commands.
 `\em[]' and `\eM[]' switch back to the previous color.
 `\em' and `\eM' correspond to the new troff output command sets starting
 with `m' and `DF'.
@@ -1970,11 +1973,11 @@ Example:
 \&..
 \&.
 \&.de foo
-\&.  nop Hello, I'm `foo'.
-\&.  nop I will now define `bar'.
-\&.  de bar !
-\&.    nop Hello, I'm `bar'.
-\&.  !
+\&.\&  nop Hello, I\[aq]m \[aq]foo\[aq].
+\&.\&  nop I will now define \[aq]bar\[aq].
+\&.\&  de bar !
+\&.\&    nop Hello, I\[aq]m \[aq]bar\[aq].
+\&.\&  !
 \&..
 .ft P
 .fi
@@ -2110,10 +2113,10 @@ Please see groff_diff.man and groff.texinfo for more details.
 .LI
 The escapes `\e%', `\e&', `\e)', and `\e:' no longer cause an error in \eX;
 they are ignored now.
-Additionally `\e\ ' and `\e~' are converted to single space characters.
+Additionally `\e\ ' and `\e\s+2~\s-2' are converted to single space characters.
 
 .LI
-The default tab distance in nroff mode is now 0.8i to be compatible
+The default tab distance in nroff mode is now 0.8 inches (i) to be compatible
 with Unix troff.
 
 .LI
@@ -2137,7 +2140,7 @@ It comes with a complete reference (in HTML format) and some examples.
 `mom' has been designed to format documents for PostScript output only.
 
 .LI
-Two macros `AT' (AT&T) and `UC' (Univ. of California) have been added to
+Two macros `AT' (AT&T) and `UC' (Univ.\& of California) have been added to
 the man macros for compatibility with older BSD releases.
 
 .LI
@@ -2145,7 +2148,8 @@ Both the man and mdoc macro packages now use the LL and LT registers for
 setting the line and title length, respectively (similar to those
 registers in the ms macro package).
 If not set on the command line or in a macro file loaded before the macro
-package itself, they default to 78n in nroff mode and 6.5i in troff mode.
+package itself, they default to 78 en (n) in nroff mode and
+6.5 inches in troff mode.
 
 .LI
 The `\-xwidth' specifier in the mdoc macro package has been removed.
@@ -2364,15 +2368,16 @@ Grodvi
 
 .ULS
 .LI
-By default, font sizes are now available in the range 5\-10000pt, similar
-to PS fonts.
+By default,
+font sizes are now available in the range 5\[en]10000\~points (p),
+similar to PS fonts.
 If you want the old behaviour (i.e., font sizes at discrete values only),
 insert the following at the start of your document:
 
 .in 2m
 .nf
 .ft C
-\&.if '\e*[.T]'dvi' \e
+\&.if \[aq]\e*[.T]\[aq]dvi\[aq] \e
 \&.  sizes 500 600 700 800 900 1000 1095 1200 1400 1440 1600 \e
 \&         1728 1800 2000 2074 2200 2400 2488 2800 3600
 .ft P
@@ -2426,7 +2431,7 @@ For the `man' program, it may be necessary to add the `\-R' option of
 `less' to the $PAGER environment variable (or $MANPAGER, depending on the
 used version of `man'); alternatively, you can use `man's `\-P' option (or
 adapt its configuration file accordingly).
-See man(1) for more details.
+See \fBman\fP (1) for more details.
 
 .TAG GROFF_NO_SGR
 .LI
@@ -2497,17 +2502,17 @@ Its argument is either
 
 .ULS
 .LI
-a predefined paper format (e.g. `A4' or `letter')
+a predefined paper format (e.g., `A4' or `letter')
 
 .LI
 a file name pointing to a file which must contain a paper size
-specification in its first line (e.g. `/etc/papersize')
+specification in its first line (e.g., `/etc/papersize')
 
 .LI
 a custom paper size definition like `35c,4i'
 .ULE
 
-See groff_font(5) for more details.
+See \fBgroff_font\fP (5) for more details.
 This keyword only affects the physical dimensions of the output medium;
 grops, grolj4, and grolbp use it currently.
 troff completely ignores it.
