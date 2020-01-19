@@ -106,7 +106,7 @@ is now maintained by the team at
 .HR
 .
 \s[-2]\f[I]This document was produced using
-.URL http://\:www.gnu.org/\:software/\:groff groff-\n[.x].\n[.y].\n[.Y] .
+.URL http://\:www.gnu.org/\:software/\:groff groff\~\n[.x].\n[.y].\n[.Y] .
 .br
 The image at the top has been contributed by Imogen Mulley,
 based on a similar picture found on the
@@ -179,7 +179,7 @@ following tools to build `groff' directly from its source:
 
 .in 2m
 .nf
-perl >= v5.6.1 (see macro GROFF_PERL in file `m4/groff.m4')
+perl \[>=] v5.6.1 (see macro GROFF_PERL in file `m4/groff.m4')
 ghostscript
 the psutils package
 the netpbm package
@@ -211,7 +211,7 @@ The `groff' configure script searches for the X11 headers and libraries
 `Xaw' and `Xmu'.
 So the corresponding developer packages of your system must be installed,
 otherwise `groff' does not install `gxditview' and the `\-TX*' devices.
-In Debian, the developer packages are `libxaw7-dev' and `libxmu-dev'.
+In Debian, the developer packages are `libxaw7\-dev' and `libxmu\-dev'.
 .
 .
 .SH
@@ -220,9 +220,9 @@ Bug reports
 Please report bugs using the project's
 .URL https://\:savannah.gnu.org/\:projects/\:groff "bug tracker" .
 
-You may use the form in the file `BUG-REPORT'; the idea of this is to
+You may use the form in the file `BUG\-REPORT'; the idea of this is to
 make sure that FSF has all the information it needs to fix the bug.
-At the very least, read the `BUG-REPORT' form and make sure that you supply
+At the very least, read the `BUG\-REPORT' form and make sure that you supply
 all the information that it asks for.
 Even if you are not sure that something is a bug, report it:
 this enables us to determine whether it really is a bug.
@@ -247,7 +247,7 @@ for general discussion of groff; and
 a read-only list showing commits to the git repository.
 .ULE
 
-To subscribe, send a mail to \[la]list\[ra]-request@\[la]domain\[ra]
+To subscribe, send a mail to \[la]list\[ra]\-request@\[la]domain\[ra]
 (example:
 .MTO groff\-request@\:gnu.org
 for the `groff' list) with the word `subscribe' in either the
@@ -256,9 +256,9 @@ Alternatively, you may subscribe by visiting the web pages at
 
 .in 2m
 .nf
-.URL http://lists.gnu.org/mailman/listinfo/bug-groff
+.URL http://lists.gnu.org/mailman/listinfo/bug\-groff
 .URL http://lists.gnu.org/mailman/listinfo/groff
-.URL http://lists.gnu.org/mailman/listinfo/groff-commit
+.URL http://lists.gnu.org/mailman/listinfo/groff\-commit
 .fi
 .in
 
@@ -275,8 +275,8 @@ gxditview
 .ULS
 .LI
 X11 resources for gxditview, which were previously installed in
-/usr/X11/lib/X11/app-defaults no matter which `prefix' was set, are
-now installed in appresdir=$prefix/lib/X11/app-defaults.
+/usr/X11/lib/X11/app\-defaults no matter which `prefix' was set, are
+now installed in appresdir=$prefix/lib/X11/app\-defaults.
 If `appresdir' is not a standard X11 resource directory, the environment
 variable XFILESEARCHPATH should be set to this path.
 The standard default directories depends on the system `libXt'.
@@ -284,9 +284,9 @@ Common directories include:
 
 .in 2m
 .nf
-/usr/lib/X11/app-defaults
-/usr/share/X11/app-defaults
-/etc/X11/app-defaults
+/usr/lib/X11/app\-defaults
+/usr/share/X11/app\-defaults
+/etc/X11/app\-defaults
 .fi
 .in
 
@@ -338,7 +338,7 @@ option by default, unless a request similar to:
 
 .in 2m
 .nf
-\&.if !\en[PHASE] .tm pdfroff-option:set toc_relocation=enabled
+\&.if !\en[PHASE] .tm pdfroff\-option:set toc_relocation=enabled
 .fi
 .in
 
@@ -448,7 +448,7 @@ Line numbering support has been improved.
 .LI
 The \-mom macro package has reached version 2.0, focusing on PDF output
 with gropdf (using the new `pdfmom' wrapper script).
-See the file `version-2.html' of the \-mom documentation for a list of the
+See the file `version\-2.html' of the \-mom documentation for a list of the
 many changes.
 
 .LI
@@ -814,7 +814,7 @@ Support for keyboard navigation has been improved.
 
 .LI
 Similar to other X11 applications, there are now two resource files,
-`GXditview' and `GXditview-color'.
+`GXditview' and `GXditview\-color'.
 .ULE
 .
 .
@@ -1003,18 +1003,32 @@ eqn
 The following keywords aren't new but haven't been documented previously:
 
 .in 2m
-\fBundef NAME\fP (to undefine a macro)
+.B undef
+.I name
+(to undefine a macro)
 .br
-\fBcopy "FILE"\fP (a synonym for `include')
+.B
+copy
+.I file \[dq] \[dq]
+.R
+a synonym for `include')
 .br
-\fBspace n\fP (to modify the vertical spacing before and after an equation)
+.B space
+.I n
+(to modify the vertical spacing before and after an equation)
 .in
 
 .LI
 The following macros aren't new but haven't been documented previously:
 
 .in 2m
-\fBAlpha, .\|.\|., Omega\fP (the same as `ALPHA', .\|.\|., `OMEGA')
+.B Alpha ,
+\&\.\.\.,
+.B Omega
+(the same as
+.B ALPHA ,
+\&\.\.\.,
+.B OMEGA )
 .br
 \fBldots\fP (three dots on the base line)
 .br
@@ -1026,24 +1040,56 @@ The following keywords have been extended.
 Again, this isn't new but hasn't been documented previously:
 
 .in 2m
-.ft B
-col n { .\|.\|. }
+.B col
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-lcol n { .\|.\|. }
+.B lcol
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-rcol n { .\|.\|. }
+.B rcol
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-ccol n { .\|.\|. }
+.B ccol
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-pile n { .\|.\|. }
+.B pile
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-lpile n { .\|.\|. }
+.B lpile
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-rpile n { .\|.\|. }
+.B rpile
+.I n
+.B {
+\&\.\.\.\&
+.B }
 .br
-cpile n { .\|.\|. }
-.ft P
-(set vertical spacing between rows to\~N)
+.B cpile
+.I n
+.B {
+\&\.\.\.\&
+.B }
+.br
+The above all set the vertical spacing between rows to\~\c
+.I n ).
 .ULE
 .
 .
@@ -1162,9 +1208,9 @@ same point size as body text.
 Sets the point size increment for each level of heading (set with
 `NH'), below the threshold level set by `GROWPS'; e.g., if
 \en[PS]\~=\~10, \en[GROWPS]\~=\~3 and \en[PSINCR]\~=\~2.0p, then `.NH\~1'
-produces 14 points (p) headings, `.NH\~2' produces 12 points,
+produces 14-point headings, `.NH\~2' produces 12-point,
 and all other levels
-remain at 10 points (because \en[PS]\~=\~10).
+remain at 10\~points (because \en[PS]\~=\~10).
 
 .LI
 The `SH' macro now accepts a numeric argument, to make heading size
@@ -1353,7 +1399,8 @@ grolj4
 
 .ULS
 .LI
-A new man page `\fBlj4_font\fP (5)'
+A new man page
+.I lj4_font (5)
 documents how fonts are accessed with
 grolj4.
 
@@ -1396,9 +1443,9 @@ the old single script style.
 
 .ULS
 .LI
-New options: \-\-text (\-\-mode\~text), \-\-tty-viewer, \-\-X (\-\-mode\~X),
-\-\-X-viewer, \-\-html (\-\-mode\~html), \-\-html-view, \-\-apropos-data,
-\-\-apropos-devel, \-\-apropos-progs.
+New options: \-\-text (\-\-mode\~text), \-\-tty\-viewer, \-\-X (\-\-mode\~X),
+\-\-X\-viewer, \-\-html (\-\-mode\~html), \-\-html\-view, \-\-apropos\-data,
+\-\-apropos\-devel, \-\-apropos\-progs.
 
 .LI
 New documentation file README_SH.
@@ -1628,9 +1675,9 @@ The glyphs \e[*e] and \e[+e] have been exchanged to be in sync with
 all other devices.
 
 .LI
-The glyph \e[\s'+2'~\s'-2'=] is now called \e[|=].
+The glyph \e[\[ti]=] is now called \e[|=].
 Similar to other devices,
-\e[\s'+2'~\s'-2'=] is now another name for glyph \e[\s'+2'~~\s'-2'].
+\e[\[ti]=] is now another name for glyph \e[\[ti]\[ti]].
 .ULE
 .
 .
@@ -1850,13 +1897,15 @@ papersize /etc/papersize a4
 
 .LI
 A local font directory has been prepended to the default font path; it
-defaults to /usr/local/share/groff/site-font.
+defaults to /usr/local/share/groff/site\-font.
 Similar to the normal font searching process, files must be placed into
-a dev\f[I]XXX\f[] subdirectory, e.g.\&\" not a end of sentence
+a \%dev\c
+.I XXX
+subdirectory, e.g.,
 
 .in 2m
 .ft C
-/usr/local/share/groff/site-font/devps/FOO
+/usr/local/share/groff/site\-font/devps/FOO
 .ft P
 .in
 
@@ -2113,10 +2162,10 @@ Please see groff_diff.man and groff.texinfo for more details.
 .LI
 The escapes `\e%', `\e&', `\e)', and `\e:' no longer cause an error in \eX;
 they are ignored now.
-Additionally `\e\ ' and `\e\s+2~\s-2' are converted to single space characters.
+Additionally `\e\ ' (space) and `\e\[ti]' are converted to single space characters.
 
 .LI
-The default tab distance in nroff mode is now 0.8 inches (i) to be compatible
+The default tab distance in nroff mode is now 0.8i\~(inches) to be compatible
 with Unix troff.
 
 .LI
@@ -2148,8 +2197,8 @@ Both the man and mdoc macro packages now use the LL and LT registers for
 setting the line and title length, respectively (similar to those
 registers in the ms macro package).
 If not set on the command line or in a macro file loaded before the macro
-package itself, they default to 78 en (n) in nroff mode and
-6.5 inches in troff mode.
+package itself, they default to 78n\~(ens) in nroff mode and
+6.5i\~(inches) in troff mode.
 
 .LI
 The `\-xwidth' specifier in the mdoc macro package has been removed.
@@ -2204,9 +2253,9 @@ The following macros have been renamed:
 
 .in 2m
 .nf
-MAILTO -> MTO
-IMAGE  -> IMG
-LINE   -> HR
+MAILTO \-> MTO
+IMAGE  \-> IMG
+LINE   \-> HR
 .fi
 .in
 
@@ -2369,7 +2418,7 @@ Grodvi
 .ULS
 .LI
 By default,
-font sizes are now available in the range 5\[en]10000\~points (p),
+font sizes are now available in the range 5\[en]10000p\~(points),
 similar to PS fonts.
 If you want the old behaviour (i.e., font sizes at discrete values only),
 insert the following at the start of your document:
@@ -2431,7 +2480,9 @@ For the `man' program, it may be necessary to add the `\-R' option of
 `less' to the $PAGER environment variable (or $MANPAGER, depending on the
 used version of `man'); alternatively, you can use `man's `\-P' option (or
 adapt its configuration file accordingly).
-See \fBman\fP (1) for more details.
+See
+.I man (1)
+for more details.
 
 .TAG GROFF_NO_SGR
 .LI
@@ -2512,7 +2563,9 @@ specification in its first line (e.g., `/etc/papersize')
 a custom paper size definition like `35c,4i'
 .ULE
 
-See \fBgroff_font\fP (5) for more details.
+See
+.I groff_font (5)
+for more details.
 This keyword only affects the physical dimensions of the output medium;
 grops, grolj4, and grolbp use it currently.
 troff completely ignores it.
