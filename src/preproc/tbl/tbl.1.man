@@ -94,7 +94,7 @@ Leader characters (\[rs]a) are handled as interpreted.
 .
 .TP
 .B \-v
-Print the version number.
+Display version information and exit.
 .
 .
 .\" ====================================================================
@@ -163,7 +163,7 @@ is an arbitrary character.
 .SH "Simple Examples"
 .\" ====================================================================
 .
-The easiest table definition is.
+A simple table definition follows.
 .RS
 .EX
 \&.TS
@@ -292,8 +292,7 @@ columns (GNU tbl only).
 .BI delim( xy )
 Use
 .I x
-and\~\c
-.I y
+.RI and\~ y
 as start and end delimiters for
 .BR @g@eqn (@MAN1EXT@).
 .
@@ -314,9 +313,11 @@ Ignored if one or more \[oq]x\[cq] column specifiers are used (see
 below).
 .
 .IP
-In case the sum of the column widths is larger than the current line length,
-the column separation factor is set to zero; such tables extend into the
-right margin, and there is no column separation at all.
+In case the sum of the column widths is larger than the current line
+length,
+the column separation factor is set to zero;
+such tables extend into the right margin,
+and there is no column separation at all.
 .
 .TP
 .B frame
@@ -336,7 +337,8 @@ Don't use diversions to prevent page breaks (GNU tbl only).
 .
 Normally
 .B tbl
-attempts to prevent undesirable breaks in boxed tables by using diversions.
+attempts to prevent undesirable breaks in boxed tables by using
+diversions.
 .
 This can sometimes interact badly with macro packages' own use of
 diversions\[em]when footnotes, for example, are used.
@@ -391,8 +393,7 @@ width, inter-column spacing, etc.
 .LP
 The longest format line defines the number of columns in the table;
 missing format descriptors at the end of format lines are assumed to
-be\~\c
-.BR L .
+.RB be\~ L .
 .
 Extra columns in the data (which have no corresponding format entry)
 are ignored.
@@ -406,10 +407,10 @@ The available key characters are:
 Center longest line in this column and then left-justifies all other
 lines in this column with respect to that centered line.
 .
-The idea is to use such alphabetic subcolumns (hence the name of the
-key character) in combination with\~
-.BR L ;
-they are called subcolumns because
+The idea is to use such alphabetic sub-columns (hence the name of the
+key character) in combination
+.RB with\~ L ;
+they are called sub-columns because
 .BR A \~items
 are indented by\~1n relative to
 .BR L \~entries.
@@ -422,13 +423,13 @@ Example:
 \&tab(;);
 \&ln,an.
 \&item one;1
-\&subitem two;2
-\&subitem three;3
+\&sub-item two;2
+\&sub-item three;3
 \&.T&
 \&ln,an.
 \&item eleven;11
-\&subitem twentytwo;22
-\&subitem thirtythree;33
+\&sub-item twenty-two;22
+\&sub-item thirty-three;33
 \&.TE
 .EE
 .RE
@@ -442,13 +443,13 @@ Result:
 tab(;);
 ln,an.
 item one;1
-subitem two;2
-subitem three;3
+sub-item two;2
+sub-item three;3
 .T&
 ln,an.
 item eleven;11
-subitem twentytwo;22
-subitem thirtythree;33
+sub-item twenty-two;22
+sub-item thirty-three;33
 .TE
 .RE
 .
@@ -462,18 +463,20 @@ Left-justify item within the column.
 .
 .TP
 .BR n , N
-Numerically justify item in the column: Units positions of numbers are
-aligned vertically.
+Numerically justify item in the column;
+that is,
+align columns of numbers vertically at the units place.
 .
-If there is one or more dots adjacent to a digit, use the rightmost one for
-vertical alignment.
+If there are one or more dots adjacent to a digit,
+use the rightmost one for vertical alignment.
 .
 If there is no dot, use the rightmost digit for vertical alignment;
 otherwise, center the item within the column.
 .
 Alignment can be forced to a certain position using \[oq]\[rs]&\[cq];
-if there is one or more instances of this special (non-printing)
-character present within the data, use the leftmost one for alignment.
+if there are one or more instances of this special (non-printing)
+character present within the data,
+use the leftmost one for alignment.
 .
 Example:
 .RS
@@ -682,12 +685,13 @@ largest width value rules).
 .
 .TP
 .BR f , F
-Either of these specifiers may be followed by a font name (either one or two
-characters long), font number (a single digit), or long name in parentheses
-(the last form is a GNU tbl extension).
+Either of these specifiers may be followed by a font name (either one or
+two characters long),
+font number (a single digit),
+or long name in parentheses (the last form is a GNU tbl extension).
 .
-A one-letter font name must be separated by one or more blanks from whatever
-follows.
+A one-letter font name must be separated by one or more blanks from
+whatever follows.
 .
 .TP
 .BR i , I
@@ -732,7 +736,8 @@ Thus the macro can overwrite other modification specifiers.
 .
 .TP
 .BR p , P
-Followed by a number, this does a point size change for the affected fields.
+Followed by a number,
+this does a point size change for the affected fields.
 .
 If signed, the current point size is incremented or decremented (using
 a signed number instead of a signed digit is a GNU tbl extension).
@@ -742,8 +747,8 @@ separated by one or more blanks.
 .
 .TP
 .BR t , T
-Start an item vertically spanning rows at the top of its range rather than
-vertically centering it.
+Start an item vertically spanning rows at the top of its range rather
+than vertically centering it.
 .
 .TP
 .BR u , U
@@ -817,8 +822,8 @@ is mutually exclusive with
 .B e
 is not mutually exclusive
 .RB with\~ w );
-if specified multiple times for a particular column, the last entry takes
-effect:
+if specified multiple times for a particular column,
+the last entry takes effect:
 .BR x \~unsets
 both
 .B e
@@ -834,8 +839,9 @@ or
 .SS "Table data"
 .\" ====================================================================
 .
-The format lines are followed by lines containing the actual data for the
-table, followed finally by
+The format lines are followed by lines containing the actual data for
+the table,
+followed finally by
 .BR .TE .
 .
 Within such data lines, items are normally separated by tab characters
@@ -900,17 +906,17 @@ If a data line consists of only \[oq]_\[cq] or \[oq]=\[cq], a single
 or double line, respectively, is drawn across the table at that point;
 if a single item in a data line consists of only \[oq]_\[cq] or
 \[oq]=\[cq], then that item is replaced by a single or double line,
-joining its neighbours.
+joining its neighbors.
 .
 If a data item consists only of \[oq]\[rs]_\[cq] or \[oq]\[rs]=\[cq],
 a single or double line, respectively, is drawn across the field at
-that point which does not join its neighbours.
+that point which does not join its neighbors.
 .
 .
 .LP
 A data item consisting only of \[oq]\[rs]Rx\[cq] (\[oq]x\[cq] any
 character) is replaced by repetitions of character \[oq]x\[cq] as wide
-as the column (not joining its neighbours).
+as the column (not joining its neighbors).
 .
 .
 .LP
@@ -991,9 +997,9 @@ which produces the bottom and side lines of a boxed table.
 .
 While
 .B tbl
-does call this macro itself at the end of the table, it can be used by
-macro packages to create boxes for multi-page tables by calling it within the
-page footer.
+does call this macro itself at the end of the table,
+it can be used by macro packages to create boxes for multi-page tables
+by calling it within the page footer.
 .
 An example of this is shown by the
 .B \-ms
@@ -1019,11 +1025,11 @@ automatically takes care of the correct order of preprocessors).
 .SH "GNU tbl Enhancements"
 .\" ====================================================================
 .
-There is no limit on the number of columns in a table, nor any limit on the
-number of text blocks.
+There is no limit on the number of columns in a table,
+nor any limit on the number of text blocks.
 .
-All the lines of a table are considered in deciding column widths, not just
-the first 200.
+All the lines of a table are considered in deciding column widths,
+not just the first 200.
 .
 Table continuation
 .RB ( .T& )
@@ -1040,13 +1046,15 @@ Numeric and alphabetic items may span horizontally.
 .
 .LP
 .B @g@tbl
-uses register, string, macro and diversion names beginning with the digit\~\c
-.BR 3 .
+uses register,
+string,
+macro and diversion names beginning with the
+.RB digit\~ 3 .
 .
 When using
 .B @g@tbl
-you should avoid using any names beginning with a\~\c
-.BR 3 .
+you should avoid using any names beginning with
+.RB a\~ 3 .
 .
 .
 .\" ====================================================================
@@ -1129,8 +1137,8 @@ as follows
 .IP
 .EX
 \&.de BP
-\&.  ie '\[rs]\[rs]n(.z'' .bp \[rs]\[rs]$1
-\&.  el \[rs]!.BP \[rs]\[rs]$1
+\&.\&  ie '\[rs]\[rs]n(.z'' \&.bp \[rs]\[rs]$1
+\&.\&  el \[rs]!.BP \[rs]\[rs]$1
 \&..
 .EE
 .
@@ -1146,7 +1154,7 @@ instead of
 Using \[rs]a directly in a table to get leaders does not work (except in
 compatibility mode).
 .
-This is correct behaviour: \[rs]a is an
+This is correct behavior: \[rs]a is an
 .B uninterpreted
 leader.
 .
