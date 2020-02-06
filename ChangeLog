@@ -1,6 +1,28 @@
+2020-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Stop ms macro package from manipulating warnings.
+
+	* tmac/s.tmac: Remove code block that attempted to enable all
+	warnings "only if none are given on the command line".  It did
+	this by simply comparing the value of the warn register
+	{\n[.warn]} against the default value; but of course, a user
+	could specify -w options that exactly matched the default and
+	the test would not be able to tell, causing puzzling and
+	undesired behavior.  Furthermore, the hard-coded default was out
+	of date and did not correspond to recent releases of groff.  If
+	you want all warnings on, use the ".warn" request with no
+	arguments in your ms document or pass "-w w" to groff (see
+	troff(1) or the Texinfo manual for more on warnings).
+
+	Thanks to Bjarni Ingi Gislason for bringing this issue to our
+	attention.
+
+	Resolves <https://savannah.gnu.org/bugs/?57583>.
+
 2020-01-18  Ingo Schwarze  <schwarze@openbsd.org>
 
-	Accept any number of arguments for .Dd in the groff_mdoc(7) macros.
+	Accept any number of arguments for .Dd in the groff_mdoc(7)
+	macros.
 
 	* tmac/doc-common-u: The .Dd macro behaved in a weird way:
 	Without arguments, it printed the string "Epoch".
@@ -134,7 +156,8 @@
 
 2019-12-21  Ingo Schwarze  <schwarze@openbsd.org>
 
-	Update NetBSD, OpenBSD, FreeBSD, Darwin, and DragonFly version strings.
+	Update NetBSD, OpenBSD, FreeBSD, Darwin, and DragonFly version
+	strings.
 
 	* tmac/doc-common-u: Update.
 	* tmac/groff_mdoc.7.man: Synchronize.
@@ -363,7 +386,8 @@
 
 2019-01-12  Ingo Schwarze  <schwarze@openbsd.org>
 
-	Correctly handle groff_mdoc(7) .Lk arguments starting with a dot.
+	Correctly handle groff_mdoc(7) .Lk arguments starting with a
+	dot.
 
 	* tmac/doc.tmac-u: Each argument to the .Lk macro is printed
 	on its own roff input line.  If it happens to start with a dot
