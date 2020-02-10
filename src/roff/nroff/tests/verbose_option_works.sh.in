@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Copyright (C) 2020 Free Software Foundation, Inc.
+#
+# This file is part of groff.
+#
+# groff is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Ensure a predictable character encoding.
+export LC_ALL=C
+# Ensure a predictable command search path.
+@GROFF_BIN_PATH_SETUP@
+
+nroff="${abs_top_builddir:-.}/nroff"
+
+echo "testing 'nroff -V'" >&2
+expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char"
+actual=$("$nroff" -V)
+diff -u <(echo "$expected") <(echo "$actual")
+
+echo "testing 'nroff -V 1'" >&2
+expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char 1"
+actual=$("$nroff" -V 1)
+diff -u <(echo "$expected") <(echo "$actual")
+
+echo "testing 'nroff -V \"1a 1b\"'" >&2
+expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char \"1a 1b\""
+actual=$("$nroff" -V \"1a 1b\")
+diff -u <(echo "$expected") <(echo "$actual")
+
+echo "testing 'nroff -V \"1a 1b\" 2'" >&2
+expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char \"1a 1b\" 2"
+actual=$("$nroff" -V \"1a 1b\" 2)
+diff -u <(echo "$expected") <(echo "$actual")
+
+echo "testing 'nroff -V 1a\\\"1b 2'" >&2
+expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char 1a\"1b 2"
+actual=$("$nroff" -V 1a\"1b 2)
+diff -u <(echo "$expected") <(echo "$actual")

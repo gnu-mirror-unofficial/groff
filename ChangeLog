@@ -1,3 +1,17 @@
+2020-02-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	nroff: Implement -P and -V options.
+
+	* src/roff/nroff/nroff.sh: Recognize -P option (with argument)
+	and pass it through to groff.  Recognize -V option; if given,
+	display constructed groff command instead of executing it.
+	Update usage message to document new options.  Tidy up shell
+	style and indentation.  Add comments.
+	* src/roff/nroff/nroff.1.man: Document new -P and -V options.
+	* src/roff/nroff/tests/verbose_option_works.sh.in: Test -V
+	option.
+	* src/roff/nroff/nroff.am: Generate test and run it.
+
 2020-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Stop ms macro package from manipulating warnings.

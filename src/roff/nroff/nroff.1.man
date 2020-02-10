@@ -35,7 +35,7 @@
 .\" ====================================================================
 .
 .SY @g@nroff
-.RB [ \-CchipStU ]
+.RB [ \-cChipStUV ]
 [\c
 .BI \-d cs\c
 ]
@@ -50,6 +50,9 @@
 ]
 [\c
 .BI \-o list\c
+]
+[\c
+.BI \-P post-proc-option\c
 ]
 [\c
 .BI \-r cn\c
@@ -139,15 +142,6 @@ Whitespace is
 permitted between an option and its argument.
 .
 The
-.B \-h
-and
-.B \-c
-options
-are equivalent to
-.IR grotty 's
-options of the same names.
-.
-The
 .BR \-C ,
 .BR \-d ,
 .BR \-i ,
@@ -155,12 +149,22 @@ The
 .BR \-M ,
 .BR \-n ,
 .BR \-o ,
+.BR \-P ,
 .BR \-r ,
 .BR \-w ,
 and
 .B \-W
 options have the effect described in
 .IR @g@troff (@MAN1EXT@).
+.
+.B \-c
+and
+.B \-h
+are equivalent to
+.RB \[lq] -P-c \[rq]
+and
+.RB \[lq] -P-h \[rq],
+respectively.
 .
 In addition,
 this implementation ignores the traditional Unix
@@ -183,6 +187,14 @@ The options
 .B \-U
 (unsafe) are passed to
 .IR groff .
+.
+.B \-V
+causes
+.I nroff
+to display the constructed
+.I groff
+command on the standard output,
+but does not execute it.
 .
 .B \-v
 and
