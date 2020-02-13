@@ -137,7 +137,7 @@ groff \- a short reference for the GNU roff language
 .\" Result : prints \name'arg', where 'name' is in CB, 'arg' in I
 .\"
 .de ESCq
-.  Text "\f[CB]\e\\$1\[cq]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[cq]\f[]"
+.  Text "\f[CB]\e\\$1\[aq]\f[]\,\f[I]\\$2\/\f[]\f[CB]\[aq]\f[]"
 ..
 .\" ====================================================================
 .\" .ESC? arg
@@ -186,19 +186,6 @@ groff \- a short reference for the GNU roff language
 .\"
 .de esc[]
 .  Text \f[CB]\e\\$1\[lB]\f[]\,\f[CI]\\$2\/\f[]\f[CB]\[rB]\f[]\\$3
-..
-.
-.\" ====================================================================
-.\" .escq name arg
-.\"
-.\" Reference for escape sequence with a bracketed long argument
-.\" Args   : 2 obligatory
-.\"   name : suitable name for an escape sequence (c, (xy, [long])
-.\"   arg  : arbitrary text
-.\" Result : prints \name'arg', where 'name' is in CB, 'arg' in CI
-.\"
-.de escq
-.  Text \f[CB]\e\\$1\[cq]\f[]\,\f[CI]\\$2\/\f[]\f[CB]\[cq]\f[]\\$3
 ..
 .
 .\" ========= strings =========
@@ -522,6 +509,30 @@ characters but glyphs.
 In this man page, we use either \[oq]glyph\[cq] or
 \[oq]character\[cq], whatever is more appropriate.
 .
+A few characters commonly seen on keyboards are treated
+specially by
+.I roff
+languages and may not look correct in output;
+they are
+the (double) quotation mark
+.RB ( \[dq] ),
+the apostrophe
+.RB ( \[aq] ),
+the hyphen-minus
+.RB ( \- ),
+the backslash
+.RB ( \[rs] ),
+the caret or circumflex accent
+.RB ( \[ha] ),
+the grave accent
+.RB ( \[ga] ),
+and the tilde
+.RB ( \[ti] ).
+.
+All are available if required;
+see
+.IR groff_char (7).
+.
 .
 .P
 Moreover, there are some advanced roff elements.
@@ -577,7 +588,7 @@ making the dot
 .squoted_char .
 a non-special character.
 .
-.IP ""
+.IP
 In all other positions, it just means a dot character.
 .
 In text paragraphs, it is advantageous to start each sentence at a
@@ -585,7 +596,7 @@ line of its own.
 .
 .TP
 \&\f[CB]\[aq]\f[]
-The single quote has two controlling tasks.
+The apostrophe has two controlling tasks.
 .
 At the beginning of a line and in the conditional requests it is the
 non-breaking control character.
@@ -598,16 +609,17 @@ By using the
 request, the non-break control character can be set to a different
 character.
 .
-.IP ""
+.IP
 As a second task, it is the most commonly used argument separator in
 some functional escape sequences (but any pair of characters not part
 of the argument do work).
 .
-In all other positions, it denotes the single quote or apostrophe
-character.
+In all other positions, it denotes a single quote or apostrophe
+character, depending on the output device's glyph repertoire.
 .
-Groff provides a printable representation with the
-.esc (cq
+.I groff
+provides a printable representation with the
+.esc (aq
 escape sequence.
 .
 .TP
@@ -629,7 +641,8 @@ introduces a comment.
 .
 Otherwise, it is not special.
 .
-Groff provides a printable representation with the
+.I groff
+provides a printable representation with the
 .esc (dq
 escape sequence.
 .
@@ -669,24 +682,41 @@ Otherwise, it is non-special.
 .
 .TP
 \f[CI]space\f[]
-Space characters are only functional characters.
+Space characters separate arguments in requests, macros, and strings.
 .
-They separate the arguments in requests, macros, and strings, and the
-words in text lines.
+In text, they separate words.
 .
-They are subject to groff's horizontal spacing calculations.
+When filling is enabled (the default),
+a line may be broken at a space.
 .
-To get a defined space width, escape sequences like
+Further, in fill mode, multiple adjacent space characters cause
+.I groff
+to attempt end-of-sentence detection on the preceding word (and trailing
+punctuation).
+.
+The amount of space between sentences in fill mode is controlled by the
+.request ss\c
+\&.
+.
+When adjustment is enabled,
+a space's width may be expanded to justify the line.
+.
+To get a space of definite width, use the escape sequences
 .squoted_char "\[rs]\ "
 (this is the escape character followed by a space),
+.esc 0 ,
 .esc | ,
-.esc ^ ,
+.esc \[ha] ,
 or
-.esc h
-should be used.
+.esc h ;
+see section \[lq]Escape Sequences\[rq] below.
+.
+An adjustable but non-breaking space is available with
+.esc \[ti] .
 .
 .IP \f[CI]newline\f[]
-In text paragraphs, newlines mostly behave like space characters.
+In text, newlines behave like space characters and trigger
+end-of-sentence recognition on the preceding text.
 .
 Continuation lines can be specified by an escaped newline, i.e., by
 specifying a backslash
@@ -2479,8 +2509,8 @@ Enable track kerning for
 .IR font .
 .
 .TPx
-.REQ .tl "\f[CB]\[cq]\f[]left\f[CB]\[cq]\f[]center\f[CB]\[cq]\f[]right\
-\f[CB]\[cq]\f[]"
+.REQ .tl "\f[CB]\[aq]\f[]left\f[CB]\[aq]\f[]center\f[CB]\[aq]\f[]right\
+\f[CB]\[aq]\f[]"
 Three-part title.
 .
 .TPx
@@ -2701,8 +2731,8 @@ This is done by enclosing names (escape name and arguments consisting
 of a variable name) by a pair of brackets
 .BI \[lB] name \[rB]
 and constant arguments (number expressions and characters) by
-apostrophes (ASCII 0x27) like
-.BI \[cq] constant \[cq] \f[R].
+apostrophes like
+.BI \[aq] constant \[aq] \f[R].
 .
 .
 .P
@@ -2835,7 +2865,7 @@ In a macro or string, the concatenation of all the arguments with each
 surrounded by double quotes, and separated by spaces.
 .
 .TP
-.ESC $^
+.ESC $\[ha]
 In a macro, the representation of all parameters as if they were an
 argument to the
 .request ds
@@ -2855,16 +2885,14 @@ or even better
 to be independent from the current escape character.
 .
 .TP
-.ESC \[aa]
+.ESC \[aq]
 The acute accent \[aa]; same as
 .esc (aa .
-Unescaped: apostrophe, right quotation mark, single quote (ASCII 0x27).
 .
 .TP
 .ESC \[ga]
 The grave accent \[ga]; same as
 .esc (ga .
-Unescaped: left quote, backquote (ASCII 0x60).
 .
 .TP
 .ESC \-
@@ -2919,7 +2947,7 @@ Digit-width unbreakable space.
 1/6\ em narrow unbreakable space glyph; zero width in nroff.
 .
 .TP
-.ESC ^
+.ESC \[ha]
 1/12\ em half-narrow unbreakable space glyph; zero width in nroff.
 .
 .TP
@@ -2948,7 +2976,7 @@ between that glyph and the preceding glyph is correct if the
 preceding glyph is a roman glyph.
 .
 .TP
-.ESC ~
+.ESC \[ti]
 Unbreakable space that stretches like a normal inter-word space when a
 line is adjusted.
 .
@@ -3493,6 +3521,7 @@ Copyright
 .ESC (cq
 Single closing quote (right)
 .B \(cq
+.
 .TP
 .ESC (ct
 Cent
@@ -3505,7 +3534,7 @@ Double dagger
 .
 .TP
 .ESC (de
-Degree
+Degree sign
 .B \(de
 .
 .TP
@@ -3515,7 +3544,7 @@ Dagger
 .
 .TP
 .ESC (dq
-Double quote (ASCII 34)
+Double quote
 .B \(dq
 .
 .TP
@@ -3527,6 +3556,11 @@ Em-dash
 .ESC (en
 En-dash
 .B \(en
+.
+.TP
+.ESC (ha
+Caret/spacing circumflex accent (\[lq]hat\[rq])
+.B \(ha
 .
 .TP
 .ESC (hy
@@ -3555,7 +3589,7 @@ Double quote right
 .
 .TP
 .ESC (rs
-Printable backslash character
+Reverse solidus/backslash
 .B \(rs
 .
 .TP
@@ -3564,14 +3598,19 @@ Section sign
 .B \(sc
 .
 .TP
+.ESC (ti
+Tilde (spacing)
+.B \(ti
+.
+.TP
 .ESC (tm
 Trademark symbol
-.B  \(tm
+.B \(tm
 .
 .TP
 .ESC (ul
 Underline character
-.B  \(ul
+.B \(ul
 .
 .TP
 .ESC (==
