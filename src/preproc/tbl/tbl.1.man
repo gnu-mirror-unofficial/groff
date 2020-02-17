@@ -78,26 +78,6 @@ is given, the standard input is read.
 .
 .
 .\" ====================================================================
-.SH Options
-.\" ====================================================================
-.
-.TP
-.B \-C
-Enable compatibility mode to
-recognize
-.B .TS
-and
-.B .TE
-even when followed by a character other than space or newline.
-.
-Leader characters (\[rs]a) are handled as interpreted.
-.
-.TP
-.B \-v
-Display version information and exit.
-.
-.
-.\" ====================================================================
 .SH "Language Overview"
 .\" ====================================================================
 .
@@ -157,99 +137,6 @@ That can be changed by the
 where
 .I c
 is an arbitrary character.
-.
-.
-.\" ====================================================================
-.SH "Simple Examples"
-.\" ====================================================================
-.
-A simple table definition follows.
-.RS
-.EX
-\&.TS
-c c c .
-This	is	centered
-Well,	this	also
-\&.TE
-.EE
-.RE
-.
-.
-By using
-.B c c
-.BR c ,
-each cell in the whole table will be centered.
-.
-The separating character is here the default
-.IR tab .
-.
-.
-.P
-The result is
-.RS
-.TS
-c c c .
-This	is	centered
-Well,	this	also
-.TE
-.RE
-.
-.
-.P
-This definition is identical to
-.RS
-.EX
-\&.TS
-tab(@);
-ccc.
-This@is@centered
-Well,@this@also
-\&.TE
-.EE
-.RE
-.
-Here, the separating tab character is changed to the letter
-.BR @ .
-.
-.
-.P
-Moreover a title can be added and the centering directions can be
-changed to many other formats:
-.RS
-.EX
-\&.TS
-tab(@);
-c s s
-l c n .
-Title
-left@centers@123
-another@number@75
-\&.TE
-.EE
-.RE
-.
-The result is
-.RS
-.TS
-tab(@);
-c s s
-l c n .
-Title
-left@centers@123
-another@number@75
-.TE
-.RE
-.
-Here
-.B l
-means
-.IR left\-justified ,
-and
-.B n
-means
-.IR numerical ,
-which is here
-.IR right\-justified .
 .
 .
 .\" ====================================================================
@@ -1103,6 +990,26 @@ therefore can't recognize the decimal point.
 .
 .
 .\" ====================================================================
+.SH Options
+.\" ====================================================================
+.
+.TP
+.B \-C
+Enable compatibility mode to
+recognize
+.B .TS
+and
+.B .TE
+even when followed by a character other than space or newline.
+.
+Leader characters (\[rs]a) are handled as interpreted.
+.
+.TP
+.B \-v
+Display version information and exit.
+.
+.
+.\" ====================================================================
 .SH Bugs
 .\" ====================================================================
 .
@@ -1215,6 +1122,99 @@ as in
 .LP
 The resulting \[lq]dummy\[rq] columns are invisible and have zero width;
 note that such columns usually don't work with TTY devices.
+.
+.
+.\" ====================================================================
+.SH "Simple Examples"
+.\" ====================================================================
+.
+A simple table definition follows.
+.RS
+.EX
+\&.TS
+c c c .
+This	is	centered
+Well,	this	also
+\&.TE
+.EE
+.RE
+.
+.
+By using
+.B c c
+.BR c ,
+each cell in the whole table will be centered.
+.
+The separating character is here the default
+.IR tab .
+.
+.
+.P
+The result is
+.RS
+.TS
+c c c .
+This	is	centered
+Well,	this	also
+.TE
+.RE
+.
+.
+.P
+This definition is identical to
+.RS
+.EX
+\&.TS
+tab(@);
+ccc.
+This@is@centered
+Well,@this@also
+\&.TE
+.EE
+.RE
+.
+Here, the separating tab character is changed to the letter
+.BR @ .
+.
+.
+.P
+Moreover a title can be added and the centering directions can be
+changed to many other formats:
+.RS
+.EX
+\&.TS
+tab(@);
+c s s
+l c n .
+Title
+left@centers@123
+another@number@75
+\&.TE
+.EE
+.RE
+.
+The result is
+.RS
+.TS
+tab(@);
+c s s
+l c n .
+Title
+left@centers@123
+another@number@75
+.TE
+.RE
+.
+Here
+.B l
+means
+.IR left\-justified ,
+and
+.B n
+means
+.IR numerical ,
+which is here
+.IR right\-justified .
 .
 .
 .\" ====================================================================
