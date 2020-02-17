@@ -404,13 +404,21 @@ and text file contents.
 .
 .\" END EXAMPLE (TODO: move to tutorial/style guide when we have it)
 .IP
-These macros are defined on many (but not all) legacy Unix systems
-running classic
-.IR troff .
+.\" Also see subsection "History" below...
+These macros are extensions,
+introduced in Version\~9 Unix,
+to the original
+.I man
+package.
 .
-To be certain your page will be portable to those systems, copy
-their definitions from the
-.I \%an\-ext.tmac
+Many (but not all) legacy Unix systems
+running classic
+.I troff
+support them.
+.
+To be certain your page will be portable to systems that do not,
+copy their definitions from the
+.I an\-ext.tmac
 file of a
 .I groff
 installation.
@@ -552,7 +560,7 @@ This macro is not defined on legacy Unix systems running classic
 .
 To be certain your page will be portable to those systems,
 copy its definition from the
-.I \%an\-ext.tmac
+.I an\-ext.tmac
 file of a
 .I groff
 installation.
@@ -649,9 +657,9 @@ with command-line options of some formats indicated by
 These macros are not defined on legacy Unix systems running classic
 .IR troff .
 .
-To be certain your page will be portable to those systems, copy
-their definitions from the
-.I \%an\-ext.tmac
+To be certain your page will be portable to those systems,
+copy their definitions from the
+.I an\-ext.tmac
 file of a
 .I groff
 installation.
@@ -876,9 +884,9 @@ and URL hyperlinks with
 These macros are not defined on legacy Unix systems running classic
 .IR troff .
 .
-To be certain your page will be portable to those systems, copy
-their definitions from the
-.I \%an\-ext.tmac
+To be certain your page will be portable to those systems,
+copy their definitions from the
+.I an\-ext.tmac
 file of a
 .I groff
 installation.
@@ -1535,6 +1543,8 @@ expands to the font identifier used to print headings and subheadings.
 .
 The default is \(oqB\(cq.
 .
+This string register is a GNU extension.\" from groff 1.19
+.
 .
 .TP
 .B \e*(lq
@@ -2000,7 +2010,8 @@ overriding any definition of the
 argument to
 .BR .TH .
 .
-This macro exists only for compatibility; don't use it.
+This macro exists only for compatibility,
+to render man pages from historical systems.
 .
 .
 .IP
@@ -2041,6 +2052,8 @@ such as in \(lqSystem\~V Release\~3\(rq.
 Set the page footer.
 .
 Redefine this macro to get control of the footer.
+.
+This macro is a GNU extension.\" from groff 1.19
 .
 .
 .TP
@@ -2126,6 +2139,8 @@ Set the page header.
 .
 Redefine this macro to get control of the header.
 .
+This macro is a GNU extension.\" from groff 1.19
+.
 .
 .TP
 .BR .UC " ["\c
@@ -2136,7 +2151,8 @@ overriding any definition of the
 argument to
 .BR .TH .
 .
-This macro exists only for compatibility; don't use it.
+This macro exists only for compatibility,
+to render man pages from historical systems.
 .
 .
 .IP
@@ -2179,16 +2195,16 @@ can be:
 .SS History
 .\" ====================================================================
 .
-Version\~7 Unix (1979) supported all of the macros described in this
-page not listed as extensions,
+Version\~7 Unix (1979) introduced the
+.I man
+macro package and supported all of the macros described in this page not
+listed as extensions,
 except
 .BR .P ,
 .BR .SB ,
 .\" .SS was implemented in tmac.an but not documented in man(7).
 and the deprecated
-.BR .AT ,
-.BR .BT ,
-.BR .PT ,
+.BR .AT
 and
 .BR .UC .
 .
@@ -2201,7 +2217,7 @@ no number registers were documented.
 .B .UC
 appeared in 3BSD (1980) and
 .B .P
-in AT&T Unix System\~III (1980).
+in Unix System\~III (1980).
 .
 4BSD (1980) added
 .\" undocumented .VS and .VE macros to mark regions with 12-point box
@@ -2217,9 +2233,25 @@ string registers.
 .\" .5v after, as well as...
 .B .AT
 and
-AT&T's
 .BR .P .
-.\" TODO: Determine provenance of .BT, .PT, .SB, \*(HF, and \*(Tm.
+.
+.\" Per Doug McIlroy in
+.\" <https://lists.gnu.org/archive/html/groff/2019-07/msg00038.html>...
+Version\~9 Unix (1986) introduced
+.B .EX
+and
+.BR .EE .
+.
+Ultrix\~11 (1988) added the
+.B Tm
+string register.
+.
+SunOS\~4.0 (1988) may have been the first to support
+.BR .SB .
+.\" ...which appeared in a few man pages distributed in 4.3BSD-Reno and
+.\" 4.4BSD even though BSD was already transitioning to mdoc(7) by that
+.\" time and did not support the macro.  SunOS 4.0.3 (May 1989)
+.\" contained over 2,100 uses of .SB.
 .
 .
 .\" ====================================================================
