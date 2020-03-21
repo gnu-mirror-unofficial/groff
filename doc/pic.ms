@@ -330,7 +330,7 @@ would have been joined to the top of the arc, like this:
 .PS
 arc; move; "arc";
 .PE
-.CE "5: Result of \fBarc; move; \"arc\"\fP"
+.CE "5: Result of \fBarc; move; ""arc""\fP"
 .PP
 This is because drawing an arc changes the default direction to the
 one its exit end points at.
@@ -339,7 +339,7 @@ To reinforce this point, consider:
 .PS
 arc cw; move; "arc";
 .PE
-.CE "6: Result of \fBarc cw; move; \"arc\"\fP"
+.CE "6: Result of \fBarc cw; move; ""arc""\fP"
 .PP
 All we've done differently here is specify \[lq]cw\[rq] for a clockwise arc
 (\[lq]ccw\[rq] specifies counter-clockwise direction).
@@ -443,7 +443,7 @@ modifier:
 .PS
 box width 3 "this text is far too long for a default box"
 .PE
-.CE "2: Result of \fBbox width 3 \"text far too long\"\fP"
+.CE "2: Result of \fBbox width 3 ""text far too long""\fP"
 .PP
 This modifier takes a dimension in inches.
 There is also a \[lq]height\[rq] modifier that changes a box's height.
@@ -2876,14 +2876,14 @@ direction on the block's bounding box.
 .DS
 .CW
 <attribute> ::=
-  h[eigh]t <expr>       \fR# set height of closed figure \fP
-  wid[th] <expr>        \fR# set width of closed figure \fP
-  rad[ius] <expr>       \fR# set radius of circle/arc \fP
-  diam[eter] <expr>     \fR# set diameter of circle/arc \fP
-  up [<expr>]           \fR# move up \fP
-  down [<expr>]         \fR# move down \fP
-  left [<expr>]         \fR# move left \fP
-  right [<expr>]        \fR# move right \fP
+  h[eigh]t <expr>       \fR# set height of closed figure\fP
+  wid[th] <expr>        \fR# set width of closed figure\fP
+  rad[ius] <expr>       \fR# set radius of circle/arc\fP
+  diam[eter] <expr>     \fR# set diameter of circle/arc\fP
+  up [<expr>]           \fR# move up\fP
+  down [<expr>]         \fR# move down\fP
+  left [<expr>]         \fR# move left\fP
+  right [<expr>]        \fR# move right\fP
   from <position>       \fR# set from position of open figure\fP
   to <position>         \fR# set to position of open figure\fP
   at <position>         \fR# set center of open figure\fP
