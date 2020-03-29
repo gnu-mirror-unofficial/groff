@@ -20,8 +20,8 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4-4
--------------
+Version 2.4-4_a
+---------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
 nothing left to take away.
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4-4
+.ds version 2.4-4_a
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -5756,10 +5756,6 @@ SMALLCAPS takes precedence.
 \#   $REVISION_STRING are in the COPYSTYLE macro.
 \#
 .MAC DEFAULTS END
-.    if !\\n[#DOC_TYPE]=5 \{\
-.       ie !d $PAPER .PAPER LETTER
-.       el .PAPER \\*[$PAPER]
-.    \}
 .    if !\\n[#DOC_TYPE] .DOCTYPE DEFAULT
 .    if !r #CH_NUM .nr #CH_NUM 1 
 .    ie \\n[#PAGENUM_STYLE_SET] .PAGENUM_STYLE \\*[$PAGENUM_STYLE]
@@ -10108,10 +10104,10 @@ Shimming must be disabled with NO_SHIM before using FLEX.
 .    if \\n[#QUOTE] \{\
 .       ie \\n[#TAB_ACTIVE] .TAB \\n[#CURRENT_TAB]
 .       el \{\
-.          ie \\n[#Q_OFFSET_VALUE] .nr #Q_OFFSET \
-\\n[#L_MARGIN]+(\\n[#PP_INDENT]*\\n[#Q_OFFSET_VALUE])
-.          el .nr #Q_OFFSET \\n[#L_MARGIN]+\\*[$Q_OFFSET_VALUE]
-.          po \\n[#Q_OFFSET]u
+.          ie \\n[#\\*[BQ]_OFFSET_VALUE] .nr #\\*[BQ]_OFFSET \
+\\n[#L_MARGIN]+(\\n[#PP_INDENT]*\\n[#\\*[BQ]_OFFSET_VALUE])
+.          el .nr #\\*[BQ]_OFFSET \\n[#L_MARGIN]+\\*[$\\*[BQ]_OFFSET_VALUE]
+.          po \\n[#\\*[BQ]_OFFSET]u
 .       \}
 .       if \\n[#PRINT_STYLE]=2 .sp \\n[#Q_LEAD_DIFF]u
 .    \}
@@ -18080,7 +18076,8 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \#
 \# Set up a default papersize of US letter
 \#
-.PAPER LETTER
+.PAGEWIDTH 8.5i
+.PAGELENGTH 11i
 \#
 \# ====================================================================
 \#
