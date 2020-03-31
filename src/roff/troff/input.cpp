@@ -5027,45 +5027,60 @@ static int get_line_arg(units *n, unsigned char si, charinfo **cp)
   return 0;
 }
 
+// In groff prior to 1.22.4, read_size() (below) had an idiom of doing:
+//   tok.next();
+//   c = tok.ch();
+// ...without checking the token for EOF or newline.  Let's do better.
+static int read_size_next_byte(void)
+{
+  int saved_lineno;
+  const char *saved_filename;
+  // Reading the next token could discard the filename (EOF) or change
+  // the line number (newline); save them.
+  if (!input_stack::get_location(0, &saved_filename, &saved_lineno))
+    // This should never happen.
+    fatal("I don't know where I am!");
+  tok.next();
+  int eof = tok.eof();
+  if (eof || tok.newline())
+      error_with_file_and_line(saved_filename, saved_lineno,
+                               "expected digit in point size; got %1",
+                               eof ? "end of file" : "newline");
+  return tok.ch();
+}
+
 static int read_size(int *x)
 {
-  tok.next();
-  int c = tok.ch();
+  int c = read_size_next_byte();
   int inc = 0;
   if (c == '-') {
     inc = -1;
-    tok.next();
-    c = tok.ch();
+    c = read_size_next_byte();
   }
   else if (c == '+') {
     inc = 1;
-    tok.next();
-    c = tok.ch();
+    c = read_size_next_byte();
   }
   int val = 0;		// pacify compiler
   int bad = 0;
   if (c == '(') {
-    tok.next();
-    c = tok.ch();
+    c = read_size_next_byte();
     if (!inc) {
       // allow an increment either before or after the left parenthesis
       if (c == '-') {
 	inc = -1;
-	tok.next();
-	c = tok.ch();
+	c = read_size_next_byte();
       }
       else if (c == '+') {
 	inc = 1;
-	tok.next();
-	c = tok.ch();
+	c = read_size_next_byte();
       }
     }
     if (!csdigit(c))
       bad = 1;
     else {
       val = c - '0';
-      tok.next();
-      c = tok.ch();
+      c = read_size_next_byte();
       if (!csdigit(c))
 	bad = 1;
       else {
@@ -5077,8 +5092,7 @@ static int read_size(int *x)
   else if (csdigit(c)) {
     val = c - '0';
     if (!inc && c != '0' && c < '4') {
-      tok.next();
-      c = tok.ch();
+      c = read_size_next_byte();
       if (!csdigit(c))
 	bad = 1;
       else
@@ -5090,8 +5104,7 @@ static int read_size(int *x)
     return 0;
   else {
     token start(tok);
-    tok.next();
-    c = tok.ch();
+    c = read_size_next_byte();
     if (!inc && (c == '-' || c == '+')) {
       inc = c == '+' ? 1 : -1;
       tok.next();
@@ -5133,7 +5146,12 @@ static int read_size(int *x)
     return 1;
   }
   else {
-    error("bad digit in point size");
+    // read_size_next_byte() already threw an error on EOF or newline.
+    if (!tok.eof() && !tok.newline())
+      if (csprint(c))
+        error("bad digit '%1' in point size", (char) c);
+      else
+        error("bad digit (character code %1) in point size", c);
     return 0;
   }
 }
