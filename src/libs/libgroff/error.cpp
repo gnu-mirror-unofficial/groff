@@ -50,24 +50,19 @@ static void do_error_with_file_and_line(const char *filename,
       fprintf(stderr, "%s:%d:", filename, lineno);
     need_space = 1;
   }
-  if (need_space) {
-    fputc(' ', stderr);
-    need_space = 0;
-  }
-  switch (type) {
-  case FATAL:
-    fputs("fatal error:", stderr);
-    need_space = 1;
-    break;
-  case ERROR:
-    break;
-  case WARNING:
-    fputs("warning:", stderr);
-    need_space = 1;
-    break;
-  }
   if (need_space)
     fputc(' ', stderr);
+  switch (type) {
+  case FATAL:
+    fputs("fatal error: ", stderr);
+    break;
+  case ERROR:
+    fputs("error: ", stderr);
+    break;
+  case WARNING:
+    fputs("warning: ", stderr);
+    break;
+  }
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);

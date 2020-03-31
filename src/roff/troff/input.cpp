@@ -8664,6 +8664,7 @@ static void do_error(error_type type,
     fputs("fatal error: ", stderr);
     break;
   case ERROR:
+    fputs("error: ", stderr);
     break;
   case WARNING:
     fputs("warning: ", stderr);
@@ -8751,6 +8752,8 @@ void error_with_file_and_line(const char *filename, int lineno,
 			      const errarg &arg2,
 			      const errarg &arg3)
 {
+  if (program_name)
+    fprintf(stderr, "%s: ", program_name);
   fprintf(stderr, "%s:%d: error: ", filename, lineno);
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);

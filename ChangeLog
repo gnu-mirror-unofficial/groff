@@ -1,3 +1,18 @@
+2020-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Align diagnostic message format.
+
+	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
+	* src/roff/troff/input.cpp (do_error):
+	Display the diagnostic level when it is "error", instead of
+	leaving it implicit.
+
+	* src/roff/troff/input.cpp (error_with_file_and_line): Include
+	the program name in the diagnostic message if it is known.
+
+	* src/roff/groff/tests/string_case_xform_errors.sh: Update
+	diagnostic message expectation.
+
 2020-03-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/input.cpp (read_size): Improve bad digit
