@@ -1,5 +1,5 @@
 // -*- C++ -*-
-/* Copyright (C) 1989-2018 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2020 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -5027,7 +5027,7 @@ static int get_line_arg(units *n, unsigned char si, charinfo **cp)
   return 0;
 }
 
-// In groff prior to 1.22.4, read_size() (below) had an idiom of doing:
+// In groff prior to 1.22.5, read_size() (below) had an idiom of doing:
 //   tok.next();
 //   c = tok.ch();
 // ...without checking the token for EOF or newline.  Let's do better.
