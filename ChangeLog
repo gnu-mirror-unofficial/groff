@@ -13,17 +13,6 @@
 	* src/roff/groff/tests/string_case_xform_errors.sh: Update
 	diagnostic message expectation.
 
-2020-03-31  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* src/roff/troff/input.cpp (read_size): Improve bad digit
-	diagnostic by reporting what the bad digit actually is;
-	literally if it is a printable character, and by numerical code
-	otherwise.  Also replace repeated two-line idiom with no
-	stream-validity error-checking with call to...
-	(read_size_next_byte): Add helper function to perform EOF and
-	newline checking every time read_size() takes a byte from the
-	input stream; issue a diagnostic if either is found.
-
 2020-02-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi:
