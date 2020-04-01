@@ -5044,7 +5044,7 @@ static int read_size_next_byte(void)
   int eof = tok.eof();
   if (eof || tok.newline())
       error_with_file_and_line(saved_filename, saved_lineno,
-                               "unexpected %1 in point-size escape",
+                               "expected digit in point size; got %1",
                                eof ? "end of file" : "newline");
   return tok.ch();
 }
