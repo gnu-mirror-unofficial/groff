@@ -1,3 +1,18 @@
+2020-04-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Improve point-size escape diagnostics.
+
+	* src/roff/troff/input.cpp (read_size): Disclose context
+	{point-size escape intepretation} in diagnostic messages.  When
+	a "bad digit" is encountered, describe it if possible.  When a
+	relative adjustment results in a negative point size, report the
+	computed value.  Also rename a variable for slightly more
+	clarity ("bad" does not refer to all bad parses, just some cases
+	of bad digits), and update an insufficiently generalized comment
+	{"\s(00" is also an acceptable expression for point-size zero}.
+
+	Based on suggestions by Ingo Schwarze and Bjarni Ingi Gislason.
+
 2020-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Align diagnostic message format.

@@ -5043,7 +5043,7 @@ static int read_size(int *x)
     c = tok.ch();
   }
   int val = 0;		// pacify compiler
-  int bad = 0;
+  int bad_digit = 0;
   if (c == '(') {
     tok.next();
     c = tok.ch();
@@ -5061,13 +5061,13 @@ static int read_size(int *x)
       }
     }
     if (!csdigit(c))
-      bad = 1;
+      bad_digit = 1;
     else {
       val = c - '0';
       tok.next();
       c = tok.ch();
       if (!csdigit(c))
-	bad = 1;
+	bad_digit = 1;
       else {
 	val = val*10 + (c - '0');
 	val *= sizescale;
@@ -5080,7 +5080,7 @@ static int read_size(int *x)
       tok.next();
       c = tok.ch();
       if (!csdigit(c))
-	bad = 1;
+	bad_digit = 1;
       else
 	val = val*10 + (c - '0');
     }
@@ -5100,17 +5100,25 @@ static int read_size(int *x)
       return 0;
     if (!(start.ch() == '[' && tok.ch() == ']') && start != tok) {
       if (start.ch() == '[')
-	error("missing ']'");
+	error("missing ']' in point-size escape");
       else
-	error("missing closing delimiter");
+	error("missing closing delimiter in point-size escape");
       return 0;
     }
   }
-  if (!bad) {
+  if (bad_digit) {
+    if (c)
+      error("bad digit in point-size escape: %1",
+	    input_char_description(c));
+    else
+      error("bad digit in point-size escape");
+    return 0;
+  }
+  else {
     switch (inc) {
     case 0:
       if (val == 0) {
-	// special case -- \s[0] and \s0 means to revert to previous size
+	// special case -- point size 0 means "revert to previous size"
 	*x = 0;
 	return 1;
       }
@@ -5127,14 +5135,11 @@ static int read_size(int *x)
     }
     if (*x <= 0) {
       warning(WARN_RANGE,
-	      "\\s escape results in non-positive point size; set to 1");
+	      "point-size escape results in non-positive argument %1;"
+	      " set to 1", *x);
       *x = 1;
     }
     return 1;
-  }
-  else {
-    error("bad digit in point size");
-    return 0;
   }
 }
 
