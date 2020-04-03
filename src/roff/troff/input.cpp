@@ -5076,13 +5076,16 @@ static int read_size(int *x)
   }
   else if (csdigit(c)) {
     val = c - '0';
-    if (!inc && c != '0' && c < '4') {
+    if (compatible_flag && !inc && c != '0' && c < '4') {
+      // Support legacy \sNN syntax.
       tok.next();
       c = tok.ch();
       if (!csdigit(c))
 	bad_digit = 1;
       else
 	val = val*10 + (c - '0');
+	error("ambiguous point-size escape; rewrite to use '\\s(%1'"
+	      " or similar", val);
     }
     val *= sizescale;
   }

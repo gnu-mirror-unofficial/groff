@@ -1,5 +1,50 @@
 2020-04-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (read_size): Move special-case
+	interpretation of the '\sN' form of point-size escapes when 'N'
+	is 1, 2, or 3 to compatibility mode (groff -C) only, and throw
+	error diagnostic with suggestion for remedy if encountered.
+
+	Traditionally, '\s36A' is interpreted as "set point size to 36,
+	then emit 'A'".  However, only values in the range 10-39 are
+	handled specially; '\s40A' is interpreted as a four-point "0A".
+	This is unlike anything else in *roff grammar; see \*, \$, \f,
+	\F, \g, \k, \m, \M, \n, \V, and \Y.
+
+	To anticipate objections: Why not throw only a warning?  Because
+	there isn't a warning category for supported but ambiguous
+	syntax (this behavior of AT&T troff dates to 1976 but apparently
+	was not documented until 1992).  Why not throw the error outside
+	of compatibility mode too?  Because outside of compatibility
+	mode we (now) have an unambiguous parse.
+
+	Background: The Graphic Systems C/A/T phototypesetter (the
+	original device target for AT&T troff) only supported a few
+	discrete point sizes in the range 6..36, so Ossanna
+	special-cased the parser to do what the user must have meant.
+	Kernighan warned of this in the 1992 revision of CSTR #54
+	{§2.3}, and more recently, McIlroy referred to it as a "living
+	fossil".
+
+	See:
+	  https://lists.gnu.org/archive/html/groff/2020-03/msg00054.html
+	  https://lists.gnu.org/archive/html/groff/2020-04/msg00002.html
+	  https://lists.gnu.org/archive/html/groff/2020-04/msg00015.html
+	and follow-ups for discussion.
+
+	* NEWS: Advise users of behavior change and offer guidance.
+
+	* doc/groff.texi:
+	* man/groff.7.man: Document the restriction of special handling
+	of point-size arguments to '\s' to compatibility mode.
+
+	* src/roff/groff/groff.am:
+	* src/roff/groff/tests/\
+	use_point_size_escape_with_single_digit_arg.sh: Add regression
+	test.
+
+2020-04-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Improve point-size escape diagnostics.
 
 	* src/roff/troff/input.cpp (read_size): Disclose context

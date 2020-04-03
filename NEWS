@@ -1,4 +1,4 @@
-    Copyright (C) 1992-2019 Free Software Foundation, Inc.
+    Copyright (C) 1992-2020 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -12,6 +12,34 @@ VERSION 1.22.5
 
 Troff
 -----
+
+o Point-size escapes of the form '\sNN', where NN is in the range 10-39, are
+  now recognized only in compatibility mode (groff -C); when encountered an
+  error diagnostic is emitted.  In normal mode, \sN is interpreted as
+  setting the point size to the single digit value N, which ends the escape.
+  This change eliminates a quirk in the language grammar that dates back to
+  1976 (AT&T troff by Ossanna) but apparently was not documented until 1992
+  when Kernighan updated CSTR #54 for AT&T ditroff.
+
+  The form '\s(NN' is accepted for two-digit point sizes in all known
+  troffs.  The form '\s[NNN]' accepts a numeric expression of variable
+  length; it has been supported by groff since version 1.02 (June 1991) at
+  the latest and is by current versions of Heirloom troff and neatroff.  The
+  form "\s'NNN'" is also widely supported.
+
+  Short version: in your documents, rewrite escapes beginning with '\s1',
+  '\s2', or '\s3' in an unambiguous and portable form.  For instance, '\s36'
+  can become any of:
+    \s(36
+    \s[36]
+    \s'36'
+  You can use
+    grep '\\s[123]'
+  to find instances in your documents.
+
+  Those who have changed the escape character with the 'ec' request (an
+  advanced usage) are expected to be able to cope; ask the development team
+  for support if you need it.
 
 o New requests 'stringdown' and 'stringup' are available.  These change
   the string named in their argument by replacing each of its bytes with its

@@ -10051,8 +10051,12 @@ and the text begins.  Any of the following forms are valid:
 
 @table @code
 @item \s@var{n}
-Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be either
-0 or in the range 4 to@tie{}39.
+Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be a
+single digit.
+
+In compatibility mode only, @var{n}@tie{}must be@tie{}0 or in the range
+4 to@tie{}39.  Legacy documents relying upon this quirk of parsing
+should be migrated to the \s(@var{nn} or \s[@var{n}] forms.
 
 @item \s+@var{n}
 @itemx \s-@var{n}

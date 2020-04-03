@@ -3299,13 +3299,16 @@ The same as
 .ESC s \[+-]N
 Set/increase/decrease the point size to/by
 .I N
-scaled points;
+scaled points.
+.
 .I N
-must be either 0
-(restore previous size)
-or,
-for historical reasons,
-in the range 4\[en]39.
+must be a single digit;
+0 restores the previous point size.
+.
+(In compatibility mode only,
+a non-zero
+.I N
+must be in the range 4\[en]39.)
 .
 Otherwise,
 same as
