@@ -5082,10 +5082,11 @@ static int read_size(int *x)
       c = tok.ch();
       if (!csdigit(c))
 	bad_digit = 1;
-      else
+      else {
 	val = val*10 + (c - '0');
 	error("ambiguous point-size escape; rewrite to use '\\s(%1'"
 	      " or similar", val);
+      }
     }
     val *= sizescale;
   }
