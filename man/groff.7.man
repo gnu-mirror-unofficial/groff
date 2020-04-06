@@ -3480,9 +3480,9 @@ and
 .
 In
 .IR groff ,
-it is also possible to use the writing
-.BI \e[ xy ]
-as well.
+it is also possible to use the form
+.BI \e[ xy ]\c
+\&.
 .
 .
 .P
@@ -4548,7 +4548,8 @@ makes trouble, change the macro name
 into some 2-letter word, like
 .BR Ul .
 .
-Moreover change the font writing from
+Moreover,
+change the form of the font escape from
 .B \[rs]f[P]
 to
 .BR \[rs]fP .
@@ -4574,13 +4575,14 @@ gets lost, use the following:
 .EE
 .RE
 .
-Due to
+When using
 .BR doclifter ,
-it might be necessary to change the variable writing
+it might be necessary to change syntax forms such as
 .B \e[xy]
 and
 .B \e*[xy]
-into the strange ancient writing
+to those supported by AT&T
+.IR troff :
 .B \e*(xy
 and
 .BR \e(xy ,
@@ -4704,6 +4706,7 @@ on how to invoke this.
 .\" ====================================================================
 .SH Authors
 .\" ====================================================================
+.
 This document was written by
 .MT groff\-bernd.warken\-72@\:web.de
 Bernd Warken
