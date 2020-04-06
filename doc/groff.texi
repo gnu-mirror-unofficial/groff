@@ -10054,9 +10054,9 @@ and the text begins.  Any of the following forms are valid:
 Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be a
 single digit.
 
-In compatibility mode only, @var{n}@tie{}must be@tie{}0 or in the range
+In compatibility mode only, a non-zero @var{n}@tie{}must be in the range
 4 to@tie{}39.  Legacy documents relying upon this quirk of parsing
-should be migrated to the \s(@var{nn} or \s[@var{n}] forms.
+should be migrated to another @code{\s} form.
 
 @item \s+@var{n}
 @itemx \s-@var{n}
@@ -10075,6 +10075,10 @@ Increase or decrease the point size by @var{nn}@tie{}points.  @var{nn}
 must be exactly two digits.
 @end table
 
+@xref{Fractional Type Sizes}, for additional syntactical forms of
+the @code{\s} escape (which accept integers as well as fractions).
+@endDefreq
+
 Note that @code{\s} doesn't produce an input token in @code{gtroff}.  As
 a consequence, it can be used in requests like @code{mc} (which expects
 a single character as an argument) to change the font on the fly:
@@ -10082,10 +10086,6 @@ a single character as an argument) to change the font on the fly:
 @Example
 .mc \s[20]x\s[0]
 @endExample
-
-@xref{Fractional Type Sizes}, for yet another syntactical form of using
-the @code{\s} escape.
-@endDefreq
 
 @Defreq {sizes, s1 s2 @dots{} sn [0]}
 Some devices may only have certain permissible sizes, in which case
