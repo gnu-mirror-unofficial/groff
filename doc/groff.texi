@@ -10020,18 +10020,18 @@ typesetters, as @dfn{leading} (this is pronounced `ledding').
 @cindex point sizes, changing (@code{ps}, @code{\s})
 Use the @code{ps} request or the @code{\s} escape to change (increase,
 decrease) the type size (in points).  Specify @var{size} as either an
-absolute point size, or as a relative change from the current size.  The
-size@tie{}0 (for both @code{.ps} and @code{\s}), or no argument (for
-@code{.ps} only), goes back to the previous size.
+absolute point size, or as a relative change from the current size.
+@code{.ps} with no argument restores the previous size.
 
-Default scaling indicator of @code{size} is @samp{z}.  If @code{size} is
-negative, it is set to 1@dmn{u}.
+The default scaling indicator of @code{size} is @samp{z}.  If the
+resulting size is non-positive, it is set to 1@dmn{u}.
 
 @cindex type size registers (@code{.s}, @code{.ps})
 @cindex point size registers (@code{.s}, @code{.ps})
 The read-only number register @code{.s} returns the point size in points
 as a decimal fraction.  This is a string.  To get the point size in
-scaled points, use the @code{.ps} register instead.
+scaled points, use the @code{.ps} register instead (@pxref{Fractional
+Type Sizes}).
 
 @code{.s} is associated with the current environment
 (@pxref{Environments}).
@@ -10052,7 +10052,7 @@ and the text begins.  Any of the following forms are valid:
 @table @code
 @item \s@var{n}
 Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be a
-single digit.
+single digit.  If @var{n}@tie{}is 0, restore the previous size.
 
 In compatibility mode only, a non-zero @var{n}@tie{}must be in the range
 4 to@tie{}39.  Legacy documents relying upon this quirk of parsing
