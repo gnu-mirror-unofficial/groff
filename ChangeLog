@@ -1,5 +1,35 @@
 2020-04-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Reorganize backtrace output.
+
+	* src/roff/troff/input.cpp (string_iterator::backtrace):
+	Prefix the output with the program name if it is known.  In a
+	deviation from the GNU Coding Standards, put the string
+	"backtrace:" immediately next instead of the file and line
+	number; this is because, particularly in cases where the
+	backtrace is most interesting or needed, it will produce
+	multiple lines of output and the common prefix aids visual
+	understanding.
+	(file_iterator::backtrace): As above; also, change prefix for
+	popened nodes in the iterator from "process" to "pipe".  This
+	seemed preferable to omitting the information entirely or using
+	an inscrutable sigil like 'f' or 'p'.  The advantage is that the
+	output is better aligned--better ergonomics for those who have
+	to cope with a lot of it.  Furthermore, output the filename only
+	once.
+
+	Example of old and new output:
+
+	/tmp/inner:2: backtrace: file '/tmp/inner'
+	echo .so /tmp/inner:1: backtrace: process 'echo .so /tmp/inner'
+	/tmp/outer:1: backtrace: file '/tmp/outer'
+
+	troff: backtrace: file '/tmp/inner':2
+	troff: backtrace: pipe 'echo .so /tmp/inner':1
+	troff: backtrace: file '/tmp/outer':1
+
+2020-04-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (read_size): Add units to diagnostic.
 	This function works only with device-specific basic units
 	internally; users likely think in terms of point size, so add

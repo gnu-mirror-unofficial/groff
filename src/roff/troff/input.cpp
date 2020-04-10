@@ -401,8 +401,10 @@ int file_iterator::get_location(int /*allow_macro*/,
 
 void file_iterator::backtrace()
 {
-  errprint("%1:%2: backtrace: %3 '%1'\n", filename, lineno,
-	   popened ? "process" : "file");
+  if (program_name)
+    fprintf(stderr, "%s: ", program_name);
+  errprint("backtrace: %3 '%1':%2\n", filename, lineno,
+	   popened ? "pipe" : "file");
 }
 
 int file_iterator::set_location(const char *f, int ln)
@@ -3570,8 +3572,11 @@ int string_iterator::get_location(int allow_macro,
 
 void string_iterator::backtrace()
 {
+  if (program_name)
+    fprintf(stderr, "%s: ", program_name);
   if (mac.filename) {
-    errprint("%1:%2: backtrace", mac.filename, mac.lineno + lineno - 1);
+    errprint("backtrace: '%1':%2", mac.filename,
+	     mac.lineno + lineno - 1);
     if (how_invoked) {
       if (!nm.is_null())
 	errprint(": %1 '%2'\n", how_invoked, nm.contents());
