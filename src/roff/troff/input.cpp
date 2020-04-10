@@ -5139,8 +5139,8 @@ static int read_size(int *x)
     }
     if (*x <= 0) {
       warning(WARN_RANGE,
-	      "point-size escape results in non-positive size %1;"
-	      " set to 1", *x);
+	      "point-size escape results in non-positive size %1u;"
+	      " set to 1u", *x);
       *x = 1;
     }
     return 1;

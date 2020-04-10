@@ -1,3 +1,20 @@
+2020-04-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/input.cpp (read_size): Add units to diagnostic.
+	This function works only with device-specific basic units
+	internally; users likely think in terms of point size, so add
+	the basic unit suffix "u" to offer a hint about what's going on.
+
+	Example:
+	$ groff -ww >/dev/null
+	\s[10]A\s[-12]B
+	troff: <standard input>:1: warning: point-size escape results in
+	non-positive size -2000u; set to 1u
+
+	On a PostScript device with 1000 basic units to the point, the
+	difference is important and would be confusing without the unit
+	indication.
+
 2020-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/input.cpp (read_size): Correctly brace 'else'
