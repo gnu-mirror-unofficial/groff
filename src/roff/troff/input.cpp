@@ -401,13 +401,13 @@ int file_iterator::get_location(int /*allow_macro*/,
 
 void file_iterator::backtrace()
 {
-  const char *fn;
-  int l;
+  const char *f;
+  int n;
   // Get side effect of filename rewrite if stdin.
-  (void) get_location(0, &fn, &l);
+  (void) get_location(0, &f, &n);
   if (program_name)
     fprintf(stderr, "%s: ", program_name);
-  errprint("backtrace: %3 '%1':%2\n", fn, l, popened ? "pipe" : "file");
+  errprint("backtrace: %3 '%1':%2\n", f, n, popened ? "pipe" : "file");
 }
 
 int file_iterator::set_location(const char *f, int ln)

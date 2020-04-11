@@ -60,7 +60,12 @@
 	get_location() for its side effect of rewriting a filename of
 	"-" to "<standard input>", for consistency with other diagnostic
 	messages.  (In this class, this member function always returns
-	1, so ignore the return value.)
+	1, so ignore the return value.  This fact is an essential part
+	of what led to the bug; the conditional
+		p && !p->get_location(0, &f, &n)
+	which appeared in the for loop of the old
+	input_stack::backtrace() would always evaluate to false when a
+	node of the file_iterator class was encountered.)
 	(input_stack::backtrace): Replace member function body with that
 	of input_stack::backtrace_all().
 	(input_stack::backtrace_all): Delete.
