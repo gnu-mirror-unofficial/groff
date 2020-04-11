@@ -1,3 +1,50 @@
+2020-04-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Enable backtracing across process/file boundaries when errors or
+	non-ignored warnings are encountered.
+
+	Experimentation reveals that .so, .mso, and .pso requests act as
+	barriers to backtracing except when explicitly requested with
+	the .backtrace request.  Judging by the git history, this
+	behavior dates back to June 1991 or earlier.  This did not
+	appear to be the intention according to a comment, which was
+	only to suppress the output of backtrace output for the line
+	corresponding to the top level itself.  Unfortunately, that was
+	not its only effect.
+
+	This change does result in one additional line of output when -b
+	is given and an error or (non-ignored) warning happens at the
+	top level.  However, I regard this as unobjectionable because
+	{1} a backtrace was in fact explicitly requested; and {2} it
+	seems a poor tradeoff to suppress most of the backtrace in all
+	complicated and frustrating cases for the sake of one fewer line
+	of backtrace output in a trivial one.
+
+	Now, backtracing behaves the same no matter what triggers it.
+
+	Fixes Savannah #58153.
+
+	* src/roff/troff/input.cpp (file_iterator::backtrace): Call
+	get_location() for its side effect of rewriting a filename of
+	"-" to "<standard input>", for consistency with other diagnostic
+	messages.  (In this class, this member function always returns
+	1, so ignore the return value.)
+	(input_stack::backtrace): Replace member function body with that
+	of input_stack::backtrace_all().
+	(input_stack::backtrace_all): Delete.
+	(backtrace_request): Update the only call site of the above.
+
+	* src/roff/groff/tests/regression_savannah_58153.sh:
+	* src/roff/groff/groff.am: Add regression test.
+
+	* src/roff/groff/tests/string_case_xform_errors.sh: Update
+	regression test to not be confounded by additional line of
+	backtrace output.  Remove bashism along the way.
+
+	* doc/groff.texi:
+	* man/groff.7.man:
+	* man/groff_diff.7.man: Update documentation.
+
 2020-04-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Reorganize backtrace output.

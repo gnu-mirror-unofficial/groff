@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2019 Free Software Foundation, Inc.
+# Copyright (C) 2020 Free Software Foundation, Inc.
 #
 # This file is part of groff.
 #
@@ -20,11 +20,11 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-expected="troff: <standard input>:1: error: cannot apply string case transformation to a request ('br')"
-
-actual=$("$groff" -Tutf8 2>&1 <<EOF
-.stringdown br
+# Ensure that we get backtrace output across file and pipe boundaries.
+OUT=$("$groff" -U 2>&1 >/dev/null <<EOF
+.pso printf '\\\s[-20]\\\n'
 EOF
 )
 
-echo "$actual" | grep -qx "$expected"
+printf "%s\n" "$OUT" | grep -qw 'backtrace: pipe'
+printf "%s\n" "$OUT" | grep -qw 'backtrace: file'

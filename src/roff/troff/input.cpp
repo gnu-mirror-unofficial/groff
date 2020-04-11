@@ -401,10 +401,13 @@ int file_iterator::get_location(int /*allow_macro*/,
 
 void file_iterator::backtrace()
 {
+  const char *fn;
+  int l;
+  // Get side effect of filename rewrite if stdin.
+  (void) get_location(0, &fn, &l);
   if (program_name)
     fprintf(stderr, "%s: ", program_name);
-  errprint("backtrace: %3 '%1':%2\n", filename, lineno,
-	   popened ? "pipe" : "file");
+  errprint("backtrace: %3 '%1':%2\n", fn, l, popened ? "pipe" : "file");
 }
 
 int file_iterator::set_location(const char *f, int ln)
@@ -435,7 +438,6 @@ public:
   static int get_location(int, const char **, int *);
   static int set_location(const char *, int);
   static void backtrace();
-  static void backtrace_all();
   static void next_file(FILE *, const char *);
   static void end_file();
   static void shift(int n);
@@ -698,17 +700,6 @@ int input_stack::get_location(int allow_macro, const char **filenamep, int *line
 
 void input_stack::backtrace()
 {
-  const char *f;
-  int n;
-  // only backtrace down to (not including) the topmost file
-  for (input_iterator *p = top;
-       p && !p->get_location(0, &f, &n);
-       p = p->next)
-    p->backtrace();
-}
-
-void input_stack::backtrace_all()
-{
   for (input_iterator *p = top; p; p = p->next)
     p->backtrace();
 }
@@ -796,7 +787,7 @@ inline int input_stack::get_compatible_flag()
 
 void backtrace_request()
 {
-  input_stack::backtrace_all();
+  input_stack::backtrace();
   fflush(stderr);
   skip_line();
 }
