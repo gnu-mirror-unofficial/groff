@@ -14127,12 +14127,13 @@ At startup, it is set to @samp{i}.
 @endDefreq
 
 @Defreq {spreadwarn, [@Var{limit}]}
-Make @code{gtroff} emit a warning if the additional space inserted for
-each space between words in an output line is larger or equal to
-@var{limit}.  A negative value is changed to zero; no argument toggles
-the warning on and off without changing @var{limit}.  The default
-scaling indicator is @samp{m}.  At startup, @code{spreadwarn} is
-deactivated, and @var{limit} is set to 3@dmn{m}.
+Emit a @code{break} warning if the additional space inserted for each
+space between words in an output line adjusted to both margins with
+@w{@samp{.ad b}} is larger than or equal to @var{limit}.  A negative
+value is treated as zero; an absent argument toggles the warning on and
+off without changing @var{limit}.  The default scaling indicator is
+@samp{m}.  At startup, @code{spreadwarn} is inactive and @var{limit} is
+3@dmn{m}.
 
 For example,
 
@@ -14141,11 +14142,9 @@ For example,
 @endExample
 
 @noindent
-causes a warning if @code{gtroff} must add 0.2@dmn{m} or more for each
-interword space in a line.
-
-This request is active only if text is justified to both margins (using
-@w{@samp{.ad b}}).
+causes a warning if @code{break} warnings are not suppressed and
+@code{gtroff} must add 0.2@dmn{m} or more for each interword space in a
+line.  @xref{Warnings}.
 @endDefreq
 
 @cindex warnings

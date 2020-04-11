@@ -2395,14 +2395,30 @@ current font.
 .
 .TPx
 .REQ .spreadwarn
-Toggle the spread warning on and off without changing its value.
+Toggle the spread warning on and off (the default) without changing its
+value.
 .
 .TPx
-.REQ .spreadwarn "limit"
-Emit a warning if each space in an output line is widened by
-.I limit
-or more (default scaling indicator\~\c
-.scaleindicator m ).
+.REQ .spreadwarn N
+Emit a
+.B break
+warning if the additional space inserted for each space between words in
+an output line adjusted to both margins is larger than or equal to
+.IR N .
+.
+A negative
+.I N
+is treated as 0.
+.
+The default scaling indicator is\~\c
+.scaleindicator m .
+.
+At startup,
+.request .spreadwarn
+is inactive and
+.I N
+is
+.scalednumber "3 m" .
 .
 .TPx
 .REQ .ss "N"

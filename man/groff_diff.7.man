@@ -2138,34 +2138,50 @@ font.
 Without arguments, reset the list of special fonts to be empty.
 .
 .TP
-.BI .spreadwarn\  limit
-Make
-.B troff
-emit a warning if the additional space inserted for each space between
-words in an output line is larger or equal to
+.B .spreadwarn\c
+.RI " [" limit ]
+Emit a
+.B break
+warning if the additional space inserted for each space between words in
+an output line adjusted to both margins with
+.RB \[lq] .ad\~b \[rq]
+is larger than or equal to
 .IR limit .
 .
-A negative value is changed to zero; no argument toggles the warning on
-and off without changing
+A negative value is treated as zero;
+an absent argument toggles the warning on and off without changing
 .IR limit .
 .
-The default scaling indicator is\~\c
+The default scaling indicator is
 .BR m .
 .
 At startup,
-.B spreadwarn
-is deactivated, and
+.B .spreadwarn
+is inactive and
 .I limit
-is set to 3m.
+is 3\~m.
 .
+.IP
 For example,
-.B .spreadwarn\ 0.2m
+.IP
+.RS
+.RS
+.EX
+\&.spreadwarn 0.2m
+.EE
+.RE
+.RE
+.IP
 causes a warning if
-.B troff
-must add 0.2m or more for each interword space in a line.
+.B break
+warnings are not suppressed and
 .
-This request is active only if text is justified to both margins (using
-.BR .ad\ b ).
+.I @g@troff
+must add 0.2\~m or more for each interword space in a line.
+.
+See
+.IR @g@troff (@MAN1EXT@)
+for warning types and control.
 .
 .TP
 .BI .stringdown \~stringvar
