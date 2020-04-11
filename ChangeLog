@@ -1,5 +1,24 @@
 2020-04-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Require Texinfo 5.0 (February 2013) at a minimum.
+
+	* m4/groff.m4 (GROFF_MAKEINFO): Check for version 5.0 (increased
+	from 4.8).  Update diagnostics and comments.
+
+	* INSTALL.extra:
+	* README:
+	* doc/groff.texi:
+	* doc/webpage.ms: Document updated requirement.
+
+	* doc/fixinfo.sh: Delete; it is no longer necessary to work
+	around Texinfo 4.x bugs.
+
+	* doc/doc.am (EXTRA_DIST): Stop shipping fixinfo.sh.
+	(.texi.html): Remove makeinfo < 5.0 version check and consequent
+	execution of fixinfo.sh.  Update comment.
+
+2020-04-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Enable backtracing across process/file boundaries when errors or
 	non-ignored warnings are encountered.
 

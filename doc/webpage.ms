@@ -183,7 +183,7 @@ perl \[>=] v5.6.1 (see macro GROFF_PERL in file `m4/groff.m4')
 ghostscript
 the psutils package
 the netpbm package
-texinfo 4.8
+texinfo 5.0
 bison \[>=] 1.875b or byacc
 .fi
 .in
@@ -193,7 +193,7 @@ from repository sources (either a checked out working copy, or a commit
 snapshot).
 They are not required for building from a stable release tarball.
 Also note that the version numbers stated are the minimum supported.
-No version of `texinfo' < 4.8 works, and the original release of `bison'
+No version of `texinfo' < 5.0 works, and the original release of `bison'
 1.875 is known not to work; you \fImay\fP find that `bison' releases < 1.875
 work, but in case of difficulty, please update to a later version
 \fIbefore\fP posting a bug report.
