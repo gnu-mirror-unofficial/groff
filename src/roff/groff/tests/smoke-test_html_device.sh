@@ -19,6 +19,7 @@
 #
 
 groff="${abs_top_builddir:-.}/test-groff"
+LC_CTYPE=C.UTF-8
 
 set -e
 

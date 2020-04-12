@@ -1,5 +1,14 @@
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/groff/tests/smoke-test_html_device.sh: Set
+	LC_CTYPE=C.UTF-8 so that byte sequences in the pipelines are
+	handled correctly.  Thanks to Bjarni Ingi Gislason for the
+	trouble report.
+
+	Fixes <https://savannah.gnu.org/bugs/?58164>.
+
+2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/html.tmac: Use .do so we correctly load unicode.tmac in
 	compatibility mode.
 
