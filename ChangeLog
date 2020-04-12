@@ -1,5 +1,18 @@
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/html.tmac: Use .do so we correctly load unicode.tmac in
+	compatibility mode.
+
+	Fixes the following problem (wrapped, filenames abbreviated):
+
+	$ echo | ./build/test-groff -C -Thtml >/dev/null
+	troff: backtrace: file '.../groff/build/../tmac/html.tmac':546
+	troff: backtrace: file ...T/groff/build/../tmac/troffrc':30
+	troff: .../groff/build/../tmac/html.tmac:546: warning: macro
+		'ms' not defined
+
+2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/smoke-test_html_device.sh:
 	* src/roff/groff/groff.am: Add regression test.
 
