@@ -26,6 +26,8 @@ groff="${abs_top_builddir:-.}/test-groff"
 DOC=".vs 10v
 \s36A"
 
+set -e
+
 # Verify that the idiosyncratic behavior of \sN is supported in
 # compatibility mode...
 echo "testing \s36A in compatiblity mode (36-point 'A')" >&2

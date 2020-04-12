@@ -38,7 +38,7 @@ fsf \- liberate laser printer firmware'
 EXAMPLE_WFJ_PAGE='.TH wfj 1 2020-01-16 "groff test suite"
 .UC
 .SH Name
-knb \- call 1-800-ITS-UNIX'
+wfj \- call 1-800-ITS-UNIX'
 
 EXAMPLE_GNU_PAGE='.TH gnu 1 2020-01-16 "groff test suite"
 .SH Name
@@ -100,6 +100,6 @@ then
     echo "2nd GNU test failed" >&2
 fi
 
-test -z "$FAIL" || exit 1
+test -z "$FAIL"
 
 # vim:set ai et sw=4 ts=4 tw=80:

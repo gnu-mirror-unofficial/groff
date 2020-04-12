@@ -26,5 +26,7 @@ OUT=$("$groff" -U 2>&1 >/dev/null <<EOF
 EOF
 )
 
+set -e
+
 printf "%s\n" "$OUT" | grep -qw 'backtrace: pipe'
 printf "%s\n" "$OUT" | grep -qw 'backtrace: file'

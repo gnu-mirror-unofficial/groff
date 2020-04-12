@@ -25,9 +25,10 @@ groff="${abs_top_builddir:-.}/test-groff"
 expected="attaché ATTACHÉ"
 
 # For now, we expect problems like this:
-# <standard input>:4: backtrace: string 'attache'
+# troff: backtrace: '<standard input>':4: string 'attache'
+# troff: backtrace: file '<standard input>':5
 # troff: <standard input>:5: warning: can't find special character
-#   'U0065_0301'
+#     'U0065_0301'
 
 actual=$("$groff" -Tutf8 2>&1 > /dev/null <<EOF
 .pl 1v
