@@ -35,22 +35,22 @@
 	Enable backtracing across process/file boundaries when errors or
 	non-ignored warnings are encountered.
 
-	Experimentation reveals that .so, .mso, and .pso requests act as
-	barriers to backtracing except when explicitly requested with
+	Experimentation reveals that .so, .mso, and .pso requests acted
+	as barriers to backtracing except when explicitly requested with
 	the .backtrace request.  Judging by the git history, this
 	behavior dates back to June 1991 or earlier.  This did not
-	appear to be the intention according to a comment, which was
-	only to suppress the output of backtrace output for the line
-	corresponding to the top level itself.  Unfortunately, that was
-	not its only effect.
+	appear to be intended, according to a source comment, which was
+	only to suppress the backtrace output for the line corresponding
+	to the outermost level of the input stack (commonly, a file
+	argument to groff).  Unfortunately, that wasn't its only effect.
 
-	This change does result in one additional line of output when -b
-	is given and an error or (non-ignored) warning happens at the
-	top level.  However, I regard this as unobjectionable because
-	{1} a backtrace was in fact explicitly requested; and {2} it
-	seems a poor tradeoff to suppress most of the backtrace in all
-	complicated and frustrating cases for the sake of one fewer line
-	of backtrace output in a trivial one.
+	This change does result in one additional line of output for
+	each error or (non-ignored) warning when -b is given.  However,
+	I regard this as unobjectionable because {1} a backtrace was in
+	fact explicitly requested; and {2} it seems a poor tradeoff to
+	suppress most of the backtrace in some complicated and
+	frustrating cases for the sake of one fewer line of backtrace
+	output in a trivial one.
 
 	Now, backtracing behaves the same no matter what triggers it.
 
@@ -63,9 +63,9 @@
 	1, so ignore the return value.  This fact is an essential part
 	of what led to the bug; the conditional
 		p && !p->get_location(0, &f, &n)
-	which appeared in the for loop of the old
-	input_stack::backtrace() would always evaluate to false when a
-	node of the file_iterator class was encountered.)
+	which appeared in the for loop of input_stack::backtrace() prior
+	to this change would always evaluate to false when a node of the
+	file_iterator class was encountered.)
 	(input_stack::backtrace): Replace member function body with that
 	of input_stack::backtrace_all().
 	(input_stack::backtrace_all): Delete.
