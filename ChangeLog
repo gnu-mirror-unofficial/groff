@@ -1,5 +1,34 @@
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Make our assert() C99-conformant.
+
+	groff has its own implementation of the standard C library's
+	assert() macro.  It hasn't been updated since C89.  C99 requires
+	that the diagnostic emitted by assert() contain the failing
+	expression and name of the function in scope.
+
+	* src/include/assert.h: Add additional pointer to const char
+	arguments to do_assert() and assertion_failed() for function
+	name and stringified expression.
+	(assertion_failed): Update prototype.
+	(do_assert): Accept 'func' and 'msg' parameters and pass them to
+	assertion_failed().
+	(assert): Update macro to collect '__func__' and stringify the
+	expr parameter (as 'msg') and pass them do do_assert().
+	* src/libs/libgroff/assert.cpp (assertion_failed): Rewrite
+	diagnostic to more closely match GNU Coding Style format and
+	also report function and failing expression.
+
+	Example output:
+		troff: ../src/roff/troff/input.cpp:2644: do_request():
+		assertion failed: '0 == "But first, here's a rotten old
+		BBC programme."'
+
+	We have no excuse to assert(0) ever again.  Express the
+	invariant that has been violated.
+
+2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/smoke-test_html_device.sh: Set
 	LC_CTYPE=C.UTF-8 so that byte sequences in the pipelines are
 	handled correctly.  Thanks to Bjarni Ingi Gislason for the
