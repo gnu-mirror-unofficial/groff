@@ -57,8 +57,9 @@
 
 	* src/roff/groff/tests/smoke-test_html_device.sh: Set
 	LC_CTYPE=C.UTF-8 so that byte sequences in the pipelines are
-	handled correctly.  Thanks to Bjarni Ingi Gislason for the
-	trouble report.
+	handled correctly.  Skip the test if the environment doesn't
+	support UTF-8.  Thanks to Bjarni Ingi Gislason for the trouble
+	report.
 
 	Fixes <https://savannah.gnu.org/bugs/?58164>.
 
