@@ -59,8 +59,6 @@ case "`exec 2>/dev/null ; locale charmap`" in
     esac ;;
 esac
 
-# 'for i; do' (with the semicolon) doesn't work with some versions of sh
-
 Topt=
 opts=
 dry_run=
@@ -93,7 +91,7 @@ do
       dry_run=yes ;;
     -v | --version)
       echo "GNU nroff (groff) version @VERSION@"
-      exit 0 ;;
+      opts="$opts $1" ;;
     --help)
       cat <<EOF
 usage: nroff [-cChipStUV] [-dCS] [-mNAME] [-MDIR] [-nNUM] [-oLIST]

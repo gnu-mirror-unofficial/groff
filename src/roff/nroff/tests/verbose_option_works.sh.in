@@ -23,7 +23,16 @@ export LC_ALL=C
 # Ensure a predictable command search path.
 @GROFF_BIN_PATH_SETUP@
 
+set -e
+
 nroff="${abs_top_builddir:-.}/nroff"
+
+nroff_ver=$("$nroff" -v | awk 'NR == 1 {print $NF}')
+groff_ver=$("$nroff" -v | awk 'NR == 2 {print $NF}')
+
+echo nroff: $nroff_ver >&2
+echo groff: $groff_ver >&2
+test "$nroff_ver" = "$groff_ver"
 
 echo "testing 'nroff -V'" >&2
 expected="PATH=$GROFF_RUNTIME$PATH groff -Tascii -mtty-char"

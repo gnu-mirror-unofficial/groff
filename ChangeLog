@@ -1,5 +1,19 @@
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	It's too easy for the nroff version to get desynced from the
+	groff version when we're running test cases, leading to spurious
+	results.  Make it easier to see a discrepancy.
+
+	* src/roff/nroff/nroff.sh: Call groff with -v or --version when
+	we are called that way.
+
+	* src/roff/nroff/tests/verbose_option_works.sh.in: Check the
+	nroff version being tested against the groff version being
+	wrapped.  This exposes a bug; the system groff rather than the
+	build tree groff was being invoked.
+
+2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Make our assert() C99-conformant.
 
 	groff has its own implementation of the standard C library's
