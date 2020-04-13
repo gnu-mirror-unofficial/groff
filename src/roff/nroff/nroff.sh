@@ -138,6 +138,9 @@ opts="-mtty-char$opts"
 @GROFF_BIN_PATH_SETUP@
 export GROFF_BIN_PATH
 
+# Let the test cases redirect us.
+groff=${GROFF_TEST_GROFF:-groff}
+
 # Note 1: It would be nice to apply the DRY ("Don't Repeat Yourself")
 # principle here and store the entire command string to be executed into
 # a variable, and then either display it or execute it.  For example:
@@ -164,9 +167,9 @@ export GROFF_BIN_PATH
 # want 'nroff' to become 'groff ... ""' if $# equals zero.
 if [ -n "$dry_run" ]
 then
-  echo PATH="$GROFF_RUNTIME$PATH" groff $T $opts ${1+"$@"}
+  echo PATH="$GROFF_RUNTIME$PATH" $groff $T $opts ${1+"$@"}
 else
-  PATH="$GROFF_RUNTIME$PATH" groff $T $opts ${1+"$@"}
+  PATH="$GROFF_RUNTIME$PATH" $groff $T $opts ${1+"$@"}
 fi
 
 # eof
