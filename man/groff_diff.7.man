@@ -559,23 +559,13 @@ This has the same effect as
 .RE
 .
 .TP
-.BI \[rs]s( nn
+.BI \[rs]s[ \[+-]n ]
 .TQ
-.BI \[rs]s\[+-]( nn
-Set the point size to
-.I nn
-points;
-.I nn
-must be exactly two digits.
-.
-.TP
-.BI \[rs]s[\[+-] n ]
+.BI \[rs]s \[+-] [ n ]
 .TQ
-.BI \[rs]s\[+-][ n ]
+.BI \[rs]s' \[+-]n '
 .TQ
-.BI \[rs]s'\[+-] n '
-.TQ
-.BI \[rs]s\[+-]' n '
+.BI \[rs]s \[+-] ' n '
 Set the point size to
 .I n
 scaled points;
@@ -3830,6 +3820,47 @@ request ignores scale indicators and so
 .P
 sets the point size to 10\~points, whereas in groff native mode the
 point size is set to 10\~scaled points.
+.
+.P
+The escape
+.BI \[rs]s n
+sets the point size to
+.I n
+scaled points;
+.I n
+must be exactly one digit and
+is a numeric expression with a default scale indicator
+.RB of\~ z\c
+\&.
+.
+AT&T
+.I troff
+would read an additional digit,
+as will
+.I groff
+in compatibility mode,
+if
+.I n
+is 1, 2, or 3,
+because the Graphic Systems C/A/T phototypesetter
+(its original device target)
+only supported a few discrete point sizes in the range 6\[en]36,
+so Ossanna special-cased the parser to do what the user must have meant.
+.
+Kernighan warned of this in the 1992 revision of CSTR\~#54 (\[sc]2.3),
+and more recently,
+McIlroy referred to it as a \[lq]living fossil\[rq].
+.
+.I groff
+will emit an error message in compatibility mode when this ambiguous
+syntax is encountered.
+.
+Use the portable
+.BI \[rs]s( nn
+form for two-digit point sizes,
+or the new forms of
+.B \[rs]s
+documented above.
 .
 .P
 In
