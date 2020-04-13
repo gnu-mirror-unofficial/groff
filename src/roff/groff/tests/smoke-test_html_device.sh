@@ -22,7 +22,7 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # We can't run these tests if the environment doesn't support UTF-8.
 LC_CTYPE=C.UTF-8
-test "$(locale -k charmap)" = 'charmap="UTF-8"' || exit 77 # skip
+test "$(locale charmap)" = 'UTF-8' || exit 77 # skip
 
 set -e
 
