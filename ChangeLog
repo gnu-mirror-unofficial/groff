@@ -8,16 +8,21 @@
 	we are called that way.  Let test cases tell us to use
 	test-groff as groff with an environment variable.
 
-	* src/roff/nroff/tests/verbose_option_works.sh.in: Check the
-	nroff version being tested against the groff version being
+	* src/roff/nroff/tests/verbose_option_works.sh.in: Rename to...
+	* src/roff/nroff/tests/verbose_option_works.sh: ...this.  Check
+	the nroff version being tested against the groff version being
 	wrapped.  This exposes a bug; the system groff rather than the
 	build tree groff was being invoked.  Refactor.  Stop messing
-	with @GROFF_BIN_PATH_SETUP@; instead, let test-groff handle that
-	for us.  Locate it and export the variable GROFF_TEST_GROFF so
-	nroff can find it.  Because we manipulate $PATH to run the
-	tests, the $PATH of an installed groff system will _always_
-	differ from that used by a build tree, ignore it in the test
-	cases.  Dispose of bashisms and set shebang to /bin/sh.
+	with @GROFF_BIN_PATH_SETUP@ (enabling the rename); instead, let
+	test-groff handle that for us.  Locate it and export the
+	variable GROFF_TEST_GROFF so nroff can find it.  Because we
+	manipulate $PATH to run the tests, the $PATH of an installed
+	groff system will _always_ differ from that used by a build
+	tree; ignore it in the test cases.  Dispose of bashisms and set
+	shebang to /bin/sh.
+
+	* src/roff/nroff/nroff.am: Stop generating the above test
+	script.  It can now be run as it ships.
 
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
