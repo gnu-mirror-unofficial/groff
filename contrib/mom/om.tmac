@@ -20,7 +20,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4-4_a
+Version 2.4-4_b
 ---------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4-4_a
+.ds version 2.4-4_b
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -15265,23 +15265,12 @@ E\\R'#CAP_HEIGHT \\n[.cht]'
 \# *Argument:
 \#   <amount of space>
 \# *Function:
-\#   Gets value for #BIB_SPACE in units.
+\#   Gets value for $BIB_SPACE.
 \# *Notes:
 \#   Requires a unit of measure.
 \#
 .MAC BIBLIOGRAPHY_SPACING END
 .    ds $BIB_SPACE \\$1
-.    if \\n[#BIB_LEAD]=0 \{\
-.       nr #DEFER_BIB_SPACING 1
-.       return
-.    \}
-.    ds $EVAL_BIB_SPACE \\*[$BIB_SPACE]
-.    substring $EVAL_BIB_SPACE -1
-.    ie '\\*[$EVAL_BIB_SPACE]'v' \{\
-.       substring $BIB_SPACE 0 0
-.       nr #BIB_SPACE \\n[#BIB_LEAD]*\\*[$BIB_SPACE]
-.    \}
-.    el .nr #BIB_SPACE (\\$1)
 .END
 \#
 \# Bibliography (user space macro)
@@ -21959,7 +21948,7 @@ does not fit on page \\n[pgnum]\\*[col-num].
 .\" Part of workaround for refer spitting out a blank page if the
 .\" last ref falls on the bottom line.
 \\*[ref*string]\R'ref*num*first-pass +1'\?\R'ref*num +1'\?
-.sp \\n[#BIB_SPACE]u
+.sp \\*[$BIB_SPACE]
 .ie \\n[#BIB_LIST]=0 .in
 .el .IL -\\n[#REF_BIB_INDENT]u
 .nn 0
