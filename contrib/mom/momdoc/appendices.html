@@ -595,7 +595,7 @@ may safely remove it.  You may also safely remove the .afm file.
 For .pfb fonts, run
 <br/>
 <span class="pre-in-pp">
-  fontforge -script generate-pfa.pe &lt;file&gt;.ttf
+  fontforge -script generate-pfa.pe &lt;file&gt;.pfb
 </span>
 This will create two new files with the extensions .pfa, and .afm.
 Next, run
@@ -619,8 +619,8 @@ to the devpdf directory</kbd>.  Start by changing into the
 then:
 <br/>
 <span class="pre-in-pp">
-  ln -s &lt;prefix&gt;/&lt;version&gt;/font/devps/&lt;file&gt;.pfa .
-  ln -s &lt;prefix&gt;/&lt;version&gt;/font/devps/&lt;groff font&gt; .
+  ln -s &lt;prefix&gt;/&lt;site-font&gt;/devps/&lt;file&gt;.pfa .
+  ln -s &lt;prefix&gt;/&lt;site-font&gt;/devps/&lt;groff font&gt; .
 </span>
 You may safely remove the .afm file.
 </p>
