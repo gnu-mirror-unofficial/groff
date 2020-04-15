@@ -14328,27 +14328,26 @@ All warnings.
 @cindex compatibility mode
 @cindex mode, compatibility
 
+@codequotebacktick on
+@codequoteundirected on
 GNU @code{troff} has a number of features that cause incompatibilities
-with documents written with old versions of @code{troff}.
+with documents written using old versions of @code{troff}.  Some GNU
+extensions to @code{troff} have become supported by other
+implementations.
 
 @cindex long names
 @cindex names, long
-Long names cause some incompatibilities.  Unix @code{troff} interprets
-
-@Example
-.dsabcd
-@endExample
-
 @cindex @code{\*}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\n}, incompatibilities with @acronym{AT&T} @code{troff}
-@noindent
-as defining a string @samp{ab} with contents @samp{cd}.  Normally, GNU
-@code{troff} interprets this as a call of a macro named @code{dsabcd}.
-Also Unix @code{troff} interprets @code{\*[} or @code{\n[} as references
-to a string or number register called @samp{[}.  In GNU @code{troff},
-however, this is normally interpreted as the start of a long name.  In
-compatibility mode GNU @code{troff} interprets long names in the
-traditional way (which means that they are not recognized as names).
+Long names may be the most obvious innovation.  @acronym{AT&T}
+@code{troff} interprets @samp{.dsabcd} as defining a string @samp{ab}
+with contents @samp{cd}.  Normally, GNU @code{troff} interprets this as
+a call of a macro named @code{dsabcd}.  @acronym{AT&T} @code{troff} also
+interprets @code{\*[} or @code{\n[} as a reference to a string or number
+register called @samp{[}.  In GNU @code{troff}, however, the @samp{[} is
+normally interpreted as delimiting a long name.  In compatibility mode,
+GNU @code{troff} interprets names in the traditional way, which means
+that they are limited to one or two characters.
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, name}
@@ -14370,7 +14369,7 @@ that is, the restored compatibility state applies to the contents of the
 macro (string, @dots{}) @var{name} as well as file or pipe data read if
 @var{name} is the @code{.so}, @code{.mso}, or @code{.pso} request.
 
-For example,
+The following example illustrates several aspects of @code{do} behavior.
 
 @Example
 .de mac1
@@ -14394,45 +14393,37 @@ compatibility
 .do mac3 \[ti] \" groff syntax accepted in .do arguments
     @result{} FOO groff FOO compatibility c1 ~
 @endExample
-
-illustrates several aspects of @code{do} behavior.
 @endDefreq
 
 @cindex input level in delimited arguments
 @cindex delimited arguments, incompatibilities with @acronym{AT&T} @code{troff}
-Two other features are controlled by @option{-C}.  If not in
-compatibility mode, GNU @code{troff} preserves the input level in
-delimited arguments:
+Normally, GNU @code{troff} preserves the input level in delimited
+arguments, but not in compatibility mode.
 
 @Example
 .ds xx '
 \w'abc\*(xxdef'
+    @result{} 168 @r{(normal mode on a TTY device)}
+    @result{} 72def' @r{(compatibility mode on a TTY device)}
 @endExample
-
-@noindent
-In compatibility mode, the string @samp{72def'} is returned; without
-@option{-C} the resulting string is @samp{168} (assuming a TTY output
-device).
 
 @cindex @code{\f}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\H}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\s}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\S}, incompatibilities with @acronym{AT&T} @code{troff}
-Finally, the escapes @code{\f}, @code{\H}, @code{\m}, @code{\M},
+Furthermore, the escapes @code{\f}, @code{\H}, @code{\m}, @code{\M},
 @code{\R}, @code{\s}, and @code{\S} are transparent for recognizing the
-beginning of a line only in compatibility mode (this is a rather obscure
-feature).  For example, the code
+beginning of a line only in compatibility mode.  For example, the code
+produces bold output in both cases, but the text differs:
 
 @Example
 .de xx
 Hello!
 ..
 \fB.xx\fP
+    @result{} .xx @r{(normal mode)}
+    @result{} Hello! @r{(compatibility mode)}
 @endExample
-
-@noindent
-prints @samp{Hello!} in bold face if in compatibility mode, and
-@samp{.xx} in bold face otherwise.
 
 @cindex @code{\A}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\|}, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14452,9 +14443,9 @@ GNU @code{troff} does not allow the use of the escape sequences
 @code{\|}, @code{\^}, @code{\&}, @code{\@{}, @code{\@}},
 @code{\@key{SP}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
 @code{\%}, and @code{\c} in names of strings, macros, diversions, number
-registers, fonts or environments; Unix @code{troff} does.  The @code{\A}
-escape sequence (@pxref{Identifiers}) may be helpful in avoiding use of
-these escape sequences in names.
+registers, fonts or environments; @acronym{AT&T} @code{troff} does.  The
+@code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
+avoiding use of these escape sequences in names.
 
 @cindex fractional point sizes
 @cindex fractional type sizes
@@ -14463,17 +14454,11 @@ these escape sequences in names.
 @cindex sizes, fractional
 @cindex @code{ps} request, incompatibilities with @acronym{AT&T} @code{troff}
 Fractional point sizes cause one noteworthy incompatibility.  In
-Unix @code{troff} the @code{ps} request ignores scale indicators and
-thus
-
-@Example
-.ps 10u
-@endExample
-
-@noindent
-sets the point size to 10@tie{}points, whereas in GNU @code{troff} it
-sets the point size to 10@tie{}scaled points.  @xref{Fractional Type
-Sizes}, for more information.
+@acronym{AT&T} @code{troff} the @code{ps} request ignores scale
+indicators and thus @samp{.ps 10u} sets the point size to
+10@tie{}points, whereas in GNU @code{troff} it sets the point size to
+10@tie{}scaled points.  @xref{Fractional Type Sizes}, for more
+information.
 
 @cindex @code{bd} request, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{cs} request, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14486,16 +14471,16 @@ Sizes}, for more information.
 In GNU @code{troff} there is a fundamental difference between
 (unformatted) input characters and (formatted) output glyphs.
 Everything that affects how a glyph is output is stored with the glyph
-node; once a glyph node has been constructed it is unaffected by any
+node; once a glyph node has been constructed, it is unaffected by any
 subsequent requests that are executed, including @code{bd}, @code{cs},
-@code{tkf}, @code{tr}, or @code{fp} requests.  Normally glyphs are
-constructed from input characters at the moment immediately before the
-glyph is added to the current output line.  Macros, diversions and
-strings are all, in fact, the same type of object; they contain lists of
-input characters and glyph nodes in any combination.  A glyph node does
-not behave like an input character for the purposes of macro processing;
-it does not inherit any of the special properties that the input
-character from which it was constructed might have had.  For example,
+@code{tkf}, @code{tr}, or @code{fp} requests.  Normally, glyphs are
+constructed from input characters immediately before the glyph is added
+to the current output line.  Macros, diversions and strings are all, in
+fact, the same type of object; they contain lists of input characters
+and glyph nodes in any combination.  A glyph node does not behave like
+an input character for the purposes of macro processing; it does not
+inherit any of the special properties that the input character from
+which it was constructed might have had.  For example,
 
 @Example
 .di x
@@ -14505,6 +14490,13 @@ character from which it was constructed might have had.  For example,
 .x
 @endExample
 
+@noindent
+prints @samp{\\} in GNU @code{troff}; each pair of input backslashes is
+turned into one output backslash and the resulting output backslashes
+are not interpreted as escape characters when they are reread.
+@acronym{AT&T} @code{troff} would interpret them as escape characters
+when they were reread and would end up printing one @samp{\}.
+
 @cindex printing backslash (@code{\\}, @code{\e}, @code{\E}, @code{\[rs]})
 @cindex backslash, printing (@code{\\}, @code{\e}, @code{\E}, @code{\[rs]})
 @cindex @code{\e}, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14512,24 +14504,30 @@ character from which it was constructed might have had.  For example,
 @cindex @code{\?}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex transparent output, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex output, transparent, incompatibilities with @acronym{AT&T} @code{troff}
-@noindent
-prints @samp{\\} in GNU @code{troff}; each pair of input backslashes is
-turned into one output backslash and the resulting output backslashes
-are not interpreted as escape characters when they are reread.
-Unix @code{troff} would interpret them as escape characters when they
-were reread and would end up printing one @samp{\}.  The correct way to
-obtain a printable backslash is to use the @code{\e} escape sequence:
-This always prints a single instance of the current escape character,
+One correct way to obtain a printable backslash in most documents is to
+use the @code{\e} escape sequence; this always prints a single instance
+of the current escape character@footnote{Naturally, if you've changed
+the escape character, you need to prefix the @code{e} with whatever it
+is---and you'll get something other than a backslash in the output.},
 regardless of whether or not it is used in a diversion; it also works in
-both GNU @code{troff} and Unix @code{troff}.@footnote{To be completely
-independent of the current escape character, use @code{\(rs}, which
-represents a reverse solidus (backslash) glyph.}  To store, for some
-reason, an escape sequence in a diversion that is interpreted when the
-diversion is reread, either use the traditional @code{\!} transparent
-output facility, or, if this is unsuitable, the new @code{\?} escape
-sequence.
+both GNU @code{troff} and @acronym{AT&T} @code{troff}.
 
-@xref{Diversions}, and @ref{Gtroff Internals}, for more information.
+The other correct way, appropriate in contexts independent of the
+backslash's common use as a @code{troff} escape character---perhaps in
+discussion of character sets or other programming languages---is
+the character escape @code{\(rs} or @code{\[rs]}, for ``reverse
+solidus'', from its name in the @acronym{ECMA-6} (@acronym{ISO/IEC} 646)
+standard@footnote{This character escape is not portable to
+@acronym{AT&T} @code{troff}, but is to its lineal descendant, Heirloom
+Doctools @code{troff}, as of its 060716 release (June 2006).}.
+
+To store, for some reason, an escape sequence in a diversion that is
+interpreted when the diversion is reread, either use the traditional
+@code{\!} transparent output facility, or, if this is unsuitable, the
+new @code{\?} escape sequence.  @xref{Diversions}, and @ref{Gtroff
+Internals}, for more information.
+@codequoteundirected off
+@codequotebacktick off
 
 
 
