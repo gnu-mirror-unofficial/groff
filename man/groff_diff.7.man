@@ -17,7 +17,7 @@ groff_diff \- differences between GNU troff and classical troff
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2018 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2018, 2020 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -1314,37 +1314,70 @@ escape (to embed the contents of a macro into the intermediate
 output preceded with \[oq]x\~X\[cq]).
 .
 .TP
-.BI .do\  xxx
-Interpret
-.I .xxx
+.BI .do\~ name\~\c
+\&...
+Interpret the string,
+request,
+diversion,
+or macro
+.I name
+(along with any arguments)
 with compatibility mode disabled.
 .
+Note that compatibility mode is restored
+(if and only if it was active)
+when the
+.I expansion
+of
+.I name
+is interpreted;
+that is,
+the restored compatibility state applies to the contents of the macro
+(string, \&...\&)
+.I name
+as well as file or pipe data read if
+.I name
+is the
+.BR .so ,
+.BR .mso ,
+or
+.B .pso
+request.
+.
+.IP
 For example,
-.
 .RS
-.
-.IP
+.RS \" one "extra" RS to get us inboard of this indented paragraph
 .EX
-\&.do fam T
+\&.de mac1
+FOO
+\&..
+\&.de1 mac2
+groff
+\&.mac1
+\&..
+\&.de mac3
+compatibility
+\&.mac1
+\&..
+\&.de ma
+\[rs]\[rs]$1
+\&..
+\&.cp 1
+\&.do mac1
+\&.do mac2 \[rs]" mac2, defined with .de1, calls "mac1"
+\&.do mac3 \[rs]" mac3 calls "ma" with argument "c1"
+\&.do mac3 \[rs][ti] \[rs]" groff syntax accepted in .do arguments
 .EE
-.
-.P
-would have the same effect as
-.
-.IP
-.EX
-\&.fam T
-.EE
-.
-.P
-except that it would work even if compatibility mode had been enabled.
-.
-Note that the previous compatibility mode is restored before any files
-sourced by
-.I xxx
-are interpreted.
-.
 .RE
+results in
+.RS
+.EX
+FOO groff FOO compatibility c1 \[ti]
+.EE
+.RE
+as output.
+.RE \" this "extra" RE avoids indentation of the remaining paragraphs
 .
 .TP
 .BI .ds1\  xx\ yy

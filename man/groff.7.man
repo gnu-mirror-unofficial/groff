@@ -10,7 +10,7 @@ groff \- a short reference for the GNU roff language
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2000-2018 Free Software Foundation, Inc.
+.\" Copyright (C) 2000-2018, 2020 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -1571,10 +1571,22 @@ See
 for more details.
 .
 .TPx
-.REQ .do "name"
-Interpret
-.BI . name
+.REQ .do "name \fR\&.\|.\|.\&\fP"
+Interpret the string,
+request,
+diversion,
+or macro
+.I name
+(along with any arguments)
 with compatibility mode disabled.
+.
+Note that compatibility mode is restored
+(if and only if it was active)
+when the
+.I expansion
+of
+.I name
+is interpreted.
 .
 .TPx
 .REQ .ds "stringvar anything"

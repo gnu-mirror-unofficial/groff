@@ -26,7 +26,7 @@
 @copying
 This manual documents GNU @code{troff} version 1.22.4.
 
-Copyright @copyright{} 1994--2018 Free Software Foundation, Inc.
+Copyright @copyright{} 1994--2018, 2020 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -14351,7 +14351,7 @@ compatibility mode GNU @code{troff} interprets long names in the
 traditional way (which means that they are not recognized as names).
 
 @DefreqList {cp, [@Var{n}]}
-@DefreqItemx {do, cmd}
+@DefreqItemx {do, name}
 @DefregListEndx {.C}
 If @var{n} is missing or non-zero, turn on compatibility mode;
 otherwise, turn it off.
@@ -14362,20 +14362,40 @@ is on, 0@tie{}otherwise.
 Compatibility mode can be also turned on with the @option{-C}
 command-line option.
 
-The @code{do} request turns off compatibility mode while executing its
-arguments as a @code{gtroff} command.  However, it does not turn off
-compatibility mode while processing the macro itself.  To do that, use
-the @code{de1} request.  @xref{Writing Macros}.
+The @code{do} request interprets the string, request, diversion, or
+macro @var{name} (along with any further arguments) with compatibility
+mode disabled.  Note that compatibility mode is restored (if and only if
+it was active) when the @emph{expansion} of @var{name} is interpreted;
+that is, the restored compatibility state applies to the contents of the
+macro (string, @dots{}) @var{name} as well as file or pipe data read if
+@var{name} is the @code{.so}, @code{.mso}, or @code{.pso} request.
+
+For example,
 
 @Example
-.do fam T
+.de mac1
+FOO
+..
+.de1 mac2
+groff
+.mac1
+..
+.de mac3
+compatibility
+.mac1
+..
+.de ma
+\\$1
+..
+.cp 1
+.do mac1
+.do mac2 \" mac2, defined with .de1, calls "mac1"
+.do mac3 \" mac3 calls "ma" with argument "c1"
+.do mac3 \[ti] \" groff syntax accepted in .do arguments
+    @result{} FOO groff FOO compatibility c1 ~
 @endExample
 
-@noindent
-executes the @code{fam} request when compatibility mode is enabled.
-
-@code{gtroff} restores the previous compatibility setting before
-interpreting any files sourced by the @var{cmd}.
+illustrates several aspects of @code{do} behavior.
 @endDefreq
 
 @cindex input level in delimited arguments
