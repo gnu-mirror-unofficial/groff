@@ -14310,11 +14310,12 @@ Long names may be the most obvious innovation.  @acronym{AT&T}
 @code{troff} interprets @samp{.dsabcd} as defining a string @samp{ab}
 with contents @samp{cd}.  Normally, GNU @code{troff} interprets this as
 a call of a macro named @code{dsabcd}.  @acronym{AT&T} @code{troff} also
-interprets @code{\*[} or @code{\n[} as a reference to a string or number
-register called @samp{[}.  In GNU @code{troff}, however, the @samp{[} is
-normally interpreted as delimiting a long name.  In compatibility mode,
-GNU @code{troff} interprets names in the traditional way, which means
-that they are limited to one or two characters.
+interprets @code{\*[} and @code{\n[} as a reference to a string or
+number register, respectively, called @samp{[}.  In GNU @code{troff},
+however, the @samp{[} is normally interpreted as delimiting a long name.
+In compatibility mode, GNU @code{troff} interprets names in the
+traditional way, which means that they are limited to one or two
+characters.
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, name}
@@ -14370,8 +14371,8 @@ arguments, but not in compatibility mode.
 @Example
 .ds xx '
 \w'abc\*(xxdef'
-    @result{} 168 @r{(normal mode on a TTY device)}
-    @result{} 72def' @r{(compatibility mode on a TTY device)}
+    @result{} 168 @r{(normal mode on a terminal device)}
+    @result{} 72def' @r{(compatibility mode on a terminal device)}
 @endExample
 
 @cindex @code{\f}, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14380,8 +14381,8 @@ arguments, but not in compatibility mode.
 @cindex @code{\S}, incompatibilities with @acronym{AT&T} @code{troff}
 Furthermore, the escapes @code{\f}, @code{\H}, @code{\m}, @code{\M},
 @code{\R}, @code{\s}, and @code{\S} are transparent for recognizing the
-beginning of a line only in compatibility mode.  For example, the code
-produces bold output in both cases, but the text differs:
+beginning of a line only in compatibility mode.  For example, this code
+produces bold output in both cases, but the text differs.
 
 @Example
 .de xx
@@ -14410,8 +14411,8 @@ GNU @code{troff} does not allow the use of the escape sequences
 @code{\|}, @code{\^}, @code{\&}, @code{\@{}, @code{\@}},
 @code{\@key{SP}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
 @code{\%}, and @code{\c} in names of strings, macros, diversions, number
-registers, fonts or environments; @acronym{AT&T} @code{troff} does.  The
-@code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
+registers, fonts, or environments; @acronym{AT&T} @code{troff} does.
+The @code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
 avoiding use of these escape sequences in names.
 
 @cindex @code{\s}, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14440,8 +14441,7 @@ Fractional point sizes cause one noteworthy incompatibility.  In
 @acronym{AT&T} @code{troff} the @code{ps} request ignores scale
 indicators and thus @samp{.ps 10u} sets the point size to
 10@tie{}points, whereas in GNU @code{troff} it sets the point size to
-10@tie{}scaled points.  @xref{Fractional Type Sizes}, for more
-information.
+10@tie{}scaled points.  @xref{Fractional Type Sizes}.
 
 @cindex @code{bd} request, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{cs} request, incompatibilities with @acronym{AT&T} @code{troff}
@@ -14458,19 +14458,21 @@ node; once a glyph node has been constructed, it is unaffected by any
 subsequent requests that are executed, including @code{bd}, @code{cs},
 @code{tkf}, @code{tr}, or @code{fp} requests.  Normally, glyphs are
 constructed from input characters immediately before the glyph is added
-to the current output line.  Macros, diversions and strings are all, in
+to the current output line.  Macros, diversions, and strings are all, in
 fact, the same type of object; they contain lists of input characters
-and glyph nodes in any combination.  A glyph node does not behave like
-an input character for the purposes of macro processing; it does not
+and glyph nodes in any combination.  Special characters can be both:
+before being added to the output, they act as input entities;
+afterwards, they denote glyphs.  A glyph node does not behave like an
+input character for the purposes of macro processing; it does not
 inherit any of the special properties that the input character from
-which it was constructed might have had.  For example,
+which it was constructed might have had.  The following example,
 
 @Example
 .di x
 \\\\
 .br
 .di
-.x
+.x@r{,} @c Only mathematical typographers will appreciate this comma.
 @endExample
 
 @noindent
@@ -14491,9 +14493,9 @@ One correct way to obtain a printable backslash in most documents is to
 use the @code{\e} escape sequence; this always prints a single instance
 of the current escape character@footnote{Naturally, if you've changed
 the escape character, you need to prefix the @code{e} with whatever it
-is---and you'll get something other than a backslash in the output.},
-regardless of whether or not it is used in a diversion; it also works in
-both GNU @code{troff} and @acronym{AT&T} @code{troff}.
+is---and you'll likely get something other than a backslash in the
+output.}, regardless of whether or not it is used in a diversion; it
+also works in both GNU @code{troff} and @acronym{AT&T} @code{troff}.
 
 The other correct way, appropriate in contexts independent of the
 backslash's common use as a @code{troff} escape character---perhaps in
@@ -14504,11 +14506,10 @@ standard@footnote{This character escape is not portable to
 @acronym{AT&T} @code{troff}, but is to its lineal descendant, Heirloom
 Doctools @code{troff}, as of its 060716 release (June 2006).}.
 
-To store, for some reason, an escape sequence in a diversion that is
-interpreted when the diversion is reread, either use the traditional
-@code{\!} transparent output facility, or, if this is unsuitable, the
-new @code{\?} escape sequence.  @xref{Diversions}, and @ref{Gtroff
-Internals}, for more information.
+To store an escape sequence in a diversion that is interpreted when the
+diversion is reread, either use the traditional @code{\!} transparent
+output facility, or, if this is unsuitable, the new @code{\?} escape
+sequence.  @xref{Diversions}, and @ref{Gtroff Internals}.
 @codequoteundirected off
 @codequotebacktick off
 
