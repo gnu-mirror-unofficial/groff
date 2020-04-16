@@ -3726,118 +3726,151 @@ The first three output commands are guaranteed to be:
 .
 .
 .\" ====================================================================
-.SH Incompatibilities
-.\" ====================================================================
-.
-In spite of the many extensions, groff has retained compatibility to
-classical troff to a large degree.
-.
-For the cases where the extensions lead to collisions, a special
-compatibility mode with the restricted, old functionality was created
-for groff.
-.
-.
-.\" ====================================================================
-.SS "groff language"
+.SH "Implementation Differences"
 .\" ====================================================================
 .
 .I groff
-provides a
-.B compatibility mode
-that allows the processing of roff code written for classical
-.B troff
-or for other implementations of roff in a consistent way.
+has a number of features that cause incompatibilities with documents
+written using old versions of
+.IR roff .
+.
+Some GNU extensions to
+.I roff
+have become supported by other implementations.
+.
 .
 .P
-Compatibility mode can be turned on with the
-.B \-C
-command-line option, and turned on or off with the
-.B .cp
-request.
+Long names may be the most obvious innovation.
 .
-The number register
-.B \[rs]n(.C
-is\~1 if compatibility mode is on, 0\~otherwise.
-.
-.P
-This became necessary because the GNU concept for long names causes
-some incompatibilities.
-.I Classical troff
+.RI AT&T\~ troff
 interprets
-.IP
-.B .dsabcd
-.
-.P
+.RB \[lq] .dsabcd \[rq]
 as defining a string
-.B ab
+.RB \[lq] ab \[rq]
 with contents
-.BR cd .
-In
-.I groff
-mode, this is considered as a call of a macro named
-.BR dsabcd .
+.RB \[lq] cd \[rq].
 .
-.P
-Also
-.I classical troff
-interprets
+Normally,
+.I groff
+interprets this as a call of a macro named
+.RB \[lq] dsabcd \[rq].
+.
+.RI AT&T\~ troff
+also interprets
 .B \[rs]*[
-or
-.B \[rs]n[
-as references to a string or number register called\~\c
-.B [
-while
-.I groff
-takes this as the start of a long name.
-.
-.P
-In
-.IR "compatibility mode" ,
-groff interprets these things in the traditional way; so long
-names are not recognized.
-.
-.P
-On the other hand, groff in
-.I GNU native mode
-does not allow to use the single-character escapes
-.B \[rs]\[rs]
-(backslash),
-.B \[rs]|
-(vertical bar),
-.B \[rs]\[ha]
-(caret),
-.B \[rs]&
-(ampersand),
-.B \[rs]{
-(opening brace),
-.B \[rs]}
-(closing brace),
-.RB \[oq] \[rs]\  \[cq]
-(space),
-.B \[rs]\[aq]
-(single quote),
-.B \[rs]\[ga]
-(backquote),
-.B \[rs]\-
-(minus),
-.B \[rs]_
-(underline),
-.B \[rs]!\&
-(bang),
-.B \[rs]%
-(percent),
 and
-.B \[rs]c
-(character\~c) in names of strings, macros, diversions, number
-registers, fonts or environments, whereas
-.I classical troff
+.B \[rs]n[
+as a reference to a string or number register,
+respectively,
+called
+.RB \[lq] [ \[rq].
+.
+In
+.IR groff ,
+however,
+the
+.RB \[lq] [ \[rq]
+is normally interpreted as delimiting a long name.
+.
+In compatibility mode,
+.I groff
+interprets names in the traditional way,
+which means that they are limited to one or two characters.
+.
+.
+.P
+See the
+.B \-C
+option in
+.IR groff (@MAN1EXT@)
+and,
+above,
+the
+.B .C
+register
+and
+.B .cp
+and
+.B .do
+requests for more on compatibility mode.
+.
+.
+.P
+Normally,
+.I groff
+preserves the input level in delimited arguments,
+but not in compatibility mode.
+.
+For example,
+on terminal devices,
+.RS
+.EX
+\&.ds xx \[aq]
+\&\[rs]w\[aq]abc\[rs]*(xxdef\[aq]
+.EE
+.RE
+produces \[lq]168\[rq] ordinarily,
+but \[lq]72def\[aq]\[rq] in compatibility mode.
+.
+.
+.P
+Furthermore,
+the escapes
+.BR \[rs]f ,
+.BR \[rs]H ,
+.BR \[rs]m ,
+.BR \[rs]M ,
+.BR \[rs]R ,
+.BR \[rs]s ,
+and
+.BR \[rs]S
+transparent for recognizing the beginning of a line only in
+compatibility mode.
+.
+For example,
+this code produces bold output in both cases,
+but the text differs,
+.RS
+.EX
+\&.de xx \[aq]
+Hello!
+\&..
+\&\[rs]fB.xx\[rs]fP
+.EE
+.RE
+producing \[lq].xx\[rq] in normal mode and \[lq]Hello!\[rq] in
+compatibility mode.
+.
+.
+.P
+.I groff
+does not allow the use of the escape sequences
+.BR \[rs]| ,
+.BR \[rs]\[ha] ,
+.BR \[rs]& ,
+.BR \[rs]{ ,
+.BR \[rs]} ,
+.RB \[lq] \[rs]\~ \[rq] ,
+.BR \[rs]\[aq] ,
+.BR \[rs]\[ga] ,
+.BR \[rs]\- ,
+.BR \[rs]_ ,
+.BR \[rs]! ,
+.BR \[rs]% ,
+.BR \[rs]c ,
+in names of strings,
+macros,
+diversions,
+number registers,
+fonts, or environments;
+.RI AT&T\~ troff
 does.
 .
-.P
 The
 .B \[rs]A
-escape sequence can be helpful in avoiding these escape sequences in
-names.
+escape sequence
+(see subsection \[lq]New escape sequences\[rq] above)
+may be helpful in avoiding use of these escape sequences in names.
 .
 .
 .P
@@ -3889,19 +3922,17 @@ McIlroy referred to it as a \[lq]living fossil\[rq].]
 Fractional point sizes cause one noteworthy incompatibility.
 .
 In
-.I classical
-.IR troff ,
+.RI AT&T\~ troff
 the
-.B ps
-request ignores scale indicators and so
-.RS
-.P
-.B .ps\~10u
-.RE
+.B .ps
+request ignores scale indicators and thus
+.RB \[lq] .ps\~10u \[rq]
+sets the point size to 10\~points,
+whereas in
+.I groff
+it sets the point size to 10\~scaled points.
 .
-.P
-sets the point size to 10\~points, whereas in groff native mode the
-point size is set to 10\~scaled points.
+See subsection \[lq]Fractional point sizes\[rq] above.
 .
 .
 .P
@@ -3910,93 +3941,123 @@ In
 there is a fundamental difference between unformatted input
 characters, and formatted output characters (glyphs).
 .
-Everything that affects how a glyph is output is
-stored with the glyph; once a glyph has been
-constructed it is unaffected by any subsequent requests that are
-executed, including the
-.BR bd ,
-.BR cs ,
-.BR tkf ,
-.BR tr ,
+Everything that affects how a glyph is output is stored with the glyph;
+once a glyph has been constructed,
+it is unaffected by any subsequent requests that are executed,
+including the
+.BR .bd ,
+.BR .cs ,
+.BR .tkf ,
+.BR .tr ,
 or
-.B fp
+.B .fp
 requests.
 .
-.P
-Normally glyphs are constructed from input characters at
-the moment immediately before the glyph is added to the current
-output line.
+Normally,
+glyphs are constructed from input characters immediately before the
+glyph is added to the current output line.
 .
-Macros, diversions and strings are all, in fact, the same type of
-object; they contain lists of input characters and glyphs
-in any combination.
+Macros,
+diversions,
+and strings are all,
+in fact,
+the same type of object;
+they contain lists of input characters and glyphs in any combination.
 .
-.P
-Special characters can be both; before being added to the output, they
-act as input entities, afterwards they denote glyphs.
+Special characters can be both: before being added to the output,
+they act as input entities;
+afterwards,
+they denote glyphs.
 .
-.P
-A glyph does not behave like an input character for the
-purposes of macro processing; it does not inherit any of the special
-properties that the input character from which it was constructed
-might have had.
+A glyph does not behave like an input character for the purposes of
+macro processing;
+it does not inherit any of the special properties that the input
+character from which it was constructed might have had.
 .
-The following example makes things clearer.
+The following example,
 .
-.P
 .RS
 .EX
-\&.di x
-\[rs]\[rs]\[rs]\[rs]
-\&.br
-\&.di
-\&.x
+.B .di x
+.B \[rs]\[rs]\[rs]\[rs]
+.B .br
+.B .di
+.BR .x ,\" Only mathematical typographers will appreciate this comma.
 .EE
 .RE
 .
-.P
-With
-.I GNU troff
-this is printed as
-.BR \[rs]\[rs] .
-So each pair of input backslashes \[oq]\[rs]\[rs]\[cq] is turned
-into a single output backslash glyph \[oq]\[rs]\[cq] and the
-resulting output backslashes are not interpreted as escape characters
-when they are reread.
+prints
+.RB \[lq] \[rs]\[rs] \[rq]
+in
+.IR groff ;
+each pair of input backslashes is turned into one output backslash and
+the resulting output backslashes are not interpreted as escape
+characters when they are reread.
 .
-.P
-.I Classical troff
+.RI AT&T\~ troff
 would interpret them as escape characters when they were reread and
-would end up printing a single backslash \[oq]\[rs]\[cq].
+would end up printing one
+.RB \[lq] \[rs] \[rq].
+.
 .
 .P
-In GNU, the correct way to get a printable version of the backslash
-character \[cq]\[rs]\[cq]
-is the
-.B \[rs](rs
-escape sequence, but classical troff does not provide a clean feature
-for getting a non-syntactical backslash.
-.
-A close method is the printable version of the current escape
-character using the
+One correct way to obtain a printable backslash in most documents is to
+use the
 .B \[rs]e
-escape sequence; this works if the current escape character is not
-redefined.
+escape sequence;
+this always prints a single instance of the current escape character,
+regardless of whether or not it is used in a diversion;
+it also works in both
+.I groff
+and
+.RI AT&T\~ troff .
 .
-It works in both GNU mode and compatibility mode, while dirty tricks
-like specifying a sequence of multiple backslashes do not work
-reliably; for the different handling in diversions, macro definitions,
-or text mode quickly leads to a confusion about the necessary number of
-backslashes.
+(Naturally,
+if you've changed the escape character,
+you need to prefix the
+.RB \[lq] e \[rq]
+with whatever it is\[em]and you'll likely get something other than a
+backslash in the output.)
+.
 .
 .P
-To store an escape sequence in a diversion that is interpreted
-when the diversion is reread, either the traditional
-.B \[rs]!\&
-transparent output facility or the
-new
-.B \[rs]?\&
-escape sequence can be used.
+The other correct way,
+appropriate in contexts independent of the backslash's common use as a
+.I roff
+escape character\[em]perhaps in discussion of character sets or other
+programming languages\[em]is the character escape
+.B \[rs](rs
+or
+.BR \[rs][rs] ,
+for \[lq]reverse solidus\[rq],
+from its name in the ECMA-6 (ISO/IEC\~646) standard.
+.
+[This character escape is not portable to
+.RI AT&T\~ troff ,
+but is to its lineal descendant,
+Heirloom Doctools
+.IR troff ,
+as of its 060716 release (June 2006).]
+.
+.
+.P
+To store an escape sequence in a diversion that is interpreted when the
+diversion is reread,
+either use the traditional
+.B \[rs]!
+transparent output facility,
+or,
+if this is unsuitable,
+the new
+.B \[rs]?
+escape sequence.
+.
+See subsection \[lq]New escape sequences\[rq] above and sections
+\[lq]Diversions\[rq] and \[lq]Gtroff Internals\[rq] in
+.IR "Groff: The GNU Implementation of troff" ,
+the
+.I groff
+Texinfo manual.
 .
 .
 .\" ====================================================================
