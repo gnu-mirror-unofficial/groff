@@ -1,3 +1,52 @@
+2020-04-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Implement new read-only .cp register.
+
+	The register \n[.cp] is specialized and may require a statement
+	of rationale.  When writing macro packages or documents that use
+	groff features and which may be mixed with other packages or
+	documents that do not—common scenarios include serial processing
+	of man pages or use of the .so or .mso requests—you may desire
+	correct operation regardless of compatibility mode in the
+	surrounding context.  It may occur to you to save the existing
+	value of \n(.C into a register, say, _C, at the beginning of
+	your file, turn compatibility mode off with “.cp 0”, then
+	restore it from that register at the end with “.cp \n(_C”.  At
+	the same time, a modular design of a document or macro package
+	may lead you to multiple layers of inclusion.  You cannot use
+	the same register name everywhere or you risk “clobbering” the
+	value from a preceding or enclosing context.  The two‐character
+	register namespace of AT&T troff is confining and mnemonically
+	challenging; you may wish to use groff's more capacious
+	namespace.  However, attempting “.nr _my_saved_C \n(.C” will not
+	work in compatibility mode; the register name is too long.
+	“This is exactly what .do is for,” you think, “.do nr
+	_my_saved_C \n(.C”.  The foregoing will always save zero to your
+	register, because .do turns compatibility mode off while it
+	interprets its argument list.  What you need is:
+		.do nr _my_saved_C \n[.cp]
+		.cp 0
+	at the beginning of your file, followed by
+		.cp _my_saved_C
+	at the end.  As in the C language, we all have to share one big
+	namespace, so choose a register name that is unlikely to collide
+	with other uses.
+
+	* src/roff/troff/input.cpp (do_request, init_input_requests):
+	Implement it.
+
+	* doc/groff.texi:
+	* man/groff.7.man:
+	* man/groff_diff.7.man: Document it.
+
+	* src/roff/groff/groff.am:
+	* src/roff/groff/tests/dot-cp_register_works.sh: Test it.
+
+	Enables a fix for
+	<https://savannah.gnu.org/bugs/index.php?58162>.
+
+	Thanks to John Gardner and Ingo Schwarze for the discussion.
+
 2020-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi:
@@ -154,11 +203,11 @@
 	Experimentation reveals that .so, .mso, and .pso requests acted
 	as barriers to backtracing except when explicitly requested with
 	the .backtrace request.  Judging by the git history, this
-	behavior dates back to June 1991 or earlier.  This did not
-	appear to be intended, according to a source comment, which was
-	only to suppress the backtrace output for the line corresponding
-	to the outermost level of the input stack (commonly, a file
-	argument to groff).  Unfortunately, that wasn't its only effect.
+	behavior dates back to June 1991 or earlier.  The intention,
+	according to a source comment, was only to suppress the
+	backtrace output for the line corresponding to the outermost
+	level of the input stack (commonly, a file argument to groff).
+	Unfortunately, that wasn't its only effect.
 
 	This change does result in one additional line of output for
 	each error or (non-ignored) warning when -b is given.  However,

@@ -2793,6 +2793,16 @@ It is positive if the glyph extends above the baseline.
 1\~if colors are enabled, 0\~otherwise.
 .
 .TP
+.B \[rs]n[.cp]
+Within a
+.B .do
+request,
+holds the saved value of compatibility mode
+(see
+.B \[rs]n[.C]
+above).
+.
+.TP
 .B \[rs]n[.csk]
 The skew of the last glyph added to the current environment.
 .
@@ -3787,13 +3797,94 @@ and,
 above,
 the
 .B .C
-register
+and
+.B .cp
+registers,
 and
 .B .cp
 and
 .B .do
 requests for more on compatibility mode.
 .
+.
+.P
+The register
+.B \[rs]n[.cp]
+is specialized and may require a statement of rationale.
+.
+When writing macro packages or documents that use
+.I groff
+features and which may be mixed with other packages or documents that do
+not\[em]common scenarios include serial processing of man pages or use
+of the
+.B .so
+or
+.B .mso
+requests\[em]you may desire correct operation regardless of
+compatibility mode in the surrounding context.
+.
+It may occur to you to save the existing value of
+.B \[rs]n(.C
+into a register,
+say,
+.BR _C ,
+at the beginning of your file,
+turn compatibility mode off with
+.RB \[lq] .cp\~0 \[rq],
+then restore it from that register at the end with
+.RB \[lq] .cp\~\[rs]n(_C \[rq].
+.
+At the same time,
+a modular design of a document or macro package may lead you to multiple
+layers of inclusion.
+.
+You cannot use the same register name everywhere or you risk
+\[lq]clobbering\[rq] the value from a preceding or enclosing context.
+.
+The two-character register namespace of
+.RI AT&T\~ troff
+is confining and mnemonically challenging;
+you may wish to use
+.IR groff 's
+more capacious namespace.
+.
+However,
+attempting
+.RB \[lq] ".nr _my_saved_C \[rs]n(.C" \[rq]
+will not work in compatibility mode;
+the register name is too long.
+.
+\[lq]This is exactly what
+.B .do
+is for,\[rq] you think,
+.RB \[lq] ".do nr _my_saved_C \[rs]n(.C" \[rq].
+.
+The foregoing will always save zero to your register,
+because
+.B .do
+turns compatibility mode
+.IR off
+while it interprets its argument list.
+.
+What you need is:
+.RS
+.EX
+\&.do nr _my_saved_C \[rs]n[.cp]
+\&.cp 0
+.EE
+.RE
+at the beginning of your file,
+followed by
+.RS
+.EX
+\&.cp _my_saved_C
+.EE
+.RE
+at the end.
+.
+As in the C language,
+we all have to share one big namespace,
+so choose a register name that is unlikely to collide with other uses.
 .
 .P
 Normally,

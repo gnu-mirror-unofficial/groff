@@ -103,6 +103,7 @@ static symbol end_macro_name;
 static symbol blank_line_macro_name;
 static symbol leading_spaces_macro_name;
 static int compatible_flag = 0;
+static int do_old_compatible_flag = -1;	// for .do request
 int ascii_output_flag = 0;
 int suppress_output_flag = 0;
 int is_html = 0;
@@ -2640,14 +2641,16 @@ static void trapping_blank_line()
 
 void do_request()
 {
-  int old_compatible_flag = compatible_flag;
+  assert(do_old_compatible_flag == -1);
+  do_old_compatible_flag = compatible_flag;
   compatible_flag = 0;
   symbol nm = get_name();
   if (nm.is_null())
     skip_line();
   else
     interpolate_macro(nm, 1);
-  compatible_flag = old_compatible_flag;
+  compatible_flag = do_old_compatible_flag;
+  do_old_compatible_flag = -1;
   request_or_macro *p = lookup_request(nm);
   macro *m = p->to_macro();
   if (m)
@@ -8297,6 +8300,7 @@ void init_input_requests()
   number_reg_dictionary.define(".$", new nargs_reg);
   number_reg_dictionary.define(".br", new break_flag_reg);
   number_reg_dictionary.define(".C", new constant_int_reg(&compatible_flag));
+  number_reg_dictionary.define(".cp", new constant_int_reg(&do_old_compatible_flag));
   number_reg_dictionary.define(".O", new variable_reg(&begin_level));
   number_reg_dictionary.define(".c", new lineno_reg);
   number_reg_dictionary.define(".color", new constant_int_reg(&color_flag));

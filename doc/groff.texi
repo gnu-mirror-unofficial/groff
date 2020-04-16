@@ -14319,7 +14319,8 @@ characters.
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, name}
-@DefregListEndx {.C}
+@DefregItemx {.C}
+@DefregListEndx {.cp}
 If @var{n} is missing or non-zero, turn on compatibility mode;
 otherwise, turn it off.
 
@@ -14361,6 +14362,51 @@ compatibility
 .do mac3 \[ti] \" groff syntax accepted in .do arguments
     @result{} FOO groff FOO compatibility c1 ~
 @endExample
+
+The read-only number register @code{.cp}, meaningful only when
+dereferenced from a @code{.do} request, is@tie{}1 if compatibility mode
+was on when the @code{.do} request was encountered, and 0@tie{}if it
+was not.  This register is specialized and may require a statement of
+rationale.
+
+When writing macro packages or documents that use GNU @code{troff}
+features and which may be mixed with other packages or documents that do
+not---common scenarios include serial processing of man pages or use of
+the @code{so} or @code{mso} requests---you may desire correct operation
+regardless of compatibility mode in the surrounding context.  It may
+occur to you to save the existing value of @samp{\n(.C} into a register,
+say, @samp{_C}, at the beginning of your file, turn compatibility mode
+off with @samp{.cp 0}, then restore it from that register at the end
+with @samp{.cp \n(_C}.  At the same time, a modular design of a document
+or macro package may lead you to multiple layers of inclusion.  You
+cannot use the same register name everywhere or you risk ``clobbering''
+the value from a preceding or enclosing context.  The two-character
+register namespace of @acronym{AT&T} @code{troff} is confining and
+mnemonically challenging; you may wish to use the more capacious
+namespace of GNU @code{troff}.  However, attempting @samp{.nr
+_my_saved_C \n(.C} will not work in compatibility mode; the register
+name is too long.  ``This is exactly what @code{do} is for,'' you think,
+@samp{.do nr _my_saved_C \n(.C}.  The foregoing will always save zero to
+your register, because @code{do} turns compatibility mode @emph{off}
+while it interprets its argument list.  What you need is:
+
+@Example
+.do nr _my_saved_C \n[.cp]
+.cp 0
+@endExample
+
+@noindent
+at the beginning of your file, followed by
+
+@Example
+.cp _my_saved_C
+@endExample
+
+@noindent
+at the end.  As in the C language, we all have to share one big
+namespace, so choose a register name that is unlikely to collide with
+other uses.
+
 @endDefreq
 
 @cindex input level in delimited arguments

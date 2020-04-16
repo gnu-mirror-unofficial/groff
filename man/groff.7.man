@@ -3897,6 +3897,13 @@ Current input line number.
 .REG .C
 1\~if compatibility mode is in effect, 0\~otherwise.
 .
+Always\~0 in a
+.request .do
+request;
+see
+.register .cp
+below.
+.
 .TPx
 .REG .cdp
 The depth of the last glyph added to the current environment.
@@ -3918,6 +3925,15 @@ It is positive if the glyph extends above the baseline.
 .TPx
 .REG .color
 1\~if colors are enabled, 0\~otherwise.
+.
+.TPx
+.REG .cp
+Within a
+.request .do
+request,
+the saved value of compatibility mode (see
+.register .C
+above).
 .
 .TPx
 .REG .csk
