@@ -3839,6 +3839,52 @@ The
 escape sequence can be helpful in avoiding these escape sequences in
 names.
 .
+.
+.P
+Normally,
+the syntax form
+.BI \[rs]s n
+accepts only a single character
+(a digit)
+for
+.IR n ,
+consistently with other forms that originated in
+.RI AT&T\~ troff ,
+like
+.BR \[rs]* ,
+.BR \[rs]$ ,
+.BR \[rs]f ,
+.BR \[rs]g ,
+.BR \[rs]k ,
+.BR \[rs]n ,
+and
+.BR \[rs]z .
+.
+.
+.P
+In compatibility mode only,
+a
+.RI non-zero\~ n
+must be in the range 4\[en]39.
+.
+Legacy documents relying upon this quirk of parsing should be migrated
+to another
+.B \[rs]s
+form.
+.
+[Background:
+The Graphic Systems C/A/T phototypesetter
+(the original device target for
+.RI AT&T\~ troff )
+supported only a few discrete point sizes in the range 6\[en]36,
+so Ossanna contrived a special case in the parser to do what the user
+must have meant.
+.
+Kernighan warned of this in the 1992 revision of CSTR\~#54 (\[sc]2.3),
+and more recently,
+McIlroy referred to it as a \[lq]living fossil\[rq].]
+.
+.
 .P
 Fractional point sizes cause one noteworthy incompatibility.
 .
@@ -3857,46 +3903,6 @@ request ignores scale indicators and so
 sets the point size to 10\~points, whereas in groff native mode the
 point size is set to 10\~scaled points.
 .
-.P
-The escape
-.BI \[rs]s n
-sets the point size to
-.I n
-scaled points;
-.I n
-must be exactly one digit and
-is a numeric expression with a default scale indicator
-.RB of\~ z\c
-\&.
-.
-AT&T
-.I troff
-would read an additional digit,
-as will
-.I groff
-in compatibility mode,
-if
-.I n
-is 1, 2, or 3,
-because the Graphic Systems C/A/T phototypesetter
-(its original device target)
-only supported a few discrete point sizes in the range 6\[en]36,
-so Ossanna special-cased the parser to do what the user must have meant.
-.
-Kernighan warned of this in the 1992 revision of CSTR\~#54 (\[sc]2.3),
-and more recently,
-McIlroy referred to it as a \[lq]living fossil\[rq].
-.
-.I groff
-will emit an error message in compatibility mode when this ambiguous
-syntax is encountered.
-.
-Use the portable
-.BI \[rs]s( nn
-form for two-digit point sizes,
-or the new forms of
-.B \[rs]s
-documented above.
 .
 .P
 In

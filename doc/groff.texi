@@ -10025,10 +10025,6 @@ and the text begins.  Any of the following forms are valid:
 Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be a
 single digit.  If @var{n}@tie{}is 0, restore the previous size.
 
-In compatibility mode only, a non-zero @var{n}@tie{}must be in the range
-4 to@tie{}39.  Legacy documents relying upon this quirk of parsing
-should be migrated to another @code{\s} form.
-
 @item \s+@var{n}
 @itemx \s-@var{n}
 Increase or decrease the point size by @var{n}@tie{}points.
@@ -14417,6 +14413,22 @@ GNU @code{troff} does not allow the use of the escape sequences
 registers, fonts or environments; @acronym{AT&T} @code{troff} does.  The
 @code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
 avoiding use of these escape sequences in names.
+
+@cindex @code{\s}, incompatibilities with @acronym{AT&T} @code{troff}
+Normally, the syntax form @code{\s}@var{n} accepts only a single
+character (a digit) for @var{n}, consistently with other forms that
+originated in @acronym{AT&T} @code{troff}, like @code{\*}, @code{\$},
+@code{\f}, @code{\g}, @code{\k}, @code{\n}, and @code{\z}.
+
+In compatibility mode only, a non-zero@tie{}@var{n} must be in the range
+4--39.  Legacy documents relying upon this quirk of parsing@footnote{The
+Graphic Systems C/A/T phototypesetter (the original device target for
+@acronym{AT&T} @code{troff}) supported only a few discrete point sizes
+in the range 6--36, so Ossanna contrived a special case in the parser to
+do what the user must have meant.  Kernighan warned of this in the 1992
+revision of CSTR@tie{}#54 (§2.3), and more recently, McIlroy referred to
+it as a ``living fossil''.} should be migrated to another @code{\s}
+form.
 
 @cindex fractional point sizes
 @cindex fractional type sizes
