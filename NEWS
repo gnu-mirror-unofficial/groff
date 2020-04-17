@@ -13,19 +13,23 @@ VERSION 1.22.5
 Troff
 -----
 
+o A new read-only register ".cp" is implemented.  Within a .do request,
+  "\n[.cp]" holds the saved value of compatibility mode.  See groff_diff(7)
+  or the Texinfo manual for rationale, use case, and example.
+
 o Point-size escapes of the form '\sNN', where NN is in the range 10-39, are
   now recognized only in compatibility mode (groff -C); when encountered an
   error diagnostic is emitted.  In normal mode, \sN is interpreted as
   setting the point size to the single digit value N, which ends the escape.
   This change eliminates a quirk in the language grammar that dates back to
   1976 (AT&T troff by Ossanna) but apparently was not documented until 1992
-  when Kernighan updated CSTR #54 for AT&T ditroff.
+  when Kernighan updated CSTR #54 for AT&T troff.
 
   The form '\s(NN' is accepted for two-digit point sizes in all known
   troffs.  The form '\s[NNN]' accepts a numeric expression of variable
   length; it has been supported by groff since version 1.02 (June 1991) at
-  the latest and is by current versions of Heirloom troff and neatroff.  The
-  form "\s'NNN'" is also widely supported.
+  the latest and is by current versions of Heirloom Doctools troff and
+  neatroff.  The form "\s'NNN'" is also widely supported.
 
   Short version: in your documents, rewrite escapes beginning with '\s1',
   '\s2', or '\s3' in an unambiguous and portable form.  For instance, '\s36'
