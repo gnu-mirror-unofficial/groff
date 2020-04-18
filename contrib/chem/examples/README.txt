@@ -56,7 +56,7 @@ The GPL2 license text is available in the internet at
 <http://www.gnu.org/licenses/gpl-2.0.html>.
 
 
-####### Emacs settings
+##### Editor settings
 Local Variables:
 mode: text
 End:
