@@ -569,8 +569,6 @@ sub finish_pinyin_mode {
 
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

@@ -464,8 +464,6 @@ sub version { # for '--version'
 # end of subs
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

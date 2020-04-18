@@ -729,8 +729,6 @@ sub whatis_setup {
 } # whatis_setup ()
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

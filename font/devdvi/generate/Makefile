@@ -207,8 +207,6 @@ extraclean: realclean
 .PHONY: clean realclean extraclean all
 
 ########################################################################
-# Emacs settings
-########################################################################
 #
 # Local Variables:
 # mode: makefile

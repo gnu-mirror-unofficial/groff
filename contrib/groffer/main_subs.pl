@@ -2125,8 +2125,6 @@ sub _make_pdf2 {
 
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

@@ -245,8 +245,6 @@ foreach (<>) {
 
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

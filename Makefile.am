@@ -934,8 +934,6 @@ $(top_srcdir)/.version:
 dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
 
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: makefile-automake
 # End:

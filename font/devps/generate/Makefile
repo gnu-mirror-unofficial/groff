@@ -301,10 +301,6 @@ extraclean: realclean
 
 .PHONY: all clean realclean extraclean
 
-########################################################################
-# Editor settings
-########################################################################
-#
 # Local Variables:
 # mode: makefile
 # fill-column: 72

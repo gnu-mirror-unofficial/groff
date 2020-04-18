@@ -497,8 +497,6 @@ sub handle_args {
 
 
 1;
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: CPerl
 # End:

@@ -36,8 +36,6 @@ configure files and Makefile's.
 Now '$glilypond_dir' can be used as libdir.
 
 
-########################################################################
-### Emacs settings
 # Local Variables:
 # mode: text
 # End:
