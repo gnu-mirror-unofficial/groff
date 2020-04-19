@@ -27,7 +27,7 @@
 .if !\n(.g \
 .  ab These macros require groff.
 .
-.nr _C \n(.C
+.do nr *groff_andoc_tmac_C \n[.cp]
 .cp 0
 .
 .als andoc-em em
@@ -88,7 +88,7 @@
 .de EN
 ..
 .
-.cp \n[_C]
+.cp \n[*groff_andoc_tmac_C]
 .
 .\" Local Variables:
 .\" mode: nroff

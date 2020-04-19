@@ -45,7 +45,7 @@
 .do if d !!!sp \
 .  nx
 .
-.nr _C \n(.C
+.do nr *groff_trace_tmac_C \n[.cp]
 .cp 0
 .
 .ds !!!sp " \"
@@ -336,7 +336,7 @@
 .
 .ec
 .
-.cp \n(_C
+.cp \n[*groff_trace_tmac_C]
 .
 .\" Local Variables:
 .\" mode: nroff

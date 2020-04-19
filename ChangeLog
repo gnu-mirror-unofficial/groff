@@ -1,3 +1,18 @@
+2020-04-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* **/*.{man,tmac}: Save compatibility mode robustly.
+
+	Use new \n[.cp] register to save compatibilty mode.
+
+	Use register names based on the filename (at the source
+	maintenance level) to avoid clobbering other files' saved
+	compatibility modes.
+
+	* tmac/html.tmac: Eliminate reference to saved-compatibility
+	register by moving its test inside the block where compatibility
+	mode is off.  This is the only part of this changeset that was
+	not automated.
+
 2020-04-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Implement new read-only .cp register.

@@ -14,7 +14,7 @@
 .
 .do if d PDFPIC .nx
 .
-.nr _C \n(.C
+.do nr *groff_pdfpic_tmac_C \n[.cp]
 .cp 0
 .
 .de @abort
@@ -143,7 +143,7 @@ sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .  \}
 ..
 .
-.cp \n[_C]
+.cp \n[*groff_pdfpic_tmac_C]
 .
 .\" Local Variables:
 .\" mode: nroff

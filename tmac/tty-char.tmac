@@ -16,7 +16,7 @@
 .\" file is inferior compared to that of the replacement characters defined
 .\" in the file tty.tmac.
 .\"
-.nr _C \n(.C
+.do nr *groff_tty-char_tmac_C \n[.cp]
 .cp 0
 .
 .de tty-char
@@ -242,7 +242,7 @@
 .\"tty-char \[:y] \ij
 .tty-char \[arrowvertex] |
 .tty-char \[mc] <micro>
-.cp \n[_C]
+.cp \n[*groff_tty-char_tmac_C]
 .
 .ie '\*(.T'cp1047' \
 .	do mso cp1047.tmac
