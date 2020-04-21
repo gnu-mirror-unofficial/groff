@@ -4,9 +4,9 @@
 	a time_t from current_time().
 
 	* src/libs/libgroff/curtime.cpp (current_time): Quote
-	$SOURCE_DATE_EPOCH variable content since it's under user
-	control and could have all kinds of bogosity in it (like
-	whitespace).
+	$SOURCE_DATE_EPOCH variable content in diagnostics produced due
+	to bad input since it's under user control and could have all
+	kinds of bogosity in it (like whitespace).
 
 2020-04-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -18,8 +18,8 @@
 	maintenance level) to avoid clobbering other files' saved
 	compatibility modes.
 
-	* tmac/html.tmac: Eliminate reference to saved-compatibility
-	register by moving its test inside the block where compatibility
+	* tmac/html.tmac: Eliminate test of saved-compatibility
+	register by moving its body inside the block where compatibility
 	mode is off.  This is the only part of this changeset that was
 	not automated.
 
