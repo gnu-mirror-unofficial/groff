@@ -5,9 +5,6 @@
 my $License = q*
 groff_lilypond - integrate 'lilypond' into 'groff' files
 
-Source file position: '<groff-source>/contrib/glilypond/args.pl'
-Installed position: '<prefix>/lib/groff/glilypond'
-
 Copyright (C) 2013-2018 Free Software Foundation, Inc.
   Written by Bernd Warken <groff-bernd.warken-72@web.de>
 

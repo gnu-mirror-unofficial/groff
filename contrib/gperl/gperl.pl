@@ -2,9 +2,6 @@
 
 # gperl - add Perl part to groff files, this is the preprocessor for that
 
-# Source file position: <groff-source>/contrib/gperl/gperl.pl
-# Installed position: <prefix>/bin/gperl
-
 # Copyright (C) 2014-2018 Free Software Foundation, Inc.
 
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.

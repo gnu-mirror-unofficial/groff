@@ -5,9 +5,6 @@ my $License = q*
 
 Subroutines for 'glilypond'.
 
-Source file position: '<groff-source>/contrib/glilypond/subs.pl'
-Installed position: '<prefix>/lib/groff/glilypond/subs.pl'
-
 Copyright (C) 2013-2018 Free Software Foundation, Inc.
   Written by Bernd Warken <groff-bernd.warken-72@web.de>
 

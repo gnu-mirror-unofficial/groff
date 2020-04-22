@@ -3,9 +3,6 @@
 # Inspired by doctype script in Kernighan & Pike, Unix Programming
 # Environment, pp 306-8.
 
-# Source file position: <groff-source>/src/roff/grog/subs.pl
-# Installed position: <prefix>/lib/grog/subs.pl
-
 # Copyright (C) 1993-2018 Free Software Foundation, Inc.
 # This file was split from grog.pl and put under GPL2 by
 #               Bernd Warken <groff-bernd.warken-72@web.de>.

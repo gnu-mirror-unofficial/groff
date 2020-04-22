@@ -1,8 +1,6 @@
 .ig
 pdfmark.ms
 
-File position: <groff-source>/contrib/pdfmark/pdfmark.ms
-
 This file is part of groff, the GNU roff type-setting system.
 
 Copyright (C) 2004-2018 Free Software Foundation, Inc.

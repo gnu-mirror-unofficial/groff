@@ -1,7 +1,5 @@
 # Makefile for 'font devlj4 generate'
 #
-# File position: <groff-source>/font/devlj4/generate/Makefile
-#
 # Copyright (C) 1994-2018 Free Software Foundation, Inc.
 #   Written by James Clark (jjc@jclark.com)
 #
