@@ -201,7 +201,6 @@ localtmacdir=$(dataprogramdir)/site-tmac
 # `appresdir' says where to install the application resource file for
 # gxditview.
 
-# groffer_dir
 # glilypond_dir
 # grog_dir
 # gpinyin_dir
@@ -656,7 +655,6 @@ include $(top_srcdir)/contrib/gperl/gperl.am
 include $(top_srcdir)/contrib/gpinyin/gpinyin.am
 include $(top_srcdir)/contrib/grap2graph/grap2graph.am
 include $(top_srcdir)/contrib/groff_filenames/groff_filenames.am
-include $(top_srcdir)/contrib/groffer/groffer.am
 include $(top_srcdir)/contrib/hdtbl/hdtbl.am
 include $(top_srcdir)/contrib/mm/mm.am
 include $(top_srcdir)/contrib/mom/mom.am

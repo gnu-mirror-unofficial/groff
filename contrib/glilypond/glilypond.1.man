@@ -157,44 +157,11 @@ devices.
 .
 .
 .P
-In
-.BR groffer ,
-it is easier to use the following device options, either
-.
-.BR \-\-ps ,
-.BR \-\-div ,
-.BR \-\-html ,
-or
-.BR \-\-xhtml .
-.
-.
-.P
 Unfortunately, the
 .B groff
 option
 .B \-Tpdf
-does not work and the
-.B groffer
-default
-.I PDF
-works neither.
-.
-.
-.P
-But
-.B groffer
-has an additional
-.IR "pdf mode" ,
-not available in
-.BR groff .
-.
-It is based on the
-.I ps mode
-in
-.B groff
-and is called through
-.B groffer \-\-pdf2
-.IR roff-file-with-lilypond .
+does not work.
 .
 .
 .\" ====================================================================
@@ -894,8 +861,6 @@ is either
 sent to standard output and can there be saved into a file or piped into
 .BR groff (@MAN1EXT@)
 or
-.BR groffer (@MAN1EXT@)
-or
 .
 .TP
 2)
@@ -907,6 +872,7 @@ stored into a file by given the option
 .\" ====================================================================
 .SH Authors
 .\" ====================================================================
+.
 .B glilypond
 was written by
 .MT groff\-bernd.warken\-72@\:web.de

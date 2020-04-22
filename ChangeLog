@@ -1,3 +1,42 @@
+2020-04-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Delete groffer.
+
+	Per discussion on the groff development mailing list, there is
+	no desire to retain the maintenance of this portion of the groff
+	distribution.
+
+	See
+	<https://lists.gnu.org/archive/html/groff/2020-04/msg00051.html>
+	et seq.
+
+	* contrib/groffer: Recursively delete.
+
+	* Makefile.am:
+	* arch/mingw/mingw.am: Stop building groffer.
+
+	* m4/groff.m4 (GROFF_GROFFERDIR_OPTION):
+	(GROFF_GROFFERDIR_OPTION): Delete; remove "--with-grofferdir"
+	configuration option.
+
+	* MANIFEST:
+	* NEWS:
+	* PROJECTS:
+	* TODO:
+	* contrib/chem/chem.1.man:
+	* contrib/chem/examples/122/README.txt:
+	* contrib/chem/examples/README.txt:
+	* contrib/glilypond/glilypond.1.man:
+	* contrib/gperl/gperl.1.man:
+	* contrib/gpinyin/gpinyin.1.man:
+	* contrib/groff_filenames/groff_filenames.5.man:
+	* man/groff_font.5.man:
+	* man/roff.7.man:
+	* src/roff/groff/groff.1.man:
+	* src/roff/grog/grog.1.man:
+	* src/utils/addftinfo/addftinfo.1.man:
+	* tmac/groff_trace.7.man: Delete references to groffer.
+
 2020-04-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/include/curtime.h: #include <time.h> if we're returning
