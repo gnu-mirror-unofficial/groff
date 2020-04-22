@@ -2,8 +2,6 @@
 # Original Makefile.in written by James Clark (jjc@jclark.com)
 # Migrated to Automake by Bertrand Garrigues
 #
-# Last update: 2017-11-02
-#
 # This file is part of groff.
 #
 # groff is free software; you can redistribute it and/or modify it under

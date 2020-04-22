@@ -12,8 +12,6 @@
 # The macros for identifying the devices were taken from Ralph
 # Corderoy's 'grog.sh' of 2006.
 
-# Last update: 10 Sep 2015
-
 # This file is part of 'grog', which is part of 'groff'.
 
 # 'groff' is free software; you can redistribute it and/or modify it
