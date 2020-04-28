@@ -1,3 +1,30 @@
+2020-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/utils/addftinfo/addftinfo.cpp (usage): Add overloaded
+	version that accepts a constant string argument, which emits the
+	argument as a diagnostic and then calls usage().
+	(main): Add diagnostics to usage message where the problem is
+	clear.  Add comment explaining why it sometimes isn't.
+	(usage): Refactor main usage message (which prints the summary)
+	to report the actual names of the accepted option arguments
+	instead of just "-param", which is not literally accepted.
+
+	Sort param_table alphabetically for use by the usage message.
+
+	Tidy up long lines and whitespace.
+
+	Tested with:
+		addftinfo -1 -2 /dev/null
+		addftinfo -asc-height 1 -body-depth 2 3
+		addftinfo -asc-height 1 -body-depth 2 3 4
+		addftinfo -asc-height 1 -body-depth 2 3 4 /dev/null
+		addftinfo /dev/null
+		addftinfo 1
+		addftinfo 1 -2 /dev/null
+		addftinfo 1 /dev/null
+		addftinfo 1 2 /dev/null
+		addftinfo 1 2 3
+
 2020-04-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Delete groffer.
@@ -6193,7 +6220,8 @@ notice and this notice are preserved.
 
 ##### Editor settings
 Local Variables:
+fill-column: 72
 mode: change-log
 version-control: never
 End:
-vim:set autoindent:
+vim:set autoindent textwidth=72:
