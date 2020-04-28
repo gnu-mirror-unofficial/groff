@@ -45,8 +45,8 @@ and pager to versions which can handle SGR.
 .
 .  \" The following code sets a top-of-page trap to disable grotty's TTY
 .  \" mode.  Since neither \X nor .output can be used before the first
-.  \" page has started, we must use a trap.  To make it work with troff's
-.  \" -o option, we wait until the first printed page.
+.  \" page has started, we must use a trap.  To make it work with
+.  \" troff's -o option, we wait until the first printed page.
 .
 .  de sgr@dummy
 .  .
@@ -56,7 +56,7 @@ and pager to versions which can handle SGR.
 .  \" The stand-alone version.  If no other trap is set, we can safely
 .  \" insert the truncated vertical space caused by the trap (if any).
 .  \" Otherwise we assume that the document's main macro package takes
-.  \" care of that.  As soon as the trap has been executed, it is removed.
+.  \" care of that.  The trap is removed once it has been executed.
 .  de1 no@sgr
 .    if \\n[.P] \{\
 .      if (\\n[.t] == \\n[.p]) \{\
@@ -1014,5 +1014,7 @@ systems.
 
 ##### Editor settings
 Local Variables:
+fill-column: 72
 mode: text
 End:
+vim: set textwidth=72:
