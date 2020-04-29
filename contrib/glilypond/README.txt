@@ -35,7 +35,9 @@ configure files and Makefile's.
 
 Now '$glilypond_dir' can be used as libdir.
 
-
-# Local Variables:
-# mode: text
-# End:
+##### Editor settings
+Local Variables:
+fill-column: 72
+mode: text
+End:
+vim: set textwidth=72:

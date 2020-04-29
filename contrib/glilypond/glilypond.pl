@@ -752,5 +752,7 @@ END {
 
 1;
 # Local Variables:
+# fill-column: 72
 # mode: CPerl
 # End:
+# vim: set autoindent textwidth=72:

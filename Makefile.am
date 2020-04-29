@@ -931,5 +931,7 @@ dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
 
 # Local Variables:
+# fill-column: 72
 # mode: makefile-automake
 # End:
+# vim: set autoindent filetype=automake textwidth=72:

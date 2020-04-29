@@ -41,5 +41,7 @@ The GPL2 license text is available in the internet at
 
 ##### Editor settings
 Local Variables:
+fill-column: 72
 mode: text
 End:
+vim: set textwidth=72:
