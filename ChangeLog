@@ -1,3 +1,18 @@
+2020-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/utils/tfmtodit/tfmtodit.cpp (read_map): Report invalid
+	character code from map file in diagnostic.
+	(main): Report invalid skew character position in diagnostic.
+	Explicitly report insufficient arguments in addition to
+	usage message.  Lift invariant computed expressions s out of
+	loops (more to shorten long lines than because I think the
+	compiler won't figure it out).  Give content to "impossible
+	assertion".
+	(tfm::load): Capitalism TFM initialism in diagnostics.
+	(usage): Use full capitals for parameters as is conventional.
+	Document disjunction of -v/--version flag from other
+	invocations.
+
 2020-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/utils/addftinfo/addftinfo.cpp (usage): Add overloaded
@@ -10,20 +25,6 @@
 	instead of just "-param", which is not literally accepted.
 
 	Sort param_table alphabetically for use by the usage message.
-
-	Tidy up long lines and whitespace.
-
-	Tested with:
-		addftinfo -1 -2 /dev/null
-		addftinfo -asc-height 1 -body-depth 2 3
-		addftinfo -asc-height 1 -body-depth 2 3 4
-		addftinfo -asc-height 1 -body-depth 2 3 4 /dev/null
-		addftinfo /dev/null
-		addftinfo 1
-		addftinfo 1 -2 /dev/null
-		addftinfo 1 /dev/null
-		addftinfo 1 2 /dev/null
-		addftinfo 1 2 3
 
 2020-04-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
