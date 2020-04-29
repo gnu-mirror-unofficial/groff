@@ -28,24 +28,6 @@ roff \- concepts and history of roff typesetting
 .
 .
 .\" ====================================================================
-.\" Local macros
-.
-.de Esc
-.  ds @1 \\$1
-.  shift
-.  nop \f[B]\[rs]\\*[@1]\f[]\\$*
-.  rm @1
-..
-.
-.
-.de QuotedChar
-.  ds @1 \\$1
-.  shift
-.  nop \[oq]\f[B]\\*[@1]\f[]\[cq]\\$*
-.  rm @1
-..
-.
-.\" ====================================================================
 .SH Description
 .\" ====================================================================
 .
@@ -856,23 +838,25 @@ or macros; both are written on a line on their own starting with a dot.
 .
 .P
 .I Escape sequences
-are
-.I roff
-elements starting with a backslash
-.QuotedChar \[rs] .
+start with a backslash,
+.RB \[lq] \[rs] \[rq].
 .
-They can be inserted anywhere, also in the midst of text in a line.
-.
-They are used to implement various features, including the insertion of
-non-\f[CR]ASCII\f[] characters with
-.Esc ( ,
+They can appear almost anywhere,
+even in the midst of text on a line,
+and implement various features,
+including the insertion of special characters with
+.RB \[lq] \[rs]( \[rq]
+or
+.RB \[lq] \[rs][] \[rq],
+break suppression at input line endings with
+.RB \[lq] \[rs]c \[rq],
 font changes with
-.Esc f ,
+.RB \[lq] \[rs]f \[rq],
+point size changes with
+.RB \[lq] \[rs]s \[rq],
 in-line comments with
-.Esc \[dq] ,
-the escaping of special control characters like
-.Esc \[rs] ,
-and many other features.
+.RB \[lq] \[rs]\[dq] \[rq],
+and many others.
 .
 .
 .P
@@ -1151,11 +1135,13 @@ features; consult the editor's online help topics
 .
 Then put the following at the end of your
 .I roff
-files, after any Emacs configuration:
-.\" ...because Emacs pattern-matches against ~3000 bytes from the end of
-.\" the buffer for "Local Variables:", but Vim only checks as many lines
-.\" as its 'modelines' variable tells it to.  A common default is "5",
-.\" but Emacs settings can be longer than that.
+files,
+after any Emacs configuration:
+.\" ...because Emacs pattern-matches against 3000 bytes from the end of
+.\" the buffer [or until hitting a 0x0C (FF, form-feed control)] for
+.\" "Local Variables:", but Vim only checks as many lines as its
+.\" 'modelines' variable tells it to.  A common default is "5", but
+.\" Emacs settings can be longer than that.
 .
 .P
 .
