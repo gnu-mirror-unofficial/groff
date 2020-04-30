@@ -1,5 +1,16 @@
 2020-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/addftinfo/addftinfo.cpp (usage):
+	* src/utils/tfmtodit/tfmtodit.cpp (usage): Add "usage:" prefix
+	to messages documenting auxiliary modes of invoking the program.
+	The output doesn't look right without one, and it feels
+	dishonest to not document the relevant options (-v, --version)
+	disjunctively.  I'm trying to strike a balance between the
+	ultra-terse BSD approach and the ultra-garrulous GNU one (see,
+	e.g., ls(1)).  Likely both camps will be unhappy.  :-/
+
+2020-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/tfmtodit/tfmtodit.cpp (read_map): Report invalid
 	character code from map file in diagnostic.
 	(main): Report invalid skew character position in diagnostic.

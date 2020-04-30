@@ -877,6 +877,6 @@ static void usage(FILE *stream)
 {
   fprintf(stream, "usage: %s [-s] [-g GF-FILE] [-k SKEW-CHAR] TFM-FILE"
 	  " MAP-FILE FONT\n", program_name);
-  fprintf(stream, "%s -v\n", program_name);
-  fprintf(stream, "%s --version\n", program_name);
+  fprintf(stream, "usage: %s -v\n", program_name);
+  fprintf(stream, "usage: %s --version\n", program_name);
 }

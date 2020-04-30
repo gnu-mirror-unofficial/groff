@@ -139,8 +139,8 @@ static void usage(FILE *stream)
   for (int i = 0; i < len; i++)
     fprintf(stream, " [-%s N]", param_table[i].name);
   fprintf(stream, " RESOLUTION UNIT-WIDTH FONT\n");
-  fprintf(stream, "%s -v\n", program_name);
-  fprintf(stream, "%s --version\n", program_name);
+  fprintf(stream, "usage: %s -v\n", program_name);
+  fprintf(stream, "usage: %s --version\n", program_name);
 }
 
 static void usage()
