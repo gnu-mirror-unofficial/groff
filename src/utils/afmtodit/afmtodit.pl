@@ -39,8 +39,10 @@ if ($opt_v) {
 }
 
 if ($#ARGV != 2) {
-    die "usage: $prog [-ckmnsvx] [-a angle] [-d DESC] [-e encoding]\n" .
-	"       [-f name] [-i n] [-o outfile] afmfile mapfile font\n";
+    die "usage: $prog [-ckmnsx] [-a ANGLE] [-d DESC-FILE]" .
+	" [-e ENCODING] [-f NAME] [-i N]\n" .
+	" [-o OUT-FILE] AFM-FILE MAP-FILE FONT\n" .
+	"usage: $prog -v\n";
 }
 
 my $afm = $ARGV[0];
