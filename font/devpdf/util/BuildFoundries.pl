@@ -186,7 +186,7 @@ sub RunAfmtodit
 	$cmd.=" $flg{$f}";
     }
 
-    system("$cmd $enc '$afmfile' $map $gfont 2>/dev/null");
+    system("$cmd $enc '$afmfile' $map $gfont");
 
     if ($?)
     {
