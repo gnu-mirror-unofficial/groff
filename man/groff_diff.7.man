@@ -4038,6 +4038,24 @@ See subsection \[lq]Fractional point sizes\[rq] above.
 .
 .P
 In
+.RI AT&T\~ troff
+the
+.B .pm
+request reports
+macro,
+string,
+and
+diversion
+sizes in units of 128-byte blocks,
+and an argument reduces the report to a sum of the above in the same
+units.
+.
+.I groff
+ignores any arguments and reports the sizes in bytes.
+.
+.
+.P
+In
 .IR groff ,
 there is a fundamental difference between unformatted input
 characters, and formatted output characters (glyphs).

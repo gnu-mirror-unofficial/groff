@@ -14002,15 +14002,10 @@ defined environments (both named and numbered) on @code{stderr}.
 @Defreq {pm, }
 @cindex dumping symbol table (@code{pm})
 @cindex symbol table, dumping (@code{pm})
-Print the entire symbol table on @code{stderr}.  Names of all defined
-macros, strings, and diversions are print together with their size in
-bytes.  Since @code{gtroff} sometimes adds nodes by itself, the returned
-size can be larger than expected.
-
-This request differs from Unix @code{troff}: @code{gtroff} reports the
-sizes of diversions, ignores an additional argument to print only the
-total of the sizes, and the size isn't returned in blocks of 128
-characters.
+Report, to the standard error stream, the names of all defined macros,
+strings, and diversions with their sizes in bytes.  Since @code{gtroff}
+sometimes adds nodes by itself, the returned sizes can be larger than
+expected.
 @endDefreq
 
 @Defreq {pnr, }
@@ -14488,6 +14483,11 @@ Fractional point sizes cause one noteworthy incompatibility.  In
 indicators and thus @samp{.ps 10u} sets the point size to
 10@tie{}points, whereas in GNU @code{troff} it sets the point size to
 10@tie{}scaled points.  @xref{Fractional Type Sizes}.
+
+@cindex @code{pm} request, incompatibilities with @acronym{AT&T} @code{troff}
+The @code{pm} request differs from @acronym{AT&T} @code{troff}:
+@code{gtroff} reports the sizes of macros, strings, and diversions in
+bytes and ignores an argument to report only the sum of the sizes.
 
 @cindex @code{bd} request, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{cs} request, incompatibilities with @acronym{AT&T} @code{troff}
