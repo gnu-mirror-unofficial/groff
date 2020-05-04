@@ -204,8 +204,8 @@ extraclean: realclean
 
 .PHONY: clean realclean extraclean all
 
-########################################################################
-#
 # Local Variables:
 # mode: makefile
+# fill-column: 72
 # End:
+# vim: set textwidth=72:
