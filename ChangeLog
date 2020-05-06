@@ -1,3 +1,39 @@
+2020-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	preconv: Support Emacs local variable lists at ends of files.
+
+	* src/preproc/preconv/preconv.cpp (get_tag_lines): Rename to...
+	(get_early_tag_lines): ...this.
+	(get_late_coding_tag): Add new function.  Search last 3000 bytes
+	{or region after last form-feed control} of file for "coding:"
+	within a region bracketed by "Local Variables:" and "End:".
+	Give up on seek, read, or memory allocation failures.
+	(check_coding_tag): Rename to...
+	(check_early_coding_tag): ...this.  Call newly-named
+	get_early_tag_lines().  Update comments.
+	(check_coding_tag): Add new function.  Try get_late_coding_tag()
+	first, then fall back to check_early_coding_tag().
+	(detect_file_encoding): Alter debugging output so it's easier to
+	grep and verify Emacs coding tag detection.
+
+	* src/preproc/preconv/preconv.1.man (Bugs): Delete; its sole
+	concern was the absence of this feature.
+	(Usage): Document alterations to algorithm.
+	(Usage/Coding Tags): Add discussion of "late" (in the file)
+	coding tags.  Restyle early tag example.  Stop manipulating
+	adjustment.  Use hyphen-minus (\- escape) characters in coding
+	tag names, since they are literals that one might paste into an
+	editor window.
+
+	Stop referencing XEmacs, whose development is moribund as far as
+	I know.
+
+	Add "us-ascii" coding tag to page; while not strictly necessary,
+	it facilitates testing (see below).
+
+	* src/preproc/preconv/tests/late_coding_tags_work.sh: Test.
+	* src/preproc/preconv/preconv.am: Run test.  Wrap long lines.
+
 2020-05-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/utils/afmtodit/afmtodit.pl: Format usage message with
