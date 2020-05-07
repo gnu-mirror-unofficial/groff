@@ -6413,7 +6413,7 @@ This is an uninteresting sentence.
 @endExample
 @endDefreq
 
-@DefreqList {ss, word_space_size [@Var{sentence_space_size}]}
+@DefreqList {ss, word-space-size [@Var{sentence-space-size}]}
 @DefregItemx {.ss}
 @DefregListEndx {.sss}
 @cindex word space size register (@code{.ss})
@@ -6422,66 +6422,63 @@ This is an uninteresting sentence.
 @cindex sentence space size register (@code{.sss})
 @cindex size of sentence space register (@code{.sss})
 @cindex space between sentences register (@code{.sss})
-Change the size of a space between words.  It takes its units as one
-twelfth of the space width parameter for the current font.  Initially
-both the @var{word_space_size} and @var{sentence_space_size}
-are@tie{}12.  In fill mode, the values specify the minimum distance.
+Set the minimal size of a space between words.  Its units are twelfths
+of the space width parameter of the current font.  Initially both the
+@var{word-space-size} and @var{sentence-space-size} are@tie{}12.  When
+adjusting, the values specify minimum distances.
+
+If two arguments are given to the @code{ss} request, the second argument
+sets the amount of additional space separating sentences on the same
+output line in fill mode.  If the second argument is omitted,
+@var{sentence-space-size} is set to @var{word-space-size}.  The request
+is ignored if there are no arguments.
+
+The read-only number registers @code{.ss} and @code{.sss} hold the
+values of minimal inter-word space and additional inter-sentence space,
+respectively.  These parameters are associated with the current
+environment (@pxref{Environments}), and rounded down to the nearest
+multiple of@tie{}12 on terminal output devices.
 
 @cindex fill mode
 @cindex mode, fill
-If two arguments are given to the @code{ss} request, the second argument
-sets the sentence space size.  If the second argument is not given,
-sentence space size is set to @var{word_space_size}.  The sentence space
-size is used in two circumstances: If the end of a sentence occurs at
-the end of a line in fill mode, then both an inter-word space and a
-sentence space are added; if two spaces follow the end of a sentence in
-the middle of a line, then the second space is a sentence space.  If a
-second argument is never given to the @code{ss} request, the behaviour
-of Unix @code{troff} is the same as that exhibited by GNU @code{troff}.
-In GNU @code{troff}, as in Unix @code{troff}, a sentence should always
-be followed by either a newline or two spaces.
+Additional inter-sentence spacing is used only in fill mode, and only if
+the output line is not full when the end of a sentence occurs in the
+input.  If a sentence ends at the end of an input line, then both an
+inter-word space and an inter-sentence space are added to the output; if
+two spaces follow the end of a sentence in the middle of an input line,
+then the second space becomes an inter-sentence space in the output.
 
-The read-only number registers @code{.ss} and @code{.sss} hold the
-values of the parameters set by the first and second arguments of the
-@code{ss} request.
-
-The word space and sentence space values are associated with the current
-environment (@pxref{Environments}).
-
-Contrary to @acronym{AT&T} @code{troff}, this request is @emph{not}
-ignored if a TTY output device is used; the given values are then
-rounded down to a multiple of@tie{}12 (@pxref{Implementation
-Differences}).
-
-The request is ignored if there is no parameter.
+If a second argument is never given to the @code{ss} request, GNU
+@code{troff} separates sentences as @acronym{AT&T} @code{troff} does.
+In GNU @code{troff}, as in @acronym{AT&T} @code{troff}, a sentence
+should always be followed by either a newline or two spaces.
 
 @cindex discardable horizontal space
 @cindex space, discardable, horizontal
 @cindex horizontal discardable space
-Another useful application of the @code{ss} request is to insert
-discardable horizontal space, i.e., space that is discarded at a line
-break.  For example, paragraph-style footnotes could be separated this
-way:
+A related application of the @code{ss} request is to insert discardable
+horizontal space; i.e., space that is discarded at a line break.  For
+example, some footnote styles collect the notes into a single paragraph
+with large spaces between each.
 
 @Example
-.ll 4.5i
-1.\ This is the first footnote.\c
-.ss 48
-.nop
-.ss 12
-2.\ This is the second footnote.
+.ie n .ll 50n
+.el   .ll 2.75i
+.ss 12 48
+1. J. Fict. Ch. Soc. 6 (2020), 3\[en]14.
+2. Better known for other work.
 @endExample
 
 @noindent
-The result:
+The result has obvious inter-sentence spacing.
 
 @Example
-1. This is the first footnote.        2. This
-is the second footnote.
+1. J. Fict. Ch. Soc. 6 (2020), 3-14.     2. Better
+known for other work.
 @endExample
 
 @noindent
-Note that the @code{\h} escape produces unbreakable space.
+If @emph{undiscardable} space is required, use the @code{\h} escape.
 @endDefreq
 
 @DefreqList {ce, [@Var{nnn}]}
@@ -14488,6 +14485,12 @@ indicators and thus @samp{.ps 10u} sets the point size to
 The @code{pm} request differs from @acronym{AT&T} @code{troff}:
 GNU @code{troff} reports the sizes of macros, strings, and diversions in
 bytes and ignores an argument to report only the sum of the sizes.
+
+@cindex @code{ss} request, incompatibilities with @acronym{AT&T} @code{troff}
+Unlike @acronym{AT&T} @code{troff}, GNU @code{troff} does not ignore the
+@code{ss} request if the output is a terminal device; instead, the
+values of minimal inter-word and additional inter-sentence spacing are
+rounded down to the nearest multiple of@tie{}12.
 
 @cindex @code{bd} request, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{cs} request, incompatibilities with @acronym{AT&T} @code{troff}

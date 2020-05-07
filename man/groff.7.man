@@ -2439,18 +2439,19 @@ is
 .scalednumber "3 m" .
 .
 .TPx
-.REQ .ss "N"
-Set space glyph size to
-.IR N /12
-of the space width in the current font.
+.REQ .ss N
+Set minimal inter-word spacing to
+.IR N \~12ths
+of the space width of the current font.
 .
 .TPx
 .REQ .ss "N M"
-Set space glyph size to
-.IR N /12
-and sentence space size set to
-.IR M /12
-of the space width in the current font.
+As
+.B .ss\~\c
+.IR N ,
+and set additional inter-sentence spacing to
+.IR M \~12ths
+of the space width of the current font.
 .
 .TPx
 .REQ .stringdown stringvar
@@ -4189,14 +4190,15 @@ The last requested point size in points as a decimal fraction
 .
 .TPx
 .REG .ss
-The value of the parameters set by the first argument of the
-.request ss
+The size of minimal inter-word spacing set by the first argument of the
+.request .ss
 request.
 .
 .TPx
 .REG .sss
-The value of the parameters set by the second argument of the
-.request ss
+The size of additional inter-sentence spacing set by the second argument
+of the
+.request .ss
 request.
 .
 .TPx

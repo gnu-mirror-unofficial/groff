@@ -1,3 +1,26 @@
+2020-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Update documentation of .ss request.
+
+	* doc/groff.texi: Rewrite documentation of .ss request and
+	\n[.ss] and \n[.sss] escapes.  Use new terminology, "minimal
+	inter-word spacing" and "additional inter-sentence spacing" for
+	clarity.  Clarify that additional inter-sentence spacing is only
+	used when the output line is not full when the end of a sentence
+	occurs.  Move discussion of differences from AT&T troff to
+	section "Implementation Differences".  Update example to more
+	closely resemble a real-world case, use second argument to .ss
+	request, and eliminate hackish use of .nop request.
+
+	* man/groff_diff.7.man: Recast in parallel with the foregoing.
+
+	* man/groff.7.man: Use new terminology and describe \n[.ss] and
+	\n[.sss] in meaningful terms, not by reference to arguments
+	to the .ss request (which wasn't even accurate, because these
+	registers have default values).
+
+	Fixes https://savannah.gnu.org/bugs/index.php?54101.
+
 2020-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	preconv: Support Emacs local variable lists at ends of files.

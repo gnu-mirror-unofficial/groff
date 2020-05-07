@@ -2628,38 +2628,91 @@ hyphenation before the last character, the latter enables hyphenation
 after the first character.
 .
 .TP
-.BI .ss\  m\ n
-When two arguments are given to the
-.B ss
-request, the second argument gives the
-.IR "sentence space size" .
-If the second argument is not given, the sentence space size
-is the same as the word space size.
+.BI .ss\~ "word-space-size sentence-space-size"
+A second argument to the
+.B .ss
+request determines the additional inter-sentence spacing used in fill
+mode.
 .
-Like the word space size, the sentence space is in units of
-one twelfth of the spacewidth parameter for the current font.
+If omitted,
+this value is the same as the minimal inter-word spacing
+(the first argument).
 .
-Initially both the word space size and the sentence
-space size are\~12.
+Both are in units of twelfths of the space-width parameter of the
+current font
+(see
+.IR groff_font (@MAN5EXT@))
+and default to \~12.
 .
-Contrary to Unix troff, GNU troff handles this request in nroff mode
-also; a given value is then rounded down to the nearest multiple
-of\~12.
+Unlike AT&T
+.IR troff ,
+.I groff
+does not ignore the
+.B .ss
+request if the output is a terminal device;
+instead,
+the values of minimal inter-word and additional inter-sentence spacing
+are rounded down to the nearest multiple of\~12.
 .
-The sentence space size is used in two circumstances.
+.IP
+Additional inter-sentence spacing is used only in fill mode,
+and only if the output line is not full when the end of a sentence
+occurs in the input.
 .
-If the end of a sentence occurs at the end of a line in fill mode,
-then both an inter-word space and a sentence space are added; if
-two spaces follow the end of a sentence in the middle of a line, then
-the second space is a sentence space.
+If a sentence ends at the end of an input line,
+then both an inter-word space and an inter-sentence space are added to
+the output;
+if two spaces follow the end of a sentence in the middle of an input
+line,
+then the second space becomes an inter-sentence space in the output.
 .
-Note that the behaviour of Unix troff is exactly that exhibited
-by GNU troff if a second argument is never given to the
-.B ss
-request.
+.IP
+If a second argument is never given to the
+.B .ss
+request,
+.I groff
+separates sentences as
+.RI AT&T\~ troff
+does.
 .
-In GNU troff, as in Unix troff, you should always follow a sentence
-with either a newline or two spaces.
+In
+.IR groff ,
+as in
+.RI AT&T\~ troff ,
+you should always follow a sentence with either a newline or two spaces.
+.
+.IP
+A related application of the
+.B .ss
+request is to insert discardable horizontal space;
+i.e.,
+space that is discarded at a line break.
+For example,
+some footnote styles collect the notes into a single paragraph with
+large spaces between each.
+.
+.RS
+.RS \" Extra indent to get us inboard of the indented paragraph.
+.EX
+\&.ie n .ll 50n
+\&.el   .ll 2.75i
+\&.ss 12 48
+1. J. Fict. Ch. Soc. 6 (2020), 3\[rs][en]14.
+2. Better known for other work.
+.EE
+.RE
+.RE
+.
+.IP
+The result has obvious inter-sentence spacing.
+.RS
+.RS \" Extra indent to get us inboard of the indented paragraph.
+.EX
+1. J. Fict. Ch. Soc. 6 (2020), 3-14.     2. Better
+known for other work.
+.EE
+.RE
+.RE
 .
 .TP
 .BI .ta\  "n1 n2 \*[ellipsis] nn " "T " "r1 r2 \*[ellipsis] rn"
@@ -2961,9 +3014,13 @@ This is a string-valued register.
 .B \[rs]n[.ss]
 .TQ
 .B \[rs]n[.sss]
-These give the values of the parameters set by the first and second
-arguments of the
-.B ss
+The values of minimal inter-word spacing and additional inter-sentence
+spacing,
+respectively,
+in twelfths of the space width of the current font.
+.
+Set by the
+.B .ss
 request.
 .
 .TP
