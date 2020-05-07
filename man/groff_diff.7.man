@@ -330,17 +330,6 @@ if
 is empty.
 .
 .TP
-.BI \[rs]C' xxx '
-Typeset glyph named
-.IR xxx .
-Normally it is more convenient to use
-.BI \[rs][ xxx ]\f[R].
-But
-.B \[rs]C
-has the advantage that it is compatible with recent versions of Unix and
-is available in compatibility mode.
-.
-.TP
 .B \[rs]E
 This is equivalent to an escape character, but it is not interpreted in
 copy mode.
@@ -411,47 +400,6 @@ Set background color for filled objects drawn with the
 commands.
 .B \[rs]M[]
 switches back to the previous color.
-.
-.TP
-.BI \[rs]N' n '
-Typeset the glyph with index\~\c
-.I n
-in the current font.
-.IR n \~\c
-can be any integer.
-.
-Most devices only have glyphs with indices between 0 and 255.
-.
-If the current font does not contain a glyph with that code,
-special fonts are
-.I not
-searched.
-.
-The
-.B \[rs]N
-escape sequence can be conveniently used in conjunction with the
-.B char
-request, for example
-.
-.RS
-.IP
-.EX
-\&.char \[rs][phone] \[rs]f(ZD\[rs]N'37'
-.EE
-.RE
-.
-.IP
-The index of each glyph is given in the fourth column in the font
-description file after the
-.B charset
-command.
-.
-It is possible to include unnamed glyphs in the font description
-file by using a name of
-.BR \-\-\- ;
-the
-.B \[rs]N
-escape sequence is the only way to use these.
 .
 .TP
 .BI \[rs]O n
