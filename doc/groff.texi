@@ -6422,16 +6422,25 @@ This is an uninteresting sentence.
 @cindex sentence space size register (@code{.sss})
 @cindex size of sentence space register (@code{.sss})
 @cindex space between sentences register (@code{.sss})
-Set the minimal size of a space between words.  Its units are twelfths
-of the space width parameter of the current font.  Initially both the
-@var{word-space-size} and @var{sentence-space-size} are@tie{}12.  When
-adjusting, the values specify minimum distances.
+Set the sizes of spaces between words and sentences.  Their units are
+twelfths of the space width parameter of the current font.  Initially
+both the @var{word-space-size} and @var{sentence-space-size}
+are@tie{}12.  Negative values are not permitted.  The request is ignored
+if there are no arguments.
 
-If two arguments are given to the @code{ss} request, the second argument
-sets the amount of additional space separating sentences on the same
-output line in fill mode.  If the second argument is omitted,
-@var{sentence-space-size} is set to @var{word-space-size}.  The request
-is ignored if there are no arguments.
+@cindex inter-word spacing, minimal
+@cindex minimal inter-word spacing
+@cindex space, between words
+The first argument, the inter-word space size, is a minimum; if
+adjusted, it may increase.
+
+@cindex inter-sentence spacing, additional
+@cindex additional inter-sentence spacing
+@cindex space, between sentences
+The optional second argument sets the amount of additional space
+separating sentences on the same output line in fill mode.  If the
+second argument is omitted, @var{sentence-space-size} is set to
+@var{word-space-size}.
 
 The read-only number registers @code{.ss} and @code{.sss} hold the
 values of minimal inter-word space and additional inter-sentence space,
@@ -6447,6 +6456,8 @@ input.  If a sentence ends at the end of an input line, then both an
 inter-word space and an inter-sentence space are added to the output; if
 two spaces follow the end of a sentence in the middle of an input line,
 then the second space becomes an inter-sentence space in the output.
+Additional inter-sentence space is not adjusted, but the inter-word
+space that always precedes it may be.
 
 If a second argument is never given to the @code{ss} request, GNU
 @code{troff} separates sentences as @acronym{AT&T} @code{troff} does.
@@ -14490,7 +14501,7 @@ bytes and ignores an argument to report only the sum of the sizes.
 Unlike @acronym{AT&T} @code{troff}, GNU @code{troff} does not ignore the
 @code{ss} request if the output is a terminal device; instead, the
 values of minimal inter-word and additional inter-sentence spacing are
-rounded down to the nearest multiple of@tie{}12.
+each rounded down to the nearest multiple of@tie{}12.
 
 @cindex @code{bd} request, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{cs} request, incompatibilities with @acronym{AT&T} @code{troff}

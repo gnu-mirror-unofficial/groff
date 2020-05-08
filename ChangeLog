@@ -3,14 +3,17 @@
 	Update documentation of .ss request.
 
 	* doc/groff.texi: Rewrite documentation of .ss request and
-	\n[.ss] and \n[.sss] escapes.  Use new terminology, "minimal
-	inter-word spacing" and "additional inter-sentence spacing" for
-	clarity.  Clarify that additional inter-sentence spacing is only
-	used when the output line is not full when the end of a sentence
-	occurs.  Move discussion of differences from AT&T troff to
-	section "Implementation Differences".  Update example to more
-	closely resemble a real-world case, use second argument to .ss
-	request, and eliminate hackish use of .nop request.
+	\n[.ss] and \n[.sss] escapes.  Note that negative values are not
+	permitted in either argument to .ss.  Use new terminology,
+	"minimal inter-word spacing" and "additional inter-sentence
+	spacing" for clarity.  Clarify that additional inter-sentence
+	spacing is only used when the output line is not full when the
+	end of a sentence occurs.  Add index nodes to help readers find
+	discussion of details of spacing between words and sentences.
+	Move discussion of differences from AT&T troff to section
+	"Implementation Differences".  Update example to more closely
+	resemble a real-world case, use second argument to .ss request,
+	and eliminate hackish use of .nop request.
 
 	* man/groff_diff.7.man: Recast in parallel with the foregoing.
 
