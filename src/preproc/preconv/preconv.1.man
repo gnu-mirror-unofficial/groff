@@ -145,47 +145,41 @@ check whether the input starts with a Unicode Byte Order Mark
 (BOM,
 see below).
 .
-If found, use it.
+If found,
+use it.
 .
 .
 .IP 3.
 Otherwise,
-check whether there is a recognized Emacs coding tag
+if the input stream is seekable,
+check whether there is a recognized GNU\~Emacs coding tag
 (see below)
-in a file-local variables region at the end of the file.
+in either the first or second input line.
 .
-If found, use it.
+If found,
+use it.
 .
 .
 .IP 4.
 Otherwise,
-check whether there is a recognized Emacs coding tag in either the first
-or second input line.
-.
-If found, use it.
-.
-.
-.IP 5.
-Otherwise,
+if the input stream is seekable,
 if the
 .I uchardet
-library
-(a character-encoding detector library available on most major
-distributions)
-is available on the system,
+library is available on the system,
 use it to try to infer the encoding of the file.
 .
 .
-.IP 6.
+.IP 5.
 If
 .I uchardet
 fails,
-use the encoding specified by the
+and the
 .B \-D
-option.
+option specifies an encoding,
+use it.
 .
 .
-.IP 7.
+.IP 6.
 Use the encoding specified by the current locale
 .RI ( LC_CTYPE ),
 unless the locale is
@@ -198,11 +192,29 @@ as the input file encoding.
 .
 .
 .PP
-Note that the
-.B groff
-program supports a
+Note that the coding tag and
+.I uchardet
+methods in the above procedure rely upon a seekable input stream;
+when
+.I preconv
+reads from a pipe,
+the stream is not seekable,
+and these detection methods are skipped.
+.
+If character encoding detection of your input files is unreliable,
+arrange for one of the other methods to succeed by using
+.IR preconv 's
+.B \-D
+or
+.B \-e
+options,
+or by configuring your locale appropriately.
+.
+Furthermore,
+.I groff
+supports a
 .I \%GROFF_ENCODING
-environment variable which is eventually expanded to option
+environment variable which is equivalent to its option
 .BR \-k .
 .
 .
@@ -241,53 +253,36 @@ space\[cq] character \[en] something not needed normally in
 .SS "Coding tags"
 .\" ====================================================================
 .
-Text editors which support more than a single character encoding need
+Text editors that support more than a single character encoding need
 tags within the input files to mark the file's encoding.
 .
 While it is possible to guess the right input encoding with the help of
-heuristics which are reliable for a preponderance of natural language
+heuristics that are reliable for a preponderance of natural language
 texts,
-it is still just a guess.
+they are not absolutely reliable.
 .
-Additionally,
-heuristics can fail on inputs that are too short or don't represent a
+Heuristics can fail on inputs that are too short or don't represent a
 natural language.
 .
 .
 .PP
-For these reasons,
+Consequently,
 .I preconv
 supports the coding tag convention
 (with some restrictions)
 used by GNU\~Emacs.
 .
+Coding tags in GNU\~Emacs are indicated in specially-marked regions of
+an input file designated for \[lq]file-local variables\[rq].
+.
 .
 .PP
-Coding tags in GNU Emacs are indicated in specially-marked regions of an
-input file designated for \[lq]file-local variables\[rq].
-.
 .I preconv
-recognizes two syntax forms which should be put into
+recognizes the following syntax form if it occurs in a
 .I roff
-comments.
+comment
+in the first or second line of the input file.
 .
-The fist must be placed within the last 3,000 bytes of the file,
-and must come after the last
-(if any)
-form-feed control character.
-.
-.RS
-.EX
-\&.\[rs]" Local Variables:
-\&.\[rs]" coding: \c
-.I encoding
-\&.\[rs]" End:
-.EE
-.RE
-.
-.
-.PP
-The other form must occur within the first two lines of the file.
 .
 .RS
 .EX
@@ -302,7 +297,14 @@ The other form must occur within the first two lines of the file.
 .
 .
 .PP
-The following list gives all MIME coding tags
+The only tag
+.I preconv
+interprets is \[lq]coding\[rq],
+which can take the values listed below.
+.
+.
+.PP
+The following list comprises all MIME \[lq]charset\[rq] tags
 (either lowercase or uppercase)
 supported by
 .IR preconv .
@@ -346,7 +348,7 @@ Trailing
 and
 \[lq]\-mac\[rq]
 suffixes on coding tags
-(which give the end-of-line convention used in the file)
+(which indicate the end-of-line convention used in the file)
 are disregarded for the purpose of comparison with the above tags.
 .
 .
@@ -371,7 +373,9 @@ is used.
 .SH "See Also"
 .\" ====================================================================
 .
-.IR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@),
+.IR iconv (3),
+.IR locale (7)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
@@ -379,7 +383,6 @@ is used.
 .
 .
 .\" Local Variables:
-.\" coding: us-ascii
 .\" mode: nroff
 .\" End:
 .\" vim: set filetype=groff:

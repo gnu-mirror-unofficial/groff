@@ -23,38 +23,28 @@
 
 2020-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	preconv: Support Emacs local variable lists at ends of files.
+	Undocument plans to support end-of-file GNU Emacs coding tags.
 
-	* src/preproc/preconv/preconv.cpp (get_tag_lines): Rename to...
-	(get_early_tag_lines): ...this.
-	(get_late_coding_tag): Add new function.  Search last 3000 bytes
-	{or region after last form-feed control} of file for "coding:"
-	within a region bracketed by "Local Variables:" and "End:".
-	Give up on seek, read, or memory allocation failures.
-	(check_coding_tag): Rename to...
-	(check_early_coding_tag): ...this.  Call newly-named
-	get_early_tag_lines().  Update comments.
-	(check_coding_tag): Add new function.  Try get_late_coding_tag()
-	first, then fall back to check_early_coding_tag().
+	* src/preproc/preconv/preconv.cpp (check_coding_tag):  Update
+	comments.
 	(detect_file_encoding): Alter debugging output so it's easier to
 	grep and verify Emacs coding tag detection.
 
 	* src/preproc/preconv/preconv.1.man (Bugs): Delete; its sole
 	concern was the absence of this feature.
-	(Usage): Document alterations to algorithm.
-	(Usage/Coding Tags): Add discussion of "late" (in the file)
-	coding tags.  Restyle early tag example.  Stop manipulating
-	adjustment.  Use hyphen-minus (\- escape) characters in coding
-	tag names, since they are literals that one might paste into an
-	editor window.
+	(Usage): Document detection algorithm in more detail.  Note
+	which detection methods don't work on unseekable input (pipes).
+	Offer recommendations for those struggling with encoding
+	detection.
+	(Usage/Coding Tags): Stop manipulating line adjustment.  Use
+	hyphen-minus (\- escape) characters in coding tag names, since
+	they are literals that one might copy and paste.  Stop
+	referencing XEmacs, whose development appears moribund.
+	(See Also): Add cross-references to iconv(3) and locale(7) man
+	pages.
 
-	Stop referencing XEmacs, whose development is moribund as far as
-	I know.
-
-	Add "us-ascii" coding tag to page; while not strictly necessary,
-	it facilitates testing (see below).
-
-	* src/preproc/preconv/tests/late_coding_tags_work.sh: Test.
+	* src/preproc/preconv/tests/smoke-test.sh: Test each of the
+	steps in the detection algorithm.
 	* src/preproc/preconv/preconv.am: Run test.  Wrap long lines.
 
 2020-05-05  G. Branden Robinson <g.branden.robinson@gmail.com>

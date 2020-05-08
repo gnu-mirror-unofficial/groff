@@ -813,8 +813,8 @@ get_BOM(FILE *fp, string &BOM, string &data)
 // or NULL in case no coding tag can occur in the data
 // (which is stored unmodified in 'data').
 // ---------------------------------------------------------
-static char *
-get_early_tag_lines(FILE *fp, string &data)
+char *
+get_tag_lines(FILE *fp, string &data)
 {
   int newline_count = 0;
   int c, prev = -1;
@@ -934,111 +934,8 @@ get_variable_value_pair(char *d1, char **variable, char **value)
   return NULL;
 }
 
-// Get coding tag from Emacs local variables list at end of file.
-//
-// The region looks like this:
-//
-// Local Variables:
-// coding: latin-2
-// mode: nroff
-// End:
-//
-// Like Emacs, we search at most 3000 bytes from the end of the file, or
-// from the last form-feed control (^L) that occurs.
-//
-// Our string class doesn't support reverse searches so just use C
-// strings.
-static char *
-get_late_coding_tag(FILE *fp)
-{
-  char *coding_tag = NULL;
-  const int limit = 3000;
-  if (fseek(fp, 0, SEEK_END) != 0)
-    return NULL;
-  // Seek to `limit` bytes from the end of the buffer, or the beginning.
-  if (fseek(fp, -limit, SEEK_END) != 0)
-    if (errno == EINVAL)
-      rewind(fp);
-    else
-      return NULL;
-  char *tmpbuf = (char *) calloc(1, limit + 1 /* trailing '\0' */);
-  if (!tmpbuf) {
-    error("unable to allocate memory");
-    rewind(fp);
-    return NULL;
-  }
-  (void) fread(tmpbuf, 1, limit, fp);
-  if (ferror(fp)) {
-    error("file read error");
-    free(tmpbuf);
-    rewind(fp);
-    return NULL;
-  }
-  char *start = tmpbuf;
-  char *end = tmpbuf + strlen(tmpbuf);
-  char *ff = strrchr(tmpbuf, '\f');
-  if (ff)
-    start = ff;
-  // Find the _last_ occurrence of a local-variables section in the
-  // buffer, because the document might have Emacs file-local variables
-  // as a discussion topic, as our roff(7) man page does.
-  //
-  // strcasestr() is a GNU extension we're not using.  TODO: Gnulib has
-  // it, so we can have it, too.
-  char *lv = NULL, *nextlv = NULL;
-  const char lvstr[] = "Local Variables:";
-  // Declare these now because GCC 8 doesn't like `goto`s crossing them.
-  const char codingstr[] = "coding:";
-  // From here we must 'goto cleanup' to free our buffer and rewind the
-  // file position instead of returning early.
-  lv = strstr(start, lvstr);
-  if (!lv)
-    goto cleanup;
-  else
-    do {
-      start += strlen(lvstr);
-      nextlv = strstr(start, lvstr);
-      if (nextlv) {
-	lv = nextlv;
-	start = lv;
-      }
-    } while(nextlv);
-  end = strstr(start, "End:");
-  if (!end)
-    end = strstr(start, "end:");
-  if (!end)
-    goto cleanup;
-  // Tighten [start, end) bracket until only the coding string remains.
-  // Locate "coding:".
-  start = strstr(start, codingstr);
-  if (!start)
-    goto cleanup;
-  // Move past it.
-  start += strlen(codingstr);
-  // Skip horizontal whitespace.
-  while (strchr(" \t", *start))
-    start++;
-  // Find the next newline and advance the end pointer to it.
-  end = strchr(start, '\n');
-  if (!end)
-    end = strchr(start, '\r');
-  if (!end)
-    goto cleanup;
-  // Back up over any trailing whitespace.
-  do {
-    *end = '\0';
-    end--;
-  } while ((end > start) && strchr(" \t", *end));
-  if (start < end)
-    coding_tag = start;
-cleanup:
-  free(tmpbuf);
-  rewind(fp);
-  return coding_tag;
-}
-
 // ---------------------------------------------------------
-// Check for coding tag near the beginning of the read buffer.
+// Check coding tag in the read buffer.
 //
 // We search for the following line:
 //
@@ -1069,10 +966,10 @@ cleanup:
 // the algorithm.  This should work even with files encoded as
 // UTF-16 or UTF-32 (or its siblings) in most cases.
 // ---------------------------------------------------------
-static char *
-check_early_coding_tag(FILE *fp, string &data)
+char *
+check_coding_tag(FILE *fp, string &data)
 {
-  char *inbuf = get_early_tag_lines(fp, data);
+  char *inbuf = get_tag_lines(fp, data);
   char *lineend;
   for (char *p = inbuf; is_comment_line(p); p = lineend + 1) {
     if ((lineend = strchr(p, '\n')) == NULL)
@@ -1100,15 +997,6 @@ check_early_coding_tag(FILE *fp, string &data)
   }
   free(inbuf);
   return NULL;
-}
-
-static char *
-check_coding_tag(FILE *fp, string &data)
-{
-  char *tag = get_late_coding_tag(fp);
-  if (!tag)
-    tag = check_early_coding_tag(fp, data);
-  return tag;
 }
 
 char *
