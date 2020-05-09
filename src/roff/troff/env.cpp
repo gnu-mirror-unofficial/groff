@@ -1292,9 +1292,16 @@ void space_size()
 {
   int n;
   if (get_integer(&n)) {
-    curenv->space_size = n;
+    if (n < 0)
+      warning(WARN_RANGE, "negative word space size ignored: '%1'", n);
+    else
+      curenv->space_size = n;
     if (has_arg() && get_integer(&n))
-      curenv->sentence_space_size = n;
+      if (n < 0)
+	warning(WARN_RANGE, "negative sentence space size ignored:"
+		" '%1'", n);
+      else
+	curenv->sentence_space_size = n;
     else
       curenv->sentence_space_size = curenv->space_size;
   }

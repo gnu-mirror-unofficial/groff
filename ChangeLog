@@ -1,3 +1,12 @@
+2020-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/env.cpp (space_size): If an argument to the .ss
+	request is negative, throw a range warning and ignore it.
+	* src/roff/groff/tests/regression_savannah_58337.sh: Add test.
+	* src/roff/groff/groff.am: Run test.
+
+	Fixes https://savannah.gnu.org/bugs/index.php?58337.
+
 2020-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Update documentation of .ss request.
