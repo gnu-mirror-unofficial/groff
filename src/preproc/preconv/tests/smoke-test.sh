@@ -26,12 +26,32 @@ set -e
 preconv="${abs_top_builddir:-.}/preconv"
 
 echo "testing -e flag override of BOM detection" >&2
-printf '\376\377foobar\n' \
+printf '\376\377\0\100\0\n' \
     | "$preconv" -d -e euc-kr 2>&1 > /dev/null \
     | grep -q "no search for coding tag"
 
-echo "testing detection of (big-endian) BOM" >&2
-printf '\376\377foobar\n' \
+echo "testing detection of UTF-32BE BOM" >&2
+printf '\0\0\376\377\0\0\0\100\0\0\0\n' \
+    | "$preconv" -d 2>&1 > /dev/null \
+    | grep -q "found BOM"
+
+echo "testing detection of UTF-32LE BOM" >&2
+printf '\377\376\0\0\100\0\0\0\n\0\0\0' \
+    | "$preconv" -d 2>&1 > /dev/null \
+    | grep -q "found BOM"
+
+echo "testing detection of UTF-16BE BOM" >&2
+printf '\376\377\0\100\0\n' \
+    | "$preconv" -d 2>&1 > /dev/null \
+    | grep -q "found BOM"
+
+echo "testing detection of UTF-16LE BOM" >&2
+printf '\377\376\100\0\n\0' \
+    | "$preconv" -d 2>&1 > /dev/null \
+    | grep -q "found BOM"
+
+echo "testing detection of UTF-8 BOM" >&2
+printf '\357\273\277@\n' \
     | "$preconv" -d 2>&1 > /dev/null \
     | grep -q "found BOM"
 
