@@ -3,11 +3,6 @@
 preconv \- prepare files for typesetting with GNU roff
 .
 .
-.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
-.do nr *groff_preconv_1_man_C \n[.cp]
-.cp 0
-.
-.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -28,6 +23,11 @@ preconv \- prepare files for typesetting with GNU roff
 .\" modified versions, except that this permission notice may be
 .\" included in translations approved by the Free Software Foundation
 .\" instead of in the original English.
+.
+.
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr *groff_preconv_1_man_C \n[.cp]
+.cp 0
 .
 .
 .\" ====================================================================
@@ -109,58 +109,7 @@ options of
 .IR groff .
 .
 .
-.\" ====================================================================
-.SH Options
-.\" ====================================================================
-.
-.B \-h
-and
-.B \-\-help
-display a usage message,
-while
-.B \-v
-and
-.B \-\-version
-show version information;
-all exit afterward.
-.
-.
-.TP
-.B \-d
-Emit debugging messages to the standard error stream.
-.
-.
-.TP
-.BI \-D\~ default-encoding
-Report
-.I default-encoding
-if all detection methods fail.
-.
-.
-.TP
-.BI \-e\~ encoding
-Override detection procedure and assume
-.IR encoding .
-.
-This corresponds to
-.IR groff 's
-.RB \[lq] \-K
-.IR encoding \[rq]
-option.
-.
-.
-.TP
-.B \-r
-Write files \[lq]raw\[rq];
-do not add
-.B .lf
-requests.
-.
-.
-.\" ====================================================================
-.SH Usage
-.\" ====================================================================
-.
+.PP
 .I preconv
 tries to find the input encoding with the following algorithm,
 stopping at the first success.
@@ -471,6 +420,54 @@ US-ASCII and is discarded by
 .
 In the last,
 it is correctly detected and mapped.
+.
+.
+.\" ====================================================================
+.SH Options
+.\" ====================================================================
+.
+.B \-h
+and
+.B \-\-help
+display a usage message,
+while
+.B \-v
+and
+.B \-\-version
+show version information;
+all exit afterward.
+.
+.
+.TP
+.B \-d
+Emit debugging messages to the standard error stream.
+.
+.
+.TP
+.BI \-D\~ default-encoding
+Report
+.I default-encoding
+if all detection methods fail.
+.
+.
+.TP
+.BI \-e\~ encoding
+Override detection procedure and assume
+.IR encoding .
+.
+This corresponds to
+.IR groff 's
+.RB \[lq] \-K
+.IR encoding \[rq]
+option.
+.
+.
+.TP
+.B \-r
+Write files \[lq]raw\[rq];
+do not add
+.B .lf
+requests.
 .
 .
 .\" ====================================================================
