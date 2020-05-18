@@ -12365,10 +12365,13 @@ of already processed lines.
 @cindex blank line traps
 @cindex traps, blank line
 
-@Defreq {blm, macro}
+@Defreq {blm, [@Var{macro}]}
 @cindex blank line macro (@code{blm})
-Set a blank line trap.  @code{gtroff} executes @var{macro} when it
-encounters a blank line in the input file.
+Set a blank line trap.  If a blank line macro is thus defined, GNU
+@code{troff} executes @var{macro} when a blank line is encountered in
+the input file, instead of the usual behavior (@pxref{Implicit Line
+Breaks}).  If no argument is supplied, the default blank line behavior
+is (re-)asserted.
 @endDefreq
 
 @c ---------------------------------------------------------------------

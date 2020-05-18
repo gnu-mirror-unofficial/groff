@@ -908,12 +908,22 @@ Also see the
 option of
 .IR groff (@MAN1EXT@).
 .
+.
 .TP
-.BI .blm\~ xx
-Set the blank line macro to
-.IR xx .
-If there is a blank line macro, it is invoked when a blank line
-is encountered instead of the usual troff behaviour.
+.BR .blm\~ [\c
+.IR macro ]
+Set a blank line trap.
+.
+If a blank line macro is thus defined,
+.I groff
+executes
+.I macro
+when a blank line is encountered in the input file,
+instead of the usual behavior.
+.
+If no argument is supplied,
+the default blank line behavior is (re-)asserted.
+.
 .
 .TP
 .BI .box\~ xx
