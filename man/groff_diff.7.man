@@ -101,54 +101,6 @@ you can use
 \[oq]\fB[\fP\,\fIxxx\/\fP\fB]\fP\[cq]
 for a name of arbitrary length.
 .
-.TP
-.BI \[rs][ xxx ]
-Print the special character (glyph) called
-.IR xxx .
-.
-.TP
-.BI \[rs][ "comp1 comp2 \*[ellipsis]" ]
-Print composite glyph consisting of multiple components.
-.
-Example: \[oq]\[rs][A\~ho]\[cq] is capital letter A with ogonek which
-finally maps to glyph name \[oq]u0041_0328\[cq].
-.
-See
-.IR "Groff: The GNU Implementation of troff" ,
-the
-.I groff
-Texinfo manual,
-for details of how a glyph name for a composite glyph is constructed,
-and
-.BR groff_char (@MAN7EXT@)
-for a list of glyph name components used in composite glyph names.
-.
-.TP
-.BI \[rs]f[ xxx ]
-Set font
-.IR xxx .
-.
-Additionally,
-.B \[rs]f[]
-is a new syntax form equal to
-.BR \[rs]fP ,
-i.e., to return to the previous font.
-.
-.TP
-.BI \[rs]*[ "xxx arg1 arg2 \*[ellipsis]" ]
-Interpolate string
-.IR xxx ,
-taking
-.IR arg1 ,
-.IR arg2 ,
-.IR \*[ellipsis] ,
-as arguments.
-.
-.TP
-.BI \[rs]n[ xxx ]
-Interpolate number register
-.IR xxx .
-.
 .
 .\" ====================================================================
 .SS "Fractional point sizes"
@@ -290,8 +242,29 @@ is missing, ignore scaling indicators in the evaluation of\~\c
 .
 .
 .\" ====================================================================
-.SS "New escape sequences"
+.SS "Escape sequences"
 .\" ====================================================================
+.
+.I groff
+introduces several new escape sequences,
+and extends the syntax of a few
+.RB AT&T\~ troff
+escapes
+(namely,
+.BR \[rs]D ,
+.BR \[rs]f ,
+.BR \[rs]k ,
+.BR \[rs]n ,
+.BR \[rs]* ,
+and
+.BR \[rs]$ ).
+.
+In the following list,
+escapes are collated alphabetically at first,
+and then by symbol roughly in Unicode code point order.
+.\" Exceptions are made to group closely-related escapes in an order
+.\" more agreeable to the development of a topic.
+.
 .
 .TP
 .BI \[rs]A' anything '
@@ -330,6 +303,12 @@ if
 is empty.
 .
 .TP
+.BR \[rs]D' \*[ellipsis] '
+All drawing commands of groff's intermediate output are accepted.
+.
+See subsection \[lq]Drawing Commands\[rq] below.
+.
+.TP
 .B \[rs]E
 This is equivalent to an escape character, but it is not interpreted in
 copy mode.
@@ -352,6 +331,17 @@ ensures that these definitions work even if
 .B \[rs]*{
 gets interpreted in copy mode (for example, by being used in a macro
 argument).
+.
+.TP
+.BI \[rs]f[ xxx ]
+Set font
+.IR xxx .
+.
+Additionally,
+.B \[rs]f[]
+is a new syntax form equal to
+.BR \[rs]fP ,
+i.e., to return to the previous font.
 .
 .TP
 .BI \[rs]F f
@@ -400,6 +390,11 @@ Set background color for filled objects drawn with the
 commands.
 .B \[rs]M[]
 switches back to the previous color.
+.
+.TP
+.BI \[rs]n[ xxx ]
+Interpolate number register
+.IR xxx .
 .
 .TP
 .BI \[rs]O n
@@ -566,12 +561,37 @@ Print anything and then restore the horizontal and vertical position;
 may not contain tabs or leaders.
 .
 .TP
+.B \[rs]#
+Everything up to and including the next newline is ignored.
+.
+This is interpreted in copy mode.
+.
+It is like
+.B \[rs]"
+except that
+.B \[rs]"
+does not ignore the terminating newline.
+.
+.\" Keep \$0 before \$( in spite of collation.
+.TP
 .B \[rs]$0
 The name by which the current macro was invoked.
 .
 The
 .B als
 request can make a macro have more than one name.
+.
+.TP
+.BI \[rs]$( nn
+.TQ
+.BI \[rs]$[ nnn ]
+In a macro or string, this gives the
+.IR nn -th
+or
+.IR nnn -th
+argument.
+.
+Macros and strings can have an unlimited number of arguments.
 .
 .TP
 .B \[rs]$*
@@ -591,16 +611,72 @@ argument to the
 request.
 .
 .TP
-.BI \[rs]$( nn
-.TQ
-.BI \[rs]$[ nnn ]
-In a macro or string, this gives the
-.IR nn -th
-or
-.IR nnn -th
-argument.
+.B \[rs])
+Like
+.B \[rs]&
+except that it behaves like a character declared with the
+.B cflags
+request to be transparent for the purposes of end-of-sentence
+recognition.
 .
-Macros and strings can have an unlimited number of arguments.
+.TP
+.BI \[rs]*[ "xxx arg1 arg2 \*[ellipsis]" ]
+Interpolate string
+.IR xxx ,
+taking
+.IR arg1 ,
+.IR arg2 ,
+.IR \*[ellipsis] ,
+as arguments.
+.
+.\" Keep \/ before \, in spite of collation.
+.TP
+.B \[rs]/
+This increases the width of the preceding glyph so that the
+spacing between that glyph and the following glyph is
+correct if the following glyph is a roman glyph.
+.
+.if t \{\
+.  nop For example, if an italic\~f is immediately followed by a roman
+.  nop right parenthesis, then in many fonts the top right portion of
+.  nop the\~f overlaps the top left of the right parenthesis
+.  nop producing \f[I]f\f[R]), which is ugly.
+.  nop Inserting
+.  B \[rs]/
+.  nop produces
+.  ie \n(.g \f[I]f\/\f[R])
+.  el       \f[I]f\|\f[R])
+.  nop and avoids this problem.
+.\}
+It is a good idea to use this escape sequence whenever an italic
+glyph is immediately followed by a roman glyph without any
+intervening space.
+.
+.TP
+.B \[rs],
+This modifies the spacing of the following glyph so that the
+spacing between that glyph and the preceding glyph is
+correct if the preceding glyph is a roman glyph.
+.
+.if t \{\
+.  nop For example, inserting
+.  B \[rs],
+.  nop between the parenthesis and the\~f changes
+.  nop \f[R](\f[I]f\f[R] to
+.  ie \n(.g \f[R](\,\f[I]f\f[R].
+.  el       \f[R](\^\f[I]f\f[R].
+.\}
+It is a good idea to use this escape sequence whenever a roman
+glyph is immediately followed by an italic glyph without any
+intervening space.
+.
+.TP
+.B \[rs]:
+This causes the insertion of a zero-width break point.
+.
+It is equal to
+.B \[rs]%
+within a word but without insertion of a soft hyphen glyph.
 .
 .TP
 .BI \[rs]? anything \[rs]?
@@ -654,78 +730,31 @@ prints\~\c
 .BR 4 .
 .
 .TP
-.B \[rs]/
-This increases the width of the preceding glyph so that the
-spacing between that glyph and the following glyph is
-correct if the following glyph is a roman glyph.
-.
-.if t \{\
-.  nop For example, if an italic\~f is immediately followed by a roman
-.  nop right parenthesis, then in many fonts the top right portion of
-.  nop the\~f overlaps the top left of the right parenthesis
-.  nop producing \f[I]f\f[R]), which is ugly.
-.  nop Inserting
-.  B \[rs]/
-.  nop produces
-.  ie \n(.g \f[I]f\/\f[R])
-.  el       \f[I]f\|\f[R])
-.  nop and avoids this problem.
-.\}
-It is a good idea to use this escape sequence whenever an italic
-glyph is immediately followed by a roman glyph without any
-intervening space.
+.BI \[rs][ xxx ]
+Print the special character (glyph) called
+.IR xxx .
 .
 .TP
-.B \[rs],
-This modifies the spacing of the following glyph so that the
-spacing between that glyph and the preceding glyph is
-correct if the preceding glyph is a roman glyph.
+.BI \[rs][ "comp1 comp2 \*[ellipsis]" ]
+Print composite glyph consisting of multiple components.
 .
-.if t \{\
-.  nop For example, inserting
-.  B \[rs],
-.  nop between the parenthesis and the\~f changes
-.  nop \f[R](\f[I]f\f[R] to
-.  ie \n(.g \f[R](\,\f[I]f\f[R].
-.  el       \f[R](\^\f[I]f\f[R].
-.\}
-It is a good idea to use this escape sequence whenever a roman
-glyph is immediately followed by an italic glyph without any
-intervening space.
+Example: \[oq]\[rs][A\~ho]\[cq] is capital letter A with ogonek which
+finally maps to glyph name \[oq]u0041_0328\[cq].
 .
-.TP
-.B \[rs])
-Like
-.B \[rs]&
-except that it behaves like a character declared with the
-.B cflags
-request to be transparent for the purposes of end-of-sentence
-recognition.
+See
+.IR "Groff: The GNU Implementation of troff" ,
+the
+.I groff
+Texinfo manual,
+for details of how a glyph name for a composite glyph is constructed,
+and
+.BR groff_char (@MAN7EXT@)
+for a list of glyph name components used in composite glyph names.
 .
 .TP
 .B \[rs]\[ti]
 This produces an unbreakable space that stretches like a normal
 inter-word space when a line is adjusted.
-.
-.TP
-.B \[rs]:
-This causes the insertion of a zero-width break point.
-.
-It is equal to
-.B \[rs]%
-within a word but without insertion of a soft hyphen glyph.
-.
-.TP
-.B \[rs]#
-Everything up to and including the next newline is ignored.
-.
-This is interpreted in copy mode.
-.
-It is like
-.B \[rs]"
-except that
-.B \[rs]"
-does not ignore the terminating newline.
 .
 .
 .\" ====================================================================
@@ -2595,17 +2624,6 @@ must previously have been the subject of an
 request.
 .I xx
 is read in copy mode.
-.
-.
-.\" ====================================================================
-.SS "Extended escape sequences"
-.\" ====================================================================
-.
-.TP
-.BR \[rs]D' \*[ellipsis] '
-All drawing commands of groff's intermediate output are accepted.
-.
-See subsection \[lq]Drawing Commands\[rq] below.
 .
 .
 .\" ====================================================================
