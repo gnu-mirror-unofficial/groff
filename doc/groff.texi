@@ -1113,7 +1113,7 @@ it also implies @code{groff}'s @option{-s} option.
 
 @item
 @code{grops}; it is used to search files named in the
-@w{@code{\X'ps: import}} and @w{@code{\X'ps: file}} escapes.
+@samp{\X'ps: import} and @samp{\X'ps: file} escapes.
 @end itemize
 
 The current directory is always searched first.  This option may be
@@ -3987,29 +3987,29 @@ Uppercase Æ ligature.
 @cindex @code{ms} macros, differences from @acronym{AT&T}
 @cindex @acronym{AT&T} @code{troff}, @code{ms} macro package differences
 
-This section lists the (minor) differences between the @code{groff -ms}
-macros and @acronym{AT&T} @code{troff -ms} macros.
+This section lists the (minor) differences between the @samp{groff -ms}
+macros and @acronym{AT&T} @samp{troff -ms} macros.
 
 @itemize @bullet
 @item
-The internals of @code{groff -ms} differ from the internals of
-@acronym{AT&T} @code{troff -ms}.  Documents that depend upon
-implementation details of @acronym{AT&T} @code{troff -ms} may not format
-properly with @code{groff -ms}.
+The internals of @samp{groff -ms} differ from the internals of
+@acronym{AT&T} @samp{troff -ms}.  Documents that depend upon
+implementation details of @acronym{AT&T} @samp{troff -ms} may not format
+properly with @samp{groff -ms}.
 
 @item
-The general error-handling policy of @code{groff -ms} is to detect and
+The general error-handling policy of @samp{groff -ms} is to detect and
 report errors, rather than silently to ignore them.
 
 @item
-@code{groff -ms} does not work in compatibility mode (that is, with the
+@samp{groff -ms} does not work in compatibility mode (that is, with the
 @option{-C} option).
 
 @item
 There is no special support for typewriter-like devices.
 
 @item
-@code{groff -ms} does not provide cut marks.
+@samp{groff -ms} does not provide cut marks.
 
 @item
 Multiple line spacing is not supported.  Use a larger vertical spacing
@@ -4030,7 +4030,7 @@ solution is to use not the @code{in} request but instead the @code{RS}
 and @code{RE} macros.
 
 @item
-To make @code{groff -ms} use the default page offset (which also
+To make @samp{groff -ms} use the default page offset (which also
 specifies the left margin), the @code{PO} register must stay undefined
 until the first @file{-ms} macro is evaluated.  This implies that
 @code{PO} should not be used early in the document, unless it is changed
@@ -4039,10 +4039,10 @@ defines it.
 @end itemize
 
 @Defmpreg {GS, ms}
-This number register is set to@tie{}1 by the @code{groff -ms} macros,
-but it is not used by the @code{AT&T} @code{troff -ms} macros.
+This number register is set to@tie{}1 by the @samp{groff -ms} macros,
+but it is not used by the @code{AT&T} @samp{troff -ms} macros.
 Documents that need to determine whether they are being formatted with
-@code{AT&T} @code{troff -ms} or @code{groff -ms} should use this number
+@code{AT&T} @samp{troff -ms} or @samp{groff -ms} should use this number
 register.
 @endDefmpreg
 
@@ -4074,7 +4074,7 @@ original Bell Labs macros.
 @node Missing ms Macros, Additional ms Macros, Differences from AT&T ms, Differences from AT&T ms
 @subsubsection @code{troff} macros not appearing in @code{groff}
 
-Macros missing from @code{groff -ms} are cover page macros specific to
+Macros missing from @samp{groff -ms} are cover page macros specific to
 Bell Labs and Berkeley.  The macros known to be missing are:
 
 @table @code
@@ -4111,8 +4111,8 @@ A cover sheet macro
 @node Additional ms Macros,  , Missing ms Macros, Differences from AT&T ms
 @subsubsection @code{groff} macros not appearing in @acronym{AT&T} @code{troff}
 
-The @code{groff -ms} macros have a few minor extensions compared to the
-@acronym{AT&T} @code{troff -ms} macros.
+The @samp{groff -ms} macros have a few minor extensions compared to the
+@acronym{AT&T} @samp{troff -ms} macros.
 
 @Defmac {AM, , ms}
 Improved accent marks.  @xref{ms Strings and Special Characters}, for
@@ -4135,7 +4135,7 @@ capture and process an index generated in this manner.
 @endDefmac
 
 The following additional number registers
-appear in @code{groff -ms}:
+appear in @samp{groff -ms}:
 
 @Defmpreg {MINGW, ms}
 Specifies a minimum space between columns (for multi-column output);
@@ -4156,7 +4156,7 @@ Special Characters}, for details.
 
 The following conventions are used for names of macros, strings and
 number registers.  External names available to documents that use the
-@code{groff -ms} macros contain only uppercase letters and digits.
+@samp{groff -ms} macros contain only uppercase letters and digits.
 
 Internally the macros are divided into modules; naming conventions are
 as follows:
@@ -6324,7 +6324,7 @@ Finally, @var{mode} can be the numeric argument returned by the
 @code{.j} register.
 
 Using @code{ad} without argument is the same as saying
-@w{@code{.ad \[.j]}}.  In particular, @code{gtroff} adjusts lines
+@samp{.ad \[.j]}.  In particular, @code{gtroff} adjusts lines
 in the same way it did before adjusting was deactivated (with a call
 to @code{na}, say).  For example, this input code
 
@@ -7774,7 +7774,7 @@ argument do exist.
 @code{troff} no longer has a hard-coded dependency on @w{Latin-1}; all
 @code{char@var{XXX}} entities have been removed from the font
 description files.  This has a notable consequence that shows up in
-warnings like @code{can't find character with input code @var{XXX}} if
+warnings like @samp{can't find character with input code @var{XXX}} if
 the @code{tr} request isn't handled properly.
 
 Consider the following translation:
@@ -10871,7 +10871,7 @@ by itself (except that leading spaces are swallowed).
 @endDefreq
 
 @Defreq {nop, anything}
-Executes @var{anything}.  This is similar to @code{.if@tie{}1}.
+Executes @var{anything}.  This is similar to @samp{.if@tie{}1}.
 @endDefreq
 
 @DefreqList {ie, expr anything}
@@ -11807,14 +11807,14 @@ available drawing functions.
 
 The default scaling indicator for all subcommands of @code{\D} is
 @samp{m} for horizontal distances and @samp{v} for vertical ones.
-Exceptions are @w{@code{\D'f @dots{}'}} and @w{@code{\D't @dots{}'}},
-which use @code{u} as the default, and @w{@code{\D'F@var{x} @dots{}'}},
-which arguments are treated similar to the @code{defcolor} request.
+Exceptions are @samp{\D'f @dots{}'} and @samp{\D't @dots{}'}, which use
+@code{u} as the default, and @samp{\D'F@var{x} @dots{}'}, which
+arguments are treated similar to the @code{defcolor} request.
 
 @table @code
 @item \D'l @var{dx} @var{dy}'
-@cindex line, drawing (@w{@code{\D'l @dots{}'}})
-@cindex drawing a line (@w{@code{\D'l @dots{}'}})
+@cindex line, drawing (@samp{\D'l @dots{}'})
+@cindex drawing a line (@samp{\D'l @dots{}'})
 Draw a line from the current location to the relative point specified by
 (@var{dx},@var{dy}), where positive values mean right and down,
 respectively.  The end point of the line is the new current location.
@@ -11845,37 +11845,37 @@ The registers @code{rst} and @code{rsb} are set by the @code{\w} escape,
 containing the largest height and depth of the whole string.
 
 @item \D'c @var{d}'
-@cindex circle, drawing (@w{@code{\D'c @dots{}'}})
-@cindex drawing a circle (@w{@code{\D'c @dots{}'}})
+@cindex circle, drawing (@samp{\D'c @dots{}'})
+@cindex drawing a circle (@samp{\D'c @dots{}'})
 Draw a circle with a diameter of@tie{}@var{d} with the leftmost point at
 the current position.  After drawing, the current location is positioned
 at the rightmost point of the circle.
 
 @item \D'C @var{d}'
-@cindex circle, solid, drawing (@w{@code{\D'C @dots{}'}})
-@cindex drawing a solid circle (@w{@code{\D'C @dots{}'}})
-@cindex solid circle, drawing (@w{@code{\D'C @dots{}'}})
+@cindex circle, solid, drawing (@samp{\D'C @dots{}'})
+@cindex drawing a solid circle (@samp{\D'C @dots{}'})
+@cindex solid circle, drawing (@samp{\D'C @dots{}'})
 Draw a solid circle with the same parameters and behaviour as an
 outlined circle.  No outline is drawn.
 
 @item \D'e @var{x} @var{y}'
-@cindex drawing an ellipse (@w{@code{\D'e @dots{}'}})
-@cindex ellipse, drawing (@w{@code{\D'e @dots{}'}})
+@cindex drawing an ellipse (@samp{\D'e @dots{}'})
+@cindex ellipse, drawing (@samp{\D'e @dots{}'})
 Draw an ellipse with a horizontal diameter of @var{x} and a vertical
 diameter of @var{y} with the leftmost point at the current position.
 After drawing, the current location is positioned at the rightmost point
 of the ellipse.
 
 @item \D'E @var{x} @var{y}'
-@cindex ellipse, solid, drawing (@w{@code{\D'E @dots{}'}})
-@cindex drawing a solid ellipse (@w{@code{\D'E @dots{}'}})
-@cindex solid ellipse, drawing (@w{@code{\D'E @dots{}'}})
+@cindex ellipse, solid, drawing (@samp{\D'E @dots{}'})
+@cindex drawing a solid ellipse (@samp{\D'E @dots{}'})
+@cindex solid ellipse, drawing (@samp{\D'E @dots{}'})
 Draw a solid ellipse with the same parameters and behaviour as an
 outlined ellipse.  No outline is drawn.
 
 @item \D'a @var{dx1} @var{dy1} @var{dx2} @var{dy2}'
-@cindex arc, drawing (@w{@code{\D'a @dots{}'}})
-@cindex drawing an arc (@w{@code{\D'a @dots{}'}})
+@cindex arc, drawing (@samp{\D'a @dots{}'})
+@cindex drawing an arc (@samp{\D'a @dots{}'})
 Draw an arc clockwise from the current location through the two
 specified relative locations (@var{dx1},@var{dy1}) and
 (@var{dx2},@var{dy2}).  The coordinates of the first point are relative
@@ -11884,15 +11884,15 @@ relative to the first point.  After drawing, the current position is
 moved to the final point of the arc.
 
 @item \D'~ @var{dx1} @var{dy1} @var{dx2} @var{dy2} @dots{}'
-@cindex drawing a spline (@w{@code{\D'~ @dots{}'}})
-@cindex spline, drawing (@w{@code{\D'~ @dots{}'}})
+@cindex drawing a spline (@samp{\D'~ @dots{}'})
+@cindex spline, drawing (@samp{\D'~ @dots{}'})
 Draw a spline from the current location to the relative point
 (@var{dx1},@var{dy1}) and then to (@var{dx2},@var{dy2}), and so on.  The
 current position is moved to the terminal point of the drawn curve.
 
 @item \D'f @var{n}'
-@cindex gray shading (@w{@code{\D'f @dots{}'}})
-@cindex shading filled objects (@w{@code{\D'f @dots{}'}})
+@cindex gray shading (@samp{\D'f @dots{}'})
+@cindex shading filled objects (@samp{\D'f @dots{}'})
 Set the shade of gray to be used for filling solid objects
 to@tie{}@var{n}; @var{n}@tie{}must be an integer between 0
 and@tie{}1000, where 0 corresponds solid white and 1000 to solid black,
@@ -11903,15 +11903,15 @@ default, a level of 1000 is used.
 Despite of being silly, the current point is moved horizontally to the
 right by@tie{}@var{n}.
 
-@cindex @w{@code{\D'f @dots{}'}} and horizontal resolution
+@cindex @samp{\D'f @dots{}'} and horizontal resolution
 Don't use this command!  It has the serious drawback that it is always
 rounded to the next integer multiple of the horizontal resolution (the
 value of the @code{hor} keyword in the @file{DESC} file).  Use @code{\M}
-(@pxref{Colors}) or @w{@code{\D'Fg @dots{}'}} instead.
+(@pxref{Colors}) or @samp{\D'Fg @dots{}'} instead.
 
 @item \D'p @var{dx1} @var{dy1} @var{dx2} @var{dy2} @dots{}'
-@cindex drawing a polygon (@w{@code{\D'p @dots{}'}})
-@cindex polygon, drawing (@w{@code{\D'p @dots{}'}})
+@cindex drawing a polygon (@samp{\D'p @dots{}'})
+@cindex polygon, drawing (@samp{\D'p @dots{}'})
 Draw a polygon from the current location to the relative position
 (@var{dx1},@var{dy1}) and then to (@var{dx2},@var{dy2}) and so on.  When
 the specified data points are exhausted, a line is drawn back to the
@@ -11920,9 +11920,9 @@ all arguments with odd index to the actual horizontal position and the
 even ones to the vertical position.
 
 @item \D'P @var{dx1} @var{dy1} @var{dx2} @var{dy2} @dots{}'
-@cindex polygon, solid, drawing (@w{@code{\D'P @dots{}'}})
-@cindex drawing a solid polygon (@w{@code{\D'P @dots{}'}})
-@cindex solid polygon, drawing (@w{@code{\D'P @dots{}'}})
+@cindex polygon, solid, drawing (@samp{\D'P @dots{}'})
+@cindex drawing a solid polygon (@samp{\D'P @dots{}'})
+@cindex solid polygon, drawing (@samp{\D'P @dots{}'})
 Draw a solid polygon with the same parameters and behaviour as an
 outlined polygon.  No outline is drawn.
 
@@ -11966,8 +11966,8 @@ coordinates.
 @endExample
 
 @item \D't @var{n}'
-@cindex line thickness (@w{@code{\D't @dots{}'}})
-@cindex thickness of lines (@w{@code{\D't @dots{}'}})
+@cindex line thickness (@samp{\D't @dots{}'})
+@cindex thickness of lines (@samp{\D't @dots{}'})
 Set the current line thickness to @var{n}@tie{}machine units.  A value
 of zero selects the smallest available line thickness.  A negative value
 makes the line thickness proportional to the current point size (this is
@@ -14129,9 +14129,9 @@ or an error occurs.  The most verbose level of warnings is @option{-ww}.
 Control the level of warnings checked for.  The @var{flags} are the sum
 of the numbers associated with each warning that is to be enabled; all
 other warnings are disabled.  The number associated with each warning is
-listed below.  For example, @w{@code{.warn 0}} disables all warnings,
-and @w{@code{.warn 1}} disables all warnings except that about missing
-glyphs.  If no argument is given, all warnings are enabled.
+listed below.  For example, @samp{.warn 0} disables all warnings, and
+@samp{.warn 1} disables all warnings except that about missing glyphs.
+If no argument is given, all warnings are enabled.
 
 The read-only number register @code{.warn} contains the current warning
 level.
@@ -15001,7 +15001,7 @@ Print the version number.
 
 The escape sequence
 
-@code{\X'ps: import @var{file} @var{llx} @var{lly} @var{urx} @var{ury}
+@samp{\X'ps: import @var{file} @var{llx} @var{lly} @var{urx} @var{ury}
   @var{width} [@var{height}]'}
 
 @noindent
@@ -15092,7 +15092,7 @@ by specifying a @var{filename} or have no CMap at all by omitting the
 
 The escape sequence
 
-@code{\X'pdf: pdfpic @var{file} @var{alignment} @var{width} [@var{height}]
+@samp{\X'pdf: pdfpic @var{file} @var{alignment} @var{width} [@var{height}]
   [@var{linelength}]'}
 
 @noindent
@@ -15206,7 +15206,7 @@ Set the line thickness to @var{n}/1000@dmn{em}.  Overrides the
 default value @var{n} = 40.
 @end table
 
-The special drawing command @code{\D'R @var{dh} @var{dv}'} draws a
+The special drawing command @samp{\D'R @var{dh} @var{dv}'} draws a
 horizontal rectangle from the current position to the position at
 offset (@var{dh},@var{dv}).
 
@@ -15913,7 +15913,7 @@ the outline of graphic objects is @samp{m}.  The color components are
 specified as integer arguments between 0 and 65536.  The number of color
 components and their meaning vary for the different color schemes.
 These commands are generated by @code{gtroff}'s escape sequences
-@w{@code{\D'F @dots{}'}} and @code{\M} (with no other corresponding
+@samp{\D'F @dots{}'} and @code{\M} (with no other corresponding
 graphics commands).  No position changing.  This command is a
 @code{gtroff} extension.
 
