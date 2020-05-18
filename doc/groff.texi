@@ -3067,7 +3067,7 @@ appearing in numbered section headings, you may define the alias
 
 @noindent
 Any such change in section numbering style becomes effective from the
-next use of @code{.NH}, following redefinition of the alias for
+next use of @code{NH}, following redefinition of the alias for
 @code{SN-STYLE}.
 @endDefstr
 
@@ -3076,7 +3076,7 @@ Unnumbered subheading.
 
 The optional @var{match-level} argument is a GNU extension.  It is a
 number indicating the level of the heading, in a manner analogous to the
-@var{curr-level} argument to @code{.NH}.  Its purpose is to match the
+@var{curr-level} argument to @code{NH}.  Its purpose is to match the
 point size, at which the heading is printed, to the size of a numbered
 heading at the same level, when the @code{GROWPS} and @code{PSINCR}
 heading size adjustment mechanism is in effect.  @xref{ms Document
@@ -3612,8 +3612,8 @@ value of the @code{FF} register.  @xref{ms Document Control Registers}.
 Footnotes can be safely used within keeps and displays, but you should
 avoid using numbered footnotes within floating keeps.  You can set a
 second @code{\**} marker between a @code{\**} and its corresponding
-@code{.FS} entry; as long as each @code{FS} macro occurs @emph{after}
-the corresponding @code{\**} and the occurrences of @code{.FS} are in
+@code{FS} entry; as long as each @code{FS} macro occurs @emph{after}
+the corresponding @code{\**} and the occurrences of @code{FS} are in
 the same order as the corresponding occurrences of @code{\**}.
 
 @c ---------------------------------------------------------------------
@@ -8524,7 +8524,7 @@ recommended).
 
 @cindex previous font (@code{ft}, @code{\f[]}, @code{\fP})
 @cindex font, previous (@code{ft}, @code{\f[]}, @code{\fP})
-With no argument or using @samp{P} as an argument, @code{.ft} switches
+With no argument or using @samp{P} as an argument, @code{ft} switches
 to the previous font.  Use @code{\f[]} to do this with the escape.  The
 old syntax forms @code{\fP} or @code{\f[P]} are also supported.
 
@@ -10000,7 +10000,7 @@ typesetters, as @dfn{leading} (this is pronounced `ledding').
 Use the @code{ps} request or the @code{\s} escape to change (increase,
 decrease) the type size (in points).  Specify @var{size} as either an
 absolute point size, or as a relative change from the current size.
-@code{.ps} with no argument restores the previous size.
+@code{ps} with no argument restores the previous size.
 
 The default scaling indicator of @code{size} is @samp{z}.  If the
 resulting size is non-positive, it is set to 1@dmn{u}.
@@ -10718,11 +10718,11 @@ True if the current page is even or odd numbered (respectively).
 @cindex TTY, conditional output for
 @cindex terminal, conditional output for
 True if the document is being processed in nroff mode (i.e., the
-@code{.nroff} command has been issued).  @xref{Troff and Nroff Mode}.
+@code{nroff} request has been issued).  @xref{Troff and Nroff Mode}.
 
 @item t
 True if the document is being processed in troff mode (i.e., the
-@code{.troff} command has been issued).  @xref{Troff and Nroff Mode}.
+@code{troff} request has been issued).  @xref{Troff and Nroff Mode}.
 
 @item v
 Always false.  This condition is for compatibility with other
@@ -12504,7 +12504,7 @@ the exact height of the document after the text has been output.
 Since only one end-of-input trap does exist and other macro packages
 may already use it, care must be taken not to break the mechanism.  A
 simple solution would be to append the above macro to the macro
-package's end-of-input macro using the @code{.am} request.
+package's end-of-input macro using the @code{am} request.
 @endDefreq
 
 
@@ -14339,7 +14339,7 @@ mode disabled.  Note that compatibility mode is restored (if and only if
 it was active) when the @emph{expansion} of @var{name} is interpreted;
 that is, the restored compatibility state applies to the contents of the
 macro (string, @dots{}) @var{name} as well as file or pipe data read if
-@var{name} is the @code{.so}, @code{.mso}, or @code{.pso} request.
+@var{name} is the @code{so}, @code{mso}, or @code{pso} request.
 
 The following example illustrates several aspects of @code{do} behavior.
 
@@ -14367,8 +14367,8 @@ compatibility
 @endExample
 
 The read-only number register @code{.cp}, meaningful only when
-dereferenced from a @code{.do} request, is@tie{}1 if compatibility mode
-was on when the @code{.do} request was encountered, and 0@tie{}if it
+dereferenced from a @code{do} request, is@tie{}1 if compatibility mode
+was on when the @code{do} request was encountered, and 0@tie{}if it
 was not.  This register is specialized and may require a statement of
 rationale.
 
