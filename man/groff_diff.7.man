@@ -733,18 +733,28 @@ does not ignore the terminating newline.
 .\" ====================================================================
 .
 .TP
-.BI .aln\~ xx\~yy
+.BI .aln\~ "new old"
 Create an alias
-.I xx
-for number register object named
-.IR yy .
-The new name and the old name are exactly equivalent.
+.I new
+for an existing number register named
+.IR old ,
+causing the names to refer to the same stored object.
 .
 If
-.I yy
-is undefined, a warning of type
-.B reg
-is generated, and the request is ignored.
+.I old
+is undefined,
+a warning of type
+.RB \[lq] reg \[rq]
+is generated and the request is ignored.
+.
+To remove a number register alias,
+call
+.B .rr
+on its name.
+.
+A number register's contents do not become inaccessible until it has no
+more names.
+.
 .
 .TP
 .BI .als\~ xx\~yy

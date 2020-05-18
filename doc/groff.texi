@@ -5777,7 +5777,9 @@ with a @samp{0}:
 @cindex number register, removing (@code{rr})
 @cindex register, removing (@code{rr})
 Remove number register @var{ident}.  If @var{ident} doesn't exist, the
-request is ignored.
+request is ignored.  Technically, only the name is removed; the
+register's contents are still accessible under aliases created with
+@code{aln}, if any.
 @endDefreq
 
 @Defreq {rnn, ident1 ident2}
@@ -5788,15 +5790,24 @@ Rename number register @var{ident1} to @var{ident2}.  If either
 @var{ident1} or @var{ident2} doesn't exist, the request is ignored.
 @endDefreq
 
-@Defreq {aln, ident1 ident2}
+@Defreq {aln, new old}
 @cindex alias, number register, creating (@code{aln})
 @cindex creating alias, for number register (@code{aln})
 @cindex number register, creating alias (@code{aln})
 @cindex register, creating alias (@code{aln})
-Create an alias @var{ident1} for a number register @var{ident2}.  The
-new name and the old name are exactly equivalent.  If @var{ident1} is
-undefined, a warning of type @samp{reg} is generated, and the request is
+Create an alias @var{new} for an existing number register @var{old},
+causing the names to refer to the same stored object.  If @var{old} is
+undefined, a warning of type @samp{reg} is generated and the request is
 ignored.  @xref{Debugging}, for information about warnings.
+
+@cindex alias, number register, removing (@code{aln})
+@cindex removing alias, for number register (@code{aln})
+@cindex number register, removing alias (@code{aln})
+@cindex register, removing alias (@code{aln})
+To remove a number register alias, call @code{rr} on its name.  A number
+register's contents do not become inaccessible until it has no more
+names.
+
 @endDefreq
 
 @c ---------------------------------------------------------------------
