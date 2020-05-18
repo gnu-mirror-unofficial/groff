@@ -188,9 +188,9 @@ escape sequence that take a numeric expression as their argument.
 .P
 For example, suppose sizescale is 1000; then a scaled point is
 equivalent to a millipoint; the call
-.B .ps\~10.25
+.B .ps 10.25
 is equivalent to
-.B .ps\~10.25z
+.B .ps 10.25z
 and so sets the point size to 10250 scaled points, which is equal to
 10.25 points.
 .
@@ -2477,9 +2477,9 @@ The number associated with each warning is listed in
 .BR @g@troff (@MAN1EXT@).
 .
 For example,
-.B .warn\~0
+.B .warn 0
 disables all warnings, and
-.B .warn\~1
+.B .warn 1
 disables all warnings except that about missing glyphs.
 .
 If
@@ -3431,7 +3431,7 @@ is the argument to the
 command  in the DESC file).
 .
 The argument to the
-.B x\~Height
+.B x Height
 command is also in scaled points.
 .
 .
@@ -3721,26 +3721,26 @@ The current position isn't changed by those colour commands
 .\" ====================================================================
 .
 There is a continuation convention which permits the argument to the
-.B x\~X
+.B x X
 command to contain newlines: when outputting the argument to the
-.B x\~X
+.B x X
 command, GNU troff follows each newline in the argument with a
 .B +
 character (as usual, it terminates the entire argument with a
 newline); thus if the line after the line containing the
-.B x\~X
+.B x X
 command starts with
 .BR + ,
 then the newline ending the line containing the
-.B x\~X
+.B x X
 command should be treated as part of the argument to the
-.B x\~X
+.B x X
 command, the
 .B +
 should be ignored, and the part of the line following the
 .B +
 should be treated like the part of the line following the
-.B x\~X
+.B x X
 command.
 .
 .P
