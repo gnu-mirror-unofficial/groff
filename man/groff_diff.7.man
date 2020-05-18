@@ -757,32 +757,47 @@ more names.
 .
 .
 .TP
-.BI .als\~ xx\~yy
+.BI .als\~ "new old"
 Create an alias
-.I xx
-for request, string, macro, or diversion object named
-.IR yy .
-.
-The new name and the old name are exactly equivalent (it is
-similar to a hard rather than a soft link).
+.I new
+for the existing request,
+string,
+macro,
+or diversion named
+.IR old ,
+causing the names to refer to the same stored object.
 .
 If
-.I yy
-is undefined, a warning of type
-.B mac
-is generated, and the request is ignored.
+.I old
+is undefined,
+a warning of type
+.RB \[lq] mac \[rq]
+is generated and the request is ignored.
 .
 The
-.BR de ,
-.BR am ,
-.BR di ,
-.BR da ,
-.BR ds ,
+.BR .am ,
+.BR .as ,
+.BR .da ,
+.BR .de ,
+.BR .di ,
 and
-.B as
-requests only create a new object if the name of the macro, diversion
-or string is currently undefined or if it is defined to be a
-request; normally they modify the value of an existing object.
+.B .ds
+requests
+(together with their variants)
+only create a new object if the name of the macro,
+diversion,
+or string is currently undefined
+or if it is defined as a request;
+normally,
+they modify the value of an existing object.
+.
+To remove an alias,
+simply call
+.B .rm
+on its name.
+.
+The object itself is not destroyed until it has no more names.
+.
 .
 .TP
 .BI .am1\~ xx\~yy
