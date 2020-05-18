@@ -188,9 +188,9 @@ escape sequence that take a numeric expression as their argument.
 .P
 For example, suppose sizescale is 1000; then a scaled point is
 equivalent to a millipoint; the call
-.B .ps\ 10.25
+.B .ps\~10.25
 is equivalent to
-.B .ps\ 10.25z
+.B .ps\~10.25z
 and so sets the point size to 10250 scaled points, which is equal to
 10.25 points.
 .
@@ -503,12 +503,12 @@ is associated with the production of the next inline image.
 .RE
 .
 .TP
-.BI \[rs]R' name\ \[+-]n '
+.BI \[rs]R' name\~\[+-]n '
 This has the same effect as
 .
 .RS
 .IP
-.BI .nr\  name\ \[+-]n
+.BI .nr\~ name\~\[+-]n
 .RE
 .
 .TP
@@ -733,7 +733,7 @@ does not ignore the terminating newline.
 .\" ====================================================================
 .
 .TP
-.BI .aln\  xx\ yy
+.BI .aln\~ xx\~yy
 Create an alias
 .I xx
 for number register object named
@@ -747,7 +747,7 @@ is undefined, a warning of type
 is generated, and the request is ignored.
 .
 .TP
-.BI .als\  xx\ yy
+.BI .als\~ xx\~yy
 Create an alias
 .I xx
 for request, string, macro, or diversion object named
@@ -775,7 +775,7 @@ or string is currently undefined or if it is defined to be a
 request; normally they modify the value of an existing object.
 .
 .TP
-.BI .am1\  xx\ yy
+.BI .am1\~ xx\~yy
 Similar to
 .BR .am ,
 but compatibility mode is switched off during execution.
@@ -797,7 +797,7 @@ and
 .BR .ds1 .
 .
 .TP
-.BI .ami\  xx\ yy
+.BI .ami\~ xx\~yy
 Append to macro indirectly.
 .
 See the
@@ -805,13 +805,13 @@ See the
 request below for more information.
 .
 .TP
-.BI .ami1\  xx\ yy
+.BI .ami1\~ xx\~yy
 Same as the
 .B ami
 request but compatibility mode is switched off during execution.
 .
 .TP
-.BI .as1\  xx\ yy
+.BI .as1\~ xx\~yy
 Similar to
 .BR .as ,
 but compatibility mode is switched off during expansion.
@@ -833,7 +833,7 @@ and
 .BR ds1 .
 .
 .TP
-.BI .asciify\  xx
+.BI .asciify\~ xx
 This request \[oq]unformats\[cq] the diversion
 .I xx
 in such a way that ASCII and space characters (and some escape
@@ -884,16 +884,16 @@ option of
 .IR groff (@MAN1EXT@).
 .
 .TP
-.BI .blm\  xx
+.BI .blm\~ xx
 Set the blank line macro to
 .IR xx .
 If there is a blank line macro, it is invoked when a blank line
 is encountered instead of the usual troff behaviour.
 .
 .TP
-.BI .box\  xx
+.BI .box\~ xx
 .TQ
-.BI .boxa\  xx
+.BI .boxa\~ xx
 These requests are similar to the
 .B di
 and
@@ -923,7 +923,7 @@ This is the same as
 .BR \[rs]p .
 .
 .TP
-.BI .cflags\  "n c1 c2 \*[ellipsis]"
+.BI .cflags\~ "n c1 c2 \*[ellipsis]"
 Characters
 .IR c1 ,
 .IR c2 ,
@@ -1009,7 +1009,7 @@ the character can't be suppressed since the right neighbour character
 doesn't get examined.
 .
 .TP
-.BI .char\  c\ string
+.BI .char\~ c\~string
 [This request can both define characters and glyphs.]
 .
 .IP
@@ -1071,14 +1071,14 @@ A glyph definition can be removed with the
 request.
 .
 .TP
-.BI .chop\  xx
+.BI .chop\~ xx
 Chop the last element off macro, string, or diversion
 .IR xx .
 This is useful for removing the newline from the end of diversions
 that are to be interpolated as strings.
 .
 .TP
-.BI .class\  "name c1 c2 \*[ellipsis]"
+.BI .class\~ "name c1 c2 \*[ellipsis]"
 Assign
 .I name
 to a set of characters
@@ -1095,7 +1095,7 @@ nested classes are possible also.
 This is useful to assign properties to a large set of characters.
 .
 .TP
-.BI .close\  stream
+.BI .close\~ stream
 Close the stream named
 .IR stream ;
 .I stream
@@ -1108,7 +1108,7 @@ See the
 request.
 .
 .TP
-.BI .composite\  glyph1\ glyph2
+.BI .composite\~ glyph1\~glyph2
 Map glyph name
 .I glyph1
 to glyph name
@@ -1128,14 +1128,14 @@ and
 requests.
 .
 .TP
-.BI .color\  n
+.BI .color\~ n
 If
 .I n
 is non-zero or missing, enable colors (this is the default), otherwise
 disable them.
 .
 .TP
-.BI .cp\  n
+.BI .cp\~ n
 If
 .I n
 is non-zero or missing, enable compatibility mode, otherwise disable
@@ -1145,7 +1145,7 @@ In compatibility mode, long names are not recognized, and the
 incompatibilities caused by long names do not arise.
 .
 .TP
-.BI .defcolor\  xxx\ scheme\ color_components
+.BI .defcolor\~ xxx\~scheme\~color_components
 Define color
 .IR xxx .
 .I scheme
@@ -1215,7 +1215,7 @@ and
 is not the same.
 .
 .TP
-.BI .de1\  xx\ yy
+.BI .de1\~ xx\~yy
 Similar to
 .BR .de ,
 but compatibility mode is switched off during execution.
@@ -1223,7 +1223,7 @@ but compatibility mode is switched off during execution.
 On entry, the current compatibility mode is saved and restored at exit.
 .
 .TP
-.BI .dei\  xx\ yy
+.BI .dei\~ xx\~yy
 Define macro indirectly.
 .
 The following example
@@ -1249,13 +1249,13 @@ is equivalent to
 .RE
 .
 .TP
-.BI .dei1\  xx\ yy
+.BI .dei1\~ xx\~yy
 Similar to the
 .B dei
 request but compatibility mode is switched off during execution.
 .
 .TP
-.BI .device\  anything
+.BI .device\~ anything
 This is (almost) the same as the
 .B \[rs]X
 escape.
@@ -1265,7 +1265,7 @@ is read in copy mode; a leading\~\c
 is stripped.
 .
 .TP
-.BI .devicem\  xx
+.BI .devicem\~ xx
 This is the same as the
 .B \[rs]Y
 escape (to embed the contents of a macro into the intermediate
@@ -1338,7 +1338,7 @@ as output.
 .RE \" this "extra" RE avoids indentation of the remaining paragraphs
 .
 .TP
-.BI .ds1\  xx\ yy
+.BI .ds1\~ xx\~yy
 Similar to
 .BR .ds ,
 but compatibility mode is switched off during expansion.
@@ -1361,7 +1361,7 @@ Without a previous call to
 will be the new escape character.
 .
 .TP
-.BI .evc\  xx
+.BI .evc\~ xx
 Copy the contents of environment
 .I xx
 to the current environment.
@@ -1369,7 +1369,7 @@ to the current environment.
 No pushing or popping of environments is done.
 .
 .TP
-.BI .fam\  xx
+.BI .fam\~ xx
 Set the current font family to
 .IR xx .
 The current font family is part of the current environment.
@@ -1384,7 +1384,7 @@ See the description of the
 request for more information on font families.
 .
 .TP
-.BI .fchar\  c\ string
+.BI .fchar\~ c\~string
 Define fallback character (or glyph)\~\c
 .I c
 to be
@@ -1403,7 +1403,7 @@ font.
 This test happens before checking special fonts.
 .
 .TP
-.BI .fcolor\  c
+.BI .fcolor\~ c
 Set the fill color to\~\c
 .IR c .
 If
@@ -1412,7 +1412,7 @@ is missing,
 switch to the previous fill color.
 .
 .TP
-.BI .fschar\  f\ c\ string
+.BI .fschar\~ f\~c\~string
 Define fallback character (or glyph)\~\c
 .I c
 for font\~\c
@@ -1431,7 +1431,7 @@ request but before the list of fonts declared with
 .BR .special .
 .
 .TP
-.BI .fspecial\  "f s1 s2 \*[ellipsis]"
+.BI .fspecial\~ "f s1 s2 \*[ellipsis]"
 When the current font is\~\c
 .IR f ,
 fonts
@@ -1450,7 +1450,7 @@ request.
 Without argument, reset the list of global special fonts to be empty.
 .
 .TP
-.BI .ftr\  f\ g
+.BI .ftr\~ f\~g
 Translate font\~\c
 .I f
 to\~\c
@@ -1486,7 +1486,7 @@ then font\~\c
 is not translated.
 .
 .TP
-.BI .fzoom\  f\ zoom
+.BI .fzoom\~ f\~zoom
 Set zoom factor
 .I zoom
 for font\~\c
@@ -1499,7 +1499,7 @@ no magnification.
 must be a real font name, not a style.
 .
 .TP
-.BI .gcolor\  c
+.BI .gcolor\~ c
 Set the glyph color to\~\c
 .IR c .
 If
@@ -1508,7 +1508,7 @@ is missing,
 switch to the previous glyph color.
 .
 .TP
-.BI .hcode\  "c1 code1 c2 code2 \*[ellipsis]"
+.BI .hcode\~ "c1 code1 c2 code2 \*[ellipsis]"
 Set the hyphenation code of character
 .I c1
 to
@@ -1530,7 +1530,7 @@ See also the
 request.
 .
 .TP
-.BI .hla\  lang
+.BI .hla\~ lang
 Set the current hyphenation language to
 .IR lang .
 Hyphenation exceptions specified with the
@@ -1546,7 +1546,7 @@ request is usually invoked by the
 file to set up a default language.
 .
 .TP
-.BI .hlm\  n
+.BI .hlm\~ n
 Set the maximum number of consecutive hyphenated lines to\~\c
 .IR n .
 If
@@ -1565,7 +1565,7 @@ Hyphens resulting from
 are counted; explicit hyphens are not.
 .
 .TP
-.BI .hpf\  file
+.BI .hpf\~ file
 Read hyphenation patterns from
 .IR file ;
 this is searched for in the same way that
@@ -1656,7 +1656,7 @@ request is usually invoked by the
 file; a second call replaces the old patterns with the new ones.
 .
 .TP
-.BI .hpfa\  file
+.BI .hpfa\~ file
 The same as
 .B hpf
 except that the hyphenation patterns from
@@ -1664,7 +1664,7 @@ except that the hyphenation patterns from
 are appended to the patterns already loaded in the current language.
 .
 .TP
-.BI .hpfcode\  "a b c d \*[ellipsis]"
+.BI .hpfcode\~ "a b c d \*[ellipsis]"
 After reading a hyphenation patterns file with the
 .B hpf
 or
@@ -1691,7 +1691,7 @@ in
 otherwise.
 .
 .TP
-.BI .hym\  n
+.BI .hym\~ n
 Set the
 .I hyphenation margin
 to\~\c
@@ -1713,7 +1713,7 @@ The current hyphenation margin is available in the
 register.
 .
 .TP
-.BI .hys\  n
+.BI .hys\~ n
 Set the
 .I hyphenation space
 to\~\c
@@ -1736,7 +1736,7 @@ The current hyphenation space is available in the
 register.
 .
 .TP
-.BI .itc\  n\ macro
+.BI .itc\~ n\~macro
 Variant of
 .B .it
 for which a line interrupted with
@@ -1744,13 +1744,13 @@ for which a line interrupted with
 is not counted as an input line.
 .
 .TP
-.BI .kern\  n
+.BI .kern\~ n
 If
 .I n
 is non-zero or missing, enable pairwise kerning, otherwise disable it.
 .
 .TP
-.BI .length\  xx\ string
+.BI .length\~ xx\~string
 Compute the length of
 .I string
 and return it in the number register
@@ -1758,7 +1758,7 @@ and return it in the number register
 (which is not necessarily defined before).
 .
 .TP
-.BI .linetabs\  n
+.BI .linetabs\~ n
 If
 .I n
 is non-zero or missing, enable line-tabs mode, otherwise disable it
@@ -1812,7 +1812,7 @@ read-only number register
 is set to\~1 if in line-tabs mode, and 0 otherwise.
 .
 .TP
-.BI .lsm\  xx
+.BI .lsm\~ xx
 Set the leading spaces macro to
 .IR xx .
 If there are leading spaces in an input line, it is invoked instead of
@@ -1825,7 +1825,7 @@ hold the number of removed leading spaces and the corresponding
 horizontal space, respectively.
 .
 .TP
-.BI .mso\  file
+.BI .mso\~ file
 The same as the
 .B so
 request except that
@@ -1849,10 +1849,10 @@ is generated if
 can't be loaded, and the request is ignored.
 .
 .TP
-.BI .nop \ anything
+.BI .nop \~anything
 Execute
 .IR anything .
-This is similar to \[oq].if\ 1\[cq].
+This is similar to \[oq].if\~1\[cq].
 .
 .TP
 .B .nroff
@@ -1867,7 +1867,7 @@ This can be reversed using the
 request.
 .
 .TP
-.BI .open\  stream\ filename
+.BI .open\~ stream\~filename
 Open
 .I filename
 for writing and associate the stream named
@@ -1881,7 +1881,7 @@ and
 requests.
 .
 .TP
-.BI .opena\  stream\ filename
+.BI .opena\~ stream\~filename
 Like
 .BR open ,
 but if
@@ -1889,7 +1889,7 @@ but if
 exists, append to it instead of truncating it.
 .
 .TP
-.BI .output\  string
+.BI .output\~ string
 Emit
 .I string
 directly to the intermediate output (subject to copy-mode
@@ -1913,7 +1913,7 @@ Print the names and contents of all currently defined number registers
 on stderr.
 .
 .TP
-.BI .psbb \ filename
+.BI .psbb \~filename
 Get the bounding box of a PostScript image
 .IR filename .
 .
@@ -1934,7 +1934,7 @@ respectively.
 If some error has occurred, the four registers are set to zero.
 .
 .TP
-.BI .pso \ command
+.BI .pso \~command
 This behaves like the
 .B so
 request except that input comes from the standard output of
@@ -1949,7 +1949,7 @@ Empty slots in the page trap list are printed as well, because they
 can affect the priority of subsequently planted traps.
 .
 .TP
-.BI .pvs \ \[+-]n
+.BI .pvs \~\[+-]n
 Set the post-vertical line space to\~\c
 .IR n ;
 default scale indicator is\~\c
@@ -1972,11 +1972,11 @@ and
 with a positive value which are applied after the line is output.
 .
 .TP
-.BI .rchar\  "c1 c2 \*[ellipsis]"
+.BI .rchar\~ "c1 c2 \*[ellipsis]"
 Remove the definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]\ \"Add a sentence space
+.I \*[ellipsis]\~\"Add a sentence space
 This undoes the effect of a
 .B char
 request.
@@ -1991,11 +1991,11 @@ and from the macro one level higher.
 No effect otherwise.
 .
 .TP
-.BI .rfschar\  "c1 c2 \*[ellipsis]"
+.BI .rfschar\~ "c1 c2 \*[ellipsis]"
 Remove the font-specific definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]\ \"Add a sentence space
+.I \*[ellipsis]\~\"Add a sentence space
 This undoes the effect of an
 .B fschar
 request.
@@ -2022,14 +2022,14 @@ request implicitly does
 .BR .rj\~0 .
 .
 .TP
-.BI .rnn \ xx\ yy
+.BI .rnn \~xx\~yy
 Rename number register
 .I xx
 to
 .IR yy .
 .
 .TP
-.BI .schar\  c\ string
+.BI .schar\~ c\~string
 Define global fallback character (or glyph)\~\c
 .I c
 to be
@@ -2044,7 +2044,7 @@ is searched after the list of fonts declared with the
 request but before the mounted special fonts.
 .
 .TP
-.BI .shc\  c
+.BI .shc\~ c
 Set the soft hyphen character to\~\c
 .IR c .
 If
@@ -2065,7 +2065,7 @@ request) nor translations (specified with the
 request) are considered when finding the soft hyphen character.
 .
 .TP
-.BI .shift\  n
+.BI .shift\~ n
 In a macro, shift the arguments by
 .I n
 positions: argument\~\c
@@ -2083,7 +2083,7 @@ is missing, arguments are shifted by\~1.
 Shifting by negative amounts is currently undefined.
 .
 .TP
-.BI .sizes\  s1\ s2\ \*[ellipsis]\ sn\  [0]
+.BI .sizes\~ s1\~s2\~\*[ellipsis]\~sn\~ [0]
 This command is similar to the
 .B sizes
 command of a
@@ -2108,7 +2108,7 @@ Contrary to the font file command, the list can't extend over more
 than a single line.
 .
 .TP
-.BI .special\  "s1 s2 \*[ellipsis]"
+.BI .special\~ "s1 s2 \*[ellipsis]"
 Fonts
 .IR s1 ,
 .IR s2 ,
@@ -2199,7 +2199,7 @@ due to the regular naming convention of the special character escapes.
 .RE
 .
 .TP
-.BI .sty\  n\ f
+.BI .sty\~ n\~f
 Associate style\~\c
 .I f
 with font position\~\c
@@ -2246,7 +2246,7 @@ file controls which font positions (if any) are initially associated
 with styles rather than fonts.
 .
 .TP
-.BI .substring\  xx\ n1\  [ n2 ]
+.BI .substring\~ xx\~n1\~ [ n2 ]
 Replace the string named
 .I xx
 with the substring defined by the indices
@@ -2270,7 +2270,7 @@ The last character has index\~\-1, the character before the last
 character has index\~\-2, etc.
 .
 .TP
-.BI .tkf\  f\ s1\ n1\ s2\ n2
+.BI .tkf\~ f\~s1\~n1\~s2\~n2
 Enable track kerning for font\~\c
 .IR f .
 When the current font is\~\c
@@ -2294,7 +2294,7 @@ and less than or equal to
 the increase in width is a linear function of the point size.
 .
 .TP
-.BI .tm1\  string
+.BI .tm1\~ string
 Similar to the
 .B tm
 request,
@@ -2305,13 +2305,13 @@ double quote in
 is stripped off to allow initial blanks.
 .
 .TP
-.BI .tmc\  string
+.BI .tmc\~ string
 Similar to
 .B tm1
 but without writing a final newline.
 .
 .TP
-.BI .trf\  filename
+.BI .trf\~ filename
 Transparently output the contents of file
 .IR filename .
 Each line is output as if preceded by
@@ -2343,7 +2343,7 @@ request, the file cannot contain characters, such as NUL,
 that are not valid troff input characters.
 .
 .TP
-.BI .trin\  abcd
+.BI .trin\~ abcd
 This is the same as the
 .B tr
 request except that the
@@ -2370,15 +2370,15 @@ Example:
 .
 .IP
 The result is
-.BR x\ a .
+.BR x\~a .
 .
 Using
 .BR tr ,
 the result would be
-.BR x\ x .
+.BR x\~x .
 .
 .TP
-.BI .trnt\  abcd
+.BI .trnt\~ abcd
 This is the same as the
 .B tr
 request except that the translations do not apply to text that is
@@ -2420,7 +2420,7 @@ This undoes the effect of the
 request.
 .
 .TP
-.BI .unformat\  xx
+.BI .unformat\~ xx
 This request \[oq]unformats\[cq] the diversion
 .IR xx .
 .
@@ -2446,7 +2446,7 @@ and
 requests.
 .
 .TP
-.BI .vpt\  n
+.BI .vpt\~ n
 Enable vertical position traps if
 .I n
 is non-zero, disable them otherwise.
@@ -2467,7 +2467,7 @@ enabled is global.
 Initially vertical position traps are enabled.
 .
 .TP
-.BI .warn\  n
+.BI .warn\~ n
 Control warnings.
 .IR n \~\c
 is the sum of the numbers associated with each warning that is to be
@@ -2487,7 +2487,7 @@ If
 is not given, all warnings are enabled.
 .
 .TP
-.BI .warnscale\  si
+.BI .warnscale\~ si
 Set the scaling indicator used in warnings to
 .IR si .
 .
@@ -2505,7 +2505,7 @@ At startup, it is set to\~\c
 .BR i .
 .
 .TP
-.BI .while \ c\ anything
+.BI .while \~c\~anything
 While condition\~\c
 .I c
 is true, accept
@@ -2527,7 +2527,7 @@ and
 requests.
 .
 .TP
-.BI .write\  stream\ anything
+.BI .write\~ stream\~anything
 Write
 .I anything
 to the stream named
@@ -2543,13 +2543,13 @@ a leading\~\c
 is stripped.
 .
 .TP
-.BI .writec\  stream\ anything
+.BI .writec\~ stream\~anything
 Similar to
 .B write
 but without writing a final newline.
 .
 .TP
-.BI .writem\  stream\ xx
+.BI .writem\~ stream\~xx
 Write the contents of the macro or string
 .I xx
 to the stream named
@@ -2578,7 +2578,7 @@ See subsection \[lq]Drawing Commands\[rq] below.
 .\" ====================================================================
 .
 .TP
-.BI .cf\  filename
+.BI .cf\~ filename
 When used in a diversion, this embeds in the diversion an object
 which, when reread, will cause the contents of
 .I filename
@@ -2591,13 +2591,13 @@ there is a current diversion; this behaviour is so anomalous that it
 must be considered a bug.
 .
 .TP
-.BI .de\  xx\ yy
+.BI .de\~ xx\~yy
 .TQ
-.BI .am\  xx\ yy
+.BI .am\~ xx\~yy
 .TQ
-.BI .ds\  xx\ yy
+.BI .ds\~ xx\~yy
 .TQ
-.BI .as\  xx\ yy
+.BI .as\~ xx\~yy
 In compatibility mode, these requests behaves similar to
 .BR .de1 ,
 .BR .am1 ,
@@ -2609,7 +2609,7 @@ beginning, and a \[oq]compatibility restore\[cq] token at the end,
 with compatibility mode switched on during execution.
 .
 .TP
-.BI .ev\  xx
+.BI .ev\~ xx
 If
 .I xx
 is not a number, this switches to a named environment called
@@ -2622,7 +2622,7 @@ There is no limit on the number of named environments; they are
 created the first time that they are referenced.
 .
 .TP
-.BI .hy\  n
+.BI .hy\~ n
 New additive values 16 and\~32 are available; the former enables
 hyphenation before the last character, the latter enables hyphenation
 after the first character.
@@ -2718,7 +2718,7 @@ known for other work.
 .RE
 .
 .TP
-.BI .ta\  "n1 n2 \*[ellipsis] nn " "T " "r1 r2 \*[ellipsis] rn"
+.BI .ta\~ "n1 n2 \*[ellipsis] nn " "T " "r1 r2 \*[ellipsis] rn"
 Set tabs at positions
 .IR n1 ,
 .IR n2 ,
@@ -3252,7 +3252,7 @@ Interpolating a string does not hide existing macro arguments.
 Thus in a macro, a more efficient way of doing
 .
 .IP
-.BI . xx\  \[rs]\[rs]$@
+.BI . xx\~ \[rs]\[rs]$@
 .P
 is
 .
@@ -3317,22 +3317,22 @@ In compatibility mode, no attention is paid to the input-level.
 There are some new types of condition:
 .
 .TP
-.BI .if\ r xxx
+.BI .if\~r xxx
 True if there is a number register named
 .IR xxx .
 .
 .TP
-.BI .if\ d xxx
+.BI .if\~d xxx
 True if there is a string, macro, diversion, or request named
 .IR xxx .
 .
 .TP
-.BI .if\ m xxx
+.BI .if\~m xxx
 True if there is a color named
 .IR xxx .
 .
 .TP
-.BI .if\ c ch
+.BI .if\~c ch
 True if there is a character (or glyph)
 .I ch
 available;
@@ -3349,7 +3349,7 @@ has been defined by the
 request.
 .
 .TP
-.BI .if\ F f
+.BI .if\~F f
 True if font\~\c
 .I f
 exists.
@@ -3361,7 +3361,7 @@ request (this is, font translation and styles are applied), without
 actually mounting it.
 .
 .TP
-.BI .if\ S s
+.BI .if\~S s
 True if style\~\c
 .I s
 has been registered.
@@ -3431,7 +3431,7 @@ is the argument to the
 command  in the DESC file).
 .
 The argument to the
-.B x\ Height
+.B x\~Height
 command is also in scaled points.
 .
 .
@@ -3468,7 +3468,7 @@ it is a multiple of the horizontal resolution.
 Special characters cannot be printed using this command.
 .
 .TP
-.BI u n\ xxx
+.BI u n\~xxx
 This is same as the
 .BR t \~\c
 command except that after printing each character, the current
@@ -3721,34 +3721,34 @@ The current position isn't changed by those colour commands
 .\" ====================================================================
 .
 There is a continuation convention which permits the argument to the
-.B x\ X
+.B x\~X
 command to contain newlines: when outputting the argument to the
-.B x\ X
+.B x\~X
 command, GNU troff follows each newline in the argument with a
 .B +
 character (as usual, it terminates the entire argument with a
 newline); thus if the line after the line containing the
-.B x\ X
+.B x\~X
 command starts with
 .BR + ,
 then the newline ending the line containing the
-.B x\ X
+.B x\~X
 command should be treated as part of the argument to the
-.B x\ X
+.B x\~X
 command, the
 .B +
 should be ignored, and the part of the line following the
 .B +
 should be treated like the part of the line following the
-.B x\ X
+.B x\~X
 command.
 .
 .P
 The first three output commands are guaranteed to be:
 .IP
-.BI x\ T\  device
+.BI x\~T\~ device
 .br
-.BI x\ res\  n\ h\ v
+.BI x\~res\~ n\~h\~v
 .br
 .B x init
 .
