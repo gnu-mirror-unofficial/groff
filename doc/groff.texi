@@ -10199,34 +10199,34 @@ post-vertical spacing; it is associated with the current environment
 @cindex @code{\H}, with fractional type sizes
 @cindex @code{\s}, with fractional type sizes
 A @dfn{scaled point} is equal to @math{1/@var{sizescale}} points, where
-@var{sizescale} is specified in the @file{DESC} file (1@tie{}by
-default).  There is a new scale indicator @samp{z}, which has the effect
-of multiplying by @var{sizescale}.  Requests and escape sequences in
-@code{gtroff} interpret arguments that represent a point size as being
-in units of scaled points, but they evaluate each such argument using a
-default scale indicator of @samp{z}.  Arguments treated in this way are
-the argument to the @code{ps} request, the third argument to the
-@code{cs} request, the second and fourth arguments to the @code{tkf}
-request, the argument to the @code{\H} escape sequence, and those
-variants of the @code{\s} escape sequence that take a numeric expression
-as their argument (see below).
+@var{sizescale} is specified in the device description file @file{DESC},
+and defaults to 1@tie{}.  A new scale indicator @samp{z} has has the
+effect of multiplying by @var{sizescale}.  Requests and escape sequences
+in GNU @code{troff} interpret arguments that represent a point size as
+being in units of scaled points; that is, they evaluate each such
+argument using a default scale indicator of @samp{z}.  Arguments treated
+in this way those to @code{ps}, the third argument to the @code{cs},
+the second and fourth arguments to the @code{tkf}, and the arguments
+to @code{\H} and @code{\s}.
 
-For example, suppose @var{sizescale} is@tie{}1000; then a scaled point
-is equivalent to a millipoint; the request @w{@samp{.ps 10.25}} is
-equivalent to @w{@samp{.ps 10.25z}} and thus sets the point size to
-10250@tie{}scaled points, which is equal to 10.25@tie{}points.
+For example, if @var{sizescale} is@tie{}1000, then a scaled point
+is one one-thousandth of a point.  The request @samp{.ps 10.25} is
+synonymous with @samp{.ps 10.25z} and sets the point size to
+10250@tie{}scaled points, or 10.25@tie{}points.
 
-@code{gtroff} disallows the use of the @samp{z} scale indicator in
-instances where it would make no sense, such as a numeric expression
-whose default scale indicator was neither @samp{u} nor @samp{z}.
-Similarly it would make no sense to use a scaling indicator other than
-@samp{z} or @samp{u} in a numeric expression whose default scale
-indicator was @samp{z}, and so @code{gtroff} disallows this as well.
+Consequently, in GNU @code{troff}, the number register @code{.s} can
+contain a non-integral point size.
 
-There is also new scale indicator @samp{s}, which multiplies by the
-number of units in a scaled point.  So, for example, @samp{\n[.ps]s} is
-equal to @samp{1m}.  Be sure not to confuse the @samp{s} and @samp{z}
-scale indicators.
+It makes no sense to use of the @samp{z} scale indicator in a numeric
+expression whose default scale indicator was neither @samp{u} nor
+@samp{z}, so GNU @code{troff} disallows this.  Similarly, it is
+nonsensical to use a scaling indicator other than @samp{z} or @samp{u}
+in a numeric expression whose default scale indicator was @samp{z}, and
+so GNU @code{troff} disallows this as well.
+
+Another new scale indicator @samp{s} multiplies by the number of units
+in a scaled point.  For instance, @samp{\n[.ps]s} is equal to @samp{1m}.
+Do not confuse the @samp{s} and @samp{z} scale indicators.
 
 @Defreg {.ps}
 A read-only number register returning the point size in scaled points.

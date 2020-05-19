@@ -1,7 +1,7 @@
 '\" e
 .TH groff_diff @MAN7EXT@ "@MDATE@" "groff @VERSION@"
 .SH Name
-groff_diff \- differences between GNU troff and classical troff
+groff_diff \- differences between GNU roff and AT&T troff
 .
 .
 .\" ====================================================================
@@ -50,182 +50,214 @@ groff_diff \- differences between GNU troff and classical troff
 .SH Description
 .\" ====================================================================
 .
-This manual page describes the language differences between
+The GNU
+.I roff
+text processing system,
 .IR groff ,
-the GNU
-.I roff
-text processing system, and the classical
-.I roff
-formatter of the freely available Unix\~7 of the 1970s, documented in
-the
-.I Troff User's Manual
-by
-.I Ossanna
-and
-.IR Kernighan .
+is largely compatible with
+.RI AT&T\~ troff ,
+the typesetting system originating in Unix systems of the 1970s.
 .
-This includes the roff language as well as the intermediate output
-format (troff output).
-.
-.
-.P
-Section \[lq]See Also\[rq] below gives pointers to both the classical
-.I roff
-and the modern
+At the same time,
 .I groff
-documentation.
+removes many arbitrary limitations and adds features,
+both to the language and to the intermediate,
+device-independent output format.
+.
+Differences arising from
+.IR groff 's
+implementation of
+.RI AT&T\~ troff
+features are also noted.
 .
 .
 .\" ====================================================================
-.SH "groff Language"
+.SH Language
 .\" ====================================================================
 .
-In this section, all additional features of
 .I groff
-compared to the classical Unix\~7
-.I troff
-are described in detail.
+features identifiers of arbitrary length,
+supports non-integral point sizes,
+adds new escapes and requests,
+provides new conditional tests,
+recognizes additional scale indicators and numerical operators,
+and extends the function of some escapes and requests already present in
+.RI AT&T\~ troff .
 .
 .
 .\" ====================================================================
 .SS "Long names"
 .\" ====================================================================
 .
-The names of number registers, fonts, strings/\:macros/\:diversions,
-special characters (glyphs), and colors can be of any length.
+.I groff
+introduces many new requests;
+with two exceptions,
+they all have names longer than two characters.
 .
-In escape sequences, additionally to the classical
-\[oq]\fB(\fP\,\fIxx\/\fP\[cq]
-construction for a two-character glyph name,
-you can use
-\[oq]\fB[\fP\,\fIxxx\/\fP\fB]\fP\[cq]
-for a name of arbitrary length.
+The names of number registers,
+fonts,
+strings/\:macros/\:diversions,
+environments,
+special characters (glyphs),
+and colors can be of any length.
+.
+Generally,
+anywhere
+.RI AT&T\~ troff
+supports an escape form that uses an opening parenthesis \[lq](\[rq]
+to introduce a two-character identifier name,
+.I groff
+supports a square-bracketed form \[lq][]\[rq] where the identifier
+within can be of arbitrary length.
 .
 .
 .\" ====================================================================
-.SS "Fractional point sizes"
+.SS "Fractional point sizes and new scale indicators"
 .\" ====================================================================
 .
 A
 .I scaled point
 is equal to
-.B 1/sizescale
-points, where
-.B sizescale
-is specified in the
-.I DESC
-file (1 by default).
+.RI 1/ sizescale
+points,
+where
+.I sizescale
+is a parameter specified in the device description file,
+.IR DESC ,
+and defaults to\~1.
 .
-There is a new scale indicator\~\c
-.B z
-that has the effect of multiplying by sizescale.
+A new scale
+.RB indicator\~\[lq] z \[rq]
+has the effect of multiplying by
+.IR sizescale .
 .
-Requests and escape sequences in troff interpret arguments that
-represent a point size as being in units of scaled points, but they
-evaluate each such argument using a default scale indicator of\~\c
-.BR z .
-Arguments treated in this way are the argument to the
-.B ps
-request, the third argument to the
-.B cs
-request, the second and fourth arguments to the
-.B tkf
-request, the argument to the
+Requests and escapes in
+.I groff
+interpret arguments that represent a point size as being in units of
+scaled points;
+that is,
+they evaluate such arguments using an implied default scale indicator
+.RB of\~\[lq] z \[rq].
+.
+Arguments treated in this way comprise those to
+.BR .ps ,
+the third argument to
+.BR .cs ,
+the second and fourth arguments to
+.BR .tkf ,
+and the arguments to
 .B \[rs]H
-escape sequence, and those variants of the
-.B \[rs]s
-escape sequence that take a numeric expression as their argument.
+and
+.BR \[rs]s .
 .
 .
 .P
-For example, suppose sizescale is 1000; then a scaled point is
-equivalent to a millipoint; the call
-.B .ps 10.25
-is equivalent to
-.B .ps 10.25z
-and so sets the point size to 10250 scaled points, which is equal to
-10.25 points.
+For example,
+if
+.I sizescale
+is\~1000,
+then a scaled point is one one-thousandth of a point.
+.
+The request
+.RB \[lq] ".ps 10.25" \[rq]
+is synonymous with
+.RB \[lq] ".ps 10.25z" \[rq]
+and sets the point size to 10250\~scaled points,
+or 10.25\~points.
 .
 .
 .P
-The number register
+Consequently,
+in
+.IR groff ,
+the number register
 .B \[rs]n[.s]
-returns the point size in points as decimal fraction.
+can contain a non-integral point size.
 .
-There is also a new number register
+The new number register
 .B \[rs]n[.ps]
-that returns the point size in scaled points.
+returns the point size in scaled points.
 .
 .
 .P
-It would make no sense to use the
-.BR z \~\c
-scale indicator in a numeric expression whose default scale indicator
-was neither
-.B u
-nor\~\c
-.BR z ,
-and so
-.B troff
+It makes no sense to use the
+.RB \[lq] z \[rq]\~scale
+indicator in a numeric expression whose default scale indicator is
+neither
+.RB \[lq] u \[rq]
+.RB nor\~\[lq] z \[rq],
+so
+.I groff
 disallows this.
 .
-Similarly it would make no sense to use a scaling indicator other than
-.B z
-or\~\c
-.B u
-in a numeric expression whose default scale indicator was\~\c
-.BR z ,
-and so
-.B troff
+Similarly,
+it is nonsenical to use a scaling indicator other
+.RB than\~\[lq] z \[rq]
+.RB or\~\[lq] u \[rq]
+in a numeric expression whose default scale indicator
+.RB is\~\[lq] z \[rq],
+so
+.I groff
 disallows this as well.
 .
-.P
-There is also new scale indicator\~\c
-.B s
-which multiplies by the number of units in a scaled point.
 .
-So, for example,
-.B \[rs]n[.ps]s
+.P
+Another new scale indicator,
+.RB \[lq] s \[rq],
+multiplies by the number of basic units in a scaled point.
+.
+For instance,
+.RB \[lq] \[rs]n[.ps]s \[rq]
 is equal to
 .BR 1m .
-Be sure not to confuse the
-.B s
-and
-.BR z \~\c
+.
+Do not confuse
+.RB the\~\[lq] s \[rq]
+.RB and\~\[lq] z \[rq]
 scale indicators.
+.
+.
+.P
+A further two new measurement units available in
+.I groff
+are
+.RB \[lq] M \[rq],
+which indicates hundredeths of an em,
+and
+.RB \[lq] f \[rq],
+which is defined as 65536 basic units.
+.
+The latter provides convenient fractions for color definitions with the
+.B .defcolor
+request.
+.
+For example, 0.5f equals 32768u.
 .
 .
 .\" ====================================================================
 .SS "Numeric expressions"
 .\" ====================================================================
 .
-Spaces are permitted in a number expression within parentheses.
+Spaces are permitted in a numeric expression within parentheses.
 .
+Three new operators are available as well.
 .
-.P
-.B M
-indicates a scale of 100ths of an em.
-.B f
-indicates a scale of 65536 units, providing fractions for color
-definitions with the
-.B defcolor
-request.
-.
-For example, 0.5f = 32768u.
 .
 .TP
 .IB e1 >? e2
-The maximum of
+Compute the maximum of
 .I e1
 and
 .IR e2 .
 .
+.
 .TP
 .IB e1 <? e2
-The minimum of
+Compute the minimum of
 .I e1
 and
 .IR e2 .
+.
 .
 .TP
 .BI ( c ; e )
@@ -237,8 +269,9 @@ as the default scaling indicator.
 .
 If
 .I c
-is missing, ignore scaling indicators in the evaluation of\~\c
-.IR e .
+is missing,
+ignore scaling indicators in the evaluation
+.RI of\~ e .
 .
 .
 .\" ====================================================================
@@ -344,18 +377,18 @@ plotter as the output device).
 .\" ====================================================================
 .
 .I groff
-introduces several new escape sequences,
+introduces several new escape sequences
 and extends the syntax of a few
-.RB AT&T\~ troff
+.RI AT&T\~ troff
 escapes
 (namely,
 .BR \[rs]D ,
 .BR \[rs]f ,
 .BR \[rs]k ,
 .BR \[rs]n ,
-.BR \[rs]* ,
+.BR \[rs]$ ,
 and
-.BR \[rs]$ ).
+.BR \[rs]* ).
 .
 In the following list,
 escapes are collated alphabetically at first,
@@ -649,8 +682,10 @@ permitted for the argument to
 .B \[rs]X
 to contain newlines).
 .
-The inclusion of newlines requires an extension to the Unix troff output
-format, and confuses drivers that do not know about this extension.
+The inclusion of newlines requires an extension to the
+.RI AT&T\~ troff
+output format,
+and confuses drivers that do not know about this extension.
 .
 .TP
 .BI \[rs]Z' anything '
@@ -2735,11 +2770,13 @@ which, when reread, will cause the contents of
 .I filename
 to be transparently copied through to the output.
 .
-In Unix troff, the contents of
+In
+.RI AT&T\~ troff,
+the contents of
 .I filename
-is immediately copied through to the output regardless of whether
-there is a current diversion; this behaviour is so anomalous that it
-must be considered a bug.
+are immediately copied through to the output regardless of whether there
+is a current diversion;
+this behavior is so anomalous that it must be considered a bug.
 .
 .TP
 .BI .de\~ xx\~yy
@@ -2795,8 +2832,8 @@ current font
 .IR groff_font (@MAN5EXT@))
 and default to \~12.
 .
-Unlike AT&T
-.IR troff ,
+Unlike
+.RI AT&T\~ troff ,
 .I groff
 does not ignore the
 .B .ss
@@ -3378,7 +3415,8 @@ is called with the
 .B \-T
 command-line option, and zero otherwise.
 .
-This behaviour is different from Unix troff.
+This behavior is different from
+.RI AT&T\~ troff .
 .
 .P
 Fonts not listed in the
@@ -3505,10 +3543,11 @@ Example:
 .SH "Intermediate Output Format"
 .\" ====================================================================
 .
-This section describes the format output by GNU troff.
-.
-The output format used by GNU troff is very similar to that used
-by Unix device-independent troff.
+The output format of
+.I groff
+is modeled after that used
+.RI AT&T\~ troff
+once it adopted a device-independent approach in the early 1980s.
 .
 Only the differences are documented here.
 .
@@ -3715,8 +3754,10 @@ Set the current line thickness to
 .IR n \~\c
 machine units.
 .
-Traditionally Unix troff drivers use a line thickness proportional to
-the current point size; drivers should continue to do this if no
+Traditionally,
+.RI AT&T\~ troff
+drivers use a line thickness proportional to the current point size;
+drivers should continue to do this if no
 .B Dt
 command has been given, or if a
 .B Dt
@@ -3748,7 +3789,8 @@ is not one of
 .BR a ,
 or\~\c
 .BR \[ti] ,
-Unix troff treats each of the $x sub i$ as a horizontal quantity,
+.RI AT&T\~ troff
+treats each of the $x sub i$ as a horizontal quantity,
 and each of the $y sub i$ as a vertical quantity and assumes that
 the width of the drawn object is $sum from i=1 to n x sub i$,
 and that the height is $sum from i=1 to n y sub i$.
@@ -4075,7 +4117,7 @@ does.
 The
 .B \[rs]A
 escape sequence
-(see subsection \[lq]New escape sequences\[rq] above)
+(see subsection \[lq]Escape sequences\[rq] above)
 may be helpful in avoiding use of these escape sequences in names.
 .
 .
@@ -4138,7 +4180,8 @@ whereas in
 .I groff
 it sets the point size to 10\~scaled points.
 .
-See subsection \[lq]Fractional point sizes\[rq] above.
+See subsection \[lq]Fractional point sizes and new scale indicators\[rq]
+above.
 .
 .
 .P
@@ -4268,15 +4311,15 @@ as of its 060716 release (June 2006).]
 To store an escape sequence in a diversion that is interpreted when the
 diversion is reread,
 either use the traditional
-.B \[rs]!
+.B \[rs]!\&
 transparent output facility,
 or,
 if this is unsuitable,
 the new
-.B \[rs]?
+.B \[rs]?\&
 escape sequence.
 .
-See subsection \[lq]New escape sequences\[rq] above and sections
+See subsection \[lq]Escape sequences\[rq] above and sections
 \[lq]Diversions\[rq] and \[lq]Gtroff Internals\[rq] in
 .IR "Groff: The GNU Implementation of troff" ,
 the
@@ -4285,40 +4328,39 @@ Texinfo manual.
 .
 .
 .\" ====================================================================
-.SS "Intermediate output"
+.SS "Intermediate output format"
 .\" ====================================================================
 .
-The groff intermediate output format is in a state of evolution.
+Its extensions notwithstanding,
+the
+.I groff
+intermediate output format has some incompatibilities
+with that of
+.RI AT&T\~ troff ,
+but full compatibility is sought;
+problem reports and patches are welcome.
 .
-So far it has some incompatibilities, but it is intended to establish
-a full compatibility to the classical troff output format.
+The following incompatibilities are known.
 .
-Actually the following incompatibilities exist:
 .
-.IP \[bu] 2m
-The positioning after the drawing of the polygons conflicts with the
-classical definition.
+.IP \[bu]
+The positioning after drawing polygons conflicts with the
+.RI AT&T\~ troff
+practice.
 .
-.IP \[bu] 2m
+.
+.IP \[bu]
 The intermediate output cannot be rescaled to other devices as
-classical \[oq]device-independent\[cq] troff did.
+.RI AT&T\~ troff 's
+could.
 .
 .
 .\" ====================================================================
 .SH Authors
 .\" ====================================================================
-This document was written by
-.MT jjc@\:jclark.com
-James Clark
-.ME
-and modified by
-.MT wl@\:gnu.org
-Werner Lemberg
-.ME
-and
-.MT groff\-bernd.warken\-72@\:web.de
-Bernd Warken
-.ME .
+.
+This document was written by James Clark and modified by Werner Lemberg
+and Bernd Warken.
 .
 .
 .\" ====================================================================
@@ -4334,54 +4376,39 @@ manual.
 You can browse it interactively with \[lq]info groff\[rq].
 .
 .
-.TP
-.BR groff (@MAN1EXT@)
-A list of all documentation around
-.IR groff .
-.
-.TP
-.BR groff (@MAN7EXT@)
-A description of the
+.PP
+\[lq]Troff User's Manual\[rq]
+by Joseph F.\& Ossanna, 1976
+(revised by Brian W.\& Kernighan, 1992),
+AT&T Bell Laboratories Computing Science Techical Report No.\& 54,
+widely called simply \[lq]CSTR\~#54\[rq],
+documents the language,
+device and font description file formats,
+and device-independent output format
+referred to collectively in
 .I groff
-language, including a short, but complete reference of all predefined
-requests, registers, and escapes of plain
-.IR groff .
-From the command line, this is called using
+documentation as
+.RI \[lq]AT&T\~ troff \[rq].
 .
-.RS
-.IP
-.EX
-man 7 groff
-.EE
-.RE
 .
-.TP
-.BR roff (@MAN7EXT@)
-A survey of
-.I roff
-systems, including pointers to further historical documentation.
+.PP
+\[lq]A Typesetter-independent TROFF\[rq]
+by Brian W.\& Kernighan, 1982,
+AT&T Bell Laboratories Computing Science Techical Report No.\& 97,
+provides additional insights into the
+device and font description file formats
+and device-independent output format.
 .
-.TP
-.RI [ CSTR\~#54\/ ]
-The
-.I Nroff/\:Troff User's Manual
-by
-.I J.\& F.\& Ossanna
-of 1976 in the revision of
-.I Brian Kernighan
-of 1992, being the
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:54.ps.gz
-classical troff documentation
-.UE .
+.
+.PP
+.IR groff (@MAN1EXT@),
+.IR groff (@MAN7EXT@),
+.IR roff (@MAN7EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
 .cp \n[*groff_groff_diff_7_man_C]
 .
-.
-.\" ====================================================================
-.\" Emacs variables
-.\" ====================================================================
 .
 .\" Local Variables:
 .\" mode: nroff
