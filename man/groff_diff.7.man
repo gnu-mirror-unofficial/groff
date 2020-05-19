@@ -242,6 +242,104 @@ is missing, ignore scaling indicators in the evaluation of\~\c
 .
 .
 .\" ====================================================================
+.SS Conditions
+.\" ====================================================================
+.
+More conditions can be tested with the
+.B .if
+and
+.B .ie
+requests,
+as well as the new
+.B .while
+request.
+.
+.
+.TP
+.BI c\~ g
+True if a glyph
+.I g
+is available,
+where
+.I g
+is a Unicode basic Latin character;
+a
+.I groff
+special character
+.BI \[rs]( xx
+or
+.BI \[rs][ xxx\c
+.BR ] ;
+.BI \[rs]N' xxx\c
+.BR ' ;
+or has been defined by the
+.B .char
+request.
+.
+.
+.TP
+.BI d\~ name
+True if there is a string,
+macro,
+diversion,
+or request called
+.IR name .
+.
+.
+.TP
+.BI F\~ font
+True if a font called
+.I font
+exists.
+.
+.I font
+is handled as if it
+were opened with the
+.B .ft
+request
+(that is,
+font translation and
+styles are applied),
+without actually mounting it.
+.
+This test doesn't load the complete font,
+but only its header,
+to verify its validity.
+.
+.
+.TP
+.BI m\~ color
+True if there is a color called
+.IR color .
+.
+.
+.TP
+.BI r\~ reg
+True if there is a number register called
+.IR reg .
+.
+.
+.TP
+.BI S\~ style
+True if a style called
+.I style
+has been registered.
+.
+Font translation is applied.
+.
+.
+.TP
+.B v
+Always false.
+.
+This condition is for compatibility with certain other
+.I troff
+implementations only
+(identifying a processing mode destined for a Versatec electrostatic
+plotter as the output device).
+.
+.
+.\" ====================================================================
 .SS "Escape sequences"
 .\" ====================================================================
 .
@@ -3366,60 +3464,6 @@ the same input level as the opening\~\c
 .
 In compatibility mode, no attention is paid to the input-level.
 .
-.P
-There are some new types of condition:
-.
-.TP
-.BI .if\~r xxx
-True if there is a number register named
-.IR xxx .
-.
-.TP
-.BI .if\~d xxx
-True if there is a string, macro, diversion, or request named
-.IR xxx .
-.
-.TP
-.BI .if\~m xxx
-True if there is a color named
-.IR xxx .
-.
-.TP
-.BI .if\~c ch
-True if there is a character (or glyph)
-.I ch
-available;
-.I ch
-is either an ASCII character or a glyph (special character)
-.BI \[rs]N' xxx '\f[R],
-.BI \[rs]( xx
-or
-.BI \[rs][ xxx ]\f[R];
-the condition is also true if
-.I ch
-has been defined by the
-.B char
-request.
-.
-.TP
-.BI .if\~F f
-True if font\~\c
-.I f
-exists.
-.
-.BR f \~\c
-is handled as if it was opened with the
-.B ft
-request (this is, font translation and styles are applied), without
-actually mounting it.
-.
-.TP
-.BI .if\~S s
-True if style\~\c
-.I s
-has been registered.
-.
-Font translation is applied.
 .
 .P
 The

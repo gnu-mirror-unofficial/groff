@@ -10737,8 +10737,9 @@ True if the document is being processed in troff mode (i.e., the
 @code{troff} request has been issued).  @xref{Troff and Nroff Mode}.
 
 @item v
-Always false.  This condition is for compatibility with other
-@code{troff} versions only (identifying a @code{-Tversatec} device).
+Always false.  This condition is for compatibility with certain other
+@code{troff} implementations only (identifying a processing mode
+destined for a Versatec electrostatic plotter as the output device).
 
 @item '@var{xxx}'@var{yyy}'
 True if the output produced by @var{xxx} is equal to the output produced
@@ -10796,34 +10797,33 @@ false
     @result{} true
 @endExample
 
-@item r @var{xxx}
-True if there is a number register named @var{xxx}.
+@item r @var{reg}
+True if there is a number register called @var{reg}.
 
-@item d @var{xxx}
-True if there is a string, macro, diversion, or request named @var{xxx}.
+@item d @var{name}
+True if there is a string, macro, diversion, or request called
+@var{name}.
 
-@item m @var{xxx}
-True if there is a color named @var{xxx}.
+@item m @var{color}
+True if there is a color called @var{color}.
 
 @item c @var{g}
-True if there is a glyph @var{g} available@footnote{The name of this
-conditional operator is a misnomer since it tests names of output
-glyphs.}; @var{g} is either an @acronym{ASCII} character or a special
-character (@code{\N'@var{xxx}'}, @code{\(@var{gg}} or
-@code{\[@var{ggg}]}); the condition is also true if @var{g} has been
-defined by the @code{char} request.
+True if a glyph @var{g} is available, where @var{g} is a Unicode basic
+Latin character; a GNU @code{troff} special character @samp{\(@var{xx}}
+or @samp{\[@var{xxx}]}; @samp{\N'@var{xxx}'}; or has been defined by the
+@code{char} request.
 
 @item F @var{font}
-True if a font named @var{font} exists.  @var{font} is handled as if it
-was opened with the @code{ft} request (that is, font translation and
+True if a font called @var{font} exists.  @var{font} is handled as if it
+were opened with the @code{ft} request (that is, font translation and
 styles are applied), without actually mounting it.
 
 This test doesn't load the complete font but only its header to verify
 its validity.
 
 @item S @var{style}
-True if style @var{style} has been registered.  Font translation is
-applied.
+True if a style called @var{style} has been registered.  Font
+translation is applied.
 @end table
 
 Note that these operators can't be combined with other operators like

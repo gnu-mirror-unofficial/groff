@@ -931,13 +931,13 @@ Texinfo manual.
 .\" ====================================================================
 .
 .B Conditions
-occur in tests raised by the
-.request if\c
+are expressions tested by the
+.request .if\c
 ,
-.request ie\c
+.request .ie\c
 ,
 and the
-.request while
+.request .while
 requests.
 .
 The following table characterizes the different types of conditions.
@@ -957,7 +957,8 @@ yields true if its value is greater than\~0.
 .BI ! N
 True if the value of
 .I N
-is\~0 (see below).
+is \[<=]\~0
+(see below).
 .
 .TPx
 .BI \[aq] s1 \[aq] s2 \[aq]
@@ -975,14 +976,17 @@ is not identical to string\~\c
 (see below).
 .
 .TPx
-.BI c ch
-True if there is a glyph\~\c
-.I ch
-available.
+.BI c\~ g
+True if a glyph
+.I g
+is available.
 .
 .TPx
-.BI d name
-True if there is a string, macro, diversion, or request called
+.BI d\~ name
+True if there is a string,
+macro,
+diversion,
+or request called
 .IR name .
 .
 .TPx
@@ -990,39 +994,47 @@ True if there is a string, macro, diversion, or request called
 Current page number is even.
 .
 .TPx
-.B o
-Current page number is odd.
+.BI F\~ font
+True if a font called
+.I font
+exists.
 .
 .TPx
-.BI m name
+.BI m\~ color
 True if there is a color called
-.IR name .
+.IR color .
 .
 .TPx
 .B n
 Formatter is
-.BR nroff .
+.IR nroff .
 .
 .TPx
-.BI r reg
-True if there is a register named
+.B o
+Current page number is odd.
+.
+.TPx
+.BI r\~ reg
+True if there is a number register called
 .IR reg .
+.
+.TPx
+.BI S\~ style
+True if a style called
+.I style
+has been registered.
 .
 .TPx
 .B t
 Formatter is
-.BR troff .
+.IR troff .
 .
 .TPx
-.BI F font
-True if there exists a font named
-.IR font .
-.
-.TPx
-.BI S style
-True if a style named
-.I style
-has been registered.
+.B v
+Always false
+(for compatibilty with other
+.I troff
+implementations).
 .
 .RE
 .PD
@@ -1030,7 +1042,7 @@ has been registered.
 .
 .P
 Note that the
-.B !
+.B !\&
 operator may only appear at the beginning of an expression,
 and negates the entire expression.
 This maintains bug-compatibility with AT&T
