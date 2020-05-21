@@ -21,6 +21,7 @@
 groff="${abs_top_builddir:-.}/test-groff"
 
 # Check for segfault if we try to write a glyph before setting up.
+# Savannah #56555.
 "$groff" >/dev/null <<EOF
 \!ta
 EOF

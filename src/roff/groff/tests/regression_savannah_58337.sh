@@ -24,7 +24,7 @@ set -e
 
 # groff should ignore negative inter-word and inter-sentence space
 # sizes.  And certainly not fail an assertion.  Savannah #58337.
-"$groff" -Tascii  <<EOF | grep -Fqx 'A B.  C.'
+"$groff" -Tascii <<EOF | grep -Fqx 'A B.  C.'
 .pl 1v
 .ss -1 -1
 A B.
