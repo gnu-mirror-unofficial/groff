@@ -222,7 +222,7 @@ A further two new measurement units available in
 .I groff
 are
 .RB \[lq] M \[rq],
-which indicates hundredeths of an em,
+which indicates hundredths of an em,
 and
 .RB \[lq] f \[rq],
 which is defined as 65536 basic units.
@@ -434,10 +434,14 @@ if
 is empty.
 .
 .TP
-.BR \[rs]D' \*[ellipsis] '
-All drawing commands of groff's intermediate output are accepted.
+.BR \[rs]D\[aq] \*[ellipsis] \[aq]
+All drawing commands supported by the
+.RI AT&T\~ troff
+device-independent
+intermediate output format are accepted.
 .
-See subsection \[lq]Drawing Commands\[rq] below.
+See subsection \[lq]Drawing Commands\[rq] below
+for GNU extensions.
 .
 .TP
 .B \[rs]E
@@ -4071,8 +4075,8 @@ the escapes
 .BR \[rs]R ,
 .BR \[rs]s ,
 and
-.BR \[rs]S
-transparent for recognizing the beginning of a line only in
+.B \[rs]S
+are transparent for recognizing the beginning of a line only in
 compatibility mode.
 .
 For example,
@@ -4141,8 +4145,6 @@ like
 and
 .BR \[rs]z .
 .
-.
-.P
 In compatibility mode only,
 a
 .RI non-zero\~ n

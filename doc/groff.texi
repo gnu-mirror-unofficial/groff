@@ -7146,9 +7146,9 @@ Enable @dfn{no-space mode}.  In this mode, spacing (either via @code{sp}
 or via blank lines) is disabled.  The @code{bp} request to advance to
 the next page is also disabled, except if it is accompanied by a page
 number (see @ref{Page Control}, for more information).  This mode ends
-when actual text is output or the @code{rs} request is encountered, which
-ends no-space mode.  The read-only number register @code{.ns} is set
-to@tie{}1 as long as no-space mode is active.
+when actual text is output or the @code{rs} request is encountered,
+which ends no-space mode.  The read-only number register @code{.ns} is
+set to@tie{}1 as long as no-space mode is active.
 
 This request is useful for macros that conditionally insert vertical
 space before the text starts (for example, a paragraph macro could
@@ -14484,9 +14484,8 @@ avoiding use of these escape sequences in names.
 Normally, the syntax form @code{\s}@var{n} accepts only a single
 character (a digit) for @var{n}, consistently with other forms that
 originated in @acronym{AT&T} @code{troff}, like @code{\*}, @code{\$},
-@code{\f}, @code{\g}, @code{\k}, @code{\n}, and @code{\z}.
-
-In compatibility mode only, a non-zero@tie{}@var{n} must be in the range
+@code{\f}, @code{\g}, @code{\k}, @code{\n}, and @code{\z}.  In
+compatibility mode only, a non-zero@tie{}@var{n} must be in the range
 4--39.  Legacy documents relying upon this quirk of parsing@footnote{The
 Graphic Systems C/A/T phototypesetter (the original device target for
 @acronym{AT&T} @code{troff}) supported only a few discrete point sizes
