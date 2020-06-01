@@ -1,3 +1,15 @@
+2020-05-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* man/groff.7.man: Fix error: negative numeric expressions
+	evaluate false, not true as was implied.  Parallelize
+	descriptions with Texinfo and groff_diff(7) (in abbreviated
+	form).
+
+2020-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi: Fix error in code sample: missing 'n' in
+	number register interpolation.
+
 2020-05-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/preconv/tests/smoke-test.sh: Make BOM detection
@@ -6,8 +18,9 @@
 
 2020-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* src/roff/troff/env.cpp (space_size): If an argument to the .ss
-	request is negative, throw a range warning and ignore it.
+	* src/roff/troff/env.cpp (space_size): Prevent assertion
+	failure.  If an argument to the .ss request is negative, throw a
+	range warning and ignore it.
 	* src/roff/groff/tests/regression_savannah_58337.sh: Add test.
 	* src/roff/groff/groff.am: Run test.
 
@@ -248,6 +261,11 @@
 
 2020-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/groff.texi: Remove incorrect claim.  The .C register
+	cannot be manipulated manually.
+
+2020-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/smoke-test_html_device.sh: Simplify
 	charmap test.
 
@@ -484,6 +502,31 @@
 	On a PostScript device with 1000 basic units to the point, the
 	difference is important and would be confusing without the unit
 	indication.
+
+2020-04-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Correct and clarify point size documentation.
+
+	The Texinfo manual has long documented the request '.ps 0' as
+	restoring the previous point size (just as '\s0' or '.ps' with
+	no argument does), but this is incorrect, since groff 1.02 or
+	earlier (June 1991), the request has not actually worked this
+	way.  Instead, '.ps 0' sets the point size to 1 basic unit
+	{though output drivers may clamp this to a higher value}.  This
+	behavior is consistent with Hierloom troff and, per Ingo
+	Schwarze, Plan 9 troff.  (It is, however, not consistent with
+	neatroff.)
+
+	* doc/groff.texi (Changing Type Sizes): Stop claiming that '.ps
+	0' works like '\s0'.  Note that the resulting (computed) point
+	size, not the argument, is clamped.  Note that it is
+	non-positive, not negative, point sizes that are clamped to 1u.
+	Add (forward) cross-reference to section where \n[.ps] is
+	defined since it is mentioned here.  Move explanation of special
+	handling of zero argument to \s escape description.
+
+	* man/groff.7.man: Explain .ps N independently of \s.  Note
+	clamping behavior.
 
 2020-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
