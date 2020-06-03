@@ -1,14 +1,14 @@
 2020-05-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* man/groff.7.man: Fix error: negative numeric expressions
-	evaluate false, not true as was implied.  Parallelize
-	descriptions with Texinfo and groff_diff(7) (in abbreviated
-	form).
+	* man/groff.7.man (Numerical Expressions): Fix error: negative
+	expressions evaluate false, not true as was implied.
+	Parallelize descriptions with Texinfo and groff_diff(7) (in
+	abbreviated form).
 
 2020-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi: Fix error in code sample: missing 'n' in
-	number register interpolation.
+	* doc/groff.texi (Manipulating Filling and Adjusting): Fix error
+	in code sample: missing 'n' in number register interpolation.
 
 2020-05-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -30,25 +30,27 @@
 
 	Update documentation of .ss request.
 
-	* doc/groff.texi: Rewrite documentation of .ss request and
-	\n[.ss] and \n[.sss] escapes.  Note that negative values are not
-	permitted in either argument to .ss.  Use new terminology,
-	"minimal inter-word spacing" and "additional inter-sentence
-	spacing" for clarity.  Clarify that additional inter-sentence
-	spacing is only used when the output line is not full when the
-	end of a sentence occurs.  Add index nodes to help readers find
-	discussion of details of spacing between words and sentences.
-	Move discussion of differences from AT&T troff to section
-	"Implementation Differences".  Update example to more closely
-	resemble a real-world case, use second argument to .ss request,
-	and eliminate hackish use of .nop request.
+	* doc/groff.texi (Manipulating Filling and Adjusting): Rewrite
+	documentation of .ss request and \n[.ss] and \n[.sss] escapes.
+	Note that negative values are not permitted in either argument
+	to .ss.  Use new terminology, "minimal inter-word spacing" and
+	"additional inter-sentence spacing" for clarity.  Clarify that
+	additional inter-sentence spacing is only used when the output
+	line is not full when the end of a sentence occurs.  Add index
+	nodes to help readers find discussion of details of spacing
+	between words and sentences.  Move discussion of differences
+	from AT&T troff to section "Implementation Differences".  Update
+	example to more closely resemble a real-world case, use second
+	argument to .ss request, and eliminate hackish use of .nop
+	request.
 
-	* man/groff_diff.7.man: Recast in parallel with the foregoing.
+	* man/groff_diff.7.man (New number registers): Recast in
+	parallel with the foregoing.
 
-	* man/groff.7.man: Use new terminology and describe \n[.ss] and
-	\n[.sss] in meaningful terms, not by reference to arguments
-	to the .ss request (which wasn't even accurate, because these
-	registers have default values).
+	* man/groff.7.man (Read-only registers): Use new terminology and
+	describe \n[.ss] and \n[.sss] in meaningful terms, not by
+	reference to arguments to the .ss request (which wasn't even
+	accurate, because these registers have default values).
 
 	Fixes https://savannah.gnu.org/bugs/index.php?54101.
 
@@ -253,16 +255,17 @@
 
 2020-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi:
-	* man/groff_diff.7.man: Rewrite description of .do request, and
-	replace example with a more illustrative one.
+	* doc/groff.texi (Implementation Differences):
+	* man/groff_diff.7.man (New requests): Rewrite description of
+	.do request, and replace example with a more illustrative one.
 
-	* man/groff.7.man: Rewrite description of .do request briefly.
+	* man/groff.7.man (Request short reference): Rewrite description
+	of .do request briefly.
 
 2020-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi: Remove incorrect claim.  The .C register
-	cannot be manipulated manually.
+	* doc/groff.texi (Implementation Differences): Remove incorrect
+	claim.  The .C register cannot be manipulated manually.
 
 2020-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -376,12 +379,12 @@
 
 	Rework documentation of .spreadwarn.
 
-	* doc/groff.texi (.spreadwarn):
-	* man/groff.7.man (.spreadwarn):
-	* man/groff_diff.7.man (.spreadwarn):
-	Recast a lot of wording, some based on suggestions from Dave
-	Kemper.  Make more prominent the fact that spreading only
-	applies to adjustment mode 'b'.  Document warning type used.
+	* doc/groff.texi (Debugging):
+	* man/groff.7.man (Request short reference):
+	* man/groff_diff.7.man (New requests): Recast description of
+	.spreadwarn request, some based on suggestions from Dave Kemper.
+	Make more prominent the fact that spreading only applies to
+	adjustment mode 'b'.  Document warning type used.
 
 	Fixes half of Savannah #58035.
 
@@ -509,13 +512,13 @@
 
 	The Texinfo manual has long documented the request '.ps 0' as
 	restoring the previous point size (just as '\s0' or '.ps' with
-	no argument does), but this is incorrect, since groff 1.02 or
+	no argument does), but this is incorrect; since groff 1.02 or
 	earlier (June 1991), the request has not actually worked this
 	way.  Instead, '.ps 0' sets the point size to 1 basic unit
 	{though output drivers may clamp this to a higher value}.  This
-	behavior is consistent with Hierloom troff and, per Ingo
-	Schwarze, Plan 9 troff.  (It is, however, not consistent with
-	neatroff.)
+	behavior is consistent with AT&T troff, Hierloom Doctools troff
+	and, per Ingo Schwarze, Plan 9 troff.  (It is, however, not
+	consistent with neatroff.)
 
 	* doc/groff.texi (Changing Type Sizes): Stop claiming that '.ps
 	0' works like '\s0'.  Note that the resulting (computed) point
@@ -525,8 +528,8 @@
 	defined since it is mentioned here.  Move explanation of special
 	handling of zero argument to \s escape description.
 
-	* man/groff.7.man: Explain .ps N independently of \s.  Note
-	clamping behavior.
+	* man/groff.7.man (Request short reference): Explain .ps N
+	independently of \s.  Note clamping behavior.
 
 2020-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -614,8 +617,9 @@
 
 2020-02-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi:
-	* man/groff.7.man: Document non-breaking spaces as such.
+	* doc/groff.texi (Page Motions):
+	* man/groff.7.man (Single-character escapes): Document
+	non-breaking spaces as such.
 
 	Report and patch by Dave Kemper <saint.snit@gmail.com>.
 	Fixes <https://savannah.gnu.org/bugs/index.php?55954>.
@@ -707,20 +711,19 @@
 	* src/roff/troff/input.cpp: Mark \[dd] character (double dagger)
 	as transparent for purposes of end-of-sentence recognition.
 
-	* doc/groff.texi:
-	* man/groff_diff.7.man: Document this.
+	* doc/groff.texi (Sentences):
+	* man/groff_diff.7.man (New requests/.cflags): Document this.
 
 	Report and patch by Dave Kemper <saint.snit@gmail.com>.
 	Fixes <https://savannah.gnu.org/bugs/?57546>.
 
 2020-01-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* src/preproc/refer/refer.1.man:
-	* src/utils/indxbib/indxbib.1.man:
-	* src/utils/lkbib/lkbib.1.man:
-	* src/utils/lookbib/lookbib.1.man: To "See Also" section of
-	"refer" and related tools, add bibliographic reference to the
-	original Bell Labs "refer" paper by Mike Lesk.
+	* src/preproc/refer/refer.1.man (See Also):
+	* src/utils/indxbib/indxbib.1.man (See Also):
+	* src/utils/lkbib/lkbib.1.man (See Also):
+	* src/utils/lookbib/lookbib.1.man (See Also): Add bibliographic
+	reference to the original Bell Labs "refer" paper by Mike Lesk.
 
 2020-01-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -746,7 +749,8 @@
 
 2020-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/groff_man.7.man: Fix errors in footer description.
+	* tmac/groff_man.7.man (Document structure macros/.SH): Fix
+	errors in footer description.
 
 2020-01-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
