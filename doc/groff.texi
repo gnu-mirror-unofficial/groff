@@ -6443,8 +6443,7 @@ if there are no arguments.
 @cindex minimal inter-word spacing
 @cindex space, between words
 The first argument, the inter-word space size, is a minimum; if
-automatically adjusted (@pxref{Manipulating Filling and Adjusting}), it
-may increase.
+automatically adjusted, it may increase.
 
 @cindex inter-sentence spacing, additional
 @cindex additional inter-sentence spacing
@@ -14580,7 +14579,7 @@ the character escape @code{\(rs} or @code{\[rs]}, for ``reverse
 solidus'', from its name in the @acronym{ECMA-6} (@acronym{ISO/IEC} 646)
 standard@footnote{This character escape is not portable to
 @acronym{AT&T} @code{troff}, but is to its lineal descendant, Heirloom
-Doctools @code{troff}, as of its 060716 release (June 2006).}.
+Doctools @code{troff}, as of its 060716 release (July 2006).}.
 
 To store an escape sequence in a diversion that is interpreted when the
 diversion is reread, either use the traditional @code{\!} transparent
@@ -16177,6 +16176,8 @@ This section presents the intermediate output generated from the same
 input for three different devices.  The input is the sentence @samp{hell
 world} fed into @code{gtroff} on the command line.
 
+@codequotebacktick on
+@codequoteundirected on
 @table @asis
 @item High-resolution device @code{ps}
 
@@ -16239,16 +16240,16 @@ s10
 # initial positioning on the page
 V40
 H0
-# write text `hell'
+# write text 'hell'
 thell
 # inform about space, and issue a horizontal jump
 wh24
-# write text `world'
+# write text 'world'
 tworld
-# announce line break, but do nothing because ...
+# announce line break, but do nothing because...
 n40 0
 @group
-# ... the end of the document has been reached
+# ...the end of the document has been reached
 x trailer
 V2640
 x stop
@@ -16261,7 +16262,7 @@ document.
 
 @item @acronym{AT&T} @code{troff} output
 Since a computer monitor has a very low resolution compared to modern
-printers the intermediate output for the X@tie{}Window devices can use
+printers, the intermediate output for the X@tie{}Window devices can use
 the jump-and-write command with its 2-digit displacements.
 
 @example
@@ -16295,6 +16296,8 @@ displaying in@tie{}X.
 Due to the obsolete jump-and-write command, the text clusters in the
 @acronym{AT&T} @code{troff} output are almost unreadable.
 @end table
+@codequotebacktick off
+@codequoteundirected off
 
 @c ---------------------------------------------------------------------
 
