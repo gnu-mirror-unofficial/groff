@@ -1,3 +1,11 @@
+2020-06-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-ext.tmac (.ME, .UE): Fix portability issue.  While
+	widely supported, the \$* escape is not documented in CSTR #54.
+	If groff is not the typesetter, append macro arguments using
+	\$1, \$2, ..., \$9 instead.  This is an edge case; .ME and .UE
+	are documented as supporting only one argument anyway.
+
 2020-05-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* man/groff.7.man (Numerical Expressions): Fix error: negative
