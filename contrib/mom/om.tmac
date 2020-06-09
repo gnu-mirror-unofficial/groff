@@ -20,7 +20,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Version 2.4-4_b
+Version 2.4-4_c
 ---------------
 Antoine de St-Exupéry asserted that elegance in engineering is
 achieved not when there is nothing left to add, but when there is
@@ -54,7 +54,7 @@ extensions, and float management).
 .if (\n[.x]\n[.y] < 118) \
 .   ab [mom]: You need GNU troff version 1.18 or higher to run this version of mom.
 \# Mom version
-.ds version 2.4-4_b
+.ds version 2.4-4_c
 .if dVERSION \{\
 .   ab [mom]: Version \*[version]
 .\}
@@ -1973,7 +1973,6 @@ end
 .END
 \#
 .MAC UNDERLINE END
-\c
 .    ds $SAVED_SS_VAR \\*[$SS_VAR]
 .    ie '\\$1'' \{\
 .       nr #UNDERLINE_ON 1
@@ -3940,28 +3939,31 @@ end
 \#   SMALLCAPS has no inline escape eqiv. to \*[UC].
 \#
 .MAC SMALLCAPS END
-.    if \\n[.int] .nop \& \c
-.    nr sc*size \\n[.ps]*\\n[sc*factor]/1000
-.    if \\n[sc*wt-adj] .nr sc*wt-adj-factor \\n[sc*size]*\\n[sc*wt-adj]/1000
-.    if \\n[sc*extend] .nr sc*extend-factor \\n[sc*size]*\\n[sc*extend]/1000
-.    ie '\\$1'' \{\
-.       nr #SMALLCAPS_ON 1
-.       nr #LOOP 0 1
-.       while \\n+[#LOOP]<=58 \{\
-.          char \\*[$c\\n[#LOOP]] \
+.    if \\n[#PRINT_STYLE]=2 \{\
+.       if !\\n[.u] \
+.          if \\n[.int] .nop \& \c
+.       nr sc*size \\n[.ps]*\\n[sc*factor]/1000
+.       if \\n[sc*wt-adj] .nr sc*wt-adj-factor \\n[sc*size]*\\n[sc*wt-adj]/1000
+.       if \\n[sc*extend] .nr sc*extend-factor \\n[sc*size]*\\n[sc*extend]/1000
+.       ie '\\$1'' \{\
+.          nr #SMALLCAPS_ON 1
+.          nr #LOOP 0 1
+.          while \\n+[#LOOP]<=58 \{\
+.             char \\*[$c\\n[#LOOP]] \
 \Z'\s[\\n[sc*size]u+\\n[sc*extend-factor]u]\H'-\\n[sc*extend-factor]u'\
 \\*[$C\\n[#LOOP]]'\
 \h'\\n[sc*wt-adj-factor]u'\\*[$C\\n[#LOOP]]\s[0]
+.          \}
 .       \}
-.    \}
-.    el \{\
-.       nr #LOOP 0 1
-.       while \\n+[#LOOP]<=58 \{\
-.          rchar \\*[$c\\n[#LOOP]]
-.      \}
-.      rr sc*wt-adj-factor
-.      rr sc*extend-factor
-.      rr #SMALLCAPS_ON
+.       el \{\
+.          nr #LOOP 0 1
+.          while \\n+[#LOOP]<=58 \{\
+.             rchar \\*[$c\\n[#LOOP]]
+.         \}
+.         rr sc*wt-adj-factor
+.         rr sc*extend-factor
+.         rr #SMALLCAPS_ON
+.       \}
 .    \}
 .END
 \#
