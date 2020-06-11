@@ -1391,14 +1391,13 @@ Copy contents of file
 unprocessed to stdout or to the diversion.
 .
 .TPx
-.REQ .cflags "mode c1 c2 \fR\&.\|.\|.\&\fP"
-Treat characters
+.REQ .cflags "n c1 c2 \fR\&.\|.\|.\&\fP"
+Assign properties encoded by the number
+.I n
+to characters
 .IR c1 ,
 .IR c2 ,
-\&.\|.\|.\&
-according to
-.I mode
-number.
+and so on.
 .
 .TPx
 .REQ .ch "trap N"
@@ -1422,12 +1421,12 @@ Chop the last character off macro, string, or diversion
 .
 .TPx
 .REQ .class "name c1 c2 \fR\&.\|.\|.\&\fP"
-Assign a set of characters, character ranges, or classes
+Define a (character) class
+.I name
+comprising the characters or range expressions
 .IR c1 ,
 .IR c2 ,
-\&.\|.\|.\&
-to
-.IR name .
+and so on.
 .
 .TPx
 .REQ .close "stream"

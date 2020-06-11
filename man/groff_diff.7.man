@@ -752,7 +752,7 @@ request.
 Like
 .B \[rs]&
 except that it behaves like a character declared with the
-.B cflags
+.B .cflags
 request to be transparent for the purposes of end-of-sentence
 recognition.
 .
@@ -1124,90 +1124,202 @@ This is the same as
 .BR \[rs]p .
 .
 .TP
-.BI .cflags\~ "n c1 c2 \*[ellipsis]"
-Characters
+.BI .cflags\~ "n c1 c2"\c
+\~\*[ellipsis]
+Assign properties encoded by the number
+.I n
+to characters
 .IR c1 ,
 .IR c2 ,
-.IR \*[ellipsis] ,
-have properties determined by
-.IR n ,
-which is ORed from the following:
+and so on.
+.
+.IP
+Input characters,
+including special characters introduced by an escape,
+have certain properties associated with them.
+.
+(Note that output glyphs don't have such properties.
+.
+In
+.IR groff ,
+a glyph is a numbered box with a given height above and depth below the baseline, and
+a width\[em]nothing more.)
+.
+These properties can be modified with this request.
+.
+The first argument is the sum of the desired flags and the remaining
+arguments are the characters to be assigned those properties.
+.
+Spaces between the
+.I cn
+arguments are optional.
+.
+Any argument
+.I cn
+can be a character class defined with the
+.B .class
+request rather than an individual character.
+.
+.IP
+The non-negative integer
+.I n
+is the sum of any of the following.
+.
+Some combinations are nonsensical,
+such as
+.RB \[lq] 33 \[rq]
+(1 + 32).
 .
 .RS
 .IP 1
-The character ends sentences (initially characters
-.B .?!\&
-have this property).
+Recognize the character as ending a sentence if followed by a newline
+or two spaces.
+.
+Initially,
+characters
+.RB \[lq] .?! \[rq]
+have this property.
 .
 .IP 2
-Lines can be broken before the character (initially no characters have
-this property); a line is not broken at a character with this property
-unless the characters on each side both have non-zero hyphenation
-codes.
-This can be overridden with value 64.
+Enable breaks before the character.
+.
+A line is not broken at a character with this property unless the
+characters on each side both have non-zero hyphenation codes.
+.
+This exception can be overridden by adding 64.
+.
+Initially,
+no characters have this property.
 .
 .IP 4
-Lines can be broken after the character (initially characters
-.B \-\[rs][hy]\[rs][em]
-have this property); a line is not broken at a character with this
-property unless the characters on each side both have non-zero
-hyphenation codes.
-This can be overridden with value 64.
+Enable breaks after the character.
+.
+A line is not broken at a character with this property unless the
+characters on each side both have non-zero hyphenation codes.
+.
+This exception can be overridden by adding 64.
+.
+Initially,
+characters
+.RB \[lq] \-\[rs][hy]\[rs][em] \[rq]
+have this property.
 .
 .IP 8
-The glyph associated with this character overlaps horizontally
-(initially characters
-.B \[rs][ul]\[rs][rn]\[rs][ru]\[rs][radicalex]\[rs][sqrtex]
-have this property).
+Mark the glyph associated with this character as overlapping other
+instances of itself horizontally.
+.
+Initially,
+characters
+.RB \[lq] \[rs][ul]\[rs][rn]\[rs][ru]\[rs][radicalex]\[rs][sqrtex] \[rq]
+have this property.
 .
 .IP 16
-The glyph associated with this character overlaps vertically
-(initially glyph
-.B \[rs][br]
-has this property).
+Mark the glyph associated with this character as overlapping other
+instances of itself vertically.
+.
+Initially,
+the character
+.RB \[lq] \[rs][br] \[rq]
+has this property.
 .
 .IP 32
-An end-of-sentence character followed by any number of characters with
+Mark the character as transparent for the purpose of end-of-sentence
+recognition.
+.
+In other words,
+an end-of-sentence character followed by any number of characters with
 this property is treated as the end of a sentence if followed by a
-newline or two spaces; in other words the character is transparent for
-the purposes of end-of-sentence recognition; this is the same as having
-a zero space factor in \*[tx] (initially characters
-.B \[dq]')]*\[rs][dg]\[rs][dd]\[rs][rq]\[rs][cq]
-have this property).
+newline or two spaces.
+.
+This is the same as having a zero space factor in \*[tx].
+.
+Initially,
+characters
+.\" The following is ordered with the apostrophe and (single) closing
+.\" quote on the ends so they are more easily visually distinguished
+.\" from the double quotation marks in roman.
+.RB \[lq] '")]*\[rs][dg]\[rs][dd]\[rs][rq]\[rs][cq] \[rq]
+have this property.
 .
 .IP 64
 Ignore hyphenation code values of the surrounding characters.
-Use this in combination with values 2 and\~4 (initially no characters
-have this property).
+.
+Use this value in combination with values 2 and\~4.
+.
+Initially, no characters have this property.
+.
+.IP
+For example,
+if you need an automatic break point after
+the en-dash in numerical ranges like \[lq]3000\[en]5000\[rq],
+insert
+.RS
+.RS
+.EX
+\&.cflags 68 \[rs][en]
+.EE
+.RE
+into your document.
+.
+Note,
+however,
+that this can lead to bad layout if done without thinking;
+in most situations,
+a better solution than
+changing the
+.B .cflags
+value is inserting
+.RB \[lq]\[rs]:\[rq]
+right after the hyphen at the places that really need a break point.
+.RE
+.
+.PP
+The remaining values were implemented for East Asian language support;
+those who use alphabetic scripts exclusively can disregard them.
 .
 .IP 128
-Prohibit a line break before the character, but allow a line break after
-the character.
-This works only in combination with flags 256 and 512 and has no effect
+Prohibit a break before the character,
+but allow a break after the character.
+.
+This works only in combination with values 256 and 512 and has no effect
 otherwise.
+.
+Initially, no characters have this property.
 .
 .IP 256
-Prohibit a line break after the character, but allow a line break before
-the character.
-This works only in combination with flags 128 and 512 and has no effect
+Prohibit a break after the character,
+but allow a break before the character.
+.
+This works only in combination with values 128 and 512 and has no effect
 otherwise.
 .
+Initially, no characters have this property.
+.
 .IP 512
-Allow line break before or after the character.
-This works only in combination with flags 128 and 256 and has no effect
+Allow a break before or after the character.
+.
+This works only in combination with values 128 and 256 and has no effect
 otherwise.
+.
+Initially, no characters have this property.
 .RE
 .
 .IP
-Contrary to flag values 2 and\~4, the flags 128, 256, and 512 work
+In contrast to values 2 and\~4,
+the values 128,
+256,
+and 512 work
 pairwise.
 .
-If, for example, the left character has value 512, and the right
-character 128, no line break gets inserted.
+If,
+for example,
+the left character has value 512,
+and the right character 128,
+no break will be automatically inserted between them.
 .
-If we use value\~6 instead for the left character, a line break after
-the character can't be suppressed since the right neighbour character
-doesn't get examined.
+If we use value\~6 instead for the left character,
+a break after the character can't be suppressed since the neighboring
+character on the right doesn't get examined.
 .
 .TP
 .BI .char\~ c\~string
@@ -1278,22 +1390,137 @@ Chop the last element off macro, string, or diversion
 This is useful for removing the newline from the end of diversions
 that are to be interpolated as strings.
 .
+.
 .TP
-.BI .class\~ "name c1 c2 \*[ellipsis]"
-Assign
+.BI .class\~ "name c1 c2"\c
+\~\*[ellipsis]
+Define a character class
+(or simply \[lq]class\[rq])
 .I name
-to a set of characters
+comprising the characters or range expressions
 .IR c1 ,
 .IR c2 ,
-.IR \*[ellipsis] ,
-so that they can be referred to from other requests easily (currently
+and so on.
+.
+.IP
+A class thus defined can then be referred to in lieu of listing all the
+characters within it.
+.
+Currently,
+only the
 .B .cflags
-only).
+request can handle references to character classes.
 .
-Character ranges (indicated by an intermediate \[oq]\-\[cq]) and
-nested classes are possible also.
+.IP
+In the request's simplest form,
+each
+.I cn
+is a character
+(or special character).
 .
-This is useful to assign properties to a large set of characters.
+.RS
+.RS
+.EX
+\&.class [quotes] ' \[rs][aq] \[rs][dq] \[rs][oq] \[rs][cq] \[rs][lq] \
+\[rs][rq]
+.EE
+.RE
+.RE
+.
+.IP
+Since class and glyph names share the same namespace,
+it is recommended to start and end the class name with
+.RB \[lq] [ \[rq]
+and
+.RB \[lq] ] \[rq],
+respectively,
+to avoid collisions with existing character names defined by
+.I groff
+or the user
+(with
+.B .char
+and related requests).
+.
+This practice applies the presence of
+.RB \[lq] ] \[rq]
+in the class name to prevent the usage of the special character escape
+form
+.RB \[lq] \[rs][ .\|.\|. ] \[rq],
+thus you must use the
+.B \[rs]C
+escape to access a class with such a name.
+.
+.
+.IP
+You can also use a character range expression consisting of a start
+character followed by
+.RB \[lq] \- \[rq]
+and then an end character.
+.
+Internally,
+.I groff
+converts these two character names to Unicode code points
+(according to the
+.I groff
+glyph list [GGL]),
+which determine the start and end values of the range.
+.
+If that fails,
+the class definition is skipped.
+.
+Furthermore,
+classes can be nested.
+.
+.RS
+.RS
+.EX
+\&.class [prepunct] , : ; > }
+\&.class [prepunctx] \[rs]C'[prepunct]' \[rs][u2013]-\[rs][u2016]
+.EE
+.RE
+The class
+.RB \[lq] [prepunctx] \[rq]
+thus contains the contents of the class
+.RB \[lq] [prepunct] \[rq]
+and characters in the range U+2013\[en]U+2016.
+.RE
+.
+.
+.IP
+If you want to include
+.RB \[lq] \- \[rq]
+in a class,
+it must be the first character value in the argument list,
+otherwise it gets misinterpreted as part of the range syntax.
+.
+.
+.IP
+Note that it is not possible to use class names as end points of range
+definitions.
+.
+.
+.IP
+A typical use of the
+.B .class
+request is to control line-breaking and hyphenation rules as defined by
+the
+.B .cflags
+request.
+.
+For example,
+to inhibit line breaks before the characters belonging to the
+.RB \[lq] [prepunctx] \[rq]
+class defined in the previous example,
+you can write the following.
+.
+.RS
+.RS
+.EX
+\&.cflags 2 \[rs]C'[prepunctx]'
+.EE
+.RE
+.RE
+.
 .
 .TP
 .BI .close\~ stream

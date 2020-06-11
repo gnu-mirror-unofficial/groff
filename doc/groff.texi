@@ -9214,46 +9214,53 @@ This is the same as @code{\[-]}, the minus sign in the current font.
 This is the same as @code{\[ul]}, the underline character.
 @endDefesc
 
+@codequotebacktick on
+@codequoteundirected on
 @Defreq {cflags, n c1 c2 @dots{}}
 @cindex glyph properties (@code{cflags})
 @cindex character properties (@code{cflags})
 @cindex properties of glyphs (@code{cflags})
 @cindex properties of characters (@code{cflags})
-Input characters and symbols have certain properties associated with
-it.@footnote{Note that the output glyphs themselves don't have such
-properties.  For @code{gtroff}, a glyph is a numbered box with a given
-width, depth, and height, nothing else.  All manipulations with the
-@code{cflags} request work on the input level.}  These properties can be
-modified with the @code{cflags} request.  The first argument is the sum
-of the desired flags and the remaining arguments are the characters or
-symbols to have those properties.  It is possible to omit the spaces
-between the characters or symbols.  Instead of single characters or
-symbols you can also use character classes (see @ref{Character Classes}
-for more details).
+Assign properties encoded by the number @var{n} to characters @var{c1},
+@var{c2}, and so on.
+
+Input characters, including special characters introduced by an escape,
+have certain properties associated with them.@footnote{Note that output
+glyphs don't have such properties.  For GNU @code{troff}, a glyph is a
+numbered box with a given height above and depth below the baseline, and
+a width---nothing more.}  These properties can be modified with this
+request.  The first argument is the sum of the desired flags and the
+remaining arguments are the characters to be assigned those properties.
+Spaces between the @var{cn} arguments are optional.  Any argument
+@var{cn} can be a character class defined with the @code{class} request
+rather than an individual character.  @xref{Character Classes}.
+
+The non-negative integer @var{n} is the sum of any of the following.
+Some combinations are nonsensical, such as @samp{33} (1 + 32).
 
 @table @code
 @item 1
 @cindex end-of-sentence characters
 @cindex characters, end-of-sentence
-The character ends sentences (initially characters @samp{.?!} have this
-property).
+Recognize the character as ending a sentence if followed by a newline
+or two spaces.  Initially, characters @samp{.?!} have this property.
 
 @item 2
 @cindex hyphenating characters
 @cindex characters, hyphenation
-Lines can be broken before the character (initially no characters have
-this property).  This only works if both the characters before and after
-have non-zero hyphenation codes (as set with the @code{hcode} request).
-Use value@tie{}64 to override this behaviour.
+Enable breaks before the character.  A line is not broken at a character
+with this property unless the characters on each side both have non-zero
+hyphenation codes.  This exception can be overridden by adding 64.
+Initially, no characters have this property.
 
 @item 4
+@cindex @code{\-} glyph, and @code{cflags}
 @cindex @code{hy} glyph, and @code{cflags}
 @cindex @code{em} glyph, and @code{cflags}
-Lines can be broken after the character (initially the character
-@samp{-} and the symbols @samp{\[hy]} and @samp{\[em]} have this
-property).  This only works if both the characters before and after have
-non-zero hyphenation codes (as set with the @code{hcode} request).  Use
-value@tie{}64 to override this behaviour.
+Enable breaks after the character.  A line is not broken at a character
+with this property unless the characters on each side both have non-zero
+hyphenation codes.  This exception can be overridden by adding 64.
+Initially, characters @samp{\-\[hy]\[em]} have this property.
 
 @item 8
 @cindex overlapping characters
@@ -9263,15 +9270,15 @@ value@tie{}64 to override this behaviour.
 @cindex @code{ru} glyph, and @code{cflags}
 @cindex @code{radicalex} glyph, and @code{cflags}
 @cindex @code{sqrtex} glyph, and @code{cflags}
-The character overlaps horizontally if used as a horizontal line
-building element.  Initially the symbols @samp{\[ul]}, @samp{\[rn]},
-@samp{\[ru]}, @samp{\[radicalex]}, and @samp{\[sqrtex]} have this
-property.
+Mark the glyph associated with this character as overlapping other
+instances of itself horizontally.  Initially, characters
+@samp{\[ul]\[rn]\[ru]\[radicalex]\[sqrtex]} have this property.
 
 @item 16
 @cindex @code{br} glyph, and @code{cflags}
-The character overlaps vertically if used as vertical line building
-element.  Initially symbol @samp{\[br]} has this property.
+Mark the glyph associated with this character as overlapping other
+instances of itself vertically.  Initially, the character @samp{\[br]}
+has this property.
 
 @item 32
 @cindex transparent characters
@@ -9285,22 +9292,23 @@ element.  Initially symbol @samp{\[br]} has this property.
 @cindex @code{dd} glyph, at end of sentence
 @cindex @code{rq} glyph, at end of sentence
 @cindex @code{cq} glyph, at end of sentence
-An end-of-sentence character followed by any number of characters with
-this property is treated as the end of a sentence if followed by a
-newline or two spaces; in other words the character is @dfn{transparent}
-for the purposes of end-of-sentence recognition---this is the same as
-having a zero space factor in @TeX{} (initially characters @samp{"')]*}
-and the symbols @samp{\[dg]}, @samp{\[dd]}, @samp{\[rq]}, and
-@samp{\[cq]} have this property).
+Mark the character as transparent for the purpose of end-of-sentence
+recognition.  In other words, an end-of-sentence character followed by
+any number of characters with this property is treated as the end of a
+sentence if followed by a newline or two spaces.  This is the same as
+having a zero space factor in @TeX{}.  Initially, characters
+@samp{"')]*\[dg]\[dd]\[rq]\[cq]} have this property.
 
 @item 64
 Ignore hyphenation code values of the surrounding characters.  Use this
-in combination with values 2 and@tie{}4 (initially no characters have
-this property).  For example, if you need an automatic break point after
-the en-dash in number ranges like `3000--5000', insert
+in combination with values 2 and@tie{}4 (initially, no characters have
+this property).
+
+For example, if you need an automatic break point after the en-dash in
+numerical ranges like ``3000--5000'', insert
 
 @Example
-.cflags 68 \(en
+.cflags 68 \[en]
 @endExample
 
 @noindent
@@ -9308,32 +9316,39 @@ into your document.  Note, however, that this can lead to bad layout if
 done without thinking; in most situations, a better solution instead of
 changing the @code{cflags} value is to insert @code{\:} right after the
 hyphen at the places that really need a break point.
+@end table
 
+The remaining values were implemented for East Asian language support;
+those who use alphabetic scripts exclusively can disregard them.
+
+@table @code
 @item 128
 Prohibit a line break before the character, but allow a line break after
 the character.  This works only in combination with flags 256 and 512
-(see below) and has no effect otherwise.  Initially no characters have
-this property.
+and has no effect otherwise.  Initially, no characters have this
+property.
 
 @item 256
 Prohibit a line break after the character, but allow a line break before
 the character.  This works only in combination with flags 128 and 512
-(see below) and has no effect otherwise.  Initially no characters have
-this property.
+and has no effect otherwise.  Initially, no characters have this
+property.
 
 @item 512
 Allow line break before or after the character.  This works only in
 combination with flags 128 and 256 and has no effect otherwise.
-Initially no characters have this property.
-
-Contrary to flag values 2 and@tie{}4, the flags 128, 256, and 512 work
-pairwise.  If, for example, the left character has value 512, and the
-right character 128, no line break gets inserted.  If we use
-value@tie{}6 instead for the left character, a line break after the
-character can't be suppressed since the right neighbour character
-doesn't get examined.
+Initially, no characters have this property.
 @end table
+
+In contrast to values 2 and@tie{}4, the values 128, 256, and 512 work
+pairwise.  If, for example, the left character has value 512, and the
+right character 128, no break will be automatically inserted between
+them.  If we use value@tie{}6 instead for the left character, a break
+after the character can't be suppressed since the neighboring character
+on the right doesn't get examined.
 @endDefreq
+@codequotebacktick off
+@codequoteundirected off
 
 @DefreqList {char, g [@Var{string}]}
 @DefreqItemx {fchar, g [@Var{string}]}
@@ -9414,8 +9429,7 @@ Finally, the @code{schar} request defines a global fallback glyph:
 of fonts declared as global special fonts with the @code{special}
 request, but before the already mounted special fonts.
 
-@xref{Using Symbols}, for a detailed description of the glyph searching
-mechanism in @code{gtroff}.
+@xref{Character Classes}.
 @endDefreq
 
 @DefreqList {rchar, c1 c2 @dots{}}
@@ -9442,74 +9456,83 @@ The request @code{rfschar} removes glyph definitions defined with
 @cindex character classes
 @cindex classes, character
 
+@codequotebacktick on
+@codequoteundirected on
 Classes are particularly useful for East Asian languages such as
 Chinese, Japanese, and Korean, where the number of needed characters is
 much larger than in European languages, and where large sets of
 characters share the same properties.
 
-@Defreq {class, n c1 c2 @dots{}}
+@Defreq {class, name c1 c2 @dots{}}
 @cindex character class (@code{class})
 @cindex defining character class (@code{class})
 @cindex class of characters (@code{class})
-In @code{groff}, a @dfn{character class} (or simply ``class'') is a set
-of characters, grouped by some user aspect.  The @code{class} request
-defines such classes so that other requests can refer to all characters
-belonging to this set with a single class name.  Currently, only the
-@code{cflags} request can handle character classes.
+Define a character class (or simply ``class'') @var{name} comprising
+the characters @var{c1}, @var{c2}, and so on.
 
-A @code{class} request takes a class name followed by a list of
-entities.  In its simplest form, the entities are characters or symbols:
+A class thus defined can then be referred to in lieu of listing all the
+characters within it.  Currently, only the @code{cflags} request can
+handle references to character classes.
+
+In the request's simplest form, each @var{cn} is a character (or special
+character).
 
 @Example
-.class [prepunct] , : ; > @}
+.class [quotes] ' \[rs] \[dq] \[oq] \[cq] \[lq] \[rq]
 @endExample
 
 Since class and glyph names share the same namespace, it is recommended
 to start and end the class name with @code{[} and @code{]},
-respectively, to avoid collisions with normal @code{groff} symbols (and
-symbols defined by the user).  In particular, the presence of @code{]}
-in the symbol name intentionally prevents the usage of @code{\[...]},
-thus you must use the @code{\C} escape to access a class with such a
-name.
+respectively, to avoid collisions with existing character names defined
+by GNU @code{troff} or the user (with @code{char} and related requests).
+This practice applies the presence of @code{]} in the class name to
+prevent the use of the special character escape form
+@code{\[@r{@dots{}}]}, thus you must use the @code{\C} escape to access
+a class with such a name.
 
 @cindex GGL (groff glyph list)
 @cindex groff glyph list (GGL)
-You can also use a special character range notation, consisting of a
-start character or symbol, followed by @samp{-}, and an end character or
-symbol.  Internally, @code{gtroff} converts these two symbol names to
-Unicode values (according to the groff glyph gist), which then give the
-start and end value of the range.  If that fails, the class definition
-is skipped.
+You can also use a character range notation consisting of a
+start character followed by @samp{-} and then an end character.
+Internally, GNU @code{troff} converts these two symbol names to
+Unicode code points (according to the groff glyph list [GGL]), which
+then give the start and end value of the range.  If that fails, the
+class definition is skipped.
 
-Finally, classes can be nested, too.
-
-Here is a more complex example:
+Furthermore, classes can be nested.
 
 @Example
+.class [prepunct] , : ; > @}
 .class [prepunctx] \C'[prepunct]' \[u2013]-\[u2016]
 @endExample
 
-The class @samp{prepunctx} now contains the contents of the class
-@code{prepunct} as defined above (the set @samp{, : ; > @}}), and
+@noindent
+The class @samp{[prepunctx]} thus contains the contents of the class
+@code{[prepunct]} as defined above (the set @samp{, : ; > @}}), and
 characters in the range between @code{U+2013} and @code{U+2016}.
 
-If you want to add @samp{-} to a class, it must be the first character
-value in the argument list, otherwise it gets misinterpreted as a range.
+If you want to include @samp{-} in a class, it must be the first
+character value in the argument list, otherwise it gets misinterpreted
+as part of the range syntax.
 
-Note that it is not possible to use class names within range
+Note that it is not possible to use class names as end points of range
 definitions.
 
-Typical use of the @code{class} request is to control line-breaking and
-hyphenation rules as defined by the @code{cflags} request.  For example,
-to inhibit line breaks before the characters belonging to the
-@code{prepunctx} class, you can write:
+A typical use of the @code{class} request is to control line-breaking
+and hyphenation rules as defined by the @code{cflags} request.  For
+example, to inhibit line breaks before the characters belonging to the
+@code{prepunctx} class defined in the previous example, you can write
+the following.
 
 @Example
 .cflags 2 \C'[prepunctx]'
 @endExample
 
+@noindent
 See the @code{cflags} request in @ref{Using Symbols}, for more details.
 @endDefreq
+@codequoteundirected off
+@codequotebacktick off
 
 @c ---------------------------------------------------------------------
 
