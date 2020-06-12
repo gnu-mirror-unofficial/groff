@@ -78,7 +78,29 @@ Whitespace is permitted between a command-line option and its argument.
 .
 .TP
 .B \-a
-Generate an ASCII approximation of the typeset output.
+Generate an ASCII
+(Unicode basic Latin)
+approximation of the typeset output.
+.
+The read-only register
+.B .A
+is set to\~1.
+.
+On a system using the
+.I man\-db
+manual page formatter and that installs man pages compressed with
+.IR gzip (1),
+one might use the shell command
+.
+.RS
+.RS
+.EX
+zcat $(man \-w troff) | groff \-a -t \-man \-Tdvi | less
+.EE
+.RE
+to observe how lines are broken for the DVI device.
+.RE
+.
 .
 .TP
 .B \-b
