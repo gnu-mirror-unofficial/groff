@@ -6580,6 +6580,104 @@ right-justified is associated with the current environment
 
 Here a description of requests that influence hyphenation.
 
+@Defreq {hw, word1 word2 @dots{}}
+Define how @var{word1}, @var{word2}, etc.@: are to be hyphenated.  The
+words must be given with hyphens at the hyphenation points.  For
+example:
+
+@Example
+.hw in-sa-lub-rious
+@endExample
+
+@noindent
+Besides the space character, any character whose hyphenation code value
+is zero can be used to separate the arguments of @code{hw} (see the
+documentation for the @code{hcode} request below for more information).
+In addition, this request can be used more than once.
+
+@cindex @code{hw} request, and @code{hy} restrictions
+Hyphenation points specified with @code{hw} are not subject to the
+restrictions given by the @code{hy} request.
+
+Hyphenation exceptions specified with the @code{hw} request are
+associated with the current hyphenation language; it causes an error if
+there is no current hyphenation language.
+
+This request is ignored if there is no parameter.
+
+In old versions of @code{troff} there was a limited amount of space to
+store such information; fortunately, with @code{gtroff}, this is no
+longer a restriction.
+@endDefreq
+
+@DefescList {\\%, , , }
+@deffnx Escape @t{\:}
+@ifnotinfo
+@esindex \:
+@end ifnotinfo
+@ifinfo
+@esindex \@r{<colon>}
+@end ifinfo
+@cindex hyphenation character (@code{\%})
+@cindex character, hyphenation (@code{\%})
+@cindex disabling hyphenation (@code{\%})
+@cindex hyphenation, disabling (@code{\%})
+To tell @code{gtroff} how to hyphenate words on the fly, use the
+@code{\%} escape, also known as the @dfn{hyphenation character}.
+Preceding a word with this character prevents it from being
+hyphenated; putting it inside a word indicates to @code{gtroff} that
+the word may be hyphenated at that point.  Note that this mechanism
+only affects that one occurrence of the word; to change the
+hyphenation of a word for the entire document, use the @code{hw}
+request.
+
+The @code{\:} escape inserts a zero-width break point (that is, the word
+breaks but without adding a hyphen).
+
+@Example
+... check the /var/log/\:httpd/\:access_log file ...
+@endExample
+
+@cindex @code{\X}, followed by @code{\%}
+@cindex @code{\Y}, followed by @code{\%}
+@cindex @code{\%}, following @code{\X} or @code{\Y}
+Note that @code{\X} and @code{\Y} start a word, that is, the @code{\%}
+escape in (say) @w{@samp{\X'...'\%foobar}} and
+@w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
+hyphenation point at the beginning of @samp{foobar}; most likely this
+isn't what you want to do.
+@endDefesc
+
+@Defreq {hc, [@Var{char}]}
+Change the hyphenation character to @var{char}.  This character then
+works the same as the @code{\%} escape, and thus, no longer appears in
+the output.  Without an argument, @code{hc} resets the hyphenation
+character to be @code{\%} (the default) only.
+
+The hyphenation character is associated with the current environment
+(@pxref{Environments}).
+@endDefreq
+
+@Defreq {shc, [@Var{glyph}]}
+@cindex soft hyphen character, setting (@code{shc})
+@cindex character, soft hyphen, setting (@code{shc})
+@cindex glyph, soft hyphen (@code{hy})
+@cindex soft hyphen glyph (@code{hy})
+@cindex @code{char} request, and soft hyphen character
+@cindex @code{tr} request, and soft hyphen character
+Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{@dfn{Soft
+hyphen character} is a misnomer since it is an output glyph.}  If the
+argument is omitted, the soft hyphen character is set to the default
+glyph @code{\(hy} (this is the start-up value of @code{gtroff} also).
+The soft hyphen character is the glyph that is inserted when a word is
+hyphenated at a line break.  If the soft hyphen character does not exist
+in the font of the character immediately preceding a potential break
+point, then the line is not broken at that point.  Neither definitions
+(specified with the @code{char} request) nor translations (specified
+with the @code{tr} request) are considered when finding the soft hyphen
+character.
+@endDefreq
+
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
 Enable hyphenation.  The request has an optional numeric argument,
@@ -6681,106 +6779,6 @@ The hyphenation mode is associated with the current environment
 (@pxref{Environments}).
 @endDefreq
 
-@DefreqList {hlm, [@Var{nnn}]}
-@DefregItemx {.hlm}
-@DefregListEndx {.hlc}
-@cindex explicit hyphen (@code{\%})
-@cindex hyphen, explicit (@code{\%})
-@cindex consecutive hyphenated lines (@code{hlm})
-@cindex lines, consecutive hyphenated (@code{hlm})
-@cindex hyphenated lines, consecutive (@code{hlm})
-Set the maximum number of consecutive hyphenated lines to @var{nnn}.  If
-this number is negative, there is no maximum.  The default value
-is@tie{}@minus{}1 if @var{nnn} is omitted.  This value is associated
-with the current environment (@pxref{Environments}).  Only lines output
-from a given environment count towards the maximum associated with that
-environment.  Hyphens resulting from @code{\%} are counted; explicit
-hyphens are not.
-
-The current setting of @code{hlm} is available in the @code{.hlm}
-read-only number register.  Also the number of immediately preceding
-consecutive hyphenated lines are available in the read-only number
-register @samp{.hlc}.
-@endDefreq
-
-@Defreq {hw, word1 word2 @dots{}}
-Define how @var{word1}, @var{word2}, etc.@: are to be hyphenated.  The
-words must be given with hyphens at the hyphenation points.  For
-example:
-
-@Example
-.hw in-sa-lub-rious
-@endExample
-
-@noindent
-Besides the space character, any character whose hyphenation code value
-is zero can be used to separate the arguments of @code{hw} (see the
-documentation for the @code{hcode} request below for more information).
-In addition, this request can be used more than once.
-
-@cindex @code{hw} request, and @code{hy} restrictions
-Hyphenation points specified with @code{hw} are not subject to the
-restrictions given by the @code{hy} request.
-
-Hyphenation exceptions specified with the @code{hw} request are
-associated with the current hyphenation language; it causes an error if
-there is no current hyphenation language.
-
-This request is ignored if there is no parameter.
-
-In old versions of @code{troff} there was a limited amount of space to
-store such information; fortunately, with @code{gtroff}, this is no
-longer a restriction.
-@endDefreq
-
-@DefescList {\\%, , , }
-@deffnx Escape @t{\:}
-@ifnotinfo
-@esindex \:
-@end ifnotinfo
-@ifinfo
-@esindex \@r{<colon>}
-@end ifinfo
-@cindex hyphenation character (@code{\%})
-@cindex character, hyphenation (@code{\%})
-@cindex disabling hyphenation (@code{\%})
-@cindex hyphenation, disabling (@code{\%})
-To tell @code{gtroff} how to hyphenate words on the fly, use the
-@code{\%} escape, also known as the @dfn{hyphenation character}.
-Preceding a word with this character prevents it from being
-hyphenated; putting it inside a word indicates to @code{gtroff} that
-the word may be hyphenated at that point.  Note that this mechanism
-only affects that one occurrence of the word; to change the
-hyphenation of a word for the entire document, use the @code{hw}
-request.
-
-The @code{\:} escape inserts a zero-width break point (that is, the word
-breaks but without adding a hyphen).
-
-@Example
-... check the /var/log/\:httpd/\:access_log file ...
-@endExample
-
-@cindex @code{\X}, followed by @code{\%}
-@cindex @code{\Y}, followed by @code{\%}
-@cindex @code{\%}, following @code{\X} or @code{\Y}
-Note that @code{\X} and @code{\Y} start a word, that is, the @code{\%}
-escape in (say) @w{@samp{\X'...'\%foobar}} and
-@w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
-hyphenation point at the beginning of @samp{foobar}; most likely this
-isn't what you want to do.
-@endDefesc
-
-@Defreq {hc, [@Var{char}]}
-Change the hyphenation character to @var{char}.  This character then
-works the same as the @code{\%} escape, and thus, no longer appears in
-the output.  Without an argument, @code{hc} resets the hyphenation
-character to be @code{\%} (the default) only.
-
-The hyphenation character is associated with the current environment
-(@pxref{Environments}).
-@endDefreq
-
 @DefreqList {hpf, pattern_file}
 @DefreqItemx {hpfa, pattern_file}
 @DefreqListEndx {hpfcode, a b [c d @dots{}]}
@@ -6843,7 +6841,6 @@ code@tie{}@var{d}, and so on.  You can use character codes that would
 be invalid otherwise.  By default, everything maps to itself except
 letters `A' to `Z', which map to `a' to `z'.
 
-
 @pindex troffrc
 @pindex troffrc-end
 @pindex hyphen.us
@@ -6899,6 +6896,53 @@ The other two hyphenation points (`kin-der-gär-ten') are missed.
 This request is ignored if it has no parameter.
 @endDefreq
 
+@DefreqList {hla, language}
+@DefregListEndx {.hla}
+@cindex @code{hpf} request, and hyphenation language
+@cindex @code{hw} request, and hyphenation language
+@pindex troffrc
+@pindex troffrc-end
+Set the current hyphenation language to the string @var{language}.
+Hyphenation exceptions specified with the @code{hw} request and
+hyphenation patterns specified with the @code{hpf} and @code{hpfa}
+requests are both associated with the current hyphenation language.  The
+@code{hla} request is usually invoked by the @file{troffrc} or the
+@file{troffrc-end} files; @file{troffrc} sets the default language to
+@samp{us}.
+
+@cindex hyphenation language register (@code{.hla})
+The current hyphenation language is available as a string in the
+read-only number register @samp{.hla}.
+
+@Example
+.ds curr_language \n[.hla]
+\*[curr_language]
+    @result{} us
+@endExample
+@endDefreq
+
+@DefreqList {hlm, [@Var{nnn}]}
+@DefregItemx {.hlm}
+@DefregListEndx {.hlc}
+@cindex explicit hyphen (@code{\%})
+@cindex hyphen, explicit (@code{\%})
+@cindex consecutive hyphenated lines (@code{hlm})
+@cindex lines, consecutive hyphenated (@code{hlm})
+@cindex hyphenated lines, consecutive (@code{hlm})
+Set the maximum number of consecutive hyphenated lines to @var{nnn}.  If
+this number is negative, there is no maximum.  The default value
+is@tie{}@minus{}1 if @var{nnn} is omitted.  This value is associated
+with the current environment (@pxref{Environments}).  Only lines output
+from a given environment count towards the maximum associated with that
+environment.  Hyphens resulting from @code{\%} are counted; explicit
+hyphens are not.
+
+The current setting of @code{hlm} is available in the @code{.hlm}
+read-only number register.  Also the number of immediately preceding
+consecutive hyphenated lines are available in the read-only number
+register @samp{.hlc}.
+@endDefreq
+
 @DefreqList {hym, [@Var{length}]}
 @DefregListEndx {.hym}
 @cindex hyphenation margin (@code{hym})
@@ -6938,51 +6982,6 @@ warning of type @samp{range}.
 @cindex hyphenation space register (@code{.hys})
 The current hyphenation space is available in the @code{.hys} read-only
 number register.
-@endDefreq
-
-@Defreq {shc, [@Var{glyph}]}
-@cindex soft hyphen character, setting (@code{shc})
-@cindex character, soft hyphen, setting (@code{shc})
-@cindex glyph, soft hyphen (@code{hy})
-@cindex soft hyphen glyph (@code{hy})
-@cindex @code{char} request, and soft hyphen character
-@cindex @code{tr} request, and soft hyphen character
-Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{@dfn{Soft
-hyphen character} is a misnomer since it is an output glyph.}  If the
-argument is omitted, the soft hyphen character is set to the default
-glyph @code{\(hy} (this is the start-up value of @code{gtroff} also).
-The soft hyphen character is the glyph that is inserted when a word is
-hyphenated at a line break.  If the soft hyphen character does not exist
-in the font of the character immediately preceding a potential break
-point, then the line is not broken at that point.  Neither definitions
-(specified with the @code{char} request) nor translations (specified
-with the @code{tr} request) are considered when finding the soft hyphen
-character.
-@endDefreq
-
-@DefreqList {hla, language}
-@DefregListEndx {.hla}
-@cindex @code{hpf} request, and hyphenation language
-@cindex @code{hw} request, and hyphenation language
-@pindex troffrc
-@pindex troffrc-end
-Set the current hyphenation language to the string @var{language}.
-Hyphenation exceptions specified with the @code{hw} request and
-hyphenation patterns specified with the @code{hpf} and @code{hpfa}
-requests are both associated with the current hyphenation language.  The
-@code{hla} request is usually invoked by the @file{troffrc} or the
-@file{troffrc-end} files; @file{troffrc} sets the default language to
-@samp{us}.
-
-@cindex hyphenation language register (@code{.hla})
-The current hyphenation language is available as a string in the
-read-only number register @samp{.hla}.
-
-@Example
-.ds curr_language \n[.hla]
-\*[curr_language]
-    @result{} us
-@endExample
 @endDefreq
 
 
