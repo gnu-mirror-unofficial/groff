@@ -1828,15 +1828,17 @@ Set glyph color to
 .
 .TPx
 .REQ .hc
-Remove additional hyphenation indicator character.
+Reset the hyphenation character
+.RB to\~ \[rs]%
+(the default).
 .
 .TPx
-.REQ .hc "c"
-Set up additional hyphenation indicator character\~\c
-.IR c .
+.REQ .hc char
+Change the hyphenation character
+.RI to\~ char .
 .
 .TPx
-.REQ .hcode "c1 code1 \fR[\fPc2 code2\fR]\fP \fR\&.\|.\|.\&\fP"
+.REQ .hcode "c1 code1 \fR[\fPc2 code2\fR] .\|.\|.\fP"
 Set the hyphenation code of character
 .I c1
 to
@@ -1845,56 +1847,93 @@ that of
 .I c2
 to
 .IR code2 ,
-etc.
+and so on.
 .
 .TPx
-.REQ .hla "lang"
-Set the current hyphenation language to
+.REQ .hla lang
+Set the hyphenation language to
 .IR lang .
 .
 .TPx
-.REQ .hlm "n"
+.REQ .hlm n
 Set the maximum number of consecutive hyphenated lines to
 .IR n .
 .
 .TPx
-.REQ .hpf "file"
+.REQ .hpf pattern-file
 Read hyphenation patterns from
-.IR file .
+.IR pattern-file .
 .
 .TPx
-.REQ .hpfa "file"
+.REQ .hpfa pattern-file
 Append hyphenation patterns from
-.IR file .
+.IR pattern-file .
 .
 .TPx
-.REQ .hpfcode "a b c d \fR\&.\|.\|.\&\fP"
-Set input mapping for
-.request .hpf\c
-\&.
+.REQ .hpfcode "a b \fR[\fPc d\fR] .\|.\|.\fP"
+Define mapping values for character codes in pattern files read with the
+.request .hpf
+and
+.request .hpfa
+requests.
 .
 .TPx
-.REQ .hw "words"
-List of
-.I words
-with exceptional hyphenation.
+.REQ .hw "word \fR.\|.\|.\fP"
+Define how each
+.I  word
+is to be hyphenated,
+with each hyphen
+.RB \[lq] \- \[rq]
+indicating a hyphenation point.
 .
 .TPx
-.REQ .hy "N"
-Switch to hyphenation mode
-.IR N .
+.REQ .hy
+Set hyphenation mode to
+.B 1
+(the default).
 .
 .TPx
-.REQ .hym "n"
-Set the hyphenation margin to
-.I n
+.REQ .hy \fB0\fP
+Disable hyphenation;
+same as
+.BR .nh .
+.
+.TPx
+.REQ .hy mode
+Set hyphenation mode to
+.IR mode ;
+see section \[lq]Hyphenation\[rq] below.
+.
+.TPx
+.REQ .hym
+Set the (right) hyphenation margin to
+.B 0
+(the default).
+.
+.TPx
+.REQ .hym length
+Set the (right) hyphenation margin to
+.I length
 (default scaling indicator\~\c
 .scaleindicator m ).
 .
 .TPx
-.REQ .hys "n"
+.REQ .hys
 Set the hyphenation space to
-.IR n .
+.B 0
+(the default).
+.
+.TPx
+.REQ .hys hyphenation-space
+Suppress hyphenation of the line in adjustment modes
+.RB \[lq] b \[rq]
+or
+.RB \[lq] n \[rq]
+if it can be justified by adding no more than
+.I hyphenation-space
+extra space to each word space
+(default scaling indicator\~\c
+.scaleindicator m ).
 .
 .TPx
 .REQ .ie "cond anything"
@@ -2099,7 +2138,9 @@ No filling or adjusting of output lines.
 .
 .TPx
 .REQ .nh
-No hyphenation.
+Disable hyphenation;
+same as
+.RB \[lq] ".hy 0" \[rq].
 .
 .TPx
 .REQ .nm
@@ -2386,9 +2427,9 @@ Reset soft hyphen glyph to
 .esc (hy .
 .
 .TPx
-.REQ .shc "c"
-Set the soft hyphen glyph to\~\c
-.IR c .
+.REQ .shc c
+Set the soft hyphen glyph
+.RI to\~ c .
 .
 .TPx
 .REQ .shift "n"
@@ -2974,7 +3015,7 @@ expands to \[oq]..\[cq].
 .
 .TP
 .ESC %
-Default optional hyphenation character.
+Default hyphenation character.
 .
 .TP
 .ESC !
@@ -4024,38 +4065,29 @@ The current font height as set with
 .
 .TPx
 .REG .hla
-The current hyphenation language as set by the
-.request hla
-request.
+The hyphenation language in the current environment.
 .
 .TPx
 .REG .hlc
-The number of immediately preceding consecutive hyphenated lines.
+The count of immediately preceding consecutive hyphenated lines in the
+current environment.
 .
 .TPx
 .REG .hlm
-The maximum allowed number of consecutive hyphenated lines, as set by
-the
-.request hlm
-request.
+The maximum number of consecutive hyphenated lines allowed in the
+current environment.
 .
 .TPx
 .REG .hy
-The current hyphenation flags (as set by the
-.request hy
-request).
+The hyphenation mode in the current environment.
 .
 .TPx
 .REG .hym
-The current hyphenation margin (as set by the
-.request hym
-request).
+The hyphenation margin in the current environment.
 .
 .TPx
 .REG .hys
-The current hyphenation space (as set by the
-.request hys
-request).
+The hyphenation space adjustment threshold in the current environment.
 .
 .TPx
 .REG .i
@@ -4503,35 +4535,42 @@ instead.
 .SH Hyphenation
 .\" ====================================================================
 .
-The
-.REQ .hy
-request,
-given an integer argument,
-controls when hyphenation applies.
+Several requests influence hyphenation.
 .
-The default value is
-.BR 1 ,
-which enables hyphenation almost everywhere (see below).
+Because conventions vary,
+a variety of hyphenation modes are available to the
+.B .hy
+request;
+these determine whether automatic hyphenation will apply to a word prior
+to breaking a line at the end of a column or page,
+and at which positions within that word hyphenation is permissible.
 .
-Macro packages often override this default.
+The default is
+.RB \[lq] 1 \[rq]
+for historical reasons,
+but macro packages often override this default.
 .
+.
+.TP
+.B 0
+disables hyphenation.
 .
 .TP
 .B 1
-disables hyphenation only after the first and before the last
-character of a word.
+enables hyphenation except after the first and before the last character
+of a word.
 .
 .TP
 .B 2
-disables hyphenation only of the last word on a page or column.
+disables hyphenation of the last word on a page or column.
 .
 .TP
 .B 4
-disables hyphenation only before the last two characters of a word.
+disables hyphenation before the last two characters of a word.
 .
 .TP
 .B 8
-disables hyphenation only after the first two characters of a word.
+disables hyphenation after the first two characters of a word.
 .
 .TP
 .B 16
@@ -4542,12 +4581,63 @@ enables hyphenation before the last character of a word.
 enables hyphenation after the first character of a word.
 .
 .P
-The values are additive.
+Note that any restrictions imposed by the hyphenation mode are
+.I not
+respected for words whose hyphenations have been explicitly
+specified with the hyphenation character
+.RB (\[lq] \[rs]% \[rq]
+by default)
+or the
+.B .hw
+request.
 .
+.P
+The nonzero values above are additive.
+.
+For example,
+value\~12 causes
+.I groff
+to hyphenate neither the last two nor the first two characters of a
+word.
+.
+Note that value\~13 would do exactly the same;
+in other words,
+value\~1 need not be added if the value is larger than\~1.
+.
+.P
 Some values cannot be used together because they contradict;
 for instance,
-4 and\~16;
-8 and\~32.
+values 4 and\~16,
+and values 8 and\~32.
+.
+.
+.P
+The places within a word that are eligible for hyphenation are
+determined by language-specific data
+.RB ( .hla ,
+.BR .hpf ,
+and
+.BR .hpfa )
+and lettercase relationships
+.RB ( .hcode
+and
+.BR .hpfcode ).
+.
+Furthermore,
+hyphenation of a word might be suppressed because too many previous
+lines have been hyphenated
+.RB ( .hlm ),
+the line has not reached a certain minimum length
+.RB ( .hym ),
+or the line can be adjusted with up to a certain amount of additional
+inter-word space instead
+.RB ( .hys ).
+.
+See
+.IR groff_diff (@MAN7EXT@)
+or the
+.I groff
+Texinfo manual for further details.
 .
 .
 .\" ====================================================================

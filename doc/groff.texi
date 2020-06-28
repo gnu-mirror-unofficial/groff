@@ -6578,71 +6578,83 @@ right-justified is associated with the current environment
 @cindex manipulating hyphenation
 @cindex hyphenation, manipulating
 
-Here a description of requests that influence hyphenation.
+@codequotebacktick on
+@codequoteundirected on
+GNU @code{troff} hyphenates words automatically by default.  Automatic
+hyphenation of words in natural languages is a subject requiring
+algorithms and data, and susceptible to conventions and preferences.
+Before tackling automatic hyphenation, let us consider how it can be
+done manually.
 
-@Defreq {hw, word1 word2 @dots{}}
-Define how @var{word1}, @var{word2}, etc.@: are to be hyphenated.  The
-words must be given with hyphens at the hyphenation points.  For
-example:
+Explicitly hyphenated phrases such as ``mother-in-law'' are eligible for
+breaking after each of their hyphens.  Relatively few words in a
+language offer such obvious break points, however.  In a short document
+we may wish to disable automatic hyphenation and explicitly instruct GNU
+@code{troff} how words could be hyphenated if the need arises.
+
+@cindex hyphenation exceptions
+@Defreq {hw, word @dots{}}
+Define each @dfn{hyphenation exception} @var{word} with each hyphen `-'
+in the word indicating a hyphenation point.  For example:
 
 @Example
 .hw in-sa-lub-rious
 @endExample
 
 @noindent
-Besides the space character, any character whose hyphenation code value
-is zero can be used to separate the arguments of @code{hw} (see the
-documentation for the @code{hcode} request below for more information).
-In addition, this request can be used more than once.
+Besides the space character, any character whose hyphenation code is
+zero can be used to separate the arguments of @code{hw} (see the
+@code{hcode} request below).  In addition, this request can be used more
+than once.
 
 @cindex @code{hw} request, and @code{hy} restrictions
 Hyphenation points specified with @code{hw} are not subject to the
-restrictions given by the @code{hy} request.
+restrictions given by the @code{hy} request (see below).
 
 Hyphenation exceptions specified with the @code{hw} request are
-associated with the current hyphenation language; it causes an error if
-there is no current hyphenation language.
+associated with the hyphenation language and environment; calling the
+@code{hw} request in the absence of a hyphenation language is an error.
 
-This request is ignored if there is no parameter.
-
-In old versions of @code{troff} there was a limited amount of space to
-store such information; fortunately, with @code{gtroff}, this is no
-longer a restriction.
+The request is ignored if there is no parameter.
 @endDefreq
 
+These are known as hyphenation @emph{exceptions} in the expectation that
+most users will avail themselves of automatic hyphenation; these
+exceptions override any rules that would nomally apply to a word
+matching a hyphenation exception defined with @code{hw}.
+
+Situations also arise when only a specific occurrence of a word needs
+its hyphenation altered (or suppressed altogether), or when something
+that is not a word in a natural language, like a URL, needs to be broken
+in sensible places without hyphens.
+
 @DefescList {\\%, , , }
-@deffnx Escape @t{\:}
-@ifnotinfo
-@esindex \:
-@end ifnotinfo
-@ifinfo
-@esindex \@r{<colon>}
-@end ifinfo
+@DefescListEndx {\:, , , }
 @cindex hyphenation character (@code{\%})
 @cindex character, hyphenation (@code{\%})
 @cindex disabling hyphenation (@code{\%})
 @cindex hyphenation, disabling (@code{\%})
-To tell @code{gtroff} how to hyphenate words on the fly, use the
+To tell GNU @code{troff} how to hyphenate words on the fly, use the
 @code{\%} escape, also known as the @dfn{hyphenation character}.
 Preceding a word with this character prevents it from being
-hyphenated; putting it inside a word indicates to @code{gtroff} that
+hyphenated; putting it inside a word indicates to GNU @code{troff} that
 the word may be hyphenated at that point.  Note that this mechanism
 only affects that one occurrence of the word; to change the
 hyphenation of a word for the entire document, use the @code{hw}
 request.
 
-The @code{\:} escape inserts a zero-width break point (that is, the word
-breaks but without adding a hyphen).
+The @code{\:} escape inserts a zero-width break point; that is, the word
+can break there, but no hyphen is written to the output if it does.
 
 @Example
-... check the /var/log/\:httpd/\:access_log file ...
+@dots{} check the /var/log/\:httpd/\:access_log file @dots{}
 @endExample
 
 @cindex @code{\X}, followed by @code{\%}
 @cindex @code{\Y}, followed by @code{\%}
 @cindex @code{\%}, following @code{\X} or @code{\Y}
-Note that @code{\X} and @code{\Y} start a word, that is, the @code{\%}
-escape in (say) @w{@samp{\X'...'\%foobar}} and
+Note that @code{\X} and @code{\Y} start a word; that is, the @code{\%}
+escape in (say) @w{@samp{\X'...'\%foobar}} or
 @w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
 hyphenation point at the beginning of @samp{foobar}; most likely this
 isn't what you want to do.
@@ -6650,9 +6662,10 @@ isn't what you want to do.
 
 @Defreq {hc, [@Var{char}]}
 Change the hyphenation character to @var{char}.  This character then
-works the same as the @code{\%} escape, and thus, no longer appears in
-the output.  Without an argument, @code{hc} resets the hyphenation
-character to be @code{\%} (the default) only.
+works as the @code{\%} escape normally does, and thus, no longer appears
+in the output.@footnote{@code{\%} itself stops marking hyphenation
+points but still produces no output glyph.}  Without an argument,
+@code{hc} resets the hyphenation character to @code{\%} (the default).
 
 The hyphenation character is associated with the current environment
 (@pxref{Environments}).
@@ -6665,62 +6678,99 @@ The hyphenation character is associated with the current environment
 @cindex soft hyphen glyph (@code{hy})
 @cindex @code{char} request, and soft hyphen character
 @cindex @code{tr} request, and soft hyphen character
-Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{@dfn{Soft
-hyphen character} is a misnomer since it is an output glyph.}  If the
-argument is omitted, the soft hyphen character is set to the default
-glyph @code{\(hy} (this is the start-up value of @code{gtroff} also).
-The soft hyphen character is the glyph that is inserted when a word is
-hyphenated at a line break.  If the soft hyphen character does not exist
-in the font of the character immediately preceding a potential break
-point, then the line is not broken at that point.  Neither definitions
-(specified with the @code{char} request) nor translations (specified
-with the @code{tr} request) are considered when finding the soft hyphen
-character.
+Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{``Soft
+hyphen @emph{character}'' is a misnomer since it is an output glyph.}
+If the argument is omitted, the soft hyphen character is set to the
+default, @code{\(hy}.  The @dfn{soft hyphen character} is the glyph that
+is inserted when a word is automatically hyphenated at a line
+break.@footnote{It is ``soft'' because it only appears in ouput where
+hyphenation is actually performed; a ``hard'' hyphen, as in
+``long-term'', always appears.}  If the soft hyphen character does not
+exist in the font of the character immediately preceding a potential
+break point, then the line is not broken at that point.  Neither
+definitions (specified with the @code{char} request) nor translations
+(specified with the @code{tr} request) are considered when assigning
+the soft hyphen character.
 @endDefreq
+
+@cindex hyphenation, automatic
+Several requests influence automatic hyphenation.  Because conventions
+vary, a variety of hyphenation modes are available to the @code{hy}
+request; these determine whether automatic hyphenation will apply to a
+word prior to breaking a line at the end of a column or page, and at
+which positions within that word hyphenation is permissible.  The places
+within a word that are eligible for hyphenation are determined by
+language-specific data and lettercase relationships.  Furthermore,
+hyphenation of a word might be suppressed because too many previous
+lines have been hyphenated (@code{hlm}), the line has not reached a
+certain minimum length (@code{hym}), or the line can instead be adjusted
+with up to a certain amount of additional inter-word space (@code{hys}).
 
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
-Enable hyphenation.  The request has an optional numeric argument,
-@var{mode}, to restrict hyphenation if necessary:
+Set hyphenation mode to @var{mode}.  The optional numeric argument
+@var{mode} sets conditions on hyphenation.
+
+Typesetting practice generally does not avail itself of every
+opportunity for hyphenation, but the details differ by language and site
+mandates.  The hyphenation modes of @acronym{AT&T} @code{troff} were
+implemented with English-language publishing practices of the 1970s in
+mind, not a scrupulous enumeration of conceivable parameters.  GNU
+@code{troff} extends those modes such that finer-grained control is
+possible, retaining compatibility with older implementations at the
+expense of a more intuitive arrangement.
 
 @table @code
+@item 0
+disables hyphenation.
+
 @item 1
-The default argument if @var{mode} is omitted: hyphenation is enabled,
-and the first and the last characters of a word are not hyphenated.
-This is also the start-up value of @code{gtroff}.
+enables hyphenation except after the first and before the last character
+of a word; this is the default if @var{mode} is omitted and also the
+start-up value of GNU @code{troff}.
 
 @item 2
-Do not hyphenate the last word on a page or column.
+disables hyphenation of the last word on a page or column.
 
 @item 4
-Do not hyphenate the last two characters of a word.
+disables hyphenation before the last two characters of a word.
 
 @item 8
-Do not hyphenate the first two characters of a word.
+disables hyphenation after the first two characters of a word.
 
 @item 16
-Allow hyphenation before the last character of a word.
+enables hyphenation before the last character of a word.
 
 @item 32
-Allow hyphenation after the first character of a word.
+enables hyphenation after the first character of a word.
 @end table
 
-The values in the previous table are additive.  For example,
-value@tie{}12 causes @code{gtroff} to neither hyphenate the last two nor
-the first two characters of a word.  Note that value@tie{}13 would do
-exactly the same; in other words, value@tie{}1 need not be added if the
-value is larger than@tie{}1.
+Note that any restrictions imposed by the hyphenation mode are
+@emph{not} respected for words whose hyphenations have been explicitly
+specified with the hyphenation character (@samp{\%} by default) or the
+@code{hw} request (see below).
+
+The nonzero values in the previous table are additive.  For example,
+value@tie{}12 causes GNU @code{troff} to hyphenate neither the last two
+nor the first two characters of a word.  Note that value@tie{}13 would
+do exactly the same; in other words, value@tie{}1 need not be added if
+the value is larger than@tie{}1.
 
 Some values cannot be used together because they contradict; for
 instance, values 4 and@tie{}16, and values 8 and@tie{}32.
 
-The number of characters at the beginning of a word after which the
-first hyphenation point should be inserted is determined by the patterns
-themselves; it can't be reduced further without introducing additional,
-invalid hyphenation points (unfortunately, this information is not part
-of a pattern file, you have to know it in advance).  The same is true
-for the number of characters at the end of word before the last
-hyphenation point should be inserted.  For example, the code
+@cindex hyphenation pattern files
+@cindex pattern files, for hyphenation
+The automatic placement of hyphens in words is determined by
+@dfn{pattern files}, which are derived from @TeX{} and available for
+several languages.  The number of characters at the beginning of a word
+after which the first hyphenation point should be inserted is determined
+by the patterns themselves; it can't be reduced further without
+introducing additional, invalid hyphenation points (unfortunately, this
+information is not part of a pattern file---you have to know it in
+advance).  The same is true for the number of characters at the end of
+a word before the last hyphenation point should be inserted.  For
+example, supplying the following input to @samp{echo $(nroff)}
 
 @Example
 .ll 1
@@ -6728,31 +6778,31 @@ hyphenation point should be inserted.  For example, the code
 splitting
 @endExample
 
-returns
+@noindent
+yields
 
 @Example
-s-
-plit-
-t-
-in-
-g
+s- plit- t- in- g
 @endExample
 
-instead of the correct `split-ting'.  US-English patterns as distributed
-with groff need two characters at the beginning and three characters at
-the end; this means that value@tie{}4 of @code{hy} is mandatory.
-Value@tie{}8 is possible as an additional restriction, but values@tie{}1
-(the default!), 16, and@tie{}32 should be avoided.
+@noindent
+instead of the correct `split- ting'.  U.S. English patterns as
+distributed with GNU @code{troff} need two characters at the beginning
+and three characters at the end; this means that value@tie{}4 of
+@code{hy} is mandatory.  Value@tie{}8 is possible as an additional
+restriction, but values@tie{}1 (the default!), 16, and@tie{}32 should be
+avoided.
 
-Here is a table of left and right minimum values for hyphenation as needed
-by the patterns distributed with groff; see the @cite{groff_tmac(5) man
-page} (type @command{man groff_tmac} at the command line) for more
-information on groff's language macro files.
+A table of left and right minimum values for hyphenation as needed by
+the patterns distributed with GNU @code{troff} follows; see the
+@cite{groff_tmac(5)} man page (type @command{man groff_tmac} at the
+command line) for more information on GNU @code{troff}'s language macro
+files.
 
 @multitable {German traditional}    {pattern name}    {left min}    {right min}
 @headitem    language           @tab pattern name @tab left min @tab right min
 @item        Czech              @tab cs           @tab 2        @tab 2
-@item        US English         @tab us           @tab 2        @tab 3
+@item        U.S. English       @tab us           @tab 2        @tab 3
 @item        French             @tab fr           @tab 2        @tab 3
 @item        German traditional @tab det          @tab 2        @tab 2
 @item        German reformed    @tab den          @tab 2        @tab 2
@@ -6761,35 +6811,34 @@ information on groff's language macro files.
 
 Hyphenation exceptions within pattern files (i.e., the words within a
 @code{\hyphenation} group) also obey the hyphenation restrictions given
-by @code{hy}.  However, exceptions specified with the @code{hw} do not.
-
-@cindex hyphenation restrictions register (@code{.hy})
-The current hyphenation restrictions can be found in the read-only
-number register @samp{.hy}.
+by @code{hy}.  However, exceptions specified with @code{hw} do not.
 
 The hyphenation mode is associated with the current environment
 (@pxref{Environments}).
+
+@cindex hyphenation mode register (@code{.hy})
+The hyphenation mode can be found in the read-only number register
+@samp{.hy}.
 @endDefreq
 
 @Defreq {nh, }
-Disable hyphenation (i.e., set the hyphenation mode to zero).  Note that
-the hyphenation mode of the last call to @code{hy} is not remembered.
-
-The hyphenation mode is associated with the current environment
-(@pxref{Environments}).
+Disable hyphenation; i.e., set the hyphenation mode to@tie{}0 (see
+above).  Note that the hyphenation mode of the last call to @code{hy} is
+not remembered.
 @endDefreq
 
-@DefreqList {hpf, pattern_file}
-@DefreqItemx {hpfa, pattern_file}
+@DefreqList {hpf, pattern-file}
+@DefreqItemx {hpfa, pattern-file}
 @DefreqListEndx {hpfcode, a b [c d @dots{}]}
 @cindex hyphenation patterns (@code{hpf})
 @cindex patterns for hyphenation (@code{hpf})
-Read in a file of hyphenation patterns.  This file is searched for in
-the same way as @file{@var{name}.tmac} (or @file{tmac.@var{name}}) is
-searched for if the @option{-m@var{name}} option is specified.
+Read hyphenation patterns from @var{pattern-file}.  This file is sought
+in the same way as @file{@var{name}.tmac} (or @file{tmac.@var{name}}) if
+the @option{-m@var{name}} option is specified.
 
-It should have the same format as (simple) @TeX{} patterns files.  More
-specifically, the following scanning rules are implemented.
+The @var{pattern-file} should have the same format as (simple) @TeX{}
+pattern files.  More specifically, the following scanning rules are
+implemented.
 
 @itemize @bullet
 @item
@@ -6800,16 +6849,16 @@ preceded by a backslash.
 No support for `digraphs' like @code{\$}.
 
 @item
-@code{^^@var{xx}} (@var{x} is 0--9 or a--f) and @code{^^@var{x}}
-(character code of @var{x} in the range 0--127) are recognized; other use
-of @code{^} causes an error.
+@code{^^@var{xx}} (where each @var{x} is 0--9 or a--f) and
+@code{^^@var{c}} (character @var{c} in the code point range 0--127
+decimal) are recognized; other uses of @code{^} cause an error.
 
 @item
 No macro expansion.
 
 @item
 @code{hpf} checks for the expression @code{\patterns@{@dots{}@}}
-(possibly with whitespace before and after the braces).  Everything
+(possibly with whitespace before or after the braces).  Everything
 between the braces is taken as hyphenation patterns.  Consequently,
 @code{@{} and @code{@}} are not allowed in patterns.
 
@@ -6822,62 +6871,64 @@ exceptions.
 
 @item
 For backwards compatibility, if @code{\patterns} is missing, the whole
-file is treated as a list of hyphenation patterns (only recognizing the
-@code{%} character as the start of a comment).
+file is treated as a list of hyphenation patterns (except that the
+@code{%} character is recognized as the start of a comment).
 @end itemize
-
-If no @code{hpf} request is specified (either in the document or in a
-macro package), @code{gtroff} won't hyphenate at all.
 
 The @code{hpfa} request appends a file of patterns to the current list.
 
 The @code{hpfcode} request defines mapping values for character codes in
-hyphenation patterns.  @code{hpf} or @code{hpfa} then apply the mapping
-(after reading the patterns) before replacing or appending them to the
-current list of patterns.  Its arguments are pairs of character codes --
-integers from 0 to@tie{}255.  The request maps character
+pattern files.  @code{hpf} or @code{hpfa} apply the mapping
+after reading the patterns but before replacing or appending to the
+active list of patterns.  Its arguments are pairs of character
+codes---integers from 0 to@tie{}255.  The request maps character
 code@tie{}@var{a} to code@tie{}@var{b}, code@tie{}@var{c} to
-code@tie{}@var{d}, and so on.  You can use character codes that would
-be invalid otherwise.  By default, everything maps to itself except
-letters `A' to `Z', which map to `a' to `z'.
+code@tie{}@var{d}, and so on.  Character codes that would otherwise be
+invalid in GNU @code{troff} can be used.  By default, every code maps to
+itself except letters `A' to `Z', which map to `a' to `z'.
 
 @pindex troffrc
 @pindex troffrc-end
 @pindex hyphen.us
 @pindex hyphenex.us
-The set of hyphenation patterns is associated with the current language
-set by the @code{hla} request.  The @code{hpf} request is usually
-invoked by the @file{troffrc} or @file{troffrc-end} file; by default,
-@file{troffrc} loads hyphenation patterns and exceptions for American
+The set of hyphenation patterns is associated with the language set by
+the @code{hla} request.  The @code{hpf} request is usually invoked by
+the @file{troffrc} or @file{troffrc-end} file; by default,
+@file{troffrc} loads hyphenation patterns and exceptions for U.S.
 English (in files @file{hyphen.us} and @file{hyphenex.us}).
 
 A second call to @code{hpf} (for the same language) replaces the
 hyphenation patterns with the new ones.
 
-Invoking @code{hpf} causes an error if there is no current hyphenation
-language.
+Invoking @code{hpf} or @code{hpfa} causes an error if there is no
+hyphenation language.
+
+If no @code{hpf} request is specified (either in the document, in a
+@file{troffrc} or @file{troffrc-end} file, or in a macro package), GNU
+@code{troff} won't automatically hyphenate at all.
 @endDefreq
 
 @Defreq {hcode, c1 code1 [c2 code2 @dots{}]}
 @cindex hyphenation code (@code{hcode})
 @cindex code, hyphenation (@code{hcode})
 Set the hyphenation code of character @var{c1} to @var{code1}, that of
-@var{c2} to @var{code2}, etc.  A hyphenation code must be a single input
-character (not a special character) other than a digit or a space.
+@var{c2} to @var{code2}, and so on.  A hyphenation code must be a single
+input character (not a special character) other than a digit or a space.
+The request is ignored if it has no parameters.
 
-To make hyphenation work, hyphenation codes must be set up.  At
-start-up, groff only assigns hyphenation codes to the letters
+For hyphenation to work, hyphenation codes must be set up.  At
+start-up, GNU @code{troff} assigns hyphenation codes only to the letters
 @samp{a}--@samp{z} (mapped to themselves) and to the letters
-@samp{A}--@samp{Z} (mapped to @samp{a}--@samp{z}); all other hyphenation
-codes are set to zero.  Normally, hyphenation patterns contain only
-lowercase letters, which should be applied regardless of case.  In
-other words, the words `FOO' and `Foo' should be hyphenated exactly the
-same way as the word `foo' is hyphenated, and this is what @code{hcode}
-is good for.  Words that contain other letters won't be hyphenated
-properly if the corresponding hyphenation patterns actually do contain
-them.  For example, the following @code{hcode} requests are necessary to
-assign hyphenation codes to the letters @samp{ÄäÖöÜüß} (this is needed
-for German):
+@samp{A}--@samp{Z} (mapped to @samp{a}--@samp{z}); all other characters
+have undefined hyphenation codes.  Normally, hyphenation patterns
+contain only lowercase letters which should be applied regardless of
+case.  In other words, they assume that the words `FOO' and `Foo' should
+be hyphenated exactly as `foo' is.  The @code{hcode} request extends
+this principle to letters outside the Unicode basic Latin alphabet;
+without it, words containing such letters won't be hyphenated properly
+even if the corresponding hyphenation patterns contain them.  For
+example, the following @code{hcode} requests are necessary to assign
+hyphenation codes to the letters @samp{ÄäÖöÜüß} (needed for German):
 
 @Example
 .hcode ä ä  Ä ä
@@ -6886,33 +6937,34 @@ for German):
 .hcode ß ß
 @endExample
 
-Without those assignments, groff treats German words like
+Without those assignments, GNU @code{troff} treats German words like
 @w{`Kindergärten'} (the plural form of `kindergarten') as two substrings
 @w{`kinderg'} and @w{`rten'} because the hyphenation code of the
 umlaut@tie{}a is zero by default.  There is a German hyphenation pattern
-that covers @w{`kinder'}, so groff finds the hyphenation `kin-der'.
-The other two hyphenation points (`kin-der-gär-ten') are missed.
-
-This request is ignored if it has no parameter.
+that covers @w{`kinder'}, so GNU @code{troff} finds the hyphenation
+`kin-der'.  The other two hyphenation points (`kin-der-gär-ten') are
+missed.
 @endDefreq
 
-@DefreqList {hla, language}
+@DefreqList {hla, lang}
 @DefregListEndx {.hla}
 @cindex @code{hpf} request, and hyphenation language
 @cindex @code{hw} request, and hyphenation language
 @pindex troffrc
 @pindex troffrc-end
-Set the current hyphenation language to the string @var{language}.
-Hyphenation exceptions specified with the @code{hw} request and
-hyphenation patterns specified with the @code{hpf} and @code{hpfa}
-requests are both associated with the current hyphenation language.  The
-@code{hla} request is usually invoked by the @file{troffrc} or the
-@file{troffrc-end} files; @file{troffrc} sets the default language to
-@samp{us}.
+Set the hyphenation language to @var{lang}.  Hyphenation exceptions
+specified with the @code{hw} request and hyphenation patterns and
+exceptions specified with the @code{hpf} and @code{hpfa} requests are
+associated with the hyphenation language.  The @code{hla} request is
+usually invoked by the @file{troffrc} or @file{troffrc-end} files;
+@file{troffrc} sets the default language to @samp{us} (U.S. English).
+
+The hyphenation language is associated with the current environment
+(@pxref{Environments}).
 
 @cindex hyphenation language register (@code{.hla})
-The current hyphenation language is available as a string in the
-read-only number register @samp{.hla}.
+The hyphenation language is available as a string in the read-only
+number register @samp{.hla}.
 
 @Example
 .ds curr_language \n[.hla]
@@ -6921,7 +6973,7 @@ read-only number register @samp{.hla}.
 @endExample
 @endDefreq
 
-@DefreqList {hlm, [@Var{nnn}]}
+@DefreqList {hlm, [@Var{n}]}
 @DefregItemx {.hlm}
 @DefregListEndx {.hlc}
 @cindex explicit hyphen (@code{\%})
@@ -6929,18 +6981,18 @@ read-only number register @samp{.hla}.
 @cindex consecutive hyphenated lines (@code{hlm})
 @cindex lines, consecutive hyphenated (@code{hlm})
 @cindex hyphenated lines, consecutive (@code{hlm})
-Set the maximum number of consecutive hyphenated lines to @var{nnn}.  If
-this number is negative, there is no maximum.  The default value
-is@tie{}@minus{}1 if @var{nnn} is omitted.  This value is associated
-with the current environment (@pxref{Environments}).  Only lines output
-from a given environment count towards the maximum associated with that
-environment.  Hyphens resulting from @code{\%} are counted; explicit
-hyphens are not.
+Set the maximum number of consecutive hyphenated lines to @var{n}.  If
+@var{n} is negative, there is no maximum.  If omitted, @var{n}
+is@tie{}@minus{}1.  This value is associated with the current
+environment (@pxref{Environments}).  Only lines output from a given
+environment count towards the maximum associated with that environment.
+Hyphens resulting from @code{\%} are counted; explicit hyphens are not.
 
-The current setting of @code{hlm} is available in the @code{.hlm}
-read-only number register.  Also the number of immediately preceding
-consecutive hyphenated lines are available in the read-only number
-register @samp{.hlc}.
+@cindex hyphenation consecutive line limit register (@code{.hlm})
+@cindex hyphenation consecutive line count register (@code{.hlc})
+The @code{.hlm} read-only number register stores this maximum.  The
+count of immediately preceding consecutive hyphenated lines is available
+in the read-only number register @code{.hlc}.
 @endDefreq
 
 @DefreqList {hym, [@Var{length}]}
@@ -6948,41 +7000,43 @@ register @samp{.hlc}.
 @cindex hyphenation margin (@code{hym})
 @cindex margin for hyphenation (@code{hym})
 @cindex @code{ad} request, and hyphenation margin
-Set the (right) hyphenation margin to @var{length}.  If the current
-adjustment mode is not @samp{b} or @samp{n}, the line is not hyphenated
-if it is shorter than @var{length}.  Without an argument, the
-hyphenation margin is reset to its default value, which is@tie{}0.  The
-default scaling indicator for this request is @samp{m}.  The hyphenation
-margin is associated with the current environment
-(@pxref{Environments}).
+Set the (right) hyphenation margin to @var{length}.  If the adjustment
+mode is not @samp{b} or @samp{n}, the line is not hyphenated if it is
+shorter than @var{length}.  Without an argument, the hyphenation margin
+is reset to its default value, 0.  The default scaling indicator is
+@samp{m}.  The hyphenation margin is associated with the current
+environment (@pxref{Environments}).
 
 A negative argument resets the hyphenation margin to zero, emitting a
 warning of type @samp{range}.
 
 @cindex hyphenation margin register (@code{.hym})
-The current hyphenation margin is available in the @code{.hym} read-only
-number register.
+The hyphenation margin is available in the @code{.hym} read-only number
+register.
 @endDefreq
 
-@DefreqList {hys, [@Var{hyphenation_space}]}
+@DefreqList {hys, [@Var{hyphenation-space}]}
 @DefregListEndx {.hys}
 @cindex hyphenation space (@code{hys})
+@cindex hyphenation space adjustment threshold
 @cindex @code{ad} request, and hyphenation space
-Set the hyphenation space to @var{hyphenation_space}.  If the current
-adjustment mode is @samp{b} or @samp{n}, don't hyphenate the line if it
-can be justified by adding no more than @var{hyphenation_space} extra
-space to each word space.  Without argument, the hyphenation space is
-set to its default value, which is@tie{}0.  The default scaling
-indicator for this request is @samp{m}.  The hyphenation space is
-associated with the current environment (@pxref{Environments}).
+Suppress hyphenation of the line in adjustment modes @samp{b} or
+@samp{n} if it can be justified by adding no more than
+@var{hyphenation-space} extra space to each word space.  Without an
+argument, the hyphenation space adjustment threshole is set to its
+default value, 0.  The default scaling indicator is @samp{m}.  The
+hyphenation space adjustment threshold is associated with the current
+environment (@pxref{Environments}).
 
-A negative argument resets the hyphenation space to zero, emitting a
-warning of type @samp{range}.
+A negative argument resets the hyphenation space adjustment threshold to
+zero, emitting a warning of type @samp{range}.
 
-@cindex hyphenation space register (@code{.hys})
-The current hyphenation space is available in the @code{.hys} read-only
-number register.
+@cindex hyphenation space adjustment threshold register (@code{.hys})
+The hyphenation space adjustment threshold is available in the
+@code{.hys} read-only number register.
 @endDefreq
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -14344,20 +14398,29 @@ with documents written using old versions of @code{troff}.  Some GNU
 extensions to @code{troff} have become supported by other
 implementations.
 
+@cindex hyphenation, incompatibilities with @acronym{AT&T} @code{troff}
+GNU @code{troff} does not always hyphenate words as @acronym{AT&T}
+@code{troff} does.  The @acronym{AT&T} implementation uses a set of
+hard-coded rules specific to U.S. English, while GNU @code{troff} uses
+language-specific hyphenation pattern files derived from @TeX{}.
+Furthermore, in old versions of @code{troff} there was a limited amount
+of space to store hyphenation exceptions (arguments to the @code{hw}
+request); GNU @code{troff} has no such restriction.
+
 @cindex long names
 @cindex names, long
 @cindex @code{\*}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\n}, incompatibilities with @acronym{AT&T} @code{troff}
-Long names may be the most obvious innovation.  @acronym{AT&T}
-@code{troff} interprets @samp{.dsabcd} as defining a string @samp{ab}
-with contents @samp{cd}.  Normally, GNU @code{troff} interprets this as
-a call of a macro named @code{dsabcd}.  @acronym{AT&T} @code{troff} also
-interprets @code{\*[} and @code{\n[} as a reference to a string or
-number register, respectively, called @samp{[}.  In GNU @code{troff},
-however, the @samp{[} is normally interpreted as delimiting a long name.
-In compatibility mode, GNU @code{troff} interprets names in the
-traditional way, which means that they are limited to one or two
-characters.
+Long names may be GNU @code{troff}'s most obvious innovation.
+@acronym{AT&T} @code{troff} interprets @samp{.dsabcd} as defining a
+string @samp{ab} with contents @samp{cd}.  Normally, GNU @code{troff}
+interprets this as a call of a macro named @code{dsabcd}.
+@acronym{AT&T} @code{troff} also interprets @code{\*[} and @code{\n[} as
+a reference to a string or number register, respectively, called
+@samp{[}.  In GNU @code{troff}, however, the @samp{[} is normally
+interpreted as delimiting a long name.  In compatibility mode, GNU
+@code{troff} interprets names in the traditional way, which means that
+they are limited to one or two characters.
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, name}

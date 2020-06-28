@@ -809,11 +809,12 @@ intervening space.
 .
 .TP
 .B \[rs]:
-This causes the insertion of a zero-width break point.
+Insert a zero-width break point.
 .
-It is equal to
+This resembles
 .B \[rs]%
-within a word but without insertion of a soft hyphen glyph.
+within a word but does not output the soft hyphen glyph prior to the
+break.
 .
 .TP
 .BI \[rs]? anything \[rs]?
@@ -1935,53 +1936,135 @@ If
 is missing,
 switch to the previous glyph color.
 .
+.
 .TP
-.BI .hcode\~ "c1 code1 c2 code2 \*[ellipsis]"
+.BI .hcode\~ "c1 code1"\c
+.RI \~[ "c2 code2" "] \*[ellipsis]"
 Set the hyphenation code of character
 .I c1
 to
-.I code1
-and that of
+.IR code1 ,
+that of
 .I c2
 to
 .IR code2 ,
 and so on.
-A hyphenation code must be a single input character (not a special
-character) other than a digit or a space.
 .
-Initially each lower-case letter \%a\[en]z has a hyphenation code, which
-is itself, and each upper-case letter \%A\[en]Z has a hyphenation code
-which is the lower-case version of itself.
+A hyphenation code must be a single input character
+(not a special character)
+other than a digit or a space.
 .
-See also the
-.B hpf
-request.
+The request is ignored if it has no parameters.
+.
+.
+.IP
+For hyphenation to work,
+hyphenation codes must be set up.
+.
+At start-up,
+.I groff
+assigns hyphenation codes only to the letters \[lq]a\[en]z\[rq]
+(mapped to themselves)
+and to the letters \[lq]A\[en]Z\[rq]
+(mapped to \[lq]a\[en]z\[rq]);
+all other characters have undefined hyphenation codes.
+.
+Normally,
+hyphenation patterns contain only lowercase letters which should be
+applied regardless of case.
+.
+In other words,
+they assume that the words \[lq]FOO\[rq] and \[lq]Foo\[rq] should be
+hyphenated exactly as \[lq]foo\[rq] is.
+.
+The
+.B .hcode
+request extends this principle to letters outside the Unicode basic
+Latin alphabet;
+without it,
+words containing such letters won't be hyphenated properly even if the
+corresponding hyphenation patterns contain them.
+.
+For example,
+the following
+.B .hcode
+requests are necessary to assign hyphenation codes to the letters
+\[lq]\[:A]\[:a]\[:O]\[:o]\[:U]\[:u]\[ss]\[rq]
+(needed for German):
+.
+.
+.RS
+.IP
+.EX
+\&.hcode \[:a] \[:a]  \[:A] \[:a]
+\&.hcode \[:o] \[:o]  \[:O] \[:o]
+\&.hcode \[:u] \[:u]  \[:U] \[:u]
+\&.hcode \[ss] \[ss]
+.EE
+.RE
+.
+.
+.IP
+Without those assignments,
+.I groff
+treats German words like \[lq]Kinderg\[:a]rten\[rq]
+(the plural form of \[lq]kindergarten\[rq])
+as two substrings \[lq]kinderg\[rq] and \[lq]rten\[rq]) because the
+hyphenation code of the umlaut\~a is zero by default.
+.
+There is a German hyphenation pattern that covers \[lq]kinder\[rq],
+so
+.I groff
+finds the hyphenation \[lq]kin-der\[rq].
+.
+The other two hyphenation points
+(\[lq]kin-der-gär-ten\[rq])
+are missed.
+.
 .
 .TP
 .BI .hla\~ lang
-Set the current hyphenation language to
+Set the hyphenation language to
 .IR lang .
+.
 Hyphenation exceptions specified with the
-.B hw
-request and hyphenation patterns specified with the
-.B hpf
-request are both associated with the current hyphenation language.
+.B .hw
+request and hyphenation patterns and exceptions specified with the
+.B .hpf
+and
+.B .hpfa
+requests are associated with the hyphenation language.
 .
 The
-.B hla
+.B .hla
 request is usually invoked by the
-.B troffrc
-file to set up a default language.
+.I troffrc
+or
+.I troffrc\-end
+files;
+.I troffrc
+sets the default language to \[lq]us\[rq]
+(U.S. English).
+.
+.
+.IP
+The hyphenation language is associated with the current environment.
+.
 .
 .TP
-.BI .hlm\~ n
-Set the maximum number of consecutive hyphenated lines to\~\c
-.IR n .
+.BR .hlm\~ [\c
+.IR n ]
+Set the maximum number of consecutive hyphenated lines
+.RI to\~ n .
+.
 If
 .I n
-is negative, there is no maximum.
+is negative,
+there is no maximum.
 .
-The default value is\~\-1.
+If omitted,
+.I n
+is\~\-1.
 .
 This value is associated with the current environment.
 .
@@ -1992,176 +2075,252 @@ Hyphens resulting from
 .B \[rs]%
 are counted; explicit hyphens are not.
 .
+.
 .TP
-.BI .hpf\~ file
+.BI .hpf\~ pattern-file
 Read hyphenation patterns from
-.IR file ;
-this is searched for in the same way that
+.IR pattern-file .
+.
+This file sought in the same way as
 .IB name .tmac
+(or
+.BI tmac. name\c
+)
 is searched for when the
 .BI \-m name
 option is specified.
 .
-It should have the same format as (simple) \*[tx] patterns files.
+.IP
+The
+.I pattern-file
+should have the same format as (simple) \*[tx] pattern files.
 .
-More specifically, the following scanning rules are implemented.
+More specifically,
+the following scanning rules are implemented.
 .
 .RS
 .IP \[bu]
-A percent sign starts a comment (up to the end of the line) even if
-preceded by a backslash.
+A percent sign starts a comment
+(up to the end of the line)
+even if preceded by a backslash.
+.
 .
 .IP \[bu]
-No support for \[oq]digraphs\[cq] like
+No support for \[lq]digraphs\[rq] like
 .BR \[rs]$ .
 .
+.
 .IP \[bu]
-.BI ^^ xx
-.RI ( x
-is 0\[en]9 or a\[en]f) and
-.BI ^^ x
-(character code of\~\c
+.RB \[lq] \[ha]\[ha]\c
+.IR xx \[rq]
+(where each
 .I x
-in the range 0\[en]127) are recognized; other use of\~\c
-.B ^
-causes an error.
+is 0\[en]9 or a\[en]f) and
+.BI \[ha]\[ha] c
+.RI (character\~ c
+in the code point range 0\[en]127 decimal)
+are recognized;
+other uses
+.RB of\~ \[ha]
+cause an error.
+.
 .
 .IP \[bu]
 No macro expansion.
+.
 .
 .IP \[bu]
 .B hpf
 checks for the expression
 .BR \[rs]patterns{ \*[ellipsis] }
-(possibly with whitespace before and after the braces).
+(possibly with whitespace before or after the braces).
 .
 Everything between the braces is taken as hyphenation patterns.
 .
 Consequently,
-.BR { \~\c
-and\~\c
-.B }
+.RB \[lq] { \[rq]
+and
+.RB \[lq] } \[rq]
 are not allowed in patterns.
+.
 .
 .IP \[bu]
 Similarly,
 .BR \[rs]hyphenation{ \*[ellipsis] }
 gives a list of hyphenation exceptions.
 .
+.
 .IP \[bu]
 .B \[rs]endinput
 is recognized also.
 .
+.
 .IP \[bu]
-For backwards compatibility, if
+For backwards compatibility,
+if
 .B \[rs]patterns
-is missing, the whole file is treated as a list of hyphenation patterns
-(only recognizing the
-.BR % \~\c
-character as the start of a comment).
+is missing,
+the whole file is treated as a list of hyphenation patterns
+(except that the
+.RB \[lq] % \[rq]
+character is recognized as the start of a comment).
 .RE
+.
 .
 .IP
 Use the
-.B hpfcode
-request to map the encoding used in hyphenation patterns files to
-.BR groff 's
+.B .hpfcode
+request
+(see below)
+to map the encoding used in hyphenation pattern files to
+.IR groff 's
 input encoding.
 .
-By default, everything maps to itself except letters \[oq]A\[cq] to
-\[oq]Z\[cq] which map to \[oq]a\[cq] to \[oq]z\[cq].
 .
 .IP
-The set of hyphenation patterns is associated with the current language
-set by the
-.B hla
+The set of hyphenation patterns is associated with the hyphenation
+language set by the
+.B .hla
 request.
 .
 The
-.B hpf
+.B .hpf
 request is usually invoked by the
-.B troffrc
-file; a second call replaces the old patterns with the new ones.
-.
-.TP
-.BI .hpfa\~ file
-The same as
-.B hpf
-except that the hyphenation patterns from
-.I file
-are appended to the patterns already loaded in the current language.
-.
-.TP
-.BI .hpfcode\~ "a b c d \*[ellipsis]"
-After reading a hyphenation patterns file with the
-.B hpf
+.I troffrc
 or
-.B hpfa
-request, convert all characters with character code\~\c
-.I a
-in the recently read patterns to character code\~\c
-.IR b ,
-character code\~\c
-.I c
-to\~\c
-.IR d ,
-etc.
+.I troffrc\-end
+file;
+by default,
+.I troffrc
+loads hyphenation patterns and exceptions for U.S. English from the
+files
+.I hyphen.us
+and
+.IR hyphenex.us ,
+respectively.
 .
-Initially, all character codes map to themselves.
 .
-The arguments of
-.B hpfcode
-must be integers in the range 0 to\~255.
+.IP
+A second call to
+.B .hpf
+(for the same language)
+replaces the old patterns with the new ones.
 .
-Note that it is even possible to use character codes which are invalid
-in
-.B groff
-otherwise.
+.
+.IP
+Invoking
+.B .hpf
+causes an error if there is no hyphenation language.
+.
+.
+.IP
+If no
+.B .hpf
+request is specified
+(either in the document,
+in a
+.I troffrc
+or
+.I troffrc\-end
+file,
+or in a macro package),
+.I groff
+won't automatically hyphenate at all.
+.
 .
 .TP
-.BI .hym\~ n
-Set the
-.I hyphenation margin
-to\~\c
-.IR n :
-when the current adjustment mode is not\~\c
-.BR b ,
-the line is not hyphenated if the line is no more than
-.I n
-short.
+.BI .hpfa\~ pattern-file
+As
+.BR .hpf ,
+except that the hyphenation patterns and exceptions from
+.I pattern-file
+are appended to the patterns already applied to the hyphenation language
+of the environment.
 .
-The default hyphenation margin is\~0.
 .
-The default scaling indicator for this request is\~\c
-.BR m .
+.TP
+.BI .hpfcode\~ "a b"\c
+.RI \~[ "c d" "] \*[ellipsis]"
+Define mapping values for character codes in pattern files;
+after reading a pattern file with the
+.B .hpf
+or
+.B .hpfa
+request,
+convert all characters with character
+.RI code\~ a
+in the recently read patterns to character
+.RI code\~ b ,
+.RI code\~ c
+.RI to\~ d ,
+and so on,
+before replacing or appending to the active list of patterns.
+.
+Each argument must be an integer in the range 0 to\~255.
+.
+Character codes that would otherwise be invalid in
+.I groff
+can be used.
+.
+By default,
+every code maps to itself except letters \[lq]A\[rq] to \[lq]Z\[rq],
+which map to \[lq]a\[rq] to \[lq]z\[rq].
+.
+.
+.TP
+.BR .hym\~ [\c
+.IR length ]
+Set the (right) hyphenation margin
+.RI to\~ length .
+.
+If the adjustment mode is not
+.RB \[lq] b \[rq]
+or
+.RB \[lq] n \[rq],
+the line is not hyphenated if it is shorter than
+.IR length .
+.
+Without an argument,
+the default hyphenation margin is reset to its default value,
+0.
+.
+The default scaling indicator
+.RB is\~\[lq] m \[rq].
+.
 The hyphenation margin is associated with the current environment.
 .
-The current hyphenation margin is available in the
-.B \[rs]n[.hym]
-register.
+.
+.IP
+A negative argument resets the hyphenation margin to zero,
+emitting a warning of type \[lq]range\[rq].
+.
 .
 .TP
-.BI .hys\~ n
-Set the
-.I hyphenation space
-to\~\c
-.IR n :
-When the current adjustment mode is\~\c
-.B b
-don't hyphenate the line if the line can be justified by adding no
-more than
-.I n
+.BR .hys\~ [\c
+.IR hyphenation-space ]
+Suppress hyphenation of the line in adjustment modes
+.RB \[lq] b \[rq]
+or
+.RB \[lq] n \[rq],
+if it can be justified by adding no more than
+.I hyphenation-space
 extra space to each word space.
 .
-The default hyphenation space is\~0.
+Without an argument,
+the hyphenation space adjustment threshold is set to its default value,
+0.
 .
-The default scaling indicator for this request is\~\c
-.BR m .
-The hyphenation space is associated with the current environment.
+The default scaling indicator
+.RB is\~\[lq] m \[rq].
 .
-The current hyphenation space is available in the
-.B \[rs]n[.hys]
-register.
+The hyphenation space adjustment threshold is associated with the
+current environment.
+.
+.
+.IP
+A negative argument resets the hyphenation space adjustment threshold to
+zero, emitting a warning of type \[lq]range\[rq].
+.
 .
 .TP
 .BI .itc\~ n\~macro
@@ -2472,25 +2631,33 @@ is searched after the list of fonts declared with the
 request but before the mounted special fonts.
 .
 .TP
-.BI .shc\~ c
-Set the soft hyphen character to\~\c
-.IR c .
+.BI .shc\~ glyph
+Set the soft hyphen character
+.RI to\~ glyph .
+.
 If
-.I c
-is omitted, the soft hyphen character is set to the default
+.I glyph
+is omitted,
+the soft hyphen character is set to the default,
 .BR \[rs][hy] .
-The soft hyphen character is the glyph which is inserted when
-a word is hyphenated at a line break.
 .
-If the soft hyphen character does not exist in the font of the
-glyph immediately preceding a potential break point, then the line
-is not broken at that point.
+The soft hyphen character is the glyph that is inserted when a word is
+automatically hyphenated at a line break.
 .
-Neither definitions (specified with the
-.B char
-request) nor translations (specified with the
-.B tr
-request) are considered when finding the soft hyphen character.
+If the soft hyphen character does not exist in the font of the character
+immediately preceding a potential break point,
+then the line is not broken at that point.
+.
+Neither definitions
+(specified with the
+.B .char
+request)
+nor translations
+(specified with the
+.B .tr
+request)
+are considered when determining the soft hyphen character.
+.
 .
 .TP
 .BI .shift\~ n
@@ -3040,11 +3207,13 @@ request without any arguments, just as for numbered environments.
 There is no limit on the number of named environments; they are
 created the first time that they are referenced.
 .
+.
 .TP
 .BI .hy\~ n
-New additive values 16 and\~32 are available; the former enables
-hyphenation before the last character, the latter enables hyphenation
-after the first character.
+New values 16 and\~32 are available;
+the former enables hyphenation before the last character in a word,
+and the latter enables hyphenation after the first character in a word.
+.
 .
 .TP
 .BI .ss\~ "word-space-size sentence-space-size"
@@ -3282,40 +3451,38 @@ troff.
 The current height of the font as set with
 .BR \[rs]H .
 .
+.
 .TP
 .B \[rs]n[.hla]
-The current hyphenation language as set by the
-.B hla
-request.
+The hyphenation language in the current environment.
+.
 .
 .TP
 .B \[rs]n[.hlc]
-The number of immediately preceding consecutive hyphenated lines.
+The count of immediately preceding consecutive hyphenated lines in the
+current environment.
+.
 .
 .TP
 .B \[rs]n[.hlm]
-The maximum allowed number of consecutive hyphenated lines, as set by
-the
-.B hlm
-request.
+The maximum number of consecutive hyphenated lines allowed in the
+current environment.
+.
 .
 .TP
 .B \[rs]n[.hy]
-The current hyphenation flags (as set by the
-.B hy
-request).
+The hyphenation mode in the current environment.
+.
 .
 .TP
 .B \[rs]n[.hym]
-The current hyphenation margin (as set by the
-.B hym
-request).
+The hyphenation margin in the current environment.
+.
 .
 .TP
 .B \[rs]n[.hys]
-The current hyphenation space (as set by the
-.B hys
-request).
+The hyphenation space adjustment threshold in the current environment.
+.
 .
 .TP
 .B \[rs]n[.in]
@@ -4138,7 +4305,32 @@ have become supported by other implementations.
 .
 .
 .P
-Long names may be the most obvious innovation.
+.I groff
+does not always hyphenate words as
+.RI AT&T\~ troff
+does.
+.
+The AT&T implementation uses a set of hard-coded rules specific to U.S.
+English,
+while
+.I groff
+uses language-specific hyphenation pattern files derived from \*[tx].
+.
+Furthermore,
+in old versions of
+.I troff
+there was a limited amount of space to store hyphenation exceptions
+(arguments to the
+.B .hw
+request);
+.I groff
+has no such restriction.
+.
+.
+.P
+Long names may be
+.IR groff 's
+most obvious innovation.
 .
 .RI AT&T\~ troff
 interprets
