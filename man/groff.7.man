@@ -2817,66 +2817,87 @@ yet.
 .SH "Escape Sequences"
 .\" ====================================================================
 .
-Escape sequences are in-line language elements usually introduced by a
-backslash
-.squoted_char \[rs]
-and followed by an escape name and sometimes by a required argument.
+Whereas requests must occur on control lines,
+escape sequences can occur intermixed with text and appear in arguments
+to requests and macros
+(and sometimes other escape sequences).
 .
-Input processing is continued directly after the escaped character or
-the argument (without an intervening separation character).
+An escape sequence
+(or simply \[lq]escape\[rq])
+is introduced by the escape character,
+a backslash
+.RB \[lq] \[rs] \[rq]
+(but see the
+.B .ec
+request).
 .
-So there must be a way to determine the end of the escape name and the
-end of the argument.
+The next character identifies the escape's function.
 .
+Escapes vary in length.
 .
-.P
-This is done by enclosing names (escape name and arguments consisting
-of a variable name) by a pair of brackets
-.BI \[lB] name \[rB]
-and constant arguments (number expressions and characters) by
-apostrophes like
-.BI \[aq] constant \[aq] \f[R].
+Some take an argument,
+and of those,
+some have different syntactical forms for a one-character,
+two-character,
+or arbitrary-length argument.
 .
+Others accept only an arbitrary-length argument.
 .
-.P
-There are abbreviations for short names.
+In the former convention,
+a one-character argument follows the function character immediately,
+an opening parenthesis
+.RB \[lq] ( \[rq]
+introduces a two-character argument,
+and an argument of arbitrary length is enclosed in brackets
+.RB \[lq] [] \[rq].
 .
-Two-character escape names can be specified by an opening parenthesis
-like
-.esc ( xy
+In the latter convention,
+the user selects a delimiter character other than
+.RB \[lq] ( \[rq]
 or
-.esc *( xy
-without a closing counterpart.
+.RB \[lq] [] \[rq]\[em]the
+neutral apostrophe
+.RB \[lq] \[aq] \[rq]
+is a popular choice and used in this document.
 .
-And all one-character names different from the special characters
-.squoted_char [
-and
-.squoted_char (
-can even be specified without a marker, for example
-.esc n c
-or
-.esc $ c.
+A few escapes are idiosyncratic,
+and support both of the foregoing conventions
+.RB (\[lq] \[rs]s \[rq]),
+designate their own terminating character
+.RB (\[lq] \[rs]? \[rq]),
+consume input until the next newline
+.RB (\[lq] \[rs]! \[rq],
+.RB \[lq] \[rs]" \[rq],
+.RB \[lq] \[rs]# \[rq]),
+or support an additional modifier character
+.RB (\[lq] \[rs]s \[rq]
+again).
+.
+Once an escape sequence terminates,
+input processing resumes with the next character.
 .
 .
 .P
-Constant arguments of length\~1 can omit the marker apostrophes, too,
-but there is no two-character analogue.
+Escape sequences serve a variety of purposes.
 .
+Widespread uses include
+commenting the source document;
+changing the font style;
+setting the point size;
+interpolating special characters,
+number registers,
+and strings into the text;
+and placement or suppression of break and hyphenation points.
 .
-.P
-While one-character escape sequences are mainly used for in-line
-functions and system-related tasks, the two-letter names following the
-.esc (
-construct are glyphs predefined by the roff system; these are called
-\[oq]Special Characters\[cq] in the classical documentation.
-.
-Escapes sequences of the form
-.esc[] "" name
-denote glyphs too.
+As with requests,
+use of escapes in source documents may interact poorly with a macro
+package you use;
+consult its documentation to learn of \[lq]safe\[rq] escapes or
+alternative facilities it provides to achieve the desired result.
 .
 .
 .\" ====================================================================
-.SS "Single-character escapes"
+.SS "Escape short reference"
 .\" ====================================================================
 .
 .PD 0
