@@ -10364,12 +10364,14 @@ with a default scale indicator of @samp{z}.
 @section Strings
 @cindex strings
 
-@code{gtroff} has string variables, which are entirely for user
-convenience (i.e.@: there are no built-in strings except @code{.T}, but
-even this is a read-write string variable).
+@codequotebacktick on
+@codequoteundirected on
+GNU @code{troff} has string variables, which are entirely for user
+convenience (i.e., there are no built-in strings except @code{.T}, but
+even that is a read/write string variable).
 
-Although the following requests can be used to create strings,
-simply using an undefined string will cause it to be defined as empty.
+Although the following requests can be used to create strings, simply
+using an undefined string will cause it to be defined as empty.
 @xref{Identifiers}.
 
 @DefreqList {ds, name [@Var{string}]}
@@ -10401,10 +10403,10 @@ This is \*[foo nice].
 @endExample
 
 The @code{\*} escape @dfn{interpolates} (expands in place) a
-previously defined string variable.  To be more precise, the stored
-string is pushed onto the input stack, which is then parsed by
-@code{gtroff}.  Similar to number registers, it is possible to nest
-strings, i.e., string variables can be called within string variables.
+previously-defined string variable.  To be more precise, the stored
+string is pushed onto the input stack, which is then parsed by GNU
+@code{troff}.  Similarly to number registers, it is possible to nest
+strings; i.e., string variables can be called within string variables.
 
 If the string named by the @code{\*} escape does not exist, it is
 defined as empty, and a warning of type @samp{mac} is emitted (see
@@ -10432,13 +10434,21 @@ escape adjacent with the end of the string.
 .ds TeX T\h'-.2m'\v'.2m'E\v'-.2m'\h'-.1m'X\" Knuth's TeX
 @endExample
 
+It is good style to end string definitions (and appendments; see below)
+with a comment, even an empty one, to prevent unwanted space from
+creeping into them.
+
+@Example
+.ds author Alice Pleasance Liddell\"
+@endExample
+
 @cindex trailing quotes
 @cindex quotes, trailing
 @cindex leading spaces with @code{ds}
 @cindex spaces with @code{ds}
 @cindex @code{ds} request, and leading spaces
-To produce leading space the string can be started with a double quote.
-No trailing quote is needed; in fact, any trailing quote is included in
+To store leading space in a string, start it with a double quote.  No
+trailing quote is needed; in fact, any trailing quote is included in
 your string.
 
 @Example
@@ -10476,7 +10486,7 @@ restore} input token at the end.
 .cp 1
 .
 \*(aa
-    @result{} warning: number register `[' not defined
+    @error{} warning: number register '[' not defined
     @result{} The value of xxx is 0xxx].
 \*(bb
     @result{} The value of xxx is 12345.
@@ -10699,8 +10709,9 @@ Rename the request, macro, diversion, or string @var{xx} to @var{yy}.
 @cindex string, removing (@code{rm})
 @cindex removing diversion (@code{rm})
 @cindex diversion, removing (@code{rm})
-Remove the request, macro, diversion, or string @var{xx}.  @code{gtroff}
-treats subsequent invocations as if the object had never been defined.
+Remove the request, macro, diversion, or string @var{xx}.  GNU
+@code{troff} treats subsequent invocations as if the object had never
+been defined.
 @endDefreq
 
 @anchor{als}
@@ -10770,10 +10781,12 @@ Remove (chop) the last character from the macro, string, or diversion
 named @var{xx}.  This is useful for removing the newline from the end of
 diversions that are to be interpolated as strings.  This command can be
 used repeatedly; see @ref{Gtroff Internals}, for details on nodes
-inserted additionally by @code{gtroff}.
+inserted additionally by GNU @code{troff}.
 @endDefreq
 
 @xref{Identifiers}, and @ref{Comments}.
+@codequoteundirected off
+@codequotebacktick off
 
 
 @c =====================================================================
