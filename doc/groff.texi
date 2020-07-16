@@ -9535,7 +9535,7 @@ character).
 .class [quotes] ' \[rs] \[dq] \[oq] \[cq] \[lq] \[rq]
 @endExample
 
-Since class and glyph names share the same namespace, it is recommended
+Since class and glyph names share the same name space, it is recommended
 to start and end the class name with @code{[} and @code{]},
 respectively, to avoid collisions with existing character names defined
 by GNU @code{troff} or the user (with @code{char} and related requests).
@@ -14489,9 +14489,9 @@ with @samp{.cp \n(_C}.  At the same time, a modular design of a document
 or macro package may lead you to multiple layers of inclusion.  You
 cannot use the same register name everywhere or you risk ``clobbering''
 the value from a preceding or enclosing context.  The two-character
-register namespace of @acronym{AT&T} @code{troff} is confining and
+register name space of @acronym{AT&T} @code{troff} is confining and
 mnemonically challenging; you may wish to use the more capacious
-namespace of GNU @code{troff}.  However, attempting @samp{.nr
+name space of GNU @code{troff}.  However, attempting @samp{.nr
 _my_saved_C \n(.C} will not work in compatibility mode; the register
 name is too long.  ``This is exactly what @code{do} is for,'' you think,
 @samp{.do nr _my_saved_C \n(.C}.  The foregoing will always save zero to
@@ -14512,7 +14512,7 @@ at the beginning of your file, followed by
 
 @noindent
 at the end.  As in the C language, we all have to share one big
-namespace, so choose a register name that is unlikely to collide with
+name space, so choose a register name that is unlikely to collide with
 other uses.
 
 @endDefreq
