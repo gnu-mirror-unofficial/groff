@@ -2578,14 +2578,20 @@ and from the macro one level higher.
 No effect otherwise.
 .
 .TP
-.BI .rfschar\~ "c1 c2 \*[ellipsis]"
+.BI .rfschar\~ "f c1 c2 "\c
+\*[ellipsis]
 Remove the font-specific definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]\~\"Add a sentence space
-This undoes the effect of an
-.B fschar
-request.
+\*[ellipsis] for
+.RB font\~ f .
+.
+Whitespace is optional between
+.IR cn \~arguments.
+.
+See
+.BR .fschar .
+.
 .
 .TP
 .B .rj
