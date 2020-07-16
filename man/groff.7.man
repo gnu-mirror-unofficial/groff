@@ -1261,17 +1261,22 @@ Same as
 but with compatibility mode switched off during macro expansion.
 .
 .TPx
-.REQ .as "stringvar anything"
+.REQ .as "stringvar \fR[\fPanything\fR]\fP"
 Append
 .I anything
 to
-.IR stringvar .
+.IR stringvar ;
+no operation if
+.I stringvar
+is omitted.
+.
 .
 .TPx
-.REQ .as1 "stringvar anything"
+.REQ .as1 "stringvar \fR[\fPanything\fR]\fP"
 Same as
 .request .as
 but with compatibility mode switched off during string expansion.
+.
 .
 .TPx
 .REQ .asciify "diversion"
@@ -1614,14 +1619,18 @@ of
 is interpreted.
 .
 .TPx
-.REQ .ds "stringvar anything"
+.REQ .ds "stringvar \fR[\fPanything\fR]\fP"
 Set
 .I stringvar
 to
-.IR anything .
+.IR anything ,
+or to the empty string if
+.I anything
+is omitted.
+.
 .
 .TPx
-.REQ .ds1 "stringvar anything"
+.REQ .ds1 "stringvar \fR[\fPanything\fR]\fP"
 Same as
 .request .ds
 but with compatibility mode switched off during string expansion.
