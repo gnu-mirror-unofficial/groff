@@ -2855,18 +2855,21 @@ In the former convention,
 a one-character argument follows the function character immediately,
 an opening parenthesis
 .RB \[lq] ( \[rq]
-introduces a two-character argument,
+introduces a two-character argument
+(no closing parenthesis is used),
 and an argument of arbitrary length is enclosed in brackets
 .RB \[lq] [] \[rq].
 .
 In the latter convention,
-the user selects a delimiter character other than
-.RB \[lq] ( \[rq]
-or
-.RB \[lq] [] \[rq]\[em]the
-neutral apostrophe
+the user selects a delimiter character;
+the neutral apostrophe
 .RB \[lq] \[aq] \[rq]
 is a popular choice and used in this document.
+.
+Some characters cannot be used as delimiters;
+see section \[lq]Escapes\[rq] in the
+.I groff
+Texinfo manual for details.
 .
 A few escapes are idiosyncratic,
 and support both of the foregoing conventions
