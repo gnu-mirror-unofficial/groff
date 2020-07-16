@@ -10400,7 +10400,7 @@ This is \*[foo nice].
     @result{} This is a nice test.
 @endExample
 
-The @code{\*} escape @dfn{interpolates} (expands in-place) a
+The @code{\*} escape @dfn{interpolates} (expands in place) a
 previously defined string variable.  To be more precise, the stored
 string is pushed onto the input stack, which is then parsed by
 @code{gtroff}.  Similar to number registers, it is possible to nest
@@ -10408,7 +10408,10 @@ strings, i.e., string variables can be called within string variables.
 
 If the string named by the @code{\*} escape does not exist, it is
 defined as empty, and a warning of type @samp{mac} is emitted (see
-@ref{Debugging}, for more details).
+@ref{Debugging} for more details).
+
+If @code{ds} is called with only one argument, @var{name} is explicitly
+defined as an empty string.
 
 @cindex comments, with @code{ds}
 @cindex @code{ds} request, and comments
