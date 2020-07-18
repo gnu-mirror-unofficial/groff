@@ -972,9 +972,9 @@ Similar to
 .BR .am ,
 but compatibility mode is switched off during execution.
 .
-To be more precise, a \[oq]compatibility save\[cq] token is inserted
-at the beginning of the macro addition, and a \[oq]compatibility
-restore\[cq] token at the end.
+To be more precise,
+a \[lq]compatibility save\[rq] token is inserted at the beginning,
+and a \[lq]compatibility restore\[rq] token at the end.
 .
 As a consequence, the requests
 .BR am ,
@@ -1002,15 +1002,16 @@ Same as the
 .B ami
 request but compatibility mode is switched off during execution.
 .
+.
 .TP
 .BI .as1\~ xx\~yy
 Similar to
 .BR .as ,
 but compatibility mode is switched off during expansion.
 .
-To be more precise, a \[oq]compatibility save\[cq] token is inserted
-at the beginning of the string, and a \[oq]compatibility restore\[cq]
-token at the end.
+To be more precise,
+a \[lq]compatibility save\[rq] token is inserted at the beginning,
+and a \[lq]compatibility restore\[rq] token at the end.
 .
 As a consequence, the requests
 .BR as ,
@@ -1023,6 +1024,7 @@ only affect the (sub)strings defined by
 .B as1
 and
 .BR ds1 .
+.
 .
 .TP
 .BI .asciify\~ xx
@@ -1772,9 +1774,10 @@ Similar to
 .BR .ds ,
 but compatibility mode is switched off during expansion.
 .
-To be more precise, a \[oq]compatibility save\[cq] token is inserted
-at the beginning of the string, and a \[oq]compatibility restore\[cq]
-token at the end.
+To be more precise,
+a \[lq]compatibility save\[rq] token is inserted at the beginning,
+and a \[lq]compatibility restore\[rq] token at the end.
+.
 .
 .TP
 .B .ecs
@@ -2584,7 +2587,7 @@ Remove the font-specific definitions of glyphs
 .IR c1 ,
 .IR c2 ,
 \*[ellipsis] for
-.RB font\~ f .
+.RI font\~ f .
 .
 Whitespace is optional between
 .IR cn \~arguments.
@@ -3182,23 +3185,27 @@ are immediately copied through to the output regardless of whether there
 is a current diversion;
 this behavior is so anomalous that it must be considered a bug.
 .
+.
 .TP
-.BI .de\~ xx\~yy
+.BI .de\~ "xx yy"
 .TQ
-.BI .am\~ xx\~yy
+.BI .am\~ "xx yy"
 .TQ
-.BI .ds\~ xx\~yy
+.BI .ds\~ "xx yy"
 .TQ
-.BI .as\~ xx\~yy
-In compatibility mode, these requests behaves similar to
+.BI .as\~ "xx yy"
+In compatibility mode,
+these requests behave similarly to
 .BR .de1 ,
 .BR .am1 ,
 .BR .ds1 ,
 and
 .BR .as1 ,
-respectively: A \[oq]compatibility save\[cq] token is inserted at the
-beginning, and a \[oq]compatibility restore\[cq] token at the end,
+respectively:
+a \[lq]compatibility save\[rq] token is inserted at the beginning,
+and a \[lq]compatibility restore\[rq] token at the end,
 with compatibility mode switched on during execution.
+.
 .
 .TP
 .BI .ev\~ xx
