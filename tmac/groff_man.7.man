@@ -629,14 +629,20 @@ see subsection \(lqFont style macros\(rq below.
 Begin a new paragraph;
 these macros are synonymous.
 .
-The left margin and indentation are reset to default values.
+The indentation is reset to the default value;
+the left margin,
+as affected by
+.B .RS
+and
+.BR .RE,
+is not.
 .
 .
 .TP
 .BR .TP " ["\c
 .IR indent ]
-Set a tagged,
-indented paragraph.
+Set a paragraph with a leading tag,
+and the remainder of the pargraph indented.
 .
 The input line following this macro,
 known as the
@@ -1602,6 +1608,140 @@ are indented 3n
 (but see the
 .B \-rSN
 option).
+.\" BEGIN STYLE
+.
+.
+.PP
+It may be helpful to think of the left margin and indentation as related
+but distinct concepts;
+.IR groff 's
+implementation of the
+.I man
+macro package tracks them separately.
+.
+The left margin is manipulated by
+.B .RS
+and
+.B .RE
+(and by
+.\".BR .TH ,\" True but not to be encouraged within a document.
+.B .SH
+and
+.BR .SS ,
+which reset it to the default).
+.
+.
+The other kind of indentation is controlled by the paragraphing macros
+(though,
+again,
+.\".BR .TH ,
+.B .SH
+and
+.BR .SS
+reset it).
+.
+Indentation is imposed by the
+.BR .TP ,
+.BR .IP ,
+and deprecated
+.B .HP
+macros,
+and cancelled by
+.B .PP
+and its synonyms.
+.
+An extensive example follows.
+.
+.
+.PP
+This
+.B .PP
+paragraph has neither a left-margin offset nor an indent;
+if it is sufficiently long,
+or the output device sufficiently narrow,
+it is set like a block.
+.
+.
+.RS
+.PP
+Now we have moved the left margin with
+.B .RS
+and started another block paragraph with
+.BR .PP .
+.
+.TP
+.B tag
+This tagged paragraph,
+set with
+.BR .TP ,
+is still within the
+.B .RS
+region,
+but lines after the first have a supplementary indentation that the
+tag lacks.
+.
+.
+.IP
+A paragraph like this one,
+set with
+.BR .IP ,
+will appear to the reader as also associated with the tag above,
+because
+.B .IP
+re-uses the previous pargraph's indentation unless given an argument
+to change it.
+.
+This paragraph is affected both by the moved left margin
+.RB ( .RS )
+and ordinary indentation
+.RB ( .IP ).
+.
+.
+.TS
+box;
+l.
+This table is affected both by
+the left margin and the indent.
+.TE
+.
+.
+.IP \(bu
+This indented paragraph has a bullet for a tag,
+making it more obvious that the left margin and the paragraph
+indent are distinct;
+only the former affects the tag,
+but both affect the text of the paragraph.
+.
+.
+.PP
+This normal
+.RB ( .PP )
+paragraph resets the indentation,
+but the left margin is still in place.
+.
+.
+.TS
+box;
+l.
+This table is affected only
+by the left margin.
+.TE
+.RE
+.
+.
+.PP
+Finally,
+we have ended the relative indent by using
+.BR .RE ,
+which
+(because we only used one
+.BR .RS / .RE
+pair)
+has reset the left margin to the default.
+.
+This is an ordinary
+.B .PP
+paragraph.
 .
 .
 .PP
@@ -1619,6 +1759,7 @@ or which is developed in the future.
 The table preprocessor
 .IR @g@tbl (@MAN1EXT@)
 can likely meet your needs.
+.\" END STYLE
 .
 .
 .PP
