@@ -1272,7 +1272,7 @@ a better solution than
 changing the
 .B .cflags
 value is inserting
-.RB \[lq]\[rs]:\[rq]
+.RB \[lq] \[rs]: \[rq]
 right after the hyphen at the places that really need a break point.
 .RE
 .
@@ -2793,11 +2793,11 @@ due to the regular naming convention of the special character escapes.
 .RS
 .EX
 \&.ds resume R\e['e]sum\e['e]\e"
-\e*[resume] \e# Résumé
+\e*[resume] \e# R['e]sum['e]
 \&.stringdown resume
-\e*[resume] \e# résumé
+\e*[resume] \e# r['e]sum['e]
 \&.stringup resume
-\e*[resume] \e# RÉSUMÉ
+\e*[resume] \e# R['E]SUM['E]
 .EE
 .RE
 .RE
@@ -4455,7 +4455,7 @@ The foregoing will always save zero to your register,
 because
 .B .do
 turns compatibility mode
-.IR off
+.I off
 while it interprets its argument list.
 .
 What you need is:
