@@ -1,3 +1,13 @@
+2020-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/tty.tmac: Stop suppressing nonexistent font warning.
+	Prompted by a 2017 suggestion and patch from Bjarni Ingi
+	Gislason.  Documents and macro packages that want to change the
+	font family should do so in awareness that this is meaningless
+	on terminal (nroff) devices (and -Thtml as well).
+
+	Fixes <https://savannah.gnu.org/bugs/?51364>.
+
 2020-07-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_man.7.man (.PP, .LP, .P): Fix error; these macros
