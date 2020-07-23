@@ -814,6 +814,18 @@ installation.
 .BI .SY " command"
 Begin synopsis.
 .
+A new paragraph is begun at the left margin
+.\" BEGIN STYLE
+(like
+.B .PP
+and its aliases)
+.\" END STYLE
+unless
+.B .SY
+has already been called without a corresponding
+.BR .YS ,
+in which case only a break is performed.
+.
 Hyphenation is turned off.
 .
 The
@@ -852,7 +864,7 @@ Square brackets in roman surround both arguments.
 .B .YS
 End synopsis.
 .
-Restore previous indentation amount and initial hyphenation mode.
+Restore previous indentation and initial hyphenation mode.
 .
 .
 .PP
@@ -918,7 +930,6 @@ produces the following output.
 .
 .
 .RS
-.PP
 .SY groff
 .OP \-abcegiklpstzCEGNRSUVXZ
 .OP \-d cs
