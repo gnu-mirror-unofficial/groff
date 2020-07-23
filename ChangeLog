@@ -1,5 +1,20 @@
 2020-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Migrate macro packages from font CW to CR.  The font name "CW"
+	{"constant-width"} is a legacy item we can dispose of (except
+	for the DVI device, which also has CWI for "constant-width
+	italic"), and much of the groff codebase already did starting
+	with commit 0de1d6d79cdb959ffa7dac3af77c2a36ef31873f {October
+	2017}.  Courier is available in the usual four styles {roman,
+	bold, italic, bold+italic}.
+
+	* tmac/an-ext.tmac (.EX): Set font to R, not CW.  The existing
+	.ft request was somewhat redundant with the '.do fam C'
+	immediately before, which set the font family to Courier.
+	* tmac/s.tmac (.UC): Use font CR, not CW.
+
+2020-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tty.tmac: Stop suppressing nonexistent font warning.
 	Prompted by a 2017 suggestion and patch from Bjarni Ingi
 	Gislason.  Documents and macro packages that want to change the
