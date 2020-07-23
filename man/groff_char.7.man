@@ -83,7 +83,7 @@ the
 .RI ( \%ISO-8859-1 )
 code set by default.
 .
-This mapping is contained in the file \f(CWlatin1.tmac\fP
+This mapping is contained in the file latin1.tmac
 and can be changed by loading a different input encoding.
 .
 Note that some of the input characters are reserved by
@@ -93,7 +93,7 @@ either for internal use or for special input purposes.
 On EBCDIC platforms, only code page
 .I cp1047
 is supported (which contains the same characters as \%latin1; the
-input encoding file is called \f(CWcp1047.tmac\fP).
+input encoding file is called cp1047.tmac).
 .
 Again, some input characters are reserved for internal and special
 purposes.
@@ -115,20 +115,20 @@ also produce single glyphs; these exist for historical reasons or
 are printable versions of syntactical characters.
 .
 They include
-\[oq]\f(CW\e\e\fP\[cq],
-\[oq]\f(CW\e\[aq]\fP\[cq],
-\[oq]\f(CW\e\[ga]\fP\[cq],
-\[oq]\f(CW\e\-\fP\[cq],
-\[oq]\f(CW\e.\fP\[cq],
+\[oq]\e\e\[cq],
+\[oq]\e\[aq]\[cq],
+\[oq]\e\[ga]\[cq],
+\[oq]\e\-\[cq],
+\[oq]\e.\[cq],
 and
-\[oq]\f(CW\ee\fP\[cq];
+\[oq]\ee\[cq];
 see
 .BR groff (@MAN7EXT@).
 .
 .
 .P
 In groff, all of these different types of characters and glyphs can be
-tested positively with the \[oq]\f(CW.if\ c\fP\[cq] conditional.
+tested positively with the \[oq].if\ c\[cq] conditional.
 .
 .
 .\" ====================================================================
@@ -235,9 +235,9 @@ as themselves; the only exceptions are the following characters:
 the ISO \%latin1 \[oq]Grave Accent\[cq] (code\ 96) prints as \[oq], a
 left single quotation mark (Unicode u2018).
 The same output glyph can be requested explicitly
-with \[oq]\f(CW\e(oq\fP\[cq].
+with \[oq]\e(oq\[cq].
 The original character can be obtained
-with \[oq]\f(CW\e`\fP\[cq] (Unicode u0060).
+with \[oq]\e`\[cq] (Unicode u0060).
 .
 .
 .TP
@@ -246,9 +246,9 @@ the ISO \%latin1 \[oq]Apostrophe\[cq] (code\ 39) prints as \[cq],
 a right single quotation mark (Unicode u2019).
 The same output glyph is commonly used in typography to represent
 a punctation apostrophe, for example in contractions.
-It can be requested explicitly with \[oq]\f(CW\e(cq\fP\[cq].
+It can be requested explicitly with \[oq]\e(cq\[cq].
 The original character can be obtained with
-\[oq]\f(CW\e(aq\fP\[cq] (Unicode u0027).
+\[oq]\e(aq\[cq] (Unicode u0027).
 .
 .
 .TP
@@ -256,8 +256,8 @@ The original character can be obtained with
 the ISO \%latin1 \[oq]Hyphen, Minus Sign\[cq] (code\ 45) prints as a
 hyphen (Unicode u2010).
 The same output glyph can be requested explicitly
-with \[oq]\f(CW\e(hy\fP\[cq].
-A minus sign can be obtained with \[oq]\f(CW\e-\fP\[cq] (Unicode u2212).
+with \[oq]\e(hy\[cq].
+A minus sign can be obtained with \[oq]\e-\[cq] (Unicode u2212).
 .
 .
 .TP
@@ -265,14 +265,14 @@ A minus sign can be obtained with \[oq]\f(CW\e-\fP\[cq] (Unicode u2212).
 the ISO \%latin1 \[oq]Tilde\[cq] (code\ 126) is reduced in size to be
 usable as a diacritic (Unicode u02DC).
 A larger glyph can be obtained with
-\[oq]\f(CW\e(ti\fP\[cq] (Unicode u007E).
+\[oq]\e(ti\[cq] (Unicode u007E).
 .
 .
 .TP
 .B ^
 the ISO \%latin1 \[oq]Circumflex Accent\[cq] (code\ 94) is reduced in
 size to be usable as a diacritic (Unicode u02C6); a larger glyph
-can be obtained with \[oq]\f(CW\e(ha\fP\[cq] (Unicode u005E).
+can be obtained with \[oq]\e(ha\[cq] (Unicode u005E).
 .
 .
 .P
@@ -343,7 +343,7 @@ printable characters.
 .
 the ISO \%latin1
 .I no-break space
-is mapped to \[oq]\f(CW\e\(ti\fP\[cq], the stretchable space
+is mapped to \[oq]\e\(ti\[cq], the stretchable space
 character.
 .
 .
@@ -354,7 +354,7 @@ the soft hyphen control character.
 .
 .B groff
 never uses this character for output (thus it is omitted in the table
-below); the input character\ 173 is mapped onto \[oq]\f(CW\e%\fP\[cq].
+below); the input character\ 173 is mapped onto \[oq]\e%\[cq].
 .
 .
 .P
@@ -485,42 +485,42 @@ ASCII or \%latin1 code set, not only alphanumeric characters.
 Here some examples:
 .
 .TP
-\f(CW\e(\fP\fIch\fP
+\e(\fP\fIch
 A glyph having the 2-character name
 .IR ch .
 .
 .TP
-\f(CW\e[\fP\,\fIchar_name\/\fP\f(CW]\fP
+\e[\fP\,\fIchar_name\/]
 A glyph having the name
 .I char_name
 (having length 1, 2, 3, \&.\|.\|.).
 .
 Note that \[oq]\fIc\fP\[cq] is not the same as
-\[oq]\f(CW\e[\fP\,\fIc\/\fP\f(CW]\fP\[cq] (\,\fIc\fP\ a single
+\[oq]\e[\fP\,\fIc\/\fP]\[cq] (\,\fIc\ a single
 character): The latter is internally mapped to glyph name
 \[oq]\e\fIc\fP\[cq].
 .
 By default, groff defines a single glyph name starting with a
 backslash, namely \%\[oq]\e-\[cq], which can be either accessed as
-\[oq]\f(CW\e\-\fP\[cq] or \[oq]\f(CW\e[-]\fP\[cq].
+\[oq]\e\-\[cq] or \[oq]\e[-]\[cq].
 .
 .TP
-\f(CW\e[\fP\,\fIbase_glyph composite_1 composite_2 \&.\|.\|.\/\fP\
-\f(CW]\fP
+\e[\fP\,\fIbase_glyph composite_1 composite_2 \&.\|.\|.\/\
+]
 A composite glyph; see below for a more detailed description.
 .
 .
 .P
 In groff, each \%8-bit input character can also referred to by the
 construct
-\[oq]\f(CW\e[char\fP\,\fIn\/\fP\f(CW]\fP\[cq] where
+\[oq]\e[char\fP\,\fIn\/]\[cq] where
 .I n
 is the decimal code of the character, a number between 0 and\ 255
 without leading zeros (those entities are
 .I not
 glyph names).
 .
-They are normally mapped onto glyphs using the \f(CW.trin\fP request.
+They are normally mapped onto glyphs using the .trin request.
 .
 .
 .P
@@ -530,7 +530,7 @@ derived from a Unicode code point; this is shown in the
 .
 In general, all glyphs not having a name as listed in this manual page
 can be accessed with the
-\[oq]\f(CW\e[u\fP\,\fIXXXX\/\fP\f(CW]\fP\[cq]
+\[oq]\e[u\fP\,\fIXXXX\/]\[cq]
 construct.
 .
 Refer to section \[lq]Using Symbols\[rq] in
@@ -544,7 +544,7 @@ glyph names are constructed.
 .
 .
 .P
-Moreover, new glyph names can be created by the \f(CW.char\fP request;
+Moreover, new glyph names can be created by the .char request;
 see
 .BR groff (@MAN7EXT@).
 .
@@ -765,7 +765,7 @@ We map it rather arbitrarily to u23AA.
 .
 .P
 Note that not all devices contain extensible bracket pieces which can
-be piled up with \[oq]\f(CW\eb\fP\[cq] due to the restrictions of the
+be piled up with \[oq]\eb\[cq] due to the restrictions of the
 escape's piling algorithm.
 .
 A general solution to build brackets out of pieces is the following
@@ -1003,8 +1003,8 @@ _
 .ad
 .
 .P
-Use \[oq]\f(CW\e[radicalex]\fP\[cq], not
-\[oq]\f(CW\e[overline]\fP\[cq], for continuation of square root.
+Use \[oq]\e[radicalex]\[cq], not
+\[oq]\e[overline]\[cq], for continuation of square root.
 .
 .P
 .I Text markers
@@ -1240,8 +1240,8 @@ problems are likely to happen \[en] being conservative, groff
 currently assumes that \[oq]phi\[cq] in a PostScript symbol font is
 the stroked version.
 .P
-In groff, symbol \[oq]\f(CW\e[*f]\fP\[cq] always denotes the stroked
-version of phi, and \[oq]\f(CW\e[+f]\fP\[cq] the curly variant.
+In groff, symbol \[oq]\e[*f]\[cq] always denotes the stroked
+version of phi, and \[oq]\e[+f]\[cq] the curly variant.
 .P
 .na
 .TS
