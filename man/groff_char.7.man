@@ -1,7 +1,7 @@
 '\" t
 .TH groff_char @MAN7EXT@ "@MDATE@" "groff @VERSION@"
 .SH Name
-groff_char \- groff glyph names
+groff_char \- GNU roff special character and glyph repertoire
 .
 .
 .\" ====================================================================
@@ -34,16 +34,14 @@ groff_char \- groff glyph names
 .\" ====================================================================
 .
 .
-.\" groff only
-.\".if \n(.g .ne 2v
-.\".if \n(.g .sv 2v
-.
+.\" CSTR #54 does not define the special character \(aq.
 .ds aq \(aq
 .
-.\" non-groff
+.\" If not groff (or not claiming groff compatibility), check the
+.\" implementation for \(aq.  If missing, we are at the mercy of the
+.\" output device.  Limp along with the acute accent/right single
+.\" quotation mark/whatever.
 .if !\n(.g .if '\(aq'' .ds aq \'
-.
-.nr Sp 2n
 .
 .do if !r ECFONTS .do fspecial CR R
 .
@@ -52,83 +50,175 @@ groff_char \- groff glyph names
 .SH Description
 .\" ====================================================================
 .
-This manual page lists the standard
-.B groff
-glyph names and the default input mapping, \%latin1.
+The GNU
+.I roff
+typesetting system has a large glyph repertoire suitable for production
+of varied literary,
+professional,
+technical,
+and mathematical documents.
 .
-The glyphs in this document look different depending on which output
-device was chosen (with option
+However,
+its input encoding is restricted to
+Latin-1
+(ISO\~8859-1)
+or EBCDIC code page 1047.
+.
+For ease of document maintenance in UTF-8 environments,
+it is advisable to use only the Unicode basic Latin code points,
+a subset of all of the foregoing historically referred to as US-ASCII,
+.\" Yes, a subset, albeit a derangement as well in the cp1047 case.
+which has only 94 visible,
+printable code points.
+.\" In groff, 0x20 SP is mapped to a space node, not a glyph node, and
+.\" all kinds of special behavior attaches to such nodes, so we count
+.\" only to 94 and not 95 as is often done in other ASCII contexts.
+.
+.
+.P
+AT&T
+.I troff
+in the 1970s faced a similar problem of typesetter devices with a glyph
+repertoire differing from that of the computers that controlled them.
+.
+The solution
+.I troff
+adopted was a special form of escape sequence known as a
+.I special character
+to access several dozen additional glyphs available in the fonts
+prepared for mounting in the phototypesetter.
+.
+These glyphs were mapped onto a two-character name space for a degree
+of mnemonic convenience;
+for example,
+the escape sequence
+.B \e(aa
+encoded an acute accent and
+.B \e(sc
+a section sign.
+.
+.
+.P
+As in other respects,
+.I groff
+has removed historical
+.I roff
+limitations on the name lengths of special characters,
+but recognizes and retains compatibility with the historical names.
+.
+.I groff
+expands the lexicon of glyphs available by name and permits users to
+define their own special character names with the
+.B .char
+request.
+.
+.
+.P
+This document lists all of the special characters supported by
+.I groff
+and describes the systematic notation by which it enables access to
+arbitrary Unicode code points and composition of composite glyphs.
+.
+The glyphs listed in this document may not be available,
+or may vary in appearance,
+depending on the output device chosen when the page was rendered
+(with option
 .B \-T
 for the
-.BR man (1)
-program or the roff formatter).
+.IR man (1)
+or
+.I roff
+programs).
 .
-Glyphs not available for the device that is being used to print or
-view this manual page are marked with
-.ie \n(.g \[oq](N/A)\[cq]; the device currently used is \[oq]\*(.T\[cq].
-.el \[oq](N/A)\[cq].
-.
-.
-.P
-In the actual version,
-.B groff
-provides only \%8-bit characters for direct input and named entities
-for further glyphs.
-.
-On ASCII platforms, input character codes in the range 0 to 127
-(decimal) represent the usual \%7-bit ASCII characters, while codes
-between 127 and 255 are interpreted as the corresponding characters in
-the
-.I \%latin1
-.RI ( \%ISO-8859-1 )
-code set by default.
-.
-This mapping is contained in the file latin1.tmac
-and can be changed by loading a different input encoding.
-.
-Note that some of the input characters are reserved by
-.BR groff ,
-either for internal use or for special input purposes.
-.
-On EBCDIC platforms, only code page
-.I cp1047
-is supported (which contains the same characters as \%latin1; the
-input encoding file is called cp1047.tmac).
-.
-Again, some input characters are reserved for internal and special
-purposes.
+The device used in generation of this page was \[lq]\*[.T]\[rq].
 .
 .
 .P
-All roff systems provide the concept of named glyphs.
-.
-In traditional roff systems, only names of length\ 2 were used, while
-groff also provides support for longer names.
-.
-It is strongly suggested that only named glyphs are used for all
-character representations outside of the printable \%7-bit ASCII range.
-.
-.
-.P
-Some of the predefined groff escape sequences (with names of length\ 1)
-also produce single glyphs; these exist for historical reasons or
-are printable versions of syntactical characters.
+A few escape sequences that are not special character escapes also
+produce glyphs;
+these exist for syntactical or historical reasons.
 .
 They include
-\[oq]\e\e\[cq],
-\[oq]\e\[aq]\[cq],
-\[oq]\e\[ga]\[cq],
-\[oq]\e\-\[cq],
-\[oq]\e.\[cq],
+.BR \e\e ,
+.BR \e\[aq] ,
+.BR \e\[ga] ,
+.BR \e\- ,
+.B \e.\&
+(backslash-dot),
 and
-\[oq]\ee\[cq];
+.BR \ee ;
 see
-.BR groff (@MAN7EXT@).
+.IR groff (@MAN7EXT@).
+.
+Of these,
+only
+.B \e\-
+is also available as a special character,
+in the form
+.BR \e[\-] .
+.
+A small number of special characters represent glyphs that are not
+encoded in Unicode;
+examples include the baseline rule
+.B \e[ru]
+and the Bell Systems logo
+.B \e[bs].
 .
 .
 .P
-In groff, all of these different types of characters and glyphs can be
-tested positively with the \[oq].if\ c\[cq] conditional.
+In
+.IR groff ,
+output device support for any character
+(ordinary or special)
+can be tested with the conditional
+.RB \[lq] c \[rq].
+.
+.RS
+.\" https://www.bell-labs.com/usr/dmr/www/ ("In 1984, ...")
+.EX
+\&.ie c \e[bs] \e{Welcome to the \e[bs] Bell System;
+did you get the Wehrmacht helmet or the Death Star?\e}
+\&.el No Bell Systems logo.
+.EE
+.RE
+.
+.
+.P
+While
+.I groff
+accepts eight-bit encoded input,
+not all such code points are valid as input.
+.
+.\" src/libs/libgroff/invalid.cpp
+On non-EBCDIC platforms,
+character codes
+0,
+11,
+13\[en]31,
+and
+128\[en]159
+are invalid.
+.
+(This is all C0 and C1 controls except for
+SOH through LF
+[Control+A to Control+J],
+and FF
+[Control+L].)
+.
+On EBCDIC platforms,
+0,
+8\[en]9,
+11,
+13\[en]20,
+23\[en]31,
+and
+48\[en]63
+are invalid.
+.
+Some of these code points are used by
+.I groff
+for internal purposes,
+which is one reason it does not support UTF-8 natively.
 .
 .
 .\" ====================================================================
