@@ -6582,11 +6582,11 @@ right-justified is associated with the current environment
 @codequoteundirected on
 GNU @code{troff} hyphenates words automatically by default.  Automatic
 hyphenation of words in natural languages is a subject requiring
-algorithms and data, and susceptible to conventions and preferences.
+algorithms and data, and is susceptible to conventions and preferences.
 Before tackling automatic hyphenation, let us consider how it can be
 done manually.
 
-Explicitly hyphenated phrases such as ``mother-in-law'' are eligible for
+Explicitly hyphenated words such as ``mother-in-law'' are eligible for
 breaking after each of their hyphens.  Relatively few words in a
 language offer such obvious break points, however.  In a short document
 we may wish to disable automatic hyphenation and explicitly instruct GNU
@@ -6595,11 +6595,16 @@ we may wish to disable automatic hyphenation and explicitly instruct GNU
 @cindex hyphenation exceptions
 @Defreq {hw, word @dots{}}
 Define each @dfn{hyphenation exception} @var{word} with each hyphen `-'
-in the word indicating a hyphenation point.  For example:
+in the word indicating a hyphenation point.  For example, the request
 
 @Example
-.hw in-sa-lub-rious
+.hw in-sa-lub-rious alpha
 @endExample
+
+@c Serendipitously, in PDF output, the "alpha" below gets hyphenated.
+@c Try to preserve this felicity in future edits.
+marks potential hyphenation points in ``insalubrious'', and prevents
+``alpha'' from being hyphenated at all.
 
 @noindent
 Besides the space character, any character whose hyphenation code is
@@ -6612,21 +6617,22 @@ Hyphenation points specified with @code{hw} are not subject to the
 restrictions given by the @code{hy} request (see below).
 
 Hyphenation exceptions specified with the @code{hw} request are
-associated with the hyphenation language and environment; calling the
-@code{hw} request in the absence of a hyphenation language is an error.
+associated with the hyphenation language (see below) and environment
+(@pxref{Environments}); calling the @code{hw} request in the absence of
+a hyphenation language is an error.
 
-The request is ignored if there is no parameter.
+The request is ignored if there are no parameters.
 @endDefreq
 
 These are known as hyphenation @emph{exceptions} in the expectation that
 most users will avail themselves of automatic hyphenation; these
-exceptions override any rules that would nomally apply to a word
+exceptions override any rules that would normally apply to a word
 matching a hyphenation exception defined with @code{hw}.
 
 Situations also arise when only a specific occurrence of a word needs
-its hyphenation altered (or suppressed altogether), or when something
-that is not a word in a natural language, like a URL, needs to be broken
-in sensible places without hyphens.
+its hyphenation altered or suppressed, or when something that is not a
+word in a natural language, like a URL, needs to be broken in sensible
+places without hyphens.
 
 @DefescList {\\%, , , }
 @DefescListEndx {\:, , , }
@@ -6634,30 +6640,35 @@ in sensible places without hyphens.
 @cindex character, hyphenation (@code{\%})
 @cindex disabling hyphenation (@code{\%})
 @cindex hyphenation, disabling (@code{\%})
-To tell GNU @code{troff} how to hyphenate words on the fly, use the
-@code{\%} escape, also known as the @dfn{hyphenation character}.
-Preceding a word with this character prevents it from being
-hyphenated; putting it inside a word indicates to GNU @code{troff} that
-the word may be hyphenated at that point.  Note that this mechanism
-only affects that one occurrence of the word; to change the
-hyphenation of a word for the entire document, use the @code{hw}
-request.
+To tell GNU @code{troff} how to hyphenate words as they occur in input,
+use the @code{\%} escape, also known as the @dfn{hyphenation character}.
+Preceding a word with this character prevents it from being hyphenated;
+each instance within a word indicates to GNU @code{troff} that the word
+may be hyphenated at that point.  Note that this mechanism only affects
+that occurrence of the word; to change the hyphenation of a word for the
+entire document, use the @code{hw} request.
 
+@cindex @code{\X}, followed by @code{\%}
+@cindex @code{\Y}, followed by @code{\%}
+@cindex @code{\%}, following @code{\X} or @code{\Y}
+Note that the escapes @code{\X} and @code{\Y} start a word; that is, the
+@code{\%} escape in (say) @w{@samp{\X'...'\%foobar}} or
+@w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
+hyphenation point at the beginning of @samp{foobar}; most likely this
+isn't what you want to do.  @xref{Postprocessor Access}.
+
+@cindex hyphenless breaks (@code{\:})
+@cindex breaking without hyphens (@code{\:})
+@cindex file names, breaking (@code{\:})
+@cindex breaking file names (@code{\:})
+@cindex URLs, breaking (@code{\:})
+@cindex breaking URLs (@code{\:})
 The @code{\:} escape inserts a zero-width break point; that is, the word
 can break there, but no hyphen is written to the output if it does.
 
 @Example
 @dots{} check the /var/log/\:httpd/\:access_log file @dots{}
 @endExample
-
-@cindex @code{\X}, followed by @code{\%}
-@cindex @code{\Y}, followed by @code{\%}
-@cindex @code{\%}, following @code{\X} or @code{\Y}
-Note that @code{\X} and @code{\Y} start a word; that is, the @code{\%}
-escape in (say) @w{@samp{\X'...'\%foobar}} or
-@w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
-hyphenation point at the beginning of @samp{foobar}; most likely this
-isn't what you want to do.
 @endDefesc
 
 @Defreq {hc, [@Var{char}]}
@@ -6679,32 +6690,33 @@ The hyphenation character is associated with the current environment
 @cindex @code{char} request, and soft hyphen character
 @cindex @code{tr} request, and soft hyphen character
 Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{``Soft
-hyphen @emph{character}'' is a misnomer since it is an output glyph.}
-If the argument is omitted, the soft hyphen character is set to the
-default, @code{\(hy}.  The @dfn{soft hyphen character} is the glyph that
-is inserted when a word is automatically hyphenated at a line
-break.@footnote{It is ``soft'' because it only appears in ouput where
+hyphen @emph{character}'' is a misnomer since it is an output glyph.} If
+the argument is omitted, the soft hyphen character is set to the
+default, @code{\[hy]}.  The @dfn{soft hyphen character} is the glyph
+that is inserted when a word is automatically hyphenated at a line
+break.@footnote{It is ``soft'' because it only appears in output where
 hyphenation is actually performed; a ``hard'' hyphen, as in
 ``long-term'', always appears.}  If the soft hyphen character does not
 exist in the font of the character immediately preceding a potential
 break point, then the line is not broken at that point.  Neither
 definitions (specified with the @code{char} request) nor translations
-(specified with the @code{tr} request) are considered when assigning
-the soft hyphen character.
+(specified with the @code{tr} request) are considered when assigning the
+soft hyphen character.
 @endDefreq
 
 @cindex hyphenation, automatic
 Several requests influence automatic hyphenation.  Because conventions
 vary, a variety of hyphenation modes are available to the @code{hy}
 request; these determine whether automatic hyphenation will apply to a
-word prior to breaking a line at the end of a column or page, and at
-which positions within that word hyphenation is permissible.  The places
-within a word that are eligible for hyphenation are determined by
-language-specific data and lettercase relationships.  Furthermore,
-hyphenation of a word might be suppressed because too many previous
-lines have been hyphenated (@code{hlm}), the line has not reached a
-certain minimum length (@code{hym}), or the line can instead be adjusted
-with up to a certain amount of additional inter-word space (@code{hys}).
+word prior to breaking a line at the end of a page (more or less; see
+below for details), and at which positions within that word hyphenation
+is permissible.  The places within a word that are eligible for
+hyphenation are determined by language-specific data and lettercase
+relationships.  Furthermore, hyphenation of a word might be suppressed
+because too many previous lines have been hyphenated (@code{hlm}), the
+line has not reached a certain minimum length (@code{hym}), or the line
+can instead be adjusted with up to a certain amount of additional
+inter-word space (@code{hys}).
 
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
@@ -6728,9 +6740,22 @@ disables hyphenation.
 enables hyphenation except after the first and before the last character
 of a word; this is the default if @var{mode} is omitted and also the
 start-up value of GNU @code{troff}.
+@end table
 
+The remaining values ``imply'' 1; that is, they enable hyphenation
+under the same conditions as @samp{.hy 1}, and then apply or lift
+restrictions relative to that basis.
+
+@table @code
 @item 2
-disables hyphenation of the last word on a page or column.
+disables hyphenation of the last word on a page.@footnote{Technically,
+this value prevents hyphenation if the next page position trap is closer
+than the next line of text would be.  GNU @code{troff} automatically
+inserts an implicit page position trap at the end of each page to cause
+a page transition.  This value can be used in traps planted by users or
+macro packages to prevent hyphenation of the last word in a column in
+multi-column page layouts or before floating figures or tables.
+@xref{Traps}.}
 
 @item 4
 disables hyphenation before the last two characters of a word.
@@ -6748,16 +6773,14 @@ enables hyphenation after the first character of a word.
 Note that any restrictions imposed by the hyphenation mode are
 @emph{not} respected for words whose hyphenations have been explicitly
 specified with the hyphenation character (@samp{\%} by default) or the
-@code{hw} request (see below).
+@code{hw} request.
 
 The nonzero values in the previous table are additive.  For example,
 value@tie{}12 causes GNU @code{troff} to hyphenate neither the last two
-nor the first two characters of a word.  Note that value@tie{}13 would
-do exactly the same; in other words, value@tie{}1 need not be added if
-the value is larger than@tie{}1.
-
-Some values cannot be used together because they contradict; for
-instance, values 4 and@tie{}16, and values 8 and@tie{}32.
+nor the first two characters of a word.  Some values cannot be used
+together because they contradict; for instance, values 4 and@tie{}16,
+and values 8 and@tie{}32.  As noted, it is superfluous to add 1 to any
+other positive value.
 
 @cindex hyphenation pattern files
 @cindex pattern files, for hyphenation
@@ -6810,8 +6833,9 @@ files.
 @end multitable
 
 Hyphenation exceptions within pattern files (i.e., the words within a
-@code{\hyphenation} group) also obey the hyphenation restrictions given
-by @code{hy}.  However, exceptions specified with @code{hw} do not.
+@TeX{} @code{\hyphenation} group) also obey the hyphenation restrictions
+given by @code{hy}.  However, exceptions specified with @code{hw} do
+not.
 
 The hyphenation mode is associated with the current environment
 (@pxref{Environments}).
@@ -6833,8 +6857,8 @@ not remembered.
 @cindex hyphenation patterns (@code{hpf})
 @cindex patterns for hyphenation (@code{hpf})
 Read hyphenation patterns from @var{pattern-file}.  This file is sought
-in the same way as @file{@var{name}.tmac} (or @file{tmac.@var{name}}) if
-the @option{-m@var{name}} option is specified.
+in the same way that macro files are with the @code{mso} request or the
+@option{-m@var{name}} command-line option to @code{groff}.
 
 The @var{pattern-file} should have the same format as (simple) @TeX{}
 pattern files.  More specifically, the following scanning rules are
@@ -6846,7 +6870,7 @@ A percent sign starts a comment (up to the end of the line) even if
 preceded by a backslash.
 
 @item
-No support for `digraphs' like @code{\$}.
+``Digraphs'' like @code{\$} are not supported.
 
 @item
 @code{^^@var{xx}} (where each @var{x} is 0--9 or a--f) and
@@ -6854,7 +6878,7 @@ No support for `digraphs' like @code{\$}.
 decimal) are recognized; other uses of @code{^} cause an error.
 
 @item
-No macro expansion.
+No macro expansion is performed.
 
 @item
 @code{hpf} checks for the expression @code{\patterns@{@dots{}@}}
@@ -6885,7 +6909,8 @@ codes---integers from 0 to@tie{}255.  The request maps character
 code@tie{}@var{a} to code@tie{}@var{b}, code@tie{}@var{c} to
 code@tie{}@var{d}, and so on.  Character codes that would otherwise be
 invalid in GNU @code{troff} can be used.  By default, every code maps to
-itself except letters `A' to `Z', which map to `a' to `z'.
+itself except those for letters `A' to `Z', which map those for to `a'
+to `z'.
 
 @pindex troffrc
 @pindex troffrc-end
@@ -6917,18 +6942,18 @@ input character (not a special character) other than a digit or a space.
 The request is ignored if it has no parameters.
 
 For hyphenation to work, hyphenation codes must be set up.  At
-start-up, GNU @code{troff} assigns hyphenation codes only to the letters
-@samp{a}--@samp{z} (mapped to themselves) and to the letters
-@samp{A}--@samp{Z} (mapped to @samp{a}--@samp{z}); all other characters
-have undefined hyphenation codes.  Normally, hyphenation patterns
-contain only lowercase letters which should be applied regardless of
-case.  In other words, they assume that the words `FOO' and `Foo' should
-be hyphenated exactly as `foo' is.  The @code{hcode} request extends
-this principle to letters outside the Unicode basic Latin alphabet;
-without it, words containing such letters won't be hyphenated properly
-even if the corresponding hyphenation patterns contain them.  For
-example, the following @code{hcode} requests are necessary to assign
-hyphenation codes to the letters @samp{ÄäÖöÜüß} (needed for German):
+start-up, GNU @code{troff} assigns hyphenation codes to the letters
+@samp{a}--@samp{z} (mapped to themselves), to the letters
+@samp{A}--@samp{Z} (mapped to @samp{a}--@samp{z}), and zero to all other
+characters.  Normally, hyphenation patterns contain only lowercase
+letters which should be applied regardless of case.  In other words,
+they assume that the words `FOO' and `Foo' should be hyphenated exactly
+as `foo' is.  The @code{hcode} request extends this principle to letters
+outside the Unicode basic Latin alphabet; without it, words containing
+such letters won't be hyphenated properly even if the corresponding
+hyphenation patterns contain them.  For example, the following
+@code{hcode} requests are necessary to assign hyphenation codes to the
+letters @samp{ÄäÖöÜüß} (needed for German):
 
 @Example
 .hcode ä ä  Ä ä
@@ -7023,7 +7048,7 @@ register.
 Suppress hyphenation of the line in adjustment modes @samp{b} or
 @samp{n} if it can be justified by adding no more than
 @var{hyphenation-space} extra space to each word space.  Without an
-argument, the hyphenation space adjustment threshole is set to its
+argument, the hyphenation space adjustment threshold is set to its
 default value, 0.  The default scaling indicator is @samp{m}.  The
 hyphenation space adjustment threshold is associated with the current
 environment (@pxref{Environments}).

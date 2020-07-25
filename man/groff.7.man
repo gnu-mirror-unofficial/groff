@@ -4574,54 +4574,89 @@ a variety of hyphenation modes are available to the
 .B .hy
 request;
 these determine whether automatic hyphenation will apply to a word prior
-to breaking a line at the end of a column or page,
+to breaking a line at the end of a page
+(more or less;
+see below for details),
 and at which positions within that word hyphenation is permissible.
 .
 The default is
 .RB \[lq] 1 \[rq]
 for historical reasons,
-but macro packages often override this default.
+but this is not an appropriate value for the U.S.\& English hyphenation
+patterns used by
+.IR groff ,
+and macro packages often override it.
 .
 .
 .TP
 .B 0
 disables hyphenation.
 .
+.
 .TP
 .B 1
 enables hyphenation except after the first and before the last character
 of a word.
 .
+.
+.P
+The remaining values \[lq]imply\[rq]
+.BR 1 ;
+that is,
+they enable hyphenation under the same conditions as
+.RB \[lq] ".hy 1" \[rq],
+and then apply or lift restrictions relative to that basis.
+.
+.
 .TP
 .B 2
-disables hyphenation of the last word on a page or column.
+disables hyphenation of the last word on a page.
+.
+(Technically,
+this value prevents hyphenation if the next page position trap is closer
+than the next line of text would be.
+.
+.I groff
+automatically inserts an implicit page position trap at the end of each
+page to cause a page transition.
+.
+This value can be used in traps planted by users or macro packages to
+prevent hyphenation of the last word in a column in multi-column page
+layouts or before floating figures or tables.)
+.\" If this page ever grows a Traps section, cross-reference it here.
+.
 .
 .TP
 .B 4
 disables hyphenation before the last two characters of a word.
 .
+.
 .TP
 .B 8
 disables hyphenation after the first two characters of a word.
+.
 .
 .TP
 .B 16
 enables hyphenation before the last character of a word.
 .
+.
 .TP
 .B 32
 enables hyphenation after the first character of a word.
 .
+.
 .P
 Note that any restrictions imposed by the hyphenation mode are
 .I not
-respected for words whose hyphenations have been explicitly
-specified with the hyphenation character
+respected for words whose hyphenations have been explicitly specified
+with the hyphenation character
 .RB (\[lq] \[rs]% \[rq]
 by default)
 or the
 .B .hw
 request.
+.
 .
 .P
 The nonzero values above are additive.
@@ -4632,15 +4667,13 @@ value\~12 causes
 to hyphenate neither the last two nor the first two characters of a
 word.
 .
-Note that value\~13 would do exactly the same;
-in other words,
-value\~1 need not be added if the value is larger than\~1.
-.
-.P
 Some values cannot be used together because they contradict;
 for instance,
 values 4 and\~16,
 and values 8 and\~32.
+.
+As noted,
+it is superfluous to add\~1 to any other positive value.
 .
 .
 .P

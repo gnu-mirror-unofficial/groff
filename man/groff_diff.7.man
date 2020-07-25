@@ -1966,11 +1966,11 @@ hyphenation codes must be set up.
 .
 At start-up,
 .I groff
-assigns hyphenation codes only to the letters \[lq]a\[en]z\[rq]
+assigns hyphenation codes to the letters \[lq]a\[en]z\[rq]
 (mapped to themselves)
 and to the letters \[lq]A\[en]Z\[rq]
-(mapped to \[lq]a\[en]z\[rq]);
-all other characters have undefined hyphenation codes.
+(mapped to \[lq]a\[en]z\[rq])
+and zero to all other characters.
 .
 Normally,
 hyphenation patterns contain only lowercase letters which should be
@@ -2084,14 +2084,13 @@ are counted; explicit hyphens are not.
 Read hyphenation patterns from
 .IR pattern-file .
 .
-This file sought in the same way as
-.IB name .tmac
-(or
-.BI tmac. name\c
-)
-is searched for when the
+This file is sought in the same way that macro files are with the
+.B .mso
+request or the
 .BI \-m name
-option is specified.
+command-line option to
+.IR groff (@MAN1EXT@).
+.
 .
 .IP
 The
@@ -2101,6 +2100,7 @@ should have the same format as (simple) \*[tx] pattern files.
 More specifically,
 the following scanning rules are implemented.
 .
+.
 .RS
 .IP \[bu]
 A percent sign starts a comment
@@ -2109,8 +2109,9 @@ even if preceded by a backslash.
 .
 .
 .IP \[bu]
-No support for \[lq]digraphs\[rq] like
-.BR \[rs]$ .
+\[lq]Digraphs\[rq] like
+.B \[rs]$
+are not supported.
 .
 .
 .IP \[bu]
@@ -2129,7 +2130,7 @@ cause an error.
 .
 .
 .IP \[bu]
-No macro expansion.
+No macro expansion is performed.
 .
 .
 .IP \[bu]
@@ -2266,8 +2267,9 @@ Character codes that would otherwise be invalid in
 can be used.
 .
 By default,
-every code maps to itself except letters \[lq]A\[rq] to \[lq]Z\[rq],
-which map to \[lq]a\[rq] to \[lq]z\[rq].
+every code maps to itself those for except letters \[lq]A\[rq] to
+\[lq]Z\[rq],
+which map to those for \[lq]a\[rq] to \[lq]z\[rq].
 .
 .
 .TP
