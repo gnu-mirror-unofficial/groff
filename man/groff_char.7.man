@@ -30,23 +30,6 @@ groff_char \- GNU roff special character and glyph repertoire
 .
 .
 .\" ====================================================================
-.\" Setup
-.\" ====================================================================
-.
-.
-.\" CSTR #54 does not define the special character \(aq.
-.ds aq \(aq
-.
-.\" If not groff (or not claiming groff compatibility), check the
-.\" implementation for \(aq.  If missing, we are at the mercy of the
-.\" output device.  Limp along with the acute accent/right single
-.\" quotation mark/whatever.
-.if !\n(.g .if '\(aq'' .ds aq \'
-.
-.do if !r ECFONTS .do fspecial CR R
-.
-.
-.\" ====================================================================
 .SH Description
 .\" ====================================================================
 .
@@ -83,7 +66,7 @@ repertoire differing from that of the computers that controlled them.
 .
 The solution
 .I troff
-adopted was a special form of escape sequence known as a
+adopted was a form of escape sequence known as a
 .I special character
 to access several dozen additional glyphs available in the fonts
 prepared for mounting in the phototypesetter.
@@ -117,14 +100,14 @@ request.
 This document lists all of the special characters supported by
 .I groff
 and describes the systematic notation by which it enables access to
-arbitrary Unicode code points and composition of composite glyphs.
+arbitrary Unicode code points and construction of composite glyphs.
 .
 The glyphs listed in this document may not be available,
 or may vary in appearance,
 depending on the output device chosen when the page was rendered
-(with option
+(with the
 .B \-T
-for the
+option to the
 .IR man (1)
 or
 .I roff
@@ -153,7 +136,7 @@ see
 Of these,
 only
 .B \e\-
-is also available as a special character,
+is also available as a special character of the same name,
 in the form
 .BR \e[\-] .
 .
@@ -331,7 +314,7 @@ with \[oq]\e`\[cq] (Unicode u0060).
 .
 .
 .TP
-.B \*(aq
+.B \[aq]
 the ISO \%latin1 \[oq]Apostrophe\[cq] (code\ 39) prints as \[cq],
 a right single quotation mark (Unicode u2019).
 The same output glyph is commonly used in typography to represent
@@ -366,7 +349,6 @@ can be obtained with \[oq]\e(ha\[cq] (Unicode u005E).
 .
 .
 .P
-.na
 .TS
 l l l l l lx.
 Output	Input	Code	PostScript	Unicode	Notes
@@ -409,7 +391,6 @@ _
 \[u02DC]	\[ti]	126	tilde	u02DC	small tilde
 \[ti]	\e(ti		asciitilde	u007E	tilde
 .TE
-.ad
 .
 .
 .\" ====================================================================
@@ -456,7 +437,6 @@ with a \%latin1 code page, it is better to use their glyph names;
 see the next section.
 .
 .P
-.na
 .TS
 l l l l l lx.
 Output	Input	Code	PostScript	Unicode	Notes
@@ -556,7 +536,6 @@ _
 \[char254]	\[char254]	254	thorn	u00FE	thorn
 \[char255]	\[char255]	255	ydieresis	u0079_0308	y dieresis (umlaut)
 .TE
-.ad
 .
 .
 .\" ====================================================================
@@ -652,7 +631,6 @@ text.
 .
 .
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -663,12 +641,10 @@ _
 \[Tp]	\e[Tp]	thorn	u00FE	lowercase thorn
 \[ss]	\e[ss]	germandbls	u00DF	German double s (sharp s)
 .TE
-.ad
 .
 .P
 .I Ligatures and Other Latin Glyphs
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -691,12 +667,10 @@ _
 \[.i]	\e[.i]	dotlessi	u0131	i without a dot (Turkish)
 \[.j]	\e[.j]	dotlessj	u0237	j without a dot
 .TE
-.ad
 .
 .P
 .I Accented Characters
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -762,7 +736,6 @@ _
 \[oA]	\e[oA]	Aring	u0041_030A	A ring
 \[oa]	\e[oa]	aring	u0061_030A	a ring
 .TE
-.ad
 .
 .P
 .I Accents
@@ -773,7 +746,6 @@ request is used to map most of the accents to non-spacing glyph names;
 the values given in parentheses are the original (spacing) ones.
 .
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -798,12 +770,10 @@ T}
 tilde in vertical middle, ASCII, in Unix-like the home directory
 T}
 .TE
-.ad
 .
 .P
 .I Quotes
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -825,12 +795,10 @@ T}
 single right-pointing angle quotation mark
 T}
 .TE
-.ad
 .
 .P
 .I Punctuation
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -841,7 +809,6 @@ _
 \[en]	\e[en]	endash	u2013	en-dash symbol
 \[hy]	\e[hy]	hyphen	u2010	hyphen symbol +
 .TE
-.ad
 .
 .P
 .I Brackets
@@ -861,10 +828,9 @@ escape's piling algorithm.
 A general solution to build brackets out of pieces is the following
 macro:
 .
-.P
-.nf
+.
 .RS
-.ft C
+.EX
 \&.\e" Make a pile centered vertically 0.5em
 \&.\e" above the baseline.
 \&.\e" The first argument is placed at the top.
@@ -891,9 +857,9 @@ macro:
 \&.  as pile \eh'\en[pile-wd]u'\e"
 \&..
 \&.ec
-.ft
+.EE
 .RE
-.fi
+.
 .
 .P
 Another complication is the fact that some glyphs which represent
@@ -914,7 +880,6 @@ only glyphs with long names are guaranteed to pile up correctly for all
 devices (provided those glyphs exist).
 .
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1025,12 +990,10 @@ T}
 right parenthesis extension
 T}
 .TE
-.ad
 .
 .P
 .I Arrows
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1057,7 +1020,6 @@ vertical double arrow in both directions
 T}
 \[an]	\e[an]	arrowhorizex	u23AF	horizontal arrow extension
 .TE
-.ad
 .
 .P
 .I Lines
@@ -1076,7 +1038,6 @@ extension of the square root sign.
 \[oq]ru\[cq] is a font-invariant glyph, namely a rule of length 0.5m.
 .
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1090,7 +1051,6 @@ _
 \[sl]	\e[sl]	slash	u002F	+
 \[rs]	\e[rs]	backslash	u005C	reverse solidus
 .TE
-.ad
 .
 .P
 Use \[oq]\e[radicalex]\[cq], not
@@ -1099,7 +1059,6 @@ Use \[oq]\e[radicalex]\[cq], not
 .P
 .I Text markers
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1119,12 +1078,10 @@ _
 \[CR]	\e[CR]	carriagereturn	u21B5	carriage return
 \[OK]	\e[OK]	a19	u2713	check mark, tick
 .TE
-.ad
 .
 .P
 .I Legal Symbols
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1134,7 +1091,6 @@ _
 \[tm]	\e[tm]	trademark	u2122
 \[bs]	\e[bs]	---	---	AT&T Bell Labs logo +
 .TE
-.ad
 .
 .P
 The Bell Labs logo is not supported in groff.
@@ -1142,7 +1098,6 @@ The Bell Labs logo is not supported in groff.
 .P
 .I Currency symbols
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1156,12 +1111,10 @@ _
 \[Cs]	\e[Cs]	currency	u00A4	Scandinavian currency sign
 \[Fn]	\e[Fn]	florin	u0192	Dutch currency sign
 .TE
-.ad
 .
 .P
 .I Units
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1174,12 +1127,10 @@ _
 \[Of]	\e[Of]	ordfeminine	u00AA	feminine ordinal (Spanish)
 \[Om]	\e[Om]	ordmasculine	u00BA	masculine ordinal (Spanish)
 .TE
-.ad
 .
 .P
 .I Logical Symbols
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1197,12 +1148,10 @@ _
 bitwise OR operator (as used in\ C) +
 T}
 .TE
-.ad
 .
 .P
 .I Mathematical Symbols
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1300,7 +1249,6 @@ T}
 Planck\ constant\ /\ 2pi (h-bar)
 T}
 .TE
-.ad
 .
 .P
 .I Greek glyphs
@@ -1333,7 +1281,6 @@ the stroked version.
 In groff, symbol \[oq]\e[*f]\[cq] always denotes the stroked
 version of phi, and \[oq]\e[+f]\[cq] the curly variant.
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1392,12 +1339,10 @@ _
 \[+p]	\e[+p]	omega1	u03D6	variant pi, looking like omega
 \[+e]	\e[+e]	uni03F5	u03F5	variant epsilon
 .TE
-.ad
 .
 .P
 .I Card symbols
 .P
-.na
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1409,7 +1354,6 @@ _
 \[DI]	\e[DI]	diamond	u2666	black diamond suit
 \[u2662]	\e[u2662]	uni2662	u2662	white diamond suit
 .TE
-.ad
 .
 .
 .\" ====================================================================
