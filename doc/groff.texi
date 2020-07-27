@@ -6216,13 +6216,6 @@ information.
 If @code{gtroff} is called with the @option{-T} command-line option, the
 number register @code{.T} is set to@tie{}1, and zero otherwise.
 @xref{Groff Options}.
-
-@item \*[.T]
-@stindex .T
-@cindex output device name string register (@code{.T})
-A single read-write string register that contains the current output
-device (for example, @samp{latin1} or @samp{ps}).  This is the only
-string register defined by @code{gtroff}.
 @end table
 
 
@@ -10395,6 +10388,14 @@ GNU @code{troff} has string variables, which are entirely for user
 convenience (i.e., there are no built-in strings except @code{.T}, but
 even that is a read/write string variable).
 
+@Defstr {.T,}
+@stindex .T
+@cindex output device name string register (@code{.T})
+A single read-write string register that contains the current output
+device (for example, @samp{latin1} or @samp{ps}).  This is the only
+string register defined by @code{gtroff}.
+@endDefstr
+
 Although the following requests can be used to create strings, simply
 using an undefined string will cause it to be defined as empty.
 @xref{Identifiers}.
@@ -10649,6 +10650,32 @@ input token at the end.
 Rudimentary string manipulation routines are given with the next several
 requests.
 
+@Defreq {length, reg str}
+@cindex length of a string (@code{length})
+@cindex string, length of (@code{length})
+@cindex @code{length} request, and copy-in mode
+@cindex copy-in mode, and @code{length} request
+@cindex mode, copy-in, and @code{length} request
+Compute the number of characters of @var{str} and return it in the
+number register @var{reg}.  If @var{reg} doesn't exist, it is created.
+@code{str} is read in copy mode.
+
+@Example
+.ds xxx abcd\h'3i'efgh
+.length yyy \*[xxx]
+\n[yyy]
+    @result{} 14
+@endExample
+@endDefreq
+
+@Defreq {chop, xx}
+Remove (chop) the last character from the macro, string, or diversion
+named @var{xx}.  This is useful for removing the newline from the end of
+diversions that are to be interpolated as strings.  This command can be
+used repeatedly; see @ref{Gtroff Internals}, for details on nodes
+inserted additionally by GNU @code{troff}.
+@endDefreq
+
 @Defreq {substring, str n1 [@Var{n2}]}
 @cindex substring (@code{substring})
 Replace the string named @var{str} with the substring defined by the
@@ -10667,24 +10694,6 @@ the character before the last character has index@tie{}@minus{}2, etc.
 .substring xxx 2
 \*[xxx]
     @result{} de
-@endExample
-@endDefreq
-
-@Defreq {length, reg str}
-@cindex length of a string (@code{length})
-@cindex string, length of (@code{length})
-@cindex @code{length} request, and copy-in mode
-@cindex copy-in mode, and @code{length} request
-@cindex mode, copy-in, and @code{length} request
-Compute the number of characters of @var{str} and return it in the
-number register @var{reg}.  If @var{reg} doesn't exist, it is created.
-@code{str} is read in copy mode.
-
-@Example
-.ds xxx abcd\h'3i'efgh
-.length yyy \*[xxx]
-\n[yyy]
-    @result{} 14
 @endExample
 @endDefreq
 
@@ -10799,14 +10808,6 @@ an error.  @xref{Writing Macros}.
 @cindex diversion, removing alias (@code{rm})
 To remove an alias, simply call @code{rm} on its name.  The object
 itself is not destroyed until it has no more names.
-@endDefreq
-
-@Defreq {chop, xx}
-Remove (chop) the last character from the macro, string, or diversion
-named @var{xx}.  This is useful for removing the newline from the end of
-diversions that are to be interpolated as strings.  This command can be
-used repeatedly; see @ref{Gtroff Internals}, for details on nodes
-inserted additionally by GNU @code{troff}.
 @endDefreq
 
 @xref{Identifiers}, and @ref{Comments}.
