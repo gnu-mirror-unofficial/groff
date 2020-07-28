@@ -10384,27 +10384,29 @@ with a default scale indicator of @samp{z}.
 
 @codequotebacktick on
 @codequoteundirected on
-GNU @code{troff} has string variables, which are entirely for user
-convenience (i.e., there are no built-in strings except @code{.T}, but
-even that is a read/write string variable).
+GNU @code{troff} has string variables primarily for user convenience.
+Only one string is predefined by the language.
 
 @Defstr {.T,}
 @stindex .T
 @cindex output device name string register (@code{.T})
-A single read-write string register that contains the current output
-device (for example, @samp{latin1} or @samp{ps}).  This is the only
-string register defined by @code{gtroff}.
+This string contains the current output device (for example,
+@samp{utf8} or @samp{pdf}).
 @endDefstr
 
 Although the following requests can be used to create strings, simply
-using an undefined string will cause it to be defined as empty.
-@xref{Identifiers}.
+using (dereferencing) an undefined string will cause it to be defined as
+empty.
 
 @DefreqList {ds, name [@Var{string}]}
 @DefreqItemx {ds1, name [@Var{string}]}
 @DefescItemx {\\*, , n, }
 @DefescItem {\\*, @Lparen{}, nm, }
-@DefescListEnd {\\*, @Lbrack{}, name arg1 arg2 @dots{}, @Rbrack{}}
+@c XXX: Can't mark the parameters with @Var because @Var gets called
+@c recursively.  The internal square brackets are in the wrong font in
+@c the uncommented kludge below.
+@c @DefescListEnd {\\*, @Lbrack{}, name [@Var{arg1} @Var{arg2} @dots{}], @Rbrack{}}
+@DefescListEnd {\\*, @Lbrack{}, name @r{[}arg1 arg2 @dots{}@r{]}, @Rbrack{}}
 @cindex string interpolation (@code{\*})
 @cindex string expansion (@code{\*})
 @cindex interpolation of strings (@code{\*})
@@ -10413,11 +10415,11 @@ using an undefined string will cause it to be defined as empty.
 @cindex arguments, of strings
 Define and access a string variable @var{name} (one-character
 name@tie{}@var{n}, two-character name @var{nm}).  If @var{name} already
-exists, @code{ds} overwrites the previous definition.  Only the syntax
-form using brackets can take arguments that are handled identically to
-macro arguments; the single exception is that a closing bracket as an
-argument must be enclosed in double quotes.  @xref{Request and Macro
-Arguments}, and @ref{Parameters}.
+exists, @code{ds} overwrites the previous definition.  The syntax form
+using brackets accepts arguments that are handled as macro arguments
+are; unlike with macro calls, however, a closing bracket as an argument
+must be enclosed in double quotes.  @xref{Request and Macro Arguments},
+and @ref{Parameters}.
 
 Example:
 
@@ -10462,42 +10464,50 @@ escape adjacent with the end of the string.
 
 It is good style to end string definitions (and appendments; see below)
 with a comment, even an empty one, to prevent unwanted space from
-creeping into them.
+creeping into them during source document maintenance.
 
 @Example
 .ds author Alice Pleasance Liddell\"
 @endExample
 
-@cindex trailing quotes
-@cindex quotes, trailing
+@cindex trailing double quotes in strings
+@cindex double quotes, trailing, in strings
+@cindex @code{ds} request, and double quotes
 @cindex leading spaces with @code{ds}
 @cindex spaces with @code{ds}
 @cindex @code{ds} request, and leading spaces
-To store leading space in a string, start it with a double quote.  No
-trailing quote is needed; in fact, any trailing quote is included in
-your string.
+To store leading space in a string, start it with a double quote.  A
+double quote is special only in that position; double quotes in any
+other location are included in the string.  Consequently, no
+trailing quote is needed.
 
+@c Examples should be more accessible than Unix nerd stuff like this,
+@c but in general document authors shouldn't want to use "straight"
+@c double quotes for ordinary prose anyway.  Also, 56 chars is as fat
+@c as these examples can get and not overrun the right margin in PDF.
 @Example
-.ds sign "           Yours in a white wine sauce,
+.ds saluatation "         Yours in a white wine sauce,\"
+.ds c-var-defn "    char build_date[]="2020-07-29";\"
+.ds sucmd sudo sh -c "fdisk -l /dev/sda > partitions"\"
 @endExample
 
 @cindex multi-line strings
 @cindex strings, multi-line
 @cindex newline character, in strings, escaping
 @cindex escaping newline characters, in strings
-Strings are not limited to a single line of text.  A string can span
-several lines by escaping the newlines with a backslash.  The resulting
-string is stored @emph{without} the newlines.
+Strings are not limited to a single line of input text.  A string can
+span several lines by escaping the newlines with a backslash.  The
+resulting string is stored @emph{without} the newlines.
 
 @Example
-.ds foo lots and lots \
-of text are on these \
-next several lines
+.ds foo This string contains \
+text on multiple lines \
+of input.
 @endExample
 
-It is not possible to have real newlines in a string.  To put a single
-double quote character into a string, use two consecutive double quote
-characters.
+It is not possible to embed ``real'' newlines in a string.  How breaking
+occurs depends on fill mode as usual, and also upon whether the string
+is interpolated as a string or a macro (see below).
 
 The @code{ds1} request turns off compatibility mode while interpreting a
 string.  To be more precise, a @dfn{compatibility save} input token is
@@ -10524,25 +10534,53 @@ restore} input token at the end.
 @cindex strings, shared name space with macros and diversions
 @cindex diversions, shared name space with macros and strings
 Strings, macros, and diversions (and boxes) share the same name space.
-Internally, even the same mechanism is used to store them.  This has
-some interesting consequences.  For example, it is possible to call a
-macro with string syntax and vice versa.
+Internally, the same mechanism is used to store them.  This has some
+interesting consequences.  For example, it is possible to call a macro
+with string syntax and vice versa.
 
 @Example
-.de xxx
-a funny test.
+.de subject
+Typesetting
 ..
-This is \*[xxx]
-    @result{} This is a funny test.
-
-.ds yyy a funny test
-This is
-.yyy
-    @result{} This is a funny test.
+.de predicate
+rewards attention to detail
+..
+\*[subject] \*[predicate].
+Truly.
+    @result{} Typesetting
+    @result{}  rewards attention to detail Truly.
 @endExample
 
-In particular, interpolating a string does not hide existing macro
-arguments.  Thus in a macro, a more efficient way of doing
+@noindent
+What went wrong?  Strings don't have newlines, but macros do.  String
+interpolation placed a newline at the end of @samp{\*[subject]}, and the
+next thing on the input was a space.  Similarly, when
+@samp{\*[predicate]} was interpolated, it was followed by the empty
+request @samp{.} on a line by itself.
+
+If we want to use macros as strings we must take interpolation behavior
+into account.
+
+@Example
+.de subject
+Typesetting\\
+..
+.de predicate
+rewards attention to detail\\
+..
+\*[subject] \*[predicate].
+Truly.
+    @result{} Typesetting rewards attention to detail.  Truly.
+@endExample
+
+@noindent
+By ending each text line of the macros with an escaped
+@samp{\@key{RET}}, we get the desired effect (@pxref{Line Control}).
+What would have happened if we had used only one backslash at a time
+instead?
+
+Interpolating a string does not hide existing macro arguments.  Thus in
+a macro, a more efficient way of doing
 
 @Example
 .xx \\$@@
@@ -10571,13 +10609,13 @@ a \fItest\fR
 .di
 .ds yyy This is \*[xxx]\c
 \*[yyy].
-    @result{} @r{This is a }@i{test}.
+    @result{} This is a @i{test}.
 @endExample
 
 @noindent
 As the previous example shows, it is possible to store formatted output
-in strings.  The @code{\c} escape prevents the insertion of an
-additional blank line in the output.
+in strings.  The @code{\c} escape prevents the subsequent newline from
+being interpreted as a break (again, @pxref{Line Control}).
 
 Copying diversions longer than a single output line produces unexpected
 results.
@@ -10595,7 +10633,7 @@ test
 @endExample
 
 Usually, it is not predictable whether a diversion contains one or more
-output lines, so this mechanism should be avoided.  With Unix
+output lines, so this mechanism should be avoided.  With AT&T
 @code{troff}, this was the only solution to strip off a final newline
 from a diversion.  Another disadvantage is that the spaces in the copied
 string are already formatted, making them unstretchable.  This can cause
@@ -10634,10 +10672,11 @@ This is \*[xxx].
 @cindex string, appending (@code{as})
 The @code{as} request is similar to @code{ds} but appends @var{string}
 to the string stored as @var{name} instead of redefining it.  If
-@var{name} doesn't exist yet, it is created.
+@var{name} doesn't exist yet, it is created.  If @code{as} is called
+with only one argument, no operation is performed.
 
 @Example
-.as sign " with shallots, onions and garlic,
+.as salutation " with shallots, onions and garlic,\"
 @endExample
 
 The @code{as1} request is similar to @code{as}, but compatibility mode
@@ -10647,8 +10686,10 @@ beginning of the appended string, and a @dfn{compatibility restore}
 input token at the end.
 @endDefreq
 
-Rudimentary string manipulation routines are given with the next several
-requests.
+Several requests exist to perform rudimentary string operations.
+Strings can be queried (@code{length}) and modified (@code{chop},
+@code{substring}, @code{stringup}, @code{stringdown}), and their names
+can be manipulated (@code{rn}, @code{rm}, @code{als}).
 
 @Defreq {length, reg str}
 @cindex length of a string (@code{length})
@@ -10676,15 +10717,16 @@ used repeatedly; see @ref{Gtroff Internals}, for details on nodes
 inserted additionally by GNU @code{troff}.
 @endDefreq
 
-@Defreq {substring, str n1 [@Var{n2}]}
+@Defreq {substring, str start [@Var{end}]}
 @cindex substring (@code{substring})
-Replace the string named @var{str} with the substring defined by the
-indices @var{n1} and @var{n2}.  The first character in the string has
-index@tie{}0.  If @var{n2} is omitted, it is implicitly set to the
-largest valid value (the string length minus one).  If the index value
-@var{n1} or @var{n2} is negative, it is counted from the end of the
-string, going backwards: The last character has index@tie{}@minus{}1,
-the character before the last character has index@tie{}@minus{}2, etc.
+Replace the string named @var{str} with its substring bounded by the
+indices @var{start} and @var{end}, inclusive.  The first character in
+the string has index@tie{}0.  If @var{end} is omitted, it is implicitly
+set to the largest valid value (the string length minus one).  If the
+index value @var{start} or @var{end} is negative, it is counted from the
+end of the string, going backwards: the last character has
+index@tie{}@minus{}1, the character before the last has
+index@tie{}@minus{}2, and so on.
 
 @Example
 .ds xxx abcdefgh
@@ -10765,7 +10807,7 @@ stored object.  If @var{old} is undefined, a warning of type @samp{mac}
 is generated and the request is ignored.
 
 To understand how the @code{als} request works it is probably best to
-think of two different pools: one pool for objects (macros, strings,
+think of two different storage pools: one for objects (macros, strings,
 etc.), and another for names.  As soon as an object is defined, GNU
 @code{troff} adds it to the object pool, adds its name to the name pool,
 and creates a link between them.  When @code{als} creates an alias, it
@@ -10810,7 +10852,6 @@ To remove an alias, simply call @code{rm} on its name.  The object
 itself is not destroyed until it has no more names.
 @endDefreq
 
-@xref{Identifiers}, and @ref{Comments}.
 @codequoteundirected off
 @codequotebacktick off
 

@@ -2857,28 +2857,46 @@ file controls which font positions (if any) are initially associated
 with styles rather than fonts.
 .
 .TP
-.BI .substring\~ xx\~n1\~ [ n2 ]
+.BI .substring\~ xx\~start\~ [ end ]
 Replace the string named
 .I xx
-with the substring defined by the indices
-.I n1
+with its substring bounded by the indices
+.I start
 and
-.IR n2 .
+.IR end ,
+inclusive.
+.
 The first character in the string has index\~0.
 .
 If
-.I n2
-is omitted, it is taken to be equal to the string's length.
+.I end
+is omitted,
+it is implicitly set to the largest valid value
+(the string length minus one).
 .
 If the index value
-.I n1
+.I start
 or
-.I n2
-is negative, it is counted from the end of the string,
+.I end
+is negative,
+it is counted from the end of the string,
 going backwards:
+the last character has index\~\-1,
+the character before the last has index\~\-2,
+and so on.
 .
-The last character has index\~\-1, the character before the last
-character has index\~\-2, etc.
+.RS
+.IP
+.EX
+.B .ds xxx abcdefgh
+.B .substring xxx 1 \-4
+.B \e*[xxx]
+bcde
+.B .substring xxx 2
+.B \e*[xxx]
+de
+.EE
+.RE
 .
 .TP
 .BI .tkf\~ f\~s1\~n1\~s2\~n2

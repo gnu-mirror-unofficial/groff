@@ -2535,13 +2535,14 @@ with font position
 .IR n .
 .
 .TPx
-.REQ .substring "xx n1 n2"
+.REQ .substring "xx start \fR[\fPend\fR]\fP"
 Replace the string named
 .I xx
-with the substring defined by the indices
-.I n1
+with its substring bounded by the indices
+.I start
 and
-.IR n2 .
+.IR end ,
+inclusive.
 .
 .TPx
 .REQ .sv
@@ -3871,27 +3872,74 @@ Please check your fonts.
 .SS Strings
 .\" ====================================================================
 .
-Strings are defined by the
-.request .ds
-request and can be retrieved by the
-.esc *
-escape sequence.
+.I groff
+has string variables primarily for user convenience.
 .
+Only one string is predefined by the language.
 .
-.P
-Strings share their name space with macros.
-.
-So strings and macros without arguments are roughly equivalent; it is
-possible to call a string like a macro and vice versa, but this often
-leads to unpredictable results.
-.
-The following string is the only one predefined in groff.
 .
 .TPx
 .STRING .T
-The name of the current output device as specified by the
-.option \-T
-command-line option.
+This string contains the current output device
+(for example,
+.RB \[lq] utf8 \[rq]
+or
+.RB \[lq] pdf \[rq] ).
+.
+.
+.P
+Strings are defined by the
+.request .ds
+and
+.request .ds1
+requests and can be retrieved by the
+.esc *
+escape sequence.
+.
+Simply using
+(dereferencing)
+an undefined string will cause it to be defined as empty.
+.
+.
+.P
+Strings,
+macros,
+and diversions
+(and boxes)
+share the same name space.
+.
+Internally, the same mechanism is used to store them.
+.
+.
+.P
+The
+.request .as
+and
+.request .as1
+requests are similar to
+.request .ds
+and
+.request .ds1 ,
+but append their arguments
+(after the first)
+to a string instead of redefining it.
+.
+Several requests exist to perform rudimentary string operations.
+.
+Strings can be queried
+(\c
+.request .length )
+and modified
+(\c
+.request .chop ,
+.request .substring ,
+.request .stringup ,
+.request .stringdown ),
+and their names can be manipulated
+(\c
+.request .rn ,
+.request .rm ,
+.request .als).
 .
 .
 .\" ====================================================================
