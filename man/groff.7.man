@@ -398,7 +398,7 @@ backslash
 .
 .P
 The user can define her own formatting commands using the
-.request de
+.request .de
 request.
 .
 These commands are called
@@ -425,7 +425,7 @@ variables as well.
 variables store character sequences.
 .
 They are set with the
-.request ds
+.request .ds
 request and retrieved by the
 .esc *
 escape sequences.
@@ -439,7 +439,7 @@ variables can store numerical values, numbers with a scale unit, and
 occasionally string-like objects.
 .
 They are set with the
-.request nr
+.request .nr
 request and retrieved by the
 .esc n
 escape sequences.
@@ -451,7 +451,7 @@ allow the user to temporarily store global formatting parameters like
 line length, font size, etc.\& for later reuse.
 .
 This is done by the
-.request ev
+.request .ev
 request.
 .
 .
@@ -460,7 +460,7 @@ request.
 are identified either by a name or by an internal number.
 .
 The current font is chosen by the
-.request ft
+.request .ft
 request or by the
 .esc f
 escape sequences.
@@ -568,19 +568,16 @@ task in certain conditions.
 \&\f[CB].\f[]
 A dot is only special at the beginning of a line or after the
 condition in the requests
-.request if\c
-,
-.request ie\c
-,
-.request el\c
-,
+.request .if ,
+.request .ie ,
+.request .el ,
 and
-.request while\c
-\&.
+.request .while .
+.
 There it is the control character that introduces a request (or macro).
 .
 By using the
-.request cc
+.request .cc
 request, the control character can be set to a different character,
 making the dot
 .squoted_char .\&
@@ -603,7 +600,7 @@ That means that it introduces a request like the dot, but with the
 additional property that this request doesn't cause a linebreak.
 .
 By using the
-.request c2
+.request .c2
 request, the non-break control character can be set to a different
 character.
 .
@@ -626,9 +623,9 @@ The double quote is used to enclose arguments in macros (but not in
 requests and strings).
 .
 In the
-.request ds
+.request .ds
 and
-.request as
+.request .as
 requests, a leading double quote in the argument is stripped off,
 making everything else afterwards the string to be defined (enabling
 leading whitespace).
@@ -648,7 +645,7 @@ escape sequence.
 \&\f[CB]\e\f[]
 The backslash usually introduces an escape sequence (this can be
 changed with the
-.request ec
+.request .ec
 request).
 .
 A printed version of the escape character is the
@@ -693,7 +690,7 @@ to attempt end-of-sentence detection on the preceding word (and trailing
 punctuation).
 .
 The amount of space between sentences in fill mode is controlled by the
-.request ss
+.request .ss
 request.
 .
 When adjustment is enabled,
@@ -932,10 +929,8 @@ Texinfo manual.
 .
 .B Conditions
 are expressions tested by the
-.request .if\c
-,
-.request .ie\c
-,
+.request .if ,
+.request .ie ,
 and the
 .request .while
 requests.
@@ -1655,8 +1650,7 @@ Set escape character to
 .TPx
 .REQ .ecr
 Restore escape character saved with
-.request .ecs\c
-\&.
+.request .ecs .
 .
 .TPx
 .REQ .ecs
@@ -1665,8 +1659,7 @@ Save current escape character.
 .TPx
 .REQ .el "anything"
 Else part for if-else (\c
-.request .ie\c
-)
+.request .ie )
 request.
 .
 .TPx
@@ -1795,10 +1788,9 @@ are special.
 .REQ .ft
 Return to previous font.
 Same as
-.request \[rs]
+.esc f[]
 or
-.request \[rs]\c
-\&.
+.esc fP .
 .
 .TPx
 .REQ .ft "font"
@@ -1949,10 +1941,9 @@ extra space to each word space
 If
 .I cond
 then
-.I anything
-else goto
-.request .el\c
-\&.
+.IR anything ,
+otherwise skip to
+.request .el .
 .
 .TPx
 .REQ .if "cond anything"
@@ -2221,7 +2212,7 @@ but append to it.
 .TPx
 .REQ .os
 Output vertical distance that was saved by the
-.request sv
+.request .sv
 request.
 .
 .TPx
@@ -2324,7 +2315,7 @@ Get the bounding box of a PostScript image
 .TPx
 .REQ .pso "command"
 This behaves like the
-.request so
+.request .so
 request except that input comes from the standard output of
 .IR command .
 .
@@ -2562,7 +2553,7 @@ of vertical space.
 Save the vertical distance
 .I N
 for later output with
-.request os
+.request .os
 request (default scaling indicator\~\c
 .scaleindicator v ).
 .
@@ -2665,7 +2656,7 @@ Transparently output the contents of file
 .TPx
 .REQ .trin "abcd\fR\&.\|.\|.\&\fP"
 This is the same as the
-.request tr
+.request .tr
 request except that the
 .B asciify
 request uses the character code (if any) before the character
@@ -2674,7 +2665,7 @@ translation.
 .TPx
 .REQ .trnt "abcd\fR\&.\|.\|.\&\fP"
 This is the same as the
-.request tr
+.request .tr
 request except that the translations do not apply to text that is
 transparently throughput into a diversion with
 .esc ! .
@@ -2692,8 +2683,7 @@ false.
 Set underline font to
 .I font
 (to be switched to by
-.request .ul\c
-).
+.request .ul ).
 .
 .TPx
 .REQ .ul "N"
@@ -2966,7 +2956,7 @@ as arguments.
 The name by which the current macro was invoked.
 .
 The
-.request als
+.request .als
 request can make a macro have more than one name.
 .
 .TP
@@ -3003,7 +2993,7 @@ surrounded by double quotes, and separated by spaces.
 .ESC $\[ha]
 In a macro, the representation of all parameters as if they were an
 argument to the
-.request ds
+.request .ds
 request.
 .
 .\" ========= escaped characters =========
@@ -3094,7 +3084,7 @@ Non-printable, zero-width glyph.
 Like
 .esc &
 except that it behaves like a glyph declared with the
-.request cflags
+.request .cflags
 request to be transparent for the purposes of end-of-sentence
 recognition.
 .
@@ -3268,7 +3258,7 @@ Switch back to previous font family.
 Return format of register with one-character name\~\c
 .I r
 suitable for
-.request af
+.request .af
 request.
 .
 .TP
@@ -3276,7 +3266,7 @@ request.
 Return format of register with two-character name
 .I rg
 suitable for
-.request af
+.request .af
 request.
 .
 .TP
@@ -3284,7 +3274,7 @@ request.
 Return format of register with arbitrarily long name
 .I reg
 suitable for
-.request af
+.request .af
 request.
 .
 .TP
@@ -3392,7 +3382,7 @@ in the current font.
 No special fonts are searched.
 .
 Useful for adding (named) entities to a document using the
-.request char
+.request .char
 request and friends.
 .
 .TP
@@ -3447,7 +3437,7 @@ must be in the range 4\[en]39.)
 .
 Otherwise,
 same as
-.request ps
+.request .ps
 request.
 .
 .TP
@@ -3463,7 +3453,7 @@ scaled points;
 is a two-digit number \[>=]1.
 .
 Same as
-.request ps
+.request .ps
 request.
 .
 .TP
@@ -3483,7 +3473,7 @@ Set/increase/decrease the point size to/by
 scaled points.
 .
 Same as
-.request ps
+.request .ps
 request.
 .
 .TP
@@ -3882,7 +3872,7 @@ Please check your fonts.
 .\" ====================================================================
 .
 Strings are defined by the
-.request ds
+.request .ds
 request and can be retrieved by the
 .esc *
 escape sequence.
@@ -3919,7 +3909,7 @@ but some can also hold a string value.
 .P
 Each register is given a name.
 Arbitrary registers can be defined and set with the
-.request nr
+.request .nr
 request.
 .
 .
@@ -4016,7 +4006,7 @@ It is positive if the glyph extends below the baseline.
 .TPx
 .REG .ce
 The number of lines remaining to be centered, as set by the
-.request ce
+.request .ce
 request.
 .
 .TPx
@@ -4092,8 +4082,7 @@ Number of basic units per horizontal unit of output device resolution.
 .TPx
 .REG .height
 The current font height as set with
-.request \[rs]H\c
-\&.
+.esc H .
 .
 .TPx
 .REG .hla
@@ -4155,19 +4144,18 @@ Current line length.
 .TPx
 .REG .L
 The current line spacing setting as set by
-.request .ls\c
-\&.
+.request .ls .
 .
 .TPx
 .REG .lg
 The current ligature mode (as set by the
-.request lg
+.request .lg
 request).
 .
 .TPx
 .REG .linetabs
 The current line-tabs mode (as set by the
-.request linetabs
+.request .linetabs
 request).
 .
 .TPx
@@ -4177,7 +4165,7 @@ The line length that applies to the current output line.
 .TPx
 .REG .lt
 The title length (as set by the
-.request lt
+.request .lt
 request).
 .
 .TPx
@@ -4195,7 +4183,7 @@ Length of text portion on previous output line.
 .TPx
 .REG .ne
 The amount of space that was needed in the last
-.request ne
+.request .ne
 request that caused a trap to be sprung.
 .
 Useful in conjunction with
@@ -4233,7 +4221,7 @@ command-line option).
 .TPx
 .REG .pn
 The number of the next page: either the value set by a
-.request pn
+.request .pn
 request, or the number of the current page plus\ 1.
 .
 .TPx
@@ -4256,7 +4244,7 @@ Always 10000 in GNU troff.
 .TPx
 .REG .rj
 The number of lines to be right-justified as set by the
-.request rj
+.request .rj
 request.
 .
 .TPx
@@ -4266,8 +4254,7 @@ Current point size as a decimal fraction.
 .TPx
 .REG .slant
 The slant of the current font as set with
-.request \eS\c
-\&.
+.esc S .
 .
 .TPx
 .REG .sr
@@ -4303,21 +4290,22 @@ is used.
 .REG .tabs
 A string representation of the current tab settings suitable for use
 as an argument to the
-.request ta
+.request .ta
 request.
 .
 .TPx
 .REG .trunc
 The amount of vertical space truncated by the most recently sprung
-vertical position trap, or, if the trap was sprung by an
-.request ne
-request, minus the amount of vertical motion produced by
-.request .ne\c
-\&.
+vertical position trap,
+or,
+if the trap was sprung by an
+.request .ne
+request,
+minus the amount of vertical motion produced by
+.request .ne .
 .
 Useful in conjunction with the
-.register .ne\c
-\&.
+.register .ne .
 .
 .TPx
 .REG .u
@@ -4424,15 +4412,13 @@ Current horizontal position at input line.
 .REG llx
 Lower left x-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb\c
-).
+.request .psbb ).
 .
 .TPx
 .REG lly
 Lower left y-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb\c
-).
+.request .psbb ).
 .
 .TPx
 .REG ln
@@ -4531,22 +4517,20 @@ Height of string above base line (generated by width function
 The return value of the
 .I system()
 function executed by the last
-.request sy
+.request .sy
 request.
 .
 .TPx
 .REG urx
 Upper right x-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb\c
-).
+.request .psbb ).
 .
 .TPx
 .REG ury
 Upper right y-coordinate (in PostScript units) of a given PostScript
 image (set by
-.request .psbb\c
-).
+.request .psbb ).
 .
 .TPx
 .REG year
