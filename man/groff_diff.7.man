@@ -1482,7 +1482,7 @@ classes can be nested.
 .RS
 .EX
 \&.class [prepunct] , : ; > }
-\&.class [prepunctx] \[rs]C'[prepunct]' \[rs][u2013]-\[rs][u2016]
+\&.class [prepunctx] \[rs]C'[prepunct]' \[rs][u2013]\-\[rs][u2016]
 .EE
 .RE
 The class
@@ -1875,16 +1875,18 @@ fonts
 .IR s1 ,
 .IR s2 ,
 \&.\|.\|.\&
-are special, that is, they are searched for glyphs not in
-the current font.
+are special,
+that is,
+they are searched for glyphs not in the current font.
 .
 Any fonts specified in the
-.B special
+.B .special
 request are searched after fonts specified in the
-.B fspecial
+.B .fspecial
 request.
 .
-Without argument, reset the list of global special fonts to be empty.
+Without argument,
+reset the list of global special fonts to be empty.
 .
 .TP
 .BI .ftr\~ f\~g
@@ -2575,8 +2577,9 @@ Remove the definitions of glyphs
 .IR c1 ,
 .IR c2 ,
 and so on.
+.
 This undoes the effect of a
-.B char
+.B .char
 request.
 .
 .TP
@@ -2711,8 +2714,8 @@ It sets the available font sizes for the current font to
 .I sn
 scaled points.
 .
-The list of sizes can be terminated by an optional\~\c
-.BR 0 .
+The list of sizes can be terminated by an
+.RB optional\~\[lq] 0 \[rq].
 .
 Each
 .I si
@@ -4167,10 +4170,10 @@ Draw a solid ellipse with a horizontal diameter of
 and a vertical diameter of
 .I dy
 with the leftmost point at the current position.
+.
 .EQ
 delim $$
 .EN
-.
 .TP
 \f[B]Dp\f[R] $dx sub 1$ $dy sub 1$ $dx sub 2$ $dy sub 2$ $...$ \c
 $dx sub n$ $dy sub n$\[rs]n
