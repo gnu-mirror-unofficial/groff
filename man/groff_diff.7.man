@@ -42,9 +42,6 @@ groff_diff \- differences between GNU roff and AT&T troff
 .el \
 .  ds ic \^
 .
-.\" ellipsis
-.ds ellipsis \&.\|.\|.\&
-.
 .
 .\" ====================================================================
 .SH Description
@@ -439,7 +436,7 @@ if
 is empty.
 .
 .TP
-.BR \[rs]D\[aq] \*[ellipsis] \[aq]
+.BR \[rs]D\[aq] .\|.\|. \[aq]
 All drawing commands supported by the
 .RI AT&T\~ troff
 device-independent
@@ -526,7 +523,7 @@ switches back to the previous color.
 .TQ
 .BI \[rs]M[ xxx ]
 Set background color for filled objects drawn with the
-.BI \[rs]D' \*[ellipsis] '
+.BR \[rs]D\[aq] .\|.\|.\& \[aq]
 commands.
 .B \[rs]M[]
 switches back to the previous color.
@@ -762,13 +759,14 @@ request to be transparent for the purposes of end-of-sentence
 recognition.
 .
 .TP
-.BI \[rs]*[ "xxx arg1 arg2 \*[ellipsis]" ]
+.BI \[rs]*[ "xxx arg1 arg2\~"\c
+\&.\|.\|.]
 Interpolate string
 .IR xxx ,
 taking
 .IR arg1 ,
 .IR arg2 ,
-.IR \*[ellipsis] ,
+\&.\|.\|.\&
 as arguments.
 .
 .\" Keep \/ before \, in spite of collation.
@@ -878,7 +876,8 @@ Print the special character (glyph) called
 .IR xxx .
 .
 .TP
-.BI \[rs][ "comp1 comp2 \*[ellipsis]" ]
+.BI \[rs][ "comp1 comp2\~"\c
+\&.\|.\|.]
 Print composite glyph consisting of multiple components.
 .
 Example: \[oq]\[rs][A\~ho]\[cq] is capital letter A with ogonek which
@@ -1132,8 +1131,8 @@ This is the same as
 .BR \[rs]p .
 .
 .TP
-.BI .cflags\~ "n c1 c2"\c
-\~\*[ellipsis]
+.BI .cflags\~ "n c1 c2\~"\c
+\&.\|.\|.
 Assign properties encoded by the number
 .I n
 to characters
@@ -1400,8 +1399,8 @@ that are to be interpolated as strings.
 .
 .
 .TP
-.BI .class\~ "name c1 c2"\c
-\~\*[ellipsis]
+.BI .class\~ "name c1 c2\~"\c
+\&.\|.\|.
 Define a character class
 (or simply \[lq]class\[rq])
 .I name
@@ -1550,7 +1549,7 @@ Map glyph name
 to glyph name
 .I glyph2
 if it is used in
-.BI \[rs][ \*[ellipsis] ]
+.BR \[rs][ .\|.\|.\& ]
 with more than one component.
 .
 .TP
@@ -1868,13 +1867,14 @@ request but before the list of fonts declared with
 .BR .special .
 .
 .TP
-.BI .fspecial\~ "f s1 s2 \*[ellipsis]"
+.BI .fspecial\~ "f s1 s2\~"\c
+\&.\|.\|.
 When the current font is\~\c
 .IR f ,
 fonts
 .IR s1 ,
 .IR s2 ,
-.IR \*[ellipsis] ,
+\&.\|.\|.\&
 are special, that is, they are searched for glyphs not in
 the current font.
 .
@@ -1946,8 +1946,8 @@ switch to the previous glyph color.
 .
 .
 .TP
-.BI .hcode\~ "c1 code1"\c
-.RI \~[ "c2 code2" "] \*[ellipsis]"
+.BI .hcode\~ "c1 code1\~"\c
+.RI [ "c2 code2" "] .\|.\|."
 Set the hyphenation code of character
 .I c1
 to
@@ -2141,7 +2141,7 @@ No macro expansion is performed.
 .IP \[bu]
 .B hpf
 checks for the expression
-.BR \[rs]patterns{ \*[ellipsis] }
+.BR \[rs]patterns{ .\|.\|. }
 (possibly with whitespace before or after the braces).
 .
 Everything between the braces is taken as hyphenation patterns.
@@ -2155,7 +2155,7 @@ are not allowed in patterns.
 .
 .IP \[bu]
 Similarly,
-.BR \[rs]hyphenation{ \*[ellipsis] }
+.BR \[rs]hyphenation{ .\|.\|. }
 gives a list of hyphenation exceptions.
 .
 .
@@ -2249,7 +2249,7 @@ of the environment.
 .
 .TP
 .BI .hpfcode\~ "a b"\c
-.RI \~[ "c d" "] \*[ellipsis]"
+.RI \~[ "c d" "] .\|.\|."
 Define mapping values for character codes in pattern files;
 after reading a pattern file with the
 .B .hpf
@@ -2569,11 +2569,12 @@ and
 with a positive value which are applied after the line is output.
 .
 .TP
-.BI .rchar\~ "c1 c2 \*[ellipsis]"
+.BI .rchar\~ "c1 c2\~"\c
+\&.\|.\|.
 Remove the definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-.I \*[ellipsis]\~\"Add a sentence space
+and so on.
 This undoes the effect of a
 .B char
 request.
@@ -2588,12 +2589,12 @@ and from the macro one level higher.
 No effect otherwise.
 .
 .TP
-.BI .rfschar\~ "f c1 c2 "\c
-\*[ellipsis]
+.BI .rfschar\~ "f c1 c2\~"\c
+\&.\|.\|.
 Remove the font-specific definitions of glyphs
 .IR c1 ,
 .IR c2 ,
-\*[ellipsis] for
+\&.\|.\|.\& for
 .RI font\~ f .
 .
 Whitespace is optional between
@@ -2694,7 +2695,9 @@ is missing, arguments are shifted by\~1.
 Shifting by negative amounts is currently undefined.
 .
 .TP
-.BI .sizes\~ s1\~s2\~\*[ellipsis]\~sn\~ [0]
+.BI .sizes\~ "s1 s2\~"\c
+.RI .\|.\|.\~ sn\~\c
+.RB [ 0 ]
 This command is similar to the
 .B sizes
 command of a
@@ -2704,7 +2707,8 @@ file.
 It sets the available font sizes for the current font to
 .IR s1 ,
 .IR s2 ,
-.IR \*[ellipsis]\| ,\~ sn
+\&.\|.\|.\&
+.I sn
 scaled points.
 .
 The list of sizes can be terminated by an optional\~\c
@@ -2719,13 +2723,13 @@ Contrary to the font file command, the list can't extend over more
 than a single line.
 .
 .TP
-.BI .special\~ "s1 s2 \*[ellipsis]"
+.BI .special\~ "s1 s2\~"\c
+\&.\|.\|.
 Fonts
 .IR s1 ,
 .IR s2 ,
-.IR \*[ellipsis] ,
-are special and are searched for glyphs not in the current
-font.
+\&.\|.\|.\&
+are special and are searched for glyphs not in the current font.
 .
 Without arguments, reset the list of special fonts to be empty.
 .
@@ -3344,21 +3348,24 @@ known for other work.
 .RE
 .
 .TP
-.BI .ta\~ "n1 n2 \*[ellipsis] nn " "T " "r1 r2 \*[ellipsis] rn"
+.BR .ta\~ [[\c
+.IR "n1 n2\~" .\|.\|.\~ nn \~]\c
+.B T\c
+.IR "r1 r2\~" .\|.\|.\~ rn ]
 Set tabs at positions
 .IR n1 ,
 .IR n2 ,
-.IR \*[ellipsis] ,
+\&.\|.\|.\|,
 .I nn
 and then set tabs at
 .IR nn \|+\| r1 ,
 .IR nn \|+\| r2 ,
-.IR \*[ellipsis] ,
+\&.\|.\|.\|,
 .IR nn \|+\| rn
 and then at
 .IR nn \|+\| rn \|+\| r1 ,
 .IR nn \|+\| rn \|+\| r2 ,
-.IR \*[ellipsis] ,
+\&.\|.\|.\|,
 .IR nn \|+\| rn \|+\| rn ,
 and so on.
 For example,
@@ -4142,7 +4149,7 @@ changing this.
 .
 .IP
 The corresponding
-.BI \[rs]D'f \*[ellipsis] '
+.BR \[rs]D'f .\|.\|.\& '
 command shouldn't be used since its argument is always rounded to an
 integer multiple of the horizontal resolution which can lead to
 surprising results.
