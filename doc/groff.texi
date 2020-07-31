@@ -10509,25 +10509,6 @@ It is not possible to embed ``real'' newlines in a string.  How breaking
 occurs depends on fill mode as usual, and also upon whether the string
 is interpolated as a string or a macro (see below).
 
-The @code{ds1} request turns off compatibility mode while interpreting a
-string.  To be more precise, a @dfn{compatibility save} input token is
-inserted at the beginning of the string, and a @dfn{compatibility
-restore} input token at the end.
-
-@Example
-.nr xxx 12345
-.ds aa The value of xxx is \\n[xxx].
-.ds1 bb The value of xxx is \\n[xxx].
-.
-.cp 1
-.
-\*(aa
-    @error{} warning: number register '[' not defined
-    @result{} The value of xxx is 0xxx].
-\*(bb
-    @result{} The value of xxx is 12345.
-@endExample
-
 @cindex name space, common, of macros, diversions, and strings
 @cindex common name space of macros, diversions, and strings
 @cindex macros, shared name space with strings and diversions
@@ -10665,6 +10646,25 @@ This is \*[xxx].
 
 @xref{Gtroff Internals}, for more information.
 @endDefreq
+
+The @code{ds1} request turns off compatibility mode while interpreting a
+string.  To be more precise, a @dfn{compatibility save} input token is
+inserted at the beginning of the string, and a @dfn{compatibility
+restore} input token at the end.
+
+@Example
+.nr xxx 12345
+.ds aa The value of xxx is \\n[xxx].
+.ds1 bb The value of xxx is \\n[xxx].
+.
+.cp 1
+.
+\*(aa
+    @error{} warning: number register '[' not defined
+    @result{} The value of xxx is 0xxx].
+\*(bb
+    @result{} The value of xxx is 12345.
+@endExample
 
 @DefreqList {as, name [@Var{string}]}
 @DefreqListEndx {as1, name [@Var{string}]}
