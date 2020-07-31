@@ -619,16 +619,19 @@ escape sequence.
 .
 .TP
 \&\f[CB]\[dq]\f[]
-The double quote is used to enclose arguments in macros (but not in
-requests and strings).
+The double quote can be used to enclose arguments to macros and strings,
+but not requests.
 .
 In the
-.request .ds
+.request .ds ,
+.request .ds1 ,
+.request .as ,
 and
-.request .as
-requests, a leading double quote in the argument is stripped off,
-making everything else afterwards the string to be defined (enabling
-leading whitespace).
+.request .as1
+requests,
+a leading double quote in the second argument is stripped off,
+enabling the inclusion of leading space characters in the string
+definition or appendment.
 .
 The escaped double quote
 .esc \[dq]
@@ -638,7 +641,7 @@ Otherwise, it is not special.
 .
 .I groff
 provides a printable representation with the
-.esc (dq
+.esc [dq]
 escape sequence.
 .
 .TP
