@@ -6285,7 +6285,7 @@ See @ref{Line Control}, for interaction with the @code{\c} escape.
 @cindex no-fill mode (@code{nf})
 @cindex mode, no-fill (@code{nf})
 Activate no-fill mode.  Input lines are output as-is, retaining line
-breaks and ignoring the current line length.  This command implicitly
+breaks and ignoring the current line length.  This request implicitly
 disables adjusting; it also causes a break.  The number register
 @code{.u} is set to@tie{}0.
 
@@ -9796,7 +9796,7 @@ special font is active; in the @code{bd} request, its default unit is
 @cindex special fonts, emboldening
 @item
 Imitate a bold form conditionally.  Embolden @var{font1} by @var{offset}
-only if font @var{font2} is the current font.  This command can be
+only if font @var{font2} is the current font.  This request can be
 issued repeatedly to set up different emboldening values for different
 current fonts.  If the second argument is missing, emboldening is turned
 off for this particular current font.
@@ -10712,7 +10712,7 @@ number register @var{reg}.  If @var{reg} doesn't exist, it is created.
 @Defreq {chop, xx}
 Remove (chop) the last character from the macro, string, or diversion
 named @var{xx}.  This is useful for removing the newline from the end of
-diversions that are to be interpolated as strings.  This command can be
+diversions that are to be interpolated as strings.  This request can be
 used repeatedly; see @ref{Gtroff Internals}, for details on nodes
 inserted additionally by GNU @code{troff}.
 @endDefreq
