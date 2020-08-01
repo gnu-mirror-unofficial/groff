@@ -1259,18 +1259,18 @@ Same as
 but with compatibility mode switched off during macro expansion.
 .
 .TPx
-.REQ .as "stringvar \fR[\fPanything\fR]\fP"
+.REQ .as "name \fR[\fPstring\fR]\fP"
 Append
-.I anything
-to
-.IR stringvar ;
+.I string
+to the string
+.IR name ;
 no operation if
-.I anything
+.I string
 is omitted.
 .
 .
 .TPx
-.REQ .as1 "stringvar \fR[\fPanything\fR]\fP"
+.REQ .as1 "name \fR[\fPstring\fR]\fP"
 Same as
 .request .as
 but with compatibility mode switched off during string expansion.
@@ -1418,8 +1418,11 @@ as string
 .IR anything .
 .
 .TPx
-.REQ .chop "object"
-Chop the last character off macro, string, or diversion
+.REQ .chop object
+Remove the last character from the macro,
+string,
+or diversion
+named
 .IR object .
 .
 .TPx
@@ -1617,18 +1620,18 @@ of
 is interpreted.
 .
 .TPx
-.REQ .ds "stringvar \fR[\fPanything\fR]\fP"
-Set
-.I stringvar
-to
-.IR anything ,
-or to the empty string if
-.I anything
+.REQ .ds "name \fR[\fPstring\fR]\fP"
+Define a string variable
+.I name
+with contents
+.IR string ,
+or as empty if
+.I string
 is omitted.
 .
 .
 .TPx
-.REQ .ds1 "stringvar \fR[\fPanything\fR]\fP"
+.REQ .ds1 "name \fR[\fPstring\fR]\fP"
 Same as
 .request .ds
 but with compatibility mode switched off during string expansion.
@@ -2012,11 +2015,12 @@ Set leader repetition glyph to\~\c
 .IR c .
 .
 .TPx
-.REQ .length "register anything"
-Write the length of the string
+.REQ .length "reg anything"
+Compute the number of characters of
 .I anything
-to
-.IR register .
+and store the count
+in the number register
+.IR reg .
 .
 .TPx
 .REQ .linetabs
@@ -2538,14 +2542,17 @@ with font position
 .IR n .
 .
 .TPx
-.REQ .substring "xx start \fR[\fPend\fR]\fP"
+.REQ .substring "str start \fR[\fPend\fR]\fP"
 Replace the string named
-.I xx
+.I str
 with its substring bounded by the indices
 .I start
 and
 .IR end ,
 inclusive.
+.
+Negative indices count backwards from the end of the string.
+.
 .
 .TPx
 .REQ .sv
@@ -3891,17 +3898,76 @@ or
 .
 .
 .P
-Strings are defined by the
+The
 .request .ds
-and
-.request .ds1
-requests and can be retrieved by the
+request creates a string and the
 .esc *
-escape sequence.
+escape retrieves (dereferences) its contents.
 .
-Simply using
-(dereferencing)
-an undefined string will cause it to be defined as empty.
+Dereferencing an undefined string name defines it as empty.
+.
+.
+.P
+The
+.request .as
+requests is similar to
+.request .ds
+but appends its arguments
+(after the first)
+to a string instead of redefining it.
+.
+If
+.request .as
+is called with only one argument,
+no operation is performed.
+.
+.
+.P
+The
+.request .ds1
+request defines a string such that compatibility mode is off when the
+string is later interpolated.
+.
+To be more precise,
+a
+.I compatibility save
+input token is inserted at the beginning of the string,
+and a
+.I compatibility restore
+input token at the end.
+.
+Likewise,
+the
+.request .as1
+request is similar to
+.request .as\c
+,
+but compatibility mode is switched off while the appended portion of the
+string is interpolated.
+.
+.
+.P
+.B Caution:
+Unlike other requests,
+the second argument to these requests consumes the remainder of the
+input line,
+including trailing spaces.
+.
+It is good style to end string definitions
+(and appendments)
+with a comment,
+even an empty one,
+to prevent unwanted space from creeping into them during source document
+maintenance.
+.
+.
+.P
+To store leading space in a string,
+start it with a double quote.
+.
+A double quote is special only in that position;
+double quotes in any other location are included in the string
+(the effect of escape sequences notwithstanding).
 .
 .
 .P
@@ -3911,22 +3977,11 @@ and diversions
 (and boxes)
 share the same name space.
 .
-Internally, the same mechanism is used to store them.
+Internally,
+the same mechanism is used to store them.
 .
 .
 .P
-The
-.request .as
-and
-.request .as1
-requests are similar to
-.request .ds
-and
-.request .ds1 ,
-but append their arguments
-(after the first)
-to a string instead of redefining it.
-.
 Several requests exist to perform rudimentary string operations.
 .
 Strings can be queried

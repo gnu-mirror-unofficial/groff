@@ -980,17 +980,19 @@ To be more precise,
 a \[lq]compatibility save\[rq] token is inserted at the beginning,
 and a \[lq]compatibility restore\[rq] token at the end.
 .
-As a consequence, the requests
-.BR am ,
-.BR am1 ,
-.BR de ,
+As a consequence,
+the requests
+.BR .am ,
+.BR .am1 ,
+.BR .de ,
 and
-.B de1
+.B .de1
 can be intermixed freely since the compatibility save/\:restore tokens
 only affect the macro parts defined by
 .B .am1
 and
 .BR .ds1 .
+.
 .
 .TP
 .BI .ami\~ xx\~yy
@@ -1008,16 +1010,20 @@ request but compatibility mode is switched off during execution.
 .
 .
 .TP
-.BI .as1\~ xx\~yy
+.BI .as1\~ "name string"
 Similar to
 .BR .as ,
-but compatibility mode is switched off during expansion.
+but compatibility mode is switched off while the appended portion of the
+string is interpolated.
 .
 To be more precise,
-a \[lq]compatibility save\[rq] token is inserted at the beginning,
+a \[lq]compatibility save\[rq] token is inserted at the beginning of the
+appended string
+.IR string,
 and a \[lq]compatibility restore\[rq] token at the end.
 .
-As a consequence, the requests
+As a consequence,
+the requests
 .BR as ,
 .BR as1 ,
 .BR ds ,
@@ -1390,12 +1396,27 @@ A glyph definition can be removed with the
 .B rchar
 request.
 .
+.
 .TP
-.BI .chop\~ xx
-Chop the last element off macro, string, or diversion
-.IR xx .
-This is useful for removing the newline from the end of diversions
-that are to be interpolated as strings.
+.BI .chop\~ object
+Remove the last character from the macro,
+string,
+or diversion
+named
+.IR object .
+.
+This is useful for removing the newline from the end of a diversion that
+is to be interpolated as a string.
+.
+This request can be used repeatedly on the same
+.IR object ;
+see section \[lq]Gtroff Internals\[rq] in
+.IR "Groff: The GNU Implementation of troff" ,
+the
+.I groff
+Texinfo manual,
+for details on nodes inserted additionally by
+.IR groff .
 .
 .
 .TP
@@ -1773,13 +1794,16 @@ as output.
 .RE \" this "extra" RE avoids indentation of the remaining paragraphs
 .
 .TP
-.BI .ds1\~ xx\~yy
+.BI .ds1\~ "name string"
 Similar to
 .BR .ds ,
+but compatibility mode is switched off when the string is later
+interpolated.
 but compatibility mode is switched off during expansion.
 .
 To be more precise,
-a \[lq]compatibility save\[rq] token is inserted at the beginning,
+a \[lq]compatibility save\[rq] token is inserted at the beginning of the
+string,
 and a \[lq]compatibility restore\[rq] token at the end.
 .
 .
@@ -2349,12 +2373,30 @@ If
 is non-zero or missing, enable pairwise kerning, otherwise disable it.
 .
 .TP
-.BI .length\~ xx\~string
-Compute the length of
-.I string
-and return it in the number register
-.I xx
-(which is not necessarily defined before).
+.BI .length\~ "reg anything"
+Compute the number of characters in
+.I anything
+and return the count in the number register
+.IR reg.
+.
+If
+.I reg
+doesn't exist,
+it is created.
+.
+.I anything
+is read in copy mode.
+.
+.RS
+.IP
+.EX
+.B .ds xxx abcd\eh\[aq]3i\[aq]efgh
+.B .length yyy \e*[xxx]
+.B \en[yyy]
+14
+.EE
+.RE
+.
 .
 .TP
 .BI .linetabs\~ n
@@ -2783,17 +2825,18 @@ See
 for warning types and control.
 .
 .TP
-.BI .stringdown \~stringvar
+.BI .stringdown \~str
 .TQ
-.BI .stringup \~stringvar
-Change the string named
-.I stringvar
+.BI .stringup \~str
+Alter the string named
+.I str
 by replacing each of its bytes with its
 lowercase
 .RB ( down )
 or uppercase
 .RB ( up )
-version (if any).
+version
+(if one exists).
 .
 .I groff
 special characters
@@ -2807,11 +2850,11 @@ due to the regular naming convention of the special character escapes.
 .RS
 .EX
 \&.ds resume R\e['e]sum\e['e]\e"
-\e*[resume] \e# R['e]sum['e]
+\e*[resume] \e# R\['e]sum\['e]
 \&.stringdown resume
-\e*[resume] \e# r['e]sum['e]
+\e*[resume] \e# r\['e]sum\['e]
 \&.stringup resume
-\e*[resume] \e# R['E]SUM['E]
+\e*[resume] \e# R\['E]SUM\['E]
 .EE
 .RE
 .RE
@@ -2864,9 +2907,10 @@ file controls which font positions (if any) are initially associated
 with styles rather than fonts.
 .
 .TP
-.BI .substring\~ xx\~start\~ [ end ]
+.BI .substring\~ "str start\~"\c
+.RI [ end ]
 Replace the string named
-.I xx
+.I str
 with its substring bounded by the indices
 .I start
 and
@@ -2881,13 +2925,7 @@ is omitted,
 it is implicitly set to the largest valid value
 (the string length minus one).
 .
-If the index value
-.I start
-or
-.I end
-is negative,
-it is counted from the end of the string,
-going backwards:
+Negative indices count backwards from the end of the string:
 the last character has index\~\-1,
 the character before the last has index\~\-2,
 and so on.
