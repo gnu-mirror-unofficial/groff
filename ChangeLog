@@ -1,3 +1,53 @@
+2021-01-14  Dave Kemper <saint.snit@gmail.com>
+
+	Commit 87edb525, from 2003, added character U+2026 (HORIZONTAL
+	ELLIPSIS) to most base groff fonts, but there has been no
+	kerning information for this character.  To produce consistent
+	typography, it should be kerned the same way as the period,
+	which is in 818 kern pairs across all the devps fonts.
+
+	Apply the following shell command to the groff description files
+	of the PostScript fonts.
+
+	  for file in font/devps/*[A-Z]
+	    do sed -Ei\~ 's/(.*)(^| )\. (.*)/&\n\1\2u2026 \3/' $file
+	  done
+
+	* font/devps/AB:
+	* font/devps/ABI:
+	* font/devps/AI:
+	* font/devps/AR:
+	* font/devps/BMB:
+	* font/devps/BMBI:
+	* font/devps/BMI:
+	* font/devps/BMR:
+	* font/devps/HB:
+	* font/devps/HBI:
+	* font/devps/HI:
+	* font/devps/HNB:
+	* font/devps/HNBI:
+	* font/devps/HNI:
+	* font/devps/HNR:
+	* font/devps/HR:
+	* font/devps/NB:
+	* font/devps/NBI:
+	* font/devps/NI:
+	* font/devps/NR:
+	* font/devps/PB:
+	* font/devps/PBI:
+	* font/devps/PI:
+	* font/devps/PR:
+	* font/devps/TB:
+	* font/devps/TBI:
+	* font/devps/TI:
+	* font/devps/TR:
+	* font/devps/ZCMI: Apply above script.
+
+	Fixes <https://savannah.gnu.org/bugs/?58897>.  However, this
+	will need to be done again if afmtodit is used to regenerate the
+	above files, or afmtodit will need to be modified to add this
+	kerning information itself.
+
 2021-01-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/libs/libgroff/relocate.cpp (set_current_prefix) [WIN32]:
