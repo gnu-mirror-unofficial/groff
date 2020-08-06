@@ -110,9 +110,9 @@ _
 \&.P	Paragraph	Paragraph macros
 \&.PP	Paragraph	Paragraph macros
 \&.RB	Roman, bold alternating	Font style macros
-\&.RE	Relative-indent end	Document structure macros
+\&.RE	Relative inset end	Document structure macros
 \&.RI	Roman, italic alternating	Font style macros
-\&.RS	Relative-indent start	Document structure macros
+\&.RS	Relative inset start	Document structure macros
 \&.SB	Small bold	Font style macros
 \&.SH	Section heading	Document structure macros
 \&.SM	Small	Font style macros
@@ -297,7 +297,7 @@ and
 .BR .EE .
 .
 When none of the foregoing meets a structural demand,
-a region within a (sub)section can be manually indented within
+a region within a (sub)section can be manually inset within
 .B .RS
 and
 .B .RE
@@ -544,7 +544,8 @@ installation.
 .TP
 .BR .RS " ["\c
 .IR indent ]
-Move the left margin to the right by the value
+Start a relative inset;
+move the left margin to the right by the value
 .IR indent ,
 if specified,
 and by a default amount otherwise;
@@ -564,7 +565,8 @@ calls is\~1.
 .TP
 .BR .RE " ["\c
 .IR level ]
-Move the left margin back to that corresponding to indentation level
+End a relative inset;
+move the left margin back to that corresponding to indentation level
 .IR level .
 .
 If no argument is given,
@@ -1593,7 +1595,7 @@ exhibited by ordinary
 .B .PP
 paragraphs not within an
 .BR .RS / .RE
-relative indent,
+relative inset,
 is 7.2n for typesetter devices
 and 7n for terminal devices.
 .
@@ -1710,7 +1712,6 @@ This paragraph is affected both by the moved left margin
 and ordinary indentation
 .RB ( .IP ).
 .
-.
 .TS
 box;
 l.
@@ -1733,7 +1734,6 @@ This normal
 paragraph resets the indentation,
 but the left margin is still in place.
 .
-.
 .TS
 box;
 l.
@@ -1745,7 +1745,7 @@ by the left margin.
 .
 .PP
 Finally,
-we have ended the relative indent by using
+we have ended the relative inset by using
 .BR .RE ,
 which
 (because we only used one
@@ -2787,8 +2787,16 @@ and\~6 otherwise.
 .
 .TP
 .BI \-rIN= indent
-Set the body text indentation
-(for normal paragraphs)
+Set the amount of indentation used for normal paragraphs
+.RB ( .PP
+and its synonyms)
+and the default indentation amount used by
+.BR .IP ,
+.BR .RS ,
+.BR .TP ,
+.BR .TQ ,
+and the deprecated
+.B .HP
 to
 .IR indent .
 .
@@ -2882,7 +2890,7 @@ See subsection \(lqFont style macros\(rq above for the default.
 .
 .TP
 .BI \-rSN= subsection-indent
-Set subsection indentation to
+Set indentation of the subsection heading to
 .IR subsection-indent .
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
@@ -3019,11 +3027,14 @@ Some tips on troubleshooting your man pages follow.
 .RB \(bu " .RS" " doesn't indent relative to my indented paragraph"
 The
 .B .RS
-macro sets the indentation relative to that of a
+macro sets the left margin;
+that is,
+the position at which a
 .I normal
 paragraph
 .RB ( .PP
-and its synonyms).
+and its synonyms)
+will be set.
 .
 .BR .RS ,
 .BR .IP ,
@@ -3032,7 +3043,7 @@ and the deprecated
 .B .HP
 all use the same default indentation.
 .
-To indent relative to an indented paragraph,
+To create an inset relative to an indented paragraph,
 call
 .B .RS
 repeatedly until an acceptable indentation is achieved,
@@ -3091,7 +3102,7 @@ After calls to the
 and
 .B .SS
 sectioning macros,
-all relative indents are cleared and calls to
+all relative insets are cleared and calls to
 .B .RE
 have no effect until
 .B .RS
