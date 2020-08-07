@@ -10403,10 +10403,9 @@ undefined string name defines it as empty.
 @DefescItemx {\\*, , n, }
 @DefescItem {\\*, @Lparen{}, nm, }
 @c XXX: Can't mark the parameters with @Var because @Var gets called
-@c recursively.  The internal square brackets are in the wrong font in
-@c the uncommented kludge below.
+@c recursively if we do.
 @c @DefescListEnd {\\*, @Lbrack{}, name [@Var{arg1} @Var{arg2} @dots{}], @Rbrack{}}
-@DefescListEnd {\\*, @Lbrack{}, name @r{[}arg1 arg2 @dots{}@r{]}, @Rbrack{}}
+@DefescListEnd {\\*, @Lbrack{}, name @sansserif{[}arg1 arg2 @dots{}@sansserif{]}, @Rbrack{}}
 @cindex string interpolation (@code{\*})
 @cindex string expansion (@code{\*})
 @cindex interpolation of strings (@code{\*})
