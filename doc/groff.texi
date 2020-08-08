@@ -5192,37 +5192,43 @@ of the @code{.br} register is inherited from the caller.
 @cindex tabs, and macro arguments
 @cindex macro arguments, and tabs
 @cindex arguments to macros, and tabs
-Arguments to requests and macros are processed much like the shell:
-The line is split into arguments according to
-spaces.@footnote{Plan@tie{}9's @code{troff} implementation also allows
-tabs for argument separation---@code{gtroff} intentionally doesn't
-support this.}
+Arguments to requests and macros are separated by space
+characters.@footnote{Plan@tie{}9 @code{troff} also allows tabs for
+argument separation---GNU @code{troff} intentionally doesn't support
+this.}  Only one space between arguments is necessary; additional ones
+are harmless and ignored.
 
 @cindex spaces, in a macro argument
-An argument to a macro that is intended to contain spaces can either be
-enclosed in double quotes, or have the spaces @dfn{escaped} with
-backslashes.  This is @emph{not} true for requests.
+A macro argument that must contain space characters can either be
+enclosed in double quotes---this is @emph{not} true of requests---or one
+of several varieties of @dfn{escape} with a spacing function can be used
+instead.
 
-Here are a few examples for a hypothetical macro @code{uh}:
+Consider calls to a hypothetical macro @code{uh}:
 
 @Example
 .uh The Mouse Problem
 .uh "The Mouse Problem"
+.uh The\~Mouse\~Problem
 .uh The\ Mouse\ Problem
 @endExample
 
 @cindex @code{\~}, difference to @code{\@key{SP}}
 @cindex @code{\@key{SP}}, difference to @code{\~}
 @noindent
-The first line is the @code{uh} macro being called with 3 arguments,
-@samp{The}, @samp{Mouse}, and @samp{Problem}.  The latter two have the
-same effect of calling the @code{uh} macro with one argument, @samp{The
-Mouse Problem}.@footnote{The last solution, i.e., using escaped spaces,
-is ``classical'' in the sense that it can be found in most @code{troff}
-documents.  Nevertheless, it is not optimal in all situations, since
-@w{@samp{\ }} inserts a fixed-width, non-breaking space character that
-can't stretch.  @code{gtroff} provides a different command @code{\~} to
-insert a stretchable, non-breaking space.}
+The first line is the @code{uh} macro being called with three arguments,
+@samp{The}, @samp{Mouse}, and @samp{Problem}.  The remainder call the
+@code{uh} macro with one argument, @samp{The Mouse Problem}.  The last
+solution, using escaped spaces, is ``classical'' in the sense that it
+can be found in documents prepared for @acronym{AT&T} @code{troff}.
+Nevertheless, it is not optimal in most situations, since @w{@samp{\ }}
+inserts a fixed-width, non-breaking space character that can't be
+adjusted.  GNU @code{troff} provides a different command @code{\~} to
+insert a adjustable, non-breaking space.@footnote{@code{\~} is also
+supported by Heirloom Doctools @code{troff} 050915 (September 2005) and
+mandoc 1.14.5 (March 2019) but not by Plan@tie{}9 @code{troff}, Solaris
+@code{troff}, DWB @code{troff} or @code{onroff}, or @code{neatroff}.}
+@c as of this writing, 2020-08-08
 
 @cindex @code{"}, in a macro argument
 @cindex double quote, in a macro argument
@@ -10132,7 +10138,7 @@ wink, wink, \s+2nudge, nudge,\s+8 say no more!
 
 The @code{\s} escape may be called in a variety of ways.  Much like
 other escapes there must be a way to determine where the argument ends
-and the text begins.  Any of the following forms are valid:
+and the text begins.  Any of the following forms is valid:
 
 @table @code
 @item \s@var{n}
@@ -10300,9 +10306,9 @@ effect of multiplying by @var{sizescale}.  Requests and escape sequences
 in GNU @code{troff} interpret arguments that represent a point size as
 being in units of scaled points; that is, they evaluate each such
 argument using a default scale indicator of @samp{z}.  Arguments treated
-in this way those to @code{ps}, the third argument to the @code{cs},
-the second and fourth arguments to the @code{tkf}, and the arguments
-to @code{\H} and @code{\s}.
+in this way comprise those to the escapes @code{\H} and @code{\s}, to
+the request @code{ps}, the third argument to the @code{cs} request, and
+the second and fourth arguments to the @code{tkf} request.
 
 For example, if @var{sizescale} is@tie{}1000, then a scaled point
 is one one-thousandth of a point.  The request @samp{.ps 10.25} is
@@ -10312,16 +10318,17 @@ synonymous with @samp{.ps 10.25z} and sets the point size to
 Consequently, in GNU @code{troff}, the number register @code{.s} can
 contain a non-integral point size.
 
-It makes no sense to use of the @samp{z} scale indicator in a numeric
-expression whose default scale indicator was neither @samp{u} nor
+It makes no sense to use the @samp{z} scale indicator in a numeric
+expression whose default scale indicator is neither @samp{u} nor
 @samp{z}, so GNU @code{troff} disallows this.  Similarly, it is
 nonsensical to use a scaling indicator other than @samp{z} or @samp{u}
-in a numeric expression whose default scale indicator was @samp{z}, and
+in a numeric expression whose default scale indicator is @samp{z}, and
 so GNU @code{troff} disallows this as well.
 
-Another new scale indicator @samp{s} multiplies by the number of units
-in a scaled point.  For instance, @samp{\n[.ps]s} is equal to @samp{1m}.
-Do not confuse the @samp{s} and @samp{z} scale indicators.
+Another new scale indicator @samp{s} multiplies by the number of basic
+units in a scaled point.  For instance, @samp{\n[.ps]s} is equal to
+@samp{1m} by definition.  Do not confuse the @samp{s} and @samp{z} scale
+indicators.
 
 @Defreg {.ps}
 A read-only number register returning the point size in scaled points.
@@ -10395,7 +10402,7 @@ This string contains the current output device (for example,
 @endDefstr
 
 The @code{ds} (or @code{ds1}) request creates a string and the @code{\*}
-escape retrieves (dereferences) its contents.  Dereferencing an
+escape dereferences name, retrieving its contents.  Dereferencing an
 undefined string name defines it as empty.
 
 @DefreqList {ds, name [@Var{string}]}
@@ -10416,30 +10423,21 @@ Define and access a string variable @var{name} (one-character
 name@tie{}@var{n}, two-character name @var{nm}).  If @var{name} already
 exists, @code{ds} overwrites the previous definition.  The syntax form
 using brackets accepts arguments that are handled as macro arguments
-are; in contrast to macro calls, however, a closing bracket as an
-argument must be enclosed in double quotes.  @xref{Request and Macro
-Arguments}, and @ref{Parameters}.
-
-Example:
-
-@Example
-.ds foo a \\$1 test
-.
-This is \*[foo nice].
-    @result{} This is a nice test.
-@endExample
+are; recall @ref{Request and Macro Arguments}.  In contrast to macro
+invocations, however, a closing bracket as a string argument must be
+enclosed in double quotes.
 
 The @code{\*} escape @dfn{interpolates} (expands in place) a previously
 defined string variable.  More precisely, the stored string is pushed
 onto the input stack, which is then parsed normally.  Similarly to
 number registers, it is possible to nest strings; i.e., string variables
-can be called within string variables.
+can be called within string variables.  An argument in a string
+definition must be escaped for correct behavior; @xref{Parameters}.
 
 @Example
-.ds a hairy
-.ds b \*[a] wildebeest
-.ds c big, \*[b]
-I see a \*[c].
+.ds a \\$1 wildebeest
+.ds b big, \*[a hairy]
+I see a \*[b].
     @result{} I see a big, hairy wildebeest.
 @endExample
 
@@ -10476,6 +10474,7 @@ creeping into them during source document maintenance.
 
 @Example
 .ds author Alice Pleasance Liddell\"
+.ds empty \" might be appended to later with .as
 @endExample
 
 @cindex trailing double quotes in strings
@@ -10541,14 +10540,12 @@ Truly.
 @endExample
 
 @noindent
-What went wrong?  Strings don't have newlines, but macros do.  String
+What went wrong?  Strings don't contain newlines, but macros do.  String
 interpolation placed a newline at the end of @samp{\*[subject]}, and the
 next thing on the input was a space.  Similarly, when
 @samp{\*[predicate]} was interpolated, it was followed by the empty
-request @samp{.} on a line by itself.
-
-If we want to use macros as strings we must take interpolation behavior
-into account.
+request @samp{.} on a line by itself.  If we want to use macros as
+strings, we must take interpolation behavior into account.
 
 @Example
 .de subject
