@@ -4884,7 +4884,7 @@ Here, leading plus and minus signs indicate increments and decrements.
 
 @xref{Setting Registers}, for some examples.
 
-@Defesc {\\B, ', anything, '}
+@Defesc {\\B, @code{'}, anything, @code{'}}
 @cindex numeric expression, valid
 @cindex valid numeric expression
 Return@tie{}1 if @var{anything} is a valid numeric expression; or@tie{}0
@@ -4977,7 +4977,7 @@ everything after @samp{.[} and @samp{.]} is handled as a special
 argument to @code{refer}.  For example, @samp{.[foo} makes @code{refer}
 to start a reference, using @samp{foo} as a parameter.
 
-@Defesc {\\A, ', ident, '}
+@Defesc {\\A, @code{'}, ident, @code{'}}
 Test whether an identifier @var{ident} is valid in @code{gtroff}.  It
 expands to the character@tie{}1 or@tie{}0 according to whether its
 argument (usually delimited by quotes) is or is not acceptable as the
@@ -5675,7 +5675,7 @@ registers, simply using an undefined register will cause it to be
 set to zero.
 
 @DefreqList {nr, ident value}
-@DefescListEndx {\\R, ', ident value, '}
+@DefescListEndx {\\R, @code{'}, ident value, @code{'}}
 Set number register @var{ident} to @var{value}.  If @var{ident} doesn't
 exist, @code{gtroff} creates it.
 
@@ -7166,7 +7166,7 @@ spacing setting.
 @xref{Changing Type Sizes}, for the requests @code{vs} and @code{pvs} as
 alternatives to @code{ls}.
 
-@DefescList {\\x, ', spacing, '}
+@DefescList {\\x, @code{'}, spacing, @code{'}}
 @DefregListEndx {.a}
 Sometimes, extra vertical spacing is only needed occasionally, e.g.@: to
 allow space for a tall construct (like an equation).  The @code{\x}
@@ -8330,7 +8330,7 @@ length to 11@dmn{i}.
 @code{gtroff} provides several operations that help in setting up top
 and bottom titles (or headers and footers).
 
-@Defreq {tl, @t{'}@Var{left}@t{'}@Var{center}@t{'}@Var{right}@t{'}}
+@Defreq {tl, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}}
 @cindex title line (@code{tl})
 @cindex three-part title (@code{tl})
 @cindex page number character (@code{%})
@@ -9208,7 +9208,7 @@ name is constructed, causing the final glyph name to be
 @item \[^E u0301]
 @itemx \[^E aa]
 @itemx \[E a^ aa]
-@itemx \[E ^ ']
+@itemx \[E ^ @code{'}]
 @samp{^E} maps to @code{u0045_0302}, thus the final glyph name is
 @code{u0045_0302_0301} in all forms (assuming proper calls of the
 @code{composite} request).
@@ -9219,7 +9219,7 @@ within a groff font file.  This is not really a limitation; instead, you
 have to define @code{u0041_0328}.
 @endDefesc
 
-@Defesc {\\C, ', xxx, '}
+@Defesc {\\C, @code{'}, xxx, @code{'}}
 @cindex named character (@code{\C})
 @cindex character, named (@code{\C})
 Typeset the glyph named @var{xxx}.@footnote{@code{\C} is actually a
@@ -9241,7 +9241,7 @@ A set of default mappings for many accents can be found in the file
 @file{composite.tmac}, which is loaded at start-up.
 @endDefreq
 
-@Defesc {\\N, ', n, '}
+@Defesc {\\N, @code{'}, n, @code{'}}
 @cindex numbered glyph (@code{\N})
 @cindex glyph, numbered (@code{\N})
 @cindex @code{char} request, used with @code{\N}
@@ -9273,13 +9273,13 @@ No kerning is applied to glyphs accessed with @code{\N}.
 
 Some escape sequences directly map onto special glyphs.
 
-@Defesc {\\', , , }
+@Defesc {\@code{'}, , , }
 This is a backslash followed by the apostrophe character,
 @acronym{ASCII} character @code{0x27} (@acronym{EBCDIC} character
 @code{0x7D}).  The same as @code{\[aa]}, the acute accent.
 @endDefesc
 
-@Defesc {\\`, , , }
+@Defesc {\@code{`}, , , }
 This is a backslash followed by @acronym{ASCII} character @code{0x60}
 (@acronym{EBCDIC} character @code{0x79} usually).  The same as
 @code{\[ga]}, the grave accent.
@@ -9663,9 +9663,9 @@ not have a wide variety of fonts, and when @code{nroff} and @code{troff}
 were separate programs.  Most of them are no longer necessary in GNU
 @code{troff}.  Nevertheless, they are supported.
 
-@DefescList {\\H, ', height, '}
-@DefescItem {\\H, ', @t{+}height, '}
-@DefescItem {\\H, ', @t{-}height, '}
+@DefescList {\\H, @code{'}, height, @code{'}}
+@DefescItem {\\H, @code{'}, @t{+}height, @code{'}}
+@DefescItem {\\H, @code{'}, @t{-}height, @code{'}}
 @DefregListEndx {.height}
 @cindex changing the font height (@code{\H})
 @cindex font height, changing (@code{\H})
@@ -9703,7 +9703,7 @@ prints the word @samp{test} twice with the same font height (five points
 larger than the current font size).
 @endDefesc
 
-@DefescList {\\S, ', slant, '}
+@DefescList {\\S, @code{'}, slant, @code{'}}
 @DefregListEndx {.slant}
 @cindex changing the font slant (@code{\S})
 @cindex font slant, changing (@code{\S})
@@ -10906,7 +10906,7 @@ Always false.  This condition is for compatibility with certain other
 early-vintage AT&T @code{troff} to a form suitable for Versatec and
 Benson-Varian plotters.}
 
-@item '@var{xxx}'@var{yyy}'
+@item @code{'}@var{xxx}@code{'}@var{yyy}@code{'}
 True if the output produced by @var{xxx} is equal to the output produced
 by @var{yyy}.  Other characters can be used in place of the single
 quotes; the same set of delimiters as for the @code{\D} escape is used
@@ -11664,7 +11664,7 @@ implementation     macro.
 
 The following escapes give fine control of movements about the page.
 
-@Defesc {\\v, ', e, '}
+@Defesc {\\v, @code{'}, e, @code{'}}
 @cindex vertical motion (@code{\v})
 @cindex motion, vertical (@code{\v})
 Move vertically, usually from the current location on the page (if no
@@ -11694,7 +11694,7 @@ Move upwards@tie{}.5@dmn{v}.
 Move down@tie{}.5@dmn{v}.
 @endDefesc
 
-@Defesc {\\h, ', e, '}
+@Defesc {\\h, @code{'}, e, @code{'}}
 @cindex inserting horizontal space (@code{\h})
 @cindex horizontal space (@code{\h})
 @cindex space, horizontal (@code{\h})
@@ -11753,7 +11753,7 @@ The following string sets the @TeX{} logo:
 .ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 @endExample
 
-@DefescList {\\w, ', text, '}
+@DefescList {\\w, @code{'}, text, @code{'}}
 @DefregItemx {st}
 @DefregItemx {sb}
 @DefregItemx {rst}
@@ -11847,7 +11847,7 @@ A read-only number register containing the current horizontal output
 position (relative to the current indentation).
 @endDefreg
 
-@Defesc {\\o, ', abc, '}
+@Defesc {\\o, @code{'}, abc, @code{'}}
 @cindex overstriking glyphs (@code{\o})
 @cindex glyphs, overstriking (@code{\o})
 Overstrike glyphs @var{a}, @var{b}, @var{c}, @dots{}; the glyphs are
@@ -11862,7 +11862,7 @@ Print glyph @var{g} with zero width, i.e., without spacing.  Use this to
 overstrike glyphs left-aligned.
 @endDefesc
 
-@Defesc {\\Z, ', anything, '}
+@Defesc {\\Z, @code{'}, anything, @code{'}}
 @cindex zero-width printing (@code{\z}, @code{\Z})
 @cindex printing, zero-width (@code{\z}, @code{\Z})
 Print @var{anything}, then restore the horizontal and vertical position.
@@ -11900,8 +11900,8 @@ information.
 
 All drawing is done via escapes.
 
-@DefescList {\\l, ', l, '}
-@DefescListEnd {\\l, ', lg, '}
+@DefescList {\\l, @code{'}, l, @code{'}}
+@DefescListEnd {\\l, @code{'}, lg, @code{'}}
 @cindex drawing horizontal lines (@code{\l})
 @cindex horizontal line, drawing (@code{\l})
 @cindex line, horizontal, drawing (@code{\l})
@@ -11946,8 +11946,8 @@ beginning of the @emph{input} line---this works because the line length
 is negative, not moving the current point.
 @endDefesc
 
-@DefescList {\\L, ', l, '}
-@DefescListEnd {\\L, ', lg, '}
+@DefescList {\\L, @code{'}, l, @code{'}}
+@DefescListEnd {\\L, @code{'}, lg, @code{'}}
 @cindex drawing vertical lines (@code{\L})
 @cindex vertical line drawing (@code{\L})
 @cindex line, vertical, drawing (@code{\L})
@@ -11977,7 +11977,7 @@ This is a
 @endExample
 @endDefesc
 
-@Defesc {\\D, ', command arg @dots{}, '}
+@Defesc {\\D, @code{'}, command arg @dots{}, @code{'}}
 The @code{\D} escape provides a variety of drawing functions.  Note that
 on character devices, only vertical and horizontal lines are supported
 within @code{grotty}; other devices may only support a subset of the
@@ -12177,7 +12177,7 @@ Examples:
 
 @xref{Graphics Commands}.
 
-@Defesc {\\b, ', string, '}
+@Defesc {\\b, @code{'}, string, @code{'}}
 @cindex pile, glyph (@code{\b})
 @cindex glyph pile (@code{\b})
 @cindex stacking glyphs (@code{\b})
@@ -13720,7 +13720,7 @@ postprocessor.  This is particularly useful for embedding
 @sc{PostScript} into the final document.
 
 @DefreqList {device, xxx}
-@DefescListEndx {\\X, ', xxx, '}
+@DefescListEndx {\\X, @code{'}, xxx, @code{'}}
 Embeds its argument into the @code{gtroff} output preceded with
 @w{@samp{x X}}.
 
