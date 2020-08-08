@@ -9129,13 +9129,14 @@ A glyph representing more than a single input character is named
 Example: @code{u0045_0302_0301}.
 
 For simplicity, all Unicode characters that are composites must be
-decomposed maximally (this is normalization form@tie{}D in the Unicode
-standard); for example, @code{u00CA_0301} is not a valid glyph name
-since U+00CA (@sc{latin capital letter e with circumflex}) can be
-further decomposed into U+0045 (@sc{latin capital letter e}) and U+0302
-(@sc{combining circumflex accent}).  @code{u0045_0302_0301} is thus the
-glyph name for U+1EBE, @sc{latin capital letter e with circumflex and
-acute}.
+maximally decomposed to NFD@footnote{This is ``Normalization Form D'' as
+documented in Unicode Standard Annex #15
+(@uref{https://unicode.org@//reports@//tr15/}).}; for example,
+@code{u00CA_0301} is not a valid glyph name since U+00CA (@sc{latin
+capital letter e with circumflex}) can be further decomposed into U+0045
+(@sc{latin capital letter e}) and U+0302 (@sc{combining circumflex
+accent}).  @code{u0045_0302_0301} is thus the glyph name for U+1EBE,
+@sc{latin capital letter e with circumflex and acute}.
 
 @item
 groff maintains a table to decompose all algorithmically derived glyph
