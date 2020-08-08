@@ -6572,13 +6572,14 @@ right-justified is associated with the current environment
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Manipulating Hyphenation, Manipulating Spacing, Manipulating Filling and Adjusting, gtroff Reference
 @section Manipulating Hyphenation
 @cindex manipulating hyphenation
 @cindex hyphenation, manipulating
 
-@codequotebacktick on
-@codequoteundirected on
 GNU @code{troff} hyphenates words automatically by default.  Automatic
 hyphenation of words in natural languages is a subject requiring
 algorithms and data, and is susceptible to conventions and preferences.
@@ -7059,6 +7060,7 @@ zero, emitting a warning of type @samp{range}.
 The hyphenation space adjustment threshold is available in the
 @code{.hys} read-only number register.
 @endDefreq
+
 @codequotebacktick off
 @codequoteundirected off
 
@@ -7577,6 +7579,9 @@ foo            bar       smurf
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Character Translations, Troff and Nroff Mode, Tabs and Fields, gtroff Reference
 @section Character Translations
 @cindex character translations
@@ -7914,6 +7919,9 @@ For example,
 prints @samp{b} to the standard error stream; if @code{trnt} is used
 instead of @code{tr} it prints @samp{a}.
 @endDefreq
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -8286,6 +8294,9 @@ environment (@pxref{Environments}).
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Page Layout, Page Control, Line Control, gtroff Reference
 @section Page Layout
 @cindex page layout
@@ -8416,6 +8427,9 @@ Note that this doesn't affect the number register@tie{}@code{%}.
 @endDefreq
 
 @xref{Traps}.
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -8970,6 +8984,9 @@ this is font 1 again
 
 @c ---------------------------------------------------------------------
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Using Symbols, Character Classes, Font Positions, Fonts and Symbols
 @subsection Using Symbols
 @cindex using symbols
@@ -9293,8 +9310,6 @@ This is the same as @code{\[-]}, the minus sign in the current font.
 This is the same as @code{\[ul]}, the underline character.
 @endDefesc
 
-@codequotebacktick on
-@codequoteundirected on
 @Defreq {cflags, n c1 c2 @dots{}}
 @cindex glyph properties (@code{cflags})
 @cindex character properties (@code{cflags})
@@ -9426,8 +9441,6 @@ them.  If we use value@tie{}6 instead for the left character, a break
 after the character can't be suppressed since the neighboring character
 on the right doesn't get examined.
 @endDefreq
-@codequotebacktick off
-@codequoteundirected off
 
 @DefreqList {char, g [@Var{string}]}
 @DefreqItemx {fchar, g [@Var{string}]}
@@ -9535,8 +9548,6 @@ The request @code{rfschar} removes glyph definitions defined with
 @cindex character classes
 @cindex classes, character
 
-@codequotebacktick on
-@codequoteundirected on
 Classes are particularly useful for East Asian languages such as
 Chinese, Japanese, and Korean, where the number of needed characters is
 much larger than in European languages, and where large sets of
@@ -9610,8 +9621,6 @@ the following.
 @noindent
 See the @code{cflags} request in @ref{Using Symbols}, for more details.
 @endDefreq
-@codequoteundirected off
-@codequotebacktick off
 
 @c ---------------------------------------------------------------------
 
@@ -10390,8 +10399,6 @@ with a default scale indicator of @samp{z}.
 @section Strings
 @cindex strings
 
-@codequotebacktick on
-@codequoteundirected on
 GNU @code{troff} has string variables primarily for user convenience.
 Only one string is predefined by the language.
 
@@ -10855,8 +10862,8 @@ To remove an alias, simply call @code{rm} on its name.  The object
 itself is not destroyed until it has no more names.
 @endDefreq
 
-@codequoteundirected off
 @codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -14471,6 +14478,9 @@ All warnings.
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Implementation Differences,  , Debugging, gtroff Reference
 @section Implementation Differences
 @cindex implementation differences
@@ -14479,8 +14489,6 @@ All warnings.
 @cindex compatibility mode
 @cindex mode, compatibility
 
-@codequotebacktick on
-@codequoteundirected on
 GNU @code{troff} has a number of features that cause incompatibilities
 with documents written using old versions of @code{troff}.  Some GNU
 extensions to @code{troff} have become supported by other
@@ -14759,9 +14767,9 @@ To store an escape sequence in a diversion that is interpreted when the
 diversion is reread, either use the traditional @code{\!} transparent
 output facility, or, if this is unsuitable, the new @code{\?} escape
 sequence.  @xref{Diversions}, and @ref{Gtroff Internals}.
-@codequoteundirected off
-@codequotebacktick off
 
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -16364,6 +16372,9 @@ commands @samp{t} and @samp{u} provide a better functionality.
 
 @c ---------------------------------------------------------------------
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Intermediate Output Examples, Output Language Compatibility, Command Reference, gtroff Output
 @subsection Intermediate Output Examples
 
@@ -16371,8 +16382,6 @@ This section presents the intermediate output generated from the same
 input for three different devices.  The input is the sentence @samp{hell
 world} fed into @code{gtroff} on the command line.
 
-@codequotebacktick on
-@codequoteundirected on
 @table @asis
 @item High-resolution device @code{ps}
 
@@ -16491,6 +16500,7 @@ displaying in@tie{}X.
 Due to the obsolete jump-and-write command, the text clusters in the
 @acronym{AT&T} @code{troff} output are almost unreadable.
 @end table
+
 @codequotebacktick off
 @codequoteundirected off
 
