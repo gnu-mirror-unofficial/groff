@@ -187,7 +187,7 @@ are described in subsection \(lqDeprecated features\(rq below.
 .
 Each macro is described in a tagged paragraph.
 .
-Closely-related macros,
+Closely related macros,
 such as
 .B .EX
 and
@@ -197,7 +197,7 @@ are grouped together.
 .
 .\" BEGIN STYLE
 .PP
-A macro call begins on a line starting with a dot (\(lq.\(rq),
+A macro call appears on a line starting with a dot (\(lq.\(rq),
 followed by zero or more spaces and then the macro name.
 .
 Some macros accept arguments;
@@ -217,8 +217,8 @@ Optional macro arguments are indicated by surrounding them with square
 brackets.
 .
 If a macro accepts multiple arguments,
-those containing space or horizontal tab characters must be
-double-quoted to be interpreted correctly.
+those containing space \" or horizontal tab (in Plan 9 troff [only?])
+characters must be double-quoted to be interpreted correctly.
 .
 .\" END STYLE
 An empty macro argument can be specified with a pair of double-quotes
@@ -276,18 +276,18 @@ information enabling its indexing by
 .IR mandb (8)
 or a similar tool.
 .
-Sections
+Section headings
 .RB ( .SH ),
 one of which is mandatory and many of which are standardized,
 facilitate quick location of relevant material by the reader and aid
 the man page writer to discuss all essential aspects of the topic.
 .
-Subsections
+Subsection headings
 .RB ( .SS )
 are optional and permit sections that grow long to develop in a
 controlled way.
 .
-Many technical discussions require examples;
+Many technical discussions benefit from examples;
 lengthy ones,
 especially those reflecting multiple lines of input to or output from
 the system,
@@ -423,7 +423,7 @@ their default values.
 .
 Text on input lines after
 .I heading-text
-is set as a normal paragraph
+is set as an ordinary paragraph
 .RB ( .PP ).
 .
 .
@@ -463,8 +463,8 @@ for the conventions prevailing on your system.
 .IR subheading-text ]
 Set
 .I subheading-text
-as a subsection heading indented partway between a section heading and a
-normally-indented paragraph
+as a subsection heading indented between a section heading and an
+ordinary paragraph
 .RB ( .PP ).
 .
 See subsection \(lqHorizontal and vertical spacing\(rq below for the
@@ -486,7 +486,7 @@ their default values.
 .
 Text on input lines after
 .I subheading-text
-is set as a normal paragraph
+is set as an ordinary paragraph
 .RB ( .PP ).
 .
 .
@@ -667,16 +667,15 @@ and continues on the following lines.
 .
 Otherwise,
 the descriptive part of the paragraph begins on the line following the
-tag,
-entirely indented.
-.
-The line containing the tag can include a macro call,
-for instance to set the tag in bold with
-.BR .B .
+tag.
 .\" BEGIN STYLE
 .
 .
 .IP
+The line containing the tag can include a macro call,
+for instance to set the tag in bold with
+.BR .B .
+.
 .B .TP
 was used to write the first paragraph of this description of
 .BR .TP ,
@@ -747,7 +746,7 @@ cannot include a macro call.
 .
 .\" BEGIN STYLE
 .IP
-Two convenient use cases for
+Two convenient uses for
 .B .IP
 are
 .
@@ -877,7 +876,7 @@ blocks can be specified,
 for instance to distinguish differing modes of operation of a complex
 command like
 .IR tar (1);
-each will be separated by a paragraph space.
+each will be vertically separated as paragraphs are.
 .
 .
 .PP
@@ -972,12 +971,7 @@ which does nothing,
 is used for vertical spacing in the input file for readability by the
 document maintainer.
 .
-Do not put blank
-(i.e.,
-empty)
-lines in a
-.I roff
-source document.
+Do not put blank (empty) lines in a man page source document.
 .
 .
 .IP \(bu
@@ -1220,9 +1214,8 @@ and man page cross-references.
 .
 .
 .PP
-The default point size and family
-(for typesetter devices)
-is 10-point Times.
+The default point size and family for typesetter devices is 10-point
+Times.
 .
 The default style is roman.
 .
@@ -1249,9 +1242,9 @@ this page uses bold for macro,
 string,
 and register names.
 .
-In
+In an
 .BR .EX / .EE
-examples of interactive I/O
+example of interactive I/O
 (such as a shell session),
 set only user input in bold.
 .
@@ -1363,7 +1356,7 @@ titles of anything other than works of literature or software;
 identifiers for standards documents or technical reports such as
 CSTR\~#54,
 RFC\~1918,
-Unicode\~11.0,
+Unicode\~13.0,
 or
 POSIX.1-2017;
 acronyms;
@@ -1548,9 +1541,9 @@ argument accepted by
 .BR .TP ,
 and the deprecated
 .B .HP
-is a number plus an optional scaling indicator.
+is a number plus an optional scale indicator.
 .
-If no scaling indicator is given,
+If no scale indicator is given,
 the
 .I man
 package assumes \(lqn\(rq;
@@ -1558,7 +1551,7 @@ that is,
 the width of a letter \(lqn\(rq in the font current when the macro is
 called
 (see section \(lqNumerical Expressions\(rq in
-.IR groff (7)).
+.IR groff (@MAN7EXT@)).
 .
 An indent specified in a call to
 .BR .IP ,
@@ -1614,7 +1607,7 @@ and the deprecated
 Headers,
 footers
 (both set with
-.RB .TH ),
+.BR .TH ),
 and section headings
 .RB ( .SH )
 are set flush left
@@ -1729,7 +1722,7 @@ but both affect the text of the paragraph.
 .
 .
 .PP
-This normal
+This ordinary
 .RB ( .PP )
 paragraph resets the indentation,
 but the left margin is still in place.
@@ -1913,8 +1906,8 @@ and
 .
 Modern implementations of the
 .I man
-program interpret this first line and automatically call the right
-preprocessor(s).
+can use this information to automatically call the required
+preprocessor(s) in the right order.
 .
 .
 .PP
@@ -2011,7 +2004,7 @@ Similar caveats apply to escapes.
 Some escape sequences are however required for correct typesetting
 even in man pages and usually do not cause portability problems.
 .
-Several of these render glyphs corresponding to punctuation characters
+Several of these render glyphs corresponding to punctuation code points
 in the Unicode basic Latin range
 (U+0000\(enU+007F)
 that are handled specially in
@@ -2022,7 +2015,7 @@ when documenting material that uses them syntactically\(emnamely,
 any of the set
 .B \(aq \- \(ha \(ga \(ti
 (apostrophe,
-dash,
+dash or minus,
 caret,
 grave accent,
 tilde).
@@ -2064,13 +2057,14 @@ overriding
 .IR groff 's
 hyphenation patterns.
 .
-Use at the beginning of a word to suppress its hyphenation entirely.
+At the beginning of a word,
+it suppresses hyphenation entirely.
 .
 .
 .TP
 .B \e\(ti
 Adjustable,
-non-breaking space character.
+non-breaking space.
 .
 Use this escape to prevent a break inside a short phrase or between a
 numerical quantity and its corresponding unit(s).
@@ -2109,7 +2103,7 @@ non-breaking space.
 .
 Used primarily in ellipses
 (\(lq.\e|.\e|.\(rq)
-to achieve more pleasant spacing on typesetter devices like PostScript
+to space the dots more pleasantly on typesetter devices like PostScript
 and PDF.
 .
 .
@@ -2164,7 +2158,7 @@ or simply for readability.
 .IP
 .\" from src/preproc/eqn/eqn.1.man
 .EX
-\&.BI split\e~\e(dq text \e(dq
+\&.BI split\e\[ti]\e(dq text \e(dq
 .EE
 .RE
 .
@@ -2254,9 +2248,7 @@ on the input line
 .\" ...except for \R escapes, which shouldn't appear in man pages...
 is discarded.
 .
-The next line,
-including macro calls,
-is interpreted as usual
+The next line is interpreted as usual and can include a macro call
 (contrast with
 .BI \e newline\/\c
 ).
@@ -2334,11 +2326,13 @@ and perhaps with some other formatters.
 .B \ee
 Widely used in man pages to represent a backslash output glyph.
 .
-It works reliably as long as the
-.B .ec
-request is not used,
+.\" Don't bold the .ec request in this discussion; it's not a major
+.\" topic of _this_ page as it would be in groff(7).  Also, we don't
+.\" want to encourage people to mess with this old kludge by drawing
+.\" attention to it.
+It works reliably as long as the \[lq].ec\[rq] request is not used,
 which should never happen in man pages,
-and it is slightly more portable than the more exact
+and it is slightly more portable than the more explicit
 .B \e(rs
 (\(lqreverse solidus\(rq) special character escape sequence.
 .
@@ -2530,8 +2524,8 @@ Use of this presentation-level macro is deprecated.
 .
 While it is universally portable to legacy Unix systems,
 a hanging indentation cannot be expressed naturally under HTML,
-and HTML-based man page processors may interpret it as starting a normal
-paragraph.
+and HTML-based man page processors may interpret it as starting a
+ordinary paragraph.
 .
 Thus,
 any information or distinction you tried to express with the
@@ -2545,8 +2539,8 @@ Define the vertical space between paragraphs or (sub)sections.
 .
 The optional argument
 .I vertical-space
-specifies the amount of space;
-the default scaling is \(oqv\(cq).
+specifies the amount;
+the default scale indicator is \(oqv\(cq).
 .
 Without an argument,
 the spacing is reset to its default value;
@@ -2777,7 +2771,7 @@ The default is \-0.5i.
 .BI \-rHY= mode
 Set hyphenation mode,
 as documented in section \(lqHyphenation\(rq of
-.IR groff (7).
+.IR groff (@MAN7EXT@).
 .
 The default is\~4 if continuous rendering is enabled
 .RB ( \-rcR=1
@@ -2787,7 +2781,7 @@ and\~6 otherwise.
 .
 .TP
 .BI \-rIN= indent
-Set the amount of indentation used for normal paragraphs
+Set the amount of indentation used for ordinary paragraphs
 .RB ( .PP
 and its synonyms)
 and the default indentation amount used by
@@ -2812,9 +2806,15 @@ indentation.
 .
 .TP
 .BI \-rLL= line-length
-Set line length.
+Set line length;
+the default is 78n for terminal devices
+and 6.5i for typesetter devices.
 .
 If this option is not given,
+.\" Don't bold the .ll request in this discussion; it's not a major
+.\" topic of _this_ page as it would be in groff(7).  Also, we don't
+.\" want to encourage people to mess with this old kludge by drawing
+.\" attention to it.
 the line length is set to respect any value set by a prior \(lq.ll\(rq
 request
 (which
@@ -2822,14 +2822,11 @@ request
 be in effect when the
 .B .TH
 macro is invoked),
-if this differs from the built-in default for the formatter;
-otherwise it defaults
-to 78n for terminal devices
-and 6.5i for typesetter devices.
+if this differs from the built-in default for the formatter.
 .
 .
 .IP
-Note that the use of a \(lq.ll\(rq request to initialize the line
+Note that the use of an \(lq.ll\(rq request to initialize the line
 length is supported for backward compatibility with some versions of
 the
 .I man
@@ -2841,7 +2838,7 @@ register should
 be preferred to the use of such a request.
 .
 In particular,
-note that a \(lq.ll\~65n\(rq request does
+note that an \(lq.ll\~65n\(rq request does
 .I not
 preserve the default
 .I nroff
@@ -3029,8 +3026,8 @@ The
 .B .RS
 macro sets the left margin;
 that is,
-the position at which a
-.I normal
+the position at which an
+.I ordinary
 paragraph
 .RB ( .PP
 and its synonyms)
