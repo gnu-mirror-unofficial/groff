@@ -527,11 +527,15 @@ package.
 Many systems running
 AT&T,
 Heirloom Doctools,
-or Plan 9
+or Plan\~9
 .I troff
 support them.
-.\" However, Plan 9 troff's .EX/.EE don't manipulate filling or
-.\" hyphenation, so AT&T Unix's probably didn't either.
+.\" Solaris 10 troff does not support .EX/.EE.
+.\"
+.\" Plan 9 troff does, but its implementation doesn't manipulate filling
+.\" or hyphenation, so AT&T Unix's probably didn't either.
+.\"
+.\" Neatroff and DWB 3.3 troff/onroff don't ship (m)an macros.
 .
 To be certain your page will be portable to systems that do not,
 copy their definitions from the
@@ -698,7 +702,11 @@ handled as with
 .
 .
 .IP
-This macro is not defined on systems running AT&T or Plan\~9
+This macro is not defined on systems running
+AT&T,
+Plan\~9,
+or
+Solaris\~10
 .IR troff .
 .
 To be certain your page will be portable to those systems,
@@ -801,7 +809,11 @@ with command-line options of some formats indicated by
 .
 .
 .PP
-These macros are not defined on systems running AT&T or Plan\~9
+These macros are not defined on systems running
+AT&T,
+Plan\~9,
+or
+Solaris\~10
 .IR troff .
 .
 To be certain your page will be portable to those systems,
@@ -1028,7 +1040,11 @@ and URL hyperlinks with
 .
 .
 .PP
-These macros are not defined on systems running AT&T or Plan\~9
+These macros are not defined on systems running
+AT&T,
+Plan\~9,
+or
+Solaris\~10
 .IR troff .
 .
 To be certain your page will be portable to those systems,
