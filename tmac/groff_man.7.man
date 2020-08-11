@@ -8,7 +8,7 @@ groff_man \- GNU roff macro package for formatting man pages
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1999-2018 Free Software Foundation, Inc.
+.\" Copyright (C) 1999-2018, 2020 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -130,11 +130,9 @@ _
 .PP
 Macros whose use we discourage
 .RB ( .AT ,
-.BR .BT ,
 .BR .DT ,
 .BR .HP ,
 .BR .PD ,
-.BR .PT ,
 and
 .BR .UC )
 are described in subsection \(lqDeprecated features\(rq below.
@@ -159,8 +157,11 @@ are described in subsection \(lqDeprecated features\(rq below.
 .\" ====================================================================
 .\" .SS "Input file format"
 .\" ====================================================================
-.\" UTF-8 (or just ASCII) is a good input encoding.
-.\" Unix line endings
+.PP
+Man pages should be encoded using Unicode basic Latin code points
+exclusively,
+and employ the Unix line-ending convention
+(U+000A only).
 .\" text lines vs. control lines (macro calls)
 .\" The above distinction works well with filling.
 .\" Don't fill your input text yourself; let groff do the work.
@@ -181,6 +182,8 @@ are described in subsection \(lqDeprecated features\(rq below.
 .\"   flush left
 .\"   single-spacing
 .\" END STYLE
+.
+.
 .\" ====================================================================
 .SS "Macro reference preliminaries"
 .\" ====================================================================
@@ -2430,6 +2433,39 @@ avoided in man pages.
 .
 .
 .\" ====================================================================
+.SS Hooks
+.\" ====================================================================
+.
+Two macros called internally by the
+.I groff man
+package to format page headers and footers can be redefined by the
+administrator in a site's
+.I man.local
+file
+(see section \(lqFiles\(rq below).
+.
+The default headers and footers are documented in the description of
+.B .TH
+above.
+.
+These macros are GNU extensions and it makes no sense for a man page
+to call them.
+.
+.
+.\" both from groff 1.19
+.TP
+.B .BT
+Set the page footer
+(\(lqbottom trap\(rq).
+.
+.
+.TP
+.B .PT
+Set the page header
+(\(lqpage trap\(rq).
+.
+.
+.\" ====================================================================
 .SS "Deprecated features"
 .\" ====================================================================
 .
@@ -2481,19 +2517,6 @@ The optional second argument
 .I release
 specifies the release number,
 such as in \(lqSystem\~V Release\~3\(rq.
-.
-.
-.TP
-.B .BT
-Set the page footer.
-.
-By redefining this macro
-(a GNU extension)\" from groff 1.19
-in a
-.I man.local
-file
-(see section \(lqFiles\(rq below),
-an administrator can customize the footer for a site.
 .
 .
 .TP
@@ -2576,19 +2599,6 @@ Thus,
 information or distinctions that you use
 .B .PD
 to express are likely to be lost.
-.
-.
-.TP
-.B .PT
-Set the page header.
-.
-By redefining this macro
-(a GNU extension)\" from groff 1.19
-in a
-.I man.local
-file
-(see section \(lqFiles\(rq below),
-an administrator can customize the header for a site.
 .
 .
 .TP
