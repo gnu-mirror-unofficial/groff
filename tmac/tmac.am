@@ -22,6 +22,7 @@ tmac_builddir = $(top_builddir)/tmac
 man7_MANS += \
   tmac/groff_ms.7 \
   tmac/groff_man.7 \
+  tmac/groff_man_style.7 \
   tmac/groff_me.7 \
   tmac/groff_mdoc.7 \
   tmac/groff_trace.7 \
@@ -112,14 +113,18 @@ nodist_mdoc_DATA = $(TMACMDOCFILES)
 # Installed in localtmacdir
 dist_localtmac_DATA = tmac/man.local tmac/mdoc.local
 
-MOSTLYCLEANFILES += $(TMACMDOCFILES) tmac/www.tmac $(TMACSTRIPFILES) \
+MOSTLYCLEANFILES += $(TMACMDOCFILES) \
+   $(TMACSTRIPFILES) \
+   tmac/groff_man.7.man \
+   tmac/groff_man_style.7.man \
+   tmac/www.tmac \
    tmac/stamp-wrap \
    tmac/*-wrap
 
 EXTRA_DIST += \
   tmac/fixmacros.sed \
   tmac/groff_ms.7.man \
-  tmac/groff_man.7.man \
+  tmac/groff_man.7.man.in \
   tmac/groff_me.7.man \
   tmac/groff_mdoc.7.man \
   tmac/groff_trace.7.man \
@@ -162,6 +167,21 @@ tmac/www.tmac: tmac/www.tmac.in
 	$(MKDIR_P) $(top_builddir)/tmac
 	sed -e "s;[@]PNMTOPS_NOSETPAGE[@];$(pnmtops_nosetpage);g" \
 	  $(tmac_srcdir)/www.tmac.in > $(top_builddir)/tmac/www.tmac
+
+
+M4WORDS = define|divert|include|index|shift|undefine|undivert
+
+# Check input file for bare m4 keywords.
+#
+# Rule only reads, and is cheap; not using stamp file or phony target.
+check-groff_man: tmac/groff_man.7.man.in
+	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' $<
+
+tmac/groff_man.7.man: tmac/groff_man.7.man.in check-groff_man
+	m4 -D_groff_man_not_style $< > $@
+
+tmac/groff_man_style.7.man: tmac/groff_man.7.man.in check-groff_man
+	m4 -D_groff_man_style $< > $@
 
 # The installation of groff compatibility wrappers for vendor-provided
 # non-GNU macro sets is controlled by 'compatibility_wrappers' (see the

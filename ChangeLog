@@ -1,3 +1,28 @@
+2020-08-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Split groff_man(7) into two pages; one a (relatively) terse
+	reference and the other a tutorial and style guide.  Both are
+	generated from the same source, which is processed by m4 into
+	two man page sources.
+
+	* tmac/groff_man.7.man: Rename...
+	* tmac/groff_man.7.man.in: ...to this.
+
+	* tmac/groff_man.7.man.in: Add m4 directives and define macros.
+	Protect m4 keywords in English from unintended expansion (this
+	affected the word "include").  Add new .TH and apropos lines for
+	style guide.  Convert marker comments into m4 macros for content
+	control.  Uncomment material intended only for basic reference
+	page.
+
+	* tmac/tmac.an: Add groff_man_style.7 to man7_MANS.  Add
+	groff_man.7.man.in to EXTRADIST.  Add m4-generated man page
+	sources tmac/groff_man{,_style}.7.man to MOSTLYCLEANFILES.  Add
+	targets to generate those same two pages from the renamed file.
+	Add target to grep the page for unprotected English m4 keywords
+	and halt the build if they are found.  Make generation of those
+	pages depend on this new target.
+
 2020-08-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_man.7.man: Add material on hooks and encoding.

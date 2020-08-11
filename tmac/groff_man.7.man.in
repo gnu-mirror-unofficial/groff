@@ -1,7 +1,22 @@
+divert(-1)
+define(`_ifstyle',`ifdef(`_groff_man_style',,`divert(-1)')')dnl
+define(`_ifnotstyle',`ifdef(`_groff_man_style',`divert(-1)')')dnl
+define(`_endif',`divert`'')
+divert`'dnl
 '\" t
+_ifnotstyle()dnl
 .TH groff_man @MAN7EXT@ "@MDATE@" "groff @VERSION@"
+_endif()dnl
+_ifstyle()dnl
+.TH groff_man_style @MAN7EXT@ "@MDATE@" "groff @VERSION@"
+_endif()dnl
 .SH Name
+_ifnotstyle()dnl
 groff_man \- GNU roff macro package for formatting man pages
+_endif()dnl
+_ifstyle()dnl
+groff_man_style \- GNU roff man page tutorial and style guide
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -70,23 +85,23 @@ the following table lists them alphabetically,
 with cross-references to appropriate subsections below.
 .
 .
-.\" BEGIN NOT-STYLE
-.\".PP
-.\"Man page authors and maintainers who are not already experienced
-.\".I groff
-.\"users should consult
-.\".IR groff_man_tutorial (@MAN7EXT@),
-.\"an expanded version of this document,
-.\"for additional explanations and advice.
-.\".
-.\"It covers only those concepts required for man page document
-.\"maintenance,
-.\"and not the full breadth of the
-.\".I groff
-.\"typesetting system.
-.\".
-.\".
-.\" END NOT-STYLE
+_ifnotstyle()dnl
+.PP
+Man page authors and maintainers who are not already experienced
+.I groff
+users should consult
+.IR groff_man_style (@MAN7EXT@),
+an expanded version of this document,
+for additional explanations and advice.
+.
+It covers only those concepts required for man page document
+maintenance,
+and not the full breadth of the
+.I groff
+typesetting system.
+.
+.
+_endif()dnl
 .PP
 .TS
 l l l.
@@ -136,7 +151,7 @@ Macros whose use we discourage
 and
 .BR .UC )
 are described in subsection \(lqDeprecated features\(rq below.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .\" ====================================================================
@@ -181,7 +196,7 @@ and employ the Unix line-ending convention
 .\" Concepts we assume you learned in school, not to be documented here:
 .\"   flush left
 .\"   single-spacing
-.\" END STYLE
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -198,7 +213,7 @@ and
 are grouped together.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .PP
 A macro call appears on a line starting with a dot (\(lq.\(rq),
 followed by zero or more spaces and then the macro name.
@@ -213,9 +228,9 @@ unless escaped
 terminates the macro call.
 .
 .
-.\" END STYLE
+_endif()dnl
 .PP
-.\" BEGIN STYLE
+_ifstyle()dnl
 Optional macro arguments are indicated by surrounding them with square
 brackets.
 .
@@ -223,13 +238,13 @@ If a macro accepts multiple arguments,
 those containing space \" or horizontal tab (in Plan 9 troff [only?])
 characters must be double-quoted to be interpreted correctly.
 .
-.\" END STYLE
+_endif()dnl
 An empty macro argument can be specified with a pair of double-quotes
 (\(lq""\(rq),
 but the
 .I man
 package is designed such that this should seldom be necessary.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 Unused macro arguments are more often simply omitted,
 .\" antipattern: '.TP ""' (just '.TP' will do)
@@ -248,13 +263,13 @@ superfluous.
 .\"     .B one "two " three
 .\"     .B one two " three"
 .\"     .B one two\~ three
-.\" END STYLE
+_endif()dnl
 .
 Most macro arguments are strings that will be output as text;
 exceptions are noted.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .PP
 Bear in mind that
 .I groff
@@ -265,7 +280,7 @@ the verb \(lqto set\(rq is frequently used below in the sense \(lqto
 typeset\(rq.
 .
 .
-.\" END STYLE
+_endif()dnl
 .\" ====================================================================
 .SS "Document structure macros"
 .\" ====================================================================
@@ -387,7 +402,7 @@ A man page should contain exactly one
 .B .TH
 call at or near the beginning of the file,
 prior to any other macro calls.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .IP
@@ -397,7 +412,7 @@ is the most recent modification date of the man page source document,
 and
 .I footer-inside
 is the name and version or release of the project providing it.
-.\" END STYLE
+_endif()dnl
 .
 .
 .TP
@@ -452,10 +467,10 @@ and must contain only a line of the form
 for a man page to be properly indexed.
 .
 See
-.\" BEGIN NOT-STYLE
-.\" .IR groff_man_tutorial (@MAN7EXT@)
-.\" for suggestions and
-.\" END NOT-STYLE
+_ifnotstyle()dnl
+.IR groff_man_style (@MAN7EXT@)
+for suggestions and
+_endif()dnl
 .IR man (7)
 for the conventions prevailing on your system.
 .RE \" Move left margin back to standard position.
@@ -511,14 +526,14 @@ restores the previous font
 and initial hyphenation mode.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 Example regions are useful for formatting code,
 shell sessions,
 and text file contents.
 .
 .
-.\" END STYLE
+_endif()dnl
 .IP
 .\" Also see subsection "History" below...
 These macros are extensions,
@@ -586,9 +601,9 @@ move the left margin one level back.
 .
 An ordinary paragraph
 .RB ( .PP )
-.\" BEGIN STYLE
+_ifstyle()dnl
 like this one
-.\" END STYLE
+_endif()dnl
 is set without a first-line indentation at the current left margin,
 which by default is indented from the leftmost position of the output
 device.
@@ -675,11 +690,11 @@ and continues on the following lines.
 Otherwise,
 the descriptive part of the paragraph begins on the line following the
 tag.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .IP
-The line containing the tag can include a macro call,
+The line containing the tag can `include' a macro call,
 for instance to set the tag in bold with
 .BR .B .
 .
@@ -689,7 +704,7 @@ was used to write the first paragraph of this description of
 and
 .B .IP
 the subsequent ones.
-.\" END STYLE
+_endif()dnl
 .
 .
 .TP
@@ -718,7 +733,7 @@ copy its definition from the
 file of a
 .I groff
 installation.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .IP
@@ -731,7 +746,7 @@ above were written using
 .B .TP
 and
 .BR .TQ .
-.\" END STYLE
+_endif()dnl
 .
 .
 .TP
@@ -752,10 +767,10 @@ with the exception that the
 .I tag
 argument to
 .B .IP
-cannot include a macro call.
+cannot `include' a macro call.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 Two convenient uses for
 .B .IP
@@ -789,7 +804,7 @@ as seen in this very paragraph.
 .RE \" Move left margin back to standard position.
 .
 .
-.\" END STYLE
+_endif()dnl
 .\" ====================================================================
 .SS "Command synopsis macros"
 .\" ====================================================================
@@ -832,11 +847,11 @@ installation.
 Begin synopsis.
 .
 A new paragraph is begun at the left margin
-.\" BEGIN STYLE
+_ifstyle()dnl
 (like
 .B .PP
 and its aliases)
-.\" END STYLE
+_endif()dnl
 unless
 .B .SY
 has already been called without a corresponding
@@ -900,7 +915,7 @@ can also be repeated multiple times before a closing
 .BR .YS ,
 which is useful to indicate synonymous ways of invoking a particular
 mode of operation.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .PP
@@ -1029,7 +1044,7 @@ and after it,
 which prevents it from being misinterpreted as the end of a sentence.
 .
 See subsection \(lqPortability\(rq below.
-.\" END STYLE
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -1087,7 +1102,7 @@ is set in angle brackets after the link text and before
 .IR punctuation .
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 When rendered by
 .I groff
@@ -1116,7 +1131,7 @@ to insert hyphenless discretionary breaks is a
 GNU extension and can be omitted.
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .UR " URL"
 .TQ
@@ -1144,7 +1159,7 @@ is set in angle brackets after the link text and before
 .IR punctuation .
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 When rendered by
 .I groff
@@ -1174,7 +1189,7 @@ to insert hyphenless discretionary breaks is a GNU extension and can be
 omitted.
 .
 .
-.\" END STYLE
+_endif()dnl
 .\" ====================================================================
 .SS "Font style macros"
 .\" ====================================================================
@@ -1219,7 +1234,7 @@ and roman,
 respectively,
 set their odd- and even-numbered arguments in alternating styles,
 with no space separating them.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .PP
@@ -1229,7 +1244,7 @@ used to mark file or path names,
 environment variables,
 in-line literals,
 and man page cross-references.
-.\" END STYLE
+_endif()dnl
 .
 .
 .PP
@@ -1250,7 +1265,7 @@ If the macro is given no arguments,
 the text of the next input line is set in bold.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 Use bold
 for literal portions of syntax synopses,
@@ -1269,7 +1284,7 @@ set only user input in bold.
 .
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BR .I \~[\c
 .IR text ]
@@ -1281,7 +1296,7 @@ If the macro is given no arguments,
 the text of the next input line is set in italics.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .IP
 Use italics
 for file and path names,
@@ -1313,7 +1328,7 @@ and italics again in running roman text when referring to the variable
 material.
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BR .SM \~[\c
 .IR text ]
@@ -1363,7 +1378,7 @@ normal size;
 it will be hidden from readers using such devices.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .PP
 Note what is
 .I not
@@ -1404,7 +1419,7 @@ and
 escapes in subsection \(lqPortability\(rq below.
 .
 .
-.\" END STYLE
+_endif()dnl
 .PP
 Unlike the above font style macros,
 the font style alternation macros below accept only arguments on the
@@ -1434,7 +1449,7 @@ Set each argument in bold and italics,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from src/roff/troff/troff.1.man
@@ -1444,7 +1459,7 @@ alternately.
 .RE
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .BR " bold-text roman-text "\c
 \&.\|.\|.\&
@@ -1452,7 +1467,7 @@ Set each argument in bold and roman,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from tmac/groff_ms.7.man
@@ -1466,7 +1481,7 @@ the new alias is defined.
 .RE
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .IB " italic-text bold-text "\c
 \&.\|.\|.\&
@@ -1474,7 +1489,7 @@ Set each argument in italics and bold,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from man/groff_tmac.5.man
@@ -1488,7 +1503,7 @@ mechanism.
 .RE
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .IR " italic-text roman-text "\c
 \&.\|.\|.\&
@@ -1496,7 +1511,7 @@ Set each argument in italics and roman,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from man/groff_out.5.man
@@ -1507,7 +1522,7 @@ This is the first command of the
 .RE
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .RB " roman-text bold-text "\c
 \&.\|.\|.\&
@@ -1515,7 +1530,7 @@ Set each argument in roman and bold,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from src/preproc/eqn/eqn.1.man
@@ -1528,7 +1543,7 @@ is not handled specially.
 .EE
 .
 .
-.\" END STYLE
+_endif()dnl
 .TP
 .BI .RI " roman-text italic-text "\c
 \&.\|.\|.\&
@@ -1536,7 +1551,7 @@ Set each argument in roman and italics,
 alternately.
 .
 .
-.\" BEGIN STYLE
+_ifstyle()dnl
 .RS
 .IP
 .\" from contrib/mm/groff_mm.7.man
@@ -1547,7 +1562,7 @@ alternately.
 .RE
 .
 .
-.\" END STYLE
+_endif()dnl
 .\" ====================================================================
 .SS "Horizontal and vertical spacing"
 .\" ====================================================================
@@ -1637,7 +1652,7 @@ option).
 .
 However,
 the HTML output device ignores indentation completely.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .PP
@@ -1787,7 +1802,7 @@ or which is developed in the future.
 The table preprocessor
 .IR @g@tbl (@MAN1EXT@)
 can likely meet your needs.
-.\" END STYLE
+_endif()dnl
 .
 .
 .PP
@@ -1947,7 +1962,7 @@ may be used freely.
 .
 Note that terminal devices are extremely limited in presentation of
 mathematical equations.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .\" ====================================================================
@@ -2265,7 +2280,7 @@ on the input line
 .\" ...except for \R escapes, which shouldn't appear in man pages...
 is discarded.
 .
-The next line is interpreted as usual and can include a macro call
+The next line is interpreted as usual and can `include' a macro call
 (contrast with
 .BI \e newline\/\c
 ).
@@ -2327,7 +2342,7 @@ see below.
 .
 Using
 .B \ec
-to include the output from more than one input line into the next-line
+to `include' the output from more than one input line into the next-line
 argument of a
 .B .TP
 macro will render incorrectly with
@@ -2425,7 +2440,7 @@ escapes do.
 For maximum portability,
 escape sequences and special characters not listed above are better
 avoided in man pages.
-.\" END STYLE
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -3032,7 +3047,7 @@ to have any effect.
 .TP
 .I @LOCALMACRODIR@/\:man.local
 Local changes and customizations should be put into this file.
-.\" BEGIN STYLE
+_ifstyle()dnl
 .
 .
 .\" ====================================================================
@@ -3127,7 +3142,7 @@ all relative insets are cleared and calls to
 have no effect until
 .B .RS
 is used again.
-.\" END STYLE
+_endif()dnl
 .
 .
 .\" ====================================================================
