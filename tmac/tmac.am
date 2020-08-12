@@ -118,6 +118,7 @@ MOSTLYCLEANFILES += $(TMACMDOCFILES) \
    tmac/groff_man.7.man \
    tmac/groff_man_style.7.man \
    tmac/www.tmac \
+   tmac/*-stamp \
    tmac/stamp-wrap \
    tmac/*-wrap
 
@@ -169,18 +170,18 @@ tmac/www.tmac: tmac/www.tmac.in
 	  $(tmac_srcdir)/www.tmac.in > $(top_builddir)/tmac/www.tmac
 
 
-M4WORDS = define|divert|include|index|shift|undefine|undivert
-
 # Check input file for bare m4 keywords.
-#
-# Rule only reads, and is cheap; not using stamp file or phony target.
-check-groff_man: tmac/groff_man.7.man.in
-	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' $<
+M4WORDS = define|divert|include|index|shift|undefine|undivert
+M4CHECK = tmac/check-groff_man-stamp
 
-tmac/groff_man.7.man: tmac/groff_man.7.man.in check-groff_man
+$(M4CHECK): tmac/groff_man.7.man.in
+	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' $<
+	> $@
+
+tmac/groff_man.7.man: tmac/groff_man.7.man.in $(M4CHECK)
 	m4 -D_groff_man_not_style $< > $@
 
-tmac/groff_man_style.7.man: tmac/groff_man.7.man.in check-groff_man
+tmac/groff_man_style.7.man: tmac/groff_man.7.man.in $(M4CHECK)
 	m4 -D_groff_man_style $< > $@
 
 # The installation of groff compatibility wrappers for vendor-provided
