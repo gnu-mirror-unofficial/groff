@@ -364,8 +364,15 @@ macros.
 .RI " [" header-middle ]
 Define the title of the man page as
 .I title
-and the section as
+and the section of the manual volume as
 .IR section .
+_ifstyle()dnl
+.
+This use of \(lqsection\(rq has nothing to do with the section headings
+otherwise discussed in this page;
+it arises from the organizational scheme of printed and bound Unix
+manuals.
+_endif()dnl
 .
 See
 .IR man (1)
@@ -2205,6 +2212,8 @@ and PDF.
 .TP
 .B \e\-
 Minus sign or basic Latin hyphen-minus.
+.
+This escape produces the Unix command-line option dash in the output.
 .
 .RB \(lq \- \(rq
 is a hyphen to
