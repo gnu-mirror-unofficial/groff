@@ -434,7 +434,7 @@ this macro starts a new page;
 the page number is reset to\~1
 (unless the
 .B \-rC1
-option is given on the command line).
+option is given).
 .
 This feature is intended only for formatting multiple man pages.
 .
@@ -652,12 +652,12 @@ device.
 .
 In man pages and other technical literature,
 definition lists are frequently encountered;
-these can be set as \(lqtagged paragraphs\(rq
-.RB ( .TP
-and
-.BR .TQ ),
-which have one or more leading tags followed by a paragraph that has an
-additional left indentation.
+these can be set as \(lqtagged paragraphs\(rq,
+which have one
+.RB ( .TP )
+or more
+.RB ( .TQ )
+leading tags followed by a paragraph that has an additional indentation.
 .
 The indented paragraph
 .RB ( .IP )
@@ -762,19 +762,15 @@ handled as with
 .
 .
 .IP
-This macro is not defined on systems running
+This macro is a GNU extension not defined on systems running
 AT&T,
 Plan\~9,
 or
 Solaris\~10
-.IR troff .
-.
-To be certain your page will be portable to those systems,
-copy its definition from the
+.IR troff ;
+see
 .I an\-ext.tmac
-file of a
-.I groff
-installation.
+in section \(lqFiles\(rq below.
 _ifstyle()dnl
 .
 .
@@ -869,19 +865,15 @@ with command-line options of some formats indicated by
 .
 .
 .PP
-These macros are not defined on systems running
+These macros are GNU extensions not defined on systems running
 AT&T,
 Plan\~9,
 or
 Solaris\~10
-.IR troff .
-.
-To be certain your page will be portable to those systems,
-copy their definitions from the
+.IR troff ;
+see
 .I an\-ext.tmac
-file of a
-.I groff
-installation.
+in section \(lqFiles\(rq below.
 .
 .
 .TP
@@ -939,6 +931,7 @@ Square brackets in roman surround both arguments.
 End synopsis.
 .
 Restore previous indentation and initial hyphenation mode.
+_ifstyle()dnl
 .
 .
 .PP
@@ -957,7 +950,6 @@ can also be repeated multiple times before a closing
 .BR .YS ,
 which is useful to indicate synonymous ways of invoking a particular
 mode of operation.
-_ifstyle()dnl
 .
 .
 .PP
@@ -1100,19 +1092,15 @@ and URL hyperlinks with
 .
 .
 .PP
-These macros are not defined on systems running
+These macros are GNU extensions not defined on systems running
 AT&T,
 Plan\~9,
 or
 Solaris\~10
-.IR troff .
-.
-To be certain your page will be portable to those systems,
-copy their definitions from the
+.IR troff ;
+see
 .I an\-ext.tmac
-file of a
-.I groff
-installation.
+in section \(lqFiles\(rq below.
 .
 .
 .TP
@@ -2091,13 +2079,9 @@ should be used with caution,
 as they may not yet be built in to some viewer that is important to your
 audience.
 .
-If in doubt,
-copy the implementation into your page\(emafter the
-.B .TH
-call and the \(lqName\(rq section,
-to accommodate timid
-.I mandb
-implementations.
+See
+.I an\-ext.tmac
+in section \(lqFiles\(rq below.
 .
 .
 .PP
@@ -2115,9 +2099,10 @@ input;
 the escapes below must be used to render them correctly and portably
 when documenting material that uses them syntactically\(emnamely,
 any of the set
-.B \(aq \- \(ha \(ga \(ti
+.B \(aq \- \(rs \(ha \(ga \(ti
 (apostrophe,
 dash or minus,
+backslash,
 caret,
 grave accent,
 tilde).
@@ -2165,8 +2150,7 @@ it suppresses hyphenation entirely.
 .
 .TP
 .B \e\(ti
-Adjustable,
-non-breaking space.
+Adjustable non-breaking space.
 .
 Use this escape to prevent a break inside a short phrase or between a
 numerical quantity and its corresponding unit(s).
@@ -2185,7 +2169,7 @@ CSTR\e\(ti#8 documents the B\e\(tilanguage.
 .
 .TP
 .B \e&
-Zero-width non-breaking space.
+Non-printing character.
 .
 Insert at the beginning of an input line to prevent a dot or apostrophe
 from being interpreted as the beginning of a
@@ -2239,8 +2223,6 @@ with a right single quotation mark.
 .B \e(cq
 Opening and closing single quotation marks.
 .
-.
-.IP
 Use these for paired directional single quotes,
 \(oqlike this\(cq.
 .
@@ -2250,6 +2232,8 @@ Use these for paired directional single quotes,
 Basic Latin double-quote.
 .
 Use in macro calls to prevent
+.\" This page prefers double quotes, but not here because they are more
+.\" confusing to the eye when another double quote is what is quoted!
 .RB \(oq \(dq \(rq
 .\" AT&T: .RB ` """'
 from being interpreted as beginning a quoted argument,
@@ -2271,8 +2255,6 @@ or simply for readability.
 .B \e(rq
 Left and right double quotation marks.
 .
-.
-.IP
 Use these for paired directional double quotes,
 \(lqlike this\(rq.
 .
@@ -2316,6 +2298,21 @@ or similar.
 .
 .
 .TP
+.B \e(rs
+Reverse solidus
+(backslash).
+.
+The backslash is the default
+.I groff
+escape character,
+so it does not represent itself in output.
+.
+Also see
+.B \ee
+below.
+.
+.
+.TP
 .B \e(ti
 Basic Latin tilde.
 .
@@ -2340,7 +2337,9 @@ and
 .I will
 be in
 .B .EX/.EE
-examples.\" i.e., no-fill mode
+examples;\" i.e., no-fill mode
+if the line is not broken,
+an adjustable space is inserted.
 .
 Anything after
 .B \ec
@@ -2600,12 +2599,11 @@ such as in \(lqSystem\~V Release\~3\(rq.
 .
 .TP
 .B .DT
-Set tab stops every 0.5\~inches.
+Set tab stops every 0.5i (inches).
 .
-Since this macro is always called during a
-.B .TH
-macro,
-it makes sense to call it only if the tab stops have been changed.
+Since this macro is called by
+.BR .TH ,
+it would make sense to call it only if a man page changes the tab stops.
 .
 .
 .IP
@@ -2642,14 +2640,13 @@ is handled as with
 .IP
 Use of this presentation-level macro is deprecated.
 .
-While it is universally portable to legacy Unix systems,
-a hanging indentation cannot be expressed naturally under HTML,
-and HTML-based man page processors may interpret it as starting a
+A hanging indentation cannot be expressed naturally under HTML,
+and HTML-based man page processors may interpret it as starting an
 ordinary paragraph.
 .
 Thus,
-any information or distinction you tried to express with the
-indentation may be lost.
+any information or distinction you mean to express with the indentation
+may be lost.
 .
 .
 .TP
@@ -2660,7 +2657,7 @@ Define the vertical space between paragraphs or (sub)sections.
 The optional argument
 .I vertical-space
 specifies the amount;
-the default scale indicator is \(oqv\(cq).
+the default scale indicator is \(lqv\(rq.
 .
 Without an argument,
 the spacing is reset to its default value;
@@ -2905,7 +2902,7 @@ default.
 For
 terminal devices,
 .I indent
-should always be an integer multiple of unit \(oqn\(cq to get consistent
+should always be an integer multiple of unit \(lqn\(rq to get consistent
 indentation.
 .
 .
@@ -2963,11 +2960,20 @@ set a line length of 65n.
 .
 .TP
 .BI \-rLT= title-length
-Set title length,
-used for headers and footers.
+Set the line length for titles.
+_ifstyle()dnl
 .
-If this option is not given,
-the title length defaults to the line length.
+(\(lqTitles\(rq is the
+.I roff
+term for headers and footers.)
+_endif()dnl
+.
+By default,
+the line length
+(see
+.B \-rLL
+above)
+is used for the title length.
 .
 .
 .TP
@@ -2981,9 +2987,8 @@ rather than\~1.
 .BI \-rS point-size
 Use
 .I point-size
-as the base document point size.
-.
-Acceptable values are 10,
+as the base point size;
+acceptable values are 10,
 11,
 or 12.
 .
@@ -2996,7 +3001,7 @@ Set indentation of the subsection heading to
 .IR subsection-indent .
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
-default indentation value.
+default.
 .
 .
 .TP
@@ -3009,6 +3014,11 @@ number pages as
 .IR p c,
 and so forth.
 .
+The register tracking the suffixed page letter uses format \(lqa\(rq
+(see the \(lq.af\(rq request in
+.IR groff (@MAN7EXT@)).
+.
+_ifstyle()dnl
 For example,
 the option
 .B \-rX2
@@ -3017,8 +3027,11 @@ numbers: 1,
 2,
 2a,
 2b,
-2c,
+\&.\|.\|.\&,
+2aa,
+2ab,
 and so on.
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -3101,7 +3114,7 @@ encouraged to re-use them.
 .
 .
 .IP
-Note that the definitions for these macros are read after the call of
+Note that the definitions for these macros are read after a page calls
 .BR .TH ,
 so they will replace any macros of the same names preceding it in your
 file.
@@ -3110,6 +3123,13 @@ If you use your own implementations of these macros,
 they must be defined after calling
 .B .TH
 to have any effect.
+.
+Furthermore,
+it is wise to `define' such page-local macros
+(if at all)
+after the \(lqName\(rq section to accommodate timid
+.I mandb
+implementations that may give up their scan for indexing material early.
 .
 .
 .TP
@@ -3240,10 +3260,12 @@ Susan G.\& Kleinmann
 It was corrected and updated by Werner Lemberg and G.\& Branden
 Robinson.
 .
-The extension macros were documented by Eric S.\& Raymond;
-he also originated the portability section,
+The extension macros were documented by Eric S.\& Raymond.
+_ifstyle()dnl
+He also originated the portability section,
 to which Ingo Schwarze contributed most of the material on escape
 sequences.
+_endif()dnl
 .
 .
 .\" ====================================================================
@@ -3280,6 +3302,12 @@ version of the BSD-originated alternative macro package for man pages.
 .
 .
 .PP
+_ifstyle()dnl
+.IR groff_man (@MAN7EXT@),
+_endif()dnl
+_ifnotstyle()dnl
+.IR groff_man_style (@MAN7EXT@),
+_endif()dnl
 .IR groff (@MAN7EXT@),
 .IR groff_char (@MAN7EXT@),
 .IR man (7)
