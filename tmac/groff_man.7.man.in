@@ -1904,6 +1904,11 @@ also cause a break but no insertion of vertical space.
 .
 Number registers are described in section \(lqOptions\(rq below.
 .
+They can be set not only on the command line but in the site
+.I man.local
+file as well;
+see section \(lqFiles\(rq below.
+.
 .
 .\" ====================================================================
 .SS Strings
@@ -3136,6 +3141,21 @@ implementations that may give up their scan for indexing material early.
 .I @LOCALMACRODIR@/\:man.local
 Put local changes and customizations into this file.
 _ifstyle()dnl
+.
+.
+.RS
+.RS
+.PP
+.EX
+\&.\e" Use narrower indentation on terminals and similar.
+\&.if n .nr IN 4n
+\&.\e" Put only one space after the end of a sentence.
+\&.ss 12 0 \e" See groff(@MAN7EXT@).
+\&.\e" Keep pages narrow even on wide terminals.
+\&.if n .if \(rsn[LL]>78 .nr LL 78n
+.EE
+.RE
+.RE
 .
 .
 .\" ====================================================================
