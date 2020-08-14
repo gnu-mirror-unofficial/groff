@@ -227,10 +227,6 @@ and employ the Unix line-ending convention
 .\" small (mandoc, Kerrisk's man7.org, manpages.debian.org, non-expert
 .\" humans).
 .\" possibly exhibit a horrorshow docbook-to-man example
-.\"
-.\" Concepts we assume you learned in school, not to be documented here:
-.\"   flush left
-.\"   single-spacing
 _endif()dnl
 .
 .
@@ -462,7 +458,7 @@ _endif()dnl
 .IR heading-text ]
 Set
 .I heading-text
-as a section heading flush left.
+as a section heading.
 .
 The text following
 .B .SH
@@ -470,7 +466,8 @@ up to the end of the line,
 or the text on the next input line if
 .B .SH
 is given no arguments,
-is set in bold
+is set with no indentation,
+in bold
 (or the font specified by the string
 .BR HF )
 and,
@@ -1691,7 +1688,7 @@ footers
 .BR .TH ),
 and section headings
 .RB ( .SH )
-are set flush left
+are set with no indentation
 and subsection headings
 .RB ( .SS )
 are indented 3n
