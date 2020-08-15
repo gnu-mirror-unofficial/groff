@@ -33,11 +33,6 @@ gperl \- groff preprocessor for Perl parts in roff files
 .el .ds EL \&.\|.\|.\&\"
 .\" called with \*(EL
 .
-.\" Bullet
-.ie t .ds BU \(bu
-.el .ds BU *
-.\" used in '.IP \*(BU 2m' (former .Topic)
-.
 .
 .\" ====================================================================
 .SH Synopsis
@@ -157,9 +152,9 @@ can either be without arguments, or by a request that has the term
 .B start
 as its only argument.
 .RS
-.IP \*(BU 2m
+.IP \(bu
 .B .Perl
-.IP \*(BU 2m
+.IP \(bu
 .B .Perl start
 .RE
 .
@@ -180,9 +175,9 @@ Of course, it would be reasonable to add the argument
 that's possible, but not necessary.
 .
 .RS
-.IP \*(BU 2m
+.IP \(bu
 .B .Perl stop
-.IP \*(BU 2m
+.IP \(bu
 .BI .Perl " other_than_start"
 .RE
 .
