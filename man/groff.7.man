@@ -353,7 +353,7 @@ or
 .IP 2.
 Double all backslashes.
 .IP 3.
-Begin all text lines with the special non-spacing character
+Begin all text lines with the non-printing input break
 .esc & .
 .
 .
@@ -3068,7 +3068,7 @@ and
 .esc ? .
 .
 .
-.\" ========= spacing =========
+.\" ========= spacing [sic; \& and \) don't really space] =========
 .
 .TP
 .ESC \& space
@@ -3080,15 +3080,19 @@ Digit-width unbreakable space.
 .
 .TP
 .ESC |
-1/6\ em narrow unbreakable space glyph; zero width in nroff.
+1/6\ em narrow unbreakable space glyph;
+zero-width in
+.IR nroff .
 .
 .TP
 .ESC \[ha]
-1/12\ em half-narrow unbreakable space glyph; zero width in nroff.
+1/12\ em half-narrow unbreakable space glyph;
+zero-width in
+.IR nroff .
 .
 .TP
 .ESC &
-Non-printable, zero-width glyph.
+Non-printing input break.
 .
 .TP
 .ESC )

@@ -5141,13 +5141,16 @@ assigning an empty macro to it.
 
 @xref{Blank Line Traps}.
 
-@cindex zero width space character (@code{\&})
-@cindex character, zero width space (@code{\&})
-@cindex space character, zero width (@code{\&})
+@cindex non-printing input break (@code{\&})
+@cindex input break, non-printing (@code{\&})
+@cindex break, non-printing input (@code{\&})
+@cindex zero-width space character (@emph{sic}) (@code{\&})
+@cindex character, zero-width space (@emph{sic}) (@code{\&})
+@cindex space character, zero-width (@emph{sic}) (@code{\&})
 @cindex @code{\&}, escaping control characters
 To begin a line with a control character without it being interpreted,
-precede it with @code{\&}.  This represents a zero width space, which
-means it does not affect the output.
+precede it with @code{\&}.  This represents a non-printing input break,
+which means it does not affect the output.
 
 In most cases the period is used as a control character.  Several
 requests cause a break implicitly; using the single quote control
@@ -7823,7 +7826,7 @@ set with the @code{shc} request.
 @item
 @cindex @code{\&}, and translations
 The pair @samp{@var{c}\&} (this is an arbitrary character@tie{}@var{c}
-followed by the zero width space character) maps this character to
+followed by the non-printing input break) maps this character to
 nothing.
 
 @Example
@@ -9897,9 +9900,9 @@ enable pairwise kerning, otherwise disable it.  The read-only number
 register @code{.kern} is set to@tie{}1 if pairwise kerning is enabled,
 0@tie{}otherwise.
 
-@cindex zero width space character (@code{\&})
-@cindex character, zero width space (@code{\&})
-@cindex space character, zero width (@code{\&})
+@cindex non-printing input break (@code{\&}), effect on kerning
+@cindex input break, non-printing (@code{\&}), effect on kerning
+@cindex break, non-printing input (@code{\&}), effect on kerning
 If the font description file contains pairwise kerning information,
 glyphs from that font are kerned.  Kerning between two glyphs can be
 inhibited by placing @code{\&} between them: @samp{V\&A}.
@@ -9995,8 +9998,8 @@ q\,\f[I]f
 @endDefesc
 
 @Defesc {\\&, , , }
-Insert a zero-width character, which is invisible.  Its intended use is
-to stop interaction of a character with its surroundings.
+Insert a non-printing input break, which is invisible.  Its intended use
+is to stop interaction of a character with its surroundings.
 
 @itemize @bullet
 @item
@@ -11930,9 +11933,9 @@ The optional second parameter@tie{}@var{g} is a glyph to draw the line
 with.  If this second argument is not specified, @code{gtroff} uses the
 underscore glyph, @code{\[ru]}.
 
-@cindex zero width space character (@code{\&})
-@cindex character, zero width space (@code{\&})
-@cindex space character, zero width (@code{\&})
+@cindex non-printing input break (@code{\&}), effect on @code{\l} escape
+@cindex input break, non-printing (@code{\&}), effect on @code{\l} escape
+@cindex break, non-printing input (@code{\&}), effect on @code{\l} escape
 To separate the two arguments (to prevent @code{gtroff} from
 interpreting a drawing glyph as a scaling indicator if the glyph is
 represented by a single character) use @code{\&}.

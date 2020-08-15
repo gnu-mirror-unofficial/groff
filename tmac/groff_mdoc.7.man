@@ -283,8 +283,8 @@ a macro invocation, precede the
 .Ql .\&
 (dot) with the
 .Ql \e&
-escape sequence which translates literally to a zero-width space, and is
-never displayed in the output.
+escape sequence which causes a non-printing input break, and is never
+displayed in the output.
 .Pp
 In general,
 .Tn GNU
@@ -543,8 +543,8 @@ handles punctuation characters specially in macro arguments.
 This will be explained in section
 .Sx General Syntax
 below.
-In the same way, you have to protect trailing full stops of abbreviations
-with a trailing zero-width space:
+In the same way, you have to protect trailing full stops of
+abbreviations with a trailing non-printing input break:
 .Ql e.g.\e& .
 .Pp
 A comment in the source file of a man page can be either started with
