@@ -1,5 +1,14 @@
 2020-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-ext.tmac (.ME, .UE): Restore hyphenation after
+	"punctuation" arguments have been output.  The next token will
+	always be a space node, the end of the document, or similar.
+
+	* tmac/tmac.am: Mark the punctuation hyphenation tests as
+	expected to fail, because they now do.
+
+2020-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/ps.tmac: Define ordinary hyphen-minus as fallback
 	character for U+2011 (non-breaking hyphen).  Prompted by
 	discussion with Dave Kemper in Savannah #58390.
