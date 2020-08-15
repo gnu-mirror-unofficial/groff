@@ -1,5 +1,23 @@
 2020-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Fix hyphenation bug.  The UR/UE and MT/ME macros were much too
+	aggressive about turning hyphenation off.  Disable it only when
+	writing the actual URL or email address.
+
+	* tmac/an-ext.tmac (.MT, .UR): Stop disabling hyphenation here.
+	(.ME, .UE): Disable hyphenation right before output of
+	URL/address; restore it right before output of supplementary
+	arguments ("punctuation").
+
+	* tmac/tests/an-ext_ME_punct_hyphenates.sh:
+	* tmac/tests/an-ext_MT_body_hyphenates.sh:
+	* tmac/tests/an-ext_UE_punct_hyphenates.sh:
+	* tmac/tests/an-ext_UR_body_hyphenates.sh: Test behavior.
+
+	* tmac/tmac.am: Run the tests.
+
+2020-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Adapt to the fact that \: reënables hyphenation.  Rename
 	"hyphenless [discretionary] break" to "non-printing break point"
 	in documentation.

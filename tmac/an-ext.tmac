@@ -96,7 +96,6 @@
 .\" Start URL.
 .de UR
 .  ds m1 \\$1\"
-.  nh
 .  if \\n(mH \{\
 .    \" Start diversion in a new environment.
 .    do ev URL-div
@@ -126,17 +125,18 @@
 \&\\$*\"
 .  \}
 .  el \{\
-.    ie \n(.g \\*(la\\*(m1\\*(ra\\$*\"
-.    el \\*(la\\*(m1\\*(ra\\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
+.    nh
+\\*(la\\*(m1\\*(ra\c
+.    hy \\n(HY
+.    ie \n(.g \\$*\"
+.    el \\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
 .  \}
-.  hy \\n(HY
 ..
 .
 .
 .\" Start email address.
 .de MT
 .  ds m1 \\$1\"
-.  nh
 .  if \\n(mH \{\
 .    \" Start diversion in a new environment.
 .    do ev URL-div
@@ -166,10 +166,12 @@
 \&\\$*\"
 .  \}
 .  el \{\
-.    ie \n(.g \\*(la\\*(m1\\*(ra\\$*\"
-.    el \\*(la\\*(m1\\*(ra\\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
+.    nh
+\\*(la\\*(m1\\*(ra\c
+.    hy \\n(HY
+.    ie \n(.g \\$*\"
+.    el \\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
 .  \}
-.  hy \\n(HY
 ..
 .
 .
