@@ -1,5 +1,29 @@
 2020-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Adapt to the fact that \: reënables hyphenation.  Rename
+	"hyphenless [discretionary] break" to "non-printing break point"
+	in documentation.
+
+	* doc/groff.texi (Manipulating Hyphenation): Rename "hyphenless
+	break" to "non-printing break point".  Clarify that it is the
+	soft hyphen glyph, not necessarily a hyphen, that is ordinarily
+	written to the output on hyphenation breaks.  Note that the
+	remainder of a word after \: is subject to hyphenation as
+	normal.  Note (new) '\:\%' idiom for getting what people will
+	want at least some of the time.  Update example to use it.
+	* makevarescape.sed: Insert \% after we insert \: to rewrite
+	slashes in filenames, to protect later portions of the filename
+	from hyphenation.
+	* man/groff.7.man (Escape Sequences/Escape short reference):
+	Rename "hyphenless break" to "non-printing break point".
+	* man/groff_diff.7.man (Language/Escape sequences): Resync with
+	our Texinfo manual.
+	* tmac/groff_man.7.man.in (Description/Hyperlink and email
+	macros): Rename "hyphenless break" to "non-printing break
+	point".
+
+2020-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	documentation: Re-christen 'ESCAPE_AMPERSAND'.
 
 	s/zero[- ]width space character/non-printing input break/

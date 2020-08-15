@@ -6660,17 +6660,23 @@ Note that the escapes @code{\X} and @code{\Y} start a word; that is, the
 hyphenation point at the beginning of @samp{foobar}; most likely this
 isn't what you want to do.  @xref{Postprocessor Access}.
 
-@cindex hyphenless breaks (@code{\:})
+@cindex non-printing break points (@code{\:})
 @cindex breaking without hyphens (@code{\:})
 @cindex file names, breaking (@code{\:})
 @cindex breaking file names (@code{\:})
 @cindex URLs, breaking (@code{\:})
 @cindex breaking URLs (@code{\:})
-The @code{\:} escape inserts a zero-width break point; that is, the word
-can break there, but no hyphen is written to the output if it does.
+The @code{\:} escape inserts a non-printing break point; that is, the
+word can break there, but the soft hyphen glyph is not written to the
+output if it does.  Note that breaks are word boundaries, so if a break
+is inserted, the remainder of the (input) word is subject to hyphenation
+as normal.
+
+You can use @code{\:} and @code{\%} in combination to control breaking
+of a filename or URL.
 
 @Example
-@dots{} check the /var/log/\:httpd/\:access_log file @dots{}
+@dots{} check the \%/var/log/\:\%httpd/\:\%access_log file @dots{}
 @endExample
 @endDefesc
 
