@@ -30,6 +30,10 @@ grops \- PostScript driver for groff
 .\" instead of in the original English.
 .
 .
+.\" This macro definition is poor style from a portability standpoint,
+.\" but it's a good test and demonstration of the standard font
+.\" repertoire for the devices where it has any effect at all, and so
+.\" should be retained.
 .de FT
 .  if '\\*(.T'ps' .ft \\$1
 .  if '\\*(.T'pdf' .ft \\$1
@@ -1224,12 +1228,7 @@ This section gives a summary of the above explanations; it can serve
 as a step-by-step font installation guide for
 .BR grops .
 .
-.ds BU \[bu]\ \ \"
-.de LI
-.IP "" 4
-\h'-\w'\*[BU]'u'\*[BU]\c
-..
-.LI
+.IP \(bu
 Convert your font to something groff understands.
 .
 This is either a PostScript Type\~1 font in PFA format or a PostScript
@@ -1276,7 +1275,7 @@ For all other font formats use
 .B fontforge
 which can convert most outline font formats.
 .
-.LI
+.IP \(bu
 Convert the AFM file to a groff font description file with the
 .BR \%afmtodit (@MAN1EXT@)
 program.
@@ -1315,7 +1314,7 @@ and the groff font names are
 and
 .BR TBI .
 .
-.LI
+.IP \(bu
 Install both the groff font description files and the fonts in a
 .I devps
 subdirectory of the font path which groff finds.
@@ -1327,7 +1326,7 @@ for the actual value of the font path.
 Note that groff doesn't use the AFM files (but it is a good idea
 to store them anyway).
 .
-.LI
+.IP \(bu
 Register all fonts which must be downloaded to the printer in the
 .I devps/download
 file.
