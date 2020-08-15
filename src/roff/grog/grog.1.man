@@ -29,15 +29,6 @@ grog \- guess options for a following groff command
 .
 .
 .\" ====================================================================
-.\" Characters
-.\" ====================================================================
-.
-.\" Ellipsis ...
-.ie t .ds EL \fS\N'188'\fP\"
-.el .ds EL \&.\|.\|.\&\"
-.\" called with \*(EL
-.
-.\" ====================================================================
 .SH Synopsis
 .\" ====================================================================
 .
@@ -48,20 +39,24 @@ grog \- guess options for a following groff command
 .OP \-\-warnings
 .OP \-\-ligatures
 .RI [ groff-option
-\*(EL]
+\&.\|.\|.\&]
 .OP \-\-
 .RI [ filespec
-\*(EL]
+\&.\|.\|.]
 .YS
+.
 .
 .SY grog
 .B \-h
+.
 .SY grog
 .B \-\-help
 .YS
 .
+.
 .SY grog
 .B \-v
+.
 .SY grog
 .B \-\-version
 .YS

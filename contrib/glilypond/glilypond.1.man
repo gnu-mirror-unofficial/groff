@@ -28,16 +28,6 @@ glilypond \- integrate lilypond parts into groff
 .
 .
 .\" ====================================================================
-.\" Characters
-.\" ====================================================================
-.
-.\" Ellipsis ...
-.ie t .ds EL \fS\N'188'\fP\"
-.el .ds EL \&.\|.\|.\&\"
-.\" called with \*(EL
-.
-.
-.\" ====================================================================
 .SH Synopsis
 .\" ====================================================================
 .
@@ -56,7 +46,8 @@ glilypond \- integrate lilypond parts into groff
 .OP \-
 .OP \-\-
 .RI [ filespec
-\*(EL]
+\&.\|.\|.]
+.
 .SY glilypond
 .RB [{ \-\-ly2eps | \-\-pdf2eps }]
 .RB [ \-\-eps_dir
@@ -72,8 +63,9 @@ glilypond \- integrate lilypond parts into groff
 .OP \-
 .OP \-\-
 .RI [ filespec
-\*(EL]
+\&.\|.\|.]
 .YS
+.
 .
 .SY glilypond
 .B \-?
@@ -241,7 +233,7 @@ So at last, the temporary directory can be removed.
 .TP
 .BR \-p | \-\-prefix "\fI begin_of_name\fP"
 Normally all temporary files get names that start with the
-.BI ly \*(EL
+.BI ly .\|.\|.\&
 prefix.
 .
 With this option, you can freely change this prefix.

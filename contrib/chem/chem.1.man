@@ -32,23 +32,13 @@
 .
 .
 .\" ====================================================================
-.\" Characters
-.\" ====================================================================
-.
-.\" Ellipsis ...
-.ie t .ds EL \fS\N'188'\fP\"
-.el .ds EL \&.\|.\|.\&\"
-.\" called with \*(EL
-.
-.
-.\" ====================================================================
 .SH Synopsis
 .\" ====================================================================
 .
 .SY @g@chem
 .OP \-\-
 .RI [ filespec
-\*(EL]
+\&.\|.\|.]
 .YS
 .
 .SY @g@chem
@@ -221,7 +211,9 @@ with the option
 for the activation of
 .BR @g@pic :
 .IP
-.B @g@chem [file \*(EL] | groff \-p \*(EL
+.B @g@chem
+.RI [ file \~.\|.\|.\&]
+.BR "| groff \-p\~" .\|.\|.
 .
 .
 .\" ====================================================================
@@ -235,7 +227,8 @@ and a way to glue them together as desired, bonds of several styles,
 moieties (e.g.,
 .BR C ,
 .BR NH3 ,
-\*(EL, and strings.
+\&.\|.\|.,
+and strings.
 .
 .
 .\" ====================================================================
@@ -395,14 +388,14 @@ puts a circle into any kind of ring.
 .RB [ \%double\ \c
 .IR i , j\ \/\c
 .IR k , l\ \/\c
-\*(EL
+\&.\|.\|.\&
 .RI [ picstuff ]
 .YS
 .RE
 .
 .
 .P
-The vertices of a ring are numbered 1, 2, \*(EL from the
+The vertices of a ring are numbered 1, 2, \&.\|.\|.\& from the
 vertex that points in the natural compass direction.
 .
 So for a hexagonal ring with the point at the top, the top vertex
@@ -423,7 +416,7 @@ R2: ring pointing right
 .P
 The ring vertices are named
 .BR .V1 ,
-\*(EL,
+\&.\|.\|.,
 .BI .V n\fR,\fP
 with
 .B .V1
@@ -463,7 +456,9 @@ creates two benzene rings connected along a side.
 .
 .P
 Interior double bonds are specified as
-.BI \%double\  n1 , n2\ n3 , n4\ \fR\*(EL;\fP
+.B \%double
+.IB n1 , "n2 n3" , n4
+.RB .\|.\|. ;
 each number pair adds an interior bond.
 .
 So the alternate form of a benzene ring is
@@ -600,8 +595,10 @@ command.
 .
 It represents a string that should be printed (without the quotes).
 .
-Text within quotes \(dq\*(EL\(dq is treated more or less
-like a moiety except that no changes are made to the quoted part.
+Text within quotes
+.BR \(dq .\|.\|.\& \(dq
+is treated more or less like a moiety except that no changes are made to
+the quoted part.
 .
 .
 .\" ====================================================================
@@ -620,7 +617,7 @@ A name is just
 .
 .IP
 .IB Name :
-\*(EL
+\&.\|.\|.
 .
 .
 .P
@@ -649,7 +646,9 @@ only letters and numbers is valid:
 The specific construction
 .RS
 .TP
-.BR bond\  \*(EL " ; moiety"
+.B bond\~\c
+\&.\|.\|.\&\~\c
+.B ; moiety
 .RE
 .P
 is equivalent to
@@ -801,8 +800,12 @@ properties of built-in objects.
 .
 .
 .P
-There is no in-line chemistry yet (e.g., analogous to the $\*(EL$
-construct of eqn).
+There is no in-line chemistry yet
+(e.g.,
+analogous to the
+.BR $ .\|.\|. $
+construct of
+.IR eqn ).
 .
 .
 .P

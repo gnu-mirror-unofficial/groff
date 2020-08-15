@@ -26,9 +26,6 @@ groff_tmac \- macro files in the roff typesetting system
 .cp 0
 .
 .
-.ds Ellipsis \&.\|.\|.\&\"
-.
-.
 .\" ====================================================================
 .SH Description
 .\" ====================================================================
@@ -905,9 +902,9 @@ macro call.
 Within the macro definition, the arguments are available as the escape
 sequences
 .BR \[rs]$1 ,
-\*[Ellipsis],
+\&.\|.\|.,
 .BR \[rs]$9 ,
-.BR \[rs]$[ \*[Ellipsis] ] ,
+.BR \[rs]$[ .\|.\|. ] ,
 .BR \[rs]$* ,
 and
 .BR \[rs]$@ ,
