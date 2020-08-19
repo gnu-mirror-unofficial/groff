@@ -2122,8 +2122,7 @@ Comment.
 Everything after the double-quote to the end of the input line is
 ignored.
 .
-Whole-line comments are frequently placed immediately after the empty
-request
+Whole-line comments should be placed immediately after the empty request
 .RB \(lq . \(rq).
 .
 .
@@ -2340,27 +2339,32 @@ the end of an input line is treated like a space;
 an output line
 .I may
 be broken there\" in fill mode
+(if not,
+an adjustable space is inserted)
 and
 .I will
-be in
+be broken there in
 .B .EX/.EE
-examples;\" i.e., no-fill mode
-if the line is not broken,
-an adjustable space is inserted.
+examples.\" i.e., no-fill mode
+.
+This escape ends an input line without inserting space or attempting a
+break.
 .
 Anything after
 .B \ec
 on the input line
 .\" ...except for \R escapes, which shouldn't appear in man pages...
-is discarded.
+is ignored.
 .
 The next line is interpreted as usual and can `include' a macro call
 (contrast with
 .BI \e newline\/\c
 ).
 .
-This is occasionally useful when three different fonts are needed in a
-single word.
+This escape is useful when three different font styles are needed in a
+single word or on a single line in
+.B .EX/.EE
+examples.
 .
 .
 .RS
@@ -2371,6 +2375,20 @@ Normally,
 the final output file should be named
 \&.IB file .pdf\ec
 \e&.
+.EE
+.RE
+.
+.
+.RS
+.IP
+.\" from src/devices/grotty/grotty.1.man
+.EX
+\&.EX
+$ \ec
+\&.B groff \e\-T utf8 \e\-Z \ec
+\&.I file \ec
+\&.B | grotty \e\-i
+\&.EE
 .EE
 .RE
 .
