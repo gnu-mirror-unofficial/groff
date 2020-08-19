@@ -29,18 +29,6 @@ groff \- front-end for the groff document formatting system
 .
 .
 .\" ====================================================================
-.\" Definitions
-.\" ====================================================================
-.
-.\" ====================================================================
-.\" 'char or string'
-.de Quoted
-.  ft CR
-\[oq]\\$*\[cq]
-.  ft
-..
-.
-.\" ====================================================================
 .SH Synopsis
 .\" ====================================================================
 .
@@ -314,44 +302,48 @@ Preprocess with
 .
 .
 .TP
-.BI \-P\  \-option
+.BI \-P\~ arg
 .TQ
-.BI \-P\  \-option \ \-P\  arg
-Pass
-.I \-option
-or
-.I "\-option\~arg"
-to the postprocessor.
+.BI "\-P \-" option
+.TQ
+.BI "\-P \-" option\~ \-P\~ arg
+Pass arguments to the postprocessor.
 .
-The option must be specified with the necessary preceding minus
-sign(s)
-.Quoted \-
-or
-.Quoted \-\-
+.
+.IP
+Each command-line
+.I option
+to a postprocessor must be specified with any required leading dashes
+.RB \[lq] \- \[rq]
+.\" No GNU roff postprocessor uses long options for anything except
+.\" --help or --version.
+.\"or
+.\".RB \[lq] \-\- \[rq]
 because
-.B groff
-does not prepend any dashes before passing it to the postprocessor.
+.I groff
+passes the arguments as-is to the postprocessor;
+this permits arbitrary arguments to be transmitted.
 .
-For example, to pass a title to the
-.B \%gxditview
-postprocessor, the shell command
+For example,
+to pass a title to the
+.I gxditview
+postprocessor,
+the shell command
 .
 .RS
-.IP
+.RS
 .EX
-groff \-X \-P \-title \-P 'groff it' \f[I]foo\f[]
+.B groff \-X \-P \-title \-P 'trial run' mydoc.t
 .EE
 .RE
 .
-.IP
 is equivalent to
 .
 .RS
-.IP
 .EX
-groff \-X \-Z \f[I]foo\f[] | \
-gxditview \-title 'groff it' \-
+.B groff \-X \-Z mydoc.t | gxditview \-title 'trial run' \-
 .EE
+.RE
 .RE
 .
 .
