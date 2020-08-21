@@ -81,9 +81,6 @@
 .
 .nr FT (-.5i)
 .
-.\" Default heading font
-.ds HF B\"
-.
 .nr an-first 1
 .
 .nr an-html 0
@@ -163,6 +160,9 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  ll \\n[LL]u
+.
+.  \" Restore parameters that a previous man page might have messed up.
+.  ad \\*[AD]
 .
 .\" We must select an integer indentation value for nroff;
 .\" see comment in an-do-tag.
@@ -686,9 +686,21 @@
 .\" Load local modifications.
 .mso man.local
 .
-.\" Set CS and CT if and only if man.local did not.
-.if !r CS .nr CS 0
-.if !r CT .nr CT 0
+.\" Determine page title and section heading full-capitalization if and
+.\" only if -r options or man.local did not.
+.if !r CS \
+.  nr CS 0
+.
+.if !r CT \
+.  nr CT 0
+.
+.\" Set the default adjustment mode and heading font only if -d options
+.\" or man.local did not.
+.if !d AD \
+.  ds AD b\"
+.
+.if !d HF \
+.  ds HF B\"
 .
 .cp \n[*groff_an-old_tmac_C]
 .
