@@ -192,7 +192,8 @@ even when followed by a character other than space or newline.
 .\"The first time, only the interiors of filled polygons (as borderless
 .\"polygons) are printed.
 .\"The second time, the outline is printed as a series of line segments.
-.\"This way, postprocessors that overwrite rather than merge picture elements
+.\"This way,
+.\"postprocessors that overwrite rather than merge picture elements
 .\"(such as PostScript) can still have text and graphics on a shaded
 .\"background.
 .
@@ -209,9 +210,11 @@ may have one
 .I @g@grn
 command.
 .
-Commands consist of one or two strings separated by white space, the first
-string being the command and the second its operand.
-Commands may be upper or lower case and abbreviated down to one character.
+Commands consist of one or two strings separated by white space,
+the first string being the command and the second its operand.
+.
+Commands may be upper or lower case and abbreviated down to one
+character.
 .
 .
 .PP
@@ -219,8 +222,8 @@ Commands that affect a picture's environment (those listed before
 .BR default ,
 see below) are only in effect for the current picture:
 .
-The environment is reinitialized to the defaults at the start of the next
-picture.
+The environment is reinitialized to the defaults at the start of the
+next picture.
 .
 The commands are as follows:
 .TP
@@ -305,8 +308,12 @@ narrow (medium and thick, respectively) lines to
 .I N
 times 0.15pt (this value can be changed at compile time).
 .
-The default is 1.0 (3.0 and 5.0, respectively), which corresponds to 0.15pt
-(0.45pt and 0.75pt, respectively).
+The default is 1.0
+(3.0 and 5.0,
+respectively),
+which corresponds to 0.15pt
+(0.45pt and 0.75pt,
+respectively).
 .
 A thickness value of zero selects the smallest available line thickness.
 .
@@ -639,15 +646,18 @@ Type Specifications in \fIgremlin\fP Files
 .TE
 .sp
 .IP \(bu
-After the object type comes a variable number of lines, each specifying a
-point used to display the element.
+After the object type comes a variable number of lines,
+each specifying a point used to display the element.
+.
 Each line contains an x-coordinate and a y-coordinate in floating point
-format, separated by spaces.
-The list of points is terminated by a line containing the string \[lq]\-1.0
-\-1.0\[rq]
+format,
+separated by spaces.
+.
+The list of points is terminated by a line containing the string
+\[lq]\-1.0 \-1.0\[rq]
 .RI ( AED
 version) or a single asterisk, \[lq]*\[rq]
-.RI ( SUN / X11
+.RI ( Sun / X11
 version).
 .
 .IP \(bu

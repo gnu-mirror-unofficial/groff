@@ -58,15 +58,19 @@ groff_www \- groff macros for authoring web pages
 .SH Description
 .\" ====================================================================
 .
-This manual page describes the GNU \-mwww macro package, which is part of
-the groff document formatting system.
+This manual page describes the GNU
+.I www
+macro package,
+which is part of the
+.I groff
+document formatting system.
 .
 The manual page is very a basic guide, and the HTML device driver
-.RB ( \%grohtml )
+.RI ( \%grohtml )
 has been completely rewritten but still remains as in an alpha state.
 .
-It has been included into the distribution so that a lot of people have a
-chance to test it.
+It has been included into the distribution so that a lot of people have
+a chance to test it.
 .
 Note that this macro file is automatically called (via the
 .I troffrc
@@ -78,7 +82,7 @@ or
 .
 .PP
 To see the hyperlinks in action, please format this man page with the
-.B \%grohtml
+.I \%grohtml
 device.
 .
 .
@@ -146,7 +150,7 @@ A file is split whenever a \&.SH or \&.NH\ 1 is encountered.
 Its argument is the file stem name for future output files.
 .
 This option is equivalent to
-.BR \%grohtml 's
+.IR \%grohtml 's
 .B \-j
 option.
 .
@@ -155,7 +159,7 @@ option.
 Specify the cut off depth when generating links from section headings.
 .
 For example, a parameter of\~2 would cause
-.B \%grohtml
+.I \%grohtml
 to generate a list of links for
 .B .NH\ 1
 and
@@ -172,7 +176,7 @@ Whereas
 .RE
 .IP
 tells
-.B \%grohtml
+.I \%grohtml
 that no heading links should be created at all.
 .
 Another method for turning automatic headings off is by issuing the
@@ -183,8 +187,12 @@ to
 .
 .TP
 .B .BCL foreground background active not-visited visited
-This macro takes five parameters: foreground, background, active hypertext
-link, hypertext link not yet visited, and visited hypertext link colour.
+This macro takes five parameters:
+foreground,
+background,
+active hypertext link,
+hypertext link not yet visited,
+and visited hypertext link colour.
 .
 .TP
 .B .BGIMG imagefile
@@ -496,8 +504,9 @@ End heading.
 .TP
 .B .LK
 .TAG LK
-Force \%grohtml to place the automatically generated links at this
-position.
+Force
+.I \%grohtml
+to place the automatically generated links at this position.
 .
 If this manual page has been processed with
 .B \-Thtml
@@ -518,8 +527,9 @@ No effect for all other devices.
 .
 .TP
 .B .NHR
-Suppress generation of the top and bottom rules which \%grohtml emits
-by default.
+Suppress generation of the top and bottom rules which
+.I \%grohtml
+emits by default.
 .
 .TP
 .B .HTL
@@ -666,9 +676,9 @@ but these values will be superseded by a user call to LINKSTYLE.
 .\" ====================================================================
 .
 By default
-.B \%grohtml
-generates links to all section headings and places these at the top of the
-HTML document.
+.I \%grohtml
+generates links to all section headings and places these at the top of
+the HTML document.
 .
 (See
 .UR #LK
@@ -716,10 +726,11 @@ Bernd Warken
 .\" ====================================================================
 .SH "See Also"
 .\" ====================================================================
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR \%grohtml (@MAN1EXT@),
-.BR netpbm (1)
+.
+.IR groff (@MAN1EXT@),
+.IR @g@troff (@MAN1EXT@),
+.IR \%grohtml (@MAN1EXT@),
+.IR netpbm (1)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

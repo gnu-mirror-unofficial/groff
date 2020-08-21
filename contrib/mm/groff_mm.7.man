@@ -91,7 +91,6 @@ is the ISO 3166 two-letter code for the
 (as used for the output format localization).
 .
 .
-.\"########################################################################
 .LP
 A file called
 .I locale
@@ -383,7 +382,7 @@ otherwise it is printed on page\~1 without a cover sheet.
 T}
 1@Abstract is only printed on the cover sheet (\fBMT 4\fP only).
 2@T{
-Abstract is printed only on the cover sheet (other than \fBMT 4\fP only).
+Abstract is printed only on the cover sheet (if not \fBMT 4\fP).
 The cover sheet is printed without a need for \fBCS\fP.
 T}
 .TE
@@ -416,7 +415,16 @@ must appear just after each
 The title shows up after the name in the signature block.
 .
 .TP
-.BI AU\  "\fR[\fPname \fR[\fPinitials \fR[\fPloc \fR[\fPdept \fR[\fPext \fR[\fProom \fR[\fParg \fR[\fParg \fR[\fParg\fR]]]]]]]]]\fP"
+.B AU\~\c
+.RI [ name\~\c
+.RI [ initials\~\c
+.RI [ loc\~\c
+.RI [ dept\~\c
+.RI [ ext\~\c
+.RI [ room\~\c
+.RI [ arg1\~\c
+.RI [ arg2\~\c
+.RI [ arg3\~ ]]]]]]]]]
 Author information.
 .
 Specifies the author of the memo or paper, and is printed on the cover
@@ -449,7 +457,10 @@ Letter signature.
 Generates a line with place for signature.
 .
 .TP
-.BI B\  "\fR[\fPbold-text \fR[\fPprev-font-text \fR[\fPbold \fR[.\|.\|.]]]]\fP"
+.B B\~\c
+.RI [ bold-text\~\c
+.RI [ prev-font-text\~\c
+.RI [ bold-text\~ .\|.\|.\&]]]
 Begin boldface.
 .
 No limit on the number of arguments.
@@ -495,7 +506,8 @@ list item (see
 .BR LI ).
 .
 .I text-indent
-overrides the default indentation of the list items set by number register
+overrides the default indentation of the list items set by number
+register
 .BR Pi .
 .
 A third argument prohibits printing of a blank line before each item.
@@ -598,7 +610,9 @@ or
 .BI DF\  "\fR[\fPformat \fR[\fPfill \fR[\fPrindent\fR]]]\fP"
 Begin floating display (no nesting allowed).
 .
-A floating display is saved in a queue and is printed in the order entered.
+A floating display is saved in a queue and is printed in the order
+entered.
+.
 .IR Format ,
 .IR fill ,
 and
@@ -2054,7 +2068,9 @@ See also string variable
 T}
 RN@T{
 Reference notation.
-Prints \[oq]In reference to:\[cq] and the argument two lines below the date line.
+Prints \[oq]In reference to:\[cq] and the argument two lines below the
+date line.
+.
 See also string variable
 .BR LetRN .
 T}
@@ -2066,7 +2082,9 @@ See also string variable
 T}
 SA@T{
 Salutation.
-Prints \[cq]To Whom It May Concern:\[cq] or the argument if it was present.
+Prints \[cq]To Whom It May Concern:\[cq] or the argument if it was
+present.
+.
 The salutation is printed two lines below the inside address.
 See also string variable
 .BR LetSA .
@@ -2912,7 +2930,8 @@ This macro is called instead of the normal page header.
 .
 It is possible to get complete control over the header.
 .
-Note that the header and the footer are printed in a separate environment.
+Note that the header and the footer are printed in a separate
+environment.
 .
 Line length is preserved, though.
 .
@@ -3692,7 +3711,8 @@ T}
 3@\[oq]section-page\[cq] numbering style enabled.
 4@page header is removed on the first page.
 5@T{
-\[oq]section-page\[cq] and \[oq]section-figure\[cq] numbering style enabled.
+\[oq]section-page\[cq] and \[oq]section-figure\[cq] numbering style
+enabled.
 T}
 .TE
 .RE

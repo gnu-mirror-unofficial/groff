@@ -46,8 +46,8 @@
 .ie \n(.g .ds ic \/
 .el       .ds ic \^
 .
-.\" The BSD man macros can't handle " in arguments to font change macros,
-.\" so use \(ts instead of ".
+.\" The BSD man macros can't handle " in arguments to font change
+.\" macros, so use \(ts instead of ".
 .tr \(ts"\""
 .
 .
@@ -340,7 +340,8 @@ You can safely use this feature to change fonts or to
 change the value of
 .BR \ebaselineskip .
 .
-Anything else may well produce undesirable results; use at your own risk.
+Anything else may well produce undesirable results;
+use at your own risk.
 .
 Lines beginning with a period are not given any special treatment.
 .
@@ -479,12 +480,21 @@ Include
 at this point in the file.
 .
 .TP
-\fBcopy\fR [\fB"\,\fIfilename\/\fB"\fR] \fBthru\fR \fIX\fR \fIbody\fR \fIX\fR \
-[\fBuntil\fR \fB"\,\fIword\*(ic\fB"\fR]
-.ns
-.TP
-\fBcopy\fR [\fB"\,\fIfilename\/\fB"\fR] \fBthru\fR \fImacro\fR \
-[\fBuntil\fR \fB"\,\fIword\*(ic\fB"\fR]
+.BR copy\~ [ \[dq]\c
+.IB filename \[dq]\c
+.RB ]\~ thru\~\c
+.I X body X\~\c
+.RB [ until\~ \[dq]\c
+.IB word \[dq]\c
+]
+.TQ
+.BR copy\~ [ \[dq]\c
+.IB filename \[dq]\c
+.RB ]\~ thru\~\c
+.I macro\~\c
+.RB [ until\~ \[dq]\c
+.IB word \[dq]\c
+]
 This construct does
 .I body
 once for each line of
@@ -888,12 +898,13 @@ The compass points of a text object are determined by this box.
 The implicit motion associated with the object is also determined
 by this box.
 .
-The dimensions of this box are taken from the width and height attributes;
-if the width attribute is not supplied then the width will be taken to be
+The dimensions of this box are taken from the width and height
+attributes;
+if the width attribute is not supplied then the width will be taken to
+be
 .BR textwid ;
-if the height attribute is not supplied then the height will be taken to be
-the number of text strings associated with the object
-times
+if the height attribute is not supplied then the height will be taken to
+be the number of text strings associated with the object times
 .BR textht .
 .
 Initially

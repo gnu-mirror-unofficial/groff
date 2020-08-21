@@ -29,8 +29,8 @@ groff_hdtbl \- Heidelberger table macros for GNU roff
 .ig
   Some simple formatting macros.  Note that we use '.ig' here and not a
   comment to make 'mandb' 2.4.1 (and probably more recent versions also)
-  happy; otherwise the '.char' lines and the stuff which follows is included
-  in the 'whatis' database.
+  happy; otherwise the '.char' lines and the stuff which follows is
+  included in the 'whatis' database.
 ..
 .
 .
@@ -167,15 +167,16 @@ groff_hdtbl \- Heidelberger table macros for GNU roff
 .
 The
 .B hdtbl
-macros consist of four base and three optional macros, controlled by about
-twenty arguments.
+macros consist of four base and three optional macros,
+controlled by about twenty arguments.
 .
 The syntax is simple and similar to the
 .B HTML
-table model and nearly as flexible: You can write sequences of tokens (macro
-calls with their arguments and content data), separated by blanks and
-beginning with a macro call, into the same line to get compact and cleanly
-arrranged input.
+table model and nearly as flexible:
+you can write sequences of tokens
+(macro calls with their arguments and content data),
+separated by blanks and beginning with a macro call,
+into the same line to get compact and cleanly arrranged input.
 .
 An advantage of
 .B hdtbl
@@ -207,8 +208,10 @@ First of all, you must load the
 .I hdtbl.tmac
 file.
 .
-As with nearly all other groff macro packages, there are two possibilities
-to do so:
+As with nearly all other
+.I groff
+macro packages,
+there are two possibilities to do so:
 .
 Either add the line
 .
@@ -372,11 +375,13 @@ argument, see below).
 .
 .
 .PP
-The contents of a table cell is arbitrary; for example, it can be another
-table, without restriction to the nesting depth.
+The contents of a table cell is arbitrary;
+for example,
+it can be another table,
+without restriction to the nesting depth.
 .
-A given table layout can be either constructed with suitably nested tables
-or with proper arguments to
+A given table layout can be either constructed with suitably nested
+tables or with proper arguments to
 .CR .TD
 and
 .CR .TH\c
@@ -486,8 +491,10 @@ Here the latter table in a more compact form.
 .
 .
 .PP
-If a macro has one or more arguments (see below), and it is not starting a
-line, everything belonging to this macro including the macro itself must be
+If a macro has one or more arguments
+(see below),
+and it is not starting a line,
+everything belonging to this macro including the macro itself must be
 enclosed in double quotes.
 .
 .
@@ -535,8 +542,9 @@ Another possible form is
 .
 .
 .PP
-However, this is limited to the case where the macro is the first one in the
-line and not already enclosed in double quotes.
+However,
+this is limited to the case where the macro is the first one in the line
+and not already enclosed in double quotes.
 .
 .
 .PP
@@ -614,7 +622,8 @@ Border color.
 .XAA cols= m
 Number of table columns.
 .
-This argument is necessary if more than one column is in the table and no
+This argument is necessary if more than one column is in the table and
+no
 .CR \[oq]width\[cq]
 arguments are present.
 .
@@ -657,11 +666,12 @@ Widths of table cells.
 .CI n
 or natural numbers with the pseudo-scaling indicator
 .CR \[oq]%\[cq]\c
-, with the meaning \[lq]percent of the actual line length (or column length
-for inner tables, respectively)\[rq].
+, with the meaning \[lq]percent of the actual line length
+(or column length for inner tables,
+respectively)\[rq].
 .
-If there are less width values than table columns, the last width value is
-used for the remaining cells.
+If there are less width values than table columns,
+the last width value is used for the remaining cells.
 .
 The argument
 .
@@ -675,8 +685,8 @@ for example indicates that the first column is 1.5\~inches wide; the
 remaining columns take 1/10 of the column length each.
 .
 .XDEF
-The table width equals the outer line length or column length; the columns
-have equal widths.
+The table width equals the outer line length or column length;
+the columns have equal widths.
 .
 .XAA height= n
 Height of the table.
@@ -789,9 +799,10 @@ cells left and right of this column.
 .
 .IP
 .B Remark:
-Overlapping of column and row spanning, as in the following table fragment
-(the overlapping happens in the second cell in the second row), is invalid
-and causes incorrect results.
+Overlapping of column and row spanning,
+as in the following table fragment
+(the overlapping happens in the second cell in the second row),
+is invalid and causes incorrect results.
 .
 .RS
 .IP
@@ -905,9 +916,9 @@ If the argument
 .CR \[oq]hold\[cq]
 is given, the table is held until it is freed by calling the macro
 .CR .t*free\c
-, which in turn prints the table immediately, either at the current position
-or at the top of the next page if its height is larger than the remaining
-space on the page.
+, which in turn prints the table immediately,
+either at the current position or at the top of the next page if its
+height is larger than the remaining space on the page.
 .
 .IP \[bu] 3
 Otherwise, if the table is higher than the remaining space on the page,
@@ -952,7 +963,8 @@ macro.
 .
 .
 .\" ====================================================================
-.SS "Arguments common to \f[CB].TBL\f[], \f[CB].TR\f[], \f[CB].TD\f[], and \f[CB].TH\f[]"
+.SS "Arguments common to \f[CB].TBL\f[], \f[CB].TR\f[], \f[CB].TD\f[], \
+and \f[CB].TH\f[]"
 .\" ====================================================================
 .
 The arguments described in this section can be specified with the
@@ -961,8 +973,11 @@ and
 .CR .TR
 macros, but they are eventually passed on to the table cells.
 .
-If omitted, the defaults take place, which the user can change by setting
-the corresponding default registers or strings, as documented below.
+If omitted,
+the defaults take place,
+which the user can change by setting the corresponding default registers
+or strings,
+as documented below.
 .
 Setting an argument with the
 .CR .TBL
@@ -1032,8 +1047,8 @@ As with
 .CR .ft
 request the
 .CR \[oq]fst\[cq]
-argument can be used to specify the font family and font style together, for
-example
+argument can be used to specify the font family and font style together,
+for example
 .CR \[oq]fst=HNBI\[cq]
 instead of
 .CR \[oq]ff=HN\[cq]
@@ -1114,7 +1129,8 @@ this is a separator line to the cell below.
 : a double separator line.
 .
 .IP
-The thickness of the separator lines is the half of the border thickness,
+The thickness of the separator lines is the half of the border
+thickness,
 but at least 0.1\~inches.
 .
 The distance between the double lines is equal to the line thickness.
@@ -1125,8 +1141,8 @@ Together with
 .CR \[oq]border=0\[cq]
 for proper formatting the value of
 .CR \[oq]csp\[cq]
-must be at least .05\~inches for single separator lines and .15\~inches for
-double separator lines.
+must be at least .05\~inches for single separator lines and .15\~inches
+for double separator lines.
 .
 .XDEFS hl=s t*hl
 .
