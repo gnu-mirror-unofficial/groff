@@ -1,3 +1,25 @@
+2020-08-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-old.tmac (TH): Set adjustment to user preference with
+	each new page rendered, in case a hostile page meddled with
+	'.ad' or '.na'.
+	(after .mso man.local): Set the default adjustment mode only if
+	a -d option or man.local did not.  Also do the same for the HF
+	string; relocate its definition here and make it similarly
+	conditional.  Also update comment on setting of CS and CT
+	registers and style their conditionals consistently with the
+	rest of the package.
+
+	* tmac/groff_man.7.man.in (Strings) <\*(AD>: Document it.
+	(Strings) <\*(HF>: Parallelize language with new \*(AD.
+	(Options) Expand introductory sentence to discuss -d and -r
+	options.
+	(Options) <-dAD>: Document default and likely values.  Nobody
+	right-justifies or centers man page text; send the curious to
+	groff(7) for '.ad' request documentation.
+	(Options) <-dHF>: Document default and steer people to groff(7)
+	for '.ft' request documentation.
+
 2020-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an-old.tmac (set-an-margin): Rename...

@@ -1935,12 +1935,23 @@ expands to an escape setting the point size to the document default.
 .
 .
 .TP
+.B \e*(AD
+expands to the default adjustment mode;
+see section \(lqOptions\(rq below for the default.
+.
+This string is a GNU extension\" from groff 1.22.5
+to support user customization of man page rendering,
+and should not be used in man page sources.
+.
+.
+.TP
 .B \e*(HF
-expands to the font identifier used to print headings and subheadings.
+expands to the font identifier used to print headings and subheadings;
+see section \(lqOptions\(rq below for the default.
 .
-The default is \(lqB\(rq.
-.
-This string is a GNU extension.\" from groff 1.19
+This string is a GNU extension\" from groff 1.19
+to support user customization of man page rendering,
+and should not be used in man page sources.
 .
 .
 .TP
@@ -2820,9 +2831,39 @@ SunOS\~4.0 (1988) may have been the first to support
 .
 The following
 .I groff
-options set number registers recognized and used by the
+options set registers
+(with the
+.B \-r
+option)
+and strings
+(with the
+.B \-d
+option)
+recognized and used by the
 .I man
 macro package.
+.
+.
+.TP
+.BI \-dAD= adjustment-mode
+Set line adjustment to
+.I adjustment-mode ,
+which is typically
+.RB \[lq] b \[rq]
+for adjustment to both margins
+(the default),
+or
+.RB \[lq] l \[rq]
+for left adjustment
+(ragged right margin).
+.
+Any valid parameter to
+.IR groff 's
+\[lq].ad\[rq] request is accepted.
+.
+See
+.IR groff (@MAN7EXT@)
+for less-common choices.
 .
 .
 .TP
@@ -2894,6 +2935,21 @@ to
 .IR footer-distance .
 .
 The default is \-0.5i.
+.
+.
+.TP
+.BI \-dHF= heading-font
+See the font used to print headings and subheadings;
+the default is
+.RB \(lq B \(rq
+(bold).
+.
+Any valid parameter to
+.IR groff 's
+\[lq].ft\[rq] request is accepted.
+.
+See
+.IR groff (@MAN7EXT@).
 .
 .
 .TP
