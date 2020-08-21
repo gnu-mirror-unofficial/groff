@@ -163,6 +163,7 @@
 .
 .  \" Restore parameters that a previous man page might have messed up.
 .  ad \\*[AD]
+.  hy \\n[HY]
 .
 .\" We must select an integer indentation value for nroff;
 .\" see comment in an-do-tag.
@@ -658,16 +659,6 @@
 .ds lq \(lq\"
 .ds rq \(rq\"
 .
-.if !\n[an-html] \{\
-.  if !rHY \{\
-.    ie \n[cR] \
-.      nr HY 4
-.    el \
-.      nr HY 6
-.  \}
-.  hy \n[HY]
-.\}
-.
 .\" For UTF-8, map some characters conservatively for the sake
 .\" of easy cut and paste.
 .
@@ -693,6 +684,15 @@
 .
 .if !r CT \
 .  nr CT 0
+.
+.\" Similarly for hyphenation mode.
+.if !r HY \{\
+.  \" No page breaks occur in continuous rendering.
+.  ie \n[cR] \
+.    nr HY 4
+.  el \
+.    nr HY 6
+.\}
 .
 .\" Set the default adjustment mode and heading font only if -d options
 .\" or man.local did not.
