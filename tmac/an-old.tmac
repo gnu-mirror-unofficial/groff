@@ -126,7 +126,7 @@
 .  .
 .\}
 .
-.de set-an-margin
+.de an-set-margin
 .  nr an-level 1
 .  nr an-margin \\n[IN]
 .  nr an-saved-margin1 \\n[IN]
@@ -184,7 +184,7 @@
 .  PD
 .  if !r SN \
 .    nr SN 3n \" indentation of sub-sub-headings relative to sub-heads
-.  set-an-margin
+.  an-set-margin
 .  nr an-tag-sep 1n
 .
 .  nr an-no-space-flag 0
@@ -346,7 +346,7 @@
 .
 .de1 SH
 .  sp \\n[PD]u
-.  set-an-margin
+.  an-set-margin
 .  fi
 .  in \\n[an-margin]u
 .  ti 0
@@ -367,7 +367,7 @@
 .
 .de1 SS
 .  sp \\n[PD]u
-.  set-an-margin
+.  an-set-margin
 .  fi
 .  in \\n[IN]u
 .  ti \\n[SN]u
