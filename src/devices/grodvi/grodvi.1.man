@@ -33,6 +33,10 @@ grodvi \- convert groff output to TeX DVI format
 .ie t .ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
 .el .ds tx TeX
 .
+.\" This macro definition is poor style from a portability standpoint,
+.\" but it's a good test and demonstration of the standard font
+.\" repertoire for the devices where it has any effect at all, and so
+.\" should be retained.
 .de FT
 .  if '\\*(.T'dvi' .ft \\$1
 ..
@@ -335,14 +339,14 @@ There are also the following fonts which are not members of a family:
 .RS
 .TP
 .B CW
-CM Typewriter Text (cmtt10)
 .FT CW
+CM Typewriter Text (cmtt10)
 .FT
 .
 .TQ
 .B CWI
-CM Italic Typewriter Text (cmitt10)
 .FT CWI
+CM Italic Typewriter Text (cmitt10)
 .FT
 .RE
 .
