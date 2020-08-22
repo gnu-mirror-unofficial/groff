@@ -25,9 +25,9 @@ EXAMPLE='.TH mal 1 2020-08-21 "groff test suite"
 mal \- malevolent man page
 .SH Description
 .nh
-Wicked page changes adjustment.
-Wicked page changes adjustment.
-Wicked page changes adjustment.
+Wicked page disables hyphenation.
+Wicked page disables hyphenation.
+Wicked page disables hyphenation.
 .TH ino 1 2020-08-21 "groff test suite"
 .SH Name
 ino \- innocent man page
