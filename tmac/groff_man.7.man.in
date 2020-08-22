@@ -3010,51 +3010,6 @@ Set line length;
 the default is 78n for terminal devices
 and 6.5i for typesetter devices.
 .
-If this option is not given,
-.\" Don't bold the .ll request in this discussion; it's not a major
-.\" topic of _this_ page as it would be in groff(7).  Also, we don't
-.\" want to encourage people to mess with this old kludge by drawing
-.\" attention to it.
-the line length is set to respect any value set by a prior \(lq.ll\(rq
-request
-(which
-.I must
-be in effect when the
-.B .TH
-macro is invoked),
-if this differs from the built-in default for the formatter.
-.
-.
-.IP
-Note that the use of an \(lq.ll\(rq request to initialize the line
-length is supported for backward compatibility with some versions of
-the
-.I man
-program;
-direct initialization of the
-.B LL
-register should
-.I always
-be preferred to the use of such a request.
-.
-In particular,
-note that an \(lq.ll\~65n\(rq request does
-.I not
-preserve the default
-.I nroff
-line length
-(the
-.I man
-default initialization to 78n prevails),
-whereas the
-.B \-rLL=65n
-option,
-or an equivalent \(lq.nr\~LL\~65n\(rq request preceding the use of the
-.B .TH
-macro,
-.I does
-set a line length of 65n.
-.
 .
 .TP
 .BI \-rLT= title-length

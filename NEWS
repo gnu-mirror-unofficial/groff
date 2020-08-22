@@ -104,6 +104,13 @@ o The an (man) macro package supports new CS and CT number registers to
   implementations) a way to view the rendered page elements in full
   capitals if desired.
 
+o The an (man) macro package no longer honors an .ll request to set the
+  line length in nroff devices prior to processing a man page.  This was
+  deprecated 18 years ago, and all known man program and macro package
+  implementations either have set/respected an LL register since 2005 or
+  earlier (man-db man and Brouwer/Lucifredi man), or simply use a
+  non-configurable line length of 78n (mandoc, Heirloom Doctools).
+
 o The groff_man(7) man page documenting the groff implementation of the
   man macro package has been split into two pages.  The original page
   remains as a terser reference for experienced users.  A new page,

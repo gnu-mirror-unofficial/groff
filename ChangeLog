@@ -1,5 +1,77 @@
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	tmac/an-old.tmac: Drop .ll hack for LL register.
+
+	Drop the .ll hack for setting the line length on nroff devices.
+
+	Once upon a time, the only way to get man pages to render on a
+	terminal at any width other than the nroff default of 65n was to
+	put an .ll request into the page--a mortal sin against
+	portability--or your man(1) program could sneak such a request
+	into nroff's input stream.
+
+	Also, long ago, John Eaton of UT Austin wrote a man(1) program.
+	In a few years this implementation branched into two lines of
+	development, which I'll call man-db man (Wilford/Polacco/Watson)
+	and another, Brouwer/Lucifredi man, which as of this writing saw
+	its last release in 2011 (1.6g).
+
+	The man and mdoc macros of groff 1.18 (July 2002) introduced an
+	LL register to configure the line length, respecting an -rLL
+	command-line option.  The source change was made by Werner
+	Lemberg on 3 May 2002 and Colin Watson updated man-db man(1)--on
+	the same day!--to synthesize the option when calling groff.
+
+	Later, in August 2005, Keith Marshall, a user of vesion 1.5m of
+	Brouwer/Lucifredi man(1), which did not set the LL register,
+	suggested that the existing .ll setting (technically, the value
+	of \n[.l], the only way the result of an .ll request could be
+	introspected) be honored in the absence of the LL register.
+	However, it is impossible to distinguish a user-supplied ".ll
+	65n" request from nroff's default setting, which was in that
+	case overridden to the modern default of 78n.
+
+	And so, in what is now git commit
+	f9d5df4aebd3d834b4084ffefa52a115e00dce38 (1 September 2005), it
+	was done.
+
+	This led to (1) surprising behavior for users accustomed to old
+	methods and desirous of the nroff default and (2) lengthy
+	apologia in groff source code comments and the groff_man(7) man
+	page.
+
+	Ironically, Brouwer/Lucifredi man(1) had already added support
+	for the LL register by the time of its 1.6 release two months
+	earlier (20 June 2005).  (Curiously, it did so similarly to the
+	old .ll hack, by injecting an '.nr LL' request into groff's
+	input stream, rather than using the -r command-line option.)
+	Moreover, Marshall and the groff list were already aware of
+	this, but the change was accepted anyway because version 1.6
+	was "too new"!  (Distributions are slow sometimes, true...)
+
+	Let us survey the field in 2020.  man-db man(1) has supported
+	the LL register for eighteen years, and Brouwer/Lucifredi man(1)
+	for fifteen.  Heirloom Doctools's man macros set the line length
+	to 78n on nroff devices unconditionally.  mandoc(1) similarly
+	also always formats for 78 columns on terminals.  groff's
+	mdoc(7) macros grew support for LL in parallel with man(7) in
+	2002 and never added the \n[.l] introspection at all.
+
+	There no longer seems to be any reason to preserve this hack.
+
+	* tmac/an-old.tmac (initialization): Drop complex setup of LL
+	register.
+	(TH): Relocate line length reset; no behavior change.
+	(after .mso man.local): Initialize LL only if the user hasn't;
+	use device default in troff mode, and 78n in nroff mode.
+
+	* tmac/groff_man.7.man.in (Options) <-rLL>: Stop documenting .ll
+	hack.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?58992>.
+
+2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tests/an-old_LL_init_sanely.sh: Add test.
 	* tmac/tmac.am (tmac_TESTS): Run test.
 
