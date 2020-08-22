@@ -556,11 +556,16 @@ See
 .
 .TP
 .I tty\-char
-Overrides the definition of standard troff characters and some groff
-characters for TTY devices.
+Defines fallback definitions of
+.I roff
+special characters for terminal devices.
 .
-The optical appearance is intentionally inferior compared to that of
-normal TTY formatting to allow processing with critical equipment.
+These definitions more poorly optically approximate typeset output
+compared to those of the
+.I tty
+file in favor of communicating more semantic information,
+which can allow easier processing with critical equipment.
+\" XXX: critical equipment like what?
 .
 .
 .TP
