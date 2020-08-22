@@ -20,7 +20,7 @@ _endif
 \&.
 
 These man pages serve multiple goals, one of which is to serve as a
-model for good man page writing by people who examine its source.
+model for good man page writing by people who examine their sources.
 
 After processing by m4, both child pages in the above case will carry \c
 escapes followed by text lines starting with punctuation one normally
@@ -30,7 +30,7 @@ to be protected from interpretation as a control line).
 This is ugly, fragile, and unnecessary; all of these traits are
 offensive to good pedagogy.
 
-Consequently, it is  better to repeat a small amount of material than
+Consequently, it is better to repeat a small amount of material than
 write a man page that looks like the output of docbook-to-man.
 
 define(`_ifstyle',`ifdef(`_groff_man_style',,`divert(-1)')')
@@ -196,11 +196,9 @@ _ifstyle()dnl
 .\" TODO: Write an introduction for non-typographers.  Cover the
 .\" following:
 .\"
-.\" word (delimited by spaces or newlines)
-.\" sentence (including end-of-sentence detection)
-.\" filling, hyphenation, breaking, adjustment (elsewhere:
+.\" filling, hyphenation, breaking, adjustment (elsewhere known as
 .\" justification)
-.\" font (family, style [elsewhere: face])
+.\" font (family, style [elsewhere known as face])
 .\" point size
 .\" typesetter (troff device, PostScript, PDF)
 .\" terminal (nroff device, emulator, typewriter, TTY)
@@ -213,7 +211,12 @@ Man pages should be encoded using Unicode basic Latin code points
 exclusively,
 and employ the Unix line-ending convention
 (U+000A only).
+.\" What about rare English words that require diacritics, and
+.\" proper names that require more than basic Latin?
+.\"
 .\" text lines vs. control lines (macro calls)
+.\" word (delimited by spaces or newlines)
+.\" sentence (including end-of-sentence detection)
 .\" The above distinction works well with filling.
 .\" Don't fill your input text yourself; let groff do the work.
 .\" Also good for diffs.
@@ -934,7 +937,7 @@ _ifstyle()dnl
 .
 .PP
 Multiple
-.B .SY/.YS
+.BR .SY / .YS
 blocks can be specified,
 for instance to distinguish differing modes of operation of a complex
 command like
@@ -1789,7 +1792,7 @@ to change it.
 .
 This paragraph is affected both by the moved left margin
 .RB ( .RS )
-and ordinary indentation
+and indentation
 .RB ( .IP ).
 .
 .TS
@@ -1901,10 +1904,10 @@ also cause a break but no insertion of vertical space.
 .
 .
 .\" ====================================================================
-.SS "Number registers"
+.SS Registers
 .\" ====================================================================
 .
-Number registers are described in section \(lqOptions\(rq below.
+Registers are described in section \(lqOptions\(rq below.
 .
 They can be set not only on the command line but in the site
 .I man.local
@@ -2342,9 +2345,11 @@ or similar.
 .
 .TP
 .B \ec
-Suppress break at the end of the input line.
+End an input line without inserting space or attempting a break.
 .
-Normally,
+.\" TODO: When we explain what a "sentence" is, move this parenthetical
+.\" there.
+(Normally,
 the end of an input line is treated like a space;
 .\" end-of-sentence detection is performed, and...
 an output line
@@ -2355,11 +2360,8 @@ an adjustable space is inserted)
 and
 .I will
 be broken there in
-.B .EX/.EE
-examples.\" i.e., no-fill mode
-.
-This escape ends an input line without inserting space or attempting a
-break.
+.BR .EX / .EE
+examples.)\" i.e., no-fill mode
 .
 Anything after
 .B \ec
@@ -2374,7 +2376,7 @@ The next line is interpreted as usual and can `include' a macro call
 .
 This escape is useful when three different font styles are needed in a
 single word or on a single line in
-.B .EX/.EE
+.BR .EX / .EE
 examples.
 .
 .
@@ -2550,9 +2552,11 @@ _endif()dnl
 .SS Hooks
 .\" ====================================================================
 .
-Two macros called internally by the
+Two macros,
+both GNU extensions,\" from groff 1.19
+are called internally by the
 .I groff man
-package to format page headers and footers can be redefined by the
+package to format page headers and footers and can be redefined by the
 administrator in a site's
 .I man.local
 file
@@ -2562,11 +2566,12 @@ The default headers and footers are documented in the description of
 .B .TH
 above.
 .
-These macros are GNU extensions and it makes no sense for a man page
-to call them.
+Because these macros are hooks for
+.I groff man
+internals,
+man pages have no reason to call them.
 .
 .
-.\" both from groff 1.19
 .TP
 .B .BT
 Set the page footer
@@ -2783,7 +2788,7 @@ The only strings defined were
 .B R
 and
 .BR S ;
-no number registers were documented.
+no registers were documented.
 .
 .B .UC
 appeared in 3BSD (1980) and
@@ -2847,7 +2852,7 @@ macro package.
 .TP
 .BI \-dAD= adjustment-mode
 Set line adjustment to
-.I adjustment-mode ,
+.IR adjustment-mode ,
 which is typically
 .RB \[lq] b \[rq]
 for adjustment to both margins
@@ -2953,10 +2958,14 @@ See
 .
 .
 .TP
-.BI \-rHY= mode
+.BI \-rHY= hyphenation-mode
 Set hyphenation mode,
 as documented in section \(lqHyphenation\(rq of
 .IR groff (@MAN7EXT@).
+.
+Use
+.B \-rHY=0
+to disable hyphenation.
 .
 The default is\~4 if continuous rendering is enabled
 .RB ( \-rcR=1
