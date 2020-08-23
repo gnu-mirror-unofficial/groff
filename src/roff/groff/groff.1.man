@@ -1582,54 +1582,57 @@ This device name is overwritten by the option
 .
 .
 .\" ====================================================================
-.SH Example
+.SH Examples
 .\" ====================================================================
 .
 The following example illustrates the power of the
-.B groff
+.I groff
 program as a wrapper around
-.BR @g@troff .
+.IR @g@troff .
 .
 .
 .P
 To process a
 .I roff
-file using the preprocessors
-.B tbl
+input file using the preprocessors
+.I tbl \" AT&T
 and
-.B pic
+.I pic \" AT&T
 and the
-.B me
-macro set, classical
+.I me
+macro package in the way to which AT&T
 .I troff
-had to be called by
+users were accustomed,
+one would type
+(or script)
+a pipeline.
 .
 .IP
 .EX
-pic foo.me | tbl | troff \-me \-Tlatin1 | grotty
+pic foo.me | tbl | troff \-me \-Tutf8 | grotty
 .EE
 .
 .
 .P
 Using
-.BR groff ,
+.IR groff ,
 this pipe can be shortened to the equivalent command
 .
 .IP
 .EX
-groff \-p \-t \-me \-T latin1 foo.me
+groff \-p \-t \-me \-T utf8 foo.me
 .EE
 .
 .
 .P
-An even easier way to call this is to use
-.BR grog (@MAN1EXT@)
-to guess the preprocessor and macro options and execute the generated
-command (by using backquotes to specify shell command substitution)
+An even easier way to do this is to use
+.IR grog (@MAN1EXT@)
+to guess the preprocessor and macro options and execute the result by
+using the command substitution feature of the shell.
 .
 .IP
 .EX
-\[ga]grog \-Tlatin1 foo.me\[ga]
+$(grog \-Tutf8 foo.me)
 .EE
 .
 .
