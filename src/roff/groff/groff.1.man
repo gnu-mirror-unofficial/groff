@@ -911,32 +911,75 @@ These aren't visible to the user.
 .SS "Macro packages"
 .\" ====================================================================
 .
-Macro packages can be included by option
+Macro packages can be included in a
+.I roff
+document by using option
 .BR \-m .
 .
 The
 .I groff
-system implements and extends all classical macro packages in a
-compatible way and adds some packages of its own.
+system implements most well-known macro packages for AT&T
+.I troff
+.\" exceptions: mpm, mv
+in a compatible way,
+extends them,
+and adds some packages of its own.
 .
-Actually, the following macro packages come with
-.IR groff :
+Several of them have one- or two-letter names due to the intense sense
+of naming economy practiced in early Unix culture.
+.
+This laconic approach led to many of the packages being identified in
+general usage with the
+.I nroff
+and
+.I troff
+option letter used to invoke them,
+sometimes to punning effect,
+as with \[lq]man\[rq]
+(short for \[lq]manual\[rq])
+and even with the option dash,
+as in the case of the
+.I s
+package,
+much better known as
+.I ms
+or even
+.IR \-ms .
+.
+.
+.P
+Available macro packages include:
+.
 .
 .TP
-.B man
-The traditional man page format; see
-.BR \%groff_man (@MAN7EXT@).
+.I an
+is the man page formatter originating in Version\~7 Unix (1979);
+see
+.IR groff_man (@MAN7EXT@).
+.
 It can be specified on the command line as
 .B \-man
 or
 .BR \-m\~man .
 .
+.
 .TP
-.B mandoc
-The general package for man pages; it automatically recognizes
-whether the documents uses the
+.I doc
+is the man page formatter originating in 4.3BSD-Reno (1990);
+see
+.IR groff_mdoc (@MAN7EXT@).
+.
+It can be specified on the command line as
+.B \-mdoc
+or
+.BR \-m\~mdoc .
+.
+.
+.TP
+.I andoc
+is a wrapper that automatically recognizes whether a document uses
 .I man
-or the
+or
 .I mdoc
 format and branches to the corresponding macro package.
 .
@@ -945,64 +988,81 @@ It can be specified on the command line as
 or
 .BR \-m\~\%mandoc .
 .
-.TP
-.B mdoc
-The \f[CR]BSD\f[]-style man page format; see
-.BR \%groff_mdoc (@MAN7EXT@).
-.
-It can be specified on the command line as
-.B \-mdoc
-or
-.BR \-m\~mdoc .
 .
 .TP
-.B me
-The classical
-.I me
-document format; see
-.BR \%groff_me (@MAN7EXT@).
+.I e
+is the BSD general-purpose
+document formatter;
+see
+.IR groff_me (@MAN7EXT@).
 .
 It can be specified on the command line as
 .B \-me
 or
 .BR \-m\~me .
 .
+.
 .TP
-.B mm
-The classical
-.I mm
-document format; see
-.BR \%groff_mm (@MAN7EXT@).
+.I m
+is the second-generation AT&T general-purpose
+document formatter;
+see
+.IR groff_mm (@MAN7EXT@).
 .
 It can be specified on the command line as
 .B \-mm
 or
 .BR \-m\~mm .
 .
+.
 .TP
-.B ms
-The classical
+.I om
+(invariably called \[lq]mom\[rq])
+is a modern package written by Peter Schaffter specifically for
+.I groff.
+.
+Consult the
+.UR https://www.schaffter.ca/mom/
+mom home page
+.UE
+for extensive documentation.
+.
+She\[em]for
+.I mom
+takes the female pronoun\[em]can be specified on the command line as
+.B \-mom
+or
+.BR \-m\~mom . \" along with -m om and -mmom...
+.
+.
+.TP
+.I s
+is the original AT&T general-purpose
 .I ms
-document format; see
-.BR \%groff_ms (@MAN7EXT@).
+document formatter; see
+.BR groff_ms (@MAN7EXT@).
+.
 It can be specified on the command line as
 .B \-ms
 or
 .BR \-m\~ms .
 .
+.
 .TP
-.B www
+.I www
+is a supplemental package providing
 HTML-like macros for inclusion in arbitrary
 .I groff
-documents; see
-.BR \%groff_www (@MAN7EXT@).
+documents;
+see
+.IR groff_www (@MAN7EXT@).
 .
 .P
 Details on the naming of macro files and their placement can be found
 in
-.BR \%groff_tmac (@MAN5EXT@);
-this man page also documents some other, minor auxiliary macro packages
-not mentioned here.
+.IR groff_tmac (@MAN5EXT@);
+this page also documents some other,
+minor auxiliary macro packages not mentioned here.
 .
 .
 .\" ====================================================================
