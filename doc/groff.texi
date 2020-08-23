@@ -6676,7 +6676,7 @@ You can use @code{\:} and @code{\%} in combination to control breaking
 of a filename or URL.
 
 @Example
-@dots{} check the \%/var/log/\:\%httpd/\:\%access_log file @dots{}
+@dots{} check \%/var/log/\:\%httpd/\:\%access_log @dots{}
 @endExample
 @endDefesc
 
@@ -6822,8 +6822,8 @@ instead of the correct `split- ting'.  U.S. English patterns as
 distributed with GNU @code{troff} need two characters at the beginning
 and three characters at the end; this means that value@tie{}4 of
 @code{hy} is mandatory.  Value@tie{}8 is possible as an additional
-restriction, but values@tie{}1 (the default!), 16, and@tie{}32 should be
-avoided.
+restriction, but values@tie{}16 and@tie{}32 should be avoided, as should
+mode@tie{}1 (the default!).  Modes@tie{}4 and@tie{}6 are typical.
 
 A table of left and right minimum values for hyphenation as needed by
 the patterns distributed with GNU @code{troff} follows; see the
@@ -6862,7 +6862,7 @@ not remembered.
 
 @DefreqList {hpf, pattern-file}
 @DefreqItemx {hpfa, pattern-file}
-@DefreqListEndx {hpfcode, a b [c d @dots{}]}
+@DefreqListEndx {hpfcode, a b [c d] @dots{}}
 @cindex hyphenation patterns (@code{hpf})
 @cindex patterns for hyphenation (@code{hpf})
 Read hyphenation patterns from @var{pattern-file}.  This file is sought
@@ -6942,7 +6942,7 @@ If no @code{hpf} request is specified (either in the document, in a
 @code{troff} won't automatically hyphenate at all.
 @endDefreq
 
-@Defreq {hcode, c1 code1 [c2 code2 @dots{}]}
+@Defreq {hcode, c1 code1 [c2 code2] @dots{}}
 @cindex hyphenation code (@code{hcode})
 @cindex code, hyphenation (@code{hcode})
 Set the hyphenation code of character @var{c1} to @var{code1}, that of
@@ -7056,8 +7056,8 @@ register.
 @cindex @code{ad} request, and hyphenation space
 Suppress hyphenation of the line in adjustment modes @samp{b} or
 @samp{n} if it can be justified by adding no more than
-@var{hyphenation-space} extra space to each word space.  Without an
-argument, the hyphenation space adjustment threshold is set to its
+@var{hyphenation-space} extra space to each inter-word space.  Without
+an argument, the hyphenation space adjustment threshold is set to its
 default value, 0.  The default scaling indicator is @samp{m}.  The
 hyphenation space adjustment threshold is associated with the current
 environment (@pxref{Environments}).
