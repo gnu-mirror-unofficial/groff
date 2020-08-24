@@ -5645,11 +5645,14 @@ affected (@pxref{Auto-increment}).
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Registers, Manipulating Filling and Adjusting, Embedded Commands, gtroff Reference
 @section Registers
 @cindex registers
 
-Numeric variables in @code{gtroff} are called @dfn{registers}.  There
+Numeric variables in GNU @code{troff} are called @dfn{registers}.  There
 are a number of built-in registers, supplying anything from the date to
 details of formatting parameters.
 
@@ -5674,19 +5677,23 @@ Define or set registers using the @code{nr} request or the @code{\R}
 escape.
 
 Although the following requests and escapes can be used to create
-registers, simply using an undefined register will cause it to be
-set to zero.
+registers, simply using an undefined register will cause it to be set to
+zero.
 
 @DefreqList {nr, ident value}
 @DefescListEndx {\\R, @code{'}, ident value, @code{'}}
 Set number register @var{ident} to @var{value}.  If @var{ident} doesn't
-exist, @code{gtroff} creates it.
+exist, GNU @code{troff} creates it.
 
 The argument to @code{\R} usually has to be enclosed in quotes.
 @xref{Escapes}, for details on parameter delimiting characters.
 
-The @code{\R} escape doesn't produce an input token in @code{gtroff};
-in other words, it vanishes completely after @code{gtroff} has
+(Later, we will discuss additional forms of @code{nr} and @code{\R} that
+can change a register's value after it is dereferenced.
+@ref{Auto-increment}.)
+
+The @code{\R} escape doesn't produce an input token in GNU @code{troff};
+in other words, it vanishes completely after GNU @code{troff} has
 processed it.
 
 For example, the following two lines are equivalent:
@@ -5718,7 +5725,7 @@ aaa bbb ccc ddd eee fff ggg hhh\h'0'\R':k \n[.k]'
 If you process this with the @sc{PostScript} device (@code{-Tps}),
 there will be a line break eventually after @code{ggg} in both input
 lines.  However, after processing the space after @code{ggg}, the
-partially collected line is not overfull yet, so @code{troff}
+partially collected line is not overfull yet, so GNU @code{troff}
 continues to collect input until it sees the space (or in this case,
 the newline) after @code{hhh}.  At this point, the line is longer
 than the line length, and the line gets broken.
@@ -5729,9 +5736,9 @@ the check for the overfull line hasn't been done yet at the point where
 register that is even greater than the current line length.
 
 In the second input line, the insertion of @code{\h'0'} to emit an
-invisible zero-width space forces @code{troff} to check the line length,
-which in turn causes the start of a new output line.  Now @code{.k}
-returns the expected value.
+invisible zero-width space forces GNU @code{troff} to check the line
+length, which in turn causes the start of a new output line.  Now
+@code{.k} returns the expected value.
 @endDefreq
 
 Both @code{nr} and @code{\R} have two additional special forms to
@@ -5739,8 +5746,8 @@ increment or decrement a register.
 
 @DefreqList {nr, ident @t{+}@Var{value}}
 @DefreqItem {nr, ident @t{-}@Var{value}}
-@DefescItemx {\\R, ', ident @t{+}value, '}
-@DefescListEnd {\\R, ', ident @t{-}value, '}
+@DefescItemx {\\R, @code{'}, ident @t{+}value, @code{'}}
+@DefescListEnd {\\R, @code{'}, ident @t{-}value, @code{'}}
 Increment (decrement) register @var{ident} by @var{value}.
 
 @Example
@@ -5819,6 +5826,9 @@ register's contents do not become inaccessible until it has no more
 names.
 
 @endDefreq
+
+@codequotebacktick off
+@codequoteundirected off
 
 @c ---------------------------------------------------------------------
 
