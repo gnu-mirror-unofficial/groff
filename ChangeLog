@@ -1,5 +1,15 @@
 2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac (TH): Reset inter-word and inter-sentence
+	spacing to default with each new page rendered.
+
+	{To observe the problem prior to this change,
+	  $ groff -mandoc groff_mmse.7 $any_other_man_page
+	groff_mmse(7) loads sv.tmac, which changes the sentence
+	spacing.}
+
+2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* PROBLEMS: Undocument the problem with test-groff and mdoc.
 	It's resolved.
 
