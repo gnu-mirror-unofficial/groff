@@ -36,16 +36,28 @@
 .
 .eo
 .
-.\" use -rD=1 for double-sided printing
+.\" \*[AD] is recognized for groff_man(7) compatibility, but ignored.
+.if !d AD .ds AD \"
 .
+.\" use -rD=1 for double-sided printing
 .if !r D .nr D 0
 .
 .\" use -rcR=0 for multiple pages instead of a single, very long page
-.
 .if !r cR .nr cR 1
 .
-.\" the following switch is ignored in nroff mode
+.\" \n[HY] is recognized for groff_man(7) compatibility, particuarly via
+.\" andoc.tmac and man(1); see \n[doc-hyphen-flags] in doc-common.
+.ec
+.if !r HY \{\
+.  \" No page breaks occur in continuous rendering.
+.  ie \n[cR] \
+.    nr HY 4
+.  el \
+.    nr HY 6
+.\}
+.eo
 .
+.\" the following switch is ignored in nroff mode
 .nr S 10
 .
 .\" the 'doc-xx-font' strings must not be empty!

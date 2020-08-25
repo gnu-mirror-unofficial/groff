@@ -1,5 +1,22 @@
 2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Update mdoc package to honor HY register as man does now, per
+	suggestion from Colin Watson.  Recognize but ignore AD string
+	for man package compatibility (essentially "reserving" it),
+	though mdoc intentionally does not permit configuration of
+	adjustment.
+
+	* tmac/mdoc/doc-ditroff-u:
+	* tmac/mdoc/doc-nroff-u: Do it.
+
+	* tmac/mdoc/doc-common-u: Initialize \n[doc-hyphen-flags] from
+	\n[HY].
+
+	* tmac/groff_mdoc.7.man \
+	(FORMATTING WITH GROFF, TROFF, AND NROFF): Document it.
+
+2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (TH): Reset inter-word and inter-sentence
 	spacing to default with each new page rendered.
 

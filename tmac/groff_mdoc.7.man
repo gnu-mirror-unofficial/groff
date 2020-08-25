@@ -4209,6 +4209,17 @@ respectively:
 .Pp
 If not set, both registers default to 78n for TTY devices and 6.5i
 otherwise.
+.Pp
+Hyphenation can be disabled with the
+.Ql HY
+register (though any permissible hyphenation mode may be used).
+.Pp
+.Dl groff \-Tutf8 -rHY=0 \-mdoc foo.man | less
+.Pp
+An
+.Ql AD
+string is also recognized, but ignored, for compatibility with
+.Xr groff_man 7 .
 .
 .
 .Sh FILES
