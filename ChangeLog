@@ -1,5 +1,30 @@
 2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	mdoc: Relocate within build tree.
+
+	The (modern) mdoc macro package has not been usable within the
+	build tree, unlike the others.  This makes it more troublesome
+	to test changes, and frustrates deploying our test
+	infrastructure against it.  Re-arrange the build tree to
+	resemble an installation tree closely enough for the macro
+	package to load.
+
+	* tmac/doc-common-u:
+	* tmac/doc-ditroff-u:
+	* tmac/doc-nroff-u:
+	* tmac/doc-syms-u: Rename to...
+	* tmac/mdoc/doc-common-u:
+	* tmac/mdoc/doc-ditroff-u:
+	* tmac/mdoc/doc-nroff-u:
+	* tmac/mdoc/doc-syms-u: ...these.
+
+	* tmac/tmac.am (TMACMDOCFILES): Look for files in tmac/mdoc.
+	($(TMACMDOCFILES)): Create tmac/mdoc in build tree.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?51003>.
+
+2020-08-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for usable in-tree mdoc.
 
 	* tmac/tests/doc-smoke-test.sh: Add test.
