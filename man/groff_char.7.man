@@ -8,7 +8,7 @@ groff_char \- GNU roff special character and glyph repertoire
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2018 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff (GNU roff), which is a free software
 .\" project.
@@ -42,10 +42,11 @@ technical,
 and mathematical documents.
 .
 However,
-its input encoding is restricted to
-Latin-1
-(ISO\~8859-1)
-or EBCDIC code page 1047.
+its input encoding is restricted to those defined by the standards
+ISO Latin-1
+(ISO 8859-1)
+and IBM code page 1047
+(an arrangement of EBCDIC).
 .
 For ease of document maintenance in UTF-8 environments,
 it is advisable to use only the Unicode basic Latin code points,
@@ -59,7 +60,8 @@ printable code points.
 .
 .
 .P
-.RI AT&T\~ troff
+AT&T
+.I troff
 in the 1970s faced a similar problem of typesetter devices with a glyph
 repertoire differing from that of the computers that controlled them.
 .
@@ -85,18 +87,18 @@ As in other respects,
 .I groff
 has removed historical
 .I roff
-limitations on the name lengths of special characters,
+limitations on the lengths of special character escapes,
 but recognizes and retains compatibility with the historical names.
 .
 .I groff
 expands the lexicon of glyphs available by name and permits users to
-define their own special character names with the
+define their own special character escapes with the
 .B .char
 request.
 .
 .
 .P
-This document lists all of the special characters supported by
+This document lists all of the glyph names predefined by
 .I groff
 and describes the systematic notation by which it enables access to
 arbitrary Unicode code points and construction of composite glyphs.
@@ -166,13 +168,29 @@ did you get the Wehrmacht helmet or the Death Star?\e}
 .
 .
 .P
+For brevity in the remainder of this document,
+we shall refer to systems conforming to the
+ISO 646:1991 IRV,
+ISO 8859,
+or
+ISO 10646 (\[lq]Unicode\[rq])
+character encoding standards as \[lq]ISO\[rq] systems,
+and those employing IBM code page 1047 as \[lq]EBCDIC\[rq] systems.
+.
+That said,
+EBCDIC systems that support
+.I groff
+are known to also support UTF-8.
+.
+.
+.P
 While
 .I groff
 accepts eight-bit encoded input,
 not all such code points are valid as input.
 .
 .\" src/libs/libgroff/invalid.cpp
-On non-EBCDIC platforms,
+On ISO platforms,
 character codes
 0,
 11,
