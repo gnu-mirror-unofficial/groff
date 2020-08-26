@@ -396,43 +396,50 @@ _
 .SS "8-bit character codes 160 to 255"
 .\" ====================================================================
 .
-They are interpreted as printable characters according to the
-.I latin1
-.RI ( ISO-8859-1 )
-code set, being identical to the Unicode range
-.IR "Latin-1 Supplement" .
+Code points in the range 160\[en]255 are for the most part interpreted
+as characters according to the Latin-1 (ISO 8859-1) standard,
+and correspond to those in the same range of the Unicode \[lq]C1
+Controls and Latin-1 Supplement\[rq] code chart.
 .
 .
 .P
-Input characters in range 128\-159 (on non-EBCDIC hosts) are not
-printable characters.
+Input characters in range 128\[en]159
+(the C1 controls on non-EBCDIC hosts)
+are defined as control characters and not printable;
+nor are two characters in the Latin-1 supplement.
 .
 .
 .TP
 160
 .
-the ISO \%latin1
-.I no-break space
-is mapped to \[oq]\e\(ti\[cq], the stretchable space
-character.
+encodes the no-break space,
+and is mapped to
+.BR \[rs]\[ti] ,
+the adjustable non-breaking space escape.
 .
 .
 .TP
 173
 .
-the soft hyphen control character.
+encodes the soft hyphen character.
 .
-.B groff
-never uses this character for output (thus it is omitted in the table
-below); the input character\ 173 is mapped onto \[oq]\e%\[cq].
+.I groff
+never uses this character for output
+(thus it is omitted in the table below);
+on input it is mapped to the hyphenation control escape,
+.BR \[rs]% .
 .
 .
 .P
-The remaining ranges (\%161\-172, \%174\-255)
-are printable characters that print as themselves.
+The remaining characters in the Latin-1 supplement print as themselves.
 .
 Although they can be specified directly with the keyboard on systems
-with a \%latin1 code page, it is better to use their glyph names;
+configured to use Latin-1 as the character encoding,
+it is more portable,
+both to other
+.I roff
+systems and to UTF-8 environments,
+to use their glyph names;
 see the next section.
 .
 .P
@@ -544,7 +551,7 @@ _
 Glyph names can be embedded into the document text by using escape
 sequences.
 .
-.BR groff (@MAN7EXT@)
+.IR groff (@MAN7EXT@)
 describes how these escape sequences look.
 .
 Glyph names can consist of quite arbitrary characters from the
@@ -553,52 +560,80 @@ ASCII or \%latin1 code set, not only alphanumeric characters.
 Here some examples:
 .
 .TP
-\e(\fP\fIch
-A glyph having the 2-character name
-.IR ch .
+.BI \[rs]( gl
+is a special character escape for the glyph with the 2-character name
+.IR gl .
+.
 .
 .TP
-\e[\fP\,\fIchar_name\/]
-A glyph having the name
-.I char_name
-(having length 1, 2, 3, \&.\|.\|.).
+.BI \[rs][ glyph-name ]
+is a special character escape for
+.IR glyph-name ,
+which can be of arbitrary length.
 .
-Note that \[oq]\fIc\fP\[cq] is not the same as
-\[oq]\e[\fP\,\fIc\/\fP]\[cq] (\,\fIc\ a single
-character): The latter is internally mapped to glyph name
-\[oq]\e\fIc\fP\[cq].
+Note that an ordinary input character
+.RI \[lq] c \[rq]
+is not the same as
+.BI \[rs][ c ]\c
+;
+the latter is internally mapped to glyph name
+.RB \[lq] \[rs] \c
+.IR c \[rq].
 .
-By default, groff defines a single glyph name starting with a
-backslash, namely \%\[oq]\e-\[cq], which can be either accessed as
-\[oq]\e\-\[cq] or \[oq]\e[-]\[cq].
+In other words,
+.RB \[lq] \[rs][a] \[rq]
+is not \[lq]a\[rq],
+but rather
+.BR \[rs]a ,
+the uninterpreted leader escape sequence.
+.
+By default,
+.I groff
+defines a single glyph name of length one,
+namely the hyphen-minus,
+which can be accessed as either
+.B \[rs]\-
+or
+.BR \[rs][\-] .
+.
 .
 .TP
-\e[\fP\,\fIbase_glyph composite_1 composite_2 \&.\|.\|.\/\
-]
-A composite glyph; see below for a more detailed description.
+.BI \[rs][ "base-glyph composite-1 composite-2"\~\c
+\&.\|.\|.\~\c
+.IB composite-n ]
+is a composite glyph;
+see below for a more detailed description.
 .
 .
 .P
-In groff, each \%8-bit input character can also referred to by the
-construct
-\[oq]\e[char\fP\,\fIn\/]\[cq] where
-.I n
-is the decimal code of the character, a number between 0 and\ 255
-without leading zeros (those entities are
-.I not
-glyph names).
+In
+.IR groff ,
+each eight-bit input character can also be referred to by the construct
+.BI \[rs][char NNN ]\c
+, where
+.I NNN
+is the decimal code of the character,
+a number between 0 and\~255
+without leading zeroes.
 .
-They are normally mapped onto glyphs using the .trin request.
+These entities are
+.I not
+glyph names.
+.
+They are normally mapped onto glyphs using the
+.B .trin
+request.
 .
 .
 .P
 Another special convention is the handling of glyphs with names directly
 derived from a Unicode code point; this is shown in the
-\[oq]Unicode\[cq] column of the table below.
+\[lq]Unicode\[rq] column of the table below.
 .
-In general, all glyphs not having a name as listed in this manual page
-can be accessed with the
-\[oq]\e[u\fP\,\fIXXXX\/]\[cq]
+In general,
+all glyphs not having a name as listed in this manual page can be
+accessed with the
+.BI \[rs][u XXXX ]
 construct.
 .
 Refer to section \[lq]Using Symbols\[rq] in
@@ -612,21 +647,35 @@ glyph names are constructed.
 .
 .
 .P
-Moreover, new glyph names can be created by the .char request;
+Moreover,
+new glyph names can be created by the
+.B .char
+request;
 see
-.BR groff (@MAN7EXT@).
+.IR groff (@MAN7EXT@).
 .
 .P
-In the following, a plus sign \[oq]+\[cq] in the \[oq]Notes\[cq] column
-indicates that this particular glyph name appears in the PS version of
-the original troff documentation, CSTR\ 54.
+In the following,
+a plus sign \[lq]+\[rq] in the \[lq]Notes\[rq] column indicates that
+the glyph name appears in the AT&T
+.I troff
+user's manual,
+CSTR\~#54.
+.
+When using the AT&T special character syntax
+.BI \[rs]( xx\c
+, portability can be expected from such names.
 .
 .P
-Entries marked with \[oq]***\[cq] denote glyphs for mathematical
-purposes (mainly used for DVI output).
+Entries marked with \[lq]***\[rq] denote glyphs used for mathematical
+purposes.
 .
-Normally, such glyphs have metrics which make them unusable in normal
-text.
+Often,
+such glyphs have metrics which look incongruous in normal text.
+.
+A few which are not uncommon in running prose have \[lq]text
+variants\[rq],
+and should work well in such contexts.
 .
 .
 .P
@@ -1403,7 +1452,7 @@ a short reference of the groff formatting language
 .
 .
 .P
-.IR "An extension to the troff character set for Europe" ,
+\[lq]An extension to the troff character set for Europe\[rq],
 E.G.\& Keizer, K.J.\& Simonsen, J.\& Akkerhuis; EUUG Newsletter,
 Volume 9, No.\& 2, Summer 1989
 .
