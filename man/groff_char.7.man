@@ -222,59 +222,6 @@ which is one reason it does not support UTF-8 natively.
 .
 .
 .\" ====================================================================
-.SH Reference
-.\" ====================================================================
-.
-In this section, the glyphs in groff are specified in tabular
-form.
-.
-The meaning of the columns is as follows.
-.
-.
-.TP
-.I "Output"
-shows how the glyph is printed for the current device; although
-this can have quite a different shape on other devices, it always
-represents the same glyph.
-.
-.
-.TP
-.I "Input"
-specifies how the glyph is input either directly by a key on the
-keyboard, or by a groff escape sequence.
-.
-.
-.TP
-.I "Code"
-applies to glyphs which can be input with a single character, and
-gives the ISO \%latin1 decimal code of that input character.
-.
-Note that this code is equivalent to the lowest 256 Unicode characters,
-including \%7-bit ASCII in the range 0 to\ 127.
-.
-.
-.TP
-.I "PostScript"
-gives the usual PostScript name of the glyph.
-.
-.
-.TP
-.I "Unicode"
-is the glyph name used in composite glyph names.
-.
-The names in the Unicode column look like
-.B u0021
-or
-.BR u0041_0300 .
-.
-In groff, the corresponding Unicode characters can be constructed
-by adding a backslash and a pair of square brackets, for example
-.B \e[u0021]
-or
-.BR \e[u0041_0300] .
-.
-.
-.\" ====================================================================
 .SS "7-bit character codes 32\(en126"
 .\" ====================================================================
 .
@@ -694,6 +641,59 @@ such glyphs have metrics which look incongruous in normal text.
 A few which are not uncommon in running prose have \[lq]text
 variants\[rq],
 and should work well in such contexts.
+.
+.
+.\" ====================================================================
+.SH Reference
+.\" ====================================================================
+.
+In this section, the glyphs in groff are specified in tabular
+form.
+.
+The meaning of the columns is as follows.
+.
+.
+.TP
+.I "Output"
+shows how the glyph is printed for the current device; although
+this can have quite a different shape on other devices, it always
+represents the same glyph.
+.
+.
+.TP
+.I "Input"
+specifies how the glyph is input either directly by a key on the
+keyboard, or by a groff escape sequence.
+.
+.
+.TP
+.I "Code"
+applies to glyphs which can be input with a single character, and
+gives the ISO \%latin1 decimal code of that input character.
+.
+Note that this code is equivalent to the lowest 256 Unicode characters,
+including \%7-bit ASCII in the range 0 to\ 127.
+.
+.
+.TP
+.I "PostScript"
+gives the usual PostScript name of the glyph.
+.
+.
+.TP
+.I "Unicode"
+is the glyph name used in composite glyph names.
+.
+The names in the Unicode column look like
+.B u0021
+or
+.BR u0041_0300 .
+.
+In groff, the corresponding Unicode characters can be constructed
+by adding a backslash and a pair of square brackets, for example
+.B \e[u0021]
+or
+.BR \e[u0041_0300] .
 .
 .
 .P
