@@ -644,7 +644,7 @@ and should work well in such contexts.
 .
 .
 .\" ====================================================================
-.SH Reference
+.SH "Glyph Tables"
 .\" ====================================================================
 .
 In this section, the glyphs in groff are specified in tabular
@@ -696,7 +696,10 @@ or
 .BR \e[u0041_0300] .
 .
 .
-.P
+.\" ====================================================================
+.SS "Supplementary Latin letters"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -708,9 +711,11 @@ _
 \[ss]	\e[ss]	germandbls	u00DF	German double s (sharp s)
 .TE
 .
-.P
-.I Ligatures and Other Latin Glyphs
-.P
+.
+.\" ====================================================================
+.SS Ligatures
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -734,9 +739,11 @@ _
 \[.j]	\e[.j]	dotlessj	u0237	j without a dot
 .TE
 .
-.P
-.I Accented Characters
-.P
+.
+.\" ====================================================================
+.SS "Accented characters"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -803,9 +810,11 @@ _
 \[oa]	\e[oa]	aring	u0061_030A	a ring
 .TE
 .
-.P
-.I Accents
-.P
+.
+.\" ====================================================================
+.SS Accents
+.\" ====================================================================
+.
 The
 .B composite
 request is used to map most of the accents to non-spacing glyph names;
@@ -837,9 +846,11 @@ tilde in vertical middle, ASCII, in Unix-like the home directory
 T}
 .TE
 .
-.P
-.I Quotes
-.P
+.
+.\" ====================================================================
+.SS "Quotation marks"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -862,9 +873,11 @@ single right-pointing angle quotation mark
 T}
 .TE
 .
-.P
-.I Punctuation
-.P
+.
+.\" ====================================================================
+.SS Punctuation
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -876,9 +889,11 @@ _
 \[hy]	\e[hy]	hyphen	u2010	hyphen symbol +
 .TE
 .
-.P
-.I Brackets
-.P
+.
+.\" ====================================================================
+.SS Brackets
+.\" ====================================================================
+.
 The extensible bracket pieces are font-invariant glyphs.
 .
 In classical troff only one glyph was available to vertically extend
@@ -1057,9 +1072,11 @@ right parenthesis extension
 T}
 .TE
 .
-.P
-.I Arrows
-.P
+.
+.\" ====================================================================
+.SS Arrows
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1087,9 +1104,11 @@ T}
 \[an]	\e[an]	arrowhorizex	u23AF	horizontal arrow extension
 .TE
 .
-.P
-.I Lines
-.P
+.
+.\" ====================================================================
+.SS Rules and lines
+.\" ====================================================================
+.
 The font-invariant glyphs \[oq]br\[cq], \[oq]ul\[cq], and \[oq]rn\[cq]
 form corners; they can be used to build boxes.
 .
@@ -1122,9 +1141,11 @@ _
 Use \[oq]\e[radicalex]\[cq], not
 \[oq]\e[overline]\[cq], for continuation of square root.
 .
-.P
-.I Text markers
-.P
+.
+.\" ====================================================================
+.SS "Text markers"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1145,9 +1166,10 @@ _
 \[OK]	\e[OK]	a19	u2713	check mark, tick
 .TE
 .
-.P
-.I Legal Symbols
-.P
+.\" ====================================================================
+.SS "Legal symbols"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1161,9 +1183,11 @@ _
 .P
 The Bell Labs logo is not supported in groff.
 .
-.P
-.I Currency symbols
-.P
+.
+.\" ====================================================================
+.SS "Currency symbols"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1178,9 +1202,11 @@ _
 \[Fn]	\e[Fn]	florin	u0192	Dutch currency sign
 .TE
 .
-.P
-.I Units
-.P
+.
+.\" ====================================================================
+.SS Units
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1194,9 +1220,11 @@ _
 \[Om]	\e[Om]	ordmasculine	u00BA	masculine ordinal (Spanish)
 .TE
 .
-.P
-.I Logical Symbols
-.P
+.
+.\" ====================================================================
+.SS "Logical symbols"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1215,9 +1243,11 @@ bitwise OR operator (as used in\ C) +
 T}
 .TE
 .
-.P
-.I Mathematical Symbols
-.P
+.
+.\" ====================================================================
+.SS "Mathematical symbols"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
@@ -1316,9 +1346,11 @@ Planck\ constant\ /\ 2pi (h-bar)
 T}
 .TE
 .
-.P
-.I Greek glyphs
-.P
+.
+.\" ====================================================================
+.SS "Greek glyphs"
+.\" ====================================================================
+.
 These glyphs are intended for technical use, not for real Greek;
 normally, the uppercase letters have upright shape, and the lowercase
 ones are slanted.
@@ -1406,9 +1438,11 @@ _
 \[+e]	\e[+e]	uni03F5	u03F5	variant epsilon
 .TE
 .
-.P
-.I Card symbols
-.P
+.
+.\" ====================================================================
+.SS "Playing card symbols"
+.\" ====================================================================
+.
 .TS
 l l l l lx.
 Output	Input	PostScript	Unicode	Notes
