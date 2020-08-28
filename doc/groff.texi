@@ -10428,9 +10428,10 @@ This string contains the current output device (for example,
 @samp{utf8} or @samp{pdf}).
 @endDefstr
 
-The @code{ds} (or @code{ds1}) request creates a string and the @code{\*}
-escape dereferences name, retrieving its contents.  Dereferencing an
-undefined string name defines it as empty.
+The @code{ds} (or @code{ds1}) request creates a string with a specified
+name and contents and the @code{\*} escape dereferences its name,
+retrieving the contents.  Dereferencing an undefined string name defines
+it as empty.
 
 @DefreqList {ds, name [@Var{string}]}
 @DefreqItemx {ds1, name [@Var{string}]}
@@ -10446,20 +10447,21 @@ undefined string name defines it as empty.
 @cindex expansion of strings (@code{\*})
 @cindex string arguments
 @cindex arguments, of strings
-Define and access a string variable @var{name} (one-character
-name@tie{}@var{n}, two-character name @var{nm}).  If @var{name} already
-exists, @code{ds} overwrites the previous definition.  The syntax form
-using brackets accepts arguments that are handled as macro arguments
-are; recall @ref{Request and Macro Arguments}.  In contrast to macro
-invocations, however, a closing bracket as a string argument must be
-enclosed in double quotes.
+Define a string variable @var{name} with contents @var{string}.  If
+@var{name} already exists, it is removed first (see @code{rm} below).
+The syntax form using brackets accepts arguments that are handled as
+macro arguments are; recall @ref{Request and Macro Arguments}.  In
+contrast to macro invocations, however, a closing bracket as a string
+argument must be enclosed in double quotes.
 
 The @code{\*} escape @dfn{interpolates} (expands in place) a previously
-defined string variable.  More precisely, the stored string is pushed
-onto the input stack, which is then parsed normally.  Similarly to
-number registers, it is possible to nest strings; i.e., string variables
-can be called within string variables.  An argument in a string
-definition must be escaped for correct behavior; @xref{Parameters}.
+defined string variable @var{name} (one-character name@tie{}@var{n},
+two-character name @var{nm}).  More precisely, the stored string is
+pushed onto the input stack, which is then parsed normally.  Similarly
+to number registers, it is possible to nest strings; i.e., string
+variables can be called within string variables.  An argument in a
+string definition must be escaped for correct behavior;
+@xref{Parameters}.
 
 @Example
 .ds a \\$1 wildebeest
@@ -10512,7 +10514,7 @@ creeping into them during source document maintenance.
 @cindex @code{ds} request, and leading spaces
 To store leading space in a string, start it with a double quote.  A
 double quote is special only in that position; double quotes in any
-other location are included in the string (the effect of escape
+other location are included in the string (the effects of escape
 sequences notwithstanding).
 
 @c Examples should be more accessible than Unix nerd stuff like this,
@@ -10704,14 +10706,15 @@ string, and a @dfn{compatibility restore} input token at the end.
 The @code{as} request is similar to @code{ds} but appends @var{string}
 to the string stored as @var{name} instead of redefining it.  If
 @var{name} doesn't exist yet, it is created.  If @code{as} is called
-with only one argument, no operation is performed.
+with only one argument, no operation is performed (beyond dereferencing
+it).
 
 @Example
 .as salutation " with shallots, onions and garlic,\"
 @endExample
 
 The @code{as1} request is similar to @code{as}, but compatibility mode
-is switched off while the appended portion of the string is
+is switched off when the appended portion of the string is later
 interpolated.  To be more precise, a @dfn{compatibility save} input
 token is inserted at the beginning of the appended string, and a
 @dfn{compatibility restore} input token at the end.
@@ -10720,7 +10723,8 @@ token is inserted at the beginning of the appended string, and a
 Several requests exist to perform rudimentary string operations.
 Strings can be queried (@code{length}) and modified (@code{chop},
 @code{substring}, @code{stringup}, @code{stringdown}), and their names
-can be manipulated (@code{rn}, @code{rm}, @code{als}).
+can be manipulated through renaming, removal, and aliasing (@code{rn},
+@code{rm}, @code{als}).
 
 @Defreq {length, reg anything}
 @cindex length of a string (@code{length})

@@ -2865,7 +2865,7 @@ In the latter convention,
 the user selects a delimiter character;
 the neutral apostrophe
 .RB \[lq] \[aq] \[rq]
-is a popular choice and used in this document.
+is a popular choice and shown in this document.
 .
 Some characters cannot be used as delimiters;
 see section \[lq]Escapes\[rq] in the
@@ -2899,7 +2899,7 @@ setting the point size;
 interpolating special characters,
 number registers,
 and strings into the text;
-and placement or suppression of break and hyphenation points.
+and placing or suppressing break and hyphenation points.
 .
 As with requests,
 use of escapes in source documents may interact poorly with a macro
@@ -3906,10 +3906,11 @@ or
 .P
 The
 .request .ds
-request creates a string and the
+request creates a string with a specified name and contents
+and the
 .esc *
 escape dereferences its name,
-retrieving its contents.
+retrieving the contents.
 .
 Dereferencing an undefined string name defines it as empty.
 .
@@ -3917,16 +3918,15 @@ Dereferencing an undefined string name defines it as empty.
 .P
 The
 .request .as
-requests is similar to
+request is similar to
 .request .ds
-but appends its arguments
-(after the first)
-to a string instead of redefining it.
+but appends to a string instead of redefining it.
 .
 If
 .request .as
 is called with only one argument,
-no operation is performed.
+no operation is performed
+(beyond dereferencing it).
 .
 .
 .P
@@ -3949,8 +3949,8 @@ the
 request is similar to
 .request .as\c
 ,
-but compatibility mode is switched off while the appended portion of the
-string is interpolated.
+but compatibility mode is switched off when the appended portion of the
+string is later interpolated.
 .
 .
 .P
@@ -3974,7 +3974,7 @@ start it with a double quote.
 .
 A double quote is special only in that position;
 double quotes in any other location are included in the string
-(the effect of escape sequences notwithstanding).
+(the effects of escape sequences notwithstanding).
 .
 .
 .P
@@ -4000,7 +4000,9 @@ and modified
 .request .substring ,
 .request .stringup ,
 .request .stringdown ),
-and their names can be manipulated
+and their names can be manipulated through renaming,
+removal,
+and aliasing
 (\c
 .request .rn ,
 .request .rm ,
