@@ -816,9 +816,9 @@ _
 .\" ====================================================================
 .
 The
-.B composite
+.B .composite
 request is used to map most of the accents to non-spacing glyph names;
-the values given in parentheses are the original (spacing) ones.
+the values given in parentheses are their spacing counterparts.
 .
 .P
 .TS
@@ -896,15 +896,22 @@ _
 .
 The extensible bracket pieces are font-invariant glyphs.
 .
-In classical troff only one glyph was available to vertically extend
-brackets, braces, and parentheses: \[oq]bv\[cq].
+In AT&T
+.IR troff ,
+only one glyph was available to vertically extend
+brackets,
+braces,
+and
+parentheses:
+.RB \[lq] \[rs](bv \[rq].
 .
 We map it rather arbitrarily to u23AA.
 .
 .P
 Note that not all devices contain extensible bracket pieces which can
-be piled up with \[oq]\eb\[cq] due to the restrictions of the
-escape's piling algorithm.
+be piled up with
+.RB \[lq] \[rs]b \[rq]
+due to the restrictions of the escape's piling algorithm.
 .
 A general solution to build brackets out of pieces is the following
 macro:
@@ -944,21 +951,33 @@ macro:
 .
 .P
 Another complication is the fact that some glyphs which represent
-bracket pieces in original troff can be used for other mathematical
-symbols also, for example \[oq]lf\[cq] and \[oq]rf\[cq] which provide
-the \[oq]floor\[cq] operator.
+bracket pieces in AT&T
+.I troff
+can be used for other mathematical symbols as well,
+for example
+\[oq]lf\[cq]
+and
+\[oq]rf\[cq]
+which provide the \[oq]floor\[cq] operator.
 .
-Other devices (most notably for DVI output) don't unify such
-glyphs.
+Some output devices,
+such as
+.IR grodvi (@MAN1EXT@) ,
+don't unify such glyphs.
 .
-For this reason, the four glyphs \[oq]lf\[cq], \[oq]rf\[cq],
-\[oq]lc\[cq], and \[oq]rc\[cq] are not unified with similarly looking
-bracket pieces.
+For this reason,
+the four glyphs
+\[oq]lf\[cq],
+\[oq]rf\[cq],
+\[oq]lc\[cq],
+and
+\[oq]rc\[cq] are not unified with similar-looking bracket pieces.
 .
 In
-.BR groff ,
+.IR groff ,
 only glyphs with long names are guaranteed to pile up correctly for all
-devices (provided those glyphs exist).
+devices\[em]provided those glyphs exist.
+.
 .
 .P
 .TS
@@ -1106,21 +1125,33 @@ T}
 .
 .
 .\" ====================================================================
-.SS Rules and lines
+.SS "Rules and lines"
 .\" ====================================================================
 .
-The font-invariant glyphs \[oq]br\[cq], \[oq]ul\[cq], and \[oq]rn\[cq]
-form corners; they can be used to build boxes.
+The font-invariant glyphs
+\[lq]br\[rq],
+\[lq]ul\[rq],
+and
+\[lq]rn\[rq]
+form corners when adjacent;
+they can be used to build boxes.
 .
-Note that both the PostScript and the Unicode-derived names of
-these three glyphs are just rough approximations.
+Note that both the PostScript and the Unicode-derived names of these
+three glyphs are rough approximations.
+.
 .
 .P
-\[oq]rn\[cq] also serves in classical troff as the horizontal
-extension of the square root sign.
+\[lq]rn\[rq] also serves in AT&T
+.I troff
+as the horizontal extension of the radical
+(square root)
+sign.
+.
 .
 .P
-\[oq]ru\[cq] is a font-invariant glyph, namely a rule of length 0.5m.
+The baseline rule \[lq]ru\[rq] is a font-invariant glyph,
+namely a rule of length 0.5m.
+.
 .
 .P
 .TS
@@ -1137,9 +1168,14 @@ _
 \[rs]	\e[rs]	backslash	u005C	reverse solidus
 .TE
 .
+.
 .P
-Use \[oq]\e[radicalex]\[cq], not
-\[oq]\e[overline]\[cq], for continuation of square root.
+Use \[lq]\e[radicalex]\[rq]
+(see subsection \[lq]Mathematical symbols\[rq] below),
+not \[lq]\e[overline]\[rq],
+for continuation of radical signs
+(e.g.,
+square roots).
 .
 .
 .\" ====================================================================
@@ -1181,7 +1217,8 @@ _
 .TE
 .
 .P
-The Bell Labs logo is not supported in groff.
+The Bell Systems logo is not supported in
+.IR groff .
 .
 .
 .\" ====================================================================
@@ -1351,33 +1388,13 @@ T}
 .SS "Greek glyphs"
 .\" ====================================================================
 .
-These glyphs are intended for technical use, not for real Greek;
-normally, the uppercase letters have upright shape, and the lowercase
-ones are slanted.
+These glyphs are intended for technical use,
+not for real Greek;
+normally,
+the uppercase letters have upright shape,
+and the lowercase ones are slanted.
 .
-There is a problem with the mapping of letter phi to Unicode.
 .
-Prior to Unicode version\ 3.0, the difference between U+03C6, GREEK
-SMALL LETTER PHI, and U+03D5, GREEK PHI SYMBOL, was not clearly
-described; only the glyph shapes in the Unicode book could be used as a
-reference.
-.
-Starting with Unicode\ 3.0, the reference glyphs have been exchanged and
-described verbally also: In mathematical context, U+03D5 is the stroked
-variant and U+03C6 the curly glyph.
-.
-Unfortunately, most font vendors didn't update their fonts to
-this (incompatible) change in Unicode.
-.
-At the time of this writing (January 2006), it is not clear yet
-whether the Adobe Glyph Names \[oq]phi\[cq] and \[oq]phi1\[cq] also
-change its meaning if used for mathematics, thus compatibility
-problems are likely to happen \[en] being conservative, groff
-currently assumes that \[oq]phi\[cq] in a PostScript symbol font is
-the stroked version.
-.P
-In groff, symbol \[oq]\e[*f]\[cq] always denotes the stroked
-version of phi, and \[oq]\e[+f]\[cq] the curly variant.
 .P
 .TS
 l l l l lx.
