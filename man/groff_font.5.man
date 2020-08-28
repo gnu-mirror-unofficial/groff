@@ -31,8 +31,21 @@ groff_font \- format of groff device and font description files
 .SH Description
 .\" ====================================================================
 .
-The groff font format is roughly a superset of the ditroff
+.\" BEGIN Keep parallel with groff.texi node "Font Files".
+The
+.I groff
+font format is a rough superset of the AT&T
+device-independent
+.I troff
 font format.
+.
+In distinction to the AT&T implementation,
+.I groff
+lacks a binary format;
+all files are text files.
+(Plan\~9
+.I troff
+has also abandoned the binary format.}
 .
 The font files for device
 .I name
@@ -660,6 +673,7 @@ the space between them should be increased by\~\c
 .
 Most entries in kernpairs section have a negative value for\~\c
 .IR n .
+.\" END Keep parallel with groff.texi node "Font Files".
 .
 .
 .\" ====================================================================

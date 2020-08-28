@@ -703,20 +703,22 @@ according to a bibliographic database.
 Unfortunately, Ossanna's @code{troff} was written in @w{PDP-11} assembly
 language and produced output specifically for the CAT phototypesetter.
 He rewrote it in C, although it was now 7000@tie{}lines of uncommented
-code and still dependent on the CAT@.  As the CAT became less common, and
-was no longer supported by the manufacturer, the need to make it support
-other devices became a priority.  However, before this could be done,
-Ossanna died by a severe heart attack in a hospital while recovering
-from a previous one.
+code and still dependent on the CAT@.  As the CAT became less common,
+and was no longer supported by the manufacturer, the need to make it
+support other devices became a priority.  However, before this could be
+done, Ossanna died from a severe heart attack in a hospital while
+recovering from a previous one.
 
 @pindex ditroff
 @cindex @code{ditroff}, the program
-So, Brian Kernighan took on the task of rewriting @code{troff}.  The
-newly rewritten version produced device independent code that was very
-easy for postprocessors to read and translate to the appropriate printer
-codes.  Also, this new version of @code{troff} (called @code{ditroff}
-for ``device independent @code{troff}'') had several extensions, which
-included drawing functions.
+Brian Kernighan took on the task of rewriting @code{troff}.  The result
+produced device-independent code that was easy for postprocessors to
+read and translate to appropriate printer commands.  This new
+``device-independent @code{troff}'', called @code{ditroff} by some, had
+several extensions, including drawing commands for lines, circles,
+ellipses, arcs, and B-splines@footnote{Short for ``basis splines''; ask
+your local numerical analyst.  The rest of us can just think of them as
+``curves''.}.
 
 Due to the additional abilities of the new version of @code{troff},
 several new preprocessors appeared.  The @code{pic} preprocessor
@@ -725,13 +727,15 @@ preprocessor did the same, although via a much different paradigm.  The
 @code{grap} preprocessor took specifications for graphs, but, unlike
 other preprocessors, produced @code{pic} code.
 
-James Clark began work on a GNU implementation of @code{ditroff} in
-early@tie{}1989.  The first version, @code{groff}@tie{}0.3.1, was
-released June@tie{}1990.  @code{groff} included:
+James Clark began work on a GNU implementation of device-independent
+@code{troff} in early@tie{}1989.  The first version,
+@code{groff}@tie{}0.3.1, was released June@tie{}1990.  @code{groff}
+included:
 
 @itemize @bullet
 @item
-A replacement for @code{ditroff} with many extensions.
+A replacement for AT&T device-independent @code{troff} with many
+extensions.
 
 @item
 The @code{soelim}, @code{pic}, @code{tbl}, and @code{eqn} preprocessors.
@@ -900,11 +904,11 @@ mathematical pictures (@code{ideal}).
 @cindex output devices
 @cindex devices for output
 
-@code{groff} actually produces device independent code that may be fed
-into a postprocessor to produce output for a particular device.
-Currently, @code{groff} has postprocessors for @sc{PostScript} devices,
-character terminals, X@tie{}Windows (for previewing), @TeX{} DVI format,
-HP LaserJet@tie{}4 and Canon LBP printers (which use @acronym{CAPSL}),
+@code{groff} produces device-independent code that may be fed into a
+postprocessor to produce output for a particular device.  Currently,
+@code{groff} has postprocessors for @sc{PostScript} devices, character
+terminals, X@tie{}Windows (for previewing), @TeX{} DVI format, HP
+LaserJet@tie{}4 and Canon LBP printers (which use @acronym{CAPSL}),
 @acronym{HTML}, @acronym{XHTML}, and @acronym{PDF}.
 
 
@@ -16542,7 +16546,7 @@ specification except for the following features.
 
 @itemize @bullet
 @item
-The classical quasi device independence is not yet implemented.
+The classical quasi-device independence is not yet implemented.
 
 @item
 The old hardware was very different from what we use today.  So the
@@ -16552,7 +16556,7 @@ in @acronym{AT&T} @code{troff}.  For example, the @acronym{AT&T}
 only 720 units per inch, suitable for printers 20 years ago, while
 @code{groff}'s @code{ps} device has a resolution of 72000 units per
 inch.  Maybe, by implementing some rescaling mechanism similar to the
-classical quasi device independence, @code{groff} could emulate
+classical quasi-device independence, @code{groff} could emulate
 @acronym{AT&T}'s @code{post} device.
 
 @item
@@ -16598,20 +16602,20 @@ follow quite naturally.
 
 @c =====================================================================
 
+@c BEGIN Keep parallel with groff_font(7).
 @node Font Files,  , gtroff Output, File formats
 @section Font Files
 @cindex font files
 @cindex files, font
 
-The @code{gtroff} font format is roughly a superset of the
-@code{ditroff} font format (as used in later versions of @acronym{AT&T}
-@code{troff} and its descendants).  Unlike the @code{ditroff} font
-format, there is no associated binary format; all files are text
-files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the binary
-format.}  The font files for device @var{name} are stored in a directory
-@file{dev@var{name}}.  There are two types of file: a device description
-file called @file{DESC} and for each font@tie{}@var{f} a font file
-called@tie{}@file{@var{f}}.
+The GNU @code{troff} font format is a rough superset of the AT&T
+device-independent @code{troff} font format.  In distinction to the AT&T
+implementation, GNU @code{troff} lacks a binary format; all files are
+text files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the
+binary format.}  The font files for device @var{name} are stored in a
+directory @file{dev@var{name}}.  There are two types of file: a device
+description file called @file{DESC} and for each font@tie{}@var{f} a
+font file called@tie{}@file{@var{f}}.
 
 @menu
 * DESC File Format::
@@ -16962,23 +16966,23 @@ There must not be any spaces between these subfields (it has been split
 here into two lines for better legibility only).  Missing subfields are
 assumed to be@tie{}0.  The subfields are all decimal integers.  Since
 there is no associated binary format, these values are not required to
-fit into a variable of type @samp{char} as they are in @code{ditroff}.
-The @var{width} subfield gives the width of the glyph.  The @var{height}
-subfield gives the height of the glyph (upwards is positive); if a glyph
-does not extend above the baseline, it should be given a zero height,
-rather than a negative height.  The @var{depth} subfield gives the depth
-of the glyph, that is, the distance from the baseline to the lowest
-point below the baseline to which the glyph extends (downwards is
-positive); if a glyph does not extend below the baseline, it should be
-given a zero depth, rather than a negative depth.  The
-@var{italic-correction} subfield gives the amount of space that should
-be added after the glyph when it is immediately to be followed by a
-glyph from a roman font.  The @var{left-italic-correction} subfield
-gives the amount of space that should be added before the glyph when it
-is immediately to be preceded by a glyph from a roman font.  The
-@var{subscript-correction} gives the amount of space that should be
-added after a glyph before adding a subscript.  This should be less than
-the italic correction.
+fit into a variable of type @samp{char} as they are in AT&T
+device-independent @code{troff}.  The @var{width} subfield gives the
+width of the glyph.  The @var{height} subfield gives the height of the
+glyph (upwards is positive); if a glyph does not extend above the
+baseline, it should be given a zero height, rather than a negative
+height.  The @var{depth} subfield gives the depth of the glyph, that is,
+the distance from the baseline to the lowest point below the baseline to
+which the glyph extends (downwards is positive); if a glyph does not
+extend below the baseline, it should be given a zero depth, rather than
+a negative depth.  The @var{italic-correction} subfield gives the amount
+of space that should be added after the glyph when it is immediately to
+be followed by a glyph from a roman font.  The
+@var{left-italic-correction} subfield gives the amount of space that
+should be added before the glyph when it is immediately to be preceded
+by a glyph from a roman font.  The @var{subscript-correction} gives the
+amount of space that should be added after a glyph before adding a
+subscript.  This should be less than the italic correction.
 
 A line in the @code{charset} section can also have the format
 
@@ -17002,7 +17006,7 @@ sequence of lines of the form:
 This means that when glyph @var{c1} appears next to glyph @var{c2} the
 space between them should be increased by@tie{}@var{n}.  Most entries in
 the kernpairs section have a negative value for@tie{}@var{n}.
-
+@c END Keep parallel with groff_font(7).
 
 
 @c =====================================================================

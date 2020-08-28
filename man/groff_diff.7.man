@@ -555,8 +555,9 @@ are intended for internal use by
 .RS
 .TP
 .B \[rs]O0
-Disable any ditroff glyphs from being emitted to the device driver,
-provided that the escape occurs at the outer level (see
+Disable glyphs from being emitted to the device driver,
+provided that the escape occurs at the outer level
+(see
 .B \[rs]O3
 and
 .BR \[rs]O4 ).
@@ -1047,21 +1048,21 @@ string is later interpolated.
 To be more precise,
 a \[lq]compatibility save\[rq] token is inserted at the beginning of the
 appended string
-.IR string,
+.IR string ,
 and a \[lq]compatibility restore\[rq] token at the end.
 .
 As a consequence,
 the requests
-.BR as ,
-.BR as1 ,
-.BR ds ,
+.BR .as ,
+.BR .as1 ,
+.BR .ds ,
 and
-.B ds1
+.B .ds1
 can be intermixed freely since the compatibility save/\:restore tokens
 only affect the (sub)strings defined by
-.B as1
+.B .as1
 and
-.BR ds1 .
+.BR .ds1 .
 .
 .
 .TP
