@@ -25,6 +25,11 @@ xtotroff \- convert X font metrics into GNU troff font metrics
 .\" instead of in the original English.
 .
 .
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr *groff_xtotroff_1_man_C \n[.cp]
+.cp 0
+.
+.
 .\" ====================================================================
 .SH Synopsis
 .\" ====================================================================
@@ -54,14 +59,11 @@ xtotroff \- convert X font metrics into GNU troff font metrics
 .\" ====================================================================
 .
 .I xtotroff
-takes a
-.IR font-map ,
-which maps
+uses
+.I font-map
+to create
 .IR groff (@MAN1EXT@)
-fonts to X11 fonts,
-creates GNU
-.IR troff (@MAN1EXT@)
-metric files for all fonts listed.
+font description files from X11 fonts.
 .
 Each line in
 .I font-map
@@ -115,7 +117,8 @@ Set the resolution for all font patterns in
 .
 The value is used for both the horizontal and vertical resolution.
 .
-If not specified, a resolution of 75dpi is assumed.
+If not specified,
+a resolution of 75dpi is assumed.
 .
 .
 .TP
@@ -123,15 +126,16 @@ If not specified, a resolution of 75dpi is assumed.
 Set the point size for all font patterns in
 .IR font-map .
 .
-If not specified, a size of 10pt is assumed.
+If not specified,
+a size of 10pt is assumed.
 .
 .
 .\" ====================================================================
 .SH Bugs
 .\" ====================================================================
 .
-The only supported font encodings are \(lqiso8859\-1\(rq and
-\%\(lqadobe\-\:fontspecific\(rq.
+The only supported font encodings are \[lq]iso8859\-1\[rq] and
+\%\[lq]adobe\-\:fontspecific\[rq].
 .
 .
 .\" ====================================================================
@@ -143,8 +147,12 @@ The only supported font encodings are \(lqiso8859\-1\(rq and
 .IR troff (@MAN1EXT@)
 .
 .
+.\" Restore compatibility mode (for, e.g., Solaris 10/11).
+.cp \n[*groff_xtotroff_1_man_C]
+.
+.
 .\" Local Variables:
 .\" fill-column: 72
 .\" mode: nroff
 .\" End:
-.\" vim: set filetype=nroff textwidth=72:
+.\" vim: set filetype=groff textwidth=72:
