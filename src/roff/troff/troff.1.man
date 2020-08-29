@@ -186,24 +186,43 @@ Read the standard input after all the named input files have been
 processed.
 .
 .TP
-.BI \-I dir
-This option may be used to add a directory to the search path for
-files (both those on the command line and those named in
-.B \&.psbb
-requests).
+.BI \-I\~ dir
+Search
+.I dir
+for files
+(those on the command line,
+those named in
+.B .psbb
+and
+.B .so
+requests,
+and
+those named in
+.RB \[lq] "\[rs]X\[aq]ps: import\[aq]" \[rq],
+.RB \[lq] "\[rs]X\[aq]ps: file\[aq]" \[rq],
+and
+.RB \[lq] "\[rs]X\[aq]pdf: pdfpic\[aq]" \[rq]
+escapes).
 .
-The search path is initialized with the current directory.
+This option may be specified more than once;
+the directories are then searched in the order specified.
 .
-This option may be specified more than once; the directories are then
-searched in the order specified (but before the current directory).
-.
-If you want to make the current directory be read before other
-directories, add
-.B \-I.\&
+If you want to search the current directory before others,
+add
+.RB \[lq] "\-I .\&" \[rq]
 at the appropriate place.
 .
-.IP
-No directory search is performed for files with an absolute file name.
+The current working directory is otherwise searched last.
+.
+.B \-I
+works similarly to,
+and is named for,
+the \[lq]include\[rq]
+option of Unix C compilers.
+.
+No directory search is performed for files specified using an absolute
+file name.
+.
 .
 .TP
 .BI \-m name

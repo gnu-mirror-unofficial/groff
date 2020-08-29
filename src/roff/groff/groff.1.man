@@ -183,31 +183,17 @@ Implies
 .
 .
 .TP
-.BI \-I\  dir
-This option may be used to specify a directory to search for
-files (both those on the command line and those named in
-.B .psbb
-and
-.B .so
-requests, and
-.B \eX'ps: import'
-,
-.B \eX'ps: file'
-and
-.B \eX'pdf: pdfpic'
-escapes).
-.
-The current directory is always searched first.
-.
-This option may be specified more than once;
-the directories are searched in the order specified.
-.
-No directory search is performed for files specified using an absolute
-path.
-.
-This option implies the
+.B \-I\~ dir
+Works as
+.IR @g@troff 's
+option
+(see below),
+but also implies
 .B \-s
-option.
+and passes the
+.B \-I
+options to
+.IR soelim .
 .
 .
 .TP
@@ -681,6 +667,23 @@ Set default font family.
 Set path for device
 .I DESC
 files.
+.
+.TP
+.BI \-I\~ dir
+Search
+.I dir
+for files
+(those on the command line,
+those named in
+.B .psbb
+and
+.B .so
+requests,
+and
+those named in certain device commands issued with the
+.B \[rs]X
+escape).
+.
 .
 .TP
 .B \-i
