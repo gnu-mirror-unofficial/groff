@@ -43,14 +43,14 @@ and mathematical documents.
 .
 However,
 its input encoding is restricted to those defined by the standards
-ISO Latin-1
-(ISO 8859-1)
+ISO \%Latin-1
+(ISO \%8859-1)
 and IBM code page 1047
 (an arrangement of EBCDIC).
 .
-For ease of document maintenance in UTF-8 environments,
+For ease of document maintenance in \%UTF-8 environments,
 it is advisable to use only the Unicode basic Latin code points,
-a subset of all of the foregoing historically referred to as US-ASCII,
+a subset of all of the foregoing historically referred to as \%US-ASCII,
 .\" Yes, a subset, albeit a permutation as well in the cp1047 case.
 which has only 94 visible,
 printable code points.
@@ -180,7 +180,7 @@ and those employing IBM code page 1047 as \[lq]EBCDIC\[rq] systems.
 That said,
 EBCDIC systems that support
 .I groff
-are known to also support UTF-8.
+are known to also support \%UTF-8.
 .
 .
 .P
@@ -218,7 +218,7 @@ are invalid.
 Some of these code points are used by
 .I groff
 for internal purposes,
-which is one reason it does not support UTF-8 natively.
+which is one reason it does not support \%UTF-8 natively.
 .
 .
 .\" ====================================================================
@@ -228,7 +228,7 @@ which is one reason it does not support UTF-8 natively.
 These are the basic glyphs having 7-bit ASCII code values assigned.
 .
 They are identical to the printable characters of the
-character standards \%ISO-8859-1 (\%latin1) and Unicode (range
+character standards ISO \%8859-1 (\%latin1) and Unicode (range
 .IR "Basic Latin" ).
 .
 The glyph names used in composite glyph names are \[oq]u0020\[cq] up
@@ -362,16 +362,16 @@ _
 .\" ====================================================================
 .
 Code points in the range 160\[en]255 are for the most part interpreted
-as characters according to the Latin-1 (ISO 8859-1) standard,
+as characters according to the \%Latin-1 (ISO \%8859-1) standard,
 and correspond to those in the same range of the Unicode \[lq]C1
-Controls and Latin-1 Supplement\[rq] code chart.
+Controls and \%Latin-1 Supplement\[rq] code chart.
 .
 .
 .P
 Input characters in range 128\[en]159
 (the C1 controls on non-EBCDIC hosts)
 are defined as control characters and not printable;
-nor are two characters in the Latin-1 supplement.
+nor are two characters in the \%Latin-1 supplement.
 .
 .
 .TP
@@ -396,14 +396,15 @@ on input it is mapped to the hyphenation control escape,
 .
 .
 .P
-The remaining characters in the Latin-1 supplement print as themselves.
+The remaining characters in the \%Latin-1 supplement print as
+themselves.
 .
 Although they can be specified directly with the keyboard on systems
-configured to use Latin-1 as the character encoding,
+configured to use \%Latin-1 as the character encoding,
 it is more portable,
 both to other
 .I roff
-systems and to UTF-8 environments,
+systems and to \%UTF-8 environments,
 to use their glyph names;
 see the next section.
 .
