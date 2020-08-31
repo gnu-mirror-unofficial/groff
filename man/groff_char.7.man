@@ -736,6 +736,75 @@ request;
 see
 .IR groff (@MAN7EXT@).
 .
+.
+.P
+.
+Conversely,
+a handful of glyphs that are normally drawn from a regular font are
+required in mathematical text.
+.
+Both sets of exceptions are noted in the tables where they appear
+(\[lq]Logical symbols\[rq] and \[lq]Mathematical symbols\[rq]).
+.
+.
+.\" ====================================================================
+.SH "Glyph Tables"
+.\" ====================================================================
+.
+In this section,
+.IR groff 's
+glyph name repertoire is presented in tabular form.
+.
+The meanings of the columns are as follows.
+.
+.
+.TP
+.I Output
+shows the glyph as it appears on the device used to render this
+document;
+although it can have a notably different shape on other devices
+(and is subject to user-directed translation and replacement),
+.I groff
+attempts reasonable equivalency on all output devices.
+.
+.
+.TP
+.I Input
+shows the
+.I groff
+character
+(ordinary or special)
+that normally produces the glyph.
+.
+.
+.IP
+Some code points have multiple glyph names.
+.
+.
+.TP
+.I AGL
+gives the name of the glyph from the Adobe Glyph List (AGL).
+.
+.
+.TP
+.I Unicode
+is the glyph name used in Unicode special character escapes.
+.
+The names in the Unicode column look like
+.B u0021
+or
+.BR u0041_0300 .
+.
+In
+.IR groff ,
+the corresponding Unicode characters can be constructed by adding a
+backslash and a pair of square brackets,
+for example
+.B \[rs][u0021]
+or
+.BR \[rs][u0041_0300] .
+.
+.
 .P
 In the following,
 a plus sign \[lq]+\[rq] in the \[lq]Notes\[rq] column indicates that
@@ -748,6 +817,7 @@ CSTR\~#54
 When using the AT&T special character syntax
 .BI \[rs]( xx\c
 , portability can be expected from such names.
+.
 .
 .P
 Entries marked with \[lq]***\[rq] denote glyphs used for mathematical
@@ -770,59 +840,6 @@ required in mathematical text.
 .
 Both sets of exceptions are noted in the tables where they appear
 (\[lq]Logical symbols\[rq] and \[lq]Mathematical symbols\[rq]).
-.
-.
-.\" ====================================================================
-.SH "Glyph Tables"
-.\" ====================================================================
-.
-In this section, the glyphs in groff are specified in tabular
-form.
-.
-The meaning of the columns is as follows.
-.
-.
-.TP
-.I "Output"
-shows how the glyph is printed for the current device; although
-this can have quite a different shape on other devices, it always
-represents the same glyph.
-.
-.
-.TP
-.I "Input"
-specifies how the glyph is input either directly by a key on the
-keyboard, or by a groff escape sequence.
-.
-.
-.TP
-.I "Code"
-applies to glyphs which can be input with a single character, and
-gives the ISO \%latin1 decimal code of that input character.
-.
-Note that this code is equivalent to the lowest 256 Unicode characters,
-including \%7-bit ASCII in the range 0 to\ 127.
-.
-.
-.TP
-.I AGL
-gives the name of the glyph from the Adobe Glyph List (AGL).
-.
-.
-.TP
-.I Unicode
-is the glyph name used in composite glyph names.
-.
-The names in the Unicode column look like
-.B u0021
-or
-.BR u0041_0300 .
-.
-In groff, the corresponding Unicode characters can be constructed
-by adding a backslash and a pair of square brackets, for example
-.B \e[u0021]
-or
-.BR \e[u0041_0300] .
 .
 .
 .\" ====================================================================
