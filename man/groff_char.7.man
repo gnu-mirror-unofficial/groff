@@ -222,139 +222,255 @@ which is one reason it does not support \%UTF-8 natively.
 .
 .
 .\" ====================================================================
-.SS "7-bit character codes 32\(en126"
+.SS "Fundamental character set"
 .\" ====================================================================
 .
-These are the basic glyphs having 7-bit ASCII code values assigned.
+The ninety-four characters noted above,
+plus the space and the newline,
+form the fundamental character
+set for
+.I groff
+input;
+anything in the language,
+even over one million code points in Unicode,
+can be expressed using it.
 .
-They are identical to the printable characters of the
-character standards ISO \%8859-1 (\%latin1) and Unicode (range
-.IR "Basic Latin" ).
+On ISO systems,
+code points in the range 33\[en]126 comprise a common set of
+printable glyphs in all of the aforementioned ISO character encoding
+standards.
 .
-The glyph names used in composite glyph names are \[oq]u0020\[cq] up
-to \[oq]u007E\[cq].
+It is this character set and
+(with some noteworthy exceptions)
+the corresponding repertoire for which AT&T
+.I troff
+was implemented.
 .
-.
-.P
-Note that input characters in the range \%0\-31 and character 127 are
-.I not
-printable characters.
-.
-Most of them are invalid input characters for
-.B groff
-anyway, and the valid ones have special meaning.
-.
-For EBCDIC, the printable characters are in the range \%66\-255.
-.
-.
-.TP
-48\-57
-Decimal digits 0 to\ 9 (print as themselves).
-.
-.
-.TP
-65\-90
-Upper case letters A\-Z (print as themselves).
-.
-.
-.TP
-97\-122
-Lower case letters a\(enz (print as themselves).
+On EBCDIC systems,
+printable characters are in the range 66\[en]201 and 203\[en]254;
+those without counterparts in the ISO range 33\[en]126 are discussed
+in the next subsection.
+.\" From this point, do not talk about numerical character assignments.
 .
 .
 .P
-Most of the remaining characters not in the just described ranges print
-as themselves; the only exceptions are the following characters:
-.
-.
-.TP
-.B \[ga]
-the ISO \%latin1 \[oq]Grave Accent\[cq] (code\ 96) prints as \[oq], a
-left single quotation mark (Unicode u2018).
-The same output glyph can be requested explicitly
-with \[oq]\e(oq\[cq].
-The original character can be obtained
-with \[oq]\e`\[cq] (Unicode u0060).
-.
-.
-.TP
-.B \[aq]
-the ISO \%latin1 \[oq]Apostrophe\[cq] (code\ 39) prints as \[cq],
-a right single quotation mark (Unicode u2019).
-The same output glyph is commonly used in typography to represent
-a punctation apostrophe, for example in contractions.
-It can be requested explicitly with \[oq]\e(cq\[cq].
-The original character can be obtained with
-\[oq]\e(aq\[cq] (Unicode u0027).
-.
-.
-.TP
-.B \-
-the ISO \%latin1 \[oq]Hyphen, Minus Sign\[cq] (code\ 45) prints as a
-hyphen (Unicode u2010).
-The same output glyph can be requested explicitly
-with \[oq]\e(hy\[cq].
-A minus sign can be obtained with \[oq]\e-\[cq] (Unicode u2212).
-.
-.
-.TP
-.B \[ti]
-the ISO \%latin1 \[oq]Tilde\[cq] (code\ 126) is reduced in size to be
-usable as a diacritic (Unicode u02DC).
-A larger glyph can be obtained with
-\[oq]\e(ti\[cq] (Unicode u007E).
-.
-.
-.TP
-.B \[ha]
-the ISO \%latin1 \[oq]Circumflex Accent\[cq] (code\ 94) is reduced in
-size to be usable as a diacritic (Unicode u02C6); a larger glyph
-can be obtained with \[oq]\e(ha\[cq] (Unicode u005E).
-.
-.
-.P
+All of the following characters map to glyphs as you would expect.
 .TS
-l l l l l lx.
-Output	Input	Code	AGL	Unicode	Notes
-_
-\[char33]	\[char33]	33	exclam	u0021	exclamation mark (bang)
-\[char34]	\[char34]	34	quotedbl	u0022	double quote
-\[char35]	\[char35]	35	numbersign	u0023	number sign
-\[char36]	\[char36]	36	dollar	u0024	currency dollar sign
-\[char37]	\[char37]	37	percent	u0025	percent
-\[char38]	\[char38]	38	ampersand	u0026	ampersand
-\[cq]	\[aq]	39	quoteright	u2019	right quote
-\[aq]	\e(aq		quotesingle	u0027	apostrophe quote
-\[char40]	\[char40]	40	parenleft	u0028	parentheses left
-\[char41]	\[char41]	41	parenright	u0029	parentheses right
-\[char42]	\[char42]	42	asterisk	u002A	asterisk
-\[char43]	\[char43]	43	plus	u002B	plus
-\[char44]	\[char44]	44	comma	u002C	comma
-\[hy]	\[char45]	45	hyphen	u2010	hyphen
-\-	\e-		minus	u2212	minus sign
-\[char46]	\[char46]	46	period	u002E	period, dot
-\[char47]	\[char47]	47	slash	u002F	slash
-\[char58]	\[char58]	58	colon	u003A	colon
-\[char59]	\[char59]	59	semicolon	u003B	semicolon
-\[char60]	\[char60]	60	less	u003C	less than
-\[char61]	\[char61]	61	equal	u003D	equal
-\[char62]	\[char62]	62	greater	u003E	greater than
-\[char63]	\[char63]	63	question	u003F	question mark
-\[char64]	\[char64]	64	at	u0040	at
-\[char91]	\[char91]	91	bracketleft	u005B	square bracket left
-\[char92]	\[char92]	92	backslash	u005C	backslash
-\[char93]	\[char93]	93	bracketright	u005D	square bracket right
-\[a^]	\[ha]	94	circumflex	u02C6	modifier circumflex
-\[ha]	\e(ha		asciicircum	u005E	circumflex accent
-\[char95]	\[char95]	95	underscore	u005F	underscore
-\[oq]	\[ga]	96	quoteleft	u2018	left quote
-\[ga]	\e(ga		grave	u0060	grave accent
-\[char123]	\[char123]	123	braceleft	u007B	curly brace left
-\[char124]	\[char124]	124	bar	u007C	bar
-\[char125]	\[char125]	125	braceright	u007D	curly brace right
-\[u02DC]	\[ti]	126	tilde	u02DC	small tilde
-\[ti]	\e(ti		asciitilde	u007E	tilde
+center box;
+lf(CR).
+! # $ % & ( ) * + , . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ ] _
+a b c d e f g h i j k l m n o p q r s t u v w x y z { | }
 .TE
+.
+.
+.P
+The remaining seven of the ninety-four code points in this range
+surprise computing professionals and others intimately familiar with the
+ISO character encodings.
+.
+The developers of AT&T
+.I troff
+chose mappings for them that would be useful for typesetting technical
+literature in a broad range of scientific disciplines;
+the preparation of AT&T's patent filings with the U.S.\& government
+was the application of the system that \[lq]paid the bills\[rq] at the
+Bell Labs site where
+.I troff
+and Unix were first developed.
+.
+It is also worth noting that the prevailing character encoding standard
+in the 1970s,
+USAS X3.4-1968 (\[lq]ASCII\[rq])
+deliberately supported semantic ambiguity at some code points,
+and outright substitution at several others,
+to suit the localization demands of various national standards bodies.
+.
+.
+.P
+The table below presents the seven exceptional code points
+with their typical keycap engravings,
+their glyph mappings and semantics in
+.I roff
+systems,
+and the escapes producing the Unicode basic Latin character they
+replace.
+.
+The first,
+the neutral double quote,
+is a partial exception because it does represent itself,
+but since it is also used by
+.I roff
+systems to quote macro arguments,
+.I groff
+supports a special character escape as an alternative form so that
+the glyph can be easily included in macro arguments without requiring
+the user to master the quoting rules that AT&T
+.I troff
+required in that context.
+.
+Furthermore,
+not all of the special character escapes are portable to AT&T
+.I troff
+and all of its descendants;
+these
+.I groff
+extensions are presented using its special character escape form
+.BR \[rs][] ,
+whereas portable special character escapes are shown in the traditional
+.B \[rs](
+form.
+.
+.B \[rs]\-
+and
+.B \[rs]e
+are portable to all known
+.IR troff s.
+.
+Note,
+however,
+that
+.B \[rs]e
+means \[lq]the glyph of the current escape character\[rq];
+it therefore can produce unexpected output if the
+.B .ec
+or
+.B .eo
+requests are used.
+.
+On devices with a limited glyph repertoire,
+the appearances of glyphs on the same row of the table may be identical;
+except for the neutral double quote,
+this will
+.I not
+be the case on more-capable devices.
+.
+Review your document on as many different postprocessors as possible.
+.
+.\" XXX: move these to tty.tmac instead?
+.fchar \[u02C6] ^
+.fchar \[u02DC] ~
+.TS
+center box;
+l l l.
+Keycap	Appearance and meaning	Special character and meaning
+_
+"	" neutral double quote	\f[B]\[rs][dq]\f[] neutral double quote
+\[aq]	\[cq] closing single quote	\f[B]\[rs][aq]\f[] neutral apostrophe
+\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] hyphen-minus
+\[rs]	(escape character)	\f[B]\[rs]e\f[] or \f[B]\[rs][rs]\f[] reverse solidus
+\[ha]	\[u02C6] modifier circumflex	\f[B]\[rs](ha\f[] circumflex/caret/\[lq]hat\[rq]
+\[ga]	\[oq] opening single quote	\f[B]\[rs](ga\f[] grave accent
+\[ti]	\[u02DC] modifier tilde	\f[B]\[rs](ti\f[] tilde
+.TE
+.fchar \[u02C6]
+.fchar \[u02DC]
+.
+.
+.P
+The hyphen-minus is a particularly unfortunate case of overloading.
+.
+Its awkward name in ISO 8859 and later standards reflects the many
+conflicting purposes to which it had already been put in the 1980s,
+including
+a hyphen,
+a minus sign,
+and
+(alone or in repetition)
+dashes of varying widths.
+.
+For best results in
+.IR groff ,
+use the character in input without an escape
+.I only
+to mean a hyphen,
+as in the phrase \[lq]long-term\[rq].
+.
+For a minus sign or a Unix command-line option dash,
+use
+.B \[rs]\-
+(or
+.B \[rs][\-]
+in
+.I groff
+if you find it helps the clarity of the source document).
+.
+AT&T
+.I troff
+supported en- and em-dashes as
+.B \[rs](en
+and
+.B \[rs](em
+respectively.
+.
+.
+.P
+The special character escape for the apostrophe as a neutral single
+quote is typically needed only in technical content;
+typing words like \[lq]can't\[rq] and \[lq]Anne's\[rq] in a natural way
+will render correctly,
+because an apostrophe is typeset either as a closing single quotation
+mark or as a neutral single quote in ordinary prose,
+depending on the capabilities of the output device.
+.
+By contrast,
+special character escapes should be used for quotation marks unless
+portability to limited or historical
+.I troff
+implementations is necessary;
+on those systems,
+the input convention is to pair the grave accent with the apostrophe for
+single quotes,
+and to double both characters for double quotes.
+.
+AT&T
+.I troff
+defined no special characters for quotation marks or apostrophes.
+.
+Note that repeated single quotes
+(\[oq]\[oq]thus\[cq]\[cq])
+will be visually distinguishable from double quotes
+(\[lq]thus\[rq])
+on terminal devices,
+and perhaps on others
+(depending on the font selected).
+.
+.TS
+tab(@) center box;
+l l.
+AT&T \f[I]troff\f[] input@recommended \f[I]groff\f[] input
+_
+A Winter\[aq]s Tale@A Winter\[aq]s Tale
+\[ga]U.K.\& outer quotes\[aq]@\f[B]\[rs][oq]\f[]U.K.\& outer quotes\f[B]\[rs][cq]\f[]
+\[ga]U.K.\& \[ga]\[ga]inner\[aq]\[aq] quotes\[aq]@\f[B]\[rs][oq]\f[]U.K.\& \f[B]\[rs][lq]\f[]inner\f[B]\[rs][rq]\f[] quotes\f[B]\[rs][cq]\f[]
+\[ga]\[ga]U.S.\& outer quotes\[aq]\[aq]@\f[B]\[rs][lq]\f[]U.S.\& outer quotes\f[B]\[rs][rq]\f[]
+\[ga]\[ga]U.S.\& \[ga]inner\[aq] quotes\[aq]\[aq]@\f[B]\[rs][lq]\f[]U.S.\& \f[B]\[rs][oq]\f[]inner\f[B]\[rs][cq]\f[] quotes\f[B]\[rs][rq]\f[]
+.TE
+.\" paragraph necessary due to tbl spacing bug with box usage; see
+.\" https://lists.gnu.org/archive/html/groff/2020-07/msg00053.html
+.
+.
+.P
+If you expect to use quotation marks frequently in your document,
+see if the macro package you're using defines strings or macros to
+facilitate quotation.
+.
+.
+.P
+Using Unicode basic Latin characters to compose boxes and lines is
+ill-advised.
+.
+.I roff
+systems have special characters for drawing straight horizontal and
+vertical lines;
+see subsection \[lq]Rules and lines\[rq] below.
+.
+Preprocessors like
+.IR @g@tbl (@MAN1EXT@)
+and
+.IR @g@pic (@MAN1EXT@)
+draw boxes and will produce the best possible output for the device,
+falling back to basic Latin glyphs only when necessary.
 .
 .
 .\" ====================================================================
@@ -1501,6 +1617,15 @@ Adobe Glyph List (AGL)
 .UR http://\:www\:.unicode\:.org
 The Unicode Standard
 .UE
+.
+.
+.P
+.UR https://\:www\:.aivosto\:.com/\:articles/\:charsets\-7bit\:.html
+\[lq]7-bit Character Sets\[rq]
+.UE
+by Tuomas Salste documents the inherent ambiguity and configurability
+(in terms of variable code points)
+of the ASCII encoding standard.
 .
 .
 .P
