@@ -741,10 +741,13 @@ extensions.
 The @code{soelim}, @code{pic}, @code{tbl}, and @code{eqn} preprocessors.
 
 @item
-Postprocessors for character devices, @sc{PostScript}, @TeX{} DVI, and
-X@tie{}Windows.  GNU @code{troff} also eliminated the need for a
-separate @code{nroff} program with a postprocessor that would produce
-@acronym{ASCII} output.
+@cindex X Window System (X11)
+@cindex @TeX{} Device-Independent (DVI) format
+Postprocessors for character devices, @sc{PostScript}, @TeX{}'s
+device-independent format (DVI), and the X@tie{}Window System (X11).
+GNU @code{troff} also eliminated the need for a separate @command{nroff}
+program with a postprocessor to produce output for @acronym{ASCII}
+terminals.
 
 @item
 A version of the @file{me} macros and an implementation of the
@@ -907,9 +910,9 @@ mathematical pictures (@code{ideal}).
 @code{groff} produces device-independent code that may be fed into a
 postprocessor to produce output for a particular device.  Currently,
 @code{groff} has postprocessors for @sc{PostScript} devices, character
-terminals, X@tie{}Windows (for previewing), @TeX{} DVI format, HP
-LaserJet@tie{}4 and Canon LBP printers (which use @acronym{CAPSL}),
-@acronym{HTML}, @acronym{XHTML}, and @acronym{PDF}.
+terminals, X11 (for previewing), DVI, HP LaserJet@tie{}4 and Canon LBP
+printers (which use @acronym{CAPSL}), @acronym{HTML}, @acronym{XHTML},
+and @acronym{PDF}.
 
 
 @c =====================================================================
@@ -16500,8 +16503,8 @@ document.
 
 @item @acronym{AT&T} @code{troff} output
 Since a computer monitor has a very low resolution compared to modern
-printers, the intermediate output for the X@tie{}Window devices can use
-the jump-and-write command with its 2-digit displacements.
+printers, the intermediate output for X11 devices can use the
+jump-and-write command with its 2-digit displacements.
 
 @example
 @group
