@@ -1379,12 +1379,13 @@ by @code{groff}.
 @tindex GROFF_COMMAND_PREFIX@r{, environment variable}
 @cindex command prefix
 @cindex prefix, for commands
-If this is set to@tie{}@var{X}, then @code{groff} runs
-@code{@var{X}troff} instead of @code{gtroff}.  This also applies to
-@code{tbl}, @code{pic}, @code{eqn}, @code{grn}, @code{chem},
-@code{refer}, and @code{soelim}.  It does not apply to @code{grops},
-@code{grodvi}, @code{grotty}, @code{pre-grohtml}, @code{post-grohtml},
-@code{preconv}, @code{grolj4}, @code{gropdf}, and @code{gxditview}.
+If this is set to@tie{}@var{X}, then @command{groff} runs
+@command{@var{X}troff} instead of @command{gtroff}.  This also applies
+to @command{tbl}, @command{pic}, @command{eqn}, @command{grn},
+@command{chem}, @command{refer}, and @command{soelim}.  It does not
+apply to @command{grops}, @command{grodvi}, @command{grotty},
+@command{pre-grohtml}, @command{post-grohtml}, @command{preconv},
+@command{grolj4}, @command{gropdf}, and @command{gxditview}.
 
 The default command prefix is determined during the installation
 process.  If a non-GNU troff system is found, prefix @samp{g} is used,
@@ -1532,7 +1533,7 @@ All font files are kept in the @dfn{font directories}, which constitute
 the @dfn{font path}.  The file search functions always append the
 directory @code{dev}@var{name}, where @var{name} is the name of the
 output device.  Assuming, say, DVI output, and @file{/foo/bar} as a font
-directory, the font files for @code{grodvi} must be in
+directory, the font files for @command{grodvi} must be in
 @file{/foo/bar/devdvi}.
 
 The elements of the search path for font files are (in that order):
@@ -15353,13 +15354,19 @@ specified as zero then the width is scaled in proportion to the height.
 @c =====================================================================
 
 @node grodvi, grolj4, gropdf, Output Devices
-@section @code{grodvi}
-@cindex @code{grodvi}, the program
+@section @command{grodvi}
+@pindex grodvi
+@pindex dvips
+@pindex dvipdf
+@cindex @command{grodvi}, the program
+@cindex DVI output driver
 
 The postprocessor @command{grodvi} translates the output from GNU
-@command{troff} into the @strong{DVI} output format compatible with
-the @strong{@TeX{}} document preparation system.  It is fully
-documented on its manual page, @cite{grodvi(1)}.
+@code{troff} into the DVI format produced by the @TeX{} document
+preparation system.  This enables the use of programs that process the
+DVI format, like @command{dvips} and @command{dvipdf}, with GNU
+@code{troff} output.   @command{grodvi} is fully documented in its
+manual page, @cite{grodvi(1)}.
 
 @menu
 * Invoking grodvi::
@@ -15368,11 +15375,11 @@ documented on its manual page, @cite{grodvi(1)}.
 @c ---------------------------------------------------------------------
 
 @node Invoking grodvi,  , grodvi, grodvi
-@subsection Invoking @code{grodvi}
-@cindex invoking @code{grodvi}
-@cindex @code{grodvi}, invoking
+@subsection Invoking @command{grodvi}
+@cindex invoking @command{grodvi}
+@cindex @command{grodvi}, invoking
 
-The postprocessor @code{grodvi} accepts the following command-line
+The postprocessor @command{grodvi} accepts the following command-line
 options:
 
 @table @option
@@ -16720,8 +16727,8 @@ postpro grodvi
 @endExample
 
 @noindent
-in the file @file{devdvi/DESC} makes @code{groff} call @code{grodvi} if
-option @option{-Tdvi} is given (and @option{-Z} isn't used).
+in the file @file{devdvi/DESC} makes @code{groff} call @command{grodvi}
+if option @option{-Tdvi} is given (and @option{-Z} isn't used).
 
 @item prepro @var{program}
 @kindex prepro
