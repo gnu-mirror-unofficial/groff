@@ -581,24 +581,29 @@ l2 l l l2 l l.
 .
 .
 .\" ====================================================================
-.SS "Named glyphs"
+.SS "Special character escape forms"
 .\" ====================================================================
 .
-Glyph names can be embedded into the document text by using escape
-sequences.
+Glyphs that lack a character code in the basic Latin repertoire to
+directly represent them are entered by one of several special character
+escape forms.
 .
-.IR groff (@MAN7EXT@)
-describes how these escape sequences look.
+Glyph names are not limited to alphanumeric characters;
+any of the printable characters from the Unicode basic Latin repertoire
+may be used.
 .
-Glyph names can consist of quite arbitrary characters from the
-ASCII or \%latin1 code set, not only alphanumeric characters.
-.
-Here some examples:
 .
 .TP
 .BI \[rs]( gl
-is a special character escape for the glyph with the 2-character name
+is a special character escape for the glyph with the two-character name
 .IR gl .
+.
+This is the syntax form supported by AT&T
+.IR troff.
+.
+The acute accent,
+.BR \[rs](aa ,
+is an example.
 .
 .
 .TP
@@ -607,6 +612,13 @@ is a special character escape for
 .IR glyph-name ,
 which can be of arbitrary length.
 .
+The foregoing acute accent example could be expressed in
+.I groff
+as
+.BR \[rs][aa] .
+.
+.
+.IP
 Note that an ordinary input character
 .RI \[lq] c \[rq]
 is not the same as
@@ -637,54 +649,18 @@ or
 .BI \[rs][ "base-glyph composite-1 composite-2"\~\c
 \&.\|.\|.\~\c
 .IB composite-n ]
-is a composite glyph;
-see below for a more detailed description.
+is a composite glyph.
 .
+Glyphs like a lowercase \[lq]e\[rq] with an acute accent,
+as in the word \[lq]caf\[e aa]\[rq],
+can be expressed as
+.BR "\[rs][e aa]" .
 .
-.P
-In
-.IR groff ,
-each eight-bit input character can also be referred to by the construct
-.BI \[rs][char NNN ]\c
-, where
-.I NNN
-is the decimal code of the character,
-a number between 0 and\~255
-without leading zeroes.
+See subsection \[lq]Accents\[rq] below for a table of combining glyph
+names.
 .
-These entities are
-.I not
-glyph names.
-.
-They are normally mapped onto glyphs using the
-.B .trin
-request.
-.
-.
-.P
-Another special convention is the handling of glyphs with names directly
-derived from a Unicode code point; this is shown in the
-\[lq]Unicode\[rq] column of the table below.
-.
-In general,
-all glyphs not having a name as listed in this manual page can be
-accessed with the
-.BI \[rs][u XXXX ]
-construct.
-.
-Refer to section \[lq]Using Symbols\[rq] in
-.IR "Groff: The GNU Implementation of troff" ,
-the
-.I groff
-Texinfo manual,
-which describes how
-.I groff
-glyph names are constructed.
-.
-.
-.P
-Moreover,
-new glyph names can be created by the
+Frequently-used glyphs or glyph combinations can be stored in strings,
+and new glyph names can be created with the
 .B .char
 request;
 see
@@ -692,13 +668,74 @@ see
 .
 .
 .P
+.I groff
+also features special character escapes based on numerical code points
+rather than glyph names.
 .
-Conversely,
-a handful of glyphs that are normally drawn from a regular font are
-required in mathematical text.
 .
-Both sets of exceptions are noted in the tables where they appear
-(\[lq]Logical symbols\[rq] and \[lq]Mathematical symbols\[rq]).
+.TP
+.BI \[rs][u nnnn\c
+.RI [ n\c
+.RI [ n ]]\c
+.B ]
+is a Unicode numeric special character escape.
+.
+Unicode encodes far more characters than
+.I groff
+can ever hope to devise glyph names for,
+and doing so would merely give users yet another list to remember.
+.
+With this form,
+any Unicode point can be indicated using four to six hexadecimal digits.
+.
+Thus,
+.B \[rs][u02DA]
+accesses the (spacing) ring accent,
+producing \[lq]\[u02DA]\[rq].
+.
+.
+.P
+Unicode code points can be composed as well;
+in fact,
+.I groff
+requires NFD
+(Normalization Form D),
+where all Unicode glyphs are maximally decomposed.
+.
+.
+.TP
+.BI \[rs][u base-glyph\c
+.RB [ _\c
+.I combining-component\c
+.BR ] .\|.\|.
+constructs a composite glyph from Unicode numeric special character
+escapes.
+.
+The code points of the base glyph and the combining components are each
+expressed in hexadecimal,
+with an underscore
+.RB ( _ )
+separating each component.
+.
+Thus,
+.B \[rs][u0065_0301]
+produces
+.RB \[lq] \[u0065_0301] \[rq].
+.
+.
+.TP
+.BI \[rs][char nnn ]
+expresses an eight-bit code point where
+.I nnn
+is the code point of the character,
+a decimal number between 0 and\~255
+without leading zeroes.
+.
+This legacy numeric special character escape is used to map characters
+onto glyphs via the
+.B .trin
+request in macro files loaded by
+.IR grotty (@MAN1EXT@).
 .
 .
 .\" ====================================================================
