@@ -150,15 +150,17 @@ must be a one letter name.
 .
 .TP
 .B \-E
-Inhibit all error messages of
-.BR @g@troff .
+Inhibit
+.I @g@troff
+error messages;
+implies
+.B \-Ww.
 .
-Note that this doesn't affect messages output to standard error by
-macro packages using the
-.B tm
-or
-.B tm1
-requests.
+Note that this doesn't suppress messages sent to the standard error
+stream by documents or macro packages using
+.B .tm
+or related requests.
+.
 .
 .TP
 .BI \-f fam
