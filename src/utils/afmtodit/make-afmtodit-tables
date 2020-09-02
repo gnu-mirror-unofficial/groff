@@ -13,8 +13,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -27,9 +27,9 @@
 #   make-afmtodit-tables \
 #     UnicodeData.txt version-string glyphlist.txt > afmtodit.in
 #
-# 'UnicodeData.txt' is the central database file from the Unicode standard.
-# Unfortunately, it doesn't contain a version number which must be thus
-# provided manually as an additional parameter.
+# 'UnicodeData.txt' is the central database file from the Unicode
+# standard.  Unfortunately, it doesn't contain a version number, which
+# must be thus provided manually as an additional parameter.
 #
 # 'glyphlist.txt' holds the Adobe Glyph List (AGL).
 #
@@ -41,7 +41,8 @@ CPP=cpp
 prog="$0"
 
 if test $# -ne 3; then
-  echo "usage: $0 UnicodeData.txt <version-string> glyphlist.txt > afmtodit.in"
+  echo "usage: $0 UnicodeData.txt <version-string> glyphlist.txt >" \
+    "afmtodit.in"
   exit 1
 fi
 
