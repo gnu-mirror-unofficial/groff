@@ -106,7 +106,7 @@ one might use the shell command
 .RS
 .RS
 .EX
-zcat $(man \-w troff) | groff \-a -t \-man \-Tdvi | less
+zcat $(man \-w troff) | groff \-a \-t \-man \-Tdvi | less
 .EE
 .RE
 to observe how lines are broken for the DVI device.
@@ -120,20 +120,27 @@ Print a backtrace with each warning or error message.
 This backtrace should help track down the cause of the error.
 .
 The line numbers given in the backtrace may not always be correct, for
-.BR @g@troff 's
+.IR @g@troff 's
 idea of line numbers gets confused by
-.B as
+.B .as
 or
-.B am
+.B .am
 requests.
+.
 .
 .TP
 .B \-c
-Disable color output (always disabled in compatibility mode).
+Disable color output;
+also disable SGR escape output to
+.IR grotty (@MAN1EXT@)
+devices.
+.
 .
 .TP
 .B \-C
-Enable compatibility mode.
+Enable compatibility mode;
+implies \-c.
+.
 .
 .TP
 .BI \-d cs
@@ -295,7 +302,9 @@ to
 .I c
 must be a one character name;
 .I n
-can be any troff numeric expression.
+can be any
+.I roff
+numeric expression.
 .
 .TP
 .B \-R
@@ -304,31 +313,38 @@ Don't load
 and
 .IR troffrc\-end .
 .
+.
 .TP
 .BI \-T name
 Prepare output for device
 .IR name ,
 rather than the default
-.BR @DEVICE@ ;
+.RB \[lq] @DEVICE@ \[rq];
 see
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 for a more detailed description.
+.
 .
 .TP
 .B \-U
-Unsafe mode.
-.
-This will enable the following requests:
-.BR open ,
-.BR opena ,
-.BR pso ,
-.BR sy ,
+Unsafe mode;
+enables the
+.BR .open ,
+.BR .opena ,
+.BR .pso ,
+.BR .sy ,
 and
-.BR pi .
-For security reasons, these potentially dangerous requests are
-disabled otherwise.
+.B .pi
+requests.
 .
-It will also add the current directory to the macro search path.
+For security reasons,
+these potentially dangerous requests are disabled otherwise.
+.
+It will also add the current directory to the macro search path;
+see
+.B \-m
+above.
+.
 .
 .TP
 .BI \-w name

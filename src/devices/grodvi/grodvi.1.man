@@ -79,10 +79,10 @@ is a driver for
 that produces \*(tx DVI format.
 .
 Normally it should be run by
-.BR groff\ \-Tdvi .
+.BR "groff \-Tdvi" .
 .
 This will run
-.BR @g@troff\ \-Tdvi ;
+.BR "@g@troff \-Tdvi" ;
 it will also input the macros in
 .IR \%@MACRODIR@/\:dvi.tmac .
 .
@@ -102,7 +102,7 @@ commands will not produce any output.
 There is an additional drawing command available:
 .
 .TP
-.BI \[rs]D'R\  dh\ dv '
+.BI \[rs]D\[aq]R\~ "dh dv" \[aq]
 Draw a rule (solid black rectangle), with one corner
 at the current position, and the diagonally opposite corner
 at the current position
@@ -117,10 +117,10 @@ commands.
 .
 .LP
 The groff command
-.BI \[rs]X' anything '
+.BI \[rs]X\[aq] anything \[aq]
 is translated into the same command in the DVI file as would be
 produced by
-.BI \[rs]special{ anything }
+.BI \%\[rs]special{ anything }
 in \*(tx;
 .I anything
 may not contain a newline.
@@ -148,19 +148,19 @@ The font description file should contain the following
 additional commands:
 .
 .TP
-.BI internalname\   name
+.BI internalname\~ name
 The name of the tfm file (without the
 .I .tfm
 extension) is
 .IR name .
 .
 .TP
-.BI checksum\  n
+.BI checksum\~ n
 The checksum in the tfm file is
 .IR n .
 .
 .TP
-.BI designsize\  n
+.BI designsize\~ n
 The designsize in the tfm file is
 .IR n .
 .
@@ -195,7 +195,7 @@ output medium.
 Instead,
 .B grodvi
 emits the equivalent to \*[tx]'s
-.BI \[rs]special{papersize= width , length }
+.BI \%\[rs]special{\:\%papersize= width , length }
 on the first page;
 .B dvips
 (and possibly other DVI drivers) then sets the page size accordingly.
@@ -276,7 +276,8 @@ There are styles called
 .BR B ,
 and
 .B BI
-mounted at font positions 1 to\ 4.
+mounted at font positions 1 to\~4.
+.
 The fonts are grouped into families
 .B T
 and

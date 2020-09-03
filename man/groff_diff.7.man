@@ -304,8 +304,8 @@ special character
 or
 .BI \[rs][ xxx\c
 .BR ] ;
-.BI \[rs]N' xxx\c
-.BR ' ;
+.BI \[rs]N\[aq] xxx\c
+.BR \[aq] ;
 or has been defined by the
 .B .char
 request.
@@ -404,7 +404,7 @@ and then by symbol roughly in Unicode code point order.
 .
 .
 .TP
-.BI \[rs]A' anything '
+.BI \[rs]A\[aq] anything \[aq]
 This expands to
 .B 1
 or\~\c
@@ -424,7 +424,7 @@ This is useful if you want to look up user input in some sort of
 associative table.
 .
 .TP
-.BI \[rs]B' anything '
+.BI \[rs]B\[aq] anything \[aq]
 This expands to
 .B 1
 or\~\c
@@ -454,14 +454,13 @@ for GNU extensions.
 This is equivalent to an escape character, but it is not interpreted in
 copy mode.
 .
-For example, strings to start and end superscripting could be defined
-like this
+Strings to start and end superscripting could be defined as follows.
 .
 .RS
 .IP
 .EX
-\&.ds { \[rs]v'\-.3m'\[rs]s'\[rs]En[.s]*6u/10u'
-\&.ds } \[rs]s0\[rs]v'.3m'
+\&.ds { \[rs]v\[aq]\-.3m\[aq]\[rs]s\[aq]\[rs]En[.s]*6u/10u\[aq]
+\&.ds } \[rs]s0\[rs]v\[aq].3m\[aq]
 .EE
 .RE
 .
@@ -640,7 +639,7 @@ is associated with the production of the next inline image.
 .RE
 .
 .TP
-.BI \[rs]R' name\~\[+-]n '
+.BI \[rs]R\[aq] name\~\[+-]n \[aq]
 This has the same effect as
 .
 .RS
@@ -653,9 +652,9 @@ This has the same effect as
 .TQ
 .BI \[rs]s \[+-] [ n ]
 .TQ
-.BI \[rs]s' \[+-]n '
+.BI \[rs]s\[aq] \[+-]n \[aq]
 .TQ
-.BI \[rs]s \[+-] ' n '
+.BI \[rs]s \[+-] \[aq] n \[aq]
 Set the point size to
 .I n
 scaled points;
@@ -683,7 +682,7 @@ is interpreted in copy mode.
 .TQ
 .BI \[rs]Y[ xxx ]
 This is approximately equivalent to
-.BI \[rs]X'\[rs]*[ xxx ]'\f[R].
+.BI \[rs]X\[aq]\[rs]*[ xxx ]\[aq]\f[R].
 However the contents of the string or macro
 .I xxx
 are not interpreted; also it is permitted for
@@ -699,7 +698,7 @@ output format,
 and confuses drivers that do not know about this extension.
 .
 .TP
-.BI \[rs]Z' anything '
+.BI \[rs]Z\[aq] anything \[aq]
 Print anything and then restore the horizontal and vertical position;
 .I anything
 may not contain tabs or leaders.
@@ -1281,7 +1280,7 @@ characters
 .\" The following is ordered with the apostrophe and (single) closing
 .\" quote on the ends so they are more easily visually distinguished
 .\" from the double quotation marks in roman.
-.RB \[lq] '")]*\[rs][dg]\[rs][dd]\[rs][rq]\[rs][cq] \[rq]
+.RB \[lq] \[aq]")]*\[rs][dg]\[rs][dd]\[rs][rq]\[rs][cq] \[rq]
 have this property.
 .
 .IP 64
@@ -1479,8 +1478,8 @@ is a character
 .RS
 .RS
 .EX
-\&.class [quotes] ' \[rs][aq] \[rs][dq] \[rs][oq] \[rs][cq] \[rs][lq] \
-\[rs][rq]
+\&.class [quotes] \[aq] \[rs][aq] \[rs][dq] \[rs][oq] \[rs][cq] \
+\[rs][lq] \[rs][rq]
 .EE
 .RE
 .RE
@@ -1533,7 +1532,8 @@ classes can be nested.
 .RS
 .EX
 \&.class [prepunct] , : ; > }
-\&.class [prepunctx] \[rs]C'[prepunct]' \[rs][u2013]\-\[rs][u2016]
+\&.class [prepunctx] \[rs]C\[aq][prepunct]\[aq] \
+\[rs][u2013]\-\[rs][u2016]
 .EE
 .RE
 The class
@@ -1574,7 +1574,7 @@ you can write the following.
 .RS
 .RS
 .EX
-\&.cflags 2 \[rs]C'[prepunctx]'
+\&.cflags 2 \[rs]C\[aq][prepunctx]\[aq]
 .EE
 .RE
 .RE
@@ -2879,7 +2879,7 @@ due to the regular naming convention of the special character escapes.
 .RS
 .RS
 .EX
-\&.ds resume R\e['e]sum\e['e]\e"
+\&.ds resume R\e[\[aq]e]sum\e[\[aq]e]\e"
 \e*[resume] \e# R\['e]sum\['e]
 \&.stringdown resume
 \e*[resume] \e# r\['e]sum\['e]
@@ -3411,8 +3411,9 @@ large spaces between each.
 The result has obvious inter-sentence spacing.
 .RS
 .RS \" Extra indent to get us inboard of the indented paragraph.
+.\" This is an output example, so use a real en-dash.
 .EX
-1. J. Fict. Ch. Soc. 6 (2020), 3-14.     2. Better
+1. J. Fict. Ch. Soc. 6 (2020), 3\[en]14.     2. Better
 known for other work.
 .EE
 .RE
@@ -3474,7 +3475,7 @@ This allows the reliable modification of requests.
 \&.de bp
 \&.tm before bp
 \&.ie \[rs]\[rs]n[.br] .bp*orig
-\&.el 'bp*orig
+\&.el \[aq]bp*orig
 \&.tm after bp
 \&..
 .EE
