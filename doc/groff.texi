@@ -14753,19 +14753,20 @@ before being added to the output, they act as input entities;
 afterwards, they denote glyphs.  A glyph node does not behave like an
 input character for the purposes of macro processing; it does not
 inherit any of the special properties that the input character from
-which it was constructed might have had.  The following example,
+which it was constructed might have had.  Consider the following
+example.
 
 @Example
 .di x
 \\\\
 .br
 .di
-.x@r{,} @c Only mathematical typographers will appreciate this comma.
+.x
 @endExample
 
 @noindent
-prints @samp{\\} in GNU @code{troff}; each pair of input backslashes is
-turned into one output backslash and the resulting output backslashes
+It prints @samp{\\} in GNU @code{troff}; each pair of input backslashes
+is turned into one output backslash and the resulting output backslashes
 are not interpreted as escape characters when they are reread.
 @acronym{AT&T} @code{troff} would interpret them as escape characters
 when they were reread and would end up printing one @samp{\}.
