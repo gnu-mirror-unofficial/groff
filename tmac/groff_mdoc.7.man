@@ -48,22 +48,22 @@
 .\"
 .
 .Dd November 2, 2010
-.Dt GROFF_MDOC 7
+.Dt groff_mdoc 7
 .Os
 .
 .
-.Sh NAME
+.Sh Name
 .
 .Nm groff_mdoc
 .Nd reference for groff's mdoc implementation
 .
 .
-.Sh SYNOPSIS
+.Sh Synopsis
 .
 .Nm groff Fl m Ns Cm doc Ar
 .
 .
-.Sh DESCRIPTION
+.Sh Description
 .
 A complete reference for writing
 .Ux
@@ -112,14 +112,14 @@ manual pages, a manual entry is simply referred to as a man page, regardless
 of actual length and without sexist intention.
 .
 .
-.Sh "GETTING STARTED"
+.Sh "Getting started"
 .
 The material presented in the remainder of this document is outlined
 as follows:
 .
 .Bl -enum -width 3n -offset indent
 .  It
-.  Tn "TROFF IDIOSYNCRASIES"
+.  Tn "troff idiosyncrasies"
 .
 .  Bl -tag -width 2n -compact
 .    It "Macro Usage"
@@ -130,16 +130,16 @@ as follows:
 .  El
 .
 .  It
-.  Tn "A MANUAL PAGE TEMPLATE"
+.  Tn "A manual page template"
 .
 .  It
-.  Tn "CONVENTIONS"
+.  Tn "Conventions"
 .
 .  It
-.  Tn "TITLE MACROS"
+.  Tn "Title macros"
 .
 .  It
-.  Tn "INTRODUCTION OF MANUAL AND GENERAL TEXT DOMAINS"
+.  Tn "Introduction of manual and general text domains"
 .
 .  Bl -tag -width 2n -compact
 .    It "What's in a Name" Ns ...
@@ -147,7 +147,7 @@ as follows:
 .  El
 .
 .  It
-.  Tn "MANUAL DOMAIN"
+.  Tn "Manual domain"
 .
 .  Bl -tag -width 2n -compact
 .    It "Addresses"
@@ -179,7 +179,7 @@ as follows:
 .  El
 .
 .  It
-.  Tn "GENERAL TEXT DOMAIN"
+.  Tn "General text domain"
 .
 .  Bl -tag -width 2n -compact
 .    It "AT&T Macro"
@@ -204,7 +204,7 @@ as follows:
 .  El
 .
 .  It
-.  Tn "PAGE STRUCTURE DOMAIN"
+.  Tn "Page structure domain"
 .
 .  Bl -tag -width 2n -compact
 .    It "Section Headers"
@@ -216,25 +216,25 @@ as follows:
 .  El
 .
 .  It
-.  Tn "MISCELLANEOUS MACROS"
+.  Tn "Miscellaneous macros"
 .
 .  It
-.  Tn "PREDEFINED STRINGS"
+.  Tn "Predefined strings"
 .
 .  It
-.  Tn "DIAGNOSTICS"
+.  Tn "Diagnostics"
 .
 .  It
-.  Tn "FORMATTING WITH GROFF, TROFF, AND NROFF"
+.  Tn "Formatting with groff, troff, and nroff"
 .
 .  It
-.  Tn "FILES"
+.  Tn "Files"
 .
 .  It
-.  Tn "SEE ALSO"
+.  Tn "See also"
 .
 .  It
-.  Tn "BUGS"
+.  Tn "Bugs"
 .El
 .
 .\" XXX
@@ -242,7 +242,7 @@ as follows:
 .  ne 7
 .
 .
-.Sh "TROFF IDIOSYNCRASIES"
+.Sh "troff idiosyncrasies"
 .
 The
 .Nm \-mdoc
@@ -432,7 +432,7 @@ would see three arguments, and the result would be:
 .Pp
 .\" For an example of what happens when the parameter list overlaps a newline
 .\" boundary, see the
-.\" .Sx BUGS
+.\" .Sx Bugs
 .\" section.
 .
 .Ss "Trailing Blank Space Characters"
@@ -559,7 +559,7 @@ anywhere (the latter is a
 extension); the rest of such a line is ignored.
 .
 .
-.Sh "A MANUAL PAGE TEMPLATE"
+.Sh "A manual page template"
 .
 The body of a man page is easily constructed from a basic template:
 .
@@ -568,39 +568,39 @@ The body of a man page is easily constructed from a basic template:
 \&.Dd Month day, year
 \&.Dt DOCUMENT_TITLE [section number] [architecture/volume]
 \&.Os [OPERATING_SYSTEM] [version/release]
-\&.Sh NAME
+\&.Sh Name
 \&.Nm name
 \&.Nd one line description of name
 \&.\e" This next command is for sections 2 and 3 only.
-\&.\e" .Sh LIBRARY
-\&.Sh SYNOPSIS
-\&.Sh DESCRIPTION
+\&.\e" .Sh Library
+\&.Sh Synopsis
+\&.Sh Description
 \&.\e" The following commands should be uncommented and
 \&.\e" used where appropriate.
-\&.\e" .Sh IMPLEMENTATION NOTES
+\&.\e" .Sh Implementation notes
 \&.\e" This next command is for sections 2, 3, and 9 only
 \&.\e"     (function return values).
-\&.\e" .Sh RETURN VALUES
+\&.\e" .Sh Return values
 \&.\e" This next command is for sections 1, 6, 7, and 8 only.
-\&.\e" .Sh ENVIRONMENT
-\&.\e" .Sh FILES
+\&.\e" .Sh Environment
+\&.\e" .Sh Files
 \&.\e" This next command is for sections 1, 6, and 8 only
 \&.\e"     (command return values to the shell).
-\&.\e" .Sh EXIT STATUS
-\&.\e" .Sh EXAMPLES
+\&.\e" .Sh Exit status
+\&.\e" .Sh Examples
 \&.\e" This next command is for sections 1, 4, 6, 7, 8, and 9 only
 \&.\e"     (fprintf/stderr type diagnostics).
-\&.\e" .Sh DIAGNOSTICS
-\&.\e" .Sh COMPATIBILITY
+\&.\e" .Sh Diagnostics
+\&.\e" .Sh Compatibility
 \&.\e" This next command is for sections 2, 3, 4, and 9 only
 \&.\e"     (settings of the errno variable).
-\&.\e" .Sh ERRORS
-\&.\e" .Sh SEE ALSO
-\&.\e" .Sh STANDARDS
-\&.\e" .Sh HISTORY
-\&.\e" .Sh AUTHORS
-\&.\e" .Sh CAVEATS
-\&.\e" .Sh BUGS
+\&.\e" .Sh Errors
+\&.\e" .Sh See also
+\&.\e" .Sh Standards
+\&.\e" .Sh History
+\&.\e" .Sh Authors
+\&.\e" .Sh Caveats
+\&.\e" .Sh Bugs
 .Ed
 .Pp
 .
@@ -614,25 +614,25 @@ developed or modified for, and the man page title (in
 .Em upper case )
 along with the section of the manual the page belongs in.
 These commands identify the page and are discussed below in
-.Sx TITLE MACROS .
+.Sx Title macros .
 .Pp
 The remaining items in the template are section headers
 .Pf ( Li .Sh ) ;
 of which
-.Em NAME ,
-.Em SYNOPSIS ,
+.Em Name ,
+.Em Synopsis ,
 and
-.Em DESCRIPTION
+.Em Description
 are mandatory.
 The headers are discussed in
-.Sx "PAGE STRUCTURE DOMAIN" ,
+.Sx "Page structure domain" ,
 after presentation of
-.Sx "MANUAL DOMAIN" .
+.Sx "Manual domain" .
 Several content macros are used to demonstrate page layout macros; reading
 about content macros before page layout macros is recommended.
 .
 .
-.Sh CONVENTIONS
+.Sh Conventions
 .
 In the description of all macros below, optional arguments are put into
 brackets.
@@ -692,7 +692,7 @@ dependencies on local modifications of the
 package.
 .
 .
-.Sh "TITLE MACROS"
+.Sh "Title macros"
 .
 The title macros are part of the page structure domain but are presented
 first and separately for someone who wishes to start writing a man page
@@ -708,9 +708,7 @@ used to construct headers and footers only.
 .Op Aq section number
 .Op Aq volume
 .Xc
-The document title is the subject of the man page and must be in
-.Tn CAPITALS
-due to troff limitations.
+The document title is the subject of the man page.
 If omitted,
 .Sq Tn UNTITLED
 is used.
@@ -984,7 +982,7 @@ This macro is neither callable nor parsed.
 .El
 .
 .
-.Sh "INTRODUCTION OF MANUAL AND GENERAL TEXT DOMAINS"
+.Sh "Introduction of manual and general text domains"
 .
 .Ss "What's in a Name" Ns ...
 .
@@ -1019,7 +1017,7 @@ be processed.
 In the second case, the description of a
 .Ux
 command using the content macros is a bit more involved; a typical
-.Sx SYNOPSIS
+.Sx Synopsis
 command line might be displayed as:
 .
 .Bd -filled -offset indent
@@ -1201,7 +1199,7 @@ Typical syntax is shown in the first content macro displayed below,
 .Ql .Ad .
 .
 .
-.Sh "MANUAL DOMAIN"
+.Sh "Manual domain"
 .
 .Ss Addresses
 .
@@ -1249,7 +1247,7 @@ documented, or the name of the author of the actual manual page.
 The default width is 12n.
 .Pp
 In the
-.Em AUTHORS
+.Em Authors
 section, the
 .Ql .An
 command causes a line break allowing each new name to appear on its own
@@ -1313,7 +1311,7 @@ declaration for a device interface in a section four manual.
 .El
 .Pp
 In the
-.Sx SYNOPSIS
+.Sx Synopsis
 section a
 .Ql .Cd
 command causes a line break before and after its arguments are printed.
@@ -1449,7 +1447,7 @@ The default width is 12n.
 The
 .Ql .Fd
 macro is used in the
-.Sx SYNOPSIS
+.Sx Synopsis
 section with section two or three functions.
 It is neither callable nor parsed.
 .Pp
@@ -1461,7 +1459,7 @@ It is neither callable nor parsed.
 .El
 .Pp
 In the
-.Sx SYNOPSIS
+.Sx Synopsis
 section a
 .Ql .Fd
 command causes a line break if a function has already been presented and a
@@ -1473,7 +1471,7 @@ the declaration for the next function.
 The
 .Ql .In
 macro, while in the
-.Sx SYNOPSIS
+.Sx Synopsis
 section, represents the
 .Li #include
 statement, and is the short form of the above example.
@@ -1481,7 +1479,7 @@ It specifies the C\~header file as being included in a C\~program.
 It also causes a line break.
 .Pp
 While not in the
-.Sx SYNOPSIS
+.Sx Synopsis
 section, it represents the header file enclosed in angle brackets.
 .Pp
 .Dl Usage: .In Ao header file Ac
@@ -1498,11 +1496,11 @@ section, it represents the header file enclosed in angle brackets.
 .Ss "Function Types"
 .
 This macro is intended for the
-.Sx SYNOPSIS
+.Sx Synopsis
 section.
 It may be used anywhere else in the man page without problems, but its main
 purpose is to present the function type in kernel normal form for the
-.Sx SYNOPSIS
+.Sx Synopsis
 of sections two and three (it causes a line break, allowing the function
 name to appear on the next line).
 .Pp
@@ -1583,10 +1581,10 @@ Produces:
 .Pp
 .
 In the
-.Sx SYNOPSIS
+.Sx Synopsis
 section, the function will always begin at the beginning of line.
 If there is more than one function presented in the
-.Sx SYNOPSIS
+.Sx Synopsis
 section and a function type has not been given, a line break will occur,
 leaving a nice vertical space between the current function name and the one
 prior.
@@ -1602,9 +1600,9 @@ are 12n and 16n, respectively.
 The
 .Ql .Fa
 macro is used to refer to function arguments (parameters) outside of the
-.Sx SYNOPSIS
+.Sx Synopsis
 section of the manual or inside the
-.Sx SYNOPSIS
+.Sx Synopsis
 section if the enclosure macros
 .Ql .Fo
 and
@@ -1632,7 +1630,7 @@ The default width is 12n.
 The
 .Ql .Rv
 macro generates text for use in the
-.Sx RETURN VALUES
+.Sx Return values
 section.
 .Pp
 .Dl Usage: .Rv Oo \-std Oc Op Ao function Ac ...
@@ -1662,7 +1660,7 @@ flag.
 The
 .Ql .Ex
 macro generates text for use in the
-.Sx DIAGNOSTICS
+.Sx Diagnostics
 section.
 .Pp
 .Dl Usage: .Ex Oo \-std Oc Op Ao utility Ac ...
@@ -1875,7 +1873,7 @@ then denotes the keyword to be used with the
 macro.
 .Pp
 In the
-.Em LIBRARY
+.Em Library
 section an
 .Ql .Lb
 command causes a line break before and after its arguments are printed.
@@ -1917,17 +1915,17 @@ regurgitates this initial name for the sole purpose of making less work for
 the author.
 .Ql .Nm
 causes a line break within the
-.Sx SYNOPSIS
+.Sx Synopsis
 section.
 .Pp
 Note: A section two or three document function name is addressed with the
 .Ql .Nm
 in the
-.Em NAME
+.Em Name
 section, and with
 .Ql .Fn
 in the
-.Sx SYNOPSIS
+.Sx Synopsis
 and remaining sections.
 For interactive commands, such as the
 .Ql while
@@ -2177,7 +2175,7 @@ The
 .Ql .Vt
 macro may be used whenever a type is referenced.
 In the
-.Sx SYNOPSIS
+.Sx Synopsis
 section, it causes a line break (useful for old style variable declarations).
 .Pp
 .Dl Usage: .Vt Ao type Ac ...
@@ -2234,7 +2232,7 @@ put into parentheses.
 The default width is 10n.
 .
 .
-.Sh "GENERAL TEXT DOMAIN"
+.Sh "General text domain"
 .
 .Ss "AT&T Macro"
 .
@@ -2295,7 +2293,7 @@ For possible values of
 see the description of the
 .Ql .Os
 command above in section
-.Sx "TITLE MACROS" .
+.Sx "Title macros" .
 .
 .Ss "FreeBSD Macro"
 .
@@ -2314,7 +2312,7 @@ For possible values of
 see the description of the
 .Ql .Os
 command above in section
-.Sx "TITLE MACROS" .
+.Sx "Title macros" .
 .
 .Ss "DragonFly Macro"
 .
@@ -2333,7 +2331,7 @@ For possible values of
 see the description of the
 .Ql .Os
 command above in section
-.Sx "TITLE MACROS" .
+.Sx "Title macros" .
 .
 .Ss "OpenBSD Macro"
 .
@@ -2618,9 +2616,9 @@ macro designates a reference to a section header within the same document.
 .Pp
 .Dl Usage: .Sx Ao section reference Ac ...
 .Pp
-.Bl -tag -width ".Li .Sx\ FILES" -offset 15n
-.It Li ".Sx FILES"
-.Sx FILES
+.Bl -tag -width ".Li .Sx\ Files" -offset 15n
+.It Li ".Sx Files"
+.Sx Files
 .El
 .Pp
 .
@@ -2666,7 +2664,7 @@ style references.
 .It Li .Rs
 Reference start (does not take arguments).
 Causes a line break in the
-.Sx "SEE ALSO"
+.Sx "See also"
 section and begins collection of reference information until the reference
 end macro is read.
 .It Li .Re
@@ -2857,7 +2855,7 @@ produces
 .Pp
 .
 .
-.Sh "PAGE STRUCTURE DOMAIN"
+.Sh "Page structure domain"
 .
 .Ss "Section Headers"
 .
@@ -2876,15 +2874,15 @@ only; it then reactivates the default font for
 .Pp
 The default width is 8n.
 .
-.Bl -tag -width ".Li .Sh\ RETURN\ VALUES"
-.It Li ".Sh NAME"
+.Bl -tag -width ".Li .Sh\ Return\ values"
+.It Li ".Sh Name"
 The
-.Ql ".Sh NAME"
+.Ql ".Sh Name"
 macro is mandatory.
 If not specified, headers, footers and page layout defaults will not be set
 and things will be rather unpleasant.
 The
-.Em NAME
+.Em Name
 section consists of at least three items.
 The first is the
 .Ql .Nm
@@ -2901,7 +2899,7 @@ first prints
 .Ql \- ,
 then all its arguments.
 .
-.It Li ".Sh LIBRARY"
+.It Li ".Sh Library"
 This section is for section two and three function calls.
 It should consist of a single
 .Ql .Lb
@@ -2909,9 +2907,9 @@ macro call;
 see
 .Sx "Library Names" .
 .
-.It Li ".Sh SYNOPSIS"
+.It Li ".Sh Synopsis"
 The
-.Sx SYNOPSIS
+.Sx Synopsis
 section describes the typical usage of the subject of a man page.
 The macros required are either
 .Ql .Nm ,
@@ -2954,9 +2952,9 @@ The following macros were used:
 .Dl ".Op Fl"
 .Dl .Ar
 .
-.It Li ".Sh DESCRIPTION"
+.It Li ".Sh Description"
 In most cases the first text in the
-.Sx DESCRIPTION
+.Sx Description
 section is a brief paragraph on the command, function or file, followed by a
 lexical list of options and respective explanations.
 To create such a list, the
@@ -2970,15 +2968,15 @@ macros are used (see
 .Sx Lists and Columns
 below).
 .
-.It Li ".Sh IMPLEMENTATION NOTES"
+.It Li ".Sh Implementation notes"
 Implementation specific information should be placed here.
 .
-.It Li ".Sh RETURN VALUES"
+.It Li ".Sh Return values"
 Sections 2, 3 and\~9 function return values should go here.
 The
 .Ql .Rv
 macro may be used to generate text for use in the
-.Sx RETURN VALUES
+.Sx Return values
 section for most section 2 and 3 library functions;
 see
 .Sx "Return Values" .
@@ -2991,52 +2989,52 @@ section headers are part of the preferred manual page layout and must be
 used appropriately to maintain consistency.
 They are listed in the order in which they would be used.
 .
-.Bl -tag -width ".Li .Sh\ COMPATIBILITY"
-.It Li ".Sh ENVIRONMENT"
+.Bl -tag -width ".Li .Sh\ Compatibility"
+.It Li ".Sh Environment"
 The
-.Em ENVIRONMENT
+.Em Environment
 section should reveal any related environment variables and clues to their
 behavior and/or usage.
 .
-.It Li ".Sh FILES"
+.It Li ".Sh Files"
 Files which are used or created by the man page subject should be listed via
 the
 .Ql .Pa
 macro in the
-.Sx FILES
+.Sx Files
 section.
 .
-.It Li ".Sh EXAMPLES"
+.It Li ".Sh Examples"
 There are several ways to create examples.
 See the
 .Sx "Examples and Displays"
 section below for details.
 .
-.It Li ".Sh DIAGNOSTICS"
+.It Li ".Sh Diagnostics"
 Diagnostic messages from a command should be placed in this section.
 The
 .Ql .Ex
 macro may be used to generate text for use in the
-.Sx DIAGNOSTICS
+.Sx Diagnostics
 section for most section 1, 6 and\~8 commands;
 see
 .Sx "Exit Status" .
 .
-.It Li ".Sh COMPATIBILITY"
+.It Li ".Sh Compatibility"
 Known compatibility issues (e.g.\& deprecated options or parameters)
 should be listed here.
 .
-.It Li ".Sh ERRORS"
+.It Li ".Sh Errors"
 Specific error handling, especially from library functions (man page
 sections 2, 3, and\~9) should go here.
 The
 .Ql .Er
 macro is used to specify an error (errno).
 .
-.It Li ".Sh SEE ALSO"
+.It Li ".Sh See also"
 References to other material on the man page topic and cross references to
 other relevant man pages should be placed in the
-.Sx "SEE ALSO"
+.Sx "See also"
 section.
 Cross references are specified using the
 .Ql .Xr
@@ -3055,7 +3053,7 @@ Example:
 .Xr group 5 ,
 .Xr passwd 5
 .
-.It Li ".Sh STANDARDS"
+.It Li ".Sh Standards"
 If the command, library function or file adheres to a specific
 implementation such as
 .St -p1003.2
@@ -3064,14 +3062,14 @@ or
 this should be noted here.
 If the command does not adhere to any standard, its history should be noted
 in the
-.Em HISTORY
+.Em History
 section.
 .
-.It Li ".Sh HISTORY"
+.It Li ".Sh History"
 Any command which does not adhere to any specific standards should be
 outlined historically in this section.
 .
-.It Li ".Sh AUTHORS"
+.It Li ".Sh Authors"
 Credits should be placed here.
 Use the
 .Ql .An
@@ -3080,7 +3078,7 @@ macro for names and the
 macro for e-mail addresses within optional contact information.
 Explicitly indicate whether the person authored the initial manual page
 or the software or whatever the person is being credited for.
-.It Li ".Sh BUGS"
+.It Li ".Sh Bugs"
 Blatant problems with the topic go here.
 .El
 .Pp
@@ -3090,7 +3088,7 @@ User-specified
 sections may be added; for example, this section was set with:
 .
 .Bd -literal -offset 15n
-\&.Sh "PAGE STRUCTURE DOMAIN"
+\&.Sh "Page structure domain"
 .Ed
 .
 .Ss "Subsection Headers"
@@ -3989,7 +3987,7 @@ Suppress insertion of vertical space before the list and between list items.
 .El
 .
 .
-.Sh "MISCELLANEOUS MACROS"
+.Sh "Miscellaneous macros"
 .
 Here a list of the remaining macros which do not fit well into one of the
 above sections.
@@ -4080,7 +4078,7 @@ It is neither callable nor parsed and takes no arguments.
 .El
 .
 .
-.Sh "PREDEFINED STRINGS"
+.Sh "Predefined strings"
 .
 The following strings are predefined:
 .Pp
@@ -4142,7 +4140,7 @@ extension).
 \#
 \#=====================================================================
 \#
-.Sh DIAGNOSTICS
+.Sh Diagnostics
 .
 The debugging macro
 .Ql .Db
@@ -4161,7 +4159,7 @@ which yields a register dump of all global registers and strings.
 A normal user will never need it.
 .
 .
-.Sh "FORMATTING WITH GROFF, TROFF, AND NROFF"
+.Sh "Formatting with groff, troff, and nroff"
 .
 By default, the package inhibits page breaks, headers, and footers if
 displayed with a
@@ -4222,7 +4220,7 @@ string is also recognized, but ignored, for compatibility with
 .Xr groff_man 7 .
 .
 .
-.Sh FILES
+.Sh Files
 .
 .Bl -tag -width mdoc/doc-ditroff -compact
 .It Pa doc.tmac
@@ -4250,7 +4248,7 @@ Multiple man pages (in either format) can be handled.
 .El
 .
 .
-.Sh "SEE ALSO"
+.Sh "See also"
 .
 .Xr groff 1 ,
 .Xr man 1 ,
@@ -4258,13 +4256,13 @@ Multiple man pages (in either format) can be handled.
 .Xr groff_man 7
 .
 .
-.Sh BUGS
+.Sh Bugs
 .
 Section 3f has not been added to the header routines.
 .Pp
 .Ql \&.Nm
 font should be changed in
-.Em NAME
+.Em Name
 section.
 .Pp
 .Ql \&.Fn
