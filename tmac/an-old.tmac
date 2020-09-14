@@ -40,7 +40,6 @@
 .
 .if !r D .nr D 0
 .if !r C .nr C 0
-.if !r S .nr S 10
 .\" We must use consecutive page numbers when using PostScript to
 .\" generate HTML images, and we must not reset the page number at the
 .\" beginning (the 'ps4html' register is automatically added to the
@@ -678,15 +677,17 @@
 .\" Load local modifications.
 .mso man.local
 .
-.\" Determine page title and section heading full-capitalization if and
-.\" only if -r options or man.local did not.
+.\" Set rendering parameters only if -[dr] options or man.local did not.
+.
+.\" full capitalization of section headings
 .if !r CS \
 .  nr CS 0
 .
+.\" full capitalization of page title
 .if !r CT \
 .  nr CT 0
 .
-.\" Similarly for hyphenation mode.
+.\" hyphenation mode
 .if !r HY \{\
 .  \" No page breaks occur in continuous rendering.
 .  ie \n[cR] \
@@ -695,11 +696,20 @@
 .    nr HY 6
 .\}
 .
-.\" Set the default adjustment mode and heading font only if -d options
-.\" or man.local did not.
+.\" point size
+.if !r S \{\
+.  nr S 10
+.  if '\*[.T]'X75-12' \
+.    nr S 12
+.  if '\*[.T]'X100-12' \
+.    nr S 12
+.\}
+.
+.\" adjustment mode
 .if !d AD \
 .  ds AD b\"
 .
+.\" section heading font
 .if !d HF \
 .  ds HF B\"
 .
