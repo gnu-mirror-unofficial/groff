@@ -1,3 +1,21 @@
+2020-09-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/mdoc/doc-common-u (doc-prepare-section-heading): New
+	macro defines new string doc-sec-head to anable recognition of
+	mixed-case section headings in mdoc man pages.  For example,
+	"Name" and "Description" are now recognized in addition to
+	"NAME" and "DESCRIPTION".
+	(doc-section-{name,synopsis,library,description,see-also,files,
+	authors}): Redefine strings to be mixed-case.  Add trailing
+	comment guard per recommended best practice.
+	(Sh): Call doc-prepare-section-heading instead of
+	doc-first-parameter, and compare predefined section strings to
+	doc-sec-head instead of doc-str-dfp.
+
+	* tmac/tests/doc-accept-mixed-case-section-headings.sh: Test it.
+	* tmac/tests/doc-smoke-test.sh: Use mixed-case section headings.
+	* tmac/tmac.am: Run test.
+
 2020-09-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* FOR-RELEASE: Start a release checklist.  We probably should

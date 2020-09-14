@@ -1118,6 +1118,34 @@
 ..
 .
 .
+.\" NS doc-prepare-section-heading macro
+.\" NS   define `doc-sec-head`, `macro` prepared for string matching
+.\"
+.\" NS
+.\" NS local variables:
+.\" NS   doc-str-tmp1
+.\" NS   doc-str-tmp2
+.\" NS   doc-tmp-strlen
+.
+.de doc-prepare-section-heading
+.  ds doc-str-tmp1 "\$*
+.  ds doc-str-tmp2 "\$*
+.  length doc-tmp-strlen \$*
+.  \" Leave (nonstandard) section headings of length 0 or 1 unchanged.
+.  ie \n[doc-tmp-strlen]>1 \{\
+.    substring doc-str-tmp1 0 0
+.    substring doc-str-tmp2 1
+.    stringdown doc-str-tmp2
+.    ds doc-sec-head \*[doc-str-tmp1]\*[doc-str-tmp2]\"
+.  \}
+.  el \
+.    ds doc-sec-head "\$*
+.    rm doc-str-tmp1
+.    rm doc-str-tmp2
+.    rr doc-tmp-strleq
+..
+.
+.
 .\" NS Sh user macro (not callable)
 .\" NS   section headers
 .\" NS
@@ -1141,13 +1169,13 @@
 .\" NS
 .\" NS width register 'Sh' set in doc-common
 .
-.ds doc-section-name        NAME
-.ds doc-section-synopsis    SYNOPSIS
-.ds doc-section-library     LIBRARY
-.ds doc-section-description DESCRIPTION
-.ds doc-section-see-also    SEE
-.ds doc-section-files       FILES
-.ds doc-section-authors     AUTHORS
+.ds doc-section-name        Name\"
+.ds doc-section-synopsis    Synopsis\"
+.ds doc-section-library     Library\"
+.ds doc-section-description Description\"
+.ds doc-section-see-also    See also\"
+.ds doc-section-files       Files\"
+.ds doc-section-authors     Authors\"
 .
 .de Sh
 .  ie \n[doc-arg-limit] \{\
@@ -1181,10 +1209,10 @@
 .    if t \
 .      ad
 .
-.    \" this resolves e.g. '.Sh "SEE ALSO"'
-.    doc-first-parameter \$*
+.    \" this resolves, e.g., '.Sh "SEE ALSO"'
+.    doc-prepare-section-heading \$*
 .
-.    ie "\*[doc-str-dfp]"\*[doc-section-name]" \{\
+.    ie "\*[doc-sec-head]"\*[doc-section-name]" \{\
 .      doc-setup-header
 .      in 0
 .    \}
@@ -1195,30 +1223,30 @@
 .      nr doc-in-files-section 0
 .      nr doc-in-authors-section 0
 .
-.      ie        "\*[doc-str-dfp]"\*[doc-section-synopsis]" \{\
+.      ie        "\*[doc-sec-head]"\*[doc-section-synopsis]" \{\
 .        if t \
 .          na
 .        nr doc-in-synopsis-section 1
 .        nr doc-indent-synopsis 0
 .        nr doc-indent-synopsis-active 0
 .      \}
-.      el \{ .ie "\*[doc-str-dfp]"\*[doc-section-library]" \{\
+.      el \{ .ie "\*[doc-sec-head]"\*[doc-section-library]" \{\
 .        nr doc-in-library-section 1
 .      \}
-.      el \{ .ie "\*[doc-str-dfp]"\*[doc-section-description]" \{\
+.      el \{ .ie "\*[doc-sec-head]"\*[doc-section-description]" \{\
 .        nr doc-is-func 0
 .        nr doc-func-count 0
 .        nr doc-func-args-processed 0
 .        nr doc-num-func-args 0
 .      \}
-.      el \{ .ie "\*[doc-str-dfp]"\*[doc-section-see-also]" \{\
+.      el \{ .ie "\*[doc-sec-head]"\*[doc-section-see-also]" \{\
 .        if t \
 .          na
 .        nr doc-in-see-also-section 1
 .      \}
-.      el \{ .ie "\*[doc-str-dfp]"\*[doc-section-files]" \
+.      el \{ .ie "\*[doc-sec-head]"\*[doc-section-files]" \
 .        nr doc-in-files-section 1
-.      el .if    "\*[doc-str-dfp]"\*[doc-section-authors]" \
+.      el .if    "\*[doc-sec-head]"\*[doc-section-authors]" \
 .        nr doc-in-authors-section 1
 .      \}\}\}\}
 .

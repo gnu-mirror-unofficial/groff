@@ -20,52 +20,55 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-# Regression-test Savannah #51003.
-#
-# Ensure we can render mdoc man pages from a build tree.
+# Ensure we recognize mixed-case section headings ("Name" as well as
+# "NAME").
 
 EXAMPLE='\
-.Dd August 25, 2020
+.Dd September 14, 2020
 .Dt mdoc\-test 7
 .Os
 .Sh Name
 .Nm mdoc\-test
 .Nd a smoke test for groff'"'"'s mdoc implementation
 .Sh Description
-If you can read this without a hailstorm of warnings,
-things are probably working.'
+This page has mixed-case section headings.
+.Pp
+This paragraph works around Savannah #59106.
+.Dd September 14, 2020
+.Dt mdoc\-test 7
+.Os
+.Sh NAME
+.Nm mdoc\-test
+.Nd a smoke test for groff'"'"'s mdoc implementation
+.Sh DESCRIPTION
+This page has fully-capitalized section headings.\
+'
 
 OUTPUT=$(printf "%s\n" "$EXAMPLE" | "$groff" -Tascii -P-cbou -mdoc)
 FAIL=
 
-if ! echo "$OUTPUT" | grep -qE '^mdoc-test\(7\) +BSD Miscellaneous'
+if [ -z "$(echo "$OUTPUT" | sed -n '/Name/{N;/smoke/p}')" ]
 then
     FAIL=yes
-    echo "header check failed" >&2
+    echo "section \"Name\" check failed" >&2
 fi
 
-if ! echo "$OUTPUT" | grep -qE '^Name$'
+if [ -z "$(echo "$OUTPUT" | sed -n '/Description/{N;/mixed-case/p}')" ]
 then
     FAIL=yes
-    echo "\"Name\" section heading missing" >&2
+    echo "section \"Description\" check failed" >&2
 fi
 
-if ! echo "$OUTPUT" | grep -qE '^Description$'
+if [ -z "$(echo "$OUTPUT" | sed -n '/NAME/{N;/smoke/p}')" ]
 then
     FAIL=yes
-    echo "\"Description\" section heading missing" >&2
+    echo "section \"NAME\" check failed" >&2
 fi
 
-if ! echo "$OUTPUT" | grep -qE 'you can read this'
+if [ -z "$(echo "$OUTPUT" | sed -n '/DESCRIPTION/{N;/fully-cap/p}')" ]
 then
     FAIL=yes
-    echo "paragraph body check failed" >&2
-fi
-
-if ! echo "$OUTPUT" | grep -qE '^BSD +August 25, 2020'
-then
-    FAIL=yes
-    echo "footer check failed" >&2
+    echo "section \"DESCRIPTION\" check failed" >&2
 fi
 
 test -z "$FAIL"
