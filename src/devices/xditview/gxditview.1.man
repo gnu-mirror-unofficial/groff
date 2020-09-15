@@ -3,11 +3,6 @@
 gxditview \- display groff intermediate output files
 .
 .
-.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
-.do nr *groff_gxditview_1_man_C \n[.cp]
-.cp 0
-.
-.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -32,6 +27,11 @@ gxditview \- display groff intermediate output files
 .\" OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
 .\" NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
 .\" WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.
+.
+.\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
+.do nr *groff_gxditview_1_man_C \n[.cp]
+.cp 0
 .
 .
 .\" ====================================================================
@@ -301,6 +301,87 @@ displayed by
 .
 .
 .\" ====================================================================
+.SH "X Defaults"
+.\" ====================================================================
+.
+This program uses the
+.I Dvi
+widget in the X\~Toolkit.
+.
+It understands all of the core resource names and classes as well as:
+.
+.TP 8
+.BR width\  (class\  Width )
+Specifies the width of the window.
+.
+.TP
+.BR height\  (class\  Height )
+Specifies the height of the window.
+.
+.TP
+.BR foreground\  (class\  Foreground )
+Specifies the default foreground color.
+.
+.TP
+.BR font\  (class\  Font )
+Specifies the font to be used for error messages.
+.
+.TP
+.BR fontMap\  (class\  FontMap )
+Specifies the mapping from
+.I groff
+font names to X\~font names.
+.
+This must be a string containing a sequence of lines.
+.
+Each line contains two whitespace separated fields: first the
+.I groff
+font name, and secondly the X\~font name.
+.
+The default is
+.nf
+"\[rs]
+TR	\-adobe\-times\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+TI	\-adobe\-times\-medium\-i\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+TB	\-adobe\-times\-bold\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+TBI	\-adobe\-times\-bold\-i\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+CR	\-adobe\-courier\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+CI	\-adobe\-courier\-medium\-o\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+CB	\-adobe\-courier\-bold\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+CBI	\-adobe\-courier\-bold\-o\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+HR	\-adobe\-helvetica\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+HI	\-adobe\-helvetica\-medium\-o\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+HB	\-adobe\-helvetica\-bold\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+HBI	\-adobe\-helvetica\-bold\-o\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+NR	\-adobe\-new century schoolbook\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+NI	\-adobe\-new century schoolbook\-medium\-i\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+NB	\-adobe\-new century schoolbook\-bold\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+NBI	\-adobe\-new century schoolbook\-bold\-i\-normal\
+\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
+S	\-adobe\-symbol\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-adobe\-fontspecific\[rs]n\[rs]
+SS	\-adobe\-symbol\-medium\-r\-normal\
+\-\-*\-100\-*\-*\-*\-*\-adobe\-fontspecific\[rs]n\[rs]
+"
+.fi
+.
+.
+.\" ====================================================================
 .SH Options
 .\" ====================================================================
 .
@@ -424,87 +505,6 @@ This option specifies a resource string to be used.
 .
 .
 .\" ====================================================================
-.SH "X Defaults"
-.\" ====================================================================
-.
-This program uses the
-.I Dvi
-widget in the X\~Toolkit.
-.
-It understands all of the core resource names and classes as well as:
-.
-.TP 8
-.BR width\  (class\  Width )
-Specifies the width of the window.
-.
-.TP
-.BR height\  (class\  Height )
-Specifies the height of the window.
-.
-.TP
-.BR foreground\  (class\  Foreground )
-Specifies the default foreground color.
-.
-.TP
-.BR font\  (class\  Font )
-Specifies the font to be used for error messages.
-.
-.TP
-.BR fontMap\  (class\  FontMap )
-Specifies the mapping from
-.I groff
-font names to X\~font names.
-.
-This must be a string containing a sequence of lines.
-.
-Each line contains two whitespace separated fields: first the
-.I groff
-font name, and secondly the X\~font name.
-.
-The default is
-.nf
-"\[rs]
-TR	\-adobe\-times\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-TI	\-adobe\-times\-medium\-i\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-TB	\-adobe\-times\-bold\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-TBI	\-adobe\-times\-bold\-i\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-CR	\-adobe\-courier\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-CI	\-adobe\-courier\-medium\-o\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-CB	\-adobe\-courier\-bold\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-CBI	\-adobe\-courier\-bold\-o\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-HR	\-adobe\-helvetica\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-HI	\-adobe\-helvetica\-medium\-o\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-HB	\-adobe\-helvetica\-bold\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-HBI	\-adobe\-helvetica\-bold\-o\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-NR	\-adobe\-new century schoolbook\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-NI	\-adobe\-new century schoolbook\-medium\-i\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-NB	\-adobe\-new century schoolbook\-bold\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-NBI	\-adobe\-new century schoolbook\-bold\-i\-normal\
-\-\-*\-100\-*\-*\-*\-*\-iso8859\-1\[rs]n\[rs]
-S	\-adobe\-symbol\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-adobe\-fontspecific\[rs]n\[rs]
-SS	\-adobe\-symbol\-medium\-r\-normal\
-\-\-*\-100\-*\-*\-*\-*\-adobe\-fontspecific\[rs]n\[rs]
-"
-.fi
-.
-.
-.\" ====================================================================
 .SH Environment
 .\" ====================================================================
 .
@@ -561,17 +561,6 @@ James Clark.
 .
 .
 .\" ====================================================================
-.SH "See Also"
-.\" ====================================================================
-.
-.BR X (7),
-.BR xrdb (1),
-.BR xditview (1),
-.BR groff (@MAN1EXT@),
-.BR groff_out (@MAN5EXT@)
-.
-.
-.\" ====================================================================
 .SH Origin
 .\" ====================================================================
 .
@@ -583,6 +572,17 @@ originated in
 .B \%xtroff
 which was derived from
 .BR \%suntroff .
+.
+.
+.\" ====================================================================
+.SH "See Also"
+.\" ====================================================================
+.
+.BR X (7),
+.BR xrdb (1),
+.BR xditview (1),
+.BR groff (@MAN1EXT@),
+.BR groff_out (@MAN5EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
