@@ -1,3 +1,23 @@
+2020-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	tmac/an-old.tmac: Drop \*[an-empty] string.  This string is
+	documented as preventing "looping" (presumably infinite) if
+	someone calls a two-font macro with an inconvenient parameter;
+	the example shown is ".RB ( \\ )".  This string was being
+	interpolated at the end of each argument pair to the two-font
+	macros BI, BR, IB, RB, and RI.  This code dates back to groff
+	1.10 (dc5351364982f78f8c630f1e856d692d4a82666f, 26 November
+	1995).  Did you notice a two-font macro missing?  It was: IR.
+	Using it fails to cause a problem.  So do all of the others when
+	the empty string interpolation is removed.  Presumably at some
+	point in the past 25 years, this workaround became unnecessary.
+	(BI, BR, IB, RB, RI): Remove interpolations of string.
+
+	* tmac/tests/an-old_avoid_two-font_denial_of_service.sh: Add
+	regression test.
+
+	* tmac/tmac.am: Run the test.
+
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	tmac/an-old.tmac: Refactor continuous rendering handling.

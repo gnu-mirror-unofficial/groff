@@ -480,14 +480,12 @@
 .  ns
 ..
 .
-.ds an-empty \" this is referenced to avoid looping on, e.g., .RB ( \\ )
-.
 .de1 RI
 .  if \\n[.$] \{\
 .    ds an-result \&\f[R]\\$1\"
 .    shift
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \,\f[I]\\$1\f[R]\/\\$2\\*[an-empty]\"
+.      as an-result \,\f[I]\\$1\f[R]\/\\$2\"
 .      shift 2
 .    \}
 .    if \\n[.$] .as an-result \,\f[I]\\$1\"
@@ -515,7 +513,7 @@
 .    ds an-result \&\f[I]\,\\$1\"
 .    shift
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \/\f[B]\\$1\f[I]\,\\$2\\*[an-empty]\"
+.      as an-result \/\f[B]\\$1\f[I]\,\\$2\"
 .      shift 2
 .    \}
 .    if \\n[.$] .as an-result \/\f[B]\\$1\"
@@ -529,7 +527,7 @@
 .    ds an-result \&\f[B]\\$1\"
 .    shift
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \,\f[I]\\$1\f[B]\/\\$2\\*[an-empty]\"
+.      as an-result \,\f[I]\\$1\f[B]\/\\$2\"
 .      shift 2
 .    \}
 .    if \\n[.$] .as an-result \,\f[I]\\$1\"
@@ -541,7 +539,7 @@
 .de1 RB
 .  ds an-result \&\"
 .  while (\\n[.$] >= 2) \{\
-.    as an-result \f[R]\\$1\f[B]\\$2\\*[an-empty]\"
+.    as an-result \f[R]\\$1\f[B]\\$2\"
 .    shift 2
 .  \}
 .  if \\n[.$] .as an-result \f[R]\\$1\"
@@ -552,7 +550,7 @@
 .de1 BR
 .  ds an-result \&\"
 .  while (\\n[.$] >= 2) \{\
-.    as an-result \f[B]\\$1\f[R]\\$2\\*[an-empty]\"
+.    as an-result \f[B]\\$1\f[R]\\$2\"
 .    shift 2
 .  \}
 .  if \\n[.$] .as an-result \f[B]\\$1\"
