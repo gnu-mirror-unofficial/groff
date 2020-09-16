@@ -1,5 +1,22 @@
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	tmac/an-old.tmac: Refactor continuous rendering handling.
+	Relocate set up of \n[cR] to end of file in parallel with other
+	rendering parameter management.  Instead of conditionally
+	defining the an-ne and an-bp macros, define them
+	unconditionally.  Also define them with .de instead of .de1,
+	since they will only be called within the contexts of macros
+	that are already running with compatibility mode off (i.e., the
+	public interface macros).  Relocate definition of an-end to sit
+	alongside these other continuous-rendering-mode specific macros
+	and avoid a forward reference and scattering of \n[cR]
+	conditionals around the file.
+	(an-set-up-continuous-rendering): Define new macro to move
+	macros (and end macro) into place.  Call it at the end of the
+	file only if cR eventually winds up being true.
+
+2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	tmac/an-old.tmac: Improve name space management.  Rename .ne
 	request to .an-ne instead of outright clobbering it (and in
 	parallel with .an-bp).  Rename 'an-ne' register to 'an-need' to

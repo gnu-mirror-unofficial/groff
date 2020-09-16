@@ -46,10 +46,6 @@
 .\" command line by the pre-HTML preprocessor).
 .if !r ps4html \
 .  if r P .pn 0\n[P]
-.if !r cR \{\
-.  ie n .nr cR 1
-.  el   .nr cR 0
-.\}
 .
 .nr need_eo_h 0
 .nr need_col2 0
@@ -61,30 +57,47 @@
 .if \n[an-html] .nr C 1
 .if r ps4html .nr C 1
 .
-.\" We redefine .ne to avoid page breaks if cR is set; instead, the page
-.\" length is increased to the necessary amount (this is needed for
-.\" tables).
+.\" Define alternate requests to handle continuous rendering.
 .\"
-.\" Similarly, we redefine .bp if cR is set, adjusting the page length
-.\" to the current position so that no empty lines are inserted.
-.if \n[cR] \{\
-.  rn ne an-ne
-.  de1 ne
-.    ie \\n[.$] \
-.      nr an-need (v;\\$*)
-.    el \
-.      nr an-need 1v
-.    if (\\n[an-need] >= \\n[.t]) \
-.      pl +(\\n[an-need]u - \\n[.t]u + 1v)
-.  .
+.\" This .ne replacement avoids page breaks; instead, the page length is
+.\" increased to the necessary amount (this is needed for tables).
+.de an-ne
+.  ie \\n[.$] \
+.    nr an-need (v;\\$*)
+.  el \
+.    nr an-need 1v
+.  if (\\n[an-need] >= \\n[.t]) \
+.    pl +(\\n[an-need]u - \\n[.t]u + 1v)
+..
 .
-.  rn bp an-bp
-.  de1 bp
-.    br
-.    pl \\n[nl]u
-.    an-bp \\$*
-.  .
-.\}
+.\" This .bp replacement adjusts the page length to the current position
+.\" so that no empty lines are inserted.
+.de an-bp
+.  br
+.  pl \\n[nl]u
+.  an-real-bp \\$*
+..
+.
+.\" We need an end macro for continuous rendering as well, to flush any
+.\" pending output line and write the footer for the final man page
+.\" rendered.
+.de an-end
+.  nr % 1
+.  pl +4v
+.  fl
+.  sp 3
+.  an-p-footer
+.  pl \\n[nl]u
+..
+.
+.\" Move macros into place for continuous rendering.
+.de an-set-up-continuous-rendering
+.  rn ne an-real-ne
+.  rn bp an-real-bp
+.  rn an-ne ne
+.  rn an-bp bp
+.  em an-end
+..
 .
 .de an-set-margin
 .  nr an-level 1
@@ -298,17 +311,6 @@
 .  BT
 .  ev
 ..
-.
-.de1 an-end
-.  nr % 1
-.  pl +4v
-.  fl
-.  sp 3
-.  an-p-footer
-.  pl \\n[nl]u
-..
-.
-.if \n[cR] .em an-end
 .
 .de1 SH
 .  sp \\n[PD]u
@@ -655,6 +657,14 @@
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
 .
+.\" continous rendering (one long page)
+.if !r cR \{\
+.  ie n \
+.    nr cR 1
+.  el \
+.    nr cR 0
+.\}
+.
 .\" full capitalization of section headings
 .if !r CS \
 .  nr CS 0
@@ -706,6 +716,9 @@
 .\" section heading font
 .if !d HF \
 .  ds HF B\"
+.
+.if \n[cR] \
+.  an-set-up-continuous-rendering
 .
 .cp \n[*groff_an-old_tmac_C]
 .
