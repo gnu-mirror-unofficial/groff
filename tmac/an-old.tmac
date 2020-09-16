@@ -68,13 +68,14 @@
 .\" Similarly, we redefine .bp if cR is set, adjusting the page length
 .\" to the current position so that no empty lines are inserted.
 .if \n[cR] \{\
+.  rn ne an-ne
 .  de1 ne
 .    ie \\n[.$] \
-.      nr an-ne (v;\\$*)
+.      nr an-need (v;\\$*)
 .    el \
-.      nr an-ne 1v
-.    if (\\n[an-ne] >= \\n[.t]) \
-.      pl +(\\n[an-ne]u - \\n[.t]u + 1v)
+.      nr an-need 1v
+.    if (\\n[an-need] >= \\n[.t]) \
+.      pl +(\\n[an-need]u - \\n[.t]u + 1v)
 .  .
 .
 .  rn bp an-bp
