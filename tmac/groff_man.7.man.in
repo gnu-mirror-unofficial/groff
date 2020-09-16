@@ -1919,7 +1919,11 @@ see section \(lqFiles\(rq below.
 .SS Strings
 .\" ====================================================================
 .
-The following strings are defined.
+The following strings are defined for use in man pages.
+.
+Others are supported for configuration of rendering parameters;
+see section \(lqOptions\(rq below.
+.
 .
 .
 .TP
@@ -1935,26 +1939,6 @@ and \(lq(Reg.)\(rq otherwise.
 .TP
 .B \e*S
 expands to an escape setting the point size to the document default.
-.
-.
-.TP
-.B \e*(AD
-expands to the default adjustment mode;
-see section \(lqOptions\(rq below for the default.
-.
-This string is a GNU extension\" from groff 1.22.5
-to support user customization of man page rendering,
-and should not be used in man page sources.
-.
-.
-.TP
-.B \e*(HF
-expands to the font identifier used to print headings and subheadings;
-see section \(lqOptions\(rq below for the default.
-.
-This string is a GNU extension\" from groff 1.19
-to support user customization of man page rendering,
-and should not be used in man page sources.
 .
 .
 .TP
@@ -3050,7 +3034,7 @@ See subsection \(lqFont style macros\(rq above for the default.
 .
 .TP
 .BI \-rSN= subsection-indent
-Set indentation of the subsection heading to
+Set indentation of subsection headings to
 .IR subsection-indent .
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
