@@ -153,18 +153,10 @@
 .  ll \\n[LL]u
 .  ss 12
 .
-.\" We must select an integer indentation value for nroff;
-.\" see comment in an-do-tag.
-.  if !r IN \{\
-.    ie t .nr IN 7.2n
-.    el   .nr IN 7n
-.  \}
 .  PD
-.  if !r SN \
-.    nr SN 3n \" indentation of sub-sub-headings relative to sub-heads
 .  an-set-margin
-.  nr an-tag-sep 1n
 .
+.  nr an-tag-sep 1n
 .  nr an-no-space-flag 0
 .  nr an-break-flag 0
 .  nr an-div? 0
@@ -684,6 +676,16 @@
 .    nr HY 6
 .\}
 .
+.\" standard indentation
+.if !r IN \{\
+.  \" We must select an integer indentation value for nroff; see comment
+.  \" in an-do-tag.
+.  ie t \
+.    nr IN 7.2n
+.  el \
+.    nr IN 7n
+.\}
+.
 .\" line length
 .if !r LL \{\
 .  \" If in troff mode, respect device default.
@@ -707,11 +709,15 @@
 .    nr S 12
 .\}
 .
+.\" subsection indentation
+.if !r SN \
+.  nr SN 3n
+.
 .\" adjustment mode
 .if !d AD \
 .  ds AD b\"
 .
-.\" section heading font
+.\" (sub)section heading font
 .if !d HF \
 .  ds HF B\"
 .
