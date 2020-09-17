@@ -38,15 +38,6 @@
 .\" Define a string for use in diagnostic messages.
 .ds an-old an-old.tmac
 .
-.if !r D .nr D 0
-.if !r C .nr C 0
-.\" We must use consecutive page numbers when using PostScript to
-.\" generate HTML images, and we must not reset the page number at the
-.\" beginning (the 'ps4html' register is automatically added to the
-.\" command line by the pre-HTML preprocessor).
-.if !r ps4html \
-.  if r P .pn 0\n[P]
-.
 .nr need_eo_h 0
 .nr need_col2 0
 .
@@ -54,8 +45,6 @@
 .
 .nr an-html 0
 .if '\*[.T]'html' .nr an-html 1
-.if \n[an-html] .nr C 1
-.if r ps4html .nr C 1
 .
 .\" Define alternate requests to handle continuous rendering.
 .\"
@@ -655,6 +644,21 @@
 .    nr cR 0
 .\}
 .
+.\" continuous page numbering over multiple documents
+.\"
+.\" TODO: If explicitly zero and an-html, warn that it is ignored.
+.if !r C \
+.  nr C 0
+.
+.\" We must use consecutive page numbers when using PostScript to
+.\" generate HTML images; we must not reset the page number at the
+.\" beginning of each document (the 'ps4html' register is automatically
+.\" added to the command line by the pre-HTML preprocessor).
+.if \n[an-html] \
+.  nr C 1
+.if r ps4html \
+.  nr C 1
+.
 .\" full capitalization of section headings
 .if !r CS \
 .  nr CS 0
@@ -662,6 +666,12 @@
 .\" full capitalization of page title
 .if !r CT \
 .  nr CT 0
+.
+.\" double-sided layout
+.\"
+.\" TODO: If an-html, warn that it is ignored.
+.if !r D \
+.  nr D 0
 .
 .\" footer distance
 .if !r FT \
@@ -700,6 +710,18 @@
 .if !r LT \
 .  nr LT \n[LL]u
 .
+.\" starting page number
+.\"
+.\" Unlike most of these parameters, we do not set a default for P;
+.\" groff supplies a default starting page number (1).  Also, when
+.\" rendering for the HTML output device, page numbers are concealed and
+.\" used for internal purposes like image embedding.
+.\"
+.\" TODO: Warn if -rP used with '\*[.T]'html'.
+.if !r ps4html \
+.  if r P \
+.    pn 0\n[P]
+.
 .\" point size
 .if !r S \{\
 .  nr S 10
@@ -712,6 +734,14 @@
 .\" subsection indentation
 .if !r SN \
 .  nr SN 3n
+.
+.\" page number after which to apply letter suffixes
+.\"
+.\" Unlike most of these parameters, we do not set a default for X; only
+.\" the macro an-p-footer uses it.
+.\"
+.\" TODO: Warn and remove register if -rX used with '\*[.T]'html'.
+.\" X
 .
 .\" adjustment mode
 .if !d AD \
