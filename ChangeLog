@@ -1,12 +1,12 @@
 2020-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/an-old.tmac (TH): Move setup of rendering parameter
+	* tmac/an-old.tmac (TH): Move setup of rendering parameter
 	registers IN and SN from here to the end of the file.  Update
 	comments.
 
 2020-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/an-old.tmac: Drop \*[an-empty] string.  This string is
+	* tmac/an-old.tmac: Drop \*[an-empty] string.  This string is
 	documented as preventing "looping" (presumably infinite) if
 	someone calls a two-font macro with an inconvenient parameter;
 	the example shown is ".RB ( \\ )".  This string was being
@@ -14,9 +14,10 @@
 	macros BI, BR, IB, RB, and RI.  This code dates back to groff
 	1.10 (dc5351364982f78f8c630f1e856d692d4a82666f, 26 November
 	1995).  Did you notice a two-font macro missing?  It was: IR.
-	Using it fails to cause a problem.  So do all of the others when
-	the empty string interpolation is removed.  Presumably at some
-	point in the past 25 years, this workaround became unnecessary.
+	Using it with the proscribed input fails to cause a problem; the
+	others similarly operate just fine when the empty string
+	interpolation is removed.  Presumably at some point in the past
+	25 years, this workaround became unnecessary.
 	(BI, BR, IB, RB, RI): Remove interpolations of string.
 
 	* tmac/tests/an-old_avoid_two-font_denial_of_service.sh: Add
@@ -26,7 +27,7 @@
 
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/an-old.tmac: Refactor continuous rendering handling.
+	* tmac/an-old.tmac: Refactor continuous rendering handling.
 	Relocate set up of \n[cR] to end of file in parallel with other
 	rendering parameter management.  Instead of conditionally
 	defining the an-ne and an-bp macros, define them
@@ -43,14 +44,14 @@
 
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/an-old.tmac: Improve name space management.  Rename .ne
+	* tmac/an-old.tmac: Improve name space management.  Rename .ne
 	request to .an-ne instead of outright clobbering it (and in
 	parallel with .an-bp).  Rename 'an-ne' register to 'an-need' to
 	prevent confusion with renamed request.
 
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	tmac/an-old.tmac: Drop .ll hack for LL register.
+	* tmac/an-old.tmac: Drop .ll hack for LL register.
 
 	Drop the .ll hack for setting the line length on nroff devices.
 
