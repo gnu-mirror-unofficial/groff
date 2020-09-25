@@ -1,5 +1,15 @@
 2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/tmac.am: Regenerate stripped macro files upon changes to
+	any of their unstripped counterparts.  This is crude, but they
+	weren't being regenerated at _all_.  Defeating a central
+	function of Make is bad.
+	(TMACUNSTRIPFILES): New variable.  Populate with -u files.
+	($(TMACMDOCFILES) $(TMACSTRIPFILES)): Depend on
+	$(TMACUNSTRIPFILES).
+
+2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac:
 	* tmac/andoc.tmac:
 	* tmac/doc.tmac-u:

@@ -93,6 +93,7 @@ TMACNORMALFILES = \
   tmac/zh.tmac
 
 # TMACSTRIPFILES are built from their unstripped version (-u)
+TMACUNSTRIPFILES = tmac/e.tmac-u tmac/doc.tmac-u tmac/doc-old.tmac-u
 TMACSTRIPFILES = tmac/e.tmac tmac/doc.tmac tmac/doc-old.tmac
 
 # Files installed in tmacdir
@@ -104,6 +105,11 @@ TMACMDOCFILES = \
   tmac/mdoc/doc-ditroff \
   tmac/mdoc/doc-nroff \
   tmac/mdoc/doc-syms
+TMACUNSTRIPFILES += \
+  tmac/mdoc/doc-common-u \
+  tmac/mdoc/doc-ditroff-u \
+  tmac/mdoc/doc-nroff-u \
+  tmac/mdoc/doc-syms-u
 mdocdir=$(tmacdir)/mdoc
 # Files installed in mdocdir
 nodist_mdoc_DATA = $(TMACMDOCFILES)
@@ -170,7 +176,7 @@ tmac-dist-hook:
 	  cp -f $(top_srcdir)/$$f-u $(distdir)/tmac; \
 	done
 
-$(TMACMDOCFILES) $(TMACSTRIPFILES):
+$(TMACMDOCFILES) $(TMACSTRIPFILES): $(TMACUNSTRIPFILES)
 	$(MKDIR_P) $(top_builddir)/tmac
 	$(MKDIR_P) $(top_builddir)/tmac/mdoc
 	for f in $(TMACMDOCFILES) $(TMACSTRIPFILES); do \
