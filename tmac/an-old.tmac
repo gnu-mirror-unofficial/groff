@@ -281,10 +281,12 @@
 .  \}
 .  el \{\
 .    ie r X \{\
-.      if (\\n[%] > \\n[X]) \{\
+.      ie (\\n[%] > \\n[X]) \{\
 .        nr an-page-letter (\\n[%] - \\n[X])
 .        ds an-page-string \\n[X]\\n[an-page-letter]\"
 .      \}
+.      el \
+.        ds an-page-string \\n[%]\"
 .    \}
 .    el \{\
 .      ie \\n[cR] \

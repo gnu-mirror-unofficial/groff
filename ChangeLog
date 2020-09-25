@@ -1,5 +1,14 @@
 2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac (an-p-footer): Define \*[an-page-string] if
+	(1) the output device is not HTML; (2) \n[X] has been defined;
+	and (3) the page number has not yet reached the threshold
+	defined by \n[X].
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59179>.
+
+2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #59197.
 
 	* tmac/tests/an-old_X_register_works.sh: Do it.
