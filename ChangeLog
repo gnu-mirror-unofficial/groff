@@ -1,5 +1,19 @@
 2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/www.tmac.in: Revise diagnostic message handling.
+	(www:fatal): New macro handles fatal macro usage errors.
+	(www:lenstr): Use www:fatal instead of writing to standard error
+	with .tm (rather than www:error) and then calling .ab without
+	arguments, which produces an unsightly "User Abort." message.
+	(www:lenstr):
+	(www:splitstr):
+	(www:url_breaks):
+	(www:url_breaks_split):
+	(LINKSTYLE): Report expected number of arguments in diagnostics.
+	(www:fontstyle): Shorten diagnostic message.
+
+2020-09-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/div.cpp
 	(top_level_diversion::clear_diversion_trap): Fix copy and paste
 	error in diagnostic, which wrongly reported that a top-level
