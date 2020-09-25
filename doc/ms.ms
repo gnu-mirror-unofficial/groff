@@ -272,9 +272,9 @@ Cover page macros
 Use the following macros to create a cover page for your document
 in the order shown.
 .TS H
-box expand;
-cb cb
-afCWw(1i) lw(5i) .
+box;
+lb lb
+lf(CR) lx.
 Macro	Description
 _
 .TH
@@ -517,9 +517,9 @@ The
 macros provide a variety of methods to highlight
 or emphasize text:
 .TS H
-box expand;
-cb cb
-afCWw(1.6i) Aw(4.4i) .
+box;
+lb lb
+lf(CR) lx.
 Macro	Description
 _
 .TH
@@ -792,8 +792,8 @@ T{
 A glossary-style list:
 \&.IP lawyers 0.4i
 Two or more attorneys.
-\&.IP guns
-\\p Firearms, preferably
+\&.IP guns\[rs]h\[aq]0.4i\[aq]
+Firearms, preferably
 large-caliber.
 \&.IP money
 Gotta pay for those
@@ -803,8 +803,8 @@ T}	T{
 A glossary-style list:
 .IP lawyers 0.4i
 Two or more attorneys.
-.IP guns
-\p Firearms, preferably large-caliber.
+.IP guns\h'0.4i'
+Firearms, preferably large-caliber.
 .IP money
 Gotta pay for those lawyers and guns!
 T}
