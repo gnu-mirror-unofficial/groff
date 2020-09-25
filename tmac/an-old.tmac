@@ -651,10 +651,14 @@
 .\}
 .
 .\" continuous page numbering over multiple documents
-.\"
-.\" TODO: If explicitly zero and an-html, warn that it is ignored.
-.if !r C \
+.ie !r C \
 .  nr C 0
+.el \
+.  if !\n[C] \
+.    if \n[an-html] \{\
+.       tm \*[an-old]: ignoring continuous page numbering in HTML output
+.       nr C 0
+.    \}
 .
 .\" We must use consecutive page numbers when using PostScript to
 .\" generate HTML images; we must not reset the page number at the
@@ -674,10 +678,14 @@
 .  nr CT 0
 .
 .\" double-sided layout
-.\"
-.\" TODO: If an-html, warn that it is ignored.
-.if !r D \
+.ie !r D \
 .  nr D 0
+.el \
+.  if \n[D] \
+.    if \n[an-html] \{\
+.       tm \*[an-old]: ignoring double-sided layout in HTML output
+.       nr D 0
+.    \}
 .
 .\" footer distance
 .if !r FT \
@@ -723,7 +731,13 @@
 .\" rendering for the HTML output device, page numbers are concealed and
 .\" used for internal purposes like image embedding.
 .\"
-.\" TODO: Warn if -rP used with '\*[.T]'html'.
+.if r P \
+.  if '\*[.T]'html' \
+.    if !(\n[P] = 1) \{\
+.       tm \*[an-old]: ignoring starting page number in HTML output
+.       rr P
+.    \}
+.
 .if !r ps4html \
 .  if r P \
 .    pn 0\n[P]
@@ -745,9 +759,11 @@
 .\"
 .\" Unlike most of these parameters, we do not set a default for X; only
 .\" the macro an-p-footer uses it.
-.\"
-.\" TODO: Warn and remove register if -rX used with '\*[.T]'html'.
-.\" X
+.if r X \
+.  if '\*[.T]'html' \{\
+.     tm \*[an-old]: ignoring page letter suffixing in HTML output
+.     rr X
+.  \}
 .
 .\" adjustment mode
 .if !d AD \
