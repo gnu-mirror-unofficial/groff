@@ -12300,11 +12300,11 @@ setting footnotes
 @cindex vertical position trap enable register (@code{.vpt})
 Enable vertical position traps if @var{flag} is non-zero, or disables
 them otherwise.  Vertical position traps are traps set by the @code{wh}
-or @code{dt} requests.  Traps set by the @code{it} request are not
-vertical position traps.  The parameter that controls whether vertical
-position traps are enabled is global.  Initially vertical position traps
-are enabled.  The current setting of this is available in the
-@code{.vpt} read-only number register.
+request, or by @code{dt} within a diversion.  Traps set by the @code{it}
+request are not vertical position traps.  The parameter that controls
+whether vertical position traps are enabled is global.  Initially
+vertical position traps are enabled.  The current setting of this is
+available in the @code{.vpt} read-only number register.
 
 Note that a page can't be ejected if @code{vpt} is set to zero.
 @endDefreq
@@ -12508,9 +12508,9 @@ most cases, this is not the expected behaviour.
 @cindex diversion trap, setting (@code{dt})
 @cindex trap, diversion, setting (@code{dt})
 Set a trap @emph{within} a diversion.  @var{dist} is the location of the
-trap (identical to the @code{wh} request; default scaling indicator is
+trap (as with the @code{wh} request, the default scaling indicator is
 @samp{v}) and @var{macro} is the name of the macro to be invoked.  If
-called without arguments, the diversion trap is removed.
+called with fewer than two arguments, the diversion trap is removed.
 
 Note that there exists only a single diversion trap.
 
