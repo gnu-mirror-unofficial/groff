@@ -6608,10 +6608,11 @@ Before tackling automatic hyphenation, let us consider how it can be
 done manually.
 
 Explicitly hyphenated words such as ``mother-in-law'' are eligible for
-breaking after each of their hyphens.  Relatively few words in a
-language offer such obvious break points, however.  In a short document
-we may wish to disable automatic hyphenation and explicitly instruct GNU
-@code{troff} how words could be hyphenated if the need arises.
+breaking after each of their hyphens when GNU @code{troff} fills lines.
+Relatively few words in a language offer such obvious break points,
+however, and automatic hyphenation is not perfect, particularly for
+unusual words like domain-specific jargon.  We may wish to explicitly
+instruct GNU @code{troff} how to hyphenate words if the need arises.
 
 @cindex hyphenation exceptions
 @Defreq {hw, word @dots{}}
@@ -6663,20 +6664,21 @@ places without hyphens.
 @cindex hyphenation, disabling (@code{\%})
 To tell GNU @code{troff} how to hyphenate words as they occur in input,
 use the @code{\%} escape, also known as the @dfn{hyphenation character}.
-Preceding a word with this character prevents it from being hyphenated;
-each instance within a word indicates to GNU @code{troff} that the word
-may be hyphenated at that point.  Note that this mechanism only affects
-that occurrence of the word; to change the hyphenation of a word for the
-entire document, use the @code{hw} request.
+Preceding a word with this escape prevents it from being automatically
+hyphenated; each instance within a word indicates to GNU @code{troff}
+that the word may be hyphenated at that point.  This mechanism affects
+only that occurrence of the word; to change the hyphenation of a word
+for the remainder of the document, use the @code{hw} request.
 
 @cindex @code{\X}, followed by @code{\%}
 @cindex @code{\Y}, followed by @code{\%}
 @cindex @code{\%}, following @code{\X} or @code{\Y}
-Note that the escapes @code{\X} and @code{\Y} start a word; that is, the
-@code{\%} escape in (say) @w{@samp{\X'...'\%foobar}} or
-@w{@samp{\Y'...'\%foobar}} no longer prevents hyphenation but inserts a
-hyphenation point at the beginning of @samp{foobar}; most likely this
-isn't what you want to do.  @xref{Postprocessor Access}.
+GNU @code{troff} regards the escapes @code{\X} and @code{\Y} as starting
+a word; that is, the @code{\%} escape in, say,
+@w{@samp{\X'...'\%foobar}} or @w{@samp{\Y'...'\%foobar}} no longer
+prevents hyphenation of @samp{foobar} but inserts a hyphenation point
+just prior to it; most likely this isn't what you want.
+@xref{Postprocessor Access}.
 
 @cindex non-printing break points (@code{\:})
 @cindex breaking without hyphens (@code{\:})
@@ -6686,12 +6688,12 @@ isn't what you want to do.  @xref{Postprocessor Access}.
 @cindex breaking URLs (@code{\:})
 The @code{\:} escape inserts a non-printing break point; that is, the
 word can break there, but the soft hyphen glyph is not written to the
-output if it does.  Note that breaks are word boundaries, so if a break
-is inserted, the remainder of the (input) word is subject to hyphenation
-as normal.
+output if it does.  Breaks are word boundaries, so if a break is
+inserted, the remainder of the (input) word is subject to hyphenation as
+normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
-of a filename or URL.
+of a file name or URL.
 
 @Example
 @dots{} check \%/var/log/\:\%httpd/\:\%access_log @dots{}
@@ -6757,7 +6759,15 @@ implemented with English-language publishing practices of the 1970s in
 mind, not a scrupulous enumeration of conceivable parameters.  GNU
 @code{troff} extends those modes such that finer-grained control is
 possible, retaining compatibility with older implementations at the
-expense of a more intuitive arrangement.
+expense of a more intuitive arrangement.  The mechanism for control of
+hyphenation modes is a set of numbers that can be added up to encode the
+behavior sought.@footnote{The mode is a vector of booleans encoded as an
+integer.  To a programmer, this fact is easily deduced from the
+exclusive use of powers of two for the configuration parameters; they
+are computationally easy to ``mask off'' and compare to zero.  To almost
+everyone else, the arrangement seems recondite and unfriendly.}  The
+entries in the table below are termed @dfn{values}, and the sum
+corresponding to the desired flags is the @dfn{mode}.
 
 @table @code
 @item 0
@@ -6775,14 +6785,14 @@ restrictions relative to that basis.
 
 @table @code
 @item 2
-disables hyphenation of the last word on a page.@footnote{Technically,
-this value prevents hyphenation if the next page position trap is closer
-than the next line of text would be.  GNU @code{troff} automatically
-inserts an implicit page position trap at the end of each page to cause
-a page transition.  This value can be used in traps planted by users or
-macro packages to prevent hyphenation of the last word in a column in
+disables hyphenation of the last word on a page.@footnote{This value
+prevents hyphenation if the next page location trap is closer than the
+next text baseline would be.  GNU @code{troff} automatically inserts an
+implicit page position trap at the end of each page to cause a page
+transition.  This value can be used in traps planted by users or macro
+packages to prevent hyphenation of the last word in a column in
 multi-column page layouts or before floating figures or tables.
-@xref{Traps}.}
+@xref{Page Location Traps}.}
 
 @item 4
 disables hyphenation before the last two characters of a word.
@@ -6797,10 +6807,10 @@ enables hyphenation before the last character of a word.
 enables hyphenation after the first character of a word.
 @end table
 
-Note that any restrictions imposed by the hyphenation mode are
-@emph{not} respected for words whose hyphenations have been explicitly
-specified with the hyphenation character (@samp{\%} by default) or the
-@code{hw} request.
+Any restrictions imposed by the hyphenation mode are @emph{not}
+respected for words whose hyphenations have been explicitly specified
+with the hyphenation character (@samp{\%} by default) or the @code{hw}
+request.
 
 The nonzero values in the previous table are additive.  For example,
 value@tie{}12 causes GNU @code{troff} to hyphenate neither the last two
@@ -6820,7 +6830,7 @@ introducing additional, invalid hyphenation points (unfortunately, this
 information is not part of a pattern file---you have to know it in
 advance).  The same is true for the number of characters at the end of
 a word before the last hyphenation point should be inserted.  For
-example, supplying the following input to @samp{echo $(nroff)}
+example, you can supply the following input to @samp{echo $(nroff)}.
 
 @Example
 .ll 1
@@ -6829,7 +6839,7 @@ splitting
 @endExample
 
 @noindent
-yields
+You will get
 
 @Example
 s- plit- t- in- g
@@ -6843,9 +6853,9 @@ and three characters at the end; this means that value@tie{}4 of
 restriction, but values@tie{}16 and@tie{}32 should be avoided, as should
 mode@tie{}1 (the default!).  Modes@tie{}4 and@tie{}6 are typical.
 
-A table of left and right minimum values for hyphenation as needed by
-the patterns distributed with GNU @code{troff} follows; see the
-@cite{groff_tmac(5)} man page (type @command{man groff_tmac} at the
+A table of left and right minimum character counts for hyphenation as
+needed by the patterns distributed with GNU @code{troff} follows; see
+the @cite{groff_tmac(5)} man page (type @command{man groff_tmac} at the
 command line) for more information on GNU @code{troff}'s language macro
 files.
 
@@ -6874,8 +6884,8 @@ The hyphenation mode can be found in the read-only number register
 
 @Defreq {nh, }
 Disable hyphenation; i.e., set the hyphenation mode to@tie{}0 (see
-above).  Note that the hyphenation mode of the last call to @code{hy} is
-not remembered.
+above).  The hyphenation mode of the last call to @code{hy} is not
+remembered.
 @endDefreq
 
 @DefreqList {hpf, pattern-file}
@@ -6929,15 +6939,16 @@ file is treated as a list of hyphenation patterns (except that the
 The @code{hpfa} request appends a file of patterns to the current list.
 
 The @code{hpfcode} request defines mapping values for character codes in
-pattern files.  @code{hpf} or @code{hpfa} apply the mapping
-after reading the patterns but before replacing or appending to the
-active list of patterns.  Its arguments are pairs of character
-codes---integers from 0 to@tie{}255.  The request maps character
-code@tie{}@var{a} to code@tie{}@var{b}, code@tie{}@var{c} to
-code@tie{}@var{d}, and so on.  Character codes that would otherwise be
-invalid in GNU @code{troff} can be used.  By default, every code maps to
-itself except those for letters `A' to `Z', which map to those for `a'
-to `z'.
+pattern files.  It is an older mechanism no longer used by GNU
+@code{troff}'s own macro files; for its successor, see @code{hcode}
+below.  @code{hpf} or @code{hpfa} apply the mapping after reading the
+patterns but before replacing or appending to the active list of
+patterns.  Its arguments are pairs of character codes---integers from 0
+to@tie{}255.  The request maps character code@tie{}@var{a} to
+code@tie{}@var{b}, code@tie{}@var{c} to code@tie{}@var{d}, and so on.
+Character codes that would otherwise be invalid in GNU @code{troff} can
+be used.  By default, every code maps to itself except those for letters
+`A' to `Z', which map to those for `a' to `z'.
 
 @pindex troffrc
 @pindex troffrc-end
