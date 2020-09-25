@@ -10628,9 +10628,8 @@ is
 @endExample
 
 @noindent
-Note that the latter calling syntax doesn't change the value of
-@code{\$0}, which is then inherited from the calling macro
-(@pxref{Parameters}).
+The latter calling syntax doesn't change the value of @code{\$0}, which
+is then inherited from the calling macro (@pxref{Parameters}).
 
 Diversions and boxes can be also called with string syntax.  It is
 sometimes convenient to copy one-line diversions or boxes to a string.
@@ -14200,41 +14199,45 @@ newline (as is done in @code{tm} and @code{tm1}).
 
 @Defreq {ab, [@Var{string}]}
 @cindex aborting (@code{ab})
-Similar to the @code{tm} request, except that it causes @code{gtroff} to
-stop processing.  With no argument it prints @samp{User Abort.} to
-standard error.
+Write @var{string} to the standard error stream (like @code{tm})and then
+abort GNU @code{troff}; that is, stop processing and terminate with a
+failure status.  With no argument, the message written is @samp{User
+Abort.}.
 @endDefreq
 
 @Defreq {ex, }
 @cindex @code{ex} request, use in debugging
 @cindex exiting (@code{ex})
-The @code{ex} request also causes @code{gtroff} to stop processing; see
-also @ref{I/O}.
+Exit GNU @code{troff}; that is, stop processing and terminate with a
+successful status.  To stop processing only the current file, use the
+@code{nx} request; @xref{I/O}.
 @endDefreq
 
 When doing something involved it is useful to leave the debugging
 statements in the code and have them turned on by a command-line flag.
 
 @Example
-.if \n(DB .tm debugging output
+.if \n[DB] .tm debugging output
 @endExample
 
 @noindent
-To activate these statements say
+To activate such statements, use the @option{-r} option to set the
+register.
 
 @Example
 groff -rDB=1 file
 @endExample
 
 If it is known in advance that there are many errors and no useful
-output, @code{gtroff} can be forced to suppress formatted output with
-the @option{-z} flag.
+output, GNU @code{troff} can be forced to suppress formatted output with
+the @option{-z} option.
 
 @Defreq {pev, }
 @cindex dumping environments (@code{pev})
 @cindex environments, dumping (@code{pev})
-Print the contents of the current environment and all the currently
-defined environments (both named and numbered) on @code{stderr}.
+Report the contents of the current environment and all the currently
+defined environments (both named and numbered) to the standard error
+stream.
 @endDefreq
 
 @Defreq {pm, }
@@ -14249,17 +14252,17 @@ larger than expected.
 @Defreq {pnr, }
 @cindex dumping number registers (@code{pnr})
 @cindex number registers, dumping (@code{pnr})
-Print the names and contents of all currently defined number registers
-on @code{stderr}.
+Report the names and contents of all currently defined number registers
+to the standard error stream.
 @endDefreq
 
 @Defreq {ptr, }
 @cindex dumping traps (@code{ptr})
 @cindex traps, dumping (@code{ptr})
-Print the names and positions of all traps (not including input line
-traps and diversion traps) on @code{stderr}.  Empty slots in the page
-trap list are printed as well, because they can affect the priority of
-subsequently planted traps.
+Report the names and positions of all traps (not including input line
+traps and diversion traps) to the standard error stream.  Empty slots in
+the page trap list are printed as well, because they can affect the
+priority of subsequently planted traps.
 @endDefreq
 
 @Defreq {fl, }
