@@ -57,8 +57,11 @@
 .cp 0
 .
 .
-.if (\n[.x]\n[.y] < 118) \
-.  ab You need GNU troff version 1.18 or higher to run this version of mdoc!
+.if (\n[.x]\n[.y] < 118) \{\
+.  ds doc-msg doc.tmac: groff mdoc macros require groff 1.18 or later,
+.  as doc-msg " but found groff \n[.x].\n[.y]; aborting
+.  ab \*[doc-msg]
+.\}
 .
 .
 .\" Load start-up files

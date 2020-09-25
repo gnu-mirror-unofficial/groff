@@ -33,11 +33,14 @@
 .do nr *groff_an-old_tmac_C \n[.cp]
 .cp 0
 .
-.if (\n[.x]\n[.y] < 118) \
-.  ab You need GNU troff 1.18 or higher to run this version of man!
-.
 .\" Define a string for use in diagnostic messages.
 .ds an-old an-old.tmac
+.
+.if (\n[.x]\n[.y] < 118) \{\
+.  ds an-msg \*[an-old]: groff man macros require groff 1.18 or later,
+.  as an-msg " but found groff \n[.x].\n[.y]; aborting
+.  ab \*[an-msg]
+.\}
 .
 .nr need_eo_h 0
 .nr need_col2 0
