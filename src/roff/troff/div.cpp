@@ -868,7 +868,7 @@ void top_level_diversion::set_diversion_trap(symbol, vunits)
 
 void top_level_diversion::clear_diversion_trap()
 {
-  error("can't set diversion trap when no current diversion");
+  error("can't clear diversion trap when no current diversion");
 }
 
 void diversion_trap()
