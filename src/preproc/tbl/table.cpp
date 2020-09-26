@@ -1839,11 +1839,13 @@ void table::init_output()
 	   ".nr " SUPPRESS_BOTTOM_REG " 0\n"
 	   ".mk #T\n"
 	   ".\\}\n"
-	   ".if \\n[.t]<=\\n[" SAVED_DN_REG "] "
-	   /* Since we turn off traps, it won't get into an infinite loop
-	   when we try and print it; it will just go off the bottom of the
-	   page. */
-	   ".tm warning: page \\n%: table text block will not fit on one page\n"
+	   ".if \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
+	   /* Since we turn off traps, it won't get into an infinite
+	      loop when we try and print it; it will just go off the
+	      bottom of the page. */
+	   ".  tmc \\n[.F]: around line \\n[.c]: warning:\n"
+	   ".  tm1 \" table text block will not fit on page \\n%\n"
+	   ".\\}\n"
 	   ".nf\n"
 	   ".if \\n[ln] .nm \\n[ln]\n"
 	   ".nr " ROW_MAX_LINE_REG " \\n[ln]\n"
@@ -1871,8 +1873,11 @@ void table::init_output()
 	   ".di\n"
 	   ".nr " SAVED_DN_REG " \\n[dn]\n"
 	   ".ne \\n[dn]u+\\n[.V]u\n"
-	   ".ie \\n[.t]<=\\n[" SAVED_DN_REG "] "
-	   ".tm error: page \\n%: table will not fit on one page; use .TS H/.TH with a supporting macro package\n"
+	   ".ie \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
+	   ".  tmc \\n[.F]: around line \\n[.c]: error:\n"
+	   ".  tmc \" table will not fit on page \\n%;\n"
+	   ".  tm1 \" use .TS H/.TH with a supporting macro package\n"
+	   ".\\}\n"
 	   ".el \\{"
 	   ".in 0\n"
 	   ".ls 1\n"
@@ -2131,8 +2136,8 @@ void table::compute_expand_width()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
-	   ".tm1 \"  table wider than line width\n");
+    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
+	   ".tm1 \" table wider than line width\n");
     prints(".ig\n"
 	   ".EQ\n"
 	   "delim on\n"
@@ -2183,16 +2188,16 @@ void table::compute_separation_factor()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
-	   ".tm1 \"  column separation set to zero\n"
+    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
+	   ".tm1 \" column separation set to zero\n"
 	   ".nr " SEPARATION_FACTOR_REG " 0\n");
   }
   prints(".\\}\n"
 	 ".el .if \\n[" SEPARATION_FACTOR_REG "]<1n \\{\\\n");
   entry_list->set_location();
   if (!(flags & NOWARN)) {
-    prints(".tm1 \"warning: file '\\n[.F]', around line \\n[.c]:\n"
-	   ".tm1 \"  table squeezed horizontally to fit line length\n");
+    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
+	   ".tm1 \" table squeezed horizontally to fit line length\n");
     prints(".ig\n"
 	   ".EQ\n"
 	   "delim on\n"

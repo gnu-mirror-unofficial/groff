@@ -1,5 +1,18 @@
 2020-09-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::init_output):
+	(table::compute_expand_width):
+	(table::compute_separation_factor): Use consistent format for
+	diagnostic messages.
+	+ Do not spread a single diagnostic across multiple lines.
+	+ Report messages in GNU Coding Standards format, that is:
+	+ Report the name of the file the problem is in...
+	+ ...then the line number...
+	+ ...then the diagnostic severity level...
+	+ ...then the specific problem.
+
+2020-09-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac: Emit warnings when configuration registers
 	are ignored when producing output for HTML.
 
