@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2018 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -3014,5 +3013,10 @@ void printfs(const char *s, const string &arg1, const string &arg2,
 	prints(c);
     }
   }
-}  
+}
 
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set autoindent textwidth=72:
