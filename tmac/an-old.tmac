@@ -34,11 +34,11 @@
 .cp 0
 .
 .\" Define a string for use in diagnostic messages.
-.ds an-old an-old.tmac
+.ds an-old an-old.tmac\"
 .
 .if (\n[.x]\n[.y] < 118) \{\
-.  ds an-msg \*[an-old]: groff man macros require groff 1.18 or later,
-.  as an-msg " but found groff \n[.x].\n[.y]; aborting
+.  ds an-msg \*[an-old]: groff man macros require groff 1.18 or later,\"
+.  as an-msg " but found groff \n[.x].\n[.y]; aborting\"
 .  ab \*[an-msg]
 .\}
 .
@@ -100,9 +100,9 @@
 .  nr an-saved-prevailing-indent1 \\n[IN]
 ..
 .
-.ds an-extra1
-.ds an-extra2
-.ds an-extra3
+.ds an-extra1 \" empty
+.ds an-extra2 \" empty
+.ds an-extra3 \" empty
 .
 .\" .TH title section extra1 extra2 extra3
 .de1 TH
@@ -158,17 +158,17 @@
 .  if \\n[CT] .stringup an-title
 .  ds an-section "\\$2\"
 .  ie (\\n[.$] > 4)    .ds an-extra3 "\\$5\"
-.  el \{ .ie '\\$2'1'  .ds an-extra3 General Commands Manual
-.  el \{ .ie '\\$2'2'  .ds an-extra3 System Calls Manual
-.  el \{ .ie '\\$2'3'  .ds an-extra3 Library Functions Manual
-.  el \{ .ie '\\$2'3p' .ds an-extra3 Perl Programmer's Reference Guide
-.  el \{ .ie '\\$2'4'  .ds an-extra3 Kernel Interfaces Manual
-.  el \{ .ie '\\$2'5'  .ds an-extra3 File Formats Manual
-.  el \{ .ie '\\$2'6'  .ds an-extra3 Games Manual
-.  el \{ .ie '\\$2'7'  .ds an-extra3 Miscellaneous Information Manual
-.  el \{ .ie '\\$2'8'  .ds an-extra3 System Manager's Manual
-.  el \{ .ie '\\$2'9'  .ds an-extra3 Kernel Developer's Manual
-.  el                  .ds an-extra3
+.  el \{ .ie '\\$2'1'  .ds an-extra3 General Commands Manual\"
+.  el \{ .ie '\\$2'2'  .ds an-extra3 System Calls Manual\"
+.  el \{ .ie '\\$2'3'  .ds an-extra3 Library Functions Manual\"
+.  el \{ .ie '\\$2'3p' .ds an-extra3 Perl Programmer's Reference Guide\"
+.  el \{ .ie '\\$2'4'  .ds an-extra3 Kernel Interfaces Manual\"
+.  el \{ .ie '\\$2'5'  .ds an-extra3 File Formats Manual\"
+.  el \{ .ie '\\$2'6'  .ds an-extra3 Games Manual\"
+.  el \{ .ie '\\$2'7'  .ds an-extra3 Miscellaneous Information Manual\"
+.  el \{ .ie '\\$2'8'  .ds an-extra3 System Manager's Manual\"
+.  el \{ .ie '\\$2'9'  .ds an-extra3 Kernel Developer's Manual\"
+.  el                  .ds an-extra3 \" empty
 .  \}\}\}\}\}\}\}\}\}\}
 .
 .  ie \\n[cR] \
@@ -186,7 +186,7 @@
 .
 .  ds an-extra1 "\\$3\"
 .  ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
-.  el                  .ds an-extra2 \"Sun Release 4.0
+.  el                  .ds an-extra2 \" empty
 ..
 .
 .\" BSD compatibility macros: .AT and .UC
@@ -275,9 +275,9 @@
 .  vs \\n[VS]u
 .  lt \\n[LT]u
 .  ie \\n[an-html] \{\
-.    ds an-page-string
-.    ds an-extra1
-.    ds an-extra2
+.    ds an-page-string \" empty
+.    ds an-extra1 \" empty
+.    ds an-extra2 \" empty
 .  \}
 .  el \{\
 .    ie r X \{\
