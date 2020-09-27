@@ -1,3 +1,23 @@
+2020-09-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/tmac.am: Fix problem with recently-relocated mdoc macro
+	files not ending up in the right place in the distribution
+	archive.
+	(dist_tmac_DATA): Also include $(TMACUNSTRIPFILES).
+	(TMACMDOCSTRIPFILES): Rename from $(TMACMDOCFILES).  Update
+	interpolation sites.
+	(TMACMDOCUNSTRIPFILES): New variable holds mdoc macro files in
+	the tmac/mdoc subdirectory.  Stop adding these files to
+	$(TMACUNSTRIPFILES) since those reside in tmac/ directly.
+	(EXTRA_DIST): Add $(TMACMDOCUNSTRIPFILES).
+	($(TMACSTRIPFILES)): Depend only on $(TMACUNSTRIPFILES).
+	($(TMACMDOCSTRIPFILES)): Add new rule, much like the foregoing.
+	Depend on $(TMACMDOCUNSTRIPFILES) and copy files into tmac/mdoc.
+	(dist-hook, tmac-dist-hook): Remove; they no longer do any
+	distinct work.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59186>.
+
 2020-09-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/tbl/table.cpp (table::init_output):
