@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 tmac_srcdir = $(top_srcdir)/tmac
 tmac_builddir = $(top_builddir)/tmac
 
@@ -172,12 +173,12 @@ tmac_TESTS = \
   tmac/tests/doc-accept-mixed-case-section-headings.sh \
   tmac/tests/doc-smoke-test.sh
 TESTS += $(tmac_TESTS)
+EXTRA_DIST += $(tmac_TESTS)
 
 tmac_XFAIL_TESTS = \
   tmac/tests/an-ext_ME_punct_hyphenates.sh \
   tmac/tests/an-ext_UE_punct_hyphenates.sh
 XFAIL_TESTS += $(tmac_XFAIL_TESTS)
-
 
 $(TMACSTRIPFILES): $(TMACUNSTRIPFILES)
 	for f in $(TMACSTRIPFILES); do \

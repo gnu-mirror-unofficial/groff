@@ -1,5 +1,18 @@
 2020-09-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Ship tests in distribution archive.
+
+	* src/preproc/preconv/preconv.am (EXTRA_DIST):
+	* src/roff/groff/groff.am (EXTRA_DIST):
+	* src/roff/nroff/nroff.am (EXTRA_DIST):
+	* tmac/tmac.am (EXTRA_DIST): Add
+	$({preconv,groff,nroff,tmac}_TESTS), as appropriate.
+
+	* src/roff/nroff/nroff.am (MOSTLYCLEANFILES): Stop adding
+	$(nroff_TESTS), which can only have unhappy consequences.
+
+2020-09-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tmac.am: Fix problem with recently-relocated mdoc macro
 	files not ending up in the right place in the distribution
 	archive.
