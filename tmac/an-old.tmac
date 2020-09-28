@@ -732,7 +732,7 @@
 .\" used for internal purposes like image embedding.
 .\"
 .if r P \
-.  if '\*[.T]'html' \
+.  if \n[an-html] \
 .    if !(\n[P] = 1) \{\
 .       tm \*[an-old]: ignoring starting page number in HTML output
 .       rr P
@@ -760,7 +760,7 @@
 .\" Unlike most of these parameters, we do not set a default for X; only
 .\" the macro an-p-footer uses it.
 .if r X \
-.  if '\*[.T]'html' \{\
+.  if \n[an-html] \{\
 .     tm \*[an-old]: ignoring page letter suffixing in HTML output
 .     rr X
 .  \}
