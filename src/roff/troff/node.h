@@ -626,6 +626,7 @@ class output_file {
   char make_g_plus_plus_shut_up;
 public:
   output_file();
+  bool is_dying = false;
   virtual ~output_file();
   virtual void trailer(vunits);
   virtual void flush() = 0;

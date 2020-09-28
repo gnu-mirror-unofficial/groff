@@ -559,7 +559,10 @@ void cleanup_and_exit(int exit_code)
 {
   if (the_output) {
     the_output->trailer(topdiv->get_page_length());
-    delete the_output;
+    // If we're already dying, don't call the_output's destructor.  See
+    // node.cpp:real_output_file::~real_output_file().
+    if (!the_output->is_dying)
+      delete the_output;
   }
   FLUSH_INPUT_PIPE(STDIN_FILENO);
   exit(exit_code);

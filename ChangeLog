@@ -1,7 +1,21 @@
 2020-09-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Fix SEGV arising from recursing destructor.
+
+	* src/roff/troff/node.h (output_file): Add class member
+	`is_dying` to track whether destructor has already been entered;
+	initialize false.
+	* src/roff/troff/node.cpp (real_output_file::~real_output_file):
+	Set `is_dying` true when destructor entered.
+	* src/roff/troff/div.cpp (cleanup_and_exit): Only delete
+	`the_output` object if it is not already being destroyed.
 	* src/roff/groff/tests/regression_savannah_59202.sh: Add test.
 	* src/roff/groff/groff.am (groff_TESTS): Run test.
+
+	Thanks to "hackerb9" for reporting the problem.  Problem appears
+	to date back to groff 1.02 (June 1991) or earlier.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59202>.
 
 2020-09-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
