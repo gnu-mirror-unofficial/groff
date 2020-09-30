@@ -651,19 +651,23 @@
 .\}
 .
 .\" continuous page numbering over multiple documents
+.\"
+.\" We must use consecutive page numbers when using PostScript to
+.\" generate HTML images; we must not reset the page number at the
+.\" beginning of each document (the 'ps4html' register is automatically
+.\" added to the command line by the pre-HTML preprocessor).
+.\"
+.\" \n[C] may get set to 1 redundantly in the below; we could replace
+.\" that with a complex conditional, but it doesn't seem to be worth the
+.\" trouble given AT&T-compatible restrictions on '!' placement.
 .ie !r C \
 .  nr C 0
 .el \
 .  if !\n[C] \
 .    if \n[an-html] \{\
 .       tm \*[an-old]: ignoring continuous page numbering in HTML output
-.       nr C 0
+.       nr C 1
 .    \}
-.
-.\" We must use consecutive page numbers when using PostScript to
-.\" generate HTML images; we must not reset the page number at the
-.\" beginning of each document (the 'ps4html' register is automatically
-.\" added to the command line by the pre-HTML preprocessor).
 .if \n[an-html] \
 .  nr C 1
 .if r ps4html \
