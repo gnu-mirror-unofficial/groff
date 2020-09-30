@@ -281,23 +281,8 @@ but the
 package is designed such that this should seldom be necessary.
 _ifstyle()dnl
 .
-Unused macro arguments are more often simply omitted,
-.\" antipattern: '.TP ""' (just '.TP' will do)
-or good style suggests that a more appropriate macro be chosen,
-.\" antipattern: '.BI "" italic bold' (use '.IB' instead)
-that earlier arguments are more important than later ones,
-.\" antipattern: '.TH foo 1 "" "foo "1.2.3"' (don't skip the date!)
-.\" antipattern: '.IP "" 4n' (use .TP or .RS/.RE, depending on needs)
-or that arguments have identical significance such that skipping any is
-superfluous.
-.\" antipattern: '.B one two "" three' (pointless)
-.\"   Technically, the above has a side-effect of additional space
-.\"   between "two" and "three", but there are much more obvious ways of
-.\"   getting it if desired.
-.\"     .B "one two  three"
-.\"     .B one "two " three
-.\"     .B one two " three"
-.\"     .B one two\~ three
+See section \(lqNotes\(rq below for examples of cases where better
+alternatives to empty arguments in macro calls are available.
 _endif()dnl
 .
 Most macro arguments are strings that will be output as text;
@@ -3232,6 +3217,63 @@ program may lack permission to open the file.
 .\" ====================================================================
 .
 Some tips on troubleshooting your man pages follow.
+.
+.
+.TP
+\(bu Do I ever need to use an empty macro argument ("")?
+Probably not.
+.
+When this seems necessary,
+often a shorter or clearer alternative is available.
+.
+.\" antipattern: '.TP ""' (just '.TP' will do)
+.\" antipattern: '.BI "" italic bold' (use '.IB' instead)
+.\" antipattern: '.TH foo 1 "" "foo 1.2.3"' (don't skip the date!)
+.\" antipattern: '.IP "" 4n' (use .TP or .RS/.RE, depending on needs)
+.\" antipattern: '.B one two "" three' (pointless)
+.\"   Technically, the above has a side-effect of additional space
+.\"   between "two" and "three", but there are much more obvious ways of
+.\"   getting it if desired.
+.\"     .B "one two  three"
+.\"     .B one "two " three
+.\"     .B one two " three"
+.\"     .B one two\~ three
+.TS
+c c
+lfCB lfCB.
+Instead of.\|.\.	.\|.\|.do this.
+_
+\&.TP \(dq\(dq	.TP
+\&.BI \(dq\(dq italic-text bold-text	.IB italic-text bold-text
+\&.TH foo 1 \(dq\(dq \(dqfoo 1.2.3\(dq	.TH foo 1 \
+\f(CIyyyy\fP-\f(CImm\fP-\f(CIdd\fP \(dqfoo 1.2.3\(dq
+\&.IP \(dq\(dq 4n	.TP 4n
+\&.B one two \(dq\(dq three	.B one two three
+.TE
+.
+.
+.IP
+In the title heading
+.RB ( .TH ),
+the date of the page's last revision is more important than packaging
+information;
+it should not be omitted.
+.
+Ideally,
+a page maintainer will keep both up to date.
+.
+.
+.IP
+In the last example,
+the empty argument does have a subtly different effect than its
+suggested replacement;
+the empty argument becomes an additional space character\(embut it is a
+regular breaking space,
+so it can be discarded at the end of an output line.
+.
+It is better not to be subtle,
+particularly with space,
+which can be overlooked in source and rendered forms.
 .
 .
 .TP
