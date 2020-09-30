@@ -22,5 +22,5 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # troff should not segfault when its standard output is closed.
 # Savannah #59202.
-echo foo | "$groff" >&-
+echo | "$groff" >&-
 ! test -e core
