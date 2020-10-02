@@ -10932,9 +10932,30 @@ In @code{if}, @code{ie}, and @code{while} requests, in addition to ordinary
 @ref{Expressions}, there are several more operators available:
 
 @table @code
+@item c @var{g}
+True if a glyph @var{g} is available, where @var{g} is a Unicode basic
+Latin character; a GNU @code{troff} special character @samp{\(@var{xx}}
+or @samp{\[@var{xxx}]}; @samp{\N'@var{xxx}'}; or has been defined by the
+@code{char} request.
+
+@item d @var{name}
+True if there is a string, macro, diversion, or request called
+@var{name}.
+
 @item e
 @itemx o
 True if the current page is even or odd numbered (respectively).
+
+@item F @var{font}
+True if a font called @var{font} exists.  @var{font} is handled as if it
+were opened with the @code{ft} request (that is, font translation and
+styles are applied), without actually mounting it.
+
+This test doesn't load the complete font but only its header to verify
+its validity.
+
+@item m @var{color}
+True if there is a color called @var{color}.
 
 @item n
 @cindex conditional output for terminal (TTY)
@@ -10942,6 +10963,13 @@ True if the current page is even or odd numbered (respectively).
 @cindex terminal, conditional output for
 True if the document is being processed in nroff mode (i.e., the
 @code{nroff} request has been issued).  @xref{Troff and Nroff Mode}.
+
+@item r @var{reg}
+True if there is a number register called @var{reg}.
+
+@item S @var{style}
+True if a style called @var{style} has been registered.  Font
+translation is applied.
 
 @item t
 True if the document is being processed in troff mode (i.e., the
@@ -11009,34 +11037,6 @@ true
 false
     @result{} true
 @endExample
-
-@item r @var{reg}
-True if there is a number register called @var{reg}.
-
-@item d @var{name}
-True if there is a string, macro, diversion, or request called
-@var{name}.
-
-@item m @var{color}
-True if there is a color called @var{color}.
-
-@item c @var{g}
-True if a glyph @var{g} is available, where @var{g} is a Unicode basic
-Latin character; a GNU @code{troff} special character @samp{\(@var{xx}}
-or @samp{\[@var{xxx}]}; @samp{\N'@var{xxx}'}; or has been defined by the
-@code{char} request.
-
-@item F @var{font}
-True if a font called @var{font} exists.  @var{font} is handled as if it
-were opened with the @code{ft} request (that is, font translation and
-styles are applied), without actually mounting it.
-
-This test doesn't load the complete font but only its header to verify
-its validity.
-
-@item S @var{style}
-True if a style called @var{style} has been registered.  Font
-translation is applied.
 @end table
 
 Note that these operators can't be combined with other operators like
@@ -11110,6 +11110,8 @@ first request is the `if' part and the latter is the `else' part.
 @endExample
 @endDefreq
 
+@xref{Expressions}.
+
 @c there is a bug in makeinfo <= 4.1a: you can't have `@{' as an argument
 @c to @deffn
 @c
@@ -11143,8 +11145,6 @@ start the first line) and @code{\@}} (which must end the last line).
 @endExample
 @c @endDefesc
 @end deffn
-
-@xref{Expressions}.
 
 @c ---------------------------------------------------------------------
 
