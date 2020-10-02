@@ -1,3 +1,18 @@
+2020-10-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/node.cpp: Make diagnostics slightly more
+	informative in unusual error cases.
+	(real_output_file::~real_output_file): If ferror() reports error
+	status on a stream say that, instead of "error writing".  If it
+	does not, but fflush() fails on the stream, describe the flush
+	as failing, and use strerror() since fflush() sets errno.  If
+	pclose() fails, say that we were unable to close a pipe instead
+	of repeating the name of the C library function to the user, who
+	might not be a C programmer.  Report sterror() in this case and
+	for a failing fclose().
+	(real_output_file::flush): Repeat updated fflush() logic from
+	previous function.
+
 2020-09-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an-old.tmac (register setup): Make interaction of \n[C]

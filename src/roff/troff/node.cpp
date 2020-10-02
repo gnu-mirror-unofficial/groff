@@ -1658,16 +1658,20 @@ real_output_file::~real_output_file()
   // Prevent destructor from recursing; see div.cpp:cleanup_and_exit().
   is_dying = true;
   // To avoid looping, set fp to 0 before calling fatal().
-  if (ferror(fp) || fflush(fp) < 0) {
+  if (ferror(fp)) {
     fp = 0;
-    fatal("error writing output file");
+    fatal("error on output file stream");
+  }
+  else if (fflush(fp) < 0) {
+    fp = 0;
+    fatal("unable to flush output file: %1", strerror(errno));
   }
 #ifndef POPEN_MISSING
   if (piped) {
     int result = pclose(fp);
     fp = 0;
     if (result < 0)
-      fatal("pclose failed");
+      fatal("unable to close pipe: %1", strerror(errno));
     if (!WIFEXITED(result))
       error("output process '%1' got fatal signal %2",
 	    pipe_command,
@@ -1683,14 +1687,17 @@ real_output_file::~real_output_file()
 #endif /* not POPEN MISSING */
   if (fclose(fp) < 0) {
     fp = 0;
-    fatal("error closing output file");
+    fatal("unable to close output file: %1", strerror(errno));
   }
 }
 
 void real_output_file::flush()
 {
-  if (fflush(fp) < 0)
-    fatal("error writing output file");
+  // To avoid looping, set fp to 0 before calling fatal().
+  if (fflush(fp) < 0) {
+    fp = 0;
+    fatal("unable to flush output file: %1", strerror(errno));
+  }
 }
 
 int real_output_file::is_printing()
