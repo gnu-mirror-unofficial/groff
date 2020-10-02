@@ -3024,4 +3024,4 @@ void printfs(const char *s, const string &arg1, const string &arg2,
 // fill-column: 72
 // mode: C++
 // End:
-// vim: set autoindent textwidth=72:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

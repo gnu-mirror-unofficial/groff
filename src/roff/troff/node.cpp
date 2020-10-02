@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2018 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -6538,3 +6537,9 @@ void init_node_requests()
   number_reg_dictionary.define(".P", new printing_reg);
   soft_hyphen_char = get_charinfo(HYPHEN_SYMBOL);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:
