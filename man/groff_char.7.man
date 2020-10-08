@@ -701,11 +701,22 @@ producing \[lq]\[u02DA]\[rq].
 .
 .P
 Unicode code points can be composed as well;
-in fact,
-.I groff
+when they are,
+.I @g@troff
 requires NFD
 (Normalization Form D),
 where all Unicode glyphs are maximally decomposed.
+.
+Thus,
+.I @g@troff
+accepts
+.RB \[lq]caf \[rs][\[aq]e] \[rq],
+.RB \[lq]caf \[rs][e\~aa] \[rq],
+and
+.RB \[lq]caf \[rs][u0065_0301] \[rq],
+but not
+.RB \[lq]caf \[rs][u00e9] \[rq],
+as ways to input \[lq]caf\['e]\[rq].
 .
 .
 .TP
