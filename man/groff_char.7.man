@@ -43,12 +43,12 @@ and mathematical documents.
 .
 However,
 its input character set is restricted to that defined by the standards
-ISO \%Latin-1
-(ISO \%8859-1)
+ISO Latin-1
+(ISO 8859-1)
 and IBM code page 1047
 (an arrangement of EBCDIC).
 .
-For ease of document maintenance in \%UTF-8 environments,
+For ease of document maintenance in UTF-8 environments,
 it is advisable to use only the Unicode basic Latin code points,
 a subset of all of the foregoing historically referred to as \%US-ASCII,
 .\" Yes, a subset, albeit a permutation as well in the cp1047 case.
@@ -180,7 +180,7 @@ and those employing IBM code page 1047 as \[lq]EBCDIC\[rq] systems.
 That said,
 EBCDIC systems that support
 .I groff
-are known to also support \%UTF-8.
+are known to also support UTF-8.
 .
 .
 .P
@@ -218,7 +218,7 @@ are invalid.
 Some of these code points are used by
 .I groff
 for internal purposes,
-which is one reason it does not support \%UTF-8 natively.
+which is one reason it does not support UTF-8 natively.
 .
 .
 .\" ====================================================================
@@ -471,7 +471,7 @@ falling back to basic Latin glyphs only when necessary.
 .
 .
 .\" ====================================================================
-.SS "Eight-bit encodings and \%Latin-1 supplement"
+.SS "Eight-bit encodings and Latin-1 supplement"
 .\" ====================================================================
 .
 ISO 646 is a seven-bit code encoding 128 code points;
@@ -480,7 +480,7 @@ eight-bit codes are twice the size.
 ISO 8859-1 and code page 1047 allocated the additional space to what
 Unicode calls \[lq]C1 controls\[rq]
 (control characters)
-and the \[lq]\%Latin-1 supplement\[rq].
+and the \[lq]Latin-1 supplement\[rq].
 .
 The C1 controls are neither printable nor usable as
 .I groff
@@ -488,7 +488,7 @@ input.
 .
 .
 .P
-Two non-printing characters in the \%Latin-1 supplement are handled
+Two non-printing characters in the Latin-1 supplement are handled
 specially.
 .
 .
@@ -511,15 +511,15 @@ on input it is mapped to the hyphenation control escape,
 .
 .
 .P
-The remaining characters in the \%Latin-1 supplement represent
+The remaining characters in the Latin-1 supplement represent
 themselves.
 .
 Although they can be specified directly with the keyboard on systems
-configured to use \%Latin-1 as the character encoding,
+configured to use Latin-1 as the character encoding,
 it is more portable,
 both to other
 .I roff
-systems and to \%UTF-8 environments,
+systems and to UTF-8 environments,
 to use their glyph names,
 shown below.
 .
