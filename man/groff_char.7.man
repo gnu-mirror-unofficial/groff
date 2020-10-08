@@ -488,14 +488,17 @@ input.
 .
 .
 .P
-Two non-printing characters in the Latin-1 supplement are handled
-specially.
+Two characters in the Latin-1 supplement are handled specially.
+.
+.I @g@troff
+never produces them as output.
 .
 .
 .TP
 NBSP
-encodes the no-break space,
-and is mapped to
+encodes the no-break space.
+.
+On input it is mapped to
 .BR \[rs]\[ti] ,
 the adjustable non-breaking space escape.
 .
@@ -504,10 +507,9 @@ the adjustable non-breaking space escape.
 SHY
 encodes the soft hyphen character.
 .
-.I groff
-never uses this character for output;
-on input it is mapped to the hyphenation control escape,
-.BR \[rs]% .
+On input it is mapped to
+.BR \[rs]% ,
+the hyphenation control escape.
 .
 .
 .P
