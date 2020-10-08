@@ -775,11 +775,6 @@ Some code points have multiple glyph names.
 .
 .
 .TP
-.B AGL
-gives the name of the glyph from the Adobe Glyph List (AGL).
-.
-.
-.TP
 .B Unicode
 is the code point notation for the glyph or combining glyph sequence as
 described in subsection \[lq]Special character escape forms\[rq] above.
@@ -870,26 +865,26 @@ and equals
 signs normally drawn from this range.
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[dq]	\e[dq]	quotedbl	u0022	neutral double quote
-\[sh]	\e[sh]	numbersign	u0023	number sign
-\[Do]	\e[Do]	dollar	u0024	dollar sign
-\[aq]	\e[aq]	quotesingle	u0027	apostrophe, neutral single quote
-\[sl]	\e[sl]	slash	u002F	slash, solidus +
-\[at]	\e[at]	at	u0040	at sign
-\[lB]	\e[lB]	bracketleft	u005B	left square bracket
-\[rs]	\e[rs]	backslash	u005C	reverse solidus
-\[rB]	\e[rB]	bracketright	u005D	right square bracket
-\[ha]	\e[ha]	asciicircum	u005E	circumflex, caret, \[lq]hat\[rq] +
-\[ul]	\e[ul]	underscore	u005F	underscore, low line +
-\[lC]	\e[lC]	braceleft	u007B	left brace
-|	|	bar	u007C	bar
-\[ba]	\e[ba]	bar	u007C	bar
-\[or]	\e[or]	bar	u007C	bitwise or +
-\[rC]	\e[rC]	braceright	u007D	right brace
-\[ti]	\e[ti]	asciitilde	u007E	tilde +
+\[dq]	\e[dq]	u0022	neutral double quote
+\[sh]	\e[sh]	u0023	number sign
+\[Do]	\e[Do]	u0024	dollar sign
+\[aq]	\e[aq]	u0027	apostrophe, neutral single quote
+\[sl]	\e[sl]	u002F	slash, solidus +
+\[at]	\e[at]	u0040	at sign
+\[lB]	\e[lB]	u005B	left square bracket
+\[rs]	\e[rs]	u005C	reverse solidus
+\[rB]	\e[rB]	u005D	right square bracket
+\[ha]	\e[ha]	u005E	circumflex, caret, \[lq]hat\[rq] +
+\[ul]	\e[ul]	u005F	underscore, low line +
+\[lC]	\e[lC]	u007B	left brace
+|	|	u007C	bar
+\[ba]	\e[ba]	u007C	bar
+\[or]	\e[or]	u007C	bitwise or +
+\[rC]	\e[rC]	u007D	right brace
+\[ti]	\e[ti]	u007E	tilde +
 .TE
 .
 .
@@ -913,17 +908,17 @@ but rather to \[lq]SS\[rq].
 see subsection \[lq]Mathematical symbols\[rq] below.
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[-D]	\e[\-D]	Eth	u00D0	uppercase eth
-\[Sd]	\e[Sd]	eth	u00F0	lowercase eth
-\[TP]	\e[TP]	Thorn	u00DE	uppercase thorn
-\[Tp]	\e[Tp]	thorn	u00FE	lowercase thorn
-\[ss]	\e[ss]	germandbls	u00DF	lowercase sharp s
-\[.i]	\e[.i]	dotlessi	u0131	i without tittle
-\[.j]	\e[.j]	dotlessj	u0237	j without tittle
-\[Fn]	\e[Fn]	florin	u0192	lowercase f with hook, function
+\[-D]	\e[\-D]	u00D0	uppercase eth
+\[Sd]	\e[Sd]	u00F0	lowercase eth
+\[TP]	\e[TP]	u00DE	uppercase thorn
+\[Tp]	\e[Tp]	u00FE	lowercase thorn
+\[ss]	\e[ss]	u00DF	lowercase sharp s
+\[.i]	\e[.i]	u0131	i without tittle
+\[.j]	\e[.j]	u0237	j without tittle
+\[Fn]	\e[Fn]	u0192	lowercase f with hook, function
 .TE
 .
 .
@@ -932,24 +927,24 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[ff]	\e[ff]	ff	u0066_0066	ff ligature +
-\[fi]	\e[fi]	fi	u0066_0069	fi ligature +
-\[fl]	\e[fl]	fl	u0066_006C	fl ligature +
-\[Fi]	\e[Fi]	ffi	u0066_0066_0069	ffi ligature +
-\[Fl]	\e[Fl]	ffl	u0066_0066_006C	ffl ligature +
-\[AE]	\e[AE]	AE	u00C6	AE ligature
-\[ae]	\e[ae]	ae	u00E6	ae ligature
-\[OE]	\e[OE]	OE	u0152	OE ligature
-\[oe]	\e[oe]	oe	u0153	oe ligature
-\[IJ]	\e[IJ]	IJ	u0132	IJ digraph
-\[ij]	\e[ij]	ij	u0133	ij digraph
-\[/L]	\e[/L]	Lslash	u0141	L with stroke
-\[/l]	\e[/l]	lslash	u0142	l with stroke
-\[/O]	\e[/O]	Oslash	u00D8	O with stroke
-\[/o]	\e[/o]	oslash	u00F8	o with stroke
+\[ff]	\e[ff]	u0066_0066	ff ligature +
+\[fi]	\e[fi]	u0066_0069	fi ligature +
+\[fl]	\e[fl]	u0066_006C	fl ligature +
+\[Fi]	\e[Fi]	u0066_0066_0069	ffi ligature +
+\[Fl]	\e[Fl]	u0066_0066_006C	ffl ligature +
+\[AE]	\e[AE]	u00C6	AE ligature
+\[ae]	\e[ae]	u00E6	ae ligature
+\[OE]	\e[OE]	u0152	OE ligature
+\[oe]	\e[oe]	u0153	oe ligature
+\[IJ]	\e[IJ]	u0132	IJ digraph
+\[ij]	\e[ij]	u0133	ij digraph
+\[/L]	\e[/L]	u0141	L with stroke
+\[/l]	\e[/l]	u0142	l with stroke
+\[/O]	\e[/O]	u00D8	O with stroke
+\[/o]	\e[/o]	u00F8	o with stroke
 .TE
 .
 .
@@ -962,76 +957,76 @@ described in subsection \[lq]Special character escape forms\[rq] above;
 the names below can be thought of short aliases for convenience.
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\['A]	\e[\[aq]A]	Aacute	u0041_0301	A acute
-\['C]	\e[\[aq]C]	Cacute	u0043_0301	C acute
-\['E]	\e[\[aq]E]	Eacute	u0045_0301	E acute
-\['I]	\e[\[aq]I]	Iacute	u0049_0301	I acute
-\['O]	\e[\[aq]O]	Oacute	u004F_0301	O acute
-\['U]	\e[\[aq]U]	Uacute	u0055_0301	U acute
-\['Y]	\e[\[aq]Y]	Yacute	u0059_0301	Y acute
-\['a]	\e[\[aq]a]	aacute	u0061_0301	a acute
-\['c]	\e[\[aq]c]	cacute	u0063_0301	c acute
-\['e]	\e[\[aq]e]	eacute	u0065_0301	e acute
-\['i]	\e[\[aq]i]	iacute	u0069_0301	i acute
-\['o]	\e[\[aq]o]	oacute	u006F_0301	o acute
-\['u]	\e[\[aq]u]	uacute	u0075_0301	u acute
-\['y]	\e[\[aq]y]	yacute	u0079_0301	y acute
+\['A]	\e[\[aq]A]	u0041_0301	A acute
+\['C]	\e[\[aq]C]	u0043_0301	C acute
+\['E]	\e[\[aq]E]	u0045_0301	E acute
+\['I]	\e[\[aq]I]	u0049_0301	I acute
+\['O]	\e[\[aq]O]	u004F_0301	O acute
+\['U]	\e[\[aq]U]	u0055_0301	U acute
+\['Y]	\e[\[aq]Y]	u0059_0301	Y acute
+\['a]	\e[\[aq]a]	u0061_0301	a acute
+\['c]	\e[\[aq]c]	u0063_0301	c acute
+\['e]	\e[\[aq]e]	u0065_0301	e acute
+\['i]	\e[\[aq]i]	u0069_0301	i acute
+\['o]	\e[\[aq]o]	u006F_0301	o acute
+\['u]	\e[\[aq]u]	u0075_0301	u acute
+\['y]	\e[\[aq]y]	u0079_0301	y acute
 
-\[:A]	\e[:A]	Adieresis	u0041_0308	A dieresis
-\[:E]	\e[:E]	Edieresis	u0045_0308	E dieresis
-\[:I]	\e[:I]	Idieresis	u0049_0308	I dieresis
-\[:O]	\e[:O]	Odieresis	u004F_0308	O dieresis
-\[:U]	\e[:U]	Udieresis	u0055_0308	U dieresis
-\[:Y]	\e[:Y]	Ydieresis	u0059_0308	Y dieresis
-\[:a]	\e[:a]	adieresis	u0061_0308	a dieresis
-\[:e]	\e[:e]	edieresis	u0065_0308	e dieresis
-\[:i]	\e[:i]	idieresis	u0069_0308	i dieresis
-\[:o]	\e[:o]	odieresis	u006F_0308	o dieresis
-\[:u]	\e[:u]	udieresis	u0075_0308	u dieresis
-\[:y]	\e[:y]	ydieresis	u0079_0308	y dieresis
+\[:A]	\e[:A]	u0041_0308	A dieresis
+\[:E]	\e[:E]	u0045_0308	E dieresis
+\[:I]	\e[:I]	u0049_0308	I dieresis
+\[:O]	\e[:O]	u004F_0308	O dieresis
+\[:U]	\e[:U]	u0055_0308	U dieresis
+\[:Y]	\e[:Y]	u0059_0308	Y dieresis
+\[:a]	\e[:a]	u0061_0308	a dieresis
+\[:e]	\e[:e]	u0065_0308	e dieresis
+\[:i]	\e[:i]	u0069_0308	i dieresis
+\[:o]	\e[:o]	u006F_0308	o dieresis
+\[:u]	\e[:u]	u0075_0308	u dieresis
+\[:y]	\e[:y]	u0079_0308	y dieresis
 
-\[^A]	\e[\[ha]A]	Acircumflex	u0041_0302	A circumflex
-\[^E]	\e[\[ha]E]	Ecircumflex	u0045_0302	E circumflex
-\[^I]	\e[\[ha]I]	Icircumflex	u0049_0302	I circumflex
-\[^O]	\e[\[ha]O]	Ocircumflex	u004F_0302	O circumflex
-\[^U]	\e[\[ha]U]	Ucircumflex	u0055_0302	U circumflex
-\[^a]	\e[\[ha]a]	acircumflex	u0061_0302	a circumflex
-\[^e]	\e[\[ha]e]	ecircumflex	u0065_0302	e circumflex
-\[^i]	\e[\[ha]i]	icircumflex	u0069_0302	i circumflex
-\[^o]	\e[\[ha]o]	ocircumflex	u006F_0302	o circumflex
-\[^u]	\e[\[ha]u]	ucircumflex	u0075_0302	u circumflex
+\[^A]	\e[\[ha]A]	u0041_0302	A circumflex
+\[^E]	\e[\[ha]E]	u0045_0302	E circumflex
+\[^I]	\e[\[ha]I]	u0049_0302	I circumflex
+\[^O]	\e[\[ha]O]	u004F_0302	O circumflex
+\[^U]	\e[\[ha]U]	u0055_0302	U circumflex
+\[^a]	\e[\[ha]a]	u0061_0302	a circumflex
+\[^e]	\e[\[ha]e]	u0065_0302	e circumflex
+\[^i]	\e[\[ha]i]	u0069_0302	i circumflex
+\[^o]	\e[\[ha]o]	u006F_0302	o circumflex
+\[^u]	\e[\[ha]u]	u0075_0302	u circumflex
 
-\[`A]	\e[\[ga]A]	Agrave	u0041_0300	A grave
-\[`E]	\e[\[ga]E]	Egrave	u0045_0300	E grave
-\[`I]	\e[\[ga]I]	Igrave	u0049_0300	I grave
-\[`O]	\e[\[ga]O]	Ograve	u004F_0300	O grave
-\[`U]	\e[\[ga]U]	Ugrave	u0055_0300	U grave
-\[`a]	\e[\[ga]a]	agrave	u0061_0300	a grave
-\[`e]	\e[\[ga]e]	egrave	u0065_0300	e grave
-\[`i]	\e[\[ga]i]	igrave	u0069_0300	i grave
-\[`o]	\e[\[ga]o]	ograve	u006F_0300	o grave
-\[`u]	\e[\[ga]u]	ugrave	u0075_0300	u grave
+\[`A]	\e[\[ga]A]	u0041_0300	A grave
+\[`E]	\e[\[ga]E]	u0045_0300	E grave
+\[`I]	\e[\[ga]I]	u0049_0300	I grave
+\[`O]	\e[\[ga]O]	u004F_0300	O grave
+\[`U]	\e[\[ga]U]	u0055_0300	U grave
+\[`a]	\e[\[ga]a]	u0061_0300	a grave
+\[`e]	\e[\[ga]e]	u0065_0300	e grave
+\[`i]	\e[\[ga]i]	u0069_0300	i grave
+\[`o]	\e[\[ga]o]	u006F_0300	o grave
+\[`u]	\e[\[ga]u]	u0075_0300	u grave
 
-\[~A]	\e[\[ti]A]	Atilde	u0041_0303	A tilde
-\[~N]	\e[\[ti]N]	Ntilde	u004E_0303	N tilde
-\[~O]	\e[\[ti]O]	Otilde	u004F_0303	O tilde
-\[~a]	\e[\[ti]a]	atilde	u0061_0303	a tilde
-\[~n]	\e[\[ti]n]	ntilde	u006E_0303	n tilde
-\[~o]	\e[\[ti]o]	otilde	u006F_0303	o tilde
+\[~A]	\e[\[ti]A]	u0041_0303	A tilde
+\[~N]	\e[\[ti]N]	u004E_0303	N tilde
+\[~O]	\e[\[ti]O]	u004F_0303	O tilde
+\[~a]	\e[\[ti]a]	u0061_0303	a tilde
+\[~n]	\e[\[ti]n]	u006E_0303	n tilde
+\[~o]	\e[\[ti]o]	u006F_0303	o tilde
 
-\[vS]	\e[vS]	Scaron	u0053_030C	S caron
-\[vs]	\e[vs]	scaron	u0073_030C	s caron
-\[vZ]	\e[vZ]	Zcaron	u005A_030C	Z caron
-\[vz]	\e[vz]	zcaron	u007A_030C	z caron
+\[vS]	\e[vS]	u0053_030C	S caron
+\[vs]	\e[vs]	u0073_030C	s caron
+\[vZ]	\e[vZ]	u005A_030C	Z caron
+\[vz]	\e[vz]	u007A_030C	z caron
 
-\[,C]	\e[,C]	Ccedilla	u0043_0327	C cedilla
-\[,c]	\e[,c]	ccedilla	u0063_0327	c cedilla
+\[,C]	\e[,C]	u0043_0327	C cedilla
+\[,c]	\e[,c]	u0063_0327	c cedilla
 
-\[oA]	\e[oA]	Aring	u0041_030A	A ring
-\[oa]	\e[oa]	aring	u0061_030A	a ring
+\[oA]	\e[oA]	u0041_030A	A ring
+\[oa]	\e[oa]	u0061_030A	a ring
 .TE
 .
 .
@@ -1046,22 +1041,22 @@ semantics;
 the values given in parentheses are their spacing counterparts.
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[a"]	\e[a"]	hungarumlaut	u030B (u02DD)	double acute accent
-\[a-]	\e[a\-]	macron	u0304 (u00AF)	macron accent
-\[a.]	\e[a.]	dotaccent	u0307 (u02D9)	dot accent
-\[a^]	\e[a\[ha]]	circumflex	u0302 (u005E)	circumflex accent
-\[aa]	\e[aa]	acute	u0301 (u00B4)	acute accent +
-\[ga]	\e[ga]	grave	u0300 (u0060)	grave accent +
-\[ab]	\e[ab]	breve	u0306 (u02D8)	breve accent
-\[ac]	\e[ac]	cedilla	u0327 (u00B8)	cedilla accent
-\[ad]	\e[ad]	dieresis	u0308 (u00A8)	dieresis accent
-\[ah]	\e[ah]	caron	u030C (u02C7)	caron accent
-\[ao]	\e[ao]	ring	u030A (u02DA)	ring accent
-\[a~]	\e[a\[ti]]	tilde	u0303 (u007E)	tilde accent
-\[ho]	\e[ho]	ogonek	u0328 (u02DB)	hook accent
+\[a"]	\e[a"]	u030B (u02DD)	double acute accent
+\[a-]	\e[a\-]	u0304 (u00AF)	macron accent
+\[a.]	\e[a.]	u0307 (u02D9)	dot accent
+\[a^]	\e[a\[ha]]	u0302 (u005E)	circumflex accent
+\[aa]	\e[aa]	u0301 (u00B4)	acute accent +
+\[ga]	\e[ga]	u0300 (u0060)	grave accent +
+\[ab]	\e[ab]	u0306 (u02D8)	breve accent
+\[ac]	\e[ac]	u0327 (u00B8)	cedilla accent
+\[ad]	\e[ad]	u0308 (u00A8)	dieresis accent
+\[ah]	\e[ah]	u030C (u02C7)	caron accent
+\[ao]	\e[ao]	u030A (u02DA)	ring accent
+\[a~]	\e[a\[ti]]	u0303 (u007E)	tilde accent
+\[ho]	\e[ho]	u0328 (u02DB)	hook accent
 .TE
 .
 .
@@ -1070,21 +1065,21 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[Bq]	\e[Bq]	quotedblbase	u201E	low double comma quote
-\[bq]	\e[bq]	quotesinglbase	u201A	low single comma quote
-\[lq]	\e[lq]	quotedblleft	u201C	left double quote
-\[rq]	\e[rq]	quotedblright	u201D	right double quote
-\[oq]	\e[oq]	quoteleft	u2018	single open (left) quote
-\[cq]	\e[cq]	quoteright	u2019	single closing (right) quote
-\[aq]	\e[aq]	quotesingle	u0027	apostrophe, neutral single quote
-\[dq]	\e[dq]	quotedbl	u0022	neutral double quote
-\[Fo]	\e[Fo]	guillemotleft	u00AB	left double chevron
-\[Fc]	\e[Fc]	guillemotright	u00BB	right double chevron
-\[fo]	\e[fo]	guilsinglleft	u2039	left single chevron
-\[fc]	\e[fc]	guilsinglright	u203A	right single chevron
+\[Bq]	\e[Bq]	u201E	low double comma quote
+\[bq]	\e[bq]	u201A	low single comma quote
+\[lq]	\e[lq]	u201C	left double quote
+\[rq]	\e[rq]	u201D	right double quote
+\[oq]	\e[oq]	u2018	single open (left) quote
+\[cq]	\e[cq]	u2019	single closing (right) quote
+\[aq]	\e[aq]	u0027	apostrophe, neutral single quote
+\[dq]	\e[dq]	u0022	neutral double quote
+\[Fo]	\e[Fo]	u00AB	left double chevron
+\[Fc]	\e[Fc]	u00BB	right double chevron
+\[fo]	\e[fo]	u2039	left single chevron
+\[fc]	\e[fc]	u203A	right single chevron
 .TE
 .
 .
@@ -1093,14 +1088,14 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[r!]	\e[r!]	exclamdown	u00A1	inverted exclamation mark
-\[r?]	\e[r?]	questiondown	u00BF	inverted question mark
-\[em]	\e[em]	emdash	u2014	em-dash +
-\[en]	\e[en]	endash	u2013	en-dash
-\[hy]	\e[hy]	hyphen	u2010	hyphen +
+\[r!]	\e[r!]	u00A1	inverted exclamation mark
+\[r?]	\e[r?]	u00BF	inverted question mark
+\[em]	\e[em]	u2014	em-dash +
+\[en]	\e[en]	u2013	en-dash
+\[hy]	\e[hy]	u2010	hyphen +
 .TE
 .
 .
@@ -1205,48 +1200,48 @@ devices\[em]provided those glyphs exist.
 .
 .\" XXX: This table overruns 78n on nroff devices.
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[lB]	\e[lB]	bracketleft	u005B	left square bracket
-\[rB]	\e[rB]	bracketright	u005D	right square bracket
-\[lC]	\e[lC]	braceleft	u007B	left brace
-\[rC]	\e[rC]	braceright	u007D	right brace
-\[la]	\e[la]	angleleft	u27E8	left angle bracket
-\[ra]	\e[ra]	angleright	u27E9	right angle bracket
-\[bv]	\e[bv]	braceex	u23AA	brace vertical extension *** +
-\[braceex]	\e[braceex]	braceex	u23AA	brace vertical extension
+\[lB]	\e[lB]	u005B	left square bracket
+\[rB]	\e[rB]	u005D	right square bracket
+\[lC]	\e[lC]	u007B	left brace
+\[rC]	\e[rC]	u007D	right brace
+\[la]	\e[la]	u27E8	left angle bracket
+\[ra]	\e[ra]	u27E9	right angle bracket
+\[bv]	\e[bv]	u23AA	brace vertical extension *** +
+\[braceex]	\e[braceex]	u23AA	brace vertical extension
 
-\[bracketlefttp]	\e[bracketlefttp]	bracketlefttp	u23A1	left square bracket top
-\[bracketleftbt]	\e[bracketleftbt]	bracketleftbt	u23A3	left square bracket bottom
-\[bracketleftex]	\e[bracketleftex]	bracketleftex	u23A2	left square bracket extension
+\[bracketlefttp]	\e[bracketlefttp]	u23A1	left square bracket top
+\[bracketleftbt]	\e[bracketleftbt]	u23A3	left square bracket bottom
+\[bracketleftex]	\e[bracketleftex]	u23A2	left square bracket extension
 
-\[bracketrighttp]	\e[bracketrighttp]	bracketrighttp	u23A4	right square bracket top
-\[bracketrightbt]	\e[bracketrightbt]	bracketrightbt	u23A6	right square bracket bottom
-\[bracketrightex]	\e[bracketrightex]	bracketrightex	u23A5	right square bracket extension
+\[bracketrighttp]	\e[bracketrighttp]	u23A4	right square bracket top
+\[bracketrightbt]	\e[bracketrightbt]	u23A6	right square bracket bottom
+\[bracketrightex]	\e[bracketrightex]	u23A5	right square bracket extension
 
-\[lt]	\e[lt]	bracelefttp	u23A7	left brace top +
-\[bracelefttp]	\e[bracelefttp]	bracelefttp	u23A7	left brace top
-\[lk]	\e[lk]	braceleftmid	u23A8	left brace middle +
-\[braceleftmid]	\e[braceleftmid]	braceleftmid	u23A8	left brace middle
-\[lb]	\e[lb]	braceleftbt	u23A9	left brace bottom +
-\[braceleftbt]	\e[braceleftbt]	braceleftbt	u23A9	left brace bottom
-\[braceleftex]	\e[braceleftex]	braceleftex	u23AA	left brace extension
+\[lt]	\e[lt]	u23A7	left brace top +
+\[bracelefttp]	\e[bracelefttp]	u23A7	left brace top
+\[lk]	\e[lk]	u23A8	left brace middle +
+\[braceleftmid]	\e[braceleftmid]	u23A8	left brace middle
+\[lb]	\e[lb]	u23A9	left brace bottom +
+\[braceleftbt]	\e[braceleftbt]	u23A9	left brace bottom
+\[braceleftex]	\e[braceleftex]	u23AA	left brace extension
 
-\[rt]	\e[rt]	bracerighttp	u23AB	right brace top +
-\[bracerighttp]	\e[bracerighttp]	bracerighttp	u23AB	right brace top
-\[rk]	\e[rk]	bracerightmid	u23AC	right brace middle +
-\[bracerightmid]	\e[bracerightmid]	bracerightmid	u23AC	right brace middle
-\[rb]	\e[rb]	bracerightbt	u23AD	right brace bottom +
-\[bracerightbt]	\e[bracerightbt]	bracerightbt	u23AD	right brace bottom
-\[bracerightex]	\e[bracerightex]	bracerightex	u23AA	right brace extension
+\[rt]	\e[rt]	u23AB	right brace top +
+\[bracerighttp]	\e[bracerighttp]	u23AB	right brace top
+\[rk]	\e[rk]	u23AC	right brace middle +
+\[bracerightmid]	\e[bracerightmid]	u23AC	right brace middle
+\[rb]	\e[rb]	u23AD	right brace bottom +
+\[bracerightbt]	\e[bracerightbt]	u23AD	right brace bottom
+\[bracerightex]	\e[bracerightex]	u23AA	right brace extension
 
-\[parenlefttp]	\e[parenlefttp]	parenlefttp	u239B	left parenthesis top
-\[parenleftbt]	\e[parenleftbt]	parenleftbt	u239D	left parenthesis bottom
-\[parenleftex]	\e[parenleftex]	parenleftex	u239C	left parenthesis extension
-\[parenrighttp]	\e[parenrighttp]	parenrighttp	u239E	right parenthesis top
-\[parenrightbt]	\e[parenrightbt]	parenrightbt	u23A0	right parenthesis bottom
-\[parenrightex]	\e[parenrightex]	parenrightex	u239F	right parenthesis extension
+\[parenlefttp]	\e[parenlefttp]	u239B	left parenthesis top
+\[parenleftbt]	\e[parenleftbt]	u239D	left parenthesis bottom
+\[parenleftex]	\e[parenleftex]	u239C	left parenthesis extension
+\[parenrighttp]	\e[parenrighttp]	u239E	right parenthesis top
+\[parenrightbt]	\e[parenrightbt]	u23A0	right parenthesis bottom
+\[parenrightex]	\e[parenrightex]	u239F	right parenthesis extension
 .TE
 .
 .
@@ -1256,22 +1251,22 @@ _
 .
 .\" XXX: This table overruns 78n on nroff devices.
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[<-]	\e[<\-]	arrowleft	u2190	horizontal arrow left +
-\[->]	\e[\->]	arrowright	u2192	horizontal arrow right +
-\[<>]	\e[<>]	arrowboth	u2194	bidirectional horizontal arrow
-\[da]	\e[da]	arrowdown	u2193	vertical arrow down +
-\[ua]	\e[ua]	arrowup	u2191	vertical arrow up +
-\[va]	\e[va]	arrowupdn	u2195	bidirectional vertical arrow
-\[lA]	\e[lA]	arrowdblleft	u21D0	horizontal double arrow left
-\[rA]	\e[rA]	arrowdblright	u21D2	horizontal double arrow right
-\[hA]	\e[hA]	arrowdblboth	u21D4	bidirectional horizontal double arrow
-\[dA]	\e[dA]	arrowdbldown	u21D3	vertical double arrow down
-\[uA]	\e[uA]	arrowdblup	u21D1	vertical double arrow up
-\[vA]	\e[vA]	uni21D5	u21D5	bidirectional vertical double arrow
-\[an]	\e[an]	arrowhorizex	u23AF	horizontal arrow extension
+\[<-]	\e[<\-]	u2190	horizontal arrow left +
+\[->]	\e[\->]	u2192	horizontal arrow right +
+\[<>]	\e[<>]	u2194	bidirectional horizontal arrow
+\[da]	\e[da]	u2193	vertical arrow down +
+\[ua]	\e[ua]	u2191	vertical arrow up +
+\[va]	\e[va]	u2195	bidirectional vertical arrow
+\[lA]	\e[lA]	u21D0	horizontal double arrow left
+\[rA]	\e[rA]	u21D2	horizontal double arrow right
+\[hA]	\e[hA]	u21D4	bidirectional horizontal double arrow
+\[dA]	\e[dA]	u21D3	vertical double arrow down
+\[uA]	\e[uA]	u21D1	vertical double arrow up
+\[vA]	\e[vA]	u21D5	bidirectional vertical double arrow
+\[an]	\e[an]	u23AF	horizontal arrow extension
 .TE
 .
 .
@@ -1292,8 +1287,7 @@ they can be used to build boxes.
 On terminal devices,
 they are mapped as shown in the table.
 .
-Note that both the AGL and the Unicode-derived names of these three
-glyphs are rough approximations.
+The Unicode-derived names of these three glyphs are approximations.
 .
 .
 .P
@@ -1321,18 +1315,18 @@ for continuation of radical signs
 square roots).
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-|	|	bar	u007C	bar
-\[ba]	\e[ba]	bar	u007C	bar
-\[br]	\e[br]	SF110000	u2502	box rule +
-\[ul]	\e[ul]	underscore	u005F	underscore, low line +
-\[rn]	\e[rn]	overline	u203E	overline +
-\[ru]	\e[ru]	---	---	baseline rule +
-\[bb]	\e[bb]	brokenbar	u00A6	broken bar
-\[sl]	\e[sl]	slash	u002F	slash, solidus +
-\[rs]	\e[rs]	backslash	u005C	reverse solidus
+|	|	u007C	bar
+\[ba]	\e[ba]	u007C	bar
+\[br]	\e[br]	u2502	box rule +
+\[ul]	\e[ul]	u005F	underscore, low line +
+\[rn]	\e[rn]	u203E	overline +
+\[ru]	\e[ru]	---	baseline rule +
+\[bb]	\e[bb]	u00A6	broken bar
+\[sl]	\e[sl]	u002F	slash, solidus +
+\[rs]	\e[rs]	u005C	reverse solidus
 .TE
 .
 .
@@ -1342,23 +1336,23 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[ci]	\e[ci]	circle	u25CB	circle +
-\[bu]	\e[bu]	bullet	u2022	bullet +
-\[dg]	\e[dg]	dagger	u2020	dagger +
-\[dd]	\e[dd]	daggerdbl	u2021	double dagger +
-\[lz]	\e[lz]	lozenge	u25CA	lozenge, diamond
-\[sq]	\e[sq]	uni25A1	u25A1	square +
-\[ps]	\e[ps]	paragraph	u00B6	pilcrow sign
-\[sc]	\e[sc]	section	u00A7	section sign +
-\[lh]	\e[lh]	uni261C	u261C	hand pointing left +
-\[rh]	\e[rh]	a14	u261E	hand pointing right +
-\[at]	\e[at]	at	u0040	at sign
-\[sh]	\e[sh]	numbersign	u0023	number sign
-\[CR]	\e[CR]	carriagereturn	u21B5	carriage return
-\[OK]	\e[OK]	a19	u2713	check mark
+\[ci]	\e[ci]	u25CB	circle +
+\[bu]	\e[bu]	u2022	bullet +
+\[dg]	\e[dg]	u2020	dagger +
+\[dd]	\e[dd]	u2021	double dagger +
+\[lz]	\e[lz]	u25CA	lozenge, diamond
+\[sq]	\e[sq]	u25A1	square +
+\[ps]	\e[ps]	u00B6	pilcrow sign
+\[sc]	\e[sc]	u00A7	section sign +
+\[lh]	\e[lh]	u261C	hand pointing left +
+\[rh]	\e[rh]	u261E	hand pointing right +
+\[at]	\e[at]	u0040	at sign
+\[sh]	\e[sh]	u0023	number sign
+\[CR]	\e[CR]	u21B5	carriage return
+\[OK]	\e[OK]	u2713	check mark
 .TE
 .
 .\" ====================================================================
@@ -1369,13 +1363,13 @@ The Bell Systems logo is not supported in
 .IR groff .
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[co]	\e[co]	copyright	u00A9	copyright sign +
-\[rg]	\e[rg]	registered	u00AE	registered sign +
-\[tm]	\e[tm]	trademark	u2122	trade mark sign
-\[bs]	\e[bs]	---	---	Bell Systems logo +
+\[co]	\e[co]	u00A9	copyright sign +
+\[rg]	\e[rg]	u00AE	registered sign +
+\[tm]	\e[tm]	u2122	trade mark sign
+\[bs]	\e[bs]	---	Bell Systems logo +
 .TE
 .
 .
@@ -1384,16 +1378,16 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[Do]	\e[Do]	dollar	u0024	dollar sign
-\[ct]	\e[ct]	cent	u00A2	cent sign +
-\[eu]	\e[eu]	---	u20AC	Euro sign
-\[Eu]	\e[Eu]	Euro	u20AC	variant Euro sign
-\[Ye]	\e[Ye]	yen	u00A5	yen sign
-\[Po]	\e[Po]	sterling	u00A3	pound sign
-\[Cs]	\e[Cs]	currency	u00A4	currency sign
+\[Do]	\e[Do]	u0024	dollar sign
+\[ct]	\e[ct]	u00A2	cent sign +
+\[eu]	\e[eu]	u20AC	Euro sign
+\[Eu]	\e[Eu]	u20AC	variant Euro sign
+\[Ye]	\e[Ye]	u00A5	yen sign
+\[Po]	\e[Po]	u00A3	pound sign
+\[Cs]	\e[Cs]	u00A4	currency sign
 .TE
 .
 .
@@ -1402,16 +1396,16 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[de]	\e[de]	degree	u00B0	degree sign +
-\[%0]	\e[%0]	perthousand	u2030	per thousand, per mille sign
-\[fm]	\e[fm]	minute	u2032	arc minute sign +
-\[sd]	\e[sd]	second	u2033	arc second sign
-\[mc]	\e[mc]	mu	u00B5	micro sign
-\[Of]	\e[Of]	ordfeminine	u00AA	feminine ordinal indicator
-\[Om]	\e[Om]	ordmasculine	u00BA	masculine ordinal indicator
+\[de]	\e[de]	u00B0	degree sign +
+\[%0]	\e[%0]	u2030	per thousand, per mille sign
+\[fm]	\e[fm]	u2032	arc minute sign +
+\[sd]	\e[sd]	u2033	arc second sign
+\[mc]	\e[mc]	u00B5	micro sign
+\[Of]	\e[Of]	u00AA	feminine ordinal indicator
+\[Om]	\e[Om]	u00BA	masculine ordinal indicator
 .TE
 .
 .
@@ -1424,19 +1418,19 @@ whether they differ in appearance or spacing will depend on the device
 and font selected.
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[AN]	\e[AN]	logicaland	u2227	logical and
-\[OR]	\e[OR]	logicalor	u2228	logical or
-\[no]	\e[no]	logicalnot	u00AC	logical not + ***
-\[tno]	\e[tno]	logicalnot	u00AC	text variant of \f[B]\e[no]\f[]
-\[te]	\e[te]	existential	u2203	there exists
-\[fa]	\e[fa]	universal	u2200	for all
-\[st]	\e[st]	suchthat	u220B	such that
-\[3d]	\e[3d]	therefore	u2234	therefore
-\[tf]	\e[tf]	therefore	u2234	therefore
-\[or]	\e[or]	bar	u007C	bitwise or +
+\[AN]	\e[AN]	u2227	logical and
+\[OR]	\e[OR]	u2228	logical or
+\[no]	\e[no]	u00AC	logical not + ***
+\[tno]	\e[tno]	u00AC	text variant of \f[B]\e[no]\f[]
+\[te]	\e[te]	u2203	there exists
+\[fa]	\e[fa]	u2200	for all
+\[st]	\e[st]	u220B	such that
+\[3d]	\e[3d]	u2234	therefore
+\[tf]	\e[tf]	u2234	therefore
+\[or]	\e[or]	u007C	bitwise or +
 .TE
 .
 .
@@ -1469,93 +1463,93 @@ the device and font selected.
 .
 .\" XXX: This table overruns 78n on nroff devices.
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[12]	\e[12]	onehalf	u00BD	one half symbol +
-\[14]	\e[14]	onequarter	u00BC	one quarter symbol +
-\[34]	\e[34]	threequarters	u00BE	three quarters symbol +
-\[18]	\e[18]	oneeighth	u215B	one eighth symbol
-\[38]	\e[38]	threeeighths	u215C	three eighths symbol
-\[58]	\e[58]	fiveeighths	u215D	five eighths symbol
-\[78]	\e[78]	seveneighths	u215E	seven eighths symbol
-\[S1]	\e[S1]	onesuperior	u00B9	superscript one
-\[S2]	\e[S2]	twosuperior	u00B2	superscript two
-\[S3]	\e[S3]	threesuperior	u00B3	superscript three
+\[12]	\e[12]	u00BD	one half symbol +
+\[14]	\e[14]	u00BC	one quarter symbol +
+\[34]	\e[34]	u00BE	three quarters symbol +
+\[18]	\e[18]	u215B	one eighth symbol
+\[38]	\e[38]	u215C	three eighths symbol
+\[58]	\e[58]	u215D	five eighths symbol
+\[78]	\e[78]	u215E	seven eighths symbol
+\[S1]	\e[S1]	u00B9	superscript one
+\[S2]	\e[S2]	u00B2	superscript two
+\[S3]	\e[S3]	u00B3	superscript three
 
-+	+	plus	u002B	plus
-\[pl]	\e[pl]	plus	u002B	special variant of plus +
-\-	\e[\-]	hyphen	u002D	minus
-\[mi]	\e[mi]	minus	u2212	special variant of minus +
-\[-+]	\e[\-+]	uni2213	u2213	minus-plus
-\[+-]	\e[+\-]	plusminus	u00B1	plus-minus + ***
-\[t+-]	\e[t+\-]	plusminus	u00B1	text variant of \f[B]\e[+\-]\f[]
-\[pc]	\e[pc]	periodcentered	u00B7	centered period
-\[md]	\e[md]	dotmath	u22C5	multiplication dot
-\[mu]	\e[mu]	multiply	u00D7	multiplication sign + ***
-\[tmu]	\e[tmu]	multiply	u00D7	text variant of \f[B]\e[mu]\f[]
-\[c*]	\e[c*]	circlemultiply	u2297	circled times
-\[c+]	\e[c+]	circleplus	u2295	circled plus
-\[di]	\e[di]	divide	u00F7	division sign + ***
-\[tdi]	\e[tdi]	divide	u00F7	text variant of \f[B]\e[di]\f[]
-\[f/]	\e[f/]	fraction	u2044	fraction slash
-\[**]	\e[**]	asteriskmath	u2217	mathematical asterisk +
++	+	u002B	plus
+\[pl]	\e[pl]	u002B	special variant of plus +
+\-	\e[\-]	u002D	minus
+\[mi]	\e[mi]	u2212	special variant of minus +
+\[-+]	\e[\-+]	u2213	minus-plus
+\[+-]	\e[+\-]	u00B1	plus-minus + ***
+\[t+-]	\e[t+\-]	u00B1	text variant of \f[B]\e[+\-]\f[]
+\[pc]	\e[pc]	u00B7	centered period
+\[md]	\e[md]	u22C5	multiplication dot
+\[mu]	\e[mu]	u00D7	multiplication sign + ***
+\[tmu]	\e[tmu]	u00D7	text variant of \f[B]\e[mu]\f[]
+\[c*]	\e[c*]	u2297	circled times
+\[c+]	\e[c+]	u2295	circled plus
+\[di]	\e[di]	u00F7	division sign + ***
+\[tdi]	\e[tdi]	u00F7	text variant of \f[B]\e[di]\f[]
+\[f/]	\e[f/]	u2044	fraction slash
+\[**]	\e[**]	u2217	mathematical asterisk +
 
-\[<=]	\e[<=]	lessequal	u2264	less than or equal to +
-\[>=]	\e[>=]	greaterequal	u2265	greater than or equal to +
-\[<<]	\e[<<]	uni226A	u226A	much less than
-\[>>]	\e[>>]	uni226B	u226B	much greater than
-\&=	\&=	equal	u003D	equals
-\[eq]	\e[eq]	equal	u003D	special variant of equals +
-\[!=]	\e[!=]	notequal	u003D_0338	not equals +
-\[==]	\e[==]	equivalence	u2261	equivalent +
-\[ne]	\e[ne]	uni2262	u2261_0338	not equivalent
-\[=~]	\e[=~]	congruent	u2245	congruent to, approximately equal to
-\[|=]	\e[|=]	uni2243	u2243	asymptotically equal to +
-\[ap]	\e[ap]	similar	u223C	similar to, tilde operator +
-\[~~]	\e[~~]	approxequal	u2248	almost equal to
-\[~=]	\e[~=]	approxequal	u2248	almost equal to
-\[pt]	\e[pt]	proportional	u221D	proportional to +
+\[<=]	\e[<=]	u2264	less than or equal to +
+\[>=]	\e[>=]	u2265	greater than or equal to +
+\[<<]	\e[<<]	u226A	much less than
+\[>>]	\e[>>]	u226B	much greater than
+\&=	\&=	u003D	equals
+\[eq]	\e[eq]	u003D	special variant of equals +
+\[!=]	\e[!=]	u003D_0338	not equals +
+\[==]	\e[==]	u2261	equivalent +
+\[ne]	\e[ne]	u2261_0338	not equivalent
+\[=~]	\e[=~]	u2245	congruent to, approximately equal to
+\[|=]	\e[|=]	u2243	asymptotically equal to +
+\[ap]	\e[ap]	u223C	similar to, tilde operator +
+\[~~]	\e[~~]	u2248	almost equal to
+\[~=]	\e[~=]	u2248	almost equal to
+\[pt]	\e[pt]	u221D	proportional to +
 
-\[es]	\e[es]	emptyset	u2205	empty set +
-\[mo]	\e[mo]	element	u2208	element of a set +
-\[nm]	\e[nm]	notelement	u2208_0338	not element of set
-\[sb]	\e[sb]	propersubset	u2282	proper subset +
-\[nb]	\e[nb]	notsubset	u2282_0338	not subset
-\[sp]	\e[sp]	propersuperset	u2283	proper superset +
-\[nc]	\e[nc]	uni2285	u2283_0338	not superset
-\[ib]	\e[ib]	reflexsubset	u2286	subset or equal +
-\[ip]	\e[ip]	reflexsuperset	u2287	superset or equal +
-\[ca]	\e[ca]	intersection	u2229	intersection, cap +
-\[cu]	\e[cu]	union	u222A	union, cup +
+\[es]	\e[es]	u2205	empty set +
+\[mo]	\e[mo]	u2208	element of a set +
+\[nm]	\e[nm]	u2208_0338	not element of set
+\[sb]	\e[sb]	u2282	proper subset +
+\[nb]	\e[nb]	u2282_0338	not subset
+\[sp]	\e[sp]	u2283	proper superset +
+\[nc]	\e[nc]	u2283_0338	not superset
+\[ib]	\e[ib]	u2286	subset or equal +
+\[ip]	\e[ip]	u2287	superset or equal +
+\[ca]	\e[ca]	u2229	intersection, cap +
+\[cu]	\e[cu]	u222A	union, cup +
 
-\[/_]	\e[/_]	angle	u2220	angle
-\[pp]	\e[pp]	perpendicular	u22A5	perpendicular
-\[is]	\e[is]	integral	u222B	integral +
-\[integral]	\e[integral]	integral	u222B	integral ***
-\[sum]	\e[sum]	summation	u2211	summation ***
-\[product]	\e[product]	product	u220F	product ***
-\[coproduct]	\e[coproduct]	uni2210	u2210	coproduct ***
-\[gr]	\e[gr]	gradient	u2207	gradient +
-\[sr]	\e[sr]	radical	u221A	radical sign, square root +
-\[sqrt]	\e[sqrt]	radical	u221A	radical sign, square root
-\[radicalex]	\e[radicalex]	radicalex	---	radical extension ***
-\[sqrtex]	\e[sqrtex]	radicalex	---	radical extension ***
+\[/_]	\e[/_]	u2220	angle
+\[pp]	\e[pp]	u22A5	perpendicular
+\[is]	\e[is]	u222B	integral +
+\[integral]	\e[integral]	u222B	integral ***
+\[sum]	\e[sum]	u2211	summation ***
+\[product]	\e[product]	u220F	product ***
+\[coproduct]	\e[coproduct]	u2210	coproduct ***
+\[gr]	\e[gr]	u2207	gradient +
+\[sr]	\e[sr]	u221A	radical sign, square root +
+\[sqrt]	\e[sqrt]	u221A	radical sign, square root
+\[radicalex]	\e[radicalex]	---	radical extension ***
+\[sqrtex]	\e[sqrtex]	---	radical extension ***
 
-\[lc]	\e[lc]	uni2308	u2308	left ceiling +
-\[rc]	\e[rc]	uni2309	u2309	right ceiling +
-\[lf]	\e[lf]	uni230A	u230A	left floor +
-\[rf]	\e[rf]	uni230B	u230B	right floor +
+\[lc]	\e[lc]	u2308	left ceiling +
+\[rc]	\e[rc]	u2309	right ceiling +
+\[lf]	\e[lf]	u230A	left floor +
+\[rf]	\e[rf]	u230B	right floor +
 
-\[if]	\e[if]	infinity	u221E	infinity +
-\[Ah]	\e[Ah]	aleph	u2135	aleph symbol
-\[Fn]	\e[Fn]	florin	u0192	lowercase f with hook, function
-\[Im]	\e[Im]	Ifraktur	u2111	blackletter I, imaginary part
-\[Re]	\e[Re]	Rfraktur	u211C	blackletter R, real part
-\[wp]	\e[wp]	weierstrass	u2118	Weierstrass p
-\[pd]	\e[pd]	partialdiff	u2202	partial differential
-\[-h]	\e[\-h]	uni210F	u210F	h bar
-\[hbar]	\e[hbar]	uni210F	u210F	h bar
+\[if]	\e[if]	u221E	infinity +
+\[Ah]	\e[Ah]	u2135	aleph symbol
+\[Fn]	\e[Fn]	u0192	lowercase f with hook, function
+\[Im]	\e[Im]	u2111	blackletter I, imaginary part
+\[Re]	\e[Re]	u211C	blackletter R, real part
+\[wp]	\e[wp]	u2118	Weierstrass p
+\[pd]	\e[pd]	u2202	partial differential
+\[-h]	\e[\-h]	u210F	h bar
+\[hbar]	\e[hbar]	u210F	h bar
 .TE
 .
 .
@@ -1571,64 +1565,64 @@ and the lowercase ones are slanted.
 .
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[*A]	\e[*A]	Alpha	u0391	uppercase alpha +
-\[*B]	\e[*B]	Beta	u0392	uppercase beta +
-\[*G]	\e[*G]	Gamma	u0393	uppercase gamma +
-\[*D]	\e[*D]	Delta	u0394	uppercase delta +
-\[*E]	\e[*E]	Epsilon	u0395	uppercase epsilon +
-\[*Z]	\e[*Z]	Zeta	u0396	uppercase zeta +
-\[*Y]	\e[*Y]	Eta	u0397	uppercase eta +
-\[*H]	\e[*H]	Theta	u0398	uppercase theta +
-\[*I]	\e[*I]	Iota	u0399	uppercase iota +
-\[*K]	\e[*K]	Kappa	u039A	uppercase kappa +
-\[*L]	\e[*L]	Lambda	u039B	uppercase lambda +
-\[*M]	\e[*M]	Mu	u039C	uppercase mu +
-\[*N]	\e[*N]	Nu	u039D	uppercase nu +
-\[*C]	\e[*C]	Xi	u039E	uppercase xi +
-\[*O]	\e[*O]	Omicron	u039F	uppercase omicron +
-\[*P]	\e[*P]	Pi	u03A0	uppercase pi +
-\[*R]	\e[*R]	Rho	u03A1	uppercase rho +
-\[*S]	\e[*S]	Sigma	u03A3	uppercase sigma +
-\[*T]	\e[*T]	Tau	u03A4	uppercase tau +
-\[*U]	\e[*U]	Upsilon	u03A5	uppercase upsilon +
-\[*F]	\e[*F]	Phi	u03A6	uppercase phi +
-\[*X]	\e[*X]	Chi	u03A7	uppercase chi +
-\[*Q]	\e[*Q]	Psi	u03A8	uppercase psi +
-\[*W]	\e[*W]	Omega	u03A9	uppercase omega +
+\[*A]	\e[*A]	u0391	uppercase alpha +
+\[*B]	\e[*B]	u0392	uppercase beta +
+\[*G]	\e[*G]	u0393	uppercase gamma +
+\[*D]	\e[*D]	u0394	uppercase delta +
+\[*E]	\e[*E]	u0395	uppercase epsilon +
+\[*Z]	\e[*Z]	u0396	uppercase zeta +
+\[*Y]	\e[*Y]	u0397	uppercase eta +
+\[*H]	\e[*H]	u0398	uppercase theta +
+\[*I]	\e[*I]	u0399	uppercase iota +
+\[*K]	\e[*K]	u039A	uppercase kappa +
+\[*L]	\e[*L]	u039B	uppercase lambda +
+\[*M]	\e[*M]	u039C	uppercase mu +
+\[*N]	\e[*N]	u039D	uppercase nu +
+\[*C]	\e[*C]	u039E	uppercase xi +
+\[*O]	\e[*O]	u039F	uppercase omicron +
+\[*P]	\e[*P]	u03A0	uppercase pi +
+\[*R]	\e[*R]	u03A1	uppercase rho +
+\[*S]	\e[*S]	u03A3	uppercase sigma +
+\[*T]	\e[*T]	u03A4	uppercase tau +
+\[*U]	\e[*U]	u03A5	uppercase upsilon +
+\[*F]	\e[*F]	u03A6	uppercase phi +
+\[*X]	\e[*X]	u03A7	uppercase chi +
+\[*Q]	\e[*Q]	u03A8	uppercase psi +
+\[*W]	\e[*W]	u03A9	uppercase omega +
 
-\[*a]	\e[*a]	alpha	u03B1	lowercase alpha +
-\[*b]	\e[*b]	beta	u03B2	lowercase beta +
-\[*g]	\e[*g]	gamma	u03B3	lowercase gamma +
-\[*d]	\e[*d]	delta	u03B4	lowercase delta +
-\[*e]	\e[*e]	epsilon	u03B5	lowercase epsilon +
-\[*z]	\e[*z]	zeta	u03B6	lowercase zeta +
-\[*y]	\e[*y]	eta	u03B7	lowercase eta +
-\[*h]	\e[*h]	theta	u03B8	lowercase theta +
-\[*i]	\e[*i]	iota	u03B9	lowercase iota +
-\[*k]	\e[*k]	kappa	u03BA	lowercase kappa +
-\[*l]	\e[*l]	lambda	u03BB	lowercase lambda +
-\[*m]	\e[*m]	mu	u03BC	lowercase mu +
-\[*n]	\e[*n]	nu	u03BD	lowercase nu +
-\[*c]	\e[*c]	xi	u03BE	lowercase xi +
-\[*o]	\e[*o]	omicron	u03BF	lowercase omicron +
-\[*p]	\e[*p]	pi	u03C0	lowercase pi +
-\[*r]	\e[*r]	rho	u03C1	lowercase rho +
-\[ts]	\e[ts]	sigma1	u03C2	terminal lowercase sigma +
-\[*s]	\e[*s]	sigma	u03C3	lowercase sigma +
-\[*t]	\e[*t]	tau	u03C4	lowercase tau +
-\[*u]	\e[*u]	upsilon	u03C5	lowercase upsilon +
-\[*f]	\e[*f]	phi	u03D5	lowercase phi +
-\[*x]	\e[*x]	chi	u03C7	lowercase chi +
-\[*q]	\e[*q]	psi	u03C8	lowercase psi +
-\[*w]	\e[*w]	omega	u03C9	lowercase omega +
+\[*a]	\e[*a]	u03B1	lowercase alpha +
+\[*b]	\e[*b]	u03B2	lowercase beta +
+\[*g]	\e[*g]	u03B3	lowercase gamma +
+\[*d]	\e[*d]	u03B4	lowercase delta +
+\[*e]	\e[*e]	u03B5	lowercase epsilon +
+\[*z]	\e[*z]	u03B6	lowercase zeta +
+\[*y]	\e[*y]	u03B7	lowercase eta +
+\[*h]	\e[*h]	u03B8	lowercase theta +
+\[*i]	\e[*i]	u03B9	lowercase iota +
+\[*k]	\e[*k]	u03BA	lowercase kappa +
+\[*l]	\e[*l]	u03BB	lowercase lambda +
+\[*m]	\e[*m]	u03BC	lowercase mu +
+\[*n]	\e[*n]	u03BD	lowercase nu +
+\[*c]	\e[*c]	u03BE	lowercase xi +
+\[*o]	\e[*o]	u03BF	lowercase omicron +
+\[*p]	\e[*p]	u03C0	lowercase pi +
+\[*r]	\e[*r]	u03C1	lowercase rho +
+\[ts]	\e[ts]	u03C2	terminal lowercase sigma +
+\[*s]	\e[*s]	u03C3	lowercase sigma +
+\[*t]	\e[*t]	u03C4	lowercase tau +
+\[*u]	\e[*u]	u03C5	lowercase upsilon +
+\[*f]	\e[*f]	u03D5	lowercase phi +
+\[*x]	\e[*x]	u03C7	lowercase chi +
+\[*q]	\e[*q]	u03C8	lowercase psi +
+\[*w]	\e[*w]	u03C9	lowercase omega +
 
-\[+h]	\e[+h]	theta1	u03D1	variant theta
-\[+f]	\e[+f]	phi1	u03C6	variant phi (curly shape)
-\[+p]	\e[+p]	omega1	u03D6	variant pi (similar to omega)
-\[+e]	\e[+e]	uni03F5	u03F5	variant epsilon (lunate)
+\[+h]	\e[+h]	u03D1	variant theta
+\[+f]	\e[+f]	u03C6	variant phi (curly shape)
+\[+p]	\e[+p]	u03D6	variant pi (similar to omega)
+\[+e]	\e[+e]	u03F5	variant epsilon (lunate)
 .TE
 .
 .
@@ -1637,13 +1631,13 @@ _
 .\" ====================================================================
 .
 .TS
-l l l l lx.
-Output	Input	AGL	Unicode	Notes
+l l l lx.
+Output	Input	Unicode	Notes
 _
-\[CL]	\e[CL]	club	u2663	solid club suit
-\[SP]	\e[SP]	spade	u2660	solid spade suit
-\[HE]	\e[HE]	heart	u2665	solid heart suit
-\[DI]	\e[DI]	diamond	u2666	solid diamond suit
+\[CL]	\e[CL]	u2663	solid club suit
+\[SP]	\e[SP]	u2660	solid spade suit
+\[HE]	\e[HE]	u2665	solid heart suit
+\[DI]	\e[DI]	u2666	solid diamond suit
 .TE
 .
 .
@@ -1702,13 +1696,6 @@ EUUG Newsletter,
 Volume 9,
 No.\& 2,
 Summer 1989
-.
-.
-.P
-.UR https://\:github\:.com/\:adobe\-type\-tools/\:agl\-aglfn/\:blob/\:\
-master/\:glyphlist\:.txt
-Adobe Glyph List (AGL)
-.UE
 .
 .
 .P
