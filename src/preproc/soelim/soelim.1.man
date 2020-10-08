@@ -1,7 +1,7 @@
 '\" p
 .TH @g@soelim @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH Name
-@g@soelim \- interpret .so requests in groff input
+@g@soelim \- interpret source (.so) requests in troff input
 .
 .
 .\" ====================================================================
@@ -29,7 +29,16 @@
 .\" Save and disable compatibility mode (for, e.g., Solaris 10/11).
 .do nr *groff_soelim_1_man_C \n[.cp]
 .cp 0
+.\" Man pages are seldom preprocessed with pic(1).
 .mso pic.tmac
+.
+.
+.\" ====================================================================
+.\" Definitions
+.\" ====================================================================
+.
+.ie t .ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
+.el   .ds tx TeX
 .
 .
 .\" ====================================================================
@@ -37,9 +46,10 @@
 .\" ====================================================================
 .
 .SY @g@soelim
-.OP \-Crt
-.OP \-I dir
-.RI [ file
+.RB [ \-Crt ]
+.RB [ \-I
+.IR dir ]
+.RI [ input-file
 \&.\|.\|.\&]
 .YS
 .
@@ -61,56 +71,101 @@
 .SH Description
 .\" ====================================================================
 .
-.B @g@soelim
-reads
-.I files
-and replaces lines of the form
-.IP
-.BI .so\~ file
-.LP
-by the contents of
-.IR file .
+.I @g@soelim
+replaces lines of the form
+.RB \[lq] .so
+.IR macro-file \[rq]
+within each
+.I input-file
+with the contents of
+.IR macro-file ,
+recursively.
 .
 It is useful if files included with
 .B .so
 need to be preprocessed.
 .
+Output is written to the standard output stream.
+.
 Normally,
-.B @g@soelim
-should be invoked with the
+.I @g@soelim
+should be invoked with
+.IR groff 's
 .B \-s
-option of
-.BR groff .
+option.
+.
+In the absence of
+.I input-file
+arguments,
+.I soelim
+reads the standard input stream.
 .
 .
 .PP
-To embed \[oq]\[rs]\[cq] in the file name, write \[oq]\[rs]\[rs]\[cq]
-or \[oq]\[rs]e\[cq].
+To embed a backslash
+.RB \[lq] \[rs] \[rq]
+in the name of a
+.IR macro-file ,
+write
+.RB \[lq] \[rs]\[rs] \[rq]
+or
+.RB \[lq] \[rs]e \[rq].
 .
-To embed a space, write \[oq]\[rs]\ \[cq].
+To embed a space,
+write
+.RB \[lq] \[rs]\~ \[rq]
+(backslash followed by a space).
 .
 Any other escape sequence in
-.I file
+.IR macro-file ,
+including
+.RB \[lq] \[rs][rs] \[rq],
 makes
-.B soelim
+.I @g@soelim
 ignore the whole line.
 .
 .
 .PP
-Note that there must be no whitespace between the leading dot and the
-two characters \[oq]s\[cq] and \[oq]o\[cq].
+There must be no whitespace between the leading dot and the two
+characters \[lq]s\[rq] and \[lq]o\[rq].
 .
-Otherwise, only
-.B groff
-interprets the
+Otherwise,
+only
+.I groff
+will interpret the
 .B .so
-request (and
-.B soelim
-ignores it).
+request;
+.I @g@soelim
+will ignore it
+(but see the
+.B \-C
+option below).
 .
 .
 .PP
-The normal processing sequence of groff is this:
+The normal processing sequence of
+.I groff
+is as follows.
+.
+.\" Does this groff installation use a command prefix?  In installed
+.\" pages, this comparison will not look like it needs to be dynamically
+.\" decided.
+.\"
+.\" This is done so that the box sizes (in the pic(1) diagram) and arrow
+.\" alignments (in the text alternative) can remain fixed.
+.if !'@g@'' \{\
+In the diagrams below,
+the traditional names for
+.I soelim
+and
+.I troff
+are used;
+on this system,
+the GNU versions are installed as
+.I @g@soelim
+and
+.IR @g@troff .
+.\}
 .
 .
 .PP
@@ -145,33 +200,33 @@ box invisible width 0.5 height 0.4 "output" "file"
 .PE
 .\}
 .el \{\
-.nf
+.EX
           input        sourced
           file          file
-            |             |
-            v             v
-        preprocessor -> troff -> postprocessor
-                                      |
-                                      v
+            \[bv]             \[bv]
+            \[da]             \[da]
+        preprocessor \[an]\[->] troff \[an]\[->] postprocessor
+                                      \[bv]
+                                      \[da]
                                    output
                                     file
-.fi
+.EE
 .\}
 .PP
-.
-That is, files sourced with
+That is,
+files sourced with
 .B .so
 are normally read
 .I only
 by
-.B troff
+.I @g@troff
 (the actual formatter).
 .
-.B soelim
+.I @g@soelim
 is
 .I not
 required for
-.B troff
+.I @g@troff
 to source files.
 .
 .
@@ -181,8 +236,8 @@ it must already be read
 .I before
 the input file passes through the preprocessor.
 .
-This is handled by
-.BR soelim :
+.I @g@soelim
+handles this.
 .
 .PP
 .ie t \{\
@@ -213,17 +268,18 @@ box invisible width 0.5 height 0.4 "output" "file"
 .PE
 .\}
 .el \{\
-.nf
+.EX
           input
           file
-            |
-            v
-          soelim -> preprocessor -> troff -> postprocessor
-            ^                                     |
-            |                                     v
+            \[bv]
+            \[da]
+          soelim \[an]\[->] preprocessor \[an]\[->] troff \[an]\[->] \
+postprocessor
+            \[ua]                                     \[bv]
+            \[bv]                                     \[da]
          sourced                               output
           file                                  file
-.fi
+.EE
 .\}
 .
 .
@@ -248,20 +304,23 @@ Recognize
 even when followed by a character other than space or newline.
 .
 .TP
-.BI \-I dir
-This option may be used to add a directory to the search path for
-files (both those on the command line and those named in
+.BI \-I\~ dir
+Add the directory
+.I dir
+to the search path for macro files
+(both those on the command line and those named in
 .B .so
 requests).
 .
 The search path is initialized with the current directory.
 .
-This option may be specified more than once; the directories are then
-searched in the order specified (but before the current directory).
+This option may be specified more than once;
+the directories are then searched in the order specified
+(but before the current directory).
 .
-If you want to make the current directory be read before other
-directories, add
-.B \-I.\&
+If you want to search the current directory before other directories,
+add
+.RB \[lq] \-I\~.\& \[rq]
 at the appropriate place.
 .
 .IP
@@ -271,14 +330,20 @@ No directory search is performed for files with an absolute file name.
 .B \-r
 Do not add
 .B .lf
-requests (for general use, with non-groff files).
+requests
+(for general use,
+with
+.RI non- groff
+files).
 .
 .TP
 .B \-t
-Don't emit
+Emit \*[tx] comment lines starting with
+.RB \[lq] % \[rq]
+indicating the current file and line number,
+rather than
 .B .lf
-requests but TeX comment lines (starting with \[oq]%\[cq]) giving the
-current file and line number.
+requests for the same purpose.
 .
 .
 .\" ====================================================================
