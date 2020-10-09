@@ -40,6 +40,7 @@ const int DEFAULT_COLUMN_SEPARATION = 3;
 #define SECTION_DIVERSION_FLAG_REG PREFIX "sflag"
 #define SAVED_VERTICAL_POS_REG PREFIX "vert"
 #define NEED_BOTTOM_RULE_REG PREFIX "brule"
+#define USE_KEEPS_REG PREFIX "usekeeps"
 #define KEEP_MACRO_NAME PREFIX "keep"
 #define RELEASE_MACRO_NAME PREFIX "release"
 #define SAVED_FONT_REG PREFIX "fnt"
@@ -876,6 +877,7 @@ double_line_entry::double_line_entry(const table *p,
 				     const entry_modifier *m)
 : line_entry(p, m)
 {
+  error("double_line_entry constructed");
 }
 
 int double_line_entry::line_type()
@@ -885,6 +887,7 @@ int double_line_entry::line_type()
 
 void double_line_entry::simple_print(int dont_move)
 {
+  error("double_line_entry::simple_print(dont_move=%1)", dont_move);
   if (!dont_move)
     prints("\\v'-" BAR_HEIGHT "'");
   printfs("\\h'|\\n[%1]u",
@@ -1759,6 +1762,9 @@ void table::init_output()
     prints(".nr " SAVED_CENTER_REG " \\n[.ce]\n");
   if (compatible_flag)
     prints(".ds " LEADER_REG " \\a\n");
+  if (!(flags & NOKEEP))
+    prints(".if !r " USE_KEEPS_REG " \\\n"
+	   ".  nr " USE_KEEPS_REG " 1\n");
   prints(".de " RESET_MACRO_NAME "\n"
 	 ".ft \\n[.f]\n"
 	 ".ps \\n[.s]\n"
@@ -2731,7 +2737,7 @@ int table::row_ends_section(int r)
 void table::do_row(int r)
 {
   if (!(flags & NOKEEP) && row_begins_section(r))
-    prints("." KEEP_MACRO_NAME "\n");
+    prints(".if \\n[" USE_KEEPS_REG "] ." KEEP_MACRO_NAME "\n");
   int had_line = 0;
   stuff *p;
   for (p = stuff_list; p && p->row < r; p = p->next)
@@ -2759,7 +2765,7 @@ void table::do_row(int r)
     printfs("." REPEATED_MARK_MACRO " %1\n", row_top_reg(r));
   // we might have had a .TH, for example,  since we last tried
   if (!(flags & NOKEEP) && row_begins_section(r))
-    prints("." KEEP_MACRO_NAME "\n");
+    prints(".if \\n[" USE_KEEPS_REG "] ." KEEP_MACRO_NAME "\n");
   prints("." REPEATED_NM_SET_MACRO " d\n"
 	 ".nr " ROW_MAX_LINE_REG " \\n[ln]\n");
   printfs(".mk %1\n", row_start_reg(r));
@@ -2894,7 +2900,7 @@ void table::do_row(int r)
     if (printed_one)
       prints("." REPEATED_VPT_MACRO " 1\n");
     if (!(flags & NOKEEP) && row_ends_section(r))
-      prints("." RELEASE_MACRO_NAME "\n");
+      prints(".if \\n[" USE_KEEPS_REG "] ." RELEASE_MACRO_NAME "\n");
   }
   prints(".if \\n[ln] .nr ln \\n[" ROW_MAX_LINE_REG "]\n");
 }
@@ -2937,7 +2943,7 @@ void table::do_bottom()
     if (p->row > nrows - 1)
       p->print(this);
   if (!(flags & NOKEEP))
-    prints("." RELEASE_MACRO_NAME "\n");
+    prints(".if \\n[" USE_KEEPS_REG "] ." RELEASE_MACRO_NAME "\n");
   printfs(".mk %1\n", row_top_reg(nrows));
   prints(".nr " NEED_BOTTOM_RULE_REG " 1\n"
 	 ".nr T. 1\n"

@@ -1,8 +1,34 @@
 2020-10-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Stop tbl from injecting spurious blank lines (and emitting
+	spurious warnings about tables and "text blocks" not "fitting on
+	a page") into long tables in man pages when continuous rendering
+	is used (the default for nroff output devices).
+
+	* src/preproc/tbl/table.cpp (USE_KEEPS_REG): New preprocessor
+	symbol stores name of groff register for dynamic determination
+	of keep usage.
+	(table::init_output): If the NOKEEP flag is not set, then in
+	generated groff output, see if the usekeeps register is defined;
+	if not, define it and enable usage of keeps.
+	(table::do_row): In groff output, check usekeeps register before
+	calling keep and release macros.
+	(table::do_bottom): In groff output, check usekeeps register
+	before calling release macro.
+
+	* tmac/an-old.tmac (TS): Set the usekeeps register used by tbl
+	to the logical complement of the man(7) cR (continuous
+	rendering) register.
+
 	* tmac/tests/an-old_TS_do_not_keep_tables_when_cR_set.sh: Add
-	regression test for Savannah #57665.
+	regression test.
+
 	* tmac/tmac.am (TESTS): Run the test.
+
+	Problem appears to date back to the introduction of continuous
+	rendering in groff 1.17 (3 May 2001).
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?57665>.
 
 2020-10-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
