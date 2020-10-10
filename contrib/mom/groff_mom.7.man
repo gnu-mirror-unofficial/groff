@@ -990,9 +990,8 @@ above, means the numeric identifier of the tab.
 The following shows a sample input line with string tab markers.
 .RS
 .EX
-.FONT B \[rs]*[ST1] R "Now is the time" B \[rs]*[ST1X] R " for all " \
-B \[rs]*[ST2] R "good men" B \[rs]*ST2X] \
-R " to come to the aid of the party."
+.BR \[rs]*[ST1] "De minimus" \[rs]*[ST1X] \c
+.RB "non curat" \[rs]*[ST2] lex \[rs]*[ST2X] .
 .EE
 .RE
 .
@@ -1108,17 +1107,16 @@ Rather than this,
 you should do:
 .RS
 .EX
-.B .QUAD CENTER
-.B .PAD """#\[rs]*[ST1]A line of text\[rs]*[ST1X]#"""
-.B .EL
-.B .ST 1
-.B .TAB 1
-.B .PT_SIZE 24
-.B .ALD 3p
-.B \[rs]*[RULE] \[rs]" Note that you can't use \[rs]*[UP] or \
-\[rs]*[DOWN] with \[rs]*[RULE]\""
-.B .RLD 3p
-.B .TQ
+\&.QUAD CENTER
+\&.PAD "#\[rs]*[ST1]A line of text\[rs]*[ST1X]#"
+\&.EL
+\&.ST 1
+\&.TAB 1
+\&.PT_SIZE 24
+\&.ALD 3p
+\&\[rs]" You can't use \[rs]*[UP] or \[rs]*[DOWN] with \[rs]*[RULE].
+\&.RLD 3p
+\&.TQ
 .EE
 .RE
 .
@@ -1743,11 +1741,11 @@ Hanging indent \[em] the optional argument requires a unit of measure.
 A hanging indent looks like this:
 .RS
 .EX
-\fB  The thousand injuries of Fortunato I had borne as best I
-    could, but when he ventured upon insult, I vowed
-    revenge.  You who so well know the nature of my soul
-    will not suppose, however, that I gave utterance to a
-    threat, at length I would be avenged.\|.\|.
+The thousand injuries of Fortunato I had borne as best I
+  could, but when he ventured upon insult, I vowed
+  revenge.  You who so well know the nature of my soul
+  will not suppose, however, that I gave utterance to a
+  threat, at length I would be avenged.\|.\|.
 .EE
 .RE
 .
@@ -1841,30 +1839,30 @@ This recipe exists to demonstrate the use of
 only.
 .RS
 .EX
-.B ".PAGE 8.5i 11i 1i 1i 1i 1i"
-.B ".FAMILY  T"
-.B ".FT      R"
-.B ".PT_SIZE 12"
-.B ".LS      14"
-.B ".JUSTIFY"
-.B ".KERN"
-.B ".SS 0"
-.B ".IL \[rs]w'\[rs]0\[rs]0.'"
-.B ".HI \[rs]w'\[rs]0\[rs]0.'"
-\fB1.\[rs]0The most important point to be considered is whether the
-answer to the meaning of Life, the Universe, and Everything
-really is 42.  We have no-one's word on the subject except
-Mr.\& Adams'.
-.B .HI
+\&.PAGE 8.5i 11i 1i 1i 1i 1i
+\&.FAMILY  T
+\&.FT      R
+\&.PT_SIZE 12
+\&.LS      14
+\&.JUSTIFY
+\&.KERN
+\&.SS 0
+\&.IL \[rs]w'\[rs]0\[rs]0.'
+\&.HI \[rs]w'\[rs]0\[rs]0.'
+1.\[rs]0The most important point to be considered is whether
+the answer to the meaning of Life, the Universe, and
+Everything really is 42.  We have no one\[aq]s word on the
+subject except Mr.\& Adams\[aq]s.
+\&.HI
 2.\[rs]0If the answer to the meaning of Life, the Universe,
 and Everything is indeed 42, what impact does this have on
 the politics of representation?  42 is, after all not a
-prime number.  Are we to infer that prime numbers don't
+prime number.  Are we to infer that prime numbers don\[aq]t
 deserve equal rights and equal access in the universe?
-.B .HI
-3.\[rs]0If 42 is deemed non-exclusionary, how do we present it
-as the answer and, at the same time, forestall debate on its
-exclusionary implications?
+\&.HI
+3.\[rs]0If 42 is deemed non-exclusionary, how do we present
+it as the answer and, at the same time, forestall debate
+on its exclusionary implications?
 .EE
 .RE
 .
