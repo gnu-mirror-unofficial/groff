@@ -65,8 +65,8 @@
 .de reload-man
 .  do cp \n(.C       \" restore original compatibility mode
 .
-.  do ch header      \" remove trap set by doc.tmac
-.  do ch footer      \" remove trap set by doc.tmac
+.  do ch doc-header  \" remove trap set by mdoc/doc-{n,dit}roff
+.  do ch doc-footer  \" remove trap set by mdoc/doc-{n,dit}roff
 .
 .  do als em andoc-em
 .  do als bp andoc-bp
