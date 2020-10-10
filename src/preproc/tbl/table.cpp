@@ -877,7 +877,6 @@ double_line_entry::double_line_entry(const table *p,
 				     const entry_modifier *m)
 : line_entry(p, m)
 {
-  error("double_line_entry constructed");
 }
 
 int double_line_entry::line_type()
@@ -887,7 +886,6 @@ int double_line_entry::line_type()
 
 void double_line_entry::simple_print(int dont_move)
 {
-  error("double_line_entry::simple_print(dont_move=%1)", dont_move);
   if (!dont_move)
     prints("\\v'-" BAR_HEIGHT "'");
   printfs("\\h'|\\n[%1]u",
