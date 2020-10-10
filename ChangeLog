@@ -1,5 +1,20 @@
 2020-10-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::init_output): In the release
+	macro written to the output, reword the warning diagnostic that
+	is emitted when a table row is to be output without enough room
+	before the next page location trap.  The former wording said
+	that a "text block" would not fit on the page, and that is
+	normally how table rows grow longer than one line in the first
+	place.  However, there are other ways the conditional can be
+	satisfied, as witnessed in Savannah #57665, so simply say what
+	is known; that the table _row_ overruns the space to the next
+	trap (we say the row won't "fit on [the] page").
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59233>.
+
+2020-10-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/tbl/table.cpp
 	(double_line_entry::double_line_entry):
 	(double_line_entry::simple_print): Remove garbage lines

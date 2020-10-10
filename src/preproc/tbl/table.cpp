@@ -1857,7 +1857,7 @@ void table::init_output()
 	      loop when we try and print it; it will just go off the
 	      bottom of the page. */
 	   ".  tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	   ".  tm1 \" table text block will not fit on page \\n%\n"
+	   ".  tm1 \" table row will not fit on page \\n%\n"
 	   ".\\}\n"
 	   ".nf\n"
 	   ".if \\n[ln] .nm \\n[ln]\n"
