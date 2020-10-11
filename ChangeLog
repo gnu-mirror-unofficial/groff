@@ -3,7 +3,7 @@
 	* tmac/andoc.tmac: Remove traps set by mdoc package by the names
 	they actually use.
 	* tmac/tests/andoc-clear-doc-traps.sh: Add regression test.
-	* tmac/tmac.an: Run test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 	Fixes <https://savannah.gnu.org/bugs/index.php?59246>.
 
@@ -53,8 +53,7 @@
 
 	* tmac/tests/an-old_TS_do_not_keep_tables_when_cR_set.sh: Add
 	regression test.
-
-	* tmac/tmac.am (TESTS): Run the test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 	Problem appears to date back to the introduction of continuous
 	rendering in groff 1.17 (3 May 2001).
@@ -276,8 +275,7 @@
 
 	* tmac/tests/an-old_avoid_two-font_denial_of_service.sh: Add
 	regression test.
-
-	* tmac/tmac.am: Run the test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 2020-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -407,8 +405,8 @@
 	doc-sec-head instead of doc-str-dfp.
 
 	* tmac/tests/doc-accept-mixed-case-section-headings.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 	* tmac/tests/doc-smoke-test.sh: Use mixed-case section headings.
-	* tmac/tmac.am: Run test.
 
 2020-09-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -592,8 +590,8 @@
 	"punctuation" arguments have been output.  The next token will
 	always be a space node, the end of the document, or similar.
 
-	* tmac/tmac.am: Mark the punctuation hyphenation tests as
-	expected to fail, because they now do.
+	* tmac/tmac.am (tmac_XFAIL_TESTS): Mark the punctuation
+	hyphenation tests as expected to fail, because they now do.
 
 2020-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -617,7 +615,7 @@
 	* tmac/tests/an-ext_UE_punct_hyphenates.sh:
 	* tmac/tests/an-ext_UR_body_hyphenates.sh: Test behavior.
 
-	* tmac/tmac.am: Run the tests.
+	* tmac/tmac.am (tmac_TESTS): Run tests.
 
 2020-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -687,6 +685,8 @@
 2020-08-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/tmac.am: Use a stamp file for m4 keyword check.
+	(M4CHECK): Add stamp file variable.
+	($(M4CHECK)): Create stamp file if check succeeds.
 
 2020-08-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -705,13 +705,14 @@
 	control.  Uncomment material intended only for basic reference
 	page.
 
-	* tmac/tmac.am: Add groff_man_style.7 to man7_MANS.  Add
-	groff_man.7.man.in to EXTRADIST.  Add m4-generated man page
-	sources tmac/groff_man{,_style}.7.man to MOSTLYCLEANFILES.  Add
-	targets to generate those same two pages from the renamed file.
-	Add target to grep the page for unprotected English m4 keywords
-	and halt the build if they are found.  Make generation of those
-	pages depend on this new target.
+	* tmac/tmac.am (man7_MANS): Add groff_man_style.7.
+	(EXTRADIST) Add groff_man.7.man.in.
+	(MOSTLYCLEANFILES): Add m4-generated man page sources
+	tmac/groff_man{,_style}.7.man.
+	Add targets to generate those same two pages from the renamed
+	file.  Add target to grep the page for unprotected English m4
+	keywords and halt the build if they are found.  Make generation
+	of those pages depend on this new target.
 
 2020-08-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -871,7 +872,7 @@
 	failure.  If an argument to the .ss request is negative, throw a
 	range warning and ignore it.
 	* src/roff/groff/tests/regression_savannah_58337.sh: Add test.
-	* src/roff/groff/groff.am: Run test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 	Fixes https://savannah.gnu.org/bugs/index.php?58337.
 
@@ -927,7 +928,9 @@
 
 	* src/preproc/preconv/tests/smoke-test.sh: Test each of the
 	steps in the detection algorithm.
-	* src/preproc/preconv/preconv.am: Run test.  Wrap long lines.
+	* src/preproc/preconv/preconv.am: Run test.
+	(preconv_TESTS): Add new variable.
+	(TESTS): Append $(preconv_TESTS).
 
 2020-05-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1108,8 +1111,8 @@
 	* man/groff.7.man:
 	* man/groff_diff.7.man: Document it.
 
-	* src/roff/groff/groff.am:
 	* src/roff/groff/tests/dot-cp_register_works.sh: Test it.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 	Enables a fix for
 	<https://savannah.gnu.org/bugs/index.php?58162>.
@@ -1215,8 +1218,8 @@
 
 2020-04-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* src/roff/groff/tests/smoke-test_html_device.sh:
-	* src/roff/groff/groff.am: Add regression test.
+	* src/roff/groff/tests/smoke-test_html_device.sh: Add test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 2020-04-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1311,8 +1314,8 @@
 	(input_stack::backtrace_all): Delete.
 	(backtrace_request): Update the only call site of the above.
 
-	* src/roff/groff/tests/regression_savannah_58153.sh:
-	* src/roff/groff/groff.am: Add regression test.
+	* src/roff/groff/tests/regression_savannah_58153.sh: Add test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 	* src/roff/groff/tests/string_case_xform_errors.sh: Update
 	regression test to not be confounded by additional line of
@@ -1444,10 +1447,10 @@
 	* man/groff.7.man: Document the restriction of special handling
 	of point-size arguments to '\s' to compatibility mode.
 
-	* src/roff/groff/groff.am:
 	* src/roff/groff/tests/\
 	use_point_size_escape_with_single_digit_arg.sh: Add regression
 	test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 2020-04-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1562,13 +1565,13 @@
 
 	* src/roff/groff/tests/*.sh: Rename some tests so their
 	filenames are more self-descriptive.
-	* src/roff/groff/groff.am: Update list of tests.
+	* src/roff/groff/groff.am (groff_TESTS): Update.
 
 2020-01-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/groff/tests/transparent_end-of-sentence_chars.sh: Add
 	test for end-of-sentence recognition.
-	* src/roff/groff/groff.am: Update list of tests.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 2020-01-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1732,8 +1735,8 @@
 	infrastructure as intended.
 
 	* Makefile.am: Declare XFAIL_TESTS variable.
-	* src/roff/groff/groff.am: Declare
-	string_case_xform_unicode_escape.sh as an XFAIL test.
+	* src/roff/groff/groff.am (groff_XFAIL_TESTS): Add
+	string_case_xform_unicode_escape.sh.
 	* src/roff/groff/tests/string_case_xform_unicode_escape.sh: Set
 	the expected output to what it would be if string case
 	transforms worked on groff Unicode escapes.
@@ -1801,7 +1804,7 @@
 	* tmac/tests/an-old_CT_register_off.sh:
 	* tmac/tests/an-old_CT_register_on.sh:
 	* tmac/tests/an-old_CT_register_unspecified.sh: Add tests.
-	* tmac/tmac.am: Run tests.
+	* tmac/tmac.am (tmac_TESTS): Run tests.
 
 2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1812,7 +1815,7 @@
 
 	* src/roff/groff/tests/string_case_xform_unicode_escape.sh: New
 	test.
-	* src/roff/groff/groff.am: Run the test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 2019-09-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1830,7 +1833,7 @@
 
 	* src/roff/groff/tests/string_case_xform_errors.sh: New test.
 	* src/roff/groff/tests/string_case_xform_requests.sh: New test.
-	* src/roff/groff/groff.am: Run the tests.
+	* src/roff/groff/groff.am (groff_TESTS): Run tests.
 
 2019-06-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
