@@ -47,6 +47,11 @@
 .
 .
 .de reload-doc
+.  \" Flush any partially collected output line and write page footer in
+.  \" continuous rendering mode.
+.  do if d an-end \
+.    do an-end
+.
 .  do ch an-header   \" remove trap set by an-old.tmac
 .  do ch an-footer   \" remove trap set by an-old.tmac
 .  do ch an-p-footer \" remove trap set by an-old.tmac
@@ -65,6 +70,11 @@
 .
 .de reload-man
 .  do cp \n(.C       \" restore original compatibility mode
+.
+.  \" Flush any partially collected output line and write page footer in
+.  \" continuous rendering mode.
+.  do if d doc-end-macro \
+.    do doc-end-macro
 .
 .  do ch doc-header  \" remove trap set by mdoc/doc-{n,dit}roff
 .  do ch doc-footer  \" remove trap set by mdoc/doc-{n,dit}roff

@@ -1,8 +1,15 @@
 2020-10-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/andoc.tmac: When switching between macro packages in
+	andoc and using continuous-rendering mode, flush any partially
+	collected output line and write page footer.
+	(reload-doc): Call an-end if it is defined.
+	(reload-man): Call doc-end-macro if it is defined.
 	* tmac/tests/andoc-flush-between-packages.sh: Add regression
 	test.
 	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59106>.
 
 2020-10-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
