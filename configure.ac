@@ -23,7 +23,7 @@ AC_INIT([GNU Troff],
         http://savannah.gnu.org/bugs/?group=groff,
         [groff])
 
-AC_PREREQ([2.62])
+AC_PREREQ([2.64])
 
 # SHORT_VERSION contains only the number of REVISION before the first '.',
 # e.g. if REVISION is '3.real.434-5aafd' then SHORT_VERSION is 'x.yy.3',
