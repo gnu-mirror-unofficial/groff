@@ -228,6 +228,10 @@ int main(int argc, char **argv)
 	"named COPYING.\n");
       printf("\ncalled subprograms:\n\n");
       fflush(stdout);
+      // Pass -v to all possible subprograms
+      commands[PRECONV_INDEX].append_arg(buf);
+      commands[CHEM_INDEX].append_arg(buf);
+      commands[IDEAL_INDEX].append_arg(buf);
       commands[POST_INDEX].append_arg(buf);
       // fall through
     case 'C':

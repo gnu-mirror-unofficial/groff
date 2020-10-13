@@ -1,4 +1,16 @@
-2020-10-12 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+2020-10-14  Ingo Schwarze <schwarze@openbsd.org>
+
+	In groff(1), fix the combination of -v with -k, -j, and -J.
+
+	* src/roff/groff/groff.cpp: Pass the -v option through to the
+	preconv, chem, and ideal preprocessors, just like for all
+	other preprocessors, to print the version of the preprocessor
+	and to avoid garbage output.
+
+	Bugfix patch from Eli Zaretskii <eliz at gnu dot org>
+	submitted in: https://savannah.gnu.org/bugs/?55297
+
+2020-10-12  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Update 'gnulib' submodule.
 
