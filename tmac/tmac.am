@@ -207,14 +207,14 @@ M4WORDS = define|divert|include|index|shift|undefine|undivert
 M4CHECK = tmac/check-groff_man-stamp
 
 $(M4CHECK): tmac/groff_man.7.man.in
-	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' $<
-	> $@
+	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' \
+	  $(tmac_srcdir)/groff_man.7.man.in > $@
 
 tmac/groff_man.7.man: tmac/groff_man.7.man.in $(M4CHECK)
-	m4 -D_groff_man_not_style $< > $@
+	m4 -D_groff_man_not_style $(tmac_srcdir)/groff_man.7.man.in > $@
 
 tmac/groff_man_style.7.man: tmac/groff_man.7.man.in $(M4CHECK)
-	m4 -D_groff_man_style $< > $@
+	m4 -D_groff_man_style $(tmac_srcdir)/groff_man.7.man.in > $@
 
 # The installation of groff compatibility wrappers for vendor-provided
 # non-GNU macro sets is controlled by 'compatibility_wrappers' (see the
