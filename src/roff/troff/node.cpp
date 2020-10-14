@@ -1613,6 +1613,7 @@ output_file *the_output = 0;
 
 output_file::output_file()
 {
+	is_dying = false;
 }
 
 output_file::~output_file()
