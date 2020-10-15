@@ -1,12 +1,30 @@
-2020-10-18 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+2020-10-18  Ingo Schwarze <schwarze@openbsd.org>
 
-    hpftodit: incorrect 'delete' after new[]
+	#include "config.h" before <stdio.h>
 
-    * src/utils/hpftodit/hpftodit.cpp (output_font_name): use 'delete[]'.
+	Required with e.g. gcc 4.2.1 because gnulib/lib/stdio.in.h
+	uses the "restrict" keyword since this gnulib commit:
+	commit 182afcba2635cbff91240656c7fb3742dd23ab6f
+	Author: Bruno Haible <bruno@clisp.org>
+	Date: Sat Feb 22 20:57:30 2020 +0100
 
-    Fixes bug #55331. Found by David Binderman, fixed by Ingo Schwarze.
+	Otherwise, the build may die from the declaration of
+	various printf-like functions with messages like:
+	./lib/stdio.h:851: error: expected ',' or '...' before 'fp'
 
-2020-10-18 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+	* src/libs/libgroff/assert.cpp, src/libs/libgroff/errarg.cpp,
+	src/libs/libgroff/error.cpp, src/preproc/eqn/eqn.ypp:
+	#include "config.h".
+
+2020-10-18  Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	hpftodit: incorrect 'delete' after new[]
+
+	* src/utils/hpftodit/hpftodit.cpp (output_font_name): use 'delete[]'.
+
+	Fixes bug #55331. Found by David Binderman, fixed by Ingo Schwarze.
+
+2020-10-18  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	preconv: don't use libuchardet if input is stdin
 
