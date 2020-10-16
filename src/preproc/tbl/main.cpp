@@ -1596,9 +1596,9 @@ int main(int argc, char **argv)
     default:
       assert(0);
     }
-	 ".if !dTS .ds TS\n"
-	 ".if !dTE .ds TE\n");
   printf(".if !\\n(.g .ab GNU tbl requires groff extensions; aborting\n"
+	 ".do if !dTS .ds TS\n"
+	 ".do if !dTE .ds TE\n");
   if (argc > optind) {
     for (int i = optind; i < argc; i++) 
       if (argv[i][0] == '-' && argv[i][1] == '\0') {

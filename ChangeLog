@@ -1,5 +1,14 @@
 2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/eqn/main.cpp (main):
+	* src/preproc/pic/main.cpp (main):
+	* src/preproc/tbl/main.cpp (main):
+	* tmac/eqnrc:
+	* tmac/troffrc: Perform checks of register and macro definitions
+	with a .do request, since we might be in compatibilty mode.
+
+2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (do_if_request): Emit warning of type
 	"syntax" if a groff conditional expression extension is used
 	when compatibility mode is active.
