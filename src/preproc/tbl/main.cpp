@@ -1582,9 +1582,6 @@ int main(int argc, char **argv)
 	exit(0);
 	break;
       }
-    case 'T':
-      // I'm sick of getting bug reports from IRIX users
-      break;
     case CHAR_MAX + 1: // --help
       usage(stdout);
       exit(0);
