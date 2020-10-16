@@ -12,7 +12,7 @@ grops \- PostScript driver for groff
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2018 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2018, 2020 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -1197,48 +1197,86 @@ to
 .\" ====================================================================
 .
 TrueType fonts can be used with
-.B grops
-if converted first to
-.B "Type\~42"
-format, a special PostScript wrapper equivalent to the PFA format
-mentioned in
-.BR \%pfbtops (@MAN1EXT@).
+.I grops
+if converted first to Type\~42 format,
+a PostScript wrapper equivalent to the PFA format described in
+.IR \%pfbtops (@MAN1EXT@).
 .
-There are several different methods to generate a type42 wrapper and
-most of them involve the use of a PostScript interpreter such as
-Ghostscript \[en] see
-.BR gs (1).
+Several methods exist to generate a Type\~42 wrapper;
+some of them involve the use of a PostScript interpreter such as
+Ghostscript\[em]see
+.IR gs (1).
 .
 .
 .LP
-Yet, the easiest method involves the use of the application
-.BR ttftot42 (1).
+One approach is to use
+.UR https://fontforge.org/
+FontForge
+.UE ,
+a font editor that can convert most outline font formats.
 .
-This program uses
-.BR freetype (3)
-(version 1.3.1) to generate type42
-font wrappers and well-formed AFM files that can be fed to
-the
-.BR \%afmtodit (@MAN1EXT@)
-script to create appropriate metric files.
+Here's an example of using the Roboto Slab Serif font with
+.IR groff .
 .
-The resulting font wrappers should be added to the
-.I download
-file.
-.B ttftot42
-source code can be downloaded from
-.UR ftp://\:www.giga.or.at/\:pub/\:nih/\:ttftot42/
-ftp://\:www.giga.or.at/\:pub/\:nih/\:ttftot42/
-.UE .
+Several variables are used so that you can more easily adapt it into
+your own script.
+.
+.
+.RS 4
+.LP
+.EX
+MAP=@FONTDIR@/devps/generate/textmap
+TTF=/usr/share/fonts/truetype/roboto/slab/RobotoSlab\-Regular.ttf
+BASE=$(basename \[dq]$TTF\[dq])
+INT=${BASE%.ttf}
+PFA=$INT.pfa
+AFM=$INT.afm
+GFN=RSR
+DIR=$HOME/.local/groff/font
+mkdir -p \[dq]$DIR\[dq]/devps
+fontforge -lang=ff -c \[dq]Open(\[rs]\[dq]$TTF\[rs]\[dq]);\[rs]
+\tGenerate(\[rs]\[dq]$DIR/devps/$PFA\[rs]\[dq]);\[dq]
+afmtodit \[dq]$DIR/devps/$AFM\[dq] \[dq]$MAP\[dq] \
+\[dq]$DIR/devps/$GFN\[dq]
+printf \[dq]$BASE\[rs]t$PFA\[rs]n\[dq] >> \[dq]$DIR/devps/download\[dq]
+.EE
+.RE
 .
 .
 .LP
-Another solution for creating type42 wrappers is to use FontForge,
-available from
-.UR http://\:fontforge.sf.net
-http://\:fontforge.sf.net
-.UE .
-This font editor can convert most outline font formats.
+.I fontforge
+and
+.I afmtodit
+may generate warnings depending on the attributes of the font.
+.
+The test procedure is simple.
+.
+.
+.RS 4
+.LP
+.EX
+printf \[dq].ft RSR\[rs]nHello, world!\[rs]n\[dq] | groff -F \
+\[dq]$DIR\[dq] > hello.ps
+.EE
+.RE
+.
+.
+.LP
+Once you're satisifed that the font works,
+you may want to generate any available related styles
+(for instance,
+Roboto Slab
+also has \[lq]Bold\[rq],
+\[lq]Light\[rq],
+and
+\[lq]Thin\[rq]
+styles)
+and set up
+.I GROFF_FONT_PATH
+in your environment to include the directory you keep the generated
+fonts in so that you don't have to use the
+.B \-F
+option.
 .
 .
 .\" ====================================================================
