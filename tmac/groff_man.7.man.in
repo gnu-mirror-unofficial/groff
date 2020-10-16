@@ -1951,6 +1951,36 @@ sign\(rq glyph,
 .BR \e(tm ,
 if available,
 and \(lq(TM)\(rq otherwise.
+_ifstyle()dnl
+.
+.
+.PP
+None of the above is necessary in a contemporary man page.
+.
+.B \e*S
+is superfluous,
+since point size changes are invisible on terminal devices and macros
+that change it restore its original value afterward.
+.
+Better alternatives exist for the rest;
+simply use the
+.BR \(rs(rg , \" Heirloom Doctools, mandoc, neatmkfn, Plan 9, Solaris
+.BR \(rs(lq , \" Heirloom Doctools, mandoc, neatmkfn, Plan 9
+.BR \(rs(rq , \" Heirloom Doctools, mandoc, neatmkfn, Plan 9
+and
+.B \(rs(tm \" Heirloom Doctools, mandoc, neatmkfn, Plan 9
+special character escape sequences directly.
+.
+Unless a man page author is aiming for a pathological level of
+portability,
+such as the composition of pages for consumption on simulators of 1980s
+Unix systems
+(or Solaris
+.IR troff ,
+though even it supports
+.BR \(rsrg ),
+the above strings should be avoided.
+_endif()dnl
 .
 .
 .\" ====================================================================
