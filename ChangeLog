@@ -1,3 +1,16 @@
+2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/input.cpp (do_if_request): Emit warning of type
+	"syntax" if a groff conditional expression extension is used
+	when compatibility mode is active.
+
+	* doc/groff.texi:
+	* src/roff/troff/troff.1.man: Update description of "syntax"
+	warning type to be more general.  It was inaccurate, referring
+	only to "dubious syntax in numeric expressions", which was not
+	the case.  Instead it was being used only for poor construction
+	of character classes with the .class request.
+
 2020-10-14  Ingo Schwarze <schwarze@openbsd.org>
 
 	In groff(1), fix the combination of -v with -k, -j, and -J.

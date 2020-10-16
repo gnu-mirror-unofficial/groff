@@ -5692,6 +5692,20 @@ int do_if_request()
   }
   int result;
   unsigned char c = tok.ch();
+  if (compatible_flag)
+    switch (c) {
+    case 'F':
+    case 'S':
+    case 'c':
+    case 'd':
+    case 'm':
+    case 'r':
+      warning(WARN_SYNTAX,
+	      "conditional '%1' used in compatibility mode", c);
+      break;
+    default:
+      break;
+    }
   if (c == 't') {
     tok.next();
     result = !nroff_mode;
