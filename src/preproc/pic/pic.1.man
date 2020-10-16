@@ -1284,6 +1284,28 @@ macros.
 .
 .
 .\" ====================================================================
+.SH Bugs
+.\" ====================================================================
+.
+Input characters that are invalid for
+.B groff
+(i.e., those with ASCII code 0,
+or 013 octal, or between 015 and 037 octal, or between 0200 and 0237
+octal) are rejected even in \*(tx mode.
+.
+.
+.LP
+The interpretation of
+.B fillval
+is incompatible with the pic in 10th edition Unix,
+which interprets 0 as black and 1 as white.
+.
+.
+.LP
+PostScript\*R is a registered trademark of Adobe Systems Incorporation.
+.
+.
+.\" ====================================================================
 .SH "See Also"
 .\" ====================================================================
 .
@@ -1336,28 +1358,6 @@ W.\& Richard Stevens,
 .UR http://\:www.kohala.com/\:start/\:troff/\:pic.examples.ps
 .IR "Examples of " pic " Macros"
 .UE
-.
-.
-.\" ====================================================================
-.SH Bugs
-.\" ====================================================================
-.
-Input characters that are invalid for
-.B groff
-(i.e., those with ASCII code 0,
-or 013 octal, or between 015 and 037 octal, or between 0200 and 0237
-octal) are rejected even in \*(tx mode.
-.
-.
-.LP
-The interpretation of
-.B fillval
-is incompatible with the pic in 10th edition Unix,
-which interprets 0 as black and 1 as white.
-.
-.
-.LP
-PostScript\*R is a registered trademark of Adobe Systems Incorporation.
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
