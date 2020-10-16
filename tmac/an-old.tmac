@@ -623,8 +623,10 @@
 .ds S \s'\\n(PSu'\"
 .ie c\[tm] .ds Tm \(tm\"
 .el        .ds Tm (TM)\"
-.ds lq \(lq\"
-.ds rq \(rq\"
+.ie c\[lq] .ds lq \(lq\"
+.el        .ds lq ""\"
+.ie c\[rq] .ds rq \(rq\"
+.el        .ds rq ""\"
 .
 .\" For UTF-8, map some characters conservatively for the sake
 .\" of easy cut and paste.
