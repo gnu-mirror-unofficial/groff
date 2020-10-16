@@ -222,12 +222,12 @@ explicit breakpoints should be inserted with the
 escape.
 .
 Here is how to encode
-.UR http://\:foo.\:org/
+.UR http://\:foo\:.org/
 foo
 .UE :
 .RS
 .IP
-.B .URL http://\[rs]:foo.\[rs]:org/ "foo" :
+.B .URL http://\[rs]:foo\[rs]:.org/ "foo" :
 .RE
 .
 .IP
@@ -238,18 +238,21 @@ or
 it appears as:
 .RS
 .IP
-foo \[la]\f[CR]http://foo.org\f[]\[ra]:
+foo \[la]\f[CR]http://\:foo\:.org\f[]\[ra]:
 .RE
 .
 .IP
-The URL macro can be of any type; for example we can reference
-.UR pic.html
-Eric Raymond's pic guide
+The URL macro can be of any type;
+for example, we can reference
+.UR pic\:.html
+Eric Raymond's
+.I pic
+guide
 .UE
 by:
 .RS
 .IP
-.B .URL pic.html \[dq]Eric Raymond's pic guide\[dq]
+.B .URL pic\[rs]:.html \[dq]Eric Raymond's pic guide\[dq]
 .RE
 .
 .TP
@@ -306,14 +309,14 @@ The second and the third parameter are optional.
 Hyphenation is disabled while printing the actual URL.
 .
 As an example, here is the location of the
-.UR ftp://\:ftp.gnu.org/
+.UR ftp://\:ftp\:.gnu\:.org/
 GNU FTP server
 .UE .
 .
 The macro example above can be specified as:
 .RS
 .IP
-.B .FTP ftp://\[rs]:ftp.gnu.org/ \[dq]GNU FTP server\[dq] .
+.B .FTP ftp://\[rs]:ftp\[rs]:.gnu\[rs]:.org/ \[dq]GNU FTP server\[dq] .
 .RE
 .
 .TP
@@ -475,12 +478,10 @@ Example:
 \&.HnS 1
 \&.HR
 GNU Troff
-\&.URL http://groff.ffii.org (Groff)
-\&\(em a
-\&.URL http://www.gnu.org/ GNU
+\&.URL https://\[rs]:www\[rs]:.gnu\[rs]:.org/\[rs]:software/\[rs]:groff/
+\&\[rs][em]a
+\&.URL http://www\[rs]:.gnu\[rs]:.org/ GNU
 \&project.
-\&Hosted by
-\&.URL http://ffii.org/ FFII .
 \&.HR
 \&.HnE
 .ft P

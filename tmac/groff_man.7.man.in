@@ -1131,7 +1131,7 @@ to a terminal or PostScript device,
 .IP
 .EX
 Contact
-\&.MT fred.foonly@\e:fubar.net
+\&.MT fred\e:.foonly@\e:fubar\e:.net
 Fred Foonly
 \&.ME
 for more information.
@@ -1140,8 +1140,8 @@ for more information.
 .
 .
 .IP
-displays as \(lqContact Fred Foonly \(lafred.foonly@\:fubar.net\(ra for
-more information.\(rq.
+displays as \(lqContact Fred Foonly \(lafred\:.foonly@\:fubar\:.net\(ra
+for more information.\(rq.
 .
 .
 .IP
@@ -1149,6 +1149,11 @@ The use of
 .B \e:
 to insert non-printing break points is a GNU extension and can be
 omitted.
+.
+We place them
+.I before
+each period so that the reader does not mistake them for sentence
+endings.
 .
 .
 _endif()dnl
@@ -1189,8 +1194,9 @@ to a terminal or PostScript device,
 .EX
 The GNU Project of the Free Software Foundation
 hosts the
-\&.UR https://\e:www.gnu.org/\e:software/\e:groff/
-groff home page
+\&.UR https://\e:www\e:.gnu\e:.org/\e:software/\e:groff/
+\&.I groff
+home page
 \&.UE .
 .EE
 .RE
@@ -1198,8 +1204,10 @@ groff home page
 .
 .IP
 displays as \(lqThe GNU Project of the Free Software Foundation hosts
-the groff home page
-\(lahttps://\:www.gnu.org/\:software/\:groff/\(ra.\(rq.
+the
+.I groff
+home page
+\(lahttps://\:www\:.gnu\:.org/\:software/\:groff/\(ra.\(rq.
 .
 .
 .IP
@@ -1207,6 +1215,11 @@ The use of
 .B \e:
 to insert non-printing break points is a GNU extension and can be
 omitted.
+.
+We place them
+.I before
+each period so that the reader does not mistake them for sentence
+endings.
 .
 .
 _endif()dnl
