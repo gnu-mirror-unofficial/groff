@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2019 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -8969,9 +8968,10 @@ charinfo *get_charinfo_by_number(int n)
 }
 
 // This overrides the same function from libgroff; while reading font
-// definition files it puts single-letter glyph names into 'charset_table'
-// and converts glyph names of the form '\x' ('x' a single letter) into 'x'.
-// Consequently, symbol("x") refers to glyph name '\x', not 'x'.
+// definition files it puts single-letter glyph names into
+// 'charset_table' and converts glyph names of the form '\x' ('x' a
+// single letter) into 'x'.  Consequently, symbol("x") refers to glyph
+// name '\x', not 'x'.
 
 glyph *name_to_glyph(const char *nm)
 {
@@ -8995,3 +8995,9 @@ const char *glyph_to_name(glyph *g)
   charinfo *ci = (charinfo *)g; // Every glyph is actually a charinfo.
   return (ci->nm != UNNAMED_SYMBOL ? ci->nm.contents() : NULL);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:
