@@ -184,7 +184,7 @@ not to use zero-length lines to draw dots in troff mode.
 .TP
 .B \-c
 Be more compatible with
-.BR tpic .
+.IR tpic .
 .
 Implies
 .BR \-t .
@@ -324,15 +324,27 @@ instead of \ebox\egraph.
 .
 .
 .LP
-You must use a \*(tx driver that supports the
-.B tpic
-specials, version 2.
+You must use a \*[tx] driver that supports
+.I tpic
+version 2 specials.
+.
+.RI ( tpic
+was a fork of AT&T
+.I pic \" AT&T
+by Tim Morgan of the University of California at Irvine that diverged
+from its source around 1984.
+.
+It is best known today for lending its name to a group of
+.B \[rs]special
+commands it produced for \*[tx].)
+.\" http://ftp.cs.stanford.edu/tex/texhax/texhax90.019
 .
 .
 .LP
 Lines beginning with
 .B \e
-are passed through transparently; a
+are passed through transparently;
+a
 .B %
 is added to the end of the line to avoid unwanted spaces.
 .
