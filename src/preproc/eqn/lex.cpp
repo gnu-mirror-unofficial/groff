@@ -258,7 +258,7 @@ static struct builtin_def troff_defs[] = {
   { "vec", "accent { vec_def }" },
   { "dyad_def", "up 52 size -5 { \\(<> }" },
   { "dyad", "accent { dyad_def }" },
-  { "...", "type \"inner\" vcenter { . . . }" },
+  { "...", "type \"inner\" { . . . }" },
 };
 
 /* equivalent definitions for MathML mode */
