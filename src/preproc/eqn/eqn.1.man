@@ -131,130 +131,6 @@ it does not support low-resolution, typewriter-like devices
 .
 .
 .\" ====================================================================
-.SH Options
-.\" ====================================================================
-.
-.B \-\-help
-displays a usage message,
-while
-.B \-v
-and
-.B \-\-version
-show version information;
-all exit afterward.
-.
-.
-.TP
-.BI \-d xy
-Specify delimiters
-.I x
-and\~\c
-.I y
-for the left and right end, respectively, of in-line equations.
-.
-Any
-.B delim
-statements in the source file overrides this.
-.
-.TP
-.B \-C
-Recognize
-.B .EQ
-and
-.B .EN
-even when followed by a character other than space or newline.
-.
-Also, the statement
-.RB \[oq] "delim on" \[cq]
-is not handled specially.
-.
-.TP
-.B \-N
-Don't allow newlines within delimiters.
-.
-This option allows
-.B eqn
-to recover better from missing closing delimiters.
-.
-.TP
-.B \-r
-Only one size reduction.
-.
-.TP
-.BI \-m n
-The minimum point-size is\~\c
-.IR n .
-.
-.B eqn
-does not reduce the size of subscripts or superscripts to
-a smaller size than\~\c
-.IR n .
-.
-.TP
-.BI \-T name
-The output is for device
-.IR name .
-.
-Normally, the only effect of this is to define a macro
-.I name
-with a value of\~\c
-.BR 1 ;
-.I eqnrc
-uses this to provide definitions appropriate for the output device.
-.
-However, if the specified device is \[lq]MathML\[rq], the output is
-MathML markup rather than troff commands, and
-.I eqnrc
-is not loaded at all.
-.
-The default output device is
-.BR @DEVICE@ .
-.
-.TP
-.BI \-M dir
-Search
-.I dir
-for
-.I eqnrc
-before the default directories.
-.
-.TP
-.B \-R
-Don't load
-.IR eqnrc .
-.
-.TP
-.BI \-f F
-This is equivalent to a
-.BI gfont\  F
-command.
-.
-.TP
-.BI \-s n
-This is equivalent to a
-.BI gsize\  n
-command.
-.
-This option is deprecated.
-.B eqn
-normally sets equations at whatever the current point size
-is when the equation is encountered.
-.
-.TP
-.BI \-p n
-This says that subscripts and superscripts should be
-.IR n \~points
-smaller than the surrounding text.
-.
-This option is deprecated.
-.
-Normally
-.B eqn
-sets subscripts and superscripts at 70% of the size of the surrounding
-text.
-.
-.
-.\" ====================================================================
 .SH Usage
 .\" ====================================================================
 .
@@ -1273,6 +1149,130 @@ causes a character to be set in italic type.
 A type of
 .B digit
 causes a character to be set in roman type.
+.
+.
+.\" ====================================================================
+.SH Options
+.\" ====================================================================
+.
+.B \-\-help
+displays a usage message,
+while
+.B \-v
+and
+.B \-\-version
+show version information;
+all exit afterward.
+.
+.
+.TP
+.B \-C
+Recognize
+.B .EQ
+and
+.B .EN
+even when followed by a character other than space or newline.
+.
+Also, the statement
+.RB \[oq] "delim on" \[cq]
+is not handled specially.
+.
+.TP
+.BI \-d xy
+Specify delimiters
+.I x
+and\~\c
+.I y
+for the left and right end, respectively, of in-line equations.
+.
+Any
+.B delim
+statements in the source file overrides this.
+.
+.TP
+.BI \-f F
+This is equivalent to a
+.BI gfont\  F
+command.
+.
+.TP
+.BI \-m n
+The minimum point-size is\~\c
+.IR n .
+.
+.TP
+.BI \-M dir
+Search
+.I dir
+for
+.I eqnrc
+before the default directories.
+.
+.B eqn
+does not reduce the size of subscripts or superscripts to
+a smaller size than\~\c
+.IR n .
+.
+.TP
+.B \-N
+Don't allow newlines within delimiters.
+.
+This option allows
+.B eqn
+to recover better from missing closing delimiters.
+.
+.TP
+.BI \-p n
+This says that subscripts and superscripts should be
+.IR n \~points
+smaller than the surrounding text.
+.
+This option is deprecated.
+.
+Normally
+.B eqn
+sets subscripts and superscripts at 70% of the size of the surrounding
+text.
+.
+.TP
+.B \-r
+Only one size reduction.
+.
+.TP
+.B \-R
+Don't load
+.IR eqnrc .
+.
+.TP
+.BI \-s n
+This is equivalent to a
+.BI gsize\  n
+command.
+.
+This option is deprecated.
+.B eqn
+normally sets equations at whatever the current point size
+is when the equation is encountered.
+.
+.TP
+.BI \-T name
+The output is for device
+.IR name .
+.
+Normally, the only effect of this is to define a macro
+.I name
+with a value of\~\c
+.BR 1 ;
+.I eqnrc
+uses this to provide definitions appropriate for the output device.
+.
+However, if the specified device is \[lq]MathML\[rq], the output is
+MathML markup rather than troff commands, and
+.I eqnrc
+is not loaded at all.
+.
+The default output device is
+.BR @DEVICE@ .
 .
 .
 .\" ====================================================================
