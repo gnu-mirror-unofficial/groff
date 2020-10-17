@@ -1,3 +1,15 @@
+2020-10-18 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
+	preconv: don't use libuchardet if input is stdin
+
+	* src/preproc/preconv/preconv.cpp (do_file): don't call
+	detect_file_encoding if input file is "-"
+
+	This fixes the failure on MS-Windows described #55334, however this
+	does not fix the encoding detection with uchardet if the input is
+	stdin (the user would have to pass with -D the correct encoding as
+	explained in the man page).
+
 2020-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/eqn/lex.cpp (troff_defs): Set the "..." token on

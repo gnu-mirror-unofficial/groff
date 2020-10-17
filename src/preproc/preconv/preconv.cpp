@@ -1078,6 +1078,7 @@ do_file(const char *filename)
 {
   FILE *fp;
   string BOM, data;
+
   if (strcmp(filename, "-")) {
     if (debug_flag)
       fprintf(stderr, "file '%s':\n", filename);
@@ -1119,7 +1120,8 @@ do_file(const char *filename)
     if (!file_encoding) {
       if (debug_flag)
 	fprintf(stderr, "  no coding tag\n");
-      file_encoding = detect_file_encoding(fp);
+      if (strcmp(filename, "-"))
+         file_encoding = detect_file_encoding(fp);
       if (!file_encoding) {
         if (debug_flag)
           fprintf(stderr, "  could not detect encoding with uchardet\n");
