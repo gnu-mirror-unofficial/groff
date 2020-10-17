@@ -1,5 +1,13 @@
 2020-10-18 Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
+    hpftodit: incorrect 'delete' after new[]
+
+    * src/utils/hpftodit/hpftodit.cpp (output_font_name): use 'delete[]'.
+
+    Fixes bug #55331. Found by David Binderman, fixed by Ingo Schwarze.
+
+2020-10-18 Bertrand Garrigues <bertrand.garrigues@laposte.net>
+
 	preconv: don't use libuchardet if input is stdin
 
 	* src/preproc/preconv/preconv.cpp (do_file): don't call
