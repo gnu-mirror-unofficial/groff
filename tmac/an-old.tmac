@@ -42,6 +42,10 @@
 .  ab \*[an-msg]
 .\}
 .
+.de an-warn
+.  tm \*[an-old]:\\n[.F]:\\n[.c]: warning: \\$*
+..
+.
 .nr need_eo_h 0
 .nr need_col2 0
 .
@@ -606,8 +610,10 @@
 .de1 R
 \c
 .  ie \\n[.$] \{\
-.    tmc \\*[an-old]: \\n[.F]: line \\n[.c]: 'R' is a string
-.    tm1 " (producing the registered sign), not a macro.
+.    ds an-msg 'R' is a string (producing the registered sign),\"
+.    as an-msg " not a macro\"
+.    an-warn \\*[an-msg]
+.    rm an-msg
 .    nop \\$*
 .  \}
 .  el \{\
