@@ -1,5 +1,13 @@
 2020-10-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac: Stop remapping ` and '.  Our own pages now
+	appear to be clear of wrong-quote problems, so let's make them
+	visible if they recur.  Those who don't want to fix bad man
+	pages (distributors, site admins) can restore the mappings in
+	their man.local files.
+
+2020-10-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (an-warn): New; emits warning diagnostic.
 	(R): Use new macro instead of .tm* requests directly.
 
@@ -25,9 +33,11 @@
 
 	hpftodit: incorrect 'delete' after new[]
 
-	* src/utils/hpftodit/hpftodit.cpp (output_font_name): use 'delete[]'.
+	* src/utils/hpftodit/hpftodit.cpp (output_font_name): use
+	'delete[]'.
 
-	Fixes bug #55331. Found by David Binderman, fixed by Ingo Schwarze.
+	Fixes bug #55331. Found by David Binderman, fixed by Ingo
+	Schwarze.
 
 2020-10-18  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
@@ -36,10 +46,10 @@
 	* src/preproc/preconv/preconv.cpp (do_file): don't call
 	detect_file_encoding if input file is "-"
 
-	This fixes the failure on MS-Windows described #55334, however this
-	does not fix the encoding detection with uchardet if the input is
-	stdin (the user would have to pass with -D the correct encoding as
-	explained in the man page).
+	This fixes the failure on MS-Windows described #55334, however
+	this does not fix the encoding detection with uchardet if the
+	input is stdin (the user would have to pass with -D the correct
+	encoding as explained in the man page).
 
 2020-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 

@@ -634,16 +634,12 @@
 .ie c\[rq] .ds rq \(rq\"
 .el        .ds rq ""\"
 .
-.\" For UTF-8, map some characters conservatively for the sake
-.\" of easy cut and paste.
+.\" For UTF-8, map the hyphen-minus to itself to facilitate copy and
+.\" paste of code examples, file names, and URLs embedding it.
 .
 .if '\*[.T]'utf8' \{\
-.  rchar \- - ' `
-.
 .  char \- \N'45'
 .  char  - \N'45'
-.  char  ' \N'39'
-.  char  ` \N'96'
 .\}
 .
 .\" Load man macro extensions.
