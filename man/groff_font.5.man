@@ -129,7 +129,7 @@ name.
 The physical vertical dimension of the output medium in machine units.
 .
 This isn't used by
-.B troff
+.I @g@troff
 itself but by output devices.
 .
 Deprecated.
@@ -557,22 +557,24 @@ Note, however, that the
 .B \[rs]N
 escape sequence only accepts a decimal integer.
 .
+.
 .LP
 The
 .I entity_name
-field gives an ASCII string identifying the glyph which the
-postprocessor uses to print that glyph.
+field defines a string identifying the glyph which the postprocessor
+uses to print that glyph.
 .
-This field is optional and is currently used by
-.B grops
-to build sub-encoding arrays for PS fonts containing more than 256
-glyphs.
+This field is optional and is used by
+.I grops
+to build sub-encoding arrays for PostScript fonts containing more than
+256 glyphs.
 .
-(It has also been used for
-.BR \%grohtml 's
-entity names but for efficiency reasons this data is now compiled
-directly into
-.BR \%grohtml .)
+(It was formerly used for
+.IR \%grohtml 's
+entity names,
+but for efficiency reasons these data are now compiled directly into
+.IR \%grohtml .)
+.
 .
 .LP
 Anything on the line after the encoding field or \[oq]\-\-\[cq] are
@@ -698,7 +700,7 @@ of device
 .\" ====================================================================
 .
 .BR groff_out (@MAN5EXT@),
-.BR @g@troff (@MAN1EXT@),
+.BR \%@g@troff (@MAN1EXT@),
 .BR addftinfo (@MAN1EXT@),
 .BR afmtodit (@MAN1EXT@)
 .

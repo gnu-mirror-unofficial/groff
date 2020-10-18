@@ -492,7 +492,7 @@ i.e., to return to the previous font.
 Change font family.
 .
 This is the same as the
-.B fam
+.B .fam
 request.
 .
 .B \[rs]F[]
@@ -1084,7 +1084,7 @@ It can be also used for gross hacks; for example, this
 .RS
 .IP
 .EX
-.ne 7v+\n(.Vu
+.ne 8v+\n(.Vu
 \&.tr @.
 \&.di x
 \&@nr n 1
@@ -1363,66 +1363,93 @@ If we use value\~6 instead for the left character,
 a break after the character can't be suppressed since the neighboring
 character on the right doesn't get examined.
 .
+.
 .TP
-.BI .char\~ c\~string
-[This request can both define characters and glyphs.]
-.
-.IP
-Define entity\~\c
-.I c
+.BI .char\~ "g string"
+Define a new character or
+.RI glyph\~ g
 to be
-.IR string .
+.IR string ,
+which can be empty.
 .
-To be more precise, define (or even override) a groff entity which
-can be accessed with name\~\c
-.I c
-on the input side, and which uses
+More precisely,
+.B .char
+defines
+(or redefines an existing)
+.I groff
+object that is accessed with the
+.RI name\~ g
+on input,
+and produces
 .I string
-on the output side.
+on output.
 .
-Every time glyph\~\c
-.I c
+Every time
+.RI glyph\~ g
 needs to be printed,
 .I string
-is processed in a temporary environment and the result is
-wrapped up into a single object.
+is processed in a temporary environment and the result is wrapped up
+into a single object.
 .
 Compatibility mode is turned off and the escape character is
-set to\~\c
-.B \[rs]
+set
+.RB to\~ \[rs]
 while
 .I string
-is being processed.
+is processed.
 .
-Any emboldening, constant spacing or track kerning is applied to
-this object rather than to individual glyphs in
+Any emboldening,
+constant spacing,
+or track kerning is applied to this object rather than to individual
+glyphs in
 .IR string .
 .
-.IP
-A groff object defined by this request can be used just like a
-normal glyph provided by the output device.
 .
-In particular other characters can be translated to it with the
-.B tr
-request; it can be made the leader glyph by the
-.B lc
-request; repeated patterns can be drawn with the glyph using the
+.IP
+An object defined by this request can be used just like a normal glyph
+provided by the output device.
+.
+In particular,
+other characters can be translated to it with the
+.B .tr
+request;
+it can be made the leader glyph with the
+.B .lc
+request;
+repeated patterns can be drawn with it using the
 .B \[rs]l
 and
 .B \[rs]L
-escape sequences; words containing\~\c
-.I c
-can be hyphenated correctly, if the
-.B hcode
+escape sequences;
+and words
+.RI containing\~ g
+can be hyphenated correctly,
+if the
+.B .hcode
 request is used to give the object a hyphenation code.
 .
+.
 .IP
-There is a special anti-recursion feature: Use of glyph within the
-glyph's definition is handled like normal glyphs not defined with
-.BR char .
+There is a special anti-recursion feature:
+use of the object within its own definition is handled like a normal
+character
+(one not defined with
+.BR .char ).
+.
+.
+.IP
+The
+.B .tr
+and
+.B .trin
+requests take precedence if
+.B .char
+accesses the same symbol.
+.
+.
 .IP
 A glyph definition can be removed with the
-.B rchar
+.B .rchar
 request.
 .
 .
@@ -1886,7 +1913,7 @@ request; the only difference is that a glyph defined with
 .B char
 hides the glyph with the same name in the current font, whereas a
 glyph defined with
-.B fchar
+.B .fchar
 is checked only if the particular glyph isn't found in the current
 font.
 .
@@ -2407,7 +2434,7 @@ is non-zero or missing, enable pairwise kerning, otherwise disable it.
 Compute the number of characters in
 .I anything
 and return the count in the number register
-.IR reg.
+.IR reg .
 .
 If
 .I reg
@@ -2508,7 +2535,7 @@ command-line option.
 If the file name to be included has the form
 .IB name .tmac
 and it isn't found,
-.B mso
+.B .mso
 tries to include
 .BI tmac. name
 instead and vice versa.
@@ -2851,7 +2878,7 @@ warnings are not suppressed and
 must add 0.2\~m or more for each interword space in a line.
 .
 See
-.IR @g@troff (@MAN1EXT@)
+.IR \%@g@troff (@MAN1EXT@)
 for warning types and control.
 .
 .TP
@@ -3178,7 +3205,7 @@ is the sum of the numbers associated with each warning that is to be
 enabled; all other warnings are disabled.
 .
 The number associated with each warning is listed in
-.BR @g@troff (@MAN1EXT@).
+.IR \%@g@troff (@MAN1EXT@).
 .
 For example,
 .B .warn 0
@@ -3776,7 +3803,7 @@ The sum of the numbers associated with each of the currently enabled
 warnings.
 .
 The number associated with each warning is listed in
-.BR @g@troff (@MAN1EXT@).
+.IR \%@g@troff (@MAN1EXT@).
 .
 .TP
 .B \[rs]n[.x]
@@ -3867,8 +3894,9 @@ The current horizontal position at input line.
 .TQ
 .B \[rs]n[lss]
 If there are leading spaces in an input line, these registers
-hold the number of leading spaces and the corresponding
-horizontal space, respectively.
+hold the number of leading spaces and the corresponding horizontal
+space,
+respectively.
 .
 .TP
 .B \[rs]n[minutes]
@@ -3903,7 +3931,7 @@ exhausted.
 The current year.
 .
 Note that the traditional
-.B troff
+.I troff \" AT&T
 number register
 .B \[rs]n[yr]
 is the current year minus 1900.
@@ -3913,78 +3941,97 @@ is the current year minus 1900.
 .SS Miscellaneous
 .\" ====================================================================
 .
-.B @g@troff
-predefines a single (read/write) string-based register,
-.BR \[rs]*[.T] ,
-which contains the argument given to the
+.I @g@troff
+predefines a string,
+.BR \[rs]*[.T] ;
+it contains the argument given to the
 .B \-T
-command-line option, namely the current output device (for example,
-.I latin1
+command-line option,
+namely the current output device
+(for example,
+.B pdf
 or
-.IR ascii ).
-Note that this is not the same as the (read-only) number register
-.B \[rs]n[.T]
+.BR utf8 ).
+.
+This is not the same as the (read-only) register
+.BR \[rs]n[.T] ,
 which is defined to be\~1 if
-.B troff
+.I @g@troff
 is called with the
 .B \-T
-command-line option, and zero otherwise.
+command-line option,
+and zero otherwise.
 .
-This behavior is different from
-.RI AT&T\~ troff .
+This behavior differs from AT&T
+.IR troff . \" AT&T
+.
 .
 .P
 Fonts not listed in the
-DESC
+.I DESC
 file are automatically mounted on the next available font position
 when they are referenced.
 .
 If a font is to be mounted explicitly with the
-.B fp
-request on an unused font position, it should be mounted on the first
-unused font position, which can be found in the
+.B .fp
+request on an unused font position,
+it should be mounted on the first unused font position,
+which can be found in the
 .B \[rs]n[.fp]
-register; although
-.B troff
-does not enforce this strictly, it does not allow a font to be mounted
-at a position whose number is much greater than that of any currently
-used position.
+register;
+although
+.I @g@troff
+does not enforce that strictly.
+.
+Rather,
+it does not allow a font to be mounted at a position whose number is
+much greater than that of any currently used position.
+.
 .
 .P
 Interpolating a string does not hide existing macro arguments.
 .
-Thus in a macro, a more efficient way of doing
+Thus,
+in a macro,
+a more efficient way of doing
 .
 .IP
 .BI . xx\~ \[rs]\[rs]$@
+.
+.
 .P
 is
 .
 .IP
 .BI \[rs]\[rs]*[ xx ]\[rs]\[rs]
 .
+.
 .P
 If the font description file contains pairwise kerning information,
 glyphs from that font are kerned.
 .
-Kerning between two glyphs can be inhibited by placing a
+Kerning between two glyphs can be inhibited by placing a non-printing
+input break
 .B \[rs]&
 between them.
 .
-.P
-In a string comparison in a condition, characters that appear at
-different input levels to the first delimiter character are not
-recognized as the second or third delimiters.
 .
-This applies also to the
-.B tl
+.P
+In a string comparison in a condition,
+characters that appear at different input levels from the first
+delimiter character are not recognized as the second or third
+delimiters.
+.
+This also applies to the
+.B .tl
 request.
 .
 In a
 .B \[rs]w
-escape sequence, a character that appears at a different input level
-to the starting delimiter character is not recognized as the
-closing delimiter character.
+escape sequence,
+a character that appears at a different input level from the starting
+delimiter character is not recognized as the closing delimiter
+character.
 .
 The same is true for
 .BR \[rs]A ,
@@ -3999,30 +4046,35 @@ and
 .BR \[rs]Z .
 .
 When decoding a macro or string argument that is delimited by double
-quotes, a character that appears at a different input level to the
-starting delimiter character is not recognized as the closing delimiter
+quotes,
+a character that appears at a different input level from the starting
+delimiter character is not recognized as the closing delimiter
 character.
 .
 The implementation of
 .B \[rs]$@
 ensures that the double quotes surrounding an argument appear at the
-same input level, which is different to the input level of the
-argument itself.
+same input level,
+which is differs from the input level of the argument itself.
 .
 In a long escape name
 .B ]
 is not recognized as a closing delimiter except when it occurs at
-the same input level as the opening\~\c
-.BR [ .
+the same input level as the
+.RB opening\~ [ .
 .
-In compatibility mode, no attention is paid to the input-level.
+In compatibility mode,
+no attention is paid to the input level.
 .
 .
 .P
-The
-.B tr
-request can now map characters onto
+In
+.IR groff ,
+the
+.B .tr
+request can map characters onto
 .BR \[rs]\[ti] .
+.
 .
 .P
 The space width emitted by the
@@ -4030,21 +4082,28 @@ The space width emitted by the
 and
 .B \[rs]^
 escape sequences can be controlled on a per-font basis.
+.
 If there is a glyph named
 .B \[rs]|
 or
-.BR \[rs]^ ,
-respectively (note the leading backslash), defined in the current font
-file, use this glyph's width instead of the default value.
+.BR \[rs]\[ha] ,
+respectively
+(note the leading backslash),
+defined in the current font file,
+use this glyph's width instead of the default value.
+.
 .
 .P
-It is now possible to have whitespace between the first and second dot
-(or the name of the ending macro) to end a macro definition.
+In
+.IR groff ,
+tabs and spaces are allowed between the first and second dots
+(or between the dot and the name of the ending macro)
+that end a macro definition.
 .
 Example:
 .
 .IP
-.ne 6v+\n(.Vu
+.ne 5v+\n(.Vu
 .EX
 \&.if t \[rs]{\[rs]
 \&.  de bar
@@ -4060,8 +4119,8 @@ Example:
 .
 The output format of
 .I groff
-is modeled after that used
-.RI AT&T\~ troff
+is modeled after that used by AT&T
+.I troff \" AT&T
 once it adopted a device-independent approach in the early 1980s.
 .
 Only the differences are documented here.
@@ -4072,14 +4131,17 @@ Only the differences are documented here.
 .\" ====================================================================
 .
 The argument to the
-.BR s \~\c
-command is in scaled points (units of
+.BR s \~command
+is in scaled points
+(in units of
 .RI points/ n ,
 where
 .I n
 is the argument to the
 .B sizescale
-command  in the DESC file).
+command in the
+.I DESC
+file).
 .
 The argument to the
 .B x Height
@@ -4094,38 +4156,45 @@ command is also in scaled points.
 .BI N n
 Print glyph with index\~\c
 .I n
-(a non-negative integer) of the current font.
+(a non-negative integer)
+of the current font.
 .
 .P
 If the
 .B tcommand
-line is present in the DESC file, troff uses the following two
-commands.
+line is present in the
+.I DESC
+file,
+GNU
+.I troff \" GNU
+uses the following two commands.
 .
 .TP
 .BI t xxx
 .I xxx
-is any sequence of characters terminated by a space or a newline (to
-be more precise, it is a sequence of glyphs which are accessed with
-the corresponding characters); the first character should be printed at
-the current position, the current horizontal position should be
-increased by the width of the first character, and so on for each
-character.
+is any sequence of characters terminated by a space or a newline
+(to be more precise,
+it is a sequence of glyphs which are accessed with the corresponding
+characters);
+the first character should be printed at the current position,
+the current horizontal position should be increased by the width of the
+first character,
+and so on for each character.
 .
 The width of the glyph is that given in the font file,
-appropriately scaled for the current point size, and rounded so that
-it is a multiple of the horizontal resolution.
+appropriately scaled for the current point size,
+and rounded so that it is a multiple of the horizontal resolution.
 .
 Special characters cannot be printed using this command.
 .
 .TP
 .BI u n\~xxx
 This is same as the
-.BR t \~\c
-command except that after printing each character, the current
+.BR t \~command
+except that after printing each character, the current
 horizontal position is increased by the sum of the width of that
-character and\~\c
-.IR n .
+character
+.RI and\~ n .
 .
 .P
 Note that single characters can have the eighth bit set, as can the

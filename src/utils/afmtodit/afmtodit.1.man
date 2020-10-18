@@ -72,7 +72,9 @@ you must have Perl version 5.004 or newer installed in order to run
 .
 .LP
 .I afm-file
-is the AFM (Adobe Font Metric) file for the font.
+is the AFM
+(Adobe Font Metric)
+file for the font.
 .
 .
 .LP
@@ -83,15 +85,17 @@ character names map onto each PostScript character name;
 this file should contain a sequence of lines of the form
 .
 .RS
-.I
-ps-char groff-char
+.I ps-char groff-char
 .RE
 .
 where
 .I ps-char
 is the PostScript name of the character and
 .I groff-char
-is the groff name of the character (as used in the
+is the
+.I groff
+name of the character
+(as used in the
 .I groff
 font file).
 .
@@ -102,7 +106,7 @@ each
 .I groff-char
 must occur at most once.
 .
-Lines starting with \(oq#\(cq and blank lines are ignored.
+Lines starting with \[lq]#\[rq] and blank lines are ignored.
 .
 If the file isn't found in the current directory,
 it is searched for in the
@@ -116,28 +120,33 @@ If a PostScript character is not mentioned in
 and a generic
 .I groff
 glyph name can't be deduced using the Adobe Glyph List
-(AGL, built into
+(AGL,
+built into
 .IR afmtodit ),
 then
 .I afmtodit
 puts the PostScript character into the
 .I groff
 font file as an unnamed character which can only be accessed by the
-\(oq\eN\(cq escape sequence in a
+\[lq]\eN\[rq] escape sequence in a
 .I roff
 document.
 .
 In particular,
-this is true for glyph variants named in the form \(lqfoo.bar\(rq;
+this is true for glyph variants named in the form \[lq]foo.bar\[rq];
 all glyph names containing one or more periods are mapped to unnamed
 entities.
 .
 If option
 .B \-e
-is not specified, the encoding defined in the AFM file (i.e., entries
-with non-negative character codes) is used.
+is not specified,
+the encoding defined in the AFM file
+(i.e.,
+entries
+with non-negative character codes)
+is used.
 .
-Refer to section \(lqUsing Symbols\(rq in
+Refer to section \[lq]Using Symbols\[rq] in
 .IR "Groff: The GNU Implementation of troff" ,
 the
 .I groff
@@ -148,12 +157,15 @@ glyph names are constructed.
 .
 .
 .LP
-Characters not encoded in the AFM file (i.e., entries which have
-\(oq\-1\(cq as the character code) are still available in
+Characters not encoded in the AFM file
+(i.e.,
+entries which have \[lq]\-1\[rq] as the character code)
+are still available in
 .IR groff ;
-they get glyph index values greater than 255 (or greater than the
-biggest character code used in the AFM file in the unlikely case that it
-is greater than 255) in the
+they get glyph index values greater than 255
+(or greater than the biggest character code used in the AFM file in the
+unlikely case that it is greater than 255)
+in the
 .I groff
 font file.
 .
@@ -172,9 +184,9 @@ option is used.
 .
 .
 .LP
-If there is a downloadable font file for the font, it may be listed in
-the file
-.IR \%@FONTDIR@/\:devps/\:download ;
+If there is a downloadable font file for the font,
+it may be listed in the file
+.IR \%@FONTDIR@/\:\%devps/\:\%download ;
 see
 .IR grops (@MAN1EXT@).
 .
@@ -210,7 +222,9 @@ and
 is the desired value of the corresponding parameter in thousandths of an
 em.
 .
-These parameters are normally needed only for italic (or oblique) fonts.
+These parameters are normally needed only for italic
+(or oblique)
+fonts.
 .
 .
 .\" ====================================================================
@@ -257,8 +271,9 @@ rather than the default
 If not found in the current directory,
 the
 .I devps
-subdirectory of the default font directory is searched (this is true for
-both the default device description file and a file given with option
+subdirectory of the default font directory is searched
+(this is true for both the default device description file and a file
+given with option
 .BR \-d ).
 .
 .
@@ -296,8 +311,8 @@ thousandths of an em
 plus the amount by which the right edge of the character's bounding box
 is to the right of the character's origin.
 .
-If this would result in a negative italic correction, use a zero
-italic correction instead.
+If this would result in a negative italic correction,
+use a zero italic correction instead.
 .
 .
 .IP
@@ -306,8 +321,8 @@ product of the tangent of the slant of the font and
 four fifths of the x-height of the font.
 .
 If this would result in a subscript correction greater than the italic
-correction, use a subscript correction equal to the italic correction
-instead.
+correction,
+use a subscript correction equal to the italic correction instead.
 .
 .
 .IP
@@ -324,7 +339,9 @@ is given.
 .
 .
 .IP
-This option is normally needed only with italic (or oblique) fonts.
+This option is normally needed only with italic
+(or oblique)
+fonts.
 .
 The font files distributed with
 .I groff
@@ -393,28 +410,28 @@ Don't use the built-in Adobe Glyph List.
 .\" ====================================================================
 .
 .TP
-.I \%@FONTDIR@/\:devps/\:DESC
+.I \%@FONTDIR@/\:\%devps/\:DESC
 Device description file.
 .
 .
 .TP
-.IR \%@FONTDIR@/\:devps/\: F
+.IR \%@FONTDIR@/\:\%devps/\: F
 Font description file for font
 .IR F .
 .
 .
 .TP
-.I \%@FONTDIR@/\:devps/\:download
+.I \%@FONTDIR@/\:\%devps/\:\%download
 List of downloadable fonts.
 .
 .
 .TP
-.I \%@FONTDIR@/\:devps/\:text.enc
+.I \%@FONTDIR@/\:\%devps/\:text.enc
 Encoding used for text fonts.
 .
 .
 .TP
-.I \%@FONTDIR@/\:devps/\:generate/\:textmap
+.I \%@FONTDIR@/\:\%devps/\:\%generate/\:textmap
 Standard mapping.
 .
 .
@@ -428,10 +445,10 @@ is the primary
 .I groff
 manual.
 .
-Section \(lqUsing Symbols\(rq may be of particular note.
+Section \[lq]Using Symbols\[rq] may be of particular note.
 .
-You can browse it interactively with \(lqinfo \(aq(groff)Using
-Symbols\(aq\(rq.
+You can browse it interactively with \[lq]info \[aq](groff)Using
+\%Symbols\[aq]\[rq].
 .
 .
 .LP

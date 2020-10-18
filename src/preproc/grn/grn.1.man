@@ -73,34 +73,42 @@ pictures in
 input.
 .
 .I @g@grn
-writes to standard output, processing only input lines between two
-that start with
+writes to standard output,
+processing only input lines between two that start with
 .B .GS
 and
 .BR .GE .
 .
 Those lines must contain
 .I @g@grn
-commands (see below).
+commands
+(see below).
 .
-These commands request a
+These macros request a
 .I gremlin
-file, and the picture in that file is converted and placed in the
+file;
+the picture in that file is converted and placed in the
 .I @g@troff
 input stream.
 .
 The
 .B .GS
-request may be followed by a C, L, or R to center, left, or right
-justify the whole
+macro may be followed by a C,
+L,
+or R to center,
+left-,
+or right-justify the whole
 .I gremlin
-picture (default justification is center).
+picture
+(the default is to center).
 .
 If no
 .I file
-is mentioned, the standard input is read.
+is mentioned,
+the standard input is read.
 .
-At the end of the picture, the position on the page is the bottom of the
+At the end of the picture,
+the position on the page is the bottom of the
 .I gremlin
 picture.
 .
@@ -409,14 +417,21 @@ line.
 .
 Since
 .I @g@grn
-is a preprocessor, it doesn't know about current indents, point
-sizes, margins, number registers, etc.  Consequently, no
+is a preprocessor,
+it doesn't know about current indentation,
+point sizes,
+margins,
+registers,
+and so on.
+.
+Consequently,
+no
 .I @g@troff
 input can be placed between the
 .B .GS
 and
 .B .GE
-requests.
+macros.
 .
 However,
 .I gremlin
@@ -478,9 +493,12 @@ and
 .B g2
 to the width and height of the
 .I gremlin
-figure (in device units) before entering the
+figure
+(in device units)
+before entering the
 .B .GS
-request (this is for those who want to rewrite these macros).
+macro
+(this is for those who want to rewrite these macros).
 .
 .
 .\" ====================================================================

@@ -166,34 +166,35 @@ groff_hdtbl \- Heidelberger table macros for GNU roff
 .\" ====================================================================
 .
 The
-.B hdtbl
+.I hdtbl
 macros consist of four base and three optional macros,
 controlled by about twenty arguments.
 .
-The syntax is simple and similar to the
-.B HTML
-table model and nearly as flexible:
+The syntax is simple and similar to the HTML table model and nearly as
+flexible:
 you can write sequences of tokens
 (macro calls with their arguments and content data),
 separated by blanks and beginning with a macro call,
 into the same line to get compact and cleanly arrranged input.
 .
 An advantage of
-.B hdtbl
-is that the tables are constructed without calling a preprocessor; this
-means that
-.BR groff 's
+.I hdtbl
+is that the tables are constructed without calling a preprocessor;
+this means that
+.IR groff 's
 full macro capabilities are available.
 .
-On the other hand, table processing with
-.B hdtbl
+On the other hand,
+table processing with
+.I hdtbl
 is much slower than using the
-.BR tbl (@MAN1EXT@)
+.IR \%@g@tbl (@MAN1EXT@)
 preprocessor.
 .
 A further advantage is that the HTML-like syntax of
-.B hdtbl
-will be easily converted to HTML; this is not implemented yet.
+.I hdtbl
+will be easily converted to HTML;
+this is not implemented yet.
 .
 .
 .\" ====================================================================
@@ -1040,12 +1041,14 @@ One of
 for roman,
 .BR bold ,
 .IR italic ,
-or \f[BI]bold italic\f[], respectively.
+or \f[BI]bold italic\f[], \" \f[BI] is not portable man(7)
+respectively.
 .
 As with
-.BR roff 's
-.CR .ft
-request the
+.IR roff 's
+.B .ft
+request,
+the
 .CR \[oq]fst\[cq]
 argument can be used to specify the font family and font style together,
 for example
@@ -1298,7 +1301,7 @@ language and GNU extensions to it.
 .
 .
 .TP
-.IR @g@tbl (@MAN1EXT@)
+.IR \%@g@tbl (@MAN1EXT@)
 describes the traditional
 .I roff
 preprocessor for tables.
