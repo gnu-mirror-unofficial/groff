@@ -1967,91 +1967,125 @@ manual.
 You can browse it interactively with \[lq]info groff\[rq].
 .
 .
+.\" groff ships 61 man pages generated from 60 source files.  The
+.\" numbered comments refer to their sorting order in the source tree,
+.\" so that it is easier to tell that we've enumerated all of them.
 .TP
-Introduction, history and further readings:
-.BR roff (@MAN7EXT@).
+Introduction, history, and further reading:
+.IR roff (@MAN7EXT@), \" #23
+.IR ditroff (@MAN7EXT@) \" #16
+.
 .
 .TP
-Viewer for groff files:
-.BR \%gxditview (@MAN1EXT@),
-.BR \%xditview (1x).
+.RI "Viewer for\~" groff "\~(and AT&T device-independent\~" troff \
+\~documents:
+.IR gxditview (@MAN1EXT@) \" #33
+.
 .
 .TP
-Wrapper programs for formatters:
-.BR \%groff (@MAN1EXT@),
-.BR \%grog (@MAN1EXT@).
+Preprocessors:
+.IR @g@chem (@MAN1EXT@), \" #1
+.IR @g@eqn (@MAN1EXT@), \" #34
+.IR @g@neqn (@MAN1EXT@), \" #35
+.IR \%glilypond (@MAN1EXT@), \" #4
+.IR @g@grn (@MAN1EXT@), \" #36
+.IR \%preconv (@MAN1EXT@), \" #38
+.IR gperl (@MAN1EXT@), \" #5
+.IR @g@pic (@MAN1EXT@), \" #37
+.IR gpinyin (@MAN1EXT@), \" #6
+.IR \%@g@refer (@MAN1EXT@), \" #39
+.IR \%@g@soelim (@MAN1EXT@), \" #40
+.IR \%@g@tbl (@MAN1EXT@) \" #41
+.
 .
 .TP
-Roff preprocessors:
-.BR \%@g@eqn (@MAN1EXT@),
-.BR \%@g@grn (@MAN1EXT@),
-.BR \%@g@pic (@MAN1EXT@),
-.BR \%@g@chem (@MAN1EXT@),
-.BR \%preconv (@MAN1EXT@),
-.BR \%@g@refer (@MAN1EXT@),
-.BR \%@g@soelim (@MAN1EXT@),
-.BR \%@g@tbl (@MAN1EXT@),
-.BR grap (1).
+Macro packages and macro-specific utilities:
+.IR \%groff_hdtbl (@MAN7EXT@), \" #9
+.IR \%groff_man (@MAN7EXT@), \" #55a
+.IR \%groff_man_style (@MAN7EXT@), \" #55b
+.IR \%groff_mdoc (@MAN7EXT@), \" #56
+.IR \%groff_me (@MAN7EXT@), \" #57
+.IR \%groff_mm (@MAN7EXT@), \" # 10
+.IR \%groff_mmse (@MAN7EXT@), \" # 11
+.IR \%mmroff (@MAN1EXT@) \" #12
+.IR \%groff_mom (@MAN7EXT@), \" #13
+.IR \%pdfmom (@MAN1EXT@), \" #30
+.IR \%groff_ms (@MAN7EXT@), \" #58
+.IR \%groff_www (@MAN7EXT@), \" #59
+.IR \%groff_trace (@MAN7EXT@) \" #60
+.
 .
 .TP
-Roff language with the groff extensions:
-.BR \%groff (@MAN7EXT@),
-.BR \%groff_char (@MAN7EXT@),
-.BR \%groff_diff (@MAN7EXT@),
-.BR \%groff_font (@MAN5EXT@).
+Bibliographic and index tools:
+.IR \%@g@indxbib (@MAN1EXT@), \" #49
+.IR \%lkbib (@MAN1EXT@), \" #50
+.IR \%@g@lookbib (@MAN1EXT@) \" #51
+.
 .
 .TP
-Roff formatter programs:
-.BR \%@g@nroff (@MAN1EXT@),
-.BR \%@g@troff (@MAN1EXT@),
-.BR ditroff (@MAN7EXT@).
+Language, conventions, and GNU extensions:
+.IR groff (@MAN7EXT@), \" #17
+.IR groff_char (@MAN7EXT@), \" #18
+.IR groff_diff (@MAN7EXT@), \" #19
+.IR \%groff_filenames (@MAN5EXT@), \" #8
+.IR groff_font (@MAN5EXT@), \" #20
+.IR groff_tmac (@MAN5EXT@) \" #22
+.
 .
 .TP
-The intermediate output language:
-.BR \%groff_out (@MAN7EXT@).
+Intermediate output language:
+.IR groff_out (@MAN5EXT@) \" #21
+.
 .
 .TP
-Postprocessors for the output devices:
-.BR \%grodvi (@MAN1EXT@),
-.BR \%grohtml (@MAN1EXT@),
-.BR \%grolbp (@MAN1EXT@),
-.BR \%grolj4 (@MAN1EXT@),
-.BR \%lj4_font (@MAN5EXT@),
-.BR \%grops (@MAN1EXT@),
-.BR \%gropdf (@MAN1EXT@),
-.BR \%grotty (@MAN1EXT@).
+Formatter program:
+.IR @g@troff (@MAN1EXT@) \" #45
+.
 .
 .TP
-Groff macro packages and macro-specific utilities:
-.BR \%groff_tmac (@MAN5EXT@),
-.BR \%groff_man (@MAN7EXT@),
-.BR \%groff_mdoc (@MAN7EXT@),
-.BR \%groff_me (@MAN7EXT@),
-.BR \%groff_mm (@MAN7EXT@),
-.BR \%groff_mmse (@MAN7EXT@),
-.BR \%groff_mom (@MAN7EXT@),
-.BR \%groff_ms (@MAN7EXT@),
-.BR \%groff_www (@MAN7EXT@),
-.BR \%groff_trace (@MAN7EXT@),
-.BR \%mmroff (@MAN7EXT@).
+Formatter wrappers:
+.\".IR groff (@MAN1EXT@), \" 42 -- this page
+.IR \%@g@nroff (@MAN1EXT@), \" #44
+.IR \%pdfroff (@MAN1EXT@) \" #14
+.
 .
 .TP
-The following utilities are available:
-.BR \%addftinfo (@MAN1EXT@),
-.BR \%afmtodit (@MAN1EXT@),
-.BR \%eqn2graph (@MAN1EXT@),
-.BR \%gdiffmk (@MAN1EXT@),
-.BR \%grap2graph (@MAN1EXT@),
-.BR \%gxditview (@MAN1EXT@),
-.BR \%hpftodit (@MAN1EXT@),
-.BR \%@g@indxbib (@MAN1EXT@),
-.BR \%lkbib (@MAN1EXT@),
-.BR \%@g@lookbib (@MAN1EXT@),
-.BR \%pdfroff (@MAN1EXT@),
-.BR \%pfbtops (@MAN1EXT@),
-.BR \%pic2graph (@MAN1EXT@),
-.BR \%tfmtodit (@MAN1EXT@),
-.BR \%xtotroff (@MAN1EXT@).
+Postprocessors for output devices:
+.IR \%grodvi (@MAN1EXT@), \" #24
+.IR \%grohtml (@MAN1EXT@), \" #25
+.IR grolbp (@MAN1EXT@), \" #26
+.IR grolj4 (@MAN1EXT@), \" #27
+.IR lj4_font (@MAN5EXT@), \" #28
+.IR gropdf (@MAN1EXT@), \" #29
+.IR grops (@MAN1EXT@), \" #31
+.IR \%grotty (@MAN1EXT@) \" #32
+.
+.
+.TP
+Font support utilities:
+.IR \%addftinfo (@MAN1EXT@), \" #46
+.IR \%afmtodit (@MAN1EXT@), \" #47
+.IR \%hpftodit (@MAN1EXT@), \" #48
+.IR \%pfbtops (@MAN1EXT@), \" #52
+.IR \%tfmtodit (@MAN1EXT@), \" #53
+.IR xtotroff (@MAN1EXT@) \" #54
+.
+.
+.TP
+Graphics conversion utilities:
+.IR eqn2graph (@MAN1EXT@), \" #2
+.IR grap2graph (@MAN1EXT@), \" #7
+.IR pic2graph (@MAN1EXT@) \" #15
+.
+.
+.TP
+Difference-marking utility:
+.IR \%gdiffmk (@MAN1EXT@) \" #3
+.
+.
+.TP
+\[lq]groff guess\[rq] utility:
+.IR grog (@MAN1EXT@) \" #43
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
