@@ -4138,7 +4138,7 @@ Example:
 .EX
 \&.if t \[rs]{\[rs]
 \&.  de bar
-\&.    nop Hello, I'm \[oq]bar\[cq].
+\&.    nop Hello, I'm \[aq]bar\[aq].
 \&.  .
 \&.\[rs]}
 .EE
@@ -4321,7 +4321,7 @@ changing this.
 .
 .IP
 The corresponding
-.BR \[rs]D'f .\|.\|.\& '
+.BR \[rs]D\[aq]f .\|.\|.\& \[aq]
 command shouldn't be used since its argument is always rounded to an
 integer multiple of the horizontal resolution which can lead to
 surprising results.
@@ -4391,8 +4391,8 @@ does not depend on this.
 .
 Given a drawing command of the form
 .IP
-\f[B]\[rs]D'\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ $...$ \c
-$x sub n$ $y sub n$\f[B]'\f[R]
+\f[B]\[rs]D\[aq]\f[I]c\f[R] $x sub 1$ $y sub 1$ $x sub 2$ $y sub 2$ \c
+$...$ $x sub n$ $y sub n$\f[B]\[aq]\f[R]
 .
 .P
 where

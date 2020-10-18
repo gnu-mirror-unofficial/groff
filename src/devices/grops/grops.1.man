@@ -262,9 +262,9 @@ both on letter (8.5\[mu]11) paper and on A4 paper without change.
 .BI \-I dir
 This option may be used to add a directory to the search path for
 files on the command line and files named in
-.B \[rs]X'ps: import'
+.B \[rs]X\[aq]ps: \%import\[aq]
 and
-.B \[rs]X'ps: file'
+.B \[rs]X\[aq]ps: file\[aq]
 escapes.
 .
 The search path is initialized with the current directory.
@@ -821,7 +821,7 @@ only interprets commands that begin with a
 tag.
 .
 .TP
-.BI \[rs]X'ps:\ exec\  code '
+.BI "\[rs]X\[aq]ps: exec\~" code \[aq]
 This executes the arbitrary PostScript commands in
 .IR code .
 .
@@ -846,7 +846,7 @@ For example,
 \&.nr x 1i
 .br
 .B
-\[rs]X'ps: exec \[rs]nx u 0 rlineto stroke'
+\[rs]X\[aq]ps: exec \[rs]nx u 0 rlineto stroke\[aq]
 .br
 .RE
 .
@@ -865,7 +865,9 @@ is on top of the dictionary stack.
 .
 If your code adds definitions to this dictionary,
 you should allocate space for them using
-.BI \[rs]X'ps\ mdef \ n '\fR.
+.BI "\[rs]X\[aq]ps mdef\~" n \[aq]\c
+\&.
+.
 .
 Any definitions persist only until the end of the page.
 .
@@ -917,14 +919,14 @@ This must be supplied by the user, if necessary.
 .RE
 .
 .TP
-.BI \[rs]X'ps:\ file\  name '
+.BI "\[rs]X\[aq]ps: file\~" name \[aq]
 This is the same as the
 .B exec
 command except that the PostScript code is read from file
 .IR name .
 .
 .TP
-.BI \[rs]X'ps:\ def\  code '
+.BI "\[rs]X\[aq]ps: def\~" code \[aq]
 Place a PostScript definition contained in
 .I code
 in the prologue.
@@ -952,7 +954,7 @@ escape sequence with an argument that names a macro,
 can extend over multiple lines.
 .
 .TP
-.BI \[rs]X'ps:\ mdef\  n\ code  '
+.BI "\[rs]X\[aq]ps: mdef\~" "n code" \[aq]
 Like
 .BR def ,
 except that
@@ -1038,9 +1040,9 @@ macro which provides a convenient high-level interface for inclusion of
 PostScript graphics.
 .
 .TP
-.B \[rs]X'ps:\ invis'
+.B \[rs]X\[aq]ps: invis\[aq]
 .TQ
-.B \[rs]X'ps:\ endinvis'
+.B \[rs]X\[aq]ps: endinvis\[aq]
 No output is generated for text and drawing commands
 that are bracketed with these
 .B \[rs]X
@@ -1070,9 +1072,10 @@ request
 .IP
 .ft B
 .nf
-\&.char \[rs](em \[rs]X'ps: invis'\[rs]
-\[rs]Z'\[rs]v'-.25m'\[rs]h'.05m'\[rs]D'l .9m 0'\[rs]h'.05m''\[rs]
-\[rs]X'ps: endinvis'\[rs](em
+\&.char \[rs][em] \[rs]X\[aq]ps: invis\[aq]\[rs]
+\[rs]Z\[aq]\[rs]v\[aq]-.25m\[aq]\[rs]h\[aq].05m\[aq]\c
+\[rs]D\[aq]l .9m 0\[aq]\[rs]h\[aq].05m\[aq]\[aq]\[rs]
+\[rs]X\[aq]ps: endinvis\[aq]\[rs][em]
 .ft
 .fi
 .

@@ -151,7 +151,7 @@ is the name of the device, usually
 .BI \-I " dir"
 This option may be used to add a directory to the search path for
 files named in
-.B \[rs]X'pdf: pdfpic'
+.B \[rs]X\[aq]pdf: pdfpic\[aq]
 escape.
 .
 The current directory is always searched first.
@@ -621,10 +621,12 @@ The lower case greek characters are automatically slanted (to match
 the SymbolSlanted font (SS) available to PostScript).
 .
 Zapf Dingbats is available as
-.BR ZD ,
-the "hand pointing left" glyph (\[rs][lh]) is available since it has
-been defined using the \[rs]X'pdf: xrev' extension which reverses the
-direction of letters within words.
+.BR ZD ;
+the \[lq]hand pointing left\[rq] glyph
+.RB ( \[rs][lh] )
+is available since it has been defined using the
+.B \[rs]X\[aq]pdf: xrev\[aq]
+extension which reverses the direction of letters within words.
 .
 .
 .LP
@@ -643,11 +645,11 @@ escape sequences supported by
 Specifically, the following is supported.
 .
 .TP
-.B "\[rs]X'ps: invis'"
+.B \[rs]X\[aq]ps: invis\[aq]
 Suppress output.
 .
 .TP
-.B "\[rs]X'ps: endinvis'"
+.B \[rs]X\[aq]ps: endinvis\[aq]
 Stop suppressing output.
 .
 .TP
@@ -663,13 +665,13 @@ command in
 .BR gpic .
 .
 .TP
-.B "\[rs]X'ps: exec grestore'"
+.B \[rs]X\[aq]ps: exec grestore\[aq]
 Again used by
 .B gpic
 to restore after rotation.
 .
 .TP
-.BI "\[rs]X'ps: exec " "n " "setlinejoin'"
+.BI "\[rs]X\[aq]ps: exec " "n\~" "setlinejoin\[aq]"
 where
 .I n
 can be one of the following values.
@@ -681,7 +683,7 @@ can be one of the following values.
 2 = Bevel join
 .
 .TP
-.BI "\[rs]X'ps: exec " "n " "setlinecap'"
+.BI "\[rs]X\[aq]ps: exec " "n " "setlinecap\[aq]"
 where
 .I n
 can be one of the following values.
@@ -695,7 +697,7 @@ can be one of the following values.
 .
 .LP
 .TP
-.B "\[rs]X'ps: ... pdfmark'"
+.BR "\[rs]X\[aq]ps:\~" .\|.\|.\& "\~pdfmark\[aq]"
 All the
 .I pdfmark
 macros installed by using
@@ -731,16 +733,20 @@ These commands are implemented with
 X commands:-
 .LP
 .TP
-.B "\[rs]X'ps: exec %%%%PAUSE"
+.B \[rs]X\[aq]ps: exec %%%%PAUSE\[aq]
 The section before this is treated as a block and is introduced using
-the current BLOCK transition setting
-(see \[oq]pdf: transition\[cq] below).
+the current
+.B BLOCK
+transition setting
+(see
+.RB \[lq] "\[rs]X\[aq]pdf: transition\[aq]" \[rq]
+below).
 .
 This command
 can be introduced using the macro
 .BR .pdfpause .
 .TP
-.B "\[rs]X'ps: exec %%%%BEGINONCE"
+.B \[rs]X\[aq]ps: exec %%%%BEGINONCE\[aq]
 Any text following this command (up to %%%%ENDONCE) is shown only once,
 the next %%%%PAUSE will remove it.
 If producing a non presentation pdf, i.e.\&
@@ -749,7 +755,7 @@ ignoring the pauses, see
 below, this text is ignored.
 .LP
 .TP
-.B "\[rs]X'ps: exec %%%%ENDONCE"
+.B \[rs]X\[aq]ps: exec %%%%ENDONCE\[aq]
 This terminates the block defined by %%%%BEGINONCE.
 This pair of commands
 is what implements the .BLOCKS Once/.BLOCKE commands in present.tmac.
@@ -777,7 +783,7 @@ One
 special used by the DVI driver is also recognised:
 .
 .TP
-.BI \[rs]X'papersize= paper-size '
+.BI \[rs]X\[aq]papersize= paper-size \[aq]
 where the
 .I paper-size
 parameter is the same as the
@@ -805,7 +811,8 @@ tags.
 The following tags are supported:
 .
 .TP
-.BI "\[rs]X'pdf: pdfpic " "file alignment width height line-length" '
+.B \[rs]X\[aq]pdf: pdfpic\~\c
+.IR "file alignment width height line-length" \[aq]
 Place an image of the specified
 .I width
 containing the PDF drawing from file
@@ -846,7 +853,7 @@ height.
 .\" of PostScript graphics.
 .
 .TP
-.B \[rs]X'pdf: xrev'
+.B \[rs]X\[aq]pdf: xrev\[aq]
 This toggles a flag which reverses the direction of printing
 .IR "letter by letter" ,
 i.e., each separate letter is reversed, not the entire word.
@@ -866,18 +873,24 @@ spot\[cq] region).
 Normally this is never used except from within the pdfmark macros.
 .
 .TP
-.B \[rs]X'pdf: markend'
-The macros which support PDF Bookmarks use this call internally to
-stop the definition of bookmark hotspot (user will have called
-\[oq].pdfhref\~L\[cq] with the text which will become the \[oq]hot
-spot\[cq] region).
+.BI "\[rs]X\[aq]pdf: markstart " "/ANN-definition" \[aq]
+.TQ
+.B \[rs]X\[aq]pdf: markend\[aq]
+The macros which support PDF bookmarks use these calls internally to
+start and stop (respectively) the definition of bookmark hot spot;
+the user will have called \[lq].pdfhref\~L\[rq] with the text which will
+become the hot spot region).
 .
-Normally this is never used except from within the pdfmark macros.
+Normally,
+these are never used except from within the
+.I pdfmark
+macros.
+.
 .
 .TP
-.B \[rs]X'pdf: marksuspend'
+.B \[rs]X\[aq]pdf: marksuspend\[aq]
 .TQ
-.B \[rs]X'pdf: markrestart'
+.B \[rs]X\[aq]pdf: markrestart\[aq]
 If you are using page traps to produce headings, footings, etc., you
 need to use these in case a \[oq]hot spot\[cq] crosses a page
 boundary, otherwise any text output by the heading or footing macro
@@ -887,12 +900,15 @@ To stop this happening just place \[oq].pdfmarksuspend\[cq] and
 \[oq].pdfmarkrestart\[cq] at the start and end of the page trap macro,
 respectively.
 .
-(These are just convenience macros which emit the \[rs]X code.
+(These are just convenience macros which emit the corresponding
+.B \[rs]X
+escapes.
 .
-These macros must only be used within page traps.)
+These macros must be used only within page traps.)
+.
 .
 .TP
-.BI "\[rs]X'pdf: pagename " name
+.BI "\[rs]X\[aq]pdf: pagename\~" name \[aq]
 This gives the current page a
 .IR name .
 .IP
@@ -904,7 +920,7 @@ The convenience command for this is
 .BR .pdfpagename .
 .
 .TP
-.BI "\[rs]X'pdf: switchtopage " "when name"
+.BI "\[rs]X'pdf: switchtopage\~" "when name" \[aq]
 Normally each new page is appended to the end of the document,
 this command allows following pages to be inserted at a
 .I \[oq]named\[cq]

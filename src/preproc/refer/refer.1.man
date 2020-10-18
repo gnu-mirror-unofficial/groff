@@ -235,8 +235,8 @@ see subsection \(lqCommands\(rq below).
 .
 .TP
 .B \-S
-.B
-label\ "(A.n|Q)\ ',\ '\ (D.y|D)"; \%bracket-label\ "\ ("\ )\ ";\ "
+.B label \[dq](A.n|Q) \[aq], \[aq] (D.y|D)\[dq]; \
+\%bracket-\%label \[dq]\ (\[dq]\ )\ \[dq];\ \[dq]
 .
 .
 .TP
@@ -1380,7 +1380,7 @@ is omitted, it defaults to\ 1.
 .
 .
 .TP
-.BI ' string '
+.BI \[aq] string \[aq]
 The characters in
 .I string
 literally.
@@ -1479,8 +1479,10 @@ or last
 upper or lower case letters or digits of
 .IR expr .
 .
-Troff special characters (such as
-.BR \e('a )
+.I roff
+special characters
+(such as
+.BR \e(\[aq]a )
 count as a single letter.
 .
 Accent strings are retained but do not count towards the total.
