@@ -9505,31 +9505,31 @@ on the right doesn't get examined.
 @cindex @code{\&}, and glyph definitions
 @cindex @code{\e}, and glyph definitions
 @cindex @code{hcode} request, and glyph definitions
-Define a new glyph@tie{}@var{g} to be @var{string} (which can be
-empty).@footnote{@code{char} is a misnomer since an output glyph is
-defined.}  Every time glyph@tie{}@var{g} needs to be printed,
-@var{string} is processed in a temporary environment and the result is
-wrapped up into a single object.  Compatibility mode is turned off and
-the escape character is set to @samp{\} while @var{string} is being
-processed.  Any emboldening, constant spacing or track kerning is
-applied to this object rather than to individual characters in
-@var{string}.
+Define a new character or glyph@tie{}@var{g} to be @var{string}, which
+can be empty.  More precisely, @code{char} defines (or redefines an
+existing) @code{groff} object that is accessed with the
+name@tie{}@var{g} on input, and produces @var{string} on output.  Every
+time glyph@tie{}@var{g} needs to be printed, @var{string} is processed
+in a temporary environment and the result is wrapped up into a single
+object.  Compatibility mode is turned off and the escape character is
+set to@tie{}@code{\} while @var{string} is processed.  Any emboldening,
+constant spacing, or track kerning is applied to this object rather than
+to individual glyphs in @var{string}.
 
-A glyph defined by these requests can be used just like a normal glyph
+An object defined by these requests can be used just like a normal glyph
 provided by the output device.  In particular, other characters can be
 translated to it with the @code{tr} or @code{trin} requests; it can be
-made the leader character by the @code{lc} request; repeated patterns
-can be drawn with the glyph using the @code{\l} and @code{\L} escape
-sequences; words containing the glyph can be hyphenated correctly if the
-@code{hcode} request is used to give the glyph's symbol a hyphenation
-code.
+made the leader character with the @code{lc} request; repeated patterns
+can be drawn with it using the @code{\l} and @code{\L} escape sequences;
+and words containing@tie{}@var{g}  can be hyphenated correctly if the
+@code{hcode} request is used to give the object a hyphenation code.
 
-There is a special anti-recursion feature: Use of @code{g} within the
-glyph's definition is handled like normal characters and symbols not
-defined with @code{char}.
+There is a special anti-recursion feature: use of the object within its
+own definition is handled like a normal character (not
+defined with @code{char}).
 
-Note that the @code{tr} and @code{trin} requests take precedence if
-@code{char} accesses the same symbol.
+The @code{tr} and @code{trin} requests take precedence if @code{char}
+accesses the same symbol.
 
 @Example
 .tr XY
@@ -13003,12 +13003,14 @@ the output device, filtering out @var{string} again.
 @cindex unformatting diversions (@code{asciify})
 @cindex diversion, unformatting (@code{asciify})
 @cindex @code{trin} request, and @code{asciify}
-@dfn{Unformat} the diversion specified by @var{div} in such a way that
-@acronym{ASCII} characters, characters translated with the @code{trin}
-request, space characters, and some escape sequences that were formatted
-and diverted are treated like ordinary input characters when the
-diversion is reread.  It can be also used for gross hacks; for example,
-the following sets register@tie{}@code{n} to@tie{}1.
+@dfn{Unformat} the diversion @var{div} in a way such that Unicode basic
+Latin (@acronym{ASCII}) characters, characters translated with the
+@code{trin} request, space characters, and some escape sequences, that
+were formatted and diverted into @var{div} are treated like ordinary
+input characters when @var{div} is reread.  Doing so can be useful in
+conjunction with the @code{writem} request.  @code{asciify} can be also
+used for gross hacks; for example, the following sets
+register@tie{}@code{n} to@tie{}1.
 
 @Example
 .tr @@.
@@ -13021,21 +13023,22 @@ the following sets register@tie{}@code{n} to@tie{}1.
 .x
 @endExample
 
-Note that @code{asciify} cannot return all items in a diversion back
-to their source equivalent, nodes such as @code{\N[...]} will still
-remain as nodes, so the result cannot be guaranteed to be a pure string.
+@code{asciify} cannot return all items in a diversion back to their
+source equivalent; nodes such as those produced by @code{\N[...]} will
+remain nodes, so the result cannot be guaranteed to be a pure string.
 
 @xref{Copy-in Mode}.
 @endDefreq
 
 @Defreq {unformat, div}
-Like @code{asciify}, unformat the specified diversion.  However,
-@code{unformat} only unformats spaces and tabs between words.
-Unformatted tabs are treated as input tokens, and spaces are stretchable
-again.
+Like @code{asciify}, unformat the diversion @var{div}.  However,
+@code{unformat} handles only tabs and spaces between words, the latter
+usually arising from spaces or newlines in the input.  Tabs are treated
+as input tokens, and spaces become stretchable again.
 
-The vertical size of lines is not preserved; glyph information (font,
-font size, space width, etc.)@: is retained.
+The vertical sizes of lines are not preserved, but glyph information
+(font, font size, space width, etc.)@: is retained.  @code{unformat} can
+be useful in conjunction with the @code{box} and @code{boxa} requests.
 @endDefreq
 
 
