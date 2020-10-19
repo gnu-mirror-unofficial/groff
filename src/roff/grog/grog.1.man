@@ -42,7 +42,7 @@ grog \- \(lqgroff guess\(rq\(eminfer a document's groff command
 .RI [ groff-option
 \&.\|.\|.\&]
 .OP \-\-
-.RI [ filespec
+.RI [ file
 \&.\|.\|.]
 .YS
 .
@@ -75,6 +75,18 @@ options are needed to perform the input with the
 .B groff
 program.
 .
+.
+.P
+If no operands are given,
+or if
+.I file
+is
+.RB \[lq] \- \[rq],
+.I @g@chem
+reads the standard input stream.
+.
+.
+.P
 A suitable device is now always written as
 .BI \-T device
 including the groff default as
@@ -93,34 +105,22 @@ the generated line is output into standard error and the generated
 command is run on the
 .IR "standard output" .
 .
+.
 .\" ====================================================================
 .SH Options
 .\" ====================================================================
 .
-The option
-.B \-v
-or
-.B \-\-version
-prints information on the version number.
-.
-Also
 .B \-h
-or
+and
 .B \-\-help
-prints usage information.
+display a usage message,
+whereas
+.B \-v
+and
+.B \-\-version
+display version information;
+all exit afterward.
 .
-Both of these options automatically end the
-.B grog
-program.
-.
-Other options are then ignored, and no
-.B groff
-command line is generated.
-.
-.
-The following 3 options are the only
-.B grog
-options,
 .
 .TP
 .B \-C
@@ -165,25 +165,13 @@ unchanged in the command for the output without effecting the work of
 .BR grog .
 .
 .
-.P
-A
-.I filespec
-argument can either be the name of an existing file or a single minus
-.B \-
-to mean standard input.
-.
-If no
-.I filespec
-is specified standard input is read automatically.
-.
-.
 .\" ====================================================================
 .SH Details
 .\" ====================================================================
 .
 .B grog
 reads all
-.I filespec
+.I file
 parameters as a whole.
 .
 It tries to guess which of the following
@@ -216,7 +204,7 @@ and
 The guessed
 .B groff
 command including those options and the found
-.I filespec
+.I file
 parameters is put on the standard output.
 .
 .

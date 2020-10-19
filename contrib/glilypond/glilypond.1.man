@@ -45,7 +45,7 @@ glilypond \- embed LilyPond musical notation in groff documents
 .RB [{ \-v | \-V }]
 .OP \-
 .OP \-\-
-.RI [ filespec
+.RI [ file
 \&.\|.\|.]
 .
 .
@@ -63,7 +63,7 @@ glilypond \- embed LilyPond musical notation in groff documents
 .OP \-\-verbose
 .OP \-
 .OP \-\-
-.RI [ filespec
+.RI [ file
 \&.\|.\|.]
 .YS
 .
@@ -111,11 +111,20 @@ is available, but does on yet work with lilypond.
 .
 .
 .P
-Files in
-.I groff
-language and
-.I "standard input"
-can be provided as arguments.
+If no operands are given,
+or if
+.I file
+is
+.RB \[lq] \- \[rq],
+.I glilypond
+reads the standard input stream.
+.
+A double-dash argument
+.RB (\[lq] \-\- \[rq])
+causes all subsequent arguments to be interpreted as
+.I file
+operands,
+even if their names start with a dash.
 .
 .
 .\" ====================================================================
@@ -164,25 +173,18 @@ does not work.
 .SH "Option Overview"
 .\" ====================================================================
 .
-.\" ====================================================================
-.SS "Breaking options"
-.\" ====================================================================
 .
-.nh
-.nf
 .TP
 .BR \-? | \-h | \-\-help | \-\-usage
-Print help or usage information, then leave the program.
+Display usage information and exit.
 .
 .TP
 .B \-\-version
-Print version information.
+Display version information and exit.
 .
 .TP
 .BR \-l | \-\-license
-Print license information.
-.fi
-.hy
+Display copyright license information and exit.
 .
 .
 .\" ====================================================================
@@ -441,56 +443,6 @@ can as well be written as
 .B \-\-Keep_All
 or even as an abbreviation like
 .BR \-\-KeE .
-.
-.
-.\" ====================================================================
-.SH "Filespec Arguments"
-.\" ====================================================================
-.
-An argument that is not an option or an option argument is called a
-.I filespec
-argument.
-.
-.
-.P
-Without any
-.I filespec
-argument,
-.I "standard input"
-is read.
-.
-.
-.P
-Each
-.I filespec
-argument must either be the name of a readable file or a dash
-.B \-
-for
-.IR "standard input" .
-.
-Each input must be written in the
-.I roff
-or
-.I groff
-language and can include
-.I lilypond
-parts.
-.
-.
-.P
-Normally arguments starting with a dash
-.B \-
-are interpreted as an option.
-.
-But if you use an argument that consists only of a doubled dash
-.B \-\- R ,
-all following arguments are taken as
-.I filespec
-argument, even if such an argument starts with a dash.
-.
-This is handled according to the
-.I GNU
-standard.
 .
 .
 .\" ====================================================================

@@ -31,7 +31,7 @@
 .
 .SY @g@chem
 .OP \-\-
-.RI [ filespec
+.RI [ file
 \&.\|.\|.]
 .YS
 .
@@ -81,15 +81,13 @@ language.
 .
 .
 .P
-A
-.I filespec
-argument is either a file name of an existing file or a minus
-character
-.BR \- ,
-meaning standard input.
-.
-If no argument is specified then standard input is taken
-automatically.
+If no operands are given,
+or if
+.I file
+is
+.RB \[lq] \- \[rq],
+.I @g@chem
+reads the standard input stream.
 .
 .B \-h
 and

@@ -30,7 +30,7 @@ gperl \- execute Perl commands in groff documents
 .\" ====================================================================
 .
 .SY gperl
-.RI [ filespec
+.RI [ file
 \&.\|.\|.]
 .YS
 .
@@ -73,51 +73,32 @@ based on the arguments at a final line of a
 .IR "Perl part" .
 .
 .
-.\" ====================================================================
-.SH Options
-.\" ====================================================================
-.
-So far, there are only
-.I filespec
-or
-.I breaking
-options.
-.
-.
 .P
-.I filespec
-are file names or the minus character
-.B \-
-character for standard input.
+If no operands are given,
+or if
+.I file
+is
+.RB \[lq] \- \[rq],
+.I gperl
+reads the standard input stream.
 .
-As usual, the argument
-.B \-\-
-can be used in order to let all following arguments mean file names,
-even if the names begin with a minus character
-.BR \- .
+A double-dash argument
+.RB (\[lq] \-\- \[rq])
+causes all subsequent arguments to be interpreted as
+.I file
+operands,
+even if their names start with a dash.
 .
-.
-.P
-An option is
-.IR breaking ,
-when the program just writes the information that was asked for and
-then stops.
-.
-All other arguments will be ignored by that.
-.
-These
-.I breaking
-options are here
-.
-.TP
-.B \-h\~\fR|\fB\~\-\-help
-Print help information with a short explanation of options to
-standard output.
-.
-.
-.TP
-.B \-v\~\fR|\fB\~\-\-version
-Print version information to standard output.
+.B \-h
+and
+.B \-\-help
+display a usage message,
+whereas
+.B \-v
+and
+.B \-\-version
+display version information;
+all exit afterward.
 .
 .
 .\" ====================================================================
