@@ -75,7 +75,7 @@ do
     -[dmMnoPrTwW])
       echo "$prog: option '$1' requires an argument" >&2
       exit 1 ;;
-    -[CipStU] | -[dMmrnoPwW]*)
+    -[CEipStU] | -[dMmrnoPwW]*)
       opts="$opts $1" ;;
     -T*)
       Topt=$1 ;;
@@ -94,7 +94,7 @@ do
       opts="$opts $1" ;;
     --help)
       cat <<EOF
-usage: nroff [-cChipStUV] [-dCS] [-mNAME] [-MDIR] [-nNUM] [-oLIST]
+usage: nroff [-cCEhipStUV] [-dCS] [-mNAME] [-MDIR] [-nNUM] [-oLIST]
              [-Popt ...] [-rCN] [-Tname] [-wNAME] [-WNAME] [FILE ...]
 EOF
       exit 0 ;;
