@@ -1,5 +1,19 @@
 2020-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::init_output): Save the value
+	of \n[.tabs] when starting a table.  In the reset macro, restore
+	the saved value.
+
+	Based on a patch by Bjarni Ingi Gislason (tweaked to use a more
+	normative preprocessor symbol; "REG"s aren't "NAME"s).
+
+	* src/preproc/tbl/tests/save-and-restore-tab-stops.sh: Test it.
+	* src/preproc/tbl/tbl.am (tbl_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?42978>.
+
+2020-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/nroff/nroff.sh: Recognize -E option and pass it
 	through to troff.  Document it in usage message.
 	* src/roff/nroff/nroff.1.man: Document new -E option.
