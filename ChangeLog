@@ -1,5 +1,20 @@
 2020-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/env.cpp (environment::possibly_break_line):
+	Emit break warning and return if the output width is not
+	positive.  The code assumes that it will be and loops infinitely
+	if it isn't.  I _think_ this is because we're not able to get
+	width data for (some?) CJK glyphs.  Based on a patch by Osamu
+	Sayama.
+
+	* src/roff/groff/tests/\
+	do_not_loop_infinitely_when_breaking_cjk.sh: Test it.
+	* src/roff/groff/groff.am: Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?44018>.
+
+2020-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/tbl/table.cpp (table::init_output): Save the value
 	of \n[.tabs] when starting a table.  In the reset macro, restore
 	the saved value.
