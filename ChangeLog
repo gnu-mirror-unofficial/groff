@@ -1,3 +1,10 @@
+2020-10-21  Ingo Schwarze <schwarze@openbsd.org>
+
+	On systems without NAME_MAX, use FILENAME_MAX as a last resort.
+
+	Problem reported by Eli Zaretskii <eliz at gnu dot org>
+	on MS Windows in https://savannah.gnu.org/bugs/?55449
+
 2020-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/env.cpp (environment::possibly_break_line):
