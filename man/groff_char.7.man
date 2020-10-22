@@ -690,7 +690,8 @@ see
 is a Unicode numeric special character escape.
 .
 With this form,
-any Unicode point can be indicated using four to six hexadecimal digits.
+any Unicode point can be indicated using four to six hexadecimal digits,
+with hexadecimal letters accepted in uppercase form only.
 .
 Thus,
 .B \[rs][u02DA]
@@ -706,6 +707,15 @@ requires NFD
 (Normalization Form D),
 where all Unicode glyphs are maximally decomposed.
 .
+(Exception:
+precomposed characters in the Latin-1 supplement described above are
+also accepted.
+.
+Do not count on this exception remaining in a future
+.I @g@troff
+that accepts UTF-8 input directly.)
+.
+.
 Thus,
 .I @g@troff
 accepts
@@ -713,9 +723,11 @@ accepts
 .RB \[lq]caf \[rs][e\~aa] \[rq],
 and
 .RB \[lq]caf \[rs][u0065_0301] \[rq],
-but not
-.RB \[lq]caf \[rs][u00e9] \[rq],
 as ways to input \[lq]caf\['e]\[rq].
+.
+(Due to its ISO Latin-1 and IBM code page 1047 compatibility,
+at present it also accepts
+.RB \[lq]caf \[rs][u00E9] \[rq]).
 .
 .
 .TP
