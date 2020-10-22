@@ -1,5 +1,20 @@
 2020-10-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Use only malloc() and free() to manage memory of paths opened by
+	the parser instead of mixing in C++ new/delete management under
+	some runtime-dependent circumstances.
+
+	* src/libs/libgroff/relocate.cpp (relocatep): Use malloc(), not
+	new.
+	* src/roff/troff/input.cpp (process_macro_file,
+	process_startup_file, macro_source): Use free(), not (a_)delete.
+
+	Thanks to an anonymous contributor for the report and patch.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?56694>.
+
+2020-10-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* man/groff_char.7.man (Description/Special character escape
 	forms): Clarify discussion of Unicode Normalization Form D and
 	its applicability to code points acceptable in Unicode numeric

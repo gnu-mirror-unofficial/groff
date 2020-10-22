@@ -7738,7 +7738,7 @@ static void process_macro_file(const char *mac)
   if (!fp)
     fatal("can't find macro file %1", mac);
   const char *s = symbol(path).contents();
-  a_delete path;
+  free(path);
   input_stack::push(new file_iterator(fp, s));
   tok.next();
   process_input_stack();
@@ -7752,7 +7752,7 @@ static void process_startup_file(const char *filename)
   FILE *fp = mac_path->open_file(filename, &path);
   if (fp) {
     input_stack::push(new file_iterator(fp, symbol(path).contents()));
-    a_delete path;
+    free(path);
     tok.next();
     process_input_stack();
   }
@@ -7795,7 +7795,7 @@ void macro_source()
     }
     if (fp) {
       input_stack::push(new file_iterator(fp, symbol(path).contents()));
-      a_delete path;
+      free(path);
     }
     else
       warning(WARN_FILE, "can't find macro file '%1'", nm.contents());
