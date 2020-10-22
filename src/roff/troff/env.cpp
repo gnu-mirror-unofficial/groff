@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2018 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
