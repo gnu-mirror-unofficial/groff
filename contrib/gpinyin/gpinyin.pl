@@ -2,7 +2,7 @@
 
 # gpinyin - European-like Chinese writing 'pinyin' into 'groff'
 
-# Copyright (C) 2014-2018 Free Software Foundation, Inc.
+# Copyright (C) 2014-2020 Free Software Foundation, Inc.
 
 # Written by Bernd Warken <groff-bernd.warken-72@web.de>.
 
