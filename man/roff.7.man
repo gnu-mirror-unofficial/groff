@@ -245,13 +245,17 @@ to turn on fill mode got the name it retains to this day.
 .\"processing.
 .
 .
+.\" ====================================================================
+.SS "Unix and roff"
+.\" ====================================================================
+.
 .P
 By 1971,
 McIlroy's
 .I runoff
 had been rewritten in DEC PDP-11 assembly language
-for the fledgling Unix operating system
 by Dennis Ritchie
+for the fledgling Unix operating system
 and seen its name shortened to
 .I roff
 (perhaps under the influence of Ken Thompson),
@@ -274,11 +278,10 @@ indirectly funded operating systems research at Murray Hill,
 for it was used to prepare patent applications for AT&T to the U.S.\&
 government.
 .
-This enabled the group to acquire the aforementioned PDP-11;
+This arrangement enabled the group to acquire the aforementioned PDP-11;
 .I roff
-promptly proved equal to the task of typesetting the manual for
-\[lq]v1 Unix\[rq],
-what would later become known as First Edition Research Unix,
+promptly proved equal to the task of typesetting the first edition of
+the manual for what would later become known as \[lq]v1 Unix\[rq],
 dated November 1971.
 .
 .
@@ -400,12 +403,13 @@ and programmable abort
 Third Edition Unix had also brought the
 .IR pipe (2)
 system call,
-and the explosive growth of a componentized system based around it and a
-\[lq]filter model\[rq] that remains perceptible today.
+the explosive growth of a componentized system based around it,
+and a \[lq]filter model\[rq] that remains perceptible today.
 .
-Around this time
+Around this time, \" judging by "CSTR #17"
+Mike Lesk developed the
 .I tbl \" AT&T
-was developed. \" judging by "CSTR #17"
+preprocessor for formatting tables.
 .
 Equally importantly,
 the Bell Labs site in Murray Hill acquired a Graphic Systems C/A/T
@@ -434,7 +438,7 @@ unlike
 .IR nroff (1). \" AT&T
 .
 Apart from typesetter-driven features,
-version 4 Unix
+Version 4 Unix
 .IR roff s
 added string definitions
 .RB ( .ds );
@@ -462,27 +466,48 @@ using preprocessor conditions of that language to generate both from a
 single source tree.
 .
 .
+.P
+The syntax of the input language to the
+.I nroff
+and
+.I troff
+programs was documented in the \[lq]Troff User's Manual\[rq],
+first published in 1976,
+with further revisions as late as 1992 by Brian Kernighan.
+.
+(The original version was entitled
+\[lq]Nroff/Troff User's Manual\[rq],
+which may partially explain why
+.I roff
+practitioners have tended to refer to it by its AT&T document identifer,
+\[lq]CSTR #54\[rq].)
+.
+Its final revision serves as the
+.I de facto
+specification of AT&T
+.IR troff , \" AT&T
+and all subsequent implementors of
+.I roff
+systems have done so in its shadow.
+.
+.
+.P
+In 1979,
+Seventh Edition Unix added the
+.I man
+macro package to the existing
+.I ms
+macros,
+both (apparently) by Mike Lesk.
+.
+Between them the system was comprehensively documented,
+with the man pages on-line and in Volume 1 and a wealth of supplementary
+documents in Volume 2.
+.
 .\" XXX GBR leaves off here
 .P
-The syntax of the formatting language of the
-.BR nroff /\: troff
-programs was documented in the famous
-.I "Troff User's Manual"
-[CSTR\~#54],
-first published in 1976,
-with further revisions up to 1992 by Brian
-Kernighan.
-.
-This document is the specification of the
-.IR "classical troff" .
-.
-All later
-.I roff
-systems tried to establish compatibility with this specification.
-.
-.
-.P
-After Ossanna's death in 1977, Kernighan went on with developing
+After Ossanna's death in 1977,
+Kernighan went on with developing
 .IR troff .
 .
 In the late 1970s, Kernighan equipped
