@@ -380,10 +380,6 @@ macro indents all text at both left and right margins
 by the amount of the register
 .BR QI .
 .
-The effect is reminiscent of the HTML
-.B <BLOCKQUOTE>
-tag.
-.
 The next paragraph or heading returns the margins to normal.
 .
 .B QP
@@ -416,16 +412,17 @@ The text between
 and
 .B QE
 can be split into further paragraphs by using
-.B \&.LP
+.B .LP
 or
-.BR \&.PP .
+.BR .PP .
 .
 .
 .PP
 The
 .B XP
-macro produces an \(lqexdented\(rq paragraph; that is, one with a
-hanging indent.
+macro produces an \[lq]exdented\[rq] paragraph;
+that is,
+one with a hanging indent.
 .
 The first line of the paragraph begins at
 the left margin,
@@ -743,7 +740,7 @@ For example,
 .
 .IP
 prints
-.RB \(lq( foo )\(rq.
+.RB \[lq]( foo )\[rq].
 .
 .IP
 If you give this macro no arguments,
@@ -1174,7 +1171,7 @@ Prints the footnote number as a superscript; indents the footnote
 .
 .TP
 1
-Prints the number followed by a period (that is,\~\(lq1.\(rq\&)
+Prints the number followed by a period (that is,\~\[lq]1.\[rq]\&)
 and indents the footnote.
 .
 .TP
@@ -1215,7 +1212,7 @@ are in the same order as the corresponding occurrences of
 .
 There are three ways to define headers and footers:
 .
-.IP \(bu 3n
+.IP \[bu] 3n
 Use the strings
 .BR LH ,
 .BR CH ,
@@ -1232,7 +1229,7 @@ to set the left, center, and right footers.
 The string-setting approach works best for documents that do not
 distinguish between odd and even pages.
 .
-.IP \(bu
+.IP \[bu]
 Use the
 .B OH
 and
@@ -1267,7 +1264,7 @@ You can replace the quote (\[aq]) marks with any character not
 appearing in the header or footer text.
 .
 .
-.IP \(bu
+.IP \[bu]
 You can redefine the
 .B PT
 and
@@ -1472,7 +1469,7 @@ they cannot be used with AT&T
 .
 Other differences include:
 .
-.IP \(bu 3n
+.IP \[bu] 3n
 The internals of
 .I "groff ms"
 differ from the internals of Unix
@@ -1483,13 +1480,13 @@ Documents that depend upon implementation details of Unix
 may not format properly with
 .IR "groff ms" .
 .
-.IP \(bu
+.IP \[bu]
 The error-handling policy of
 .I "groff ms"
 is to detect and report errors,
 rather than silently to ignore them.
 .
-.IP \(bu
+.IP \[bu]
 Some Bell Labs localisms are not implemented by default.
 .
 However, if you call the otherwise undocumented
@@ -1514,14 +1511,14 @@ macros both collide with different macros in the Berkeley version of
 .IP
 These emulations are sufficient to give back the 1976 Kernighan\~&
 Cherry paper
-.I "Typesetting Mathematics \(en User's Guide"
+.I "Typesetting Mathematics \[en] User's Guide"
 its section headings, and restore some text that had gone missing as
 arguments of undefined macros.
 .
 No warranty express or implied is given as to how well the typographic
 details these produce match the original Bell Labs macros.
 .
-.IP \(bu
+.IP \[bu]
 Berkeley localisms, in particular the
 .B TM
 and
@@ -1529,24 +1526,24 @@ and
 macros,
 are not implemented.
 .
-.IP \(bu
+.IP \[bu]
 .I "Groff ms"
 does not work in compatibility mode (e.g., with the
 .B \-C
 option).
 .
-.IP \(bu
+.IP \[bu]
 There is no support for typewriter-like devices.
 .
-.IP \(bu
+.IP \[bu]
 .I "Groff ms"
 does not provide cut marks.
 .
-.IP \(bu
+.IP \[bu]
 Multiple line spacing is not supported
 (use a larger vertical spacing instead).
 .
-.IP \(bu
+.IP \[bu]
 Some Unix
 .I ms
 documentation says that the
@@ -1559,7 +1556,7 @@ gutter width, respectively.
 These number registers are not used in
 .IR "groff ms" .
 .
-.IP \(bu
+.IP \[bu]
 Macros that cause a reset
 (paragraphs, headings, etc.\&)
 may change the indent.
@@ -1578,7 +1575,7 @@ and
 .B RE
 macros.
 .
-.IP \(bu
+.IP \[bu]
 The number register
 .B GS
 is set to\~1 by the
@@ -1595,7 +1592,7 @@ or
 .I "groff ms"
 should use this number register.
 .
-.IP \(bu
+.IP \[bu]
 To make
 .I "groff ms"
 use the default page offset (which also specifies the left margin),
@@ -1736,41 +1733,45 @@ macros contain only uppercase letters and digits.
 Internally the macros are divided into modules;
 naming conventions are as follows:
 .
-.IP \(bu 3n
+.IP \[bu] 3n
 Names used only within one module are of the form
-.IB \%module * name\fR.
+.IB \%module * name\c
+\&.
 .
-.IP \(bu
+.IP \[bu]
 Names used outside the module in which they are defined are of the form
-.IB \%module @ name\fR.
+.IB \%module @ name\c
+\&.
 .
-.IP \(bu
+.IP \[bu]
 Names associated with a particular environment are of the form
-.IB \%environment : name\fR;
+.IB \%environment : name\c
+\&;
 these are used only within the
 .B par
 module.
 .
-.IP \(bu
+.IP \[bu]
 .I name
 does not have a module prefix.
 .
-.IP \(bu
+.IP \[bu]
 Constructed names used to implement arrays are of the form
-.IB \%array ! index\fR.
+.IB \%array ! index\c
+\&.
 .
 .
 .PP
 Thus the groff ms macros reserve the following names:
 .
-.IP \(bu 3n
+.IP \[bu] 3n
 Names containing the characters
 .BR * ,
 .BR @ ,
 and\~\c
 .BR : .
 .
-.IP \(bu
+.IP \[bu]
 Names containing only uppercase letters and digits.
 .
 .
@@ -1778,11 +1779,16 @@ Names containing only uppercase letters and digits.
 .SH Files
 .\" ====================================================================
 .
-.I @MACRODIR@/ms.tmac
-(a wrapper file for
-.IR s.tmac )
-.br
-.I @MACRODIR@/s.tmac
+.TP
+.I \%@MACRODIR@/\:s\:.tmac
+.I groff
+implementation of manuscript macros.
+.
+.
+.TP
+.I \%@MACRODIR@/\:ms\:.tmac
+Wrapper to load
+.IR s.tmac .
 .
 .
 .
@@ -1804,17 +1810,35 @@ Larry Kollar
 .SH "See Also"
 .\" ====================================================================
 .
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR @g@tbl (@MAN1EXT@),
-.BR @g@pic (@MAN1EXT@),
-.BR @g@eqn (@MAN1EXT@),
-.BR @g@refer (@MAN1EXT@)
+.TP
+.I \%@DOCDIR@/\:ms\:.ps
+\[lq]Using
+.I groff
+with the
+.I ms
+Macro Package\[rq];
+Larry Kollar.
+.
+This file,
+together with its source,
+.IR ms.ms ,
+is part of the
+.I groff
+distribution.
 .
 .
 .PP
 .IR "Groff: The GNU Implementation of troff" ,
 by Trent A.\& Fisher and Werner Lemberg
+.
+.
+.PP
+.IR groff (@MAN1EXT@),
+.IR @g@troff (@MAN1EXT@),
+.IR @g@tbl (@MAN1EXT@),
+.IR @g@pic (@MAN1EXT@),
+.IR @g@eqn (@MAN1EXT@),
+.IR @g@refer (@MAN1EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
