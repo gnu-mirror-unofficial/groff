@@ -1,6 +1,6 @@
 .TH @g@refer @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH Name
-@g@refer \- preprocess bibliographic references for groff
+@g@refer \- process bibliographic references for groff
 .
 .
 .\" ====================================================================
@@ -37,15 +37,17 @@
 .SY @g@refer
 .OP \-benCPRS
 .OP \-a n
+.RB [ \-B
+.IB field . macro\c
+]
 .OP \-c fields
 .OP \-f n
 .OP \-i fields
 .OP \-k field
 .OP \-l m,n
-.OP \-p filename
+.OP \-p databse-file
 .OP \-s fields
 .OP \-t n
-.BI "\-B " field . macro
 .RI [ file
 \&.\|.\|.\&]
 .YS
@@ -69,13 +71,15 @@
 .\" ====================================================================
 .
 This file documents the GNU version of
-.BR refer ,
-which is part of the groff document formatting system.
+.IR refer , \" generic
+which is part of the
+.I groff (@MAN1EXT@)
+document formatting system.
 .
-.B refer
+.I @g@refer
 copies the contents of
-.IR filename \|.\|.\|.\&
-to the standard output,
+.I file
+\&.\|.\|.\& to the standard output stream,
 except that lines between
 .B .[
 and
@@ -91,31 +95,31 @@ are interpreted as commands about how citations are to be processed.
 .LP
 Each citation specifies a reference.
 .
-The citation can specify a reference that is contained in
-a bibliographic database by giving a set of keywords
-that only that reference contains.
+The citation can specify a reference that is contained in a
+bibliographic database by giving a set of keywords that only that
+reference contains.
 .
-Alternatively it can specify a reference by supplying a database
-record in the citation.
+Alternatively it can specify a reference by supplying a database record
+in the citation.
 .
 A combination of these alternatives is also possible.
 .
 .
 .LP
 For each citation,
-.B refer
+.I @g@refer
 can produce a mark in the text.
 .
-This mark consists of some label which can be separated from
-the text and from other labels in various ways.
+This mark consists of some label which can be separated from the text
+and from other labels in various ways.
 .
 For each reference it also outputs
-.B groff
-commands that can be used by a macro package to produce a formatted
-reference for each citation.
+.I groff (@MAN7EXT@)
+language commands that can be used by a macro package to produce a
+formatted reference for each citation.
 .
 The output of
-.B refer
+.I @g@refer
 must therefore be processed using a suitable macro package,
 such as
 .IR ms ,
@@ -129,8 +133,9 @@ after the citation,
 or the references may be accumulated,
 and the commands output at some later point.
 .
-If the references are accumulated, then multiple citations of the same
-reference will produce a single formatted reference.
+If the references are accumulated,
+then multiple citations of the same reference will produce a single
+formatted reference.
 .
 .
 .LP
@@ -139,26 +144,24 @@ The interpretation of lines between
 and
 .B .R2
 as commands is a new feature of GNU
-.BR refer .
+.IR refer . \" GNU
 .
-Documents making use of this feature can still be processed by
-Unix refer just by adding the lines
+Documents making use of this feature can still be processed by AT&T
+.I refer \" AT&T
+just by adding the lines
 .
 .RS
-.LP
-.nf
-.ft B
+.EX
 \&.de R1
 \&.ig R2
 \&..
-.ft
-.fi
+.EE
 .RE
 .
 to the beginning of the document.
 .
 This will cause
-.B troff
+.I @g@troff (@MAN1EXT@)
 to ignore everything between
 .B .R1
 and
@@ -166,26 +169,27 @@ and
 .
 The effect of some commands can also be achieved by options.
 .
-These options are supported mainly for compatibility with Unix refer.
+These options are supported mainly for compatibility with AT&T
+.IR refer . \" AT&T
 .
 It is usually more convenient to use commands.
 .
 .
 .LP
-.B refer
+.I @g@refer
 generates
 .B .lf
-lines so that filenames and line numbers in messages produced
-by commands that read
-.B refer
+requests so that file names and line numbers in messages produced by
+commands that read
+.I @g@refer
 output will be correct;
 it also interprets lines beginning with
 .B .lf
-so that filenames and line numbers in the messages and
+so that file names and line numbers in the messages and
 .B .lf
 lines that it produces will be accurate even if the input has been
 preprocessed by a command such as
-.BR @g@soelim (@MAN1EXT@).
+.IR @g@soelim (@MAN1EXT@).
 .
 .
 .\" ====================================================================
@@ -205,12 +209,12 @@ all exit afterward.
 .LP
 Most options are equivalent to commands
 (for a description of these commands,
-see subsection \(lqCommands\(rq below).
+see subsection \[lq]Commands\[rq] below).
 .
 .
 .TP
 .B \-b
-.B "no-label-in-text; no-label-in-reference"
+.B "\%no\-label\-in\-text; \%no\-label\-in\-reference"
 .
 .
 .TP
@@ -220,7 +224,7 @@ see subsection \(lqCommands\(rq below).
 .
 .TP
 .B \-n
-.B no-default-database
+.B no\-default\-database
 .
 .
 .TP
@@ -230,13 +234,13 @@ see subsection \(lqCommands\(rq below).
 .
 .TP
 .B \-P
-.B move-punctuation
+.B move\-punctuation
 .
 .
 .TP
 .B \-S
 .B label \[dq](A.n|Q) \[aq], \[aq] (D.y|D)\[dq]; \
-\%bracket-\%label \[dq]\ (\[dq]\ )\ \[dq];\ \[dq]
+\%bracket-\%label \[dq]\~(\[dq]\~)\~\[dq];\~\[dq]
 .
 .
 .TP
@@ -259,20 +263,20 @@ see subsection \(lqCommands\(rq below).
 .
 .TP
 .BI \-i fields
-.B search-ignore
+.B search\-ignore
 .I fields
 .
 .
 .TP
 .B \-k
 .B label
-.B L\(ti%a
+.B L\[ti]%a
 .
 .
 .TP
 .BI \-k field
 .B label
-.IB field \(ti%a
+.IB field \[ti]%a
 .
 .
 .TP
@@ -300,9 +304,9 @@ see subsection \(lqCommands\(rq below).
 .
 .
 .TP
-.BI \-p filename
+.BI \-p database\-file
 .B database
-.I filename
+.I database-file
 .
 .
 .TP
@@ -313,13 +317,13 @@ see subsection \(lqCommands\(rq below).
 .
 .TP
 .BI \-t n
-.B search-truncate
+.B search\-truncate
 .I n
 .
 .
 .LP
 These options are equivalent to the following commands with the
-addition that the filenames specified on the command line are
+addition that the file names specified on the command line are
 processed as if they were arguments to the
 .B bibliography
 command instead of in the normal way:
@@ -327,7 +331,7 @@ command instead of in the normal way:
 .
 .TP
 .B \-B
-.B "annotate X AP; no-label-in-reference"
+.B "annotate X AP; \%no\-label\-in\-reference"
 .
 .
 .TP
@@ -335,7 +339,7 @@ command instead of in the normal way:
 .B annotate
 .I field
 .IB macro ;
-.B no-label-in-reference
+.B \%no\-label\-in\-reference
 .
 .
 .LP
@@ -400,7 +404,8 @@ field.
 .
 .TP
 .B %B
-For an article that is part of a book, the title of the book.
+For an article that is part of a book,
+the title of the book.
 .
 .
 .TP
@@ -414,13 +419,15 @@ The date of publication.
 .
 The year should be specified in full.
 .
-If the month is specified, the name rather than the number of the month
-should be used, but only the first three letters are required.
+If the month is specified,
+the name rather than the number of the month should be used,
+but only the first three letters are required.
 .
 It is a good idea always to supply a
 .B %D
 field;
-if the date is unknown, a value such as
+if the date is unknown,
+a value such as
 .B in press
 or
 .B unknown
@@ -436,15 +443,15 @@ Where the work has editors and no authors,
 the names of the editors should be given as
 .B %A
 fields and
-.B ,\ (ed)
+.B ,\~(ed.)\&
 or
-.B ,\ (eds)
+.B ,\~(eds.)\&
 should be appended to the last author.
 .
 .
 .TP
 .B %G
-US Government ordering number.
+U.S. government ordering number.
 .
 .
 .TP
@@ -483,13 +490,16 @@ This is usually printed at the end of the reference.
 .TP
 .B %P
 Page number.
+.
 A range of pages can be specified as
-.IB m \- n\fR.
+.IB m \- \c
+.IR n .
 .
 .
 .TP
 .B %Q
-The name of the author, if the author is not a person.
+The name of the author,
+if the author is not a person.
 .
 This will only be used if there are no
 .B %A
@@ -541,9 +551,9 @@ only the last such field will be used.
 If accent strings are used,
 they should follow the character to be accented.
 This means that the
-.B AM
+.B .AM
 macro must be used with the
-.B \-ms
+.I ms
 macros.
 .
 Accent strings should not be quoted:
@@ -556,16 +566,15 @@ rather than two.
 .SS Citations
 .\" ====================================================================
 .
-The format of a citation is
+Citations have a characteristic format.
 .
 .RS
+.EX
 .BI .[ opening-text
-.br
-.I "flags keywords"
-.br
+.I flags keywords
 .I fields
-.br
 .BI .] closing-text
+.EE
 .RE
 .
 .
@@ -597,14 +606,14 @@ It is an error if more than one reference if found.
 .LP
 The
 .I fields
-components specifies additional fields to replace or supplement
-those specified in the reference.
+components specifies additional fields to replace or supplement those
+specified in the reference.
 .
 When references are being accumulated and the
 .I keywords
 component is non-empty,
-then additional fields should be specified only on the first
-occasion that a particular reference is cited,
+then additional fields should be specified only on the first occasion
+that a particular reference is cited,
 and will apply to all citations of that reference.
 .
 .
@@ -613,53 +622,54 @@ The
 .I opening-text
 and
 .I closing-text
-component specifies strings to be used to bracket the label instead
-of the strings specified in the
-.B bracket-label
+component specifies strings to be used to bracket the label instead of
+the strings specified in the
+.B bracket\-label
 command.
 .
 If either of these components is non-empty,
 the strings specified in the
-.B bracket-label
+.B bracket\-label
 command will not be used;
-this behaviour can be altered using the
+this behavior can be altered using the
 .B [
 and
 .B ]
 flags.
 .
-Note that leading and trailing spaces are significant for these
-components.
+Leading and trailing spaces are significant for these components.
 .
 .
 .LP
 The
 .I flags
-component is a list of
-non-alphanumeric characters each of which modifies the treatment
-of this particular citation.
+component is a list of non-alphanumeric characters each of which
+modifies the treatment of this particular citation.
 .
-Unix refer will treat these flags as part of the keywords and
-so will ignore them since they are non-alphanumeric.
+AT&T
+.I refer .\" AT&T
+will treat these flags as part of the keywords and so will ignore them
+since they are non-alphanumeric.
 .
-The following flags are currently recognized:
+The following flags are currently recognized.
 .
 .
 .TP
 .B #
-This says to use the label specified by the
-.B short-label
+Use the label specified by the
+.B short\-label
 command,
 instead of that specified by the
 .B label
 command.
 .
-If no short label has been specified, the normal label will be used.
+If no short label has been specified,
+the normal label will be used.
 .
-Typically the short label is used with author-date labels
-and consists of only the date and possibly a disambiguating letter;
+Typically the short label is used with author-date labels and consists
+of only the date and possibly a disambiguating letter;
 the
-.B #
+.RB \[lq] # \[rq]
 is supposed to be suggestive of a numeric type of label.
 .
 .
@@ -668,7 +678,7 @@ is supposed to be suggestive of a numeric type of label.
 Precede
 .I opening-text
 with the first string specified in the
-.B bracket-label
+.B bracket\-label
 command.
 .
 .
@@ -677,7 +687,7 @@ command.
 Follow
 .I closing-text
 with the second string specified in the
-.B bracket-label
+.B bracket\-label
 command.
 .
 .
@@ -694,11 +704,11 @@ is that
 .
 you can change the style of bracket used in the document just by
 changing the
-.B bracket-label
+.B \%bracket\-label
 command.
 .
-Another advantage is that sorting and merging of citations
-will not necessarily be inhibited if the flags are used.
+Another advantage is that sorting and merging of citations will not
+necessarily be inhibited if the flags are used.
 .
 .
 .LP
@@ -707,7 +717,8 @@ it will be attached to the line preceding the
 .B .[
 line.
 .
-If there is no such line, then an extra line will be inserted before the
+If there is no such line,
+then an extra line will be inserted before the
 .B .[
 line and a warning will be given.
 .
@@ -728,11 +739,13 @@ The labels may also be sorted or merged.
 .
 See the description of the
 .B <>
-label expression, and of the
-.B sort-adjacent-labels
+label expression,
+and of the
+.B sort\-adjacent\-labels
 and
-.B abbreviate-label-ranges
+.B abbreviate\-label\-ranges
 command.
+.
 A label will not be merged if its citation has a non-empty
 .I opening-text
 or
@@ -754,9 +767,10 @@ or the second citation's
 .I closing-text
 is non-empty.
 .
-(If you wish to prevent this just make the first citation's
+(If you wish to prevent this,
+just make the first citation's
 .I closing-text
-.BR \e& .)
+.BR \[rs]& .)
 .
 .
 .\" ====================================================================
@@ -786,58 +800,47 @@ is output.
 .
 .
 .LP
-Commands are separated by newlines or
-.BR ; s.
-.B #
-introduces a comment that extends to the end of the line
-(but does not conceal the newline).
+Commands are separated by newlines or semicolons.
+.
+A hash sign
+.RB ( # )
+introduces a comment that extends to the end of the line,
+but does not conceal the newline.
 .
 Each command is broken up into words.
 .
 Words are separated by spaces or tabs.
 .
-A word that begins with
-.B \[dq]
-extends to the next
-.B \[dq]
-that is not followed by another
-.BR \[dq] .
+A word that begins with a (neutral) double quote
+.RB ( \[dq] )
+extends to the next double quote that is not followed by another double
+quote.
 .
-If there is no such
-.B \[dq]
+If there is no such double quote,
 the word extends to the end of the line.
 .
-Pairs of
-.B \[dq]
-in a word beginning with
-.B \[dq]
-collapse to a single
-.BR \[dq] .
+Pairs of double quotes in a word beginning with a double quote collapse
+to a single double quote.
 .
-Neither
-.B #
-nor
-.B ;
-are recognized inside
-.BR \[dq] s.
+Neither a hash sign nor a semicolon is recognized inside double quotes.
 .
 A line can be continued by ending it with
-.BR \e ;
-this works everywhere except after a
-.BR # .
+.BR \[rs][rs] ;
+this works everywhere except after a hash sign.
 .
 .
 .LP
-.ds n \fR*
+.ds n \fR*\fP\"
 Each command
 .I name
 that is marked with \*n has an associated negative command
-.BI no- name
+.BI no\- name
 that undoes the effect of
 .IR name .
 .
-For example, the
-.B no-sort
+For example,
+the
+.B no\-sort
 command specifies that references should not be sorted.
 .
 The negative commands take no arguments.
@@ -855,12 +858,12 @@ and
 are used for a non-negative numbers;
 .I string
 is used for an arbitrary string;
-.I filename
+.I file
 is used for the name of a file.
 .
 .
 .TP
-.BI abbreviate\*n\  fields\ string1\ string2\ string3\ string4
+.BI abbreviate\*n\~ fields\~string1\~string2\~string3\~string4
 Abbreviate the first names of
 .IR fields .
 .
@@ -891,7 +894,7 @@ Names are abbreviated before sorting and before label construction.
 .
 .
 .TP
-.BI abbreviate-label-ranges\*n\  string
+.BI abbreviate\-label\-ranges\*n\~ string
 .
 Three or more adjacent labels that refer to consecutive references
 will be abbreviated to a label consisting of the first label,
@@ -904,7 +907,7 @@ This is mainly useful with numeric labels.
 If
 .I string
 is omitted it defaults to
-.BR \- .
+.RB \[lq] \- \[rq].
 .
 .
 .TP
@@ -916,25 +919,25 @@ Accumulated references will be written out whenever a reference
 of the form
 .
 .RS
+.RS
 .IP
+.EX
 .B .[
-.br
 .B $LIST$
-.br
 .B .]
+.EE
+.RE
 .
-.
-.LP
 is encountered,
 after all input files have been processed,
-and whenever
+and whenever a
 .B .R1
 line is recognized.
 .RE
 .
 .
 .TP
-.BI annotate\*n\  field\ string
+.BI annotate\*n\~ "field string"
 .I field
 is an annotation;
 print it at the end of the reference as a paragraph preceded by the line
@@ -959,9 +962,11 @@ Only one field can be an annotation.
 .
 .
 .TP
-.BI articles\  string \fR\|.\|.\|.
-.IR string \|.\|.\|.\&
-are definite or indefinite articles,
+.BI articles\~ string\~\c
+\&.\|.\|.
+Each
+.I string
+is a definite or indefinite article,
 and should be ignored at the beginning of
 .B T
 fields when sorting.
@@ -975,10 +980,11 @@ are recognized as articles.
 .
 .
 .TP
-.BI bibliography\  filename \fR\|.\|.\|.
+.BI bibliography\~ file\~\c
+\&.\|.\|.
 .
-Write out all the references contained in the bibliographic databases
-.IR filename \|.\|.\|.
+Write out all the references contained in each bibliographic database
+.IR file .
 .
 This command should come last in a
 .BR .R1 / .R2
@@ -986,9 +992,9 @@ block.
 .
 .
 .TP
-.BI bracket-label\  string1\ string2\ string3
-In the text, bracket each label
-with
+.BI bracket\-label\~ "string1 string2 string3"
+In the text,
+bracket each label with
 .I string1
 and
 .IR string2 .
@@ -1000,7 +1006,7 @@ immediately followed by
 will be turned into
 .IR string3 .
 .
-The default behaviour is
+The default behavior is as follows.
 .
 .RS
 .IP
@@ -1010,7 +1016,7 @@ bracket-label \e*([. \e*(.] ", "
 .
 .
 .TP
-.BI capitalize\  fields
+.BI capitalize\~ fields
 Convert
 .I fields
 to caps and small caps.
@@ -1026,28 +1032,30 @@ even when followed by a character other than space or newline.
 .
 .
 .TP
-.BI database\  filename \fR\|.\|.\|.
-Search the bibliographic databases
-.IR filename \|.\|.\|.
+.BI database\~ file\~\c
+\&.\|.\|.
+Search each bibliographic database
+.IR file .
 .
 For each
-.I filename
+.IR file ,
 if an index
-.IB filename @INDEX_SUFFIX@
+.IB file @INDEX_SUFFIX@
 created by
-.BR @g@indxbib (@MAN1EXT@)
-exists, then it will be searched instead;
+.IR @g@indxbib (@MAN1EXT@)
+exists,
+then it will be searched instead;
 each index can cover multiple databases.
 .
 .
 .TP
-.BI date-as-label\*n\  string
+.BI date\-as\-label\*n\~ string
 .I string
 is a label expression that specifies a string with which to replace the
 .B D
 field after constructing the label.
 .
-See subsection \(lqLabel expressions\(rq below for a description of
+See subsection \[lq]Label expressions\[rq] below for a description of
 label expressions.
 .
 This command is useful if you do not want explicit labels in the
@@ -1059,13 +1067,13 @@ The label used in the text would typically be some combination of the
 author and date.
 .
 In most cases you should also use the
-.B no-label-in-reference
+.B \%no\-label\-in\-reference
 command.
 For example,
 .
 .RS
 .IP
-.B "date-as-label D.+yD.y%a*D.-y"
+.B date\-as\-label D.+yD.y%a*D.\-y
 .
 .
 .LP
@@ -1076,24 +1084,24 @@ field in the reference.
 .
 .
 .TP
-.B default-database\*n
+.B default\-database\*n
 The default database should be searched.
 .
-This is the default behaviour,
+This is the default behavior,
 so the negative version of this command is more useful.
 .
-.B refer
+.I @g@refer
 determines whether the default database should be searched
 on the first occasion that it needs to do a search.
 .
 Thus a
-.B no-default-database
+.B no\-default\-database
 command must be given before then,
 in order to be effective.
 .
 .
 .TP
-.BI discard\*n\  fields
+.BI discard\*n\~ fields
 When the reference is read,
 .I fields
 should be discarded;
@@ -1108,15 +1116,15 @@ are
 .
 .
 .TP
-.BI et-al\*n\  string\ m\ n
+.BI et\-al\*n\~ "string m n"
 Control use of
-.B "et al"
+.B et al.\&
 in the evaluation of
 .B @
 expressions in label expressions.
 .
-If the number of authors needed to make the author sequence
-unambiguous is
+If the number of authors needed to make the author sequence unambiguous
+is
 .I u
 and the total number of authors is
 .I t
@@ -1133,27 +1141,43 @@ and
 is not less than
 .IR n .
 .
-The default behaviour is
+The default behavior is as follows.
 .
 .RS
 .IP
-.B
-et-al " et al" 2 3
+.EX
+.B et\-al \[dq] et al\[dq] 2 3
+.EE
 .RE
 .
 .
+.IP
+Note the absence of a dot from the end of the abbreviation,
+which is arguably not correct.
+.
+.RI ( "Et al" [.]
+is short for
+.IR "et alli" ,
+as
+.I etc.
+is short for
+.IR "et cetera".)
+.
+.
 .TP
-.BI include\  filename
+.BI include\~ file
 Include
-.I filename
+.I file
 and interpret the contents as commands.
 .
 .
 .TP
-.BI join-authors\  string1\ string2\ string3
-This says how authors should be joined together.
+.BI join\-authors\~ "string1 string2 string3"
+Join multiple authors together with
+.IR string s.
 .
-When there are exactly two authors, they will be joined with
+When there are exactly two authors,
+they will be joined with
 .IR string1 .
 .
 When there are more than two authors,
@@ -1175,50 +1199,50 @@ is also omitted it will also default to
 For example,
 .
 .RS
-.IP
-.B
-join-authors " and " ", " ", and "
+.RS
+.EX
+.B join\-authors \[dq] and \[dq] \[dq], \[dq] \[dq], and \[dq]
+.EE
+.RE
 .
-.
-.LP
 will restore the default method for joining authors.
 .RE
 .
 .
 .TP
-.B label-in-reference\*n
+.B label\-in\-reference\*n
 When outputting the reference,
 define the string
 .B [F
 to be the reference's label.
 .
-This is the default behaviour; so the negative version
-of this command is more useful.
+This is the default behavior,
+so the negative version of this command is more useful.
 .
 .
 .TP
-.B label-in-text\*n
+.B label\-in\-text\*n
 For each reference output a label in the text.
 .
 The label will be separated from the surrounding text as described in
 the
-.B bracket-label
+.B bracket\-label
 command.
 .
-This is the default behaviour; so the negative version
-of this command is more useful.
+This is the default behavior,
+so the negative version of this command is more useful.
 .
 .
 .TP
-.BI label\  string
+.BI label\~ string
 .I string
 is a label expression describing how to label each reference.
 .
 .
 .TP
-.BI separate-label-second-parts\  string
-When merging two-part labels, separate the second part of the second
-label from the first label with
+.BI separate\-label\-second\-parts\~ string
+When merging two-part labels,
+separate the second part of the second label from the first label with
 .IR string .
 .
 See the description of the
@@ -1227,7 +1251,7 @@ label expression.
 .
 .
 .TP
-.B move-punctuation\*n
+.B move\-punctuation\*n
 In the text,
 move any punctuation at the end of line past the label.
 .
@@ -1236,30 +1260,32 @@ superscripted numbers as labels.
 .
 .
 .TP
-.BI reverse\*n\  string
+.BI reverse\*n\~ string
 Reverse the fields whose names
 are in
 .IR string .
 .
-Each field name can be followed by a number which says
-how many such fields should be reversed.
+Each field name can be followed by a number which says how many such
+fields should be reversed.
 .
-If no number is given for a field, all such fields will be reversed.
+If no number is given for a field,
+all such fields will be reversed.
 .
 .
 .TP
-.BI search-ignore\*n\  fields
+.BI search\-ignore\*n\~ fields
 While searching for keys in databases for which no index exists,
 ignore the contents of
 .IR fields .
 .
-Initially, fields
+Initially,
+fields
 .B XYZ
 are ignored.
 .
 .
 .TP
-.BI search-truncate\*n\  n
+.BI search\-truncate\*n\~ n
 Only require the first
 .I n
 characters of keys to be given.
@@ -1269,35 +1295,37 @@ truncated to the maximum of
 .I n
 and the length of the key.
 .
-Initially
+Initially,
 .I n
-is\ 6.
+is\~6.
 .
 .
 .TP
-.BI short-label\*n\  string
+.BI short\-label\*n\~ string
 .I string
-is a label expression that specifies an alternative (usually shorter)
+is a label expression that specifies an alternative
+(usually shorter)
 style of label.
 .
 This is used when the
 .B #
 flag is given in the citation.
 .
-When using author-date style labels, the identity of the author
-or authors is sometimes clear from the context, and so it
-may be desirable to omit the author or authors from the label.
+When using author-date style labels,
+the identity of the author or authors is sometimes clear from the
+context,
+and so it may be desirable to omit the author or authors from the label.
 .
 The
-.B short-label
+.B short\-label
 command will typically be used to specify a label containing just
 a date and possibly a disambiguating letter.
 .
 .
 .TP
-.BI sort\*n\  string
+.BI sort\*n\~ string
 Sort references according to
-.BR string .
+.IR string .
 .
 References will automatically be accumulated.
 .
@@ -1306,7 +1334,7 @@ should be a list of field names,
 each followed by a number,
 indicating how many fields with the name should be used for sorting.
 .
-.B +
+.RB \[lq] + \[rq]
 can be used to indicate that all the fields with the name should be
 used.
 .
@@ -1315,17 +1343,17 @@ Also
 can be used to indicate the references should be sorted using the
 (tentative) label.
 .
-(Subsection \(lqLabel expressions\(rq below describes the concept of a
+(Subsection \[lq]Label expressions\[rq] below describes the concept of a
 tentative label.)
 .
 .
 .TP
-.B sort-adjacent-labels\*n
+.B sort\-adjacent\-labels\*n
 Sort labels that are adjacent in the text according to their position
 in the reference list.
 .
 This command should usually be given if the
-.B abbreviate-label-ranges
+.B abbreviate\-label\-ranges
 command has been given,
 or if the label expression contains a
 .B <>
@@ -1342,19 +1370,20 @@ Label expressions can be evaluated both normally and tentatively.
 .
 The result of normal evaluation is used for output.
 .
-The result of tentative evaluation, called the
+The result of tentative evaluation,
+called the
 .IR "tentative label" ,
 is used to gather the information that normal evaluation needs to
 disambiguate the label.
 .
 Label expressions specified by the
-.B date-as-label
+.B date\-as\-label
 and
-.B short-label
+.B short\-label
 commands are not evaluated tentatively.
 .
-Normal and tentative evaluation are the same for all types of
-expression other than
+Normal and tentative evaluation are the same for all types of expression
+other than
 .BR @ ,
 .BR * ,
 and
@@ -1368,7 +1397,7 @@ except where otherwise specified.
 .TP
 .I field
 .TQ
-.I field\ n
+.I field\~n
 The
 .IR n -th
 part of
@@ -1376,7 +1405,8 @@ part of
 .
 If
 .I n
-is omitted, it defaults to\ 1.
+is omitted,
+it defaults to\~1.
 .
 .
 .TP
@@ -1389,7 +1419,7 @@ literally.
 .TP
 .B @
 All the authors joined as specified by the
-.B join-authors
+.B join\-authors
 command.
 .
 The whole of each author's name will be used.
@@ -1425,9 +1455,9 @@ reference is considered to be ambiguous if there is a reference with
 some other sequence of authors which also has that subsequence as a
 proper initial subsequence.
 .
-When an initial subsequence of authors is used, the remaining authors
-are replaced by the string specified by the
-.B et-al
+When an initial subsequence of authors is used,
+the remaining authors are replaced by the string specified by the
+.B et\-al
 command;
 this command may also specify additional requirements that must be
 met before an initial subsequence can be used.
@@ -1451,7 +1481,7 @@ the same representation.
 The serial number of the reference formatted according to the
 character following the
 .BR % .
-The serial number of a reference is\ 1 plus the number of earlier
+The serial number of a reference is\~1 plus the number of earlier
 references with same tentative label as this reference.
 .
 These expressions tentatively evaluate to an empty string.
@@ -1560,7 +1590,7 @@ The last name part of
 .
 .
 .TP
-.IB expr1 \(ti expr2
+.IB expr1 \[ti] expr2
 .I expr1
 except that if the last character of
 .I expr1
@@ -1571,7 +1601,7 @@ then it will be replaced by
 .
 .
 .TP
-.I expr1\ expr2
+.I expr1 expr2
 The concatenation of
 .I expr1
 and
@@ -1611,22 +1641,24 @@ otherwise
 .
 .TP
 .BI < expr >
-The label is in two parts, which are separated by
+The label is in two parts,
+which are separated by
 .IR expr .
 .
 Two adjacent two-part labels which have the same first part will be
 merged by appending the second part of the second label onto the first
 label separated by the string specified in the
-.B separate-label-second-parts
-command (initially,
+.B separate\-label\-second\-parts
+command
+(initially,
 a comma followed by a space);
 the resulting label will also be a two-part label with the same first
 part as before merging,
 and so additional labels can be merged into it.
 .
 Note that it is permissible for the first part to be empty;
-this maybe desirable for expressions used in the
-.B short-label
+this may be desirable for expressions used in the
+.B short\-label
 command.
 .
 .
@@ -1652,13 +1684,13 @@ have the same precedence.
 .\" ====================================================================
 .
 Each reference starts with a call to the macro
-.BR ]- .
+.BR ]\- .
 .
 The string
 .B [F
 will be defined to be the label for this reference,
 unless the
-.B no-label-in-reference
+.B \%no\-label\-in\-reference
 command has been given.
 .
 There then follows a series of string definitions,
@@ -1670,7 +1702,7 @@ corresponds to field
 .
 The number register
 .B [P
-is set to\ 1 if the
+is set to\~1 if the
 .B P
 field contains a range of pages.
 .
@@ -1679,7 +1711,7 @@ The
 .B [A
 and
 .B [O
-number registers are set to\ 1 according as the
+number registers are set to\~1 according as the
 .BR T ,
 .B A
 and
@@ -1689,7 +1721,7 @@ fields end with one of the characters
 .
 The
 .B [E
-number register will be set to\ 1 if the
+number register will be set to\~1 if the
 .B [E
 string contains more than one name.
 .
@@ -1702,27 +1734,29 @@ the type of the reference.
 .
 If a reference contains a
 .B J
-field, it will be classified as type\ 1,
+field,
+it will be classified as type\~1,
 otherwise if it contains a
 .B B
-field, it will type\ 3,
+field,
+it will be type\~3,
 otherwise if it contains a
 .B G
 or
 .B R
-field it will be type\ 4,
+field it will be type\~4,
 otherwise if it contains an
 .B I
-field it will be type\ 2,
-otherwise it will be type\ 0.
+field it will be type\~2,
+otherwise it will be type\~0.
 .
 The second argument is a symbolic name for the type:
 .BR other ,
-.BR journal-article ,
+.BR \%journal\-article ,
 .BR book ,
-.B article-in-book
+.BR \%article\-in\-book ,
 or
-.BR tech-report .
+.BR \%tech\-report .
 .
 Groups of references that have been accumulated or are produced by the
 .B bibliography
@@ -1739,7 +1773,8 @@ macro.
 .
 .TP
 .I REFER
-If set, overrides the default database.
+If set,
+overrides the default database.
 .
 .
 .\" ====================================================================
@@ -1757,12 +1792,12 @@ Index files.
 .
 .
 .LP
-.B refer
+.I @g@refer
 uses temporary files.
 .
 See the
-.BR groff (@MAN1EXT@)
-man page for details where such files are created.
+.IR groff (@MAN1EXT@)
+man page for details of where such files are created.
 .
 .
 .\" ====================================================================
