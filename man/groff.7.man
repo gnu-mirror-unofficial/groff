@@ -1179,8 +1179,26 @@ Start line adjustment in mode
 Assign format
 .I c
 to
-.I register
-(\f[CI]c\/\f[]\f[CR]\|\^\[eq]\|l,i,I,a,A\f[]).
+.IR register ,
+where
+.I c
+is
+.RB \[lq] i \[rq],
+.RB \[lq] I \[rq],
+.RB \[lq] a \[rq],
+.RB \[lq] A \[rq],
+or a sequence of decimal digits whose quantity denotes the width in
+digits to be used when the register is interpolated.
+.
+.RB \[lq] i \[rq]
+and
+.RB \[lq] a \[rq]
+indicate Roman numerals and base-26 Latin alphabetics,
+respectively,
+in the lettercase specified.
+.
+The default is \[lq]0\[rq].
+.
 .
 .TPx
 .REQ .aln "new old"
