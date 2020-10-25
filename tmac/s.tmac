@@ -85,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .\" indexing
 .de IX
-.tm \\$1\t\\$2\t\\$3\t\\$4 ... \\n[PN]
+.tm \\$1\t\\$2\t\\$3\t\\$4 ... \\n[%]
 ..
 .\" print an error message and then try to recover
 .de @error-recover
@@ -454,7 +454,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ds CF
 .ds RF
 .ds LH
-.ds CH -\En[PN]-
+.ds CH -\En[%]-\"
 .ds RH
 .ds pg*OH '\E*[LH]'\E*[CH]'\E*[RH]'
 .ds pg*EH '\E*[LH]'\E*[CH]'\E*[RH]'
@@ -467,7 +467,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .als OF OH
 .als EF OH
 .de PT
-.ie \\n%=1 .if \\n[pg*P1] .tl \\*[pg*OH]
+.\" To compare the page number to 1, we need it in decimal.
+.ds pg*saved-page-number-format \\g%\"
+.af % 0
+.nr pg*page-number-in-decimal \\n%
+.af % \\*[pg*saved-page-number-format]
+.ie \\n[pg*page-number-in-decimal]=1 .if \\n[pg*P1] .tl \\*[pg*OH]
 .el \{\
 .	ie o .tl \\*[pg*OH]
 .	el .tl \\*[pg*EH]
@@ -530,7 +535,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" top of page macro
 .de pg@top
 .ch pg*footer -\\n[FM]u/2u
-.nr PN \\n%
 .nr pg*col-num 0
 .nr pg@fn-bottom-margin 0
 .po \\n[PO]u
@@ -592,7 +596,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .		pn \\n[pg*next-number]
 .		rr pg*next-number
 .		if d pg*next-format \{\
-.			af PN \\*[pg*next-format]
+.			af % \\*[pg*next-format]
 .			rm pg*next-format
 .		\}
 .	\}
@@ -1629,7 +1633,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .		ie '\\$1'no' .ds toc*num
 .		el .ds toc*num "\\$1
 .	\}
-.	el .ds toc*num \\n[PN]
+.	el .ds toc*num \\n[%]\"
 .	br
 .	par@reset
 .	na

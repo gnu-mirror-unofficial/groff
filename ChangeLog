@@ -1,5 +1,36 @@
 2020-10-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Fix ms .TC macro by allowing it to actually use lowercase Roman
+	numerals for the page(s) of the table of contents when a custom
+	title (header or footer) is defined containing '%'.
+
+	As a side effect, eliminate the PN register, which was
+	apparently misused because it was undocumented and had a name
+	just long enough to be both suggestive and ambiguous.  Another
+	pin goes into my Ken Thompson voodoo doll.
+
+	* tmac/s.tmac (IX): Write out page number of index term(s) in
+	using the % register (instead of PN), obtaining whatever format
+	is assigned to the register at that time.
+	(CH): Similarly, output %, not PN, in the center of the default
+	heading.
+	(PT): Save the format of %, set it to decimal, copy its value to
+	a new register, pg*page-number-in-decimal, then restore %'s
+	previous format.  Compare the new register, not %, to 1 to
+	determine whether special page one behavior should be used.
+	(pg*end-page): Assign pg*next-format to %, not PN.
+	(XA): Define toc*num with the interpolation of %, not PN.
+
+	* tmac/tests/s-TC-works-with-percent-in-custom-titles.sh: Test.
+	* tmac/tmac.an (tmac_TEST): Run test.
+
+	Problem appears to be very old; as I read it, Larry Kollar was
+	complaining of it in his ms.ms document over 20 years ago.
+
+	Fixes <https://savannah.gnu.org/bugs/?59345>.
+
+2020-10-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* man/groff.7 (Requests/Request short reference) <.af>: Fix
 	error; "l" is not a valid register format.  Explain what the
 	request does, and the default format, as tersely as possible.
