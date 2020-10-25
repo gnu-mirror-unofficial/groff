@@ -3,7 +3,7 @@ pdfmark.ms
 
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2020 Free Software Foundation, Inc.
+Copyright (C) 2004-2018 Free Software Foundation, Inc.
 written by Keith Marshall <keith.d.marshall@ntlworld.com>
 
 Permission is granted to copy, distribute and/or modify this document

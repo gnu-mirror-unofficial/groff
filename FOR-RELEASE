@@ -1,4 +1,4 @@
-    Copyright 2013-2020 Free Software Foundation, Inc.
+    Copyright 2013-2018 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -24,19 +24,6 @@ generic file provided from GNU (normally called `INSTALL').
       glyphlist.txt>
 
 * Update the 'gnulib' sub-module to the latest version.
-
-* Update the copyright:
-
-  Use ./gnulib/build-aux/update-copyright:
-
-     export UPDATE_COPYRIGHT_USE_INTERVALS=2
-     find . \
-        -path ./.git -prune -o \
-        -path ./gnulib -prune -o \
-        ! -name "ChangeLog.*" -type f |  xargs ./gnulib/build-aux/update-copyright -
-
-  Modify in 'src/roff/groff/groff.cpp' the 'printf' that displays the
-  copyright.
 
 * Update the release version number where it is hard-coded.
   + NEWS

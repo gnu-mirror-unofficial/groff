@@ -3,7 +3,7 @@
 #   BuildFoundries   : Given a Foundry file generate groff and download files
 #   Deri James       : Monday 07 Feb 2011
 
-# Copyright (C) 2011-2020 Free Software Foundation, Inc.
+# Copyright (C) 2011-2018 Free Software Foundation, Inc.
 #      Written by Deri James <deri@chuzzlewit.demon.co.uk>
 #
 # This file is part of groff.

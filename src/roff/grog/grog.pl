@@ -3,7 +3,7 @@
 # Inspired by doctype script in Kernighan & Pike, Unix Programming
 # Environment, pp 306-8.
 
-# Copyright (C) 1993-2020 Free Software Foundation, Inc.
+# Copyright (C) 1993-2018 Free Software Foundation, Inc.
 # Written by James Clark.
 # Rewritten with Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph
