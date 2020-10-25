@@ -22,7 +22,7 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # Regression-test Savannah #42978.
 #
-# When tbl changes the tabs stops, it needs to restore them.
+# When tbl changes the tab stops, it needs to restore them.
 #
 # Based on an example by Bjarni Igni Gislason.
 
