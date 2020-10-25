@@ -26,9 +26,9 @@ groff="${abs_top_builddir:-.}/test-groff"
 #
 # Based on an example by Bjarni Igni Gislason.
 
-EXAMPLE='.TH tbl-tabs-test 1 2020-10-20 "groff test suite"
+EXAMPLE='.TH tbl\-tabs\-test 1 2020-10-20 "groff test suite"
 .SH Name
-tbl-tabs-test \- see if tbl messes up the tab stops
+tbl\-tabs\-test \- see if tbl messes up the tab stops
 .SH Description
 Do not use tabs in man pages outside of
 .BR .TS / .TE

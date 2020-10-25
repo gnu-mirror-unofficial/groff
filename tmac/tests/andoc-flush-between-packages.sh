@@ -27,7 +27,7 @@ groff="${abs_top_builddir:-.}/test-groff"
 # document.  Check going from man(7) to mdoc(7) documents and back.
 
 EXAMPLE=\
-'.TH man-flush-test 7 2020-10-11 "groff test page 1"
+'.TH man\-flush\-test 7 2020-10-11 "groff test page 1"
 .SH Name
 man\-flush-test \- a sanity test for groff_man(7)
 .SH Description
@@ -42,7 +42,7 @@ partially-collected output line.
 .Sh Description
 This additional gratuitously loquacious sentence should end up with a
 partially-collected output line.
-.TH man-flush-test2 7 2020-10-11 "groff test page 3"
+.TH man\-flush\-test2 7 2020-10-11 "groff test page 3"
 .SH Name
 man\-flush-test2 \- a second sanity test for groff_man(7)
 .SH Description

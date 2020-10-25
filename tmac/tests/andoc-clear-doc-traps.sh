@@ -34,11 +34,11 @@ EXAMPLE=\
 .Nd lay mine
 .Sh Description
 Just testing.
-.TH man-test 7 2020-10-11
+.TH man\-test 7 2020-10-11
 .SH Name
 man-test \- drive sheep across minefield
 .SH Description
-\[lq]doc-footer\[rq] should definitely not be sprung by this document.'
+\[lq]doc\-footer\[rq] should definitely not be sprung by this document.'
 
 ! printf "%s\n" "$EXAMPLE" \
     | "$groff" -Tascii -P-cbou -mandoc -rcR=0 \
