@@ -82,7 +82,7 @@ and its mirrors;
 the current development version is available from a
 .URL "https://\:savannah.gnu.org/\:git/\:?group=groff" "git repository" .
 .
-The current version is 1.22.4 (Spring 2018).
+The current version is 1.23.0 (Autumn 2020).
 
 To view the git repository in your browser, use
 .URL "http://\:git.savannah.gnu.org/\:cgit/\:groff.git" \
