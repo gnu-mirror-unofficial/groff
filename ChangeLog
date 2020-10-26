@@ -1,3 +1,18 @@
+2020-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Fix ms .R macro to work as documented, by handling its arguments
+	instead of ignoring them.
+
+	* tmac/s.tmac (R): Delete.  During set up, call
+	par*define-font-macro for R font just as we do for B, I, and BI.
+
+	Problem dates back at least to groff 1.02, June 1991.
+
+	* tmac/tests/s_R-handles-its-arguments.sh: Test it.
+	* tmac/tmac.am (tmac_TEST): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?59348>.
+
 2020-10-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Fix ms .TC macro by allowing it to actually use lowercase Roman
@@ -21,8 +36,8 @@
 	(pg*end-page): Assign pg*next-format to %, not PN.
 	(XA): Define toc*num with the interpolation of %, not PN.
 
-	* tmac/tests/s-TC-works-with-percent-in-custom-titles.sh: Test.
-	* tmac/tmac.an (tmac_TEST): Run test.
+	* tmac/tests/s_TC-works-with-percent-in-custom-titles.sh: Test.
+	* tmac/tmac.am (tmac_TEST): Run test.
 
 	Problem appears to be very old; as I read it, Larry Kollar was
 	complaining of it in his ms.ms document over 20 years ago.
