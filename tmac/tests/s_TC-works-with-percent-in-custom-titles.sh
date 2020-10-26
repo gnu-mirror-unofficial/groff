@@ -46,7 +46,7 @@ FAIL=
 
 if [ -z "$(echo "$OUTPUT" \
     | sed '/^$/d' \
-    | sed -n '/i/{N;/Table of Contents/{N;/Foo[. ]\+/p}}')" ]
+    | sed -n '/i/{N;/Table of Contents/{N;/Foo[. ]\+1/p}}')" ]
 then
     FAIL=yes
 fi
