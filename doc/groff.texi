@@ -2612,8 +2612,7 @@ Default: 10@dmn{p}.
 @Defmpreg {VS, ms}
 Defines the space between lines (line height plus leading).  If the
 value is larger than or equal to 1000, divide it by 1000 to get a
-fractional point size.  Due to backwards compatibility, @code{VS} must
-be smaller than 40000 (this is 40.0@dmn{p}).
+fractional point size.
 
 Effective: next paragraph.
 
@@ -3463,17 +3462,6 @@ Right-justifies each line in the display.  The @samp{.DS R} call
 generates a page break, if necessary, to keep the entire display on one
 page.  The @code{RD} macro allows the display to break across pages.
 The @code{DE} macro ends the display.
-@endDefmac
-
-@DefmacList {Ds, , ms}
-@DefmacListEndx {De, , ms}
-These two macros were formerly provided as aliases for @code{DS} and
-@code{DE}, respectively.  They have been removed, and should no longer
-be used.  The original implementations of @code{DS} and @code{DE} are
-retained, and should be used instead.  X11 documents that actually use
-@code{Ds} and @code{De} always load a specific macro file from the X11
-distribution (@file{macros.t}) that provides proper definitions for the
-two macros.
 @endDefmac
 
 On occasion, you may want to @dfn{keep} other text together on a page.
