@@ -249,7 +249,6 @@ to turn on fill mode got the name it retains to this day.
 .SS "Unix and roff"
 .\" ====================================================================
 .
-.P
 By 1971,
 McIlroy's
 .I runoff
@@ -400,6 +399,26 @@ and programmable abort
 .
 .
 .P
+A small and simple set of macros was first used for the manual pages of
+Version 4 Unix (November 1973) and remained in use until Version 6, but
+the first macro package to be formally installed as a library were the
+.I ms
+macros by Michael Lesk (/usr/lib/tmac.s) in Version 6 Unix (May 1975).
+For Version 7 Unix (January 1979), Douglas McIlroy designed,
+implemented, and documented the
+.I man
+macro package, introducing most of the macros still present in
+.IR groff_man (7)
+today, and edited volume 1 of the Version 7 manual using these
+macros.
+While the earlier manual page macros used for Version 4 to 6
+were abandoned, the
+.I ms
+macros remained in use for most of Volume 2 of the manual,
+which contained a wealth of supplementary documents.
+.
+.
+.P
 Third Edition Unix had also brought the
 .IR pipe (2)
 system call,
@@ -491,19 +510,6 @@ and all subsequent implementors of
 systems have done so in its shadow.
 .
 .
-.P
-In 1979,
-Seventh Edition Unix added the
-.I man
-macro package to the existing
-.I ms
-macros,
-the former by Lesk and the latter (possibly) by McIlroy.
-.
-Between them the system was comprehensively documented,
-with the man pages on-line and in Volume 1 and a wealth of supplementary
-documents in Volume 2.
-.
 .\" XXX GBR leaves off here
 .P
 After Ossanna's death in 1977,
@@ -576,6 +582,10 @@ It was called
 See
 .BR groff (@MAN1EXT@)
 for an overview.
+.
+From its outset and for at least the following three decades,
+it has been used by practically all GNU/Linux and BSD
+operating systems.
 .
 .
 .P
