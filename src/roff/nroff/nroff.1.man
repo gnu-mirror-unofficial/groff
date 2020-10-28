@@ -98,7 +98,7 @@ language for typewriter-like devices such as terminal emulators.
 GNU
 .I nroff \" GNU
 emulates the AT&T
-.I nroff
+.I nroff \" AT&T
 command using
 .IR groff (@MAN1EXT@).
 .
@@ -124,7 +124,8 @@ If neither the
 .I \%GROFF_TYPESETTER
 environment variable nor the
 .B \-T
-command-line option (which overrides the environment variable)
+command-line option
+(which overrides the environment variable)
 specifies a (valid) device,
 .I @g@nroff
 consults the locale to select an appropriate output device.
@@ -172,8 +173,8 @@ and
 respectively.
 .
 In addition,
-this implementation ignores the traditional Unix
-.I nroff
+this implementation ignores the AT&T
+.I nroff \" AT&T
 options
 .BR \-e ,
 .BR \-q ,
@@ -195,7 +196,7 @@ The options
 .
 .B \-V
 causes
-.I nroff
+.I @g@nroff
 to display the constructed
 .I groff
 command on the standard output,
@@ -241,13 +242,13 @@ specifies the default output device for
 .I LANG
 .TQ
 .I LESSCHARSET
-are pattern-matched in this order for standard character encodings
-supported by
+are pattern-matched in this order for contents matching standard
+character encodings supported by
 .I groff
 in the event no
 .B \-T
 option is given and
-.I GROFF_TYPESETTER
+.I \%GROFF_TYPESETTER
 is unset.
 .
 .
@@ -268,7 +269,7 @@ see
 .
 .P
 Character definitions in the file
-.I \%@MACRODIR@/\:tty\-char.tmac
+.I \%@MACRODIR@/\:tty\-char\:.tmac
 are loaded to replace unrepresentable glyphs.
 .
 .
