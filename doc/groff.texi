@@ -2450,106 +2450,156 @@ usage is best understood by consulting the @acronym{HTML} documentation.
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node ms,  , mom, Macro Packages
 @section @file{ms}
 @cindex @code{ms} macros
 
-The @file{-ms} (``manuscript'') macros are suitable for reports,
-letters, books, user manuals, and so forth.  The package provides macros
-for cover pages, section headings, paragraphs, lists, footnotes,
-pagination, and a table of contents.
+The @code{ms} (``manuscript'') macros are suitable for reports, letters,
+memoranda, books, user manuals, and so forth.  The package provides
+macros for cover page and table of contents generation, section
+headings, multiple paragraph styles, text styling (including font
+changes), lists, footnotes, pagination, and indexing.
+
+@code{ms} supports the @command{tbl}, @command{eqn}, @command{pic}, and
+@command{refer} preprocessors for inclusion of tables, mathematical
+equations, diagrams, and standardized bibliographic citations.
 
 @menu
-* ms Intro::
-* General ms Structure::
-* ms Document Control Registers::
+* ms Introduction::
+* ms Document Structure::
+* ms Document Control Settings::
 * ms Cover Page Macros::
 * ms Body Text::
 * ms Page Layout::
 * Differences from AT&T ms::
-* Naming Conventions::
+* ms Naming Conventions::
 @end menu
 
 @c ---------------------------------------------------------------------
 
-@node ms Intro, General ms Structure, ms, ms
+@node ms Introduction, ms Document Structure, ms, ms
 @subsection Introduction to @file{ms}
 
-The original @file{-ms} macros were included with @acronym{AT&T}
-@code{troff} as well as the @file{man} macros.  While the @file{man}
-package is intended for brief documents that can be read on-line as well
-as printed, the @file{ms} macros are suitable for longer documents that
-are meant to be printed rather than read on-line.
+The @file{ms} macros are the oldest surviving macro package for
+@code{roff} systems.@footnote{Although man @emph{pages} are even older,
+the @file{man} macro language dates back only to Seventh Edition Unix
+(1979).  @file{ms} was documented by Mike Lesk in an article for the
+@slanted{Communications of the ACM} in 1974.}  While the @file{man}
+package was intended for brief documents to be perused at a terminal,
+the @file{ms} macros are suitable for longer documents intended for
+printing and possible publication.
 
-The @file{ms} macro package included with @code{groff} is a complete,
-bottom-up re-implementation.  Several macros (specific to @acronym{AT&T}
-or Berkeley) are not included, while several new commands are.
-@xref{Differences from AT&T ms}, for more information.
+The @file{ms} macro package included with @code{groff} is a complete
+re-implementation.  Some macros specific to @acronym{AT&T} or Berkeley
+are not included, while several new commands been introduced.
+@xref{Differences from AT&T ms}.
+
+If you're in a hurry to get started, you need only know that @code{ms}
+needs one of its macros called at the beginning of a document so that it
+can initialize.  A paragraph macro like @code{PP} (if you want your
+paragraph to have a first-line indent) or @code{LP} (if you don't)
+suffices.
+
+After that, start typing normally.  You can separate paragraphs with
+further paragraph macros, or with blank lines, and you can indent with
+tabs.  When you need one of the features mentioned earlier (@pxref{ms}),
+return to this manual.
+
+@CartoucheExample
+.LP
+Radical novelties are so disturbing that they tend to be
+suppressed or ignored, to the extent that even the
+possibility of their existence in general is more often
+denied than admitted.
+
+@arrow{}That's what Dijkstra said, anyway.
+@endCartoucheExample
+
+We have used an arrow @arrow{} in the above to indicate a tab character.
 
 @c ---------------------------------------------------------------------
 
-@node General ms Structure, ms Document Control Registers, ms Intro, ms
+@node ms Document Structure, ms Document Control Settings, ms Introduction, ms
 @subsection General structure of an @file{ms} document
 @cindex @code{ms} macros, general structure
 
 The @file{ms} macro package expects a certain amount of structure, but
-not as much as packages such as @file{man} or @file{mdoc}.
-
-The simplest documents can begin with a paragraph macro (such as
-@code{LP} or @code{PP}), and consist of text separated by paragraph
-macros or even blank lines.  Longer documents have a structure as
-follows:
+not as much as packages such as @file{man} or @file{mdoc}.  The simplest
+documents can begin with a paragraph macro (such as @code{LP} or
+@code{PP}), and consist of text separated by paragraph macros or even
+blank lines.  Longer documents have a structure as follows.
 
 @table @strong
 @item Document type
 If you invoke the @code{RP} (report) macro on the first line of the
-document, @code{groff} prints the cover page information on its own
-page; otherwise it prints the information on the first page with your
-document text immediately following.  Other document formats found in
-@acronym{AT&T} @code{troff} are specific to @acronym{AT&T} or Berkeley,
-and are not supported in @code{groff}.
+document, @file{ms} prints the cover page information on its own
+page; otherwise it prints the information (if any) on the first page
+with your document text immediately following.  Some document types
+found in @acronym{AT&T} @code{troff} are specific to @acronym{AT&T} or
+Berkeley, and are not supported in @code{groff}.
 
 @item Format and layout
-By setting number registers, you can change your document's type (font
-and size), margins, spacing, headers and footers, and footnotes.
-@xref{ms Document Control Registers}, for more details.
+By setting registers (and one string), you can change your document's
+type (font and point size), margins, spacing, headers and footers, and
+footnotes.  @xref{ms Document Control Settings}.
 
 @item Cover page
 A cover page consists of a title, the author's name and institution, an
 abstract, and the date.@footnote{Actually, only the title is required.}
-@xref{ms Cover Page Macros}, for more details.
+@xref{ms Cover Page Macros}.
 
 @item Body
-Following the cover page is your document.  You can use the @file{ms}
-macros to write reports, letters, books, and so forth.  The package is
-designed for structured documents, consisting of paragraphs interspersed
-with headings and augmented by lists, footnotes, tables, and other
-common constructs.  @xref{ms Body Text}, for more details.
+Following the cover page is your document.  @file{ms} supports highly
+structured documents consisting of paragraphs interspersed with
+multi-level headings (chapters, sections, subsections, and so forth) and
+augmented by lists, footnotes, tables, diagrams, and similar.  @xref{ms
+Body Text}.
 
 @item Table of contents
 Longer documents usually include a table of contents, which you can
-invoke by placing the @code{TC} macro at the end of your document.  The
-@file{ms} macros have minimal indexing facilities, consisting of the
-@code{IX} macro, which prints an entry on standard error.  Printing the
-table of contents at the end is necessary since @code{groff} is a
-single-pass text formatter, thus it cannot determine the page number of
-each section until that section has been set and printed.  Since
-@file{ms} output is intended for hard copy, you can manually relocate
-the pages containing the table of contents between the cover page and
-the body text after printing.
+produce by placing the @code{TC} macro at the end of your document.
+Printing the table of contents at the end is necessary since
+GNU @code{troff}, like its @acronym{AT&T} ancestor, is a single-pass
+text formatter; it thus cannot determine the page number of each section
+until that section has been set and output.  Since @file{ms} output is
+designed for hard copy, you can manually relocate the pages containing
+the table of contents between the cover page and the body text after
+printing.@footnote{This limitation could also be overcome by using
+PostScript or PDF file manipulation utilities to resequence pages in the
+document, facilitated by specially-formatted comments (``device tags'')
+placed in the output by by @file{ms}.}
 @end table
 
 @c ---------------------------------------------------------------------
 
-@node ms Document Control Registers, ms Cover Page Macros, General ms Structure, ms
-@subsection Document control registers
-@cindex @code{ms} macros, document control registers
+@node ms Document Control Settings, ms Cover Page Macros, ms Document Structure, ms
+@subsection Document control settings
+@cindex @code{ms} macros, document control settings
 
-The following is a list of document control number registers.  For the
-sake of consistency, set registers related to margins at the beginning
-of your document, or just after the @code{RP} macro.  You can set other
+@file{ms} exposes many aspects of document layout to user control via
+@code{groff} requests.  To use them, you must understand how to define
+registers and strings.
+
+@Defreq {nr, reg value}
+Set register @var{reg} to @var{value}.  If @var{reg} doesn't exist, GNU
+@code{troff} creates it.
+@endDefreq
+
+@Defreq {ds, name contents}
+Set string @var{name} to @var{contents}.  If @var{name} exists, it is
+removed first.
+@endDefreq
+
+For consistency, set registers related to margins at the beginning of
+your document, or just after the @code{RP} macro.  You can set other
 registers later in your document, but you should keep them together at
 the beginning to make them easy to find and edit as necessary.
+
+A list of document control registers (and one string) follows.  They are
+presented in the syntax used to interpolate them.
 
 @unnumberedsubsubsec Margin Settings
 
@@ -2646,22 +2696,26 @@ Default: 0.
 @endDefmpreg
 
 @Defmpreg {HY, ms}
-Defines the hyphenation level.  @code{HY} sets safely the value of the
-low-level @code{hy} register.  Setting the value of @code{HY} to@tie{}0
-is equivalent to using the @code{nh} request.
+Defines the hyphenation mode.  @code{HY} safely sets the value of the
+low-level @code{hy} register.  Setting @code{HY} to@tie{}0 is equivalent
+to using the @code{nh} request.
 
 Effective: next paragraph.
 
 Default: 6.
 @endDefmpreg
 
-@Defmpreg {FAM, ms}
+@Defstr {FAM, ms}
 Defines the font family used to typeset the document.
+
+Unlike the other document control settings, @code{FAM} is a string, not
+a register.  You must therefore set it with the @code{ds} request
+instead of @code{nr}.
 
 Effective: next paragraph.
 
 Default: as defined in the output device.
-@endDefmpreg
+@endDefstr
 
 @unnumberedsubsubsec Paragraph Settings
 
@@ -2785,7 +2839,7 @@ Effective: next footnote.
 Default: @math{@code{@\n[PD]} / 2}.
 @endDefmpreg
 
-@unnumberedsubsubsec Miscellaneous Number Registers
+@unnumberedsubsubsec Miscellaneous Registers
 
 @Defmpreg {MINGW, ms}
 Defines the minimum width between columns in a multi-column document.
@@ -2806,7 +2860,7 @@ Default: 0.5@dmn{v}.
 
 @c ---------------------------------------------------------------------
 
-@node ms Cover Page Macros, ms Body Text, ms Document Control Registers, ms
+@node ms Cover Page Macros, ms Body Text, ms Document Control Settings, ms
 @subsection Cover page macros
 @cindex @code{ms} macros, cover page
 @cindex cover page macros, [@code{ms}]
@@ -2955,23 +3009,19 @@ Sets a paragraph without an initial indentation.
 @endDefmac
 
 @Defmac {QP, , ms}
-Sets a paragraph that is indented at both left and right margins
-by the amount of the register @code{QI}.
-The effect is identical to the @acronym{HTML} @code{<BLOCKQUOTE>} element.
-The next paragraph or heading returns margins to normal.
-@code{QP} inserts vertical space of amount set by register @code{PD}
-before the paragraph.
+Sets a paragraph that is indented at both left and right margins by the
+amount of the register @code{QI}.  The next paragraph or heading returns
+margins to normal.  @code{QP} inserts vertical space of amount set by
+register @code{PD} before the paragraph.
 @endDefmac
 
 @DefmacList {QS, , ms}
 @DefmacListEndx {QE, , ms}
-These macros begin and end a quoted section.
-The @code{QI} register
-controls the amount of indentation.
-Both @code{QS} and @code{QE} insert inter-paragraph vertical space
-set by register @code{PD}.
-The text between @code{QS} and @code{QE} can be structured further
-by use of the macros @code{LP} or @code{PP}.
+These macros begin and end a quoted section.  The @code{QI} register
+controls the amount of indentation.  Both @code{QS} and @code{QE} insert
+inter-paragraph vertical space set by register @code{PD}.  The text
+between @code{QS} and @code{QE} can be structured further by use of the
+macros @code{LP} or @code{PP}.
 @endDefmac
 
 @Defmac {XP, , ms}
@@ -3013,7 +3063,7 @@ and criticisms about the quality and usability of
 free software.
 @endCartoucheExample
 
-The @code{PORPHANS} register (@pxref{ms Document Control Registers})
+The @code{PORPHANS} register (@pxref{ms Document Control Settings})
 operates in conjunction with each of these macros, to inhibit the
 printing of orphan lines at the bottom of any page.
 
@@ -3036,8 +3086,8 @@ the level of the heading, or the letter@tie{}@code{S} followed by
 numeric arguments to set the heading level explicitly.
 
 If you specify heading levels out of sequence, such as invoking
-@samp{.NH 3} after @samp{.NH 1}, @code{groff} prints a warning on
-standard error.
+@samp{.NH 3} after @samp{.NH 1}, @code{groff} @file{ms} prints a warning
+on the standard error stream.
 @endDefmac
 
 @DefstrList {SN, ms}
@@ -3091,10 +3141,10 @@ number indicating the level of the heading, in a manner analogous to the
 point size, at which the heading is printed, to the size of a numbered
 heading at the same level, when the @code{GROWPS} and @code{PSINCR}
 heading size adjustment mechanism is in effect.  @xref{ms Document
-Control Registers}.
+Control Settings}.
 @endDefmac
 
-The @code{HORPHANS} register (@pxref{ms Document Control Registers})
+The @code{HORPHANS} register (@pxref{ms Document Control Settings})
 operates in conjunction with the @code{NH} and @code{SH} macros, to
 inhibit the printing of orphaned section headings at the bottom of any
 page.
@@ -3106,25 +3156,25 @@ page.
 @cindex @code{ms} macros, highlighting
 
 The @file{ms} macros provide a variety of methods to highlight or
-emphasize text:
+emphasize text.
 
 @Defmac {B, [@Var{txt} [@Var{post} [@Var{pre}]]], ms}
 Sets its first argument in @strong{bold type}.  If you specify a second
-argument, @code{groff} prints it in the previous font after the bold
-text, with no intervening space (this allows you to set punctuation
-after the highlighted text without highlighting the punctuation).
-Similarly, it prints the third argument (if any) in the previous font
-@emph{before} the first argument.  For example,
+argument, @code{groff} @file{ms} prints it in the previous font after
+the bold text, with no intervening space (this allows you to set
+punctuation after the highlighted text without highlighting the
+punctuation).  Similarly, it prints the third argument (if any) in the
+previous font @emph{before} the first argument.  For example,
 
 @Example
 .B foo ) (
 @endExample
 
-prints (@strong{foo}).
+prints @samp{(@strong{foo})}.
 
-If you give this macro no arguments, @code{groff} prints all text
-following in bold until the next highlighting, paragraph, or heading
-macro.
+If you give this macro no arguments, @code{groff} @file{ms} prints all
+text following in bold until the next highlighting, paragraph, or
+heading macro.
 @endDefmac
 
 @Defmac {R, [@Var{txt} [@Var{post} [@Var{pre}]]], ms}
@@ -3148,9 +3198,9 @@ operates similarly to the @code{B}@tie{}macro otherwise.  This is a
 Berkeley extension.
 
 In @code{groff} @file{ms} you might prefer to change the font family to
-Courier---a constant-width typeface---with the @samp{.fam C} request;
-you can then use all four style macros above, returning to the default
-family (Times) with @samp{.fam T}.
+Courier---a constant-width typeface---by setting the @code{FAM} string
+to @samp{C}.  You can then use all four style macros above, returning to
+the default family (Times) with @samp{.ds FAM T}.
 @endDefmac
 
 @Defmac {BX, [@Var{txt}], ms}
@@ -3199,15 +3249,15 @@ The @code{IP} macro handles duties for all lists.
 
 @Defmac {IP, [@Var{marker} [@Var{width}]], ms}
 The @var{marker} is usually a bullet glyph (@code{\[bu]}) for unordered
-lists, a number (or auto-incrementing number register) for numbered
-lists, or a word or phrase for indented (glossary-style) lists.
+lists, a number (or auto-incrementing register) for numbered lists, or a
+word or phrase for indented (glossary-style) lists.
 
 The @var{width} specifies the indentation for the body of each list
 item; its default unit is @samp{n}.  Once specified, the indentation
 remains the same for all list items in the document until specified
 again.
 
-The @code{PORPHANS} register (@pxref{ms Document Control Registers})
+The @code{PORPHANS} register (@pxref{ms Document Control Settings})
 operates in conjunction with the @code{IP} macro, to inhibit the
 printing of orphaned list markers at the bottom of any page.
 @endDefmac
@@ -3265,7 +3315,7 @@ A numbered list:
 3. money
 @endExample
 
-Note the use of the auto-incrementing number register in this example.
+Note the use of the auto-incrementing register in this example.
 
 The following is an example of a glossary-style list.
 @cindex example markup, glossary-style list [@code{ms}]
@@ -3609,7 +3659,7 @@ the footnote and the @code{FE} macro.
 @endDefmac
 
 You can control how @code{groff} prints footnote numbers by changing the
-value of the @code{FF} register.  @xref{ms Document Control Registers}.
+value of the @code{FF} register.  @xref{ms Document Control Settings}.
 
 @cindex footnotes, and keeps [@code{ms}]
 @cindex keeps, and footnotes [@code{ms}]
@@ -3633,8 +3683,7 @@ The default output from the @file{ms} macros provides a minimalist page
 layout: it prints a single column, with the page number centered at the
 top of each page.  It prints no footers.
 
-You can change the layout by setting the proper number registers and
-strings.
+You can change the layout by setting the proper registers and strings.
 
 @menu
 * ms Headers and Footers::
@@ -3671,10 +3720,10 @@ Sets the left, center, and right footers.
 For documents that need different information printed in the even and
 odd pages, use the following macros:
 
-@DefmacList {OH, @t{'}@Var{left}@t{'}@Var{center}@t{'}@Var{right}@t{'}, ms}
-@DefmacItemx {EH, @t{'}@Var{left}@t{'}@Var{center}@t{'}@Var{right}@t{'}, ms}
-@DefmacItemx {OF, @t{'}@Var{left}@t{'}@Var{center}@t{'}@Var{right}@t{'}, ms}
-@DefmacListEndx {EF, @t{'}@Var{left}@t{'}@Var{center}@t{'}@Var{right}@t{'}, ms}
+@DefmacList {OH, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
+@DefmacItemx {EH, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
+@DefmacItemx {OF, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
+@DefmacListEndx {EF, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
 The @code{OH} and @code{EH} macros define headers for the odd and even
 pages; the @code{OF} and @code{EF} macros define footers for the odd and
 even pages.  This is more flexible than defining the individual strings.
@@ -3703,8 +3752,8 @@ after executing the @code{PT} macro.
 @subsubsection Margins
 @cindex @code{ms} macros, margins
 
-You control margins using a set of number registers.  @xref{ms Document
-Control Registers}, for details.
+You control margins using a set of registers.  @xref{ms Document Control
+Settings}, for details.
 
 @c ---------------------------------------------------------------------
 
@@ -3887,18 +3936,18 @@ accent marks and special characters.  This is a Berkeley extension.
 To use the accent marks, place them @emph{after} the character being
 accented.
 
-Note that groff's native support for accents is superior to the
+Note that @code{groff}'s native support for accents is superior to the
 following definitions.
 @endDefmac
 
 The following accent marks are available after invoking the @code{AM}
 macro:
 
-@Defstr {', ms}
+@Defstr {@code{'}, ms}
 Acute accent.
 @endDefstr
 
-@Defstr {`, ms}
+@Defstr {@code{`}, ms}
 Grave accent.
 @endDefstr
 
@@ -3989,34 +4038,34 @@ Uppercase Æ ligature.
 
 @c ---------------------------------------------------------------------
 
-@node Differences from AT&T ms, Naming Conventions, ms Page Layout, ms
+@node Differences from AT&T ms, ms Naming Conventions, ms Page Layout, ms
 @subsection Differences from @acronym{AT&T} @file{ms}
 @cindex @code{ms} macros, differences from @acronym{AT&T}
 @cindex @acronym{AT&T} @code{troff}, @code{ms} macro package differences
 
-This section lists the (minor) differences between the @samp{groff -ms}
-macros and @acronym{AT&T} @samp{troff -ms} macros.
+This section lists the (minor) differences between the @code{groff}
+@file{ms} macros and @acronym{AT&T} @code{troff} @file{ms} macros.
 
 @itemize @bullet
 @item
-The internals of @samp{groff -ms} differ from the internals of
+The internals of @code{groff} @file{ms} differ from the internals of
 @acronym{AT&T} @samp{troff -ms}.  Documents that depend upon
-implementation details of @acronym{AT&T} @samp{troff -ms} may not format
-properly with @samp{groff -ms}.
+implementation details of @acronym{AT&T} @code{troff} @file{ms} may not
+format properly with @code{groff} @file{ms}.
 
 @item
-The general error-handling policy of @samp{groff -ms} is to detect and
-report errors, rather than silently to ignore them.
+The general error-handling policy of @code{groff} @file{ms} is to detect
+and report errors, rather than silently to ignore them.
 
 @item
-@samp{groff -ms} does not work in compatibility mode (that is, with the
-@option{-C} option).
+@code{groff} @file{ms} does not work in compatibility mode (that is,
+with the @option{-C} option).
 
 @item
-There is no special support for typewriter-like devices.
+There is no special support for terminal devices.
 
 @item
-@samp{groff -ms} does not provide cut marks.
+@code{groff} @file{ms} does not provide cut marks.
 
 @item
 Multiple line spacing is not supported.  Use a larger vertical spacing
@@ -4024,9 +4073,8 @@ instead.
 
 @item
 Some Unix @code{ms} documentation says that the @code{CW} and @code{GW}
-number registers can be used to control the column width and gutter
-width, respectively.  These number registers are not used in @code{groff
--ms}.
+registers can be used to control the column width and gutter width,
+respectively.  These registers are not used in @code{groff} @file{ms}.
 
 @item
 Macros that cause a reset (paragraphs, headings, etc.@:) may change the
@@ -4037,19 +4085,32 @@ solution is to use not the @code{in} request but instead the @code{RS}
 and @code{RE} macros.
 
 @item
-To make @samp{groff -ms} use the default page offset (which also
+To make @code{groff} @file{ms} use the default page offset (which also
 specifies the left margin), the @code{PO} register must stay undefined
 until the first @file{-ms} macro is evaluated.  This implies that
 @code{PO} should not be used early in the document, unless it is changed
 also: accessing an undefined register automatically defines it.
+
+@item
+Displays are left-adjusted by default, not indented.  In @acronym{AT&T}
+@code{troff} @file{ms}, @samp{.DS} is synonymous with @samp{.DS I}; in
+@code{groff} @file{ms}, it is synonymous with @samp{.DS L}.
+
+@item
+Right-adjusted displays are available.  The @acronym{AT&T} @code{troff}
+@file{ms} manual observes that ``it is tempting to assume that @samp{.DS
+R} will right adjust lines, but it doesn't
+work''.@footnote{``Typing Documents on the UNIX System: Using the -ms
+Macros with Troff and Nroff''; M.@: E.@: Lesk; Bell Laboratories; 1978.}
+In @code{groff} @file{ms}, it does.
 @end itemize
 
 @Defmpreg {GS, ms}
-This number register is set to@tie{}1 by the @samp{groff -ms} macros,
-but it is not used by the @acronym{AT&T} @samp{troff -ms} macros.
+This register is set to@tie{}1 by the @code{groff} @file{ms} macros, but
+it is not used by the @acronym{AT&T} @code{troff} @file{ms} macros.
 Documents that need to determine whether they are being formatted with
-@acronym{AT&T} @samp{troff -ms} or @samp{groff -ms} should use this
-number register.
+@acronym{AT&T} @samp{troff -ms} or @code{groff} @file{ms} should use
+this register.
 @endDefmpreg
 
 Emulations of a few ancient Bell Labs macros can be re-enabled by
@@ -4059,16 +4120,16 @@ application name, and the pair @code{P1}/@code{P2} for surrounding code
 example displays.
 
 These are not enabled by default because (a)@tie{}they were not
-documented, in the original @code{ms} manual, and (b)@tie{}the @code{P1}
-and @code{UC} macros collide with different macros with the same names
-in the Berkeley version of @code{ms}.
+documented in the original @code{ms} manual@footnote{@slanted{Ibid.}}
+and (b)@tie{}the @code{P1} and @code{UC} macros collide with different
+macros with the same names in the Berkeley version of @code{ms}.
 
 These @code{groff} emulations are sufficient to give back the 1976
-Kernighan@tie{}& Cherry paper @cite{Typesetting Mathematics---User's
-Guide} its section headings, and restore some text that had gone missing
-as arguments of undefined macros.  No warranty express or implied is
-given as to how well the typographic details these produce match the
-original Bell Labs macros.
+Kernighan@tie{}& Cherry @command{eqn} manual @cite{Typesetting
+Mathematics---User's Guide} its section headings, and restore some text
+that had gone missing as arguments of undefined macros.  No warranty
+express or implied is offered as to how well the typographic details
+these produce match the original Bell Labs macros.
 
 @menu
 * Missing ms Macros::
@@ -4080,8 +4141,8 @@ original Bell Labs macros.
 @node Missing ms Macros, Additional ms Macros, Differences from AT&T ms, Differences from AT&T ms
 @subsubsection @code{troff} macros not appearing in @code{groff}
 
-Macros missing from @samp{groff -ms} are cover page macros specific to
-Bell Labs and Berkeley.  The macros known to be missing are:
+Macros missing from @code{groff} @file{ms} are specific to Bell Labs and
+Berkeley.  The macros known to be missing are:
 
 @table @code
 @item .TM
@@ -4100,7 +4161,7 @@ Memo for file; a cover sheet style
 Engineer's notes; a cover sheet style
 
 @item .TR
-Computing Science Tech Report; a cover sheet style
+Computing Science Technical Report; a cover sheet style
 
 @item .OK
 Other keywords
@@ -4109,7 +4170,7 @@ Other keywords
 Cover sheet information
 
 @item .MH
-A cover sheet macro
+Murray Hill Bell Laboratories postal address
 @end table
 
 @c ---------------------------------------------------------------------
@@ -4117,55 +4178,50 @@ A cover sheet macro
 @node Additional ms Macros,  , Missing ms Macros, Differences from AT&T ms
 @subsubsection @code{groff} macros not appearing in @acronym{AT&T} @code{troff}
 
-The @samp{groff -ms} macros have a few minor extensions to the
+The @code{groff} @file{ms} macros have a few minor extensions to the
 @acronym{AT&T} @samp{troff -ms} macros.
 
 @Defmac {AM, , ms}
-Improved accent marks.  @xref{ms Strings and Special Characters}, for
-details.
-@endDefmac
-
-@Defmac {DS, @t{I}, ms}
-Indented display.  The default behavior of @acronym{AT&T} @code{troff
--ms} was to indent; the @code{groff} default prints displays flush left
-with the body text.
+Use improved accent marks.  @xref{ms Strings and Special Characters},
+for details.  This is a Berkeley extension.
 @endDefmac
 
 @Defmac {CW, , ms}
-Print text in @code{constant-width} (Courier) font.  From Berkeley.
+Set text in a @code{constant-width} font (Courier).  This is a Berkeley
+extension.
 @endDefmac
 
 @Defmac {IX, , ms}
-Indexing term (printed on standard error).  You can write a script to
-capture and process an index generated in this manner.
+Write an indexing term to the standard error stream.  You can write a
+script to capture and process an index generated in this manner.
 @endDefmac
 
-The following additional number registers
-appear in @samp{groff -ms}:
+The following additional registers appear in @code{groff} @file{ms}.
 
 @Defmpreg {MINGW, ms}
-Specifies a minimum space between columns (for multi-column output);
-this takes the place of the @code{GW} register that was documented but
-apparently not implemented in @acronym{AT&T} @code{troff}.
+Specifies a minimum space (``gutter width'') between columns (for
+multi-column output); this takes the place of the @code{GW} register
+that was introduced in the Seventh Edition Unix (1979) version of the
+@acronym{AT&T} @samp{troff -ms} macros.
 @endDefmpreg
 
-Several new string registers are available as well.  You can change
-these to handle (for example) the local language.  @xref{ms Strings and
-Special Characters}, for details.
+Several new strings are available as well.  You can change these to
+handle (for example) the local language.  @xref{ms Strings and Special
+Characters}, for details.
 
 @c ---------------------------------------------------------------------
 
-@node Naming Conventions,  , Differences from AT&T ms, ms
-@subsection Naming Conventions
+@node ms Naming Conventions,  , Differences from AT&T ms, ms
+@subsection ms Naming Conventions
 @cindex @code{ms} macros, naming conventions
 @cindex naming conventions, @code{ms} macros
 
-The following conventions are used for names of macros, strings and
-number registers.  External names available to documents that use the
-@samp{groff -ms} macros contain only uppercase letters and digits.
+The following conventions are used for names of macros, strings, and
+registers.  External names available to documents that use the
+@code{groff} @file{ms} macros contain only uppercase letters and digits.
 
-Internally the macros are divided into modules; naming conventions are
-as follows:
+Internally the macros are divided into modules.  The naming conventions
+are as follows.
 
 @itemize @bullet
 @item
@@ -4189,7 +4245,7 @@ Constructed names used to implement arrays are of the form
 @var{array}@code{!}@var{index}.
 @end itemize
 
-Thus the groff ms macros reserve the following names:
+Thus the @code{groff} @file{ms} macros reserve the following names.
 
 @itemize @bullet
 @item
@@ -4198,6 +4254,9 @@ Names containing the characters @code{*}, @code{@@}, and@tie{}@code{:}.
 @item
 Names containing only uppercase letters and digits.
 @end itemize
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
