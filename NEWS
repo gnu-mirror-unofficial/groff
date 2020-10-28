@@ -10,7 +10,7 @@ not described.  There are more details in the man and info pages.
 VERSION 1.23.0
 ==============
 
-Troff
+troff
 -----
 
 o A new read-only register ".cp" is implemented.  Within a .do request,
@@ -21,7 +21,7 @@ o A new read-only register ".cp" is implemented.  Within a .do request,
 o Point-size escapes of the form '\sNN', where NN is in the range 10-39,
   are now recognized only in compatibility mode (groff -C); when
   encountered, an error diagnostic is emitted.  In normal mode, \sN is
-  interpreted as setting the point size to the single digit value N,
+  interpreted as setting the point size to the single-digit value N,
   which ends the escape.  This change eliminates a quirk in the language
   grammar that dates back to the mid-1970s (AT&T troff by Ossanna) but
   was not documented in the Troff User's Manual until 1992 when
@@ -33,9 +33,9 @@ o Point-size escapes of the form '\sNN', where NN is in the range 10-39,
   at the latest and is by current versions of Heirloom Doctools troff
   and neatroff.  The form "\s'NNN'" is also widely supported.
 
-  Short version: in your documents, rewrite escapes beginning with
-  '\s1', '\s2', or '\s3' in an unambiguous and portable form.  For
-  instance, '\s36' can become any of:
+  Summary: in your documents, rewrite escapes beginning with '\s1',
+  '\s2', or '\s3' in an unambiguous and portable form.  For instance,
+  '\s36' can become any of:
     \s(36
     \s[36]
     \s'36'
@@ -51,40 +51,26 @@ o New requests 'stringdown' and 'stringup' are available.  These change
   the string named in their argument by replacing each of its bytes with
   its lowercase or uppercase version (if any), respectively.  groff
   special characters (see the groff_char(7) man page) can be used and
-  the output will usually transform in the expected way due to the
-  regular naming convention of the special character escapes.
+  the output will often transform in the expected way due to the
+  regular naming convention of the special character escapes for
+  accented letters.
 
-o On the Latin-1 output device ("groff -T latin1") the output glyph
-  \[oq] (opening quote) is now rendered as code point 0x27 (apostrophe)
-  instead of 0x60 (grave accent).  The ISO 8859/ECMA-94 Latin character
-  sets do not define any glyphs for directional ("typographer's")
-  quotation marks, but the apostrophe is depicted as a neutral
-  (vertical) glyph, whereas the grave accent 0x60 and acute accent 0xB4
-  are mirror-symmetric diacritical marks.
-
-  Note that this change has no effect on _input_ conventions for roff
-  source documents.  You can still get directional single quotes on
-  UTF-8, PostScript, PDF, and other output devices supporting them by
-  typing sequences like `this' in the input (character remapping with
-  ".char" requests and similar notwithstanding).
-
-Nroff
+nroff
 -----
 
-o The new option -P takes an argument to pass to the device
-  postprocessor (always grotty(1)).  "-P-i" directs the terminal device
-  to display real italic (oblique) characters instead of underlining;
-  note that it is up to your terminal (emulator) to support italics
-  (xterm does since patch #314 [2014-12-28]).  "-P-c" and "-P-h" can now
-  be used instead of "-c" and "-h"; the latter pair may eventually be
-  deprecated and repurposed.
+o The new option -P takes an argument to pass to the output driver
+  (always grotty(1)).  "-P-i" directs the terminal device to display
+  real italic (oblique) characters instead of underlining: it is up to
+  your terminal (emulator) to support italics (xterm does since patch
+  #314 [2014-12-28]).  "-P-c" and "-P-h" can now be used instead of "-c"
+  and "-h"; the latter pair may eventually be deprecated and repurposed.
 
 o The new option -V emits the constructed groff command that nroff would
-  run to standard output instead of executing it.  Note that arguments
-  to nroff that contain shell metacharacters may not be sufficiently
-  escaped for the output of nroff -V to be cut and pasted to the shell
-  prompt; this is a historical deficiency of the Bourne shell family not
-  yet corrected by the POSIX standard.
+  run to standard output instead of executing it.  Arguments to nroff
+  that contain shell metacharacters may not be sufficiently escaped for
+  the output of nroff -V to be copied and pasted to the shell prompt;
+  this is a historical deficiency of the Bourne shell family not yet
+  corrected by the POSIX standard.
 
 o nroff now recognizes the -E option and passes it through to troff.
 
@@ -109,9 +95,10 @@ o The an (man) macro package supports new CS and CT number registers to
 o The an (man) macro package no longer honors an .ll request to set the
   line length in nroff devices prior to processing a man page.  This was
   deprecated 18 years ago, and all known man program and macro package
-  implementations either have set/respected an LL register since 2005 or
-  earlier (man-db man and Brouwer/Lucifredi man), or simply use a
-  non-configurable line length of 78n (mandoc, Heirloom Doctools).
+  implementations either have set an LL register since 2002 (man-db
+  man), 2005 (Brouwer/Lucifredi man), or don't let the user vary the
+  line length freely (DWB troff, Solaris troff, Plan 9 troff) or at all
+  (mandoc, Heirloom Doctools troff).
 
 o The groff_man(7) man page documenting the groff implementation of the
   man macro package has been split into two pages.  The original page
@@ -120,10 +107,32 @@ o The groff_man(7) man page documenting the groff implementation of the
   material supplemented with explanations, examples, and advice for the
   reader who is not an expert in *roff systems or in writing man pages.
 
+o The doc (mdoc) macro package now honors the HY register as the an
+  (man) package does: to set the default hyphenation mode.  It
+  furthermore recognizes but ignores the AD string (see above) for
+  compatibility with an (man).
+
 o The s (ms) macro package no longer manipulates the warning level.  If
   you want all warnings on, use the ".warn" request with no arguments in
   your ms document or pass "-w w" to groff (see troff(1) or the groff
   Texinfo manual for more on warnings).
+
+grotty
+------
+
+o On the Latin-1 output device ("groff -T latin1") the output glyph
+  \[oq] (opening quote) is now rendered as code point 0x27 (apostrophe)
+  instead of 0x60 (grave accent).  The ISO 8859/ECMA-94 Latin character
+  sets do not define any glyphs for directional ("typographer's")
+  quotation marks, but the apostrophe is depicted as a neutral
+  (vertical) glyph, whereas the grave accent 0x60 and acute accent 0xB4
+  are mirror-symmetric diacritical marks.
+
+  This change has no effect on _input_ conventions for roff source
+  documents.  You can still get directional single quotes on UTF-8,
+  PostScript, PDF, and other output devices supporting them by typing
+  sequences like `this' in the input (character remapping with ".char"
+  requests and similar notwithstanding).
 
 Miscellaneous
 -------------
