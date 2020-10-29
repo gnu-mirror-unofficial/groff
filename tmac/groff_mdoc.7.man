@@ -156,7 +156,7 @@ as follows:
 .    It "Configuration Declarations (Section Four Only)"
 .    It "Command Modifiers"
 .    It "Defined Variables"
-.    It "Errno's"
+.    It "Errnos"
 .    It "Environment Variables"
 .    It "Flags"
 .    It "Function Declarations"
@@ -1353,7 +1353,7 @@ is specified by the macro
 .
 The default width is 12n.
 .
-.Ss Errno's
+.Ss Errnos
 .
 The
 .Ql .Er
@@ -3623,9 +3623,7 @@ to specify the tag width.
 .It SL
 sleep time of the process (seconds blocked)
 .It PAGEIN
-number of disk
-.Tn I/O Ns 's
-resulting from references by the process
+number of disk I/O operations resulting from references by the process
 to pages not loaded in core.
 .It UID
 numerical user-id of process owner
@@ -3642,10 +3640,8 @@ The raw text:
 \&.It SL
 sleep time of the process (seconds blocked)
 \&.It PAGEIN
-number of disk
-\&.Tn I/O Ns 's
-resulting from references by the process
-to pages not loaded in core.
+number of disk I/O operations resulting from references
+by the process to pages not loaded in core.
 \&.It UID
 numerical user\-id of process owner
 \&.It PPID
@@ -3707,16 +3703,14 @@ tagged paragraph labels.
 .Pp
 .
 .It Fl ohang
-Lists with overhanging tags do not use indentation for the items; tags are
-written to a separate line.
+Lists with overhanging tags do not use indentation for the items;
+tags are written to a separate line.
 .Pp
 .Bl -ohang -offset indent
 .It Sy SL
 sleep time of the process (seconds blocked)
 .It Sy PAGEIN
-number of disk
-.Tn I/O Ns 's
-resulting from references by the process
+number of disk I/O operations resulting from references by the process
 to pages not loaded in core.
 .It Sy UID
 numerical user-id of process owner
@@ -3733,10 +3727,8 @@ The raw text:
 \&.It Sy SL
 sleep time of the process (seconds blocked)
 \&.It Sy PAGEIN
-number of disk
-\&.Tn I/O Ns 's
-resulting from references by the process
-to pages not loaded in core.
+number of disk I/O operations resulting from references
+by the process to pages not loaded in core.
 \&.It Sy UID
 numerical user\-id of process owner
 \&.It Sy PPID
