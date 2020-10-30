@@ -32,20 +32,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr GS 1
 .nr need_eo_h 0
 .nr need_eo_tl 0
+.
+.\" Define a string for use in diagnostic messages.
+.ds @s s.tmac\"
+.
 .de @error
-.tm \\n(.F:\\n(.c: macro error: \\$*
+.tm \*[@s]:\\n(.F:\\n(.c: error: \\$*
 ..
 .de @warning
-.tm \\n(.F:\\n(.c: macro warning: \\$*
+.tm \*[@s]:\\n(.F:\\n(.c: warning: \\$*
 ..
 .de @fatal
-.ab \\n(.F:\\n(.c: fatal macro error: \\$*
+.ab \*[@s]:\\n(.F:\\n(.c: fatal error: \\$*
 ..
 .de @not-implemented
-.@error sorry, \\$0 not implemented
+.@error sorry, .\\$0 not implemented
 .als \\$0 @nop
 ..
+.
+.\" AT&T technical memorandum/Berkeley thesis mode
 .als TM @not-implemented
+.\" Chapter titles for Berkeley thesis mode
 .als CT @not-implemented
 .de @nop
 ..
@@ -116,16 +123,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" ****************************
 .\" Cover sheet and first page.
 .de cov*err-not-after-first-page
-.@error \\$0 is not allowed after the first page has started
+.@error .\\$0 is not allowed after the first page has started
 ..
 .de cov*err-not-before-tl
-.@error \\$0 is not allowed before TL
+.@error .\\$0 is not allowed before .TL
 ..
 .de cov*err-not-again
-.@error \\$0 is not allowed more than once
+.@error .\\$0 is not allowed more than once
 ..
 .de cov*err-not-after-ab
-.@error \\$0 is not allowed after first AB, LP, PP, IP, SH or NH
+.@error .\\$0 is not allowed after first .AB, .LP, .PP, .IP, .SH or .NH
 ..
 .als AU cov*err-not-before-tl
 .als AI cov*err-not-before-tl
@@ -137,8 +144,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ch cov*first-page-init
 .rm cov*first-page-init
 .if !'\\n[.ev]'0' \{\
-.	@error must be in top-level environment, not '\\n[.ev]',
-.	@error when first page is started
+.	ds cov*msg must be in top-level environment, not '\\n[.ev]',\"
+.	as cov*msg " when first page is started\"
+.	@error \\*[cov*msg]
+.	rm cov*msg
 .\}
 .par@init
 .als RP cov*err-not-after-first-page
@@ -207,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	br
 .	di
 .\}
-.ie !\\n[cov*n-au] .@error AI before AU
+.ie !\\n[cov*n-au] .@error .AI before .AU
 .el \{\
 .	di cov*ai-div!\\n[cov*n-au]
 .	nf
@@ -314,7 +323,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	par@reset
 .	cov*print
 .  \}
-.  el .@error AE without AB
+.  el .@error .AE without .AB
 .\}
 ..
 .de @div-end!cov*ab-div
@@ -328,7 +337,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 .el \{\
 .	if \\n[cov*rp-format] \{\
-.		@warning RP format but no TL
+.		@warning .RP format but no .TL
 .		bp 1
 .		als FS @FS
 .		als FE @FE
@@ -368,7 +377,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .CHECK-FOOTER-AND-KEEP
 .\" If anything was printed below where the footer line is normally
 .\" printed, then that's an overflow.
-.if -\\n[FM]/2+1v+\\n[cov*page-length]<\\n[nl] .@error cover sheet overflow
+.if -\\n[FM]/2+1v+\\n[cov*page-length]<\\n[nl] \
+.	@error cover sheet overflow
 .pl \\n[cov*page-length]u
 .bp 1
 .if !\\n[cov*rp-no] .cov*tl-au-print
@@ -415,7 +425,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" start of footnote on cover
 .de cov*FS
 .if \\n[cov*in-fn] \{\
-.	@error nested FS
+.	@error nested .FS
 .	FE
 .\}
 .nr cov*in-fn 1
@@ -438,7 +448,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	nr cov*in-fn 0
 .	nr cov*fn-height +\\n[dn]
 .\}
-.el .@error FE without matching FS
+.el .@error .FE without matching .FS
 ..
 .\" ***************************
 .\" ******** module pg ********
@@ -663,7 +673,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .\" Second argument of 'no' means don't embellish the first argument.
 .de fn*do-FS
-.if \\n[fn*open] .@error-recover nested FS
+.if \\n[fn*open] .@error-recover nested .FS
 .nr fn*open 1
 .if \\n[.u] \{\
 .	\" Ensure that the first line of the footnote is on the same page
@@ -683,7 +693,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .el .@LP
 ..
 .de @FE
-.ie !\\n[fn*open] .@error FE without FS
+.ie !\\n[fn*open] .@error .FE without .FS
 .el \{\
 .	nr fn*open 0
 .	br
@@ -820,7 +830,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .di kp*div
 ..
 .de KF
-.if !'\\n(.z'' .@error-recover KF while open diversion
+.if !'\\n(.z'' .@error-recover .KF while diversion open
 .di kp*fdiv
 .ev k
 .par@reset-env
@@ -830,7 +840,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ie '\\n(.z'kp*div' .kp*end
 .el \{\
 .	ie '\\n(.z'kp*fdiv' .kp*fend
-.	el .@error KE without KS or KF
+.	el .@error .KE without .KS or .KF
 .\}
 ..
 .de @div-end!kp*div
@@ -924,7 +934,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .el .ds*end!2
 ..
 .de ds*end!0
-.@error DE without DS, ID, CD, LD or BD
+.@error .DE without .DS, .ID, .CD, .LD or .BD
 ..
 .de LD
 .br
@@ -966,7 +976,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	rm ds*div
 .	ds*common-end
 .\}
-.el .@error-recover mismatched DE
+.el .@error-recover mismatched .DE
 ..
 .de DS
 .br
@@ -1009,7 +1019,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	rm ds*div
 .	ds*common-end
 .\}
-.el .@error-recover mismatched DE
+.el .@error-recover mismatched .DE
 ..
 .de ds*end!4
 .ie '\\n(.z'ds*div' \{\
@@ -1022,7 +1032,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	rm ds*div
 .	ds*common-end
 .\}
-.el .@error-recover mismatched DE
+.el .@error-recover mismatched .DE
 ..
 .\" ****************************
 .\" ******** module par ********
@@ -1302,7 +1312,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	nr \\n[.ev]:pli \\n[\\n[.ev]:pli!\\n[\\n[.ev]:il]]
 .	nr \\n[.ev]:pri \\n[\\n[.ev]:pri!\\n[\\n[.ev]:il]]
 .\}
-.el .@error unbalanced \\$0
+.el .@error unbalanced .\\$0
 .ie '\\$0'QE' .par*start 0 0
 .el .par@reset
 ..
@@ -1359,7 +1369,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	lt +\\n[par*box-n]u
 .	par*box-draw \\n[.i]u \\n[.l]u-(\\n[.H]u==1n*1n)
 .\}
-.el .@error B2 without B1
+.el .@error .B2 without .B1
 .HTML-IMAGE-END
 ..
 .de par*box-mark-top
@@ -1587,8 +1597,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .			nr nh*hl 1
 .		\}
 .		el \{\
-.			if \\n[nh*hl]-\\n[nh*ohl]>1 \
-.				@warning .NH \\n[nh*ohl] followed by .NH \\n[nh*hl]
+.			if \\n[nh*hl]-\\n[nh*ohl]>1 \{\
+.				ds nh*msg .NH \\n[nh*ohl] followed by\"
+.				as nh*msg " .NH \\n[nh*hl]\"
+.				@warning \\*[nh*msg]
+.				rm nh*msg
+.			\}
 .		\}
 .	\}
 .	el .nr nh*hl 1
@@ -1638,7 +1652,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	ll -8n
 .	in (n;0\\$2)
 .\}
-.el .@error XA without XS
+.el .@error .XA without .XS
 ..
 .de XE
 .ie '\\n(.z'toc*div' \{\
@@ -1646,7 +1660,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	ev
 .	di
 .\}
-.el .@error XE without XS
+.el .@error .XE without .XS
 ..
 .de toc*end-entry
 \\a\\t\\*[toc*num]
@@ -1718,7 +1732,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .\" Note that geqn mark and lineup work correctly in centered equations.
 .de @EN
-.ie !'\\n(.z'eqn*div' .@error-recover mismatched EN
+.ie !'\\n(.z'eqn*div' .@error-recover mismatched .EN
 .el \{\
 .	br
 .	di
@@ -1859,7 +1873,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de PS
 .br
 .sp \\n[DD]u
-.ie \\n[.$]<2 .@error bad arguments to PS (not preprocessed with pic?)
+.ie \\n[.$]<2 .@error bad arguments to .PS (not preprocessed with pic?)
 .el \{\
 .	ds@need (u;\\$1)+1v
 .	in +(u;\\n[.l]-\\n[.i]-\\$2/2>?0)

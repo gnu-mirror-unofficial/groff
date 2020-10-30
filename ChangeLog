@@ -1,6 +1,26 @@
+2020-10-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac: Revise diagnostic messages.  Define a common
+	prefix string, starting all such messages with "s.tmac".
+	Continues the long process of fixing Savannah #52463.  Drop the
+	word "macro" from diagnostic since this will now be clear from
+	the prefix.  Prefix every macro name in a diagnostic message
+	with a leading dot; this was already done in four cases.
+	(cov*first-page-init): Use temporary string to avoid multi-line
+	diagnostic message.
+	(@NH): Use temporary string to prevent overlength line.
+
+	A further benefit of this revision is that index information
+	produced by ms's .IX macro (which writes to the standard error
+	stream) will now be trivially easy to extract even for documents
+	that cause diagnostic messages.  One can simply filter them with
+		grep -v '^s\.tmac:'
+	or similar.
+
 2020-10-28  Ingo Schwarze <schwarze@openbsd.org>
 
-	* man/roff.7.man, tmac/groff_man.7.man.in: Correct man(7) history.
+	* man/roff.7.man, tmac/groff_man.7.man.in: Correct man(7)
+	history.
 
 2020-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -13,7 +33,7 @@
 	Problem dates back at least to groff 1.02, June 1991.
 
 	* tmac/tests/s_R-handles-its-arguments.sh: Test it.
-	* tmac/tmac.am (tmac_TEST): Run test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 	Fixes <https://savannah.gnu.org/bugs/?59348>.
 
@@ -41,7 +61,7 @@
 	(XA): Define toc*num with the interpolation of %, not PN.
 
 	* tmac/tests/s_TC-works-with-percent-in-custom-titles.sh: Test.
-	* tmac/tmac.am (tmac_TEST): Run test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 	Problem appears to be very old; as I read it, Larry Kollar was
 	complaining of it in his ms.ms document over 20 years ago.
