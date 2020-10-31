@@ -1,5 +1,17 @@
 2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac: Implement \*< and \*> strings for subscripting.
+	groff ms has had (extension) strings for superscripting since
+	1991 at the latest, and the asymmetry possessed me of a madness.
+	Both pairs of string names follow similar usage in Eric Allman's
+	"me" macros.
+
+	* NEWS:
+	* doc/groff.texi:
+	* tmac/groff_ms.7.man: Document it.
+
+2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/groff_mdoc.7.man (Predefined strings): Fix error; the
 	\*[Lq] and \*[Rq] strings degrade to neutral double quotes (")
 	on "nroff" devices (-Tascii and -Tlatin1), not "``" and "''".
