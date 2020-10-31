@@ -43,7 +43,7 @@
 .\"     @(#)mdoc.samples.7 8.2 (Berkeley) 12/30/93
 .\"
 .\" This reference invokes every macro in the package several times and
-.\" is guaranteed to give a worst case performance for an already
+.\" is guaranteed to give worst-case performance for an already
 .\" extremely slow package.
 .\"
 .
@@ -4072,57 +4072,68 @@ It is neither callable nor parsed and takes no arguments.
 .
 .Sh "Predefined strings"
 .
-The following strings are predefined:
+The following strings are predefined,
+and should be used in preference to any corresponding special character
+escapes in
+.Nm \-mdoc
+documents.
+.
+They degrade gracefully when rendered on devices with more limited glyph
+repertoires.
+.
+.
 .Pp
 .TS
-lb lb lb lb
-l l l l.
-String	Nroff	Troff	Meaning
-<=	<=  	\*[<=]	less equal
->=	>=  	\*[>=]	greater equal
-Rq	"   	\*[Rq]	right double quote
-Lq	"   	\*[Lq]	left double quote
-ua	^   	\*[ua]	upwards arrow
-aa	\'  	\*[aa]	acute accent
-ga	\`  	\*[ga]	grave accent
-q 	\&" 	\*[q] 	straight double quote
-Pi	pi  	\*[Pi]	greek pi
-Ne	!=  	\*[Ne]	not equal
-Le	<=  	\*[Le]	less equal
-Ge	>=  	\*[Ge]	greater equal
-Lt	<   	\*[Lt]	less than
-Gt	>   	\*[Gt]	greater than
-Pm	+\- 	\*[Pm]	plus minus
-If	infinity	\*[If]	infinity
-Am	\*[Am]	\*[Am]	ampersand
-Na	\*[Na]	\*[Na]	not a number
-Ba	\*[Ba]	\*[Ba]	vertical bar
+lb lb lb lb lb
+l l l l l.
+String	7-bit	8-bit	Unicode	Meaning
+<=	<=  	<=	\*[<=]	less than or equal to
+>=	>=  	>=	\*[>=]	greater than or equal to
+Rq	"  	"	\*[Rq]	right double quote
+Lq	"  	"	\*[Lq]	left double quote
+ua	^   	^	\*[ua]	up arrow
+aa	\[aq]	\'	\*[aa]	acute accent
+ga	\`  	\`	\*[ga]	grave accent
+q 	\&" 	\&"	\*[q] 	neutral double quote
+Pi	pi  	pi	\*[Pi]	pi
+Ne	!=  	!=	\*[Ne]	not equal to
+Le	<=  	<=	\*[Le]	less than or equal to
+Ge	>=  	>=	\*[Ge]	greater than or equal to
+Lt	<   	<	\*[Lt]	less than
+Gt	>   	>	\*[Gt]	greater than
+Pm	+\- 	\[+-]	\*[Pm]	plus or minus
+If	infinity	infinity	\*[If]	infinity
+Am	\*[Am]	\*[Am]	\*[Am]	ampersand
+Na	\*[Na]	\*[Na]	\*[Na]	not a number
+Ba	\*[Ba]	\*[Ba]	\*[Ba]	vertical bar
 .TE
+.
+.
 .Pp
-The names of the columns
-.Sy Nroff
+The names of the columns are shorthand for standard character encodings;
+\*[Lq]7-bit\*[Rq] for ISO 646:1991 IRV (US-ASCII),
+\*[Lq]8-bit\*[Rq] for ISO 8859-1 (Latin-1) and IBM code page 1047,
 and
-.Sy Troff
-are a bit misleading;
-.Sy Nroff
-shows the
-.Tn ASCII
-representation, while
-.Sy Troff
-gives the best glyph form available.
-For example, a Unicode enabled
-.Tn TTY Ns - Ns
-device will have proper glyph representations for all strings, whereas the
-enhancement for a Latin1
-.Tn TTY Ns - Ns
-device is only the plus-minus sign.
+\*[Lq]Unicode\*[Rq] for ISO 10646.
+.
+The strings are defined such that the best available representation will
+be used.
+.
+For example,
+a Unicode-enabled terminal device will have optimal glyph
+representations for all strings,
+whereas a Latin-1 terminal's only advantage over an ASCII one
+(for these glyphs)
+is the plus-minus sign.
+.
+.
 .Pp
 String names which consist of two characters can be written as
-.Ql \e*(xx ;
+.Ql \[rs]*(xx ;
 string names which consist of one character can be written as
-.Ql \e*x .
-A generic syntax for a string name of any length is
-.Ql \e*[xxx]
+.Ql \[rs]*x .
+A general syntax for a string name of any length is
+.Ql \[rs]*[xxx]
 (this is a
 .Tn GNU
 .Xr troff 1
