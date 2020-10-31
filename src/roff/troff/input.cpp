@@ -1276,7 +1276,8 @@ static color *read_rgb(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_rgb(s)) {
-      warning(WARN_COLOR, "expecting rgb color definition not '%1'", s);
+      warning(WARN_COLOR, "expecting rgb color definition,"
+	      " not '%1'", s);
       delete col;
       return 0;
     }
@@ -1305,7 +1306,8 @@ static color *read_cmy(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_cmy(s)) {
-      warning(WARN_COLOR, "expecting cmy color definition not '%1'", s);
+      warning(WARN_COLOR, "expecting cmy color definition,"
+	      " not '%1'", s);
       delete col;
       return 0;
     }
@@ -1334,7 +1336,8 @@ static color *read_cmyk(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_cmyk(s)) {
-      warning(WARN_COLOR, "expecting a cmyk color definition not '%1'", s);
+      warning(WARN_COLOR, "expecting cmyk color definition,"
+	      " not '%1'", s);
       delete col;
       return 0;
     }
@@ -1364,7 +1367,8 @@ static color *read_gray(char end = 0)
   color *col = new color;
   if (*s == '#') {
     if (!col->read_gray(s)) {
-      warning(WARN_COLOR, "expecting a gray definition not '%1'", s);
+      warning(WARN_COLOR, "expecting gray definition,"
+	      " not '%1'", s);
       delete col;
       return 0;
     }
@@ -1441,7 +1445,8 @@ node *do_overstrike()
   for (;;) {
     tok.next();
     if (tok.newline() || tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " overstrike escape (got %1)", tok.description());
       input_stack::push(make_temp_iterator("\n"));
       break;
     }
@@ -1476,13 +1481,14 @@ static node *do_bracket()
   int start_level = input_stack::get_level();
   for (;;) {
     tok.next();
-    if (tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
-      break;
-    }
-    if (tok.newline()) {
-      warning(WARN_DELIM, "missing closing delimiter");
-      input_stack::push(make_temp_iterator("\n"));
+    if (tok.eof() || tok.newline()) {
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " bracket-building escape (got %1)", tok.description());
+      // XXX: Most other places we miss a closing delimiter, we push a
+      // temp iterator for the EOF case too.  What's special about \b?
+      // Exceptions: \w, \X are like this too.
+      if (tok.newline())
+	input_stack::push(make_temp_iterator("\n"));
       break;
     }
     if (tok == start
@@ -1508,7 +1514,8 @@ static int do_name_test()
   for (;;) {
     tok.next();
     if (tok.newline() || tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " name test escape (got %1)", tok.description());
       input_stack::push(make_temp_iterator("\n"));
       break;
     }
@@ -1545,7 +1552,8 @@ static int do_expr_test()
   for (;;) {
     tok.next();
     if (tok.newline() || tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " expression test escape (got %1)", tok.description());
       input_stack::push(make_temp_iterator("\n"));
       break;
     }
@@ -1601,7 +1609,8 @@ static node *do_zero_width()
   for (;;) {
     tok.next();
     if (tok.newline() || tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " zero-width escape (got %1)", tok.description());
       input_stack::push(make_temp_iterator("\n"));
       break;
     }
@@ -5246,13 +5255,14 @@ static void do_width()
   curenv = &env;
   for (;;) {
     tok.next();
-    if (tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
-      break;
-    }
-    if (tok.newline()) {
-      warning(WARN_DELIM, "missing closing delimiter");
-      input_stack::push(make_temp_iterator("\n"));
+    if (tok.eof() || tok.newline()) {
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " width escape (got %1)", tok.description());
+      // XXX: Most other places we miss a closing delimiter, we push a
+      // temp iterator for the EOF case too.  What's special about \w?
+      // Exception: \b, \X are like this too.
+      if (tok.newline())
+	input_stack::push(make_temp_iterator("\n"));
       break;
     }
     if (tok == start
@@ -5433,13 +5443,14 @@ node *do_special()
   for (tok.next();
        tok != start || input_stack::get_level() != start_level;
        tok.next()) {
-    if (tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
-      return 0;
-    }
-    if (tok.newline()) {
-      input_stack::push(make_temp_iterator("\n"));
-      warning(WARN_DELIM, "missing closing delimiter");
+    if (tok.eof() || tok.newline()) {
+      warning(WARN_DELIM, "missing closing delimiter in"
+	      " device special escape (got %1)", tok.description());
+      // XXX: Most other places we miss a closing delimiter, we push a
+      // temp iterator for the EOF case too.  What's special about \X?
+      // Exceptions: \b, \w are like this too.
+      if (tok.newline())
+	input_stack::push(make_temp_iterator("\n"));
       break;
     }
     unsigned char c;
@@ -5790,7 +5801,8 @@ int do_if_request()
       for (;;) {
 	tok.next();
 	if (tok.newline() || tok.eof()) {
-	  warning(WARN_DELIM, "missing closing delimiter");
+	  warning(WARN_DELIM, "missing closing delimiter in conditional"
+		  " expression (got %1)", tok.description());
 	  tok.next();
 	  curenv = oldenv;
 	  return 0;
@@ -8556,7 +8568,8 @@ static void read_color_draw_node(token &start)
     curenv->set_fill_color(col);
   while (tok != start) {
     if (tok.newline() || tok.eof()) {
-      warning(WARN_DELIM, "missing closing delimiter");
+      warning(WARN_DELIM, "missing closing delimiter in color drawing"
+	      " device command (got %1)", tok.description());
       input_stack::push(make_temp_iterator("\n"));
       break;
     }

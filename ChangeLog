@@ -1,5 +1,15 @@
 2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (do_overstrike, do_bracket,
+	do_name_test, do_expr_test, do_zero_width, do_width, do_special,
+	do_if_request, read_color_draw_note): Improve diagnostic
+	messages for missing closing delimiters by describing the
+	incomplete structure and the problem token.
+	(read_rgb, read_cmy, read_cmyk, read_gray): Improve English
+	syntax of diagnostic message when color definition missing.
+
+2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/mdoc/doc-ditroff-u:
 	* tmac/mdoc/doc-nroff-u: Recognize but ignore the groff_man(7)
 	string HF and registers FT, IN, P, SN, and X (by initializing
