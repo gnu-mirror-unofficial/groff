@@ -4216,10 +4216,28 @@ Hyphenation can be disabled with the
 register (though any permissible hyphenation mode may be used).
 .Pp
 .Dl groff \-Tutf8 -rHY=0 \-mdoc foo.man | less
+.
+.
 .Pp
-An
 .Ql AD
-string is also recognized, but ignored, for compatibility with
+and
+.Ql HF
+strings,
+and
+.\" XXX: FT and IN have to be protected with ampersands because when
+.\" rendering via andoc and having already seen a man(7) page, .Ql
+.\" mis-handles them.  Why this is not true of AD, cR, D, HF, HY, P, SN,
+.\" or X is a mystery.
+.Ql \&FT ,
+.Ql \&IN ,
+.Ql P ,
+.Ql SN ,
+and
+.Ql X
+registers,
+are also recognized
+(but ignored)
+for compatibility with
 .Xr groff_man 7 .
 .
 .

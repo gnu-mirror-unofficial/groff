@@ -37,13 +37,19 @@
 .eo
 .
 .\" \*[AD] is recognized for groff_man(7) compatibility, but ignored.
-.if !d AD .ds AD \"
+.if !d AD .ds AD \" empty
 .
 .\" use -rD=1 for double-sided printing
 .if !r D .nr D 0
 .
 .\" use -rcR=1 to force the creation of a single, very long page
 .if !r cR .nr cR 0
+.
+.\" \n[FT] is recognized for groff_man(7) compatibility, but ignored.
+.if !r FT .nr FT 0
+.
+.\" \*[HF] is recognized for groff_man(7) compatibility, but ignored.
+.if !d HF .ds HF \" empty
 .
 .\" \n[HY] is recognized for groff_man(7) compatibility, particuarly via
 .\" andoc.tmac and man(1); see \n[doc-hyphen-flags] in doc-common.
@@ -56,6 +62,12 @@
 .    nr HY 6
 .\}
 .eo
+.
+.\" \n[IN] is recognized for groff_man(7) compatibility, but ignored.
+.if !r IN .nr IN 0
+.
+.\" \n[P] is recognized for groff_man(7) compatibility, but ignored.
+.if !r P .nr P 0
 .
 .\" use -rS={11,12} to change the font size from 10pt to 11pt or 12pt.
 .if !r S .nr S 10
@@ -77,6 +89,12 @@
 .  vs 12p
 .\}\}
 .
+.
+.\" \n[SN] is recognized for groff_man(7) compatibility, but ignored.
+.if !r SN .nr SN 0
+.
+.\" \n[X] is recognized for groff_man(7) compatibility, but ignored.
+.if !r X .nr X 0
 .
 .\" the 'doc-xx-font' strings must not be empty!
 .
