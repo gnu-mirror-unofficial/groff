@@ -4072,40 +4072,39 @@ It is neither callable nor parsed and takes no arguments.
 .
 .Sh "Predefined strings"
 .
-The following strings are predefined,
-and should be used in preference to any corresponding special character
-escapes in
+The following strings are predefined for compatibility with legacy
 .Nm \-mdoc
 documents.
 .
-They degrade gracefully when rendered on devices with more limited glyph
-repertoires.
+Contemporary ones should use the alternatives shown in the
+.Ql Prefer
+column below.
 .
 .
 .Pp
 .TS
-lb lb lb lb lb
-l l l l l.
-String	7-bit	8-bit	Unicode	Meaning
-<=	<=  	<=	\*[<=]	less than or equal to
->=	>=  	>=	\*[>=]	greater than or equal to
-Rq	"  	"	\*[Rq]	right double quote
-Lq	"  	"	\*[Lq]	left double quote
-ua	^   	^	\*[ua]	up arrow
-aa	\[aq]	\'	\*[aa]	acute accent
-ga	\`  	\`	\*[ga]	grave accent
-q 	\&" 	\&"	\*[q] 	neutral double quote
-Pi	pi  	pi	\*[Pi]	pi
-Ne	!=  	!=	\*[Ne]	not equal to
-Le	<=  	<=	\*[Le]	less than or equal to
-Ge	>=  	>=	\*[Ge]	greater than or equal to
-Lt	<   	<	\*[Lt]	less than
-Gt	>   	>	\*[Gt]	greater than
-Pm	+\- 	\[+-]	\*[Pm]	plus or minus
-If	infinity	infinity	\*[If]	infinity
-Am	\*[Am]	\*[Am]	\*[Am]	ampersand
-Na	\*[Na]	\*[Na]	\*[Na]	not a number
-Ba	\*[Ba]	\*[Ba]	\*[Ba]	vertical bar
+lb lb lb lb lb lb
+l l l l l l.
+String	7-bit	8-bit	UCS	Prefer	Meaning
+<=	<=  	<=	\*[<=]	\[rs](<=	less than or equal to
+>=	>=  	>=	\*[>=]	\[rs](>=	greater than or equal to
+Rq	"  	"	\*[Rq]	\[rs](rq	right double quote
+Lq	"  	"	\*[Lq]	\[rs](lq	left double quote
+ua	^   	^	\*[ua]	\[rs](ua	vertical arrow up
+aa	\[aq]	\'	\*[aa]	\[rs](aa	acute accent
+ga	\`  	\`	\*[ga]	\[rs](ga	grave accent
+q 	\&" 	\&"	\*[q] 	\[rs](dq	neutral double quote
+Pi	pi  	pi	\*[Pi]	\[rs](*p	lowecase pi
+Ne	!=  	!=	\*[Ne]	\[rs](!=	not equals
+Le	<=  	<=	\*[Le]	\[rs](<=	less than or equal to
+Ge	>=  	>=	\*[Ge]	\[rs](>=	greater than or equal to
+Lt	<   	<	\*[Lt]	<	less than
+Gt	>   	>	\*[Gt]	>	greater than
+Pm	+\- 	\[+-]	\*[Pm]	\[rs](+\-	plus or minus
+If	infinity	infinity	\*[If]	\[rs](if	infinity
+Am	\*[Am]	\*[Am]	\*[Am]	&	ampersand
+Na	\*[Na]	\*[Na]	\*[Na]	NaN	not a number
+Ba	\*[Ba]	\*[Ba]	\*[Ba]	|	bar
 .TE
 .
 .
@@ -4114,17 +4113,34 @@ The names of the columns are shorthand for standard character encodings;
 \*[Lq]7-bit\*[Rq] for ISO 646:1991 IRV (US-ASCII),
 \*[Lq]8-bit\*[Rq] for ISO 8859-1 (Latin-1) and IBM code page 1047,
 and
-\*[Lq]Unicode\*[Rq] for ISO 10646.
+\*[Lq]UCS\*[Rq] for ISO 10646 (Unicode character set).
 .
-The strings are defined such that the best available representation will
-be used.
+The strings were originally defined
+(circa 1989)
+such that the best available representation would be used.
 .
 For example,
-a Unicode-enabled terminal device will have optimal glyph
-representations for all strings,
+a Unicode-enabled terminal device using a well-chosen font will have
+optimal glyph representations for all of the above,
 whereas a Latin-1 terminal's only advantage over an ASCII one
 (for these glyphs)
 is the plus-minus sign.
+.
+Old typesetters lacked directional double quotes, \" like the C/A/T
+and would produce repeated directional single quotes,
+\[oq]\[oq]like this\[cq]\[cq];
+early versions of
+.Nm \-mdoc
+in fact defined the
+.Ql Lq
+and
+.Ql Rq
+strings this way. \" thanks to Ingo Schwarze for the research
+.
+In the years since,
+output drivers have taken on the responsibility of glyph substitution;
+they are the part of the formatting process with relevant knowledge of
+the available repertoire.
 .
 .
 .Pp
