@@ -416,7 +416,7 @@ is created by
 .Ql ".Fn fetch char\e *str"
 .It Fn fetch "char *str"
 can also be created by
-.Ql ".Fn fetch \*[q]char *str\*[q]"
+.Ql ".Fn fetch \[dq]char *str\[dq]"
 .El
 .
 .Pp
@@ -481,13 +481,14 @@ ordinary text line; contrary to other text formatters, they are
 replaced with a single space.
 .Pp
 You can't pass
-.Ql \*[q]
+.Ql \[dq]
 directly as an argument.
+.
 Use
-.Ql \e*[q]
-(or
-.Ql \e*q )
+.Ql \[rs][dq]
 instead.
+.
+.
 .Pp
 By default,
 .Xr troff 1
@@ -671,13 +672,19 @@ but
 Consequently, a warning message is emitted for most commands if the first
 argument is a macro itself since it cancels the effect of the calling
 command completely.
+.
 Another consequence is that quoting macros never insert literal quotes;
+.\" XXX: The above claim does not seem to be true.  They will if the
+.\" output device has to fall back on them.  And .Qq appears to be
+.\" designed to do PRECISELY this.
 .Sq Ic "foo <bar>"
 has been produced by
-.Ql ".Ic \*[q]foo <bar>\*[q]" .
+.Ql ".Ic \[dq]foo <bar>\[dq]" .
+.
+.
 .Pp
-Most macros have a default width value which can be used to specify a label
-width
+Most macros have a default width value which can be used to specify a
+label width
 .Pf ( Fl width )
 or offset
 .Pf ( Fl offset )
@@ -814,7 +821,7 @@ prevents the digit\~7 from being a valid numeric expression.
 .It Li ".Dt FOO 2 i386"
 .Ql FOO(2)
 .Ql \*[doc-volume-operating-system]/\*[doc-volume-as-i386] \*[doc-volume-ds-2]
-.It Li ".Dt FOO \*[q]\*[q] bar"
+.It Li ".Dt FOO \[dq]\[dq] bar"
 .Ql FOO
 .Ql bar
 .El
@@ -1232,14 +1239,14 @@ documented, or the name of the author of the actual manual page.
 .Pp
 .Dl Usage: .An Ao author name Ac ...
 .Pp
-.Bl -tag -width ".Li .An\ \*[q]Joe\ Author\*[q]\ )\ )\ ," -offset 15n
-.It Li ".An \*[q]Joe Author\*[q]"
+.Bl -tag -width ".Li .An\ \[dq]Joe\ Author\[dq]\ )\ )\ ," -offset 15n
+.It Li ".An \[dq]Joe Author\[dq]"
 .An "Joe Author"
-.It Li ".An \*[q]Joe Author\*[q] ,"
+.It Li ".An \[dq]Joe Author\[dq] ,"
 .An "Joe Author" ,
-.It Li ".An \*[q]Joe Author\*[q] Aq nobody@FreeBSD.org"
+.It Li ".An \[dq]Joe Author\[dq] Aq nobody@FreeBSD.org"
 .An "Joe Author" Aq nobody@FreeBSD.org
-.It Li ".An \*[q]Joe Author\*[q] ) ) ,"
+.It Li ".An \[dq]Joe Author\[dq] ) ) ,"
 .An "Joe Author" ) ) ,
 .El
 .Pp
@@ -1306,7 +1313,7 @@ declaration for a device interface in a section four manual.
 .Dl Usage: .Cd Ao argument Ac ...
 .Pp
 .Bl -tag -width ".Li .Cd\ Xdevice\ le0\ at\ scode?X" -offset 15n
-.It Li ".Cd \*[q]device le0 at scode?\*[q]"
+.It Li ".Cd \[dq]device le0 at scode?\[dq]"
 .Cd "device le0 at scode?"
 .El
 .Pp
@@ -1454,7 +1461,7 @@ It is neither callable nor parsed.
 .Dl Usage: .Fd Ao argument Ac ...
 .Pp
 .Bl -tag -width ".Li .Fd\ X#include\ <sys/types.h>X" -compact -offset 15n
-.It Li ".Fd \*[q]#include <sys/types.h>\*[q]"
+.It Li ".Fd \[dq]#include <sys/types.h>\[dq]"
 .Fd "#include <sys/types.h>"
 .El
 .Pp
@@ -1526,7 +1533,7 @@ conventions.
 .Fn getchar
 .It Li ".Fn strlen ) ,"
 .Fn strlen ) ,
-.It Li ".Fn align \*[q]char *ptr\*[q] ,"
+.It Li ".Fn align \[dq]char *ptr\[dq] ,"
 .Fn align "char *ptr" ,
 .El
 .Pp
@@ -1696,7 +1703,7 @@ macro designates an interactive or internal command.
 .Bl -tag -width ".Li .Ic\ setenv\ ,\ unsetenv" -compact -offset 15n
 .It Li ".Ic :wq"
 .Ic :wq
-.It Li ".Ic \*[q]do while {...}\*[q]"
+.It Li ".Ic \[dq]do while {...}\[dq]"
 .Ic "do while {...}"
 .It Li ".Ic setenv , unsetenv"
 .Ic setenv , unsetenv
@@ -2198,9 +2205,9 @@ Generic variable reference.
 .Va count
 .It Li ".Va settimer ,"
 .Va settimer ,
-.It Li ".Va \*[q]int *prt\*[q] ) :"
+.It Li ".Va \[dq]int *prt\[dq] ) :"
 .Va "int *prt" ) :
-.It Li ".Va \*[q]char s\*[q] ] ) ) ,"
+.It Li ".Va \[dq]char s\[dq] ] ) ) ,"
 .Va "char s" ] ) ) ,
 .El
 .Pp
@@ -4110,10 +4117,10 @@ Ba	\*[Ba]	\*[Ba]	\*[Ba]	|	bar
 .
 .Pp
 The names of the columns are shorthand for standard character encodings;
-\*[Lq]7-bit\*[Rq] for ISO 646:1991 IRV (US-ASCII),
-\*[Lq]8-bit\*[Rq] for ISO 8859-1 (Latin-1) and IBM code page 1047,
+\[lq]7-bit\[rq] for ISO 646:1991 IRV (US-ASCII),
+\[lq]8-bit\[rq] for ISO 8859-1 (Latin-1) and IBM code page 1047,
 and
-\*[Lq]UCS\*[Rq] for ISO 10646 (Unicode character set).
+\[lq]UCS\[rq] for ISO 10646 (Unicode character set).
 .
 The strings were originally defined
 (circa 1989)
