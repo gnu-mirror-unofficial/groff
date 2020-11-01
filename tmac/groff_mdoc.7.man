@@ -4181,6 +4181,26 @@ to zero while calling
 resulting in multiple pages instead of a single, very long page:
 .Pp
 .Dl groff \-Tlatin1 \-rcR=0 \-mdoc foo.man > foo.txt
+.
+.
+.Pp
+Section headings
+(defined with
+.Ql .Sh )
+and page titles in headers
+(defined with
+.Ql .Dt )
+can be presented in full capitals by setting the registers
+.Ql CS
+and
+.Ql CT ,
+respectively,
+to 1.
+.
+These transformations are off by default because they discard case
+distinction information.
+.
+.
 .Pp
 For double-sided printing, set register
 .Ql D

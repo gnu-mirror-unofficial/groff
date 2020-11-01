@@ -354,6 +354,9 @@
 .  if !"\$1"" \
 .    ds doc-document-title "\$1
 .
+.  if \n[CT] \
+.    stringup doc-document-title
+.
 .  if !"\$2"" \{\
 .    ds doc-section \$2
 .    ie \B\$2 \{\
@@ -1178,6 +1181,9 @@
 .ds doc-section-authors     Authors\"
 .
 .de Sh
+.  \" Tell doc-print-recursive whether to force capitalization.
+.  nr doc-do-capitalize \n[CS]
+.
 .  ie \n[doc-arg-limit] \{\
 .    \" we only allow 'Sh' within 'Sh'; it will change the font back to
 .    \" 'doc-Sh-font'
@@ -1282,6 +1288,9 @@
 .
 .    doc-check-depth
 .  \}
+.
+.  \" Don't let doc-print-recursive force caps on anything else.
+.  nr doc-do-capitalize 0
 ..
 .
 .

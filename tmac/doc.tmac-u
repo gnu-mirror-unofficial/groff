@@ -479,6 +479,8 @@
 .  nr doc-reg-dpr1 \n[doc-type\n[doc-arg-ptr]]
 .  ds doc-str-dpr "\*[doc-arg\n[doc-arg-ptr]]
 .
+.  if \n[doc-do-capitalize] .stringup doc-str-dpr
+.
 .  ie (\n[doc-reg-dpr1] == 1) \{\
 .    nop \f[\n[doc-curr-font]]\s[\n[doc-curr-size]u]\c
 .    \*[doc-str-dpr]

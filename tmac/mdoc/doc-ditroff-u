@@ -39,6 +39,12 @@
 .\" \*[AD] is recognized for groff_man(7) compatibility, but ignored.
 .if !d AD .ds AD \" empty
 .
+.\" Use -rCS=1 to force capitalization of section headings.
+.if !r CS .nr CS 0
+.
+.\" Use -rCT=1 to force capitalization of page titles in headers.
+.if !r CT .nr CT 0
+.
 .\" use -rD=1 for double-sided printing
 .if !r D .nr D 0
 .

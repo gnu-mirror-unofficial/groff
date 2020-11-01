@@ -1,5 +1,27 @@
 2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Add support for CS and CT registers to mdoc(7), just like in
+	man(7), from a year ago.
+
+	* tmac/doc.tmac-u (doc-print-recursive): Call .stringup on each
+	argument if register doc-do-capitalize is true.
+	* tmac/mdoc/doc-common-u (Dt): Call .stringup on
+	doc-document-title if \n[CT] is true.
+	(Sh): Set doc-do-capitalize to value of \n[CS].  Set
+	doc-do-capitalize false before returning.
+	* tmac/mdoc/doc-ditroff-u:
+	* tmac/mdoc/doc-nroff-u: Set CS and CT registers to 0 (false)
+	if the user has not defined them.
+
+	* tmac/groff_mdoc.7.man \
+	(Formatting with groff, troff, and nroff): Document it.
+
+	* tmac/tests/doc-CS_works.sh:
+	* tmac/tests/doc-CT_works.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run tests.
+
+2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (do_overstrike, do_bracket,
 	do_name_test, do_expr_test, do_zero_width, do_width, do_special,
 	do_if_request, read_color_draw_note): Improve diagnostic
