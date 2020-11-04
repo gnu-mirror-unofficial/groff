@@ -203,7 +203,7 @@ this is not implemented yet.
 .
 In this and the next section, we present examples to help users
 understand the basic workflow of
-.BR hdtbl .
+.IR hdtbl .
 .
 First of all, you must load the
 .I hdtbl.tmac
@@ -229,7 +229,7 @@ Either add the line
 to your
 .I roff
 file before using any macros of the
-.B hdtbl
+.I hdtbl
 package, or add the option
 .
 .PP
@@ -242,7 +242,7 @@ package, or add the option
 .
 .PP
 to the command line of groff (before the document file which contains
-.B hdtbl
+.I hdtbl
 macros).
 .
 Then you can include on or more tables in your document, where each one
@@ -254,11 +254,15 @@ macros, respectively.
 .
 .
 .PP
-In this man page, we approximate the result of each example in the
-.I tty
-format to be as generic as possible since
-.B hdtbl
-currently only supports the PS and PDF output devices.
+In this man page,
+we approximate the result of each example as terminal ouput to be as
+generic as possible since
+.I hdtbl
+currently only supports the
+.B ps
+and
+.B pdf
+output drivers.
 .
 .
 .PP
@@ -281,9 +285,7 @@ Here we construct a table with only one cell.
 .
 .
 .PP
-A
-.I tty
-representation is
+A terminal representation is
 .
 .
 .PP
@@ -339,9 +341,7 @@ can be written as
 .
 .
 .PP
-A
-.I tty
-representation is
+A terminal representation is
 .
 .
 .PP
@@ -492,7 +492,7 @@ enclosed in double quotes.
 The order of macro calls and other tokens follows the HTML model.
 .
 In the following list, valid predecessors and successors of all
-.B hdtbl
+.I hdtbl
 macros are given, together with the possible arguments.
 .
 .PP
@@ -1163,6 +1163,8 @@ Before creating the first table, you should configure default values
 to minimize the markup needed in each table.
 .
 The following example sets up defaults suitable for typical papers:
+.
+.
 .PP
 .RS
 .EX
@@ -1176,7 +1178,7 @@ The following example sets up defaults suitable for typical papers:
 .
 .PP
 The file
-.B examples/common.roff
+.I \%@EXAMPLEDIR@/\:hdtbl/\:\%common\:.roff
 provides another example setup
 in the \[lq]minimal Page setup\[rq] section.
 .
@@ -1203,7 +1205,7 @@ For example, say
 .
 .PP
 if you use the
-.B ms
+.I ms
 macro package.
 .
 .
@@ -1233,7 +1235,7 @@ For example:
 .
 .PP
 If you use the
-.B ms
+.I ms
 macro package.
 .
 .
