@@ -661,24 +661,25 @@ Example:
 .
 .Pp
 Except stated explicitly, all macros are parsed and callable.
+.
+.
 .Pp
 Note that a macro takes effect up to the next nested macro.
+.
 For example,
 .Ql ".Ic foo Aq bar"
 doesn't produce
 .Sq Ic "foo <bar>"
-but
+but rather
 .Sq Ic foo Aq bar .
-Consequently, a warning message is emitted for most commands if the first
-argument is a macro itself since it cancels the effect of the calling
-command completely.
 .
-Another consequence is that quoting macros never insert literal quotes;
-.\" XXX: The above claim does not seem to be true.  They will if the
-.\" output device has to fall back on them.  And .Qq appears to be
-.\" designed to do PRECISELY this.
+Consequently,
+a warning message is emitted for most commands if the first argument is
+a macro itself since it cancels the effect of the calling command
+completely.
+.
 .Sq Ic "foo <bar>"
-has been produced by
+is produced by
 .Ql ".Ic \[dq]foo <bar>\[dq]" .
 .
 .
