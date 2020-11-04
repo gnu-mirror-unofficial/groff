@@ -166,12 +166,16 @@ but not for
 .BR .NH\ 3 .
 .
 Whereas
+.
+.
 .RS
 .IP
-.nf
-.B .HX 0
-.fi
+.EX
+\&.HX 0
+.EE
 .RE
+.
+.
 .IP
 tells
 .I \%grohtml
@@ -333,19 +337,20 @@ since it is a local reference.
 .
 This link was achieved via placing a TAG in the URL description above;
 the source looks like this:
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.TP
 \&.B URL
 generates
 \&.TAG URL
 a URL using either two or three arguments.
 \&.\|.\|.
-.fi
-.ft P
+.EE
 .RE
+.
 .
 .TP
 .B .IMG [\-R|\-L|\-C] filename [width] [height]
@@ -430,14 +435,15 @@ If the width is absent it defaults to 1\~inch.
 If the height is absent it defaults to the width.
 .
 Example:
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.MPIMG \-L \-G 2c foo.png 3c 1.5c
-.ft P
-.fi
+.EE
 .RE
+.
 .
 .IP
 The height and width may also be given as percentages.
@@ -449,14 +455,15 @@ register and the height from the
 register.
 .
 For example:
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.MPIMG \-L \-G 2c foo.png 15%
-.ft P
-.fi
+.EE
 .RE
+.
 .
 .TP
 .B .HnS n
@@ -469,10 +476,11 @@ is specified by the first parameter.
 Use this macro if your headings contain URL, FTP or MTO macros.
 .
 Example:
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.HnS 1
 \&.HR
 GNU Troff
@@ -482,9 +490,9 @@ GNU Troff
 \&project.
 \&.HR
 \&.HnE
-.ft P
-.fi
+.EE
 .RE
+.
 .
 .IP
 In this case you might wish to disable automatic links to headings.
@@ -555,16 +563,18 @@ or
 .BR \-Txhtml .
 .
 Example:
+.
+.
 .RS
 .IP
-.nf
-.B ".HEAD" "\[dq]<link \[rs]"
-.B "  rel=\[dq]\[dq]icon\[dq]\[dq] \[rs]"
-.B "  type=\[dq]\[dq]image/png\[dq]\[dq] \[rs]"
-.B "  href=\[dq]\[dq]http://foo.org//bar.png\[dq]\[dq]/>\[dq]"
-.fi
-.ft P
+.EX
+\&.HEAD \[dq]<link \[rs]
+  rel=\[dq]\[dq]icon\[dq]\[dq] \[rs]
+  type=\[dq]\[dq]image/png\[dq]\[dq] \[rs]
+  href=\[dq]\[dq]http://foo.org//bar.png\[dq]\[dq]/>\[dq]
+.EE
 .RE
+.
 .
 .TP
 .B .HTML
@@ -583,15 +593,15 @@ higher-level macros.
 For example, the
 .B BGIMG
 macro is defined as
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.de BGIMG
 \&.   HTML <body background=\[rs]\[rs]$1>
 \&..
-.ft P
-.fi
+.EE
 .RE
 .
 .
@@ -657,14 +667,15 @@ Initialize default URL attributes to be used if this macro set is not
 used with the HTML device.
 .
 The macro set initializes itself with the following call
+.
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.LINKSTYLE blue CR \e[la] \e[ra]
-.ft P
-.fi
+.EE
 .RE
+.
 .
 .IP
 but these values will be superseded by a user call to LINKSTYLE.

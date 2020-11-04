@@ -456,24 +456,31 @@ or
 but allows the values of variables to be passed through.
 .
 For example,
+.
+.
 .RS
 .IP
-.ft B
-.nf
+.EX
 \&.PS
 x = 14
 command ".ds string x is " x "."
 \&.PE
 \e*[string]
-.ft
-.fi
+.EE
 .RE
+.
+.
 .IP
 prints
+.
+.
 .RS
 .IP
-.B x is 14.
+.EX
+x is 14.
+.EE
 .RE
+.
 .
 .TP
 \fBsh\fR \fIX\fR \fIcommand\fR \fIX\fR
@@ -540,10 +547,11 @@ can be any character not occurring in
 .IR body .
 .
 For example,
+.
+.
 .RS
 .IP
-.ft B
-.nf
+.EX
 \&.PS
 copy thru % circle at ($1,$2) % until "END"
 1 2
@@ -552,24 +560,26 @@ copy thru % circle at ($1,$2) % until "END"
 END
 box
 \&.PE
-.ft
-.fi
+.EE
 .RE
+.
+.
 .IP
 is equivalent to
+.
+.
 .RS
 .IP
-.ft B
-.nf
+.EX
 \&.PS
 circle at (1,2)
 circle at (3,4)
 circle at (5,6)
 box
 \&.PE
-.ft
-.fi
+.EE
 .RE
+.
 .
 .IP
 The commands to be performed for each line can also be taken
@@ -638,10 +648,11 @@ defines the variable in the current block if it is not already defined
 there, and then changes the value in the current block only.)
 .
 For example, the following:
+.
+.
 .RS
 .IP
-.ft B
-.nf
+.EX
 \&.PS
 x = 3
 y = 3
@@ -651,14 +662,19 @@ y = 3
 ]
 print x " " y
 \&.PE
-.ft
-.fi
+.EE
 .RE
+.
+.
 .IP
 prints
+.
+.
 .RS
 .IP
+.EX
 .B 5 3
+.EE
 .RE
 .
 .
@@ -1146,15 +1162,14 @@ is a single token: no space is allowed between the
 and the
 .BR th .
 .
+.
 For example,
 .IP
-.ft B
-.nf
+.EX
 for i = 1 to 4 do {
-   line from \[oq]i\[cq]th box.nw to \[oq]i+1\[cq]th box.se
+   line from \[aq]i\[aq]th box.nw to \[aq]i+1\[aq]th box.se
 }
-.ft
-.fi
+.EE
 .
 .
 .\" ====================================================================
@@ -1193,16 +1208,16 @@ At the moment, calling standard
 without any macro package works.
 .
 Alternatively, you can define your own requests, e.g., to do nothing:
+.
+.
 .LP
 .RS
-.nf
-.ft B
+.EX
 \&.de PS
 \&..
 \&.de PE
 \&..
-.ft
-.fi
+.EE
 .RE
 .
 .

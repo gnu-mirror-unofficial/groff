@@ -879,10 +879,10 @@ can extend over multiple lines.
 .
 For example,
 .
+.
 .RS
 .IP
-.nf
-.ft B
+.EX
 \&.nr x 1i
 \&.de y
 \&ps: exec
@@ -890,8 +890,8 @@ For example,
 \&stroke
 \&..
 \&\[rs]Yy
-.ft R
-.fi
+.EE
+.
 .
 .LP
 is another way to draw a horizontal line one inch long.
@@ -1069,15 +1069,14 @@ character because the standard X11 fonts do not provide it;
 this problem can be overcome by executing the following
 request
 .
+.
 .IP
-.ft B
-.nf
+.EX
 \&.char \[rs][em] \[rs]X\[aq]ps: invis\[aq]\[rs]
 \[rs]Z\[aq]\[rs]v\[aq]-.25m\[aq]\[rs]h\[aq].05m\[aq]\c
 \[rs]D\[aq]l .9m 0\[aq]\[rs]h\[aq].05m\[aq]\[aq]\[rs]
 \[rs]X\[aq]ps: endinvis\[aq]\[rs][em]
-.ft
-.fi
+.EE
 .
 .
 .LP
@@ -1112,10 +1111,11 @@ anything is drawn or written by groff).
 .
 For example, to underlay the page contents with the word
 \[oq]DRAFT\[cq] in light gray, you might use
+.
+.
 .RS
 .LP
-.nf
-.ft B
+.EX
 \&.de XX
 ps: def
 /BPhook
@@ -1127,27 +1127,30 @@ ps: def
 def
 \&..
 \&.devicem XX
-.ft R
-.fi
+.EE
 .RE
+.
+.
 .LP
 Or, to cause lines and polygons to be drawn with square linecaps
 and mitered linejoins instead of the round linecaps and linejoins
 normally used by
 .BR grops ,
 use
+.
+.
 .RS
 .LP
-.nf
-.ft B
+.EX
 \&.de XX
 ps: def
 /BPhook { 2 setlinecap 0 setlinejoin } def
 \&..
 \&.devicem XX
-.ft R
-.fi
+.EE
 .RE
+.
+.
 .LP
 (square linecaps, as opposed to butt linecaps (0 setlinecap),
 give true corners in boxed tables even though the lines are
@@ -1168,16 +1171,14 @@ produces an encapsulated PS file.
 .
 .RS
 .LP
-.nf
-.ft B
+.EX
 #! /bin/sh
 groff \-P\-b16 $1 > $1.ps
 gs \-dNOPAUSE \-sDEVICE=bbox \-\- $1.ps 2> $1.bbox
 sed \-e "/\[ha]%%Orientation/r $1.bbox" \[rs]
     \-e "/\[ha]%!PS-Adobe-3.0/s/$/ EPSF-3.0/" $1.ps > $1.eps
 rm $1.ps $1.bbox
-.ft R
-.fi
+.EE
 .RE
 .
 .

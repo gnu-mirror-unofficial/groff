@@ -1526,13 +1526,12 @@ High-resolution device
 .RS
 .P
 .EX
-\fBshell>\fP echo "hell world" | groff \-Z \-T ps
+.RB "shell>\~" "echo \[dq]hell world\[dq] | groff \-Z \-T ps"
 .EE
 .
 .
 .P
-.nf
-.ft CB
+.EX
 x T ps
 x res 72000 1 1
 x init
@@ -1551,8 +1550,7 @@ n12000 0
 x trailer
 V792000
 x stop
-.ft P
-.fi
+.EE
 .RE
 .
 .
@@ -1587,43 +1585,33 @@ formatter.
 .
 .
 .P
-.nf
-.I "# prologue"
-.ft CB
+.EX
+.I # prologue
 x T latin1
 x res 240 24 40
 x init
-.I "# begin a new page"
-.ft CB
+.I # begin a new page
 p1
-.I "# font setup"
-.ft CB
+.I # font setup
 x font 1 R
 f1
 s10
-.I "# initial positioning on the page"
-.ft CB
+.I # initial positioning on the page
 V40
 H0
-.I "# write text \[oq]hell\[cq]"
-.ft CB
+.I # write text \[oq]hell\[cq]
 thell
-.I "# inform about a space, and do it by a horizontal jump"
-.ft CB
+.I # inform about a space, and do it by a horizontal jump
 wh24
-.I "# write text \[oq]world\[cq]"
-.ft CB
+.I # write text \[oq]world\[cq]
 tworld
-.I "# announce line break, but do nothing because ..."
-.ft CB
+.I # announce line break, but do nothing because ...
 n40 0
-.I "# ... the end of the document has been reached"
-.ft CB
+.I # ... the end of the document has been reached
 x trailer
 V2640
 x stop
-.ft P
-.fi
+.EE
 .RE
 .
 .
@@ -1653,8 +1641,7 @@ displacements.
 .
 .
 .P
-.nf
-.ft CB
+.EX
 x T X100
 x res 100 1 1
 x init
@@ -1664,15 +1651,13 @@ f5
 s10
 V16
 H100
-.I "# write text with old-style jump-and-write command"
-.ft CB
+.I # write text with old-style jump-and-write command
 ch07e07l03lw06w11o07r05l03dh7
 n16 0
 x trailer
 V1100
 x stop
-.ft P
-.fi
+.EE
 .RE
 .
 .

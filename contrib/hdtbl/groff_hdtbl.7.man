@@ -216,14 +216,14 @@ there are two possibilities to do so:
 .
 Either add the line
 .
+.
 .PP
-.nf
-.nh
 .RS
-.CR .mso hdtbl.tmac
-.fi
-.hy
+.EX
+\&.mso hdtbl.tmac
+.EE
 .RE
+.
 .
 .PP
 to your
@@ -233,13 +233,12 @@ file before using any macros of the
 package, or add the option
 .
 .PP
-.nf
-.nh
 .RS
-.CR \-m hdtbl
-.fi
-.hy
+.EX
+\-m hdtbl
+.EE
 .RE
+.
 .
 .PP
 to the command line of groff (before the document file which contains
@@ -268,17 +267,16 @@ four base table macros in the right order.
 .
 Here we construct a table with only one cell.
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR .TBL
-.CR .TR
-.CR .TD
-.CI contents of the table cell
-.CR .ETB
-.fi
-.hy
+.EX
+\&.TBL
+\&.TR
+\&.TD
+.I contents of the table cell
+\&.ETB
+.EE
 .RE
 .
 .
@@ -287,30 +285,28 @@ A
 .I tty
 representation is
 .
+.
 .PP
-.nf
-.nh
-.ft CR
+.if t .ne 3v
 .RS
+.EX
 +------------------------------------------------------+
-| contents-of-the-table-cell                           |
+.\" That's 27 spaces below.
+.RI "| " contents-of-the-table-cell "                           |"
 +------------------------------------------------------+
+.EE
 .RE
-.ft
-.hy
-.fi
 .
 .
 .PP
 Equivalent to the above is the following notation.
 .
+.
 .PP
 .RS
-.nh
-.nf
-.CRI ".TBL .TR .TD \[dq]" "contents of the table cell" "\[dq] .ETB"
-.fi
-.hy
+.EX
+.RI ".TBL .TR .TD \[dq]" "contents of the table cell" "\[dq] .ETB"
+.EE
 .RE
 .
 .
@@ -333,14 +329,12 @@ can be written as
 .
 .PP
 .RS
-.nf
-.nh
-.CR ".TBL cols=2"
-.CR ".  TR .TD 1*1 .TD 1*2"
-.CR ".  TR .TD 2*1 .TD 2*2"
-.CR ".ETB"
-.fi
-.hy
+.EX
+\&.TBL cols=2
+\&.  TR .TD 1*1 .TD 1*2
+\&.  TR .TD 2*1 .TD 2*2
+\&.ETB
+.EE
 .RE
 .
 .
@@ -351,19 +345,16 @@ representation is
 .
 .
 .PP
-.nf
-.nh
-.ft CR
+.if t .ne 5v
 .RS
+.EX
 +--------------------------+---------------------------+
 | 1*1                      | 1*2                       |
 +--------------------------+---------------------------+
 | 2*1                      | 2*2                       |
 +--------------------------+---------------------------+
+.EE
 .RE
-.ft
-.hy
-.fi
 .
 .
 .PP
@@ -390,48 +381,48 @@ and
 .
 Note, however, that this table
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR ".TBL"
-.CR ".  TR"
-.CR ".    TD"
-.CR ".      nop 1*1 1*2"
-.CR ".  TR"
-.CR ".    TD"
-.CR ".      TBL cols=2 border="
-.CR ".        TR"
-.CR ".          TD"
-.CR ".            nop 2*1"
-.CR ".          TD"
-.CR ".            nop 2*2"
-.CR ".      ETB"
-.CR ".ETB"
-.fi
-.hy
+.EX
+\&.TBL
+\&.  TR
+\&.    TD
+\&.      nop 1*1 1*2
+\&.  TR
+\&.    TD
+\&.      TBL cols=2 border=
+\&.        TR
+\&.          TD
+\&.            nop 2*1
+\&.          TD
+\&.            nop 2*2
+\&.      ETB
+\&.ETB
+.EE
 .RE
+.
 .
 .PP
 and this table
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR ".TBL cols=2"
-.CR ".  TR"
-.CR ".    TD colspan=2"
-.CR ".      nop 1*1 1*2"
-.CR ".  TR"
-.CR ".    TD"
-.CR ".      nop 2*1"
-.CR ".    TD"
-.CR ".      nop 2*2"
-.CR ".ETB"
-.fi
-.hy
+.EX
+\&.TBL cols=2
+\&.  TR
+\&.    TD colspan=2
+\&.      nop 1*1 1*2
+\&.  TR
+\&.    TD
+\&.      nop 2*1
+\&.    TD
+\&.      nop 2*2
+\&.ETB
+.EE
 .RE
+.
 .
 .PP
 are similar but not identical (the use of
@@ -443,10 +434,9 @@ is purely cosmetic to get proper indentation).
 The first table looks like
 .
 .PP
-.nf
-.nh
-.ft CR
+.if t .ne 7v
 .RS
+.EX
 +------------------------------------------------------+
 | 1*1 1*2                                              |
 +------------------------------------------------------+
@@ -454,40 +444,36 @@ The first table looks like
 | 2*1                         2*2                      |
 |                                                      |
 +------------------------------------------------------+
+.EE
 .RE
-.ft
-.hy
-.fi
+.
 .
 .PP
 and the second one like
 .
+.
 .PP
-.nf
-.nh
-.ft CR
+.if t .ne 5v
 .RS
+.EX
 +------------------------------------------------------+
 | 1*1 1*2                                              |
 +---------------------------+--------------------------+
 | 2*1                       | 2*2                      |
 +---------------------------+--------------------------+
+.EE
 .RE
-.ft
-.hy
-.fi
+.
 .
 .PP
 Here the latter table in a more compact form.
 .
 .PP
 .RS
-.nf
-.nh
-.CR ".TBL cols=2 .TR \[dq].TD colspan=2\[dq] 1*1 1*2"
-.CR ".            TR .TD 2*1 .TD 2*2 .ETB"
-.fi
-.hy
+.EX
+\&.TBL cols=2 .TR \[dq].TD colspan=2\[dq] 1*1 1*2
+\&.            TR .TD 2*1 .TD 2*2 .ETB
+.EE
 .RE
 .
 .
@@ -805,45 +791,42 @@ as in the following table fragment
 (the overlapping happens in the second cell in the second row),
 is invalid and causes incorrect results.
 .
+.
 .RS
 .IP
-.nh
-.nf
-.CR ".TR .TD 1*1 \[dq].TD 1*2 rowspan=2\[dq] .TD 1*3"
-.CR ".TR \[dq].TD 2*1 colspan=2\[dq]         .TD 2*3"
-.fi
-.hy
+.EX
+\&.TR .TD 1*1 \[dq].TD 1*2 rowspan=2\[dq] .TD 1*3
+\&.TR \[dq].TD 2*1 colspan=2\[dq]         .TD 2*3
+.EE
 .RE
+.
 .
 .PP
 A working example for headers and cells with
 .B colspan
 is
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR .TBL cols=3
-.CR ".  TR" \[dq].TH colspan=2\[dq] header1+2 .TH header3
-.CR ".  TR" .TD 1*1 .TD 1*2 .TD 1*3
-.CR ".  TR" .TD 2*1 \[dq].TD colspan=2\[dq] 2*2+3
-.CR .ETB
-.fi
-.hy
+.EX
+\&.TBL cols=3
+\&.  TR \[dq].TH colspan=2\[dq] header1+2 .TH header3
+\&.  TR .TD 1*1 .TD 1*2 .TD 1*3
+\&.  TR .TD 2*1 \[dq].TD colspan=2\[dq] 2*2+3
+\&.ETB
+.EE
 .RE
+.
 .
 .PP
 This looks like
 .
+.
 .PP
-.ft CR
-.if t \{\
-.  ne 7v
-.\}
+.if t .ne 7v
 .RS
-.nf
-.nh
+.EX
 +------------------------------+---------------+
 |          header1+2           |    header3    |
 +--------------+---------------+---------------+
@@ -851,56 +834,53 @@ This looks like
 +--------------+---------------+---------------+
 | 2*1          | 2*2+3                         |
 +--------------+-------------------------------+
+.EE
 .RE
-.ft
-.hy
-.fi
+.
 .
 .PP
 A working example with
 .B rowspan
 is
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR .TBL cols=3
-.CR ".  TR"
-.CR ".  TD" 1*1
-.CR ".  TD" rowspan=2 1+2*2
-.CR ".  TD" 1*3
-.CR .
-.CR ".  TR"
-.CR ".  TD" 2*1
-.CR ".  TD" 2*3
-.CR .ETB
-.fi
-.hy
+.EX
+\&.TBL cols=3
+\&.  TR
+\&.  TD 1*1
+\&.  TD rowspan=2 1+2*2
+\&.  TD 1*3
+\&.
+\&.  TR
+\&.  TD 2*1
+\&.  TD 2*3
+\&.ETB
+.EE
 .RE
+.
 .
 .PP
 which looks like
 .
+.
 .PP
-.ft CR
+.if t .ne 5v
 .RS
-.nf
-.nh
+.EX
 +--------------+---------------+---------------+
 | 1*1          | 1+2*2         | 1*3           |
 +--------------+               +---------------+
 | 2*1          |               | 2*3           |
 +--------------+---------------+---------------+
-.hy
-.fi
+.EE
 .RE
-.ft CR
-.
 .RE
 .RE
 .
 .\"==================================================================
+.
 .
 .TP
 .CB ".ETB \[lB]hold\[rB]"
@@ -1185,12 +1165,12 @@ to minimize the markup needed in each table.
 The following example sets up defaults suitable for typical papers:
 .PP
 .RS
-.nf
-.CR ".ds t*bgc white\e\[dq] background color
-.CR ".ds t*fgc black\e\[dq] foreground color
-.CR ".ds t*bc black\e\[dq]  border color
-.CR ".nr t*cpd 0.1n\e\[dq]  cell padding
-.fi
+.EX
+\&.ds t*bgc white\[rs]\[dq] background color
+\&.ds t*fgc black\[rs]\[dq] foreground color
+\&.ds t*bc black\[rs]\[dq]  border color
+\&.nr t*cpd 0.1n\[rs]\[dq]  cell padding
+.EE
 .RE
 .
 .
@@ -1210,13 +1190,14 @@ to the page header macro of your document's main macro package.
 .
 For example, say
 .
+.
 .PP
 .RS
-.nf
-.CR ".am pg@top"
-.CR ".  t*hm"
-.CR ".."
-.fi
+.EX
+\&.am pg@top
+\&.  t*hm
+\&..
+.EE
 .RE
 .
 .
@@ -1239,16 +1220,16 @@ to the \[lq]end\[rq] macro of your document's main macro package.
 .
 For example:
 .
+.
 .PP
 .RS
-.nf
-.nh
-.CR ".am pg@end-text"
-.CR ".  t*EM"
-.CR ".."
-.fi
-.hy
+.EX
+\&.am pg@end-text
+\&.  t*EM
+\&..
+.EE
 .RE
+.
 .
 .PP
 If you use the

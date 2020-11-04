@@ -534,9 +534,9 @@ For example,
 the sequence:
 .
 .RS
-.ne 12
-.nf
 .IP
+.ne 12v
+.EX
 \&.nr PS 10
 \&.nr GROWPS 3
 \&.nr PSINCR 1.5p
@@ -549,7 +549,7 @@ Second Level Heading
 \&.
 \&.NH 3
 Third Level Heading
-.fi
+.EE
 .RE
 .
 .IP
@@ -600,24 +600,32 @@ accordingly.
 By default,
 .B SN\-STYLE
 is initialised by defining the alias
+.
+.
 .RS
-.nf
 .IP
+.EX
 \&.als SN\-STYLE SN\-DOT
-.fi
+.EE
 .RE
+.
+.
 .IP
 it may be changed to the
 .B SN\-NO\-DOT
 style,
 if preferred,
 by defining the alternative alias
+.
+.
 .RS
-.nf
 .IP
+.EX
 \&.als SN\-STYLE SN\-NO\-DOT
-.fi
+.EE
 .RE
+.
+.
 .IP
 Any such change becomes effective with the first use of
 .BR .NH ,
@@ -646,12 +654,14 @@ the user may redefine it as an alias for
 'ne 10
 by including the initialisation:
 .
+.
 .RS
-.nf
 .IP
+.EX
 \&.als SN SN\-NO\-DOT
-.fi
+.EE
 .RE
+.
 .
 .IP
 at any time;
@@ -686,13 +696,14 @@ as used in the preceding
 example,
 the sequence:
 .
+.
 .RS
-.ne
-.nf
 .IP
+.ne 2v
+.EX
 \&.SH 2
 An Unnumbered Subheading
-.fi
+.EE
 .RE
 .
 .IP
@@ -1380,7 +1391,7 @@ For example:
 .
 .PP
 .ne 8
-.nf
+.EX
 \&.XS 1
 Introduction
 \&.XA 2
@@ -1389,8 +1400,9 @@ A Brief History of the Universe
 Details of Galactic Formation
 \&.\|.\|.
 \&.XE
-.fi
+.EE
 .RE
+.
 .
 .LP
 Use the
