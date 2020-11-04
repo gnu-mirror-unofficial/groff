@@ -140,48 +140,6 @@ all exit afterward.
 .
 .
 .TP
-.B \-C
-Recognize
-.B .PS
-and
-.B .PE
-even when followed by a character other than space or newline.
-.
-.TP
-.B \-S
-Safer mode; do not execute
-.B sh
-commands.
-.
-This can be useful when operating on untrustworthy input (enabled by
-default).
-.
-.TP
-.B \-U
-Unsafe mode; revert the default option
-.BR \-S .
-.
-.TP
-.B \-n
-Don't use the groff extensions to the troff drawing commands.
-.
-You should use this if you are using a postprocessor that doesn't
-support these extensions.
-.
-The extensions are described in
-.BR groff_out (@MAN5EXT@).
-.
-The
-.B \-n
-option also causes
-.B pic
-not to use zero-length lines to draw dots in troff mode.
-.
-.TP
-.B \-t
-\*(tx mode.
-.
-.TP
 .B \-c
 Be more compatible with
 .IR tpic .
@@ -213,6 +171,54 @@ non-negative line thickness has not been specified by use of the
 attribute or by setting the
 .B linethick
 variable.
+.
+.
+.TP
+.B \-C
+Recognize
+.B .PS
+and
+.B .PE
+even when followed by a character other than space or newline.
+.
+.
+.TP
+.B \-n
+Don't use the groff extensions to the troff drawing commands.
+.
+You should use this if you are using a postprocessor that doesn't
+support these extensions.
+.
+The extensions are described in
+.BR groff_out (@MAN5EXT@).
+.
+The
+.B \-n
+option also causes
+.B pic
+not to use zero-length lines to draw dots in troff mode.
+.
+.
+.TP
+.B \-S
+Safer mode; do not execute
+.B sh
+commands.
+.
+This can be useful when operating on untrustworthy input (enabled by
+default).
+.
+.
+.TP
+.B \-t
+\*(tx mode.
+.
+.
+.TP
+.B \-U
+Unsafe mode; revert the default option
+.BR \-S .
+.
 .
 .TP
 .B \-z

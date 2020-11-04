@@ -318,44 +318,6 @@ and
 is ignored if given.
 .
 .TP
-.B \-q
-Suppress warnings about characters in the map file that were not found
-in the TFM file.
-.
-Warnings never are given for unnamed glyphs or by glyphs named by their
-Unicode values.
-.
-This option is useful when sending the output of
-.B hpftodit
-to the standard output.
-.
-.TP
-.B \-v
-Print the
-.B hpftodit
-version number and exit.
-.
-.TP
-.B \-s
-The font is special.
-.
-This option adds the
-.B special
-command to the font file,
-and affects the order in which HP symbol sets are searched for each
-glyph.
-.
-Without the
-.B \-s
-option,
-the \[lq]text\[rq] sets are searched before the \[lq]mathematical\[rq]
-symbol sets.
-With the
-.B \-s
-option,
-the search order is reversed.
-.
-.TP
 .BI \-i n
 Generate an italic correction for each character so that the character's
 width plus the character's italic correction is equal to
@@ -385,6 +347,44 @@ The left italic correction may be negative.
 .IP
 This option normally is needed only with italic or oblique fonts;
 a value of 50 (0.05\~em) usually is a reasonable choice.
+.
+.TP
+.B \-q
+Suppress warnings about characters in the map file that were not found
+in the TFM file.
+.
+Warnings never are given for unnamed glyphs or by glyphs named by their
+Unicode values.
+.
+This option is useful when sending the output of
+.B hpftodit
+to the standard output.
+.
+.TP
+.B \-s
+The font is special.
+.
+This option adds the
+.B special
+command to the font file,
+and affects the order in which HP symbol sets are searched for each
+glyph.
+.
+Without the
+.B \-s
+option,
+the \[lq]text\[rq] sets are searched before the \[lq]mathematical\[rq]
+symbol sets.
+With the
+.B \-s
+option,
+the search order is reversed.
+.
+.TP
+.B \-v
+Print the
+.B hpftodit
+version number and exit.
 .
 .
 .\" ====================================================================
