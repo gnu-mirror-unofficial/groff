@@ -48,7 +48,7 @@ A
 system consists of an extensible text formatting language and a set of
 programs for printing and converting to other text formats.
 .
-Unix-like operating systems distribute a
+Unix-like operating systems often distribute a
 .I roff
 system as a core package.
 .
@@ -447,8 +447,8 @@ and enabled the user to write diagnostics to the standard error stream
 .RB ( .tm ).
 .
 Around 1974,
-empowered with scalable fonts,
-italic type,
+empowered with multiple type sizes,
+italics,
 and a symbol font specially commissioned by Bell Labs from
 Graphic Systems,
 Brian Kernighan and Lorinda Cherry implemented
@@ -502,12 +502,12 @@ by Lesk in Version 6.
 .
 He also wrote a manual,
 \[lq]Typing Documents on the Unix System\[rq],
-describing it and basic
+describing
+.I ms
+and basic
 .IR nroff / troff
 usage,
-updating it as
-.I ms
-accrued features.
+updating it as the package accrued features.
 .
 .
 .P
@@ -530,11 +530,10 @@ edited by Kernighan.
 .
 .
 .P
-Ossanna passed away unexpectedly in 1977,
-and after release of Version 7,
-with the C/A/T typesetter becoming supplanted by alternative typesetting
-devices,
-Kerngihan undertook a revision and rewrite of
+Ossanna had passed away unexpectedly in 1977,
+and after the release of Version 7,
+with the C/A/T typesetter becoming supplanted by alternative devices,
+Kernighan undertook a revision and rewrite of
 .I troff
 to generalize its design.
 .
@@ -548,7 +547,8 @@ last revised in 1982,
 and like the
 .I troff
 manual itself,
-it is widely known simply as \[lq]CSTR #97\[rq],
+it is widely known by a shorthand,
+\[lq]CSTR #97\[rq].
 .
 .
 .P
@@ -591,7 +591,7 @@ The most important free
 .I roff
 project historically has been
 .IR groff ,
- the GNU implementation of
+the GNU implementation of
 .IR troff ,
 developed from scratch by James Clark starting in 1989 and distributed
 under
@@ -610,7 +610,7 @@ rapidly attracted contributors,
 and has served as a complete replacement for almost all applications of
 AT&T
 .I troff
-(exceptions include users of
+(exceptions include
 .IR mv ,
 a macro package for preparation of viewgraphs and slides,
 and the
@@ -622,7 +622,7 @@ it has added numerous features;
 see
 .IR groff_diff (@MAN7EXT@).
 .
-From its inception and for at least the following three decades,
+Since its inception and for at least the following three decades,
 it has been used by practically all GNU/Linux and BSD operating systems.
 .
 .
@@ -673,16 +673,19 @@ Moreover, one finds there the
 .SH "Using roff"
 .\" ====================================================================
 .
-Most people won't even notice that they are actually using
-.IR roff .
-.
-When you read a system manual page (man page)
+Many people use
 .I roff
-is working in the background.
+frequently without knowing it.
 .
-But using
+When you read a system manual page
+(man page),
+it is often a
 .I roff
-explicitly isn't difficult either.
+working in the background to render it.
+.
+But using a
+.I roff
+explicitly isn't difficult.
 .
 .
 .P
@@ -690,85 +693,108 @@ Some
 .I roff
 implementations provide wrapper programs that make it easy to use the
 .I roff
-system on the shell command line.
+system from the shell's command line.
 .
-For example,
-the GNU
-.I roff
-implementation,
+These can be specific to a macro package,
+like
+.IR mmroff (@MAN1EXT@),
+or more general.
+.
 .IR groff (@MAN1EXT@)
-provides command-line options to avoid the long command pipes of
-AT&T
-.IR troff ;
-a program
-.IR grog (@MAN1EXT@)
-tries to infer from a document's contents which
+provides command-line options sparing the user from constructing the
+long,
+order-dependent pipelines familiar to AT&T
+.I troff
+users.
+.
+Further,
+a heuristic program,
+.IR grog (@MAN1EXT@),
+is available to infer from a document's contents which
 .I groff
 arguments should be used to process it.
 .
 .
 .\" ====================================================================
-.SS "The roff pipe"
+.SS "The roff pipeline"
 .\" ====================================================================
 .
 Each
 .I roff
 system consists of preprocessors,
+one or more
 .I roff
-formatter programs, and a set of device postprocessors.
+formatter programs,
+and a set of output drivers
+(or \[lq]device postprocessors\[rq]).
 .
-This concept makes heavy use of the
-.I piping
-mechanism, that is, a series of programs is called one after the other,
-where the output of each program in the queue is taken as the input
-for the next program.
+This arrangement is designed to take advantage of a landmark Unix
+innovation in inter-process communication:
+the pipe.
+.
+That is,
+a series of programs termed a \[lq]pipeline\[rq] is called together
+.\" in an indeterminate order :P
+where the output of each program in the sequence is taken as the input
+for the next program,
+without (necessarily) passing through temporary files on a disk.
+.
+(On non-Unix systems,
+pipelines may have to be simulated.)
+.
 .
 .RS
-.P
-cat \f[I]file\f[P] \
-| .\|.\|. \
-| \f[I]preproc\f[P] \
-| .\|.\|. \
-| troff \f[I]options\f[P] \
-| \f[I]postproc\f[P]
+.PP
+.EX
+.RI $\~ preproc1 \~\c
+.BI <\~ input-file \~|\~ preproc2 \~|\~\c
+.RB .\|.\|.\&\~ "| troff\~"\c
+.BI [ option\~\c
+.RB "\~.\|.\|.\&]\~" \[rs]
+.BI "    |\~" output-driver \" 4 leading spaces
+.EE
 .RE
 .
 .
 .P
-The preprocessors generate
+One all preprocessors have run,
+they deliver a pure
 .I roff
-code that is fed into a
-.I roff
-formatter (e.g.,
-.BR troff ),
-which in turn generates
-.I intermediate output
-that is fed into a device postprocessor program for printing or final
-output.
+document to the formatter,
+which in turn generates intermediate output that is fed into an output
+driver for viewing,
+printing,
+or further processing.
 .
 .
 .P
-All of these parts use programming languages of their own; each
-language is totally unrelated to the other parts.
+All of these parts use programming languages of their own;
+each language is totally unrelated to the other parts.
 .
 Moreover,
 .I roff
-macro packages that were tailored for special purposes can be
-included.
+macro packages that are tailored for special purposes can be included.
 .
 .
 .P
 Most
 .I roff
-documents use the macros of some package, intermixed with code for one
-or more preprocessors, spiced with some elements from the plain
+input files use the macros of a document formatting package,
+intermixed with instructions for one or more preprocessors,
+seasoned with escape sequences and requests directly from the
 .I roff
 language.
 .
+Some documents are simpler still,
+since their formatting packages discourage direct use of
+.I roff
+requests;
+man pages are a prominent example.
+.
 The full power of the
 .I roff
-formatting language is seldom needed by users; only programmers of
-macro packages need to know about the gory details.
+formatting language is seldom needed by users;
+only programmers of macro packages need a substantial command of it.
 .
 .
 .
@@ -848,17 +874,20 @@ grn@for including \fBgremlin\fR(1) pictures.
 .SS "Formatter programs"
 .\" ====================================================================
 .
-A formatter is a program that parses documents written in the
+In the context of
+.I roff
+systems,
+the formatter is the program that parses documents written in the
 .I roff
 language.
 .
 It generates intermediate output,
-which is intended to be fed into an output driver,
-or device postprocessor,
-that must be specified by a command-line option to the formatter.
+which is intended to be fed into an output driver
+(also known as a device postprocessor),
+the identity of which must be known prior to processing.
 .
-The documents must have been run through all necessary preprocessors
-before to render correctly.
+The documents must already have been run through all necessary
+preprocessors to render correctly.
 .
 .
 .P
@@ -868,8 +897,7 @@ formatter is represented in another language,
 termed the \[lq]intermediate output format\[rq].
 .
 As noted in section \[lq]History\[rq] above,
-this language was first specified in
-[CSTR\~#97];
+this language was first specified in CSTR\~#97;
 GNU extensions to it are documented in
 .IR groff_out (@MAN5EXT@).
 .
@@ -877,24 +905,22 @@ Intermediate output is in specialized in its parameters,
 but not its syntax,
 for the output driver used;
 the format is
-.RI device- independent,
+.RI device- independent ,
 but not
-.RI device- agnostic.
+.RI device- agnostic .
 .
 .
 .P
-The
-.I roff
-formatter is the heart of the
+The formatter is the heart of the
 .I roff
 system.
 .
 AT&T
-.I roff
-had two formatters,
-.B nroff
-for terminals
-.B troff
+had two formatters:
+.I nroff
+for terminals,
+and
+.I troff
 for typesetters.
 .
 .
@@ -911,105 +937,96 @@ documentation prefers the term
 .
 .
 .\" ====================================================================
-.SS "Devices and postprocessors"
+.SS "Devices and output drivers"
 .\" ====================================================================
 .
-Devices are hardware interfaces like printers, text or graphical
-terminals, etc., or software interfaces such as a conversion into a
-different text or graphical format.
+To a
+.I roff
+system,
+a
+.I device
+is a hardware interface like a printer,
+a text or graphical terminal,
+or a standardized file format that unrelated software can interpret.
 .
 .
 .P
 A
 .I roff
-postprocessor is a program that transforms
+output driver is a program that parses the device-independent
+intermediate output format of
 .I troff
-output into a form suitable for a special device.
-.
-The
-.I roff
-postprocessors are like device drivers for the output target.
+and produces instructions specific to the device or file format it
+supports.
 .
 .
 .P
-For each device there is a postprocessor program that fits the device
-optimally.
+The names of the devices and their driver programs are not standardized.
 .
-The postprocessor parses the generated intermediate output and
-generates device-specific code that is sent directly to the device.
+Technologies change;
+the devices used for document preparation have greatly changed since
+CSTR\~#54 was first written in the 1970s.
 .
+Such hardware is no longer used in production environments,
+and device capabilities
+(including resolution,
+color drawing,
+and font repertoire)
+have tended to increase.
 .
-.P
-The names of the devices and the postprocessor programs are not fixed
-because they greatly depend on the software and hardware abilities of
-the actual computer.
-.
-For example, the classical devices mentioned in
-[CSTR\~#54]
-have greatly changed since the classical times.
-.
-The old hardware doesn't exist any longer and the old graphical
-conversions were quite imprecise when compared to their modern
-counterparts.
-.
-.
-.P
-For example, the PostScript device
-.I post
-in classical
+The PostScript output driver
+.IR dpost (1)
+from an AT&T
 .I troff
-had a resolution of 720 units per inch, while
+of 1980s vintage had a resolution of 720 units per inch,
+whereas
 .IR groff 's
-.I ps
-device has 72000, a refinement of factor 100.
+.IR grops (@MAN1EXT@)
+uses 72 000.
 .
 .
-.P
-Today the operating systems provide device drivers for most
-printer-like hardware, so it isn't necessary to write a special
-hardware postprocessor for each printer.
+.\".P
+.\"Today the operating systems provide device drivers for most
+.\"printer-like hardware, so it isn't necessary to write a special
+.\"hardware postprocessor for each printer.
+.\" XXX?  No they don't.  Instead printers interpret PS or PDF directly.
+.\" With a TCP/IP protocol stack and an HTTP server to accept POSTed
+.\" documents for printing.
 .
 .
 .\" ====================================================================
-.SH "roff Programming"
+.SH "roff programming"
 .\" ====================================================================
 .
 Documents using
 .I roff
-are normal text files decorated by
+are normal text files interleaved with
 .I roff
 formatting elements.
 .
-The
 .I roff
-formatting language is quite powerful; it is almost a full programming
-language and provides elements to enlarge the language.
+languages are powerful enough to support arbitrary computation and
+supply facilities that encourage their extension.
 .
-With these, it became possible to develop macro packages that are
-tailored for special applications.
-.
-Such macro packages are much handier than plain
-.IR roff .
-.
-So most people will choose a macro package without worrying about the
-internals of the
-.I roff
-language.
+The primary such facility is macro definition;
+with this feature,
+macro packages have been developed that are tailored for particular
+applications.
 .
 .
 .\" ====================================================================
 .SS "Macro packages"
 .\" ====================================================================
 .
-Macro packages are collections of macros that are suitable to format a
-special kind of documents in a convenient way.
+Macro packages can have a much smaller vocabulary than
+.I roff
+itself;
+this trait combined with their domain-specific nature can make them easy
+to acquire and master.
 .
-This greatly eases the usage of
-.IR roff .
-.
-The macro definitions of a package are kept in a file called
+The macro definitions of a package are typically kept in a file called
 .IB name .tmac
-(classically
+(historically,
 .BI tmac. name\/\c\" Italic correction comes before \c !
 ).
 .
@@ -1018,73 +1035,132 @@ positions.
 .
 Details on the naming of macro packages and their placement is found
 in
-.BR groff_tmac (@MAN5EXT@).
+.IR groff_tmac (@MAN5EXT@).
 .
 .
 .P
-A macro package that is to be used in a document can be announced to
+A macro package anticipated for use in a document can be delcared to
 the formatter by the command-line option
-.BR \-m ,
+.BR \-m ;
 see
-.BR troff (@MAN1EXT@),
-or it can be specified within a document using the file inclusion
-requests of the
+.IR \%@g@troff (@MAN1EXT@).
+.
+It can alternatively be specified within a document using the file
+inclusion requests of the
 .I roff
-language, see
-.BR groff (@MAN7EXT@).
+language; see
+.IR groff (@MAN7EXT@).
 .
 .
 .P
-Famous classical macro packages are
+Well-known macro packages include
 .I man
-for traditional man pages,
+for traditional man pages and
 .I mdoc
-for \f[CR]BSD\f[]-style manual pages;
-the macro sets for books, articles, and letters are
-.I me
-(probably from the first name of its creator
-.I Eric
-Allman),
+for BSD-style manual pages.
+.
+Macro packages for typesetting books,
+articles,
+and letters include
 .I ms
-(from
-.IR "Manuscript Macros\/" ),
-and
+(from \[lq]manuscript macros\[rq]),
+.I me
+(named by a system administrator from the first name of its creator,
+Eric Allman),
 .I mm
-(from
-.IR "Memorandum Macros\/" ).
+(from \[lq]memorandum macros\[rq]),
+and
+.IR mom ,
+a punningly-named package exercising many
+.I groff
+extensions.
 .
 .
 .\" ====================================================================
 .SS "The roff formatting language"
 .\" ====================================================================
 .
-The classical
-.I roff
-formatting language is documented in the
-.I Troff User's Manual
-[CSTR\~#54].
+The canonical reference for the AT&T
+.I troff
+language is Ossanna's \[lq]Troff User's Manual\[rq],
+CSTR\~#54,
+in its 1992 revision by Kernighan.
 .
-The
 .I roff
-language is a full programming language providing requests, definition
-of macros, escape sequences, string variables, number or size
-registers, and flow controls.
+languages provide requests,
+escape sequences,
+macro definition facilities,
+string variables,
+registers for storage of numbers or dimensions,
+and control of execution flow.
+.
+The theoretically-minded will observe that a
+.I roff
+is not a mere markup language,
+but Turing-complete,
+and would be even stripped of its macro-definition facility.
+.
+It has storage
+(registers);
+it can perform tests
+(as in onditional expressions like
+.RB \[lq] "(\[rs]n[i] >= 1)" \[rq]);
+and it can jump or branch using the
+.B .if
+request.
 .
 .
 .P
 .I Requests
-are the predefined basic formatting commands similar to the commands
-at the shell prompt.
+and
+.I escape sequences
+are instructions,
+predefined parts of the language,
+that perform formatting operations or otherwise change the state of the
+parser.
 .
-The user can define request-like elements using predefined
-.I roff
-elements.
+The user can define their own request-like elements by composing
+together text,
+requests,
+and escape sequences
+.IR "ad libitum" .
 .
-These are then called
-.IR macros .
 .
-A document writer will not note any difference in usage for requests
-or macros; both are written on a line on their own starting with a dot.
+A document writer will not
+(usually)
+note any difference in usage for requests or macros;
+both are written on a line on their own starting with a dot.
+.
+However,
+there is a distinction;
+requests take either a fixed number of arguments
+(sometimes zero),
+silently ignoring any excess,
+or consume the rest of the input line,
+whereas macros can take a variable number of arguments.
+.
+Since arguments are separated by spaces,
+macros require a means of embedding a space in an argument;
+in other words,
+of quoting it.
+.
+This then demands a mechanism of embedding the quoting character itself,
+in case
+.I it
+is needed literally in a macro argument.
+.
+AT&T
+.I troff
+had complex rules involving the placement and repetition of the double
+quote to achieve both aims.
+.
+.I groff
+cuts this knot by supporting a special character escape sequence for the
+double quote,
+.RB \[lq] \[rs][dq] \[rq] ,
+which never performs quoting in the typesetting language,
+but is simply a glyph,
+.RB \[oq] \[dq] \[cq].
 .
 .
 .P
@@ -1134,7 +1210,7 @@ and its value can be retrieved by the escape sequence
 .
 .
 .\" ====================================================================
-.SH "File Name Extensions"
+.SH "File name extensions"
 .\" ====================================================================
 .
 Manual pages (man pages) take the section number as a file name
@@ -1286,14 +1362,14 @@ In the output, this sentence continues the same paragraph.
 .SS "Editing with Emacs"
 .\" ====================================================================
 .
-The best program for editing a
+Official GNU doctrine holds that the best program for editing a
 .I roff
-document is Emacs (or XEmacs); see
-.BR emacs (1).
+document is Emacs; see
+.IR emacs (1).
 .
 It provides an
 .I nroff
-mode that is suitable for all kinds of
+major mode that is suitable for all kinds of
 .I roff
 dialects.
 .
@@ -1408,9 +1484,11 @@ after any Emacs configuration:
 Replace \[lq]groff\[rq] in the above with \[lq]nroff\[rq] if you want
 highlighing that does
 .I not
-recognize many of the \f[CR]GNU\f[] extensions to
+recognize the GNU extensions to
 .IR roff ,
-such as request, register, and string names longer than two characters.
+such as request,
+register,
+and string names longer than two characters.
 .
 .
 .\" ====================================================================
@@ -1446,12 +1524,30 @@ are documented in great detail.
 .SS "Internet sites"
 .\" ====================================================================
 .
-.TP
-\[lq]History of Unix Manpages\[rq]
-An
+.P
+.UR https://github.com/larrykollar/Unix-Text-Processing
+.I Unix Text Processing
+.UE ,
+by Dale Dougherty and Tim O'Reilly,
+1987,
+Hayden Books.
+.
+This well-regarded text from 1987 brings the reader from a state of no
+knowledge of Unix or text editing
+(if necessary)
+to sophisticated computer-aided typesetting.
+.
+It has been placed under a free software license by its authors and
+updated by a team of
+.I groff
+contributors and enthusiasts.
+.
+.
+.P
 .UR http://\:manpages\:.bsd\:.lv/\:history\:.html
-online article maintained by the mdocml project
-.UE
+\[lq]History of Unix Manpages\[rq]
+.UE ,
+an online article maintained by the mdocml project,
 provides an overview of
 .I roff
 development from Salzer's
@@ -1461,82 +1557,61 @@ with links to original documentation and recollections of the authors
 and their contemporaries.
 .
 .
-.TP
-troff.org
+.P
 .UR http://\:www\:.troff\:.org/
-The historical troff site
-.UE
-provides an overview and pointers to the historical aspects of
-.IR roff .
+troff.org
+.UE ,
+Ralph Corderoy's
+.I troff
+site,
+provides an overview and pointers to much historical
+.I roff
+information.
 .
-.TP
-Multics
+.
+.P
 .UR http://\:www\:.multicians\:.org/
-The Multics site
-.UE
-contains a lot of information on the MIT projects, CTSS, Multics,
-early Unix, including
-.IR runoff ;
-especially useful are a glossary and the many links to ancient
-documents.
+Multicians
+.UE ,
+a site by Multics enthusiasts,
+contains a lot of information on the MIT projects CTSS and Multics,
+including
+.IR RUNOFF ;
+it is especially useful for its glossary and the many links to
+historical documents.
 .
-.TP
+.
+.P
 .UR http://\:www\:.tuhs\:.org/\:Archive/
 The Unix Archive
-.UE
-curated by the Unix Heritage Society provides the source code and some
-binaries of historical Unices
+.UE ,
+curated by the Unix Heritage Society,
+provides the source code and some binaries of historical Unices
 (including the source code of some versions of
 .I troff
 and its documentation)
 contributed by their copyright holders.
 .
 .
-.TP
-Developers at AT&T Bell Labs
-.UR http://\:www\:.bell\-labs\:.com/
-Bell Labs Computing and Mathematical Sciences Research
-.UE
-.
-provides a search facility for tracking information on the early
-developers.
-.
-.TP
-Plan 9
-.UR http://\:plan9\:.bell\-labs\:.com
-The Plan\~9 operating system
-.UE
-.
-by AT&T Bell Labs.
-.
-.TP
-runoff
+.P
 .UR http://\:web\:.mit\:.edu/\:Saltzer/\:www/\:publications/\
 \:pubs\:.html
 Jerry Saltzer's home page
 .UE
-stores some documents using the ancient RUNOFF formatting language.
+stores some documents using the original
+.I RUNOFF
+formatting language.
 .
-.TP
-CSTR Papers
-.UR https://\:www\:.alcatel\-lucent\:.com/\:bell\-labs\-journals
-The Bell Labs (now Alcatel) CSTR site
-.UE
 .
-stores the original
-.I troff
-manuals (CSTR #54, #97, #114, #116, #122) and famous historical
-documents on programming.
-.
-.TP
+.P
 .UR http://\:www\:.gnu\:.org/\:software/\:groff
 .I groff
-.UE
+.UE ,
 GNU
 .IR roff 's
-web site
+web site ,
 provides convenient access to
-.I groff 's
+.IR groff 's
 source code repository,
 bug tracker,
 and mailing lists
@@ -1547,108 +1622,81 @@ and mailing lists
 .SS "Historical roff documentation"
 .\" ====================================================================
 .
-Many classical
+Many AT&T
 .I troff
-documents are still available on-line.
-.
-The two main manuals of the
-.I troff
-language are
-.
-.TP
-[CSTR\~#54]
-J.\& F.\& Ossanna,
-.UR http://\:www\:.troff\:.org/\:54\:.pdf
-.I "Nroff/\:Troff User's Manual"
-.UE ;
-.
-Bell Labs, 1976; revised by Brian Kernighan, 1992.
-.
-.TP
-[CSTR\~#97]
-Brian Kernighan,
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:97.ps.gz
-.I "A Typesetter-independent TROFF"
-.UE ,
-.
-Bell Labs, 1981, revised March 1982.
-.
-.P
-The \[lq]little language\[rq]
-.I roff
-papers are
-.
-.TP
-[CSTR\~#114]
-Jon L.\& Bentley and Brian W.\& Kernighan,
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:114.ps.gz
-.I "GRAP \[en] A Language for Typesetting Graphs"
-.UE ;
-.
-Bell Labs, August 1984.
-.
-.TP
-[CSTR\~#116]
-Brian W.\& Kernighan,
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:116.ps.gz
-.I "PIC \[en] A Graphics Language for Typesetting"
-.UE ;
-.
-Bell Labs, December 1984.
-.
-.TP
-[CSTR\~#122]
-J.\& L.\& Bentley, L.\& W.\& Jelinski, and B.\& W.\& Kernighan,
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:122.ps.gz
-.I "CHEM \[en] A Program for Typesetting Chemical Structure Diagrams,"
-.I "Computers and Chemistry"
-.UE ;
-.
-Bell Labs, April 1986.
+documents are available online,
+and can be found at Ralph Corderoy's site
+(see above)
+or via Internet search.
 .
 .
 .P
-You can get an archive with most
-.I classical roff documentation
-as reasonable
-.I PDF files
-at
-.I github
-using the
-.I shell command
-.RS
-.EX
-$ git clone https://github.com/bwarken/roff_classical.git
-.EE
-.RE
+Of foremost significance are two mentioned in section \[lq]History\[rq]
+above,
+describing the language and its device-independent implementation,
+respectively.
+.
+.
+.P
+\[lq]Troff User's Manual\[rq];
+Computing Science Technical Report #54;
+Joseph F.\& Ossanna;
+AT&T Bell Laboratories;
+1976.
+.
+Revised by Brian Kernighan, November 1992.
+.
+.
+.P
+\[lq]A Typesetter-independent TROFF\[rq];
+Computing Science Technical Report #54;
+Brian W.\& Kernighan;
+AT&T Bell Laboratories;
+1981.
+.
+Revised March 1982.
+.
+.
+.P
+You can obtain many relevant Bell Labs papers in PDF from
+.UR https://github.com/bwarken/roff_classical.git
+Bernd Warken's
+\[lq]roff classical\[rq]
+GitHub repository
+.UE .
 .
 .
 .\" ====================================================================
 .SS "Manual pages"
 .\" ====================================================================
 .
-Due to its complex structure, a full
+As a system of multiple components,
+a
 .I roff
-system has many man pages, each describing a single aspect of
-.IR roff .
+system potentially has many man pages,
+each describing an aspect of it.
 .
-Unfortunately, there is no general naming scheme for the documentation
-among the different
+Unfortunately,
+there is no general naming scheme for the documentation among the
+different
 .I roff
 implementations.
 .
 .
 .P
-In
-.IR groff ,
-the man page
+For GNU
+.IR roff ,
+the
 .IR groff (@MAN1EXT@)
-contains a survey of all documentation available in
-.IR groff .
+man page offers a survey of all the documentation distributed with the
+system.
 .
 .
 .P
-On other systems, you are on your own, but
+With other
+.IR roff s,
+you are on your own,
+but
 .IR troff (1) \" foreign troff
 might be a good starting point.
 .
