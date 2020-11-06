@@ -4090,9 +4090,15 @@ column below.
 .
 .
 .Pp
+.\" Note: This table pushes 80-column ASCII and Latin-1 terminals to
+.\" the limits of their capacity.  Observe the spacing parameters of the
+.\" 2nd and 3rd columns; we had to steal a character cell from each (the
+.\" default is 3) because in the UCS column, the word "infinity" gets
+.\" written out in full, which in turn pushes the >= and Ge rows past
+.\" the 78n norm.  Update with caution.  See Savannah #59424.
 .TS
-lb lb lb lb lb lb
-l l l l l l.
+lb lb2 lb2 lb lb lb
+l l2 l2 l l l.
 String	7-bit	8-bit	UCS	Prefer	Meaning
 <=	<=  	<=	\*[<=]	\[rs](<=	less than or equal to
 >=	>=  	>=	\*[>=]	\[rs](>=	greater than or equal to
