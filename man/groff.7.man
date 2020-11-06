@@ -5089,69 +5089,94 @@ is the primary
 .I groff
 manual.
 .
-You can browse it interactively with \(lqinfo groff\(rq.
-.
-Besides the gory details, it contains many examples.
+You can browse it interactively with \[lq]info groff\[rq].
 .
 .
-.TP
-.BR groff (@MAN1EXT@)
-the usage of the groff program and pointers to the documentation and
-availability of the groff system.
-.
-.TP
-.BR groff_diff (@MAN7EXT@)
-describes the differences between the groff language and classical
-troff.
-.
-.IP
-This is the authoritative document for the predefined language
-elements that are specific to groff.
-.
-.TP
-.BR groff_char (@MAN7EXT@)
-the predefined groff special characters (glyphs).
-.
-.TP
-.BR groff_font (@MAN5EXT@)
-the specification of fonts and the DESC file.
-.
-.TP
-.BR groff_tmac (@MAN5EXT@)
-contains an overview of available groff macro packages, instructions on
-how to interface them with a document, guidance on writing macro
-packages and using diversions, and historical information on macro
-package naming conventions.
-.TP
-.BR roff (@MAN7EXT@)
-the history of roff, the common parts shared by all roff systems, and
-pointers to further documentation.
-.
-.TP
-[CSTR\~#54]
-.UR http://\:cm.bell\-labs.com/\:cm/\:cs/\:cstr/\:54.ps.gz
-Nroff/\:Troff User's Manual by Ossanna & Kernighan
-.UE
-\[em] the bible for classical troff.
-.
-.TP
-.I Wikipedia
-article about
+.P
+\[lq]Troff User's Manual\[rq]
+by Joseph F.\& Ossanna, 1976
+(revised by Brian W.\& Kernighan, 1992),
+AT&T Bell Laboratories Computing Science Techical Report No.\& 54,
+widely called simply \[lq]CSTR\~#54\[rq],
+documents the language,
+device and font description file formats,
+and device-independent output format
+referred to collectively in
 .I groff
-.UR https://\:en.wikipedia.org/\:wiki/\:Groff_%28software%29
-.UE .
+documentation as
+.RI \[lq]AT&T\~ troff \[rq].
+.
+.
+.P
+\[lq]A Typesetter-independent TROFF\[rq]
+by Brian W.\& Kernighan, 1982,
+AT&T Bell Laboratories Computing Science Techical Report No.\& 97
+(CSTR\~#97),
+provides additional insights into the
+device and font description file formats
+and device-independent output format.
+.
 .
 .TP
-.I Tutorial about groff
-.UR dl.dropbox.com/\:u/\:4299293/\:grofftut.pdf
-Manas Laha - An Introduction to the GNU Groff Text Processing System
-.UE
+.IR groff (@MAN1EXT@)
+is the preferred interface to the
+.I groff
+system;
+it manages the pipeline that carries a source document through
+preprocessors,
+the
+.I \%@g@troff
+formatter,
+and an output driver to viewable or printable form.
 .
-.TP
-.I troff.org
-This is a collection of internet sites with classical
+It also exhaustively lists all of the man pages provided with the GNU
 .I roff
-documentations and other information.
+system.
+.
+.
+.TP
+.IR groff_char (@MAN7EXT@)
+discusses character encoding issues,
+escape sequences that produce glyphs,
+and enumerates
+.IR groff 's
+predefined special character escapes.
+.
+.
+.TP
+.IR groff_diff (@MAN7EXT@)
+covers the differences between the
+GNU
+.I troff \" GNU
+formatter,
+its device and font description file format,
+and its device-independent output format,
+and those of AT&T
+.IR troff ,\" AT&T
+whose design it re-implements.
+.
+.
+.TP
+.IR groff_font (@MAN5EXT@)
+describes the formats of the files that describe devices
+.RI ( DESC )
+and fonts.
+.
+.
+.TP
+.IR groff_tmac (@MAN5EXT@)
+surveys macro packages provided with
+.IR groff ,
+describes how documents can take advantage of them,
+offers guidance on writing macro packages and using diversions,
+and includes historical information on macro package naming conventions.
+.
+.
+.TP
+.IR roff (@MAN7EXT@)
+presents a detailed history of
+.I roff
+systems and summarizes concepts common to them.
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
