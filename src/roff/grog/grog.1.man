@@ -67,12 +67,12 @@ grog \- \(lqgroff guess\(rq\(eminfer a document's groff command
 .SH Description
 .\" ====================================================================
 .
-.B grog
+.I grog
 reads the input (file names or standard input) and guesses which of
 the
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 options are needed to perform the input with the
-.B groff
+.I groff
 program.
 .
 .
@@ -89,19 +89,21 @@ reads the standard input stream.
 .P
 A suitable device is now always written as
 .BI \-T device
-including the groff default as
+including the
+.I groff
+default of
 .BR "\-T ps" .
 .
 .
 .P
 The corresponding
-.B groff
+.I groff
 command is usually displayed in standard output.
 .
 With the option
 .BR \-\-run ,
 the generated line is output into standard error and the generated
-.B groff
+.I groff
 command is run on the
 .IR "standard output" .
 .
@@ -127,7 +129,7 @@ all exit afterward.
 this option means enabling the
 .I groff
 compatibility mode, which is also transfered to the generated
-.B groff
+.I groff
 command line.
 .
 .TP
@@ -153,7 +155,7 @@ All other specified short options (words starting with one minus
 character
 .BR \- )
 are interpreted as
-.B groff
+.I groff
 options or option clusters with or without argument.
 .
 No space is allowed between options and their argument.
@@ -162,22 +164,22 @@ Except from the
 .BI \-m arg
 options, all options will be passed on, i.e.\& they are included
 unchanged in the command for the output without effecting the work of
-.BR grog .
+.IR grog .
 .
 .
 .\" ====================================================================
 .SH Details
 .\" ====================================================================
 .
-.B grog
+.I grog
 reads all
 .I file
 parameters as a whole.
 .
 It tries to guess which of the following
-.B groff
+.I groff
 options are required for running the input under
-.BR groff :
+.IR groff :
 .BR \-e ,
 .BR \-g ,
 .BR \-G ,
@@ -202,7 +204,7 @@ and
 .
 .P
 The guessed
-.B groff
+.I groff
 command including those options and the found
 .I file
 parameters is put on the standard output.
@@ -210,7 +212,7 @@ parameters is put on the standard output.
 .
 .P
 It is possible to specify arbitrary
-.B groff
+.I groff
 options on the command line.
 .
 These are passed on the output without change, except for the
@@ -220,13 +222,13 @@ options.
 .
 .P
 The
-.B groff
+.I groff
 program has trouble when the wrong
 .BI \-m arg
 option or several of these options are specified.
 .
 In these cases,
-.B grog
+.I grog
 will print an error message and exit with an error code.
 .
 It is better to specify no
@@ -242,7 +244,7 @@ does not find any of these options or the same option is found.
 If several different
 .BI \-m arg
 options are found by
-.B grog
+.I grog
 an error message is produced and the program is terminated with an
 error code.
 .
@@ -258,7 +260,7 @@ file can also be written in the
 .I groff
 language without any macro package.
 .
-.B grog
+.I grog
 will produce an output without an
 .BI \-m arg
 option.
@@ -266,7 +268,7 @@ option.
 .
 .P
 As
-.B groff
+.I groff
 also works with pure text files without any
 .I roff
 requests,
@@ -295,7 +297,7 @@ groff \-me meintro.me
 .RE
 .
 So
-.B grog
+.I grog
 recognized that the file
 .B meintro.me
 is written with the
@@ -321,7 +323,7 @@ groff \-p \-t \-e \-ms pic.ms
 .
 Besides determining the macro package
 .BR \-ms ,
-.B grog
+.I grog
 recognized that the file
 .B pic.ms
 additionally needs
@@ -349,7 +351,7 @@ grog meintro.me pic.ms
 .RE
 .
 an error message is sent to standard error because
-.B groff
+.I groff
 cannot work with two different macro packages:
 .
 .RS
@@ -379,9 +381,9 @@ grog \-ksS \-Tdvi grnexmpl.g
 .RE
 .
 contains several
-.B groff
+.I groff
 options that are just passed on the output without any interface to
-.BR grog .
+.IR grog .
 These are the option cluster
 .B \-ksS
 consisting of
@@ -402,11 +404,11 @@ groff \-k \-s \-S \-Tdvi grnexmpl.g
 .RE
 .
 so no additional option was added by
-.BR grog .
+.IR grog .
 As no option
 .BI \-m arg
 was found by
-.B grog
+.I grog
 this file does not use a macro package.
 .
 .
@@ -421,18 +423,14 @@ The current Perl implementation was written by
 .MT groff\-bernd\:.warken\-72@\:web\:.de
 Bernd Warken
 .ME
-with contributions from Ralph Corderoy,
-and is maintained by
-.MT wl@\:gnu\:.org
-Werner Lemberg
-.ME .
+with contributions from Ralph Corderoy.
 .
 .
 .\" ====================================================================
 .SH "See Also"
 .\" ====================================================================
 .
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

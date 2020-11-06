@@ -198,7 +198,7 @@ Use
 .I x
 .RI and\~ y
 as start and end delimiters for
-.BR @g@eqn (@MAN1EXT@).
+.IR \%@g@eqn (@MAN1EXT@).
 .
 .TP
 .B doublebox
@@ -253,7 +253,7 @@ Don't use diversions to prevent page breaks
 only).
 .
 Normally
-.I @g@tbl
+.I \%@g@tbl
 attempts to prevent undesirable breaks in boxed tables by using
 diversions.
 .
@@ -456,11 +456,11 @@ there is no extra indentation.
 .IP
 Using equations
 (to be processed with
-.IR @g@eqn )
+.IR \%@g@eqn )
 within columns which use the
 .BR N \~specifier
 is problematic in most cases due to
-.IR @g@tbl 's
+.IR \%@g@tbl 's
 algorithm for finding the vertical alignment,
 as described above.
 .
@@ -469,7 +469,7 @@ Using the global
 option,
 however,
 it is possible to make
-.I @g@tbl
+.I \%@g@tbl
 ignore the data within
 .I eqn
 delimiters for that purpose.
@@ -721,7 +721,7 @@ No effect if the corresponding table entry isn't a text block.
 .BR w , W
 Minimum column width value.
 Must be followed either by a
-.IR @g@troff (@MAN1EXT@)
+.IR \%@g@troff (@MAN1EXT@)
 width expression in parentheses or a unitless integer.
 .
 If no unit is given, en units are used.
@@ -805,7 +805,7 @@ concatenation).
 .
 .LP
 Note that
-.I @g@tbl
+.I \%@g@tbl
 computes the column widths line by line, applying \[rs]w on each entry
 which isn't a text block.
 .
@@ -952,13 +952,13 @@ macro.
 .
 .
 .\" ====================================================================
-.SS "Interaction with @g@eqn"
+.SS "Interaction with \%@g@eqn"
 .\" ====================================================================
 .
-.BR @g@tbl (@MAN1EXT@)
+.IR \%@g@tbl (@MAN1EXT@)
 should always be called before
-.BR @g@eqn (@MAN1EXT@)
-.RB ( groff (@MAN1EXT@)
+.IR \%@g@eqn (@MAN1EXT@)
+.RI ( groff (@MAN1EXT@)
 automatically takes care of the correct order of preprocessors).
 .
 .
@@ -986,14 +986,14 @@ Numeric and alphabetic items may span horizontally.
 .
 .
 .LP
-.B @g@tbl
+.I \%@g@tbl
 uses register,
 string,
 macro and diversion names beginning with the
 .RB digit\~ 3 .
 .
 When using
-.B @g@tbl
+.I \%@g@tbl
 you should avoid using any names beginning with
 .RB a\~ 3 .
 .
@@ -1003,7 +1003,7 @@ you should avoid using any names beginning with
 .\" ====================================================================
 .
 Since
-.B @g@tbl
+.I \%@g@tbl
 defines its own macros (right before each table) it is necessary to use
 an \[oq]end-of-macro\[cq] macro.
 .
@@ -1029,17 +1029,17 @@ Here an example.
 .
 .LP
 Note, however, that not all features of
-.I @g@tbl
+.I \%@g@tbl
 can be wrapped into a macro because
-.I @g@tbl
+.I \%@g@tbl
 sees the input earlier than
-.IR @g@troff .
+.IR \%@g@troff .
 .
 For example,
 number formatting with vertically aligned decimal points fails if those
 numbers are passed on as macro parameters because decimal point
 alignment is handled by
-.I @g@tbl
+.I \%@g@tbl
 itself:
 it only sees
 .BR \[rs]$1 ,
@@ -1294,8 +1294,8 @@ AT&T Bell Laboratories;
 .
 .
 .LP
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@)
+.IR groff (@MAN1EXT@),
+.IR \%@g@troff (@MAN1EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

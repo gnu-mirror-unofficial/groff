@@ -120,7 +120,7 @@ It specifies the program to generate PNG images from
 PostScript input.
 .
 Under GNU/Linux this is usually
-.I gs
+.IR gs (1)
 but under other systems (notably cygwin) it might be set to another
 name.
 .
@@ -129,7 +129,7 @@ name.
 The physical vertical dimension of the output medium in machine units.
 .
 This isn't used by
-.I @g@troff
+.I \%@g@troff
 itself but by output devices.
 .
 Deprecated.
@@ -158,7 +158,7 @@ Alternatively,
 can be a file name (e.g.,
 .IR /etc/papersize );
 if the file can be opened,
-.B groff
+.I groff
 reads the first line and tests for the above paper sizes.
 .
 Finally,
@@ -186,7 +186,7 @@ sets both the vertical and horizontal dimension of the output medium.
 .
 .IP
 More than one argument can be specified;
-.B groff
+.I groff
 scans from left to right and uses the first valid paper specification.
 .
 .TP
@@ -200,7 +200,7 @@ Use
 instead.
 .
 This isn't used by
-.B troff
+.I \%@g@troff
 itself but by output devices.
 .
 .TP
@@ -234,7 +234,7 @@ If omitted, the
 and
 .B \-L
 options of
-.B groff
+.I groff
 are ignored.
 .
 .TP
@@ -310,7 +310,7 @@ is present, no
 .B charset
 section is required in the font description files since the Unicode
 handling built into
-.B groff
+.I groff
 is used.
 .
 However, if there are entries in a
@@ -364,13 +364,13 @@ lines are compulsory.
 Not all commands in the
 .I DESC
 file are used by
-.B troff
+.I \%@g@troff
 itself; some of the keywords (or even additional ones) are used by
 postprocessors to store arbitrary information about the device.
 .
 .LP
 Here a list of obsolete keywords which are recognized by
-.B groff
+.I groff
 but completely ignored:
 .BR spare1 ,
 .BR spare2 ,
@@ -435,7 +435,7 @@ mounted.
 .
 .LP
 Other commands are ignored by
-.B troff
+.I \%@g@troff
 but may be used by postprocessors to store arbitrary information
 about the font in the font file.
 .

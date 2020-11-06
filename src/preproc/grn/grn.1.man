@@ -65,14 +65,14 @@
 .SH Description
 .\" ====================================================================
 .
-.I @g@grn
+.I \%@g@grn
 is a preprocessor for including
 .I gremlin
 pictures in
 .I groff
 input.
 .
-.I @g@grn
+.I \%@g@grn
 writes to standard output,
 processing only input lines between two that start with
 .B .GS
@@ -80,7 +80,7 @@ and
 .BR .GE .
 .
 Those lines must contain
-.I @g@grn
+.I \%@g@grn
 commands
 (see below).
 .
@@ -88,7 +88,7 @@ These macros request a
 .I gremlin
 file;
 the picture in that file is converted and placed in the
-.I @g@troff
+.I \%@g@troff
 input stream.
 .
 The
@@ -113,7 +113,7 @@ the position on the page is the bottom of the
 picture.
 .
 If the
-.I @g@grn
+.I \%@g@grn
 entry is ended with
 .B .GF
 instead of
@@ -215,7 +215,7 @@ Each input line between
 and
 .B .GE
 may have one
-.I @g@grn
+.I \%@g@grn
 command.
 .
 Commands consist of one or two strings separated by white space,
@@ -260,7 +260,7 @@ The default is 12 (16, 24, and 36, respectively).
 .TQ
 .BI special\  f
 Set the roman (italics, bold, or special) font to
-.IR @g@troff 's
+.IR \%@g@troff 's
 font
 .I f
 (either a name or number).
@@ -272,7 +272,7 @@ The default is R (I, B, and S, respectively).
 .TQ
 .BI stipple\  f
 Set the stipple font to
-.IR @g@troff 's
+.IR \%@g@troff 's
 stipple font
 .I f
 (name or number).
@@ -343,7 +343,7 @@ regardless of any scaling factors in the picture.
 Setting
 .B pointscale
 will cause the point sizes to scale with the picture (within
-.IR @g@troff 's
+.IR \%@g@troff 's
 limitations, of course).
 .
 An operand of anything but
@@ -357,7 +357,7 @@ picture.
 .
 This is meant to be used as a global parameter setting mechanism at
 the beginning of the
-.I @g@troff
+.I \%@g@troff
 input file, but can be used at any time to reset the
 default settings.
 .
@@ -416,7 +416,7 @@ line.
 .\" ====================================================================
 .
 Since
-.I @g@grn
+.I \%@g@grn
 is a preprocessor,
 it doesn't know about current indentation,
 point sizes,
@@ -426,7 +426,7 @@ and so on.
 .
 Consequently,
 no
-.I @g@troff
+.I \%@g@troff
 input can be placed between the
 .B .GS
 and
@@ -436,9 +436,9 @@ macros.
 However,
 .I gremlin
 text is now processed by
-.IR @g@troff ,
+.IR \%@g@troff ,
 so anything valid in a single line of
-.I @g@troff
+.I \%@g@troff
 input is valid in a line of
 .I gremlin
 text (barring \[oq].\[cq] directives at the beginning of a line).
@@ -455,11 +455,11 @@ expressions enclosed by previously defined delimiters (e.g.,
 .
 .PP
 When using
-.I @g@grn
+.I \%@g@grn
 along with other preprocessors, it is best to run
 .I tbl
 before
-.IR @g@grn ,
+.IR \%@g@grn ,
 .IR pic ,
 and/or
 .I ideal
@@ -472,7 +472,7 @@ should always be run last.
 .
 .PP
 A picture is considered an entity, but that doesn't stop
-.I @g@troff
+.I \%@g@troff
 from trying to break it up if it falls off the end of a page.
 .
 Placing the picture between \[oq]keeps\[cq] in \-me macros will ensure
@@ -480,9 +480,9 @@ proper placement.
 .
 .
 .PP
-.I @g@grn
+.I \%@g@grn
 uses
-.IR @g@troff 's
+.IR \%@g@troff 's
 number registers
 .B g1
 through
@@ -529,7 +529,7 @@ file does not contain negative coordinates, either format will be read
 correctly by either version of
 .I gremlin
 or
-.IR @g@grn .
+.IR \%@g@grn .
 .
 The other difference from
 .IR SUN / X11
@@ -711,7 +711,7 @@ ncw(0.1i)l.
 .TE
 .sp
 If you're using
-.I @g@grn
+.I \%@g@grn
 to run your pictures through
 .IR groff ,
 the font is really just a starting font:
@@ -772,7 +772,7 @@ shouldn't ever use negative coordinates.
 .I gremlin
 writes out coordinates using format \[lq]%f1.2\[rq]; it's probably
 a good idea to use the same format if you want to modify the
-.I @g@grn
+.I \%@g@grn
 code.
 .
 .
@@ -817,10 +817,10 @@ Daniel Senderowicz and Werner Lemberg modified it for
 .SH "See Also"
 .\" ====================================================================
 .
-.BR gremlin (1),
-.BR groff (@MAN1EXT@),
-.BR @g@pic (@MAN1EXT@),
-.BR ideal (1)
+.IR \%gremlin (1),
+.IR groff (@MAN1EXT@),
+.IR \%@g@pic (@MAN1EXT@),
+.IR ideal (1)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

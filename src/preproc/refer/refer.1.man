@@ -71,12 +71,12 @@
 .\" ====================================================================
 .
 This file documents the GNU version of
-.IR refer , \" generic
+.IR \%refer , \" generic
 which is part of the
 .I groff (@MAN1EXT@)
 document formatting system.
 .
-.I @g@refer
+.I \%@g@refer
 copies the contents of
 .I file
 \&.\|.\|.\& to the standard output stream,
@@ -107,7 +107,7 @@ A combination of these alternatives is also possible.
 .
 .LP
 For each citation,
-.I @g@refer
+.I \%@g@refer
 can produce a mark in the text.
 .
 This mark consists of some label which can be separated from the text
@@ -119,7 +119,7 @@ language commands that can be used by a macro package to produce a
 formatted reference for each citation.
 .
 The output of
-.I @g@refer
+.I \%@g@refer
 must therefore be processed using a suitable macro package,
 such as
 .IR ms ,
@@ -144,10 +144,10 @@ The interpretation of lines between
 and
 .B .R2
 as commands is a new feature of GNU
-.IR refer . \" GNU
+.IR \%refer . \" GNU
 .
 Documents making use of this feature can still be processed by AT&T
-.I refer \" AT&T
+.I \%refer \" AT&T
 just by adding the lines
 .
 .RS
@@ -161,7 +161,7 @@ just by adding the lines
 to the beginning of the document.
 .
 This will cause
-.I @g@troff (@MAN1EXT@)
+.I \%@g@troff (@MAN1EXT@)
 to ignore everything between
 .B .R1
 and
@@ -170,18 +170,18 @@ and
 The effect of some commands can also be achieved by options.
 .
 These options are supported mainly for compatibility with AT&T
-.IR refer . \" AT&T
+.IR \%refer . \" AT&T
 .
 It is usually more convenient to use commands.
 .
 .
 .LP
-.I @g@refer
+.I \%@g@refer
 generates
 .B .lf
 requests so that file names and line numbers in messages produced by
 commands that read
-.I @g@refer
+.I \%@g@refer
 output will be correct;
 it also interprets lines beginning with
 .B .lf
@@ -189,7 +189,7 @@ so that file names and line numbers in the messages and
 .B .lf
 lines that it produces will be accurate even if the input has been
 preprocessed by a command such as
-.IR @g@soelim (@MAN1EXT@).
+.IR \%@g@soelim (@MAN1EXT@).
 .
 .
 .\" ====================================================================
@@ -647,7 +647,7 @@ component is a list of non-alphanumeric characters each of which
 modifies the treatment of this particular citation.
 .
 AT&T
-.I refer .\" AT&T
+.I \%refer \" AT&T
 will treat these flags as part of the keywords and so will ignore them
 since they are non-alphanumeric.
 .
@@ -1042,7 +1042,7 @@ For each
 if an index
 .IB file @INDEX_SUFFIX@
 created by
-.IR @g@indxbib (@MAN1EXT@)
+.IR \%@g@indxbib (@MAN1EXT@)
 exists,
 then it will be searched instead;
 each index can cover multiple databases.
@@ -1090,7 +1090,7 @@ The default database should be searched.
 This is the default behavior,
 so the negative version of this command is more useful.
 .
-.I @g@refer
+.I \%@g@refer
 determines whether the default database should be searched
 on the first occasion that it needs to do a search.
 .
@@ -1792,7 +1792,7 @@ Index files.
 .
 .
 .LP
-.I @g@refer
+.I \%@g@refer
 uses temporary files.
 .
 See the
@@ -1823,9 +1823,9 @@ AT&T Bell Laboratories;
 .
 .
 .LP
-.BR @g@indxbib (@MAN1EXT@),
-.BR @g@lookbib (@MAN1EXT@),
-.BR lkbib (@MAN1EXT@)
+.IR \%@g@indxbib (@MAN1EXT@),
+.IR \%@g@lookbib (@MAN1EXT@),
+.IR \%lkbib (@MAN1EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

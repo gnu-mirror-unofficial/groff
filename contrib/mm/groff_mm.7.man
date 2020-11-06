@@ -53,8 +53,10 @@ groff_mm \- memorandum macros for GNU roff
 .SH Description
 .\" ====================================================================
 .
-The groff mm macros are intended to be compatible with the DWB mm macros
-with the following limitations:
+The
+.IR groff (@MAN7EXT@)
+mm macros are intended to be compatible with the DWB mm macros with the
+following limitations.
 .
 .TP
 .B \(bu
@@ -66,7 +68,8 @@ The macros OK and PM are not implemented.
 .
 .TP
 .B \(bu
-groff mm does not support cut marks.
+.I groff
+mm does not support cut marks.
 .
 .
 .LP
@@ -935,7 +938,7 @@ Equation start.
 .
 .BR EQ / EN
 are the delimiters for equations written for
-.BR @g@eqn (@MAN1EXT@).
+.IR \%@g@eqn (@MAN1EXT@).
 .
 .BR EQ / EN
 must be inside of a
@@ -943,7 +946,7 @@ must be inside of a
 pair, except if
 .B EQ
 is used to set options for
-.B @g@eqn
+.I \%@g@eqn
 only.
 .
 The
@@ -1707,10 +1710,10 @@ redirected into file
 .
 Requires two passes with groff;
 this is handled by a separate program called
-.BR mmroff (@MAN1EXT@).
+.IR mmroff (@MAN1EXT@).
 .
 This program exists because
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 by default deactivates the unsafe operations that are required by
 .BR INITR .
 .
@@ -2399,7 +2402,7 @@ on the first page.
 Include a PostScript file in the document.
 .
 The macro depends on
-.BR mmroff (@MAN1EXT@)
+.IR mmroff (@MAN1EXT@)
 and
 .BR INITR .
 .
@@ -2428,7 +2431,7 @@ can also be given to resize the picture.
 Picture end.
 .
 Ends a picture for
-.BR @g@pic (@MAN1EXT@).
+.IR \%@g@pic (@MAN1EXT@).
 .
 .TP
 .BI PF\  \fR[\fParg\fR]\fP
@@ -2488,7 +2491,7 @@ This macro defines string
 Picture start (from pic).
 .
 Begins a picture for
-.BR @g@pic (@MAN1EXT@).
+.IR \%@g@pic (@MAN1EXT@).
 .
 .TP
 .B PX
@@ -2955,7 +2958,7 @@ TPoh@argument of \fBOH\fP
 Table start.
 .
 This is the start of a table specification to
-.BR @g@tbl (@MAN1EXT@).
+.IR \%@g@tbl (@MAN1EXT@).
 .
 .B TS
 ends with
@@ -3025,7 +3028,7 @@ This adds four digit-sized spaces in the beginning of each line.
 Finer control is available with the string variable
 .BR Verbnm .
 It contains all arguments to the
-.BR troff (@MAN1EXT@)
+.IR \%@g@troff (@MAN1EXT@)
 command
 .BR .nm ,
 normally \[oq]1\[cq].
@@ -3996,13 +3999,13 @@ of Lund, Sweden.
 .SH "See Also"
 .\" ====================================================================
 .
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR @g@tbl (@MAN1EXT@),
-.BR @g@pic (@MAN1EXT@),
-.BR @g@eqn (@MAN1EXT@)
+.IR groff (@MAN1EXT@),
+.IR \%@g@troff (@MAN1EXT@),
+.IR \%@g@tbl (@MAN1EXT@),
+.IR \%@g@pic (@MAN1EXT@),
+.IR \%@g@eqn (@MAN1EXT@)
 .br
-.BR groff_mmse (@MAN7EXT@)
+.IR groff_mmse (@MAN7EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

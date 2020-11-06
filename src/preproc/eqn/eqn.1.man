@@ -85,11 +85,11 @@ is part of the
 .IR groff (@MAN7EXT@)
 document formatting system.
 .
-.I @g@eqn
+.I \%@g@eqn
 compiles descriptions of equations embedded in
 .IR roff (@MAN7EXT@)
 input files into commands that are understood by
-.IR @g@troff (@MAN1EXT@).
+.IR \%@g@troff (@MAN1EXT@).
 .
 Normally,
 it should be invoked using the
@@ -119,7 +119,7 @@ the standard input stream is read.
 Unless the
 .B \-R
 option is given,
-.I @g@eqn
+.I \%@g@eqn
 searches for the file
 .I eqnrc
 in the directories given with the
@@ -132,7 +132,7 @@ and finally in the standard macro directory
 .IR @MACRODIR@ .
 .
 If it exists,
-.I @g@eqn
+.I \%@g@eqn
 processes it before the other input files.
 .
 .
@@ -329,7 +329,7 @@ intended to have semantics like
 CSS \[lq]large\[rq].
 .
 In
-.I @g@troff
+.I \%@g@troff
 output,
 the point size is increased by\~5;
 in MathML output,
@@ -546,7 +546,7 @@ that is not the first character on the input line is treated like
 This constructs a new object
 .RI from\~ e
 using a
-.IR @g@troff (@MAN1EXT@)
+.IR \%@g@troff (@MAN1EXT@)
 macro named
 .IR text .
 .
@@ -735,7 +735,9 @@ the biggest one is used.
 .
 When
 .I eqn
-is generating troff markup,
+is generating
+.I troff \" generic
+markup,
 the appearance of equations is controlled by a large number of
 parameters.
 .
@@ -771,7 +773,7 @@ set x_height 45
 .
 .IP
 says that
-.I @g@eqn
+.I \%@g@eqn
 should assume an x\~height of 0.45\~ems.
 .
 .
@@ -787,7 +789,7 @@ definitive.
 .
 .TP
 .B minimum_size
-.I @g@eqn
+.I \%@g@eqn
 won't set anything at a smaller point size than this.
 .
 The value is in points.
@@ -1227,7 +1229,7 @@ and
 .SS Fonts
 .\" ====================================================================
 .
-.I @g@eqn
+.I \%@g@eqn
 normally uses at least two fonts to set an equation:
 an italic font for letters,
 and a roman font for everything else.
@@ -1351,7 +1353,7 @@ command.
 Set the minimum point size
 .RI to\~ n .
 .
-.I @g@eqn
+.I \%@g@eqn
 will not reduce the size of subscripts or superscripts to
 a smaller size
 .RI than\~ n .
@@ -1371,7 +1373,7 @@ before the default directories.
 Don't allow newlines within delimiters.
 .
 This option allows
-.I @g@eqn
+.I \%@g@eqn
 to recover better from missing closing delimiters.
 .
 .
@@ -1384,7 +1386,7 @@ smaller than the surrounding text.
 This option is deprecated.
 .
 Normally,
-.I @g@eqn
+.I \%@g@eqn
 sets subscripts and superscripts at 70% of the size of the surrounding
 text.
 .
@@ -1408,7 +1410,7 @@ This is equivalent to a
 command.
 .
 This option is deprecated.
-.I @g@eqn
+.I \%@g@eqn
 normally sets equations at whatever the current point size is when the
 equation is encountered.
 .
@@ -1429,7 +1431,7 @@ uses this to provide definitions appropriate for the output device.
 However,
 if the specified device is \[lq]MathML\[rq],
 the output is MathML markup rather than
-.I @g@troff
+.I \%@g@troff
 commands,
 and
 .I eqnrc
@@ -1458,13 +1460,13 @@ be rendered.
 .
 It does not support fine control of motions and sizes to the same
 degree
-.I @g@troff
+.I \%@g@troff
 does.
 .
 Thus:
 .
 .IP \[bu]
-.I @g@eqn
+.I \%@g@eqn
 parameters have no effect on the generated MathML.
 .
 .IP \[bu]
@@ -1486,7 +1488,7 @@ as centering on the math axis is the MathML default.
 .
 .IP \[bu]
 Characters that
-.I @g@eqn
+.I \%@g@eqn
 sets extra large in
 .I troff \" mode
 mode\[em]notably the integral sign\[em]may appear too small and need to
@@ -1497,7 +1499,7 @@ have their \[lq]<mstyle>\[rq] wrappers adjusted by hand.
 As in its
 .I troff \" mode
 mode,
-.I @g@eqn
+.I \%@g@eqn
 in MathML mode leaves the
 .B .EQ
 and
@@ -1513,7 +1515,7 @@ be recognized as strings that begin with \[lq]<math>\[rq] and end with
 .
 .LP
 See section \[lq]Bugs\[rq] below for translation limits specific to
-.IR @g@eqn .
+.IR \%@g@eqn .
 .
 .
 .\" ====================================================================
@@ -1568,10 +1570,10 @@ Addison-Wesley Professional;
 .
 .
 .LP
-.BR groff (@MAN1EXT@),
-.BR @g@troff (@MAN1EXT@),
-.BR @g@pic (@MAN1EXT@),
-.BR groff_font (@MAN5EXT@)
+.IR groff (@MAN1EXT@),
+.IR \%@g@troff (@MAN1EXT@),
+.IR \%@g@pic (@MAN1EXT@),
+.IR groff_font (@MAN5EXT@)
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
