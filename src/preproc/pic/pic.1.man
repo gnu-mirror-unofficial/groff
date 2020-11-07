@@ -46,10 +46,6 @@
 .ie \n(.g .ds ic \/
 .el       .ds ic \^
 .
-.\" The BSD man macros can't handle " in arguments to font change
-.\" macros, so use \(ts instead of ".
-.tr \(ts"\""
-.
 .
 .\" ====================================================================
 .SH Synopsis
@@ -634,7 +630,7 @@ with an argument of
 If
 .I text
 is omitted a format string of
-.B "\(ts%g\(ts"
+.B \[dq]%g\[dq]
 is used.
 .
 Attributes can be specified in the same way as for a normal text
@@ -961,7 +957,7 @@ have a value of 0.
 In (almost all) places where a quoted text string can be used,
 an expression of the form
 .IP
-.BI sprintf(\(ts format \(ts,\  arg ,\fR.\|.\|.\fB)
+.BI sprintf(\[dq] format \[dq],\  arg ,\fR.\|.\|.\fB)
 .LP
 can also be used;
 this will produce the arguments formatted according to
