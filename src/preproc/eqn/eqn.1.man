@@ -1113,7 +1113,7 @@ file for the
 .BR utf8 ,
 and
 .B cp1047
-devices.)
+drivers.)
 .
 .
 .LP
@@ -1190,7 +1190,7 @@ has been defined by
 .B define
 (or has been automatically defined because
 .I name
-is the output device) process
+is the output driver) process
 .IR anything ;
 otherwise ignore
 .IR anything .
@@ -1417,7 +1417,7 @@ equation is encountered.
 .
 .TP
 .BI \-T\~ name
-The output is for device
+The output is for output driver
 .IR name .
 .
 Normally,
@@ -1426,10 +1426,10 @@ the only effect of this is to define a macro
 with a value
 .RB of\~ 1 ;
 .I eqnrc
-uses this to provide definitions appropriate for the output device.
+uses this to provide definitions appropriate for the output driver.
 .
 However,
-if the specified device is \[lq]MathML\[rq],
+if the specified driver is \[lq]MathML\[rq],
 the output is MathML markup rather than
 .I \%@g@troff
 commands,
@@ -1437,7 +1437,7 @@ and
 .I eqnrc
 is not loaded at all.
 .
-The default output device is
+The default output driver is
 .BR @DEVICE@ .
 .
 .
