@@ -94,17 +94,23 @@ denotes the two-letter code for the
 .IR language ,
 as defined in the ISO 639 standard.
 .
-For Swedish, this is \[oq]sv.tmac\[cq] \[en] not \[oq]se\[cq], which
-is the ISO 3166 two-letter code for the
-.I country
-(as used for the output format localization).
+For Swedish,
+this is
+.I sv.tmac;
+\[lq]sv\[rq],
+not
+\[lq]se\[rq].
+.
+The ISO 639 language code,
+not the ISO 3166 territory code,
+is used.
 .
 .
 .LP
 A file called
 .I locale
 or
-.RI country _locale
+.RI territory _locale
 is read after the initialization of the global variables.
 .
 It is therefore possible to localize the macros with a different company
@@ -3899,7 +3905,7 @@ letter type.
 The name of the submacro has the letter type as suffix.
 .
 It is therefore possible to define other letter types, either in the
-national macro-file, or as local additions.
+territory-specific macro file, or as local additions.
 .
 .B .LT
 sets the number variables
