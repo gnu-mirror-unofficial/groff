@@ -130,7 +130,8 @@ The physical vertical dimension of the output medium in machine units.
 .
 This isn't used by
 .I \%@g@troff
-itself but by output devices.
+itself,
+but by output devices.
 .
 Deprecated.
 .
@@ -144,10 +145,22 @@ Select a paper size.
 .
 Valid values for
 .I string
-are the ISO paper types A0\[en]A7, B0\[en]B7, C0\[en]C7, D0\[en]D7,
-DL, and the US paper
-types letter, legal, tabloid, ledger, statement, executive, com10, and
-monarch.
+are the ISO paper types
+.BR A0 \[en] A7 ,
+.BR B0 \[en] B7 ,
+.BR C0 \[en] C7 ,
+.BR D0 \[en] D7 ,
+.BR DL ,
+and the US paper types
+.BR letter ,
+.BR legal ,
+.BR tabloid ,
+.BR ledger ,
+.BR statement ,
+.BR executive ,
+.BR com10 ,
+and
+.BR monarch .
 .
 Case is not significant for
 .I string
@@ -171,9 +184,11 @@ Both
 .I length
 and
 .I width
-must have a unit appended; valid values are \[oq]i\[cq] for inches,
-\[oq]c\[cq] for centimeters, \[oq]p\[cq] for points, and \[oq]P\[cq]
-for picas.
+must have a unit appended;
+valid values are \[oq]i\[cq] for inches,
+\[oq]c\[cq] for centimeters,
+\[oq]p\[cq] for points,
+and \[oq]P\[cq] for picas.
 .
 Example:
 .BR 12c,235p .
@@ -201,7 +216,8 @@ instead.
 .
 This isn't used by
 .I \%@g@troff
-itself but by output devices.
+itself,
+but by output devices.
 .
 .TP
 .B pass_filenames
@@ -229,7 +245,8 @@ Use
 .I program
 as the spooler program for printing.
 .
-If omitted, the
+If omitted,
+the
 .B \-l
 and
 .B \-L
@@ -306,16 +323,19 @@ instead of glyphs.
 .IP
 If
 .B unicode
-is present, no
+is present,
+no
 .B charset
 section is required in the font description files since the Unicode
 handling built into
 .I groff
 is used.
 .
-However, if there are entries in a
+However,
+if there are entries in a
 .B charset
-section, they either override the default mappings for those
+section,
+they either override the default mappings for those
 particular characters or add new mappings (normally for composite
 characters).
 .
@@ -365,7 +385,8 @@ Not all commands in the
 .I DESC
 file are used by
 .I \%@g@troff
-itself; some of the keywords (or even additional ones) are used by
+itself;
+some of the keywords (or even additional ones) are used by
 postprocessors to store arbitrary information about the device.
 .
 .LP
@@ -381,11 +402,14 @@ but completely ignored:
 .SS "Font file format"
 .\" ====================================================================
 .
-A font file has two sections; empty lines are ignored in both of them.
+A font file has two sections;
+empty lines are ignored in both of them.
 .
 .LP
 The first section is a sequence of lines each containing a sequence of
-blank delimited words; the first word in the line is a key, and
+blank delimited words;
+the first word in the line is a key,
+and
 subsequent words give a value for that key.
 .
 .TP
@@ -393,7 +417,8 @@ subsequent words give a value for that key.
 Glyphs
 .IR lig1 ,
 .IR lig2 ", \|.\|.\|., " lign
-are ligatures; possible ligatures are
+are ligatures;
+possible ligatures are
 .BR ff ,
 .BR fi ,
 .BR fl ,
@@ -401,7 +426,8 @@ are ligatures; possible ligatures are
 and
 .BR ffl .
 .
-For backwards compatibility, the list of ligatures may be terminated
+For backwards compatibility,
+the list of ligatures may be terminated
 with a\~\c
 .BR 0 .
 .
@@ -430,8 +456,8 @@ The normal width of a space is\~\c
 The font is
 .IR special ;
 this means that when a glyph is requested that is not present in
-the current font, it is searched for in any special fonts that are
-mounted.
+the current font,
+it is searched for in any special fonts that are mounted.
 .
 .LP
 Other commands are ignored by
@@ -491,8 +517,8 @@ then it corresponds to the groff input character
 .IR c ;
 if it is of the form
 .BI \[rs] c
-where c is a single character, then it
-corresponds to the special character
+where c is a single character,
+then it corresponds to the special character
 .BI \[rs][ c ]\fR;
 otherwise it corresponds to the groff input character
 .BI \[rs][ name ]\fR.
@@ -522,15 +548,20 @@ field gives the glyph type:
 .
 .TP
 1
-means the glyph has a descender, for example, \[oq]p\[cq];
+means the glyph has a descender,
+for example,
+\[oq]p\[cq];
 .
 .TP
 2
-means the glyph has an ascender, for example, \[oq]b\[cq];
+means the glyph has an ascender,
+for example,
+\[oq]b\[cq];
 .
 .TP
 3
-means the glyph has both an ascender and a descender, for example,
+means the glyph has both an ascender and a descender,
+for example,
 \[oq](\[cq].
 .
 .LP
@@ -553,7 +584,9 @@ or
 .B 0X
 it is interpreted as hexadecimal.
 .
-Note, however, that the
+Note,
+however,
+that the
 .B \[rs]N
 escape sequence only accepts a decimal integer.
 .
@@ -602,8 +635,8 @@ Missing subfields are assumed to be\~0.
 .
 The subfields are all decimal integers.
 .
-Since there is no associated binary format, these
-values are not required to fit into a variable of type
+Since there is no associated binary format,
+these values are not required to fit into a variable of type
 .B char
 as they are in ditroff.
 .
@@ -614,15 +647,19 @@ subfields gives the width of the glyph.
 The
 .I height
 subfield gives the height of the glyph (upwards is positive);
-if a glyph does not extend above the baseline, it should be
-given a zero height, rather than a negative height.
+if a glyph does not extend above the baseline,
+it should be given a zero height,
+rather than a negative height.
 .
 The
 .I depth
-subfield gives the depth of the glyph, that is, the distance
-below the baseline to which the glyph extends (downwards is positive);
-if a glyph does not extend below the baseline, it should be
-given a zero depth, rather than a negative depth.
+subfield gives the depth of the glyph,
+that is,
+the distance below the baseline to which the glyph extends (downwards is
+positive);
+if a glyph does not extend below the baseline,
+it should be given a zero depth,
+rather than a negative depth.
 .
 The
 .I italic-correction
@@ -710,8 +747,10 @@ You can browse it interactively with \[lq]info groff\[rq].
 .
 .LP
 \[lq]Troff User's Manual\[rq]
-by Joseph F.\& Ossanna, 1976
-(revised by Brian W.\& Kernighan, 1992),
+by Joseph F.\& Ossanna,
+1976
+(revised by Brian W.\& Kernighan,
+1992),
 AT&T Bell Laboratories Computing Science Techical Report No.\& 54,
 widely called simply \[lq]CSTR\~#54\[rq],
 documents the language,
@@ -725,7 +764,8 @@ documentation as
 .
 .LP
 \[lq]A Typesetter-independent TROFF\[rq]
-by Brian W.\& Kernighan, 1982,
+by Brian W.\& Kernighan,
+1982,
 AT&T Bell Laboratories Computing Science Techical Report No.\& 97,
 provides additional insights into the
 device and font description file formats
