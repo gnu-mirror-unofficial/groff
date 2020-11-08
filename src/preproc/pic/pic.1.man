@@ -144,6 +144,7 @@ Be more compatible with
 .
 Implies
 .BR \-t .
+.
 Lines beginning with
 .B \[rs]
 are not passed through transparently.
@@ -308,11 +309,15 @@ You must yourself print that vbox using, for example, the command
 Actually, since the vbox has a height of zero (it is defined with
 \[rs]vtop) this will produce slightly more vertical space above the
 picture than below it;
+.
+.
 .RS
 .LP
 .B
 \[rs]centerline{\[rs]raise 1em\[rs]box\[rs]graph}
 .RE
+.
+.
 .LP
 would avoid this.
 .
@@ -322,12 +327,16 @@ To make the vbox having a positive height and a depth of zero
 (as used e.g., by \*[lx]'s
 .BR \%graphics.sty ),
 define the following macro in your document:
+.
+.
 .RS
 .LP
 .B \[rs]def\[rs]gpicbox#1{%
 .br
 .B "   \[rs]vbox{\[rs]unvbox\[rs]csname #1\[rs]endcsname\[rs]kern 0pt}}
 .RE
+.
+.
 .LP
 Now you can simply say
 .B \[rs]gpicbox{graph}
@@ -505,11 +514,13 @@ to a shell.
 can be any character not occurring in
 .IR command .
 .
+.
 .TP
 \fBcopy\fR \fB"\,\fIfilename\/\fB"\fR
 Include
 .I filename
 at this point in the file.
+.
 .
 .TP
 .BR copy\~ [ \[dq]\c
@@ -620,6 +631,7 @@ Assigning a value to
 also causes all pre-defined variables that control dimensions to be
 reset to their default values times the new value of scale.
 .
+.
 .TP
 \fBplot\fR \fIexpr\fR [\fB"\,\fItext\*(ic\fB"\fR]
 This is a text object which is constructed by using
@@ -639,6 +651,7 @@ object.
 Be very careful that you specify an appropriate format string;
 .I \%@g@pic
 does only very limited checking of the string.
+.
 This is deprecated in favour of
 .BR sprintf .
 .
@@ -829,6 +842,8 @@ these have values 8.5 and 11.
 .LP
 Scientific notation is allowed for numbers.
 For example
+.
+.
 .RS
 .LP
 .B
@@ -840,11 +855,14 @@ x = 5e\-2
 Text attributes can be compounded.
 .
 For example,
+.
 .RS
 .LP
 .B
 "foo" above ljust
 .RE
+.
+.
 .LP
 is valid.
 .
@@ -861,6 +879,8 @@ For example,
 .B
 circle at last [\^].A.B.C
 .RE
+.
+.
 .LP
 is acceptable.
 .
@@ -958,8 +978,12 @@ have a value of 0.
 .LP
 In (almost all) places where a quoted text string can be used,
 an expression of the form
+.
+.
 .IP
 .BI sprintf(\[dq] format \[dq],\  arg ,\fR.\|.\|.\fB)
+.
+.
 .LP
 can also be used;
 this will produce the arguments formatted according to
@@ -967,6 +991,7 @@ this will produce the arguments formatted according to
 which should be a string as described in
 .IR printf (3)
 appropriate for the number of arguments supplied.
+.
 Only the flags
 .RB \[lq] # \[rq],
 .RB \[lq] \- \[rq],
@@ -1013,10 +1038,14 @@ There is also a
 attribute.
 .
 For example,
+.
+.
 .RS
 .LP
 .B circle thickness 1.5
 .RE
+.
+.
 .LP
 would draw a circle using a line with a thickness of 1.5 points.
 .
@@ -1068,6 +1097,8 @@ the fill color, and
 sets both.
 .
 All three keywords expect a suffix specifying the color, for example
+.
+.
 .RS
 .LP
 .B circle shaded """green""" outline """black"""
@@ -1264,16 +1295,24 @@ Moreover, the PostScript interpreter
 .B ghostscript
 .RI ( gs (1))
 has built-in graphics conversion devices that are called with the option
+.
+.
 .LP
 .RS
 .BI "gs \-sDEVICE=" <devname>
 .RE
+.
+.
 .LP
 Call
+.
+.
 .LP
 .RS
 .B gs \-\-help
 .RE
+.
+.
 .LP
 for a list of the available devices.
 .
