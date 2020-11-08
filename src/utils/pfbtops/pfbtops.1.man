@@ -58,20 +58,21 @@ pfbtops \- translate Printer Font Binary files to PostScript ASCII
 .
 .I pfbtops
 translates a PostScript font in Printer Font Binary (PFB) format to
-ASCII, splitting overlong lines in text packets into smaller chunks.
+Printer Font ASCII (PFA) format,
+splitting overlong lines in text packets into smaller chunks.
 .
 If
 .I pfb-file
 is omitted,
 the PFB file will be read from the standard input stream.
 .
-The ASCII format PostScript font will be written on the standard output.
+The PFA font will be written on the standard output stream.
 .
-PostScript fonts for MS-DOS are normally supplied in PFB format.
+PostScript fonts for MS-DOS were historically supplied in PFB format.
 .
 .
 .LP
-The resulting ASCII format PostScript font can be used with groff,
+The resulting PFA font can be used with
 .IR groff (@MAN1EXT@)
 if it is first listed in
 .I \%@FONTDIR@/\:\%devps/\:\%download
