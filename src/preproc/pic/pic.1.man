@@ -36,7 +36,7 @@
 .
 .ie t \{\
 .  ds tx T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
-.  ds lx L\h'-0.36m'\v'-0.22v'\s-2A\s0\h'-0.15m'\v'0.22v'\*(tx
+.  ds lx L\h'-0.36m'\v'-0.22v'\s-2A\s0\h'-0.15m'\v'0.22v'\*[tx]
 .\}
 .el \{\
 .  ds tx TeX
@@ -92,7 +92,7 @@ document formatting system.
 .I \%@g@pic
 compiles descriptions of pictures embedded within
 .I troff \" generic
-or \*(tx input files into commands that are understood by \*(tx or
+or \*[tx] input files into commands that are understood by \*[tx] or
 .IR troff .
 .
 Each picture starts with a line beginning with
@@ -145,7 +145,7 @@ Be more compatible with
 Implies
 .BR \-t .
 Lines beginning with
-.B \e
+.B \[rs]
 are not passed through transparently.
 .
 Lines beginning with
@@ -153,7 +153,7 @@ Lines beginning with
 are passed through with the initial
 .B .
 changed to
-.BR \e .
+.BR \[rs] .
 .
 A line beginning with
 .B .ps
@@ -215,7 +215,7 @@ default).
 .
 .TP
 .B \-t
-\*(tx mode.
+\*[tx] mode.
 .
 .
 .TP
@@ -226,7 +226,7 @@ Unsafe mode; revert the default option
 .
 .TP
 .B \-z
-In \*(tx mode draw dots using zero-length lines.
+In \*[tx] mode draw dots using zero-length lines.
 .
 .
 .LP
@@ -236,7 +236,7 @@ are ignored:
 .
 .TP
 .B \-D
-Draw all lines using the \eD escape sequence.
+Draw all lines using the \[rs]D escape sequence.
 .I \%@g@pic
 always does this.
 .
@@ -276,17 +276,17 @@ A complete documentation is available in the file
 .
 .
 .\" ====================================================================
-.SS "\*(tx mode"
+.SS "\*[tx] mode"
 .\" ====================================================================
 .
-\*(tx mode is enabled by the
+\*[tx] mode is enabled by the
 .B \-t
 option.
 .
-In \*(tx mode,
+In \*[tx] mode,
 .I \%@g@pic
 will define a vbox called
-.B \egraph
+.B \[rs]graph
 for each picture.
 .
 Use the
@@ -298,19 +298,20 @@ You must yourself print that vbox using, for example, the command
 .
 .RS
 .LP
-.B
-\ecenterline{\ebox\egraph}
+.EX
+\[rs]centerline{\[rs]box\[rs]graph}
+.EE
 .RE
 .
 .
 .LP
 Actually, since the vbox has a height of zero (it is defined with
-\evtop) this will produce slightly more vertical space above the
+\[rs]vtop) this will produce slightly more vertical space above the
 picture than below it;
 .RS
 .LP
 .B
-\ecenterline{\eraise 1em\ebox\egraph}
+\[rs]centerline{\[rs]raise 1em\[rs]box\[rs]graph}
 .RE
 .LP
 would avoid this.
@@ -323,14 +324,14 @@ To make the vbox having a positive height and a depth of zero
 define the following macro in your document:
 .RS
 .LP
-.B \edef\egpicbox#1{%
+.B \[rs]def\[rs]gpicbox#1{%
 .br
-.B "   \evbox{\eunvbox\ecsname #1\eendcsname\ekern 0pt}}"
+.B "   \[rs]vbox{\[rs]unvbox\[rs]csname #1\[rs]endcsname\[rs]kern 0pt}}
 .RE
 .LP
 Now you can simply say
-.B \egpicbox{graph}
-instead of \ebox\egraph.
+.B \[rs]gpicbox{graph}
+instead of \[rs]box\[rs]graph.
 .
 .
 .LP
@@ -352,7 +353,7 @@ commands it produced for \*[tx].)
 .
 .LP
 Lines beginning with
-.B \e
+.B \[rs]
 are passed through transparently;
 a
 .B %
@@ -360,7 +361,7 @@ is added to the end of the line to avoid unwanted spaces.
 .
 You can safely use this feature to change fonts or to
 change the value of
-.BR \ebaselineskip .
+.BR \[rs]baselineskip .
 .
 Anything else may well produce undesirable results;
 use at your own risk.
@@ -455,7 +456,7 @@ This is useful for debugging.
 Concatenate the arguments
 and pass them through as a line to
 .I troff
-or \*(tx.
+or \*[tx].
 .
 Each
 .I arg
@@ -464,7 +465,7 @@ must be an expression, a position, or text.
 This has a similar effect to a line beginning with
 .B .\&
 or
-.BR \e ,
+.BR \[rs] ,
 but allows the values of variables to be passed through.
 .
 For example,
@@ -477,7 +478,7 @@ For example,
 x = 14
 command ".ds string x is " x "."
 \&.PE
-\e*[string]
+\[rs]*[string]
 .EE
 .RE
 .
@@ -872,7 +873,7 @@ is a part.
 .LP
 Circles, ellipses, and arcs can be dotted or dashed.
 .
-In \*(tx mode splines can be dotted or dashed also.
+In \*[tx] mode splines can be dotted or dashed also.
 .
 .
 .LP
@@ -967,10 +968,10 @@ which should be a string as described in
 .IR printf (3)
 appropriate for the number of arguments supplied.
 Only the flags
-.RB \(oq # \(cq,
-.RB \(oq \- \(cq,
-.RB \(oq + \(cq,
-and \(oq\ \(cq (space), a minimum field width, an optional precision,
+.RB \[lq] # \[rq],
+.RB \[lq] \- \[rq],
+.RB \[lq] + \[rq],
+and \[lq]\~\[rq] [sp]ace), a minimum field width, an optional precision,
 and the conversion specifications
 .BR %e ,
 .BR %E ,
@@ -990,8 +991,8 @@ variable.
 This gives the thickness of lines in points.
 .
 A negative value means use the default thickness:
-in \*(tx output mode, this means use a thickness of 8 milliinches;
-in \*(tx output mode with the
+in \*[tx] output mode, this means use a thickness of 8 milliinches;
+in \*[tx] output mode with the
 .B \-c
 option, this means use the line thickness specified by
 .B .ps
@@ -1074,7 +1075,7 @@ All three keywords expect a suffix specifying the color, for example
 .
 .
 .LP
-Currently, color support isn't available in \*(tx mode.
+Currently, color support isn't available in \*[tx] mode.
 .
 Predefined color names for
 .I groff
@@ -1088,7 +1089,7 @@ for more details).
 .
 .
 .LP
-To change the name of the vbox in \*(tx mode, set the pseudo-variable
+To change the name of the vbox in \*[tx] mode, set the pseudo-variable
 .B figname
 (which is actually a specially parsed command) within a picture.
 .
@@ -1107,7 +1108,7 @@ Example:
 .
 .LP
 The picture is then available in the box
-.BR \efoobar .
+.BR \[rs]foobar .
 .
 .
 .LP
@@ -1119,7 +1120,7 @@ set to the default value.
 .LP
 Arrow heads will be drawn as solid triangles if the variable
 .B arrowhead
-is non-zero and either \*(tx mode is enabled or the
+is non-zero and either \*[tx] mode is enabled or the
 .B \-n
 option has not been given.
 .
@@ -1340,7 +1341,7 @@ Characters that are invalid as input to GNU
 Texinfo manual or
 .IR groff_char (@MAN7EXT@)
 for a list)
-are rejected even in \*(tx mode.
+are rejected even in \*[tx] mode.
 .
 .
 .LP
