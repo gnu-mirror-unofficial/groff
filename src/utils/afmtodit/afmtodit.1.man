@@ -58,31 +58,35 @@ afmtodit \- adapt Adobe Font Metrics files for groff \-Tps and \-Tpdf
 .\" ====================================================================
 .
 .I afmtodit
-creates a font file for use with
-.IR groff ,
-.IR grops ,
+converts an
+Adobe Font Metric
+file,
+.IR afm-file ,
+for use with the
+.B ps
 and
-.IR gropdf .
+.B pdf
+output drivers of
+.IR groff (@MAN1EXT@).
 .
-.I afmtodit
-is written in Perl;
-you must have Perl version 5.004 or newer installed in order to run
-.IR afmtodit .
+.I map-file
+associates a
+.I groff
+character name with a PostScript character name.
+.
+Output is written to
+.IR font,
+a file named for the intended
+.I groff
+font name
+(but see the
+.B -o
+option).
 .
 .
 .LP
 .I afm-file
-is the AFM
-(Adobe Font Metric)
-file for the font.
-.
-.
-.LP
-.I map-file
-is a file that says which
-.I groff
-character names map onto each PostScript character name;
-this file should contain a sequence of lines of the form
+should contain a sequence of lines of the form
 .
 .RS
 .I ps-char groff-char
@@ -109,7 +113,7 @@ must occur at most once.
 Lines starting with \[lq]#\[rq] and blank lines are ignored.
 .
 If the file isn't found in the current directory,
-it is searched for in the
+it is sought in the
 .I devps/generate
 subdirectory of the default font directory.
 .
@@ -137,9 +141,9 @@ this is true for glyph variants named in the form \[lq]foo.bar\[rq];
 all glyph names containing one or more periods are mapped to unnamed
 entities.
 .
-If option
+Unless
 .B \-e
-is not specified,
+is specified,
 the encoding defined in the AFM file
 (i.e.,
 entries
@@ -174,16 +178,6 @@ it is best to access them with glyph names only.
 .
 .
 .LP
-The
-.I groff
-font file will be output to a file called
-.IR font ,
-unless the
-.B \-o
-option is used.
-.
-.
-.LP
 If there is a downloadable font file for the font,
 it may be listed in the file
 .IR \%@FONTDIR@/\:\%devps/\:\%download ;
@@ -196,12 +190,12 @@ If the
 .B \-i
 option is used,
 .I afmtodit
-will automatically generate an italic correction,
-a left italic correction and a subscript correction
-for each character
-(the significance of these parameters is explained in
+automatically generates an italic correction,
+a left italic correction,
+and a subscript correction for each character
+(the significance of these is explained in
 .IR groff_font (@MAN5EXT@));
-these parameters may be specified for individual characters by
+they be specified for individual characters by
 adding to the
 .I afm-file
 lines of the form:
@@ -222,7 +216,7 @@ and
 is the desired value of the corresponding parameter in thousandths of an
 em.
 .
-These parameters are normally needed only for italic
+Such parameters are normally needed only for italic
 (or oblique)
 fonts.
 .
@@ -388,16 +382,15 @@ use with monospaced (constant-width) fonts.
 .
 .TP
 .B \-s
-The font is special.
-.
-The effect of this option is to add the
+The font is special;
+add the
 .B special
 command to the font file.
 .
 .
 .TP
 .B \-v
-Print version and exit.
+Write version information to the standard output stream and exit.
 .
 .
 .TP
