@@ -116,11 +116,13 @@ and
 macros.
 .
 When the macro package being used does not supply such definitions
-(for example, old versions of \-ms), appropriate definitions can be
+(for example,
+old versions of \-ms),
+appropriate definitions can be
 obtained with
 .BR \-mpic :
+these will center each picture.
 .
-These will center each picture.
 .
 .
 .\" ====================================================================
@@ -159,8 +161,9 @@ changed to
 A line beginning with
 .B .ps
 is given special treatment:
-it takes an optional integer argument specifying
-the line thickness (pen size) in milliinches;
+it takes an optional integer argument specifying the line thickness
+(pen size)
+in milliinches;
 a missing argument restores the previous line thickness;
 the default line thickness is 8 milliinches.
 .
@@ -206,12 +209,14 @@ mode.
 .
 .TP
 .B \-S
-Safer mode; do not execute
+Safer mode;
+do not execute
 .B sh
 commands.
 .
-This can be useful when operating on untrustworthy input (enabled by
-default).
+This option,
+enabled by default,
+can be useful when operating on untrustworthy input.
 .
 .
 .TP
@@ -221,7 +226,8 @@ default).
 .
 .TP
 .B \-U
-Unsafe mode; revert the default option
+Unsafe mode;
+revert the default option
 .BR \-S .
 .
 .
@@ -294,7 +300,9 @@ Use the
 .B figname
 command to change the name of the vbox.
 .
-You must yourself print that vbox using, for example, the command
+You must yourself print that vbox using,
+for example,
+the command
 .
 .
 .RS
@@ -306,9 +314,11 @@ You must yourself print that vbox using, for example, the command
 .
 .
 .LP
-Actually, since the vbox has a height of zero (it is defined with
-\[rs]vtop) this will produce slightly more vertical space above the
-picture than below it;
+Actually,
+since the vbox has a height of zero
+(it is defined with \[rs]vtop)
+this will produce slightly more vertical space above the picture than
+below it;
 .
 .
 .RS
@@ -402,7 +412,8 @@ by
 .IR expr3 ;
 if
 .B by
-is not given, increment
+is not given,
+increment
 .I variable
 by 1.
 .
@@ -426,7 +437,8 @@ For the multiplicative case,
 .I expr3
 must be greater than zero.
 .
-If the constraints aren't met, the loop isn't executed.
+If the constraints aren't met,
+the loop isn't executed.
 .
 .I X
 can be any character not occurring in
@@ -452,11 +464,14 @@ can be any character not occurring in
 .
 .TP
 \fBprint\fR \fIarg\fR\|.\|.\|.
-Concatenate the arguments and print as a line on stderr.
+Concatenate the arguments and print as a line on the standard error
+stream.
 .
 Each
 .I arg
-must be an expression, a position, or text.
+must be an expression,
+a position,
+or text.
 .
 This is useful for debugging.
 .
@@ -469,7 +484,9 @@ or \*[tx].
 .
 Each
 .I arg
-must be an expression, a position, or text.
+must be an expression,
+a position,
+or text.
 .
 This has a similar effect to a line beginning with
 .B .\&
@@ -556,7 +573,8 @@ word of the line.
 .
 If
 .I filename
-is not given, lines are taken from the current input up to
+is not given,
+lines are taken from the current input up to
 .BR .PE .
 .
 If an
@@ -623,8 +641,8 @@ Reset pre-defined variables
 .I variable2
 \&.\^.\^.\& to their default values.
 .
-If no arguments are given, reset all pre-defined variables to their
-default values.
+If no arguments are given,
+reset all pre-defined variables to their default values.
 .
 Assigning a value to
 .B scale
@@ -671,9 +689,11 @@ without creating a variable local to the current block.
 (By contrast,
 .B =
 defines the variable in the current block if it is not already defined
-there, and then changes the value in the current block only.)
+there,
+and then changes the value in the current block only.)
 .
-For example, the following:
+For example,
+the following:
 .
 .
 .RS
@@ -823,8 +843,11 @@ For example
 .LP
 means draw a line 2\ inches long in the current direction.
 .
-The \[oq]i\[cq] (or \[oq]I\[cq]) character is ignored; to use another
-measurement unit, set the
+The \[oq]i\[cq]
+(or \[oq]I\[cq])
+character is ignored;
+to use another measurement unit,
+set the
 .I scale
 variable to an appropriate value.
 .
@@ -891,7 +914,9 @@ is a part.
 .
 .
 .LP
-Circles, ellipses, and arcs can be dotted or dashed.
+Circles,
+ellipses,
+and arcs can be dotted or dashed.
 .
 In \*[tx] mode splines can be dotted or dashed also.
 .
@@ -906,7 +931,8 @@ If no
 .B rad
 or
 .B diam
-attribute is given, a radius of
+attribute is given,
+a radius of
 .B boxrad
 is used.
 .
@@ -976,7 +1002,9 @@ have a value of 0.
 .
 .
 .LP
-In (almost all) places where a quoted text string can be used,
+In
+(almost all)
+places where a quoted text string can be used,
 an expression of the form
 .
 .
@@ -996,7 +1024,9 @@ Only the flags
 .RB \[lq] # \[rq],
 .RB \[lq] \- \[rq],
 .RB \[lq] + \[rq],
-and \[lq]\~\[rq] [sp]ace), a minimum field width, an optional precision,
+and \[lq]\~\[rq] [sp]ace),
+a minimum field width,
+an optional precision,
 and the conversion specifications
 .BR %e ,
 .BR %E ,
@@ -1016,10 +1046,12 @@ variable.
 This gives the thickness of lines in points.
 .
 A negative value means use the default thickness:
-in \*[tx] output mode, this means use a thickness of 8 milliinches;
+in \*[tx] output mode,
+this means use a thickness of 8 milliinches;
 in \*[tx] output mode with the
 .B \-c
-option, this means use the line thickness specified by
+option,
+this means use the line thickness specified by
 .B .ps
 lines;
 in
@@ -1052,28 +1084,33 @@ would draw a circle using a line with a thickness of 1.5 points.
 The thickness of lines is not affected by the
 value of the
 .B scale
-variable, nor by the width or height given in the
+variable,
+nor by the width or height given in the
 .B .PS
 line.
 .
 .
 .LP
-Boxes (including boxes with rounded corners or slanted sides),
+Boxes
+(including boxes with rounded corners or slanted sides),
 circles and ellipses can be filled by giving them an attribute of
 .BR fill [ ed ].
 .
 This takes an optional argument of an expression with a value between
-0 and 1; 0 will fill it with white, 1 with black, values in between
-with a proportionally gray shade.
+0 and 1;
+0 will fill it with white,
+1 with black,
+values in between with a proportionally gray shade.
 .
 A value greater than 1 can also be used:
 this means fill with the
 shade of gray that is currently being used for text and lines.
 .
-Normally this will be black, but output devices may provide
-a mechanism for changing this.
+Normally this will be black,
+but output devices may provide a mechanism for changing this.
 .
-Without an argument, then the value of the variable
+Without an argument,
+then the value of the variable
 .B fillval
 will be used.
 .
@@ -1082,9 +1119,9 @@ this has a value of 0.5.
 .
 The invisible attribute does not affect the filling of objects.
 .
-Any text associated with a filled object will be added after the
-object has been filled, so that the text will not be obscured
-by the filling.
+Any text associated with a filled object will be added after the object
+has been filled,
+so that the text will not be obscured by the filling.
 .
 .
 .LP
@@ -1092,11 +1129,13 @@ Three additional modifiers are available to specify colored objects:
 .BR outline [ d ]
 sets the color of the outline,
 .B shaded
-the fill color, and
+the fill color,
+and
 .B colo\fR[\fPu\fR]\fPr\fR[\fPed\fR]
 sets both.
 .
-All three keywords expect a suffix specifying the color, for example
+All three keywords expect a suffix specifying the color,
+as shown below.
 .
 .
 .RS
@@ -1106,23 +1145,28 @@ All three keywords expect a suffix specifying the color, for example
 .
 .
 .LP
-Currently, color support isn't available in \*[tx] mode.
+Currently,
+color support isn't available in \*[tx] mode.
 .
 Predefined color names for
 .I groff
-are in the device macro files, for example
+are in the device macro files,
+for example
 .BR ps.tmac ;
 additional colors can be defined with the
 .B .defcolor
-request (see the manual page of
+request
+(see the manual page of
 .IR \%@g@troff (@MAN1EXT@)
 for more details).
 .
 .
 .LP
-To change the name of the vbox in \*[tx] mode, set the pseudo-variable
+To change the name of the vbox in \*[tx] mode,
+set the pseudo-variable
 .B figname
-(which is actually a specially parsed command) within a picture.
+(which is actually a specially parsed command)
+within a picture.
 .
 Example:
 .RS
@@ -1173,8 +1217,8 @@ The
 .B \-T
 option is therefore redundant.
 .
-All numbers are taken to be in inches; numbers are never interpreted
-to be in
+All numbers are taken to be in inches;
+numbers are never interpreted to be in
 .I troff
 machine units.
 .
@@ -1228,7 +1272,8 @@ for i = 1 to 4 do {
 .
 To obtain a stand-alone picture from a
 .I \%@g@pic
-file, enclose your
+file,
+enclose your
 .I pic \" language
 code with
 .B .PS
@@ -1236,7 +1281,8 @@ and
 .B .PE
 requests;
 .I roff
-configuration commands may be added at the beginning of the file, but no
+configuration commands may be added at the beginning of the file,
+but no
 .I roff
 text.
 .
@@ -1244,20 +1290,28 @@ text.
 .LP
 It is necessary to feed this file into
 .I groff
-without adding any page information, so you must check which
+without adding any page information,
+so you must check which
 .B .PS
 and
 .B .PE
 requests are actually called.
 .
-For example, the mm macro package adds a page number, which is very
-annoying.
+For example,
+the
+.I mm
+macro package adds a page number,
+which is very annoying.
 .
-At the moment, calling standard
+At the moment,
+calling standard
 .I groff
 without any macro package works.
 .
-Alternatively, you can define your own requests, e.g., to do nothing:
+Alternatively,
+you can define your own requests,
+e.g.,
+to do nothing:
 .
 .
 .LP
@@ -1333,9 +1387,9 @@ papersize to
 .LP
 As the Encapsulated PostScript File Format
 .B EPS
-is getting more and more important, and the conversion wasn't
-regarded trivial in the past you might be interested to know that
-there is a conversion tool named
+is getting more and more important,
+and the conversion wasn't regarded trivial in the past you might be
+interested to know that there is a conversion tool named
 .I ps2eps
 which does the right job.
 .
@@ -1346,7 +1400,8 @@ packaged with
 .
 .
 .LP
-For bitmapped graphic formats, you should use
+For bitmapped graphic formats,
+you should use
 .IR pstopnm ;
 the resulting (intermediate)
 .IR pnm (5)
