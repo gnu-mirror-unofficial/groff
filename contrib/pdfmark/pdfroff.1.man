@@ -123,8 +123,9 @@ For each invocation of
 .IR pdfroff ,
 the ultimate
 .I groff
-output stream is post-processed by the GhostScript interpreter,
-to produce a finished PDF document.
+output stream is post-processed by the Ghostscript
+.IR gs (1)
+interpreter to produce a finished PDF document.
 .
 .P
 .I pdfroff
@@ -295,9 +296,7 @@ This may be useful, to capture intermediate PostScript output, when
 using a specialised postprocessor, such as
 .I gpresent
 for example,
-in place of the default
-.I GhostScript
-PDF writer.
+in place of the default Ghostscript PDF writer.
 .
 .TP
 .B \-\-keep\-temporary\-files
@@ -349,9 +348,7 @@ which is traditionally required to relocate a
 to the start of a document,
 .I pdfroff
 accumulates a number of empty page descriptions
-into the intermediate
-.I PostScript
-output stream.
+into the intermediate PostScript output stream.
 During the final collation step,
 these empty pages are normally discarded from the finished document;
 this option forces
@@ -586,8 +583,8 @@ is not specified, then
 searches the process
 .IR PATH ,
 looking for a program with any of the well known names
-for the GhostScript interpreter;
-if no GhostScript interpreter can be found,
+for the Ghostscript interpreter;
+if no Ghostscript interpreter can be found,
 .I pdfroff
 aborts.
 .
@@ -765,7 +762,7 @@ file,
 in which \[lq]Table of Contents\[rq] entries are collected,
 to facilitate relocation before the body text,
 on ultimate output to the
-.I GhostScript
+.I Ghostscript
 postprocessor.
 .
 .TP
@@ -774,7 +771,7 @@ An intermediate
 .I PostScript
 file,
 in which the body text is collected prior to ultimate output to the
-.I GhostScript
+.I Ghostscript
 postprocessor,
 in the proper sequence,
 .I after
