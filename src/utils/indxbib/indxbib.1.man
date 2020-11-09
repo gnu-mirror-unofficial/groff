@@ -77,10 +77,9 @@ for use with
 and
 .IR \%lkbib (@MAN1EXT@).
 .
-Each index will be named
+Each created index is named
 .RI file @INDEX_SUFFIX@ ;
-the index is written to a temporary file which is then renamed to
-this.
+writing is done to a temporary file which is then renamed to this.
 .
 If no
 .I file
@@ -102,7 +101,7 @@ each field starts with a
 .B %
 character at the beginning of a line.
 .
-Fields have a one letter name which follows the
+Fields have a one letter name that follows the
 .B %
 character.
 .
@@ -190,6 +189,8 @@ option can be given at most once.
 .BI \-i\~ string
 Don't index the contents of fields whose names are in
 .IR string .
+.
+Field names are one character each.
 .
 Initially,
 .I string
@@ -288,6 +289,10 @@ Default index name.
 .TP
 .I \%@COMMON_WORDS_FILE@
 List of common words.
+.
+The traditional name,
+.RI \[lq] eign \[rq],
+is an abbreviation of \[lq]English ignored [word list]\[rq].
 .
 .
 .TP
