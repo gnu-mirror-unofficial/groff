@@ -105,12 +105,13 @@ The intermediate output format of
 is device-independent but not device-agnostic.
 .
 .I gxditview
-can view it for all typesetter devices;
-that is,
-it will not display output for terminal
-.RI ( nroff )
-devices,
+can view it for all typesetter devices,
 but the quality is device-dependent.
+.
+.I gxditview
+will not display output for terminal
+.RI ( nroff )
+devices.
 .
 .
 .PP
@@ -135,7 +136,7 @@ and the base point size
 They are especially built for
 .IR gxditview .
 .
-When using one of them
+When using one of these,
 .I groff
 generates the intermediate output for this device and calls
 .I gxditview
@@ -147,7 +148,7 @@ the following command views this man page with a base point size of 12.
 .PP
 .RS
 .EX
-groff \-TX100\-12 \-man gxditview
+groff \-TX100\-12 \-man gxditview.1
 .EE
 .RE
 .
@@ -214,7 +215,7 @@ intermediate output.
 .
 If the filename starts with a bar or pipe symbol,
 .RB \[lq] | \[rq]
-it will be interpreted as be a command from which to read.
+it will be interpreted as a command from which to read.
 .
 .
 .TP
@@ -224,6 +225,10 @@ Exit from
 .
 .
 .PP
+The menu entries correspond to actions with similar but not identical
+names,
+which can also be accessed with keyboard accelerators.
+.
 The
 .IR n ,
 .IR Space ,
@@ -232,7 +237,7 @@ and
 .I Next
 .RI ( PgDn )
 keys are bound to the
-.B Next\~Page
+.B NextPage
 action.
 .
 The
@@ -244,7 +249,7 @@ and
 .I Prior
 .RI ( PgUp )
 keys are bound to the
-.B Previous\~Page
+.B PreviousPage
 action.
 .
 The
@@ -267,7 +272,7 @@ action.
 .
 The
 .I r
-key is bound to the
+key is bound to a
 .B Rerasterize
 action which rereads the current file,
 and redisplays the current page;
