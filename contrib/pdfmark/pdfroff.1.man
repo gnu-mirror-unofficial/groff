@@ -386,6 +386,7 @@ to the start of a document,
 .I pdfroff
 accumulates a number of empty page descriptions
 into the intermediate PostScript output stream.
+.
 During the final collation step,
 these empty pages are normally discarded from the finished document;
 this option forces
@@ -397,6 +398,7 @@ to leave them in place.
 Specifies the name to be used for the resultant PDF document;
 if unspecified,
 the PDF output is written to standard output.
+.
 A future version of
 .I pdfroff
 may use this option,
@@ -480,7 +482,9 @@ However,
 users should not normally need to specify
 .IR \%PDFROFF_COLLATE ,
 (and indeed,
-are not encouraged to do so).  If unspecified,
+are not encouraged to do so).
+.
+If unspecified,
 .I pdfroff
 uses
 .IR sed (@MAN1EXT@)
@@ -595,6 +599,7 @@ then the variables
 and
 .I TEMP
 are considered in turn as possible temporary file repositories.
+.
 If none of these are set,
 then temporary files are created
 in the current directory.
@@ -702,6 +707,7 @@ option is specified on the command line.
 Input and output files for
 .I pdfroff
 may be named according to any convention of the user's choice.
+.
 Typically,
 input files may be named according to the choice of the principal
 normatting macro package,
@@ -734,6 +740,7 @@ if this subdirectory is successfully created,
 the temporary files will be placed within it,
 otherwise they will be placed directly in the directory
 nominated in the environment.
+.
 .P
 All temporary files themselves
 are named according to the convention
