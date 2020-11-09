@@ -72,22 +72,21 @@ The GNU
 .I roff
 TTY
 (\[lq]Teletype\[rq])
-output driver translates the intermediate,
-device-independent output of
-.IR groff (@MAN1EXT@)
+output driver translates the output of
+.IR \%@g@troff (@MAN1EXT@)
 into a form suitable for typewriter-like devices,
 including terminal emulators.
 .
 Normally,
 .I grotty
 is invoked by
-.I groff
+.IR groff (@MAN1EXT@)
 when the latter is given one of the
 .BR \-Tascii ,
 .B \-Tlatin1
 or
 .B \-Tutf8
-options on ASCII-based systems,
+options on systems using ISO character encoding standards,
 or with
 .B \-Tcp1047
 or
@@ -101,9 +100,9 @@ or if
 .I file
 is \[lq]\-\[rq],
 .I grotty
-reads the standard input.
+reads the standard input stream.
 .
-Output is written to the standard output.
+Output is written to the standard output stream.
 .
 .
 .LP
@@ -398,7 +397,8 @@ Prepend directory
 .RI dir /dev name
 to the search path for font and device description files;
 .I name
-is the name of the device, usually
+describes the output device's character encoding,
+one of
 .BR ascii ,
 .BR latin1 ,
 .BR utf8 ,
