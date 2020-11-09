@@ -117,6 +117,7 @@ this allows for the definition of content which is required to precede
 the table of contents,
 in the published document.
 .
+.
 .P
 For each invocation of
 .IR pdfroff ,
@@ -125,6 +126,7 @@ the ultimate
 output stream is post-processed by the Ghostscript
 .IR gs (1)
 interpreter to produce a finished PDF document.
+.
 .
 .P
 .I pdfroff
@@ -245,11 +247,13 @@ however,
 are handled specially by
 .IR pdfroff .
 .
+.
 .TP
 .B \-h
 Same as
 .BR \-\-help ;
 see below.
+.
 .
 .TP
 .B \-i
@@ -270,6 +274,7 @@ in the multiple-pass
 processing context of
 .IR pdfroff .
 .
+.
 .TP
 .BI \-T \ dev
 Only
@@ -280,6 +285,7 @@ is supported by
 Attempting to specify any other device causes
 .I pdfroff
 to abort.
+.
 .
 .TP
 .B \-v
@@ -311,6 +317,7 @@ passed on to
 .IR groff ,
 unless otherwise stated below.
 .
+.
 .TP
 .B \-\-help
 Causes
@@ -318,6 +325,7 @@ Causes
 to display a summary of the its usage syntax,
 and supported options,
 and then exit.
+.
 .
 .TP
 .B \-\-emit\-ps
@@ -333,6 +341,7 @@ such as
 for example,
 in place of the default Ghostscript PDF writer.
 .
+.
 .TP
 .B \-\-keep\-temporary\-files
 Suppresses the deletion of temporary files,
@@ -342,10 +351,12 @@ after
 has completed PDF document formatting;
 this may be useful when debugging formatting problems.
 .
+.
 .IP
 See section \[lq]Files\[rq] below for a description of the temporary
 files used by
 .IR pdfroff .
+.
 .
 .TP
 .B \-\-no\-pdf\-output
@@ -357,6 +368,7 @@ to eliminate the overhead of PDF formatting when running
 .I pdfroff
 to create a reference dictionary for use in a different document.
 .
+.
 .TP
 .B \-\-no\-reference\-dictionary
 May be used to eliminate the overhead of creating a reference
@@ -367,6 +379,7 @@ created by the
 .B pdfhref
 macro.
 .
+.
 .TP
 .B \-\-no\-toc\-relocation
 May be used to eliminate the extra
@@ -376,6 +389,7 @@ which is required to generate a table of contents,
 and relocate it to the start of the PDF document,
 when processing any document which lacks an automatically
 generated table of contents.
+.
 .
 .TP
 .B \-\-no\-kill\-null\-pages
@@ -393,6 +407,7 @@ this option forces
 .I pdfroff
 to leave them in place.
 .
+.
 .TP
 .BI \-\-pdf\-output= name
 Specifies the name to be used for the resultant PDF document;
@@ -403,6 +418,7 @@ A future version of
 .I pdfroff
 may use this option,
 to encode the document name in a generated reference dictionary.
+.
 .
 .TP
 .BI \-\-reference\-dictionary= name
@@ -420,6 +436,7 @@ be specified,
 if it is desired to save the reference dictionary,
 for use in references placed in other PDF documents.
 .
+.
 .TP
 .B \-\-report\-progress
 Causes
@@ -428,6 +445,7 @@ to display an informational message on standard error,
 at the start of each
 .I groff
 processing pass.
+.
 .
 .TP
 .BI \-\-stylesheet= name
@@ -438,6 +456,7 @@ which is to be placed
 .I before
 the table of contents,
 in the formatted PDF document.
+.
 .
 .TP
 .B \-\-version
@@ -466,10 +485,12 @@ and exported,
 to modify the behaviour of
 .IR pdfroff .
 .
+.
 .TP
 .I PDFROFF_COLLATE
 Specifies the program to be used
 for collation of the finished PDF document.
+.
 .
 .IP
 This collation step may be required to move
@@ -491,6 +512,7 @@ uses
 by default,
 which normally suffices.
 .
+.
 .IP
 If
 .I \%PDFROFF_COLLATE
@@ -503,11 +525,13 @@ whence it is piped to the
 .IR \%PDFROFF_POSTPROCESSOR_COMMAND ,
 to produce the finished PDF output.
 .
+.
 .IP
 When specifying
 .IR \%PDFROFF_COLLATE ,
 it is normally necessary to also specify
 .IR \%PDFROFF_KILL_NULL_PAGES .
+.
 .
 .IP
 .I \%PDFROFF_COLLATE
@@ -518,11 +542,13 @@ is invoked with the
 .B \%\-\-no\-kill\-null\-pages
 option.
 .
+.
 .TP
 .I PDFROFF_KILL_NULL_PAGES
 Specifies options to be passed to the
 .I \%PDFROFF_COLLATE
 program.
+.
 .
 .IP
 It should not normally be necessary to specify
@@ -545,6 +571,7 @@ then it is likely that a corresponding alternative specification for
 .I \%PDFROFF_KILL_NULL_PAGES
 is required.
 .
+.
 .IP
 As in the case of
 .IR \%PDFROFF_COLLATE ,
@@ -555,6 +582,7 @@ if
 is invoked with the
 .B \%\-\-no\-kill\-null\-pages
 option.
+.
 .
 .TP
 .I PDFROFF_POSTPROCESSOR_COMMAND
@@ -570,6 +598,7 @@ with the special case of
 .RB \[lq] \- \[rq]
 representing the standard input stream.
 .
+.
 .IP
 If unspecified,
 .I \%PDFROFF_POSTPROCESSOR_COMMAND
@@ -581,6 +610,7 @@ gs \-dBATCH \-dQUIET \-dNOPAUSE \-dSAFER \-sDEVICE=pdfwrite \e
 	\-sOutputFile=\-
 .EE
 .RE
+.
 .
 .TP
 .I GROFF_TMPDIR
@@ -603,6 +633,7 @@ are considered in turn as possible temporary file repositories.
 If none of these are set,
 then temporary files are created
 in the current directory.
+.
 .
 .TP
 .I GROFF_GHOSTSCRIPT_INTERPRETER
@@ -634,6 +665,7 @@ if no Ghostscript interpreter can be found,
 .I pdfroff
 aborts.
 .
+.
 .TP
 .I GROFF_AWK_INTERPRETER
 Specifies the program to be invoked when
@@ -664,6 +696,7 @@ however,
 in this case,
 no reference dictionary is created.
 .
+.
 .TP
 .I OSTYPE
 Typically defined automatically by the operating system,
@@ -677,6 +710,7 @@ which is used when parsing the process
 .I PATH
 to search for external helper programs.
 .
+.
 .TP
 .I PATH_SEPARATOR
 If set,
@@ -689,6 +723,7 @@ on Microsoft Win32/MS-DOS),
 which is used when parsing the process
 .I PATH
 to search for external helper programs.
+.
 .
 .TP
 .I SHOW_PROGRESS
@@ -741,6 +776,7 @@ the temporary files will be placed within it,
 otherwise they will be placed directly in the directory
 nominated in the environment.
 .
+.
 .P
 All temporary files themselves
 are named according to the convention
@@ -757,6 +793,7 @@ represents any of the extensions used by
 .I pdfroff
 to identify the following temporary and intermediate files.
 .
+.
 .TP
 .IR pdf $$ .tmp
 A scratch pad file,
@@ -765,6 +802,7 @@ used to capture reference data emitted by
 during the
 .I reference dictionary
 compilation phase.
+.
 .
 .TP
 .IR pdf $$ .ref
@@ -781,6 +819,7 @@ it contains the
 entries,
 as collected in the preceding pass).
 .
+.
 .IP
 If the
 .BR \%\-\-reference\-dictionary =\c
@@ -791,6 +830,7 @@ and is named
 .IR name ,
 rather than
 .IR pdf $$ .ref .
+.
 .
 .TP
 .IR pdf $$ .cmp
@@ -817,6 +857,7 @@ and the
 is appended to this intermediate file,
 for inclusion in the final formatting passes.
 .
+.
 .TP
 .IR pdf $$ .tc
 An intermediate
@@ -827,6 +868,7 @@ to facilitate relocation before the body text,
 on ultimate output to the
 .I Ghostscript
 postprocessor.
+.
 .
 .TP
 .IR pdf $$ .ps
