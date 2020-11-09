@@ -155,6 +155,7 @@ See
 .IR groff (@MAN1EXT@)
 for acceptable devices.
 .
+.
 .TP
 .BI \-M dir
 Prepend
@@ -170,6 +171,7 @@ directory,
 and
 .IR @MACRODIR@ .
 .
+.
 .TP
 .BI \-F dir
 Search
@@ -184,6 +186,7 @@ file before the default font directories
 .IR @FONTDIR@ ,
 and
 .IR @LEGACYFONTDIR@ .
+.
 .
 .TP
 .B \-C
@@ -234,6 +237,8 @@ The environment is reinitialized to the defaults at the start of the
 next picture.
 .
 The commands are as follows:
+.
+.
 .TP
 .BI 1\  N
 .TQ
@@ -251,6 +256,7 @@ points.
 .
 The default is 12 (16, 24, and 36, respectively).
 .
+.
 .TP
 .BI roman\  f
 .TQ
@@ -266,6 +272,7 @@ font
 (either a name or number).
 .
 The default is R (I, B, and S, respectively).
+.
 .
 .TP
 .BI l\  f
@@ -291,6 +298,7 @@ it is invalid to include a
 picture with polygons without specifying a
 stipple font.
 .
+.
 .TP
 .BI x\  N
 .TQ
@@ -302,6 +310,7 @@ a floating point number larger than zero.
 The command
 .B scale
 may be abbreviated down to \[oq]sc\[cq].
+.
 .
 .TP
 .BI narrow\  N
@@ -328,6 +337,7 @@ A thickness value of zero selects the smallest available line thickness.
 Negative values cause the line thickness to be proportional to the
 current point size.
 .
+.
 .TP
 .BI pointscale\  <off/on>
 Scale text to match the picture.
@@ -350,6 +360,7 @@ An operand of anything but
 .I off
 will turn text scaling on.
 .
+.
 .TP
 .B default
 Reset the picture environment defaults to the settings in the current
@@ -361,6 +372,7 @@ the beginning of the
 input file, but can be used at any time to reset the
 default settings.
 .
+.
 .TP
 .BI width\  N
 Forces the picture to be
@@ -371,6 +383,7 @@ This overrides any scaling factors present in the same picture.
 .RB \[oq] width
 .IR 0 \[cq]
 is ignored.
+.
 .
 .TP
 .BI height\  N
@@ -388,6 +401,7 @@ commands are not saved with a
 command.
 .
 They will, however, affect point size scaling if that option is set.
+.
 .
 .TP
 .BI file\  name
@@ -565,6 +579,8 @@ css.
 Table 1.  File examples
 .TE
 .sp
+.
+.
 .IP \(bu
 The first line of each
 .I gremlin
@@ -574,6 +590,8 @@ file contains either the string
 version) or
 .B sungremlinfile
 .RI ( SUN / X11 )
+.
+.
 .IP \(bu
 The second line of the file contains an orientation, and
 .B x
@@ -609,11 +627,13 @@ this file is read into another file.
 The stuff on this line really isn't all that important; a value of
 \[lq]1 0.00 0.00\[rq] is suggested.
 .
+.
 .IP \(bu
 The rest of the file consists of zero or more element specifications.
 .
 After the last element specification is a line containing the string
 \[lq]\-1\[rq].
+.
 .
 .IP \(bu
 Lines longer than 127 characters are chopped to this limit.
@@ -663,6 +683,8 @@ Table 2.
 Type Specifications in \fIgremlin\fP Files
 .TE
 .sp
+.
+.
 .IP \(bu
 After the object type comes a variable number of lines,
 each specifying a point used to display the element.
@@ -677,6 +699,7 @@ The list of points is terminated by a line containing the string
 version) or a single asterisk, \[lq]*\[rq]
 .RI ( Sun / X11
 version).
+.
 .
 .IP \(bu
 After the points comes a line containing two decimal values, giving the
@@ -730,6 +753,7 @@ For polygons, this size field is interpreted as a stipple number to
 fill the polygon with.
 .
 The number is used to index into a stipple font at print time.
+.
 .
 .IP \(bu
 The last line of each element contains a decimal number and a string of
