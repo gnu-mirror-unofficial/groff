@@ -104,7 +104,8 @@ is a wrapper program for the GNU text processing system,
 .
 It transparently handles the mechanics of multiple pass
 .I groff
-processing, when applied to suitably marked up
+processing,
+when applied to suitably marked up
 .I groff
 source files,
 such that tables of contents and body text are formatted separately,
@@ -127,30 +128,40 @@ interpreter to produce a finished PDF document.
 .
 .P
 .I pdfroff
-makes no assumptions about, and imposes no restrictions on, the use of
-any
+makes no assumptions about,
+and imposes no restrictions on,
+the use of any
 .I groff
 macro packages which the user may choose to employ,
 in order to achieve a desired document format;
-however, it
+however,
+it
 .I does
 include specific built in support for the
 .I pdfmark
-macro package, should the user choose to employ it.
+macro package,
+should the user choose to employ it.
 .
-Specifically, if the
+Specifically,
+if the
 .I pdfhref
-macro, defined in the
+macro,
+defined in the
 .I pdfmark.tmac
-package, is used to define public reference marks, or dynamic links to
-such reference marks, then
+package,
+is used to define public reference marks,
+or dynamic links to such reference marks,
+then
 .I pdfroff
 performs as many preformatting
 .I groff
-passes as required, up to a maximum limit of
+passes as required,
+up to a maximum limit of
 .IR four ,
-in order to compile a document reference dictionary, to resolve
-references, and to expand the dynamically defined content of links.
+in order to compile a document reference dictionary,
+to resolve
+references,
+and to expand the dynamically defined content of links.
 .
 .
 .\" ====================================================================
@@ -159,16 +170,23 @@ references, and to expand the dynamically defined content of links.
 .
 The command line is parsed in accordance with normal GNU conventions,
 but with one exception \(em when specifying any short form option
-(i.e., a single character option introduced by a single hyphen),
-and if that option expects an argument, then it
+(i.e.,
+a single character option introduced by a single hyphen),
+and if that option expects an argument,
+then it
 .I must
-be specified independently (i.e., it may
+be specified independently
+(i.e.,
+it may
 .I not
 be appended to any group of other single character short form options).
 .
 .
 .P
-Long form option names (i.e., those introduced by a double hyphen) may
+Long form option names
+(i.e.,
+those introduced by a double hyphen)
+may
 be abbreviated to their minimum length unambiguous initial substring.
 .
 .
@@ -179,12 +197,15 @@ usage closely mirrors that of
 .I groff
 itself.
 .
-Indeed, with the exception of the
+Indeed,
+with the exception of the
 .BR \-h ,
 .BR \-v ,
 and
 .BI \-T \ dev
-short form options, and all long form options, which are parsed
+short form options,
+and all long form options,
+which are parsed
 internally by
 .IR pdfroff ,
 all options and file name arguments specified on the command line are
@@ -194,7 +215,8 @@ to control the formatting of the PDF document.
 .
 Consequently,
 .I pdfroff
-accepts all options and arguments, as specified in
+accepts all options and arguments,
+as specified in
 .IR groff (@MAN1EXT@),
 which may also be considered as the definitive reference for all
 standard
@@ -207,14 +229,20 @@ options and argument usage.
 .\" ====================================================================
 .
 .I pdfroff
-accepts all of the short form options (i.e., those introduced by a
-single hyphen), which are available with
+accepts all of the short form options
+(i.e.,
+those introduced by a
+single hyphen),
+which are available with
 .I groff
 itself.
 .
-In most cases, these are simply passed transparently to
+In most cases,
+these are simply passed transparently to
 .IR groff ;
-the following, however, are handled specially by
+the following,
+however,
+are handled specially by
 .IR pdfroff .
 .
 .TP
@@ -225,16 +253,19 @@ see below.
 .
 .TP
 .B \-i
-Process standard input, after all other specified input files.
+Process standard input,
+after all other specified input files.
 .
 This is passed transparently to
 .IR groff ,
-but, if grouped with other options, it
+but,
+if grouped with other options,
+it
 .I must
 be the first in the group.
 .
-Hiding it within a group breaks standard input processing, in the
-multiple pass
+Hiding it within a group breaks standard input processing,
+in the multiple pass
 .I groff
 processing context of
 .IR pdfroff .
@@ -260,7 +291,8 @@ see below.
 .P
 See
 .IR groff (@MAN1EXT@)
-for a description of all other short form options, which are
+for a description of all other short form options,
+which are
 transparently passed through
 .I pdfroff
 to
@@ -268,8 +300,10 @@ to
 .
 .
 .P
-All long form options (i.e., those introduced by a double hyphen) are
-interpreted locally by
+All long form options
+(i.e.,
+those introduced by a double hyphen)
+ are interpreted locally by
 .IR pdfroff ;
 they are
 .I not
@@ -281,28 +315,32 @@ unless otherwise stated below.
 .B \-\-help
 Causes
 .I pdfroff
-to display a summary of the its usage syntax, and supported options,
+to display a summary of the its usage syntax,
+and supported options,
 and then exit.
 .
 .TP
 .B \-\-emit\-ps
-Suppresses the final output conversion step, causing
+Suppresses the final output conversion step,
+causing
 .I pdfroff
 to emit PostScript output instead of PDF.
 .
-This may be useful, to capture intermediate PostScript output, when
-using a specialised postprocessor, such as
+This may be useful to capture intermediate PostScript output when using
+a specialised postprocessor,
+such as
 .I gpresent
 for example,
 in place of the default Ghostscript PDF writer.
 .
 .TP
 .B \-\-keep\-temporary\-files
-Suppresses the deletion of temporary files, which normally occurs
+Suppresses the deletion of temporary files,
+which normally occurs
 after
 .I pdfroff
-has completed PDF document formatting; this may be useful, when
-debugging formatting problems.
+has completed PDF document formatting;
+this may be useful when debugging formatting problems.
 .
 .IP
 See section \[lq]Files\[rq] below for a description of the temporary
@@ -313,10 +351,11 @@ files used by
 .B \-\-no\-pdf\-output
 May be used with the
 .BI \%\-\-reference\-dictionary= name
-option (described below) to eliminate the overhead of PDF formatting,
-when running
+option
+(described below)
+to eliminate the overhead of PDF formatting when running
 .I pdfroff
-to create a reference dictionary, for use in a different document.
+to create a reference dictionary for use in a different document.
 .
 .TP
 .B \-\-no\-reference\-dictionary
@@ -356,7 +395,8 @@ to leave them in place.
 .TP
 .BI \-\-pdf\-output= name
 Specifies the name to be used for the resultant PDF document;
-if unspecified, the PDF output is written to standard output.
+if unspecified,
+the PDF output is written to standard output.
 A future version of
 .I pdfroff
 may use this option,
@@ -374,7 +414,8 @@ completes processing of the current document.
 .
 This option
 .I must
-be specified, if it is desired to save the reference dictionary,
+be specified,
+if it is desired to save the reference dictionary,
 for use in references placed in other PDF documents.
 .
 .TP
@@ -410,14 +451,16 @@ pass operation
 .IR only ,
 in order to display the associated
 .I groff
-version information, before exiting.
+version information,
+before exiting.
 .
 .
 .\" ====================================================================
 .SH Environment
 .\" ====================================================================
 .
-The following environment variables may be set, and exported,
+The following environment variables may be set,
+and exported,
 to modify the behaviour of
 .IR pdfroff .
 .
@@ -433,9 +476,11 @@ to the start of the finished PDF document,
 when formatting with traditional macro packages,
 which print them at the end.
 .
-However, users should not normally need to specify
+However,
+users should not normally need to specify
 .IR \%PDFROFF_COLLATE ,
-(and indeed, are not encouraged to do so).  If unspecified,
+(and indeed,
+are not encouraged to do so).  If unspecified,
 .I pdfroff
 uses
 .IR sed (@MAN1EXT@)
@@ -500,7 +545,8 @@ is required.
 As in the case of
 .IR \%PDFROFF_COLLATE ,
 .I \%PDFROFF_KILL_NULL_PAGES
-is ignored, if
+is ignored,
+if
 .I pdfroff
 is invoked with the
 .B \%\-\-no\-kill\-null\-pages
@@ -542,18 +588,20 @@ If
 .I \%GROFF_TMPDIR
 is
 .I not
-specified, then the variables
+specified,
+then the variables
 .IR TMPDIR ,
 .I TMP
 and
 .I TEMP
-are considered in turn, as possible temporary file repositories.
-If none of these are set, then temporary files are created
+are considered in turn as possible temporary file repositories.
+If none of these are set,
+then temporary files are created
 in the current directory.
 .
 .TP
 .I GROFF_GHOSTSCRIPT_INTERPRETER
-Specifies the program to be invoked, when
+Specifies the program to be invoked when
 .I pdfroff
 converts
 .I groff
@@ -570,7 +618,8 @@ overriding any explicit setting specified in the environment.
 .
 If
 .I \%GROFF_GHOSTSCRIPT_INTERPRETER
-is not specified, then
+is not specified,
+then
 .I pdfroff
 searches the process
 .IR PATH ,
@@ -582,7 +631,7 @@ aborts.
 .
 .TP
 .I GROFF_AWK_INTERPRETER
-Specifies the program to be invoked, when
+Specifies the program to be invoked when
 .I pdfroff
 is extracting reference dictionary entries from a
 .I groff
@@ -590,16 +639,24 @@ intermediate message stream.
 .
 If
 .I \%GROFF_AWK_INTERPRETER
-is not specified, then
+is not specified,
+then
 .I pdfroff
 searches the process
 .IR PATH ,
-looking for any of the preferred programs, \[oq]gawk\[cq],
-\[oq]mawk\[cq], \[oq]nawk\[cq], and \[oq]awk\[cq], in this order; if
-none of these are found,
+looking for any of the preferred programs,
+\[oq]gawk\[cq],
+\[oq]mawk\[cq],
+\[oq]nawk\[cq],
+and \[oq]awk\[cq],
+in that order;
+if none of these are found,
 .I pdfroff
-issues a warning message, and continue processing;
-however, in this case, no reference dictionary is created.
+issues a warning message,
+and continue processing;
+however,
+in this case,
+no reference dictionary is created.
 .
 .TP
 .I OSTYPE
@@ -629,11 +686,12 @@ to search for external helper programs.
 .
 .TP
 .I SHOW_PROGRESS
-If this is set to a non-empty value, then
+If this is set to a non-empty value,
+then
 .I pdfroff
 always behaves as if the
 .B \%\-\-report\-progress
-option is specified, on the command line.
+option is specified on the command line.
 .
 .
 .\" ====================================================================
@@ -643,20 +701,23 @@ option is specified, on the command line.
 Input and output files for
 .I pdfroff
 may be named according to any convention of the user's choice.
-Typically, input files may be named according to the choice of the
-principal formatting macro package, e.g.,
+Typically,
+input files may be named according to the choice of the principal
+normatting macro package,
+e.g.,
 .RI file .ms
 might be an input file for formatting using the
 .I ms
 macros
 .RI ( s.tmac );
-normally, the final output file should be named
+normally,
+the final output file should be named
 .RI file .pdf .
 .
 .
 .P
-Temporary files, created by
-.IR pdfroff ,
+Temporary files created by
+.I pdfroff
 are placed in the file system hierarchy,
 in or below the directory specified by environment variables
 (see section \[lq]Environment\[rq] above).
@@ -681,7 +742,8 @@ where
 is the standard shell variable representing the process identifier of
 the
 .I pdfroff
-process itself, and
+process itself,
+and
 .I *
 represents any of the extensions used by
 .I pdfroff
@@ -816,10 +878,12 @@ extended features.
 .P
 While
 .I pdfroff
-imposes neither any restriction on, nor any requirement for,
+imposes neither any restriction on,
+nor any requirement for,
 the use of any specific
 .I groff
-macro package, a number of supplied macro packages,
+macro package,
+a number of supplied macro packages,
 and in particular those associated with the package
 .IR pdfmark.tmac ,
 are best suited for use with
