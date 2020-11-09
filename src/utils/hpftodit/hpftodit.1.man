@@ -110,16 +110,16 @@ for a list).
 The values can be separated by any whitespace;
 the Unicode value must use uppercase digits A\^\[en]\^F,
 and must be without a leading
-.RB \[oq] 0x \[cq],
-.RB \[oq] u \[cq],
+.RB \[lq] 0x \[rq],
+.RB \[lq] u \[rq],
 or
-.RB \[oq] U+ \[cq].
+.RB \[lq] U+ \[rq].
 .
 Unicode values corresponding to composite glyphs are decomposed;
 e.g.,
-.RB \[oq] u00C0 \[cq]
+.RB \[lq] u00C0 \[rq]
 becomes
-.RB \[oq] u0041_0300 \[cq].
+.RB \[lq] u0041_0300 \[rq].
 .
 The name for a glyph without a
 .I groff
@@ -127,7 +127,7 @@ name may be given as
 .BI u XXXX
 if the glyph corresponds to a Unicode value,
 or as an unnamed glyph
-.RB \[oq] \-\-\- \[cq].
+.RB \[lq] \-\-\- \[rq].
 .
 If the given Unicode value is in the Private Use Area
 (0xE000\^\[en]\^0xF8FF),
@@ -140,17 +140,17 @@ for additional information about unnamed glyphs and how to access them.
 .
 .LP
 Blank lines and lines beginning with
-.RB \[oq] # \[cq]
+.RB \[lq] # \[rq]
 are ignored.
 .
 A
-.RB \[oq] # \[cq]
+.RB \[lq] # \[rq]
 following one or more
 .I groff
 names begins a comment.
 .
 Because
-.RB \[oq] # \[cq]
+.RB \[lq] # \[rq]
 is a valid
 .I groff
 name,
@@ -182,7 +182,7 @@ rather than
 .RE
 .
 which will treat the first
-.RB \[oq] # \[cq]
+.RB \[lq] # \[rq]
 as the beginning of the comment.
 .
 .
@@ -192,7 +192,7 @@ The
 font file is written to the specified
 .IR output-font ;
 if this operand is
-.RB \[oq] \- \[cq],
+.RB \[lq] \- \[rq],
 the font file is written to the standard output.
 .
 .
@@ -251,7 +251,7 @@ Include characters in the TFM file that are not included in
 A glyph with corresponding Unicode value is given the name
 .RI u XXXX ;
 a glyph without a Unicode value is included as an unnamed glyph
-\[oq]\-\^\-\^\-\[cq].
+\[lq]\-\^\-\^\-\[rq].
 .
 A glyph with a Unicode value in the Private Use Area
 (0xE000\^\[en]\^0xF8FF) also is included as an unnamed glyph.
@@ -296,7 +296,7 @@ The information includes the values of important TFM tags,
 and a listing (by MSL number for Intellifont TFM files or by Unicode
 value for TrueType TFM files) of the glyphs included in the TFM file.
 .
-The unit of measure \[oq]DU\[cq] for some tags indicates design units;
+The unit of measure \[lq]DU\[rq] for some tags indicates design units;
 there are 8782\~design units per em for Intellifont fonts,
 and 2048\~design units per em for TrueType fonts.
 .
