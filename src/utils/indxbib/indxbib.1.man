@@ -36,9 +36,9 @@
 .
 .SY @g@indxbib
 .OP \-w
-.OP \-c file
+.OP \-c common-words-file
 .OP \-d dir
-.OP \-f file
+.OP \-f list-file
 .OP \-h n
 .OP \-i string
 .OP \-k n
@@ -46,7 +46,7 @@
 .OP \-n n
 .OP \-o file
 .OP \-t n
-.RI [ filename
+.RI [ file
 \&.\|.\|.\&]
 .YS
 .
@@ -69,20 +69,22 @@
 .\" ====================================================================
 .
 .I \%@g@indxbib
-makes an inverted index for the bibliographic databases in
-.IR filename \|.\|.\|.
+makes an inverted index for the bibliographic databases in each
+.I file
 for use with
 .IR \%@g@refer (@MAN1EXT@),
 .IR \%@g@lookbib (@MAN1EXT@),
 and
 .IR \%lkbib (@MAN1EXT@).
 .
-The index will be named
-.RI filename @INDEX_SUFFIX@ ;
+Each index will be named
+.RI file @INDEX_SUFFIX@ ;
 the index is written to a temporary file which is then renamed to
 this.
 .
-If no filenames are given on the command line because the
+If no
+.I file
+operands are given on the command line because the
 .B \-f
 option has been used,
 and no
@@ -147,7 +149,7 @@ all exit afterward.
 .
 .
 .TP
-.BI \-c\~ file
+.BI \-c\~ common-words-file
 Read the list of common words from
 .I file
 instead of
@@ -169,7 +171,7 @@ will be a symbolic link that points to the directory printed by
 .
 .
 .TP
-.BI \-f\~ file
+.BI \-f\~ list-file
 Read the files to be indexed from
 .IR file .
 .
@@ -274,7 +276,7 @@ Each file is a separate record.
 .\" ====================================================================
 .
 .TP
-.RI \%filename @INDEX_SUFFIX@
+.RI \%file @INDEX_SUFFIX@
 Index.
 .
 .
