@@ -449,9 +449,7 @@ If
 specified,
 then it must act as a filter,
 accepting a list of file name arguments,
-and write its output to the
-.I stdout
-stream,
+and write its output to the standard output stream,
 whence it is piped to the
 .IR \%PDFROFF_POSTPROCESSOR_COMMAND ,
 to produce the finished PDF output.
@@ -514,17 +512,13 @@ Specifies the command to be used for the final document conversion
 from PostScript intermediate output to PDF.
 .
 It must behave as a filter,
-writing its output to the
-.I stdout
-stream,
+writing its output to the standard output stream,
 and must accept an arbitrary number of
 .I files .\|.\|.\&
 arguments,
 with the special case of
 .RB \[lq] \- \[rq]
-representing the
-.I stdin
-stream.
+representing the standard input stream.
 .
 .IP
 If unspecified,
