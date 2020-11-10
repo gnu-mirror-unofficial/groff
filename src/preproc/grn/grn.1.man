@@ -168,8 +168,10 @@ to the default search path for
 .I gremlin
 files.
 .
-The default path is (in that order) the current directory, the home
-directory,
+The default path is
+(in that order)
+the current directory,
+the home directory,
 .IR @SYSTEMMACRODIR@ ,
 .IR @LOCALMACRODIR@ ,
 and
@@ -183,7 +185,8 @@ Search
 for subdirectories
 .IR dev name
 .RI ( name
-is the name of the device) for the
+is the name of the device)
+for the
 .I DESC
 file before the default font directories
 .IR @LOCALFONTDIR@ ,
@@ -233,9 +236,11 @@ character.
 .
 .
 .PP
-Commands that affect a picture's environment (those listed before
+Commands that affect a picture's environment
+(those listed before
 .BR default ,
-see below) are only in effect for the current picture:
+see below)
+are only in effect for the current picture:
 .
 The environment is reinitialized to the defaults at the start of the
 next picture.
@@ -254,11 +259,19 @@ The commands are as follows:
 .
 Set
 .IR gremlin 's
-text size number 1 (2, 3, or 4) to
+text size number 1
+(2,
+3,
+or 4)
+to
 .I N
 points.
 .
-The default is 12 (16, 24, and 36, respectively).
+The default is 12
+(16,
+24,
+and 36,
+respectively).
 .
 .
 .TP
@@ -269,13 +282,21 @@ The default is 12 (16, 24, and 36, respectively).
 .BI bold\  f
 .TQ
 .BI special\  f
-Set the roman (italics, bold, or special) font to
+Set the roman
+(italics,
+bold,
+or special)
+font to
 .IR \%@g@troff 's
 font
 .I f
 (either a name or number).
 .
-The default is R (I, B, and S, respectively).
+The default is R
+(I,
+B,
+and S,
+respectively).
 .
 .
 .TP
@@ -290,13 +311,15 @@ stipple font
 .
 The command
 .B stipple
-may be abbreviated down as far as \[lq]st\[rq] (to avoid confusion
-with
+may be abbreviated down as far as \[lq]st\[rq]
+(to avoid confusion with
 .BR special ).
 .
 There is
 .I no
-default for stipples (unless one is set by the default command), and
+default for stipples
+(unless one is set by the default command),
+and
 it is invalid to include a
 .I gremlin
 picture with polygons without specifying a
@@ -307,7 +330,9 @@ stipple font.
 .BI x\  N
 .TQ
 .BI scale\  N
-Magnify the picture (in addition to any default magnification) by
+Magnify the picture
+(in addition to any default magnification)
+by
 .IR N ,
 a floating point number larger than zero.
 .
@@ -325,9 +350,13 @@ may be abbreviated down to \[lq]sc\[rq].
 .
 Set the thickness of
 .IR gremlin 's
-narrow (medium and thick, respectively) lines to
+narrow
+(medium and thick,
+respectively)
+lines to
 .I N
-times 0.15pt (this value can be changed at compile time).
+times 0.15pt
+(this value can be changed at compile time).
 .
 The default is 1.0
 (3.0 and 5.0,
@@ -358,7 +387,8 @@ Setting
 .B pointscale
 will cause the point sizes to scale with the picture (within
 .IR \%@g@troff 's
-limitations, of course).
+limitations,
+of course).
 .
 An operand of anything but
 .I off
@@ -373,8 +403,8 @@ picture.
 This is meant to be used as a global parameter setting mechanism at
 the beginning of the
 .I \%@g@troff
-input file, but can be used at any time to reset the
-default settings.
+input file,
+but can be used at any time to reset the default settings.
 .
 .
 .TP
@@ -394,7 +424,8 @@ is ignored.
 .BI height\  N
 Forces picture to be
 .I N
-inches high, overriding other scaling factors.
+inches high,
+overriding other scaling factors.
 .
 If both \[lq]width\[rq] and \[lq]height\[rq] are specified the tighter
 constraint will determine the scale of the picture.
@@ -406,7 +437,9 @@ commands are not saved with a
 .B default
 command.
 .
-They will, however, affect point size scaling if that option is set.
+They will,
+however,
+affect point size scaling if that option is set.
 .
 .
 .TP
@@ -415,17 +448,21 @@ Get picture from
 .I gremlin
 file
 .I name
-located the current directory (or in the library directory; see the
+located the current directory
+(or in the library directory;
+see the
 .B \-M
 option above).
 .
 If two
 .B file
-commands are given, the second one overrides the first.
+commands are given,
+the second one overrides the first.
 .
 If
 .I name
-doesn't exist, an error message is reported and processing
+doesn't exist,
+an error message is reported and processing
 continues from the
 .B .GE
 line.
@@ -461,22 +498,26 @@ so anything valid in a single line of
 .I \%@g@troff
 input is valid in a line of
 .I gremlin
-text (barring \[lq].\[rq] directives at the beginning of a line).
+text
+(barring \[lq].\[rq] directives at the beginning of a line).
 .
-Thus, it is possible to have equations within a
+Thus,
+it is possible to have equations within a
 .I gremlin
 figure by including in the
 .I gremlin
 file
 .I eqn
-expressions enclosed by previously defined delimiters (e.g.,
+expressions enclosed by previously defined delimiters
+(e.g.,
 .IR $$ ).
 .
 .
 .PP
 When using
 .I \%@g@grn
-along with other preprocessors, it is best to run
+along with other preprocessors,
+it is best to run
 .I tbl
 before
 .IR \%@g@grn ,
@@ -491,7 +532,8 @@ should always be run last.
 .
 .
 .PP
-A picture is considered an entity, but that doesn't stop
+A picture is considered an entity,
+but that doesn't stop
 .I \%@g@troff
 from trying to break it up if it falls off the end of a page.
 .
@@ -528,9 +570,11 @@ macro
 .
 There exist two distinct
 .I gremlin
-file formats, the original format from the
+file formats,
+the original format from the
 .I AED
-graphic terminal version, and the
+graphic terminal version,
+and the
 .I SUN
 or
 .I X11
@@ -546,15 +590,18 @@ version.
 .
 As long as a
 .I gremlin
-file does not contain negative coordinates, either format will be read
-correctly by either version of
+file does not contain negative coordinates,
+either format will be read correctly by either version of
 .I gremlin
 or
 .IR \%@g@grn .
 .
 The other difference from
 .IR SUN / X11
-format is the use of names for picture objects (e.g., POLYGON, CURVE)
+format is the use of names for picture objects
+(e.g.,
+POLYGON,
+CURVE)
 instead of numbers.
 .
 Files representing the same picture are shown in Table 1 in each format.
@@ -594,19 +641,23 @@ The first line of each
 file contains either the string
 .B gremlinfile
 .RI ( AED
-version) or
+version)
+or
 .B sungremlinfile
 .RI ( SUN / X11 )
 .
 .
 .IP \[bu]
-The second line of the file contains an orientation, and
+The second line of the file contains an orientation,
+and
 .B x
 and
 .B y
-values for a positioning point, separated by spaces.
+values for a positioning point,
+separated by spaces.
 .
-The orientation, either
+The orientation,
+either
 .B 0
 or
 .BR 1 ,
@@ -617,14 +668,16 @@ version.
 .B 0
 means that
 .I gremlin
-will display things in horizontal format (drawing area wider than it is
-tall, with menu across top).
+will display things in horizontal format
+(drawing area wider than it is tall,
+with menu across top).
 .
 .B 1
 means that
 .I gremlin
-will display things in vertical format (drawing area taller than it is
-wide, with menu on left side).
+will display things in vertical format
+(drawing area taller than it is wide,
+with menu on left side).
 .
 .B x
 and
@@ -632,8 +685,8 @@ and
 are floating point values giving a positioning point to be used when
 this file is read into another file.
 .
-The stuff on this line really isn't all that important; a value of
-\[lq]1 0.00 0.00\[rq] is suggested.
+The stuff on this line really isn't all that important;
+a value of \[lq]1 0.00 0.00\[rq] is suggested.
 .
 .
 .IP \[bu]
@@ -655,7 +708,8 @@ Lines longer than 127 characters are chopped to this limit.
 The first line of each element contains a single decimal number giving
 the type of the element
 .RI ( AED
-version) or its ASCII name
+version)
+or its ASCII name
 .RI ( SUN / X11
 version).
 .
@@ -704,18 +758,22 @@ separated by spaces.
 The list of points is terminated by a line containing the string
 \[lq]\-1.0 \-1.0\[rq]
 .RI ( AED
-version) or a single asterisk, \[lq]*\[rq]
+version)
+or a single asterisk,
+\[lq]*\[rq]
 .RI ( Sun / X11
 version).
 .
 .
 .IP \[bu]
-After the points comes a line containing two decimal values, giving the
-brush and size for the element.
+After the points comes a line containing two decimal values,
+giving the brush and size for the element.
 .
 The brush determines the style in which things are drawn.
 .
-For vectors, arcs, and curves there are six valid brush values:
+For vectors,
+arcs,
+and curves there are six valid brush values:
 .sp
 .TS
 center, tab(@);
@@ -728,11 +786,15 @@ ncw(0.1i)l.
 6 \[mi]@@medium solid lines
 .TE
 .sp
-For polygons, one more value, 0, is valid.
+For polygons,
+one more value,
+0,
+is valid.
 .
 It specifies a polygon with an invisible border.
 .
-For text, the brush selects a font as follows:
+For text,
+the brush selects a font as follows:
 .sp
 .TS
 center, tab(@);
@@ -755,29 +817,34 @@ or
 \[lq]\[rs]d\[rq]
 which may change the font (as well as do many other things).
 .
-For text, the size field is a decimal value between 1 and 4.
+For text,
+the size field is a decimal value between 1 and 4.
 .
 It selects the size of the font in which the text will be drawn.
 .
-For polygons, this size field is interpreted as a stipple number to
-fill the polygon with.
+For polygons,
+this size field is interpreted as a stipple number to fill the polygon
+with.
 .
 The number is used to index into a stipple font at print time.
 .
 .
 .IP \[bu]
 The last line of each element contains a decimal number and a string of
-characters, separated by a single space.
+characters,
+separated by a single space.
 .
 The number is a count of the number of characters in the string.
 .
-This information is only used for text elements, and contains the text
-string.
+This information is only used for text elements,
+and contains the text string.
 .
 There can be spaces inside the text.
 .
-For arcs, curves, and vectors, this line of the element contains the
-string \[lq]0\[rq].
+For arcs,
+curves,
+and vectors,
+this line of the element contains the string \[lq]0\[rq].
 .
 .
 .\" ====================================================================
@@ -791,16 +858,21 @@ and its coordinates reflect the
 .I AED
 coordinate space.
 .
-For vertical pictures, x-values range 116 to 511, and y-values from 0
-to 483.
+For vertical pictures,
+x-values range 116 to 511,
+and y-values from 0 to 483.
 .
-For horizontal pictures, x-values range from 0 to 511 and y-values
-range from 0 to 367.
+For horizontal pictures,
+x-values range from 0 to 511 and y-values range from 0 to 367.
 .
-Although you needn't absolutely stick to this range, you'll
-get best results if you at least stay in this vicinity.
+Although you needn't absolutely stick to this range,
+you'll get best results if you at least stay in this vicinity.
 .
-Also, point lists are terminated by a point of (\-1, \-1), so you
+Also,
+point lists are terminated by a point of
+(\-1,
+\-1),
+so you
 shouldn't ever use negative coordinates.
 .
 .I gremlin
@@ -820,7 +892,8 @@ create objects in the
 version of
 .IR gremlin .
 .
-However, files with negative coordinates
+However,
+files with negative coordinates
 .I will
 cause problems if displayed on the
 .IR AED .
