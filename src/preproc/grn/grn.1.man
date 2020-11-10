@@ -132,91 +132,6 @@ and
 .
 .
 .\" ====================================================================
-.SH Options
-.\" ====================================================================
-.
-.B \-?\&
-and
-.B \-\-help
-display a usage message,
-while
-.B \-v
-and
-.B \-\-version
-show version information;
-all exit afterward.
-.
-.
-.TP
-.BI \-T\~ dev
-Prepare output for device
-.IR dev .
-.
-The default is
-.BR @DEVICE@ .
-.
-See
-.IR groff (@MAN1EXT@)
-for valid device names.
-.
-.
-.TP
-.BI \-M\~ dir
-Prepend
-.I dir
-to the default search path for
-.I gremlin
-files.
-.
-The default path is
-(in this order)
-the current directory,
-the home directory,
-.IR @SYSTEMMACRODIR@ ,
-.IR @LOCALMACRODIR@ ,
-and
-.IR @MACRODIR@ .
-.
-.
-.TP
-.BI \-F\~ dir
-Search
-.I dir
-for subdirectories
-.IR dev name
-.RI ( name
-is the name of the device)
-for the
-.I DESC
-file before the default font directories
-.IR @LOCALFONTDIR@ ,
-.IR @FONTDIR@ ,
-and
-.IR @LEGACYFONTDIR@ .
-.
-.
-.TP
-.B \-C
-Recognize
-.B .GS
-and
-.B .GE
-(and
-.BR .GF )
-even when followed by a character other than space or newline.
-.\".TP
-.\".B \-s
-.\"This switch causes the picture to be traversed twice:
-.\"The first time, only the interiors of filled polygons (as borderless
-.\"polygons) are printed.
-.\"The second time, the outline is printed as a series of line segments.
-.\"This way,
-.\"postprocessors that overwrite rather than merge picture elements
-.\"(such as PostScript) can still have text and graphics on a shaded
-.\"background.
-.
-.
-.\" ====================================================================
 .SH "grn Commands"
 .\" ====================================================================
 .
@@ -897,6 +812,91 @@ files with negative coordinates
 .I will
 cause problems if displayed on the
 .IR AED .
+.
+.
+.\" ====================================================================
+.SH Options
+.\" ====================================================================
+.
+.B \-?\&
+and
+.B \-\-help
+display a usage message,
+while
+.B \-v
+and
+.B \-\-version
+show version information;
+all exit afterward.
+.
+.
+.TP
+.BI \-T\~ dev
+Prepare output for device
+.IR dev .
+.
+The default is
+.BR @DEVICE@ .
+.
+See
+.IR groff (@MAN1EXT@)
+for valid device names.
+.
+.
+.TP
+.BI \-M\~ dir
+Prepend
+.I dir
+to the default search path for
+.I gremlin
+files.
+.
+The default path is
+(in this order)
+the current directory,
+the home directory,
+.IR @SYSTEMMACRODIR@ ,
+.IR @LOCALMACRODIR@ ,
+and
+.IR @MACRODIR@ .
+.
+.
+.TP
+.BI \-F\~ dir
+Search
+.I dir
+for subdirectories
+.IR dev name
+.RI ( name
+is the name of the device)
+for the
+.I DESC
+file before the default font directories
+.IR @LOCALFONTDIR@ ,
+.IR @FONTDIR@ ,
+and
+.IR @LEGACYFONTDIR@ .
+.
+.
+.TP
+.B \-C
+Recognize
+.B .GS
+and
+.B .GE
+(and
+.BR .GF )
+even when followed by a character other than space or newline.
+.\".TP
+.\".B \-s
+.\"This switch causes the picture to be traversed twice:
+.\"The first time, only the interiors of filled polygons (as borderless
+.\"polygons) are printed.
+.\"The second time, the outline is printed as a series of line segments.
+.\"This way,
+.\"postprocessors that overwrite rather than merge picture elements
+.\"(such as PostScript) can still have text and graphics on a shaded
+.\"background.
 .
 .
 .\" ====================================================================
