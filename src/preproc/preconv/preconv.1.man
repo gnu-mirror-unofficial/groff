@@ -196,12 +196,21 @@ or
 options,
 or by configuring your locale appropriately.
 .
-Furthermore,
 .I groff
-supports a
+also supports a
 .I \%GROFF_ENCODING
-environment variable which is equivalent to its option
-.BR \-k .
+environment variable,
+which can be overridden by its
+.B \-K
+option.
+.
+Valid values for
+(or parameters to)
+all of these are enumerated in the lists of recognized coding tags in
+the next subsection,
+and is further influenced by
+.I iconv
+library support.
 .
 .
 .\" ====================================================================
@@ -372,8 +381,10 @@ are disregarded for the purpose of comparison with the above tags.
 .SS "iconv support"
 .\" ====================================================================
 .
+While
 .I preconv
-itself only supports three encodings:
+recognizes all of the coding tags listed above,
+it is capable on its own of interpreting only three encodings:
 Latin-1,
 code page 1047,
 and UTF-8.
@@ -384,6 +395,8 @@ support is configured at compile time and available at run time,
 all other encodings are passed to
 .I iconv
 library functions.
+.
+The library may recognize many additional encoding strings.
 .
 The command
 .RB \[lq] preconv\~\-v \[rq]

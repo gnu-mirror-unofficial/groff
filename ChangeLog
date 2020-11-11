@@ -1,5 +1,16 @@
 2020-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/preconv/preconv.1.man (Description): Fix error;
+	groff's -K option, not -k, specifies a character econding (and
+	overrides GROFF_ENCODING in the environment).  Also explain how
+	valid encoding strings are determined.
+
+	Thanks to Bjarni Ingi Gislason for the report.
+
+	Fixes <https://savannah.gnu.org/bugs/?59445>.
+
+2020-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/tbl/table.cpp (table::compute_separation_factor):
 	Add word "table" to diagnostic message to better cue the user
 	that it is produced by roff that has been injected into the
