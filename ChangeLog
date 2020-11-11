@@ -1,3 +1,14 @@
+2020-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/tbl/table.cpp (table::compute_separation_factor):
+	Add word "table" to diagnostic message to better cue the user
+	that it is produced by roff that has been injected into the
+	document by the tbl(1) preprocessor.  The other 3 such possible
+	diagnostic messages already do this.  Thanks to Bjarni Ingi
+	Gislason for bringing the inconsistency to light.
+
+	Fixes <https://savannah.gnu.org/bugs/?59443>.
+
 2020-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_mdoc.7.man (Predefined strings): Ensure the table

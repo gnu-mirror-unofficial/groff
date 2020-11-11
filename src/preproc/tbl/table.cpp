@@ -2205,7 +2205,7 @@ void table::compute_separation_factor()
 	   ".EN\n"
 	   "..\n");
     prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	   ".tm1 \" column separation set to zero\n"
+	   ".tm1 \" table column separation set to zero\n"
 	   ".nr " SEPARATION_FACTOR_REG " 0\n");
   }
   prints(".\\}\n"
