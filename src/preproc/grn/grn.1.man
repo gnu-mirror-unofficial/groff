@@ -304,7 +304,8 @@ regardless of any scaling factors in the picture.
 .
 Setting
 .B pointscale
-will cause the point sizes to scale with the picture (within
+will cause the point sizes to scale with the picture
+(within
 .IR \%@g@troff 's
 limitations,
 of course).
@@ -713,7 +714,8 @@ The text string can contain formatting sequences like
 \[lq]\[rs]fI\[rq]
 or
 \[lq]\[rs]d\[rq]
-which may change the font (as well as do many other things).
+which may change the font
+(as well as do many other things).
 .
 For text,
 the size field is a decimal value between 1 and 4.
@@ -864,16 +866,23 @@ and
 (and
 .BR .GF )
 even when followed by a character other than space or newline.
+.\".
+.\".
 .\".TP
 .\".B \-s
 .\"This switch causes the picture to be traversed twice:
-.\"The first time, only the interiors of filled polygons (as borderless
-.\"polygons) are printed.
-.\"The second time, the outline is printed as a series of line segments.
+.\"The first time,
+.\"only the interiors of filled polygons
+.\"(as borderless polygons)
+.\"are printed.
+.\".
+.\"The second time,
+.\"the outline is printed as a series of line segments.
+.\".
 .\"This way,
 .\"postprocessors that overwrite rather than merge picture elements
-.\"(such as PostScript) can still have text and graphics on a shaded
-.\"background.
+.\"(such as PostScript)
+.\"can still have text and graphics on a shaded background.
 .
 .
 .\" ====================================================================
