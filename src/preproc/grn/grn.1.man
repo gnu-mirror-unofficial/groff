@@ -148,7 +148,7 @@ command.
 Commands consist of one or two strings separated by white space,
 the first string being the command and the second its operand.
 .
-Commands may be upper or lower case and abbreviated down to one
+Commands may be upper- or lowercase and abbreviated down to one
 character.
 .
 .
@@ -158,11 +158,10 @@ Commands that affect a picture's environment
 .RB \%\[lq] default \[rq],
 see below)
 are only in effect for the current picture:
-.
-The environment is reinitialized to the defaults at the start of the
+the environment is reinitialized to the defaults at the start of the
 next picture.
 .
-The commands are as follows:
+The commands are as follows.
 .
 .
 .TP
@@ -253,7 +252,7 @@ Magnify the picture
 (in addition to any default magnification)
 by
 .IR N ,
-a floating point number larger than zero.
+a floating-point number larger than zero.
 .
 The command
 .B scale
@@ -592,20 +591,20 @@ version.
 means that
 .I gremlin
 will display things in horizontal format
-(drawing area wider than it is tall,
-with menu across top).
+(a drawing area wider than it is tall,
+with a menu across the top).
 .
 .B 1
 means that
 .I gremlin
 will display things in vertical format
-(drawing area taller than it is wide,
-with menu on left side).
+(a drawing area taller than it is wide,
+with a menu on the left side).
 .
 .B x
 and
 .B y
-are floating point values giving a positioning point to be used when
+are floating-point values giving a positioning point to be used when
 this file is read into another file.
 .
 The stuff on this line really isn't all that important;
@@ -620,7 +619,7 @@ After the last element specification is a line containing the string
 .
 .
 .IP \[bu]
-Lines longer than 127 characters are chopped to this limit.
+Lines longer than 127 characters are truncated to that length.
 .
 .
 .\" ====================================================================
@@ -674,7 +673,7 @@ Type Specifications in \fIgremlin\fP Files
 After the object type comes a variable number of lines,
 each specifying a point used to display the element.
 .
-Each line contains an x-coordinate and a y-coordinate in floating point
+Each line contains an x-coordinate and a y-coordinate in floating-point
 format,
 separated by spaces.
 .
@@ -696,7 +695,7 @@ The brush determines the style in which things are drawn.
 .
 For vectors,
 arcs,
-and curves there are six valid brush values:
+and curves there are six valid brush values.
 .sp
 .TS
 center, tab(@);
@@ -717,7 +716,7 @@ is valid.
 It specifies a polygon with an invisible border.
 .
 For text,
-the brush selects a font as follows:
+the brush selects a font as follows.
 .sp
 .TS
 center, tab(@);
@@ -732,7 +731,7 @@ If you're using
 .I \%@g@grn
 to run your pictures through
 .IR groff ,
-the font is really just a starting font:
+the font is really just a starting font.
 .
 The text string can contain formatting sequences like
 \[lq]\[rs]fI\[rq]
@@ -786,17 +785,17 @@ x-values range 116 to 511,
 and y-values from 0 to 483.
 .
 For horizontal pictures,
-x-values range from 0 to 511 and y-values range from 0 to 367.
+x-values range from 0 to 511,
+and y-values from 0 to 367.
 .
 Although you needn't absolutely stick to this range,
-you'll get best results if you at least stay in this vicinity.
+you'll get better results if you at least stay in this vicinity.
 .
 Also,
 point lists are terminated by a point of
 (\-1,
 \-1),
-so you
-shouldn't ever use negative coordinates.
+so you shouldn't ever use negative coordinates.
 .
 .I gremlin
 writes out coordinates using format \[lq]%f1.2\[rq]; it's probably
