@@ -492,23 +492,14 @@ macro
 .
 There exist two distinct
 .I gremlin
-file formats,
-the original format from the
-.I AED
-graphic terminal version,
-and the
-.I SUN
-or
-.I X11
-version.
+file formats:
+the original format for AED graphic terminals,
+and the Sun or X11 version.
 .
-An extension to the
-.IR SUN / X11
-version allowing reference points with negative coordinates is
+An extension used by the Sun/X11 version allowing reference points with
+negative coordinates is
 .I not
-compatible with the
-.I AED
-version.
+compatible with the AED version.
 .
 As long as a
 .I gremlin
@@ -518,9 +509,8 @@ either format will be read correctly by either version of
 or
 .IR \%@g@grn .
 .
-The other difference from
-.IR SUN / X11
-format is the use of names for picture objects
+The other difference in
+Sun/X11 format is the use of names for picture objects
 (e.g.,
 .BR POLYGON ,
 .BR CURVE )
@@ -562,11 +552,11 @@ The first line of each
 .I gremlin
 file contains either the string
 .RB \[lq] gremlinfile \[rq]
-.RI ( AED
-version)
+(AED)
 or
 .RB \[lq] sungremlinfile \[rq]
-.RI ( SUN / X11 )
+(Sun/X11).
+=======
 .
 .
 .IP \[bu]
@@ -582,9 +572,7 @@ either
 .B 0
 or
 .BR 1 ,
-is ignored by the
-.IR SUN / X11
-version.
+is ignored by the Sun/X11 version.
 .
 .B 0
 means that
@@ -627,14 +615,7 @@ Lines longer than 127 characters are truncated to that length.
 .
 .IP \[bu]
 The first line of each element contains a single decimal number giving
-the type of the element
-.RI ( AED
-version)
-or its ASCII name
-.RI ( SUN / X11
-version).
-.
-See Table 2.
+the type of the element (AED) or its name (Sun/X11).
 .sp
 .TS
 center, tab(@);
@@ -643,7 +624,7 @@ ccc
 nll.
 \fIgremlin\fP File Format \[mi] Object Type Specification
 .sp
-\fIAED\fP Number@\fISUN\/\fP/\,\fIX11\fP Name@Description
+AED Number@Sun/X11 Name@Description
 0@BOTLEFT@bottom-left-justified text
 1@BOTRIGHT@bottom-right-justified text
 2@CENTCENT@center-justified text
@@ -678,12 +659,8 @@ separated by spaces.
 .
 The list of points is terminated by a line containing the string
 .RB \[lq] "\-1.0 \-1.0" \[rq]
-.RI ( AED
-version)
-or a single asterisk,
-\[lq]*\[rq]
-.RI ( Sun / X11
-version).
+(AED) or a single asterisk,
+\[lq]*\[rq] (Sun/X11).
 .
 .
 .IP \[bu]
@@ -773,11 +750,8 @@ this line of the element contains the string \[lq]0\[rq].
 .\" ====================================================================
 .
 .I gremlin
-was designed for
-.IR AED s,
-and its coordinates reflect the
-.I AED
-coordinate space.
+was designed for AED terminals,
+and its coordinates reflect the AED coordinate space.
 .
 For vertical pictures,
 x-values range 116 to 511,
@@ -807,17 +781,14 @@ code.
 .SS "Notes on Sun/X11 coordinates"
 .\" ====================================================================
 .
-There is no longer a restriction on the range of coordinates used to
-create objects in the
-.IR SUN / X11
-version of
+There is no restriction on the range of coordinates used to create
+objects in the Sun/X11 version of
 .IR gremlin .
 .
 However,
 files with negative coordinates
 .I will
-cause problems if displayed on the
-.IR AED .
+cause problems if displayed on the AED.
 .
 .
 .\" ====================================================================
