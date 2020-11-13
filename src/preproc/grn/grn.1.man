@@ -256,7 +256,8 @@ a floating-point number larger than zero.
 .
 The command
 .B scale
-may be abbreviated down to \[lq]sc\[rq].
+may be abbreviated down to
+.RB \[lq] sc \[rq].
 .
 .
 .TP
@@ -290,7 +291,7 @@ current point size.
 .
 .
 .TP
-.BI pointscale\~ <off/on>
+.BR pointscale\~ [ off | on ]
 Scale text to match the picture.
 .
 Gremlin text is usually printed in the point size specified with the
@@ -309,7 +310,7 @@ limitations,
 of course).
 .
 An operand of anything but
-.I off
+.B off
 will turn text scaling on.
 .
 .
@@ -333,8 +334,7 @@ inches wide.
 .
 This overrides any scaling factors present in the same picture.
 .
-.RB \[lq] width
-.IR 0 \[rq]
+.RB \[lq] "width 0" \[rq]
 is ignored.
 .
 .
@@ -432,7 +432,7 @@ file
 .I eqn
 expressions enclosed by previously defined delimiters
 (e.g.,
-.IR $$ ).
+\[lq]$$\[rq]).
 .
 .
 .PP
@@ -522,8 +522,8 @@ The other difference from
 .IR SUN / X11
 format is the use of names for picture objects
 (e.g.,
-POLYGON,
-CURVE)
+.BR POLYGON ,
+.BR CURVE )
 instead of numbers.
 .
 Files representing the same picture are shown in Table 1 in each format.
@@ -561,20 +561,19 @@ Table 1.  File examples
 The first line of each
 .I gremlin
 file contains either the string
-.B gremlinfile
+.RB \[lq] gremlinfile \[rq]
 .RI ( AED
 version)
 or
-.B sungremlinfile
+.RB \[lq] sungremlinfile \[rq]
 .RI ( SUN / X11 )
 .
 .
 .IP \[bu]
-The second line of the file contains an orientation,
+The second line of the file contains an orientation and
+.I x
 and
-.B x
-and
-.B y
+.I y
 values for a positioning point,
 separated by spaces.
 .
@@ -601,9 +600,9 @@ will display things in vertical format
 (a drawing area taller than it is wide,
 with a menu on the left side).
 .
-.B x
+.I x
 and
-.B y
+.I y
 are floating-point values giving a positioning point to be used when
 this file is read into another file.
 .
@@ -678,7 +677,7 @@ format,
 separated by spaces.
 .
 The list of points is terminated by a line containing the string
-\[lq]\-1.0 \-1.0\[rq]
+.RB \[lq] "\-1.0 \-1.0" \[rq]
 .RI ( AED
 version)
 or a single asterisk,
