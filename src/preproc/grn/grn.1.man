@@ -153,7 +153,7 @@ character.
 .PP
 Commands that affect a picture's environment
 (those listed before
-.BR default ,
+.RB \%\[lq] default \[rq],
 see below)
 are only in effect for the current picture:
 .
@@ -225,17 +225,19 @@ stipple font
 (name or number).
 .
 The command
-.B stipple
-may be abbreviated down as far as \[lq]st\[rq]
+.B \%stipple
+may be abbreviated down as far as
+.RB \[lq] st \[rq]
 (to avoid confusion with
 .BR special ).
 .
 There is
 .I no
 default for stipples
-(unless one is set by the default command),
-and
-it is invalid to include a
+(unless one is set by the
+.RB \%\[lq] default \[rq]
+command),
+and it is invalid to include a
 .I gremlin
 picture with polygons without specifying a
 stipple font.
@@ -342,14 +344,18 @@ Forces picture to be
 inches high,
 overriding other scaling factors.
 .
-If both \[lq]width\[rq] and \[lq]height\[rq] are specified the tighter
-constraint will determine the scale of the picture.
+If both
+.B width
+and
+.B height
+are specified,
+the tighter constraint will determine the scale of the picture.
 .
-.B Height
+.B height
 and
 .B width
 commands are not saved with a
-.B default
+.RB \%\[lq] default \[rq]
 command.
 .
 They will,
