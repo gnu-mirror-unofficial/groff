@@ -133,6 +133,16 @@ and
 .BR .GF .
 .
 .
+.PP
+.I \%@g@grn
+produces drawing escapes using the
+.I groff
+color-scheme extension
+.RB ( \[rs]D\[aq]F .\|.\|.\& \[aq] ),
+and thus may not work with other
+.IR troff s.
+.
+.
 .\" ====================================================================
 .SS "grn commands"
 .\" ====================================================================
@@ -240,8 +250,7 @@ default for stipples
 command),
 and it is invalid to include a
 .I gremlin
-picture with polygons without specifying a
-stipple font.
+picture with polygons without specifying a stipple font.
 .
 .
 .TP
@@ -329,7 +338,7 @@ but can be used at any time to reset the default settings.
 .
 .TP
 .BI width\~ N
-Forces the picture to be
+Force the picture to be
 .I N
 inches wide.
 .
@@ -341,7 +350,7 @@ is ignored.
 .
 .TP
 .BI height\~ N
-Forces picture to be
+Force the picture to be
 .I N
 inches high,
 overriding other scaling factors.
@@ -377,16 +386,15 @@ see the
 .B \-M
 option above).
 .
-If two
+If multiple
 .B file
 commands are given,
-the second one overrides the first.
+the last one controls.
 .
 If
 .I name
 doesn't exist,
-an error message is reported and processing
-continues from the
+an error message is reported and processing continues from the
 .B .GE
 line.
 .
@@ -422,7 +430,8 @@ so anything valid in a single line of
 input is valid in a line of
 .I gremlin
 text
-(barring \[lq].\[rq] directives at the beginning of a line).
+(barring the dot control character \[lq].\[rq] at the beginning of a
+line).
 .
 Thus,
 it is possible to have equations within a
@@ -782,8 +791,11 @@ point lists are terminated by a point of
 so you shouldn't ever use negative coordinates.
 .
 .I gremlin
-writes out coordinates using format \[lq]%f1.2\[rq]; it's probably
-a good idea to use the same format if you want to modify the
+writes out coordinates using the
+.IR printf (3)
+format \[lq]%f1.2\[rq];
+it's probably a good idea to use the same format if you want to modify
+the
 .I \%@g@grn
 code.
 .
@@ -820,7 +832,7 @@ all exit afterward.
 .
 .TP
 .BI \-T\~ dev
-Prepare output for device
+Prepare device output using output driver
 .IR dev .
 .
 The default is
@@ -828,25 +840,24 @@ The default is
 .
 See
 .IR groff (@MAN1EXT@)
-for valid device names.
+for a list of valid devices.
 .
 .
 .TP
 .BI \-M\~ dir
 Prepend
 .I dir
-to the default search path for
+to the search path for
 .I gremlin
 files.
 .
-The default path is
-(in this order)
-the current directory,
+The default search path is the current directory,
 the home directory,
 .IR \%@SYSTEMMACRODIR@ ,
 .IR \%@LOCALMACRODIR@ ,
 and
-.IR \%@MACRODIR@ .
+.IR \%@MACRODIR@ ,
+in that order.
 .
 .
 .TP
@@ -856,7 +867,7 @@ Search
 for subdirectories
 .IR dev name
 .RI ( name
-is the name of the device)
+is the name of the output driver)
 for the
 .I DESC
 file before the default font directories
@@ -900,8 +911,8 @@ even when followed by a character other than space or newline.
 .
 .TP
 .IR \%@FONTDIR@/\:dev name /\:DESC
-Device description file for device
-.IR name .
+device description file for output driver
+.I name
 .
 .
 .\" ====================================================================
