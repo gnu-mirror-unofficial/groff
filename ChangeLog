@@ -1,10 +1,25 @@
+2020-11-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Add style checks to man(7) macro package.
+
+	Not otherwise documented yet; experimental--subject to change.
+
+	* tmac/an-old.tmac: Initialize CHECKSTYLE to false if not
+	already set.
+	(an-style-warn): New macro emits diagnostic of type "style" when
+	called if CHECKSTYLE register is true.
+	(TH): Call an-style-warn if fewer than two or more than five
+	arguments are seen.
+	(RI, IR, IB, BI, RB, BR): Call an-style-warn if fewer than two
+	arguments are seen.
+
 2020-11-11  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	Update copyright
 
-	* update-copyright.sh: use gnulib's 'update-copyright' script.  Pass
-	this script in directories 'arch', 'contrib', 'font', 'man', 'tmac',
-	'src' and on a list of extra files.
+	* update-copyright.sh: use gnulib's 'update-copyright' script.
+	Pass this script in directories 'arch', 'contrib', 'font',
+	'man', 'tmac', 'src' and on a list of extra files.
 
 	* FOR-RELEASE: mention this point.
 

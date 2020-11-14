@@ -115,7 +115,7 @@
 .
 .\" .TH title section extra1 extra2 extra3
 .de1 TH
-.  if (\\n[.$] < 2) \
+.  if ((\\n[.$] < 2) : (\\n[.$] > 5)) \
 .    an-style-warn .\\$0 expects 2 to 5 arguments, got \\n[.$]
 .  if \\n[an-html] \{\
 .    DEVTAG-TL
