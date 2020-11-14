@@ -2293,9 +2293,8 @@ Pipe output to
 .REQ .pl
 Set page length to default
 .scalednumber 11 i .
-The current page length is stored in
-.register .p\c
-\&.
+The current page length is stored in register
+.BR .p .
 .
 .TPx
 .REQ .pl "\[+-]N"
@@ -2329,9 +2328,8 @@ on stderr.
 .REQ .po
 Change to previous page offset.
 .
-The current page offset is available in
-.register .o\c
-\&.
+The current page offset is available in register
+.BR .o .
 .
 .TPx
 .REQ .po "\[+-]N"
@@ -3981,8 +3979,7 @@ Likewise,
 the
 .request .as1
 request is similar to
-.request .as\c
-,
+.BR .as ,
 but compatibility mode is switched off when the appended portion of the
 string is later interpolated.
 .
@@ -4186,9 +4183,8 @@ the center of an accent over that glyph should be placed.
 .
 .TPx
 .REG .d
-Current vertical place in current diversion; equal to
-.register nl\c
-\&.
+Current vertical place in current diversion; equal to register
+.BR nl .
 .
 .TPx
 .REG .ev
@@ -4335,9 +4331,8 @@ The amount of space that was needed in the last
 .request .ne
 request that caused a trap to be sprung.
 .
-Useful in conjunction with
-.register .trunc\c
-\&.
+Useful in conjunction with register
+.BR .trunc .
 .
 .TPx
 .REG .ns
@@ -4607,22 +4602,20 @@ Vertical position of last printed text base-line.
 These four registers mark the top left and bottom right hand corners of
 a box which encompasses all written glyphs.
 They are reset to \-1 by
-.escarg O 0
+.B \[rs]O0
 or
-.escarg O 1 .
+.BR \[rs]O1 .
 .
 .TPx
 .REG rsb
-Like
-.register sb\c
-,
+Like register
+.BR sb ,
 but takes account of the heights and depths of glyphs.
 .
 .TPx
 .REG rst
-Like
-.register st\c
-,
+Like register
+.BR st ,
 but takes account of the heights and depths of glyphs.
 .
 .TPx
