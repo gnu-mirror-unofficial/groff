@@ -76,7 +76,10 @@ groff \- GNU roff language reference
 .
 .\" reference of a request
 .de request
-.  BR \\$*
+.  ie (\\n[.$] < 2) \
+.    B \\$*
+.  el \
+.    BR \\$*
 ..
 .
 .\" ========= numerical elements =========
@@ -158,7 +161,10 @@ groff \- GNU roff language reference
 .\" Result  : prints \name, where 'name' is in B, 'punct' in R
 .\"
 .de esc
-.  BR "\e\\$1" \\$2
+.  ie (\\n[.$] < 2) \
+.    B "\e\\$1"
+.  el \
+.    BR "\e\\$1" \\$2
 ..
 .\" ====================================================================
 .\" .escarg name arg [punct]
@@ -208,7 +214,10 @@ groff \- GNU roff language reference
 .\" reference of a register, without decoration
 .de register
 .  Text register
-.  BR \\$*
+.  ie (\\n[.$] < 2) \
+.    B \\$*
+.  el \
+.    BR \\$*
 ..
 .
 .\" end of macro definitions
