@@ -1146,8 +1146,8 @@ Set input encoding used by preconv to @var{arg}.  Implies @option{-k}.
 @item -l
 Send the output to a spooler for printing.  The command used for this is
 specified by the @code{print} command in the device description file
-(see @ref{Device and Font Files}, for more info).  If not present,
-@option{-l} is ignored.
+(@pxref{Device and Font Files}).  If not present, @option{-l} is
+ignored.
 
 @item -L@var{arg}
 Pass @var{arg} to the spooler.  Each argument should be passed with a
@@ -1326,8 +1326,7 @@ is used to call @code{gtroff}).  @xref{Built-in Registers}.
 
 The postprocessor to be used for a device is specified by the
 @code{postpro} command in the device description file.  (@xref{Device
-and Font Files}, for more info.)  This can be overridden with the
-@option{-X} option.
+and Font Files}.)  This can be overridden with the @option{-X} option.
 
 @item -U
 @cindex mode, unsafe
@@ -3391,7 +3390,8 @@ Gotta pay for those lawyers and guns!
 @endCartoucheExample
 
 To set nested lists, use the @code{RS} and @code{RE} macros.
-@xref{Indentation values in ms}, for more information.
+@xref{Indentation values in ms}.
+
 @cindex @code{ms} macros, nested lists
 @cindex nested lists [@code{ms}]
 
@@ -5164,7 +5164,7 @@ Ens.  In @code{groff}, this is half of an em.
 @cindex @code{v} unit
 @cindex unit, @code{v}
 Vertical space.  This is equivalent to the current line spacing.
-@xref{Sizes}, for more information about this.
+@xref{Sizes}.
 
 @item M
 @cindex @code{M} unit
@@ -6012,8 +6012,8 @@ the output several escapes are defined: @code{\\}, @code{\e} or
 being used in macros or diversions.  @xref{Character Translations}, for
 an exact description of those escapes.
 
-@xref{Implementation Differences}, @ref{Copy Mode}, and
-@ref{Diversions}, @ref{Identifiers}, for more information.
+@xref{Implementation Differences}, @ref{Copy Mode}, @ref{Diversions},
+and @ref{Identifiers}.
 
 @menu
 * Comments::
@@ -7746,10 +7746,10 @@ This is a test with the \b escape.
 Enable @dfn{no-space mode}.  In this mode, spacing (either via @code{sp}
 or via blank lines) is disabled.  The @code{bp} request to advance to
 the next page is also disabled, except if it is accompanied by a page
-number (see @ref{Page Control}, for more information).  This mode ends
-when actual text is output or the @code{rs} request is encountered,
-which ends no-space mode.  The read-only number register @code{.ns} is
-set to@tie{}1 as long as no-space mode is active.
+number (@pxref{Page Control}).  This mode ends when actual text is
+output or the @code{rs} request is encountered, which ends no-space
+mode.  The read-only number register @code{.ns} is set to@tie{}1 as long
+as no-space mode is active.
 
 This request is useful for macros that conditionally insert vertical
 space before the text starts (for example, a paragraph macro could
@@ -8418,7 +8418,7 @@ Without an argument, the @code{tr} request is ignored.
 @cindex @code{\!}, and @code{trnt}
 @code{trnt} is the same as the @code{tr} request except that the
 translations do not apply to text that is transparently throughput into
-a diversion with @code{\!}.  @xref{Diversions}, for more information.
+a diversion with @code{\!}.  @xref{Diversions}.
 
 For example,
 
@@ -11568,7 +11568,7 @@ Evaluate the expression @var{expr}, and execute @var{anything} (the
 remainder of the line) if @var{expr} evaluates true (that is, to a value
 greater than zero).  @var{anything} is interpreted as though it
 were on a line by itself (except that leading spaces are ignored).
-@xref{Operators in Conditionals}, for more info.
+@xref{Operators in Conditionals}.
 
 @Example
 .nr xxx 1
@@ -12494,12 +12494,11 @@ an actual emergency!
 @cindex requests for drawing
 
 @code{gtroff} provides a number of ways to draw lines and other figures
-on the page.  Used in combination with the page motion commands (see
-@ref{Page Motions}, for more info), a wide variety of figures can be
-drawn.  However, for complex drawings these operations can be quite
-cumbersome, and it may be wise to use graphic preprocessors like
-@code{gpic} or @code{ggrn}.  @xref{gpic}, and @ref{ggrn}, for more
-information.
+on the page.  Used in combination with the page motion commands
+(@pxref{Page Motions}), a wide variety of figures can be drawn.
+However, for complex drawings these operations can be quite cumbersome,
+and it may be wise to use graphic preprocessors like @code{gpic} or
+@code{ggrn}.  @xref{gpic}, and @ref{ggrn}.
 
 All drawing is done via escapes.
 
@@ -12997,7 +12996,7 @@ missing, the trap is removed.
 The read-only number register @code{.ne} contains the amount of space
 that was needed in the last @code{ne} request that caused a trap to be
 sprung.  Useful in conjunction with the @code{.trunc} register.
-@xref{Page Control}, for more information.
+@xref{Page Control}.
 
 Since the @code{.ne} register is only set by traps it doesn't make much
 sense to use it outside of trap macros.
@@ -13077,7 +13076,7 @@ called with fewer than two arguments, the diversion trap is removed.
 There exists only a single diversion trap.
 
 The number register @code{.t} still works within diversions.
-@xref{Diversions}, for more information.
+@xref{Diversions}.
 @endDefreq
 
 @c ---------------------------------------------------------------------
@@ -13635,9 +13634,9 @@ input traps
 drawing and fill colours
 @end itemize
 
-These environments may be given arbitrary names (see @ref{Identifiers},
-for more info).  Old versions of @code{troff} only had environments
-named @samp{0}, @samp{1}, and @samp{2}.
+These environments may be given arbitrary names (@pxref{Identifiers}.)
+Old versions of @code{troff} only had environments named @samp{0},
+@samp{1}, and @samp{2}.
 
 @DefreqList {ev, [@Var{env}]}
 @DefregListEndx {.ev}
@@ -17328,7 +17327,7 @@ This means that the device has fonts at @var{s1}, @var{s2}, @dots{}
 The scale factor for point sizes.  By default this has a value
 of@tie{}1.  One scaled point is equal to one point/@var{n}.  The
 arguments to the @code{unitwidth} and @code{sizes} commands are given in
-scaled points.  @xref{Fractional Type Sizes}, for more information.
+scaled points.  @xref{Fractional Type Sizes}.
 
 @item styles @var{S1} @var{S2} @dots{} @var{Sm}
 @kindex styles
