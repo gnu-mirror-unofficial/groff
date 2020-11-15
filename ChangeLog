@@ -1,3 +1,34 @@
+2020-11-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi: Update.  Add introductory material.  Rewrite
+	the first section of the "gtroff Reference" chapter of our
+	Texinfo manual.  It is written as an introduction for readers
+	who want to go straight to "raw" troff without knowing much or
+	anything about existing macro packages.  Thanks to Dave Kemper
+	and John Gardner for feedback and support.
+
+	Clarify whitespace usage.  "Whitespace" is defined in this
+	manual as "spaces, tabs, and newlines".  Say only "spaces and
+	tabs" when newlines should not be included.
+
+	Rename "Font Files" to "Device and Font Files".
+
+	Rename "Manipulating Filling and Adjusting" to "Manipulating
+	Filling and Adjustment".
+
+	Update discussion of "copy mode".  Rename from "copy-in mode",
+	which I don't think eludicdated anything; is there a "copy-out
+	mode"?  Rename nodes accordingly.  Attempt to explain more
+	clearly.  Recast to shift emphasis to what _isn't_ merely copied
+	in copy mode, since that is what seems to cause confusion among
+	the inexperienced.
+
+	Update "Conditionals and Loops".  Add introductory paragraph.
+	Add nodes/subsections "if-then" and "Conditional Blocks".  Add
+	subsection "Conditional Blocks" to explain the behavior of the
+	\{ and \} escapes much more precisely.  I don't think this
+	syntactical area is well understood.  Supply examples.
+
 2020-11-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Add style checks to man(7) macro package.
@@ -15,7 +46,7 @@
 
 2020-11-11  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
-	Update copyright
+	Update copyright.
 
 	* update-copyright.sh: use gnulib's 'update-copyright' script.
 	Pass this script in directories 'arch', 'contrib', 'font',
