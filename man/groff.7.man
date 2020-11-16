@@ -1332,16 +1332,19 @@ Embolden Special Font
 when current font is
 .IR font .
 .
+.
 .TPx
 .REQ .blm
 Unset blank line macro (trap).
 .
 Restore default handling of blank lines.
 .
+.
 .TPx
-.REQ .blm macro
-Set blank line trap to
-.IR macro .
+.REQ .blm name
+Set blank line macro (trap) to
+.IR name .
+.
 .
 .TPx
 .REQ .box
@@ -1429,13 +1432,17 @@ to characters
 .IR c2 ,
 and so on.
 .
+.
 .TPx
-.REQ .ch "trap N"
-Change
-.I trap
-location
-to
-.IR N .
+.REQ .ch "name N"
+Change location of page location trap by moving macro
+.I name
+to new location
+.IR N ,
+or by unplanting it altogether if
+.I N
+absent.
+.
 .
 .TPx
 .REQ .char "c anything"
@@ -1670,10 +1677,10 @@ Clear diversion trap.
 .
 .
 .TPx
-.REQ .dt "N trap"
+.REQ .dt "N name"
 Set diversion trap to
 macro
-.I trap
+.I name
 at position
 .I N
 (default scaling indicator\~\c
@@ -1705,11 +1712,13 @@ Else part for if-else (\c
 .request .ie )
 request.
 .
+.
 .TPx
-.REQ .em "macro"
-The
-.I macro
-is run after the end of input.
+.REQ .em name
+Invoke macro
+.I name
+after the end of input.
+.
 .
 .TPx
 .REQ .eo
@@ -2019,18 +2028,24 @@ Change indentation according to
 (default scaling indicator\~\c
 .scaleindicator m ).
 .
-.TPx
-.REQ .it "N trap"
-Set an input-line count trap for the next
-.I N
-lines.
 .
 .TPx
-.REQ .itc "N trap"
-Same as
-.request .it
+.REQ .it "n name"
+Set an input line trap,
+calling macro
+.IR name ,
+after the next
+.IR n\~ lines
+lines of text input have been read.
+.
+.
+.TPx
+.REQ .itc "n name"
+As
+.request .it ,
 but don't count lines interrupted with
 .esc c .
+.
 .
 .TPx
 .REQ .kern
@@ -2105,14 +2120,19 @@ Set line length according to
 default scaling indicator\~\c
 .scaleindicator m ).
 .
-.TPx
-.REQ .lsm
-Unset the leading spaces macro.
 .
 .TPx
-.REQ .lsm "macro"
-Set the leading spaces macro to
-.IR macro .
+.REQ .lsm
+Unset the leading space macro (trap).
+.
+Restore default handling of lines with leading spaces.
+.
+.
+.TPx
+.REQ .lsm name
+Set the leading space macro (trap) to
+.IR name .
+.
 .
 .TPx
 .REQ .ls
@@ -2366,10 +2386,12 @@ This behaves like the
 request except that input comes from the standard output of
 .IR command .
 .
+.
 .TPx
 .REQ .ptr
-Print the names and positions of all traps (not including input line
-traps and diversion traps) on stderr.
+Report names and positions of all page location traps to the standard
+error stream.
+.
 .
 .TPx
 .REQ .pvs
@@ -2752,11 +2774,17 @@ input lines.
 Unformat space characters and tabs in
 .IR diversion ,
 preserving font information.
+.
+.
 .TPx
-.REQ .vpt "n"
-Enable vertical position traps if
-.I n
-is non-zero, disable them otherwise.
+.REQ .vpt
+Enable vertical position traps.
+.
+.
+.TPx
+.B .vpt 0
+Disable vertical position traps.
+.
 .
 .TPx
 .REQ .vs
@@ -2783,14 +2811,28 @@ Set warnings code to
 Set scaling indicator used in warnings to
 .IR si .
 .
-.TPx
-.REQ .wh "N"
-Remove (first) trap at position
-.IR N .
 .
 .TPx
-.REQ .wh "N trap"
-Set location trap; negative means from page bottom.
+.REQ .wh N
+Remove active trap at vertical position
+.IR N ;
+a negative value is measured upward from page bottom.
+.
+.
+.TPx
+.REQ .wh "N name"
+Plant trap,
+calling macro
+.I name
+when page location
+.I N
+is reached or passed;
+a negative value is measured upward from page bottom.
+.
+Any active trap already present at
+.I N
+is replaced.
+.
 .
 .TPx
 .REQ .while "cond anything"
@@ -4518,9 +4560,11 @@ of the current font.
 .REG .sty
 The current font style (string-valued).
 .
+.
 .TPx
 .REG .t
-Vertical distance to the next trap.
+Distance to the next vertical position trap.
+.
 .
 .TPx
 .REG .T
@@ -4566,9 +4610,11 @@ Current vertical line spacing.
 .REG .V
 Number of basic units per vertical unit of output device resolution.
 .
+.
 .TPx
 .REG .vpt
 1\~if vertical position traps are enabled, 0\~otherwise.
+.
 .
 .TPx
 .REG .w
@@ -4667,14 +4713,17 @@ image (set by
 .REG ln
 Output line number.
 .
+.
 .TPx
 .REG lsn
-The number of leading spaces of an input line.
+The count of leading spaces on an input line.
+.
 .
 .TPx
 .REG lss
-The horizontal space corresponding to the leading spaces of an input
-line.
+The amount of horizontal space corresponding to the leading spaces
+on an input line.
+.
 .
 .TPx
 .REG minutes
