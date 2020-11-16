@@ -2042,14 +2042,19 @@ If
 .I n
 is zero, disable pairwise kerning, otherwise enable it.
 .
+.
 .TPx
 .REQ .lc
 Remove leader repetition glyph.
 .
+.
 .TPx
 .REQ .lc "c"
-Set leader repetition glyph to\~\c
-.IR c .
+Set leader repetition glyph
+.RI to\~ c
+(default:
+.RB \[lq] . \[rq]).
+.
 .
 .TPx
 .REQ .length "reg anything"
@@ -2638,13 +2643,18 @@ increments from 0, 1, 2, \&.\|.\|.\& to infinity.
 .\".REQ .tas
 .\"Save tab positions internally.
 .
+.
 .TPx
 .REQ .tc
 Remove tab repetition glyph.
+.
+.
 .TPx
 .REQ .tc "c"
-Set tab repetition glyph to\~\c
-.IR c .
+Set tab repetition glyph
+.RI to\~ c
+(default: none).
+.
 .
 .TPx
 .REQ .ti "\[+-]N"
@@ -3639,6 +3649,95 @@ names with two or more characters.
 If a backslash is followed by a character that does not constitute a
 defined escape sequence, the backslash is silently ignored and the
 character maps to itself.
+.
+.
+.\" ====================================================================
+.SS Identifiers
+.\" ====================================================================
+.
+An identifier is a label for an object of syntactical importance like
+a register,
+a name
+(macro,
+string,
+diversion,
+or box),
+an environment,
+a font,
+a style,
+or a glyph,
+comprising a sequence of one or more characters with the following
+exceptions.
+.
+.
+.IP \[bu]
+Spaces,
+tabs,
+or newlines.
+.
+.
+.IP \[bu]
+Invalid input characters;
+these are certain control characters
+(from the sets \[lq]C0 Controls\[rq] and \[lq]C1 Controls\[rq] as
+Unicode describes them).
+.
+When
+.I \%@g@troff
+encounters one in an identifier,
+it produces a warning diagnostic of type
+.RB \[lq] input \[rq]
+(see section \[lq]Warnings\[rq] in
+.IR \%@g@troff (@MAN1EXT@)).
+.
+.
+.IP
+On a machine using the ISO 646,
+8859,
+or 10646 character encodings,
+invalid input characters are
+.BR 0x00 ,
+.BR 0x08 ,
+.BR 0x0B ,
+.BR 0x0D \[en] 0x1F ,
+and
+.BR 0x80 \[en] 0x9F .
+.
+.
+.IP
+On an EBCDIC host,
+they are
+.BR 0x00 \[en] 0x01 ,
+.BR 0x08 ,
+.BR 0x09 ,
+.BR 0x0B ,
+.BR 0x0D \[en] 0x14 ,
+.BR 0x17 \[en] 0x1F ,
+and
+.BR 0x30 \[en] 0x3F .
+.
+.
+.IP
+Some of these code points are used by
+.I \%@g@troff
+internally,
+making it non-trivial to extend the program to cover Unicode or other
+character encodings that use characters from these ranges.
+.
+(Consider what happens when a C1 control
+.BR 0x80 \[en] 0x9F
+is necessary as a continuation byte in a UTF-8 sequence.}
+.
+.
+.IP
+Invalid characters are removed during parsing;
+an identifier
+.RB \[lq] foo \[rq],
+followed by an invalid character,
+followed by
+.RB \[lq] bar \[rq]
+is treated as
+.RB \[lq] foobar \[rq] .
 .
 .
 .\" ====================================================================

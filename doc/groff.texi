@@ -4975,7 +4975,7 @@ breathing and changes in prosody.
 
 @item
 Use @code{\&} after @samp{!}, @samp{?}, and @samp{.} if they are
-followed by space or tab characters and don't end a sentence.
+followed by space, tab, or newline characters and don't end a sentence.
 
 @item
 Do not attempt to format the input in a @acronym{WYSIWYG} manner (i.e.,
@@ -5397,54 +5397,48 @@ expressions, unless the entire expression is surrounded by parentheses.
 @section Identifiers
 @cindex identifiers
 
-Like any other language, @code{gtroff} has rules for properly formed
-@dfn{identifiers}.  In @code{gtroff}, an identifier can be made up of
-almost any printable character, with the exception of the following
-characters:
+Like any other language, GNU @code{troff} has rules for properly formed
+@dfn{identifiers}---labels for objects with syntactical importance,
+like registers, names (macros, strings, diversions, or boxes),
+environments, fonts, styles, and glyphs.  In GNU @code{troff}, an
+identifier is a sequence of one or more characters with the following
+exceptions.
 
 @itemize @bullet
 @item
-@cindex whitespace characters
-@cindex newline character
-@cindex character, whitespace
-Whitespace characters (spaces, tabs, and newlines).
-
-@item
-@cindex character, backspace
-@cindex backspace character
-@cindex @acronym{EBCDIC} encoding of backspace
-Backspace (@acronym{ASCII}@tie{}@code{0x08} or
-@acronym{EBCDIC}@tie{}@code{0x16}) and character code @code{0x01}.
+Spaces, tabs, or newlines.
 
 @item
 @cindex invalid input characters
 @cindex input characters, invalid
 @cindex characters, invalid input
 @cindex Unicode
-The following input characters are invalid and are ignored if
-@code{groff} runs on a machine based on the ISO 646, 8859, or 10646
-character encodings, causing a warning message of type @samp{input} (see
-@ref{Debugging}, for more details): @code{0x00}, @code{0x0B},
-@code{0x0D}--@code{0x1F}, @code{0x80}--@code{0x9F}.
+Invalid input characters; these are certain control characters (from the
+sets ``C0 Controls'' and ``C1 Controls'' as Unicode describes them).
+When GNU @code{troff} encounters one in an identifier, it produces a
+warning diagnostic of type @samp{input} (@pxref{Debugging}).
 
-And here are the invalid input characters if @code{groff} runs on an
-@acronym{EBCDIC} host: @code{0x00}, @code{0x08}, @code{0x09},
-@code{0x0B}, @code{0x0D}--@code{0x14}, @code{0x17}--@code{0x1F},
-@code{0x30}--@code{0x3F}.
+On a machine using the ISO 646, 8859, or 10646 character encodings,
+invalid input characters are @code{0x00}, @code{0x08}, @code{0x0B},
+@code{0x0D}--@code{0x1F}, and @code{0x80}--@code{0x9F}.
 
-Currently, some of these reserved codepoints are used internally, thus
-making it non-trivial to extend GNU @code{troff} to cover Unicode or
-other character sets and encodings that use characters of these
+On an @acronym{EBCDIC} host, they are @code{0x00}--@code{0x01},
+@code{0x08}, @code{0x09}, @code{0x0B}, @code{0x0D}--@code{0x14},
+@code{0x17}--@code{0x1F}, and @code{0x30}--@code{0x3F}.
+
+Some of these code points are used by GNU @code{troff} internally,
+making it non-trivial to extend the program to cover Unicode or other
+character encodings that use characters from these
 ranges.@footnote{Consider what happens when a C1 control
 @code{0x80}--@code{0x9F} is necessary as a continuation byte in a UTF-8
 sequence.}
 
-Invalid characters are removed before parsing; an identifier @code{foo},
+Invalid characters are removed during parsing; an identifier @code{foo},
 followed by an invalid character, followed by @code{bar} is treated as
 @code{foobar}.
 @end itemize
 
-For example, any of the following is valid.
+For example, any of the following identifiers is valid.
 
 @Example
 br
@@ -5457,10 +5451,11 @@ end-list
 @cindex @code{]}, as part of an identifier
 @noindent
 An identifier longer than two characters with a closing bracket
-(@samp{]}) in its name can't be accessed with escape sequences that
-expect an identifier as a parameter.  For example, @samp{\[foo]]}
-accesses the glyph @samp{foo}, followed by @samp{]}, whereas
-@samp{\C'foo]'} really asks for glyph @samp{foo]}.
+(@samp{]}) in its name can't be accessed with bracket-form escape
+sequences that expect an identifier as a parameter.  For example,
+@samp{\[foo]]} accesses the glyph @samp{foo}, followed by @samp{]} in
+whatever the surrounding context is, whereas @samp{\C'foo]'} really asks
+for glyph @samp{foo]}.
 
 @cindex @code{refer}, and macro names starting with @code{[} or @code{]}
 @cindex @code{[}, macro names starting with, and @code{refer}
@@ -6042,9 +6037,10 @@ and its variants.
 
 @cindex tabs, before comments
 @cindex comments, lining up with tabs
-One possibly irritating idiosyncrasy is that tabs must not be used to
-line up comments.  Tabs are not treated as whitespace between the
-request and macro arguments.
+One possibly irritating idiosyncrasy is that tabs should not be used to
+vertically align comments in the source document.  Tab characters are
+not treated as separators between a request name and its argument, nor
+between arguments.
 
 @cindex undefined request
 @cindex request, undefined
@@ -7931,12 +7927,17 @@ register @code{.S} for the same purpose.
 @cindex tab repetition character (@code{tc})
 @cindex character, tab repetition (@code{tc})
 @cindex glyph, tab repetition (@code{tc})
-Normally @code{gtroff} fills the space to the next tab stop with
-whitespace.  This can be changed with the @code{tc} request.  With no
-argument @code{gtroff} reverts to using whitespace, which is the
-default.  The value of this @dfn{tab repetition character} is associated
-with the current environment (@pxref{Environments}).@footnote{@dfn{Tab
-repetition character} is a misnomer since it is an output glyph.}
+Normally, GNU @code{troff} writes no glyph when moving to a tab stop
+(some output devices may explicitly output space characters to achieve
+this motion).  A @dfn{tab repetition character} can be specified with
+the @code{tc} request, causing GNU @code{troff} to write as many
+instances of @var{fill-glyph} as are necessary to occupy the interval
+from the current horizontal location to the next tab stop.  With no
+argument, GNU @code{troff} reverts to the default behavior.  The tab
+repetition character is associated with the current environment
+(@pxref{Environments}).@footnote{Tab repetition @emph{character} is a
+misnomer since it is an output glyph.}  Only a single @var{fill-glyph}
+is recognized; any excess is ignored.
 @endDefreq
 
 @DefreqList {linetabs, n}
@@ -8020,12 +8021,16 @@ character.
 @cindex leader repetition character (@code{lc})
 @cindex character, leader repetition (@code{lc})
 @cindex glyph, leader repetition (@code{lc})
-Declare the @dfn{leader repetition character}.@footnote{@dfn{Leader
-repetition character} is a misnomer since it is an output glyph.}
-Without an argument, leaders act the same as tabs (i.e., using
-whitespace for filling).  @code{gtroff}'s start-up value is a dot
-(@samp{.}).  The value of the leader repetition character is associated
-with the current environment (@pxref{Environments}).
+When writing a leader, GNU @code{troff} fills the space to the next tab
+stop with dots @samp{.}.  A different @dfn{leader repetition character}
+can be specified with the @code{lc} request, causing GNU @code{troff} to
+write as many instances of @var{fill-glyph} as are necessary to occupy
+the interval from the current horizontal location to the next tab stop.
+With no argument, GNU @code{troff} treats leaders the same as tabs.  The
+leader repetition character is associated with the current environment
+(@pxref{Environments}).@footnote{Leader repetition @emph{character} is a
+misnomer since it is an output glyph.}  Only a single @var{fill-glyph}
+is recognized; any excess is ignored.
 @endDefreq
 
 @cindex table of contents
@@ -11294,8 +11299,8 @@ the special character escapes.
 @endDefreq
 
 (In pratice, we would end the @code{ds} request with a comment escape
-@code{\"} to prevent whitespace from creeping into the definition
-during source document maintenance.)
+@code{\"} to prevent space from creeping into the definition during
+source document maintenance.)
 
 @Defreq {rn, old new}
 @cindex renaming request (@code{rn})
@@ -16304,28 +16309,28 @@ following two sections describe their format.
 @cindex @code{gtroff}, output
 @cindex output, @code{gtroff}
 
-This section describes the intermediate output format of GNU
-@code{troff}.  This output is produced by a run of @code{gtroff} before
-it is fed into a device postprocessor program.
+This section describes the @code{groff} intermediate output format, which
+is produced by GNU @code{troff}.
 
-As @code{groff} is a wrapper program around @code{gtroff} that
-automatically calls a postprocessor, this output does not show up
-normally.  This is why it is called @dfn{intermediate}.  @code{groff}
-provides the option @option{-Z} to inhibit postprocessing, such that the
-produced intermediate output is sent to standard output just like
-calling @code{gtroff} manually.
+As @code{groff} is a wrapper program around GNU @code{troff} and
+automatically calls an output driver (or ``postprocessor''), this output
+does not show up normally.  This is why it is called
+@emph{intermediate}.  @code{groff} provides the option @option{-Z} to
+inhibit postprocessing such that the produced intermediate output is
+sent to standard output just as it is when calling GNU @code{troff}
+directly.
 
 @cindex troff output
 @cindex output, troff
 @cindex intermediate output
 @cindex output, intermediate
 Here, the term @dfn{troff output} describes what is output by
-@code{gtroff}, while @dfn{intermediate output} refers to the language
-that is accepted by the parser that prepares this output for the
-postprocessors.  This parser is more tolerant of whitespace and
-implements obsolete elements for compatibility, otherwise both formats
-are the same.@footnote{The parser and postprocessor for intermediate
-output can be found in the file@*
+GNU @code{troff}, while @dfn{intermediate output} refers to the language
+that is accepted by the parser that prepares this output for the output
+drivers.  This parser handles whitespace more flexibly than AT&T's
+implementation and implements obsolete elements for compatibility;
+otherwise, both formats are the same.@footnote{The parser and
+postprocessor for intermediate output can be found in the file@*
 @file{@var{groff-source-dir}/src/libs/libdriver/input.cpp}.}
 
 The main purpose of the intermediate output concept is to facilitate the
@@ -16452,7 +16457,7 @@ x init
 
 @noindent
 with the arguments set as outlined in @ref{Device Control Commands}.
-The parser for the intermediate output format is able to swallow
+The parser for the intermediate output format is able to interpret
 additional whitespace and comments as well even in the prologue.
 
 The body is the main section for processing the document data.
@@ -16647,8 +16652,9 @@ integer).  The original Unix troff manual allows negative values for
 @var{n} also, but @code{gtroff} doesn't use this.
 
 @item w
-Informs about a paddable white space to increase readability.  The
-spacing itself must be performed explicitly by a move command.
+Describe an adjustable space. This performs no action; it is present for
+documentary purposes.  The spacing itself must be performed explicitly
+by a move command.
 @end table
 
 @node Graphics Commands, Device Control Commands, Simple Commands, Command Reference
@@ -16919,10 +16925,10 @@ ignored.
 @item xT @var{xxx}@angles{line break}
 The @samp{T} stands for @var{Typesetter}.
 
-Set name of device to word @var{xxx}, a sequence of characters ended by
-the next white space character.  The possible device names coincide with
-those from the @code{groff} @option{-T} option.  This is the first
-command of the prologue.
+Set the name of the output driver to @var{xxx}, a sequence of
+non-whitespace characters terminated by whitespace.  The possible names
+correspond to those of @code{groff}'s @option{-T} option.  This is the
+first command of the prologue.
 
 @item xu @var{n}@angles{line break}
 The @samp{u} stands for @var{underline}.
