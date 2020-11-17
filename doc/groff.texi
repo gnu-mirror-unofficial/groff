@@ -1317,9 +1317,9 @@ This driver consists of two parts, a preprocessor (@code{pre-grohtml})
 and a postprocessor (@code{post-grohtml}).
 @end table
 
-@cindex output device name string register (@code{.T})
+@cindex output device name string (@code{.T})
 @cindex output device usage register (@code{.T})
-The predefined @code{gtroff} string register @code{.T} contains the
+The predefined @code{gtroff} string @code{.T} contains the
 current output device; the read-only register @code{.T} is set to@tie{}1
 if this option is used (which is always true if @code{groff} is used to
 call @code{gtroff}).  @xref{Built-in Registers}.
@@ -3855,7 +3855,7 @@ single-pass formatter and can only print what has been collected up to
 the point that the @code{TC} macro appears.
 
 The optional argument @code{no} suppresses printing the title specified
-by the string register @code{TOC}.
+by the string @code{TOC}.
 @endDefmac
 
 @Defmac {PX, [@code{no}], ms}
@@ -3864,7 +3864,7 @@ numbering sequence.  Use this macro to print a manually generated table
 of contents at the beginning of your document.
 
 The optional argument @code{no} suppresses printing the title specified
-by the string register @code{TOC}.
+by the string @code{TOC}.
 @endDefmac
 
 The @cite{Groff and Friends HOWTO} includes a @code{sed} script that
@@ -10913,7 +10913,7 @@ Only one string is predefined by the language.
 
 @Defstr {.T,}
 @stindex .T
-@cindex output device name string register (@code{.T})
+@cindex output device name string (@code{.T})
 Contains the name of the output driver (for example, @samp{utf8} or
 @samp{pdf}).
 @endDefstr
