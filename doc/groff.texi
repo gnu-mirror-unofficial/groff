@@ -808,7 +808,7 @@ line length and indenting
 macros, strings, diversions, and traps
 
 @item
-number registers
+registers
 
 @item
 tabs, leaders, and fields
@@ -1199,11 +1199,11 @@ prepend @samp{-} to @var{arg} before passing it to the postprocessor.
 
 @item -r@var{c}@var{n}
 @itemx -r@var{name}=@var{n}
-Set number register@tie{}@var{c} or @var{name} to the
-value@tie{}@var{n}.  @var{c}@tie{}must be a one-letter name; @var{name}
-can be of arbitrary length.  @var{n}@tie{}can be any @code{gtroff}
-numeric expression.  All register assignments happen before loading any
-macro file (including the start-up file).
+Set register@tie{}@var{c} or @var{name} to the value@tie{}@var{n}.
+@var{c}@tie{}must be a one-letter name; @var{name} can be of arbitrary
+length.  @var{n}@tie{}can be any @code{gtroff} numeric expression.  All
+register assignments happen before loading any macro file (including the
+start-up file).
 
 @item -R
 Preprocess with @code{grefer}.  No mechanism is provided for passing
@@ -1318,11 +1318,11 @@ and a postprocessor (@code{post-grohtml}).
 @end table
 
 @cindex output device name string register (@code{.T})
-@cindex output device usage number register (@code{.T})
+@cindex output device usage register (@code{.T})
 The predefined @code{gtroff} string register @code{.T} contains the
-current output device; the read-only number register @code{.T} is set
-to@tie{}1 if this option is used (which is always true if @code{groff}
-is used to call @code{gtroff}).  @xref{Built-in Registers}.
+current output device; the read-only register @code{.T} is set to@tie{}1
+if this option is used (which is always true if @code{groff} is used to
+call @code{gtroff}).  @xref{Built-in Registers}.
 
 The postprocessor to be used for a device is specified by the
 @code{postpro} command in the device description file.  (@xref{Device
@@ -2242,8 +2242,8 @@ argument to @code{TH} in the center.
 Control the content of the footers.  Normally, the footer prints the
 page number and the third and fourth arguments to @code{TH}.
 
-Use the @code{FT} number register to specify the footer position.  The
-default is @minus{}0.5@dmn{i}.
+Use the @code{FT} register to specify the footer position.  The default
+is @minus{}0.5@dmn{i}.
 @endDefmac
 
 @unnumberedsubsubsec Ultrix-specific man macros
@@ -3786,8 +3786,8 @@ Two-column mode.
 @Defmac {MC, [@Var{width} [@Var{gutter}]], ms}
 Multi-column mode.  If you specify no arguments, it is equivalent to the
 @code{2C} macro.  Otherwise, @var{width} is the width of each column and
-@var{gutter} is the space between columns.  The @code{MINGW} number
-register controls the default gutter width.
+@var{gutter} is the space between columns.  The @code{MINGW} register
+controls the default gutter width.
 @endDefmac
 
 @c ---------------------------------------------------------------------
@@ -5471,9 +5471,9 @@ to start a reference, using @samp{foo} as a parameter.
 Test whether an identifier @var{ident} is valid in @code{gtroff}.  It
 expands to the character@tie{}1 or@tie{}0 according to whether its
 argument (usually delimited by quotes) is or is not acceptable as the
-name of a string, macro, diversion, number register, environment, or
-font.  It returns@tie{}0 if no argument is given.  This is useful for
-looking up user input in some sort of associative table.
+name of a string, macro, diversion, register, environment, or font.  It
+returns@tie{}0 if no argument is given.  This is useful for looking up
+user input in some sort of associative table.
 
 @Example
 \A'end-list'
@@ -5515,7 +5515,7 @@ If the identifier is a string, macro, or diversion, @code{gtroff}
 defines it as empty.
 
 @item
-If the identifier is a number register, @code{gtroff} defines it with a
+If the identifier is a register, @code{gtroff} defines it with a
 value of@tie{}0.
 @end itemize
 
@@ -5647,9 +5647,9 @@ requests cause a break implicitly; using the single quote control
 character prevents this.
 
 @Defreg {.br}
-A read-only number register, which is set to@tie{}1 if a macro is called
-with the normal control character (as defined with the @code{cc}
-request), and set to@tie{}0 otherwise.
+A read-only register, which is set to@tie{}1 if a macro is called with
+the normal control character (as defined with the @code{cc} request),
+and set to@tie{}0 otherwise.
 
 @cindex modifying requests
 @cindex requests, modifying
@@ -6173,8 +6173,8 @@ zero.
 
 @DefreqList {nr, ident value}
 @DefescListEndx {\\R, @code{'}, ident value, @code{'}}
-Set number register @var{ident} to @var{value}.  If @var{ident} doesn't
-exist, GNU @code{troff} creates it.
+Set register @var{ident} to @var{value}.  If @var{ident} doesn't exist,
+GNU @code{troff} creates it.
 
 The argument to @code{\R} usually has to be enclosed in quotes.
 @xref{Escapes}, for details on parameter delimiting characters.
@@ -6196,8 +6196,8 @@ For example, the following two lines are equivalent:
 @endExample
 
 The complete transparency of @code{\R} can cause surprising effects if
-you use number registers like @code{.k}, which get evaluated at the
-time they are accessed.
+you use registers like @code{.k}, which get evaluated at the time they
+are accessed.
 
 @Example
 .ll 1.6i
@@ -6223,8 +6223,8 @@ than the line length, and the line gets broken.
 
 In the first input line, since the @code{\R} escape leaves no traces,
 the check for the overfull line hasn't been done yet at the point where
-@code{\R} gets handled, and you get a value for the @code{.k} number
-register that is even greater than the current line length.
+@code{\R} gets handled, and you get a value for the @code{.k} register
+that is even greater than the current line length.
 
 In the second input line, the insertion of @code{\h'0'} to emit an
 invisible zero-width space forces GNU @code{troff} to check the line
@@ -6281,40 +6281,35 @@ with a @samp{0}:
 @endDefreq
 
 @Defreq {rr, ident}
-@cindex removing number register (@code{rr})
-@cindex number register, removing (@code{rr})
+@cindex removing a register (@code{rr})
 @cindex register, removing (@code{rr})
-Remove number register @var{ident}.  If @var{ident} doesn't exist, the
-request is ignored.  Technically, only the name is removed; the
-register's contents are still accessible under aliases created with
-@code{aln}, if any.
+Remove register @var{ident}.  If @var{ident} doesn't exist, the request
+is ignored.  Technically, only the name is removed; the register's
+contents are still accessible under aliases created with @code{aln}, if
+any.
 @endDefreq
 
 @Defreq {rnn, ident1 ident2}
-@cindex renaming number register (@code{rnn})
-@cindex number register, renaming (@code{rnn})
+@cindex renaming a register (@code{rnn})
 @cindex register, renaming (@code{rnn})
-Rename number register @var{ident1} to @var{ident2}.  If either
-@var{ident1} or @var{ident2} doesn't exist, the request is ignored.
+Rename register @var{ident1} to @var{ident2}.  If either @var{ident1} or
+@var{ident2} doesn't exist, the request is ignored.
 @endDefreq
 
 @Defreq {aln, new old}
-@cindex alias, number register, creating (@code{aln})
-@cindex creating alias, for number register (@code{aln})
-@cindex number register, creating alias (@code{aln})
-@cindex register, creating alias (@code{aln})
-Create an alias @var{new} for an existing number register @var{old},
-causing the names to refer to the same stored object.  If @var{old} is
+@cindex alias, register, creation (@code{aln})
+@cindex creating alias for register (@code{aln})
+@cindex register, creating alias for (@code{aln})
+Create an alias @var{new} for an existing register @var{old}, causing
+the names to refer to the same stored object.  If @var{old} is
 undefined, a warning of type @samp{reg} is generated and the request is
 ignored.  @xref{Debugging}, for information about warnings.
 
-@cindex alias, number register, removing (@code{aln})
-@cindex removing alias, for number register (@code{aln})
-@cindex number register, removing alias (@code{aln})
-@cindex register, removing alias (@code{aln})
-To remove a number register alias, call @code{rr} on its name.  A number
-register's contents do not become inaccessible until it has no more
-names.
+@cindex alias, register, removing (@code{aln})
+@cindex removing alias for register (@code{aln})
+@cindex register, removing alias for (@code{aln})
+To remove a register alias, call @code{rr} on its name.  A register's
+contents do not become inaccessible until it has no more names.
 
 @endDefreq
 
@@ -6337,7 +6332,7 @@ Numeric registers can be accessed via the @code{\n} escape.
 @cindex assignments, nested
 @cindex indirect assignments
 @cindex assignments, indirect
-Interpolate number register with name @var{ident} (one-character
+Interpolate register with name @var{ident} (one-character
 name@tie{}@var{i}, two-character name @var{id}).  This means that the
 value of the register is expanded in-place while @code{gtroff} is
 parsing the input line.  Nested assignments (also called indirect
@@ -6375,7 +6370,7 @@ the @code{nr} request or @code{\R} escape.
 
 @Defreq {nr, ident value incr}
 @cindex @code{\R}, difference to @code{nr}
-Set number register @var{ident} to @var{value}; the increment for
+Set register @var{ident} to @var{value}; the increment for
 auto-incrementing is set to @var{incr}.  The @code{\R} escape doesn't
 support this notation.
 @endDefreq
@@ -6440,10 +6435,10 @@ can be changed to a variety of formats (numbers, Roman numerals, etc.).
 This is done using the @code{af} request.
 
 @Defreq {af, ident format}
-Change the output format of a number register.  The first argument
-@var{ident} is the name of the number register to be changed, and the
-second argument @var{format} is the output format.  The following output
-formats are available:
+Change the output format of a register.  The first argument @var{ident}
+is the name of the register to be changed, and the second argument
+@var{format} is the output format.  The following output formats are
+available:
 
 @table @code
 @item 1
@@ -6474,9 +6469,9 @@ Upper-case letters: 0, A, B, C, @dots{},@tie{}Z, AA, AB,@tie{}@enddots{}
 Lower-case letters: 0, a, b, c, @dots{},@tie{}z, aa, ab,@tie{}@enddots{}
 @end table
 
-Omitting the number register format causes a warning of type
-@samp{missing}.  @xref{Debugging}, for more details.  Specifying a
-nonexistent format causes an error.
+Omitting the register format causes a warning of type @samp{missing}.
+@xref{Debugging}, for more details.  Specifying a nonexistent format
+causes an error.
 
 The following example produces @samp{10, X, j, 010}:
 
@@ -6553,7 +6548,7 @@ Number of basic units per horizontal unit of output device resolution.
 @cindex number of registers register (@code{.R})
 @cindex registers, number of, register (@code{.R})
 @vindex .R
-The number of number registers available.  This is always 10000 in
+The number of registers available.  This is always 10000 in
 GNU@tie{}@code{troff}; it exists for backward compatibility.
 
 @item \n[.U]
@@ -6563,8 +6558,8 @@ GNU@tie{}@code{troff}; it exists for backward compatibility.
 @cindex mode, unsafe
 @vindex .U
 If @code{gtroff} is called with the @option{-U} command-line option to
-activate unsafe mode, the number register @code{.U} is set to@tie{}1,
-and to zero otherwise.  @xref{Groff Options}.
+activate unsafe mode, the register @code{.U} is set to@tie{}1, and to
+zero otherwise.  @xref{Groff Options}.
 
 @item \n[.V]
 @cindex vertical resolution register (@code{.V})
@@ -6724,7 +6719,7 @@ information.
 @item \n[.T]
 @vindex .T
 If @code{gtroff} is called with the @option{-T} command-line option, the
-number register @code{.T} is set to@tie{}1, and zero otherwise.
+register @code{.T} is set to@tie{}1, and zero otherwise.
 @xref{Groff Options}.
 @end table
 
@@ -6783,7 +6778,7 @@ the @code{fi} request.
 @cindex mode, fill (@code{fi})
 Activate fill mode (which is the default).  This request implicitly
 enables adjusting; it also inserts a break in the text currently being
-filled.  The read-only number register @code{.u} is set to@tie{}1.
+filled.  The read-only register @code{.u} is set to@tie{}1.
 
 The fill mode status is associated with the current environment
 (@pxref{Environments}).
@@ -6796,8 +6791,8 @@ See @ref{Line Control}, for interaction with the @code{\c} escape.
 @cindex mode, no-fill (@code{nf})
 Activate no-fill mode.  Input lines are output as-is, retaining line
 breaks and ignoring the current line length.  This request implicitly
-disables adjusting; it also causes a break.  The number register
-@code{.u} is set to@tie{}0.
+disables adjusting; it also causes a break.  The register @code{.u} is
+set to@tie{}0.
 
 The fill mode status is associated with the current environment
 (@pxref{Environments}).
@@ -6882,8 +6877,8 @@ textD
 
 @cindex adjustment mode register (@code{.j})
 As just demonstrated, the current adjustment mode is available in the
-read-only number register @code{.j}; it can be stored and
-subsequently used to set adjustment.
+read-only register @code{.j}; it can be stored and subsequently used to
+set adjustment.
 
 The adjustment mode status is associated with the current environment
 (@pxref{Environments}).
@@ -6957,8 +6952,8 @@ separating sentences on the same output line in fill mode.  If the
 second argument is omitted, @var{sentence-space-size} is set to
 @var{word-space-size}.
 
-The read-only number registers @code{.ss} and @code{.sss} hold the
-values of minimal inter-word space and additional inter-sentence space,
+The read-only registers @code{.ss} and @code{.sss} hold the values of
+minimal inter-word space and additional inter-sentence space,
 respectively.  These parameters are associated with the current
 environment (@pxref{Environments}), and rounded down to the nearest
 multiple of@tie{}12 on terminal output devices.
@@ -7051,8 +7046,8 @@ a large number of lines, and turning off centering after the text to be
 centered.  This is useful for any request that takes a number of lines
 as an argument.
 
-The @code{.ce} read-only number register contains the number of lines
-remaining to be centered, as set by the @code{ce} request.
+The @code{.ce} read-only register contains the number of lines remaining
+to be centered, as set by the @code{ce} request.
 @endDefreq
 
 @DefreqList {rj, [@Var{nnn}]}
@@ -7061,11 +7056,10 @@ remaining to be centered, as set by the @code{ce} request.
 @cindex text, justifying (@code{rj})
 @cindex right-justifying (@code{rj})
 Justify unfilled text to the right margin.  Arguments are identical to
-the @code{ce} request.  The @code{.rj} read-only number register is the
-number of lines to be right-justified as set by the @code{rj} request.
-This request causes a break.  The number of lines still to be
-right-justified is associated with the current environment
-(@pxref{Environments}).
+the @code{ce} request.  The @code{.rj} read-only register is the number
+of lines to be right-justified as set by the @code{rj} request.  This
+request causes a break.  The number of lines still to be right-justified
+is associated with the current environment (@pxref{Environments}).
 @endDefreq
 
 
@@ -7357,8 +7351,7 @@ The hyphenation mode is associated with the current environment
 (@pxref{Environments}).
 
 @cindex hyphenation mode register (@code{.hy})
-The hyphenation mode can be found in the read-only number register
-@samp{.hy}.
+The hyphenation mode can be found in the read-only register @samp{.hy}.
 @endDefreq
 
 @Defreq {nh, }
@@ -7506,7 +7499,7 @@ The hyphenation language is associated with the current environment
 
 @cindex hyphenation language register (@code{.hla})
 The hyphenation language is available as a string in the read-only
-number register @samp{.hla}.
+register @samp{.hla}.
 
 @Example
 .ds curr_language \n[.hla]
@@ -7532,9 +7525,9 @@ Hyphens resulting from @code{\%} are counted; explicit hyphens are not.
 
 @cindex hyphenation consecutive line limit register (@code{.hlm})
 @cindex hyphenation consecutive line count register (@code{.hlc})
-The @code{.hlm} read-only number register stores this maximum.  The
-count of immediately preceding consecutive hyphenated lines is available
-in the read-only number register @code{.hlc}.
+The @code{.hlm} read-only register stores this maximum.  The count of
+immediately preceding consecutive hyphenated lines is available in the
+read-only register @code{.hlc}.
 @endDefreq
 
 @DefreqList {hym, [@Var{length}]}
@@ -7553,7 +7546,7 @@ A negative argument resets the hyphenation margin to zero, emitting a
 warning of type @samp{range}.
 
 @cindex hyphenation margin register (@code{.hym})
-The hyphenation margin is available in the @code{.hym} read-only number
+The hyphenation margin is available in the @code{.hym} read-only
 register.
 @endDefreq
 
@@ -7575,7 +7568,7 @@ zero, emitting a warning of type @samp{range}.
 
 @cindex hyphenation space adjustment threshold register (@code{.hys})
 The hyphenation space adjustment threshold is available in the
-@code{.hys} read-only number register.
+@code{.hys} read-only register.
 @endDefreq
 
 @codequotebacktick off
@@ -7649,7 +7642,7 @@ baz
 @cindex discarded space in traps
 @cindex space, discarded, in traps
 @cindex traps, and discarded space
-The amount of discarded space is available in the number register
+The amount of discarded space is available in the register
 @code{.trunc}.
 
 To protect @code{sp} against vertical traps, use the @code{vpt} request:
@@ -7678,8 +7671,8 @@ The line spacing is associated with the current environment
 (@pxref{Environments}).
 
 @cindex line spacing register (@code{.L})
-The read-only number register @code{.L} contains the current line
-spacing setting.
+The read-only register @code{.L} contains the current line spacing
+setting.
 @endDefreq
 
 @xref{Changing Type Sizes}, for the requests @code{vs} and @code{pvs} as
@@ -7699,8 +7692,8 @@ the values is used.
 @xref{Escapes}, for details on parameter delimiting characters.
 
 @cindex extra post-vertical line space register (@code{.a})
-The @code{.a} read-only number register contains the most recent
-(non-negative) extra vertical line space.
+The @code{.a} read-only register contains the most recent (non-negative)
+extra vertical line space.
 
 Using @code{\x} can be necessary in combination with the @code{\b}
 escape, as the following example shows.
@@ -7744,8 +7737,8 @@ or via blank lines) is disabled.  The @code{bp} request to advance to
 the next page is also disabled, except if it is accompanied by a page
 number (@pxref{Page Control}).  This mode ends when actual text is
 output or the @code{rs} request is encountered, which ends no-space
-mode.  The read-only number register @code{.ns} is set to@tie{}1 as long
-as no-space mode is active.
+mode.  The read-only register @code{.ns} is set to@tie{}1 as long as
+no-space mode is active.
 
 This request is useful for macros that conditionally insert vertical
 space before the text starts (for example, a paragraph macro could
@@ -7907,7 +7900,7 @@ The start-up value of @code{gtroff} is @w{@samp{T 0.5i}}.
 @end itemize
 
 @cindex tab settings register (@code{.tabs})
-The read-only number register @code{.tabs} contains a string
+The read-only register @code{.tabs} contains a string
 representation of the current tab settings suitable for use as an
 argument to the @code{ta} request.
 
@@ -8587,7 +8580,7 @@ For terminal output devices, it is set to 0 in the startup file
 @samp{v} as incorrectly documented in the @acronym{AT&T} @code{troff}
 manual).
 
-The current page offset can be found in the read-only number register
+The current page offset can be found in the read-only register
 @samp{.o}.
 
 If @code{po} is called without an argument, the page offset is reset to
@@ -8630,7 +8623,7 @@ it exists) is output.  A temporary indentation value is reset to zero
 also.
 
 The current indentation (as set by @code{in}) can be found in the
-read-only number register @samp{.i}.
+read-only register @samp{.i}.
 @endDefreq
 
 @DefreqList {ti, offset}
@@ -8654,8 +8647,8 @@ normal indentation, if @var{offset} is given as a relative value.
 The effect of @code{ti} is delayed until a partially collected line (if
 it exists) is output.
 
-The read-only number register @code{.in} is the indentation that applies
-to the current output line.
+The read-only register @code{.in} is the indentation that applies to the
+current output line.
 
 The difference between @code{.i} and @code{.in} is that the latter takes
 into account whether a partially collected line still uses the old
@@ -8683,8 +8676,8 @@ The line length is associated with the current environment
 
 @cindex line length register (@code{.l})
 The current line length (as set by @code{ll}) can be found in the
-read-only number register @samp{.l}.  The read-only number register
-@code{.ll} is the line length that applies to the current output line.
+read-only register @samp{.l}.  The read-only register @code{.ll} is the
+line length that applies to the current output line.
 
 Similar to @code{.i} and @code{.in}, the difference between @code{.l}
 and @code{.ll} is that the latter takes into account whether a partially
@@ -8837,8 +8830,7 @@ current value by @var{length}).  This is the length of the physical
 output page.  The default scaling indicator is @samp{v}.
 
 @cindex page length register (@code{.p})
-The current setting can be found in the read-only number register
-@samp{.p}.
+The current setting can be found in the read-only register @samp{.p}.
 
 @cindex top margin
 @cindex margin, top
@@ -8919,7 +8911,7 @@ argument, the title length is reset to the previous value before the
 last call to @code{lt}.
 
 The current setting of this is available in the @code{.lt} read-only
-number register; it is associated with the current environment
+register; it is associated with the current environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -8933,8 +8925,8 @@ Change (increase or decrease) the page number of the @emph{next} page.
 The only argument is the page number; the request is ignored without a
 parameter.
 
-The read-only number register @code{.pn} contains the number of the next
-page: either the value set by a @code{pn} request, or the number of the
+The read-only register @code{.pn} contains the number of the next page:
+either the value set by a @code{pn} request, or the number of the
 current page plus@tie{}1.
 @endDefreq
 
@@ -8944,7 +8936,7 @@ current page plus@tie{}1.
 @vindex %
 Change the page number character (used by the @code{tl} request) to a
 different character.  With no argument, this mechanism is disabled.
-This doesn't affect the number register@tie{}@code{%}.
+This doesn't affect the register@tie{}@code{%}.
 @endDefreq
 
 @xref{Traps}.
@@ -8992,8 +8984,8 @@ eject a page.  @xref{Page Layout}.
 @cindex current page number (@code{%})
 The read-write register@tie{}@code{%} holds the current page number.
 
-The number register @code{.pe} is set to@tie{}1 while @code{bp} is
-active.  @xref{Page Location Traps}.
+The register @code{.pe} is set to@tie{}1 while @code{bp} is active.
+@xref{Page Location Traps}.
 @endDefreq
 
 @Defreq {ne, [@Var{space}]}
@@ -9176,7 +9168,7 @@ single character as an argument) to change the font on the fly:
 .mc \f[I]x\f[]
 @endExample
 
-The current style name is available in the read-only number register
+The current style name is available in the read-only register
 @samp{.sty} (this is a string-valued register); if the current font
 isn't a style, the empty string is returned.  It is associated with the
 current environment.
@@ -9249,7 +9241,7 @@ The magnification of a font is completely transparent to GNU
 except that the dimensions of glyphs, (word) spaces, kerns, etc., of the
 affected font are adjusted accordingly.
 
-The zoom factor of the current font is available in the read-only number
+The zoom factor of the current font is available in the read-only
 register @samp{.zoom}, in multiples of 1/1000th.  It returns zero if
 there is no magnification.
 @endDefreq
@@ -9293,7 +9285,7 @@ the previous font family.  Use @code{\F[]} to do this with the escape;
 @code{\FP} selects font family @samp{P} instead.
 
 The value at start-up is @samp{T}.  The current font family is available
-in the read-only number register @samp{.fam} (this is a string-valued
+in the read-only register @samp{.fam} (this is a string-valued
 register); it is associated with the current environment.
 
 @Example
@@ -9424,9 +9416,9 @@ start-up@footnote{Usually.}).
 
 @cindex font position register (@code{.f})
 The current font in use, as a font position, is available in the
-read-only number register @samp{.f}.  This can be useful to save the
-current font for later recall.  It is associated with the current
-environment (@pxref{Environments}).
+read-only register @samp{.f}.  This can be useful to save the current
+font for later recall.  It is associated with the current environment
+(@pxref{Environments}).
 
 @Example
 .nr save-font \n[.f]
@@ -9437,8 +9429,7 @@ environment (@pxref{Environments}).
 
 @cindex next free font position register (@code{.fp})
 The number of the next free font position is available in the read-only
-number register @samp{.fp}.  This is useful when mounting a new font,
-like so:
+register @samp{.fp}.  This is useful when mounting a new font, like so:
 
 @Example
 .fp \n[.fp] NEATOFONT
@@ -10201,8 +10192,8 @@ Change (increment, decrement) the height of the current font, but not
 the width.  If @var{height} is zero, restore the original height.
 Default scaling indicator is @samp{z}.
 
-The read-only number register @code{.height} contains the font height as
-set by @code{\H}.
+The read-only register @code{.height} contains the font height as set by
+@code{\H}.
 
 Currently, only the @option{-Tps} and @option{-Tpdf} devices support
 this feature.
@@ -10238,8 +10229,8 @@ larger than the current font size).
 Slant the current font by @var{slant} degrees.  Positive values slant to
 the right.  Only integer values are possible.
 
-The read-only number register @code{.slant} contains the font slant as
-set by @code{\S}.
+The read-only register @code{.slant} contains the font slant as set by
+@code{\S}.
 
 Currently, only the @option{-Tps} and @option{-Tpdf} devices support
 this feature.
@@ -10386,9 +10377,8 @@ siblings) are taken into account.
 @cindex ligatures enabled register (@code{.lg})
 Switch the ligature mechanism on or off; if the parameter is non-zero or
 missing, ligatures are enabled, otherwise disabled.  Default is on.  The
-current ligature mode can be found in the read-only number register
-@code{.lg} (set to 1 or@tie{}2 if ligatures are enabled,
-0@tie{}otherwise).
+current ligature mode can be found in the read-only register @code{.lg}
+(set to 1 or@tie{}2 if ligatures are enabled, 0@tie{}otherwise).
 
 Setting the ligature mode to@tie{}2 enables the two-character ligatures
 (fi, fl, and ff) and disables the three-character ligatures (ffi and
@@ -10411,8 +10401,8 @@ same width don't use kerning.
 @cindex kerning, activating (@code{kern})
 @cindex kerning enabled register (@code{.kern})
 Switch kerning on or off.  If the parameter is non-zero or missing,
-enable pairwise kerning, otherwise disable it.  The read-only number
-register @code{.kern} is set to@tie{}1 if pairwise kerning is enabled,
+enable pairwise kerning, otherwise disable it.  The read-only register
+@code{.kern} is set to@tie{}1 if pairwise kerning is enabled,
 0@tie{}otherwise.
 
 @cindex non-printing input break (@code{\&}), effect on kerning
@@ -10649,10 +10639,10 @@ resulting size is non-positive, it is set to 1@dmn{u}.
 
 @cindex type size registers (@code{.s}, @code{.ps})
 @cindex point size registers (@code{.s}, @code{.ps})
-The read-only number register @code{.s} returns the point size in points
-as a decimal fraction.  This is a string.  To get the point size in
-scaled points, use the @code{.ps} register instead (@pxref{Fractional
-Type Sizes}).
+The read-only register @code{.s} returns the point size in points as a
+decimal fraction.  This is a string.  To get the point size in scaled
+points, use the @code{.ps} register instead (@pxref{Fractional Type
+Sizes}).
 
 @code{.s} is associated with the current environment
 (@pxref{Environments}).
@@ -10742,9 +10732,8 @@ the vertical resolution (as given in the @code{.V} register).
 a vertical motion.  You explicitly have to repeat this command before
 inserting the diversion.
 
-The read-only number register @code{.v} contains the current vertical
-spacing; it is associated with the current environment
-(@pxref{Environments}).
+The read-only register @code{.v} contains the current vertical spacing;
+it is associated with the current environment (@pxref{Environments}).
 @endDefreq
 
 @cindex vertical line spacing, effective value
@@ -10805,8 +10794,8 @@ is reset to the previous value before the last call to @code{pvs}.
 @code{gtroff} creates a warning of type @samp{range} if @var{space} is
 zero or negative; the vertical spacing is then set to zero.
 
-The read-only number register @code{.pvs} contains the current
-post-vertical spacing; it is associated with the current environment
+The read-only register @code{.pvs} contains the current post-vertical
+spacing; it is associated with the current environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -10845,8 +10834,8 @@ is one one-thousandth of a point.  The request @samp{.ps 10.25} is
 synonymous with @samp{.ps 10.25z} and sets the point size to
 10250@tie{}scaled points, or 10.25@tie{}points.
 
-Consequently, in GNU @code{troff}, the number register @code{.s} can
-contain a non-integral point size.
+Consequently, in GNU @code{troff}, the register @code{.s} can contain a
+non-integral point size.
 
 It makes no sense to use the @samp{z} scale indicator in a numeric
 expression whose default scale indicator is neither @samp{u} nor
@@ -10861,7 +10850,7 @@ units in a scaled point.  For instance, @samp{\n[.ps]s} is equal to
 indicators.
 
 @Defreg {.ps}
-A read-only number register returning the point size in scaled points.
+A read-only register returning the point size in scaled points.
 
 @code{.ps} is associated with the current environment
 (@pxref{Environments}).
@@ -10874,9 +10863,9 @@ A read-only number register returning the point size in scaled points.
 @cindex @code{.ps} register, in comparison with @code{.psr}
 @cindex @code{.s} register, in comparison with @code{.sr}
 The last-requested point size in scaled points is contained in the
-@code{.psr} read-only number register.  The last-requested point size in
-points as a decimal fraction can be found in @code{.sr}.  This is a
-string-valued read-only number register.
+read-only register @code{.psr}.  The last-requested point size in points
+as a decimal fraction can be found in the read-only string-valued
+register @code{.sr}.
 
 The requested point sizes are device-independent, whereas the values
 returned by the @code{.ps} and @code{.s} registers are not.  For
@@ -10959,9 +10948,9 @@ The @code{\*} escape @dfn{interpolates} (expands in place) a previously
 defined string variable @var{name} (one-character name@tie{}@var{n},
 two-character name @var{nm}).  More precisely, the stored string is
 pushed onto the input stack, which is then parsed normally.  Similarly
-to number registers, it is possible to nest strings; i.e., string
-variables can be called within string variables.  An argument in a
-string definition must be escaped for correct behavior;
+to registers, it is possible to nest strings; i.e., string variables can
+be called within string variables.  An argument in a string definition
+must be escaped for correct behavior;
 @xref{Parameters}.
 
 @Example
@@ -11233,8 +11222,8 @@ can be manipulated through renaming, removal, and aliasing (@code{rn},
 @cindex copy mode, and @code{length} request
 @cindex mode, copy, and @code{length} request
 Compute the number of characters of @var{anything} and store the count
-in the number register @var{reg}.  If @var{reg} doesn't exist, it is
-created.  @var{anything} is read in copy mode.
+in the register @var{reg}.  If @var{reg} doesn't exist, it is created.
+@var{anything} is read in copy mode.
 
 @Example
 .ds xxx abcd\h'3i'efgh
@@ -11457,7 +11446,7 @@ True if the document is being processed in @code{nroff} mode (i.e., the
 True if the current page is odd-numbered.
 
 @item r @var{reg}
-True if there is a number register called @var{reg}.
+True if there is a register called @var{reg}.
 
 @item S @var{style}
 True if a style called @var{style} has been registered.  Font
@@ -12056,7 +12045,7 @@ escapes.
 @Defreg {.$}
 @cindex number of arguments register (@code{.$})
 The number of arguments passed to a macro or string.  This is a
-read-only number register.
+read-only register.
 
 The @code{shift} request can change its value.
 @endDefreg
@@ -12432,8 +12421,8 @@ over that glyph.
 @cindex input line position, horizontal, saving (@code{\k})
 @cindex position, horizontal input line, saving (@code{\k})
 @cindex line, input, horizontal position, saving (@code{\k})
-Store the current horizontal position in the @emph{input} line in number
-register with name @var{position} (one-character name@tie{}@var{p},
+Store the current horizontal position in the @emph{input} line in a
+register with the name @var{position} (one-character name@tie{}@var{p},
 two-character name @var{ps}).  Use this, for example, to return to the
 beginning of a string for highlighting or other decoration.
 @endDefesc
@@ -12451,8 +12440,8 @@ The current horizontal position at the input line.
 @cindex output line, horizontal position, register (@code{.k})
 @cindex position, horizontal, in output line, register (@code{.k})
 @cindex line, output, horizontal position, register (@code{.k})
-A read-only number register containing the current horizontal output
-position (relative to the current indentation).
+A read-only register containing the current horizontal output position
+(relative to the current indentation).
 @endDefreg
 
 @Defesc {\\o, @code{'}, abc, @code{'}}
@@ -13405,11 +13394,10 @@ After the diversion.
 @cindex vertical position in diversion register (@code{.d})
 @cindex position, vertical, in diversion, register (@code{.d})
 @cindex diversion, vertical position in, register (@code{.d})
-Diversions may be nested.  The read-only number register @code{.z}
-contains the name of the current diversion (this is a string-valued
-register).  The read-only number register @code{.d} contains the current
-vertical place in the diversion.  If not in a diversion it is the same
-as register @code{nl}.
+Diversions may be nested.  The read-only register @code{.z} contains the
+name of the current diversion (this is a string-valued register).  The
+read-only register @code{.d} contains the current vertical place in the
+diversion.  If not in a diversion, it is the same as register @code{nl}.
 @endDefreg
 
 @Defreg {.h}
@@ -13444,8 +13432,8 @@ return value of the @code{.h} register.
 @cindex @code{dl} register, and @code{da} (@code{boxa})
 @cindex @code{da} request, and @code{dn} (@code{dl})
 @cindex @code{boxa} request, and @code{dn} (@code{dl})
-After completing a diversion, the read-write number registers @code{dn}
-and @code{dl} contain the vertical and horizontal size of the diversion.
+After completing a diversion, the read-write registers @code{dn} and
+@code{dl} contain the vertical and horizontal size of the diversion.
 Only the just-processed lines are counted: for the computation of
 @code{dn} and @code{dl}, the requests @code{da} and @code{boxa} are
 handled as if @code{di} and @code{box} had been used---lines that have
@@ -13853,8 +13841,8 @@ production of the next inline image.
 If @var{n} is missing or non-zero, activate colors (this is the
 default); otherwise, turn it off.
 
-The read-only number register @code{.color} is@tie{}1 if colors are
-active, 0@tie{}otherwise.
+The read-only register @code{.color} is@tie{}1 if colors are active,
+0@tie{}otherwise.
 
 Internally, @code{color} sets a global flag; it does not produce a
 token.  Similar to the @code{cp} request, you should use it at the
@@ -13964,7 +13952,7 @@ call to @code{fcolor} without an argument.
 @cindex name, fill color, register (@code{.M})
 @cindex color name, fill, register (@code{.M})
 The name of the current fill (background) color is available in the
-read-only, string-valued number register @samp{.M}.
+read-only, string-valued register @samp{.M}.
 
 The fill color is associated with the current environment
 (@pxref{Environments}).
@@ -14226,10 +14214,10 @@ into a document:
 
 @noindent
 This works by having the Perl script (run by @code{sy}) print out the
-@code{nr} requests that set the number registers @code{H}, @code{M}, and
+@code{nr} requests that set the registers @code{H}, @code{M}, and
 @code{S}, and then reading those commands in with the @code{so} request.
 
-For most practical purposes, the number registers @code{seconds},
+For most practical purposes, the registers @code{seconds},
 @code{minutes}, and @code{hours}, which are initialized at start-up of
 GNU @code{troff}, should be sufficient.  Use the @code{af} request to
 format their values for output.
@@ -14242,8 +14230,8 @@ format their values for output.
 @endExample
 
 @cindex @code{system()} return value register (@code{systat})
-The @code{systat} read-write number register contains the return value
-of the @code{system()} function executed by the last @code{sy} request.
+The @code{systat} read-write register contains the return value of the
+@code{system()} function executed by the last @code{sy} request.
 @endDefreq
 
 @DefreqList {open, stream file}
@@ -14442,7 +14430,7 @@ active line numbering parameters.
 
 The parameters of @code{nm} are associated with the current environment
 (@pxref{Environments}).  The current output line number is available in
-the number register @code{ln}.
+the register @code{ln}.
 
 @Example
 .po 1m
@@ -14567,10 +14555,9 @@ Retrieve the bounding box of the @sc{PostScript} image found in
 @var{filename}.  The file must conform to Adobe's @dfn{Document
 Structuring Conventions} (DSC); the command searches for a
 @code{%%BoundingBox} comment and extracts the bounding box values into
-the number registers @code{llx}, @code{lly}, @code{urx}, and @code{ury}.
-If an error occurs (for example, @code{psbb} cannot find the
-@code{%%BoundingBox} comment), it sets the four number registers to
-zero.
+the registers @code{llx}, @code{lly}, @code{urx}, and @code{ury}.  If an
+error occurs (for example, @code{psbb} cannot find the
+@code{%%BoundingBox} comment), it sets the four registers to zero.
 
 The search path for @var{filename} can be controlled with the
 @option{-I} command-line option.
@@ -14828,10 +14815,10 @@ larger than expected.
 @endDefreq
 
 @Defreq {pnr, }
-@cindex dumping number registers (@code{pnr})
-@cindex number registers, dumping (@code{pnr})
-Report the names and contents of all currently defined number registers
-to the standard error stream.
+@cindex dumping registers (@code{pnr})
+@cindex registers, dumping (@code{pnr})
+Report the names and contents of all currently defined registers to the
+standard error stream.
 @endDefreq
 
 @Defreq {ptr, }
@@ -14900,10 +14887,10 @@ generated on each error and warning.  Warnings have to be enabled;
 
 @Defreg {slimit}
 @cindex input stack, setting limit
-Use the @code{slimit} number register to set the maximum number of
-objects on the input stack.  If @code{slimit} is less than or equal
-to@tie{}0, there is no limit set.  With no limit, a buggy recursive
-macro can exhaust virtual memory.
+Use the @code{slimit} register to set the maximum number of objects on
+the input stack.  If @code{slimit} is less than or equal to@tie{}0,
+there is no limit set.  With no limit, a buggy recursive macro can
+exhaust virtual memory.
 
 The default value is 1000; this is a compile-time constant.
 @endDefreg
@@ -14951,8 +14938,7 @@ listed below.  For example, @samp{.warn 0} disables all warnings, and
 @samp{.warn 1} disables all warnings except that about missing glyphs.
 If no argument is given, all warnings are enabled.
 
-The read-only number register @code{.warn} contains the current warning
-level.
+The read-only register @code{.warn} contains the current warning level.
 @endDefreq
 
 @menu
@@ -15039,10 +15025,9 @@ each name.
 @cindex @code{nr} request, and warnings
 @cindex @code{\R}, and warnings
 @cindex @code{\n}, and warnings
-Use of undefined number registers.  When an undefined number register is
-used, that register is automatically defined to have a value of@tie{}0.
-So, in most cases, at most one warning is given for use of a particular
-name.
+Use of undefined registers.  When an undefined register is used, that
+register is automatically defined to have a value of@tie{}0.  So, in
+most cases, at most one warning is given for use of a particular name.
 
 @item tab
 @itemx 2048
@@ -15142,11 +15127,11 @@ Long names may be GNU @code{troff}'s most obvious innovation.
 string @samp{ab} with contents @samp{cd}.  Normally, GNU @code{troff}
 interprets this as a call of a macro named @code{dsabcd}.
 @acronym{AT&T} @code{troff} also interprets @code{\*[} and @code{\n[} as
-a reference to a string or number register, respectively, called
-@samp{[}.  In GNU @code{troff}, however, the @samp{[} is normally
-interpreted as delimiting a long name.  In compatibility mode, GNU
-@code{troff} interprets names in the traditional way, which means that
-they are limited to one or two characters.
+a reference to a string or register, respectively, called @samp{[}.  In
+GNU @code{troff}, however, the @samp{[} is normally interpreted as
+delimiting a long name.  In compatibility mode, GNU @code{troff}
+interprets names in the traditional way, which means that they are
+limited to one or two characters.
 
 @DefreqList {cp, [@Var{n}]}
 @DefreqItemx {do, name}
@@ -15155,8 +15140,8 @@ they are limited to one or two characters.
 If @var{n} is missing or non-zero, turn on compatibility mode;
 otherwise, turn it off.
 
-The read-only number register @code{.C} is@tie{}1 if compatibility mode
-is on, 0@tie{}otherwise.
+The read-only register @code{.C} is@tie{}1 if compatibility mode is on,
+0@tie{}otherwise.
 
 Compatibility mode can be also turned on with the @option{-C}
 command-line option.
@@ -15194,11 +15179,10 @@ compatibility
     @result{} FOO groff FOO compatibility c1 ~
 @endExample
 
-The read-only number register @code{.cp}, meaningful only when
-dereferenced from a @code{do} request, is@tie{}1 if compatibility mode
-was on when the @code{do} request was encountered, and 0@tie{}if it
-was not.  This register is specialized and may require a statement of
-rationale.
+The read-only register @code{.cp}, meaningful only when dereferenced
+from a @code{do} request, is@tie{}1 if compatibility mode was on when
+the @code{do} request was encountered, and 0@tie{}if it was not.  This
+register is specialized and may require a statement of rationale.
 
 When writing macro packages or documents that use GNU @code{troff}
 features and which may be mixed with other packages or documents that do
@@ -15287,7 +15271,7 @@ Hello!
 GNU @code{troff} does not allow the use of the escape sequences
 @code{\|}, @code{\^}, @code{\&}, @code{\@{}, @code{\@}},
 @code{\@key{SP}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
-@code{\%}, and @code{\c} in names of strings, macros, diversions, number
+@code{\%}, and @code{\c} in names of strings, macros, diversions,
 registers, fonts, or environments; @acronym{AT&T} @code{troff} does.
 The @code{\A} escape sequence (@pxref{Identifiers}) may be helpful in
 avoiding use of these escape sequences in names.
