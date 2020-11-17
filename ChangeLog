@@ -1,3 +1,13 @@
+2020-11-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/div.cpp (top_level_diversion::change_trap):
+	Emit error diagnostic if an attempt is made to move an unplanted
+	macro.  This could have been a warning, as it's pretty harmless
+	{though possibly a big surprise to anyone who was wondering why
+	their .ch was a no-op}, but there's no good warning category for
+	this kind of problem and I am not about to start a bike shed
+	discussion about it right now.
+
 2020-11-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi: Update.  Add introductory material.  Rewrite
