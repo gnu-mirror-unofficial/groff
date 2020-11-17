@@ -8982,7 +8982,7 @@ eject a page.  @xref{Page Layout}.
 
 @cindex page number register (@code{%})
 @cindex current page number (@code{%})
-The read-write register@tie{}@code{%} holds the current page number.
+The writable register@tie{}@code{%} holds the current page number.
 
 The register @code{.pe} is set to@tie{}1 while @code{bp} is active.
 @xref{Page Location Traps}.
@@ -13432,7 +13432,7 @@ return value of the @code{.h} register.
 @cindex @code{dl} register, and @code{da} (@code{boxa})
 @cindex @code{da} request, and @code{dn} (@code{dl})
 @cindex @code{boxa} request, and @code{dn} (@code{dl})
-After completing a diversion, the read-write registers @code{dn} and
+After completing a diversion, the writable registers @code{dn} and
 @code{dl} contain the vertical and horizontal size of the diversion.
 Only the just-processed lines are counted: for the computation of
 @code{dn} and @code{dl}, the requests @code{da} and @code{boxa} are
@@ -14230,7 +14230,7 @@ format their values for output.
 @endExample
 
 @cindex @code{system()} return value register (@code{systat})
-The @code{systat} read-write register contains the return value of the
+The writable register @code{systat} contains the return value of the
 @code{system()} function executed by the last @code{sy} request.
 @endDefreq
 
