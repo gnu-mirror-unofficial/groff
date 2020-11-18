@@ -1,5 +1,26 @@
 2020-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/mdoc/doc-common-u (doc-footer): When performing
+	double-sided page layout, Set page number on outside of _recto_
+	{odd-numbered} pages, as is conventional and for consistency
+	with man(7).
+
+	* tmac/groff_mdoc.7.man
+	(Formatting with groff, troff, and nroff): Document what
+	double-sided layout (not "printing") means.  Also correct
+	description of continuous rendering, which implied that page
+	headers and footers were not written at all, and used an
+	incorrect groff driver name.
+
+	Fixes <https://bugs.debian.org/919890>.  Also see:
+	https://lists.gnu.org/archive/html/groff/2019-01/msg00021.html
+	Thanks to Ralph Corderoy for the discussion.
+
+	* tmac/tests/doc-D_places_page_numbers_correctly.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+2020-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/mdoc/doc-common-u (doc-header): Fix infinite loop when
 	attempting to trim header string (like "FTP(1)") to fit when the
 	available title length won't allow even extreme shortening.

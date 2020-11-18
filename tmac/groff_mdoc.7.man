@@ -4194,21 +4194,24 @@ A normal user will never need it.
 .
 .Sh "Formatting with groff, troff, and nroff"
 .
-By default, the package inhibits page breaks, headers, and footers if
-displayed with a
-.Tn TTY
-device like
+By default,
+the package inhibits page breaks,
+headers,
+and footers in the midst of the document text if it is being displayed
+with a terminal device such as
 .Sq latin1
 or
-.Sq unicode ,
-to make the manual more efficient for viewing on-line.
-This behaviour can be changed (e.g.\& to create a hardcopy of the
-.Tn TTY
-output) by setting the register
+.Sq utf8 ,
+to enable more efficient viewing of the page.
+.
+This behavior can be changed to format the page as if for 66-line
+.Tn Teletype
+output by setting the continuous rendering register
 .Ql cR
 to zero while calling
-.Xr groff 1 ,
-resulting in multiple pages instead of a single, very long page:
+.Xr groff 1 .
+.
+.
 .Pp
 .Dl groff \-Tlatin1 \-rcR=0 \-mdoc foo.man > foo.txt
 .
@@ -4232,11 +4235,22 @@ distinction information.
 .
 .
 .Pp
-For double-sided printing, set register
+Setting register
 .Ql D
-to\~1:
+to\~1 enables double-sided page layout,
+which is only distinct when not continuously rendering.
+.
+It places the page number at the bottom right on odd-numbered (recto)
+pages,
+and at the bottom left on even-numbered (verso) pages,
+swapping places with the arguments to
+.Ql .Os .
+.
+.
 .Pp
 .Dl groff \-Tps \-rD1 \-mdoc foo.man > foo.ps
+.
+.
 .Pp
 To change the document font size to 11pt or 12pt, set register
 .Ql S
