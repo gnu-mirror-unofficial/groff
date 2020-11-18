@@ -1,5 +1,26 @@
 2020-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/mdoc/doc-common-u (doc-header): Fix infinite loop when
+	attempting to trim header string (like "FTP(1)") to fit when the
+	available title length won't allow even extreme shortening.
+	Measure the string before and after calling .substring on it,
+	and break out of loop if it didn't get shorter.
+
+	Problem dates back to at least
+	ed63b0ae76a611b581601a1afc192f6a7367be6f (7 July 2002), possibly
+	as far as the Great Mdoc Rewrite of
+	058f72af832fc68488d33cd09ec819e5c560fa09 (23 March 2001).
+
+	One can never check loop invariants too many times...
+
+	Fixes <https://bugs.debian.org/411227>.
+
+	* tmac/tests/\
+	doc-do_not_loop_infinitely_when_shortening_headers.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+2020-11-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/nroff/nroff.sh: Recognize -b and -z options and pass
 	them through to troff.  Document them in usage message.
 	* src/roff/nroff/nroff.1.man: Document new -b and -z options.
