@@ -944,7 +944,7 @@ the preprocessors, @code{gtroff} and the postprocessor.
 
 It has become a tradition that GNU programs get the prefix @samp{g} to
 distinguish them from their original counterparts provided by the host
-(see @ref{Environment}).  Thus, for example, @code{geqn} is GNU
+(@pxref{Environment}).  Thus, for example, @code{geqn} is GNU
 @code{eqn}.  On operating systems like GNU/Linux or the Hurd, which
 don't contain proprietary versions of @code{troff}, and on
 MS-DOS/MS-Windows, where @code{troff} and associated programs are not
@@ -1115,7 +1115,7 @@ It is passed to the following programs:
 
 @itemize
 @item
-@code{gsoelim} (see @ref{gsoelim} for more details);
+@code{gsoelim} (@pxref{gsoelim} for more details);
 it also implies @code{groff}'s @option{-s} option.
 
 @item
@@ -2006,7 +2006,7 @@ form).
 The titles are called @dfn{three-part titles}, that is, there is a
 left-justified part, a centered part, and a right-justified part.  An
 automatically generated page number may be put in any of these fields
-with the @samp{%} character (see @ref{Page Layout}, for more details).
+with the @samp{%} character (@pxref{Page Layout}).
 
 @c ---------------------------------------------------------------------
 
@@ -3920,8 +3920,8 @@ Prints the full name of the month in dates.  The default is
 @samp{January}, @samp{February}, etc.
 @endDefstr
 
-The following special characters are available@footnote{For an
-explanation what special characters are see @ref{Special Characters}.}:
+The following special characters are available.@footnote{For an
+explanation of what special characters are @ref{Special Characters}.}
 
 @Defstr {-, ms}
 Prints an em dash.
@@ -8996,10 +8996,9 @@ It is often necessary to force a certain amount of space before a new
 page occurs.  This is most useful to make sure that there is not a
 single @dfn{orphan} line left at the bottom of a page.  The @code{ne}
 request ensures that there is a certain distance, specified by the first
-argument, before the next page is triggered (see @ref{Traps}, for
-further information).  The default scaling indicator for @code{ne} is
-@samp{v}; the default value of @var{space} is@tie{}1@dmn{v} if no
-argument is given.
+argument, before the next page is triggered (@pxref{Traps}).  The
+default scaling indicator for @code{ne} is @samp{v}; the default value
+of @var{space} is@tie{}1@dmn{v} if no argument is given.
 
 For example, to make sure that no fewer than 2@tie{}lines get orphaned,
 do the following before each paragraph:
@@ -10961,8 +10960,8 @@ I see a \*[b].
 @endExample
 
 If the string named by the @code{\*} escape does not exist, it is
-defined as empty, and a warning of type @samp{mac} is emitted (see
-@ref{Debugging}).
+defined as empty, and a warning of type @samp{mac} is emitted
+(@pxref{Debugging}).
 
 If @code{ds} is called with only one argument, @var{name} is defined as
 an empty string.
@@ -12087,8 +12086,8 @@ example, to pass the arguments along to another macro).  The @code{\$*}
 escape concatenates all the arguments separated by spaces.  A similar
 escape is @code{\$@@}, which concatenates all the arguments with each
 surrounded by double quotes, and separated by spaces.  If not in
-compatibility mode, the input level of double quotes is preserved (see
-@ref{Request and Macro Arguments}).
+compatibility mode, the input level of double quotes is preserved
+(@pxref{Request and Macro Arguments}).
 @endDefesc
 
 @Defesc {\\$^, , , }
