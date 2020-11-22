@@ -12805,7 +12805,8 @@ Instead, use the @code{eqn} preprocessor.
 @section Traps
 @cindex traps
 
-@dfn{Traps} are locations that, when reached, call a specified macro.
+@dfn{Traps} are locations in the output, or conditions on the input
+that, when reached or fulfilled, cause a specified macro to be called.
 These traps can occur at a given location on the page, at a given
 location in the current diversion (together, these are known as
 @emph{vertical position traps}), at a blank line, at a line with
@@ -12820,7 +12821,7 @@ It is also said that a trap is @dfn{sprung} if the associated macro is
 executed.
 
 @menu
-* Page Location Traps::
+* Vertical Position Traps::
 * Diversion Traps::
 * Input Line Traps::
 * Blank Line Traps::
@@ -12830,14 +12831,14 @@ executed.
 
 @c ---------------------------------------------------------------------
 
-@node Page Location Traps, Diversion Traps, Traps, Traps
-@subsection Page Location Traps
-@cindex page location traps
-@cindex traps, page location
+@node Vertical Position Traps, Page Location Traps, Traps, Traps
+@subsection Vertical Position Traps
+@cindex vertical position traps
+@cindex traps, vertical position
 
-@dfn{Page location traps} perform an action when GNU @code{troff}
-reaches or passes a certain vertical location on the page or in a
-diversion.  Page location traps have a variety of purposes.
+@dfn{Vertical position traps} perform an action when GNU @code{troff}
+reaches or passes a certain vertical location on the output page or in a
+diversion.  They have a variety of purposes.
 
 @itemize
 @item
@@ -12851,9 +12852,9 @@ setting footnotes
 @end itemize
 
 @noindent
-The location parameter used in page location traps has a default scaling
-indicator of @samp{v}, and its value is rounded to be multiples of the
-vertical resolution (as given in register @code{.V}).
+The location parameter used in vertical position traps has a default
+scaling indicator of @samp{v}, and its value is rounded to be multiples
+of the vertical resolution (as given in register @code{.V}).
 
 @DefreqList {vpt, [@Var{flag}]}
 @DefregListEndx {.vpt}
@@ -12861,14 +12862,26 @@ vertical resolution (as given in register @code{.V}).
 @cindex vertical position traps, enabling (@code{vpt})
 @cindex vertical position trap enable register (@code{.vpt})
 Enable vertical position traps if @var{flag} is non-zero or absent;
-disable them otherwise.  Vertical position traps are only those set by
-the @code{wh} request or by @code{dt} within a diversion.  The parameter
+disable them otherwise.  Vertical position traps are those set by the
+@code{wh} request or by @code{dt} within a diversion.  The parameter
 that controls whether vertical position traps are enabled is global.
 Initially, vertical position traps are enabled.  The current setting of
 this is available in the @code{.vpt} read-only register.
 
 A page can't be ejected if @code{vpt} is set to zero.
 @endDefreq
+
+@menu
+* Page Location Traps::
+* Diversion Traps::
+@end menu
+
+@c ---------------------------------------------------------------------
+
+@node Page Location Traps, Diversion Traps, Vertical Position Traps, Vertical Position Traps
+@subsubsection Page Location Traps
+@cindex page location traps
+@cindex traps, page location
 
 @Defreq {wh, dist [@Var{name}]}
 Call macro @var{name} when the vertical position @var{dist} on the page
@@ -12877,6 +12890,12 @@ is reached or passed in the downward direction.  Non-negative values for
 set the trap relative to the bottom of the page.  An existing
 @emph{visible} trap (see below) at @var{dist} is removed; this is
 @code{wh}'s sole function if @var{name} is missing.
+
+A trap is sprung only if it is @dfn{visible}, meaning that its location
+is reachable on the page@footnote{A trap planted at @samp{20i} or
+@samp{-30i} will not be sprung on a page of length @samp{11i}.} and it
+is not hidden by another trap at the same location already planted
+there.
 
 @cindex page headers
 @cindex page footers
@@ -12901,16 +12920,17 @@ An example of how a macro package might set headers and footers follows.
 .wh -1i fo            \" trap one inch from bottom
 @endExample
 
-A trap at or below the bottom of the page is ignored becaue the vertical
-position never reaches it; it can be made visible by either moving it up
-or increasing the page length so that the trap is on the page.
-
-Negative trap values always use the @emph{current} page length; they are
-not converted to an absolute vertical position.
-@cindex page position traps, debugging
-@cindex debugging page position traps
+A trap above the top or at or below the bottom of the page can be made
+visible by either moving it into the page area or increasing the page
+length so that the trap is on the page.  Negative trap values always use
+the @emph{current} page length; they are not converted to an absolute
+vertical position.
+@cindex page location traps, debugging
+@cindex debugging page location traps
 We can use the @code{ptr} request to dump our page location traps to the
-standard error stream (@pxref{Debugging}).
+standard error stream (@pxref{Debugging}).  Their positions are reported
+in basic units appropriate to the device; an @code{nroff} device example
+follows.
 
 @Example
 .pl 5i
@@ -12923,12 +12943,10 @@ standard error stream (@pxref{Debugging}).
 @endExample
 
 It is possible to have more than one trap at the same location (although
-only one at a time can be @emph{visible}); to achieve this, the traps
-must be defined at different locations, then moved to the same place
-with the @code{ch} request.  Only a @dfn{visible} page location trap
-will be invoked; a trap planted earlier at a location hides those moved
-there later as shown in the following example (the many empty lines
-caused by the @code{bp} request are omitted).
+only one at a time can be visible); to achieve this, the traps must be
+defined at different locations, then moved to the same place with the
+@code{ch} request.  In the following example, the many empty lines
+caused by the @code{bp} request are not shown in the output.
 
 @Example
 .de a
@@ -12961,15 +12979,13 @@ caused by the @code{bp} request are omitted).
 @endDefreq
 
 @Defreg {.t}
-@cindex distance to next trap register (@code{.t})
-@cindex trap, distance, register (@code{.t})
-A read-only register holding the distance to the next trap.
-
-If there are no traps between the current position and the bottom of the
-page, it contains the distance to the page bottom.  In a diversion, the
-distance to the page bottom is infinite (the returned value is the
-largest integer that can be represented in @code{groff}) if there are no
-diversion traps.
+@cindex distance to next vertical position trap register (@code{.t})
+@cindex trap, distance to next vertical position, register (@code{.t})
+The read-only register @code{.t} holds the distance to the next vertical
+position trap.  If there are no traps between the current position and
+the bottom of the page, it contains the distance to the page bottom.
+Within a diversion, in the absence of a diversion trap, this distance is
+the largest representable integer in basic units---effectively infinite.
 @endDefreg
 
 @Defreq {ch, name [@Var{dist}]}
@@ -12980,7 +12996,10 @@ Change the location of a trap by moving macro @var{name} to new location
 Parameters to @code{ch} are specified in the opposite order from
 @code{wh}.  If @var{name} is the earliest planted macro of multiple
 traps at the same location, (re)moving it from that location exposes the
-macro next most recently planted at the same place.
+macro next least recently planted at the same place.@footnote{It may
+help to think of each trap location as maintaining a queue; @code{wh}
+operates on the head of the queue, and @code{ch} operates on its tail.
+Only the trap at the head of the queue is visible.}
 
 Changing a trap's location is useful for building up footnotes in a
 diversion to allow more space at the bottom of the page for them.
@@ -12994,13 +13013,55 @@ diversion to allow more space at the bottom of the page for them.
 @end ignore
 @endDefreq
 
+The same macro can be installed simultaneously at multiple locations;
+however, only the earliest-planted instance---that has not yet been
+deleted with @code{wh}---will be moved by @code{ch}.  The following
+example (using an @code{nroff} device) illustrates this
+behavior.@footnote{@dots{}which is compatible with Heirloom Doctools
+@code{troff}.}  Blank lines have been elided from the output.
+
+@Example
+.de T
+Trap sprung at \\n(nlu.
+.br
+..
+.wh 1i T
+.wh 2i T
+foo
+.sp 11i
+.bp
+.ch T 4i
+bar
+.sp 11i
+.bp
+.ch T 5i
+baz
+.sp 11i
+.bp
+.wh 5i
+.ch T 6i
+qux
+.sp 11i
+    @result{} foo
+    @result{} Trap sprung at 240u.
+    @result{} Trap sprung at 480u.
+    @result{} bar
+    @result{} Trap sprung at 480u.
+    @result{} Trap sprung at 960u.
+    @result{} baz
+    @result{} Trap sprung at 480u.
+    @result{} Trap sprung at 1200u.
+    @result{} qux
+    @result{} Trap sprung at 1440u.
+@endExample
+
 @Defreg {.ne}
 The read-only register @code{.ne} contains the amount of space that was
-needed in the last @code{ne} request that caused a trap to be sprung.
-Useful in conjunction with the @code{.trunc} register.  @xref{Page
+needed in the last @code{ne} request that caused a trap to be sprung;
+it is useful in conjunction with the @code{.trunc} register.  @xref{Page
 Control}.
 
-Since the @code{.ne} register is only set by traps it doesn't make much
+Since the @code{.ne} register is set only by traps it doesn't make much
 sense to use it outside of trap macros.
 @endDefreg
 
@@ -13060,8 +13121,8 @@ most cases, this is not the expected behaviour.
 
 @c ---------------------------------------------------------------------
 
-@node Diversion Traps, Input Line Traps, Page Location Traps, Traps
-@subsection Diversion Traps
+@node Diversion Traps, Input Line Traps, Page Location Traps, Vertical Position Traps
+@subsubsection Diversion Traps
 @cindex diversion traps
 @cindex traps, diversion
 
@@ -13096,16 +13157,15 @@ Set an input line trap, calling macro @var{name} after the next
 @var{n}@tie{}lines of text input have been read.  Lines beginning with
 the control character or no-break control character are not counted.
 
-One possible use of @code{it} is to have a macro that prints the next
-@var{n}@tie{}lines in a bold font.
+Consider a macro
+@samp{.B @var{n}} which sets the next @var{n}@tie{}input lines in bold.
 
 @Example
 .de B
-.  it \\$1 B-end
+.  it \\$1 EB
 .  ft B
 ..
-.
-.de B-end
+.de EB \" end bold
 .  ft R
 ..
 @endExample
@@ -13114,14 +13174,31 @@ One possible use of @code{it} is to have a macro that prints the next
 @cindex interrupted lines and input line traps (@code{itc})
 @cindex traps, input line, and interrupted lines (@code{itc})
 @cindex lines, interrupted, and input line traps (@code{itc})
-As @code{it}, except that interrupted text lines (those ending with
-@code{\c}) are not counted as separate lines.
+With @code{itc}, interrupted text lines are not counted separately.
+
+@Example
+.de Monospace
+.  it \\$1 End-Monospace
+.  fam C
+..
+.de End-Monospace
+.  fam T
+..
+Syntax:
+.Monospace 1
+.ft B
+mycommand \c
+[\c
+.ft I
+operand \c
+]
+@endExample
+@endDefreq
 
 Both requests are associated with the current environment
 (@pxref{Environments}); switching to another environment disables the
 current input trap, and going back reactivates it, restoring the count
 of already processed lines.
-@endDefreq
 
 @c ---------------------------------------------------------------------
 
@@ -13218,8 +13295,8 @@ Date:\t\t\a
 
 The @code{\c} in the above example needs explanation.  For historical
 reasons (and for compatibility with @acronym{AT&T} @code{troff}), the
-end macro exits as soon as it causes a page break and no remaining
-data is in the partially collected line.
+end-of-input macro exits as soon as it causes a page break and no
+remaining data is in the partially collected line.
 
 Let us assume that there is no @code{\c} in the above @code{approval}
 macro, and that the page is full and has been ended with, say, a
@@ -13227,18 +13304,18 @@ macro, and that the page is full and has been ended with, say, a
 page, which in turn makes @code{troff} exit immediately for the reasons
 just described.  In most situations this is not intended.
 
-To always force processing the whole end macro independently of this
-behaviour it is thus advisable to insert something that starts an
-empty partially filled line (@code{\c}) whenever there is a chance that
-a page break can happen.  In the above example, the call of the
+To force processing of the whole end-of-input macro independently of
+this behavior, it is thus advisable to insert something that starts an
+empty partially collected line (@code{\c}) whenever there is a chance
+that a page break can happen.  In the above example, the call of the
 @code{ne} request assures that the remaining code stays on the same
 page, so we have to insert @code{\c} only once.
 
-The next example shows how to append three lines, then starting a new
-page unconditionally.  Since @w{@samp{.ne 1}} doesn't give the desired
+The next example shows how to append three lines, then start a new page
+unconditionally.  Since @w{@samp{.ne 1}} doesn't give the desired
 effect---there is always one line available or we are already at the
-beginning of the next page---we temporarily increase the page length
-by one line so that we can use @w{@samp{.ne 2}}.
+beginning of the next page---we temporarily increase the page length by
+one line so that we can use @w{@samp{.ne 2}}.
 
 @Example
 .de EM
@@ -13262,24 +13339,25 @@ line three
 .em EM
 @endExample
 
-This specific feature affects only the first potential page break
-caused by the end macro; further page breaks emitted by the end
-macro are handled normally.
+This specific feature affects only the first potential page break caused
+by the end-of-input macro; further page breaks emitted by the macro are
+handled normally.
 
 Another possible use of the @code{em} request is to make GNU
 @code{troff} emit a single large page instead of multiple pages.  For
 example, one may want to produce a long plain text file for reading
 in a terminal or emulator without page footers and headers interrupting
-the body of the document.@footnote{This is the default behavior of some
-@command{man} programs.}  The idea is to set the page length at the
-beginning of the document to a very large value to hold all the text,
-and automatically adjust it to the exact height of the document after
-the text has been output.
+the body of the document.  One approach is to set the page length at the
+beginning of the document to a very large value to hold all the
+text,@footnote{Another, taken by the @code{groff} @code{man} macros, is
+to intercept @code{ne} requests and wrap @code{bp} ones.} and
+automatically adjust it to the exact height of the document after the
+text has been output.
 
 @Example
 .de adjust-page-length
 .  br
-.  pl \\n[nl]u \" \n[nl] holds the current vert. position
+.  pl \\n[nl]u \" \n[nl]: current vertical position
 ..
 .
 .de single-page-mode
@@ -13287,14 +13365,15 @@ the text has been output.
 .  em adjust-page-length
 ..
 .
-.\" activate the above code
-.single-page-mode
+.\" Activate the above code if configured.
+.if \n[do-continuous-rendering] \
+.  single-page-mode
 @endExample
 
-Since only one end-of-input trap does exist and other macro packages
-may already use it, care must be taken not to break the mechanism.  A
-simple solution would be to append the above macro to the macro
-package's end-of-input macro using the @code{am} request.
+Since only one end-of-input trap exists and another macro package may
+already use it, care must be taken not to break the mechanism.  A simple
+solution would be to append the above macro to the macro package's
+end-of-input macro using the @code{am} request.
 @endDefreq
 
 @codequotebacktick off
@@ -14820,10 +14899,10 @@ standard error stream.
 @endDefreq
 
 @Defreq {ptr, }
-@cindex dumping page position traps (@code{ptr})
-@cindex listing page position traps (@code{ptr})
-@cindex traps, page position, dumping (@code{ptr})
-@cindex traps, page position, listing (@code{ptr})
+@cindex dumping page location traps (@code{ptr})
+@cindex listing page location traps (@code{ptr})
+@cindex traps, page location, dumping (@code{ptr})
+@cindex traps, page location, listing (@code{ptr})
 Report the names and positions of all page location traps to the
 standard error stream.  Empty slots in the list, where a trap has been
 planted but subsequently (re)moved, are printed as well.

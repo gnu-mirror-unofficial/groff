@@ -4980,6 +4980,64 @@ Texinfo manual for further details.
 .
 .
 .\" ====================================================================
+.SH Traps
+.\" ====================================================================
+.
+.I Traps
+are locations in the output,
+or conditions on the input that,
+when reached or fulfilled,
+cause a specified macro to be called.
+.
+These traps can occur at a given location on the page
+.RB ( .wh ,\~ .ch );
+at a given location in the current diversion
+.RB ( .dt )\[em]together,
+these are known as
+vertical position traps,
+which can be disabled and re-enabled
+.RB ( .vpt );
+at a blank line
+.RB ( .blm );
+at a line with leading space characters
+.RB ( .lsm );
+after a certain number of input lines
+.RB ( .it ,\~ .itc );
+or at the end of input
+.RB ( .em ).
+.
+Macros invoked by traps have no arguments.
+.
+Setting a trap is also called
+.IR planting .
+.
+It is also said that a trap is
+.I sprung
+if the associated macro is executed.
+.
+.
+.P
+Registers associated with trap management include
+vertical position trap enablement status
+.RB ( \[rs]n[.vpt] ),
+distance to the next trap
+.RB ( \[rs]n[.t] ),
+amount of needed
+.RB ( .ne -requested )
+space that caused the most recent vertical position trap to be sprung
+.RB ( \[rs]n[.ne] ),
+amount of needed space truncated from the amount requested
+.RB ( \[rs]n[.trunc] ),
+page ejection status
+.RB ( \[rs]n[.pe] ),
+and
+leading space count
+.RB ( \[rs]n[.lsn] )
+with its corresponding amount of motion
+.RB ( \[rs]n[.lss] ).
+.
+.
+.\" ====================================================================
 .SH Underlining
 .\" ====================================================================
 .
