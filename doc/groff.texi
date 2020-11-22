@@ -717,9 +717,9 @@ produced device-independent code that was easy for postprocessors to
 read and translate to appropriate printer commands.  This new
 ``device-independent @code{troff}'', called @code{ditroff} by some, had
 several extensions, including drawing commands for lines, circles,
-ellipses, arcs, and B-splines@footnote{Short for ``basis splines''; ask
+ellipses, arcs, and B-splines.@footnote{Short for ``basis splines''; ask
 your local numerical analyst.  The rest of us can just think of them as
-``curves''.}.
+``curves''.}
 
 Due to the additional abilities of the new version of @code{troff},
 several new preprocessors appeared.  The @code{pic} preprocessor
@@ -6018,9 +6018,8 @@ and @ref{Identifiers}.
 @subsubsection Comments
 @cindex comments
 
-Probably one of the most@footnote{Unfortunately, this is a lie.  But
-hopefully future @code{gtroff} hackers will believe it @code{:-)}}
-common forms of escapes is the comment.
+One of the most common forms of escape is the comment.@footnote{This
+claim may be more aspirational than descriptive.}
 
 @Defesc {\\", , , }
 Start a comment.  Everything to the end of the input line is ignored.
@@ -9411,7 +9410,7 @@ Mount font @var{font} at position @var{pos} (which must be a
 non-negative integer).  This numeric position can then be referred to
 with font-changing commands.  When GNU @code{troff} starts, it uses font
 position@tie{}1 (which must exist; position@tie{}0 is unused at
-start-up@footnote{Usually.}).
+start-up.@footnote{Usually.})
 
 @cindex font position register (@code{.f})
 The current font in use, as a font position, is available in the
@@ -9654,9 +9653,9 @@ A glyph representing more than a single input character is named
 Example: @code{u0045_0302_0301}.
 
 For simplicity, all Unicode characters that are composites must be
-maximally decomposed to NFD@footnote{This is ``Normalization Form D'' as
-documented in Unicode Standard Annex #15
-(@uref{https://unicode.org@//reports@//tr15/}).}; for example,
+maximally decomposed to NFD;@footnote{This is ``Normalization Form D''
+as documented in Unicode Standard Annex #15
+(@uref{https://unicode.org@//reports@//tr15/}).} for example,
 @code{u00CA_0301} is not a valid glyph name since U+00CA (@sc{latin
 capital letter e with circumflex}) can be further decomposed into U+0045
 (@sc{latin capital letter e}) and U+0302 (@sc{combining circumflex
@@ -15362,10 +15361,10 @@ when they were reread and would end up printing one @samp{\}.
 @cindex output, transparent, incompatibilities with @acronym{AT&T} @code{troff}
 One correct way to obtain a printable backslash in most documents is to
 use the @code{\e} escape sequence; this always prints a single instance
-of the current escape character@footnote{Naturally, if you've changed
+of the current escape character,@footnote{Naturally, if you've changed
 the escape character, you need to prefix the @code{e} with whatever it
 is---and you'll likely get something other than a backslash in the
-output.}, regardless of whether or not it is used in a diversion; it
+output.} regardless of whether or not it is used in a diversion; it
 also works in both GNU @code{troff} and @acronym{AT&T} @code{troff}.
 
 The other correct way, appropriate in contexts independent of the
@@ -15373,9 +15372,9 @@ backslash's common use as a @code{troff} escape character---perhaps in
 discussion of character sets or other programming languages---is
 the character escape @code{\(rs} or @code{\[rs]}, for ``reverse
 solidus'', from its name in the @acronym{ECMA-6} (@acronym{ISO/IEC} 646)
-standard@footnote{This character escape is not portable to
+standard.@footnote{This character escape is not portable to
 @acronym{AT&T} @code{troff}, but is to its lineal descendant, Heirloom
-Doctools @code{troff}, as of its 060716 release (July 2006).}.
+Doctools @code{troff}, as of its 060716 release (July 2006).}
 
 To store an escape sequence in a diversion that is interpreted when the
 diversion is reread, either use the traditional @code{\!} transparent
@@ -17486,10 +17485,10 @@ comprises a number of fields separated by blanks or tabs.  The format is
 @cindex glyphs, unnamed, accessing with @code{\N}
 @kindex ---
 @noindent
-@var{name} identifies the glyph name@footnote{The distinction between
+@var{name} identifies the glyph name:@footnote{The distinction between
 input, characters, and output, glyphs, is not clearly separated in the
 terminology of @code{groff}; for example, the @code{char} request should
-be called @code{glyph} since it defines an output entity.}: If
+be called @code{glyph} since it defines an output entity.} if
 @var{name} is a single character@tie{}@var{c} then it corresponds to the
 @code{gtroff} input character@tie{}@var{c}; if it is of the form
 @samp{\@var{c}} where @var{c} is a single character, then it corresponds
