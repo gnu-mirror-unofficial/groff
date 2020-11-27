@@ -13386,21 +13386,27 @@ end-of-input macro using the @code{am} request.
 @section Diversions
 @cindex diversions
 
-In @code{gtroff} it is possible to @dfn{divert} text into a named
-storage area.  Due to the similarity to defining macros it is sometimes
-said to be stored in a macro.  This is used for saving text for output
-at a later time, which is useful for keeping blocks of text on the same
-page, footnotes, tables of contents, and indices.
-
+In @code{roff} systems it is possible to format text as if for output,
+but instead of writing it immediately, one can @dfn{divert} the
+formatted text into a named storage area.  The same name space is used
+for such @emph{diversions} as for strings and macros.  Such text is
+sometimes said to be ``stored in a macro'', but this coinage obscures
+the important distinction between macros and strings on one hand and
+diversions on the other; the former store @emph{unformatted} input text,
+and latter captures @emph{formatted} output.  Applications of diversions
+include ``keeps'' (preventing a page break from occurring at an
+inconvenient place by forcing a set of output lines to be set as a
+group), footnotes, tables of contents, and indices.
 @cindex top-level diversion
 @cindex diversion, top-level
-For orthogonality it is said that @code{gtroff} is in the @dfn{top-level
-diversion} if no diversion is active (i.e., the data is diverted to the
-output device).
+For orthogonality it is said that GNU @code{troff} is in the
+@dfn{top-level diversion} if no diversion is active (that is, formatted
+output is being ``diverted'' immediately to the output device).
 
-Although the following requests can be used to create diversions,
-simply using an undefined diversion will cause it to be defined as empty.
-@xref{Identifiers}.
+The following requests are used to create and alter diversions;
+dereferencing an undefined diversion will create an empty one of that
+name, and cause a warning of type @samp{mac} to be emitted
+(@pxref{Debugging}).
 
 @DefreqList {di, macro}
 @DefreqListEndx {da, macro}
@@ -13419,7 +13425,7 @@ appends to an existing diversion.
 The current partially filled line is included into the diversion.  See
 the @code{box} request below for an example.  Switching to another
 (empty) environment (with the @code{ev} request) avoids the inclusion
-of the current partially filled line.
+of the current partially filled line; @ref{Environments}.
 @endDefreq
 
 @DefreqList {box, macro}
@@ -13482,9 +13488,10 @@ diversion.  If not in a diversion, it is the same as register @code{nl}.
 @cindex mark, high-water, register (@code{.h})
 @cindex position of lowest text line (@code{.h})
 @cindex text line, position of lowest (@code{.h})
-The @dfn{high-water mark} on the current page or in the current
-diversion.  It corresponds to the text baseline of the lowest line
-on the page.  This is a read-only register.
+The read-only register @code{.h} stores the @dfn{high-water mark} on the
+current page or in the current diversion.  It corresponds to the text
+baseline of the lowest line on the page.@footnote{Thus, the ``water''
+gets ``higher'' proceeding @emph{down} the page.}
 
 @Example
 .tm .h==\n[.h], nl==\n[nl]
@@ -13519,8 +13526,8 @@ been already stored in a macro are not taken into account.
 @Example
 .\" Center text both horizontally and vertically.
 .
-.\" Enclose macro definitions in .eo and .ec
-.\" to avoid the doubling of the backslash.
+.\" Disable the escape character with .eo so that we
+.\" don't have to double backslashes on the \n escapes.
 .eo
 .\" Macro .(c starts centering mode.
 .de (c
@@ -13549,7 +13556,7 @@ been already stored in a macro are not taken into account.
 .  rr @@s
 .  rm @@c
 ..
-.\" End of macro definitions; restore escape mechanism.
+.\" End of macro definitions; restore escape character.
 .ec
 @endExample
 @endDefreg
@@ -15474,7 +15481,12 @@ Doctools @code{troff}, as of its 060716 release (July 2006).}
 To store an escape sequence in a diversion that is interpreted when the
 diversion is reread, either use the traditional @code{\!} transparent
 output facility, or, if this is unsuitable, the new @code{\?} escape
-sequence.  @xref{Diversions}, and @ref{Gtroff Internals}.
+sequence.  @xref{Diversions} and @ref{Gtroff Internals}.
+
+In the somewhat pathological case where a diversion exists containing a
+partially-collected line and a partially-collected line at the top-level
+diversion has never existed, @acronym{AT&T} @code{troff} will output the
+partially-collected line at the end of input; GNU @code{troff} will not.
 
 @codequotebacktick off
 @codequoteundirected off
