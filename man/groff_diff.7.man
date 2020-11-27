@@ -4536,6 +4536,56 @@ The first three output commands are guaranteed to be:
 .
 .
 .\" ====================================================================
+.SH Debugging
+.\" ====================================================================
+.
+In addition to AT&T
+.I troff
+debugging features,
+.I groff
+emits more error diagnostics when syntactical or semantic nonsense is
+encountered and supports several categories of warning;
+the output of these can be selectively suppressed with
+.B .warn
+(and see the
+.BR -E ,
+.BR -w ,
+and
+.B -W
+options of
+.IR \%@g@troff (@MAN1EXT@)).
+.
+Backtraces can be automatically produced when errors or warnings occur
+(the
+.B \-b
+option of
+.IR \%@g@troff (@MAN1EXT@))
+or generated on demand
+.RB ( .backtrace ).
+.
+.
+.P
+.I groff
+also adds more flexible diagnostic output requests
+.RB ( .tmc
+and
+.BR .tm1 ).
+.
+More aspects of formatter state can be examined with requests that write
+lists of
+defined macros,
+strings,
+diversions,
+and boxes
+.RB ( .pm );
+environments
+.RB ( .pev ),
+and page location traps
+.RB ( .ptr )
+to the standard error stream.
+.
+.
+.\" ====================================================================
 .SH "Implementation Differences"
 .\" ====================================================================
 .

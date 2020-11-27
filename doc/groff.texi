@@ -14787,8 +14787,24 @@ tokens are removed.
 @section Debugging
 @cindex debugging
 
-@code{gtroff} is not easy to debug, but there are some useful features
-and strategies for debugging.
+GNU @code{troff} is not the easiest language to debug, in part thanks to
+its design features of recursive interpolation and multi-stage pipeline
+processing.  Nevertheless there exist several features useful for
+troubleshooting.
+
+Preprocessors use the @code{lf} request to preserve the identity of the
+line numbers and names of input files.  GNU @code{troff} emits a variety
+of error diagnostics and supports several categories of warning; the
+output of these can be selectively suppressed.  Backtraces can be
+enabled when errors or warnings occur, or triggered on demand.  The
+@code{tm} and related requests can be used to emit customized diagnostic
+messages or for instrumentation while troubleshooting.  The @code{ex}
+and @code{ab} requests cause early termination with successful and error
+exit codes respectively, to halt further processing when continuing
+would be fruitless.  The state of the formatter can be examined with
+requests that write lists of defined names (macros, strings, diversions,
+or boxes), environments, registers, and page location traps to the
+standard error stream.
 
 @Defreq {lf, line [@Var{filename}]}
 @pindex soelim
@@ -14817,8 +14833,8 @@ Other @code{troff} implementations (including the original
 @DefreqListEndx {tmc, string}
 @cindex printing to stderr (@code{tm}, @code{tm1}, @code{tmc})
 @cindex stderr, printing to (@code{tm}, @code{tm1}, @code{tmc})
-Send @var{string} to the standard error output; this is very useful for
-printing debugging messages among other things.
+Send @var{string}, which consumes the remainder of the input line, to
+the standard error stream.
 
 @cindex @code{tm} request, and copy mode
 @cindex copy mode, and @code{tm} request

@@ -5281,6 +5281,74 @@ see
 .
 .
 .\" ====================================================================
+.SH Debugging
+.\" ====================================================================
+.
+.I groff
+is not the easiest language to debug,
+in part thanks to its design features of recursive interpolation and
+multi-stage pipeline processing.
+.
+Nevertheless there exist several features useful for troubleshooting.
+.
+.
+.P
+Preprocessors use the
+.B .lf
+request to preserve the identity of the line numbers and names of input
+files.
+.
+.I groff
+emits a variety of error diagnostics and supports several categories of
+warning;
+the output of these can be selectively suppressed with
+.B .warn
+(and see the
+.BR -E ,
+.BR -w ,
+and
+.B -W
+options of
+.IR \%@g@troff (@MAN1EXT@)).
+.
+Backtraces can be automatically produced when errors or warnings occur
+(the
+.B \-b
+option of
+.IR \%@g@troff (@MAN1EXT@))
+or generated on demand
+.RB ( .backtrace ).
+.
+.BR .tm ,
+.BR .tmc ,
+and
+.B .tm1
+can be used to emit customized diagnostic messages or for
+instrumentation while troubleshooting.
+.
+.B .ex
+and
+.B .ab
+cause early termination with successful and error exit codes
+respectively,
+to halt further processing when continuing would be fruitless.
+.
+The state of the formatter can be examined with requests that write
+lists of defined macros,
+strings,
+diversions,
+and boxes
+.RB ( .pm );
+environments
+.RB ( .pev ),
+registers
+.RB ( .pnr ),
+and page location traps
+.RB ( .ptr )
+to the standard error stream.
+.
+.
+.\" ====================================================================
 .SH Authors
 .\" ====================================================================
 .
