@@ -7200,9 +7200,9 @@ hyphenation is actually performed; a ``hard'' hyphen, as in
 ``long-term'', always appears.}  If the soft hyphen character does not
 exist in the font of the character immediately preceding a potential
 break point, then the line is not broken at that point.  Neither
-definitions (specified with the @code{char} request) nor translations
-(specified with the @code{tr} request) are considered when assigning the
-soft hyphen character.
+character definitions (specified with the @code{char} and similar
+requests) nor translations (specified with the @code{tr} request) are
+considered when assigning the soft hyphen character.
 @endDefreq
 
 @cindex hyphenation, automatic
@@ -7230,9 +7230,9 @@ mandates.  The hyphenation modes of @acronym{AT&T} @code{troff} were
 implemented with English-language publishing practices of the 1970s in
 mind, not a scrupulous enumeration of conceivable parameters.  GNU
 @code{troff} extends those modes such that finer-grained control is
-possible, retaining compatibility with older implementations at the
-expense of a more intuitive arrangement.  The means of hyphenation mode
-control is a set of numbers that can be added up to encode the behavior
+possible, favoring compatibility with older implementations over a more
+intuitive arrangement.  The means of hyphenation mode control is a set
+of numbers that can be added up to encode the behavior
 sought.@footnote{The mode is a vector of booleans encoded as an integer.
 To a programmer, this fact is easily deduced from the exclusive use of
 powers of two for the configuration parameters; they are computationally
@@ -7289,7 +7289,7 @@ value@tie{}12 causes GNU @code{troff} to hyphenate neither the last two
 nor the first two characters of a word.  Some values cannot be used
 together because they contradict; for instance, values 4 and@tie{}16,
 and values 8 and@tie{}32.  As noted, it is superfluous to add 1 to any
-other positive value.
+nonzero even mode.
 
 @cindex hyphenation pattern files
 @cindex pattern files, for hyphenation
@@ -14830,9 +14830,9 @@ This is a debugging aid for documents that are split into many files,
 then put together with @code{soelim} and other preprocessors.  Usually,
 it isn't invoked manually.
 
-Other @code{troff} implementations (including the original
-@acronym{AT&T} version) handle @code{lf} differently.  For them,
-@var{line} changes the line number of the @emph{current} line.
+@acronym{AT&T} @code{troff} and other implementations handle @code{lf}
+differently.  For them, @var{line} changes the line number of the
+@emph{current} line.
 @endDefreq
 
 @DefreqList {tm, string}
@@ -16676,8 +16676,8 @@ current page.
 
 @item h @var{n}
 Move @var{n} (a non-negative integer) basic units @samp{u} horizontally
-to the right.  The original Unix troff manual allows negative
-values for @var{n} also, but @code{gtroff} doesn't use this.
+to the right.  The @acronym{AT&T} @code{troff} manual allows negative
+values for @var{n} also, but GNU @code{troff} doesn't use them.
 
 @item m @var{color-scheme} @r{[}@var{component} @dots{}@r{]}
 Set the color for text (glyphs), line drawing, and the outline of
@@ -16724,12 +16724,12 @@ performing any action.  In @code{groff}, they are just ignored, but they
 must be provided for compatibility reasons.
 
 @item p @var{n}
-Begin a new page in the outprint.  The page number is set
-to@tie{}@var{n}.  This page is completely independent of pages formerly
-processed even if those have the same page number.  The vertical
-position on the outprint is automatically set to@tie{}0.  All
-positioning, writing, and drawing is always done relative to a page, so
-a @samp{p} command must be issued before any of these commands.
+Begin a new page in the output.  The page number is set to@tie{}@var{n}.
+This page is completely independent of pages formerly processed even if
+those have the same page number.  The vertical position on the output is
+automatically set to@tie{}0.  All positioning, writing, and drawing is
+always done relative to a page, so a @samp{p} command must be issued
+before any of these commands.
 
 @item s @var{n}
 Set point size to @var{n}@tie{}scaled points (this is unit @samp{z}).
@@ -16766,8 +16766,8 @@ integer in basic units @samp{u}) relative to upper edge of current page.
 
 @item v @var{n}
 Move @var{n}@tie{}basic units @samp{u} down (@var{n} is a non-negative
-integer).  The original Unix troff manual allows negative values for
-@var{n} also, but @code{gtroff} doesn't use this.
+integer).  The @acronym{AT&T} @code{troff} manual allows negative values
+for @var{n} also, but GNU @code{troff} doesn't use them.
 
 @item w
 Describe an adjustable space. This performs no action; it is present for
@@ -17009,11 +17009,14 @@ Initialize device.  This is the third command of the prologue.
 @item xp@angles{line break}
 The @samp{p} stands for @var{pause}.
 
-Parsed but ignored.  The original Unix troff manual writes
+Parsed but ignored.  The @acronym{AT&T} @code{troff} manual documents
+this command as
 
 @display
 pause device, can be restarted
 @end display
+
+but GNU @code{troff} output drivers do nothing with this command.
 
 @item xr @var{n} @var{h} @var{v}@angles{line break}
 The @samp{r} stands for @var{resolution}.
