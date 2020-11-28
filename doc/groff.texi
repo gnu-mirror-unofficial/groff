@@ -735,8 +735,8 @@ included:
 
 @itemize @bullet
 @item
-A replacement for AT&T device-independent @code{troff} with many
-extensions.
+A replacement for @acronym{AT&T} device-independent @code{troff} with
+many extensions.
 
 @item
 The @code{soelim}, @code{pic}, @code{tbl}, and @code{eqn} preprocessors.
@@ -4326,17 +4326,18 @@ not interested in details.
 @section Text
 @cindex text, GNU @code{troff} processing
 
-AT&T @code{troff} was designed to take input as it would be composed on
-a typewriter, including the teletypewriters used as early computer
-terminals, and relieve the user of having to be concerned with the
-precise line length that the final version of the document would use,
-where words should be hyphenated, and how to achieve straight margins on
-both the left and right sides of the page.  Early in its development,
-the program gained the ability to prepare output for a phototypesetter;
-a document could then be prepared for output to either a teletypewriter,
-a phototypesetter, or both.  GNU @code{troff} continues this tradition
-of permitting an author to compose a single master version of a document
-which can then be rendered for a variety of output formats or devices.
+@acronym{AT&T} @code{troff} was designed to take input as it would be
+composed on a typewriter, including the teletypewriters used as early
+computer terminals, and relieve the user of having to be concerned with
+the precise line length that the final version of the document would
+use, where words should be hyphenated, and how to achieve straight
+margins on both the left and right sides of the page.  Early in its
+development, the program gained the ability to prepare output for a
+phototypesetter; a document could then be prepared for output to either
+a teletypewriter, a phototypesetter, or both.  GNU @code{troff}
+continues this tradition of permitting an author to compose a single
+master version of a document which can then be rendered for a variety of
+output formats or devices.
 
 GNU @code{troff} input files contain text with directives to control the
 typesetter interspersed throughout.  Even in the absence of such
@@ -4400,9 +4401,9 @@ what other circumstances should influence this spacing.@footnote{A
 well-researched jeremiad appreciated by @code{groff} contributors on
 both sides of the sentence-spacing debate can be found at
 @uref{https://web.archive.org@//web@//20171217060354@//http://www.heracliteanriver.com@//?p=324}.}
-GNU @code{troff} follows the example of AT&T @code{troff}, attempting
-to detect the boundaries between sentences, and supplying additional
-inter-sentence space.
+GNU @code{troff} follows the example of @acronym{AT&T} @code{troff},
+attempting to detect the boundaries between sentences, and supplying
+additional inter-sentence space.
 
 @Example
 Hello, world!
@@ -11142,7 +11143,7 @@ test
 @endExample
 
 Usually, it is not predictable whether a diversion contains one or more
-output lines, so this mechanism should be avoided.  With AT&T
+output lines, so this mechanism should be avoided.  With @acronym{AT&T}
 @code{troff}, this was the only solution to strip off a final newline
 from a diversion.  Another disadvantage is that the spaces in the copied
 string are already formatted, making them unstretchable.  This can cause
@@ -11466,8 +11467,8 @@ True if the document is being processed in @code{troff} mode (i.e., the
 Always false.  This condition is recognized only for compatibility with
 certain other @code{troff} implementations.@footnote{This refers to
 @code{vtroff}, a translator that would convert the C/A/T output from
-early-vintage AT&T @code{troff} to a form suitable for Versatec and
-Benson-Varian plotters.}
+early-vintage @acronym{AT&T} @code{troff} to a form suitable for
+Versatec and Benson-Varian plotters.}
 
 @item @code{'}@var{xxx}@code{'}@var{yyy}@code{'}
 True if the output produced by @var{xxx} is equal to the output produced
@@ -11539,7 +11540,7 @@ exclamation mark and the operator) can be used to negate the result.
 
 Spaces and tabs immediately after @samp{!} cause the condition to
 evaluate as zero (this bizarre behavior maintains compatibility with
-AT&T @code{troff}).
+@acronym{AT&T} @code{troff}).
 
 @Example
 .nr x 1
@@ -11661,8 +11662,8 @@ U
 @endExample
 
 If the above behavior challenges the intuition, keep in mind that it was
-implemented to retain compatibility with AT&T @code{troff}.  For
-clarity, it is common practice to end input lines with @code{\@{},
+implemented to retain compatibility with @acronym{AT&T} @code{troff}.
+For clarity, it is common practice to end input lines with @code{\@{},
 optionally followed by @code{\@key{RET}} to suppress a break before
 subsequent text lines, and to have nothing more than a control
 character, spaces, and tabs before any lines containing @code{\@}}.
@@ -16454,10 +16455,10 @@ directly.
 Here, the term @dfn{troff output} describes what is output by
 GNU @code{troff}, while @dfn{intermediate output} refers to the language
 that is accepted by the parser that prepares this output for the output
-drivers.  This parser handles whitespace more flexibly than AT&T's
-implementation and implements obsolete elements for compatibility;
-otherwise, both formats are the same.@footnote{The parser and
-postprocessor for intermediate output can be found in the file@*
+drivers.  This parser handles whitespace more flexibly than
+@acronym{AT&T}'s implementation and implements obsolete elements for
+compatibility; otherwise, both formats are the same.@footnote{The parser
+and postprocessor for intermediate output can be found in the file@*
 @file{@var{groff-source-dir}/src/libs/libdriver/input.cpp}.}
 
 The main purpose of the intermediate output concept is to facilitate the
@@ -17320,14 +17321,14 @@ follow quite naturally.
 @cindex font files
 @cindex files, font
 
-The GNU @code{troff} font format is a rough superset of the AT&T
-device-independent @code{troff} font format.  In distinction to the AT&T
-implementation, GNU @code{troff} lacks a binary format; all files are
-text files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the
-binary format.}  The font files for device @var{name} are stored in a
-directory @file{dev@var{name}}.  There are two types of file: a device
-description file called @file{DESC} and for each font@tie{}@var{f} a
-font file called@tie{}@file{@var{f}}.
+The GNU @code{troff} font format is a rough superset of the
+@acronym{AT&T} device-independent @code{troff} font format.  In
+distinction to the @acronym{AT&T} implementation, GNU @code{troff} lacks
+a binary format; all files are text files.@footnote{Plan@tie{}9
+@code{troff} has also abandoned the binary format.}  The font files for
+device @var{name} are stored in a directory @file{dev@var{name}}.  There
+are two types of file: a device description file called @file{DESC} and
+for each font@tie{}@var{f} a font file called@tie{}@file{@var{f}}.
 
 @menu
 * DESC File Format::
@@ -17677,7 +17678,7 @@ There must not be any spaces between these subfields (it has been split
 here into two lines for better legibility only).  Missing subfields are
 assumed to be@tie{}0.  The subfields are all decimal integers.  Since
 there is no associated binary format, these values are not required to
-fit into a variable of type @samp{char} as they are in AT&T
+fit into a variable of type @samp{char} as they are in @acronym{AT&T}
 device-independent @code{troff}.  The @var{width} subfield gives the
 width of the glyph.  The @var{height} subfield gives the height of the
 glyph (upwards is positive); if a glyph does not extend above the
