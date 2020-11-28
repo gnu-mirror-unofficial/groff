@@ -8575,9 +8575,11 @@ the current value by @var{offset}).  This request does not cause a
 break, so changing the page offset in the middle of text being filled
 may not yield the expected result.  The initial value is 1@dmn{i}.
 For terminal output devices, it is set to 0 in the startup file
-@file{troffrc}; the default scaling indicator is @samp{m} (and not
-@samp{v} as incorrectly documented in the @acronym{AT&T} @code{troff}
-manual).
+@file{troffrc}; the default scaling indicator is @samp{m}.
+@cindex CSTR@tie{}#54 errata
+@cindex CSTR@tie{}#54 erratum, @code{.po} request
+This request is incorrectly documented in the @acronym{AT&T}
+@code{troff} manual as using a default scaling indicator of @samp{v}.
 
 The current page offset can be found in the read-only register
 @samp{.o}.
@@ -8963,6 +8965,10 @@ decrease) the page number of the next page (which becomes the current
 page after @code{bp} has finished).  The difference between @code{bp}
 and @code{pn} is that @code{pn} does not cause a break or actually
 eject a page.  @xref{Page Layout}.
+@c @cindex CSTR@tie{}#54 errata
+@c @cindex CSTR@tie{}#54 erratum, @code{\S} escape
+@c This request is incorrectly documented in the @acronym{AT&T}
+@c @code{troff} manual as taking a scaling indicator, but it does not.
 
 @Example
 .de newpage                         \" define macro
@@ -10241,8 +10247,10 @@ a single character as an argument) to change the font on the fly:
 .mc \S'20'x\S'0'
 @endExample
 
-This request is incorrectly documented in the original Unix troff
-manual; the slant is always set to an absolute value.
+@cindex CSTR@tie{}#54 errata
+@cindex CSTR@tie{}#54 erratum, @code{\S} escape
+This escape is incorrectly documented in the @acronym{AT&T}
+@code{troff} manual; the slant is always set to an absolute value.
 @endDefesc
 
 @Defreq {ul, [@Var{lines}]}
