@@ -1639,11 +1639,11 @@ groff -t -mandoc -Tascii file | less
 @endExample
 
 @noindent
-This is basically what a call to the @code{man} program does.
-@code{gtroff} processes the man page @file{file} with the @file{mandoc}
-macro file (which in turn either calls the @file{man} or the @file{mdoc}
-macro package), using the @code{tbl} preprocessor and the
-@acronym{ASCII} output device.  Finally, the @code{less} pager displays
+This is basically what a call to the @code{man} program does.  GNU
+@code{troff} processes the man page @file{file} with the @file{mandoc}
+macro file (which in turn loads either the @file{man} or the @file{mdoc}
+macro package), using the @command{tbl} preprocessor and the
+@code{ascii} output device.  Finally, the @command{less} pager displays
 the result.
 
 @Example
