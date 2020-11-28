@@ -12126,7 +12126,7 @@ If a macro is called as a string (within another macro), the value of
 .de foo
 .  tm \\$0
 ..
-.als foo bar
+.als bar foo
 .
 @endExample
 @Example
@@ -12146,13 +12146,13 @@ If a macro is called as a string (within another macro), the value of
 @endExample
 @Example
 .aaa
-    @result{} foo
+    @error{} foo
 .bbb
-    @result{} bar
+    @error{} bar
 .ccc
-    @result{} ccc
+    @error{} ccc
 .ddd
-    @result{} ddd
+    @error{} ddd
 @endExample
 @endDefesc
 
