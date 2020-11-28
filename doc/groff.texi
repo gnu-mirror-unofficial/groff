@@ -14820,19 +14820,16 @@ standard error stream.
 @cindex setting input line number (@code{lf})
 @cindex input line number, setting (@code{lf})
 @cindex number, input line, setting (@code{lf})
-Change the line number and optionally the file name @code{gtroff} shall
-use for error and warning messages.  @var{line} is the input line number
-of the @emph{next} line.
+Change the line number and optionally the file name GNU @code{troff}
+shall use for error and warning messages.  @var{line} is the input line
+number of the @emph{next} line.  Without an argument, the request is
+ignored.
 
-Without argument, the request is ignored.
-
-This is a debugging aid for documents that are split into many files,
-then put together with @code{soelim} and other preprocessors.  Usually,
-it isn't invoked manually.
-
-@acronym{AT&T} @code{troff} and other implementations handle @code{lf}
-differently.  For them, @var{line} changes the line number of the
-@emph{current} line.
+This request is primarily a debugging aid for documents that undergo
+preprocessing.  Programs like @command{tbl} that transform input in
+their own languages to @code{roff} requests use it so that any
+diagnostic messages emitted by @code{troff} correspond to the original
+source document.
 @endDefreq
 
 @DefreqList {tm, string}
@@ -15321,8 +15318,12 @@ at the beginning of your file, followed by
 at the end.  As in the C language, we all have to share one big
 name space, so choose a register name that is unlikely to collide with
 other uses.
-
 @endDefreq
+
+@cindex @code{lf} request, incompatibilities with @acronym{AT&T} @code{troff}
+@acronym{AT&T} @code{troff} and other implementations handle the
+@code{lf} request differently.  For them, its @var{line} argument
+changes the line number of the @emph{current} line.
 
 @cindex input level in delimited arguments
 @cindex delimited arguments, incompatibilities with @acronym{AT&T} @code{troff}
