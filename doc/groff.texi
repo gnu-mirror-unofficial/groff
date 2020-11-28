@@ -1137,7 +1137,7 @@ Preprocess with @code{gchem}.  Implies @option{-p}.
 
 @item -k
 Preprocess with @code{preconv}.  This is run before any other
-preprocessor.  Please refer to @code{preconv}'s manual page for its
+preprocessor.  Please refer to @code{preconv}'s man page for its
 behaviour if no @option{-K} (or @option{-D}) option is specified.
 
 @item -K@var{arg}
@@ -1406,8 +1406,8 @@ implies @code{groff}'s command-line option @option{-k} (that is,
 @code{groff} always calls @code{preconv}).  If set without a value,
 @code{groff} calls @code{preconv} without arguments.  An explicit
 @option{-K} command-line option overrides the value of
-@env{GROFF_ENCODING}.  See the @cite{preconv(7)} manual page; type
-@command{man preconv} at the command line to view it.
+@env{GROFF_ENCODING}.  See the @cite{preconv@r{(7)}} man page; type
+@samp{man preconv} at the command line to view it.
 
 @item GROFF_FONT_PATH
 @tindex GROFF_FONT_PATH@r{, environment variable}
@@ -1640,11 +1640,11 @@ groff -t -mandoc -Tascii file | less
 
 @noindent
 This is basically what a call to the @code{man} program does.
-@code{gtroff} processes the manual page @file{file} with the
-@file{mandoc} macro file (which in turn either calls the @file{man} or
-the @file{mdoc} macro package), using the @code{tbl} preprocessor and
-the @acronym{ASCII} output device.  Finally, the @code{less} pager
-displays the result.
+@code{gtroff} processes the man page @file{file} with the @file{mandoc}
+macro file (which in turn either calls the @file{man} or the @file{mdoc}
+macro package), using the @code{tbl} preprocessor and the
+@acronym{ASCII} output device.  Finally, the @code{less} pager displays
+the result.
 
 @Example
 groff -X -m me file
@@ -2210,8 +2210,9 @@ The @code{man} macro package is the most widely-used and probably the
 most important ever developed for @code{troff}.  It is easy to use, and
 a vast majority of manual pages (``man pages'') are written in it.
 
-@code{groff}'s implementation is documented in the @cite{groff_man(7)}
-man page.  Type @command{man groff_man} at the command line to view it.
+@code{groff}'s implementation is documented in the
+@cite{groff_man@r{(7)}} man page.  Type @samp{man groff_man} at the
+command line to view it.
 
 @menu
 * Optional man extensions::
@@ -2376,8 +2377,8 @@ are printed in Helvetica bold.
 @cindex @code{mdoc} macros
 
 @code{groff}'s implementation of the BSD @file{doc} package for man
-pages is documented in the @cite{groff_mdoc(7)} man page.  Type
-@command{man groff_mdoc} at the command line to view it.
+pages is documented in the @cite{groff_mdoc@r{(7)}} man page.  Type
+@samp{man groff_mdoc} at the command line to view it.
 
 
 @c =====================================================================
@@ -2389,8 +2390,8 @@ pages is documented in the @cite{groff_mdoc(7)} man page.  Type
 @code{groff}'s implementation of the BSD @file{me} macro package is
 documented using itself.  A tutorial, @file{meintro.me}, and reference,
 @file{meref.me}, are available in @code{groff}'s documentation
-directory.  A @cite{groff_me(7)} man page is also available and
-identifies the installation path for these documents.  Type @command{man
+directory.  A @cite{groff_me@r{(7)}} man page is also available and
+identifies the installation path for these documents.  Type @samp{man
 groff_me} at the command line to view it.
 
 A French translation of the tutorial is available as
@@ -2404,11 +2405,11 @@ A French translation of the tutorial is available as
 @cindex @code{mm} macro package
 
 @code{groff}'s implementation of the @acronym{AT&T} memorandum macro
-package is documented in the @cite{groff_mm(7)} man page.  Type
-@command{man groff_mm} at the command line) to view it.
+package is documented in the @cite{groff_mm@r{(7)}} man page.  Type
+@samp{man groff_mm} at the command line) to view it.
 
 A Swedish localization of @file{mm} is also available; see
-@cite{groff_mmse(7)}.
+@cite{groff_mmse@r{(7)}}.
 
 
 @c =====================================================================
@@ -2419,7 +2420,7 @@ A Swedish localization of @file{mm} is also available; see
 
 The main documentation files for the @file{mom} macros are in
 @acronym{HTML} format.  Additional, useful documentation is in
-@acronym{PDF} format.  See the @cite{groff(1)} man page, section
+@acronym{PDF} format.  See the @cite{groff@r{(1)}} man page, section
 ``Installation Directories'', for their location.
 
 @itemize @bullet
@@ -2444,9 +2445,10 @@ The mom macros are in active development between groff releases.
 The most recent version, along with up-to-date documentation, is
 available at @uref{http://www.schaffter.ca/mom/mom-05.html}.
 
-The @cite{groff_mom(7)} man page (type @command{man groff_mom} at the
-command line) contains a partial list of available macros, however their
-usage is best understood by consulting the @acronym{HTML} documentation.
+The @cite{groff_mom@r{(7)}} man page (type @samp{man groff_mom} at
+the command line) contains a partial list of available macros, however
+their usage is best understood by consulting the @acronym{HTML}
+documentation.
 
 
 @c =====================================================================
@@ -3609,8 +3611,9 @@ equation.
 @DefmacList {[, , ms}
 @DefmacListEndx {], , ms}
 Denotes a reference, to be processed by the @code{refer} preprocessor.
-The GNU @cite{refer(1)} man page provides a comprehensive reference to
-the preprocessor and the format of the bibliographic database.
+The GNU @cite{refer@r{(1)}} man page provides a comprehensive reference
+to the preprocessor and the format of the bibliographic database.  Type
+@samp{man refer} at the command line to view it.
 @endDefmac
 
 @menu
@@ -4660,8 +4663,7 @@ The above example produces the following output.
 GNU @code{troff} provides sufficient facilities for sophisticated table
 composition; @ref{Tabs and Fields}.  There are many details to track
 when using such low-level features, so most users turn to the
-@cite{tbl@r{(1)}} preprocessor (type @command{man tbl} at the command
-line) for table construction.
+@cite{tbl@r{(1)}} preprocessor for table construction.
 
 @c ---------------------------------------------------------------------
 
@@ -4870,7 +4872,7 @@ character set is also a valid ISO @w{Latin-1} document; the standards
 are interchangeable in their first 128 code points.@footnote{The
 @emph{semantics} of certain punctuation code points have gotten stricter
 with the successive standards, a cause of some frustration among man
-page writers; see the @cite{groff_char(7)} man page.}
+page writers; see the @cite{groff_char@r{(7)}} man page.}
 
 The remaining encodings require support that is not built-in to the GNU
 @code{troff} executable; instead, they use macro packages.
@@ -7328,9 +7330,8 @@ mode@tie{}1 (the default!).  Modes@tie{}4 and@tie{}6 are typical.
 
 A table of left and right minimum character counts for hyphenation as
 needed by the patterns distributed with GNU @code{troff} follows; see
-the @cite{groff_tmac(5)} man page (type @command{man groff_tmac} at the
-command line) for more information on GNU @code{troff}'s language macro
-files.
+the @cite{groff_tmac@r{(5)}} man page for more information on GNU
+@code{troff}'s language macro files.
 
 @multitable {German traditional}    {pattern name}    {left min}    {right min}
 @headitem    language           @tab pattern name @tab left min @tab right min
@@ -9603,11 +9604,11 @@ increasing font positions.  Consequently, it finds @code{BAZ} before
 
 @xref{Device and Font Files}, and @ref{Special Fonts}, for more details.
 
-@cindex list of available glyphs (@cite{groff_char(7)} man page)
-@cindex available glyphs, list (@cite{groff_char(7)} man page)
-@cindex glyphs, available, list (@cite{groff_char(7)} man page)
+@cindex list of available glyphs (@cite{groff_char@r{(7)}} man page)
+@cindex available glyphs, list (@cite{groff_char@r{(7)}} man page)
+@cindex glyphs, available, list (@cite{groff_char@r{(7)}} man page)
 The list of available symbols is device dependent; see the
-@cite{groff_char(7)} man page for a complete list of all glyphs.  For
+@cite{groff_char@r{(7)}} man page for a complete list of all glyphs.  For
 example, say
 
 @Example
@@ -11279,9 +11280,9 @@ index@tie{}@minus{}2, and so on.
 Alter the string named @var{str} by replacing each of its bytes with
 its lowercase (@code{stringdown}) or uppercase (@code{stringup}) version
 (if one exists).  GNU @code{troff} special characters (see the
-@cite{groff_char(7)} man page) can be used and the output will usually
-transform in the expected way due to the regular naming convention of
-the special character escapes.
+@cite{groff_char@r{(7)}} man page) can be used and the output will
+usually transform in the expected way due to the regular naming
+convention of the special character escapes.
 
 @Example
 .ds resume R\['e]sum\['e]
@@ -15765,7 +15766,7 @@ is available as an extra package from the following address:
 
 The postprocessor @code{grotty} translates the output from GNU
 @code{troff} into a form suitable for typewriter-like devices.  It is
-fully documented on its manual page, @cite{grotty(1)}.
+fully documented on its man page, @cite{grotty@r{(1)}}.
 
 @menu
 * Invoking grotty::
@@ -15846,8 +15847,8 @@ an italic character @var{c} with the sequence @samp{_ BACKSPACE
 @var{c}}.  Furthermore, color output is disabled.  The same effect can
 be achieved either by setting the @env{GROFF_NO_SGR} environment
 variable or by using a @code{groff} escape sequence within the document;
-see the subsection ``Device control commands'' of the @cite{grotty(1)}
-man page for details.
+see the subsection ``Device control commands'' of the
+@cite{grotty@r{(1)}} man page for details.
 
 The legacy output format can be rendered on a video terminal (or
 emulator) by piping @code{grotty}'s output through @code{ul},
@@ -15874,7 +15875,7 @@ is therefore no need to filter its output through @code{col}.
 
 The postprocessor @command{grops} translates the output from GNU
 @command{troff} into a form suitable for Adobe @sc{PostScript}
-devices.  It is fully documented on its manual page, @cite{grops(1)}.
+devices.  It is fully documented on its man page, @cite{grops@r{(1)}}.
 
 
 @menu
@@ -15895,8 +15896,8 @@ options:
 @table @option
 @item -b@var{flags}
 Use backward compatibility settings given by @var{flags} as
-documented in the @cite{grops(1)} manual page.  Overrides the command
-@option{broken} in the @file{DESC} file.
+documented in the @cite{grops@r{(1)}} man page.  Overrides the
+command @option{broken} in the @file{DESC} file.
 
 @item -c@var{n}
 Print @var{n} copies of each page.
@@ -15925,7 +15926,7 @@ Use manual feed.
 @item -p@var{papersize}
 Set the page dimensions.  Overrides the commands @option{papersize},
 @option{paperlength}, and @option{paperwidth} in the @file{DESC}
-file.  See the @cite{groff_font(5)} manual page for details.
+file.  See the @cite{groff_font@r{(5)}} man page for details.
 
 @item -P@var{prologue}
 Use the @var{prologue} in the font path as the prologue instead of
@@ -15963,7 +15964,7 @@ specified, the embedded drawing is scaled proportionally.
 generates the bounding box.
 
 This escape sequence is used internally by the macro @code{PSPIC}
-(see the @cite{groff_tmac(5)} manual page).
+(see the @cite{groff_tmac@r{(5)}} man page).
 
 
 @c =====================================================================
@@ -15974,7 +15975,7 @@ This escape sequence is used internally by the macro @code{PSPIC}
 
 The postprocessor @command{gropdf} translates the output from GNU
 @command{troff} into a form suitable for Adobe @acronym{PDF} devices.
-It is fully documented on its manual page, @cite{gropdf(1)}.
+It is fully documented on its man page, @cite{gropdf@r{(1)}}.
 
 @menu
 * Invoking gropdf::
@@ -16013,15 +16014,15 @@ Use landscape orientation.
 @item -p@var{papersize}
 Set the page dimensions.  Overrides the commands @option{papersize},
 @option{paperlength}, and @option{paperwidth} in the @file{DESC}
-file.  See the @cite{groff_font(5)} manual page for details.
+file.  See the @cite{groff_font@r{(5)}} man page for details.
 
 @item -v
 Print the version number.
 
 @item -s
 Append a comment line to end of @acronym{PDF} showing statistics, i.e.
-number of pages in document.  Ghostscript's @cite{ps2pdf(1)} complains
-about this line if it is included, but works anyway.
+number of pages in document.  Ghostscript's @cite{ps2pdf@r{(1)}}
+complains about this line if it is included, but works anyway.
 
 @item -u@var{filename}
 @code{gropdf} normally includes a ToUnicode CMap with any font created
@@ -16068,7 +16069,7 @@ The postprocessor @command{grodvi} translates the output from GNU
 preparation system.  This enables the use of programs that process the
 DVI format, like @command{dvips} and @command{dvipdf}, with GNU
 @code{troff} output.   @command{grodvi} is fully documented in its
-manual page, @cite{grodvi(1)}.
+man page, @cite{grodvi@r{(1)}}.
 
 @menu
 * Invoking grodvi::
@@ -16099,7 +16100,7 @@ Use landscape orientation.
 @item -p@var{papersize}
 Set the page dimensions.  Overrides the commands @option{papersize},
 @option{paperlength}, and @option{paperwidth} in the @file{DESC}
-file.  See @cite{groff_font(5)} manual page for details.
+file.  See the @cite{groff_font@r{(5)}} man page for details.
 
 @item -v
 Print the version number.
@@ -16119,7 +16120,7 @@ default value @var{n} = 40.
 The postprocessor @command{grolj4} translates the output from GNU
 @command{troff} into the @strong{PCL5} output format suitable for
 printing on a @strong{HP LaserJet@tie{}4} printer.  It is fully
-documented on its manual page, @cite{grolj4(1)}.
+documented on its man page, @cite{grolj4@r{(1)}}.
 
 @menu
 * Invoking grolj4::
@@ -16174,7 +16175,7 @@ offset (@var{dh},@var{dv}).
 The postprocessor @command{grolbp} translates the output from GNU
 @command{troff} into the @strong{LBP} output format suitable for
 printing on @strong{Canon CAPSL} printers.  It is fully documented on
-its manual page, @cite{grolbp(1)}.
+its man page, @cite{grolbp@r{(1)}}.
 
 @menu
 * Invoking grolbp::
@@ -16207,7 +16208,7 @@ Use the @var{orientation} specified: @code{portrait} or
 @code{landscape}.
 
 @item -p@var{papersize}
-Set the page dimensions.  See @cite{groff_font(5)} manual page for
+Set the page dimensions.  See @cite{groff_font@r{(5)}} man page for
 details.
 
 @item -w@var{n}
@@ -16251,8 +16252,8 @@ safely ignored unless the special characters appear inside a table or
 equation, in which case glyphs for these characters must be defined for
 the @code{ps} device as well.
 
-This output device is fully documented on its manual page,
-@cite{grohtml(1)}.
+This output device is fully documented on its man page,
+@cite{grohtml@r{(1)}}.
 
 @menu
 * Invoking grohtml::
