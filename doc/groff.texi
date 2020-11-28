@@ -536,7 +536,7 @@ developing GNU and promoting software freedom.''
 * Introduction::
 * Invoking groff::
 * Tutorial for Macro Users::
-* Macro Packages::
+* Major Macro Packages::
 * gtroff Reference::
 * Preprocessors::
 * Output Devices::
@@ -849,7 +849,8 @@ output and error messages
 
 @node Macro Package Intro, Preprocessor Intro, groff Capabilities, Introduction
 @section Macro Packages
-@cindex macro packages
+@cindex macro package, introduction
+@cindex package, macro, introduction
 
 Since @code{groff} provides such low-level facilities, it can be quite
 difficult to use by itself.  However, @code{groff} provides a
@@ -1464,9 +1465,12 @@ the @samp{tmac} string.
 @cindex directory, for tmac files
 @cindex tmac, path
 @cindex path, for tmac files
-@cindex searching macro files
-@cindex macro files, searching
-@cindex files, macro, searching
+@cindex locating macro files
+@cindex macro file search path
+@cindex file, macro, search path
+@cindex locating macro packages
+@cindex macro package search path
+@cindex package, macro, search path
 Macro files are kept in the @dfn{tmac directories}, all of which
 constitute the @dfn{tmac path}.  The elements of the search path for
 macro files are (in that order):
@@ -1655,7 +1659,7 @@ Preview @file{file} with @code{gxditview}, using the @file{me} macro
 package.  Since no @option{-T} option is specified, use the default
 device (@samp{ps}).  You can say either @w{@samp{-m me}} or
 @w{@samp{-me}}; the latter is an anachronism from the early days of
-Unix.@footnote{The same is true for the other main macro packages that
+Unix.@footnote{The same is true for the other major macro packages that
 come with @code{groff}: @file{man}, @file{mdoc}, @file{ms}, @file{mm},
 and @file{mandoc}.  This won't work in general; for example, to load
 @file{trace.tmac}, either @samp{-mtrace} or @w{@samp{-m trace}} must be
@@ -1721,7 +1725,7 @@ something meaningful (i.e.@: either a file or a pager program like
 @c =====================================================================
 @c =====================================================================
 
-@node Tutorial for Macro Users, Macro Packages, Invoking groff, Top
+@node Tutorial for Macro Users, Major Macro Packages, Invoking groff, Top
 @chapter Tutorial for Macro Users
 @cindex tutorial for macro users
 @cindex macros, tutorial for users
@@ -2163,16 +2167,19 @@ to changing the appearance of section headers.
 @c =====================================================================
 @c =====================================================================
 
-@node Macro Packages, gtroff Reference, Tutorial for Macro Users, Top
+@node Major Macro Packages, gtroff Reference, Tutorial for Macro Users, Top
 @chapter Macro Packages
-@cindex macro packages
-@cindex packages, macros
+@cindex major macro package
+@cindex package, macro, major
+@cindex macro package, major
+@cindex full-service macro package
+@cindex package, macro, full-service
+@cindex macro package, full-service
 
-This chapter documents the main macro packages that come with
-@code{groff}.
-
-Different main macro packages can't be used at the same time; for
-example
+This chapter documents the major macro packages that come with
+@code{groff}.  Such packages are also sometimes described as
+@dfn{full-service} due to the breadth of features they provide and
+because more than one cannot be used by the same document; for example
 
 @Example
 groff -m man foo.man -m ms bar.doc
@@ -2198,7 +2205,7 @@ groff -m man -m ms foo.man bar.doc
 
 @c =====================================================================
 
-@node man, mdoc, Macro Packages, Macro Packages
+@node man, mdoc, Major Macro Packages, Major Macro Packages
 @section @file{man}
 @cindex manual pages
 @cindex man pages
@@ -2372,7 +2379,7 @@ are printed in Helvetica bold.
 
 @c =====================================================================
 
-@node mdoc, me, man, Macro Packages
+@node mdoc, me, man, Major Macro Packages
 @section @file{mdoc}
 @cindex @code{mdoc} macros
 
@@ -2383,7 +2390,7 @@ pages is documented in the @cite{groff_mdoc@r{(7)}} man page.  Type
 
 @c =====================================================================
 
-@node me, mm, mdoc, Macro Packages
+@node me, mm, mdoc, Major Macro Packages
 @section @file{me}
 @cindex @code{me} macro package
 
@@ -2400,7 +2407,7 @@ A French translation of the tutorial is available as
 
 @c =====================================================================
 
-@node mm, mom, me, Macro Packages
+@node mm, mom, me, Major Macro Packages
 @section @file{mm}
 @cindex @code{mm} macro package
 
@@ -2414,7 +2421,7 @@ A Swedish localization of @file{mm} is also available; see
 
 @c =====================================================================
 
-@node mom, ms, mm, Macro Packages
+@node mom, ms, mm, Major Macro Packages
 @section @file{mom}
 @cindex @code{mom} macro package
 
@@ -2456,7 +2463,7 @@ documentation.
 @codequotebacktick on
 @codequoteundirected on
 
-@node ms,  , mom, Macro Packages
+@node ms,  , mom, Major Macro Packages
 @section @file{ms}
 @cindex @code{ms} macros
 
@@ -4272,7 +4279,7 @@ Names containing only uppercase letters and digits.
 @c =====================================================================
 @c =====================================================================
 
-@node gtroff Reference, Preprocessors, Macro Packages, Top
+@node gtroff Reference, Preprocessors, Major Macro Packages, Top
 @chapter @code{gtroff} Reference
 @cindex reference, @code{gtroff}
 @cindex @code{gtroff}, reference
@@ -4355,6 +4362,7 @@ by filling, hyphenating, breaking, and adjusting it.
 * Adjustment::
 * Tab Stops::
 * Requests and Macros::
+* Macro Packages::
 * Input Encodings::
 * Input Conventions::
 @end menu
@@ -4667,7 +4675,7 @@ when using such low-level features, so most users turn to the
 
 @c ---------------------------------------------------------------------
 
-@node Requests and Macros, Input Encodings, Tab Stops, Text
+@node Requests and Macros, Macro Packages, Tab Stops, Text
 @subsection Requests and Macros
 
 We have now encountered almost all of the syntax there is in @code{roff}
@@ -4697,17 +4705,18 @@ handling in macros is more flexible but also more complex.
 @xref{Request and Macro Arguments}.}
 
 @cindex macro
+@cindex macro, defined
 @cindex interpolation
-A macro can be thought of as an abbreviation that is automatically
-replaced with what it stands for.  In @code{roff} systems, the process
-of replacing a macro is known as @dfn{interpolation}.@footnote{Some
-escape sequences undergo interpolation as well.}  Interpolations are
-handled as soon as they are recognized, and once performed, a
-@code{roff} formatter scans the replacement for further requests, macro
-calls, and escape sequences.
+A @dfn{macro} can be thought of as an abbreviation you can define that
+is replaced with what it stands for when it is called.  In @code{roff}
+systems, the process of replacing a macro call is known as
+@dfn{interpolation}.@footnote{Some escape sequences undergo
+interpolation as well.}  Interpolations are handled as soon as they are
+recognized, and once performed, a @code{roff} formatter scans the
+replacement for further requests, macro calls, and escape sequences.
 
 In @code{roff} systems, the @code{de} request defines a
-macro.@footnote{GNU @code{troff} offers several others.  @xref{Writing
+macro.@footnote{GNU @code{troff} offers additional ones.  @xref{Writing
 Macros}.}
 
 @Example
@@ -4749,16 +4758,6 @@ because its macro was @emph{called} first.  Consider what would happen
 if we dropped @code{END} from the @samp{.de START} line and added
 @code{..} after @code{.END}.  Would the order change?
 
-@cindex macro package
-@cindex package (macro)
-Macro definitions can be collected into @dfn{macro packages},
-@code{roff} input files designed to produce no output themselves but
-instead ease the preparation of other @code{roff} documents.  Macro
-packages can be loaded by supplying the @option{-m} option to
-@command{groff} or @command{troff}.  Alternatively, a @code{groff}
-document wishing to use a macro package can load it with the @code{mso}
-(``macro source'') request.
-
 @Example
 .de DATE
 2020-10-05
@@ -4793,8 +4792,8 @@ Insert tedious liability disclaimer paragraph here.
 @endExample
 
 @noindent
-The document started with a series of lines beginning with the control
-character.  Three macros were defined, with a @code{de} request
+The above document started with a series of lines beginning with the
+control character.  Three macros were defined, with a @code{de} request
 declaring the macro's name, and the ``body'' of the macro starting on
 the next line and continuing until a line with two dots @samp{@code{..}}
 marked its end.  The text proper began only after the macros were
@@ -4830,7 +4829,26 @@ that they are most easily understood when read from beginning to end.
 
 @c ---------------------------------------------------------------------
 
-@node Input Encodings, Input Conventions, Requests and Macros, Text
+@node Macro Packages, Input Encodings, Requests and Macros, Text
+@subsection Macro Packages
+@cindex macro package
+@cindex package, macro
+
+Macro definitions can be collected into @dfn{macro files}, @code{roff}
+input files designed to produce no output themselves but instead ease
+the preparation of other @code{roff} documents.  There is no syntactical
+difference between a macro file and any other roff document; only its
+purpose distinguishes it.  When a macro file it installed into a
+standard location and suitable for use by a general audience, it is
+often termed a @dfn{macro package}.@footnote{Macro packages frequently
+define registers and strings as well.}  Macro packages can be loaded by
+supplying the @option{-m} option to @command{groff} or @command{troff}.
+Alternatively, a @code{groff} document wishing to use a macro package
+can load it with the @code{mso} (``macro source'') request.
+
+@c ---------------------------------------------------------------------
+
+@node Input Encodings, Input Conventions, Macro Packages, Text
 @subsection Input Encodings
 
 The @command{groff} front end calls the @command{preconv} preprocessor
@@ -5569,13 +5587,12 @@ symbol, etc.
 
 @menu
 * Requests::
-* Macros::
 * Escapes::
 @end menu
 
 @c ---------------------------------------------------------------------
 
-@node Requests, Macros, Embedded Commands, Embedded Commands
+@node Requests, Escapes, Embedded Commands, Embedded Commands
 @subsection Requests
 @cindex requests
 
@@ -5593,8 +5610,9 @@ the request.  This may be followed by any number of space-separated
 arguments (@emph{no} tabs here).
 
 @cindex structuring source code of documents or macro packages
-@cindex documents, structuring the source code
-@cindex macro packages, structuring the source code
+@cindex documents, structuring the source of
+@cindex macro package, structuring the source of
+@cindex package, package, structuring the source of
 Since spaces and tabs are ignored after a control character, it is
 common practice to use them to structure the source of documents or
 macro files.
@@ -5791,19 +5809,7 @@ Double quotes in the @code{ds} request are handled differently.
 
 @c ---------------------------------------------------------------------
 
-@node Macros, Escapes, Requests, Embedded Commands
-@subsection Macros
-@cindex macros
-
-@code{gtroff} has a @dfn{macro} facility for defining a series of lines
-that can be invoked by name.  They are called in the same manner as
-requests---arguments also may be passed basically in the same manner.
-
-@xref{Writing Macros}, and @ref{Request and Macro Arguments}.
-
-@c ---------------------------------------------------------------------
-
-@node Escapes,  , Macros, Embedded Commands
+@node Escapes,  , Requests, Embedded Commands
 @subsection Escapes
 @cindex escapes
 
@@ -11333,9 +11339,9 @@ been defined.
 @cindex creating alias, for string (@code{als})
 @cindex creating alias, for macro (@code{als})
 @cindex creating alias, for diversion (@code{als})
-@cindex string, creating alias (@code{als})
-@cindex macro, creating alias (@code{als})
-@cindex diversion, creating alias (@code{als})
+@cindex string, creating alias for (@code{als})
+@cindex macro, creating alias for (@code{als})
+@cindex diversion, creating alias for (@code{als})
 Create an alias @var{new} for the existing request, string, macro, or
 diversion object named @var{old}, causing the names to refer to the same
 stored object.  If @var{old} is undefined, a warning of type @samp{mac}
@@ -11379,9 +11385,9 @@ an error.  @xref{Writing Macros}.
 @cindex removing alias, for string (@code{rm})
 @cindex removing alias, for macro (@code{rm})
 @cindex removing alias, for diversion (@code{rm})
-@cindex string, removing alias (@code{rm})
-@cindex macro, removing alias (@code{rm})
-@cindex diversion, removing alias (@code{rm})
+@cindex string, removing alias for (@code{rm})
+@cindex macro, removing alias for (@code{rm})
+@cindex diversion, removing alias for (@code{rm})
 To remove an alias, simply call @code{rm} on its name.  The object
 itself is not destroyed until it has no more names.
 @endDefreq
@@ -11944,7 +11950,7 @@ pitfalls if redefining a macro that has been aliased.
 @DefreqItemx {ami, name [@Var{end}]}
 @DefreqListEndx {ami1, name [@Var{end}]}
 @cindex appending to a macro (@code{am})
-@cindex macro, appending (@code{am})
+@cindex macro, appending to (@code{am})
 Works similarly to @code{de} except it appends onto the macro named
 @var{name}.  So, to make the previously defined @samp{P} macro set
 indented instead of block paragraphs, add the necessary code to the
