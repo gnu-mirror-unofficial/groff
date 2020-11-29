@@ -4470,15 +4470,15 @@ per-instance basis.  We can therefore rewrite our input more
 defensively.
 
 @Example
-I submit that R. Harper subscribes to a maxim of P.\& T.\&
-Barnum.
+I submit that R.\& Harper subscribes to a maxim of P.\&
+T.\& Barnum.
     @result{} I submit that R. Harper subscribes to a maxim of
     @result{} P. T. Barnum.
 @endExample
 
-Was the additional @code{\&} after @samp{P.} necessary?  No, but what if
-further editing and reflowing places @samp{P.} at the end of an input
-line?  Ensuring that sentence boundaries are robust to editing
+Adding text caused our input to wrap; now, we don't need the escape
+after @samp{T.} but we do after @samp{P.}.  Being consistent and
+ensuring that potential sentence boundaries are robust to editing
 activities and reliably understood both by GNU @code{troff} and the
 document author is a goal of the advice presented in @ref{Input
 Conventions}.
@@ -4510,7 +4510,10 @@ quotations and parentheticals.  The default set is @samp{"}, @samp{'},
 and @code{\[cq]}.  The last four are examples of @dfn{special
 characters}, escape sequences whose purpose is to obtain glyphs that are
 not easily typed at the keyboard, or which have special meaning to GNU
-@code{troff} (like @code{\} itself).
+@code{troff} (like @code{\} itself).@footnote{The mnemonics for the
+special characters shown here are ``dagger'', ``double dagger'', ``right
+(double) quote'', and ``closing (single) quote''.  See the
+@cite{groff_char@r{(7)}} man page.}
 
 @Example
 \[lq]The idea that the poor should have leisure has always
@@ -4544,8 +4547,8 @@ in @TeX{}) to decide which words can be hyphenated and where.
 
 Hyphenation does not always occur even when the hyphenation rules for a
 word allow it; it can be disabled, and when not disabled there are
-several parameters that can prevent it.  @xref{Manipulating
-Hyphenation}.
+several parameters that can prevent it in certain circumstances.
+@xref{Manipulating Hyphenation}.
 
 @c ---------------------------------------------------------------------
 
@@ -4561,9 +4564,11 @@ occurred on that line, the next word read from the input will be placed
 on a different output line; this is called a @dfn{break}.  In this
 manual and in @code{roff} discussions generally, a ``break'' if not
 further qualified always refers to the termination of an output line.
-After an automatic break, GNU @code{troff} adjusts the line if
-applicable (see below), and then resumes collecting and filling text on
-the next output line.
+When the formatter is filling text, it introduces breaks automatically
+to keep output lines from exceeding the current line length.  After an
+automatic break, GNU @code{troff} adjusts the line if applicable (see
+below), and then resumes collecting and filling text on the next output
+line.
 
 Sometimes, a line cannot be broken automatically.  This typically does
 not happen with natural language text unless the output line length has
@@ -4573,7 +4578,7 @@ prompt to contrive an example of failure to break the output line.  The
 regular output is omitted below.
 
 @Example
-$ perl -e 'print "\$" x 80, "\n";' | nroff
+$ perl -e 'print "#" x 80, "\n";' | nroff
     @error{} troff: <standard input>:1: warning [p 1, 0.0i]:
     @error{} can't break line
 @endExample
@@ -4758,6 +4763,8 @@ because its macro was @emph{called} first.  Consider what would happen
 if we dropped @code{END} from the @samp{.de START} line and added
 @code{..} after @code{.END}.  Would the order change?
 
+Let us consider a more elaborate example.
+
 @Example
 .de DATE
 2020-10-05
@@ -4856,7 +4863,7 @@ to handle most input character encoding issues without troubling the
 user.  Direct input to GNU @code{troff}, on the other hand, must be in
 one of two encodings it can recognize.
 
-@table @asis
+@table @code
 @item cp1047
 @cindex encoding, input, @acronym{EBCDIC}
 @cindex @acronym{EBCDIC}, input encoding
@@ -4868,8 +4875,7 @@ one of two encodings it can recognize.
 @pindex cp1047.tmac
 The code page 1047 input encoding works only on @acronym{EBCDIC}
 platforms (and conversely, the other input encodings don't work with
-@acronym{EBCDIC}); the file @file{cp1047.tmac} is by default loaded at
-start-up.
+@acronym{EBCDIC}); the file @file{cp1047.tmac} is loaded at start-up.
 
 @item latin1
 @cindex encoding, input, @w{Latin-1} (ISO @w{8859-1})
@@ -4895,7 +4901,7 @@ page writers; see the @cite{groff_char@r{(7)}} man page.}
 The remaining encodings require support that is not built-in to the GNU
 @code{troff} executable; instead, they use macro packages.
 
-@table @asis
+@table @code
 @item latin2
 @cindex encoding, input, @w{Latin-2} (ISO @w{8859-2})
 @cindex @w{Latin-2} (ISO @w{8859-2}), input encoding
@@ -4923,26 +4929,19 @@ use @samp{-mlatin5} as a command-line argument to @code{groff}.
 @cindex ISO @w{8859-15} (@w{Latin-9}), input encoding
 @cindex input encoding, @w{Latin-9} (ISO @w{8859-15})
 @pindex latin9.tmac
-ISO @w{Latin-9} is intended (at least in Europe) to replace @w{Latin-1}.
-Its main difference from @w{Latin-1} is that @w{Latin-9} contains the
-Euro character.  To use this encoding, either use @w{@samp{.mso
-latin9.tmac}} at the very beginning of your document or use
-@samp{-mlatin9} as a command-line argument to @code{groff}.
+ISO @w{Latin-9} is a successor to @w{Latin-1}.  Its main difference from
+@w{Latin-1} is that @w{Latin-9} contains the Euro sign.  To use this
+encoding, either use @w{@samp{.mso latin9.tmac}} at the very beginning
+of your document or use @samp{-mlatin9} as a command-line argument to
+@code{groff}.
 @end table
 
 Some input encoding characters may not be available for a particular
-output device.
-
-@Example
-groff -Tlatin1 -mlatin9 @dots{}
-@endExample
-
-@noindent
-The above command fails if you use the Euro character in the input.
-Usually, this limitation is present only for devices that have a limited
-repertoire of output glyphs (e.g., @option{-Tascii} and
-@option{-Tlatin1}); for other devices it is usually sufficient to
-install proper fonts that contain the necessary glyphs.
+output device.  For terminal devices, fallbacks are defined, like
+@samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.
+For typesetter devices it usually suffices to install fonts that have
+compatible metrics with other fonts used in the document and contain the
+necessary glyphs.
 
 @pindex freeeuro.pfa
 @pindex ec.tmac
@@ -5010,22 +5009,23 @@ future self).  We thus introduce another escape sequence, @code{\"},
 which causes GNU @code{troff} to ignore the remainder of the input line.
 
 @item
-Use the empty request to visually manage separation of material in input
-files.  The @code{groff} project's own documents use an empty request
-between sentences and after macro definitions, and two empty requests
-between paragraphs or other requests or macro calls that will introduce
-vertical space into the document.
+Use the empty request---a control character followed immediately by a
+newline---to visually manage separation of material in input files.  The
+@code{groff} project's own documents use an empty request between
+sentences and after macro definitions, and two empty requests between
+paragraphs or other requests or macro calls that will introduce vertical
+space into the document.
 
 Combined with the comment escape, you can include whole-line
 comments in your document, and even ``comment out'' sections of your
 document by prefixing lines with empty requests and the comment escape.
 @end itemize
 
-An example sufficiently long to illustrate the above suggestions in
-practice follows.  For the purpose of fitting the example in the margins
-of this manual with the font used for its typeset version, we have
-shortened the input line length to 58 columns.  We have also used an
-arrow @arrow{} to indicate a tab character.
+We conclude this section with an example sufficiently long to illustrate
+the above suggestions in practice.  For the purpose of fitting the
+example in the margins of this manual with the font used for its typeset
+version, we have shortened the input line length to 58 columns.  We have
+also used an arrow @arrow{} to indicate a tab character.
 
 @Example
 .\" raw roff input example
