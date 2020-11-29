@@ -1041,20 +1041,36 @@ Here's the description of the command-line options:
 @cindex command-line options
 @table @samp
 @item -a
-@cindex @acronym{ASCII} approximation output register (@code{.A})
-Generate an @acronym{ASCII} (Unicode basic Latin) approximation of the
-typeset output.  The read-only register @code{.A} is set to@tie{}1.
-@xref{Built-in Registers}.  On a system using the @code{man-db} manual
-page formatter and that installs man pages compressed with @code{gzip},
-one might use the shell command
+@cindex plain text approximation output register (@code{.A})
+Generate a plain text approximation of the typeset output.  The
+read-only register @code{.A} is set to@tie{}1.  @xref{Built-in
+Registers}.  This option produces a sort of abstract preview of the
+formatted output.
 
-@Example
-zcat $(man -w troff) | groff -a -t -man -Tdvi \
-| less
-@endExample
+@itemize @bullet
+@item
+Page breaks are marked by a phrase in angle brackets; for example,
+@samp{<beginning of page>}.
 
-@noindent
-to observe how lines are broken for the DVI device.
+@item
+Lines are broken where they would be in the formatted output.
+
+@item
+A horizontal motion of any size is represented as one space.  Adjacent
+horizontal motions are not combined.  Inter-sentence space nodes (those
+arising from the second argument to the @code{ss} request) are not
+represented.
+
+@item
+Vertical motions are not represented.
+
+@item
+Special characters are rendered in angle brackets; for example, the
+default soft hyphen character appears as @samp{<hy>}.
+@end itemize
+
+The above description should not be considered a specification; the
+details of @option{-a} output are subject to change.
 
 @item -b
 Print a backtrace with each warning or error message.  This backtrace

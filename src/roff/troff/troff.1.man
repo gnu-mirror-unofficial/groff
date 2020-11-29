@@ -89,28 +89,55 @@ appropriate order and with the appropriate options.
 .
 .TP
 .B \-a
-Generate an ASCII
-(Unicode basic Latin)
-approximation of the typeset output.
+Generate a plain text approximation of the typeset output.
 .
 The read-only register
 .B .A
 is set to\~1.
 .
-On a system using the
-.I man\-db
-manual page formatter and that installs man pages compressed with
-.IR gzip (1),
-one might use the shell command
+This option produces a sort of abstract preview of the formatted output.
+.
 .
 .RS
-.RS
-.EX
-zcat $(man \-w troff) | groff \-a \-t \-man \-Tdvi | less
-.EE
+.IP \[bu]
+Page breaks are marked by a phrase in angle brackets;
+for example,
+\[lq]<beginning of page>\[rq].
+.
+.
+.IP \[bu]
+Lines are broken where they would be in the formatted output.
+.
+.
+.IP \[bu]
+A horizontal motion of any size is represented as one space.
+.
+Adjacent horizontal motions are not combined.
+.
+Inter-sentence space nodes
+(those arising from the second argument to the
+.B .ss
+request)
+are not represented.
+.
+.
+.IP \[bu]
+Vertical motions are not represented.
+.
+.
+.IP \[bu]
+Special characters are rendered in angle brackets;
+for example,
+the default soft hyphen character appears as
+\[lq]<hy>\[rq].
 .RE
-to observe how lines are broken for the DVI device.
-.RE
+.
+.
+.IP
+The above description should not be considered a specification;
+the details of
+.B \-a
+output are subject to change.
 .
 .
 .TP
@@ -119,7 +146,8 @@ Print a backtrace with each warning or error message.
 .
 This backtrace should help track down the cause of the error.
 .
-The line numbers given in the backtrace may not always be correct, for
+The line numbers given in the backtrace may not always be correct,
+for
 .IR \%@g@troff 's
 idea of line numbers gets confused by
 .B .as
