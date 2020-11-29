@@ -5058,6 +5058,18 @@ the
 Texinfo manual.
 .
 .
+.P
+In the somewhat pathological case where a diversion exists containing a
+partially-collected line and a partially-collected line at the top-level
+diversion has never existed,
+AT&T
+.I troff
+will output the
+partially-collected line at the end of input;
+.I groff
+will not.
+.
+.
 .\" ====================================================================
 .SS "Intermediate output format"
 .\" ====================================================================
