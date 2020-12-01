@@ -1,3 +1,11 @@
+2020-12-21  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
+	* src/utils/addftinfo/addftinfo.cpp (usage): Use size_t for loop
+	index when iterating over a count of size_t items.  Quiets
+	signedness mismatch compiler warning.
+
+	Fixes <https://savannah.gnu.org/bugs/?59583>.
+
 2020-12-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/doc.tmac-u (Mt): Emit a usage diagnostic and return if
