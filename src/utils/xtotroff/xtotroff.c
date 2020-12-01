@@ -81,7 +81,8 @@ static int CanonicalizeFontName(char *font_name, char *canon_font_name)
   XFontName parsed;
 
   if (!XParseFontName(font_name, &parsed, &attributes)) {
-    fprintf(stderr, "not a standard name: %s\n", font_name);
+    fprintf(stderr, "%s: not a standard font name: \"%s\"\n",
+	    program_name, font_name);
     return 0;
   }
 
@@ -103,13 +104,15 @@ FontNamesAmbiguous(const char *font_name, char **names, int count)
 
   for (i = 0; i < count; i++) {
     if (!CanonicalizeFontName(names[i], i == 0 ? name1 : name2)) {
-      fprintf(stderr, "bad font name: %s\n", names[i]);
+      fprintf(stderr, "%s: bad font name: \"%s\"\n", program_name,
+	      names[i]);
       return 1;
     }
     if (i > 0 && strcmp(name1, name2) != 0) {
-      fprintf(stderr, "ambiguous font name: %s\n", font_name);
-      fprintf(stderr, "  matches %s\n", names[0]);
-      fprintf(stderr, "  and %s\n", names[i]);
+      fprintf(stderr, "%s: ambiguous font name: \"%s\"", program_name,
+	      font_name);
+      fprintf(stderr, " matches \"%s\"", names[0]);
+      fprintf(stderr, " and \"%s\"", names[i]);
       return 1;
     }
   }
@@ -133,7 +136,8 @@ static int MapFont(char *font_name, const char *troff_name)
   char name_string[2048];
 
   if (!XParseFontName(font_name, &parsed, &attributes)) {
-    fprintf(stderr, "not a standard name: %s\n", font_name);
+    fprintf(stderr, "%s: not a standard font name: \"%s\"\n",
+	    program_name, font_name);
     return 0;
   }
 
@@ -148,7 +152,8 @@ static int MapFont(char *font_name, const char *troff_name)
 
   names = XListFonts(dpy, name_string, 100000, &count);
   if (count < 1) {
-    fprintf(stderr, "bad font name: %s\n", font_name);
+    fprintf(stderr, "%s: bad font name: \"%s\"\n", program_name,
+	    font_name);
     return 0;
   }
 
@@ -163,13 +168,15 @@ static int MapFont(char *font_name, const char *troff_name)
       *s = tolower(*s);
   char_map = DviFindMap(encoding);
   if (!char_map) {
-    fprintf(stderr, "not a standard encoding: %s\n", encoding);
+    fprintf(stderr, "%s: not a standard encoding: \"%s\"\n",
+	    program_name, encoding);
     return 0;
   }
 
   fi = XLoadQueryFont(dpy, names[0]);
   if (!fi) {
-    fprintf(stderr, "font does not exist: %s\n", names[0]);
+    fprintf(stderr, "%s: font does not exist: \"%s\"\n", program_name,
+	    names[0]);
     return 0;
   }
 
@@ -233,8 +240,9 @@ static int MapFont(char *font_name, const char *troff_name)
 static void usage(FILE *stream)
 {
   fprintf(stream,
-	  "usage: %s [-r resolution] [-s pointsize] FontMap\n",
-	  program_name);
+	  "usage: %s [-r resolution] [-s point-size] FontMap\n"
+	  "       %s -v\n",
+	  program_name, program_name);
 }
 
 int main(int argc, char **argv)
@@ -286,9 +294,9 @@ int main(int argc, char **argv)
 
   dpy = XOpenDisplay(0);
   if (!dpy) {
-    fprintf(stderr, "Can't connect to the X server.\n");
-    fprintf(stderr,
-	    "Make sure the DISPLAY environment variable is set correctly.\n");
+    fprintf(stderr, "%s: can't connect to the X server; make sure the"
+	    " DISPLAY environment variable is set correctly\n",
+	    program_name);
     exit(1);
   }
 
@@ -316,3 +324,9 @@ int main(int argc, char **argv)
   }
   exit(0);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:
