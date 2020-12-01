@@ -130,7 +130,9 @@ static int MapFont(char *font_name, const char *troff_name)
   XFontName parsed;
   int j, k;
   DviCharNameMap *char_map;
-  char encoding[256];
+  /* 'encoding' needs to hold a CharSetRegistry (256), a CharSetEncoding
+     (256) [both from XFontName.h], a dash, and a null terminator. */
+  char encoding[256 * 2 + 1 + 1];
   char *s;
   int wid;
   char name_string[2048];
@@ -161,7 +163,8 @@ static int MapFont(char *font_name, const char *troff_name)
     return 0;
 
   XParseFontName(names[0], &parsed, &attributes);
-  sprintf(encoding, "%s-%s", parsed.CharSetRegistry,
+  size_t sz = sizeof encoding;
+  snprintf(encoding, sz, "%s-%s", parsed.CharSetRegistry,
 	  parsed.CharSetEncoding);
   for (s = encoding; *s; s++)
     if (isupper(*s))

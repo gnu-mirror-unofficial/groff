@@ -1,5 +1,14 @@
 2020-12-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/xtotroff/xtotroff.c (MapFont): Avoid writing past
+	the end of a static buffer.  Problem found and patch supplied by
+	Bjarni Ingi Gislason.  I tweaked it to comment it differently
+	{in case the buffer ever needs to grow, but the prospects of
+	future X11 server-side font rendering development seem dim} and
+	use snprintf() instead of retaining the existing sprintf().
+
+2020-12-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/xtotroff/xtotroff.c (CanonicalizeFontName,
 	FontNamesAmbiguous, MapFont, main): Format diagnostic messages
 	more consistently with GNU Coding Standards.  Prefix with name
