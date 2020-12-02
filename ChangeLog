@@ -1,3 +1,21 @@
+2021-01-29  T. Kurt Bond <tkurtbond@gmail.com>
+
+	[ms]: Add new string FR to hold an expression for computing the
+	footnote length relative to the line length, consistently for
+	single- and multi-column modes, which \n[FL] has never done.
+
+	* tmac/s.tmac: Initialize FR string to "11/12".
+	(@MC): Compute footnote column width using \*[FR] instead of a
+	hard-coded "11/12" expression.
+	(par@init): Compute default \n[FL] using \*[FR] instead of a
+	hard-coded "11/12" expression.
+
+	* doc/groff.texi (Macro Packages/ms/Document control settings):
+	* tmac/groff_ms.7.man (Usage/Document control registers):
+	Document it.
+
+	Fixes <https://savannah.gnu.org/bugs/?59605>.
+
 2021-01-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/env.cpp: Add ADJUST_MAX enumeration constant to
