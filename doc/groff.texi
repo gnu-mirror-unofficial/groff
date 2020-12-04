@@ -4637,15 +4637,15 @@ also cause breaks, implicitly or explicitly.  This is discussed in
 @cindex spaces, leading and trailing
 @cindex extra spaces
 @cindex trailing spaces
-Once GNU @code{troff} has filled a line and performed an automatic
-break, it tries to @dfn{adjust} that line; additional inter-sentence
-space is inserted (and, in the default adjustment mode, inter-word
-spaces are widened until the text reaches the right margin).  Extra
-spaces between words are preserved, but trailing spaces on an input line
-are ignored.  Leading spaces are handled as noted above.  Text can be
-adjusted to the left or right margins only (instead of both), or
-centered; see @ref{Manipulating Filling and Adjustment}.  As a rule, an
-output line that has not been filled will not be adjusted.
+Once GNU @code{troff} has filled a line and broken it, it inserts
+additional inter-sentence space.  If the break was automatic, it then
+tries to @dfn{adjust} the line: inter-word spaces are widened until the
+text reaches the right margin.  Extra spaces between words are
+preserved, but trailing spaces on an input line are ignored.  Leading
+spaces are handled as noted above.  Text can be adjusted to the left or
+right margins only (instead of both), or centered; see @ref{Manipulating
+Filling and Adjustment}.  As a rule, an output line that has not been
+filled will not be adjusted.
 
 @c ---------------------------------------------------------------------
 
