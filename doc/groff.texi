@@ -529,7 +529,7 @@ developing GNU and promoting software freedom.''
 
 @ifnottex
 @node Top, Introduction, (dir), (dir)
-@top GNU troff
+@top GNU @code{troff}
 @end ifnottex
 
 @menu
@@ -575,7 +575,7 @@ for some thirty years.  It is well entrenched in the Unix community.
 @menu
 * What Is groff?::
 * History::
-* groff Capabilities::
+* @code{groff} Capabilities::
 * Macro Package Intro::
 * Preprocessor Intro::
 * Output device intro::
@@ -634,7 +634,7 @@ impossible to accomplish complex actions.''  --Doug Gwyn (22/Jun/91 in
 
 @c =====================================================================
 
-@node History, groff Capabilities, What Is groff?, Introduction
+@node History, @code{groff} Capabilities, What Is groff?, Introduction
 @section History
 @cindex history
 
@@ -774,7 +774,7 @@ to produce @acronym{HTML} and @acronym{XHTML} have been added.
 
 @c =====================================================================
 
-@node groff Capabilities, Macro Package Intro, History, Introduction
+@node @code{groff} Capabilities, Macro Package Intro, History, Introduction
 @section @code{groff} Capabilities
 @cindex @code{groff} capabilities
 @cindex capabilities of @code{groff}
@@ -847,7 +847,7 @@ output and error messages
 
 @c =====================================================================
 
-@node Macro Package Intro, Preprocessor Intro, groff Capabilities, Introduction
+@node Macro Package Intro, Preprocessor Intro, @code{groff} Capabilities, Introduction
 @section Macro Packages
 @cindex macro package, introduction
 @cindex package, macro, introduction
@@ -2253,8 +2253,9 @@ macros or for style changes.
 @unnumberedsubsubsec Custom headers and footers
 @cindex @code{man} macros, custom headers and footers
 
-In groff versions 1.18.2 and later, you can specify custom headers and
-footers by redefining the following macros in @file{man.local}.
+In @code{groff} versions 1.18.2 and later, you can specify custom
+headers and footers by redefining the following macros in
+@file{man.local}.
 
 @Defmac {PT, , man}
 Control the content of the headers.  Normally, the header prints the
@@ -2464,7 +2465,7 @@ category.
 @acronym{PDF} features and usage.
 @end itemize
 
-The mom macros are in active development between groff releases.
+The mom macros are in active development between @code{groff} releases.
 The most recent version, along with up-to-date documentation, is
 available at @uref{http://www.schaffter.ca/mom/mom-05.html}.
 
@@ -4859,8 +4860,8 @@ that they are most easily understood when read from beginning to end.
 Macro definitions can be collected into @dfn{macro files}, @code{roff}
 input files designed to produce no output themselves but instead ease
 the preparation of other @code{roff} documents.  There is no syntactical
-difference between a macro file and any other roff document; only its
-purpose distinguishes it.  When a macro file it installed into a
+difference between a macro file and any other @code{roff} document; only
+its purpose distinguishes it.  When a macro file it installed into a
 standard location and suitable for use by a general audience, it is
 often termed a @dfn{macro package}.@footnote{Macro packages frequently
 define registers and strings as well.}  Macro packages can be loaded by
@@ -5117,19 +5118,19 @@ character that immediately follows the number or expression.  Each of
 these units are understood, by @code{gtroff}, to be a multiple of its
 @dfn{basic unit}.  So, whenever a different measurement unit is
 specified @code{gtroff} converts this into its @dfn{basic units}.  This
-basic unit, represented by a @samp{u}, is a device dependent measurement,
-which is quite small, ranging from 1/75@dmn{th} to 1/72000@dmn{th} of an
-inch.  The values may be given as fractional numbers; however,
-fractional basic units are always rounded to integers.
+basic unit, represented by a @samp{u}, is a device dependent
+measurement, which is quite small, ranging from 1/75@dmn{th} to
+1/72000@dmn{th} of an inch.  The values may be given as fractional
+numbers; however, fractional basic units are always rounded to integers.
 
 Some of the measurement units are independent of any of the current
 settings (e.g., type size) of GNU @code{troff}.
 
 Although GNU @code{troff}'s basic unit is device-dependent, it may still
 be smaller than the smallest unit the device is capable of producing.
-The register @code{.H} specifies how many groff basic units constitute
-the current device's basic unit horizontally, and the register @code{.V}
-specifies this value vertically.
+The register @code{.H} specifies how many @code{groff} basic units
+constitute the current device's basic unit horizontally, and the
+register @code{.V} specifies this value vertically.
 
 @table @code
 @item i
@@ -9651,15 +9652,15 @@ groff -Tdvi -mec -man groff_char.7 > groff_char.dvi
 
 @cindex composite glyph names
 @cindex glyph names, composite
-@cindex groff glyph list (GGL)
-@cindex GGL (groff glyph list)
+@cindex @code{groff} glyph list (GGL)
+@cindex GGL (@code{groff} glyph list)
 @cindex adobe glyph list (AGL)
 @cindex AGL (adobe glyph list)
 Glyph names not listed in groff_char(7) are derived algorithmically,
 using a simplified version of the Adobe Glyph List (AGL) algorithm, which
 is described in @uref{https://github.com@//adobe-type-tools@//agl-aglfn}.
 The (frozen) set of glyph names that can't be derived algorithmically
-is called @dfn{groff glyph list (GGL)}.
+is called the @dfn{@code{groff} glyph list (GGL)}.
 
 @itemize @bullet
 @item
@@ -9699,9 +9700,9 @@ groff maintains a table to decompose all algorithmically derived glyph
 names that are composites itself.  For example, @code{u0100} (@sc{latin
 letter a with macron}) is automatically decomposed into
 @code{u0041_0304}.  Additionally, a glyph name of the GGL is preferred
-to an algorithmically derived glyph name; groff also automatically does
-the mapping.  Example: The glyph @code{u0045_0302} is mapped to
-@code{^E}.
+to an algorithmically derived glyph name; @code{groff} also
+automatically does the mapping.  Example: The glyph @code{u0045_0302} is
+mapped to @code{^E}.
 
 @item
 glyph names of the GGL can't be used in composite glyph names; for
@@ -9771,8 +9772,8 @@ name is constructed, causing the final glyph name to be
 @end table
 
 It is not possible to define glyphs with names like @w{@samp{A ho}}
-within a groff font file.  This is not really a limitation; instead, you
-have to define @code{u0041_0328}.
+within a @code{groff} font file.  This is not really a limitation;
+instead, you have to define @code{u0041_0328}.
 @endDefesc
 
 @Defesc {\\C, @code{'}, xxx, @code{'}}
@@ -10120,14 +10121,14 @@ prevent the use of the special character escape form
 @code{\[@r{@dots{}}]}, thus you must use the @code{\C} escape to access
 a class with such a name.
 
-@cindex GGL (groff glyph list)
-@cindex groff glyph list (GGL)
+@cindex GGL (@code{groff} glyph list)
+@cindex @code{groff} glyph list (GGL)
 You can also use a character range notation consisting of a
 start character followed by @samp{-} and then an end character.
 Internally, GNU @code{troff} converts these two symbol names to
-Unicode code points (according to the groff glyph list [GGL]), which
-then give the start and end value of the range.  If that fails, the
-class definition is skipped.
+Unicode code points (according to the @code{groff} glyph list [GGL]),
+which then give the start and end value of the range.  If that fails,
+the class definition is skipped.
 
 Furthermore, classes can be nested.
 
@@ -16368,7 +16369,7 @@ Print the version number.
 Generate a validator button at the bottom.
 
 @item -y
-Generate a signature of groff after the validator button, if any.
+Generate a signature of @code{groff} after the validator button, if any.
 @end table
 
 
@@ -16465,8 +16466,8 @@ following two sections describe their format.
 @cindex @code{gtroff}, output
 @cindex output, @code{gtroff}
 
-This section describes the @code{groff} intermediate output format, which
-is produced by GNU @code{troff}.
+This section describes the @code{groff} intermediate output format
+produced by GNU @code{troff}.
 
 As @code{groff} is a wrapper program around GNU @code{troff} and
 automatically calls an output driver (or ``postprocessor''), this output
@@ -16476,8 +16477,8 @@ inhibit postprocessing such that the produced intermediate output is
 sent to standard output just as it is when calling GNU @code{troff}
 directly.
 
-@cindex troff output
-@cindex output, troff
+@cindex @code{troff} output
+@cindex output, @code{troff}
 @cindex intermediate output
 @cindex output, intermediate
 Here, the term @dfn{troff output} describes what is output by
@@ -17094,8 +17095,8 @@ The @samp{u} stands for @var{underline}.
 
 Configure underlining of spaces.  If @var{n} is@tie{}1, start
 underlining of spaces; if @var{n} is@tie{}0, stop underlining of spaces.
-This is needed for the @code{cu} request in nroff mode and is ignored
-otherwise.  This command is a @code{gtroff} extension.
+This is needed for the @code{cu} request in @code{nroff} mode and is
+ignored otherwise.  This command is a @code{gtroff} extension.
 
 @item xX @var{anything}@angles{line break}
 The @samp{x} stands for @var{X-escape}.
@@ -17324,8 +17325,9 @@ feature it is kept for compatibility reasons.
 
 @ignore
 Temporarily, there existed some confusion on the positioning after the
-@samp{D} commands that are groff extensions.  This has been clarified by
-establishing the classical rule for all @code{groff} drawing commands:
+@samp{D} commands that are @code{groff} extensions.  This has been
+clarified by establishing the classical rule for all @code{groff}
+drawing commands:
 
 @itemize
 @item
