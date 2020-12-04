@@ -1453,9 +1453,9 @@ The default output device.
 
 @item SOURCE_DATE_EPOCH
 @tindex SOURCE_DATE_EPOCH@r{, environment variable}
-A timestamp (expressed as seconds since the Unix epoch) to use in place of
-the current time when initializing time-based built-in registers such as
-@code{\n[seconds]}.
+A timestamp (expressed as seconds since the Unix epoch) to use in place
+of the current time when initializing time-based built-in registers such
+as @code{\n[seconds]}.
 @end table
 
 MS-DOS and MS-Windows ports of @code{groff} use semicolons, rather than
@@ -1617,8 +1617,8 @@ orientation.  @xref{DESC File Format}, for a description of the
 @pindex troffrc
 A convenient shorthand to set a particular paper size for @code{gtroff}
 is command-line option @option{-dpaper=@var{size}}.  This defines string
-@code{paper}, which is processed in file @file{papersize.tmac} (loaded in
-the start-up file @file{troffrc} by default).  Possible values for
+@code{paper}, which is processed in file @file{papersize.tmac} (loaded
+in the start-up file @file{troffrc} by default).  Possible values for
 @var{size} are the same as the predefined values for the
 @code{papersize} keyword (but only in lowercase) except
 @code{a7}--@code{d7}.  An appended @samp{l} (ell) character denotes
@@ -2877,8 +2877,8 @@ Default: 2@dmn{n}.
 @endDefmpreg
 
 @Defmpreg {DD, ms}
-Sets the vertical spacing before and after a display, a @code{tbl} table, an
-@code{eqn} equation, or a @code{pic} image.
+Sets the vertical spacing before and after a display, a @code{tbl}
+table, an @code{eqn} equation, or a @code{pic} image.
 
 Effective: next paragraph.
 
@@ -7908,8 +7908,9 @@ foo                 bar              foobar
 @noindent
 The first line right-justifies the second `foo' relative to the tab
 stop.  The second line right-justifies `foobar'.  The third line finally
-right-justifies only `foo' because of the additional tab character, which
-marks the end of the string belonging to the last defined tab stop.
+right-justifies only `foo' because of the additional tab character,
+which marks the end of the string belonging to the last defined tab
+stop.
 
 @item
 Tab stops are associated with the current environment
@@ -9634,8 +9635,8 @@ increasing font positions.  Consequently, it finds @code{BAZ} before
 @cindex available glyphs, list (@cite{groff_char@r{(7)}} man page)
 @cindex glyphs, available, list (@cite{groff_char@r{(7)}} man page)
 The list of available symbols is device dependent; see the
-@cite{groff_char@r{(7)}} man page for a complete list of all glyphs.  For
-example, say
+@cite{groff_char@r{(7)}} man page for a complete list of all glyphs.
+For example, say
 
 @Example
 man -Tdvi groff_char > groff_char.dvi
@@ -10148,7 +10149,8 @@ If you want to include @samp{-} in a class, it must be the first
 character value in the argument list, otherwise it gets misinterpreted
 as part of the range syntax.
 
-It is not possible to use class names as end points of range definitions.
+It is not possible to use class names as end points of range
+definitions.
 
 A typical use of the @code{class} request is to control line-breaking
 and hyphenation rules as defined by the @code{cflags} request.  For
@@ -14141,12 +14143,11 @@ for @code{pso} also.
 @Defreq {mso, file}
 Identical to the @code{so} request except that @code{gtroff} searches
 for the specified @var{file} in the same directories as macro files for
-the @option{-m} command-line option.
-If the file name to be included has the form @file{@var{name}.tmac} and it
-isn't found, @code{mso} tries to include @file{tmac.@var{name}} and vice
-versa.
-If the file does not exist, a warning of type @samp{file} is emitted.
-@xref{Debugging}, for information about warnings.
+the @option{-m} command-line option.  If the file name to be included
+has the form @file{@var{name}.tmac} and it isn't found, @code{mso} tries
+to include @file{tmac.@var{name}} and vice versa.  If the file does not
+exist, a warning of type @samp{file} is emitted.  @xref{Debugging}, for
+information about warnings.
 @endDefreq
 
 @DefreqList {trf, file}
@@ -17816,8 +17817,8 @@ emits a warning, printing glyph @var{X}.
 @node Register Index, Macro Index, Operator Index, Top
 @appendix Register Index
 
-The macro package or program a specific register belongs to is appended in
-brackets.
+The macro package or program a specific register belongs to is appended
+in brackets.
 
 A register name@tie{}@code{x} consisting of exactly one character can be
 accessed as @samp{\nx}.  A register name @code{xx} consisting of exactly
