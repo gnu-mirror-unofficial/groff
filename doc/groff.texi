@@ -4317,7 +4317,7 @@ not interested in details.
 * Manipulating Spacing::
 * Tabs and Fields::
 * Character Translations::
-* Troff and Nroff Mode::
+* @code{troff} and @code{nroff} Modes::
 * Line Layout::
 * Line Control::
 * Page Layout::
@@ -8117,7 +8117,7 @@ current environment (@pxref{Environments}).
 @codequotebacktick on
 @codequoteundirected on
 
-@node Character Translations, Troff and Nroff Mode, Tabs and Fields, gtroff Reference
+@node Character Translations, @code{troff} and @code{nroff} Modes, Tabs and Fields, gtroff Reference
 @section Character Translations
 @cindex character translations
 @cindex translations of characters
@@ -8455,65 +8455,68 @@ prints @samp{b} to the standard error stream; if @code{trnt} is used
 instead of @code{tr} it prints @samp{a}.
 @endDefreq
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
-@node Troff and Nroff Mode, Line Layout, Character Translations, gtroff Reference
-@section Troff and Nroff Mode
-@cindex troff mode
-@cindex mode, troff
-@cindex nroff mode
-@cindex mode, nroff
+@node @code{troff} and @code{nroff} Modes, Line Layout, Character Translations, gtroff Reference
+@section @code{troff} and @code{nroff} Modes
+@cindex @code{troff} mode
+@cindex mode, @code{troff}
+@cindex @code{nroff} mode
+@cindex mode, @code{nroff}
 
-Originally, @code{nroff} and @code{troff} were two separate programs,
-the former for TTY output, the latter for everything else.  With GNU
-@code{troff}, both programs are merged into one executable, sending its
-output to a device driver (@code{grotty} for TTY devices, @code{grops}
-for @sc{PostScript}, etc.)@: which interprets the intermediate output of
-@code{gtroff}.  For Unix @code{troff} it makes sense to talk about
-@dfn{Nroff mode} and @dfn{Troff mode} since the differences are
-hardcoded.  For GNU @code{troff}, this distinction is not appropriate
-because @code{gtroff} simply takes the information given in the font
-files for a particular device without handling requests specially if a
-TTY output device is used.
+Historically, @code{nroff} and @code{troff} were two separate programs;
+the former for terminal output, the latter for typesetters.  GNU
+@code{troff} merges both functions into one executable@footnote{A
+GNU @command{nroff} program is available for convenience; it calls GNU
+@code{troff} to perform the formatting.} that sends its output to a
+device driver (@code{grotty} for terminal devices, @code{grops} for
+@sc{PostScript}, etc.)@: which interprets this intermediate output
+format.  When discussing @acronym{AT&T} @code{troff}, it makes sense to
+talk about @dfn{@code{nroff} mode} and @dfn{@code{troff} mode} since the
+differences are hard-coded.  GNU @code{troff} takes information from
+device and font description files without handling requests specially if
+a terminal output device is used, so such a strong distinction is
+unnecessary.
 
 Usually, a macro package can be used with all output devices.
 Nevertheless, it is sometimes necessary to make a distinction between
-TTY and non-TTY devices: @code{gtroff} provides two built-in conditions
-@samp{n} and @samp{t} for the @code{if}, @code{ie}, and @code{while}
-requests to decide whether @code{gtroff} shall behave like @code{nroff}
-or like @code{troff}.
+terminal and non-terminal devices: GNU @code{troff} provides two
+built-in conditions @samp{n} and @samp{t} for the @code{if}, @code{ie},
+and @code{while} requests to decide whether GNU @code{troff} shall
+behave like @code{nroff} or like @code{troff}.
 
 @Defreq {troff, }
 @pindex troffrc
 @pindex troffrc-end
 Make the @samp{t} built-in condition true (and the @samp{n} built-in
 condition false) for @code{if}, @code{ie}, and @code{while} conditional
-requests.  This is the default if @code{gtroff} (@emph{not}
+requests.  This is the default if GNU @code{troff} (@emph{not}
 @code{groff}) is started with the @option{-R} switch to avoid loading of
 the start-up files @file{troffrc} and @file{troffrc-end}.  Without
-@option{-R}, @code{gtroff} stays in troff mode if the output device is
-not a TTY (e.g.@: `ps').
+@option{-R}, GNU @code{troff} stays in @code{troff} mode if the output
+device is not a terminal (e.g., `ps').
 @endDefreq
 
 @Defreq {nroff, }
 @pindex tty.tmac
 Make the @samp{n} built-in condition true (and the @samp{t} built-in
 condition false) for @code{if}, @code{ie}, and @code{while} conditional
-requests.  This is the default if @code{gtroff} uses a TTY output
-device; the code for switching to nroff mode is in the file
-@file{tty.tmac}, which is loaded by the start-up file @code{troffrc}.
+requests.  This is the default if GNU @code{troff} uses a terminal
+output device; the code for switching to @code{nroff} mode is in the
+file @file{tty.tmac}, which is loaded by the start-up file
+@code{troffrc}.
 @endDefreq
 
 @xref{Conditionals and Loops}, for more details on built-in conditions.
 
+@codequotebacktick off
+@codequoteundirected off
+
 
 @c =====================================================================
 
-@node Line Layout, Line Control, Troff and Nroff Mode, gtroff Reference
+@node Line Layout, Line Control, @code{troff} and @code{nroff} Modes, gtroff Reference
 @section Line Layout
 @cindex line layout
 @cindex layout, line
@@ -10299,8 +10302,9 @@ changed with the @code{uf} request.
 
 @c XXX @xref should be changed to grotty
 
-@c @xref{Troff and Nroff Mode}, for a discussion how underlining is
-@c implemented in for TTY output devices, and which problems can arise.
+@c @xref{@code{troff} and @code{nroff} Modes}, for a discussion of how
+@c underlining is implemented for terminal output devices, and what
+@c problems can arise.
 
 The @code{ul} request does not underline spaces.
 @endDefreq
@@ -11469,7 +11473,8 @@ True if there is a color called @var{color}.
 @cindex TTY, conditional output for
 @cindex terminal, conditional output for
 True if the document is being processed in @code{nroff} mode (i.e., the
-@code{nroff} request has been issued).  @xref{Troff and Nroff Mode}.
+@code{nroff} request has been issued).  @xref{@code{troff} and
+@code{nroff} Modes}.
 
 @item o
 True if the current page is odd-numbered.
@@ -11483,7 +11488,8 @@ translation is applied.
 
 @item t
 True if the document is being processed in @code{troff} mode (i.e., the
-@code{troff} request has been issued).  @xref{Troff and Nroff Mode}.
+@code{troff} request has been issued).  @xref{@code{troff} and
+@code{nroff} Modes}.
 
 @item v
 Always false.  This condition is recognized only for compatibility with
