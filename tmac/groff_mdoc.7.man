@@ -47,9 +47,9 @@
 .\" extremely slow package.
 .\"
 .
-.Dd November 2, 2010
+.Dd @MDATE@
 .Dt groff_mdoc 7
-.Os
+.Os groff @VERSION@
 .
 .
 .Sh Name
@@ -566,9 +566,9 @@ The body of a man page is easily constructed from a basic template:
 .
 .Bd -literal -offset indent
 \&.\e" The following commands are required for all man pages.
-\&.Dd Month day, year
-\&.Dt DOCUMENT_TITLE [section number] [architecture/volume]
-\&.Os [OPERATING_SYSTEM] [version/release]
+\&.Dd date
+\&.Dt document-title [section number] [architecture/volume]
+\&.Os [package or operating system] [version/release]
 \&.Sh Name
 \&.Nm name
 \&.Nd one line description of name
@@ -610,12 +610,15 @@ The first items in the template are the commands
 .Ql .Dt ,
 and
 .Ql .Os ;
-the document date, the operating system the man page or subject source is
-developed or modified for, and the man page title (in
-.Em upper case )
-along with the section of the manual the page belongs in.
+the document date,
+the document title and section of the manual the page belongs in,
+and either the project or package supplying the page or the operating
+system it is developed or modified for.
+.
 These commands identify the page and are discussed below in
 .Sx Title macros .
+.
+.
 .Pp
 The remaining items in the template are section headers
 .Pf ( Li .Sh ) ;
@@ -731,8 +734,7 @@ If it is specified, and no volume name is given, a default volume name is
 used.
 .
 .Pp
-Under
-.Tn \*[doc-operating-system] ,
+In this implementation,
 the following sections are defined:
 .Pp
 .TS
@@ -840,29 +842,48 @@ look for strings named
 then denotes the keyword to be used with the
 .Ql .Dt
 macro.
+.
+.
 .Pp
 This macro is neither callable nor parsed.
 .
+.
 .It Li .Os Xo
-.Op Aq operating system
-.Op Aq release
+.Op Aq operating system or package name
+.Op Aq version or release
 .Xc
+This is the mandatory third macro of every
+.Xr mdoc 7
+document.
+.
+In man pages supplied by the base installation of an operating system,
+do not provide an argument.
+.
+A portable software package maintaining its own man pages can supply
+its name and version number or release identifier as optional arguments.
+.
 If the first parameter is empty,
 the default
-.Sq Tn "\*[doc-operating-system]"
+.Sq Tn "\*[doc-default-operating-system]"
 is used.
-This may be overridden in the local configuration file,
+.
+This default may be overridden in the local configuration file,
 .Pa mdoc.local .
-In general, the name of the operating system should be the common acronym,
-e.g.\&
+.
+Historically,
+the name of the operating system was one of the common initialisms
 .Tn BSD
 or
 .Tn ATT .
+.
 The release should be the standard release nomenclature for the system
 specified.
-In the following table, the possible second arguments for some predefined
-operating systems are listed.
-Similar to
+.
+In the following table,
+possible second arguments for some predefined operating systems are
+listed.
+.
+Similarly to
 .Ql .Dt ,
 local additions might be defined in
 .Pa mdoc.local ;
