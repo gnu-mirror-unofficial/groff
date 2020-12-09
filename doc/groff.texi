@@ -15153,10 +15153,13 @@ current diversion.
 @cindex @code{da} request, and warnings
 @cindex @code{box}, @code{boxa} requests, and warnings
 @cindex @code{\*}, and warnings
-Use of undefined strings, macros and diversions.  When an undefined
-string, macro, or diversion is used, that string is automatically
-defined as empty.  So, in most cases, at most one warning is given for
-each name.
+An undefined string, macro, diversion, or box was used.  When such an
+object is dereferenced, an empty object of that name is automatically
+created.  So, in most cases, at most one warning is given for each name.
+
+This warning is also emitted upon an attempt to move an unplanted trap
+(@pxref{Page Location Traps}).  In such cases, the unplanted macro is
+@emph{not} dereferenced, so it is not created if it does not exist.
 
 @item reg
 @itemx 1024

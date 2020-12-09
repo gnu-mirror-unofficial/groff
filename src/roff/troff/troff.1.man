@@ -520,12 +520,28 @@ Invalid input characters.
 .
 .TP
 .BR mac "\t512"
-Use of undefined strings, macros and diversions.
+An undefined string,
+macro,
+diversion,
+or box was used.
 .
-When an undefined string, macro or diversion is used, that string is
-automatically defined as empty.
+When such an object is dereferenced,
+an empty object of that name is automatically created.
 .
-So, in most cases, at most one warning will be given for each name.
+So,
+in most cases,
+at most one warning is given for each name.
+.
+.
+.IP
+This warning is also emitted upon an attempt to move an unplanted trap.
+.
+In such cases,
+the unplanted macro is
+.I not
+dereferenced,
+so it is not created if it does not exist.
+.
 .
 .TP
 .BR missing "\t8192"

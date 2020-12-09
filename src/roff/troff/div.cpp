@@ -531,7 +531,8 @@ void top_level_diversion::change_trap(symbol nam, vunits pos)
       p->position = pos;
       return;
     }
-  error("cannot move unplanted trap macro '%1'", nam.contents());
+  warning(WARN_MAC, "cannot move unplanted trap macro '%1'",
+	  nam.contents());
 }
 
 void top_level_diversion::print_traps()

@@ -1,3 +1,21 @@
+2020-12-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Lower new unplanted trap error to 'mac' warning.
+
+	* src/roff/troff/div.cpp (top_level_diversion::change_trap):
+	Change error upon invalid attempt to move an unplanted trap into
+	a warning of type 'mac'.
+
+	* doc/groff.texi (Warnings):
+	* src/roff/troff/troff.1.man (Warnings): Recast description of
+	'mac' warning type to include the above scenario.
+
+	Thanks to Bjarni Ingi Gislason for reporting the diagnostic
+	arising in real life, and to Peter Schaffter for the discussion
+	and recommendation.  Some bike sheds get painted quickly!
+
+	Fixes <https://savannah.gnu.org/bugs/?59573>.
+
 2020-12-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_mdoc.7.man: Tweak mandatory macro explanations.
