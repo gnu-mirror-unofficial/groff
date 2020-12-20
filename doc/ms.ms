@@ -108,11 +108,11 @@ Unit	Description
 _
 i	inches
 c	centimeters
-p	points (about 1/72")
+p	points (1/72\[sd])
 v	line height
 n	width of a letter ``n'' in the current font
 m	width of a letter ``M'' in the current font
-P	pica (1/6")
+P	pica (1/6\[sd])
 .TE
 .LP
 You set number registers by using the
