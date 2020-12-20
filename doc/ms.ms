@@ -255,7 +255,7 @@ Paragraphs	PI	Initial indent	next \(pp	5n
 \^	PD	Space between paragraphs	next \(pp	0.3v
 \^	QI	Quoted paragraph indent	next \(pp	5n
 _
-Footnotes	FL	Footnote length	next footnote	LL*5/6
+Footnotes	FL	Footnote length	next footnote	LL*11/12
 \^	FI	Footnote indent	next footnote	2n
 \^	FF	Footnote format	next footnote	0
 _
