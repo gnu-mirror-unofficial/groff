@@ -1,5 +1,13 @@
 2020-12-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/doc.tmac-u (Mt): Emit a usage diagnostic if called with
+	no arguments.  This introduces an incompatiblility with
+	mandoc(1), but the existing behavior (print an italicized tilde,
+	because Mt is implemented as a wrapper around Pa, which prints
+	pathnames) made no sense.
+
+2020-12-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/ms.ms (Basic Information): Tweak unit definitions.  groff
 	defines a typesetter's point as precisely 1/72 inches.  Also use
 	the correct symbol for inch units--strictly, it's the same as
