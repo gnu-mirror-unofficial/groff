@@ -5,18 +5,10 @@
 	generated groff.dvi file, which frustrated reproducible builds.
 	Thanks to Werner Lemberg for the suggestion.
 
-	See <https://savannah.gnu.org/bugs/?57218>.
-
-2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
-
 	* src/roff/groff/tests/string_case_xform_unicode_escape.sh: Fix
 	test to no longer use Bash process substitution, resulting in
 	nondeterministic file descriptor numbers appearing in test logs,
 	frustrating reproducible builds.
-
-	See <https://savannah.gnu.org/bugs/?57218>.
-
-2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* contrib/pdfmark/pdfmark.am (PDFROFF): Call pdfroff without
 	`--keep-temporary-files` option.  Temporary directories are
