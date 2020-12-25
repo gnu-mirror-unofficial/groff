@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Copyright (C) 2019-2020 Free Software Foundation, Inc.
 #
@@ -30,7 +30,7 @@ expected="attaché ATTACHÉ"
 # troff: <standard input>:5: warning: can't find special character
 #     'U0065_0301'
 
-actual=$("$groff" -Tutf8 2>&1 > /dev/null <<EOF
+actual=$("$groff" -Tutf8 2>&1 <<EOF
 .pl 1v
 .ds attache attach\\[u0065_0301]\\\"
 \\*[attache]
@@ -39,4 +39,4 @@ actual=$("$groff" -Tutf8 2>&1 > /dev/null <<EOF
 EOF
 )
 
-diff -u <(echo "$expected") <(echo "$actual")
+echo "$actual" | grep -Fqx "$expected"
