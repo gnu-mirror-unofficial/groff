@@ -1,3 +1,12 @@
+2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* contrib/pdfmark/pdfmark.am (PDFROFF): Call pdfroff without
+	`--keep-temporary-files` option.  Temporary directories are
+	created with mktemp(1) and files with an embedded process
+	identifier, which frustrates reproducible builds.
+
+	See <https://savannah.gnu.org/bugs/?57218>.
+
 2020-12-21  Dorai Sitaram <ds26gte@yahoo.com>
 
 	* tmac/s.tmac (@IP): Handle inter-sentence space correctly in
