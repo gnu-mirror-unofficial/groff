@@ -1,5 +1,14 @@
 2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am (.texi.dvi): Call texi2dvi with FORCE_SOURCE_DATE=1
+	in the environment, avoiding an embedded timestamp in the
+	generated groff.dvi file, which frustrated reproducible builds.
+	Thanks to Werner Lemberg for the suggestion.
+
+	See <https://savannah.gnu.org/bugs/?57218>.
+
+2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/string_case_xform_unicode_escape.sh: Fix
 	test to no longer use Bash process substitution, resulting in
 	nondeterministic file descriptor numbers appearing in test logs,
