@@ -6948,7 +6948,7 @@ This is an uninteresting sentence.
 @endExample
 @endDefreq
 
-@DefreqList {ss, word-space-size [@Var{sentence-space-size}]}
+@DefreqList {ss, word-space-size [@Var{additional-sentence-space-size}]}
 @DefregItemx {.ss}
 @DefregListEndx {.sss}
 @cindex word space size register (@code{.ss})
@@ -6958,11 +6958,13 @@ This is an uninteresting sentence.
 @cindex sentence space size register (@code{.sss})
 @cindex size of sentence space register (@code{.sss})
 @cindex space between sentences register (@code{.sss})
-Set the sizes of spaces between words and sentences.  Their units are
-twelfths of the space width parameter of the current font.  Initially
-both the @var{word-space-size} and @var{sentence-space-size}
-are@tie{}12.  Negative values are not permitted.  The request is ignored
-if there are no arguments.
+Set the sizes of spaces between words and
+sentences.@footnote{@xref{Filling} and @ref{Sentences} for the
+definitions of word and sentence boundaries, respectively.}  Their units
+are twelfths of the space width parameter of the current font.
+Initially both the @var{word-space-size} and
+@var{additional-sentence-space-size} are@tie{}12.  Negative values are
+not permitted.  The request is ignored if there are no arguments.
 
 @cindex inter-word spacing, minimal
 @cindex minimal inter-word spacing
@@ -6975,8 +6977,8 @@ automatically adjusted, it may increase.
 @cindex space, between sentences
 The optional second argument sets the amount of additional space
 separating sentences on the same output line in fill mode.  If the
-second argument is omitted, @var{sentence-space-size} is set to
-@var{word-space-size}.
+second argument is omitted, @var{additional-sentence-space-size} is set
+to @var{word-space-size}.
 
 The read-only registers @code{.ss} and @code{.sss} hold the values of
 minimal inter-word space and additional inter-sentence space,
@@ -6995,11 +6997,6 @@ then the second space becomes an inter-sentence space in the output.
 Additional inter-sentence space is not adjusted, but the inter-word
 space that always precedes it may be.  Further input spaces after the
 second, if present, are adjusted as normal.
-
-If a second argument is never given to the @code{ss} request, GNU
-@code{troff} separates sentences as @acronym{AT&T} @code{troff} does.
-In input to GNU @code{troff}, as with @acronym{AT&T} @code{troff}, a
-sentence should always be followed by either a newline or two spaces.
 
 @cindex discardable horizontal space
 @cindex space, discardable, horizontal

@@ -3413,7 +3413,7 @@ and the latter enables hyphenation after the first character in a word.
 .
 .
 .TP
-.BI .ss\~ "word-space-size sentence-space-size"
+.BI .ss\~ "word-space-size additional-sentence-space-size"
 A second argument to the
 .B .ss
 request determines the additional inter-sentence spacing used in fill
@@ -3439,6 +3439,7 @@ instead,
 the values of minimal inter-word and additional inter-sentence spacing
 are rounded down to the nearest multiple of\~12.
 .
+.
 .IP
 Additional inter-sentence spacing is used only in fill mode,
 and only if the output line is not full when the end of a sentence
@@ -3454,20 +3455,6 @@ then the second space becomes an inter-sentence space in the output.
 Additional inter-sentence space is not adjusted,
 but the inter-word space that always precedes it may be.
 .
-.IP
-If a second argument is never given to the
-.B .ss
-request,
-.I groff
-separates sentences as
-.RI AT&T\~ troff
-does.
-.
-In
-.IR groff ,
-as in
-.RI AT&T\~ troff ,
-you should always follow a sentence with either a newline or two spaces.
 .
 .IP
 A related application of the
@@ -3491,6 +3478,7 @@ large spaces between each.
 .RE
 .RE
 .
+.
 .IP
 The result has obvious inter-sentence spacing.
 .RS
@@ -3502,6 +3490,7 @@ known for other work.
 .EE
 .RE
 .RE
+.
 .
 .TP
 .BR .ta\~ [[\c
