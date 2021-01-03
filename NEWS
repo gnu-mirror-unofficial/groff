@@ -148,6 +148,18 @@ o On the Latin-1 output device ("groff -T latin1") the output glyph
 Miscellaneous
 -------------
 
+o The semantics of the environment variable SOURCE_DATE_EPOCH (support
+  for which was added in 1.22.4) to groff were not established with
+  respect to time zone selection, prompting divergent interpretations;
+  Debian and distributions derived from it have for several years
+  patched groff to implicitly use UTC as the time zone when interpreting
+  the current time (or SOURCE_DATE_EPOCH) as a local time.  While a
+  convenient and defensible choice for reproducible build efforts, it
+  runs against the grain of user expectations.  Systems programmers like
+  monotonically increasing clocks; the broader user base usually prefers
+  a clock that follows an applicable civil calendar.  Users of
+  SOURCE_DATE_EPOCH may also wish to set the TZ environment variable.
+
 o groffer has been deleted from the distribution.
 
 
