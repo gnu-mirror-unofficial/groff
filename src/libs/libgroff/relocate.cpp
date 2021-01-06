@@ -160,11 +160,11 @@ char *msw2posixpath(char *path)
 void set_current_prefix()
 {
   char *pathextstr;
-  curr_prefix = new char[path_name_max()];
   // Obtain the full path of the current binary;
   // using GetModuleFileName on MS-Windows,
   // and searching along PATH on other systems.
 #ifdef _WIN32
+  curr_prefix = new char[path_name_max()];
   int len = GetModuleFileName(0, curr_prefix, path_name_max());
   if (len)
     len = GetShortPathName(curr_prefix, curr_prefix, path_name_max());
