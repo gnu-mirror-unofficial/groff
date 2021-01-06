@@ -171,8 +171,6 @@ void set_current_prefix()
 # if DEBUG
   fprintf(stderr, "curr_prefix: %s\n", curr_prefix);
 # endif /* DEBUG */
-#else /* !_WIN32 */
-  curr_prefix = searchpath(program_name, getenv("PATH"));
   if (!curr_prefix && !strchr(program_name, '.')) {	// try with extensions
     pathextstr = strsave(getenv("PATHEXT"));
     if (!pathextstr)
@@ -180,6 +178,8 @@ void set_current_prefix()
     curr_prefix = searchpathext(program_name, pathextstr, getenv("PATH"));
     a_delete pathextstr;
   }
+#else /* !_WIN32 */
+  curr_prefix = searchpath(program_name, getenv("PATH"));
   if (!curr_prefix)
     return;
 #endif /* !_WIN32 */

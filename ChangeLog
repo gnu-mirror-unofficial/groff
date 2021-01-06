@@ -8,6 +8,11 @@
 	searchpath() is used to populate `curr_prefix`, and that
 	function (except on Windows) performs its own allocation.  Fixes
 	memory leak noted by Ingo Schwarze.
+	(set_current_prefix) [!_WIN32]: Move logic attempting to set
+	`curr_prefix` by calling searchpathext() from here...
+	[WIN32]: ...to here.  The PATHEXT environment variable has
+	semantics only under Windows, not POSIX systems, so the
+	placement of this code seemed erroneous.
 
 	See <https://savannah.gnu.org/bugs/?55475>.
 
