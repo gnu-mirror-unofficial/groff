@@ -1,3 +1,19 @@
+2021-01-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Add support for strsignal().
+
+	POSIX.1-2008 added strsignal() to the C library and recommended
+	its use over sys_siglist[], but groff's pipeline management
+	hadn't been updated in that respect since that time.
+
+	* configure.ac: Check for strsignal().
+	* src/roff/groff/pipeline.c (xstrsignal): Return strsignal() if
+	it is defined.
+
+	Thanks to an anonymous contributor for the report and the patch.
+
+	Fixes <https://savannah.gnu.org/bugs/?59835>.
+
 2021-01-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/libs/libgroff/relocate.cpp (relocatep): Add assertion to
