@@ -1,3 +1,9 @@
+2021-01-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/relocate.cpp (set_current_prefix) [WIN32]:
+	Move declaration of `pathextstr` to lie within preprocessor
+	conditional, since it is dereferenced only there.
+
 2021-01-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Add support for strsignal().
