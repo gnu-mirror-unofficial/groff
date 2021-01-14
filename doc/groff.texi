@@ -7427,7 +7427,9 @@ with up to a certain amount of additional inter-word space (@code{hys}).
 Set automatic hyphenation mode to @var{mode}, an integer encoding
 conditions for hyphenation; if omitted, 1 is implied.  The hyphenation
 mode is available in the read-only register @samp{.hy}; it is associated
-with the environment (@pxref{Environments}).
+with the environment (@pxref{Environments}).  The default hyphenation
+mode depends on the language in use on the system; see the @code{hpf}
+request below.
 
 Typesetting practice generally does not avail itself of every
 opportunity for hyphenation, but the details differ by language and site
@@ -7452,8 +7454,7 @@ disables hyphenation.
 
 @item 1
 enables hyphenation except after the first and before the last character
-of a word; this is the default if @var{mode} is omitted and also the
-start-up value of GNU @code{troff}.
+of a word.
 @end table
 
 The remaining values ``imply'' 1; that is, they enable hyphenation
@@ -7523,12 +7524,12 @@ s- plit- t- in- g
 @endExample
 
 @noindent
-instead of the correct `split- ting'.  U.S.@: English patterns as
-distributed with GNU @code{troff} need two characters at the beginning
-and three characters at the end; this means that value@tie{}4 of
-@code{hy} is mandatory.  Value@tie{}8 is possible as an additional
-restriction, but values@tie{}16 and@tie{}32 should be avoided, as should
-mode@tie{}1.  Modes@tie{}4 and@tie{}6 are typical.
+instead of the correct `split- ting'.  English patterns as distributed
+with GNU @code{troff} need two characters at the beginning and three
+characters at the end; this means that value@tie{}4 of @code{hy} is
+mandatory.  Value@tie{}8 is possible as an additional restriction, but
+values@tie{}16 and@tie{}32 should be avoided, as should mode@tie{}1.
+Modes@tie{}4 and@tie{}6 are typical.
 
 A table of left and right minimum character counts for hyphenation as
 needed by the patterns distributed with GNU @code{troff} follows; see
@@ -7538,7 +7539,7 @@ the @cite{groff_tmac@r{(5)}} man page for more information on GNU
 @multitable {German traditional}    {pattern name}    {left min}    {right min}
 @headitem    language           @tab pattern name @tab left min @tab right min
 @item        Czech              @tab cs           @tab 2        @tab 2
-@item        U.S. English       @tab us           @tab 2        @tab 3
+@item        English            @tab en           @tab 2        @tab 3
 @item        French             @tab fr           @tab 2        @tab 3
 @item        German traditional @tab det          @tab 2        @tab 2
 @item        German reformed    @tab den          @tab 2        @tab 2
@@ -7617,25 +7618,39 @@ Character codes that would otherwise be invalid in GNU @code{troff} can
 be used.  By default, every code maps to itself except those for letters
 `A' to `Z', which map to those for `a' to `z'.
 
+@cindex localization
 @pindex troffrc
 @pindex troffrc-end
-@pindex hyphen.us
-@pindex hyphenex.us
+@pindex cs.tmac
+@pindex de.tmac
+@pindex en.tmac
+@pindex fr.tmac
+@pindex ja.tmac
+@pindex sv.tmac
+@pindex zh.tmac
+@tindex LC_ALL
+@tindex LANG
 The set of hyphenation patterns is associated with the language set by
 the @code{hla} request (see below).  The @code{hpf} request is usually
-invoked by the @file{troffrc} or @file{troffrc-end} file; by default,
-@file{troffrc} loads hyphenation patterns and exceptions for U.S.@:
-English (in files @file{hyphen.us} and @file{hyphenex.us}).
+invoked by a localization file loaded by the @file{troffrc} or
+@file{troffrc-end} file.  By default, @file{troffrc} checks the
+environment variables @env{LC_ALL} and @env{LANG} (in that order) and
+attempts to load a localization file matching the first two characters
+of the variable's value.@footnote{As of @code{groff} 1.23.0,
+localization files for Czech (@code{cs}), German (@code{de}), English
+(@code{en}), French (@code{fr}), Japanese (@code{ja}), Swedish
+(@code{sv}), and Chinese (@code{zh}) exist.}  For Western languages, the
+localization file sets the hyphenation mode and loads hyphenation
+patterns and exceptions.  If the environment variables are not set or
+set to ``C'', or a localization file for the locale does not exist, the
+English localization file is used.
 
 A second call to @code{hpf} (for the same language) replaces the
-hyphenation patterns with the new ones.
-
-Invoking @code{hpf} or @code{hpfa} causes an error if there is no
-hyphenation language.
-
-If no @code{hpf} request is specified (either in the document, in a
-@file{troffrc} or @file{troffrc-end} file, or in a macro package), GNU
-@code{troff} won't automatically hyphenate at all.
+hyphenation patterns with the new ones.  Invoking @code{hpf} or
+@code{hpfa} causes an error if there is no hyphenation language.  If no
+@code{hpf} request is specified (either in the document, in a file
+loaded at start-up, or in a macro package), GNU @code{troff} won't
+automatically hyphenate at all.
 @endDefreq
 
 @Defreq {hcode, c1 code1 [c2 code2] @dots{}}
@@ -7687,8 +7702,9 @@ Set the hyphenation language to @var{lang}.  Hyphenation exceptions
 specified with the @code{hw} request and hyphenation patterns and
 exceptions specified with the @code{hpf} and @code{hpfa} requests are
 associated with the hyphenation language.  The @code{hla} request is
-usually invoked by the @file{troffrc} or @file{troffrc-end} files;
-@file{troffrc} sets the default language to @samp{us} (U.S.@: English).
+usually invoked by a localization file, which is turn loaded by the the
+@file{troffrc} or @file{troffrc-end} file; see the @code{hpf} request
+above.
 
 @cindex hyphenation language register (@code{.hla})
 The hyphenation language is available in the read-only string-valued
@@ -15412,7 +15428,7 @@ implementations.
 @cindex hyphenation, incompatibilities with @acronym{AT&T} @code{troff}
 GNU @code{troff} does not always hyphenate words as @acronym{AT&T}
 @code{troff} does.  The @acronym{AT&T} implementation uses a set of
-hard-coded rules specific to U.S.@: English, while GNU @code{troff} uses
+hard-coded rules specific to English, while GNU @code{troff} uses
 language-specific hyphenation pattern files derived from @TeX{}.
 Furthermore, in old versions of @code{troff} there was a limited amount
 of space to store hyphenation exceptions (arguments to the @code{hw}

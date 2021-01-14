@@ -2105,14 +2105,15 @@ requests are associated with the hyphenation language.
 .
 The
 .B .hla
-request is usually invoked by the
+request is usually invoked by a localization file,
+which is in turn loaded by the
 .I troffrc
 or
 .I troffrc\-end
-files;
-.I troffrc
-sets the default language to \[lq]us\[rq]
-(U.S.\& English).
+file;
+see the
+.B .hpf
+request above.
 .
 .
 .IP
@@ -2255,19 +2256,47 @@ request.
 .
 The
 .B .hpf
-request is usually invoked by the
+request is usually invoked by a localization file loaded by the
 .I troffrc
 or
 .I troffrc\-end
-file;
-by default,
+file.
+.
+By default,
 .I troffrc
-loads hyphenation patterns and exceptions for U.S.\& English from the
-files
-.I hyphen.us
+checks the environment variables
+.I LC_ALL
 and
-.IR hyphenex.us ,
-respectively.
+.I LANG
+(in that order)
+and attempts to load a localization file matching the first two
+characters of the variable's value.
+.
+(As of @code{groff} 1.23.0, localization files for Czech
+.RI ( cs ),
+German
+.RI ( de ),
+English
+.RI ( en ),
+French
+.RI ( fr ),
+Japanese
+.RI ( ja ),
+Swedish
+.RI ( sv ),
+and Chinese
+.RI ( zh )
+exist.)
+.
+For Western languages,
+the localization file sets the hyphenation mode and loads hyphenation
+patterns and exceptions.
+.
+If the environment variables are not set,
+set to
+.RB \[lq] C \[rq],
+or a localization file for the locale does not exist,
+the English localization file is used.
 .
 .
 .IP
@@ -2288,11 +2317,7 @@ If no
 .B .hpf
 request is specified
 (either in the document,
-in a
-.I troffrc
-or
-.I troffrc\-end
-file,
+in a file loaded at start-up,
 or in a macro package),
 .I groff
 won't automatically hyphenate at all.
