@@ -204,17 +204,6 @@
 
 	[1] https://reproducible-builds.org/docs/source-date-epoch/
 
-2021-01-03  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* src/roff/troff/input.cpp (init_registers): Delete comment from
-	1992.  C++ maintains separate name spaces for structure tags and
-	type names as C does (the main difference being that C++ permits
-	the creation of user-defined name spaces which are then
-	partitioned much as C name spaces are).  It seems that a version
-	of g++ that was old in 1992 unified the name space for structure
-	tags and type names.  Support for any such compiler would have
-	ceased long ago.
-
 2020-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am (.texi.dvi): Call texi2dvi with FORCE_SOURCE_DATE=1
