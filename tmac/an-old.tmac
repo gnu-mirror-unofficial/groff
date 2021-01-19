@@ -579,6 +579,21 @@
 ..
 .
 .de1 RE
+.  ie \\n[.$] .nr an-RE-requested-level \\$1
+.  el         .nr an-RE-requested-level (\\n[an-level] - 1)
+.  ie \\n[.$] \{\
+.    if (\\n[an-RE-requested-level] = \\n[an-level]) \
+.      ds an-RE-problem redundant; already at level \\n[an-level]\"
+.    if (\\n[an-RE-requested-level] > \\n[an-level]) \
+.      ds an-RE-problem too large\"
+.    if (\\n[an-RE-requested-level] < 1) \
+.      ds an-RE-problem too small\"
+.    if d an-RE-problem \
+.      an-style-warn argument """\\$1""" to .\\$0 \\*[an-RE-problem]
+.    rm an-RE-problem
+.  \}
+.  el .if !(\\n[an-RE-requested-level]) .an-style-warn unbalanced .\\$0
+.  rr an-RE-requested-level
 .  ie \\n[.$] .nr an-level ((;\\$1) <? \\n[an-level])
 .  el         .nr an-level -1
 .  nr an-level (1 >? \\n[an-level])
