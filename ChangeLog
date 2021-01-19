@@ -23,7 +23,6 @@
 	  + Advise usage of .do for groff extensions.
 	  + Line-break one-off conditionals as troffrc does.
 	  + Add empty string comment to empty string definitions.
-	  + Add editor configuration comments.
 
 2021-01-14  Dave Kemper <saint.snit@gmail.com>
 
@@ -139,7 +138,7 @@
 	convenience and changed the affected programs to iterate over
 	command-line arguments manually using the three-argument form of
 	open.
-    
+
 	glilypond doesn't need the initial unshift since that's already
 	handled in contrib/glilypond/args.pl.
 
@@ -618,6 +617,10 @@
 	\*[Lq] and \*[Rq] strings degrade to neutral double quotes (")
 	on "nroff" devices (-Tascii and -Tlatin1), not "``" and "''".
 
+2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac (ds*end!0): Improve diagnostic to mention .RD.
+
 2020-10-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/s.tmac: Revise diagnostic messages.  Define a common
@@ -846,6 +849,33 @@
 
 	Continues the long process of fixing Savannah #52463.
 
+2020-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-old.tmac: Add fallback for lq, rq strings.
+
+	Define \*(lq and \*(rq as '"' if the output device has no \(lq
+	or \(rq special character escapes defined (respectively).
+
+	This is a bit belt-and-suspenders for groff since our output
+	devices all guarantee availability of these glyphs, but if this
+	macro file gets used with other implementations (and if they
+	support the 'c' conditional), it should prevent the strings from
+	producing empty output.
+
+	Man page writers should simply use \(lq and \(rq unless they are
+	aiming for pathological levels of portability (e.g., composing
+	man pages today for consumption on simulators of 1980s Unix
+	systems).
+
+2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-old.tmac: Define an-end with .de1.  We need to define
+	an-end with de1 (execute macro with compatibility mode off)
+	because, as of 37b4180a27a6eeaea429e40ec278abefcda7f3a7 (11
+	October), it can now be called from a trap executing in a
+	context whence compatibility mode might be on (namely,
+	"reload-doc" in andoc.tmac).
+
 2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/eqn/main.cpp (main):
@@ -867,6 +897,23 @@
 	only to "dubious syntax in numeric expressions", which was not
 	the case.  Instead it was being used only for poor construction
 	of character classes with the .class request.
+
+2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/tbl/main.cpp (main): Stop ignoring -T.  GNU tbl
+	was undocumentedly ignoring the -T option; apparently IRIX tbl
+	implemented it, something on the system called tbl with that
+	option (I'm guessing IRIX's man(1)) and its users spammed James
+	Clark with bug reports.  We can probably weather the volume of
+	such spurious reports from IRIX users today.
+
+2020-10-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/tbl/main.cpp (main): Clarify fatal diagnostic in
+	generated document by informing the user that the program is
+	aborting, and also that it is groff extensions that are required
+	rather than GNU troff per se (since Heirloom Doctools troff
+	claims groff extension support via the .g register).
 
 2020-10-14  Ingo Schwarze <schwarze@openbsd.org>
 
@@ -1314,6 +1361,27 @@
 	* tmac/tests/doc-accept-mixed-case-section-headings.sh: Test it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
 	* tmac/tests/doc-smoke-test.sh: Use mixed-case section headings.
+
+2020-09-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* makevarescape.sed: Use \[] form of special character escapes.
+
+	The only man page we have that doesn't turn compatibility mode
+	off (neqn) also doesn't use any sed-substituted patterns where
+	characters replaced by a \[] special character escape form are
+	likely to be used.
+
+	The @g@ command prefix is the main avenue for intrusion of such
+	escapes, but I think it improbable that many people are going to
+	include apostrophes, double quotes, carets, grave accents, or
+	tildes in the command prefix; some or all of these will pick
+	fights with the shell and require quoting that we don't
+	represent in man page text anyway.
+
+	On top of that, neqn is largely a stub page.
+
+	If it's a problem, a better fix than reverting this is to make
+	neqn switch out of compatibility mode like our other man pages.
 
 2020-09-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
