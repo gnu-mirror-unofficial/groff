@@ -12,24 +12,24 @@
 
 	* tmac/troffrc:
 	* tmac/troffrc-end:
-	  + Identify files in header comments as part of GNU troff.
+	  - Identify files in header comments as part of GNU troff.
 
 	* tmac/troffrc:
-	  + Clarify purpose of .do request.
-	  + Identify .X (set by groff -X) as a register, not a string.
-	  + Remove temporary registers one per line to make
+	  - Clarify purpose of .do request.
+	  - Identify .X (set by groff -X) as a register, not a string.
+	  - Remove temporary registers one per line to make
 	    synchronization with foregoing logic easier.  Fixes name
 	    space management nits: an undefined string troffrc!Xps was
 	    being removed, and troffrc!{ascii,latin1,utf8,cp1047} were
 	    not being removed despite being defined.
 
 	* tmac/troffrc-end:
-	  + Clarify that file is read after -m file arguments (not "all
+	  - Clarify that file is read after -m file arguments (not "all
 	    macro sets", which can be loaded with .mso after this file
 	    is processed).
-	  + Advise usage of .do for groff extensions.
-	  + Line-break one-off conditionals as troffrc does.
-	  + Add empty string comment to empty string definitions.
+	  - Advise usage of .do for groff extensions.
+	  - Line-break one-off conditionals as troffrc does.
+	  - Add empty string comment to empty string definitions.
 
 2021-01-14  Dave Kemper <saint.snit@gmail.com>
 
@@ -1116,12 +1116,12 @@
 	(table::compute_expand_width):
 	(table::compute_separation_factor): Use consistent format for
 	diagnostic messages.
-	+ Do not spread a single diagnostic across multiple lines.
-	+ Report messages in GNU Coding Standards format, that is:
-	+ Report the name of the file the problem is in...
-	+ ...then the line number...
-	+ ...then the diagnostic severity level...
-	+ ...then the specific problem.
+	  - Do not spread a single diagnostic across multiple lines.
+	  - Report messages in GNU Coding Standards format, that is:
+	  - Report the name of the file the problem is in...
+	  - ...then the line number...
+	  - ...then the diagnostic severity level...
+	  - ...then the specific problem.
 
 2020-09-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
