@@ -26,7 +26,7 @@
 @copying
 This manual documents GNU @code{troff} version 1.23.0.
 
-Copyright @copyright{} 1994--2020 Free Software Foundation, Inc.
+Copyright @copyright{} 1994--2021 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -6765,11 +6765,14 @@ register @code{.T} is set to@tie{}1, and zero otherwise.
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Manipulating Filling and Adjustment, Manipulating Hyphenation, Registers, gtroff Reference
 @section Manipulating Filling and Adjustment
-@cindex manipulating filling and adjusting
-@cindex filling and adjusting, manipulating
-@cindex adjusting and filling, manipulating
+@cindex manipulating filling and adjustment
+@cindex filling and adjustment, manipulating
+@cindex adjustment and filling, manipulating
 @cindex justifying text
 @cindex text, justifying
 
@@ -6786,28 +6789,37 @@ register @code{.T} is set to@tie{}1, and zero otherwise.
 @cindex @code{sp} request, causing implicit linebreak
 @cindex @code{ti} request, causing implicit linebreak
 @cindex @code{trf} request, causing implicit linebreak
-Various ways of causing @dfn{breaks} were given in @ref{Breaking}.  The
+Various ways of causing @dfn{breaks} were shown in @ref{Breaking}.  The
 @code{br} request likewise causes a break.  Several other requests also
-cause breaks, but implicitly.  These are @code{bp}, @code{ce},
-@code{cf}, @code{fi}, @code{fl}, @code{in}, @code{nf}, @code{rj},
-@code{sp}, @code{ti}, and @code{trf}.
+cause breaks implicitly.  These are @code{bp}, @code{ce}, @code{cf},
+@code{fi}, @code{fl}, @code{in}, @code{nf}, @code{rj}, @code{sp},
+@code{ti}, and @code{trf}.  If the no-break control character is used
+with any of these requests, GNU @code{troff} suppresses the break.
+
+@cindex pending output line
+@cindex partially collected line
+An output line is said to be @dfn{pending} if some input has been
+collected but an output line corresponding to it has not yet been
+written.  If no output line is pending, it is as if a break has already
+happened; additional breaks, whether explicit or implicit, have no
+effect.
 
 @Defreq {br, }
-Break the current line, i.e., the input collected so far is emitted
-without adjustment.
-
-If the no-break control character is used, @code{gtroff} suppresses the
-break:
+Break the current line: any input collected on the pending output line
+is emitted without adjustment.
 
 @Example
-a
+foo bar
+.br
+baz
 'br
-b
-    @result{} a b
+qux
+    @result{} foo bar
+    @result{} baz qux
 @endExample
 @endDefreq
 
-Initially, @code{gtroff} fills and adjusts text to both margins.
+Initially, GNU @code{troff} fills text and adjusts it to both margins.
 Filling can be disabled via the @code{nf} request and re-enabled with
 the @code{fi} request.
 
@@ -6815,11 +6827,10 @@ the @code{fi} request.
 @DefregListEndx {.u}
 @cindex fill mode (@code{fi})
 @cindex mode, fill (@code{fi})
-Activate fill mode (which is the default).  This request implicitly
-enables adjusting; it also inserts a break in the text currently being
-filled.  The read-only register @code{.u} is set to@tie{}1.
+Activate fill mode; a pending output line is broken.  The read-only
+register @code{.u} is set to@tie{}1.
 
-The fill mode status is associated with the current environment
+Fill mode enablement status is associated with the current environment
 (@pxref{Environments}).
 
 See @ref{Line Control}, for interaction with the @code{\c} escape.
@@ -6828,12 +6839,12 @@ See @ref{Line Control}, for interaction with the @code{\c} escape.
 @Defreq {nf, }
 @cindex no-fill mode (@code{nf})
 @cindex mode, no-fill (@code{nf})
-Activate no-fill mode.  Input lines are output as-is, retaining line
-breaks and ignoring the current line length.  This request implicitly
-disables adjusting; it also causes a break.  The register @code{.u} is
-set to@tie{}0.
+Activate no-fill mode: the output line length (@pxref{Line Layout}) is
+ignored and output lines are broken where the input lines are.  A
+pending output line is broken and adjustment is suppressed.  The
+register @code{.u} is set to@tie{}0.
 
-The fill mode status is associated with the current environment
+Fill mode enablement status is associated with the current environment
 (@pxref{Environments}).
 
 See @ref{Line Control}, for interaction with the @code{\c} escape.
@@ -6841,41 +6852,43 @@ See @ref{Line Control}, for interaction with the @code{\c} escape.
 
 @DefreqList {ad, [@Var{mode}]}
 @DefregListEndx {.j}
-Set adjusting mode.
+Set adjustment mode to @var{mode}, taking effect when the pending (or
+next) output line is broken.   Adjustment is suppressed in no-fill mode.
 
-Activation and deactivation of adjusting is done implicitly with calls
-to the @code{fi} or @code{nf} requests.
-
-@var{mode} can have one of the following values:
+@var{mode} can have one of the following values.
 
 @table @code
 @item l
-@cindex ragged-right
-Adjust text to the left margin.  This produces what is traditionally
-called ragged-right text.
+@cindex ragged-right text
+Adjust text to the left margin, producing what is sometimes called
+ragged-right text.  Due to the way @code{roff} systems traditionally
+implement adjustment, it can be helpful to think of @w{@samp{.ad l}} as
+``no adjustment'', or as a synonym for the @code{na} request (see
+below).
 
 @item r
-@cindex ragged-left
+@cindex ragged-left text
 Adjust text to the right margin, producing ragged-left text.
 
 @item c
 @cindex centered text
-@cindex @code{ce} request, difference to @samp{.ad@tie{}c}
-Center filled text.  This is different to the @code{ce} request, which
-only centers text without filling.
+@cindex @code{ce} request, difference from @w{@samp{.ad c}}
+Center filled text.  Contrast with the @code{ce} request, which centers
+text without filling.
 
 @item b
 @itemx n
-Justify to both margins.  This is the default used by @code{gtroff}.
+Adjust ``normally'': to both margins.  This is the GNU @code{troff}
+default.
 @end table
 
 Finally, @var{mode} can be the numeric argument returned by the
 @code{.j} register.
 
-Using @code{ad} without argument is the same as saying
-@samp{.ad \n[.j]}.  In particular, @code{gtroff} adjusts lines in the
-same way it did before adjusting was deactivated (with a call to
-@code{na}, say).  For example, this input code
+Using @code{ad} without an argument is the same as @samp{.ad \n[.j]}.
+In particular, GNU @code{troff} adjusts lines in the same way it did
+before adjustment was deactivated (with a call to @code{na}, say).  For
+example, this input code
 
 @Example
 .de AD
@@ -6888,76 +6901,79 @@ same way it did before adjusting was deactivated (with a call to
 .  na
 ..
 .
-textA
+left
 .AD r
 .nr ad \n[.j]
-textB
+right
 .AD c
-textC
+center
 .NA
-textD
-.AD         \" back to centering
-textE
-.AD \n[ad]  \" back to right justifying
-textF
+left
+.AD
+center
+.AD \n[ad]
+right
 @endExample
 
 @noindent
 produces the following output:
 
 @Example
-textA
-                                                    textB
-                          textC
-textD
-                          textE
-                                                    textF
+left
+                                                    right
+                          center
+left
+                          center
+                                                    right
 @endExample
 
 @cindex adjustment mode register (@code{.j})
-As just demonstrated, the current adjustment mode is available in the
-read-only register @code{.j}; it can be stored and subsequently used to
-set adjustment.
+The current adjustment mode is available in the read-only register
+@code{.j}; it can be stored and subsequently used to set adjustment.
 
-The adjustment mode status is associated with the current environment
-(@pxref{Environments}).
+The adjustment mode and enablement status are associated with the
+current environment (@pxref{Environments}).
+
+The value of @code{.j} for any adjustment mode is an implementation
+detail and should not be relied upon as a programmer's interface.
 @endDefreq
 
 @Defreq {na, }
-Disable adjusting.  This request won't change the current adjustment
-mode: A subsequent call to @code{ad} uses the previous adjustment
-setting.
+Disable adjustment.  This is synonymous with the request
+@w{@samp{.ad l}}; the value of the adjustment mode register @code{.j}
+is not changed.
 
-The adjustment mode status is associated with the current environment
-(@pxref{Environments}).
+The adjustment mode and enablement status are associated with the
+current environment (@pxref{Environments}).
 @endDefreq
 
 @DefreqList {brp, }
 @DefescListEndx {\\p, , , }
-Break, adjusting the current line per the current adjustment mode.
+Break, adjusting the line per the current adjustment mode.
 
 With @code{\p}, this break will happen at the next word boundary.  The
 @code{\p} itself is removed entirely, adding neither a break nor a space
 where it appears in input; it can thus be placed in the middle of a word
 to cause a break at the end of that word.
 
-In most cases this produces very ugly results since @code{gtroff}
-doesn't have a sophisticated paragraph building algorithm (as @TeX{}
-has, for example); instead, @code{gtroff} fills and adjusts a paragraph
-line by line:
+In most cases this produces ugly results since GNU @code{troff} doesn't
+have a sophisticated paragraph-building algorithm (as @TeX{} has, for
+example); instead, GNU @code{troff} fills and adjusts a paragraph line
+by line.
 
 @Example
+.ll 4.5i
 This is an uninteresting sentence.
 This is an uninteresting sentence.\p
 This is an uninteresting sentence.
 @endExample
 
 @noindent
-is formatted as
+is formatted as follows.
 
 @Example
-This is  an uninteresting  sentence.   This  is an
-uninteresting                            sentence.
+This  is  an uninteresting sentence.  This is
+an          uninteresting           sentence.
 This is an uninteresting sentence.
 @endExample
 @endDefreq
@@ -7044,30 +7060,32 @@ If @emph{undiscardable} space is required, use the @code{\h} escape.
 @DefregListEndx {.ce}
 @cindex centering lines (@code{ce})
 @cindex lines, centering (@code{ce})
-Center text.  While the @w{@samp{.ad c}} request also centers text, it
-fills the text as well.  @code{ce} does not fill the text it affects.
-This request causes a break.  The number of lines still to be centered
+Center the next @var{nnn} input text lines without filling them.  A
+pending output line is broken.  The number of lines still to be centered
 is associated with the current environment (@pxref{Environments}).
 
-The following example demonstrates the differences.
+While the @w{@samp{.ad c}} request also centers text, it fills the text
+as well.  The following example demonstrates the difference.
 
 @Example
+.de FR
+This is a small text fragment that shows the differences
+between the `.ce' and the `.ad c' requests.
+..
 .ll 4i
 .ce 1000
-This is a small text fragment that shows the differences
-between the `.ce' and the `.ad c' request.
+.FR
 .ce 0
 
 .ad c
-This is a small text fragment that shows the differences
-between the `.ce' and the `.ad c' request.
-    @result{}   This is a small text fragment that
-    @result{}          shows the differences
-    @result{} between the `.ce' and the `.ad c' request.
+.FR
+    @result{} This is a small text fragment that shows
+    @result{}              the differences
+    @result{} between the @quoteleft{}.ce@quoteright{} and the @quoteleft{}.ad c@quoteright{} requests.
     @result{}
-    @result{}   This is a small text fragment that
-    @result{} shows the differences between the `.ce'
-    @result{}         and the `.ad c' request.
+    @result{} This is a small text fragment that shows
+    @result{}  the differences between the @quoteleft{}.ce@quoteright{} and
+    @result{}         the @quoteleft{}.ad c@quoteright{} requests.
 @endExample
 
 With no arguments, @code{ce} centers the next line of text.  @var{nnn}
@@ -7078,10 +7096,10 @@ The basic length for centering text is the line length (as set with the
 @code{ll} request) minus the indentation (as set with the @code{in}
 request).  Temporary indentation is ignored.
 
-The previous example shows the common idiom of turning on centering for
-a large number of lines, and turning off centering after the text to be
-centered.  This is useful for any request that takes a number of lines
-as an argument.
+The previous example illustrates a common idiom of turning centering on
+for a quantity of lines far in excess of what is required, and off again
+after the text to be centered.  This pattern is useful for any request
+that takes a count of input lines as an argument.
 
 The @code{.ce} read-only register contains the number of lines remaining
 to be centered, as set by the @code{ce} request.
@@ -7092,18 +7110,16 @@ to be centered, as set by the @code{ce} request.
 @cindex justifying text (@code{rj})
 @cindex text, justifying (@code{rj})
 @cindex right-justifying (@code{rj})
-Justify unfilled text to the right margin.  Arguments are identical to
-the @code{ce} request.  The @code{.rj} read-only register is the number
-of lines to be right-justified as set by the @code{rj} request.  This
-request causes a break.  The number of lines still to be right-justified
-is associated with the current environment (@pxref{Environments}).
+Align the next @var{nnn} input text lines to the right margin without
+filling them.  A pending output line is broken.  The @code{.rj}
+read-only register is the number of lines to be right-justified as set
+by the @code{rj} request.  The number of lines still to be
+right-justified is associated with the current environment
+(@pxref{Environments}).
 @endDefreq
 
 
 @c =====================================================================
-
-@codequotebacktick on
-@codequoteundirected on
 
 @node Manipulating Hyphenation, Manipulating Spacing, Manipulating Filling and Adjustment, gtroff Reference
 @section Manipulating Hyphenation
