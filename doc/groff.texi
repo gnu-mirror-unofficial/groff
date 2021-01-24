@@ -6871,8 +6871,7 @@ below).
 Adjust text to the right margin, producing ragged-left text.
 
 @item c
-@cindex centered text
-@cindex @code{ce} request, difference from @w{@samp{.ad c}}
+@cindex centered text (filled)
 Center filled text.  Contrast with the @code{ce} request, which centers
 text without filling.
 
@@ -7058,12 +7057,14 @@ If @emph{undiscardable} space is required, use the @code{\h} escape.
 
 @DefreqList {ce, [@Var{nnn}]}
 @DefregListEndx {.ce}
+@cindex centered text (unfilled)
 @cindex centering lines (@code{ce})
 @cindex lines, centering (@code{ce})
 Center the next @var{nnn} input text lines without filling them.  A
 pending output line is broken.  The number of lines still to be centered
 is associated with the current environment (@pxref{Environments}).
 
+@cindex @code{ce} request, difference from @w{@samp{.ad c}}
 While the @w{@samp{.ad c}} request also centers text, it fills the text
 as well.  The following example demonstrates the difference.
 
