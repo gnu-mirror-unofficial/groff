@@ -5602,17 +5602,19 @@ emitted!  The contents of the first macro definition are lost.
 @cindex embedded commands
 @cindex commands, embedded
 
-Most documents need more functionality beyond filling, adjusting and
-implicit line breaking.  In order to gain further functionality,
-@code{gtroff} allows commands to be embedded into the text, in two ways.
+To support the needs of documents that require more than filling,
+automatic line breaking and hyphenation, and adjustment, GNU
+@code{troff} allows commands to be embedded into the text.   This is
+done in two ways.
 
-The first is a @dfn{request} that takes up an entire line, and does
-some large-scale operation (e.g.@: break lines, start new pages).
+One is a @dfn{request} that takes up an entire line, and often performs
+some large-scale operation such as breaking a lines or starting a new
+page.
 
-The other is an @dfn{escape} that can be usually embedded anywhere in
-the text; most requests can accept it even as an argument.  Escapes
-generally do more minor operations like sub- and superscripts, print a
-symbol, etc.
+The other is an @dfn{escape} that can usually be embedded anywhere in
+the text; most requests can accept an escape even as an argument.
+Escapes typically implement relatively minor operations like sub- and
+superscripting or interpolating a symbol.
 
 @menu
 * Requests::
