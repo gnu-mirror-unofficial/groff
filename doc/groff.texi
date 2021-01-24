@@ -6858,6 +6858,16 @@ next) output line is broken.   Adjustment is suppressed in no-fill mode.
 @var{mode} can have one of the following values.
 
 @table @code
+@item b
+@itemx n
+Adjust ``normally'': to both margins.  This is the GNU @code{troff}
+default.
+
+@item c
+@cindex centered text (filled)
+Center filled text.  Contrast with the @code{ce} request, which centers
+text without filling.
+
 @item l
 @cindex ragged-right text
 Adjust text to the left margin, producing what is sometimes called
@@ -6869,16 +6879,6 @@ below).
 @item r
 @cindex ragged-left text
 Adjust text to the right margin, producing ragged-left text.
-
-@item c
-@cindex centered text (filled)
-Center filled text.  Contrast with the @code{ce} request, which centers
-text without filling.
-
-@item b
-@itemx n
-Adjust ``normally'': to both margins.  This is the GNU @code{troff}
-default.
 @end table
 
 Finally, @var{mode} can be the numeric argument returned by the
@@ -6977,6 +6977,70 @@ This is an uninteresting sentence.
 @endExample
 @endDefreq
 
+@DefreqList {ce, [@Var{nnn}]}
+@DefregListEndx {.ce}
+@cindex centered text (unfilled)
+@cindex centering lines (@code{ce})
+@cindex lines, centering (@code{ce})
+Center the next @var{nnn} input text lines without filling them.  A
+pending output line is broken.  The number of lines still to be centered
+is associated with the current environment (@pxref{Environments}).
+
+@cindex @code{ce} request, difference from @w{@samp{.ad c}}
+While the @w{@samp{.ad c}} request also centers text, it fills the text
+as well.  The following example demonstrates the difference.
+
+@Example
+.de FR
+This is a small text fragment that shows the differences
+between the `.ce' and the `.ad c' requests.
+..
+.ll 4i
+.ce 1000
+.FR
+.ce 0
+
+.ad c
+.FR
+    @result{} This is a small text fragment that shows
+    @result{}              the differences
+    @result{} between the @quoteleft{}.ce@quoteright{} and the @quoteleft{}.ad c@quoteright{} requests.
+    @result{}
+    @result{} This is a small text fragment that shows
+    @result{}  the differences between the @quoteleft{}.ce@quoteright{} and
+    @result{}         the @quoteleft{}.ad c@quoteright{} requests.
+@endExample
+
+With no arguments, @code{ce} centers the next line of text.  @var{nnn}
+specifies the number of lines to be centered.  If the argument is zero
+or negative, centering is disabled.
+
+The basic length for centering text is the line length (as set with the
+@code{ll} request) minus the indentation (as set with the @code{in}
+request).  Temporary indentation is ignored.
+
+The previous example illustrates a common idiom of turning centering on
+for a quantity of lines far in excess of what is required, and off again
+after the text to be centered.  This pattern is useful for any request
+that takes a count of input lines as an argument.
+
+The @code{.ce} read-only register contains the number of lines remaining
+to be centered, as set by the @code{ce} request.
+@endDefreq
+
+@DefreqList {rj, [@Var{nnn}]}
+@DefregListEndx {.rj}
+@cindex justifying text (@code{rj})
+@cindex text, justifying (@code{rj})
+@cindex right-justifying (@code{rj})
+Align the next @var{nnn} input text lines to the right margin without
+filling them.  A pending output line is broken.  The @code{.rj}
+read-only register is the number of lines to be right-justified as set
+by the @code{rj} request.  The number of lines still to be
+right-justified is associated with the current environment
+(@pxref{Environments}).
+@endDefreq
+
 @DefreqList {ss, word-space-size [@Var{additional-sentence-space-size}]}
 @DefregItemx {.ss}
 @DefregListEndx {.sss}
@@ -7053,70 +7117,6 @@ known for other work.
 
 @noindent
 If @emph{undiscardable} space is required, use the @code{\h} escape.
-@endDefreq
-
-@DefreqList {ce, [@Var{nnn}]}
-@DefregListEndx {.ce}
-@cindex centered text (unfilled)
-@cindex centering lines (@code{ce})
-@cindex lines, centering (@code{ce})
-Center the next @var{nnn} input text lines without filling them.  A
-pending output line is broken.  The number of lines still to be centered
-is associated with the current environment (@pxref{Environments}).
-
-@cindex @code{ce} request, difference from @w{@samp{.ad c}}
-While the @w{@samp{.ad c}} request also centers text, it fills the text
-as well.  The following example demonstrates the difference.
-
-@Example
-.de FR
-This is a small text fragment that shows the differences
-between the `.ce' and the `.ad c' requests.
-..
-.ll 4i
-.ce 1000
-.FR
-.ce 0
-
-.ad c
-.FR
-    @result{} This is a small text fragment that shows
-    @result{}              the differences
-    @result{} between the @quoteleft{}.ce@quoteright{} and the @quoteleft{}.ad c@quoteright{} requests.
-    @result{}
-    @result{} This is a small text fragment that shows
-    @result{}  the differences between the @quoteleft{}.ce@quoteright{} and
-    @result{}         the @quoteleft{}.ad c@quoteright{} requests.
-@endExample
-
-With no arguments, @code{ce} centers the next line of text.  @var{nnn}
-specifies the number of lines to be centered.  If the argument is zero
-or negative, centering is disabled.
-
-The basic length for centering text is the line length (as set with the
-@code{ll} request) minus the indentation (as set with the @code{in}
-request).  Temporary indentation is ignored.
-
-The previous example illustrates a common idiom of turning centering on
-for a quantity of lines far in excess of what is required, and off again
-after the text to be centered.  This pattern is useful for any request
-that takes a count of input lines as an argument.
-
-The @code{.ce} read-only register contains the number of lines remaining
-to be centered, as set by the @code{ce} request.
-@endDefreq
-
-@DefreqList {rj, [@Var{nnn}]}
-@DefregListEndx {.rj}
-@cindex justifying text (@code{rj})
-@cindex text, justifying (@code{rj})
-@cindex right-justifying (@code{rj})
-Align the next @var{nnn} input text lines to the right margin without
-filling them.  A pending output line is broken.  The @code{.rj}
-read-only register is the number of lines to be right-justified as set
-by the @code{rj} request.  The number of lines still to be
-right-justified is associated with the current environment
-(@pxref{Environments}).
 @endDefreq
 
 
