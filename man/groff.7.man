@@ -1173,15 +1173,29 @@ Print
 .I string
 on standard error, exit program.
 .
-.TPx
-.REQ .ad
-Begin line adjustment for output lines in current adjust mode.
 .
 .TPx
-.REQ .ad "c"
-Start line adjustment in mode
+.REQ .ad
+Enable output line adjustment in current mode
+.RB ( \[rs]n[.j] ).
+.
+.
+.TPx
+.REQ .ad c
+Adjust output lines in mode
 .I c
-(\f[CI]c\/\f[]\f[CR]\|\^\[eq]\|l,r,c,b,n\f[]).
+.RI ( c =\c
+.BR b , c , n , r ).
+.
+Sets
+.BR \[rs]n[.j] .
+.
+.
+.TPx
+.REQ ".ad l"
+Same as
+.RB \[lq] ".na" \[rq].
+.
 .
 .TPx
 .REQ .af "register c"
@@ -2186,9 +2200,15 @@ except that
 .I file
 is searched in the tmac directories.
 .
+.
 .TPx
 .REQ .na
-No output-line adjusting.
+No adjustment.
+.
+Do not adjust output lines;
+same as
+.RB \[lq] ".ad l" \[rq].
+.
 .
 .TPx
 .REQ .ne
