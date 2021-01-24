@@ -787,7 +787,7 @@ the most important operations supported by @code{groff}:
 
 @itemize @bullet
 @item
-text filling, adjusting, and centering
+text filling, adjustment, and centering
 
 @item
 hyphenation
@@ -4439,7 +4439,7 @@ both sides of the sentence-spacing debate can be found at
 @uref{https://web.archive.org@//web@//20171217060354@//http://www.heracliteanriver.com@//?p=324}.}
 GNU @code{troff} follows the example of @acronym{AT&T} @code{troff},
 attempting to detect the boundaries between sentences, and supplying
-additional inter-sentence space.
+additional inter-sentence space between them.
 
 @Example
 Hello, world!
@@ -4727,6 +4727,11 @@ no-break control character.  These characters were chosen because it is
 uncommon for lines of text in natural languages to begin with periods or
 apostrophes.
 
+@cindex control line
+Lines beginning with a control character are called @dfn{control lines}.
+@cindex text line
+Every line of input that is not a control line is a @dfn{text line}.
+
 GNU @code{troff} requests, combined with its escape sequences, comprise
 the control language of the formatter.  Of key importance are the
 requests that define macros.  Macros are invoked like requests, enabling
@@ -4735,7 +4740,6 @@ handling in macros is more flexible but also more complex.
 @xref{Request and Macro Arguments}.}
 
 @cindex macro
-@cindex macro, defined
 @cindex interpolation
 A @dfn{macro} can be thought of as an abbreviation you can define that
 is replaced with what it stands for when it is called.  In @code{roff}
@@ -4870,7 +4874,7 @@ Macro definitions can be collected into @dfn{macro files}, @code{roff}
 input files designed to produce no output themselves but instead ease
 the preparation of other @code{roff} documents.  There is no syntactical
 difference between a macro file and any other @code{roff} document; only
-its purpose distinguishes it.  When a macro file it installed into a
+its purpose distinguishes it.  When a macro file is installed into a
 standard location and suitable for use by a general audience, it is
 often termed a @dfn{macro package}.@footnote{Macro packages frequently
 define registers and strings as well.}  Macro packages can be loaded by
@@ -13424,9 +13428,6 @@ solution would be to append the above macro to the macro package's
 end-of-input macro using the @code{am} request.
 @endDefreq
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
@@ -13441,9 +13442,9 @@ for such @emph{diversions} as for strings and macros.  Such text is
 sometimes said to be ``stored in a macro'', but this coinage obscures
 the important distinction between macros and strings on one hand and
 diversions on the other; the former store @emph{unformatted} input text,
-and latter captures @emph{formatted} output.  Applications of diversions
-include ``keeps'' (preventing a page break from occurring at an
-inconvenient place by forcing a set of output lines to be set as a
+and the latter capture @emph{formatted} output.  Applications of
+diversions include ``keeps'' (preventing a page break from occurring at
+an inconvenient place by forcing a set of output lines to be set as a
 group), footnotes, tables of contents, and indices.
 @cindex top-level diversion
 @cindex diversion, top-level
@@ -13737,6 +13738,9 @@ The vertical sizes of lines are not preserved, but glyph information
 (font, font size, space width, etc.)@: is retained.  @code{unformat} can
 be useful in conjunction with the @code{box} and @code{boxa} requests.
 @endDefreq
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
