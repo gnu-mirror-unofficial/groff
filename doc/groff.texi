@@ -6871,10 +6871,7 @@ text without filling.
 @item l
 @cindex ragged-right text
 Adjust text to the left margin, producing what is sometimes called
-ragged-right text.  Due to the way @code{roff} systems traditionally
-implement adjustment, it can be helpful to think of @w{@samp{.ad l}} as
-``no adjustment'', or as a synonym for the @code{na} request (see
-below).
+ragged-right text.
 
 @item r
 @cindex ragged-left text
@@ -6938,9 +6935,9 @@ detail and should not be relied upon as a programmer's interface.
 @endDefreq
 
 @Defreq {na, }
-Disable adjustment.  This is synonymous with the request
-@w{@samp{.ad l}}; the value of the adjustment mode register @code{.j}
-is not changed.
+Disable adjustment.  This looks the same as adjustment to the left
+margin, but the value of the adjustment mode register @code{.j} is not
+changed.
 
 The adjustment mode and enablement status are associated with the
 current environment (@pxref{Environments}).
