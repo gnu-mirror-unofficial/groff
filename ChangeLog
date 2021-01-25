@@ -1,5 +1,13 @@
 2021-01-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/env.cpp: Add ADJUST_MAX enumeration constant to
+	record maximum valid numerical adjustment mode.
+	(adjust): Verify numeric argument against ADJUST_MAX instead of
+	a numeric literal.  Ignore excessively large values instead of
+	setting adjustment mode to "right".  Update warning diagnostic.
+
+2021-01-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for .ad and .na requests.
 
 	* src/roff/groff/tests/adjustment_works.sh: Do it.
