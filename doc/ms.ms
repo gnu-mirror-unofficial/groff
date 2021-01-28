@@ -251,6 +251,7 @@ Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
 _
 Text	\[rs]n[PS]	Point size	next \(pp	10p
 \^	\[rs]n[VS]	Line spacing (leading)	next \(pp	12p
+\^	\[rs]*[FAM]	Font family	next \(pp	12p
 _
 Paragraphs	\[rs]n[PI]	Initial indent	next \(pp	5n
 \^	\[rs]n[PD]	Space between paragraphs	next \(pp	0.3v
