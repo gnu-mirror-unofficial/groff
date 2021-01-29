@@ -191,17 +191,13 @@ tmac_XFAIL_TESTS = \
 XFAIL_TESTS += $(tmac_XFAIL_TESTS)
 
 $(TMACSTRIPFILES): $(TMACUNSTRIPFILES)
-	for f in $(TMACSTRIPFILES); do \
-	   sed -f $(tmac_srcdir)/strip.sed $(top_srcdir)/$$f-u \
-	     > $(top_builddir)/$$f; \
-	done
+	sed -f $(tmac_srcdir)/strip.sed $(top_srcdir)/$@-u \
+	    > $(top_builddir)/$@
 
 $(TMACMDOCSTRIPFILES): $(TMACMDOCUNSTRIPFILES)
 	$(MKDIR_P) $(top_builddir)/tmac/mdoc
-	for f in $(TMACMDOCSTRIPFILES); do \
-	   sed -f $(tmac_srcdir)/strip.sed $(top_srcdir)/$$f-u \
-	     > $(top_builddir)/$$f; \
-	done
+	sed -f $(tmac_srcdir)/strip.sed $(top_srcdir)/$@-u \
+	    > $(top_builddir)/$@
 
 tmac/www.tmac: tmac/www.tmac.in
 	$(MKDIR_P) $(top_builddir)/tmac

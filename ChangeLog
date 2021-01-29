@@ -1,3 +1,13 @@
+2021-01-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/tmac.am ($(TMACSTRIPFILES)):
+	($(TMACMDOCSTRIPFILES)): Remove unidiomatic for loop which
+	frustrated parallel make operation.
+
+	Thanks to an anonymous contributor for the report and patch.
+
+	Fixes <https://savannah.gnu.org/bugs/?59958>.
+
 2021-01-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/ms.ms (Document control settings): Document old FAM string
