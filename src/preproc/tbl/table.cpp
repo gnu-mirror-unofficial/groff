@@ -1,4 +1,4 @@
-/* Copyright (C) 1989-2020 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2021 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -63,6 +63,11 @@ const int DEFAULT_COLUMN_SEPARATION = 3;
 #define ROW_MAX_LINE_REG PREFIX "lnmx"
 #define REPEATED_NM_SET_MACRO PREFIX "rlns"
 #define REPEATED_NM_SUS_MACRO PREFIX "rlnx"
+#define SAVED_HYPHENATION_MODE_REG PREFIX "hyphmode"
+#define SAVED_HYPHENATION_LANG_NAME PREFIX "hyphlang"
+#define SAVED_HYPHENATION_MAX_LINES_REG PREFIX "hyphmaxlines"
+#define SAVED_HYPHENATION_MARGIN_REG PREFIX "hyphmargin"
+#define SAVED_HYPHENATION_SPACE_REG PREFIX "hyphspace"
 
 // this must be one character
 #define COMPATIBLE_REG PREFIX "c"
@@ -1771,6 +1776,11 @@ void table::init_output()
 	 ".in \\n[.i]u\n"
 	 ".ll \\n[.l]u\n"
 	 ".ls \\n[.L]\n"
+	 ".hy \\\\n[" SAVED_HYPHENATION_MODE_REG "]\n"
+	 ".hla \\\\*[" SAVED_HYPHENATION_LANG_NAME "]\n"
+	 ".hlm \\\\n[" SAVED_HYPHENATION_MAX_LINES_REG "]\n"
+	 ".hym \\\\n[" SAVED_HYPHENATION_MARGIN_REG "]\n"
+	 ".hys \\\\n[" SAVED_HYPHENATION_SPACE_REG "]\n"
 	 ".ad \\n[.j]\n"
 	 ".ie \\n[.u] .fi\n"
 	 ".el .nf\n"
@@ -1782,6 +1792,11 @@ void table::init_output()
 	 ".nr " SAVED_SIZE_REG " \\n[.s]\n"
 	 ".nr " SAVED_FILL_REG " \\n[.u]\n"
 	 ".ds " SAVED_TABS_NAME " \\n[.tabs]\n"
+	 ".nr " SAVED_HYPHENATION_MODE_REG " \\n[.hy]\n"
+	 ".ds " SAVED_HYPHENATION_LANG_NAME " \\n[.hla]\n"
+	 ".nr " SAVED_HYPHENATION_MAX_LINES_REG " \\n[.hlm]\n"
+	 ".nr " SAVED_HYPHENATION_MARGIN_REG " \\n[.hym]\n"
+	 ".nr " SAVED_HYPHENATION_SPACE_REG " \\n[.hys]\n"
 	 ".nr T. 0\n"
 	 ".nr " CURRENT_ROW_REG " 0-1\n"
 	 ".nr " LAST_PASSED_ROW_REG " 0-1\n"

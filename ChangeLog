@@ -1,5 +1,22 @@
 2021-01-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Save and restore hyphenation parameters.
+
+	* src/preproc/tbl/table.cpp (table::init_output): When starting
+	a table, save the hyphenation parameters (\n[.hy], \n[.hla],
+	\n[.hlm], \n[.hym], \n[.hys]).  Restore them in the table reset
+	macro (confusingly called "3init"), which is called before
+	performing each diversion and before exiting a table.
+
+	This enables people to, e.g., turn off hyphenation in a table
+	text block with .nh, just as they can turn off adjustment with
+	.na, without having to manually reset it.  The next text block,
+	and the material after the table, will not be affected.
+
+	Fixes <https://savannah.gnu.org/bugs/?59971>.
+
+2021-01-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #59971.
 
 	* src/preproc/tbl/tests/\
