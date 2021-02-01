@@ -7727,17 +7727,21 @@ static void parse_output_page_list(char *p)
 
 static FILE *open_mac_file(const char *mac, char **path)
 {
-  // Try first FOOBAR.tmac, then tmac.FOOBAR
+  // Try `mac`.tmac first, then tmac.`mac`.  Expect ENOENT errors.
   char *s1 = new char[strlen(mac)+strlen(MACRO_POSTFIX)+1];
   strcpy(s1, mac);
   strcat(s1, MACRO_POSTFIX);
   FILE *fp = mac_path->open_file(s1, path);
+  if (!fp && ENOENT != errno)
+    error("can't open macro file '%1': %2", s1, strerror(errno));
   a_delete s1;
   if (!fp) {
     char *s2 = new char[strlen(mac)+strlen(MACRO_PREFIX)+1];
     strcpy(s2, MACRO_PREFIX);
     strcat(s2, mac);
     fp = mac_path->open_file(s2, path);
+  if (!fp && ENOENT != errno)
+      error("can't open macro file '%1': %2", s2, strerror(errno));
     a_delete s2;
   }
   return fp;
@@ -7748,7 +7752,7 @@ static void process_macro_file(const char *mac)
   char *path;
   FILE *fp = open_mac_file(mac, &path);
   if (!fp)
-    fatal("can't find macro file %1", mac);
+    fatal("unable to open macro file for -m argument '%1'", mac);
   const char *s = symbol(path).contents();
   free(path);
   input_stack::push(new file_iterator(fp, s));
@@ -7781,9 +7785,10 @@ void macro_source()
       tok.next();
     char *path;
     FILE *fp = mac_path->open_file(nm.contents(), &path);
-    // .mso doesn't (and cannot) go through open_mac_file, so we
-    // need to do it here manually: If we have tmac.FOOBAR, try
-    // FOOBAR.tmac and vice versa
+    // .mso cannot go through open_mac_file, which handles the -m option
+    // and expects only an identifier like "s" or "an", not a file name.
+    // We need to do it here manually: If we have tmac.FOOBAR, try
+    // FOOBAR.tmac and vice versa.
     if (!fp) {
       const char *fn = nm.contents();
       size_t fnlen = strlen(fn);
@@ -7810,7 +7815,8 @@ void macro_source()
       free(path);
     }
     else
-      warning(WARN_FILE, "can't find macro file '%1'", nm.contents());
+      warning(WARN_FILE, "can't open macro file '%1': %2",
+	      nm.contents(), strerror(errno));
     tok.next();
   }
 }
