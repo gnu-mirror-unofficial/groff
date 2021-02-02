@@ -24,6 +24,11 @@ man7_MANS += contrib/rfc1345/groff_rfc1345.7
 rfc1345tmacdir = $(tmacdir)
 dist_rfc1345tmac_DATA = contrib/rfc1345/rfc1345.tmac
 
+rfc1345_TESTS= \
+  contrib/rfc1345/tests/rfc1345-smoke-test.sh
+TESTS += $(rfc1345_TESTS)
+EXTRA_DIST += $(rfc1345_TESTS)
+
 EXTRA_DIST += \
   contrib/rfc1345/groff_rfc1345.7.man \
   contrib/rfc1345/COPYRIGHT
