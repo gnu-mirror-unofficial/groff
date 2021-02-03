@@ -1,5 +1,23 @@
 2021-02-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::init_output): Save value of
+	hyphenation maximum consecutive line count register (\n[.hlm])
+	more carefully to keep it from being incorrectly parsed as a
+	decrement, because negative values of \n[.hlm] are valid (in
+	fact, "-1" is the default).  In documents with a large number of
+	tables, this can lead to a Persian chessboard problem and an
+	integer overflow (at the groff language level, caught and
+	handled by src/roff/troff/number.cpp:parse_term()).
+
+	It is wise to wrap a non-literal second argument to the .nr
+	request in parentheses if assignment is desired and its value
+	can be negative.  See section 5.6.1 ("Setting Registers") of the
+	groff Texinfo manual.
+
+	Fixes <https://savannah.gnu.org/bugs/?59993>.
+
+2021-02-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[rfc1345]: Add smoke test.
 
 	* contrib/rfc1345/tests/rfc1345-smoke-test.sh: Add test.

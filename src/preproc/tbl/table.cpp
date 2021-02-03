@@ -1794,7 +1794,7 @@ void table::init_output()
 	 ".ds " SAVED_TABS_NAME " \\n[.tabs]\n"
 	 ".nr " SAVED_HYPHENATION_MODE_REG " \\n[.hy]\n"
 	 ".ds " SAVED_HYPHENATION_LANG_NAME " \\n[.hla]\n"
-	 ".nr " SAVED_HYPHENATION_MAX_LINES_REG " \\n[.hlm]\n"
+	 ".nr " SAVED_HYPHENATION_MAX_LINES_REG " (\\n[.hlm])\n"
 	 ".nr " SAVED_HYPHENATION_MARGIN_REG " \\n[.hym]\n"
 	 ".nr " SAVED_HYPHENATION_SPACE_REG " \\n[.hys]\n"
 	 ".nr T. 0\n"
