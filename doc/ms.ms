@@ -239,7 +239,7 @@ to make them easy to find and edit as necessary.
 .TS H
 box expand;
 cb | cb cb cb cb
-l | afCW l l lfCW .
+l | afCR l l lfCR .
 Type	Parameter	Definition	Effective	Default
 _
 .TH
@@ -511,7 +511,7 @@ The following table describes the heading macros:
 .TS
 box expand;
 cb cb
-afCWw(0.75i) lw(5i) .
+afCRw(0.75i) lw(5i) .
 Macro	Description
 _
 \&.NH \fIxx\fP	T{
@@ -710,7 +710,7 @@ The following are examples of each type of list:
 .TS H
 box expand;
 cb cb
-afCW a .
+afCR a .
 Source	Result
 _
 .TH
@@ -793,7 +793,7 @@ The following example shows two possible workarounds:
 .TS
 box expand;
 cb cb
-afCW l .
+afCR l .
 Code	Result
 _
 T{
@@ -927,7 +927,7 @@ The following table shows the display types available.
 box expand;
 cb s | cb 
 cb cb | ^
-afCW afCW | a .
+afCR afCR | a .
 Display macro	Description
 With keep	No keep
 _
@@ -1014,7 +1014,7 @@ in pairs of tags as follows:
 .TS
 box expand;
 cb cb
-afCWw(1.25i) aw(4.75i) .
+afCRw(1.25i) aw(4.75i) .
 Tag Pair	Description
 _
 T{
@@ -1257,7 +1257,7 @@ The following table lists the register names and defaults:
 .TS
 box expand;
 cb cb cb cb
-afCW l l a .
+afCR l l a .
 Register	Definition	Effective	Default
 _
 PO	Page offset (left margin)	next page	1i
@@ -1292,7 +1292,7 @@ force a page break.
 .TS
 box expand;
 cb cb
-lfCWw(2i) lw(4i).
+lfCRw(2i) lw(4i).
 Macro	Description
 _
 \&.1C	Single-column mode.
