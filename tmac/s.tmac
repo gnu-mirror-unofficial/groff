@@ -1491,7 +1491,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .par*define-font-macro B B
 .par*define-font-macro I I
 .par*define-font-macro BI BI
-.par*define-font-macro CW CR
+.ie n .par*define-font-macro CW R
+.el   .par*define-font-macro CW CR
 .\" underline a word
 .de UL
 \Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
