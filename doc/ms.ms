@@ -1,3 +1,10 @@
+.\" Handle font requests with families, for instance in tbl(1) tables.
+.if n \{\
+.  ftr CR R
+.  ftr CB B
+.  ftr CI I
+.  ftr CBI BI
+.\}
 .\" Acronym (slightly smaller type)
 .de Acr
 \s-1\\$1\s0\\$2
