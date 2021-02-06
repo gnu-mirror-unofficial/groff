@@ -9,9 +9,6 @@
 .de Acr
 \s-1\\$1\s0\\$2
 ..
-.\" Paragraph symbol
-.ie t .char \(pp \N'182'
-.el .char \(pp para.
 .\".RP
 .nr LL 6.5i
 .nr LT 6.5i
@@ -273,18 +270,18 @@ Type	Parameter	Definition	Effective	Default
 _
 .TH
 Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
-\^	\[rs]n[LL]	Line length	next \(pp	6i
-\^	\[rs]n[LT]	Header/footer (title) length	next \(pp	6i
+\^	\[rs]n[LL]	Line length	next \[ps]	6i
+\^	\[rs]n[LT]	Header/footer (title) length	next \[ps]	6i
 \^	\[rs]n[HM]	Top (header) margin	next page	1i
 \^	\[rs]n[FM]	Bottom (footer) margin	next page	1i
 _
-Text	\[rs]n[PS]	Point size	next \(pp	10p
-\^	\[rs]n[VS]	Line spacing (leading)	next \(pp	12p
-\^	\[rs]*[FAM]	Font family	next \(pp	12p
+Text	\[rs]n[PS]	Point size	next \[ps]	10p
+\^	\[rs]n[VS]	Line spacing (leading)	next \[ps]	12p
+\^	\[rs]*[FAM]	Font family	next \[ps]	12p
 _
-Paragraphs	\[rs]n[PI]	Initial indent	next \(pp	5n
-\^	\[rs]n[PD]	Space between paragraphs	next \(pp	0.3v
-\^	\[rs]n[QI]	Quoted paragraph indent	next \(pp	5n
+Paragraphs	\[rs]n[PI]	Initial indent	next \[ps]	5n
+\^	\[rs]n[PD]	Space between paragraphs	next \[ps]	0.3v
+\^	\[rs]n[QI]	Quoted paragraph indent	next \[ps]	5n
 _
 Footnotes	\[rs]*[FR]	Line length ratio	special	11/12
 \^	\[rs]n[FI]	Indentation	next footnote	2n
@@ -1324,8 +1321,8 @@ afCR l l a .
 Register	Definition	Effective	Default
 _
 PO	Page offset (left margin)	next page	1i
-LL	Line length	next \(pp	6i
-LT	Header/footer (title) length	next \(pp	6i
+LL	Line length	next \[ps]	6i
+LT	Header/footer (title) length	next \[ps]	6i
 HM	Top (header) margin	next page	1i
 FM	Bottom (footer) margin	next page	1i
 .TE
