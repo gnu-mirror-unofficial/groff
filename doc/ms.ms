@@ -100,14 +100,23 @@ Basic information
 .XS
 	Basic information
 .XE
+.
+.
 .LP
+.I ms
+exposes many aspects of document layout to user control via
+.I groff
+registers and strings.
+.
 Most
 .I registers
 have a default unit of measurement.
 .
 Specifying a unit explicitly does not cause any problems,
 and can avoid problems in complex situations.
-The following are typical units:
+.
+The following table summarizes typical units.
+.
 .TS
 box;
 cb cb
@@ -127,12 +136,20 @@ P	pica (1/6\[sd])
 .LP
 Set registers with using the
 .CW .nr
+request
+and strings with the
+.CW .ds
 request.
-.RS
+.
+.
+.DS
 .CW
 \&.nr PS 12
+\&.ds FAM P
 .R
-.RE
+.DE
+.
+.
 .\" ------------------------
 .if t .bp
 .NH 1
