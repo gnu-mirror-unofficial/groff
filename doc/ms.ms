@@ -102,8 +102,9 @@ Basic information
 .XE
 .LP
 Most
-.I "number registers"
+.I registers
 have a default unit of measurement.
+.
 Specifying a unit explicitly does not cause any problems,
 and can avoid problems in complex situations.
 The following are typical units:
@@ -121,10 +122,12 @@ n	width of a letter ``n'' in the current font
 m	width of a letter ``M'' in the current font
 P	pica (1/6\[sd])
 .TE
+.
+.
 .LP
-You set number registers by using the
+Set registers with using the
 .CW .nr
-request; for example:
+request.
 .RS
 .CW
 \&.nr PS 12
@@ -177,9 +180,11 @@ or Berkeley, and are not supported in
 By setting number registers,
 you can change your document's type (font and size),
 margins, spacing, headers and footers, and footnotes.
-See 
-.I "Document control registers"
+.
+See
+.I "Document control settings"
 below for more details.
+.
 .IP "\fBCover page\fP"
 A cover page consists of a title, the author's name and institution,
 an abstract, and the date.\**
@@ -1289,8 +1294,11 @@ Margins
 .XS
 	Margins
 .XE
+.
+.
 .LP
-You control margins using a set of number registers.
+Control margins using registers.
+.
 The following table lists the register names and defaults:
 .TS
 box expand;

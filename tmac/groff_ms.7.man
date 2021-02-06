@@ -105,13 +105,13 @@ are specific to AT&T or Berkeley, and are not supported in
 .
 .TP
 .B "Format and layout"
-By setting number registers,
+By setting registers and strings,
 you can change your document's
 margins, spacing, headers and footers, footnotes,
 and the base point size for the text.
 .
 See
-.I "Document control registers"
+.I "Document control settings"
 below for more details.
 .
 .TP
@@ -138,14 +138,13 @@ macro at the end of your document.
 .
 .
 .\" ====================================================================
-.SS "Document control registers"
+.SS "Document control settings"
 .\" ====================================================================
 .
-The following table lists the document control
-number registers.
+The following table lists the document control registers and strings.
 .
 For the sake of consistency,
-set registers related to margins at the beginning of your document,
+set parameters related to margins at the beginning of your document,
 or just after the
 .B RP
 macro.
@@ -917,7 +916,9 @@ The
 is usually a bullet character
 .B \[rs](bu
 for unordered lists,
-a number (or auto-incrementing number register) for numbered lists,
+a number
+(or auto-incrementing register)
+for numbered lists,
 or a word or phrase for indented (glossary-style) lists.
 .
 .IP
@@ -1301,7 +1302,7 @@ after printing the header
 .SS Margins
 .\" ====================================================================
 .
-You control margins using a set of number registers.
+Control margins using registers.
 .
 The following table lists the register names and defaults:
 .RS
@@ -1370,7 +1371,7 @@ is the space between columns.
 .
 The
 .B MINGW
-number register is the default gutter width.
+register is the default gutter width.
 .
 .
 .\" ====================================================================
@@ -1561,10 +1562,10 @@ documentation says that the
 .B CW
 and
 .B GW
-number registers can be used to control the column width and
-gutter width, respectively.
+registers can be used to control the column width and gutter width,
+respectively.
 .
-These number registers are not used in
+These registers are not used in
 .IR "groff ms" .
 .
 .IP \[bu]
@@ -1587,10 +1588,10 @@ and
 macros.
 .
 .IP \[bu]
-The number register
+The register
 .B GS
 is set to\~1 by the
-.I "groff ms"
+.I groff ms
 macros,
 but is not used by the Unix
 .I ms
@@ -1600,8 +1601,8 @@ Documents that need to determine whether they are being formatted with
 Unix
 .I ms
 or
-.I "groff ms"
-should use this number register.
+.I groff ms
+should use this register.
 .
 .IP \[bu]
 To make
@@ -1609,7 +1610,7 @@ To make
 use the default page offset (which also specifies the left margin),
 the
 .B PO
-number register must stay undefined until the first
+register must stay undefined until the first
 .B ms
 macro is evaluated.
 .
@@ -1686,7 +1687,7 @@ it is set to Times.
 .
 .LP
 The point size, vertical spacing, and inter-paragraph spacing for
-footnotes are controlled by the number registers
+footnotes are controlled by the registers
 .BR FPS ,
 .BR FVS ,
 and
@@ -1732,11 +1733,12 @@ produces an n with a tilde over it.
 .SH "Naming Conventions"
 .\" ====================================================================
 .
-The following conventions are used for names of macros, strings, and
-number registers.
+The following conventions are used for names of macros,
+strings,
+and registers.
 .
 External names available to documents that use the
-.I "groff ms"
+.I groff ms
 macros contain only uppercase letters and digits.
 .
 .
