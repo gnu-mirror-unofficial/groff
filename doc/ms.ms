@@ -264,9 +264,9 @@ Paragraphs	\[rs]n[PI]	Initial indent	next \(pp	5n
 \^	\[rs]n[PD]	Space between paragraphs	next \(pp	0.3v
 \^	\[rs]n[QI]	Quoted paragraph indent	next \(pp	5n
 _
-Footnotes	\[rs]*[FR]	Footnote length ratio	special	11/12
-\^	\[rs]n[FI]	Footnote indent	next footnote	2n
-\^	\[rs]n[FF]	Footnote format	next footnote	0
+Footnotes	\[rs]*[FR]	Line length ratio	special	11/12
+\^	\[rs]n[FI]	Indentation	next footnote	2n
+\^	\[rs]n[FF]	Format	next footnote	0
 _
 Other	\[rs]n[MINGW]	Minimum width between columns	next page	2n
 .TE
