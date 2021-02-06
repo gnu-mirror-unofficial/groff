@@ -18,8 +18,8 @@
 .nr PS 11
 .nr VS 13
 .nr PI 3.5n
-.ND v0.1, April 2001
-.EH '%''v0.1, April 2001'
+.ND February 2021
+.EH '%''February 2021'
 .EF ''''
 .OH 'Using \fIgroff\fP with the -ms macros''%'
 .OF ''''
