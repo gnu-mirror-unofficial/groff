@@ -237,17 +237,12 @@ cb   cb cb cb
 lfCR l  l  l.
 Reg.	Definition	Effective	Default
 _
-FL	Footnote length	T{
-next footnote; not effective in multicolumn mode
-T}	\[rs]n[LL]*\[rs]*[FR]
 FI	Footnote indent	next footnote	2n
 FF	Footnote format	next footnote	0
 FPS	Point size	next footnote	\[rs]n[PS]\-2
 FVS	Vert.\& spacing	next footnote	\[rs]n[FPS]+2
 FPD	Para.\& spacing	next footnote	\[rs]n[PD]/2
-FR	Footnote ratio	T{
-before first paragraph, or before each .MC
-T}	11/12
+FR	Line length ratio	special	11/12
 _
 .TE
 .RE
@@ -258,6 +253,12 @@ _
 is a string and should be set with the
 .B .ds
 request.
+.
+Changes to the footnote line length ratio
+.B \[rs]*[FR]
+take effect with the next footnote written in single-column
+arrangements,
+but on the next page in multiple-column contexts.
 .
 .
 .LP

@@ -264,12 +264,13 @@ Paragraphs	\[rs]n[PI]	Initial indent	next \(pp	5n
 \^	\[rs]n[PD]	Space between paragraphs	next \(pp	0.3v
 \^	\[rs]n[QI]	Quoted paragraph indent	next \(pp	5n
 _
-Footnotes	\[rs]*[FR]	Footnote length ratio	next footnote	11/12
+Footnotes	\[rs]*[FR]	Footnote length ratio	special	11/12
 \^	\[rs]n[FI]	Footnote indent	next footnote	2n
 \^	\[rs]n[FF]	Footnote format	next footnote	0
 _
 Other	\[rs]n[MINGW]	Minimum width between columns	next page	2n
 .TE
+.
 .
 .PP
 The default footnote line length is 11/12ths of the normal line length
@@ -280,7 +281,7 @@ you may wish to set
 .CW \[rs]*[FR]
 to
 .CW 1
-to suit contemporary typesetting practices.
+to align with contemporary typesetting practices.
 .
 In the past,\**
 .FS
@@ -297,8 +298,38 @@ an
 .CW FL
 register was used for the line length in footnotes;
 however,
-setting this register had no effect on the footnote line length in
-multi-column environments.
+setting this register at document initialization time had no effect on
+the footnote line length in multi-column arrangements.
+.
+.
+.PP
+.CW \[rs]*[FR]
+should be used in preference to
+.CW \[rs]n[FL]
+in contemporary documents.
+.
+The footnote line length is effectively computed as
+.CW "\[rs]n[\f[I]column-width\f[]] * \[rs]*[FR]" \[rq]. \[lq]
+.
+If an absolute footnote line length is required,
+recall that arithmetic expressions in
+.I roff
+languages are evaluated from left to right.
+.
+.
+.DS
+.CW
+\&.ds FR 0+3i
+.R
+.DE
+.
+.
+.PP
+Changes to the footnote length ratio
+.CW \[rs]*[FR]
+take effect with the next footnote written in single-column
+arrangements,
+but on the next page in multiple-column contexts.
 .
 .
 .\" ------------------------

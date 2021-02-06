@@ -2633,8 +2633,8 @@ your document, or just after the @code{RP} macro.  You can set other
 registers later in your document, but you should keep them together at
 the beginning to make them easy to find and edit as necessary.
 
-A list of document control registers (and one string) follows.  They are
-presented in the syntax used to interpolate them.
+A list of document control registers (and two strings) follows.  They
+are presented in the syntax used to interpolate them.
 
 @unnumberedsubsubsec Margin Settings
 
@@ -2809,14 +2809,6 @@ Default: 1.
 
 @unnumberedsubsubsec Footnote Settings
 
-@Defmpreg {FL, ms}
-Defines the length of a footnote.
-
-Effective: next footnote.
-
-Default: @math{@code{@\n[LL]} * 11 / 12}.
-@endDefmpreg
-
 @Defmpreg {FI, ms}
 Defines the footnote indentation.
 
@@ -2878,10 +2870,31 @@ Default: @math{@code{@\n[PD]} / 2}.
 Defines the ratio of the footnote line length to the current line
 length.
 
-Effective: start of document or before each @code{.MC} or @code{.2C}.
+Effective: next footnote in single-column arrangements, next page
+otherwise.
 
 Default: @math{11/12}.
 @endDefmpreg
+
+The default footnote line length is 11/12ths of the normal line length
+for compatibility with the expectations of historical @file{ms}
+documents; you may wish to set the @code{FR} string to @samp{1} to align
+with contemporary typesetting practices.  In the past,@footnote{in
+Version 7 Unix @file{ms}, its descendants, and GNU @file{ms} prior to
+@code{groff} version 1.23.0} an @code{FL} register was used for the line
+length in footnotes; however, setting this register at document
+initialization time had no effect on the footnote line length in
+multi-column arrangements.
+
+@code{FR} should be used in preference to the old @code{FL} register in
+contemporary documents.  The footnote line length is effectively
+computed as @samp{\n[@slanted{column-width}] * \*[FR]}.  If an absolute
+footnote line length is required, recall that arithmetic expressions in
+@code{roff} languages are evaluated from left to right.
+
+@Example
+.ds FR 0+3i
+@endExample
 
 @unnumberedsubsubsec Miscellaneous Registers
 
