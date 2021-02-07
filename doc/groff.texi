@@ -2704,32 +2704,6 @@ Effective: next paragraph.
 Default: 12@dmn{p}.
 @endDefmpreg
 
-@Defmpreg {PSINCR, ms}
-Defines an increment in point size, which is applied to section headings
-at nesting levels below the value specified in @code{GROWPS}.  The value
-of @code{PSINCR} should be specified in points, with the @dmn{p} scaling
-factor, and may include a fractional component; for example,
-@w{@samp{.nr PSINCR 1.5p}} sets a point size increment of 1.5@dmn{p}.
-
-Effective: next section heading.
-
-Default: 1@dmn{p}.
-@endDefmpreg
-
-@Defmpreg {GROWPS, ms}
-Defines the heading level below which the point size increment set by
-@code{PSINCR} becomes effective.  Section headings at and above the
-level specified by @code{GROWPS} are printed at the point size set by
-@code{PS}; for each level below the value of @code{GROWPS}, the point
-size is increased in steps equal to the value of @code{PSINCR}.  Setting
-@code{GROWPS} to any value less than@tie{}2 disables the incremental
-heading size feature.
-
-Effective: next section heading.
-
-Default: 0.
-@endDefmpreg
-
 @Defmpreg {HY, ms}
 Defines the hyphenation mode.  @code{HY} safely sets the value of the
 low-level @code{hy} register.  Setting @code{HY} to@tie{}0 is equivalent
@@ -2791,6 +2765,34 @@ the paragraph.
 Effective: next paragraph.
 
 Default: 1.
+@endDefmpreg
+
+@unnumberedsubsubsec Section Heading Settings
+
+@Defmpreg {PSINCR, ms}
+Defines an increment in point size, which is applied to section headings
+at nesting levels below the value specified in @code{GROWPS}.  The value
+of @code{PSINCR} should be specified in points, with the @dmn{p} scaling
+factor, and may include a fractional component; for example,
+@w{@samp{.nr PSINCR 1.5p}} sets a point size increment of 1.5@dmn{p}.
+
+Effective: next section heading.
+
+Default: 1@dmn{p}.
+@endDefmpreg
+
+@Defmpreg {GROWPS, ms}
+Defines the heading level below which the point size increment set by
+@code{PSINCR} becomes effective.  Section headings at and above the
+level specified by @code{GROWPS} are printed at the point size set by
+@code{PS}; for each level below the value of @code{GROWPS}, the point
+size is increased in steps equal to the value of @code{PSINCR}.  Setting
+@code{GROWPS} to any value less than@tie{}2 disables the incremental
+heading size feature.
+
+Effective: next section heading.
+
+Default: 0.
 @endDefmpreg
 
 @Defmpreg {HORPHANS, ms}
