@@ -195,13 +195,21 @@ is ignored
 T}	next heading	0
 HY	T{
 Hyphenation mode
-T}	6
-FAM	T{
+T}	next paragraph	6
+\[rs]*[FAM]	T{
 Font family
-T}	T
+T}	next paragraph	T
 _
 .TE
 .RE
+.
+.
+.LP
+.B FAM
+is a string and should be set with the
+.B ds
+request.
+.
 .
 .LP
 .ne 11
@@ -247,7 +255,7 @@ FF	Format	next footnote	0
 FPS	Point size	next footnote	\[rs]n[PS]\-2
 FVS	Vertical spacing	next footnote	\[rs]n[FPS]+2
 FPD	Paragraph spacing	next footnote	\[rs]n[PD]/2
-FR	Line length ratio	special	11/12
+\[rs]*[FR]	Line length ratio	special	11/12
 _
 .TE
 .RE
@@ -256,7 +264,7 @@ _
 .LP
 .B FR
 is a string and should be set with the
-.B .ds
+.B ds
 request.
 .
 Changes to the footnote line length ratio
