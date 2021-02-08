@@ -341,7 +341,7 @@ languages are evaluated from left to right.
 .
 .DS
 .CW
-\&.ds FR 0+3i
+\&.ds FR 0+3i \[rs]" Set footnote line length to 3 inches.
 .R
 .DE
 .
@@ -1190,46 +1190,55 @@ Footnotes
 .XS
 	Footnotes
 .XE
+.
+.
 .LP
 The
-.I -ms
-macro package has a flexible footnote system.
+.I ms
+macros provide a flexible footnote system.
+.
 You can specify a numbered footnote\**
 .FS
 This is a numbered footnote.
 .FE
 by using the
 .CW \\\\**
-escape, followed by the text of the footnote
-enclosed by
+escape,
+followed by the text of the footnote enclosed by
 .CW .FS
 and
 .CW .FE
 macros.
+.
+.
 .PP
-You can specify symbolic footnotes\(dg
+You can specify symbolic footnotes\[dg]
 .FS
-\(dgThis is a symbolic footnote.
+\[dg]This is a symbolic footnote.
 .FE
-by placing the
-.if !'\[dg]'*' dagger
-character
+by placing the mark character
 (such as
-.CW \\\\(dg
-for the character used here),
-followed by the symbol and the text of the footnote
-enclosed by
+.CW \\\\[dg]
+for the
+.if !'\[dg]'*' dagger
+character used here),
+followed by the symbol and the text of the footnote enclosed by
 .CW .FS
 and
 .CW .FE
 macros.
+.
+.
 .KS
 .PP
 You can control how
-.I groff
+.I ms
 prints footnote numbers by changing the value of the
 .CW FF
-register as follows:
+register as follows.
+.
+.
+.na
 .TS
 box;
 cb cb
@@ -1237,18 +1246,49 @@ aw(0.75i) lw(5.25i) .
 Value	Description
 _
 0	T{
-Prints the footnote number as a superscript; indents the footnote (default).
+Prints the footnote number as a superscript and indents the footnote
+(default).
 T}
 1	T{
-Prints the number followed by a period (like 1.)
+Prints the number followed by a period
+(that is,\~\[lq]1.\[rq]\&)
 and indents the footnote.
 T}
-2	Like 1, without an indent.
+2	T{
+Like\~1,
+without an indent.
+T}
 3	T{
-Like 1, but prints the footnote number as a hanging paragraph.
+Like\~1,
+but prints the footnote number as a paragraph with a hanging indent.
 T}
 .TE
+.ad
 .KE
+.
+.
+.LP
+You can use footnotes safely within keeps and displays,
+but avoid using numbered footnotes within floating keeps.
+.
+You can set a second
+.CW \[rs]**
+between a
+.CW \[rs]**
+and its corresponding
+.CW .FS ,
+as long as each
+.CW .FS
+occurs
+.I after
+the corresponding
+.CW \[rs]**
+and the occurrences of
+.CW .FS
+are in the same order as the corresponding occurrences of
+.CW \[rs]** .
+.
+.
 .\" ------------------------
 .NH 1
 Page layout

@@ -1139,8 +1139,8 @@ macros provide a flexible footnote system.
 .
 You can specify a numbered footnote by using the
 .B \[rs]**
-escape, followed by the text of the footnote
-enclosed by
+escape,
+followed by the text of the footnote enclosed by
 .B FS
 and
 .B FE
@@ -1148,13 +1148,12 @@ macros.
 .
 .
 .PP
-You can specify symbolic footnotes
-by placing the mark character (such as
-.B \[rs](dg
+You can specify symbolic footnotes by placing the mark character
+(such as
+.B \[rs][dg]
 for the dagger character) in the body text,
-followed by the text of the footnote
-enclosed by
-.B FS\ \[rs](dg
+followed by the text of the footnote enclosed by
+.B FS\~\[rs][dg]
 and
 .B FE
 macros.
@@ -1162,33 +1161,41 @@ macros.
 .
 .PP
 You can control how
-.I groff
+.I ms
 prints footnote numbers by changing the value of the
 .B FF
-register as follows:
-.RS
-.ne 7
+register as follows.
 .
+.
+.ne 7
+.RS
 .TP
 0
-Prints the footnote number as a superscript; indents the footnote
+Prints the footnote number as a superscript and indents the footnote
 (default).
+.
 .
 .TP
 1
-Prints the number followed by a period (that is,\~\[lq]1.\[rq]\&)
+Prints the number followed by a period
+(that is,\~\[lq]1.\[rq]\&)
 and indents the footnote.
+.
 .
 .TP
 2
-Like\~1, without an indent.
+Like\~1,
+without an indent.
+.
 .
 .TP
 3
-Like\~1, but prints the footnote number as a paragraph with a hanging
+Like\~1,
+but prints the footnote number as a paragraph with a hanging
 indent.
-.
 .RE
+.
+.
 .LP
 You can use footnotes safely within keeps and displays,
 but avoid using numbered footnotes within floating keeps.
@@ -1198,7 +1205,7 @@ You can set a second
 between a
 .B \[rs]**
 and its corresponding
-.BR .FS ;
+.BR .FS ,
 as long as each
 .B .FS
 occurs
