@@ -1074,7 +1074,7 @@ in pairs of tags as follows:
 .TS
 box expand;
 cb cb
-afCRw(1.25i) aw(4.75i) .
+afCRw(1.5i) aw(4.5i) .
 Tag Pair	Description
 _
 T{
