@@ -5,6 +5,9 @@
 .  ftr CI I
 .  ftr CBI BI
 .\}
+.fchar \[dg] *
+.fchar \[ps] paragraph
+.fchar \[sd] \[dq]
 .\" Acronym (slightly smaller type)
 .de Acr
 \s-1\\$1\s0\\$2
@@ -1208,9 +1211,12 @@ You can specify symbolic footnotes\(dg
 .FS
 \(dgThis is a symbolic footnote.
 .FE
-by placing the character (such as
+by placing the
+.if !'\[dg]'*' dagger
+character
+(such as
 .CW \\\\(dg
-for the dagger character used here),
+for the character used here),
 followed by the symbol and the text of the footnote
 enclosed by
 .CW .FS
