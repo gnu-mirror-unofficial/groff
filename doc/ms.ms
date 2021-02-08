@@ -389,12 +389,17 @@ _
 .TH
 \&.RP [\fBno\fP]	T{
 Specifies the report format for your document.
+.
 The report format creates a separate cover page.
-The default action (no
+.
+The default action
+(no
 .CW .RP
-macro) is to print a subset of the
-cover page on page 1 of your document.
-.sp \n(PDu
+macro)
+is to print a subset of the cover page on page 1 of your document.
+.
+.
+.sp \n[PD]u
 If you use the optional
 .B no
 argument,
@@ -408,8 +413,10 @@ _
 \&.DA [\fIxxx\fP]	T{
 (optional) Print the current date,
 or the arguments to the macro if any,
-on the title page (if specified)
+on the title page
+(if specified)
 and in the footers.
+.
 This is the default for
 .I nroff .
 T}
@@ -417,14 +424,17 @@ _
 \&.ND xxx [\fIxxx\fP]	T{
 (optional) Print the current date,
 or the arguments to the macro if any,
-on the title page (if specified)
+on the title page
+(if specified)
 but not in the footers.
+.
 This is the default for
 .I troff .
 T}
 _
 \&.TL	T{
 Specifies the document title.
+.
 .I groff
 collects text following the
 .CW .TL
@@ -432,9 +442,14 @@ macro into the title, until reaching the author name or abstract.
 T}
 _
 \&.AU	T{
-Specifies the author's name, which appears on the
-line (or lines) immediately following.
-You can specify multiple authors as follows:
+Specifies the author's name,
+which appears on the line
+(or lines)
+immediately following.
+.
+You can specify multiple authors as follows.
+.
+.
 .DS I
 .CW
 \&.AU
@@ -452,15 +467,19 @@ T}
 _
 \&.AI	T{
 Specifies the author's institution.
-You can specify multiple institutions in the same way
-that you specify multiple authors.
+.
+You can specify multiple institutions in the same way that you specify
+multiple authors.
 T}
 _
 \&.AB [no]	T{
 Begins the abstract.
+.
 The default is to print the word
 .Acr ABSTRACT ,
-centered and in italics, above the text of the abstract.
+centered and in italics,
+above the text of the abstract.
+.
 The option
 .CW no
 suppresses this heading.
@@ -592,16 +611,21 @@ Macro	Description
 _
 \&.NH \fIxx\fP	T{
 Numbered heading.
+.
 The argument
 .I xx
 is either a numeric argument to indicate the
-level of the heading, or
+level of the heading,
+or
 .I "S xx xx" "..."
 to set the heading level explicitly.
+.
 The section headings in this document use the
 .CW .NH
 macro to show the level of each section.
-
+.
+.
+.sp \n[PD]u
 If you specify heading levels out of sequence,
 such as invoking
 .CW ".NH\ 3"
@@ -635,34 +659,47 @@ _
 \&.B [txt [post [pre]]]	T{
 Sets its first argument in
 .B "bold type" .
+.
 If you specify a second argument,
 .I groff
-prints it in the previous font after
-the bold text, with no intervening space
-(this allows you to set punctuation after
-the highlighted text without highlighting
-the punctuation).
-Similarly, it prints the third argument (if any)
+prints it in the previous font after the bold text,
+with no intervening space
+(this allows you to set punctuation after the highlighted text without
+highlighting the punctuation).
+.
+Similarly,
+it prints the third argument
+(if any)
 in the previous font
 .B before
 the first argument.
+.
 For example,
-.sp \n(PDu
+.
+.
+.sp \n[PD]u
 .ti +3n
 \&.B foo ) (
-.sp \n(PDu
+.
+.
+.sp \n[PD]u
 prints
 .B foo ). (
-.sp \n(PDu
+.
+.
+.sp \n[PD]u
 If you give this macro no arguments,
 .I groff
-prints all text following in bold until
-the next highlighting, paragraph, or heading macro.
+prints all text following in bold until the next highlighting,
+paragraph,
+or heading macro.
 T}
 _
 \&.R [txt [post [pre]]]	T{
-Sets its first argument in
-roman (or regular) type.
+Sets its first argument in roman
+(or regular)
+type.
+.
 It operates similarly to the
 .CW .B
 macro otherwise.
@@ -671,6 +708,7 @@ _
 \&.I [txt [post [pre]]]	T{
 Sets its first argument in
 .I "italic type" .
+.
 It operates similarly to the
 .CW .B
 macro otherwise.
@@ -679,6 +717,7 @@ _
 \&.CW [txt [post [pre]]]	T{
 Sets its first argument in a
 .CW "constant width face" .
+.
 It operates similarly to the
 .CW .B
 macro otherwise.
@@ -687,6 +726,7 @@ _
 \&.BI [txt [post [pre]]]	T{
 Sets its first argument in
 .BI "bold italic type" .
+.
 It operates similarly to the
 .CW .B
 macro otherwise.
@@ -696,6 +736,7 @@ _
 Prints its argument and draws a
 .BX box
 around it.
+.
 If you want to box a string that contains spaces,
 use a digit-width space (\\0).
 T}
@@ -703,10 +744,11 @@ _
 \&.UL [txt [post]]	T{
 Prints its first argument with an
 .UL underline .
+.
 If you specify a second argument,
 .I groff
-prints it in the previous font after
-the underlined text, with no intervening space.
+prints it in the previous font after the underlined text,
+with no intervening space.
 T}
 _
 \&.LG	T{
@@ -716,7 +758,11 @@ larger type
 .NL
 (2 points larger than the current point size)
 until
-the next font size, highlighting, paragraph, or heading macro.
+the next font size,
+highlighting,
+paragraph,
+or heading macro.
+.
 You can
 .LG
 specify this macro
@@ -733,7 +779,11 @@ smaller type
 .NL
 (2 points smaller than the current point size)
 until
-the next type size, highlighting, paragraph, or heading macro.
+the next type size,
+highlighting,
+paragraph,
+or heading macro.
+.
 You can
 .SM
 specify this macro
@@ -744,9 +794,9 @@ to reduce the point size as needed.
 T}
 _
 \&.NL	T{
-Prints all text following in
-the normal point size
-(that is, the value of the
+Prints all text following in the normal point size
+(that is,
+the value of the
 .CW PS
 register).
 T}
@@ -793,20 +843,20 @@ _
 T{
 .nf
 A bulleted list:
-\&.IP \\(bu 2
+\&.IP \[rs][bu] 2
 lawyers
-\&.IP \\(bu
+\&.IP \[rs][bu]
 guns
-\&.IP \\(bu
+\&.IP \[rs][bu]
 money
 .fi
 T}	T{
 A bulleted list:
-.IP \(bu 2
+.IP \[bu] 2
 lawyers
-.IP \(bu
+.IP \[bu]
 guns
-.IP \(bu
+.IP \[bu]
 money
 T}
 _
@@ -830,8 +880,10 @@ lawyers
 guns
 .IP \n+[step].
 money
+.
+.
 .LP
-Note the use of the auto-incrementing number
+Note the use of the auto-incrementing
 .br
 register in this example.
 T}
@@ -842,18 +894,20 @@ A glossary-style list:
 \&.IP lawyers 0.4i
 Two or more attorneys.
 \&.IP guns
-Firearms, preferably
-large-caliber.
+Firearms,
+preferably large-caliber.
 \&.IP money
 Gotta pay for those
 lawyers and guns!
 .fi
 T}	T{
 A glossary-style list:
+.
 .IP lawyers 0.4i
 Two or more attorneys.
 .IP guns
-Firearms, preferably large-caliber.
+Firearms,
+preferably large-caliber.
 .IP money
 Gotta pay for those lawyers and guns!
 T}
@@ -879,8 +933,8 @@ A glossary-style list:
 Two or more attorneys.
 \&.IP guns
 \&.br
-Firearms, preferably
-large-caliber.
+Firearms,
+preferably large-caliber.
 \&.IP money
 Gotta pay for those
 lawyers and guns!
@@ -891,7 +945,8 @@ A glossary-style list:
 Two or more attorneys.
 .IP guns
 .br
-Firearms, preferably large-caliber.
+Firearms,
+preferably large-caliber.
 .IP money
 Gotta pay for those lawyers and guns!
 T}
@@ -913,7 +968,8 @@ A glossary-style list:
 .IP lawyers 0.4i
 Two or more attorneys.
 .IP guns\h'0.4i'
-Firearms, preferably large-caliber.
+Firearms,
+preferably large-caliber.
 .IP money
 Gotta pay for those lawyers and guns!
 T}
@@ -1009,10 +1065,13 @@ With keep	No keep
 _
 \&.DS L	\&.LD	Left-justified display.
 \&.DS I [\fIindent\fP]	\&.ID	T{
-Indented display (default is the DI register).
+Indented display
+(default is the DI register).
 T}
 \&.DS B	\&.BD	T{
-Block-centered display (left-justified, longest line centered).
+Block-centered display
+(left-justified,
+longest line centered).
 T}
 \&.DS C	\&.CD	Centers all lines in the display.
 \&.DS R	\&.RD	Right-justifies all lines in the display.
@@ -1098,9 +1157,10 @@ T{
 .br
 \&.TE
 T}	T{
-Denotes a table, to be processed by the
+Denotes a table to be processed by the
 .I tbl
 preprocessor.
+.
 The optional
 .B H
 argument to
@@ -1111,7 +1171,8 @@ to create a running header with the information
 up to the
 .CW .TH
 macro.
-.I Groff
+.
+.I groff
 prints the header at the beginning of the table;
 if the table runs onto another page,
 .I groff
@@ -1123,12 +1184,13 @@ T{
 .br
 \&.PE
 T}	T{
-Denotes a graphic, to be processed by the
+Denotes a graphic to be processed by the
 .I pic
 preprocessor.
+.
 You can create a
 .I pic
-file by hand, using the
+file by hand using the
 .Acr AT&T
 .I pic
 manual available on the Web as a reference,
@@ -1142,9 +1204,10 @@ T{
 .br
 \&.EN
 T}	T{
-Denotes an equation, to be processed by the
+Denotes an equation to be processed by the
 .I eqn
 preprocessor.
+.
 The optional
 .I align
 argument can be
@@ -1152,8 +1215,10 @@ argument can be
 .B L ,
 or
 .B I
-to center (the default), left-justify, or indent
-the equation.
+to center
+(the default),
+left-justify,
+or indent the equation.
 T}
 _
 T{
@@ -1161,15 +1226,15 @@ T{
 .br
 \&.]
 T}	T{
-Denotes a reference, to be processed by the
+Denotes a reference to be processed by the
 .I refer
 preprocessor.
+.
 The
 .Acr GNU
 .I refer (1)
-manpage provides a comprehensive reference
-to the preprocessor and the format of the
-bibliographic database.
+man page provides a comprehensive reference to the preprocessor and the
+format of the bibliographic database.
 T}
 .TE
 .KE
@@ -1413,14 +1478,18 @@ _
 _
 \&.MC [\fIwidth\fP [\fIgutter\fP]]	T{
 Multi-column mode.
-If you specify no arguments, it is equivalent to the
+.
+If you specify no arguments,
+it is equivalent to the
 .CW .2C
 macro.
+.
 Otherwise,
 .I width
 is the width of each column and
 .I gutter
 is the space between columns.
+.
 The
 .CW MINGW
 number register is the default gutter width.
