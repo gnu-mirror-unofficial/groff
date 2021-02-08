@@ -13,11 +13,13 @@
 \s-1\\$1\s0\\$2
 ..
 .\".RP
-.nr LL 6.5i
-.nr LT 6.5i
+.ie t .nr LL 6.5i
+.el   .nr LL 91n
+.nr LT \n[LL]
 .nr PS 11
 .nr VS 13
-.nr PI 3.5n
+.ie t .nr PI 3.5n
+.el   .nr PI 4n
 .ND February 2021
 .EH '%''February 2021'
 .EF ''''
