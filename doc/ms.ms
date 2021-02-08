@@ -1359,25 +1359,15 @@ Margins
 .LP
 Control margins using registers.
 .
-The following table lists the register names and defaults:
-.TS
-box expand;
-cb cb cb cb
-afCR l l a .
-Register	Definition	Effective	Default
-_
-PO	Page offset (left margin)	next page	1i
-LL	Line length	next \[ps]	6i
-LT	Header/footer (title) length	next \[ps]	6i
-HM	Top (header) margin	next page	1i
-FM	Bottom (footer) margin	next page	1i
-.TE
+These are summarized in the \[lq]Margins\[rq] section of the table in
+section \[lq]Document control settings\[rq] above.
+.
+There is no right margin setting;
+the combination of page offset and line length provide the information
+necessary to derive the right margin.
 .KE
-.PP
-Note that there is no right margin setting.
-The combination of page offset and line length
-provide the information necessary to
-derive the right margin.
+.
+.
 .KS
 .NH 2
 Multiple columns
