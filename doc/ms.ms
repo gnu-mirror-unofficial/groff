@@ -282,17 +282,31 @@ Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
 _
 Text	\[rs]n[PS]	Point size	next \[ps]	10p
 \^	\[rs]n[VS]	Line spacing (leading)	next \[ps]	12p
-\^	\[rs]*[FAM]	Font family	next \[ps]	12p
+\^	\[rs]n[HY]	Hyphenation mode	next \[ps]	6
+\^	\[rs]*[FAM]	Font family	next \[ps]	T
 _
 Paragraphs	\[rs]n[PI]	Initial indent	next \[ps]	5n
 \^	\[rs]n[PD]	Space between paragraphs	next \[ps]	0.3v
 \^	\[rs]n[QI]	Quoted paragraph indent	next \[ps]	5n
+\^	\[rs]n[PORPHANS]	# of lines to keep	next \[ps]	1
 _
-Footnotes	\[rs]*[FR]	Line length ratio	special	11/12
-\^	\[rs]n[FI]	Indentation	next footnote	2n
+T{
+Section
+.br
+headings
+T}	\[rs]n[PSINCR]	Point size increment	next heading	1p
+\^	\[rs]n[GROWPS]	Size increase threshold	next heading	0
+\^	\[rs]n[HORPHANS]	# of lines to keep	next heading	1
+_
+Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FF]	Format	next footnote	0
+\^	\[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2
+\^	\[rs]n[FVS]	Vertical spacing	next footnote	\[rs]n[FPS]+2
+\^	\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
+\^	\[rs]*[FR]	Line length ratio	special	11/12
 _
-Other	\[rs]n[MINGW]	Minimum width between columns	next page	2n
+Other	\[rs]n[DD]	Display distance (spacing)	next \[ps]	0.5v
+\^	\[rs]n[MINGW]	Minimum gutter width	next page	2n
 .TE
 .
 .
