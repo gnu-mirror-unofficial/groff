@@ -606,9 +606,9 @@ using the same font family and point size as the body text.
 .PP
 The following table describes the heading macros:
 .TS
-box expand;
+box;
 cb cb
-afCRw(0.75i) lw(5i) .
+afCR lx .
 Macro	Description
 _
 \&.NH \fIxx\fP	T{
@@ -885,12 +885,6 @@ lawyers
 guns
 .IP \n+[step].
 money
-.
-.
-.LP
-Note the use of the auto-incrementing
-.br
-register in this example.
 T}
 _
 T{
@@ -918,13 +912,22 @@ Gotta pay for those lawyers and guns!
 T}
 .TE
 .KE
+.
+.
 .PP
-In the last example, note how the
+The second example sets up an auto-incrementing register,
+.CW step .
+.
+In the last example,
+observe how the
 .CW .IP
-macro places the definition on the same line as the term
-if it has enough space.
-This may or may not be the effect you want.
-The following example shows two possible workarounds:
+macro places the definition on the same line as the term if it has
+enough space.
+.
+If this is not what you want,
+there are a couple of workarounds.
+.
+.
 .TS
 box expand;
 cb cb
