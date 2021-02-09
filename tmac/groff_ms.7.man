@@ -141,7 +141,7 @@ macro at the end of your document.
 .SS "Document control settings"
 .\" ====================================================================
 .
-The following table lists the document control registers and strings.
+The following tables list the document control registers and strings.
 .
 For the sake of consistency,
 set parameters related to margins at the beginning of your document,
@@ -157,7 +157,7 @@ macro.
 .TS
 cb   cb cb cb
 lfCR lx  l  lfCR.
-Reg.	Definition	Effective	Default
+Register	Definition	Effective	Default
 _
 PO	Page offset (left margin)	next page	1i
 LL	Line length	next paragraph	6i
@@ -175,7 +175,7 @@ _
 .TS
 cb   cb cb cb
 lfCR lx l  lfCR.
-Reg.	Definition	Effective	Default
+Register	Definition	Effective	Default
 _
 PS	T{
 Point size
@@ -184,13 +184,10 @@ VS	T{
 Line spacing (leading)
 T}	next paragraph	12p
 PSINCR	T{
-Point size increment
-for section headings of
-increasing importance
+Point size increment for section headings of increasing importance
 T}	next heading	1p
 GROWPS	T{
-Heading level
-beyond which PSINCR
+Heading level at which to stop applying point size increase
 is ignored
 T}	next heading	0
 HY	T{
@@ -218,7 +215,7 @@ request.
 .TS
 cb   cb cb cb
 lfCR lx l  lfCR.
-Reg.	Definition	Effective	Default
+Register	Definition	Effective	Default
 _
 PI	T{
 Initial indent
@@ -248,7 +245,7 @@ _
 .TS
 cb   cb cb cb
 lfCR lx  l  lfCR.
-Reg.	Definition	Effective	Default
+Register	Definition	Effective	Default
 _
 FI	Indentation	next footnote	2n
 FF	Format	next footnote	0
@@ -277,11 +274,12 @@ but on the next page in multiple-column contexts.
 .LP
 .ne 6
 .B Other settings
+.
 .RS
 .TS
 cb   cb cb cb
 lfCR lx  l  lfCR.
-Reg.	Definition	Effective	Default
+Register	Definition	Effective	Default
 _
 DD	Display, table, eqn, pic spacing	next para.	0.5v
 MINGW	Minimum width between columns	next page	2n
@@ -375,9 +373,9 @@ You can specify multiple institutions.
 .BR ".AB " [ no ]
 Begins the abstract.
 .
-The default is to print the word
-.BR ABSTRACT ,
-centered and in italics, above the text of the abstract.
+The default is to print the word \[lq]ABSTRACT\[rq],
+centered and in italics,
+above the text of the abstract.
 .
 The option
 .B no
@@ -409,7 +407,7 @@ by the amount of the register
 .
 The next paragraph or heading returns the margins to normal.
 .
-.B QP
+.B .QP
 inserts the vertical space specified in register
 .B PD
 as inter-paragraph spacing.
@@ -421,23 +419,23 @@ A paragraph bracketed between the macros
 and
 .B QE
 has the same appearance as a paragraph started with
-.B QP
+.B .QP
 and a following paragraph started with
-.BR LP .
+.BR .LP .
 .
 Both
-.B QS
+.B .QS
 and
-.B QE
+.B .QE
 insert the inter-paragraph spacing specified in
 .B PD
 and the text is indented on both sides by the amount of register
 .BR QI .
 .
 The text between
-.B QS
+.B .QS
 and
-.B QE
+.B .QE
 can be split into further paragraphs by using
 .B .LP
 or
@@ -455,7 +453,7 @@ The first line of the paragraph begins at
 the left margin,
 and subsequent lines are indented
 (the opposite of
-.BR PP ).
+.BR .PP ).
 .
 .
 .PP
@@ -517,14 +515,16 @@ this behaviour may be modified by defining the document control
 registers
 .B GROWPS
 and
-.BR PSINCR .
+.BR PSINCR ;
+these are GNU extensions.
 .
 .
 .PP
-The following heading macros are available:
+The following heading macros are available.
+.
 .
 .TP
-.BI .NH\  xx
+.BI .NH\~ xx
 Numbered heading.
 .
 The argument
@@ -532,22 +532,22 @@ The argument
 is either a numeric argument to indicate the
 level of the heading, or
 .B S\~\c
-.IR "xx\~xx\~" .\|.\|.\&
+.IR xx\~xx\~ .\|.\|.\&
 to set the section number explicitly.
 .
 If you specify heading levels out of sequence,
 such as invoking
-.B ".NH\ 3"
+.B .NH\~3
 after
-.BR ".NH\ 1" ,
-.I groff
-prints a warning on standard error.
+.BR .NH\~1 ,
+.I ms
+reports a warning to the standard error stream.
+.
 .
 .IP
 If the
 .B GROWPS
-register is set to a value
-greater than the level of the heading,
+register is set to a value greater than the level of the heading,
 then the point size of the heading will be increased by
 .B PSINCR
 units over the text size specified by the
@@ -579,50 +579,42 @@ Third Level Heading
 .EE
 .RE
 .
+.
 .IP
-will cause
-.RI \*(lq 1.\ Top\ Level\ Heading \*(rq
-to be printed in 13pt
-.B bold
-text, followed by
-.RI \*(lq 1.1.\ Second\ Level\ Heading \*(rq
-in 11.5pt
-.B bold
-text, while
-.RI \*(lq 1.1.1.\ Third\ Level\ Heading \*(rq,
-and all more deeply nested heading levels,
-will remain in the 10pt
-.B bold
-text which is specified by the
+will cause \[lq]1. Top Level Heading\[rq]
+to be printed in 13-point text,
+followed by \[lq]1.1. Second Level Heading\[rq]
+in 11.5-point text,
+while \[lq]1.1.1. Third Level Heading\[rq] and all more deeply nested
+heading levels will remain in the 10-point text specified by the
 .B PS
 register.
 .
+.
 .IP
-Note that the value stored in
-.B PSINCR
+The value stored in
+.B \[rs]n[PSINCR]
 is interpreted in
 .I groff
 basic units;
 the
-.I p
+.B p
 scaling factor should be employed when assigning a value specified in
 points.
 .
+.
 .IP
-The style used to represent the section number,
-within a numbered heading,
+The style used to represent the section number within a numbered heading
 is controlled by the
 .B SN\-STYLE
-string;
-this may be set to either the
+string,
+which may be set to either of the
 .B SN\-DOT
 or the
 .B SN\-NO\-DOT
-style,
+styles
 (described below),
-by aliasing
-.B SN\-STYLE
-accordingly.
+by aliasing it accordingly.
 .
 By default,
 .B SN\-STYLE
@@ -655,9 +647,10 @@ by defining the alternative alias
 .
 .IP
 Any such change becomes effective with the first use of
-.BR .NH ,
+.B .NH
 .I after
 the new alias is defined.
+.
 .
 .IP
 After invoking
@@ -682,16 +675,16 @@ argument is a GNU extension,
 which adjusts the point size of the unnumbered subheading
 to match that of a numbered heading,
 introduced using
-.BI .NH\  xx
+.BI .NH\~ xx
 with the same value of
 .IR xx .
 .
 For example,
 given the same settings for
 .BR PS ,
-.B GROWPS
+.BR GROWPS ,
 and
-.BR PSINCR ,
+.B PSINCR
 as used in the preceding
 .B .NH
 example,
@@ -707,12 +700,9 @@ An Unnumbered Subheading
 .EE
 .RE
 .
+.
 .IP
-will print
-.RI \*(lq "An Unnumbered Subheading" \*(rq
-in 11.5pt
-.B bold
-text.
+will print \[lq]An Unnumbered Subheading\[rq] in 11.5-point text.
 .
 .
 .\" ====================================================================
@@ -764,7 +754,9 @@ the next highlighting, paragraph, or heading macro.
 .B .R\c
 .RI " [" txt " [" post " [" pre ]]]
 Sets its first argument in
-roman (or regular) type.
+roman
+(or regular)
+type.
 .
 It operates similarly to the
 .B B
@@ -1053,14 +1045,15 @@ The
 macros support the standard
 .I groff
 preprocessors:
-.IR tbl ,
-.IR pic ,
-.IR eqn ,
+.IR \%@g@tbl ,
+.IR \%@g@pic ,
+.IR \%@g@eqn ,
 and
-.IR refer .
+.IR \%@g@refer (@MAN1EXT@).
 .
-Mark text meant for preprocessors by enclosing it
-in pairs of tags as follows:
+Mark text meant for preprocessors by enclosing it in pairs of tags as
+follows.
+.
 .
 .TP
 .BR .TS " [" H "] and " .TE
@@ -1313,8 +1306,8 @@ necessary to derive the right margin.
 .
 The
 .I ms
-macros can set text in as many columns as will reasonably
-fit on the page.
+macros can set text in as many columns as will reasonably fit on the
+page.
 .
 The following macros are available.
 .
@@ -1602,17 +1595,18 @@ remember that accessing an undefined register automatically defines it.
 .
 .
 .\" ====================================================================
-.SS Strings
+.SS "Localization strings"
 .\" ====================================================================
 .
 You can redefine the following strings to adapt the
 .I groff ms
-macros to languages other than English:
+macros to languages other than English.
+.
 .RS
 .TS
 cb   cb
 lfCR lfCR.
-String	Default Value
+String	Default
 _
 REFERENCES	References
 ABSTRACT	ABSTRACT
@@ -1653,7 +1647,7 @@ respectively, in
 .
 .
 .\" ====================================================================
-.SS Text Settings
+.SS "Text Settings"
 .\" ====================================================================
 .
 The
