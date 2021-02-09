@@ -267,6 +267,8 @@ macro.
 You can set other registers later in your document,
 but you should keep them together at the beginning
 to make them easy to find and edit as necessary.
+.
+.
 .TS H
 box expand;
 cb | cb cb cb cb
@@ -830,9 +832,12 @@ The
 specifies the indent for the body of each list item.
 Once specified, the indent remains the same for all
 list items in the document until specified again.
+.
+.
 .KS
 .PP
-The following are examples of each type of list:
+The following are examples of each type of list.
+.
 .TS H
 box expand;
 cb cb
