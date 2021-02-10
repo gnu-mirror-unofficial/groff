@@ -78,39 +78,53 @@ Introduction
 .XS
 Introduction
 .XE
+.
+.
 .LP
 The original
-.I -ms
+.I ms
 macros were included with
 .Acr AT&T
 .I troff
-as well as the
-.I -man
+alongside the
+.I man
 macros.
+.
 While the
-.I -man
-package is intended for brief documents
-that can be read on-line as well as printed, the
-.I -ms
-macros are suitable for longer documents that are meant to be
-printed rather than read on-line.
+.I man
+package is intended for brief documents that can be read on-line as well
+as printed,
+the
+.I ms
+macros are suitable for longer documents that are meant to be printed
+rather than read on-line.
+.
+.
 .PP
 The
-.I -ms
+.I ms
 macro package included with
-.I -groff
-is a complete, bottom-up re-implementation.
-Several macros (specific to
+.I groff
+is a complete,
+bottom-up re-implementation.
+.
+Several macros
+(specific to
 .Acr AT&T
-or Berkeley) are not included,
+or Berkeley)
+are not included,
 while several new commands are.
+.
 See
 .I
 Differences from
 .Acr AT&T
--ms\c
+ms\c
 .R
-, later in this document, for more information.
+, later in this document,
+for more information.
+.
+.
 .NH 2
 Basic information
 .XS
@@ -133,23 +147,24 @@ and can avoid problems in complex situations.
 .
 The following table summarizes typical units.
 .
+.
 .TS
-box;
+box center;
 cb cb
-c a .
+cfCR l .
 Unit	Description
 _
 i	inches
 c	centimeters
 p	points (1/72\[sd])
-v	line height
-n	width of a letter ``n'' in the current font
-m	width of a letter ``M'' in the current font
-P	pica (1/6\[sd])
+v	\[lq]vees\[rq]; height of a line using the current font
+n	\[lq]ens\[rq]; width of an \[lq]n\[rq] using the current font
+m	\[lq]ems\[rq]; width of an \[lq]M\[rq] using the current font
+P	picas (1/6\[sd])
 .TE
 .
 .
-.LP
+.PP
 Set registers with using the
 .CW .nr
 request
@@ -158,12 +173,12 @@ and strings with the
 request.
 .
 .
-.DS
-.CW
-\&.nr PS 12
-\&.ds FAM P
-.R
-.DE
+.TS
+box center;
+lfCR.
+\&.nr PS 12 \[rs]" Use 12-point type.
+\&.ds FAM P \[rs]" Use Palatino font family.
+.TE
 .
 .
 .\" ------------------------
