@@ -284,18 +284,17 @@ Document control settings
 .XS
 Document control settings
 .XE
-.LP
-The following table lists document control registers and strings.
 .
-For the sake of consistency,
+.
+.LP
+For consistent document rendering,
 set registers related to margins at the beginning of your document,
-or just after the
-.CW .RP
-macro.
+or just after calling
+.CW .RP .
 .
 You can set other registers later in your document,
-but you should keep them together at the beginning
-to make them easy to find and edit as necessary.
+but keeping them together at the beginning makes them easy to find and
+edit as necessary.
 .
 .
 .TS H
@@ -386,11 +385,11 @@ recall that arithmetic expressions in
 languages are evaluated from left to right.
 .
 .
-.DS
-.CW
+.TS
+box center;
+lfCR.
 \&.ds FR 0+3i \[rs]" Set footnote line length to 3 inches.
-.R
-.DE
+.TE
 .
 .
 .PP
