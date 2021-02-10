@@ -1908,10 +1908,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ds U \(rq
 .ds - \(em
 .\" Characters
-.\" The idea of this definition is for the top of the 3 to be at the
-.\" x-height.
-.if !c\[yogh] .char \[yogh] \Z'\v'\w'x'*0-\En[rst]u'\s[\En[.s]*8u/10u]\
-\v'\w'3'*0+\En[rst]u'3\s0'\h'\w'\s[\En[.s]*8u/10u]3'u'
 .\" Accents
 .de acc*over-def
 .ds \\$1 \Z'\v'(u;\w'x'*0+\En[rst]-\En[.cht])'\
@@ -1949,6 +1945,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .acc*slash-def / /
 .char \[hooko] o\E*[hook]
 .ds q \[hooko]
+.\" The idea of this definition is for the top of the 3 to be at the
+.\" x-height.
+.if !c\[yogh] .char \[yogh] \Z'\v'\w'x'*0-\En[rst]u'\s[\En[.s]*8u/10u]\
+\v'\w'3'*0+\En[rst]u'3\s0'\h'\w'\s[\En[.s]*8u/10u]3'u'
 .ds 3 \[yogh]
 .ds D- \(-D\"			Icelandic uppercase eth
 .ds d- \(Sd\"			Icelandic lowercase eth

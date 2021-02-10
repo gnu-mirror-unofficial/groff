@@ -1,3 +1,18 @@
+2021-02-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[ms]: Demote definition of \[yogh] special character escape from
+	unconditional availability to be defined only if the output
+	device defines it or if .AM macro is called to enable support
+	for Berkeley-style accent marks.
+
+	See
+	  https://lists.gnu.org/archive/html/groff/2021-01/msg00000.html
+	and follow-ups for discussion.
+
+	* tmac/s.tmac (initialization): Move definition of \[yogh] (only
+	if the output device doesn't already define it) from here...
+	(AM): ...to here.
+
 2021-02-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/ms.ms: Use \[ps] special character instead of local
