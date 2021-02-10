@@ -1,5 +1,29 @@
 2021-02-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Address build failure on macOS.
+
+	Follow the advice of the gnulib manual ("Changing your source
+	for use with gnulib") more scrupulously; include config.h in
+	more files.
+
+	* src/libs/libgroff/assert.cpp [HAVE_CONFIG_H]: #include
+	config.h using angle brackets instead of quotation marks.
+
+	* src/libs/libgroff/curtime.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/device.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/errarg.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/error.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/fatal.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/string.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/strsave.cpp [HAVE_CONFIG_H]:
+	* src/preproc/eqn/other.cpp [HAVE_CONFIG_H]:
+	* src/preproc/eqn/text.cpp [HAVE_CONFIG_H]:
+	* src/preproc/pic/object.cpp [HAVE_CONFIG_H]: Do it.
+
+	Fixes <https://savannah.gnu.org/bugs/?60035>.
+
+2021-02-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #60025.
 
 	* tmac/tests/doc_Mt-works.sh: Do it.
