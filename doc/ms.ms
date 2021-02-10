@@ -23,13 +23,13 @@
 .ND February 2021
 .EH '%''February 2021'
 .EF ''''
-.OH 'Using \fIgroff\fP with the -ms macros''%'
+.OH 'Using \fIgroff\fP with the ms macros''%'
 .OF ''''
 .TL
 Using
-.I groff
+.BI groff
 with the
-.I -ms
+.BI ms
 Macro Package
 .AU
 Larry Kollar
@@ -39,26 +39,40 @@ kollar@alltel.net
 This document describes the
 .Acr GNU
 re-implementation of the popular
-.I
-groff -ms
-.R
+.I "groff ms"
 macro package.
+.
+.
 .PP
 The
-.I -ms
-macros are suitable for reports, letters, books,
-user manuals, and so forth.
-The package provides macros for cover pages, section headings,
-paragraphs, lists, footnotes, pagination,
+.I ms
+macros are suitable for reports,
+letters,
+books,
+user manuals,
+and so forth.
+.
+The package provides macros for cover pages,
+section headings,
+paragraphs,
+lists,
+footnotes,
+pagination,
 and a table of contents.
+.
+.
 .PP
 This document provides both tutorial and reference material.
+.
 It also discusses differences from the
 .Acr AT&T
-.I -ms
-macros, both omissions and additions.
+.I ms
+macros,
+both omissions and additions.
 .AE
-.\" ------------------------- End of cover page ------------------------- 
+.
+.
+.\" ------------------------- End of cover page ------------------------
 .NH 1
 Introduction
 .XS
