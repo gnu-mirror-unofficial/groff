@@ -1473,11 +1473,11 @@ This is more flexible than defining the individual strings.
 The syntax for these macros is as follows:
 .DS I
 .CW
-\&.OH '\fIleft\fP'\fIcenter\fP'\fIright\fP'
+\&.OH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]
 .R
 .DE
 .LP
-You can replace the quote (') marks with any character not
+You can replace the neutral apostrophes (\[aq]) with any character not
 appearing in the header or footer text.
 .\" ------------------------
 .KS
