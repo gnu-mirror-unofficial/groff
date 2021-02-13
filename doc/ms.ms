@@ -318,15 +318,15 @@ _
 Paragraphs	\[rs]n[PI]	Initial indent	next \[ps]	5n
 \^	\[rs]n[PD]	Space between paragraphs	next \[ps]	0.3v
 \^	\[rs]n[QI]	Quoted paragraph indent	next \[ps]	5n
-\^	\[rs]n[PORPHANS]	# of lines to keep	next \[ps]	1
+\^	\[rs]n[PORPHANS]	# of initial lines kept	next \[ps]	1
 _
 T{
 Section
 .br
 headings
 T}	\[rs]n[PSINCR]	Point size increment	next heading	1p
-\^	\[rs]n[GROWPS]	Size increase threshold	next heading	0
-\^	\[rs]n[HORPHANS]	# of lines to keep	next heading	1
+\^	\[rs]n[GROWPS]	Size increase level limit	next heading	0
+\^	\[rs]n[HORPHANS]	# of following lines kept	next heading	1
 _
 Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FF]	Format	next footnote	0
