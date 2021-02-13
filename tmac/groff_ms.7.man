@@ -177,18 +177,10 @@ cb   cb cb cb
 lfCR lx l  lfCR.
 Register	Definition	Effective	Default
 _
-PS	T{
-Point size
-T}	next paragraph	10p
-VS	T{
-Line spacing (leading)
-T}	next paragraph	12p
-HY	T{
-Hyphenation mode
-T}	next paragraph	6
-\[rs]*[FAM]	T{
-Font family
-T}	next paragraph	T
+PS	Point size	next paragraph	10p
+VS	Line spacing (leading)	next paragraph	12p
+HY	Hyphenation mode	next paragraph	6
+\[rs]*[FAM]	Font family	next paragraph	T
 _
 .TE
 .RE
@@ -210,23 +202,10 @@ cb   cb cb cb
 lfCR lx l  lfCR.
 Register	Definition	Effective	Default
 _
-PI	T{
-Initial indent
-T}	next paragraph	5n
-PD	T{
-Space between paragraphs
-T}	next paragraph	0.3v
-QI	T{
-Quoted paragraph indent
-T}	next paragraph	5n
-PORPHANS	T{
-Number of initial lines
-to be kept together
-T}	next paragraph	1
-HORPHANS	T{
-Number of initial lines
-to be kept with heading
-T}	next heading	1
+PI	Initial indent	next paragraph	5n
+PD	Space between paragraphs	next paragraph	0.3v
+QI	Quoted paragraph indent	next paragraph	5n
+PORPHANS	# of initial lines kept	next paragraph	1
 _
 .TE
 .RE
@@ -241,13 +220,9 @@ cb   cb cb cb
 lfCR lx l  lfCR.
 String	Definition	Effective	Default
 _
-PSINCR	T{
-Point size increment for section headings of increasing importance
-T}	next heading	1p
-GROWPS	T{
-Heading level at which to stop applying point size increase
-is ignored
-T}	next heading	0
+PSINCR	Point size increment	next heading	1p
+GROWPS	Size increase level limit	next heading	0
+HORPHANS	# of following lines kept	next heading	1
 _
 .TE
 .RE
