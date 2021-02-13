@@ -156,13 +156,13 @@ cb    s  s  s
 cb   cb cb cb
 lfCR lx  l  lfCR.
 Margin settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-PO	Page offset (left margin)	next page	1i
-LL	Line length	next paragraph	6i
-LT	Header/footer length	next paragraph	6i
-HM	Top (header) margin	next page	1i
-FM	Bottom (footer) margin	next page	1i
+\[rs]n[PO]	Page offset (left margin)	next page	1i
+\[rs]n[LL]	Line length	next paragraph	6i
+\[rs]n[LT]	Header/footer length	next paragraph	6i
+\[rs]n[HM]	Top (header) margin	next page	1i
+\[rs]n[FM]	Bottom (footer) margin	next page	1i
 _
 .TE
 .
@@ -172,21 +172,14 @@ cb   s  s  s
 cb   cb cb cb
 lfCR lx l  lfCR.
 Text settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-PS	Point size	next paragraph	10p
-VS	Line spacing (leading)	next paragraph	12p
-HY	Hyphenation mode	next paragraph	6
+\[rs]n[PS]	Point size	next paragraph	10p
+\[rs]n[VS]	Line spacing (leading)	next paragraph	12p
+\[rs]n[HY]	Hyphenation mode	next paragraph	6
 \[rs]*[FAM]	Font family	next paragraph	T
 _
 .TE
-.
-.
-.LP
-.B FAM
-is a string and should be set with the
-.B ds
-request.
 .
 .
 .LP
@@ -195,12 +188,12 @@ cb   s  s  s
 cb   cb cb cb
 lfCR lx l  lfCR.
 Paragraph settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-PI	Initial indent	next paragraph	5n
-PD	Space between paragraphs	next paragraph	0.3v
-QI	Quoted paragraph indent	next paragraph	5n
-PORPHANS	# of initial lines kept	next paragraph	1
+\[rs]n[PI]	Initial indent	next paragraph	5n
+\[rs]n[PD]	Space between paragraphs	next paragraph	0.3v
+\[rs]n[QI]	Quoted paragraph indent	next paragraph	5n
+\[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
 _
 .TE
 .
@@ -211,11 +204,11 @@ cb   s  s  s
 cb   cb cb cb
 lfCR lx l  lfCR.
 Section heading settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-PSINCR	Point size increment	next heading	1p
-GROWPS	Size increase level limit	next heading	0
-HORPHANS	# of following lines kept	next heading	1
+\[rs]n[PSINCR]	Point size increment	next heading	1p
+\[rs]n[GROWPS]	Size increase level limit	next heading	0
+\[rs]n[HORPHANS]	# of following lines kept	next heading	1
 _
 .TE
 .
@@ -226,24 +219,19 @@ cb   s  s  s
 cb   cb cb cb
 lfCR lx  l  lfCR.
 Footnote settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-FI	Indentation	next footnote	2n
-FF	Format	next footnote	0
-FPS	Point size	next footnote	\[rs]n[PS]\-2
-FVS	Vertical spacing	next footnote	\[rs]n[FPS]+2
-FPD	Paragraph spacing	next footnote	\[rs]n[PD]/2
+\[rs]n[FI]	Indentation	next footnote	2n
+\[rs]n[FF]	Format	next footnote	0
+\[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2
+\[rs]n[FVS]	Vertical spacing	next footnote	\[rs]n[FPS]+2
+\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
 \[rs]*[FR]	Line length ratio	special	11/12
 _
 .TE
 .
 .
 .LP
-.B FR
-is a string and should be set with the
-.B ds
-request.
-.
 Changes to the footnote line length ratio
 .B \[rs]*[FR]
 take effect with the next footnote written in single-column
@@ -257,10 +245,10 @@ cb   s  s  s
 cb   cb cb cb
 lfCR lx  l  lfCR.
 Other settings
-Register	Definition	Effective	Default
+Parameter	Definition	Effective	Default
 _
-DD	Display distance (spacing)	next paragraph	0.5v
-MINGW	Minimum gutter width	next page	2n
+\[rs]n[DD]	Display distance (spacing)	next paragraph	0.5v
+\[rs]n[MINGW]	Minimum gutter width	next page	2n
 _
 .TE
 .
