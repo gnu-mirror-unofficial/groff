@@ -1,3 +1,21 @@
+2021-02-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/searchpath.cpp (search_path::open_file,
+	search_path::open_file_cautious): Save errno before calling
+	free() and restore it afterwards.  A future version of POSIX
+	will require that free() not change errno if it succeeds[1];
+	some C library implementations, including recent versions of
+	glibc[2], lack this property.  free() is called in these
+	libgroff functions to clean up after an unsuccessful fopen() of
+	a heap-allocated file name string, and because the errno from
+	fopen() may be passed to strerror() in a diagnostic message, it
+	needs to be accurate.  I checked the rest of groff's codebase
+	and found no other instances of free() being used to clean up
+	after fopen() failure.
+
+	[1] https://www.austingroupbugs.net/view.php?id=385
+	[2] https://sourceware.org/bugzilla/attachment.cgi?id=13073
+
 2021-02-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Address build failure on macOS.
