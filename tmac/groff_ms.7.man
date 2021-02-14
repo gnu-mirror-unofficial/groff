@@ -209,11 +209,20 @@ _
 \[rs]n[PSINCR]	Point size increment	next heading	1p
 \[rs]n[GROWPS]	Size increase level limit	next heading	0
 \[rs]n[HORPHANS]	# of following lines kept	next heading	1
+\[rs]*[SN\-STYLE]	Numbering style (alias)	next heading	\[rs]*[SN\-DOT]
 _
 .TE
 .
 .
 .LP
+.B \[rs]*[SN\-STYLE]
+can alternatively be made an alias of
+.B \[rs]*[SN\-NO\-DOT]
+with the
+.B als
+request.
+.
+.
 .TS
 cb   s  s  s
 cb   cb cb cb
@@ -453,232 +462,160 @@ a page break is forced before the first line of the paragraph is
 printed.
 .
 .
-.PP
-Similarly,
-when a section heading
-(see subsection \[lq]Headings\[rq] below)
-precedes any of these paragraph types,
-the
-.B HORPHANS
-document control register specifies the
-.I minimum
-number of lines of the paragraph
-which must be kept on the same page as the heading.
-.
-If insufficient space remains on the current page
-to accommodate the heading and this number of lines of paragraph text,
-then a page break is forced
-.I before
-the heading is printed.
-.
-.
 .\" ====================================================================
 .SS Headings
 .\" ====================================================================
 .
-Use headings to create a hierarchical structure
-for your document.
+Use headings to create a hierarchical structure for your document.
 .
-By default,
-the
+The
 .I ms
 macros print headings in
 .B bold
-using the same font family and point size as the body text.
+using the same font family and,
+by default,
+point size as the body text.
 .
-For output devices which support scalable fonts,
-this behaviour may be modified by defining the document control
-registers
-.B GROWPS
-and
-.BR PSINCR ;
-these are GNU extensions.
+Numbered and unnumbered section headings are available.
 .
-.
-.PP
-The following heading macros are available.
+Text lines after heading macros are treated as part of the heading,
+rendered on the same output line in the same style.
 .
 .
 .TP
-.BI .NH\~ xx
+.BI .NH\~ level
 Numbered heading.
 .
-The argument
-.I xx
-is either a numeric argument to indicate the
-level of the heading, or
-.B S\~\c
-.IR xx\~xx\~ .\|.\|.\&
-to set the section number explicitly.
-.
-If you specify heading levels out of sequence,
-such as invoking
-.B .NH\~3
-after
-.BR .NH\~1 ,
+The
+.I level
+argument instructs
 .I ms
-reports a warning to the standard error stream.
+to number sections in the form
+.IR x . y . z ,
+to any depth desired,
+with the numbering of each level increasing automatically and being
+reset when a more significant level is increased.
+.
+.RB \[lq] 1 \[rq]\~is
+the most significant or coarsest division of the document.
+.
+Only nonzero values are output.
+.
+If you specify heading levels with a gap in an ascending sequence,
+such as by invoking
+.RB \[lq] ".NH\~3" \[rq]
+after
+.RB \[lq] ".NH\~1" \[rq],
+.I groff ms
+emits a warning on the standard error stream.
 .
 .
-.IP
+.PP
+After invocation of
+.BR .NH ,
+the assigned section number is made available in the strings
+.B SN\-DOT
+(as it appears in a printed section heading with default formatting,
+followed by a terminating period)
+and
+.B SN\-NO\-DOT
+(with the terminating period omitted).
+.
+.
+.PP
+You can control the style used to print section numbers within numbered
+section headings by defining an appropriate alias for the string
+.BR SN\-STYLE .
+.
+By default,
+.B \[rs]*[SN\-STYLE]
+is aliased to
+.BR \[rs]*[SN\-DOT] .
+.
+If you prefer to omit the terminating period from section numbers
+appearing in numbered section headings,
+you may alias it to
+.BR \[rs]*[SN\-NO\-DOT] .
+.
+Any such change in section numbering style becomes effective from the
+next use of
+.BR .NH ,
+following redefinition of the alias for
+.BR \[rs]*[SN\-STYLE] .
+.
+.
+.TP
+.B .SH\c
+.RI " [" level ]
+Unnumbered subheading.
+.
+The optional
+.I level
+argument is a GNU extension indicating the heading level corresponding
+to the
+.I level
+argument of
+.BR .NH .
+.
+It matches the point size at which the heading is printed to that of a
+numbered heading at the same level when the
+.B \[rs]n[GROWPS]
+and
+.B \[rs]n[PSINCR]
+heading size adjustment mechanism is in effect.
+.
+.
+.PP
 If the
 .B GROWPS
-register is set to a value greater than the level of the heading,
-then the point size of the heading will be increased by
-.B PSINCR
-units over the text size specified by the
-.B PS
-register,
-for each level by which the heading level is less than
-the value of
-.BR GROWPS .
+register is set to a value greater than the
+.I level
+argument to
+.B .NH
+or
+.BR .SH ,
+the point size of a heading produced by these macros increases by
+.B \[rs]n[PSINCR]
+units over the size specified by
+.BR \[rs]n[PS] ,
+multiplied by the difference between
+.I level
+and
+.BR \[rs]n[GROWPS] .
 .
-For example,
-the sequence:
-.
-.RS
-.IP
-.ne 12v
-.EX
-\&.nr PS 10
-\&.nr GROWPS 3
-\&.nr PSINCR 1.5p
-\&.
-\&.NH 1
-Top Level Heading
-\&.
-\&.NH 2
-Second Level Heading
-\&.
-\&.NH 3
-Third Level Heading
-.EE
-.RE
-.
-.
-.IP
-will cause \[lq]1. Top Level Heading\[rq]
-to be printed in 13-point text,
-followed by \[lq]1.1. Second Level Heading\[rq]
-in 11.5-point text,
-while \[lq]1.1.1. Third Level Heading\[rq] and all more deeply nested
-heading levels will remain in the 10-point text specified by the
-.B PS
-register.
-.
-.
-.IP
 The value stored in
 .B \[rs]n[PSINCR]
 is interpreted in
 .I groff
 basic units;
 the
-.B p
+.RB \[lq] p \[rq]
 scaling factor should be employed when assigning a value specified in
 points.
 .
 .
-.IP
-The style used to represent the section number within a numbered heading
-is controlled by the
-.B SN\-STYLE
-string,
-which may be set to either of the
-.B SN\-DOT
-or the
-.B SN\-NO\-DOT
-styles
-(described below),
-by aliasing it accordingly.
-.
-By default,
-.B SN\-STYLE
-is initialised by defining the alias
-.
-.
-.RS
-.IP
-.EX
-\&.als SN\-STYLE SN\-DOT
-.EE
-.RE
-.
-.
-.IP
-it may be changed to the
-.B SN\-NO\-DOT
-style,
-if preferred,
-by defining the alternative alias
-.
-.
-.RS
-.IP
-.EX
-\&.als SN\-STYLE SN\-NO\-DOT
-.EE
-.RE
-.
-.
-.IP
-Any such change becomes effective with the first use of
-.B .NH
-.I after
-the new alias is defined.
-.
-.
-.IP
-After invoking
-.BR .NH ,
-the assigned heading number is available in the strings
-.B SN\-DOT
-(as it appears in the default formatting style for numbered headings,
-with a terminating period following the number),
+.PP
+The
+.B \[rs]n[HORPHANS]
+register operates in conjunction with the
+.B NH
 and
-.B SN\-NO\-DOT
-(with this terminating period omitted).
+.B SH
+macros to inhibit the printing of orphaned section headings at the
+bottom of a page;
+it specifies the minimum number of lines of the subsequent paragraph
+that must be kept on the same page as the heading.
 .
+If insufficient space remains on the current page to accommodate the
+heading and this number of lines of paragraph text,
+a page break is forced before the heading is printed.
 .
-.TP
-.B .SH\c
-.RI " [" xx ]
-Unnumbered subheading.
-.
-The use of the optional
-.I xx
-argument is a GNU extension,
-which adjusts the point size of the unnumbered subheading
-to match that of a numbered heading,
-introduced using
-.BI .NH\~ xx
-with the same value of
-.IR xx .
-.
-For example,
-given the same settings for
-.BR PS ,
-.BR GROWPS ,
-and
-.B PSINCR
-as used in the preceding
-.B .NH
-example,
-the sequence:
-.
-.
-.RS
-.IP
-.ne 2v
-.EX
-\&.SH 2
-An Unnumbered Subheading
-.EE
-.RE
-.
-.
-.IP
-will print \[lq]An Unnumbered Subheading\[rq] in 11.5-point text.
+Any display macro or
+.IR tbl ,
+.IR pic ,
+or
+.I eqn
+region suppresses this grouping.
 .
 .
 .\" ====================================================================

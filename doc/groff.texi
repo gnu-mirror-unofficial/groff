@@ -2792,18 +2792,27 @@ Default: 0.
 @endDefmpreg
 
 @Defmpreg {HORPHANS, ms}
-Defines the minimum number of lines of the following paragraph that
-should be kept together with any section heading introduced by the
-@code{NH} or @code{SH} macros.  If a section heading is placed close to
-the bottom of a page, and there is insufficient space to accommodate
-both the heading and at least @code{HORPHANS} lines of the following
-paragraph, before an automatic page break, then the page break is forced
-before the heading.
+Defines the minimum number of lines of an immediately succeeding
+paragraph that should be kept together with any section heading
+introduced by the @code{NH} or @code{SH} macros.  If a section heading
+is placed close to the bottom of a page, and there is insufficient space
+to accommodate both the heading and at least @code{HORPHANS} lines of
+the following paragraph, before an automatic page break, then the page
+break is forced before the heading.
 
 Effective: next paragraph.
 
 Default: 1.
 @endDefmpreg
+
+@Defstr {SN-STYLE, ms}
+Defines the style used to print section numbers within numbered section
+headings.  @xref{Headings in ms}.
+
+Effective: next section heading.
+
+Default: alias of @code{SN-DOT}
+@endDefstr
 
 @unnumberedsubsubsec Footnote Settings
 
@@ -3129,21 +3138,55 @@ printing of orphan lines at the bottom of any page.
 @cindex @code{ms} macros, headings
 
 Use headings to create a hierarchical structure for your document.  The
-@file{ms} macros print headings in @strong{bold}, using the same font
-family and point size as the body text.
+@file{ms} macros print headings in @strong{bold} using the same font
+family and, by default, point size as the body text.  Numbered and
+unnumbered section headings are available.  Text lines after heading
+macros are treated as part of the heading, rendered on the same output
+line in the same style.
 
-The following describes the heading macros:
+@DefmacList {NH, @Var{level}, ms}
+@DefmacListEnd {NH, @t{S} @Var{section-level-index} @dots{}, ms}
+Numbered heading.
 
-@DefmacList {NH, @Var{curr-level}, ms}
-@DefmacListEnd {NH, @t{S} @Var{level0} @dots{}, ms}
-Numbered heading.  The argument is either a numeric argument to indicate
-the level of the heading, or the letter@tie{}@code{S} followed by
-numeric arguments to set the heading level explicitly.
+The @var{level} argument instructs @file{ms} to number sections in the
+form @var{x.y.z}, to any depth desired, with the numbering of each level
+increasing automatically and being reset when a more significant level
+is increased.  ``1''@tie{}is the most significant or coarsest division
+of the document.  Only nonzero values are output.
 
-If you specify heading levels out of sequence, such as invoking
-@samp{.NH 3} after @samp{.NH 1}, @code{groff} @file{ms} prints a warning
-on the standard error stream.
+If you specify heading levels with a gap in an ascending sequence, such
+as by invoking @samp{.NH 3} after @samp{.NH 1}, @code{groff} @file{ms}
+emits a warning on the standard error stream.
+
+Alternatively, a first argument of@tie{}@code{S} can be given, followed
+by integral arguments to number the levels of the heading explicitly.
+Further automatic section numbering, if used, resumes using the
+specified section numbers as their predecessors.
 @endDefmac
+
+An example may be illustrative.  The blank line after each section
+heading is omitted from the output shown.
+
+@Example
+.NH 1
+Animalia
+.NH 2
+Arthropoda
+.NH 3
+Crustacea
+.NH 2
+Chordata
+.NH S 6 6 6
+Daimonia
+.NH 1
+Plantae
+    @result{} 1.  Animalia
+    @result{} 1.1.  Arthropoda
+    @result{} 1.1.1.  Crustacea
+    @result{} 1.2.  Chordata
+    @result{} 6.6.6.  Daimonia
+    @result{} 7.  Plantae
+@endExample
 
 @DefstrList {SN-STYLE, ms}
 @DefstrItemx {SN-DOT, ms}
@@ -3153,13 +3196,12 @@ available in the strings @code{SN-DOT} (as it appears in a printed
 section heading with default formatting, followed by a terminating
 period), and @code{SN-NO-DOT} (with the terminating period omitted).
 
-You may control the style used to print section numbers within numbered
+You can control the style used to print section numbers within numbered
 section headings by defining an appropriate alias for the string
 @code{SN-STYLE}.  By default, @code{SN-STYLE} is aliased to
-@code{SN-DOT}.
-
-If you prefer to omit the terminating period, from section numbers
-appearing in numbered section headings, you may define the alias
+@code{SN-DOT}.  If you prefer to omit the terminating period from
+section numbers appearing in numbered section headings, you may define
+the alias as follows.
 
 @Example
 .als SN-STYLE SN-NO-DOT
@@ -3175,18 +3217,53 @@ next use of @code{NH}, following redefinition of the alias for
 Unnumbered subheading.
 
 The optional @var{match-level} argument is a GNU extension.  It is a
-number indicating the level of the heading, in a manner analogous to the
-@var{curr-level} argument to @code{NH}.  Its purpose is to match the
-point size, at which the heading is printed, to the size of a numbered
-heading at the same level, when the @code{GROWPS} and @code{PSINCR}
-heading size adjustment mechanism is in effect.  @xref{ms Document
-Control Settings}.
+number indicating the level of the heading corresponding to the
+@var{level} argument to @code{NH}.  Its purpose is to match the point
+size at which the heading is printed to the size of a numbered heading
+at the same level when the @code{GROWPS} and @code{PSINCR} heading size
+adjustment mechanism is in effect.  @xref{ms Document Control Settings}.
 @endDefmac
 
+If the @code{GROWPS} register is set to a value greater than the
+@var{level} argument to @code{NH} or @code{SH}, the point size of
+the a heading produced by these macros increases by @code{PSINCR} units
+over the size specified by @code{PS}, multiplied by the difference
+between @var{level} and @code{GROWPS}.  The value stored in
+@code{PSINCR} is interpreted in @code{groff} basic units; the @code{p}
+scaling factor should be employed when assigning a value specified in
+points.  For example, the sequence
+
+@Example
+.nr PS 10
+.nr GROWPS 3
+.nr PSINCR 1.5p
+.NH 1
+Carnivora
+.NH 2
+Felinae
+.NH 3
+Felis catus
+.SH 2
+Machairodontinae
+@endExample
+
+@noindent
+will cause ``1. Carnivora'' to be printed in 13-point text, followed by
+``1.1. Felinae'' in 11.5-point text, while ``1.1.1. Felis catus'' and
+all more deeply nested heading levels will remain in the 10-point text
+specified by the @code{PS} register.  ``Machairodontinae'' is printed at
+11.5 points, since it corresponds to heading level\~2.
+
 The @code{HORPHANS} register (@pxref{ms Document Control Settings})
-operates in conjunction with the @code{NH} and @code{SH} macros, to
-inhibit the printing of orphaned section headings at the bottom of any
-page.
+operates in conjunction with the @code{NH} and @code{SH} macros to
+inhibit the printing of orphaned section headings at the bottom of a
+page; it specifies the minimum number of lines of an immediately
+subsequent paragraph that must be kept on the same page as the heading.
+
+If insufficient space remains on the current page to accommodate the
+heading and this number of lines of paragraph text, a page break is
+forced before the heading is printed.  Any display macro or
+@code{tbl}, @code{pic}, or @code{eqn} region suppresses this grouping.
 
 @c ---------------------------------------------------------------------
 

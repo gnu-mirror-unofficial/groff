@@ -327,6 +327,7 @@ headings
 T}	\[rs]n[PSINCR]	Point size increment	next heading	1p
 \^	\[rs]n[GROWPS]	Size increase level limit	next heading	0
 \^	\[rs]n[HORPHANS]	# of following lines kept	next heading	1
+\^	\[rs]*[SN\-STYLE]	Numbering style (alias)	next heading	\[rs]*[SN\-DOT]
 _
 Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FF]	Format	next footnote	0
@@ -632,57 +633,276 @@ RAM and disk space over time.
 .DE
 .B2
 .KE
+.
+.
 .NH 2
 Headings
 .XS
 	Headings
 .XE
+.
+.
 .LP
-Use headings to create a hierarchical structure
-for your document.
+Use headings to create a hierarchical structure for your document.
+.
 The
-.I -ms
+.I ms
 macros print headings in
-.B bold ,
-using the same font family and point size as the body text.
-.KS
-.PP
-The following table describes the heading macros:
+.B bold
+using the same font family and,
+by default,
+point size as the body text.
+.
+Numbered and unnumbered section headings are available.
+.
+Text lines after heading macros are treated as part of the heading,
+rendered on the same output line in the same style.
+.
+.
 .TS
 box;
 cb cb
 afCR lx .
 Macro	Description
 _
-\&.NH \fIxx\fP	T{
+\&.NH \f[I]level\f[]	T{
 Numbered heading.
 .
-The argument
-.I xx
-is either a numeric argument to indicate the
-level of the heading,
-or
-.I "S xx xx" "..."
-to set the heading level explicitly.
+The
+.I level
+argument instructs
+.I ms
+to number sections in the form
+.I x.y.z ,
+to any depth desired,
+with the numbering of each level increasing automatically and being
+reset when a more significant level is increased.
 .
-The section headings in this document use the
-.CW .NH
-macro to show the level of each section.
+.CW 1\~ is
+the most significant or coarsest division of the document.
+.
+Only nonzero values are output.
+.
+If you specify heading levels with a gap in an ascending sequence,
+such as by invoking
+.CW ".NH\~3" \[rq] \[lq]
+after
+.CW ".NH\~1" \[rq], \[lq]
+.I "groff ms"
+emits a warning on the standard error stream.
 .
 .
 .sp \n[PD]u
-If you specify heading levels out of sequence,
-such as invoking
-.CW ".NH\ 3"
-after
-.CW ".NH\ 1" ,
-.I groff
-prints a warning on standard error.
+Alternatively,
+a first argument
+.CW S "" of\~
+can be given,
+followed by integral arguments to number the levels of the heading
+explicitly.
+.
+Further automatic section numbering,
+if used,
+resumes using the specified section numbers as their predecessors.
 T}
-_
-\&.SH	Unnumbered subheading.
 .TE
-.KE
+.
+.
+.PP
+An example may be illustrative.
+.
+.
+.TS
+box center;
+cb | cb
+lfCR | lB.
+Code	Output
+_
+T{
+.nf
+\&.NH 1
+Animalia
+\&.NH 2
+Arthropoda
+\&.NH 3
+Crustacea
+\&.NH 2
+Chordata
+\&.NH S 6 6 6
+Daimonia
+\&.NH 1
+Plantae
+.fi
+T}	T{
+.nf
+1.  Animalia
+.sp
+1.1.  Arthropoda
+.sp
+1.1.1.  Crustacea
+.sp
+1.2.  Chordata
+.sp
+6.6.6.  Daimonia
+.sp
+7.  Plantae
+.fi
+T}
+.TE
+.
+.
+.PP
+After invocation of
+.CW .NH ,
+the assigned section number is made available in the strings
+.CW SN\-DOT
+(as it appears in a printed section heading with default formatting,
+followed by a terminating period)
+and
+.CW SN\-NO\-DOT
+(with the terminating period omitted).
+.
+.
+.PP
+You can control the style used to print section numbers within numbered
+section headings by defining an appropriate alias for the string
+.CW SN\-STYLE .
+.
+By default,
+.CW \[rs]*[SN\-STYLE]
+is aliased to
+.CW \[rs]*[SN\-DOT] .
+.
+If you prefer to omit the terminating period from section numbers
+appearing in numbered section headings,
+you may define the alias as follows.
+.
+.
+.TS
+box center;
+lfCR.
+\&.als SN\-STYLE SN\-NO\-DOT
+.TE
+.
+.
+.LP
+Any such change in section numbering style becomes effective from the
+next use of
+.CW .NH ,
+following redefinition of the alias for
+.CW \[rs]*[SN\-STYLE] .
+.
+.
+.TS
+box;
+cb cb
+afCR lx .
+Macro	Description
+_
+\&.SH [\f[I]level\f[]]	T{
+Unnumbered heading.
+.
+The optional
+.I level
+argument is a GNU extension indicating the heading level corresponding
+to the
+.I level
+argument of
+.CW .NH .
+.
+It matches the point size at which the heading is printed to that of a
+numbered heading at the same level when the
+.CW \[rs]n[GROWPS]
+and
+.CW \[rs]n[PSINCR]
+heading size adjustment mechanism is in effect.
+T}
+.TE
+.
+.
+.LP
+If the
+.CW GROWPS
+register is set to a value greater than the
+.I level
+argument to
+.CW .NH
+or
+.CW .SH ,
+the point size of a heading produced by these macros increases by
+.CW \[rs]n[PSINCR]
+units over the size specified by
+.CW \[rs]n[PS] ,
+multiplied by the difference between
+.I level
+and
+.CW \[rs]n[GROWPS] .
+.
+The value stored in
+.CW \[rs]n[PSINCR]
+is interpreted in
+.I groff
+basic units;
+the
+.CW p \[rq] \[lq]
+scaling factor should be employed when assigning a value specified in
+points.
+.
+For example,
+the sequence
+.
+.TS
+box center;
+lfCR.
+\&.nr PS 10
+\&.nr GROWPS 3
+\&.nr PSINCR 1.5p
+\&.NH 1
+Carnivora
+\&.NH 2
+Felinae
+\&.NH 3
+Felis catus
+\&.SH 2
+Machairodontinae
+.TE
+.
+.
+.LP
+will cause \[lq]1. Carnivora\[rq] to be printed in 13-point text,
+followed by \[lq]1.1. Felinae\[rq] in 11.5-point text,
+while \[lq]1.1.1. Felis catus\[rq] and all more deeply nested
+heading levels will remain in the 10-point text specified by the
+.CW PS
+register.
+.
+\[lq]Machairodontinae\[rq] is printed at 11.5 points,
+since it corresponds to heading level\~2.
+.
+.
+.PP
+The
+.CW \[rs]n[HORPHANS]
+register operates in conjunction with the
+.CW NH
+and
+.CW SH
+macros to inhibit the printing of orphaned section headings at the
+bottom of a page;
+it specifies the minimum number of lines of the subsequent paragraph
+that must be kept on the same page as the heading.
+.
+If insufficient space remains on the current page to accommodate the
+heading and this number of lines of paragraph text,
+a page break is forced before the heading is printed.
+.
+Any display macro or
+.I tbl ,
+.I pic ,
+or
+.I eqn
+region suppresses this grouping.
+.
+.
 .KS
 .NH 2
 Highlighting
