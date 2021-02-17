@@ -900,7 +900,8 @@ Any display macro or
 .I pic ,
 or
 .I eqn
-region suppresses this grouping.
+region between the heading and the subsequent paragraph suppresses this
+grouping.
 .
 .
 .KS

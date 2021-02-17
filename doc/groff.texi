@@ -3203,17 +3203,17 @@ number indicating the level of the heading corresponding to the
 @var{level} argument to @code{NH}.  Its purpose is to match the point
 size at which the heading is printed to the size of a numbered heading
 at the same level when the @code{GROWPS} and @code{PSINCR} heading size
-adjustment mechanism is in effect.  @xref{ms Document Control Settings}.
+adjustment mechanism is in effect.
 @endDefmac
 
 If the @code{GROWPS} register is set to a value greater than the
 @var{level} argument to @code{NH} or @code{SH}, the point size of
-the a heading produced by these macros increases by @code{PSINCR} units
-over the size specified by @code{PS}, multiplied by the difference
-between @var{level} and @code{GROWPS}.  The value stored in
-@code{PSINCR} is interpreted in @code{groff} basic units; the @code{p}
-scaling factor should be employed when assigning a value specified in
-points.  For example, the sequence
+a heading produced by these macros increases by @code{PSINCR} units over
+the size specified by @code{PS}, multiplied by the difference between
+@var{level} and @code{GROWPS}.  The value stored in @code{PSINCR} is
+interpreted in @code{groff} basic units; the @code{p} scaling factor
+should be employed when assigning a value specified in points.  For
+example, the sequence
 
 @Example
 .nr PS 10
@@ -3236,16 +3236,15 @@ all more deeply nested heading levels will remain in the 10-point text
 specified by the @code{PS} register.  ``Machairodontinae'' is printed at
 11.5 points, since it corresponds to heading level\~2.
 
-The @code{HORPHANS} register (@pxref{ms Document Control Settings})
-operates in conjunction with the @code{NH} and @code{SH} macros to
-inhibit the printing of orphaned section headings at the bottom of a
-page; it specifies the minimum number of lines of an immediately
-subsequent paragraph that must be kept on the same page as the heading.
-
-If insufficient space remains on the current page to accommodate the
-heading and this number of lines of paragraph text, a page break is
-forced before the heading is printed.  Any display macro or
-@code{tbl}, @code{pic}, or @code{eqn} region suppresses this grouping.
+The @code{HORPHANS} register operates in conjunction with the @code{NH}
+and @code{SH} macros to inhibit the printing of orphaned section
+headings at the bottom of a page; it specifies the minimum number of
+lines of an immediately subsequent paragraph that must be kept on the
+same page as the heading.  If insufficient space remains on the current
+page to accommodate the heading and this number of lines of paragraph
+text, a page break is forced before the heading is printed.  Any display
+macro or @code{tbl}, @code{pic}, or @code{eqn} region between the
+heading and the subsequent paragraph suppresses this grouping.
 
 @c ---------------------------------------------------------------------
 
