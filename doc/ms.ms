@@ -23,7 +23,7 @@
 .ND February 2021
 .EH '%''February 2021'
 .EF ''''
-.OH 'Using \fIgroff\fP with the ms macros''%'
+.OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
 .TL
 Using
@@ -39,7 +39,7 @@ kollar@alltel.net
 This document describes the
 .Acr GNU
 re-implementation of the popular
-.I "groff ms"
+.I ms
 macro package.
 .
 .
