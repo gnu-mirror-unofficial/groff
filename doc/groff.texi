@@ -3030,8 +3030,8 @@ Examples include paragraphs, sections, and other groups.
 * Headings in ms::
 * Highlighting in ms::
 * Lists in ms::
-* Indentation values in ms::
-* Tabstops in ms::
+* Indented regions in ms::
+* Tab stops in ms::
 * ms Displays and Keeps::
 * ms Insertions::
 * Example multi-page table::
@@ -3348,7 +3348,7 @@ Text enclosed with @code{\*<} and @code{\*>} is printed as a subscript.
 
 @c ---------------------------------------------------------------------
 
-@node Lists in ms, Indentation values in ms, Highlighting in ms, ms Body Text
+@node Lists in ms, Indented regions in ms, Highlighting in ms, ms Body Text
 @subsubsection Lists
 @cindex @code{ms} macros, lists
 
@@ -3490,13 +3490,28 @@ Two or more attorneys.
 Gotta pay for those lawyers and guns!
 @endCartoucheExample
 
-To set nested lists, use the @code{RS} and @code{RE} macros.
-@xref{Indentation values in ms}.
+@c ---------------------------------------------------------------------
 
+@node Indented regions in ms, Tab stops in ms, Lists in ms, ms Body Text
+@subsubsection Indented regions
+
+You may need to indent a section of text while still wrapping and
+filling.
+
+@Defmac {RS, , ms}
+Begin a region indented by the amount of the @code{PI} register,
+affecting the placement of headings, paragraphs, and displays.
+@endDefmac
+
+@Defmac {RE, , ms}
+End the most recent indented region.
+@endDefmac
+
+You can use @code{RS}/@code{RE} regions to line up text under hanging
+and indented paragraphs.
 @cindex @code{ms} macros, nested lists
 @cindex nested lists [@code{ms}]
-
-For example:
+For example, you may wish to nest lists; the input
 
 @CartoucheExample
 .IP \[bu] 2
@@ -3506,6 +3521,7 @@ Lawyers:
 Dewey,
 .IP \[bu]
 Cheatham,
+and
 .IP \[bu]
 and Howe.
 .RE
@@ -3513,43 +3529,31 @@ and Howe.
 Guns
 @endCartoucheExample
 
-Produces:
+@noindent
+produces
 
 @Example
 @bullet{} Lawyers:
 
   @bullet{}  Dewey,
 
-  @bullet{}  Cheatham,
+  @bullet{}  Cheatham, and
 
-  @bullet{}  and Howe.
+  @bullet{}  Howe.
 
 @bullet{} Guns
 @endExample
 
-@c ---------------------------------------------------------------------
+@noindent
+as output.
 
-@node Indentation values in ms, Tabstops in ms, Lists in ms, ms Body Text
-@subsubsection Indentation values
-
-In many situations, you may need to indentation a section of text while
-still wrapping and filling.  @xref{Lists in ms}, for an example of
-nested lists.
-
-@DefmacList {RS, , ms}
-@DefmacListEndx {RE, , ms}
-These macros begin and end an indented section.  The @code{PI} register
-controls the amount of indentation, allowing the indented text to line
-up under hanging and indented paragraphs.
-@endDefmac
-
-@xref{ms Displays and Keeps}, for macros to indentation and turn off
-filling.
+@xref{ms Displays and Keeps}, for macros to indent regions with filling
+disabled.
 
 @c ---------------------------------------------------------------------
 
-@node Tabstops in ms, ms Displays and Keeps, Indentation values in ms, ms Body Text
-@subsubsection Tab Stops
+@node Tab stops in ms, ms Displays and Keeps, Indented regions in ms, ms Body Text
+@subsubsection Tab stops
 
 Use the @code{ta} request to define tab stops as needed.  @xref{Tabs and
 Fields}.
@@ -3562,7 +3566,7 @@ set of default tab stops.
 
 @c ---------------------------------------------------------------------
 
-@node ms Displays and Keeps, ms Insertions, Tabstops in ms, ms Body Text
+@node ms Displays and Keeps, ms Insertions, Tab stops in ms, ms Body Text
 @subsubsection Displays and keeps
 @cindex @code{ms} macros, displays
 @cindex @code{ms} macros, keeps

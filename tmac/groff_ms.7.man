@@ -796,32 +796,35 @@ document until specified again.
 .
 .
 .\" ====================================================================
-.SS Indents
+.SS "Indented regions"
 .\" ====================================================================
 .
-You may need to indent sections of text.
+You may need to indent a section of text while still wrapping and
+filling.
 .
-A typical use for indents is to create nested lists and sublists.
+.
+.TP
+.B .RS
+Begin a region indented by
+.BR \[rs]n[PI] ,
+affecting the placement of headings,
+paragraphs,
+and displays.
+.
+.
+.TP
+.B .RE
+End the most recent indented region.
 .
 .
 .PP
-Use the
-.B RS
-and
-.B RE
-macros to start and end a section of indented text, respectively.
+You can use
+.BR .RS /
+.B .RE
+regions to line up text under hanging and indented paragraphs.
 .
-The
-.B PI
-register controls the amount of indent.
-.
-.
-.PP
-You can nest indented sections as deeply as needed by using multiple,
-nested pairs of
-.B RS
-and
-.BR RE .
+For example,
+you may wish to nest lists.
 .
 .
 .\" ====================================================================

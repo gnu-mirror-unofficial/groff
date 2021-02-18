@@ -1259,54 +1259,89 @@ If you omit the space,
 prints the first word on the same line as the term or label (if it fits)
 .B then
 breaks the line.
+.
+.
+.NH 2
+Indented regions
+.XS
+	Indented regions
+.XE
+.
+.
+.LP
+You may need to indent a section of text while still wrapping and
+filling.
+.
+.
+.TS
+box;
+cb cb
+lfCR lx .
+Macro	Description
+_
+\&.RS	T{
+Begin a region indented by
+.CW \[rs]n[PI] ,
+affecting the placement of headings,
+paragraphs,
+and displays.
+T}
+\&.RE	T{
+End the most recent indented region.
+T}
+.TE
+.
+.
 .PP
-To set nested lists, use the
-.CW .RS
-and 
+You can use
+.CW .RS /
 .CW .RE
-macros.
-These macros begin and end a section indented to line
-up with the body of an
-.CW .IP
-macro.
-For example:
+regions to line up text under hanging and indented paragraphs.
+.
+For example,
+you may wish to nest lists.
+.
 .TS
 box center;
-a a .
+l l .
 T{
 .nf
 .CW
-\&.IP \\(bu 2
+\&.IP \\[bu] 2
 Lawyers:
 \&.RS
-\&.IP \\(bu
+\&.IP \\[bu]
 Dewey,
-\&.IP \\(bu
+\&.IP \\[bu]
 Cheatham,
-\&.IP \\(bu
-and Howe.
+and
+\&.IP \\[bu]
+Howe.
 \&.RE
-\&.IP \\(bu
+\&.IP \\[bu]
 Guns
 .R
-\&...
+\&.\|.\|.
 .fi
 T}	T{
-.IP \(bu 2
+.IP \[bu] 2
 Lawyers:
 .RS
-.IP \(bu
+.IP \[bu]
 Dewey,
-.IP \(bu
+.IP \[bu]
 Cheatham,
-.IP \(bu
-and Howe.
+and
+.IP \[bu]
+Howe.
 .RE
-.IP \(bu
+.IP \[bu]
 Guns
-\&...
+\&.\|.\|.
 T}
 .TE
+.
+.
 .NH 2
 Displays and keeps
 .XS
