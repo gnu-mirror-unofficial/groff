@@ -764,35 +764,6 @@ as a subscript.
 .
 .
 .\" ====================================================================
-.SS Indents
-.\" ====================================================================
-.
-You may need to indent sections of text.
-.
-A typical use for indents is to create nested lists and sublists.
-.
-.
-.PP
-Use the
-.B RS
-and
-.B RE
-macros to start and end a section of indented text, respectively.
-.
-The
-.B PI
-register controls the amount of indent.
-.
-.
-.PP
-You can nest indented sections as deeply as needed by using multiple,
-nested pairs of
-.B RS
-and
-.BR RE .
-.
-.
-.\" ====================================================================
 .SS Lists
 .\" ====================================================================
 .
@@ -822,9 +793,35 @@ specifies the indent for the body of each list item.
 .
 Once specified, the indent remains the same for all list items in the
 document until specified again.
-.\" =====
-.br
-.ne 15
+.
+.
+.\" ====================================================================
+.SS Indents
+.\" ====================================================================
+.
+You may need to indent sections of text.
+.
+A typical use for indents is to create nested lists and sublists.
+.
+.
+.PP
+Use the
+.B RS
+and
+.B RE
+macros to start and end a section of indented text, respectively.
+.
+The
+.B PI
+register controls the amount of indent.
+.
+.
+.PP
+You can nest indented sections as deeply as needed by using multiple,
+nested pairs of
+.B RS
+and
+.BR RE .
 .
 .
 .\" ====================================================================
