@@ -4466,16 +4466,15 @@ inches''.
 
 @cindex word, definition of
 @cindex filling
-GNU @code{troff} processes its input by reading words.  To GNU
-@code{troff}, a @dfn{word} is any sequence of one or more characters
-that aren't spaces, tabs, or newlines.  They are separated by spaces,
-tabs, newlines, or file boundaries.@footnote{There are also @emph{escape
-sequences} which can function as word characters, word-separating space,
-or neither---the last simply have no effect on GNU @code{troff}'s idea
-of whether its input is within a word or not.}  GNU @code{troff} reads
-its input character by character, collecting words as it goes, and fits
-as many of them together on one output line as it can---this is known as
-@dfn{filling}.
+GNU @code{troff} reads its input character by character, collecting
+words as it goes, and fits as many words together on one output line as
+it can---this is known as @dfn{filling}.  To GNU @code{troff}, a
+@dfn{word} is any sequence of one or more characters that aren't spaces,
+tabs, or newlines.  Words are separated by spaces, tabs, newlines, or
+file boundaries.@footnote{There are also @emph{escape sequences} which
+can function as word characters, word-separating space, or neither---the
+last simply have no effect on GNU @code{troff}'s idea of whether its
+input is within a word or not.}
 
 @Example
 It is a truth universally acknowledged
@@ -4777,22 +4776,29 @@ languages, with one conspicuous exception.
 @cindex control character
 @cindex control character, no-break
 @cindex no-break control character
-A @dfn{request} is an instruction to the formatter that occurs on a line
-by itself after a control character.@footnote{Or occasionally as part of
-another request, such as @code{if} or @code{while}.}  A @dfn{control
-character} must occur at the beginning of an input line to be
-recognized.  The regular control character has a counterpart, the
-@dfn{no-break control character}, which suppresses the break that is
-implied by some requests.  The default control characters are the dot
-(@code{.}) and the neutral apostrophe (@code{'}), the latter being the
-no-break control character.  These characters were chosen because it is
-uncommon for lines of text in natural languages to begin with periods or
-apostrophes.
+A @dfn{request} is an instruction to the formatter that occurs after a
+control character.  A @dfn{control character} must occur at the
+beginning of an input line to be recognized.@footnote{Occasionally a
+control character is expected as part of another request, such as
+@code{if} or @code{while}.}  The regular control character has a
+counterpart, the @dfn{no-break control character}, which suppresses the
+break that is implied by some requests.  The default control characters
+are the dot (@code{.}) and the neutral apostrophe (@code{'}), the latter
+being the no-break control character.  These characters were chosen
+because it is uncommon for lines of text in natural languages to begin
+with periods or apostrophes.
 
 @cindex control line
-Lines beginning with a control character are called @dfn{control lines}.
+Lines beginning with a control character are called @dfn{control
+lines}.@footnote{or a continuation of one (@pxref{Line Control})}
 @cindex text line
 Every line of input that is not a control line is a @dfn{text line}.
+
+@cindex argument
+Requests often take @dfn{arguments}, words separated from the request
+name and each other by spaces that specify details of the action GNU
+@code{troff} is expected to perform.  If a request is meaningless
+without arguments, it is typically ignored.
 
 GNU @code{troff} requests, combined with its escape sequences, comprise
 the control language of the formatter.  Of key importance are the
@@ -4803,10 +4809,10 @@ handling in macros is more flexible but also more complex.
 
 @cindex macro
 @cindex interpolation
-A @dfn{macro} can be thought of as an abbreviation you can define that
-is replaced with what it stands for when it is called.  In @code{roff}
-systems, the process of replacing a macro call is known as
-@dfn{interpolation}.@footnote{Some escape sequences undergo
+A @dfn{macro} can be thought of as an abbreviation you can define for a
+collection of control and text lines.  When the macro is called, it is
+replaced with what it stands for.  The process of replacing a macro call
+is known as @dfn{interpolation}.@footnote{Some escape sequences undergo
 interpolation as well.}  Interpolations are handled as soon as they are
 recognized, and once performed, a @code{roff} formatter scans the
 replacement for further requests, macro calls, and escape sequences.
@@ -4825,7 +4831,7 @@ Macros}.}
 The foregoing input produces no output by itself; all we have done is
 store some information.  Observe the pair of dots that end the macro
 definition.  This is a default; you can specify your own terminator for
-the macro definition.
+the macro definition as the second argument to the @code{de} request.
 
 @Example
 .de NAME ENDNAME
@@ -4833,9 +4839,8 @@ Heywood Jabuzzoff
 .ENDNAME
 @endExample
 
-In fact, the ending marker is no mere string, but can itself be a macro
-that will be automatically called if it is defined at the time the
-enclosing macro definition begins.
+In fact, the ending marker can itself be the name of a macro that will
+be called if it is defined at the time the macro definition begins.
 
 @Example
 .de END
@@ -5103,9 +5108,9 @@ which causes GNU @code{troff} to ignore the remainder of the input line.
 Use the empty request---a control character followed immediately by a
 newline---to visually manage separation of material in input files.  The
 @code{groff} project's own documents use an empty request between
-sentences and after macro definitions, and two empty requests between
-paragraphs or other requests or macro calls that will introduce vertical
-space into the document.
+sentences, after macro definitions, and where a break is expected, and
+two empty requests between paragraphs or other requests or macro calls
+that will introduce vertical space into the document.
 
 You can combine the empty request with the comment escape to include
 whole-line comments in your document, and even ``comment out'' sections
