@@ -2952,7 +2952,7 @@ abstract.
 Specifies the author's name, which appears on the line (or lines)
 immediately following.  You can specify multiple authors as follows:
 
-@Example
+@CartoucheExample
 .AU
 John Doe
 .AI
@@ -2963,7 +2963,7 @@ Martha Buck
 Monolithic Corporation
 
 ...
-@endExample
+@endCartoucheExample
 @endDefmac
 
 @Defmac {AI, , ms}
@@ -3149,7 +3149,7 @@ specified section numbers as their predecessors.
 An example may be illustrative.  The blank line after each section
 heading is omitted from the output shown.
 
-@Example
+@CartoucheExample
 .NH 1
 Animalia
 .NH 2
@@ -3162,12 +3162,15 @@ Chordata
 Daimonia
 .NH 1
 Plantae
-    @result{} 1.  Animalia
-    @result{} 1.1.  Arthropoda
-    @result{} 1.1.1.  Crustacea
-    @result{} 1.2.  Chordata
-    @result{} 6.6.6.  Daimonia
-    @result{} 7.  Plantae
+@endCartoucheExample
+
+@Example
+1.  Animalia
+1.1.  Arthropoda
+1.1.1.  Crustacea
+1.2.  Chordata
+6.6.6.  Daimonia
+7.  Plantae
 @endExample
 
 @DefstrList {SN-STYLE, ms}
@@ -3215,7 +3218,7 @@ interpreted in @code{groff} basic units; the @code{p} scaling factor
 should be employed when assigning a value specified in points.  For
 example, the sequence
 
-@Example
+@CartoucheExample
 .nr PS 10
 .nr GROWPS 3
 .nr PSINCR 1.5p
@@ -3227,7 +3230,7 @@ Felinae
 Felis catus
 .SH 2
 Machairodontinae
-@endExample
+@endCartoucheExample
 
 @noindent
 will cause ``1. Carnivora'' to be printed in 13-point text, followed by
@@ -3368,7 +3371,7 @@ The following is an example of a bulleted list.
 @cindex example markup, bulleted list [@code{ms}]
 @cindex bulleted list, example markup [@code{ms}]
 
-@Example
+@CartoucheExample
 A bulleted list:
 .IP \[bu] 2
 lawyers
@@ -3376,7 +3379,7 @@ lawyers
 guns
 .IP \[bu]
 money
-@endExample
+@endCartoucheExample
 
 Produces:
 
@@ -3394,7 +3397,7 @@ The following is an example of a numbered list.
 @cindex example markup, numbered list [@code{ms}]
 @cindex numbered list, example markup [@code{ms}]
 
-@Example
+@CartoucheExample
 .nr step 1 1
 A numbered list:
 .IP \n[step] 3
@@ -3403,7 +3406,7 @@ lawyers
 guns
 .IP \n+[step]
 money
-@endExample
+@endCartoucheExample
 
 Produces:
 
@@ -3423,7 +3426,7 @@ The following is an example of a glossary-style list.
 @cindex example markup, glossary-style list [@code{ms}]
 @cindex glossary-style list, example markup [@code{ms}]
 
-@Example
+@CartoucheExample
 A glossary-style list:
 .IP lawyers 0.4i
 Two or more attorneys.
@@ -3433,7 +3436,7 @@ large-caliber.
 .IP money
 Gotta pay for those
 lawyers and guns!
-@endExample
+@endCartoucheExample
 
 Produces:
 
