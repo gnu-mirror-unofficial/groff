@@ -29,19 +29,19 @@
 	for use with gnulib") more scrupulously; include config.h in
 	more files.
 
-	* src/libs/libgroff/assert.cpp [HAVE_CONFIG_H]: #include
-	config.h using angle brackets instead of quotation marks.
-
 	* src/libs/libgroff/curtime.cpp [HAVE_CONFIG_H]:
 	* src/libs/libgroff/device.cpp [HAVE_CONFIG_H]:
-	* src/libs/libgroff/errarg.cpp [HAVE_CONFIG_H]:
-	* src/libs/libgroff/error.cpp [HAVE_CONFIG_H]:
 	* src/libs/libgroff/fatal.cpp [HAVE_CONFIG_H]:
 	* src/libs/libgroff/string.cpp [HAVE_CONFIG_H]:
 	* src/libs/libgroff/strsave.cpp [HAVE_CONFIG_H]:
 	* src/preproc/eqn/other.cpp [HAVE_CONFIG_H]:
 	* src/preproc/eqn/text.cpp [HAVE_CONFIG_H]:
 	* src/preproc/pic/object.cpp [HAVE_CONFIG_H]: Do it.
+
+	* src/libs/libgroff/assert.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/errarg.cpp [HAVE_CONFIG_H]:
+	* src/libs/libgroff/error.cpp [HAVE_CONFIG_H]: #include
+	config.h using angle brackets instead of quotation marks.
 
 	Fixes <https://savannah.gnu.org/bugs/?60035>.
 
@@ -322,7 +322,7 @@
 
 2021-01-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* src/libs/libgroff/relocate.cpp (set_current_prefix) [WIN32]:
+	* src/libs/libgroff/relocate.cpp (set_current_prefix) [_WIN32]:
 	Move declaration of `pathextstr` to lie within preprocessor
 	conditional, since it is dereferenced only there.
 
