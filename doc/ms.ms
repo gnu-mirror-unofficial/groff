@@ -1362,27 +1362,34 @@ Displays can be
 .I kept
 on a single page, or allowed to break across pages.
 The following table shows the display types available.
+.
+.
 .TS
-box expand;
-cb s | cb 
+box;
+cb s | cb
 cb cb | ^
-afCR afCR | a .
+lfCR lfCR | lx .
 Display macro	Description
 With keep	No keep
 _
-\&.DS L	\&.LD	Left-justified display.
+\&.DS L	\&.LD	Left-aligns display.
 \&.DS I [\fIindent\fP]	\&.ID	T{
-Indented display
-(default is the DI register).
+Indents display
+(by
+.I indent
+if given,
+otherwise the value of
+.CW \[rs]n[DI] ).
 T}
 \&.DS B	\&.BD	T{
-Block-centered display
-(left-justified,
-longest line centered).
+Block-centers display
+(left-aligns with the longest line centered).
 T}
 \&.DS C	\&.CD	Centers all lines in the display.
-\&.DS R	\&.RD	Right-justifies all lines in the display.
+\&.DS R	\&.RD	Right-aligns all lines in the display.
 .TE
+.
+.
 .LP
 Use the
 .CW .DE
@@ -1453,11 +1460,13 @@ and
 .I refer .
 You mark text meant for preprocessors by enclosing it
 in pairs of tags as follows:
+.
+.
 .TS
-box expand;
+box;
 cb cb
-afCRw(1.5i) aw(4.5i) .
-Tag Pair	Description
+lfCR lx .
+Tag pair	Description
 _
 T{
 \&.TS [H]
@@ -1545,6 +1554,8 @@ format of the bibliographic database.
 T}
 .TE
 .KE
+.
+.
 .KS
 .NH 3
 An example multi-page table
@@ -1626,11 +1637,10 @@ prints footnote numbers by changing the value of the
 register as follows.
 .
 .
-.na
 .TS
 box;
 cb cb
-aw(0.75i) lw(5.25i) .
+lfCR lx .
 Value	Description
 _
 0	T{
@@ -1651,7 +1661,6 @@ Like\~1,
 but prints the footnote number as a paragraph with a hanging indent.
 T}
 .TE
-.ad
 .KE
 .
 .
@@ -1773,10 +1782,12 @@ However, if the current mode is single-column, starting a multi-column
 mode does
 .B not
 force a page break.
+.
+.
 .TS
-box expand;
+box;
 cb cb
-lfCRw(2i) lw(4i).
+lfCR lx .
 Macro	Description
 _
 \&.1C	Single-column mode.
@@ -1803,6 +1814,8 @@ number register is the default gutter width.
 T}
 .TE
 .KE
+.
+.
 .NH 2
 Creating a table of contents
 .XS
