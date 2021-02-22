@@ -1,3 +1,15 @@
+2021-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac: Emit warning diagnostic when using a multi-page
+	table with a repeating header (".TS H").
+	(KS): Rename diversion from "kp*div" to "kp@div" since the name
+	is now referenced outside the keep module.
+	(KF): ...similarly for kp@fdiv.
+	(generally): Update diversion dereference sites and derived
+	names.
+	(@TS): When handling "H" argument, check identity of current
+	diversion and emit appropriately worded warning.
+
 2021-02-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* FOR-RELEASE: Add more procedures and information related to

@@ -827,26 +827,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" Keeps.
 .de KS
 .br
-.di kp*div
+.di kp@div
 ..
 .de KF
 .if !'\\n(.z'' .@error-recover .KF while diversion open
-.di kp*fdiv
+.di kp@fdiv
 .ev k
 .par@reset-env
 .par@reset
 ..
 .de KE
-.ie '\\n(.z'kp*div' .kp*end
+.ie '\\n(.z'kp@div' .kp*end
 .el \{\
-.	ie '\\n(.z'kp*fdiv' .kp*fend
+.	ie '\\n(.z'kp@fdiv' .kp*fend
 .	el .@error .KE without .KS or .KF
 .\}
 ..
-.de @div-end!kp*div
+.de @div-end!kp@div
 .kp*end
 ..
-.de @div-end!kp*fdiv
+.de @div-end!kp@fdiv
 .kp*fend
 ..
 .de kp*need
@@ -859,9 +859,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .di
 .kp*need \\n[dn]
 .ev nf
-.kp*div
+.kp@div
 .ev
-.rm kp*div
+.rm kp@div
 ..
 .\" Floating keeps.
 .nr kp@head 0
@@ -874,12 +874,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .ie \\n[.t]-(\\n[.k]>0*1v)>\\n[dn] \{\
 .	br
 .	ev nf
-.	kp*fdiv
-.	rm kp*fdiv
+.	kp@fdiv
+.	rm kp@fdiv
 .	ev
 .\}
 .el \{\
-.	rn kp*fdiv kp*div!\\n[kp@tail]
+.	rn kp@fdiv kp@div!\\n[kp@tail]
 .	nr kp*ht!\\n[kp@tail] 0\\n[dn]
 .	nr kp@tail +1
 .\}
@@ -905,7 +905,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .		\" back the keep, so that if the last line of the
 .		\" last keep springs the bottom of page trap, a new
 .		\" page will not be started unnecessarily.
-.		rn kp*div!\\n[kp@head] kp*temp
+.		rn kp@div!\\n[kp@head] kp*temp
 .		nr kp@head +1
 .		ev nf
 .		kp*temp
@@ -1812,7 +1812,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .de @TS
 .sp \\n[DD]u
-.if '\\$1'H' .di tbl*header-div
+.if '\\$1'H' \{\
+.	ds tbl*stem .TS H table inside\"
+.	ie '\\n[.z]'kp@div' .@warning \\*[tbl*stem] .KS/.KE keep
+.	el .if '\\n[.z]'kp@fdiv' \
+.		@warning \\*[tbl*stem] .KF/.KE floating keep
+.	rm tbl*stem
+.	di tbl*header-div
+.\}
 .if '\*(.T'html' \{\
 .	nr tbl*ll \\n[.l]
 .	ll 1000n
