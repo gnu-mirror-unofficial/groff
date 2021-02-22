@@ -125,6 +125,11 @@ ms\c
 for more information.
 .
 .
+.PP
+In this document,
+a right arrow (\[->]) is used to indicate a tab character in the input.
+.
+.
 .NH 2
 Basic information
 .XS
@@ -507,7 +512,7 @@ Martha Buck
 \&.AI
 Monolithic Corporation
 .R
-\&...
+\&.\|.\|.
 .DE
 T}
 _
@@ -533,42 +538,49 @@ T}
 _
 \&.AE	End the abstract.
 .TE
+.
+.
 .KS
 .LP
-The following is example mark-up for a title page.
-.B1
-.DS B
+The following is example markup for a title page.
+.
+.
+.\" Wrap lines in the code example below at 64 columns.
+.TS
+box center;
+l.
+T{
+.nf
 .CW
 \&.RP
 \&.TL
-The Inevitability of Code Bloat
-in Commercial and Free Software
+The Inevitability of Code Bloat in Commercial and Free Software
 \&.AU
 J. Random Luser
 \&.AI
 University of West Bumblefuzz
 \&.AB
-This report examines the long-term growth
-of the code bases in two large, popular software
-packages; the free Emacs and the commercial
-Microsoft Word.
-While differences appear in the type or order
-of features added, due to the different
-methodologies used, the results are the same
-in the end.
+This report examines the long-term growth of the code bases in
+two large,
+popular software packages;
+the free Emacs and the commercial Microsoft Word.
+While differences appear in the type or order of features added,
+due to the different methodologies used,
+the results are the same in the end.
 \&.PP
-The free software approach is shown to be
-superior in that while free software can
-become as bloated as commercial offerings,
-free software tends to have fewer serious
-bugs and the added features are in line with
-user demand.
+The free software approach is shown to be superior in that while
+free software can become as bloated as commercial offerings,
+free software tends to have fewer serious bugs and the added
+features are in line with user demand.
 \&.AE
 .R
-\&... the rest of the paper follows ...
-.DE
-.B2
+\&.\|.\|.\|the rest of the paper follows\|.\|.\|.
+.fi
+T}
+.TE
 .KE
+.
+.
 .\" ------------------------
 .bp
 .NH 1
@@ -604,34 +616,44 @@ The effect is identical to the
 element.
 The next paragraph or heading
 returns margins to normal.
+.
+.
 .KS
 .PP
 The following markup uses all three paragraph macros.
-.B1
-.DS B
+.
+.
+.\" Wrap lines in the code example below at 64 columns.
+.TS
+box center;
+l.
+T{
+.nf
 .CW
 \&.NH 2
 Cases used in the study
 \&.LP
-The following software and versions were
-considered for this report.
+The following software and versions were considered for this
+report.
 \&.PP
-For commercial software, we chose
+For commercial software,
+we chose
 \&.B "Microsoft Word for Windows" ,
-starting with version 1.0 through the
-current version (Word 2000).
+starting with version 1.0 through the current version
+(Word 2000).
 \&.PP
-For free software, we chose
+For free software,
+we chose
 \&.B Emacs ,
-from its first appearance as a standalone
-editor through the current version (v20).
+from its first appearance as a standalone editor through the
+current version (v20).
 \&.QP
 Franklin's Law applied to software:
-software expands to outgrow both
-RAM and disk space over time.
+software expands to outgrow both RAM and disk space over time.
 .R
-.DE
-.B2
+.fi
+T}
+.TE
 .KE
 .
 .
@@ -910,11 +932,15 @@ Highlighting
 .XS
 	Highlighting
 .XE
+.
+.
 .LP
 The
-.I -ms
-macros provide a variety of methods to highlight
-or emphasize text:
+.I ms
+macros provide a variety of methods to highlight or emphasize text.
+.KE
+.
+.
 .TS H
 box;
 lb lb
@@ -1067,7 +1093,8 @@ the value of the
 register).
 T}
 .TE
-.KE
+.
+.
 .NH 2
 Lists
 .XS
@@ -1098,7 +1125,6 @@ Once specified, the indent remains the same for all
 list items in the document until specified again.
 .
 .
-.KS
 .PP
 The following are examples of each type of list.
 .
@@ -1175,7 +1201,6 @@ preferably large-caliber.
 Gotta pay for those lawyers and guns!
 T}
 .TE
-.KE
 .
 .
 .PP
@@ -1562,28 +1587,39 @@ An example multi-page table
 .XS
 		An example multi-page table
 .XE
+.
+.
 .LP
-The following is an example of how to set up a
-table that may print across two or more pages.
-.B1
-.DS I
+The following is an example of how to set up a table that may print
+across two or more pages.
+.
+.
+.TS
+box center;
+l .
+T{
+.nf
 .CW
 \&.TS H
 allbox expand;
 cb | cb .
-Text      \&...of heading...
+Part\[->]Description
 _
 \&.TH
 \&.T&
 l | l .
+GH-1978\[->]Fribulating gonkulator
 .R
-\&... the rest of the table follows...
+\&.\|.\|.\|the rest of the table follows\|.\|.\|.
 .CW
 \&.TE
 .R
-.DE
-.B2
+.fi
+T}
+.TE
 .KE
+.
+.
 .NH 2
 Footnotes
 .XS
@@ -1833,16 +1869,25 @@ repeat those headings wrapped in
 and
 .CW .XE
 macros.
+.
+.
 .PP
-In addition, the
-.CW .XS
-macro does not know to indent a heading based on
-its level.
-The easiest way to work around this is to add tabs
-to the table of contents string.
-The following is an example:
-.B1
-.DS I
+In addition,
+the
+.CW XS
+macro does not know to indent a heading based on its level.
+.
+The easiest way to work around this is to add tabs to the table of
+contents string.
+.
+The following is an example.
+.
+.
+.TS
+box center;
+l .
+T{
+.nf
 .CW
 \&.NH 1
 Introduction
@@ -1850,17 +1895,20 @@ Introduction
 Introduction
 \&.XE
 .R
-\&...
+\&.\|.\|.
 .CW
 \&.NH 2
 Methodology
 \&.XS
-	Methodology
+\[->]Methodology
 \&.XE
 .R
-\&...
-.DE
-.B2
+\&.\|.\|.
+.fi
+T}
+.TE
+.
+.
 .LP
 The
 .I "Groff and Friends HOWTO"
