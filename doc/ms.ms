@@ -1620,6 +1620,15 @@ T}
 .KE
 .
 .
+.PP
+Attempting to place a multi-page table inside a keep can lead to
+unpleasant results,
+particularly if the
+.I tbl
+.CW allbox
+option is used.
+.
+.
 .NH 2
 Footnotes
 .XS
