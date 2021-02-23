@@ -13544,10 +13544,13 @@ For orthogonality it is said that GNU @code{troff} is in the
 @dfn{top-level diversion} if no diversion is active (that is, formatted
 output is being ``diverted'' immediately to the output device).
 
-The following requests are used to create and alter diversions;
-dereferencing an undefined diversion will create an empty one of that
-name, and cause a warning of type @samp{mac} to be emitted
-(@pxref{Debugging}).
+Dereferencing an undefined diversion will create an empty one of that
+name and cause a warning of type @samp{mac} to be emitted
+(@pxref{Debugging}).  A diversion does not exist for the purpose of
+testing with the @code{d} conditional operator until it ends
+(@pxref{Operators in Conditionals}).  The @code{.z} register can be used
+to test the identity of the current diversion.  The following requests
+are used to create and alter diversions.
 
 @DefreqList {di, macro}
 @DefreqListEndx {da, macro}
