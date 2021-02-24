@@ -1,4 +1,4 @@
-    Copyright (C) 1992-2020 Free Software Foundation, Inc.
+    Copyright (C) 1992-2021 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -17,6 +17,13 @@ o A new read-only register ".cp" is implemented.  Within a .do request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
   groff_diff(7) or the groff Texinfo manual for rationale, use case, and
   example.
+
+o A new read-only register ".nm" is implemented.  It reports the
+  enablement status of output line numbering (caused by the .nm
+  request) irrespective of the temporary suspension of numbering with
+  the .nn request.  This register was introduced because there was no
+  way to introspect its state, tbl(1) needs to be able to do so, and the
+  writable line number register \n[ln] is not a reliable proxy for it.
 
 o Point-size escapes of the form '\sNN', where NN is in the range 10-39,
   are now recognized only in compatibility mode (groff -C); when

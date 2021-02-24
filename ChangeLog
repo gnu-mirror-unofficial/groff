@@ -1,3 +1,25 @@
+2021-02-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Implement new read-only register ".nm".  It reports the
+	enablement status of output line numbering (caused by the .nm
+	request) irrespective of the temporary suspension of numbering
+	with the .nn request.  Needed because there was no way to
+	introspect its state, tbl(1) needs to do so, and the writable
+	line number register \n[ln] is not a reliable proxy for it.
+
+	* src/roff/troff/env.h: Add get_numbering_nodes(), returning
+	`int`,  to public interface of `environment` class.
+	* src/roff/troff/env.cpp: Implement get_numbering_nodes().
+
+	* src/roff/groff/tests/dot-nm_register_works.sh: Test it.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
+
+	* doc/groff.texi (Miscellaneous):
+	* man/groff_diff.7.man (Language/New number registers):
+	* man/groff.7.man (Registers/Read-only registers): Document it.
+
+	* NEWS: Add item.
+
 2021-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/s.tmac: Emit warning diagnostic when using a multi-page

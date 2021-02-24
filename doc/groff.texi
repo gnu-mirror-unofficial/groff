@@ -14627,7 +14627,8 @@ Commands}).
 This section documents parts of @code{gtroff} that cannot (yet) be
 categorized elsewhere in this manual.
 
-@Defreq {nm, [@Var{start} [@Var{inc} [@Var{space} [@Var{indent}]]]]}
+@DefreqList {nm, [@Var{start} [@Var{inc} [@Var{space} [@Var{indent}]]]]}
+@DefregListEndx {.nm}
 @cindex printing line numbers (@code{nm})
 @cindex line numbers, printing (@code{nm})
 @cindex numbers, line, printing (@code{nm})
@@ -14661,6 +14662,10 @@ active line numbering parameters.
 The parameters of @code{nm} are associated with the current environment
 (@pxref{Environments}).  The current output line number is available in
 the register @code{ln}.
+
+The @code{.nm} register tracks the enablement status of line numbering.
+Temporary suspension of numbering with the @code{nn} request does
+@emph{not} alter its value.
 
 @Example
 .po 1m
