@@ -1818,7 +1818,7 @@ void table::init_output()
 	 ".ie !'\\n(.z'' \\{.nm\n"
 	 "\\!." REPEATED_NM_SET_MACRO " \"\\$1\"\n"
 	 ".\\}\n"
-	 ".el .if \\n[ln] \\{\\\n"
+	 ".el .if \\n[.nm] .if \\n[ln] \\{\\\n"
 	 ".if '\\$1'd' .nr " ROW_START_LINE_REG " \\n[ln]\n"
 	 ".if '\\$1's' .nm \\n[" ROW_START_LINE_REG "]\n"
 	 ".if '\\$1'm' .nr " ROW_MAX_LINE_REG " \\n[ln]>?\\n[" ROW_MAX_LINE_REG "]\n"
@@ -1828,7 +1828,7 @@ void table::init_output()
 	 ".ie !'\\n(.z'' \\{.nm\n"
 	 "\\!." REPEATED_NM_SUS_MACRO " \"\\$1\"\n"
 	 ".\\}\n"
-	 ".el .if \\n[ln] \\{\\\n"
+	 ".el .if \\n[.nm] .if \\n[ln] \\{\\\n"
 	 ".ie '\\$1's' \\{\\\n"
 	 ".nr " ROW_SAVE_LINE_REG " \\n(ln<?\\n[" ROW_MAX_LINE_REG "]\n"
 	 ".nm +0 \\n[ln]+42\n"
@@ -1878,12 +1878,12 @@ void table::init_output()
 	   ".  tm1 \" table row will not fit on page \\n%\n"
 	   ".\\}\n"
 	   ".nf\n"
-	   ".if \\n[ln] .nm \\n[ln]\n"
+	   ".if \\n[.nm] .if \\n[ln] .nm \\n[ln]\n"
 	   ".nr " ROW_MAX_LINE_REG " \\n[ln]\n"
 	   ".ls 1\n"
 	   "." SECTION_DIVERSION_NAME "\n"
 	   ".ls\n"
-	   ".if \\n[ln] .nm\n"
+	   ".if \\n[.nm] .if \\n[ln] .nm\n"
 	   ".rm " SECTION_DIVERSION_NAME "\n"
 	   ".\\}\n"
 	   "..\n"
@@ -1913,12 +1913,12 @@ void table::init_output()
 	   ".in 0\n"
 	   ".ls 1\n"
 	   ".nf\n"
-	   ".if \\n[ln] .nm \\n[ln]\n"
+	   ".if \\n[.nm] .if \\n[ln] .nm \\n[ln]\n"
 	   "." TABLE_DIVERSION_NAME "\n"
 	   ".\\}\n"
 	   ".rm " TABLE_DIVERSION_NAME "\n"
 	   ".\\}\n"
-	   ".if \\n[ln] \\{.nm\n"
+	   ".if \\n[.nm] .if \\n[ln] \\{.nm\n"
 	   ".nr ln \\n[" ROW_MAX_LINE_REG "]\n"
 	   ".\\}\n"
 	   "..\n");
@@ -2918,7 +2918,7 @@ void table::do_row(int r)
     if (!(flags & NOKEEP) && row_ends_section(r))
       prints(".if \\n[" USE_KEEPS_REG "] ." RELEASE_MACRO_NAME "\n");
   }
-  prints(".if \\n[ln] .nr ln \\n[" ROW_MAX_LINE_REG "]\n");
+  prints(".if \\n[.nm] .if \\n[ln] .nr ln \\n[" ROW_MAX_LINE_REG "]\n");
 }
 
 void table::do_top()
@@ -2978,7 +2978,7 @@ void table::do_bottom()
   if (!(flags & NOKEEP) && (flags & (BOX | DOUBLEBOX | ALLBOX)))
     prints("." TABLE_RELEASE_MACRO_NAME "\n");
   else
-    prints(".if \\n[ln] \\{.nm\n"
+    prints(".if \\n[.nm] .if \\n[ln] \\{.nm\n"
 	   ".nr ln \\n[" ROW_MAX_LINE_REG "]\n"
 	   ".\\}\n");
   if (flags & DOUBLEBOX)

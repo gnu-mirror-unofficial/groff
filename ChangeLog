@@ -1,5 +1,22 @@
 2021-02-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Fix bug where having line numbering off but the output line
+	number register \n[ln] set to a positive value would cause
+	tbl(1) table rows to spontaneously become numbered.  Use new
+	\n[.nm] register to determine whether line numbering is enabled.
+
+	* src/preproc/tbl/table.cpp (table::init_output, table::do_row,
+	table::do_bottom): Predicate all conditions on \n[ln]
+	additionally on \n[.nm].
+
+	Thanks to Olle Lögdahl for the report.  Problem appears to date
+	back to commit b69062693d3360efce9d4d63fac337be21e07db7, 20 July
+	2011.
+
+	Fixes <https://savannah.gnu.org/bugs/?59812>.
+
+2021-02-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #59812.
 
 	* src/preproc/tbl/tests/cooperate-with-nm-request.sh: Do it.
