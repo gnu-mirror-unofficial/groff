@@ -1,3 +1,22 @@
+2021-03-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac: Improve diagnostic messages.
+	(@diag): New macro wraps .tm request, always prefixing it with
+	the name of the macro package, as well as file and line
+	indicators only if these are set to non-empty or non-zero
+	values, respectively.
+	(@error, @warning): Call @diag instead of .tm directly.
+	(@fatal): Retire; it had only one call site and it would have
+	greatly complicated @diag to support calling .ab instead of .tm.
+	An ugly alternative would have been to call .ab with a redundant
+	message after calling @diag.
+	(@divert): New macro wraps .di request, remembering the name of
+	the current file (\n[.F]) when a diversion is started.
+	(@error-recover): Call .ab instead of (deleted) @fatal.
+	(pg@super-eject): Tell user what the last file name seen was
+	when recovering from an unfinished diversion when processing
+	ends.
+
 2021-02-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Fix bug where having line numbering off but the output line

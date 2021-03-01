@@ -36,15 +36,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" Define a string for use in diagnostic messages.
 .ds @s s.tmac\"
 .
+.de @diag
+.	ds *file \" empty
+.	ds *line \" empty
+.	if !'\\n[.F]'' .ds *file \\n[.F]:\"
+.	if !'\\n[.c]'0' .ds *line \\n[.c]:\"
+.	tm \*[@s]:\\*[*file]\\*[*line] \\$*
+.	rm *file
+.	rm *line
+..
+.
 .de @error
-.tm \*[@s]:\\n(.F:\\n(.c: error: \\$*
+.	@diag error: \\$*
 ..
+.
 .de @warning
-.tm \*[@s]:\\n(.F:\\n(.c: warning: \\$*
+.	@diag warning: \\$*
 ..
-.de @fatal
-.ab \*[@s]:\\n(.F:\\n(.c: fatal error: \\$*
-..
+.
 .de @not-implemented
 .@error sorry, .\\$0 not implemented
 .als \\$0 @nop
@@ -56,6 +65,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .als CT @not-implemented
 .de @nop
 ..
+.
+.\" Wrap the .di request to save the name of the file being processed
+.\" when a diversion is started.  This aids diagnostics when diversions
+.\" are still open after input has been processed and \n[.F] is empty.
+.als @divert di
+.de di
+.	if \\n[.$] .ds @last-file-seen \\n[.F]\"
+.	@divert \\$*
+..
+.
 .de @init
 .if !rPO .nr PO \\n(.o
 .\" a non-empty environment
@@ -104,7 +123,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	el .*div-end-default
 .	nr *pop-count +1
 .	\" ensure that we don't loop forever
-.	if \\n[*pop-count]>20 .@fatal recovery failed
+.	if \\n[*pop-count]>20 .ab \*[@s]: fatal error: recovery failed
 .\}
 .while !'\\n[.ev]'0' .ev
 .par@reset-env
@@ -633,7 +652,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" flush out any keeps or footnotes
 .de pg@super-eject
 .br
-.if !'\\n(.z'' .@error-recover diversion open while ejecting page
+.if !'\\n(.z'' \{\
+.	ds @msg diversion open while ejecting page\"
+.	as @msg " (last file seen: \\*[@last-file-seen])\"
+.	@error-recover \\*[@msg]
+.	rm @msg
+.\}
 .\" Make sure we stay in the end macro while there is still footnote
 .\" overflow left, or floating keeps.
 .while \\n[kp@tail]>\\n[kp@head]:\\n[pg@fn-flag] \{\
