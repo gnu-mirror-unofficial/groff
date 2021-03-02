@@ -5647,7 +5647,14 @@ value of@tie{}0.
 
 @xref{Warnings}, @ref{Interpolating Registers}, and @ref{Strings}.
 
-Macros, strings, and diversions (and boxes) share the same name space.
+@cindex name space, common, of macros, diversions, boxes, and strings
+@cindex common name space of macros, diversions, boxes, and strings
+@cindex macros, shared name space with strings, diversions, and boxes
+@cindex strings, shared name space with macros, diversions, and boxes
+@cindex diversions, shared name space with macros, strings, and boxes
+@cindex boxes, shared name space with macros, strings, and diversions
+Identifiers for macros, strings, diversions (and boxes) share a name
+space.
 
 @Example
 .de xxx
@@ -11175,15 +11182,10 @@ It is not possible to embed a newline in a string that will be
 interpreted as such when the string is interpolated.  To achieve that
 effect, use the @code{\*} escape to interpolate a macro instead.
 
-@cindex name space, common, of macros, diversions, and strings
-@cindex common name space of macros, diversions, and strings
-@cindex macros, shared name space with strings and diversions
-@cindex strings, shared name space with macros and diversions
-@cindex diversions, shared name space with macros and strings
-Strings, macros, and diversions (and boxes) share the same name space.
-Internally, the same mechanism is used to store them.  Thus it is
-possible to invoke a macro with string interpolation syntax and vice
-versa.
+Strings, macros, diversions (and boxes) share a same name space;
+@ref{Identifiers}.  Internally, the same mechanism is used to store
+them.  It is thus possible to invoke a macro with string interpolation
+syntax and vice versa.
 
 @Example
 .de subject
@@ -12066,8 +12068,8 @@ off in a single document.
 Using @file{trace.tmac}, you can trace calls to @code{de} and
 @code{de1}.
 
-Macro identifiers share their name space with identifiers for strings
-and diversions (and boxes).
+Macro identifiers share their name space with identifiers for strings,
+diversions, and boxes; @ref{Identifiers}.
 
 @xref{als,,the description of the @code{als} request}, for possible
 pitfalls if redefining a macro that has been aliased.
@@ -13530,14 +13532,14 @@ end-of-input macro using the @code{am} request.
 In @code{roff} systems it is possible to format text as if for output,
 but instead of writing it immediately, one can @dfn{divert} the
 formatted text into a named storage area.  The same name space is used
-for such @emph{diversions} as for strings and macros.  Such text is
-sometimes said to be ``stored in a macro'', but this coinage obscures
-the important distinction between macros and strings on one hand and
-diversions on the other; the former store @emph{unformatted} input text,
-and the latter capture @emph{formatted} output.  Applications of
-diversions include ``keeps'' (preventing a page break from occurring at
-an inconvenient place by forcing a set of output lines to be set as a
-group), footnotes, tables of contents, and indices.
+for such @emph{diversions} as for strings and macros; @ref{Identifiers}.
+Such text is sometimes said to be ``stored in a macro'', but this
+coinage obscures the important distinction between macros and strings on
+one hand and diversions on the other; the former store
+@emph{unformatted} input text, and the latter capture @emph{formatted}
+output.  Applications of diversions include ``keeps'' (preventing a page
+break from occurring at an inconvenient place by forcing a set of output
+lines to be set as a group), footnotes, tables of contents, and indices.
 @cindex top-level diversion
 @cindex diversion, top-level
 For orthogonality it is said that GNU @code{troff} is in the
