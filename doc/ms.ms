@@ -1006,18 +1006,18 @@ It operates similarly to the
 macro otherwise.
 T}
 _
-\&.CW [txt [post [pre]]]	T{
-Sets its first argument in a
-.CW "constant width face" .
+\&.BI [txt [post [pre]]]	T{
+Sets its first argument in
+.BI "bold italic type" .
 .
 It operates similarly to the
 .CW .B
 macro otherwise.
 T}
 _
-\&.BI [txt [post [pre]]]	T{
-Sets its first argument in
-.BI "bold italic type" .
+\&.CW [txt [post [pre]]]	T{
+Sets its first argument in a
+.CW "constant width face" .
 .
 It operates similarly to the
 .CW .B
