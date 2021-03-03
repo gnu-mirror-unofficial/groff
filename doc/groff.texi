@@ -2276,7 +2276,8 @@ Print @samp{<CTRL/@var{key}>}.
 @endDefmac
 
 @Defmac {CW, , man}
-Print subsequent text using the constant-width typeface (Courier).
+Print subsequent text using a ``constant-width'' (monospaced) typeface
+(Courier roman).
 @endDefmac
 
 @Defmac {Ds, , man}
@@ -2288,7 +2289,7 @@ End a non-filled display started with @code{Ds}.
 @endDefmac
 
 @Defmac {EX, [@Var{indent}], man}
-Begin a non-filled display using the constant-width typeface (Courier).
+Begin a non-filled display using a monospaced typeface (Courier roman).
 Use the optional @var{indent} argument to indent the display.
 @endDefmac
 
@@ -2337,15 +2338,15 @@ End a note begun with @code{NT}.
 @endDefmac
 
 @Defmac {PN, @Var{path} [@Var{punct}], man}
-Set the path name in a constant-width typeface (Courier), followed by
+Set the path name in a monospaced typeface (Courier roman), followed by
 optional punctuation.
 @endDefmac
 
 @Defmac {Pn, [@Var{punct}] @Var{path} [@Var{punct}], man}
 If called with two arguments, identical to @code{PN}.  If called with
-three arguments, set the second argument in a constant-width typeface
-(Courier), bracketed by the first and third arguments in the current
-font.
+three arguments, set the second argument in a monospaced typeface
+(Courier roman), bracketed by the first and third arguments in the
+current font.
 @endDefmac
 
 @Defmac {R, , man}
@@ -3295,13 +3296,14 @@ the @code{B}@tie{}macro otherwise.
 @endDefmac
 
 @Defmac {CW, [@Var{txt} [@Var{post} [@Var{pre}]]], ms}
-Sets its first argument in a @code{constant-width typeface}.  It
-operates similarly to the @code{B}@tie{}macro otherwise.  This is a
-Berkeley extension.
+Sets its first argument in a @code{constant-width} (monospaced)
+roman typeface.  It operates similarly to the @code{B}@tie{}macro
+otherwise.  This is a Version@tie{}10 Research Unix extension.
+@c Possibly V9, but definitely not Berkeley.
 
 In @code{groff} @file{ms} you might prefer to change the font family to
-Courier---a constant-width typeface---by setting the @code{FAM} string
-to @samp{C}.  You can then use all four style macros above, returning to
+Courier, which is monospaced, by setting the @code{FAM} string to
+@samp{C}.  You can then use all four style macros above, returning to
 the default family (Times) with @samp{.ds FAM T}.
 @endDefmac
 
@@ -4300,8 +4302,8 @@ for details.  This is a Berkeley extension.
 @endDefmac
 
 @Defmac {CW, , ms}
-Set text in a @code{constant-width} font (Courier).  This is a Berkeley
-extension.
+Set text in a @code{constant-width} (monospaced) typeface.  This is a
+Version@tie{}10 Research Unix extension.
 @endDefmac
 
 @Defmac {IX, , ms}

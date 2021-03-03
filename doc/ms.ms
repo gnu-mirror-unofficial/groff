@@ -1017,11 +1017,29 @@ T}
 _
 \&.CW [txt [post [pre]]]	T{
 Sets its first argument in a
-.CW "constant width face" .
+.CW constant-width
+(monospaced) roman typeface.
 .
 It operates similarly to the
 .CW .B
 macro otherwise.
+.
+This is a Version\~10 Research Unix extension.
+.\" Possibly V9, but definitely not Berkeley.
+.
+.
+.sp \n[PD]u
+In
+.I "groff ms"
+you might prefer to change the font family to Courier\[em]a monospaced
+typeface\[em]by setting
+.CW \[rs]*[FAM]
+to
+.CW C \[rq]. \[lq]
+.
+You can then use all four style macros above,
+returning to the default family (Times) with
+.CW ".ds FAM T" \[rq]. \[lq]
 T}
 _
 \&.BX [txt]	T{
