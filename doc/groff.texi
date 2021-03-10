@@ -4448,10 +4448,10 @@ continues this tradition of permitting an author to compose a single
 master version of a document which can then be rendered for a variety of
 output formats or devices.
 
-GNU @code{troff} input files contain text with directives to control the
-typesetter interspersed throughout.  Even in the absence of such
-directives, GNU @code{troff} still processes its input in several ways,
-by filling, hyphenating, breaking, and adjusting it.
+@code{roff} input files contain text interspersed with instructions to
+control the typesetter.  Even in the absence of such instructions, GNU
+@code{troff} still processes its input in several ways, by filling,
+hyphenating, breaking, and adjusting it.
 
 @menu
 * Filling::
@@ -4472,14 +4472,14 @@ by filling, hyphenating, breaking, and adjusting it.
 @subsection Filling
 
 When GNU @code{troff} starts up, it obtains information about the device
-for which it is preparing output.@footnote{@ref{Device and Font Files}.}
-A crucial example is the length of the output line, such as ``6.5
-inches''.
+for which it is preparing output.@footnote{@xref{Device and Font
+Files}.} A crucial example is the length of the output line, such as
+``6.5 inches''.
 
 @cindex word, definition of
 @cindex filling
 GNU @code{troff} reads its input character by character, collecting
-words as it goes, and fits as many words together on one output line as
+words as it goes, and fits as many words together on an output line as
 it can---this is known as @dfn{filling}.  To GNU @code{troff}, a
 @dfn{word} is any sequence of one or more characters that aren't spaces,
 tabs, or newlines.  Words are separated by spaces, tabs, newlines, or
@@ -4510,9 +4510,9 @@ what other circumstances should influence this spacing.@footnote{A
 well-researched jeremiad appreciated by @code{groff} contributors on
 both sides of the sentence-spacing debate can be found at
 @uref{https://web.archive.org@//web@//20171217060354@//http://www.heracliteanriver.com@//?p=324}.}
-GNU @code{troff} follows the example of @acronym{AT&T} @code{troff},
-attempting to detect the boundaries between sentences, and supplying
-additional inter-sentence space between them.
+GNU @code{troff} follows the example of @acronym{AT&T} @code{troff};
+when filling text, it attempts to detect the boundaries between
+sentences, and supplies additional inter-sentence space between them.
 
 @Example
 Hello, world!
@@ -4550,16 +4550,15 @@ Barnum.
 @endExample
 
 ``Barnum'' doesn't begin a sentence!  What to do?  Let us meet our first
-@dfn{escape sequence}, a series of input characters that give special
+@dfn{escape sequence}, a series of input characters that give
 instructions to GNU @code{troff} instead of being copied as-is to output
 device glyphs.@footnote{This statement oversimplifes; there are escape
 sequences whose purpose is precisely to produce glyphs on the output
 device, and input characters that @emph{aren't} part of escape sequences
-can undergo a great deal of processing before getting to the output.}
-An escape sequence begins with the backslash character @code{\} by
-default, an uncommon character in natural language text, and is
-@emph{always} followed by at least one other character, hence the term
-``sequence''.
+can undergo a great deal of processing before getting to the output.} An
+escape sequence begins with the backslash character @code{\} by default,
+an uncommon character in natural language text, and is @emph{always}
+followed by at least one other character, hence the term ``sequence''.
 
 @cindex @code{\&}, at end of sentence
 The non-printing input break escape sequence @code{\&} can be used after
@@ -4599,16 +4598,16 @@ detection of the end of a sentence.  For example, it would be incorrect
 for GNU @code{troff} to infer the end of a sentence after the dot in
 @samp{3.14159}.  However, several characters are treated
 @emph{transparently} after the occurence of an end-of-sentence
-character.  That is, GNU @code{troff} does not cancel the
-end-of-sentence detection process when it processes them.  This is
-because such characters are often used as footnote markers or to close
-quotations and parentheticals.  The default set is @samp{"}, @samp{'},
-@samp{)}, @samp{]}, @samp{*}, @code{\[dg]}, @code{\[dd]}, @code{\[rq]},
-and @code{\[cq]}.  The last four are examples of @dfn{special
-characters}, escape sequences whose purpose is to obtain glyphs that are
-not easily typed at the keyboard, or which have special meaning to GNU
-@code{troff} (like @code{\} itself).@footnote{The mnemonics for the
-special characters shown here are ``dagger'', ``double dagger'', ``right
+character.  That is, GNU @code{troff} does not cancel end-of-sentence
+detection when it processes them.  This is because such characters are
+often used as footnote markers or to close quotations and
+parentheticals.  The default set is @samp{"}, @samp{'}, @samp{)},
+@samp{]}, @samp{*}, @code{\[dg]}, @code{\[dd]}, @code{\[rq]}, and
+@code{\[cq]}.  The last four are examples of @dfn{special characters},
+escape sequences whose purpose is to obtain glyphs that are not easily
+typed at the keyboard, or which have special meaning to GNU @code{troff}
+(like @code{\} itself).@footnote{The mnemonics for the special
+characters shown here are ``dagger'', ``double dagger'', ``right
 (double) quote'', and ``closing (single) quote''.  See the
 @cite{groff_char@r{(7)}} man page.}
 
@@ -4623,8 +4622,8 @@ been shocking to the rich.\[rq]
 
 The sets of characters that potentially end sentences or are transparent
 to sentence endings are configurable.  See the @code{cflags} request in
-@ref{Using Symbols}.  To change the additional inter-sentence spacing
-amount---even to remove it entirely---see the @code{ss} request in
+@ref{Using Symbols}.  To disable filling or to change the additional
+inter-sentence spacing amount---even to remove it entirely---see
 @ref{Manipulating Filling and Adjustment}.
 
 @c ---------------------------------------------------------------------
@@ -4633,15 +4632,15 @@ amount---even to remove it entirely---see the @code{ss} request in
 @subsection Hyphenation
 @cindex hyphenation
 
-It is uncommon for the most recent word collected from the input to
-exactly fill the output line.  Typically, there is enough room left over
-for part of the next word.  The process of splitting a word so that it
-appears partially on one line (with a hyphen to indicate to the reader
-that the word has been broken) with the remainder of the word on the
-next is @dfn{hyphenation}.  GNU @code{troff} uses a hyphenation
-algorithm and language-specific pattern files (based on but simplified
-from those used in @TeX{}) to decide which words can be hyphenated and
-where.
+When an output line is nearly full, it is uncommon for the most recent
+word collected from the input to exactly fill it.  Typically, there is
+enough room left over for part of the next word.  The process of
+splitting a word so that it appears partially on one line (with a hyphen
+to indicate to the reader that the word has been broken) with the
+remainder of the word on the next is @dfn{hyphenation}.  GNU
+@code{troff} uses a hyphenation algorithm and language-specific pattern
+files (based on but simplified from those used in @TeX{}) to decide
+which words can be hyphenated and where.
 
 Hyphenation does not always occur even when the hyphenation rules for a
 word allow it; it can be disabled, and when not disabled there are
@@ -4691,24 +4690,23 @@ point escape sequence @samp{\:}; see @ref{Manipulating Hyphenation}.
 @cindex blank line macro (@code{blm})
 What if the document author wants to stop filling lines temporarily, for
 instance to start a new paragraph?  There are several solutions.  A
-blank line not only causes a break, but by default it also outputs a
-one-line vertical space (effectively a blank line).  This behavior can
-be modified with the blank line macro request @code{blm}.  @xref{Blank
-Line Traps}.  Macro packages may discourage or disable the blank line
-method of paragraphing in favor of their own macros.
+blank input line not only causes a break, but by default it also outputs
+a one-line vertical space (effectively a blank output line).  This
+behavior can be modified; see @ref{Blank Line Traps}.  Macro packages
+may discourage or disable the blank line method of paragraphing in favor
+of their own macros.
 
 @cindex leading space macro (@code{lsm})
-A line that begins with a space causes a break and the space is output
-at the beginning of the next line.  This space isn't @emph{adjusted}
-(see below); however, this behavior can be modified with the leading
-spaces macro request @code{lsm}.  @xref{Leading Space Traps}.  Again,
-macro packages may provide other methods of producing indented
-paragraphs.
+A line that begins with one or more spaces causes a break.  The spaces
+are output at the beginning of the next line without being
+@emph{adjusted} (see below); however, this behavior can be modified
+(@pxref{Leading Space Traps}).  Again, macro packages may provide other
+methods of producing indented paragraphs.
 
 What if there is no next input word?  Or the file ends before enough
 words have been collected to fill an output line?  The end of the file
-also causes a break, resolving both of these cases.  Certain requests
-also cause breaks, implicitly or explicitly.  This is discussed in
+causes a break, resolving both of these cases.  Certain requests also
+cause breaks, implicitly or explicitly.  This is discussed in
 @ref{Manipulating Filling and Adjustment}.
 
 @c ---------------------------------------------------------------------
@@ -4750,29 +4748,19 @@ appearance (and width) of the text on a terminal and the results from
 GNU @code{troff} can vary greatly, particularly when proportional
 typefaces are used.
 
-A further possible difficulty is that lines beginning with tab
-characters are still filled, possibly producing unexpected
-results.@footnote{It works well, on the other hand, for a traditional
-practice of paragraph composition wherein a tab is used to create a
-first-line indentation.}
+A tab character does not cause a break and therefore does not interrupt
+filling.  We use an arrow @arrow{} below to indicate an input tab
+character.
 
-@multitable {12345678} {12345678} {12345678} {12345678}
-@item
-@tab 1 @tab 2 @tab 3
-@item
-@tab   @tab 4 @tab 5
-@end multitable
-
-@noindent
-The above example produces the following output.
-
-@multitable {12345678} {12345678} {12345678} {12345678} {12345678} {12345678} {12345678}
-@item
-@tab 1 @tab 2 @tab 3 @tab   @tab 4 @tab 5
-@end multitable
+@Example
+1
+@arrow{} 2 @arrow{} 3 @arrow{} 4
+@arrow{} @arrow{} 5
+@result{} 1         2       3       4                 5
+@endExample
 
 GNU @code{troff} provides sufficient facilities for sophisticated table
-composition; @ref{Tabs and Fields}.  There are many details to track
+composition; see @ref{Tabs and Fields}.  There are many details to track
 when using such low-level features, so most users turn to the
 @cite{tbl@r{(1)}} preprocessor for table construction.
 
@@ -4782,8 +4770,7 @@ when using such low-level features, so most users turn to the
 @subsection Requests and Macros
 
 We have now encountered almost all of the syntax there is in @code{roff}
-languages, with one conspicuous exception.
-
+languages, with an exception already noted several times in passing.
 @cindex request
 @cindex control character
 @cindex control character, no-break
@@ -4801,10 +4788,12 @@ because it is uncommon for lines of text in natural languages to begin
 with periods or apostrophes.
 
 @cindex control line
-Lines beginning with a control character are called @dfn{control
-lines}.@footnote{or a continuation of one (@pxref{Line Control})}
+An input line beginning with a control character is called a
+@dfn{control line}.
 @cindex text line
-Every line of input that is not a control line is a @dfn{text line}.
+Every line of input that is not a control line is a @dfn{text
+line}.@footnote{The @key{\RET} escape can alter how an input line is
+classified; see @ref{Line Control}.}
 
 @cindex argument
 Requests often take @dfn{arguments}, words separated from the request
@@ -4820,11 +4809,13 @@ handling in macros is more flexible but also more complex.
 @xref{Request and Macro Arguments}.}
 
 @cindex macro
+@cindex calling a macro
 @cindex interpolation
 A @dfn{macro} can be thought of as an abbreviation you can define for a
-collection of control and text lines.  When the macro is called, it is
-replaced with what it stands for.  The process of replacing a macro call
-is known as @dfn{interpolation}.@footnote{Some escape sequences undergo
+collection of control and text lines.  When the macro is @dfn{called} by
+giving its name after a control character, it is replaced with what it
+stands for.  The process of textual replacement is known as
+@dfn{interpolation}.@footnote{Some escape sequences undergo
 interpolation as well.}  Interpolations are handled as soon as they are
 recognized, and once performed, a @code{roff} formatter scans the
 replacement for further requests, macro calls, and escape sequences.
@@ -4841,7 +4832,7 @@ Macros}.}
 
 @noindent
 The foregoing input produces no output by itself; all we have done is
-store some information.  Observe the pair of dots that end the macro
+store some information.  Observe the pair of dots that ends the macro
 definition.  This is a default; you can specify your own terminator for
 the macro definition as the second argument to the @code{de} request.
 
@@ -4909,7 +4900,7 @@ Insert tedious liability disclaimer paragraph here.
 @noindent
 The above document started with a series of lines beginning with the
 control character.  Three macros were defined, with a @code{de} request
-declaring the macro's name, and the ``body'' of the macro starting on
+declaring each macro's name, and the ``body'' of the macro starting on
 the next line and continuing until a line with two dots @samp{@code{..}}
 marked its end.  The text proper began only after the macros were
 defined; this is a common pattern.  Only the @code{NOTICE} macro was
@@ -5045,9 +5036,9 @@ of your document or use @samp{-mlatin9} as a command-line argument to
 @end table
 
 Some input encoding characters may not be available for a particular
-output device.  For terminal devices, fallbacks are defined, like
-@samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.
-For typesetter devices it usually suffices to install fonts that have
+output driver.  For terminal devices, fallbacks are defined, like
+@samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.  For
+typesetter devices it usually suffices to install fonts that have
 compatible metrics with other fonts used in the document and contain the
 necessary glyphs.
 
@@ -5056,13 +5047,15 @@ necessary glyphs.
 Due to the importance of the Euro glyph in Europe, @code{groff} is
 distributed with a @sc{PostScript} font called @file{freeeuro.pfa},
 which provides various glyph shapes for the Euro.  In other words,
-@w{Latin-9} encoding is supported for the @option{-Tps} device out of
-the box (@w{Latin-2} isn't).
+@w{Latin-9} encoding is supported for the @option{ps} driver out of the
+box (@w{Latin-2} isn't).
 
-The @option{-Tutf8} device supports characters from all other input
-encodings.  @option{-Tdvi} has support for both @w{Latin-2} and
-@w{Latin-9} if the command-line @option{-mec} is used also to load the
-file @file{ec.tmac} (which flips to the EC fonts).
+The @option{utf8} driver supports characters from all other input
+encodings.  The @option{dvi} driver has support for both @w{Latin-2} and
+@w{Latin-9} if the command-line option @option{-mec} is used also to
+load the file @file{ec.tmac}.@footnote{This macro file uses the EC fonts
+instead of the Computer Modern (CM) fonts (the DVI output driver
+default).}
 
 @c ---------------------------------------------------------------------
 
@@ -5130,10 +5123,10 @@ of it.
 @end itemize
 
 We conclude this section with an example sufficiently long to illustrate
-the above suggestions in practice.  For the purpose of fitting the
-example between the margins of this manual with the font used for its
-typeset version, we have shortened the input line length to 58 columns.
-We have also used an arrow @arrow{} to indicate a tab character.
+most of the above suggestions in practice.  For the purpose of fitting
+the example between the margins of this manual with the font used for
+its typeset version, we have shortened the input line length to 58
+columns.  As before, an arrow @arrow{} indicates a tab character.
 
 @CartoucheExample
 .\" raw roff input example
@@ -12153,13 +12146,13 @@ When GNU @code{troff} processes certain requests, most importantly those
 which define a macro, string, or diversion, it does so in @dfn{copy
 mode}: it copies the characters of the definition into a dedicated
 storage region, interpolating the escape sequences @code{\n}, @code{\$},
-and @code{\*}, intepreting @code{\\} and @code{\@key{RET}} immediately
+and @code{\*}, intepreting @code{\\} and @code{\@key{RET}} immediately,
 and storing all other escape sequences in an encoded form.
 
 Since the escape character escapes itself, you can control whether
-any escape sequence is interpreted at definition time or when it is
-later invoked or interpolated by selectively insulating the escapes with
-an extra backslash.@footnote{Compare this to the @code{\def} and
+any escape sequence is interpreted at macro definition time or when it
+is later interpolated by selectively insulating the escapes with an
+extra backslash.@footnote{Compare this to the @code{\def} and
 @code{\edef} commands in @TeX{}.}
 
 @Example
