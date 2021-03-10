@@ -2581,8 +2581,8 @@ Longer documents usually include a table of contents, which you can
 produce by placing the @code{TC} macro at the end of your document.
 Printing the table of contents at the end is necessary since
 GNU @code{troff}, like its @acronym{AT&T} ancestor, is a single-pass
-text formatter; it thus cannot determine the page number of each section
-until that section has been set and output.  Since @file{ms} output is
+text formatter; it thus cannot determine the page number of a division
+of the text until it has been set and output.  Since @file{ms} output is
 designed for hard copy, you can manually relocate the pages containing
 the table of contents between the cover page and the body text after
 printing.@footnote{This limitation could also be overcome by using
@@ -2746,42 +2746,42 @@ Effective: next paragraph.
 Default: 1.
 @endDefmpreg
 
-@unnumberedsubsubsec Section Heading Settings
+@unnumberedsubsubsec Heading Settings
 
 @Defmpreg {PSINCR, ms}
-Defines an increment in point size, which is applied to section headings
-at nesting levels below the value specified in @code{GROWPS}.  The value
-of @code{PSINCR} should be specified in points, with the @dmn{p} scaling
-factor, and may include a fractional component; for example,
-@w{@samp{.nr PSINCR 1.5p}} sets a point size increment of 1.5@dmn{p}.
+Defines an increment in point size to be applied to headings at nesting
+levels more significant (numerically less) than the value specified in
+@code{GROWPS}.  The value of @code{PSINCR} should be specified in points
+with the @dmn{p} scaling factor and may include a fractional component;
+for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size increment of
+1.5@dmn{p}.
 
-Effective: next section heading.
+Effective: next heading.
 
 Default: 1@dmn{p}.
 @endDefmpreg
 
 @Defmpreg {GROWPS, ms}
-Defines the heading level below which the point size increment set by
-@code{PSINCR} becomes effective.  Section headings at and above the
-level specified by @code{GROWPS} are printed at the point size set by
-@code{PS}; for each level below the value of @code{GROWPS}, the point
-size is increased in steps equal to the value of @code{PSINCR}.  Setting
-@code{GROWPS} to any value less than@tie{}2 disables the incremental
-heading size feature.
+Defines the heading level at which the point size increment set by
+@code{PSINCR} becomes effective.  Headings more significant (numerically
+less) than that specified by @code{GROWPS} are printed at the point size
+set by @code{PS}; for each level below the value of @code{GROWPS}, the
+point size is increased by @code{PSINCR}.  Setting @code{GROWPS} to any
+value less than@tie{}2 disables the incremental heading size feature.
 
-Effective: next section heading.
+Effective: next heading.
 
 Default: 0.
 @endDefmpreg
 
 @Defmpreg {HORPHANS, ms}
 Defines the minimum number of lines of an immediately succeeding
-paragraph that should be kept together with any section heading
-introduced by the @code{NH} or @code{SH} macros.  If a section heading
-is placed close to the bottom of a page, and there is insufficient space
-to accommodate both the heading and at least @code{HORPHANS} lines of
-the following paragraph, before an automatic page break, then the page
-break is forced before the heading.
+paragraph that should be kept together with any heading introduced by
+the @code{NH} or @code{SH} macros.  If a heading is placed close to the
+bottom of a page, and there is insufficient space to accommodate both
+the heading and at least @code{HORPHANS} lines of the following
+paragraph, before an automatic page break, then the page break is forced
+before the heading.
 
 Effective: next paragraph.
 
@@ -2789,10 +2789,10 @@ Default: 1.
 @endDefmpreg
 
 @Defstr {SN-STYLE, ms}
-Defines the style used to print section numbers within numbered section
-headings.  @xref{Headings in ms}.
+Defines the style used to print numbered headings.  @xref{Headings in
+ms}.
 
-Effective: next section heading.
+Effective: next heading.
 
 Default: alias of @code{SN-DOT}
 @endDefstr
@@ -3064,7 +3064,7 @@ register @code{PD} before the paragraph.
 
 @DefmacList {QS, , ms}
 @DefmacListEndx {QE, , ms}
-These macros begin and end a quoted section.  The @code{QI} register
+These macros begin and end a quoted region.  The @code{QI} register
 controls the amount of indentation.  Both @code{QS} and @code{QE} insert
 inter-paragraph vertical space set by register @code{PD}.  The text
 between @code{QS} and @code{QE} can be structured further by use of the
@@ -3123,19 +3123,19 @@ printing of orphan lines at the bottom of any page.
 Use headings to create a hierarchical structure for your document.  The
 @file{ms} macros print headings in @strong{bold} using the same font
 family and, by default, point size as the body text.  Numbered and
-unnumbered section headings are available.  Text lines after heading
-macros are treated as part of the heading, rendered on the same output
-line in the same style.
+unnumbered headings are available.  Text lines after heading macros are
+treated as part of the heading, rendered on the same output line in the
+same style.
 
 @DefmacList {NH, @Var{level}, ms}
-@DefmacListEnd {NH, @t{S} @Var{section-level-index} @dots{}, ms}
+@DefmacListEnd {NH, @t{S} @Var{heading-level-index} @dots{}, ms}
 Numbered heading.
 
-The @var{level} argument instructs @file{ms} to number sections in the
-form @var{x.y.z}, to any depth desired, with the numbering of each level
-increasing automatically and being reset when a more significant level
-is increased.  ``1''@tie{}is the most significant or coarsest division
-of the document.  Only nonzero values are output.
+The @var{level} argument instructs @file{ms} to number headings in the
+form @var{a.b.c@dots{}}, to any depth desired, with the numbering of
+each level increasing automatically and being reset when a more
+significant level is increased.  ``1''@tie{}is the most significant or
+coarsest division of the document.  Only nonzero values are output.
 
 If you specify heading levels with a gap in an ascending sequence, such
 as by invoking @samp{.NH 3} after @samp{.NH 1}, @code{groff} @file{ms}
@@ -3143,8 +3143,8 @@ emits a warning on the standard error stream.
 
 Alternatively, a first argument of@tie{}@code{S} can be given, followed
 by integral arguments to number the levels of the heading explicitly.
-Further automatic section numbering, if used, resumes using the
-specified section numbers as their predecessors.
+Further automatic numbering, if used, resumes using the specified
+heading level indices as their predecessors.
 @endDefmac
 
 An example may be illustrative.
@@ -3164,8 +3164,8 @@ Daimonia
 Plantae
 @endCartoucheExample
 
-The above results in section numbering as follows; the vertical space
-that normally precedes each section heading is omitted.
+The above results in numbering as follows; the vertical space that
+normally precedes each heading is omitted.
 
 @Example
 1.  Animalia
@@ -3179,30 +3179,28 @@ that normally precedes each section heading is omitted.
 @DefstrList {SN-STYLE, ms}
 @DefstrItemx {SN-DOT, ms}
 @DefstrListEndx {SN-NO-DOT, ms}
-After invocation of @code{NH}, the assigned section number is made
-available in the strings @code{SN-DOT} (as it appears in a printed
-section heading with default formatting, followed by a terminating
-period), and @code{SN-NO-DOT} (with the terminating period omitted).
+After invocation of @code{NH}, the assigned number is made available in
+the strings @code{SN-DOT} (as it appears in a printed heading with
+default formatting, followed by a terminating period), and
+@code{SN-NO-DOT} (with the terminating period omitted).
 
-You can control the style used to print section numbers within numbered
-section headings by defining an appropriate alias for the string
-@code{SN-STYLE}.  By default, @code{SN-STYLE} is aliased to
-@code{SN-DOT}.  If you prefer to omit the terminating period from
-section numbers appearing in numbered section headings, you may define
-the alias as follows.
+You can control the style used to print numbered headings by defining an
+appropriate alias for the string @code{SN-STYLE}.  By default,
+@code{SN-STYLE} is aliased to @code{SN-DOT}.  If you prefer to omit the
+terminating period from numbers appearing in numbered headings, you may
+define the alias as follows.
 
 @Example
 .als SN-STYLE SN-NO-DOT
 @endExample
 
 @noindent
-Any such change in section numbering style becomes effective from the
-next use of @code{NH}, following redefinition of the alias for
-@code{SN-STYLE}.
+Any such change in numbering style becomes effective from the next use
+of @code{NH}, following redefinition of the alias for @code{SN-STYLE}.
 @endDefstr
 
 @Defmac {SH, [@Var{match-level}], ms}
-Unnumbered subheading.
+Unnumbered heading.
 
 The optional @var{match-level} argument is a GNU extension.  It is a
 number indicating the level of the heading corresponding to the
@@ -3243,14 +3241,14 @@ specified by the @code{PS} register.  ``Machairodontinae'' is printed at
 11.5 points, since it corresponds to heading level\~2.
 
 The @code{HORPHANS} register operates in conjunction with the @code{NH}
-and @code{SH} macros to inhibit the printing of orphaned section
-headings at the bottom of a page; it specifies the minimum number of
-lines of an immediately subsequent paragraph that must be kept on the
-same page as the heading.  If insufficient space remains on the current
-page to accommodate the heading and this number of lines of paragraph
-text, a page break is forced before the heading is printed.  Any display
-macro or @code{tbl}, @code{pic}, or @code{eqn} region between the
-heading and the subsequent paragraph suppresses this grouping.
+and @code{SH} macros to inhibit the printing of orphaned headings at the
+bottom of a page; it specifies the minimum number of lines of an
+immediately subsequent paragraph that must be kept on the same page as
+the heading.  If insufficient space remains on the current page to
+accommodate the heading and this number of lines of paragraph text, a
+page break is forced before the heading is printed.  Any display macro
+or @code{tbl}, @code{pic}, or @code{eqn} region between the heading and
+the subsequent paragraph suppresses this grouping.
 
 @c ---------------------------------------------------------------------
 
@@ -3497,7 +3495,7 @@ Gotta pay for those lawyers and guns!
 @node Indented regions in ms, Tab stops in ms, Lists in ms, ms Body Text
 @subsubsection Indented regions
 
-You may need to indent a section of text while still wrapping and
+You may need to indent a region of text while still wrapping and
 filling.
 
 @Defmac {RS, , ms}
@@ -3655,7 +3653,7 @@ specified.
 You can also use the @code{ne} request to force a page break if there is
 not enough vertical space remaining on the page.
 
-Use the following macros to draw a box around a section of text (such as
+Use the following macros to draw a box around a region of text (such as
 a display).
 
 @DefmacList {B1, , ms}
