@@ -3145,7 +3145,8 @@ emits a warning on the standard error stream.
 Alternatively, a first argument of@tie{}@code{S} can be given, followed
 by integral arguments to number the levels of the heading explicitly.
 Further automatic numbering, if used, resumes using the specified
-heading level indices as their predecessors.
+heading level indices as their predecessors.  This feature is a GNU
+extension.
 @endDefmac
 
 An example may be illustrative.
@@ -4217,6 +4218,10 @@ R} will right adjust lines, but it doesn't
 work''.@footnote{``Typing Documents on the UNIX System: Using the -ms
 Macros with Troff and Nroff''; M.@: E.@: Lesk; Bell Laboratories; 1978.}
 In @code{groff} @file{ms}, it does.
+
+@item
+@code{groff} @file{ms} handles @code{S} as the first argument to the
+@code{NH} macro specially, allowing explicit numbering of headings.
 @end itemize
 
 @Defmpreg {GS, ms}

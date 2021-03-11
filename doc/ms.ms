@@ -658,6 +658,8 @@ explicitly.
 Further automatic numbering,
 if used,
 resumes using the specified heading level indices as their predecessors.
+.
+This feature is a GNU extension.
 T}
 .TE
 .
