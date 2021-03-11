@@ -271,11 +271,14 @@ macros have minimal indexing facilities, consisting of the
 .CW .IX
 macro, which prints an entry on standard error.
 .FE
+.
 Printing the table of contents at the end is necessary since
-.I groff
-is a single-pass text formatter,
-thus it cannot determine the page number of each section
-until that section has actually been set and printed.
+GNU
+.I troff
+is a single-pass text formatter;
+it thus cannot determine the page number of a division of the text until
+it has been set and output.
+.
 Since
 .I -ms
 output was intended for hardcopy,
@@ -325,11 +328,7 @@ Paragraphs	\[rs]n[PI]	Initial indent	next \[ps]	5n
 \^	\[rs]n[QI]	Quoted paragraph indent	next \[ps]	5n
 \^	\[rs]n[PORPHANS]	# of initial lines kept	next \[ps]	1
 _
-T{
-Section
-.br
-headings
-T}	\[rs]n[PSINCR]	Point size increment	next heading	1p
+Headings	\[rs]n[PSINCR]	Point size increment	next heading	1p
 \^	\[rs]n[GROWPS]	Size increase level limit	next heading	0
 \^	\[rs]n[HORPHANS]	# of following lines kept	next heading	1
 \^	\[rs]*[SN\-STYLE]	Numbering style (alias)	next heading	\[rs]*[SN\-DOT]
@@ -675,7 +674,7 @@ using the same font family and,
 by default,
 point size as the body text.
 .
-Numbered and unnumbered section headings are available.
+Numbered and unnumbered headings are available.
 .
 Text lines after heading macros are treated as part of the heading,
 rendered on the same output line in the same style.
@@ -694,14 +693,18 @@ The
 .I level
 argument instructs
 .I ms
-to number sections in the form
-.I x.y.z ,
+to number headings in the form
+.CW
+.I a .\c
+.I b .\c
+.I c.\|.\|.,
+.R
 to any depth desired,
 with the numbering of each level increasing automatically and being
 reset when a more significant level is increased.
 .
-.CW 1\~ is
-the most significant or coarsest division of the document.
+\[lq]1\[rq]\~is the most significant or coarsest division of the
+document.
 .
 Only nonzero values are output.
 .
@@ -712,9 +715,8 @@ after
 .CW ".NH\~1" \[rq], \[lq]
 .I "groff ms"
 emits a warning on the standard error stream.
-.
-.
-.sp \n[PD]u
+T}
+\&.NH S \f[I]heading-level-index\f[]\f[R] .\|.\|.\f[]	T{
 Alternatively,
 a first argument
 .CW S "" of\~
@@ -722,9 +724,9 @@ can be given,
 followed by integral arguments to number the levels of the heading
 explicitly.
 .
-Further automatic section numbering,
+Further automatic numbering,
 if used,
-resumes using the specified section numbers as their predecessors.
+resumes using the specified heading level indices as their predecessors.
 T}
 .TE
 .
@@ -775,9 +777,9 @@ T}
 .PP
 After invocation of
 .CW .NH ,
-the assigned section number is made available in the strings
+the assigned number is made available in the strings
 .CW SN\-DOT
-(as it appears in a printed section heading with default formatting,
+(as it appears in a printed heading with default formatting,
 followed by a terminating period)
 and
 .CW SN\-NO\-DOT
@@ -785,8 +787,8 @@ and
 .
 .
 .PP
-You can control the style used to print section numbers within numbered
-section headings by defining an appropriate alias for the string
+You can control the style used to print numbered headings by defining an
+appropriate alias for the string
 .CW SN\-STYLE .
 .
 By default,
@@ -794,8 +796,8 @@ By default,
 is aliased to
 .CW \[rs]*[SN\-DOT] .
 .
-If you prefer to omit the terminating period from section numbers
-appearing in numbered section headings,
+If you prefer to omit the terminating period from numbers appearing in
+numbered headings,
 you may define the alias as follows.
 .
 .
@@ -807,8 +809,8 @@ lfCR.
 .
 .
 .LP
-Any such change in section numbering style becomes effective from the
-next use of
+Any such change in numbering style becomes effective from the next use
+of
 .CW .NH ,
 following redefinition of the alias for
 .CW \[rs]*[SN\-STYLE] .
@@ -841,15 +843,69 @@ T}
 .TE
 .
 .
+.PP
+The
+.CW PSINCR
+register defines an increment in point size to be applied to headings
+at nesting levels more significant
+(numerically less)
+than the value specified in
+.CW \[rs]n[GROWPS] .
+.
+The value of
+.CW \[rs]n[PSINCR]
+should be specified in points with the
+.CW p
+scaling factor and may include a fractional component;
+for example,
+.
+.
+.TS
+box center;
+lfCR.
+\&.nr PSINCR 1.5p
+.TE
+.
+.
 .LP
-If the
+sets a point size increment of 1.5 points.
+.
+.
+.PP
+The
 .CW GROWPS
-register is set to a value greater than the
+register defines the heading level at which the point size increment set
+by
+.CW \[rs]n[PSINCR]
+becomes effective.
+.
+Headings more significant
+(numerically less)
+than that specified by
+.CW \[rs]n[GROWPS]
+are printed at the point size set by
+.CW \[rs]n[PS] ;
+for each level below the value of
+.CW \[rs]n[GROWPS] ,
+the point size is increased by
+.CW \[rs]n[PSINCR] .
+.
+Setting
+.CW \[rs]n[GROWPS]
+to a value less than\~2 disables the incremental heading size feature.
+.
+.
+.PP
+In other words,
+if the
+.CW GROWPS
+register is greater than the
 .I level
-argument to
+argument to a
 .CW .NH
 or
-.CW .SH ,
+.CW .SH
+call,
 the point size of a heading produced by these macros increases by
 .CW \[rs]n[PSINCR]
 units over the size specified by
@@ -859,15 +915,6 @@ multiplied by the difference between
 and
 .CW \[rs]n[GROWPS] .
 .
-The value stored in
-.CW \[rs]n[PSINCR]
-is interpreted in
-.I groff
-basic units;
-the
-.CW p \[rq] \[lq]
-scaling factor should be employed when assigning a value specified in
-points.
 .
 For example,
 the sequence
@@ -908,8 +955,8 @@ register operates in conjunction with the
 .CW NH
 and
 .CW SH
-macros to inhibit the printing of orphaned section headings at the
-bottom of a page;
+macros to inhibit the printing of orphaned headings at the bottom of a
+page;
 it specifies the minimum number of lines of the subsequent paragraph
 that must be kept on the same page as the heading.
 .
@@ -1312,7 +1359,7 @@ Indented regions
 .
 .
 .LP
-You may need to indent a section of text while still wrapping and
+You may need to indent a region of text while still wrapping and
 filling.
 .
 .
