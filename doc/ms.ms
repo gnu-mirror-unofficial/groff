@@ -351,23 +351,6 @@ Changes to the footnote length ratio
 take effect with the next footnote written in single-column
 arrangements,
 but on the next page in multiple-column contexts.
-.
-.
-.LP
-The
-.CW \[rs]n[DD]
-distance used before and after each pair of display macros is also
-applied to regions of the document preprocessed with
-.I eqn (1),
-.I pic (1),
-and
-.I tbl (1).
-.
-The \[lq]gutter\[rq] affected by
-.CW \[rs]n[MINGW]
-is the gap between columns in multiple-column page arrangements.
-.
-.
 .\" ------------------------
 .bp
 .NH 1
@@ -1432,6 +1415,19 @@ T}
 Use the
 .CW .DE
 macro to end any display type.
+.
+.
+.PP
+The
+.CW \[rs]n[DD]
+distance used before and after each pair of display macros is also
+applied to regions of the document preprocessed with
+.I eqn (1),
+.I pic (1),
+and
+.I tbl (1).
+.
+.
 .PP
 On occasion, you may want to
 .I keep
