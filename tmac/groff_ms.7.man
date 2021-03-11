@@ -203,7 +203,7 @@ _
 cb   s  s  s
 cb   cb cb cb
 lfCR lx l  lfCR.
-Section heading settings
+Heading settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[PSINCR]	Point size increment	next heading	1p
@@ -476,7 +476,7 @@ using the same font family and,
 by default,
 point size as the body text.
 .
-Numbered and unnumbered section headings are available.
+Numbered and unnumbered headings are available.
 .
 Text lines after heading macros are treated as part of the heading,
 rendered on the same output line in the same style.
@@ -490,8 +490,8 @@ The
 .I level
 argument instructs
 .I ms
-to number sections in the form
-.IR x . y . z ,
+to number heading in the form
+.IR a . b . c .\|.\|.,
 to any depth desired,
 with the numbering of each level increasing automatically and being
 reset when a more significant level is increased.
@@ -510,12 +510,27 @@ after
 emits a warning on the standard error stream.
 .
 .
+.TP
+.BI ".NH S\~" heading-level-index\~\c
+\&.\|.\|.
+Alternatively,
+a first argument
+.RB \[lq] S \[rq]\~of
+can be given,
+followed by integral arguments to number the levels of the heading
+explicitly.
+.
+Further automatic numbering,
+if used,
+resumes using the specified heading level indices as their predecessors.
+.
+.
 .PP
 After invocation of
 .BR .NH ,
-the assigned section number is made available in the strings
+the assigned number is made available in the strings
 .B SN\-DOT
-(as it appears in a printed section heading with default formatting,
+(as it appears in a printed heading with default formatting,
 followed by a terminating period)
 and
 .B SN\-NO\-DOT
@@ -523,8 +538,8 @@ and
 .
 .
 .PP
-You can control the style used to print section numbers within numbered
-section headings by defining an appropriate alias for the string
+You can control the style used to print numbered headings by defining an
+appropriate alias for the string
 .BR SN\-STYLE .
 .
 By default,
@@ -532,13 +547,13 @@ By default,
 is aliased to
 .BR \[rs]*[SN\-DOT] .
 .
-If you prefer to omit the terminating period from section numbers
-appearing in numbered section headings,
+If you prefer to omit the terminating period from numbers appearing in
+numbered headings,
 you may alias it to
 .BR \[rs]*[SN\-NO\-DOT] .
 .
-Any such change in section numbering style becomes effective from the
-next use of
+Any such change in numbering style becomes effective from the next use
+of
 .BR .NH ,
 following redefinition of the alias for
 .BR \[rs]*[SN\-STYLE] .
@@ -566,14 +581,56 @@ heading size adjustment mechanism is in effect.
 .
 .
 .PP
-If the
+The
+.B PSINCR
+register defines an increment in point size to be applied to headings
+at nesting levels more significant
+(numerically less)
+than the value specified in
+.BR \[rs]n[GROWPS] .
+.
+The value of
+.B \[rs]n[PSINCR]
+should be specified in points with the
+.RB \[lq] p \[rq]
+scaling factor and may include a fractional component.
+.
+.
+.PP
+The
 .B GROWPS
-register is set to a value greater than the
+register defines the heading level at which the point size increment set
+by
+.B \[rs]n[PSINCR]
+becomes effective.
+.
+Headings more significant
+(numerically less)
+than that specified by
+.B \[rs]n[GROWPS]
+are printed at the point size set by
+.BR \[rs]n[PS] ;
+for each level below the value of
+.BR \[rs]n[GROWPS] ,
+the point size is increased by
+.BR \[rs]n[PSINCR] .
+.
+Setting
+.B \[rs]n[GROWPS]
+to a value less than\~2 disables the incremental heading size feature.
+.
+.
+.PP
+In other words,
+if the
+.B GROWPS
+register is greater than the
 .I level
-argument to
+argument to a
 .B .NH
 or
-.BR .SH ,
+.B .SH
+call,
 the point size of a heading produced by these macros increases by
 .B \[rs]n[PSINCR]
 units over the size specified by
@@ -583,16 +640,6 @@ multiplied by the difference between
 and
 .BR \[rs]n[GROWPS] .
 .
-The value stored in
-.B \[rs]n[PSINCR]
-is interpreted in
-.I groff
-basic units;
-the
-.RB \[lq] p \[rq]
-scaling factor should be employed when assigning a value specified in
-points.
-.
 .
 .PP
 The
@@ -601,8 +648,8 @@ register operates in conjunction with the
 .B NH
 and
 .B SH
-macros to inhibit the printing of orphaned section headings at the
-bottom of a page;
+macros to inhibit the printing of orphaned headings at the bottom of a
+page;
 it specifies the minimum number of lines of the subsequent paragraph
 that must be kept on the same page as the heading.
 .
@@ -806,7 +853,7 @@ document until specified again.
 .SS "Indented regions"
 .\" ====================================================================
 .
-You may need to indent a section of text while still wrapping and
+You may need to indent a region of text while still wrapping and
 filling.
 .
 .
