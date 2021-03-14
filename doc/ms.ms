@@ -1772,12 +1772,11 @@ setting this register at document initialization time had no effect on
 the footnote line length in multi-column arrangements.\**
 .
 .FS
-You could reset it after calling
-.CW .2C
+You could reset it after each call to
+.CW .1C ,
+.CW .2C ,
 or
-.CW .MC ,
-then again after
-.CW .1C .
+.CW .MC .
 .FE
 .
 .
