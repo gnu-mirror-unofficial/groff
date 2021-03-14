@@ -841,8 +841,8 @@ or
 call,
 the point size of a heading produced by these macros increases by
 .CW \[rs]n[PSINCR]
-units over the size specified by
-.CW \[rs]n[PS] ,
+units over
+.CW \[rs]n[PS]
 multiplied by the difference between
 .I level
 and
