@@ -2977,7 +2977,8 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\"	indent stored in cov*abs-ind
 .\" number of authors stored in cov*au
 .\" author(s) stored in cov*au!x!y
-.\" author(s) title stored in cov*at!x!y
+.\" number of authors' titles strored in cov*at!x
+.\" title(s) of author(s) stored in cov*at!x!y
 .\" 	x is the author-index [1-cov*au], y is the argument-index [1-9].
 .\" author(s) firm stored in cov*firm
 .\" new date (if .ND exists) is stored in cov*new-date
@@ -3021,6 +3022,7 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\" Must appear directly after .AU
 .de AT
 .if \\n[.$]<1 .@error "AT: no arguments"
+.nr cov*at!\\n[cov*au] \\n[.$]
 .nr cov*i 0 1
 .while \\n[.$]>=\\n+[cov*i] \{\
 .	ds cov*at!\\n[cov*au]!\\n[cov*i] "\\$[\\n[cov*i]]
@@ -3306,18 +3308,23 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .nr let*i 0 1
 .while \\n+[let*i]<=\\n[cov*au] \{\
 .	if \\n[let*i]>1 .as let*tmp /
-.	as let*tmp \\*[cov*au!\\n[let*k]!2]
+.	as let*tmp \\*[cov*au!\\n[let*i]!2]
 .\}
 .if !''\\$1' .as let*tmp -\\$1
 .in (u;\\n[.l]/2)
 .nf
 .nr let*i 0 1
 .while \\n+[let*i]<=\\n[cov*au] \{\
+.	ne 3v+\\n[cov*at!\\n[let*i]]v
 .	SP 3v
 .	if \\n[let*i]=\\n[let*k] \{\
 \Z'\h'-(u;\\n[.l]/2)'\\*[let*tmp]'\c
 .	\}
 \\*[cov*au!\\n[let*i]!1]
+.	nr let*j 0 1
+.	while \\n+[let*j]<=\\n[cov*at!\\n[let*i]] \{\
+\\*[cov*at!\\n[let*i]!\\n[let*j]]
+.	\}
 .\}
 .fi
 .in
