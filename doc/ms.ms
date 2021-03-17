@@ -166,10 +166,10 @@ _
 i	inches
 c	centimeters
 p	points (1/72\[sd])
+P	picas (1/6\[sd])
 v	\[lq]vees\[rq]; height of a line using the current font
 n	\[lq]ens\[rq]; width of an \[lq]n\[rq] using the current font
 m	\[lq]ems\[rq]; width of an \[lq]M\[rq] using the current font
-P	picas (1/6\[sd])
 .TE
 .
 .
