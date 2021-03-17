@@ -309,6 +309,12 @@ but keeping them together at the beginning makes them easy to find and
 edit as necessary.
 .
 .
+.PP
+A list of document control registers and strings follows.
+.
+They are presented in the syntax used to interpolate them.
+.
+.
 .TS H
 box expand;
 cb | cb cb cb cb

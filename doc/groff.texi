@@ -2611,10 +2611,10 @@ Set string @var{name} to @var{contents}.  If @var{name} exists, it is
 removed first.
 @endDefreq
 
-For consistency, set registers related to margins at the beginning of
-your document, or just after the @code{RP} macro.  You can set other
-registers later in your document, but you should keep them together at
-the beginning to make them easy to find and edit as necessary.
+For consistent document rendering, set registers related to margins at
+the beginning of your document, or just after the @code{RP} macro.  You
+can set other registers later in your document, but keeping them
+together at the beginning makes them easy to find and edit as necessary.
 
 A list of document control registers and strings follows.  They are
 presented in the syntax used to interpolate them.
@@ -2625,6 +2625,7 @@ presented in the syntax used to interpolate them.
 Defines the page offset (i.e., the left margin).  There is no explicit
 right margin setting; the combination of the @code{PO} and @code{LL}
 registers implicitly define the right margin width.
+@c not in V6
 
 Effective: next page.
 
@@ -2650,6 +2651,7 @@ Default: 6@dmn{i}.
 
 @Defmpreg {HM, ms}
 Defines the header margin height at the top of the page.
+@c not in V6
 
 Effective: next page.
 
@@ -2658,6 +2660,7 @@ Default: 1@dmn{i}.
 
 @Defmpreg {FM, ms}
 Defines the footer margin height at the bottom of the page.
+@c not in V6
 
 Effective: next page.
 
@@ -2690,7 +2693,9 @@ Default: 12@dmn{p}.
 @Defmpreg {HY, ms}
 Defines the hyphenation mode.  @code{HY} safely sets the value of the
 low-level @code{hy} register.  Setting @code{HY} to@tie{}0 is equivalent
-to using the @code{nh} request.
+to using the @code{nh} request.  This is a Version@tie{}10 Research Unix
+extension.
+@c possibly V9, but definitely not Berkeley
 
 Effective: next paragraph.
 
@@ -2698,7 +2703,8 @@ Default: 6.
 @endDefmpreg
 
 @Defstr {FAM, ms}
-Defines the font family used to typeset the document.
+Defines the font family used to typeset the document.  This is a GNU
+extension.
 
 Effective: next paragraph.
 
@@ -2708,7 +2714,9 @@ Default: as defined in the output device.
 @unnumberedsubsubsec Paragraph Settings
 
 @Defmpreg {PI, ms}
-Defines the initial indentation of a (@code{PP} macro) paragraph.
+Defines the indentation amount used by the @code{PP}, @code{IP} (unless
+overridden by an optional argument), @code{XP}, and @code{RS} macros.
+@c not in V6
 
 Effective: next paragraph.
 
@@ -2717,6 +2725,7 @@ Default: 5@dmn{n}.
 
 @Defmpreg {PD, ms}
 Defines the space between paragraphs.
+@c not in V6
 
 Effective: next paragraph.
 
@@ -2724,9 +2733,10 @@ Default: 0.3@dmn{v}.
 @endDefmpreg
 
 @Defmpreg {QI, ms}
-Defines the indentation on both sides of a quoted (@code{QP},
-@code{QS}, and @code{QE} macros)
+Defines the indentation amount used on both sides of a paragraph set
+with the @code{QP} or between the @code{QS} and @code{QE} macros.
 paragraph.
+@c not in V6
 
 Effective: next paragraph.
 
@@ -2734,12 +2744,12 @@ Default: 5@dmn{n}.
 @endDefmpreg
 
 @Defmpreg {PORPHANS, ms}
-Defines the minimum number of initial lines of any paragraph that
-should be kept together, to avoid orphan lines at the bottom of a page.
-If a new paragraph is started close to the bottom of a page, and there
-is insufficient space to accommodate @code{PORPHANS} lines before an
-automatic page break, then the page break is forced, before the start of
-the paragraph.
+Defines the minimum number of initial lines of any paragraph that must
+be kept together to avoid orphaned lines at the bottom of a page.  If a
+new paragraph is started close to the bottom of a page, and there is
+insufficient space to accommodate @code{PORPHANS} lines before an
+automatic page break, then a page break is forced before the start of
+the paragraph.  This is a GNU extension.
 
 Effective: next paragraph.
 
@@ -2754,7 +2764,7 @@ levels more significant (numerically less) than the value specified in
 @code{GROWPS}.  The value of @code{PSINCR} should be specified in points
 with the @dmn{p} scaling factor and may include a fractional component;
 for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size increment of
-1.5@dmn{p}.
+1.5@dmn{p}.  This is a GNU extension.
 
 Effective: next heading.
 
@@ -2768,6 +2778,7 @@ less) than that specified by @code{GROWPS} are printed at the point size
 set by @code{PS}; for each level below the value of @code{GROWPS}, the
 point size is increased by @code{PSINCR}.  Setting @code{GROWPS} to any
 value less than@tie{}2 disables the incremental heading size feature.
+This is a GNU extension.
 
 Effective: next heading.
 
@@ -2781,7 +2792,7 @@ the @code{NH} or @code{SH} macros.  If a heading is placed close to the
 bottom of a page, and there is insufficient space to accommodate both
 the heading and at least @code{HORPHANS} lines of the following
 paragraph, before an automatic page break, then the page break is forced
-before the heading.
+before the heading.  This is a GNU extension.
 
 Effective: next paragraph.
 
@@ -2790,7 +2801,7 @@ Default: 1.
 
 @Defstr {SN-STYLE, ms}
 Defines the style used to print numbered headings.  @xref{Headings in
-ms}.
+ms}.  This is a GNU extension.
 
 Effective: next heading.
 
@@ -2800,7 +2811,7 @@ Default: alias of @code{SN-DOT}
 @unnumberedsubsubsec Footnote Settings
 
 @Defmpreg {FI, ms}
-Defines the footnote indentation.
+Defines the footnote indentation.  This is a Berkeley extension.
 
 Effective: next footnote.
 
@@ -2808,21 +2819,25 @@ Default: 2@dmn{n}.
 @endDefmpreg
 
 @Defmpreg {FF, ms}
-The footnote format:
+Defines the format of
+automatically numbered @c see Savannah #60227
+footnotes at the bottom of a column or page.  This is a Berkeley
+extension.
 @table @code
 @item 0
-Print the footnote number as a superscript; indent the footnote
+Set the footnote number as a superscript; indent the footnote text
 (default).
 
 @item 1
-Print the number followed by a period (like 1.@:) and indent the
-footnote.
+Set the number followed by a period (that is, ``1.@:'') and indent the
+footnote text.
 
 @item 2
-Like 1, without an indentation.
+Like @code{1}, but without an indentation.
 
 @item 3
-Like 1, but print the footnote number as a hanging paragraph.
+Like @code{1}, but set the footnote text as a paragraph with the number
+hanging.
 @end table
 
 Effective: next footnote.
@@ -2832,7 +2847,8 @@ Default: 0.
 
 @Defmpreg {FPS, ms}
 Defines the footnote point size.  If the value is larger than or equal
-to 1000, divide it by 1000 to get a fractional point size.
+to 1000, divide it by 1000 to get a fractional point size.  This is a
+GNU extension.
 
 Effective: next footnote.
 
@@ -2841,7 +2857,8 @@ Default: @math{@code{@\n[PS]} - 2}.
 
 @Defmpreg {FVS, ms}
 Defines the footnote vertical spacing.  If the value is larger than or
-equal to 1000, divide it by 1000 to get a fractional point size.
+equal to 1000, divide it by 1000 to get a fractional point size.  This
+is a GNU extension.
 
 Effective: next footnote.
 
@@ -2849,7 +2866,7 @@ Default: @math{@code{@\n[FPS]} + 2}.
 @endDefmpreg
 
 @Defmpreg {FPD, ms}
-Defines the footnote paragraph spacing.
+Defines the footnote paragraph spacing.  This is a GNU extension.
 
 Effective: next footnote.
 
@@ -2858,7 +2875,7 @@ Default: @math{@code{@\n[PD]} / 2}.
 
 @Defstr {FR, ms}
 Defines the ratio of the footnote line length to the current line
-length.
+length.  This is a GNU extension.
 
 Effective: next footnote in single-column arrangements, next page
 otherwise.
@@ -2866,32 +2883,12 @@ otherwise.
 Default: @math{11/12}.
 @endDefstr
 
-The default footnote line length is 11/12ths of the normal line length
-for compatibility with the expectations of historical @file{ms}
-documents; you may wish to set the @code{FR} string to @samp{1} to align
-with contemporary typesetting practices.  In the past,@footnote{in
-Version 7 Unix @file{ms}, its descendants, and GNU @file{ms} prior to
-@code{groff} version 1.23.0} an @code{FL} register was used for the line
-length in footnotes; however, setting this register at document
-initialization time had no effect on the footnote line length in
-multi-column arrangements.@footnote{You could reset it after each call
-to @code{.1C}, @code{.2C}, or @code{.MC}.}
-
-@code{FR} should be used in preference to the old @code{FL} register in
-contemporary documents.  The footnote line length is effectively
-computed as @samp{\n[@slanted{column-width}] * \*[FR]}.  If an absolute
-footnote line length is required, recall that arithmetic expressions in
-@code{roff} languages are evaluated from left to right.
-
-@Example
-.ds FR 0+3i \" Set footnote line length to 3 inches.
-@endExample
-
 @unnumberedsubsubsec Other Settings
 
 @Defmpreg {DD, ms}
 Sets the vertical spacing before and after a display, a @code{tbl}
-table, an @code{eqn} equation, or a @code{pic} image.
+table, an @code{eqn} equation, or a @code{pic} image.  This is a
+Berkeley extension.
 
 Effective: next paragraph.
 
@@ -2900,6 +2897,7 @@ Default: 0.5@dmn{v}.
 
 @Defmpreg {MINGW, ms}
 Defines the minimum width between columns in a multi-column document.
+This is a GNU extension.
 
 Effective: next page.
 
@@ -3786,6 +3784,27 @@ second @code{\**} marker between a @code{\**} and its corresponding
 @code{FS} entry; as long as each @code{FS} macro occurs @emph{after}
 the corresponding @code{\**} and the occurrences of @code{FS} are in
 the same order as the corresponding occurrences of @code{\**}.
+
+The default footnote line length is 11/12ths of the normal line length
+for compatibility with the expectations of historical @file{ms}
+documents; you may wish to set the @code{FR} string to @samp{1} to align
+with contemporary typesetting practices.  In the past,@footnote{in
+Version 7 Unix @file{ms}, its descendants, and GNU @file{ms} prior to
+@code{groff} version 1.23.0} an @code{FL} register was used for the line
+length in footnotes; however, setting this register at document
+initialization time had no effect on the footnote line length in
+multi-column arrangements.@footnote{You could reset it after each call
+to @code{.1C}, @code{.2C}, or @code{.MC}.}
+
+@code{FR} should be used in preference to the old @code{FL} register in
+contemporary documents.  The footnote line length is effectively
+computed as @samp{\n[@slanted{column-width}] * \*[FR]}.  If an absolute
+footnote line length is required, recall that arithmetic expressions in
+@code{roff} languages are evaluated from left to right.
+
+@Example
+.ds FR 0+3i \" Set footnote line length to 3 inches.
+@endExample
 
 @c ---------------------------------------------------------------------
 
