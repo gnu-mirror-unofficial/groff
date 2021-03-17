@@ -401,28 +401,6 @@ does not repeat any of the title page information
 on page 1 of the document.
 T}
 _
-\&.DA [\fIxxx\fP]	T{
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page
-(if specified)
-and in the footers.
-.
-This is the default for
-.I nroff .
-T}
-_
-\&.ND xxx [\fIxxx\fP]	T{
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page
-(if specified)
-but not in the footers.
-.
-This is the default for
-.I troff .
-T}
-_
 \&.TL	T{
 Specifies the document title.
 .
@@ -461,6 +439,28 @@ Specifies the author's institution.
 .
 You can specify multiple institutions in the same way that you specify
 multiple authors.
+T}
+_
+\&.DA [\fIxxx\fP]	T{
+(optional) Print the current date,
+or the arguments to the macro if any,
+on the title page
+(if specified)
+and in the footers.
+.
+This is the default for
+.I nroff .
+T}
+_
+\&.ND xxx [\fIxxx\fP]	T{
+(optional) Print the current date,
+or the arguments to the macro if any,
+on the title page
+(if specified)
+but not in the footers.
+.
+This is the default for
+.I troff .
 T}
 _
 \&.AB [no]	T{
