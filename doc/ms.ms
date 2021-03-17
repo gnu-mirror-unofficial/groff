@@ -36,39 +36,41 @@ Larry Kollar
 .AI
 kollar@alltel.net
 .AB no
-This document describes the
-.Acr GNU
-re-implementation of the popular
-.I ms
-macro package.
-.
-.
-.PP
 The
 .I ms
-macros are suitable for reports,
+(\[lq]manuscript\[rq]) package is suitable for the preparation
+of reports,
 letters,
+memoranda,
 books,
-user manuals,
-and so forth.
+and manuals.
 .
-The package provides macros for cover pages,
-section headings,
-paragraphs,
+These
+.I groff
+macros support cover page and table of contents generation,
+section
+headings,
+multiple paragraph styles,
+text styling
+(including font changes),
 lists,
 footnotes,
-pagination,
-and a table of contents.
+pagination control,
+and indexing.
 .
 .
 .PP
-This document provides both tutorial and reference material.
-.
-It also discusses differences from the
-.Acr AT&T
 .I ms
-macros,
-both omissions and additions.
+supports the
+.I tbl ,
+.I eqn ,
+.I pic ,
+and
+.I refer
+preprocessors for inclusion of tables,
+mathematical equations,
+diagrams,
+and standardized bibliographic citations.
 .AE
 .
 .
@@ -81,23 +83,30 @@ Introduction
 .
 .
 .LP
-The original
+The
 .I ms
-macros were included with
-.Acr AT&T
-.I troff
-alongside the
+macros are the oldest surviving macro package for
+.I roff
+systems.\**
+.
+.FS
+Although manual pages are even older,
+the
 .I man
-macros.
+macro language originated in Seventh Edition Unix (1979).
+.
+.I ms
+shipped with Sixth Edition (1975) and was documented by Mike Lesk in a
+Bell Labs internal memorandum.
+.FE
 .
 While the
 .I man
-package is intended for brief documents that can be read on-line as well
-as printed,
+package was designed for brief documents to be perused at a terminal,
 the
 .I ms
-macros are suitable for longer documents that are meant to be printed
-rather than read on-line.
+macros are also suitable for longer documents intended for printing and
+possible publication.
 .
 .
 .PP
@@ -105,24 +114,19 @@ The
 .I ms
 macro package included with
 .I groff
-is a complete,
-bottom-up re-implementation.
+is a complete re-implementation.
 .
-Several macros
-(specific to
+Some macros
+specific to
 .Acr AT&T
-or Berkeley)
+or Berkeley
+.I ms
 are not included,
-while several new commands are.
-.
-See
-.I
-Differences from
+while several features have been added;
+see section \[lq]Differences from
 .Acr AT&T
-ms\c
-.R
-, later in this document,
-for more information.
+.I ms \[rq]
+below.
 .
 .
 .PP

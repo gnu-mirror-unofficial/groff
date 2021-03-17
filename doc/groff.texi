@@ -2475,11 +2475,11 @@ documentation.
 @section @file{ms}
 @cindex @code{ms} macros
 
-The @code{ms} (``manuscript'') macros are suitable for reports, letters,
-memoranda, books, user manuals, and so forth.  The package provides
-macros for cover page and table of contents generation, section
+The @code{ms} (``manuscript'') package is suitable for the preparation
+of reports, letters, memoranda, books, and manuals.  These @code{groff}
+macros support cover page and table of contents generation, section
 headings, multiple paragraph styles, text styling (including font
-changes), lists, footnotes, pagination, and indexing.
+changes), lists, footnotes, pagination control, and indexing.
 
 @code{ms} supports the @command{tbl}, @command{eqn}, @command{pic}, and
 @command{refer} preprocessors for inclusion of tables, mathematical
@@ -2502,18 +2502,18 @@ equations, diagrams, and standardized bibliographic citations.
 @subsection Introduction to @file{ms}
 
 The @file{ms} macros are the oldest surviving macro package for
-@code{roff} systems.@footnote{Although man @emph{pages} are even older,
-the @file{man} macro language dates back only to Seventh Edition Unix
-(1979).  @file{ms} was documented by Mike Lesk in an article for the
-@slanted{Communications of the ACM} in 1974.}  While the @file{man}
-package was intended for brief documents to be perused at a terminal,
-the @file{ms} macros are also suitable for longer documents intended for
+@code{roff} systems.@footnote{Although manual pages are even older, the
+@file{man} macro language originated in Seventh Edition Unix (1979).
+@file{ms} shipped with Sixth Edition (1975) and was documented by Mike
+Lesk in a Bell Labs internal memorandum.}  While the @file{man} package
+was designed for brief documents to be perused at a terminal, the
+@file{ms} macros are also suitable for longer documents intended for
 printing and possible publication.
 
 The @file{ms} macro package included with @code{groff} is a complete
 re-implementation.  Some macros specific to @acronym{AT&T} or Berkeley
-are not included, while several new commands been introduced.
-@xref{Differences from AT&T ms}.
+@file{ms} are not included, while several features have been added; see
+@ref{Differences from AT&T ms}.
 
 If you're in a hurry to get started, you need only know that @code{ms}
 needs one of its macros called at the beginning of a document so that it
