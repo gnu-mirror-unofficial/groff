@@ -85,7 +85,7 @@ Introduction
 .LP
 The
 .I ms
-macros are the oldest surviving macro package for
+macros are the oldest surviving package for
 .I roff
 systems.\**
 .
@@ -93,7 +93,7 @@ systems.\**
 Although manual pages are even older,
 the
 .I man
-macro language originated in Seventh Edition Unix (1979).
+macros originated in Seventh Edition Unix (1979).
 .
 .I ms
 shipped with Sixth Edition (1975) and was documented by Mike Lesk in a
