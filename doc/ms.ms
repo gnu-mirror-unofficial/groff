@@ -151,8 +151,8 @@ Most
 .I registers
 have a default unit of measurement.
 .
-Specifying a unit explicitly does not cause any problems,
-and can avoid problems in complex situations.
+Specifying a unit explicitly does not cause problems,
+and can avoid them in complex situations.
 .
 The following table summarizes typical units.
 .
