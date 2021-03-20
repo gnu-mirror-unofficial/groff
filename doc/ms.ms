@@ -217,22 +217,27 @@ or
 .CW .PP ),
 and consist of text separated by paragraph macros
 or even blank lines.
-Longer documents have a structure as follows:
+.
+Longer documents have a structure as follows.
+.
+.
 .IP "\fBDocument type\fP"
-If you invoke the
+If you call the
 .CW .RP
-(report) macro on the first line of the document,
-.I groff
-prints the cover page information on its own page;
-otherwise it prints the information on the
-first page with your document text immediately following.
-Other document formats found in
-.Acr AT&T
-.I troff
-are specific to
-.Acr AT&T
-or Berkeley, and are not supported in
-.I groff .
+macro at the beginning of your document,
+.I ms
+prints the document description on its own page;
+otherwise it prints the information
+(if any)
+on the first page with your document text immediately following.
+.
+Some document types found in other
+.I ms
+implementations are specific to AT&T or Berkeley,
+and are not supported in
+.I "groff ms" .
+.
+.
 .IP "\fBFormat and layout\fP"
 By setting number registers,
 you can change your document's type (font and size),
@@ -242,17 +247,20 @@ See
 .I "Document control settings"
 below for more details.
 .
-.IP "\fBCover page\fP"
-A cover page consists of a title, the author's name and institution,
-an abstract, and the date.\**
-.FS
-Actually, only the title is required.
-.FE
-See
-.I "Cover page macros"
-below for more details.
+.
+.IP "\fBDocument description\fP"
+A document description consists of any of:
+a title,
+one or more authors' names and affiliated institutions,
+an abstract, and a date or other identifier.
+.
+See section \[lq]Document description macros\[rq] below.
+.
+.
 .IP "\fBBody\fP"
-Following the cover page is your document.
+The main matter of your document follows its description
+(if any).
+.
 You can use the
 .I -ms
 macros to write reports, letters, books, and so forth.
@@ -361,16 +369,65 @@ Changes to the footnote length ratio
 take effect with the next footnote written in single-column
 arrangements,
 but on the next page in multiple-column contexts.
+.
+.
 .\" ------------------------
 .bp
 .NH 1
-Cover page macros
+Document description macros
 .XS
-Cover page macros
+Document description macros
 .XE
+.
+.
 .LP
-Use the following macros to create a cover page for your document
-in the order shown.
+All but the simplest documents bear a title.
+.
+As their level of sophistication
+(or complexity)
+increases,
+they tend to acquire dates of revision,
+explicitly identified authors,
+sponsoring institutions for authors,
+and,
+at the rarefied heights,
+an abstract of their content.
+.
+Define these data by using the macros below in the order shown;
+.CW .DA
+or
+.CW .ND
+can be called to set the document date
+(or other identifier)
+at any time before (a) the abstract,
+if present;
+or (b) the end of the first page.
+.
+Use of these macros is optional,
+except that
+.CW .TL
+is mandatory if any other document description macro is called,\**
+.
+.FS
+Strictly,
+a
+.CW .TL
+call is not mandated by
+.CW .DA
+or
+.CW .ND ,
+but the latter has no visible effect in the absence of a cover page when
+the default footers are used.
+.\" TODO: (see section \[lq]Headers and Footers\[rq] below).
+.FE
+.
+and
+.CW .AE
+is mandatory if
+.CW .AB
+is called.
+.
+.
 .TS H
 box;
 lb lb
@@ -378,100 +435,146 @@ lf(CR) lx.
 Macro	Description
 _
 .TH
-\&.RP [\fBno\fP]	T{
-Specifies the report format for your document.
+\&.RP \f[R][\f[]no\f[R]]	T{
+Use the \[lq]report\[rq]
+(AT&T: \[lq]released paper\[rq])
+format for your document,
+creating a separate cover page.
 .
-The report format creates a separate cover page.
-.
-The default action
-(no
-.CW .RP
-macro)
-is to print a subset of the cover page on page 1 of your document.
+The default arrangement is to print most of the document description
+(title,
+author names and institutions,
+abstract,
+but not the date)
+at the top of page\~1.
 .
 .
 .sp \n[PD]u
-If you use the optional
-.B no
-argument,
-.I groff
-prints a title page but
-does not repeat any of the title page information
-(title, author, abstract, etc.)
-on page 1 of the document.
+If the optional
+.CW no
+argument is given,
+.I ms
+prints a cover page but does not repeat any of its information on
+page\~1
+(but see the
+.CW DA
+macro below regarding the date).
+T}
+_
+\&.P1	T{
+Print the header on page\~1.
+.
+The default is to suppress the header on that page.
+.
+This is a Berkeley extension.\**
+.
+.FS
+Version\~10
+.\" possibly V9
+Research Unix supported a pair of
+.CW P1
+and
+.CW P2
+macros
+(for setting code examples);
+.I "groff ms"
+does not.
+.FE
 T}
 _
 \&.TL	T{
-Specifies the document title.
+Specify the document title.
 .
-.I groff
-collects text following the
-.CW .TL
-macro into the title, until reaching the author name or abstract.
+.I ms
+collects text on input lines following a call to this macro into the
+title until reaching an
+.CW .AU ,
+.CW .AB ,
+or heading or paragraph macro call.
 T}
 _
 \&.AU	T{
-Specifies the author's name,
-which appears on the line
-(or lines)
-immediately following.
+Specify an author's name.
 .
-You can specify multiple authors as follows.
+.I ms
+collects text on input lines following a call to this macro into the
+author's name until reaching an
+.CW .AI ,
+.CW .AB ,
+or heading or paragraph macro.
 .
-.
-.DS I
-.CW
-\&.AU
-John Doe
-\&.AI
-University of West Bumblefuzz
-\&.AU
-Martha Buck
-\&.AI
-Monolithic Corporation
-.R
-\&.\|.\|.
-.DE
+Call
+.CW .AU
+repeatedly to specify multiple authors.
 T}
 _
 \&.AI	T{
-Specifies the author's institution.
+Specify the preceding author's institution.
 .
-You can specify multiple institutions in the same way that you specify
-multiple authors.
+An
+.CW .AU
+call is usefully followed by at most one
+.CW .AI
+call;
+if there are more,
+the last
+.CW .AI
+call controls.
+.
+.I ms
+collects text on input lines following a call to this macro into the
+author's institution until reaching an
+.CW .AU ,
+.CW .AB ,
+or heading or paragraph macro call.
 T}
 _
-\&.DA [\fIxxx\fP]	T{
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page
-(if specified)
-and in the footers.
-.
-This is the default for
-.I nroff .
+\&.DA \f[R][\f[I]x\f[] .\|.\|.\&]	T{
+Print the current date,
+or any
+.I x , arguments\~ x
+in footers,
+and,
+if
+.CW .RP
+is also called,
+left-aligned after other document description information on the cover
+page.
+.\" see Savannah #59826
 T}
 _
-\&.ND xxx [\fIxxx\fP]	T{
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page
-(if specified)
-but not in the footers.
+\&.ND \f[R][\f[I]x\f[] .\|.\|.\&]	T{
+Print the current date,
+or any
+.I x , arguments\~ x
+in footers,
+and,
+if
+.CW .RP
+is also called,
+left-aligned after other document description information on the cover
+page.
 .
-This is the default for
-.I troff .
+This is the
+.I "groff ms"
+default.
 T}
 _
 \&.AB [no]	T{
-Begins the abstract.
+Begin the abstract.
 .
-The default is to print the word
-.Acr ABSTRACT ,
-centered and in italics,
-above the text of the abstract.
+.I ms
+collects text on input lines following a call to this macro into the
+abstract until reaching an
+.CW .AE
+call.
 .
-The option
+By default,
+.I ms
+places the word \[lq]ABSTRACT\[rq] centered and in italics above the
+text of the abstract.
+.
+The optional argument
 .CW no
 suppresses this heading.
 T}
@@ -482,7 +585,9 @@ _
 .
 .KS
 .LP
-The following is example markup for a title page.
+An example document description,
+using a cover page,
+follows.
 .
 .
 .\" Wrap lines in the code example below at 64 columns.
@@ -496,7 +601,7 @@ T{
 \&.TL
 The Inevitability of Code Bloat in Commercial and Free Software
 \&.AU
-J. Random Luser
+J.\[rs]& Random Luser
 \&.AI
 University of West Bumblefuzz
 \&.AB
@@ -511,10 +616,10 @@ the results are the same in the end.
 The free software approach is shown to be superior in that while
 free software can become as bloated as commercial offerings,
 free software tends to have fewer serious bugs and the added
-features are in line with user demand.
+features are more in line with user demand.
 \&.AE
 .R
-\&.\|.\|.\|the rest of the paper follows\|.\|.\|.
+\&.\|.\|.\|the rest of the paper\|.\|.\|.
 .fi
 T}
 .TE

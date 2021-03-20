@@ -86,22 +86,26 @@ macro package expects files to have a certain amount of structure.
 The simplest documents can begin with a paragraph macro and consist of
 text separated by paragraph macros or even blank lines.
 .
-Longer documents have a structure as follows:
+Longer documents have a structure as follows.
+.
 .
 .TP
-.B "Document type"
-If you use the
+.B Document type
+If you call the
 .B RP
-(report) macro at the beginning of the document,
+macro at the beginning of the document,
 .I groff
-prints the cover page information on its own page;
-otherwise it prints the information on the
-first page with your document text immediately following.
+prints the document description on its own page;
+otherwise it prints the information
+(if any)
+on the first page with your document text immediately following.
 .
-Other document formats found in AT&T
-.I troff
-are specific to AT&T or Berkeley, and are not supported in
+Some document types found in other
+.I ms
+implementations are specific to AT&T or Berkeley,
+and are not supported in
 .IR "groff ms" .
+.
 .
 .TP
 .B "Format and layout"
@@ -114,19 +118,22 @@ See
 .I "Document control settings"
 below for more details.
 .
-.TP
-.B "Cover page"
-A cover page consists of a title,
-and optionally the author's name and institution,
-an abstract, and the date.
 .
-See
-.I "Cover page macros"
-below for more details.
+.TP
+.B Document description
+A document description consists of any of:
+a title,
+one or more authors' names and affiliated institutions,
+an abstract, and a date or other identifier.
+.
+See subsection \[lq]Document description macros\[rq] below.
+.
 .
 .TP
 .B "Body"
-Following the cover page is your document.
+The main matter of your document follows its description
+(if any).
+.
 It consists of paragraphs, headings, and lists.
 .
 .TP
@@ -278,97 +285,192 @@ is the gap between columns in multiple-column page arrangements.
 .
 .
 .\" ====================================================================
-.SS "Cover page macros"
+.SS "Document description macros"
 .\" ====================================================================
 .
-Use the following macros to create a cover page for your document
-in the order shown.
+Define information describing the document by using the macros below in
+the order shown;
+.B .DA
+or
+.B .ND
+can be called to set the document date
+(or other identifier)
+at any time before (a) the abstract,
+if present;
+or (b) the end of the first page.
+.
+Use of these macros is optional,
+except that
+.B .TL
+is mandatory if any other document description macro is called
+(strictly,
+a
+.B .TL
+call is not mandated by
+.B .DA
+or
+.BR .ND ,
+but the latter has no visible effect in the absence of a cover page when
+the default footers are used)
+.\" TODO: (see subsection \[lq]Headers and Footers\[rq] below).
+and
+.B .AE
+is mandatory if
+.B .AB
+is called.
+.
 .
 .TP
-.BR ".RP " [ no ]
-Specifies the report format for your document.
+.BR ".RP\~" [ no ]
+Use the \[lq]report\[rq]
+(AT&T: \[lq]released paper\[rq])
+format for your document,
+creating a separate cover page.
 .
-The report format creates a separate cover page.
+The default arrangement is to print most of the document description
+(title,
+author names and institutions,
+abstract,
+but not the date)
+at the top of page\~1.
 .
-With no
-.B RP
-macro,
-.I groff
-prints a subset of the
-cover page on page\~1 of your document.
 .
 .IP
-If you use the optional
+If the optional
 .B no
-argument,
-.I groff
-prints a title page but
-does not repeat any of the title page information
-(title, author, abstract, etc.\&)
-on page\~1 of the document.
+argument is given,
+.I ms
+prints a cover page but does not repeat any of its information on
+page\~1
+(but see the
+.B DA
+macro below regarding the date).
+.
 .
 .TP
 .B .P1
-(P-one) Prints the header on page\~1.
+Print the header on page\~1.
 .
-The default is to suppress the header.
+The default is to suppress the header on that page.
+.
+This is a Berkeley extension.
+.
+(Version\~10
+.\" possibly V9
+Research Unix supported a pair of
+.B P1
+and
+.B P2
+macros
+[for setting code examples];
+.I groff ms
+does not.)
+.
 .
 .TP
 .B .TL
-Specifies the document title.
+Specify the document title.
 .
-.I groff
-collects text following the
-.B TL
-macro into the title, until reaching the author name or abstract.
+.I ms
+collects text on input lines following a call to this macro into the
+title until reaching an
+.BR .AU ,
+.BR .AB ,
+or heading or paragraph macro call.
+.
 .
 .TP
 .B .AU
-Specifies the author's name.
+Specify an author's name.
 .
-You can specify multiple authors by using an
-.B AU
-macro for each author.
+.I ms
+collects text on input lines following a call to this macro into the
+author's name until reaching an
+.BR .AI ,
+.BR .AB ,
+or heading or paragraph macro.
+.
+Call
+.B .AU
+repeatedly to specify multiple authors.
+.
 .
 .TP
 .B .AI
-Specifies the author's institution.
+Specify the preceding author's institution.
 .
-You can specify multiple institutions.
+An
+.B .AU
+call is usefully followed by at most one
+.B .AI
+call;
+if there are more,
+the last
+.B .AI
+call controls.
+.
+.I ms
+collects text on input lines following a call to this macro into the
+author's institution until reaching an
+.BR .AU ,
+.BR .AB ,
+or heading or paragraph macro call.
+.
 .
 .TP
 .B .DA\c
-.RI " [" xxx ]
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page (if specified)
-and in the footers.
+.RI "\~[" x "\~.\|.\|.]"
+Print the current date,
+or any
+.RI arguments\~ x ,
+in footers,
+and,
+if
+.B .RP
+is also called,
+left-aligned after other document description information on the cover
+page.
+.\" see Savannah #59826
 .
-This is the default for
-.IR nroff .
 .
 .TP
 .B .ND\c
-.RI " [" xxx ]
-(optional) Print the current date,
-or the arguments to the macro if any,
-on the title page (if specified)
-but not in the footers.
+.RI "\~[" x "\~.\|.\|.]"
+Print the current date,
+or any
+.RI arguments\~ x ,
+in footers,
+and,
+if
+.B .RP
+is also called,
+left-aligned after other document description information on the cover
+page.
 .
-This is the default for
-.IR troff .
+This is the
+.I groff ms
+default.
+.
 .
 .TP
 .BR ".AB " [ no ]
-Begins the abstract.
+Begin the abstract.
 .
-The default is to print the word \[lq]ABSTRACT\[rq],
-centered and in italics,
-above the text of the abstract.
+.I ms
+collects text on input lines following a call to this macro into the
+abstract until reaching an
+.B .AE
+call.
 .
-The option
+By default,
+.I ms
+places the word \[lq]ABSTRACT\[rq] centered and in italics above the
+text of the abstract.
+.
+The optional argument
 .B no
 suppresses this heading.
+.
 .
 .TP
 .B .AE

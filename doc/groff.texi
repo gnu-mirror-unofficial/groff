@@ -2489,7 +2489,7 @@ equations, diagrams, and standardized bibliographic citations.
 * ms Introduction::
 * ms Document Structure::
 * ms Document Control Settings::
-* ms Cover Page Macros::
+* ms Document Description Macros::
 * ms Body Text::
 * ms Page Layout::
 * Differences from AT&T ms::
@@ -2552,29 +2552,29 @@ blank lines.  Longer documents have a structure as follows.
 
 @table @strong
 @item Document type
-If you invoke the @code{RP} (report) macro on the first line of the
-document, @file{ms} prints the cover page information on its own
-page; otherwise it prints the information (if any) on the first page
-with your document text immediately following.  Some document types
-found in @acronym{AT&T} @code{troff} are specific to @acronym{AT&T} or
-Berkeley, and are not supported in @code{groff}.
+If you call the @code{RP} macro at the beginning of your document,
+@file{ms} prints the document description on its own page; otherwise it
+prints the information (if any) on the first page with your document
+text immediately following.  Some document types found in other
+@file{ms} implementations are specific to @acronym{AT&T} or Berkeley,
+and are not supported in @code{groff} @file{ms}.
 
 @item Format and layout
 By setting registers (and one string), you can change your document's
 type (font and point size), margins, spacing, headers and footers, and
 footnotes.  @xref{ms Document Control Settings}.
 
-@item Cover page
-A cover page consists of a title, the author's name and institution, an
-abstract, and the date.@footnote{Actually, only the title is required.}
-@xref{ms Cover Page Macros}.
+@item Document description
+A document description consists of any of: a title, one or more authors'
+names and affiliated institutions, an abstract, and a date or other
+identifier.  @xref{ms Document Description Macros}.
 
-@item Body
-Following the cover page is your document.  @file{ms} supports highly
-structured documents consisting of paragraphs interspersed with
-multi-level headings (chapters, sections, subsections, and so forth) and
-augmented by lists, footnotes, tables, diagrams, and similar.  @xref{ms
-Body Text}.
+@item Body text
+The main matter of your document follows its description (if any).
+@file{ms} supports highly structured text consisting of paragraphs
+interspersed with multi-level headings (chapters, sections, subsections,
+and so forth) and augmented by lists, footnotes, tables, diagrams, and
+similar.  @xref{ms Body Text}.
 
 @item Table of contents
 Longer documents usually include a table of contents, which you can
@@ -2593,7 +2593,7 @@ placed in the output by @file{ms}.}
 
 @c ---------------------------------------------------------------------
 
-@node ms Document Control Settings, ms Cover Page Macros, ms Document Structure, ms
+@node ms Document Control Settings, ms Document Description Macros, ms Document Structure, ms
 @subsection Document control settings
 @cindex @code{ms} macros, document control settings
 
@@ -2905,85 +2905,94 @@ Default: 2@dmn{n}.
 
 @c ---------------------------------------------------------------------
 
-@node ms Cover Page Macros, ms Body Text, ms Document Control Settings, ms
-@subsection Cover page macros
-@cindex @code{ms} macros, cover page
-@cindex cover page macros, [@code{ms}]
+@node ms Document Description Macros, ms Body Text, ms Document Control Settings, ms
+@subsection Document Description Macros
+@cindex @code{ms} macros, document description
+@cindex document description macros, [@code{ms}]
 
-Use the following macros to create a cover page for your document in the
-order shown.
+All but the simplest documents bear a title.  As their level of
+sophistication (or complexity) increases, they tend to acquire dates of
+revision, explicitly identified authors, sponsoring institutions for
+authors, and, at the rarefied heights, an abstract of their content.
+Define these data by using the macros below in the order shown;
+@code{DA} or @code{ND} can be called to set the document date (or other
+identifier) at any time before (a) the abstract, if present; or (b) the
+end of the first page.  Use of these macros is optional, except that
+@code{TL} is mandatory if any other document description macro is
+called,@footnote{Strictly, a @code{TL} call is not mandated by @code{DA}
+or @code{ND}, but the latter has no visible effect in the absence of a
+cover page when the default footers are used (@pxref{ms Headers and
+Footers}).} and @code{AE} is mandatory if @code{AB} is called.
 
 @Defmac {RP, [@code{no}], ms}
-Specifies the report format for your document.  The report format
-creates a separate cover page.  The default action (no @code{RP} macro)
-is to print a subset of the cover page on page@tie{}1 of your document.
+Use the ``report'' (@acronym{AT&T}: ``released paper'') format for your
+document, creating a separate cover page.  The default arrangement is to
+print most of the document description (title, author names and
+institutions, abstract, but not the date) at the top of page@tie{}1.
 
-If you use the word @code{no} as an optional argument, @code{groff}
-prints a title page but does not repeat any of the title page
-information (title, author, abstract, etc.@:) on page@tie{}1 of the
-document.
+If the optional @code{no} argument is given, @file{ms} prints a cover
+page but does not repeat any of its information on page@tie{}1 (see the
+@code{DA} macro below regarding the date).
 @endDefmac
 
 @Defmac {P1, , ms}
-(P-one) Prints the header on page@tie{}1.  The default is to suppress
-the header.
+Print the header on page@tie{}1.  The default is to suppress the header
+on that page.  This is a Berkeley extension.@footnote{Version@tie{}10
+@c possibly V9
+Research Unix supported a pair of @code{P1} and @code{P2} macros (for
+setting code examples); @code{groff} @file{ms} does not.}
 @endDefmac
 
 @Defmac {TL, , ms}
-Specifies the document title.  @code{groff} collects text following the
-@code{TL} macro into the title, until reaching the author name or
-abstract.
+Specify the document title.  @file{ms} collects text on input lines
+following a call to this macro into the title until reaching an
+@code{AU}, @code{AB}, or heading or paragraph macro call.
 @endDefmac
 
 @Defmac {AU, , ms}
-Specifies the author's name, which appears on the line (or lines)
-immediately following.  You can specify multiple authors as follows:
-
-@CartoucheExample
-.AU
-John Doe
-.AI
-University of West Bumblefuzz
-.AU
-Martha Buck
-.AI
-Monolithic Corporation
-
-...
-@endCartoucheExample
+Specify an author's name.  @file{ms} collects text on input lines
+following a call to this macro into the author's name until reaching an
+@code{AI}, @code{AB}, or heading or paragraph macro call.  Call
+@code{AU} repeatedly to specify multiple authors.
 @endDefmac
 
 @Defmac {AI, , ms}
-Specifies the author's institution.  You can specify multiple
-institutions in the same way that you specify multiple authors.
+Specify the preceding author's institution.  An @code{AU} call is
+usefully followed by at most one @code{AI} call; if there are more, the
+last @code{AI} call controls.  @file{ms} collects text on input lines
+following a call to this macro into the author's institution until
+reaching an @code{AU}, @code{AB}, or heading or paragraph macro call.
 @endDefmac
 
-@Defmac {DA, [@dots{}], ms}
-(optional) Prints the current date, or the arguments to the macro if
-any, on the title page (if specified) and in the footers.  This is the
-default for @code{nroff}.
+@Defmac {DA, [@Var{x} @dots{}], ms}
+Print the current date, or any arguments @var{x} in footers, and, if
+@code{RP} is also called, left-aligned after other document description
+information on the cover page.
+@c see Savannah #59826
 @endDefmac
 
-@Defmac {ND, [@dots{}], ms}
-(optional) Prints the current date, or the arguments to the macro if
-any, on the title page (if specified) but not in the footers.  This is
-the default for @code{troff}.
+@Defmac {ND, [@Var{x} @dots{}], ms}
+Print the current date, or any arguments @var{x}, if @code{RP} is also
+called, left-aligned after other document description information on the
+cover page, but not in footers.  This is the @code{groff} @file{ms}
+default.
 @endDefmac
 
 @Defmac {AB, [@code{no}], ms}
-Begins the abstract.  The default is to print the word
-@acronym{ABSTRACT}, centered and in italics, above the text of the
-abstract.  The word @code{no} as an optional argument suppresses this
-heading.
+Begin the abstract.  @file{ms} collects text on input lines following a
+call to this macro into the abstract until reaching an @code{AE} call.
+By default, @file{ms} places the word ``ABSTRACT'' centered and in
+italics above the text of the abstract.  The optional argument @code{no}
+suppresses this heading.
 @endDefmac
 
 @Defmac {AE, , ms}
-Ends the abstract.
+End the abstract.
 @endDefmac
 
-The following is example mark-up for a title page.
-@cindex title page, example markup
-@cindex example markup, title page
+An example document description, using a cover page, follows.
+@cindex cover page in [@code{ms}], example markup
+@cindex example markup, cover page in [@code{ms}]
 
 @CartoucheExample
 .RP
@@ -2991,33 +3000,32 @@ The following is example mark-up for a title page.
 The Inevitability of Code Bloat
 in Commercial and Free Software
 .AU
-J. Random Luser
+J.\& Random Luser
 .AI
 University of West Bumblefuzz
 .AB
-This report examines the long-term growth
-of the code bases in two large, popular software
-packages; the free Emacs and the commercial
-Microsoft Word.
-While differences appear in the type or order
-of features added, due to the different
-methodologies used, the results are the same
-in the end.
+This report examines the long-term growth of the code
+bases in two large,
+popular software packages;
+the free Emacs and the commercial Microsoft Word.
+While differences appear in the type or order of
+features added,
+due to the different methodologies used,
+the results are the same in the end.
 .PP
-The free software approach is shown to be
-superior in that while free software can
-become as bloated as commercial offerings,
-free software tends to have fewer serious
-bugs and the added features are in line with
-user demand.
+The free software approach is shown to be superior in
+that while free software can become as bloated as
+commercial offerings,
+free software tends to have fewer serious bugs and the
+added features are more in line with user demand.
 .AE
 
-... the rest of the paper follows ...
+@r{@dots{}the rest of the paper@dots{}}
 @endCartoucheExample
 
 @c ---------------------------------------------------------------------
 
-@node ms Body Text, ms Page Layout, ms Cover Page Macros, ms
+@node ms Body Text, ms Page Layout, ms Document Description Macros, ms
 @subsection Body text
 @cindex @code{ms} macros, body text
 
