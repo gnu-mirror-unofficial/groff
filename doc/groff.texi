@@ -4481,7 +4481,8 @@ output formats or devices.
 @code{roff} input files contain text interspersed with instructions to
 control the formatter.  Even in the absence of such instructions, GNU
 @code{troff} still processes its input in several ways, by filling,
-hyphenating, breaking, and adjusting it.
+hyphenating, breaking, and adjusting it, and supplementing it with
+inter-sentence space.
 
 @menu
 * Filling::
@@ -4516,7 +4517,8 @@ tabs, or newlines.  Words are separated by spaces, tabs, newlines, or
 file boundaries.@footnote{There are also @emph{escape sequences} which
 can function as word characters, word-separating space, or neither---the
 last simply have no effect on GNU @code{troff}'s idea of whether its
-input is within a word or not.}
+input is within a word or not.}  To disable filling, see
+@ref{Manipulating Filling and Adjustment}.
 
 @Example
 It is a truth universally acknowledged
@@ -4541,8 +4543,8 @@ well-researched jeremiad appreciated by @code{groff} contributors on
 both sides of the sentence-spacing debate can be found at
 @uref{https://web.archive.org@//web@//20171217060354@//http://www.heracliteanriver.com@//?p=324}.}
 GNU @code{troff} follows the example of @acronym{AT&T} @code{troff};
-when filling text, it attempts to detect the boundaries between
-sentences, and supplies additional inter-sentence space between them.
+it attempts to detect the boundaries between sentences, and supplies
+additional inter-sentence space between them.
 
 @Example
 Hello, world!
@@ -4557,8 +4559,8 @@ Welcome to groff.
 GNU @code{troff} does this by flagging certain characters (normally
 @samp{!}, @samp{?}, and @samp{.}) as @dfn{end-of-sentence} characters;
 when GNU @code{troff} encounters one of these characters at the end of a
-line, or one of them is followed by two or more spaces on the same input
-line, it appends a normal space followed by an inter-sentence space in
+line, or one of them is followed by two spaces on the same input line,
+it appends an inter-word space followed by an inter-sentence space in
 the formatted output.
 
 @Example
@@ -4653,9 +4655,9 @@ been shocking to the rich.\[rq]
 
 The sets of characters that potentially end sentences or are transparent
 to sentence endings are configurable.  See the @code{cflags} request in
-@ref{Using Symbols}.  To disable filling or to change the additional
-inter-sentence spacing amount---even to remove it entirely---see
-@ref{Manipulating Filling and Adjustment}.
+@ref{Using Symbols}.  To change the additional inter-sentence spacing
+amount---even to remove it entirely---see @ref{Manipulating Filling and
+Adjustment}.
 
 @c ---------------------------------------------------------------------
 
@@ -4749,15 +4751,13 @@ cause breaks, implicitly or explicitly.  This is discussed in
 @cindex spaces, leading and trailing
 @cindex extra spaces
 @cindex trailing spaces
-Once GNU @code{troff} has filled a line and broken it, it inserts
-additional inter-sentence space.  If the break was automatic, it then
-tries to @dfn{adjust} the line: inter-word spaces are widened until the
-text reaches the right margin.  Extra spaces between words are
-preserved, but trailing spaces on an input line are ignored.  Leading
-spaces are handled as noted above.  Text can be adjusted to the left or
-right margins only (instead of both), or centered; see @ref{Manipulating
-Filling and Adjustment}.  As a rule, an output line that has not been
-filled will not be adjusted.
+After GNU @code{troff} performs an automatic line break, it then tries
+to @dfn{adjust} the line: inter-word spaces are widened until the text
+reaches the right margin.  Extra spaces between words are preserved, but
+trailing spaces on an input line are ignored.  Leading spaces are
+handled as noted above.  Text can be adjusted to the left or right
+margins only (instead of both), or centered; see @ref{Manipulating
+Filling and Adjustment}.
 
 @c ---------------------------------------------------------------------
 
