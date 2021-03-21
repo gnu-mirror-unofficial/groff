@@ -408,21 +408,13 @@ or (b) the end of the first page.
 Use of these macros is optional,
 except that
 .CW .TL
-is mandatory if any other document description macro is called,\**
-.
-.FS
-Strictly,
-a
-.CW .TL
-call is not mandated by
-.CW .DA
+is mandatory if any of
+.CW .RP ,
+.CW .AU ,
+.CW .AI ,
 or
-.CW .ND ,
-but the latter has no visible effect in the absence of a cover page when
-the default footers are used.
-.\" TODO: (see section \[lq]Headers and Footers\[rq] below).
-.FE
-.
+.CW .AB
+is called,
 and
 .CW .AE
 is mandatory if
@@ -461,27 +453,6 @@ page\~1
 (but see the
 .CW DA
 macro below regarding the date).
-T}
-_
-\&.P1	T{
-Print the header on page\~1.
-.
-The default is to suppress the header on that page.
-.
-This is a Berkeley extension.\**
-.
-.FS
-Version\~10
-.\" possibly V9
-Research Unix supported a pair of
-.CW P1
-and
-.CW P2
-macros
-(for setting code examples);
-.I "groff ms"
-does not.
-.FE
 T}
 _
 \&.TL	T{
@@ -549,13 +520,12 @@ _
 Print the current date,
 or any
 .I x , arguments\~ x
-in footers,
-and,
 if
 .CW .RP
 is also called,
 left-aligned after other document description information on the cover
-page.
+page,
+but not in footers.
 .
 This is the
 .I "groff ms"
@@ -1988,6 +1958,38 @@ The syntax for these macros is as follows:
 .LP
 You can replace the neutral apostrophes (\[aq]) with any character not
 appearing in the header or footer text.
+.
+.
+.TS
+box;
+lb lb
+lf(CR) lx.
+Macro	Description
+_
+\&.P1	T{
+Print the header on page\~1.
+.
+By default,
+no header is printed on that page.
+.
+This is a Berkeley extension.\**
+.
+.FS
+Version\~10
+.\" possibly V9
+Research Unix supported a pair of
+.CW P1
+and
+.CW P2
+macros
+(for setting code examples);
+.I "groff ms"
+does not.
+.FE
+T}
+.TE
+.
+.
 .\" ------------------------
 .KS
 .NH 2

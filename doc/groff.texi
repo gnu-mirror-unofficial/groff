@@ -2918,11 +2918,8 @@ Define these data by using the macros below in the order shown;
 @code{DA} or @code{ND} can be called to set the document date (or other
 identifier) at any time before (a) the abstract, if present, or (b) the
 end of the first page.  Use of these macros is optional, except that
-@code{TL} is mandatory if any other document description macro is
-called,@footnote{Strictly, a @code{TL} call is not mandated by @code{DA}
-or @code{ND}, but the latter has no visible effect in the absence of a
-cover page when the default footers are used (@pxref{ms Headers and
-Footers}).} and @code{AE} is mandatory if @code{AB} is called.
+@code{TL} is mandatory if any of @code{RP}, @code{AU}, @code{AI}, or
+@code{AB} is called, and @code{AE} is mandatory if @code{AB} is called.
 
 @Defmac {RP, [@code{no}], ms}
 Use the ``report'' (@acronym{AT&T}: ``released paper'') format for your
@@ -2933,14 +2930,6 @@ institutions, and abstract, but not the date) at the top of page@tie{}1.
 If the optional @code{no} argument is given, @file{ms} prints a cover
 page but does not repeat any of its information on page@tie{}1 (see the
 @code{DA} macro below regarding the date).
-@endDefmac
-
-@Defmac {P1, , ms}
-Print the header on page@tie{}1.  The default is to suppress the header
-on that page.  This is a Berkeley extension.@footnote{Version@tie{}10
-@c possibly V9
-Research Unix supported a pair of @code{P1} and @code{P2} macros (for
-setting code examples); @code{groff} @file{ms} does not.}
 @endDefmac
 
 @Defmac {TL, , ms}
@@ -3871,6 +3860,14 @@ even pages.  This is more flexible than defining the individual strings.
 
 You can replace the quote (@code{'}) marks with any character not
 appearing in the header or footer text.
+@endDefmac
+
+@Defmac {P1, , ms}
+Print the header on page@tie{}1.  By default, no header is printed on
+that page.  This is a Berkeley extension.@footnote{Version@tie{}10
+@c possibly V9
+Research Unix supported a pair of @code{P1} and @code{P2} macros (for
+setting code examples); @code{groff} @file{ms} does not.}
 @endDefmac
 
 To specify custom header and footer processing, redefine the following
