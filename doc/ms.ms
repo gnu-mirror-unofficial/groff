@@ -160,7 +160,7 @@ The following table summarizes typical units.
 .TS
 box center;
 cb cb
-cfCR l .
+cf(CR) l .
 Unit	Description
 _
 i	inches
@@ -184,7 +184,7 @@ request.
 .
 .TS
 box center;
-lfCR.
+lf(CR).
 \&.nr PS 12 \[rs]" Use 12-point type.
 \&.ds FAM P \[rs]" Use Palatino font family.
 .TE
@@ -194,21 +194,23 @@ lfCR.
 .if t .bp
 .NH 1
 General structure of an
-.I -ms
+.I ms
 document
 .XS
 General structure of an
-.I -ms
+.I ms
 document
 .XE
 .LP
 The
-.I -ms
+.I ms
 macro package expects a certain amount of structure,
 but not as much as packages such as
-.I -man
+.I man
 or
-.I -mdoc .
+.I mdoc .
+.
+.
 .PP
 The simplest documents can begin with a paragraph macro
 (such as
@@ -262,7 +264,7 @@ The main matter of your document follows its description
 (if any).
 .
 You can use the
-.I -ms
+.I ms
 macros to write reports, letters, books, and so forth.
 The package is designed for structured documents,
 consisting of paragraphs interspersed with headings
@@ -278,7 +280,7 @@ which you can invoke by placing the
 macro at the end of your document.\**
 .FS
 The
-.I -ms
+.I ms
 macros have minimal indexing facilities, consisting of the
 .CW .IX
 macro, which prints an entry on standard error.
@@ -292,7 +294,7 @@ it thus cannot determine the page number of a division of the text until
 it has been set and output.
 .
 Since
-.I -ms
+.I ms
 output was intended for hardcopy,
 the standard procedure was to manually relocate the pages containing
 the table of contents between the cover page and the
@@ -324,9 +326,9 @@ They are presented in the syntax used to interpolate them.
 .
 .
 .TS H
-box expand;
+box;
 cb | cb cb cb cb
-l | afCR l l lfCR .
+l | lf(CR) lx l lf(CR).
 Type	Parameter	Definition	Effective	Default
 _
 .TH
@@ -400,7 +402,7 @@ or
 can be called to set the document date
 (or other identifier)
 at any time before (a) the abstract,
-if present;
+if present,
 or (b) the end of the first page.
 .
 Use of these macros is optional,
@@ -444,7 +446,7 @@ creating a separate cover page.
 The default arrangement is to print most of the document description
 (title,
 author names and institutions,
-abstract,
+and abstract,
 but not the date)
 at the top of page\~1.
 .
@@ -729,7 +731,7 @@ rendered on the same output line in the same style.
 .TS
 box;
 cb cb
-afCR lx .
+lf(CR) lx .
 Macro	Description
 _
 \&.NH \f[I]level\f[]	T{
@@ -786,7 +788,7 @@ An example may be illustrative.
 .TS
 box center;
 cb | cb
-lfCR | lB.
+lf(CR) | lB.
 Code	Output
 _
 T{
@@ -851,7 +853,7 @@ you may define the alias as follows.
 .
 .TS
 box center;
-lfCR.
+lf(CR).
 \&.als SN\-STYLE SN\-NO\-DOT
 .TE
 .
@@ -859,7 +861,7 @@ lfCR.
 .LP
 Any such change in numbering style becomes effective from the next use
 of
-.CW .NH ,
+.CW .NH
 following redefinition of the alias for
 .CW \[rs]*[SN\-STYLE] .
 .
@@ -867,7 +869,7 @@ following redefinition of the alias for
 .TS
 box;
 cb cb
-afCR lx .
+lf(CR) lx .
 Macro	Description
 _
 \&.SH [\f[I]level\f[]]	T{
@@ -904,13 +906,13 @@ The value of
 .CW \[rs]n[PSINCR]
 should be specified in points with the
 .CW p
-scaling factor and may include a fractional component;
+scaling indicator and may include a fractional component;
 for example,
 .
 .
 .TS
 box center;
-lfCR.
+lf(CR).
 \&.nr PSINCR 1.5p
 .TE
 .
@@ -969,7 +971,7 @@ the sequence
 .
 .TS
 box center;
-lfCR.
+lf(CR).
 \&.nr PS 10
 \&.nr GROWPS 3
 \&.nr PSINCR 1.5p
@@ -1120,7 +1122,7 @@ It operates similarly to the
 macro otherwise.
 .
 This is a Version\~10 Research Unix extension.
-.\" Possibly V9, but definitely not Berkeley.
+.\" possibly V9, but definitely not Berkeley
 .
 .
 .sp \n[PD]u
@@ -1242,10 +1244,10 @@ list items in the document until specified again.
 The following are examples of each type of list.
 .
 .TS H
-box expand;
+box center;
 cb cb
-afCR a .
-Source	Result
+lf(CR) l .
+Input	Result
 _
 .TH
 T{
@@ -1322,7 +1324,7 @@ The second example sets up an auto-incrementing register,
 .
 In the last example,
 observe how the
-.CW .IP
+.CW IP
 macro places the definition on the same line as the term if it has
 enough space.
 .
@@ -1331,10 +1333,10 @@ there are a couple of workarounds.
 .
 .
 .TS
-box expand;
+box center;
 cb cb
-afCR l .
-Code	Result
+lf(CR) l .
+Input	Result
 _
 T{
 .nf
@@ -1414,7 +1416,7 @@ filling.
 .TS
 box;
 cb cb
-lfCR lx .
+lf(CR) lx .
 Macro	Description
 _
 \&.RS	T{
@@ -1439,9 +1441,12 @@ regions to line up text under hanging and indented paragraphs.
 For example,
 you may wish to nest lists.
 .
+.
 .TS
 box center;
-l l .
+cb cb
+lf(CR) l .
+Input	Result
 T{
 .nf
 .CW
@@ -1506,7 +1511,7 @@ The following table shows the display types available.
 box;
 cb s | cb
 cb cb | ^
-lfCR lfCR | lx .
+lf(CR) lf(CR) | lx .
 Display macro	Description
 With keep	No keep
 _
@@ -1553,7 +1558,7 @@ For example, you may want to keep two paragraphs together, or
 a paragraph that refers to a table (or list, or other item)
 immediately following.
 The
-.I -ms
+.I ms
 macros provide the
 .CW .KS
 and
@@ -1600,7 +1605,7 @@ Tables, figures, equations, and references
 .XE
 .LP
 The
-.I -ms
+.I ms
 macros support the standard
 .I groff
 preprocessors:
@@ -1616,7 +1621,7 @@ in pairs of tags as follows:
 .TS
 box;
 cb cb
-lfCR lx .
+lf(CR) lx .
 Tag pair	Description
 _
 T{
@@ -1811,7 +1816,7 @@ register as follows.
 .TS
 box;
 cb cb
-lfCR lx .
+lf(CR) lx .
 Value	Description
 _
 0	T{
@@ -1912,7 +1917,7 @@ languages are evaluated from left to right.
 .
 .TS
 box center;
-lfCR.
+lf(CR).
 \&.ds FR 0+3i \[rs]" Set footnote line length to 3 inches.
 .TE
 .
@@ -1933,7 +1938,7 @@ Page layout
 .XE
 .LP
 The default output from the
-.I -ms
+.I ms
 macros provides a minimalist
 page layout:
 it prints a single column, with
@@ -2012,7 +2017,7 @@ Multiple columns
 .XE
 .LP
 The
-.I -ms
+.I ms
 macros can set text in as many columns as will reasonably
 fit on the page.
 The following macros are available.
@@ -2026,7 +2031,7 @@ force a page break.
 .TS
 box;
 cb cb
-lfCR lx .
+lf(CR) lx .
 Macro	Description
 _
 \&.1C	Single-column mode.
@@ -2062,7 +2067,7 @@ Creating a table of contents
 .XE
 .LP
 The facilities in the
-.I -ms
+.I ms
 macro package for creating a table of contents
 are semi-automated at best.
 Assuming that you want the table of contents to
@@ -2128,22 +2133,22 @@ Altering the
 macro to automatically build the table of contents
 is perhaps initially more difficult, but would save
 a great deal of time in the long run if you use
-.I -ms
+.I ms
 regularly.
 .\" ------------------------
 .NH 1
 Differences from AT&T
-.I -ms
+.I ms
 .XS
 Differences from AT&T
-.I -ms
+.I ms
 .XE
 .LP
 This section lists the (minor) differences between the
-.I "groff -ms"
+.I "groff ms"
 macros and
 .Acr AT&T
-.I "troff -ms"
+.I "troff ms"
 macros.
 .NH 2
 .I troff
@@ -2156,7 +2161,7 @@ macros not appearing in
 .XE
 .LP
 Macros missing from
-.I "groff -ms"
+.I "groff ms"
 are cover page macros specific to
 Bell Labs.
 The macros known to be missing are:
@@ -2191,10 +2196,10 @@ AT&T
 .XE
 .LP
 The
-.I "groff -ms"
+.I "groff ms"
 macros have a few minor extensions compared to the
 .Acr AT&T
-.I "troff -ms"
+.I "troff ms"
 macros.
 .IP \&.AM 0.5i
 Improved accent marks.
@@ -2202,7 +2207,7 @@ Improved accent marks.
 Indented display.
 The default behavior of
 .Acr AT&T
-.I "troff -ms"
+.I "troff ms"
 was to indent; the
 .I groff
 default prints displays flush left with the body text.

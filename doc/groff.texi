@@ -2560,9 +2560,9 @@ text immediately following.  Some document types found in other
 and are not supported in @code{groff} @file{ms}.
 
 @item Format and layout
-By setting registers (and one string), you can change your document's
-type (font and point size), margins, spacing, headers and footers, and
-footnotes.  @xref{ms Document Control Settings}.
+By setting registers and strings, you can change your document's type
+(font and point size), margins, spacing, headers and footers, and
+footnote arrangment.  @xref{ms Document Control Settings}.
 
 @item Document description
 A document description consists of any of: a title, one or more authors'
@@ -2761,9 +2761,9 @@ Default: 1.
 Defines an increment in point size to be applied to headings at nesting
 levels more significant (numerically less) than the value specified in
 @code{GROWPS}.  The value of @code{PSINCR} should be specified in points
-with the @dmn{p} scaling factor and may include a fractional component;
-for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size increment of
-1.5@dmn{p}.  This is a GNU extension.
+with the @dmn{p} scaling indicator and may include a fractional
+component; for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size
+increment of 1.5@dmn{p}.  This is a GNU extension.
 
 Effective: next heading.
 
@@ -2916,7 +2916,7 @@ revision, explicitly identified authors, sponsoring institutions for
 authors, and, at the rarefied heights, an abstract of their content.
 Define these data by using the macros below in the order shown;
 @code{DA} or @code{ND} can be called to set the document date (or other
-identifier) at any time before (a) the abstract, if present; or (b) the
+identifier) at any time before (a) the abstract, if present, or (b) the
 end of the first page.  Use of these macros is optional, except that
 @code{TL} is mandatory if any other document description macro is
 called,@footnote{Strictly, a @code{TL} call is not mandated by @code{DA}
@@ -2928,7 +2928,7 @@ Footers}).} and @code{AE} is mandatory if @code{AB} is called.
 Use the ``report'' (@acronym{AT&T}: ``released paper'') format for your
 document, creating a separate cover page.  The default arrangement is to
 print most of the document description (title, author names and
-institutions, abstract, but not the date) at the top of page@tie{}1.
+institutions, and abstract, but not the date) at the top of page@tie{}1.
 
 If the optional @code{no} argument is given, @file{ms} prints a cover
 page but does not repeat any of its information on page@tie{}1 (see the
@@ -3126,12 +3126,12 @@ printing of orphaned lines at the bottom of any page.
 @subsubsection Headings
 @cindex @code{ms} macros, headings
 
-Use headings to create a hierarchical structure for your document.  The
-@file{ms} macros print headings in @strong{bold} using the same font
-family and, by default, point size as the body text.  Numbered and
-unnumbered headings are available.  Text lines after heading macros are
-treated as part of the heading, rendered on the same output line in the
-same style.
+Use headings to create a sequential or hierarchical structure for your
+document.  The @file{ms} macros print headings in @strong{bold} using
+the same font family and, by default, point size as the body text.
+Numbered and unnumbered headings are available.  Text lines after
+heading macros are treated as part of the heading, rendered on the same
+output line in the same style.
 
 @DefmacList {NH, @Var{level}, ms}
 @DefmacListEnd {NH, @t{S} @Var{heading-level-index} @dots{}, ms}
@@ -3203,7 +3203,7 @@ define the alias as follows.
 
 @noindent
 Any such change in numbering style becomes effective from the next use
-of @code{NH}, following redefinition of the alias for @code{SN-STYLE}.
+of @code{NH} following redefinition of the alias for @code{SN-STYLE}.
 @endDefstr
 
 @Defmac {SH, [@Var{match-level}], ms}
@@ -3222,7 +3222,7 @@ If the @code{GROWPS} register is set to a value greater than the
 a heading produced by these macros increases by @code{PSINCR} units over
 the size specified by @code{PS} multiplied by the difference between
 @var{level} and @code{GROWPS}.  The value stored in @code{PSINCR} is
-interpreted in @code{groff} basic units; the @code{p} scaling factor
+interpreted in @code{groff} basic units; the @code{p} scaling indicator
 should be employed when assigning a value specified in points.  For
 example, the sequence
 
@@ -3304,7 +3304,7 @@ the @code{B}@tie{}macro otherwise.
 Sets its first argument in a @code{constant-width} (monospaced)
 roman typeface.  It operates similarly to the @code{B}@tie{}macro
 otherwise.  This is a Version@tie{}10 Research Unix extension.
-@c Possibly V9, but definitely not Berkeley.
+@c possibly V9, but definitely not Berkeley
 
 In @code{groff} @file{ms} you might prefer to change the font family to
 Courier, which is monospaced, by setting the @code{FAM} string to
@@ -3390,7 +3390,7 @@ guns
 money
 @endCartoucheExample
 
-Produces:
+produces:
 
 @Example
 A bulleted list:
@@ -3417,7 +3417,7 @@ guns
 money
 @endCartoucheExample
 
-Produces:
+produces:
 
 @Example
 A numbered list:
@@ -3447,7 +3447,7 @@ Gotta pay for those
 lawyers and guns!
 @endCartoucheExample
 
-Produces:
+produces:
 
 @Example
 A glossary-style list:
