@@ -245,9 +245,7 @@ By setting number registers,
 you can change your document's type (font and size),
 margins, spacing, headers and footers, and footnotes.
 .
-See
-.I "Document control settings"
-below for more details.
+See section \[lq]Document control settings\[rq] below.
 .
 .
 .IP "\fBDocument description\fP"
@@ -270,9 +268,10 @@ The package is designed for structured documents,
 consisting of paragraphs interspersed with headings
 and augmented by lists, footnotes, tables, and other
 common constructs.
-See
-.I "Body text"
-below for more details.
+.
+See section \[lq]Body text\[lq] below.
+.
+.
 .IP "\fBTable of contents\fP"
 Longer documents include a table of contents,
 which you can invoke by placing the
