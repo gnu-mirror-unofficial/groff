@@ -194,7 +194,7 @@ lf(CR).
 .if t .bp
 .NH 1
 General structure of an
-.I ms
+.BI ms
 document
 .XS
 General structure of an
@@ -2140,7 +2140,7 @@ regularly.
 .\" ------------------------
 .NH 1
 Differences from AT&T
-.I ms
+.BI ms
 .XS
 Differences from AT&T
 .I ms
@@ -2153,9 +2153,9 @@ macros and
 .I "troff ms"
 macros.
 .NH 2
-.I troff
+.BI troff
 macros not appearing in
-.I groff
+.BI groff
 .XS
 	\fItroff\fP
 macros not appearing in
@@ -2186,10 +2186,10 @@ Cover sheet information
 .IP \&.MH
 A cover sheet macro
 .NH 2
-.I groff
+.BI groff
 macros not appearing in
 AT&T
-.I troff
+.BI troff
 .XS
 	\fIgroff\fP
 macros not appearing in
