@@ -1971,20 +1971,7 @@ Print the header on page\~1.
 By default,
 no header is printed on that page.
 .
-This is a Berkeley extension.\**
-.
-.FS
-Version\~10
-.\" possibly V9
-Research Unix supported a pair of
-.CW P1
-and
-.CW P2
-macros
-(for setting code examples);
-.I "groff ms"
-does not.
-.FE
+This is a Berkeley extension.
 T}
 .TE
 .
@@ -2184,6 +2171,20 @@ Other keywords
 Cover sheet information
 .IP \&.MH
 A cover sheet macro
+.
+.
+.LP
+Version\~10
+.\" possibly V9
+Research Unix supported a pair of
+.CW P1
+and
+.CW P2
+macros for setting code examples;
+.I "groff ms"
+does not.
+.
+.
 .NH 2
 .BI groff
 macros not appearing in
