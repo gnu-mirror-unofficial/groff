@@ -124,7 +124,7 @@
 	line number register \n[ln] is not a reliable proxy for it.
 
 	* src/roff/troff/env.h: Add get_numbering_nodes(), returning
-	`int`,  to public interface of `environment` class.
+	`int`, to public interface of `environment` class.
 	* src/roff/troff/env.cpp: Implement get_numbering_nodes().
 
 	* src/roff/groff/tests/dot-nm_register_works.sh: Test it.
@@ -669,9 +669,9 @@
 	footnote line length of 5/6ths of the text line length; this may
 	correspond to an early AT&T ms default (perhaps documented in
 	the 1974 version of the M. E. Lesk paper, "Typing Documents on
-	the UNIX System"[1], published by the ACM).  However, as early
-	as V6 Unix (1975), AT&T ms actually used a footnote line length
-	of 11/12ths of the text line length instead[2].
+	the UNIX System"[1]).  However, as early as V6 Unix (1975), AT&T
+	ms actually used a footnote line length of 11/12ths of the text
+	line length instead[2].
 
 	Heirloom Doctools and neatroff ms also use this default.
 
@@ -1409,7 +1409,7 @@
 	as failing, and use strerror() since fflush() sets errno.  If
 	pclose() fails, say that we were unable to close a pipe instead
 	of repeating the name of the C library function to the user, who
-	might not be a C programmer.  Report sterror() in this case and
+	might not be a C programmer.  Report strerror() in this case and
 	for a failing fclose().
 	(real_output_file::flush): Repeat updated fflush() logic from
 	previous function.
