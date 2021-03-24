@@ -687,17 +687,17 @@ it terminates a long escape name or long escape argument.
 .
 Otherwise, it is non-special.
 .
+.
 .TP
 \f[CI]space\f[]
-Space characters separate arguments in requests, macros, and strings.
+Space characters separate arguments in request invocations,
+macro calls,
+and string interpolations.
 .
-In text, they separate words.
+In text,
+they separate words.
 .
-When filling is enabled
-(the default),
-a line may be broken at a space.
-.
-Multiple adjacent space characters cause
+Multiple adjacent space characters in text cause
 .I groff
 to attempt end-of-sentence detection on the preceding word
 (and trailing punctuation).
@@ -706,7 +706,12 @@ The amount of space between words and sentences is controlled by the
 .request .ss
 request.
 .
-When adjustment is enabled,
+When filling is enabled
+(the default),
+a line may be broken at a space.
+.
+When adjustment is enabled and set to both margins
+(the default),
 inter-word spaces may be expanded to justify the line.
 .
 To get a space of definite width,
@@ -723,9 +728,14 @@ see section \[lq]Escape Sequences\[rq] below.
 An adjustable but non-breaking space is available with
 .esc \[ti] .
 .
+.
 .IP \f[CI]newline\f[]
-In text, newlines behave like space characters and trigger
+In text,
+a newline puts an inter-word space onto the output and triggers
 end-of-sentence recognition on the preceding text.
+.
+.esc c
+at the end of an input line suppresses these functions.
 .
 Continuation lines can be specified by an escaped newline, i.e., by
 specifying a backslash
