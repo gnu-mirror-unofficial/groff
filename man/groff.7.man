@@ -693,22 +693,24 @@ Space characters separate arguments in requests, macros, and strings.
 .
 In text, they separate words.
 .
-When filling is enabled (the default),
+When filling is enabled
+(the default),
 a line may be broken at a space.
 .
-Further, in fill mode, multiple adjacent space characters cause
+Multiple adjacent space characters cause
 .I groff
-to attempt end-of-sentence detection on the preceding word (and trailing
-punctuation).
+to attempt end-of-sentence detection on the preceding word
+(and trailing punctuation).
 .
-The amount of space between sentences in fill mode is controlled by the
+The amount of space between words and sentences is controlled by the
 .request .ss
 request.
 .
 When adjustment is enabled,
-a space's width may be expanded to justify the line.
+inter-word spaces may be expanded to justify the line.
 .
-To get a space of definite width, use the escape sequences
+To get a space of definite width,
+use the escape sequences
 .squoted_char "\[rs]\ "
 (this is the escape character followed by a space),
 .esc 0 ,

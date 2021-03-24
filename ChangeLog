@@ -1,3 +1,24 @@
+2021-03-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi (Manipulating Filling and Adjustment):
+	* man/groff_diff.7.man (Language/Extended requests): Fix
+	incorrect claim that additional inter-sentence space is applied
+	only in fill mode.  Drop word "parameter" from description of
+	unit used in .ss request arguments; it is a needlessly specific
+	reference to the font file format.  Tighten wording.
+
+	* man/groff.7.man (Control Characters): Fix incorrect claim that
+	end-of-sentence detection is attempted only in fill mode.  Note
+	that .ss request also affects inter-word spacing.
+
+	* man/groff_diff.7.man (Language/Extended requests):
+	  - Drop example.
+	  - Move discussion of AT&T vs. GNU troff difference in .ss
+	    handling from here...
+	  (Implementation Differences): ...to here.
+
+	Thanks to Dave Kemper for his continued scrutiny!
+
 2021-03-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi (ms Cover Page Macros):
