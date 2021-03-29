@@ -758,7 +758,7 @@ An example may be illustrative.
 box center;
 cb | cb
 lf(CR) | lB.
-Code	Output
+Input	Result
 _
 T{
 .nf
@@ -1414,8 +1414,9 @@ you may wish to nest lists.
 .TS
 box center;
 cb cb
-lf(CR) l .
+lf(CR)8 l .
 Input	Result
+_
 T{
 .nf
 .CW
