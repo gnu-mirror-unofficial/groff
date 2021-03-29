@@ -604,42 +604,151 @@ Body text
 .XS
 Body text
 .XE
+.
+.
 .LP
-This section describes macros 
-used to mark up the body of your document.
-Examples include paragraphs, sections, and
-other groups.
+A variety of macros,
+registers,
+and strings can be used to structure and style the body of your
+document.
+.
+Examples include paragraphs,
+headings,
+footnotes,
+and inclusions of material such as tables and figures.
+.
+.
+.KS
 .NH 2
 Paragraphs
 .XS
 	Paragraphs
 .XE
+.
+.
 .LP
-Use the
-.CW .PP
-macro to create indented paragraphs
-(like the next paragraph),
-and the
-.CW .LP
-macro to create paragraphs with no initial indent (like this one).
+Several paragraph types are available,
+differing in how indentation is
+applied:
+to left,
+right,
+or both margins;
+to the first output line of the paragraph,
+all output lines,
+or all but the first.
+.
+All paragraphing macro calls cause the insertion of vertical space in
+the amount stored in the
+.CW PD
+register,
+except at page breaks.
+.KE
+.
+.
 .PP
 The
-.CW .QP
-macro indents its text at both left and right margins.
-The effect is identical to the
-.Acr HTML
-.CW <BLOCKQUOTE>
-element.
-The next paragraph or heading
-returns margins to normal.
+.CW PORPHANS
+register defines the minimum number of initial lines of any paragraph
+that must be kept together to avoid orphaned lines at the bottom of a
+page.
+.
+If a new paragraph is started close to the bottom of a page,
+and there is insufficient space to accommodate
+.CW \[rs]n[PORPHANS]
+lines before an automatic page break,
+then a page break is forced before the start of the paragraph.
+.
+This is a GNU extension.
+.
+.
+.TS H
+box;
+lb lb
+lf(CR) lx.
+Macro	Description
+_
+.TH
+\&.LP	Set a paragraph without any (additional) indentation.
+_
+\&.PP	T{
+Set a paragraph with a first-line left indentation in the amount stored
+in the
+.CW PI
+register.
+T}
+_
+\&.IP \f[R][\f[]\f[I]marker\f[] \f[R][\f[]\f[I]width\f[]\f[R]]]\f[]\
+	T{
+Set a paragraph with a left indentation.
+.
+The optional
+.I marker
+is not indented and is empty by default.
+.
+It has several applications;
+see subsection \[lq]Lists\[rq] below.
+.
+.I width
+overrides the default indentation amount stored in
+.CW \[rs]n[PI] ;
+its default unit is
+.CW n \[rq]. \[lq]
+.
+Once specified,
+.I width
+applies to further
+.CW .IP
+calls until specified again or a different paragraphing
+.\" or heading (Savannah #60222)
+macro is called.
+T}
+_
+\&.QP	T{
+Set a paragraph indented from both left and right margins by
+.CW \[rs]n[QI] .
+.
+This is a Berkeley extension.
+T}
+_
+T{
+\&.QS
+.br
+\&.QE
+T}	T{
+Begin
+.CW QS ) (
+and end
+.CW QE ) (
+a region where each paragraph is indented from both margins by
+.CW \[rs]n[QI] .
+.
+The text between
+.CW .QS
+and
+.CW .QE
+can be structured further by use of other paragraphing macros.
+.
+These macros are GNU extensions.
+T}
+_
+\&.XP	T{
+Set an \[lq]exdented\[rq] paragraph\[em]one with a left indentation of
+.CW \[rs]n[PI]
+on every line
+.I except
+the first
+(also known as a hanging indent).
+.
+This is a Berkeley extension.
+T}
+.TE
 .
 .
 .KS
 .PP
-The following markup uses all three paragraph macros.
+The following example illustrates several different paragraph macros.
 .
 .
-.\" Wrap lines in the code example below at 64 columns.
 .TS
 box center;
 l.
@@ -647,25 +756,32 @@ T{
 .nf
 .CW
 \&.NH 2
-Cases used in the study
+Cases used in the 2001 study
 \&.LP
-The following software and versions were considered for this
-report.
+Two software releases were considered for this report.
 \&.PP
-For commercial software,
-we chose
-\&.B "Microsoft Word for Windows" ,
+The first is commercial software;
+the second is free.
+\&.IP \[rs][bu]
+Microsoft Word for Windows,
 starting with version 1.0 through the current version
 (Word 2000).
-\&.PP
-For free software,
-we chose
-\&.B Emacs ,
+\&.IP \[rs][bu]
+GNU Emacs,
 from its first appearance as a standalone editor through the
 current version (v20).
+See [Bloggs 2002] for details.
 \&.QP
-Franklin's Law applied to software:
+Franklin\[aq]s Law applied to software:
 software expands to outgrow both RAM and disk space over time.
+\&.SH
+Bibliography
+\&.XP
+Bloggs, Joseph R.,
+\&.I "Everyone\[aq]s a Critic" ,
+Underground Press, March 2002.
+A definitive work that answers all questions and criticisms
+about the quality and usability of free software.
 .R
 .fi
 T}
@@ -1184,33 +1300,23 @@ Lists
 .XS
 	Lists
 .XE
-.LP
-The
-.CW .IP
-macro handles duties for all lists.
-Its syntax is as follows:
-.PP
-.CW .IP
-.I marker "" [
-.I width ]] [
+.
+.
 .LP
 The
 .I marker
-is usually a bullet character
-.CW \\\\(bu ) (
+argument to the
+.CW IP
+macro can be employed to present a variety of lists;
+for instance,
+you can use a bullet glyph
+.CW \[rs][bu] ) (
 for unordered lists,
-a number (or auto-incrementing number register) for numbered lists,
-or a word or phrase for indented (glossary-style) lists.
-.PP
-The
-.I width
-specifies the indent for the body of each list item.
-Once specified, the indent remains the same for all
-list items in the document until specified again.
+a number
+(or auto-incrementing register)
+for numbered lists,
+or a word or phrase for glossary-style or definition lists.
 .
-.
-.PP
-The following are examples of each type of list.
 .
 .TS H
 box center;
@@ -1222,7 +1328,7 @@ _
 T{
 .nf
 A bulleted list:
-\&.IP \[rs][bu] 2
+\&.IP \[rs][bu] 2n
 lawyers
 \&.IP \[rs][bu]
 guns
@@ -1243,7 +1349,7 @@ T{
 .nf
 \&.nr step 1 1
 A numbered list:
-\&.IP \\n[step] 3
+\&.IP \\n[step] 3n
 lawyers
 \&.IP \\n+[step]
 guns
@@ -1288,86 +1394,86 @@ T}
 .
 .
 .PP
-The second example sets up an auto-incrementing register,
-.CW step .
-.
-In the last example,
+In the last example above,
 observe how the
 .CW IP
 macro places the definition on the same line as the term if it has
 enough space.
 .
 If this is not what you want,
-there are a couple of workarounds.
+there are a few workarounds we will illustrate by modifying the example.
+.
+First,
+you can use a
+.CW br
+request to force a break after printing the term or label.
+.
+Second,
+you could apply the
+.CW \[rs]p
+escape to force a break.
+.
+The space following the escape is important;
+if you omit it,
+.I groff
+prints the first word of the paragraph text on the same line as the term
+or label
+(if it fits)
+.I then
+breaks the line.
+.
+Finally,
+you may append unbreakable horizontal space to the term or label with
+the
+.CW \[rs]h
+escape;
+using the same amount as the indentation will ensure that it's too wide
+for
+.I groff
+to treat it as \[lq]fitting\[rq] on the same line as the paragraph text.
 .
 .
 .TS
 box center;
-cb cb
-lf(CR) l .
-Input	Result
+cb | cb | cb
+lf(CR) | lf(CR)  | lf(CR).
+Approach #1	Approach #2	Approach #3
 _
 T{
 .nf
-A glossary-style list:
-\&.IP lawyers 0.4i
-Two or more attorneys.
 \&.IP guns
 \&.br
 Firearms,
-preferably large-caliber.
-\&.IP money
-Gotta pay for those
-lawyers and guns!
 .fi
 T}	T{
-A glossary-style list:
-.IP lawyers 0.4i
-Two or more attorneys.
-.IP guns
-.br
+.nf
+\&.IP guns
+\[rs]p Firearms,
+.fi
+T}	T{
+.nf
+\&.IP guns\[rs]h\[aq]0.4i\[aq]
 Firearms,
-preferably large-caliber.
-.IP money
-Gotta pay for those lawyers and guns!
+.fi
 T}
 _
+.T&
+cb s s
+l s s.
+Result
+_
 T{
-.nf
 A glossary-style list:
-\&.IP lawyers 0.4i
-Two or more attorneys.
-\&.IP guns\[rs]h\[aq]0.4i\[aq]
-Firearms, preferably
-large-caliber.
-\&.IP money
-Gotta pay for those
-lawyers and guns!
-.fi
-T}	T{
-A glossary-style list:
+.
 .IP lawyers 0.4i
 Two or more attorneys.
-.IP guns\h'0.4i'
+.IP guns\h\[aq]0.4i\[aq] 0.4i
 Firearms,
 preferably large-caliber.
 .IP money
 Gotta pay for those lawyers and guns!
 T}
 .TE
-.PP
-The first example uses the
-.CW .br
-request to force a break after printing the term or label.
-The second example uses the
-.CW \\\\p
-escape to do the same thing.
-Note the space following the escape; this is important.
-If you omit the space,
-.I groff
-prints the first word on the same line as the term or label (if it fits)
-.B then
-breaks the line.
 .
 .
 .NH 2

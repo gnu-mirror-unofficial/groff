@@ -3018,8 +3018,9 @@ added features are more in line with user demand.
 @subsection Body text
 @cindex @code{ms} macros, body text
 
-This section describes macros used to mark up the body of your document.
-Examples include paragraphs, sections, and other groups.
+A variety of macros, registers, and strings can be used to structure and
+style the body of your document.  Examples include paragraphs, headings,
+footnotes, and inclusions of material such as tables and figures.
 
 @menu
 * Paragraphs in ms::
@@ -3040,74 +3041,88 @@ Examples include paragraphs, sections, and other groups.
 @subsubsection Paragraphs
 @cindex @code{ms} macros, paragraph handling
 
-The following paragraph types are available.
-
-@Defmac {PP, , ms}
-Sets a paragraph with an initial indentation.
-@endDefmac
+Several paragraph types are available, differing in how indentation is
+applied: to left, right, or both margins; to the first output line of
+the paragraph, all output lines, or all but the first.  All paragraphing
+macro calls cause the insertion of vertical space in the amount stored
+in the @code{PD} register, except at page breaks.  The @code{PORPHANS}
+register (@pxref{ms Document Control Settings}) operates in conjunction
+with each of these macros to inhibit the printing of orphaned lines at
+the bottom of any page.
 
 @Defmac {LP, , ms}
-Sets a paragraph without an initial indentation.
+Set a paragraph without any (additional) indentation.
+@endDefmac
+
+@Defmac {PP, , ms}
+Set a paragraph with a first-line left indentation in the amount stored
+in the @code{PI} register.
+@endDefmac
+
+@Defmac {IP, [@Var{marker} [@Var{width}]], ms}
+Set a paragraph with a left indentation.  The optional @var{marker} is
+not indented and is empty by default.  It has several applications;
+see @ref{Lists in ms}.  @var{width} overrides the default indentation
+amount stored in the @code{PI} register; its default unit is @samp{n}.
+Once specified, @var{width} applies to further @code{IP} calls until
+specified again or a different paragraphing
+@c or heading (Savannah #60222)
+macro is called.
 @endDefmac
 
 @Defmac {QP, , ms}
-Sets a paragraph that is indented at both left and right margins by the
-amount of the register @code{QI}.  The next paragraph or heading returns
-margins to normal.  @code{QP} inserts vertical space of amount set by
-register @code{PD} before the paragraph.
+Set a paragraph indented from both left and right margins by the amount
+stored in the @code{QI} register.  This is a Berkeley extension.
 @endDefmac
 
 @DefmacList {QS, , ms}
 @DefmacListEndx {QE, , ms}
-These macros begin and end a quoted region.  The @code{QI} register
-controls the amount of indentation.  Both @code{QS} and @code{QE} insert
-inter-paragraph vertical space set by register @code{PD}.  The text
-between @code{QS} and @code{QE} can be structured further by use of the
-macros @code{LP} or @code{PP}.
+Begin (@code{QS}) and end (@code{QE}) a region where each paragraph is
+indented from both margins by the amount stored in the @code{QI}
+register.  The text between @code{QS} and @code{QE} can be structured
+further by use of other paragraphing macros.  These macros are GNU
+extensions.
 @endDefmac
 
 @Defmac {XP, , ms}
-Sets a paragraph whose lines are indented, except for the first line.
-This is a Berkeley extension.
+Set an ``exdented'' paragraph---one with a left indentation in the
+amount stored in the @code{PI} register on every line @emph{except} the
+first (also known as a hanging indent).  This is a Berkeley extension.
 @endDefmac
 
-The following markup uses all four paragraph macros.
+The following example illustrates several different paragraph macros.
 
 @CartoucheExample
 .NH 2
-Cases used in the study
+Cases used in the 2001 study
 .LP
-The following software and versions were
-considered for this report.
+Two software releases were considered for this report.
 .PP
-For commercial software, we chose
-.B "Microsoft Word for Windows" ,
-starting with version 1.0 through the
-current version (Word 2000).
-.PP
-For free software, we chose
-.B Emacs ,
-from its first appearance as a standalone
-editor through the current version (v20).
+The first is commercial software;
+the second is free.
+.IP \[bu]
+Microsoft Word for Windows,
+starting with version 1.0 through the current version
+(Word 2000).
+.IP \[bu]
+GNU Emacs,
+from its first appearance as a standalone editor through
+the current version (v20).
 See [Bloggs 2002] for details.
 .QP
 Franklin's Law applied to software:
-software expands to outgrow both
-RAM and disk space over time.
-.LP
-Bibliography:
+software expands to outgrow both RAM and disk space over
+time.
+.SH
+Bibliography
 .XP
 Bloggs, Joseph R.,
 .I "Everyone's a Critic" ,
 Underground Press, March 2002.
-A definitive work that answers all questions
-and criticisms about the quality and usability of
-free software.
+A definitive work that answers all questions and
+criticisms about the quality and usability of free
+software.
 @endCartoucheExample
-
-The @code{PORPHANS} register (@pxref{ms Document Control Settings})
-operates in conjunction with each of these macros to inhibit the
-printing of orphaned lines at the bottom of any page.
 
 @c ---------------------------------------------------------------------
 
@@ -3348,22 +3363,11 @@ Text enclosed with @code{\*<} and @code{\*>} is printed as a subscript.
 @subsubsection Lists
 @cindex @code{ms} macros, lists
 
-The @code{IP} macro handles duties for all lists.
-
-@Defmac {IP, [@Var{marker} [@Var{width}]], ms}
-The @var{marker} is usually a bullet glyph (@code{\[bu]}) for unordered
-lists, a number (or auto-incrementing register) for numbered lists, or a
-word or phrase for indented (glossary-style) lists.
-
-The @var{width} specifies the indentation for the body of each list
-item; its default unit is @samp{n}.  Once specified, the indentation
-remains the same for all list items in the document until specified
-again.
-
-The @code{PORPHANS} register (@pxref{ms Document Control Settings})
-operates in conjunction with the @code{IP} macro, to inhibit the
-printing of orphaned list markers at the bottom of any page.
-@endDefmac
+The @var{marker} argument to the @code{IP} macro can be employed to
+present a variety of lists; for instance, you can use a bullet glyph
+(@code{\[bu]}) for unordered lists, a number (or auto-incrementing
+register) for numbered lists, or a word or phrase for glossary-style or
+definition lists.
 
 The following is an example of a bulleted list.
 @cindex example markup, bulleted list [@code{ms}]
@@ -3371,7 +3375,7 @@ The following is an example of a bulleted list.
 
 @CartoucheExample
 A bulleted list:
-.IP \[bu] 2
+.IP \[bu] 2n
 lawyers
 .IP \[bu]
 guns
@@ -3398,7 +3402,7 @@ The following is an example of a numbered list.
 @CartoucheExample
 .nr step 1 1
 A numbered list:
-.IP \n[step] 3
+.IP \n[step] 3n
 lawyers
 .IP \n+[step]
 guns
@@ -3418,9 +3422,8 @@ A numbered list:
 3. money
 @endExample
 
-Note the use of the auto-incrementing register in this example.
-
-The following is an example of a glossary-style list.
+Note the use of the auto-incrementing register @var{step} in the
+foregoing example.  The next illustrates a glossary-style list.
 @cindex example markup, glossary-style list [@code{ms}]
 @cindex glossary-style list, example markup [@code{ms}]
 
@@ -3429,8 +3432,8 @@ A glossary-style list:
 .IP lawyers 0.4i
 Two or more attorneys.
 .IP guns
-Firearms, preferably
-large-caliber.
+Firearms,
+preferably large-caliber.
 .IP money
 Gotta pay for those
 lawyers and guns!
@@ -3450,41 +3453,52 @@ money
       Gotta pay for those lawyers and guns!
 @endExample
 
-In the last example, the @code{IP} macro places the definition on the
-same line as the term if it has enough space; otherwise, it breaks to
-the next line and starts the definition below the term.  This may or may
-not be the effect you want, especially if some of the definitions break
-and some do not.  The following examples show two possible ways to force
-a break.
-
-The first workaround uses the @code{br} request to force a break after
-printing the term or label.
+In the previous example, observe how the @code{IP} macro places the
+definition on the same line as the term if it has enough space.  If this
+is not what you want, there are a few workarounds we will illustrate by
+modifying the example.  First, you can use a @code{br} request to force
+a break after printing the term or label.
 
 @CartoucheExample
-A glossary-style list:
-.IP lawyers 0.4i
-Two or more attorneys.
 .IP guns
 .br
-Firearms, preferably large-caliber.
-.IP money
-Gotta pay for those lawyers and guns!
+Firearms,
 @endCartoucheExample
 
-The second workaround uses the @code{\p} escape to force the break.
-Note the space following the escape; this is important.  If you omit the
-space, @code{groff} prints the first word on the same line as the term
-or label (if it fits) @emph{then} breaks the line.
+Second, you could apply the @code{\p} escape to force a break.  The
+space following the escape is important; if you omit it, @code{groff}
+prints the first word of the paragraph text fits) on the same line as
+the term or label (if it fits) @emph{then} breaks the line.
 
 @CartoucheExample
-A glossary-style list:
-.IP lawyers 0.4i
-Two or more attorneys.
 .IP guns
-\p Firearms, preferably large-caliber.
-.IP money
-Gotta pay for those lawyers and guns!
+\p Firearms,
 @endCartoucheExample
+
+Finally, you may append unbreakable horizontal space to the term or
+label with the @code{\h} escape; using the same amount as the
+indentation will ensure that it's too wide for @code{groff} to treat it
+as ``fitting'' on the same line as the paragraph text.
+
+@CartoucheExample
+.IP guns\h'0.4i'
+Firearms,
+@endCartoucheExample
+
+In each case, the result is the same.
+
+@Example
+A glossary-style list:
+
+lawyers
+      Two or more attorneys.
+
+guns
+      Firearms, preferably large-caliber.
+
+money
+      Gotta pay for those lawyers and guns!
+@endExample
 
 @c ---------------------------------------------------------------------
 

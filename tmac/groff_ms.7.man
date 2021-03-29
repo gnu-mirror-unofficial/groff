@@ -450,87 +450,114 @@ End the abstract.
 .SS Paragraphs
 .\" ====================================================================
 .
-Use the
-.B PP
-macro to create indented paragraphs,
-and the
-.B LP
-macro to create paragraphs with no initial indent.
+Several paragraph types are available,
+differing in how indentation is
+applied:
+to left,
+right,
+or both margins;
+to the first output line of the paragraph,
+all output lines,
+or all but the first.
+.
+All paragraphing macro calls cause the insertion of vertical space in
+the amount stored in the
+.B PD
+register,
+except at page breaks.
 .
 .
 .PP
 The
-.B QP
-macro indents all text at both left and right margins
-by the amount of the register
-.BR QI .
+.B PORPHANS
+register defines the minimum number of initial lines of any paragraph
+that must be kept together to avoid orphaned lines at the bottom of a
+page.
 .
-The next paragraph or heading returns the margins to normal.
+If a new paragraph is started close to the bottom of a page,
+and there is insufficient space to accommodate
+.B \[rs]n[PORPHANS]
+lines before an automatic page break,
+then a page break is forced before the start of the paragraph.
 .
+This is a GNU extension.
+.
+.
+.TP
+.B .LP
+Set a paragraph without any (additional) indentation.
+.
+.
+.TP
+.B .PP
+Set a paragraph with a first-line left indentation in the amount stored
+in the
+.B PI
+register.
+.
+.
+.TP
+.B .IP\c
+.RI \~[ marker \~[ width ]]
+Set a paragraph with a left indentation.
+.
+The optional
+.I marker
+is not indented and is empty by default.
+.
+.I width
+overrides the default indentation amount of
+.BR \[rs]n[PI] ;
+its default unit is
+.RB \[lq] n \[rq].
+.
+Once specified,
+.I width
+applies to further
+.B .IP
+calls until specified again or a different paragraphing
+.\" or heading (Savannah #60222)
+macro is called.
+.
+.
+.TP
 .B .QP
-inserts the vertical space specified in register
-.B PD
-as inter-paragraph spacing.
+Set a paragraph indented from both left and right margins by
+.BR \[rs]n[PI] .
+.
+This is a Berkeley extension.
 .
 .
-.PP
-A paragraph bracketed between the macros
-.B QS
-and
-.B QE
-has the same appearance as a paragraph started with
-.B .QP
-and a following paragraph started with
-.BR .LP .
-.
-Both
+.TP
 .B .QS
-and
+.TQ
 .B .QE
-insert the inter-paragraph spacing specified in
-.B PD
-and the text is indented on both sides by the amount of register
-.BR QI .
+Begin
+.RB ( QS )
+and end
+.RB ( QE )
+a region where each paragraph is indented from both margins by
+.BR \[rs]n[QI] .
 .
 The text between
 .B .QS
 and
 .B .QE
-can be split into further paragraphs by using
-.B .LP
-or
-.BR .PP .
+can be structured further by use of other paragraphing macros.
+.
+These macros are GNU extensions.
 .
 .
-.PP
-The
-.B XP
-macro produces an \[lq]exdented\[rq] paragraph;
-that is,
-one with a hanging indent.
+.TP
+.B .XP
+Set an \[lq]exdented\[rq] paragraph\[em]one with a left indentation of
+.B \[rs]n[PI]
+on every line
+.I except
+the first
+(also known as a hanging indent).
 .
-The first line of the paragraph begins at
-the left margin,
-and subsequent lines are indented
-(the opposite of
-.BR .PP ).
-.
-.
-.PP
-For each of the above paragraph types,
-and also for any list entry introduced by the
-.B IP
-macro
-(described later),
-the document control register
-.B PORPHANS
-sets the minimum number of lines which must be printed after the start
-of the paragraph before any page break occurs.
-.
-If there is insufficient space remaining on the current page to
-accommodate this number of lines,
-a page break is forced before the first line of the paragraph is
-printed.
+This is a Berkeley extension.
 .
 .
 .\" ====================================================================
@@ -888,38 +915,6 @@ as a superscript.
 Print the enclosed
 .I text
 as a subscript.
-.
-.
-.\" ====================================================================
-.SS Lists
-.\" ====================================================================
-.
-The
-.B IP
-macro handles duties for all lists.
-.
-Its syntax is as follows:
-.
-.TP
-.B .IP\c
-.RI " [" marker " [" width ]]
-The
-.I marker
-is usually a bullet character
-.B \[rs](bu
-for unordered lists,
-a number
-(or auto-incrementing register)
-for numbered lists,
-or a word or phrase for indented (glossary-style) lists.
-.
-.IP
-The
-.I width
-specifies the indent for the body of each list item.
-.
-Once specified, the indent remains the same for all list items in the
-document until specified again.
 .
 .
 .\" ====================================================================
