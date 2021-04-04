@@ -7310,11 +7310,11 @@ places without hyphens.
 @cindex hyphenation, disabling (@code{\%})
 To tell GNU @code{troff} how to hyphenate words as they occur in input,
 use the @code{\%} escape, also known as the @dfn{hyphenation character}.
-Preceding a word with this escape prevents it from being automatically
-hyphenated; each instance within a word indicates to GNU @code{troff}
-that the word may be hyphenated at that point.  This mechanism affects
-only that occurrence of the word; to change the hyphenation of a word
-for the remainder of the document, use the @code{hw} request.
+Each instance within a word indicates to GNU @code{troff} that the
+word may be hyphenated at that point, while prefixing a word with this
+escape prevents it from being otherwise hyphenated.  This mechanism
+affects only that occurrence of the word; to change the hyphenation of a
+word for the remainder of the document, use the @code{hw} request.
 
 @cindex @code{\X}, followed by @code{\%}
 @cindex @code{\Y}, followed by @code{\%}
@@ -7339,10 +7339,15 @@ inserted, the remainder of the (input) word is subject to hyphenation as
 normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
-of a file name or URL.
+of a file name or URL or to permit hyphenation after only certain
+explicit hyphens within a word.
 
 @Example
-@dots{} check \%/var/log/\:\%httpd/\:\%access_log @dots{}
+@c Wrap example at 56 columns.
+The \%Lethbridge-Stewart-\:\%Sackville-Baggins divorce
+was, in retrospect, inevitable once the contents of
+\%/var/log/\:\%httpd/\:\%access_log on the family web
+server came to light, revealing visitors from Hogwarts.
 @endExample
 @endDefesc
 
@@ -7527,8 +7532,8 @@ The hyphenation mode can be found in the read-only register @samp{.hy}.
 @endDefreq
 
 @Defreq {nh, }
-Disable hyphenation; i.e., set the hyphenation mode to@tie{}0 (see
-above).  The hyphenation mode of the last call to @code{hy} is not
+Disable automatic hyphenation; i.e., set the hyphenation mode to@tie{}0
+(see above).  The hyphenation mode of the last call to @code{hy} is not
 remembered.
 @endDefreq
 

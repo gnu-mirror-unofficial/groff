@@ -1,3 +1,21 @@
+2021-03-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi (Manipulating Hyphenation): Recast description
+	of \% escape to emphasize independence of its two uses (e.g.,
+	"\%pseudo\%unununium" is hyphenated only after "pseudo-", if at
+	all).  Add example.  Note that .nh affects only automatic
+	hyphenation.
+	* man/groff.7.man (Requests/Request short reference) <.nh>:
+	Clarify that the request disables only _automatic_ hyphenation.
+	(Hyphenation): Add new introductory paragraph summarizing manual
+	hyphenation support and features, including notice that breaking
+	at explicit hyphens is performed in fill mode, i.e., even if
+	_automatic_ hyphenation is disabled.
+
+	Thanks to Peter Schaffter for the report.
+
+	Fixes <https://savannah.gnu.org/bugs/?60332>.
+
 2021-03-27  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Changes to the ghostscript fontnames (9.53.3).

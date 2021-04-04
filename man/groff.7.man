@@ -2228,7 +2228,7 @@ No filling or adjusting of output lines.
 .
 .TPx
 .REQ .nh
-Disable hyphenation;
+Disable automatic hyphenation;
 same as
 .RB \[lq] ".hy 0" \[rq].
 .
@@ -4870,7 +4870,24 @@ instead.
 .SH Hyphenation
 .\" ====================================================================
 .
-Several requests influence hyphenation.
+Explicitly hyphenated words such as \[lq]mother-in-law\[rq] are eligible
+for breaking after each of their hyphens when
+.I groff
+fills lines.
+.
+The hyphenation
+.RB character\~ \[rs]%
+and non-printing break
+.RB point\~ \[rs]:
+escapes may be used to control the hyphenation of individual words.
+.
+Otherwise,
+.I groff
+hyphenates words automatically by default.
+.
+.
+.P
+Several requests influence automatic hyphenation.
 .
 Because conventions vary,
 a variety of hyphenation modes are available to the
