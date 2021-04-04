@@ -677,8 +677,7 @@ in the
 register.
 T}
 _
-\&.IP \f[R][\f[]\f[I]marker\f[] \f[R][\f[]\f[I]width\f[]\f[R]]]\f[]\
-	T{
+\&.IP \f[R][\f[I]marker\f[] [\f[I]width\f[]]]	T{
 Set a paragraph with a left indentation.
 .
 The optional
@@ -830,8 +829,8 @@ to number headings in the form
 .CW
 .I a .\c
 .I b .\c
-.I c.\|.\|.,
 .R
+.I c .\|.\|.,
 to any depth desired,
 with the numbering of each level increasing automatically and being
 reset when a more significant level is increased.
