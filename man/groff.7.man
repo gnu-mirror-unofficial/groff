@@ -1958,23 +1958,26 @@ with each hyphen
 .RB \[lq] \- \[rq]
 indicating a hyphenation point.
 .
+.
 .TPx
 .REQ .hy
-Set hyphenation mode to
-.B 1
-(the default).
+Set automatic hyphenation mode to
+.BR 1 .
+.
 .
 .TPx
 .REQ .hy \fB0\fP
-Disable hyphenation;
+Disable automatic hyphenation;
 same as
 .BR .nh .
 .
+.
 .TPx
 .REQ .hy mode
-Set hyphenation mode to
+Set automatic hyphenation mode to
 .IR mode ;
 see section \[lq]Hyphenation\[rq] below.
+.
 .
 .TPx
 .REQ .hym
@@ -2510,15 +2513,18 @@ Define global fallback character (or glyph)\~\c
 as string
 .IR anything .
 .
+.
 .TPx
 .REQ .shc
-Reset soft hyphen glyph to
-.esc (hy .
+Reset the soft hyphen glyph to
+.esc [hy] .
+.
 .
 .TPx
 .REQ .shc c
 Set the soft hyphen glyph
 .RI to\~ c .
+.
 .
 .TPx
 .REQ .shift "n"
@@ -4407,7 +4413,7 @@ current environment.
 .
 .TPx
 .REG .hy
-The hyphenation mode in the current environment.
+The automatic hyphenation mode in the current environment.
 .
 .TPx
 .REG .hym
@@ -4879,11 +4885,17 @@ The hyphenation
 .RB character\~ \[rs]%
 and non-printing break
 .RB point\~ \[rs]:
-escapes may be used to control the hyphenation of individual words.
+escapes may be used to control the hyphenation and breaking of
+individual words.
+.
+The
+.B .hw
+request sets user-defined hyphenation points for specified words at any
+subsequent occurrence.
 .
 Otherwise,
 .I groff
-hyphenates words automatically by default.
+determines hyphenation points automatically by default.
 .
 .
 .P
@@ -4893,11 +4905,12 @@ Because conventions vary,
 a variety of hyphenation modes are available to the
 .B .hy
 request;
-these determine whether automatic hyphenation will apply to a word prior
-to breaking a line at the end of a page
+these determine whether hyphenation will apply to a word prior to
+breaking a line at the end of a page
 (more or less;
 see below for details),
-and at which positions within that word hyphenation is permissible.
+and at which positions within that word automatically determined
+hyphenation points are permissible.
 .
 The default is
 .RB \[lq] 1 \[rq]

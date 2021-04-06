@@ -1,12 +1,31 @@
-2021-03-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+2021-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi (Manipulating Hyphenation): Recast description
-	of \% escape to emphasize independence of its two uses (e.g.,
-	"\%pseudo\%unununium" is hyphenated only after "pseudo-", if at
-	all).  Add example.  Note that .nh affects only automatic
-	hyphenation.
-	* man/groff.7.man (Requests/Request short reference) <.nh>:
-	Clarify that the request disables only _automatic_ hyphenation.
+	* doc/groff.texi (Manipulating Hyphenation):
+	Recast introductory paragraph to better distinguish between the
+	automatic breaking of words and placement of hyphens at
+	user-specified hyphenation points (done with the \% escape) and
+	automatic determination of hyphenation points within words (what
+	the pattern files and most of the hyphenation mode parameters
+	are for).  Clarify that what our manual calls "automatic
+	hyphenation" pertains only to the latter.
+	<hw> Correct over-general claim; hyphenation exceptions defined
+	with the .hw request _do_ honor .hy value 2 (don't break a word
+	at the bottom of a page), but none of the others.
+	<\%> Recast description of escape to emphasize independence of
+	its two uses (e.g., "\%pseudo\%unununium" is hyphenated only
+	after "pseudo-", if at all).
+	<\:> Clarify that escape is an input word boundary.
+	<shc> Clarify that the soft hyphen glyph is applied to manual as
+	well as automatically-determined hyphenation points.
+	<hy> Recharacterize as setting the _automatic_ hyphenation mode.
+	Note that restrictions apart from value 2 are not applied to
+	words with manually-assigned hyphenation points.
+	<nh> Note that request affects only automatic hyphenation.
+
+	* man/groff.7.man (Requests/Request short reference) <.hy,.nh>:
+	Clarify that requests deal with _automatic_ hyphenation.
+	(Registers/Read-only registers) <.hy>:
+	Clarify that register applies to _automatic_ hyphenation.
 	(Hyphenation): Add new introductory paragraph summarizing manual
 	hyphenation support and features, including notice that breaking
 	at explicit hyphens is performed in fill mode, i.e., even if

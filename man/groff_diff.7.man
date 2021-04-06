@@ -814,6 +814,7 @@ It is a good idea to use this escape sequence whenever a roman
 glyph is immediately followed by an italic glyph without any
 intervening space.
 .
+.
 .TP
 .B \[rs]:
 Insert a non-printing break point.
@@ -824,27 +825,8 @@ but the soft hyphen glyph is not written to the output if it does
 (in contrast to
 .RB \[lq] \[rs]% \[rq]).
 .
-Note that breaks are word boundaries,
-so if a break is inserted,
-the remainder of the (input) word is subject to hyphenation as normal.
-.
-.
-.IP
-You can use
-.B \[rs]:
-and
-.B \[rs]%
-in combination to control breaking of a filename or URL.
-.
-.
-.RS
-.RS
-.IP
-.EX
-\&.\|.\|.\& check \e%/var/log/\e:\e%httpd/\e:\e%access_log .\|.\|.
-.EE
-.RE
-.RE
+This escape is an input word boundary,
+so the remainder of the word is subject to hyphenation as normal.
 .
 .
 .TP
@@ -2797,25 +2779,24 @@ is searched after the list of fonts declared with the
 .B special
 request but before the mounted special fonts.
 .
+.
 .TP
 .BI .shc\~ glyph
-Set the soft hyphen character
+Set the soft hyphen glyph,
+inserted when a word is hyphenated automatically or at a hyphenation
+character
+.BR \[rs]% ,
 .RI to\~ glyph .
 .
-If
-.I glyph
-is omitted,
-the soft hyphen character is set to the default,
+If the argument is omitted,
+the soft hyphen glyph is set to the default,
 .BR \[rs][hy] .
 .
-The soft hyphen character is the glyph that is inserted when a word is
-automatically hyphenated at a line break.
-.
-If the soft hyphen character does not exist in the font of the character
-immediately preceding a potential break point,
+If the selected glyph does not exist in the font in use at a potential
+hyphenation point,
 then the line is not broken at that point.
 .
-Neither definitions
+Neither character definitions
 (specified with the
 .B .char
 request)
@@ -2823,7 +2804,7 @@ nor translations
 (specified with the
 .B .tr
 request)
-are considered when determining the soft hyphen character.
+are considered when assigning the soft hyphen glyph.
 .
 .
 .TP

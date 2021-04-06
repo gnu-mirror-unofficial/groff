@@ -7246,19 +7246,24 @@ If @emph{undiscardable} space is required, use the @code{\h} escape.
 @cindex manipulating hyphenation
 @cindex hyphenation, manipulating
 
-GNU @code{troff} hyphenates words automatically by default.  Automatic
-hyphenation of words in natural languages is a subject requiring
+@cindex hyphenation, automatic
+@cindex automatic hyphenation
+GNU @code{troff} normally hyphenates words where necessary.  The
+machine-driven determination of hyphenation points in words requires
 algorithms and data, and is susceptible to conventions and preferences.
-Before tackling automatic hyphenation, let us consider how it can be
-done manually.
+Before tackling such @dfn{automatic hyphenation}, let us consider how
+hyphenation points can be set manually.
 
+@cindex hyphenation, explicit
+@cindex explicit hyphenation
+@cindex hyphenation, manual
+@cindex manual hyphenation
 Explicitly hyphenated words such as ``mother-in-law'' are eligible for
 breaking after each of their hyphens when GNU @code{troff} fills lines.
 Relatively few words in a language offer such obvious break points,
 however, and automatic hyphenation is not perfect, particularly for
-unusual words found in domain-specific jargon.  We may wish to
-explicitly instruct GNU @code{troff} how to hyphenate words if the need
-arises.
+unusual words found in technical literature.  We may wish to instruct
+GNU @code{troff} how to hyphenate specific words if the need arises.
 
 @cindex hyphenation exceptions
 @Defreq {hw, word @dots{}}
@@ -7281,7 +7286,8 @@ than once.
 
 @cindex @code{hw} request, and @code{hy} restrictions
 Hyphenation points specified with @code{hw} are not subject to the
-restrictions given by the @code{hy} request (see below).
+within-word placement restrictions imposed by the @code{hy} request (see
+below).
 
 Hyphenation exceptions specified with the @code{hw} request are
 associated with the hyphenation language (see below) and environment
@@ -7333,9 +7339,8 @@ just prior to it; most likely this isn't what you want.
 @cindex breaking URLs (@code{\:})
 The @code{\:} escape inserts a non-printing break point; that is, the
 word can break there, but the soft hyphen glyph is not written to the
-output if it does.  Breaks are word boundaries, so if a break is
-inserted, the remainder of the (input) word is subject to hyphenation as
-normal.
+output if it does.  This escape is an input word boundary, so the
+remainder of the word is subject to hyphenation as normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
 of a file name or URL or to permit hyphenation after only certain
@@ -7368,39 +7373,39 @@ The hyphenation character is associated with the current environment
 @cindex soft hyphen glyph (@code{hy})
 @cindex @code{char} request, and soft hyphen character
 @cindex @code{tr} request, and soft hyphen character
-Set the @dfn{soft hyphen character} to @var{glyph}.@footnote{``Soft
-hyphen @emph{character}'' is a misnomer since it is an output glyph.}
-If the argument is omitted, the soft hyphen character is set to the
-default, @code{\[hy]}.  The @dfn{soft hyphen character} is the glyph
-that is inserted when a word is automatically hyphenated at a line
-break.@footnote{It is ``soft'' because it only appears in output where
-hyphenation is actually performed; a ``hard'' hyphen, as in
-``long-term'', always appears.}  If the soft hyphen character does not
-exist in the font of the character immediately preceding a potential
-break point, then the line is not broken at that point.  Neither
+Set the @dfn{soft hyphen character},@footnote{``Soft hyphen
+@emph{character}'' is a misnomer since it is an output glyph.} inserted
+when a word is hyphenated automatically or at a hyphenation character
+@code{\%}, to@tie{}@var{glyph}.@footnote{It is ``soft'' because it only
+appears in output where hyphenation is actually performed; a ``hard''
+hyphen, as in ``long-term'', always appears.}  If the argument is
+omitted, the soft hyphen glyph is set to the default, @code{\[hy]}.  If
+the selected glyph does not exist in the font in use at a potential
+hyphenation point, then the line is not broken at that point.  Neither
 character definitions (specified with the @code{char} and similar
 requests) nor translations (specified with the @code{tr} request) are
-considered when assigning the soft hyphen character.
+considered when assigning the soft hyphen glyph.
 @endDefreq
 
-@cindex hyphenation, automatic
+@cindex hyphenation parameters, automatic
+@cindex automatic hyphenation parameters
 Several requests influence automatic hyphenation.  Because conventions
 vary, a variety of hyphenation modes is available to the @code{hy}
-request; these determine whether automatic hyphenation will apply to a
+request; these determine whether hyphenation will apply to a
 word prior to breaking a line at the end of a page (more or less; see
-below for details), and at which positions within that word hyphenation
-is permissible.  The places within a word that are eligible for
-hyphenation are determined by language-specific data and lettercase
-relationships.  Furthermore, hyphenation of a word might be suppressed
-because too many previous lines have been hyphenated (@code{hlm}), the
-line has not reached a certain minimum length (@code{hym}), or the line
-can instead be adjusted with up to a certain amount of additional
-inter-word space (@code{hys}).
+below for details), and at which positions within that word
+automatically determined hyphenation points are permissible.  The places
+within a word that are eligible for hyphenation are determined by
+language-specific data and lettercase relationships.  Furthermore,
+hyphenation of a word might be suppressed because too many previous
+lines have been hyphenated (@code{hlm}), the line has not reached a
+certain minimum length (@code{hym}), or the line can instead be adjusted
+with up to a certain amount of additional inter-word space (@code{hys}).
 
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
-Set hyphenation mode to @var{mode}.  The optional numeric argument
-@var{mode} encodes conditions for hyphenation.
+Set automatic hyphenation mode to @var{mode}.  The optional numeric
+argument @var{mode} encodes conditions for hyphenation.
 
 Typesetting practice generally does not avail itself of every
 opportunity for hyphenation, but the details differ by language and site
@@ -7439,9 +7444,9 @@ disables hyphenation of the last word on a page.@footnote{This value
 prevents hyphenation if the next page location trap is closer than the
 next text baseline would be.  GNU @code{troff} automatically inserts an
 implicit vertical position trap at the end of each page to cause a page
-transition.  This value can be used in traps planted by users or macro
-packages to prevent hyphenation of the last word in a column in
-multi-column page layouts or before floating figures or tables.
+transition.  Users or macro packages can set such traps explicitly to
+prevent hyphenation of the last word in a column in multi-column page
+layouts or before floating figures or tables.
 @xref{Page Location Traps}.}
 
 @item 4
@@ -7457,10 +7462,10 @@ enables hyphenation before the last character of a word.
 enables hyphenation after the first character of a word.
 @end table
 
-Any restrictions imposed by the hyphenation mode are @emph{not}
-respected for words whose hyphenations have been explicitly specified
-with the hyphenation character (@samp{\%} by default) or the @code{hw}
-request.
+Apart from value 2, restrictions imposed by the hyphenation mode are
+@emph{not} respected for words whose hyphenations have been explicitly
+specified with the hyphenation character (@samp{\%} by default) or the
+@code{hw} request.
 
 The nonzero values in the previous table are additive.  For example,
 value@tie{}12 causes GNU @code{troff} to hyphenate neither the last two
