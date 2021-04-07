@@ -7304,8 +7304,8 @@ matching a hyphenation exception defined with @code{hw}.
 
 Situations also arise when only a specific occurrence of a word needs
 its hyphenation altered or suppressed, or when something that is not a
-word in a natural language, like a URL, needs to be broken in sensible
-places without hyphens.
+word in a natural language, like a URL, needs to be breakable in
+sensible places without hyphens.
 
 @DefescList {\\%, , , }
 @DefescListEndx {\:, , , }
@@ -7319,7 +7319,7 @@ Each instance within a word indicates to GNU @code{troff} that the
 word may be hyphenated at that point, while prefixing a word with this
 escape prevents it from being otherwise hyphenated.  This mechanism
 affects only that occurrence of the word; to change the hyphenation of a
-word for the remainder of the document, use the @code{hw} request.
+word for the remainder of input processing, use the @code{hw} request.
 
 @cindex @code{\X}, followed by @code{\%}
 @cindex @code{\Y}, followed by @code{\%}
@@ -7343,7 +7343,7 @@ output if it does.  This escape is an input word boundary, so the
 remainder of the word is subject to hyphenation as normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
-of a file name or URL or to permit hyphenation after only certain
+of a file name or URL or to permit hyphenation only after certain
 explicit hyphens within a word.
 
 @Example
