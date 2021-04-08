@@ -4528,10 +4528,10 @@ it can---this is known as @dfn{filling}.  To GNU @code{troff}, a
 @dfn{word} is any sequence of one or more characters that aren't spaces,
 tabs, or newlines.  Words are separated by spaces, tabs, newlines, or
 file boundaries.@footnote{There are also @emph{escape sequences} which
-can function as word characters, word-separating space, or neither---the
-last simply have no effect on GNU @code{troff}'s idea of whether its
-input is within a word or not.}  To disable filling, see
-@ref{Manipulating Filling and Adjustment}.
+can function as word characters, word separators, or neither---the last
+simply have no effect on GNU @code{troff}'s idea of whether its input is
+within a word or not.}  To disable filling, see @ref{Manipulating
+Filling and Adjustment}.
 
 @Example
 It is a truth universally acknowledged
@@ -4678,15 +4678,15 @@ Adjustment}.
 @subsection Hyphenation
 @cindex hyphenation
 
-When an output line is nearly full, it is uncommon for the most recent
-word collected from the input to exactly fill it---typically, there is
-enough room left over for part of the next word.  The process of
-splitting a word so that it appears partially on one line (with a hyphen
-to indicate to the reader that the word has been broken) with the
-remainder of the word on the next is @dfn{hyphenation}.  GNU
-@code{troff} uses a hyphenation algorithm and language-specific pattern
-files (based on but simplified from those used in @TeX{}) to decide
-which words can be hyphenated and where.
+When an output line is nearly full, it is uncommon for the next word
+collected from the input to exactly fill it---typically, there is room
+left over only for part of the next word.  The process of splitting a
+word so that it appears partially on one line (with a hyphen to indicate
+to the reader that the word has been broken) with the remainder of the
+word on the next is @dfn{hyphenation}.  GNU @code{troff} uses a
+hyphenation algorithm and language-specific pattern files (based on but
+simplified from those used in @TeX{}) to decide which words can be
+hyphenated and where.
 
 Hyphenation does not always occur even when the hyphenation rules for a
 word allow it; it can be disabled, and when not disabled there are
@@ -4840,8 +4840,8 @@ line}.@footnote{The @key{\RET} escape can alter how an input line is
 classified; see @ref{Line Control}.}
 
 @cindex argument
-Requests often take @dfn{arguments}, words separated from the request
-name and each other by spaces that specify details of the action GNU
+Requests often take @dfn{arguments}, words (separated from the request
+name and each other by spaces) that specify details of the action GNU
 @code{troff} is expected to perform.  If a request is meaningless
 without arguments, it is typically ignored.
 
