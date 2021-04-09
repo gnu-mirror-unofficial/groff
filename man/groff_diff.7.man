@@ -2570,11 +2570,14 @@ tries to include
 .BI tmac. name
 instead and vice versa.
 .
-A warning of type
-.B file
-is generated if
+If
 .I file
-can't be loaded, and the request is ignored.
+does not exist,
+a warning of type
+.RB \[lq] file \[rq]
+is emitted
+and the request has no other effect.
+.
 .
 .TP
 .BI .nop \~anything
