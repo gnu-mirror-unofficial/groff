@@ -14273,9 +14273,11 @@ The fill color is associated with the current environment
 @cindex including a file (@code{so})
 @cindex file, inclusion (@code{so})
 Read in the specified @var{file} and include it in place of the
-@code{so} request.  This is quite useful for large documents, e.g.@:
-keeping each chapter in a separate file.  @xref{gsoelim}, for more
-information.
+@code{so} request.  If @var{file} does not exist, a warning of type
+@samp{file} is emitted and the request has no other effect.
+@xref{Debugging}, for information about warnings.  This is quite useful
+for large documents, e.g.@: keeping each chapter in a separate file.
+@xref{gsoelim}, for more information.
 
 Since @code{gtroff} replaces the @code{so} request with the contents of
 @code{file}, it makes a difference whether the data is terminated with a
@@ -14312,13 +14314,12 @@ for @code{pso} also.
 @endDefreq
 
 @Defreq {mso, file}
-Identical to the @code{so} request except that @code{gtroff} searches
-for the specified @var{file} in the same directories as macro files for
-the @option{-m} command-line option.  If the file name to be included
-has the form @file{@var{name}.tmac} and it isn't found, @code{mso} tries
-to include @file{tmac.@var{name}} and vice versa.  If the file does not
-exist, a warning of type @samp{file} is emitted.  @xref{Debugging}, for
-information about warnings.
+Identical to the @code{so} request
+except that @code{gtroff} searches for the specified @var{file} in the
+same directories as macro files for the @option{-m} command-line option.
+If the file name to be included has the form @file{@var{name}.tmac} and
+it isn't found, @code{mso} tries to include @file{tmac.@var{name}} and
+vice versa.
 @endDefreq
 
 @DefreqList {trf, file}
