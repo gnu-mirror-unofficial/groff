@@ -1835,6 +1835,7 @@ particularly if the
 option is used.
 .
 .
+.KS
 .NH 2
 Footnotes
 .XS
@@ -1843,91 +1844,134 @@ Footnotes
 .
 .
 .LP
+.\" The following sentence is used below as an example as well.  Keep it
+.\" in sync.
+A footnote is typically anchored to a place in the text with a
+.I marker ,
+which is a small integer\**,
+.FS
+like this numeric footnote
+.FE
+a symbol\[dg],
+.FS \[dg]
+like this symbolic footnote
+.FE
+or arbitrary user-specified text.
+.
+The footnote text is set at the nearest available \[lq]foot\[rq],
+or bottom,
+of a text column or page.
+.KE
+.
+.
+.PP
+Automatic numbering of footnotes is available.
+.
 The
-.I ms
-macros provide a flexible footnote system.
+.CW *
+string places such a footnote marker in the text.
 .
-You can specify a numbered footnote\**
-.FS
-This is a numbered footnote.
-.FE
-by using the
-.CW \\\\**
-escape,
-followed by the text of the footnote enclosed by
-.CW .FS
-and
-.CW .FE
-macros.
+Each time this string is interpolated,
+the number it produces increments by one.
 .
+Automatic footnote numbers start at 1.
 .
-.PP
-You can specify symbolic footnotes\[dg]
-.FS
-\[dg]This is a symbolic footnote.
-.FE
-by placing the mark character
-(such as
-.CW \\\\[dg]
-for the
-.if !'\[dg]'*' dagger
-character used here),
-followed by the symbol and the text of the footnote enclosed by
-.CW .FS
-and
-.CW .FE
-macros.
-.
-.
-.KS
-.PP
-You can control how
-.I ms
-prints footnote numbers by changing the value of the
-.CW FF
-register as follows.
+This is a Berkeley extension.
 .
 .
 .TS
 box;
 cb cb
-lf(CR) lx .
-Value	Description
+lfCR lx .
+Macro	Description
 _
-0	T{
-Prints the footnote number as a superscript and indents the footnote
-(default).
+\&.FS \f[R][\f[I]marker\f[]]	T{
+Begin a footnote.
+.
+A
+.I marker
+argument is placed at the beginning of the footnote text.
+.
+If
+.I marker
+is omitted,
+the next pending automatic footnote number enqueued by interpolation of
+the
+.CW *
+string is used,
+and if none exists,
+nothing is prefixed.
+.
 T}
-1	T{
-Prints the number followed by a period
-(that is,\~\[lq]1.\[rq]\&)
-and indents the footnote.
-T}
-2	T{
-Like\~1,
-without an indent.
-T}
-3	T{
-Like\~1,
-but prints the footnote number as a paragraph with a hanging indent.
-T}
+_
+\&.FE	End footnote text.
 .TE
-.KE
 .
 .
-.LP
-You can use footnotes safely within keeps and displays,
-but avoid using numbered footnotes within floating keeps.
+.PP
+You may not desire automatically numbered footnotes in spite of their
+convenience.
 .
-You can set a second
+You can indicate a footnote with a symbol or other text by specifying
+its marker at the appropriate place
+(for example,
+by using
+.CW \[rs][dg]
+for the dagger glyph)
+.I and
+as an argument to the
+.CW FS
+macro.
+.
+Such manual marks should be repeated as arguments to
+.CW .FS
+or as part of the footnote text to disambiguate their correspondence.
+.
+You may wish to use
+.CW \[rs]*{
+and
+.CW \[rs]*}
+to superscript the marker at the anchor point,
+in the footnote text,
+or both.
+.
+.
+.PP
+The following input was used to produce the first sentence in this
+section.
+.
+.
+.TS
+box center;
+lfCR.
+A footnote is anchored to a place in the text with a
+\&.I marker ,
+which is a small integer\[rs]**,
+\&.FS
+like this numeric footnote
+\&.FE
+a symbol\[rs][dg],
+\&.FS \[rs][dg]
+like this symbolic footnote
+\&.FE
+or arbitrary user-specified text.
+.TE
+.
+.
+.PP
+Footnotes can be safely used within keeps and displays,
+but you should avoid using automatically numbered footnotes within
+floating keeps.
+.
+You can place a second
 .CW \[rs]**
-between a
+interpolation between a
 .CW \[rs]**
 and its corresponding
-.CW .FS ,
-as long as each
 .CW .FS
-occurs
+call as long as each
+.CW .FS
+call occurs
 .I after
 the corresponding
 .CW \[rs]**
@@ -1935,6 +1979,68 @@ and the occurrences of
 .CW .FS
 are in the same order as the corresponding occurrences of
 .CW \[rs]** .
+.
+.
+.PP
+Footnote text is formatted as paragraphs are,
+using analogous parameters.
+.
+The registers
+.CW FI ,
+.CW FPD ,
+.CW FPS ,
+and
+.CW FVS
+correspond to
+.CW PI ,
+.CW PD ,
+.CW PS ,
+and
+.CW VS ,
+respectively.
+.
+See section \[lq]Document control settings\[rq] above.
+.
+.
+.KS
+.PP
+The
+.CW FF
+register controls the formatting of automatically numbered footnotes,
+and those for which
+.CW .FS
+is given a marker argument,
+at the bottom of a column or page as follows.
+.
+.
+.TS
+box;
+cb cb
+lf(CR) lx .
+\f[CB]FF\f[] value	Description
+_
+0	T{
+Indent the footnote paragraph and set the marker as a superscript
+(default).
+T}
+1	T{
+Like
+.CW 0 ,
+but set the marker as regular text,
+and follow an automatic number with a period.
+T}
+2	T{
+Like
+.CW 1 ,
+but without indentation.
+T}
+3	T{
+Like
+.CW 1 ,
+but set the footnote paragraph with the marker hanging.
+T}
+.TE
+.KE
 .
 .
 .PP

@@ -2818,25 +2818,23 @@ Default: 2@dmn{n}.
 @endDefmpreg
 
 @Defmpreg {FF, ms}
-Defines the format of
-automatically numbered @c see Savannah #60227
-footnotes at the bottom of a column or page.  This is a Berkeley
-extension.
+Defines the format of automatically numbered footnotes,
+and those for which the @code{FS} request is given a marker argument, at
+the bottom of a column or page.  This is a Berkeley extension.
 @table @code
 @item 0
-Set the footnote number as a superscript; indent the footnote text
+Indent the footnote paragraph and set the marker as a superscript
 (default).
 
 @item 1
-Set the number followed by a period (that is, ``1.@:'') and indent the
-footnote text.
+Like @code{0}, but set the marker as regular text and follow an
+automatic number with a period.
 
 @item 2
-Like @code{1}, but without an indentation.
+Like @code{1}, but without indentation.
 
 @item 3
-Like @code{1}, but set the footnote text as a paragraph with the number
-hanging.
+Like @code{1}, but set the footnote paragraph with the marker hanging.
 @end table
 
 Effective: next footnote.
@@ -3764,36 +3762,54 @@ l | l .
 @cindex @code{ms} macros, footnotes
 @cindex footnotes [@code{ms}]
 
-The @file{ms} macro package has a flexible footnote system.  You can
-specify either numbered footnotes or symbolic footnotes (that is, using
-a marker such as a dagger symbol).
+@cindex footnote marker [@code{ms}]
+@cindex marker, footnote [@code{ms}]
+A footnote is typically anchored to a place in the text with a
+@dfn{marker}, which is a small integer, a symbol such as a dagger, or
+arbitrary user-specified text.  The footnote text is set at the nearest
+available ``foot'', or bottom, of a text column or page.
+
+Automatic numbering of footnotes is available.
 
 @Defstr {*, ms}
-Specifies the location of a numbered footnote marker in the text.
+Place an automatically numbered footnote marker in the text.  Each time
+this string is interpolated, the number it produces increments by one.
+Automatic footnote numbers start at 1.  This is a Berkeley extension.
 @endDefesc
 
-@DefmacList {FS, , ms}
+@DefmacList {FS, [@Var{marker}], ms}
 @DefmacListEndx {FE, , ms}
-Specifies the text of the footnote.  The default action is to create a
-numbered footnote; you can create a symbolic footnote by specifying a
-@dfn{mark} glyph (such as @code{\[dg]} for the dagger glyph) in the body
-text and as an argument to the @code{FS} macro, followed by the text of
-the footnote and the @code{FE} macro.
+Begin (@code{FS}) and end (@code{FE}) a footnote.  A @var{marker}
+argument is placed at the beginning of the footnote text.  If
+@var{marker} is omitted, the next pending automatic footnote number
+enqueued by interpolation of the @code{*} string is used, and if none
+exists, nothing is prefixed.
 @endDefmac
 
-You can control how @file{ms} prints footnote numbers by changing the
-value of the @code{FF} register.  @xref{ms Document Control Settings}.
+You may not desire automatically numbered footnotes in spite of their
+convenience.  You can indicate a footnote with a symbol or other text by
+specifying its marker at the appropriate place (for example, by using
+@code{\[dg]} for the dagger glyph) @emph{and} as an argument to the
+@code{FS} macro.  Such manual marks should be repeated as arguments to
+@code{FS} or as part of the footnote text to disambiguate their
+correspondence.  You may wish to use @code{\*@{} and @code{\*@}} to
+superscript the marker at the anchor point, in the footnote text, or
+both.
 
 @cindex footnotes, and keeps [@code{ms}]
 @cindex keeps, and footnotes [@code{ms}]
 @cindex footnotes, and displays [@code{ms}]
 @cindex displays, and footnotes [@code{ms}]
 Footnotes can be safely used within keeps and displays, but you should
-avoid using numbered footnotes within floating keeps.  You can set a
-second @code{\**} marker between a @code{\**} and its corresponding
-@code{FS} entry; as long as each @code{FS} macro occurs @emph{after}
-the corresponding @code{\**} and the occurrences of @code{FS} are in
-the same order as the corresponding occurrences of @code{\**}.
+avoid using automatically numbered footnotes within floating keeps.  You
+can place a second @code{\**} interpolation between a @code{\**} and its
+corresponding @code{FS} call as long as each @code{FS} call occurs
+@emph{after} the corresponding @code{\**} and the occurrences of
+@code{FS} are in the same order as the corresponding occurrences of
+@code{\**}.  You can control how @file{ms} presents footnotes by
+changing the values of the @code{FI}, @code{FF}, @code{FPS}, @code{FVS},
+and @code{FPD} registers; and the @code{FR} string.  @xref{ms Document
+Control Settings}.
 
 The default footnote line length is 11/12ths of the normal line length
 for compatibility with the expectations of historical @file{ms}

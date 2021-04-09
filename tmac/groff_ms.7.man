@@ -1171,88 +1171,94 @@ option is used.
 .SS Footnotes
 .\" ====================================================================
 .
+A footnote is typically anchored to a place in the text with a
+.I marker ,
+which is a small integer,
+a symbol,
+or arbitrary user-specified text.
+.
+The footnote text is set at the nearest available \[lq]foot\[rq],
+or bottom,
+of a text column or page.
+.
+.
+.PP
+Automatic numbering of footnotes is available.
+.
 The
-.I ms
-macros provide a flexible footnote system.
+.B *
+string places such a footnote marker in the text.
 .
-You can specify a numbered footnote by using the
-.B \[rs]**
-escape,
-followed by the text of the footnote enclosed by
-.B FS
-and
-.B FE
-macros.
+Each time this string is interpolated,
+the number it produces increments by one.
+.
+Automatic footnote numbers start at 1.
+.
+This is a Berkeley extension.
 .
 .
-.PP
-You can specify symbolic footnotes by placing the mark character
-(such as
-.B \[rs][dg]
-for the dagger character) in the body text,
-followed by the text of the footnote enclosed by
-.B FS\~\[rs][dg]
-and
-.B FE
-macros.
+.TP
+.B .FS\c
+.RI \~[ marker ]
+Begin a footnote.
+.
+A
+.I marker
+argument is placed at the beginning of the footnote text.
+.
+If
+.I marker
+is omitted,
+the next pending automatic footnote number enqueued by interpolation of
+the
+.B *
+string is used,
+and if none exists,
+nothing is prefixed.
 .
 .
-.PP
-You can control how
-.I ms
-prints footnote numbers by changing the value of the
+.TP
+.B .FE
+End footnote text.
+.
+.
+The
 .B FF
-register as follows.
+register controls the formatting of automatically numbered footnotes,
+and those for which
+.B .FS
+is given a marker argument,
+at the bottom of a column or page as follows.
 .
 .
 .RS
 .TP
 0
-Prints the footnote number as a superscript and indents the footnote
+Indent the footnote paragraph and set the marker as a superscript
 (default).
 .
 .
 .TP
 1
-Prints the number followed by a period
-(that is,\~\[lq]1.\[rq]\&)
-and indents the footnote.
+Like
+.BR 0 ,
+but set the marker as regular text,
+and follow an automatic number with a period.
 .
 .
 .TP
 2
-Like\~1,
-without an indent.
+Like
+.BR 1 ,
+but without indentation.
 .
 .
 .TP
 3
-Like\~1,
-but prints the footnote number as a paragraph with a hanging
-indent.
+Like
+.BR 1 ,
+but set the footnote paragraph with the marker hanging.
 .RE
-.
-.
-.PP
-You can use footnotes safely within keeps and displays,
-but avoid using numbered footnotes within floating keeps.
-.
-You can set a second
-.B \[rs]**
-between a
-.B \[rs]**
-and its corresponding
-.BR .FS ,
-as long as each
-.B .FS
-occurs
-.I after
-the corresponding
-.B \[rs]**
-and the occurrences of
-.B .FS
-are in the same order as the corresponding occurrences of
-.BR \[rs]** .
 .
 .
 .\" ====================================================================
