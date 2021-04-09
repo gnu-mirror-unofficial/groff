@@ -6,10 +6,9 @@
 	Savannah #59814 can use this to quietly attempt to open a
 	localization file.  groff only supports a few locales, so people
 	with LANG=es_ES, for instance, would ordinarily see warning
-	diagnostics on every groff startup if file warnings were
-	enabled; and {2} system- or site-configurable support of
-	per-user {.,}troffrc or man.local files, gracefully failing if
-	they don't exist.
+	diagnostics on every groff startup; and {2} system- or
+	site-configurable support of per-user {.,}troffrc or man.local
+	files, gracefully failing if they don't exist.
 
 	* src/roff/troff/input.cpp:
 	(do_source): Add new function, taking boolean "quietly"
