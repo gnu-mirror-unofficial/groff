@@ -2200,13 +2200,16 @@ or in an internal register used by
 .B .rt
 if no argument.
 .
+.
 .TPx
 .REQ .mso "file"
-The same as
-.request .so
+As
+.request .so ,
 except that
 .I file
-is searched in the tmac directories.
+is sought in the
+.I tmac
+directories.
 .
 .
 .TPx
@@ -2540,9 +2543,12 @@ command in a
 .I DESC
 file.
 .
+.
 .TPx
-.REQ .so "filename"
-Include source file.
+.REQ .so file
+Interpolate (\[lq]source\[rq])
+.IR file .
+.
 .
 .TPx
 .REQ .sp
