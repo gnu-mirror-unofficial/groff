@@ -6713,7 +6713,8 @@ read-only.  A complete listing of all built-in registers can be found in
 @cindex current input file name register (@code{.F})
 @cindex input file name, current, register (@code{.F})
 @vindex .F
-This string-valued register returns the current input file name.
+This read-only string-valued register returns the current input file
+name.
 
 @item \n[.H]
 @cindex horizontal resolution register (@code{.H})
@@ -7695,7 +7696,7 @@ The hyphenation language is associated with the current environment
 (@pxref{Environments}).
 
 @cindex hyphenation language register (@code{.hla})
-The hyphenation language is available as a string in the read-only
+The hyphenation language is available in the read-only string-valued
 register @samp{.hla}.
 
 @Example
@@ -9374,10 +9375,9 @@ single character as an argument) to change the font on the fly:
 .mc \f[I]x\f[]
 @endExample
 
-The current style name is available in the read-only register
-@samp{.sty} (this is a string-valued register); if the current font
-isn't a style, the empty string is returned.  It is associated with the
-current environment.
+The current style name is available in the read-only string-valued
+register @samp{.sty}; if the current font isn't a style, the empty
+string is returned.  It is associated with the current environment.
 
 @xref{Font Positions}, for an alternative syntax.
 @endDefreq
@@ -9491,8 +9491,8 @@ the previous font family.  Use @code{\F[]} to do this with the escape;
 @code{\FP} selects font family @samp{P} instead.
 
 The value at start-up is @samp{T}.  The current font family is available
-in the read-only register @samp{.fam} (this is a string-valued
-register); it is associated with the current environment.
+in the read-only string-valued register @samp{.fam}; it is associated
+with the current environment.
 
 @Example
 spam,
@@ -9516,10 +9516,10 @@ a single character as an argument) to change the font family on the fly.
 .mc \F[P]x\F[]
 @endExample
 
-The @samp{.fn} register contains the current @dfn{real font name} of the
-current font.  This is a string-valued register.  If the current font is
-a style, the value of @code{\n[.fn]} is the proper concatenation of
-family and style name.
+The read-only string-valued register @samp{.fn} contains the current
+@dfn{real font name} of the current font.  If the current font is a
+style, the value of @code{\n[.fn]} is the proper concatenation of family
+and style name.
 @endDefreq
 
 @Defreq {sty, n style}
@@ -10850,10 +10850,9 @@ resulting size is non-positive, it is set to 1@dmn{u}.
 
 @cindex type size registers (@code{.s}, @code{.ps})
 @cindex point size registers (@code{.s}, @code{.ps})
-The read-only register @code{.s} returns the point size in points as a
-decimal fraction.  This is a string.  To get the point size in scaled
-points, use the @code{.ps} register instead (@pxref{Fractional Type
-Sizes}).
+The read-only string-valued register @code{.s} returns the point size in
+points as a decimal fraction.  To get the point size in scaled points,
+use the @code{.ps} register instead (@pxref{Fractional Type Sizes}).
 
 @code{.s} is associated with the current environment
 (@pxref{Environments}).
@@ -13687,10 +13686,10 @@ After the diversion.
 @cindex vertical position in diversion register (@code{.d})
 @cindex position, vertical, in diversion, register (@code{.d})
 @cindex diversion, vertical position in, register (@code{.d})
-Diversions may be nested.  The read-only register @code{.z} contains the
-name of the current diversion (this is a string-valued register).  The
-read-only register @code{.d} contains the current vertical place in the
-diversion.  If not in a diversion, it is the same as register @code{nl}.
+Diversions may be nested.  The read-only string-valued register
+@code{.z} contains the name of the current diversion.  The read-only
+register @code{.d} contains the current vertical place in the diversion.
+If not in a diversion, it is the same as register @code{nl}.
 @endDefreg
 
 @Defreg {.h}
@@ -13959,8 +13958,8 @@ Switch to another environment.  The argument @var{env} is the name of
 the environment to switch to.  With no argument, @code{gtroff} switches
 back to the previous environment.  There is no limit on the number of
 named environments; they are created the first time that they are
-referenced.  The @code{.ev} read-only register contains the name or
-number of the current environment.  This is a string-valued register.
+referenced.  The read-only string-valued register @code{.ev} contains
+the name or number of the current environment.
 
 A call to @code{ev} (with argument) pushes the previously active
 environment onto a stack.  If, say, environments @samp{foo},
@@ -14210,7 +14209,7 @@ The escape @code{\m[]} returns to the previous color, as does a call to
 @cindex drawing color name register (@code{.m})
 @cindex name, drawing color, register (@code{.m})
 @cindex color name, drawing, register (@code{.m})
-The name of the current drawing color is available in the read-only,
+The name of the current drawing color is available in the read-only
 string-valued register @samp{.m}.
 
 The drawing color is associated with the current environment
@@ -14249,7 +14248,7 @@ call to @code{fcolor} without an argument.
 @cindex name, fill color, register (@code{.M})
 @cindex color name, fill, register (@code{.M})
 The name of the current fill (background) color is available in the
-read-only, string-valued register @samp{.M}.
+read-only string-valued register @samp{.M}.
 
 The fill color is associated with the current environment
 (@pxref{Environments}).
