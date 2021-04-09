@@ -5956,9 +5956,7 @@ void while_continue_request()
   }
 }
 
-// .so
-
-void source()
+void do_source(bool quietly)
 {
   symbol nm = get_long_name(1);
   if (nm.is_null())
@@ -5971,9 +5969,27 @@ void source()
     if (fp)
       input_stack::push(new file_iterator(fp, nm.contents()));
     else
-      error("can't open '%1': %2", nm.contents(), strerror(errno));
+      // Suppress diagnostic only if we're operating quietly and it's an
+      // expected problem.
+      if (!(quietly && (ENOENT == errno)))
+	error("can't open '%1': %2", nm.contents(), strerror(errno));
     tok.next();
   }
+}
+
+// .so
+
+void source()
+{
+  do_source(0 /* not quietly*/ );
+}
+
+// .soquiet: like .so, but silently ignore files that can't be opened
+// due to their nonexistence
+
+void source_quietly()
+{
+  do_source(1 /* quietly */ );
 }
 
 // like .so but use popen()
@@ -7775,7 +7791,7 @@ static void process_startup_file(const char *filename)
   mac_path = orig_mac_path;
 }
 
-void macro_source()
+void do_macro_source(bool quietly)
 {
   symbol nm = get_long_name(1);
   if (nm.is_null())
@@ -7815,10 +7831,28 @@ void macro_source()
       free(path);
     }
     else
-      warning(WARN_FILE, "can't open macro file '%1': %2",
-	      nm.contents(), strerror(errno));
+      // Suppress diagnostic only if we're operating quietly and it's an
+      // expected problem.
+      if (!quietly && (ENOENT == errno))
+	warning(WARN_FILE, "can't open macro file '%1': %2",
+		nm.contents(), strerror(errno));
     tok.next();
   }
+}
+
+// .mso
+
+void macro_source()
+{
+  do_macro_source(0 /* not quietly (if WARN_FILE enabled) */ );
+}
+
+// .msoquiet: like .mso, but silently ignore files that can't be opened
+// due to their nonexistence
+
+void macro_source_quietly()
+{
+  do_macro_source(1 /* quietly */ );
 }
 
 static void process_input_file(const char *name)
@@ -8281,6 +8315,7 @@ void init_input_requests()
   init_request("lf", line_file);
   init_request("lsm", leading_spaces_macro);
   init_request("mso", macro_source);
+  init_request("msoquiet", macro_source_quietly);
   init_request("nop", nop_request);
   init_request("nroff", nroff_request);
   init_request("nx", next_file);
@@ -8302,6 +8337,7 @@ void init_input_requests()
   init_request("schar", define_special_character);
   init_request("shift", shift);
   init_request("so", source);
+  init_request("soquiet", source_quietly);
   init_request("spreadwarn", spreadwarn_request);
   init_request("stringdown", stringdown_request);
   init_request("stringup", stringup_request);

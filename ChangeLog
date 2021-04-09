@@ -1,3 +1,38 @@
+2021-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Implement new .soquiet and .msoquiet requests.
+
+	Needed for two planned developments: {1} the i18n patch in
+	Savannah #59814 can use this to quietly attempt to open a
+	localization file.  groff only supports a few locales, so people
+	with LANG=es_ES, for instance, would ordinarily see warning
+	diagnostics on every groff startup if file warnings were
+	enabled; and {2} system- or site-configurable support of
+	per-user {.,}troffrc or man.local files, gracefully failing if
+	they don't exist.
+
+	* src/roff/troff/input.cpp:
+	(do_source): Add new function, taking boolean "quietly"
+	parameter and absorbing function of source(), with added
+	conditional.
+	(source): Convert into a wrapper to call do_source() unquietly.
+	(source_quietly): Wrap do_source(), quietly.
+	(do_macro_source, macro_source, macro_source_quietly): Analogous
+	to the foregoing.
+	(init_requests): Hook "msoquiet" to macro_source_quietly() and
+	"soquiet" to "source_quietly().
+
+	* doc/groff.texi (I/O):
+	* man/groff.7.man (Requests/Request short reference):
+	* man/groff_diff.7.man (Language/New requests): Document them.
+
+	* src/roff/groff/tests/msoquiet_works.sh:
+	* src/roff/groff/tests/soquiet_works.sh: Test them.
+
+	* src/roff/groff/groff.am (groff_TESTS): Add tests.
+
+	Fixes <https://savannah.gnu.org/bugs/?59973>.
+
 2021-04-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/groff.texi (ms Document Control Settings) <FF>: Update

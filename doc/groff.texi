@@ -14269,7 +14269,8 @@ The fill color is associated with the current environment
 
 @code{gtroff} has several requests for including files:
 
-@Defreq {so, file}
+@DefreqList {so, file}
+@DefreqListEndx {soquiet, file}
 @cindex including a file (@code{so})
 @cindex file, inclusion (@code{so})
 Read in the specified @var{file} and include it in place of the
@@ -14295,6 +14296,10 @@ yields @samp{This is foobar}.
 
 The search path for @var{file} can be controlled with the @option{-I}
 command-line option.
+
+@code{soquiet} works the same way, except that no warning diagnostic
+is issued if @var{file} does not exist, even if warnings of type
+@samp{file} are enabled.
 @endDefreq
 
 @Defreq {pso, command}
@@ -14313,8 +14318,9 @@ The comment regarding a final newline for the @code{so} request is valid
 for @code{pso} also.
 @endDefreq
 
-@Defreq {mso, file}
-Identical to the @code{so} request
+@DefreqList {mso, file}
+@DefreqListEndx {msoquiet, file}
+Identical to the @code{so} and @code{soquiet} requests, respectively,
 except that @code{gtroff} searches for the specified @var{file} in the
 same directories as macro files for the @option{-m} command-line option.
 If the file name to be included has the form @file{@var{name}.tmac} and
