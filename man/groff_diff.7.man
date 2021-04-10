@@ -2769,12 +2769,19 @@ The
 request implicitly does
 .BR .rj\~0 .
 .
+.
 .TP
 .BI .rnn \~xx\~yy
 Rename number register
 .I xx
 to
 .IR yy .
+.
+If
+.I xx
+doesn't exist,
+the request is ignored.
+.
 .
 .TP
 .BI .schar\~ c\~string
