@@ -6968,10 +6968,8 @@ the @code{fi} request.
 @cindex fill mode (@code{fi})
 @cindex mode, fill (@code{fi})
 Activate fill mode; a pending output line is broken.  The read-only
-register @code{.u} is set to@tie{}1.
-
-Fill mode enablement status is associated with the current environment
-(@pxref{Environments}).
+register @code{.u} is set to@tie{}1.  The fill mode enablement status is
+associated with the environment (@pxref{Environments}).
 
 See @ref{Line Control}, for interaction with the @code{\c} escape.
 @endDefreq
@@ -6982,10 +6980,8 @@ See @ref{Line Control}, for interaction with the @code{\c} escape.
 Activate no-fill mode: the output line length (@pxref{Line Layout}) is
 ignored and output lines are broken where the input lines are.  A
 pending output line is broken and adjustment is suppressed.  The
-register @code{.u} is set to@tie{}0.
-
-Fill mode enablement status is associated with the current environment
-(@pxref{Environments}).
+register @code{.u} is set to@tie{}0.  The fill mode enablement status is
+associated with the environment (@pxref{Environments}).
 
 See @ref{Line Control}, for interaction with the @code{\c} escape.
 @endDefreq
@@ -7066,9 +7062,8 @@ left
 @cindex adjustment mode register (@code{.j})
 The current adjustment mode is available in the read-only register
 @code{.j}; it can be stored and subsequently used to set adjustment.
-
 The adjustment mode and enablement status are associated with the
-current environment (@pxref{Environments}).
+environment (@pxref{Environments}).
 
 The value of @code{.j} for any adjustment mode is an implementation
 detail and should not be relied upon as a programmer's interface.
@@ -7077,10 +7072,8 @@ detail and should not be relied upon as a programmer's interface.
 @Defreq {na, }
 Disable adjustment.  This produces the same output as adjustment to the
 left margin, but the value of the adjustment mode register @code{.j} is
-altered differently.
-
-The adjustment mode and enablement status are associated with the
-current environment (@pxref{Environments}).
+altered differently.  The adjustment mode and enablement status are
+associated with the environment (@pxref{Environments}).
 @endDefreq
 
 @DefreqList {brp, }
@@ -7121,7 +7114,7 @@ This is an uninteresting sentence.
 @cindex lines, centering (@code{ce})
 Center the next @var{nnn} input text lines without filling them.  A
 pending output line is broken.  The number of lines still to be centered
-is associated with the current environment (@pxref{Environments}).
+is associated with the environment (@pxref{Environments}).
 
 @cindex @code{ce} request, difference from @w{@samp{.ad c}}
 While the @w{@samp{.ad c}} request also centers text, it fills the text
@@ -7174,7 +7167,7 @@ Align the next @var{nnn} input text lines to the right margin without
 filling them.  A pending output line is broken.  The @code{.rj}
 read-only register is the number of lines to be right-justified as set
 by the @code{rj} request.  The number of lines still to be
-right-justified is associated with the current environment
+right-justified is associated with the environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -7211,9 +7204,9 @@ is set to @var{word-space-size}.
 
 The read-only registers @code{.ss} and @code{.sss} hold the values of
 minimal inter-word space and additional inter-sentence space,
-respectively.  These parameters are associated with the current
-environment (@pxref{Environments}), and rounded down to the nearest
-multiple of@tie{}12 on terminal output devices.
+respectively.  These parameters are associated with the environment
+(@pxref{Environments}), and rounded down to the nearest multiple
+of@tie{}12 on terminal output devices.
 
 @cindex fill mode, and inter-sentence space
 @cindex mode, fill, and inter-sentence space
@@ -7378,8 +7371,7 @@ works as the @code{\%} escape normally does, and thus no longer appears
 in the output.@footnote{@code{\%} itself stops marking hyphenation
 points but still produces no output glyph.}  Without an argument,
 @code{hc} resets the hyphenation character to @code{\%} (the default).
-
-The hyphenation character is associated with the current environment
+The hyphenation character is associated with the environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -7545,7 +7537,7 @@ Hyphenation exceptions within pattern files (i.e., the words within a
 given by @code{hy}.  However, exceptions specified with @code{hw} do
 not.
 
-The hyphenation mode is associated with the current environment
+The hyphenation mode is associated with the environment
 (@pxref{Environments}).
 
 @cindex hyphenation mode register (@code{.hy})
@@ -7692,12 +7684,10 @@ associated with the hyphenation language.  The @code{hla} request is
 usually invoked by the @file{troffrc} or @file{troffrc-end} files;
 @file{troffrc} sets the default language to @samp{us} (U.S. English).
 
-The hyphenation language is associated with the current environment
-(@pxref{Environments}).
-
 @cindex hyphenation language register (@code{.hla})
 The hyphenation language is available in the read-only string-valued
-register @samp{.hla}.
+register @samp{.hla}; it is associated with the environment
+(@pxref{Environments}).
 
 @Example
 .ds curr_language \n[.hla]
@@ -7865,12 +7855,10 @@ no argument, @code{gtroff} uses the previous value before the last
 .ls      \" Again double-spaced
 @endExample
 
-The line spacing is associated with the current environment
-(@pxref{Environments}).
-
 @cindex line spacing register (@code{.L})
 The read-only register @code{.L} contains the current line spacing
-setting.
+setting.  The line spacing is associated with the environment
+(@pxref{Environments}).
 @endDefreq
 
 @xref{Changing Type Sizes}, for the requests @code{vs} and @code{pvs} as
@@ -8087,8 +8075,7 @@ which marks the end of the string belonging to the last defined tab
 stop.
 
 @item
-Tab stops are associated with the current environment
-(@pxref{Environments}).
+Tab stops are associated with the environment (@pxref{Environments}).
 
 @item
 Calling @code{ta} without an argument removes all tab stops.
@@ -8126,7 +8113,7 @@ the @code{tc} request, causing GNU @code{troff} to write as many
 instances of @var{fill-glyph} as are necessary to occupy the interval
 from the current horizontal location to the next tab stop.  With no
 argument, GNU @code{troff} reverts to the default behavior.  The tab
-repetition character is associated with the current environment
+repetition character is associated with the environment
 (@pxref{Environments}).@footnote{Tab repetition @emph{character} is a
 misnomer since it is an output glyph.}  Only a single @var{fill-glyph}
 is recognized; any excess is ignored.
@@ -8168,9 +8155,9 @@ in line-tabs mode, the same code outputs
 a         b                   c
 @endExample
 
-Line-tabs mode is associated with the current environment.  The
-read-only register @code{.linetabs} is set to@tie{}1 if in line-tabs
-mode, and 0 in normal mode.
+Line-tabs mode is associated with the environment.  The read-only
+register @code{.linetabs} is set to@tie{}1 if in line-tabs mode, and 0
+in normal mode.
 @endDefreq
 
 @menu
@@ -8219,7 +8206,7 @@ can be specified with the @code{lc} request, causing GNU @code{troff} to
 write as many instances of @var{fill-glyph} as are necessary to occupy
 the interval from the current horizontal location to the next tab stop.
 With no argument, GNU @code{troff} treats leaders the same as tabs.  The
-leader repetition character is associated with the current environment
+leader repetition character is associated with the environment
 (@pxref{Environments}).@footnote{Leader repetition @emph{character} is a
 misnomer since it is an output glyph.}  Only a single @var{fill-glyph}
 is recognized; any excess is ignored.
@@ -8275,7 +8262,7 @@ is missing, the padding character defaults to a space character.  If
 there is no argument at all, the field mechanism is disabled (which is
 the default).  In contrast to, e.g., the tab repetition character,
 delimiting and padding characters are @emph{not} associated with the
-current environment (@pxref{Environments}).
+environment (@pxref{Environments}).
 
 @Example
 .fc # ^
@@ -8311,14 +8298,13 @@ respectively.
 @Defreq {cc, [@Var{c}]}
 Set the control character to@tie{}@var{c}.  With no argument the default
 control character @samp{.} is restored.  The value of the control
-character is associated with the current environment
-(@pxref{Environments}).
+character is associated with the environment (@pxref{Environments}).
 @endDefreq
 
 @Defreq {c2, [@Var{c}]}
 Set the no-break control character to@tie{}@var{c}.  With no argument
 the default control character @samp{'} is restored.  The value of the
-no-break control character is associated with the current environment
+no-break control character is associated with the environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -8815,9 +8801,6 @@ If @code{in} is called without an argument, the indentation is reset to
 the previous value before the last call to @code{in}.  The default
 scaling indicator is @samp{m}.
 
-The indentation is associated with the current environment
-(@pxref{Environments}).
-
 If a negative indentation value is specified (which is not allowed),
 @code{gtroff} emits a warning of type @samp{range} and sets the
 indentation to zero.
@@ -8827,7 +8810,8 @@ it exists) is output.  A temporary indentation value is reset to zero
 also.
 
 The current indentation (as set by @code{in}) can be found in the
-read-only register @samp{.i}.
+read-only register @samp{.i}.  The indentation is associated with the
+environment (@pxref{Environments}).
 @endDefreq
 
 @DefreqList {ti, offset}
@@ -8873,10 +8857,8 @@ is @samp{m}.
 If @code{ll} is called without an argument, the line length is reset to
 the previous value before the last call to @code{ll}.  If a negative
 line length is specified (which is not allowed), @code{gtroff} emits a
-warning of type @samp{range} and sets the line length to zero.
-
-The line length is associated with the current environment
-(@pxref{Environments}).
+warning of type @samp{range} and sets the line length to zero.  The line
+length is associated with the environment (@pxref{Environments}).
 
 @cindex line length register (@code{.l})
 The current line length (as set by @code{ll}) can be found in the
@@ -9112,10 +9094,8 @@ is specified (which is not allowed), @code{gtroff} emits a warning of
 type @samp{range} and sets the title line length to zero.  The default
 scaling indicator is @samp{m}.  If @code{lt} is called without an
 argument, the title length is reset to the previous value before the
-last call to @code{lt}.
-
-The current setting of this is available in the @code{.lt} read-only
-register; it is associated with the current environment
+last call to @code{lt}.  The current setting is available in the
+@code{.lt} read-only register; it is associated with the environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -9376,8 +9356,9 @@ single character as an argument) to change the font on the fly:
 @endExample
 
 The current style name is available in the read-only string-valued
-register @samp{.sty}; if the current font isn't a style, the empty
-string is returned.  It is associated with the current environment.
+register @samp{.sty}; it is associated with the environment
+(@pxref{Environments}).  If the current font isn't a style,
+interpolating @samp{.sty}  produces nothing.
 
 @xref{Font Positions}, for an alternative syntax.
 @endDefreq
@@ -9492,7 +9473,7 @@ the previous font family.  Use @code{\F[]} to do this with the escape;
 
 The value at start-up is @samp{T}.  The current font family is available
 in the read-only string-valued register @samp{.fam}; it is associated
-with the current environment.
+with the environment (@pxref{Environments}).
 
 @Example
 spam,
@@ -9623,7 +9604,7 @@ start-up.@footnote{Usually.})
 @cindex font position register (@code{.f})
 The current font in use, as a font position, is available in the
 read-only register @samp{.f}.  This can be useful to save the current
-font for later recall.  It is associated with the current environment
+font for later recall.  It is associated with the environment
 (@pxref{Environments}).
 
 @Example
@@ -10475,8 +10456,8 @@ is possible to change fonts, but after the last line affected by
 @code{ul} the saved font is restored.
 
 This number of lines still to be underlined is associated with the
-current environment (@pxref{Environments}).  The underline font can be
-changed with the @code{uf} request.
+environment (@pxref{Environments}).  The underline font can be changed
+with the @code{uf} request.
 
 @c XXX @xref should be changed to grotty
 
@@ -10850,12 +10831,10 @@ resulting size is non-positive, it is set to 1@dmn{u}.
 
 @cindex type size registers (@code{.s}, @code{.ps})
 @cindex point size registers (@code{.s}, @code{.ps})
-The read-only string-valued register @code{.s} returns the point size in
-points as a decimal fraction.  To get the point size in scaled points,
-use the @code{.ps} register instead (@pxref{Fractional Type Sizes}).
-
-@code{.s} is associated with the current environment
-(@pxref{Environments}).
+The read-only string-valued register @code{.s} stores the point size in
+points as a decimal fraction; it is associated with the environment
+(@pxref{Environments}).  To get the point size in scaled points, use the
+@code{.ps} register instead (@pxref{Fractional Type Sizes}).
 
 @Example
 snap, snap,
@@ -10943,7 +10922,7 @@ a vertical motion.  You explicitly have to repeat this command before
 inserting the diversion.
 
 The read-only register @code{.v} contains the current vertical spacing;
-it is associated with the current environment (@pxref{Environments}).
+it is associated with the environment (@pxref{Environments}).
 @endDefreq
 
 @cindex vertical line spacing, effective value
@@ -11005,8 +10984,7 @@ is reset to the previous value before the last call to @code{pvs}.
 zero or negative; the vertical spacing is then set to zero.
 
 The read-only register @code{.pvs} contains the current post-vertical
-spacing; it is associated with the current environment
-(@pxref{Environments}).
+spacing; it is associated with the environment (@pxref{Environments}).
 @endDefreq
 
 @c ---------------------------------------------------------------------
@@ -11060,10 +11038,8 @@ units in a scaled point.  For instance, @samp{\n[.ps]s} is equal to
 indicators.
 
 @Defreg {.ps}
-A read-only register returning the point size in scaled points.
-
-@code{.ps} is associated with the current environment
-(@pxref{Environments}).
+A read-only register returning the point size in scaled points; it is
+associated with the environment (@pxref{Environments}).
 @endDefreg
 
 @DefregList {.psr}
@@ -11075,7 +11051,8 @@ A read-only register returning the point size in scaled points.
 The last-requested point size in scaled points is contained in the
 read-only register @code{.psr}.  The last-requested point size in points
 as a decimal fraction can be found in the read-only string-valued
-register @code{.sr}.
+register @code{.sr}.  Both registers are associated with the environment
+(@pxref{Environments}).
 
 The requested point sizes are device-independent, whereas the values
 returned by the @code{.ps} and @code{.s} registers are not.  For
@@ -11083,8 +11060,6 @@ example, if a point size of 11@dmn{pt} is requested, and a @code{sizes}
 request (or a @code{sizescale} line in a @file{DESC} file) specifies
 10.95@dmn{pt} instead, this value is actually used.
 
-Both registers are associated with the current environment
-(@pxref{Environments}).
 @endDefreg
 
 The @code{\s} escape has the following syntax for working with
@@ -13404,10 +13379,10 @@ operand \c
 @endExample
 @endDefreq
 
-Both requests are associated with the current environment
-(@pxref{Environments}); switching to another environment disables the
-current input trap, and going back reactivates it, restoring the count
-of already processed lines.
+Input traps are associated with the environment (@pxref{Environments});
+switching to another environment disables the current input trap, and
+going back reactivates it, restoring the count of already processed
+lines.
 
 @c ---------------------------------------------------------------------
 
@@ -14031,18 +14006,18 @@ The number of consecutive hyphenated lines (set to zero).
 @cindex last glyph, dimensions (@code{.w}, @code{.cht}, @code{.cdp}, @code{.csk})
 @cindex glyph, last, dimensions (@code{.w}, @code{.cht}, @code{.cdp}, @code{.csk})
 The @code{\n[.w]} register contains the width of the last glyph added to
-the current environment.
+the environment.
 
 The @code{\n[.cht]} register contains the height of the last glyph added
-to the current environment.
+to the environment.
 
 The @code{\n[.cdp]} register contains the depth of the last glyph added
-to the current environment.  It is positive for glyphs extending below
-the baseline.
+to the environment.  It is positive for glyphs extending below the
+baseline.
 
 The @code{\n[.csk]} register contains the @dfn{skew} (how far to the
 right of the glyph's center that @code{gtroff} should place an accent)
-of the last glyph added to the current environment.
+of the last glyph added to the environment.
 @endDefreg
 
 @Defreg {.n}
@@ -14051,7 +14026,7 @@ of the last glyph added to the current environment.
 @cindex length of previous line (@code{.n})
 @cindex previous line length (@code{.n})
 The @code{\n[.n]} register contains the length of the previous output
-line in the current environment.
+line in the environment.
 @endDefreg
 
 
@@ -14210,9 +14185,7 @@ The escape @code{\m[]} returns to the previous color, as does a call to
 @cindex name, drawing color, register (@code{.m})
 @cindex color name, drawing, register (@code{.m})
 The name of the current drawing color is available in the read-only
-string-valued register @samp{.m}.
-
-The drawing color is associated with the current environment
+string-valued register @samp{.m}; it is associated with the environment
 (@pxref{Environments}).
 
 @code{\m} doesn't produce an input token in GNU @code{troff}.  As a
@@ -14248,10 +14221,8 @@ call to @code{fcolor} without an argument.
 @cindex name, fill color, register (@code{.M})
 @cindex color name, fill, register (@code{.M})
 The name of the current fill (background) color is available in the
-read-only string-valued register @samp{.M}.
-
-The fill color is associated with the current environment
-(@pxref{Environments}).
+read-only string-valued register @samp{.M}; it is associated with the
+environment (@pxref{Environments}).
 
 @code{\M} doesn't produce an input token in GNU @code{troff}.
 @endDefesc
@@ -14730,7 +14701,7 @@ If line numbering has been disabled with a call to @code{nm} without an
 argument, it can be reactivated with @samp{.nm +0}, using the previously
 active line numbering parameters.
 
-The parameters of @code{nm} are associated with the current environment
+The parameters of @code{nm} are associated with the environment
 (@pxref{Environments}).  The current output line number is available in
 the register @code{ln}.
 
@@ -14815,7 +14786,7 @@ xxx
 For empty lines and lines produced by the @code{tl} request no margin
 character is emitted.
 
-The margin character is associated with the current environment
+The margin character is associated with the environment
 (@pxref{Environments}).
 
 @pindex nrchbar
