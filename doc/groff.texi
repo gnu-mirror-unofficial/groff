@@ -4496,16 +4496,16 @@ not interested in details.
 
 @acronym{AT&T} @code{troff} was designed to take input as it would be
 composed on a typewriter, including the teletypewriters used as early
-computer terminals, and relieve the user of having to be concerned with
-the precise line length that the final version of the document would
-use, where words should be hyphenated, and how to achieve straight
-margins on both the left and right sides of the page.  Early in its
-development, the program gained the ability to prepare output for a
-phototypesetter; a document could then be prepared for output to either
-a teletypewriter, a phototypesetter, or both.  GNU @code{troff}
-continues this tradition of permitting an author to compose a single
-master version of a document which can then be rendered for a variety of
-output formats or devices.
+computer terminals, and relieve the user of having to be concerned
+during the drafting process with the precise line length that the final
+version of the document would use, where words should be hyphenated, and
+how to achieve straight margins on both the left and right sides of the
+page.  Early in its development, the program gained the ability to
+prepare output for a phototypesetter; a document could then be prepared
+for output to either a teletypewriter, a phototypesetter, or both.  GNU
+@code{troff} continues this tradition of permitting an author to compose
+a single master version of a document which can then be rendered for a
+variety of output formats or devices.
 
 @code{roff} input files contain text interspersed with instructions to
 control the formatter.  Even in the absence of such instructions, GNU
@@ -4655,11 +4655,11 @@ the advice presented in @ref{Input Conventions}.
 @cindex special characters
 @cindex characters, special
 Normally, the occurrence of a visible non-end-of-sentence character (as
-opposed to a space or tab) after an end-of-sentence character cancels
-detection of the end of a sentence.  For example, it would be incorrect
-for GNU @code{troff} to infer the end of a sentence after the dot in
-@samp{3.14159}.  However, several characters are treated
-@emph{transparently} after the occurence of an end-of-sentence
+opposed to a space or tab) immediately after an end-of-sentence
+character cancels detection of the end of a sentence.  For example, it
+would be incorrect for GNU @code{troff} to infer the end of a sentence
+after the dot in @samp{3.14159}.  However, several characters are
+treated @emph{transparently} after the occurence of an end-of-sentence
 character.  That is, GNU @code{troff} does not cancel end-of-sentence
 detection when it processes them.  This is because such characters are
 often used as footnote markers or to close quotations and
@@ -4724,8 +4724,8 @@ on a different output line; this is called a @dfn{break}.  In this
 manual and in @code{roff} discussions generally, a ``break'' if not
 further qualified always refers to the termination of an output line.
 When the formatter is filling text, it introduces breaks automatically
-to keep output lines from exceeding the current line length.  After an
-automatic break, GNU @code{troff} adjusts the line if applicable (see
+to keep output lines from exceeding the configured line length.  After
+an automatic break, GNU @code{troff} adjusts the line if applicable (see
 below), and then resumes collecting and filling text on the next output
 line.
 
@@ -4861,12 +4861,12 @@ name and each other by spaces) that specify details of the action GNU
 @code{troff} is expected to perform.  If a request is meaningless
 without arguments, it is typically ignored.
 
-GNU @code{troff} requests, combined with its escape sequences, comprise
-the control language of the formatter.  Of key importance are the
-requests that define macros.  Macros are invoked like requests, enabling
-the request repertoire to be extended or overridden.@footnote{Argument
-handling in macros is more flexible but also more complex.
-@xref{Request and Macro Arguments}.}
+GNU @code{troff}'s requests and escape sequences comprise the control
+language of the formatter.  Of key importance are the requests that
+define macros.  Macros are invoked like requests, enabling the request
+repertoire to be extended or overridden.@footnote{Argument handling in
+macros is more flexible but also more complex.  @xref{Request and Macro
+Arguments}.}
 
 @cindex macro
 @cindex calling a macro
@@ -4985,13 +4985,13 @@ We could have defined @code{DATE} and @code{BOSS} in the opposite order;
 perhaps less obviously, we could also have defined them @emph{after}
 @code{NOTICE}.  ``Forward references'' like this are acceptable because
 the body of a macro definition is not (completely) interpreted, but
-stored instead (@pxref{Copy Mode}).  While a macro is being defined,
-requests are not interpreted and macros not interpolated, whereas some
-commonly used escape sequences @emph{are} interpolated.  @code{roff}
-systems also support recursive macros---as long as you have a way to
-break the recursion (@pxref{Conditionals and Loops}).  For maintainable
-@code{roff} documents, arrange your macro definitions so that they are
-most easily understood when read from beginning to end.
+stored instead (@pxref{Copy Mode}).  While a macro is being defined (or
+appended to), requests are not interpreted and macros not interpolated,
+whereas some commonly used escape sequences @emph{are} interpolated.
+@code{roff} systems also support recursive macros---as long as you have
+a way to break the recursion (@pxref{Conditionals and Loops}).  For
+maintainable @code{roff} documents, arrange your macro definitions so
+that they are most easily understood when read from beginning to end.
 
 @c ---------------------------------------------------------------------
 
@@ -6929,12 +6929,13 @@ register @code{.T} is set to@tie{}1, and zero otherwise.
 @cindex @code{sp} request, causing implicit linebreak
 @cindex @code{ti} request, causing implicit linebreak
 @cindex @code{trf} request, causing implicit linebreak
-Various ways of causing @dfn{breaks} were shown in @ref{Breaking}.  The
-@code{br} request likewise causes a break.  Several other requests also
-cause breaks implicitly.  These are @code{bp}, @code{ce}, @code{cf},
-@code{fi}, @code{fl}, @code{in}, @code{nf}, @code{rj}, @code{sp},
-@code{ti}, and @code{trf}.  If the no-break control character is used
-with any of these requests, GNU @code{troff} suppresses the break.
+A break interrupts filling.  Various ways of causing breaks were shown
+in @ref{Breaking}.  The @code{br} request likewise causes a break.
+Several other requests also cause breaks implicitly.  These are
+@code{bp}, @code{ce}, @code{cf}, @code{fi}, @code{fl}, @code{in},
+@code{nf}, @code{rj}, @code{sp}, @code{ti}, and @code{trf}.  If the
+no-break control character is used with any of these requests, GNU
+@code{troff} suppresses the break.
 
 @cindex pending output line
 @cindex partially collected line
@@ -6959,7 +6960,7 @@ qux
 @endExample
 @endDefreq
 
-Initially, GNU @code{troff} fills text and adjusts it to both margins.
+By default, GNU @code{troff} fills text and adjusts it to both margins.
 Filling can be disabled via the @code{nf} request and re-enabled with
 the @code{fi} request.
 
@@ -7348,9 +7349,10 @@ just prior to it; most likely this isn't what you want.
 @cindex URLs, breaking (@code{\:})
 @cindex breaking URLs (@code{\:})
 The @code{\:} escape inserts a non-printing break point; that is, the
-word can break there, but the soft hyphen glyph is not written to the
-output if it does.  This escape is an input word boundary, so the
-remainder of the word is subject to hyphenation as normal.
+word can break there, but the soft hyphen glyph (see below) is not
+written to the output if it does.  This escape is an input word
+boundary, so the remainder of the word is subject to hyphenation as
+normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
 of a file name or URL or to permit hyphenation only after certain
