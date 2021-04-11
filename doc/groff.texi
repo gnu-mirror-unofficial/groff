@@ -7300,9 +7300,9 @@ within-word placement restrictions imposed by the @code{hy} request (see
 below).
 
 Hyphenation exceptions specified with the @code{hw} request are
-associated with the hyphenation language (see below) and environment
-(@pxref{Environments}); calling the @code{hw} request in the absence of
-a hyphenation language is an error.
+associated with the hyphenation language (see the @code{hla} request
+below) and environment (@pxref{Environments}); calling the @code{hw}
+request in the absence of a hyphenation language is an error.
 
 The request is ignored if there are no parameters.
 @endDefreq
@@ -7411,10 +7411,13 @@ lines have been hyphenated (@code{hlm}), the line has not reached a
 certain minimum length (@code{hym}), or the line can instead be adjusted
 with up to a certain amount of additional inter-word space (@code{hys}).
 
+@cindex hyphenation mode register (@code{.hy})
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
-Set automatic hyphenation mode to @var{mode}.  The optional numeric
-argument @var{mode} encodes conditions for hyphenation.
+Set automatic hyphenation mode to @var{mode}, an integer encoding
+conditions for hyphenation.  The hyphenation mode is available in the
+read-only register @samp{.hy}; it is associated with the environment
+(@pxref{Environments}).
 
 Typesetting practice generally does not avail itself of every
 opportunity for hyphenation, but the details differ by language and site
@@ -7429,9 +7432,9 @@ sought.@footnote{The mode is a vector of booleans encoded as an integer.
 To a programmer, this fact is easily deduced from the exclusive use of
 powers of two for the configuration parameters; they are computationally
 easy to ``mask off'' and compare to zero.  To almost everyone else, the
-arrangement seems recondite and unfriendly.}  The entries in the table
-below are termed @dfn{values}, and the sum of the desired values is the
-@dfn{mode}.
+arrangement seems recondite and unfriendly.}  The entries in the
+following table are termed @dfn{values}; the sum of the desired
+values is the @dfn{mode}.
 
 @table @code
 @item 0
@@ -7449,14 +7452,14 @@ restrictions relative to that basis.
 
 @table @code
 @item 2
-disables hyphenation of the last word on a page.@footnote{This value
-prevents hyphenation if the next page location trap is closer than the
-next text baseline would be.  GNU @code{troff} automatically inserts an
-implicit vertical position trap at the end of each page to cause a page
+disables hyphenation of the last word on a page,@footnote{Hyphenation is
+prevented if the next page location trap is closer than the next text
+baseline would be.  GNU @code{troff} automatically inserts an implicit
+vertical position trap at the end of each page to cause a page
 transition.  Users or macro packages can set such traps explicitly to
 prevent hyphenation of the last word in a column in multi-column page
-layouts or before floating figures or tables.
-@xref{Page Location Traps}.}
+layouts or before floating figures or tables.  @xref{Page Location
+Traps}.} even for manually hyphenated words.
 
 @item 4
 disables hyphenation before the last two characters of a word.
@@ -7510,12 +7513,12 @@ s- plit- t- in- g
 @endExample
 
 @noindent
-instead of the correct `split- ting'.  U.S. English patterns as
+instead of the correct `split- ting'.  U.S.@: English patterns as
 distributed with GNU @code{troff} need two characters at the beginning
 and three characters at the end; this means that value@tie{}4 of
 @code{hy} is mandatory.  Value@tie{}8 is possible as an additional
 restriction, but values@tie{}16 and@tie{}32 should be avoided, as should
-mode@tie{}1 (the default!).  Modes@tie{}4 and@tie{}6 are typical.
+mode@tie{}1.  Modes@tie{}4 and@tie{}6 are typical.
 
 A table of left and right minimum character counts for hyphenation as
 needed by the patterns distributed with GNU @code{troff} follows; see
@@ -7536,12 +7539,6 @@ Hyphenation exceptions within pattern files (i.e., the words within a
 @TeX{} @code{\hyphenation} group) also obey the hyphenation restrictions
 given by @code{hy}.  However, exceptions specified with @code{hw} do
 not.
-
-The hyphenation mode is associated with the environment
-(@pxref{Environments}).
-
-@cindex hyphenation mode register (@code{.hy})
-The hyphenation mode can be found in the read-only register @samp{.hy}.
 @endDefreq
 
 @Defreq {nh, }
@@ -7617,9 +7614,9 @@ be used.  By default, every code maps to itself except those for letters
 @pindex hyphen.us
 @pindex hyphenex.us
 The set of hyphenation patterns is associated with the language set by
-the @code{hla} request.  The @code{hpf} request is usually invoked by
-the @file{troffrc} or @file{troffrc-end} file; by default,
-@file{troffrc} loads hyphenation patterns and exceptions for U.S.
+the @code{hla} request (see below).  The @code{hpf} request is usually
+invoked by the @file{troffrc} or @file{troffrc-end} file; by default,
+@file{troffrc} loads hyphenation patterns and exceptions for U.S.@:
 English (in files @file{hyphen.us} and @file{hyphenex.us}).
 
 A second call to @code{hpf} (for the same language) replaces the
@@ -7651,9 +7648,10 @@ they assume that the words `FOO' and `Foo' should be hyphenated exactly
 as `foo' is.  The @code{hcode} request extends this principle to letters
 outside the Unicode basic Latin alphabet; without it, words containing
 such letters won't be hyphenated properly even if the corresponding
-hyphenation patterns contain them.  For example, the following
-@code{hcode} requests are necessary to assign hyphenation codes to the
-letters @samp{ÄäÖöÜüß} (needed for German):
+hyphenation patterns contain them.
+
+For example, the following @code{hcode} requests are necessary to assign
+hyphenation codes to the letters @samp{ÄäÖöÜüß}, needed for German.
 
 @Example
 .hcode ä ä  Ä ä
@@ -7662,13 +7660,13 @@ letters @samp{ÄäÖöÜüß} (needed for German):
 .hcode ß ß
 @endExample
 
-Without those assignments, GNU @code{troff} treats German words like
-@w{`Kindergärten'} (the plural form of `kindergarten') as two substrings
+Without these assignments, GNU @code{troff} treats the German word
+@w{`Kindergärten'} (the plural form of `kindergarten') as two words
 @w{`kinderg'} and @w{`rten'} because the hyphenation code of the
-umlaut@tie{}a is zero by default.  There is a German hyphenation pattern
-that covers @w{`kinder'}, so GNU @code{troff} finds the hyphenation
-`kin-der'.  The other two hyphenation points (`kin-der-gär-ten') are
-missed.
+umlaut@tie{}a is zero by default, just like a space.  There is a German
+hyphenation pattern that covers @w{`kinder'}, so GNU @code{troff} finds
+the hyphenation `kin-der'.  The other two hyphenation points
+(`kin-der-gär-ten') are missed.
 @endDefreq
 
 @DefreqList {hla, lang}
@@ -7682,7 +7680,7 @@ specified with the @code{hw} request and hyphenation patterns and
 exceptions specified with the @code{hpf} and @code{hpfa} requests are
 associated with the hyphenation language.  The @code{hla} request is
 usually invoked by the @file{troffrc} or @file{troffrc-end} files;
-@file{troffrc} sets the default language to @samp{us} (U.S. English).
+@file{troffrc} sets the default language to @samp{us} (U.S.@: English).
 
 @cindex hyphenation language register (@code{.hla})
 The hyphenation language is available in the read-only string-valued
@@ -15406,7 +15404,7 @@ implementations.
 @cindex hyphenation, incompatibilities with @acronym{AT&T} @code{troff}
 GNU @code{troff} does not always hyphenate words as @acronym{AT&T}
 @code{troff} does.  The @acronym{AT&T} implementation uses a set of
-hard-coded rules specific to U.S. English, while GNU @code{troff} uses
+hard-coded rules specific to U.S.@: English, while GNU @code{troff} uses
 language-specific hyphenation pattern files derived from @TeX{}.
 Furthermore, in old versions of @code{troff} there was a limited amount
 of space to store hyphenation exceptions (arguments to the @code{hw}
