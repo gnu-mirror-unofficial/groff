@@ -665,7 +665,7 @@ End this page,
 but do not begin the next page.
 Useful for forcing out footnotes,
 but other than
-that hardly every used.
+that hardly ever used.
 Must be followed by a
 .b .bp
 or the end of input.
@@ -1456,8 +1456,7 @@ ends the header portion of the table.
 .b .TE
 .DE
 Table end.
-Note that this table
-does not float,
+This table does not float;
 in fact,
 it is not even guaranteed to stay on one page
 if you use requests such as
@@ -1678,7 +1677,7 @@ If there are any spaces in it,
 the entire header must be quoted.
 If you want the header to have the chapter number
 in it,
-Use the string
+use the string
 .b "\e\e\e\en(ch" .
 For example, to number appendixes
 .b A.1
@@ -1690,8 +1689,7 @@ Each section
 should be preceded by the
 .b .+c
 macro.
-It should be mentioned
-that it is easier when using
+It is easier when using
 \*T to put the front material
 at the end of the paper,
 so that the table of contents
@@ -1872,9 +1870,7 @@ Right quote.
 .TL
 .ST \-
 .DE
-.ie \w'\(34'>0 \(34
-.el 3/4
-em dash.
+Em dash.
 .sh 1 "Special Characters and Marks"
 .pp
 There are a number of special characters
@@ -1890,8 +1886,8 @@ Umlaut	\e*:	u\e*:	u\*:
 Tilde	\e*~	n\e*~	n\*~
 Caret	\e*^	e\e*^	e\*^
 Cedilla	\e*,	c\e*,	c\*,
-Czech	\e*v	e\e*v	e\*v
-Circle	\e*o	A\e*o	A\*o
+Caron	\e*v	e\e*v	e\*v
+Ring	\e*o	A\e*o	A\*o
 There exists	\e*(qe		\*(qe
 For all	\e*(qa		\*(qa
 .fi
@@ -2038,7 +2034,7 @@ NAME	TYPE	DESCRIPTION
 \&.+c	M	begin chapter
 \e*,	S	cedilla
 \e\-	F\(sc	minus sign
-\e*\-	S	3/4 em dash
+\e*\-	S	em dash
 \e0	F\(sc	unpaddable digit-width space
 \&.1c	M	revert to single column output
 \&.2c	M	begin two column output
@@ -2099,8 +2095,8 @@ NAME	TYPE	DESCRIPTION
 \e*(dw	S	current day of week
 \en(dy	R\(sc	day of month
 \ee	F\(sc	printable version of \e
-\&.ef	M	set footer (even numbered pages only)
-\&.eh	M	set header (even numbered pages only)
+\&.ef	M	set footer (even-numbered pages only)
+\&.eh	M	set header (even-numbered pages only)
 \&.el	M\(sc	else part of conditional
 \&.ep	M	end page
 \en(es	R	equation pre/post space
@@ -2154,9 +2150,9 @@ NAME	TYPE	DESCRIPTION
 \&.np	M	begin numbered paragraph
 \&.nr	M\(sc	set number register
 \&.ns	M\(sc	no space mode
-\e*o	S	circle (e.g., for Norse A\*o)
-\&.of	M	set footer (odd numbered pages only)
-\&.oh	M	set header (odd numbered pages only)
+\e*o	S	ring (e.g., for Norse A\*o)
+\&.of	M	set footer (odd-numbered pages only)
+\&.oh	M	set header (odd-numbered pages only)
 \&.pa	M	begin page
 \&.pd	M	print delayed text
 \en(pf	R	paragraph font
@@ -2211,7 +2207,7 @@ NAME	TYPE	DESCRIPTION
 \&.uh	M	unnumbered section
 \&.ul	M\(sc	underline next line
 \ev\'\fI\&d\fP\'	F\(sc	local vertical motion for distance \fI\&d\fP
-\e*v	S	inverted `v' for czeck ``e\*v''
+\e*v	S	raised `v' for caron ``e\*v''
 \ew\'\fI\&S\fP\'	F\(sc	return width of string \fI\&S\fP
 \&.xl	M	set line length (local)
 \&.xp	M	print index
