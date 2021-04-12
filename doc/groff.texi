@@ -7266,7 +7266,8 @@ If @emph{undiscardable} space is required, use the @code{\h} escape.
 
 @cindex hyphenation, automatic
 @cindex automatic hyphenation
-GNU @code{troff} normally hyphenates words where necessary.  The
+When filling, GNU @code{troff} hyphenates words as needed at
+user-specified and automatically determined hyphenation points.  The
 machine-driven determination of hyphenation points in words requires
 algorithms and data, and is susceptible to conventions and preferences.
 Before tackling such @dfn{automatic hyphenation}, let us consider how
@@ -7277,11 +7278,11 @@ hyphenation points can be set manually.
 @cindex hyphenation, manual
 @cindex manual hyphenation
 Explicitly hyphenated words such as ``mother-in-law'' are eligible for
-breaking after each of their hyphens when GNU @code{troff} fills lines.
-Relatively few words in a language offer such obvious break points,
-however, and automatic hyphenation is not perfect, particularly for
-unusual words found in technical literature.  We may wish to instruct
-GNU @code{troff} how to hyphenate specific words if the need arises.
+breaking after each of their hyphens.  Relatively few words in a
+language offer such obvious break points, however, and automatic
+hyphenation is not perfect, particularly for unusual words found in
+technical literature.  We may wish to instruct GNU @code{troff} how to
+hyphenate specific words if the need arises.
 
 @cindex hyphenation exceptions
 @Defreq {hw, word @dots{}}
@@ -7424,9 +7425,9 @@ with up to a certain amount of additional inter-word space (@code{hys}).
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
 Set automatic hyphenation mode to @var{mode}, an integer encoding
-conditions for hyphenation.  The hyphenation mode is available in the
-read-only register @samp{.hy}; it is associated with the environment
-(@pxref{Environments}).
+conditions for hyphenation; if omitted, 1 is implied.  The hyphenation
+mode is available in the read-only register @samp{.hy}; it is associated
+with the environment (@pxref{Environments}).
 
 Typesetting practice generally does not avail itself of every
 opportunity for hyphenation, but the details differ by language and site
@@ -7545,9 +7546,8 @@ the @cite{groff_tmac@r{(5)}} man page for more information on GNU
 @end multitable
 
 Hyphenation exceptions within pattern files (i.e., the words within a
-@TeX{} @code{\hyphenation} group) also obey the hyphenation restrictions
-given by @code{hy}.  However, exceptions specified with @code{hw} do
-not.
+@TeX{} @code{\hyphenation} group) obey the hyphenation restrictions
+given by @code{hy}.
 @endDefreq
 
 @Defreq {nh, }
@@ -7561,11 +7561,10 @@ remembered.
 @DefreqListEndx {hpfcode, a b [c d] @dots{}}
 @cindex hyphenation patterns (@code{hpf})
 @cindex patterns for hyphenation (@code{hpf})
-Read hyphenation patterns from @var{pattern-file}.  This file is sought
+Read hyphenation patterns from @var{pattern-file}, which is sought
 in the same way that macro files are with the @code{mso} request or the
-@option{-m@var{name}} command-line option to @code{groff}.
-
-The @var{pattern-file} should have the same format as (simple) @TeX{}
+@option{-m@var{name}} command-line option to @code{groff}.  The
+@var{pattern-file} should have the same format as (simple) @TeX{}
 pattern files.  More specifically, the following scanning rules are
 implemented.
 
