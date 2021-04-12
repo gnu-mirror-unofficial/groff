@@ -6698,37 +6698,41 @@ returned.
 
 @c ---------------------------------------------------------------------
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Built-in Registers,  , Assigning Formats, Registers
 @subsection Built-in Registers
 @cindex built-in registers
 @cindex registers, built-in
 
 The following lists some built-in registers that are not described
-elsewhere in this manual.  Any register that begins with a @samp{.} is
-read-only.  A complete listing of all built-in registers can be found in
-@ref{Register Index}.
+elsewhere in this manual.  Any register name that begins with a @samp{.}
+is read-only.  A complete listing of all built-in registers can be found
+in @ref{Register Index}.
 
 @table @code
 @item \n[.F]
 @cindex current input file name register (@code{.F})
 @cindex input file name, current, register (@code{.F})
 @vindex .F
-This read-only string-valued register returns the current input file
-name.
+This read-only string-valued register stores the name of the file being
+formatted.
 
 @item \n[.H]
 @cindex horizontal resolution register (@code{.H})
 @cindex resolution, horizontal, register (@code{.H})
 @vindex .H
-Number of basic units per horizontal unit of output device resolution.
-@xref{Measurements}.
+Number of basic units in a unit of horizontal resolution of the output
+device.  @xref{Measurements}.
 
 @item \n[.R]
 @cindex number of registers register (@code{.R})
 @cindex registers, number of, register (@code{.R})
 @vindex .R
-The number of registers available.  This is always 10000 in
-GNU@tie{}@code{troff}; it exists for backward compatibility.
+Number of registers available.  This is always 10000 in GNU
+@code{troff};@footnote{GNU @code{troff} dynamically allocates memory for
+as many registers as required.} it exists for backward compatibility.
 
 @item \n[.U]
 @cindex safer mode
@@ -6736,16 +6740,15 @@ GNU@tie{}@code{troff}; it exists for backward compatibility.
 @cindex unsafe mode
 @cindex mode, unsafe
 @vindex .U
-If @code{gtroff} is called with the @option{-U} command-line option to
-activate unsafe mode, the register @code{.U} is set to@tie{}1, and to
-zero otherwise.  @xref{Groff Options}.
+1 if GNU @code{troff} is called with the @option{-U} command-line option
+to activate unsafe mode, and zero otherwise.  @xref{Groff Options}.
 
 @item \n[.V]
 @cindex vertical resolution register (@code{.V})
 @cindex resolution, vertical, register (@code{.V})
 @vindex .V
-Number of basic units per vertical unit of output device resolution.
-@xref{Measurements}.
+Number of basic units in a unit of vertical resolution of the output
+device.  @xref{Measurements}.
 
 @item \n[seconds]
 @cindex seconds, current time (@code{seconds})
@@ -6754,7 +6757,7 @@ Number of basic units per vertical unit of output device resolution.
 @vindex seconds
 The number of seconds after the minute, normally in the range@tie{}0
 to@tie{}59, but can be up to@tie{}61 to allow for leap seconds.
-Initialized at start-up of @code{gtroff}.
+Initialized at start-up of GNU @code{troff}.
 
 @item \n[minutes]
 @cindex minutes, current time (@code{minutes})
@@ -6762,7 +6765,7 @@ Initialized at start-up of @code{gtroff}.
 @cindex current time, minutes (@code{minutes})
 @vindex minutes
 The number of minutes after the hour, in the range@tie{}0 to@tie{}59.
-Initialized at start-up of @code{gtroff}.
+Initialized at start-up of GNU @code{troff}.
 
 @item \n[hours]
 @cindex hours, current time (@code{hours})
@@ -6770,55 +6773,57 @@ Initialized at start-up of @code{gtroff}.
 @cindex current time, hours (@code{hours})
 @vindex hours
 The number of hours past midnight, in the range@tie{}0 to@tie{}23.
-Initialized at start-up of @code{gtroff}.
+Initialized at start-up of GNU @code{troff}.
 
 @item \n[dw]
 @cindex day of the week register (@code{dw})
 @cindex date, day of the week register (@code{dw})
 @vindex dw
-Day of the week (1--7).
+Day of the week (1--7).  Initialized at start-up of GNU @code{troff}.
 
 @item \n[dy]
 @cindex day of the month register (@code{dy})
 @cindex date, day of the month register (@code{dy})
 @vindex dy
-Day of the month (1--31).
+Day of the month (1--31).  Initialized at start-up of GNU @code{troff}.
 
 @item \n[mo]
 @cindex month of the year register (@code{mo})
 @cindex date, month of the year register (@code{mo})
 @vindex mo
-Current month (1--12).
+Current month (1--12).  Initialized at start-up of GNU @code{troff}.
 
 @item \n[year]
 @cindex date, year register (@code{year}, @code{yr})
 @cindex year, current, register (@code{year}, @code{yr})
 @vindex year
-The current year.
+The current year.  Initialized at start-up of GNU @code{troff}.
 
+@cindex CSTR@tie{}#54 errata
+@cindex CSTR@tie{}#54 erratum, @code{yr} register
 @item \n[yr]
 @vindex yr
-The current year minus@tie{}1900.  Unfortunately, the documentation of
-Unix Version@tie{}7's @code{troff} had a year@tie{}2000 bug: It
-incorrectly claimed that @code{yr} contains the last two digits of the
-year.  That claim has never been true of either @acronym{AT&T}
-@code{troff} or GNU @code{troff}.  Old @code{troff} input that looks
-like this:
+The current year minus@tie{}1900.  Initialized at start-up of GNU
+@code{troff}.  This register is incorrectly documented in the
+@acronym{AT&T} @code{troff} manual as storing the last two digits of the
+current year.  That claim stopped being true in 2000.  Old @code{troff}
+input that looks like:
 
 @Example
-'\" The following line stopped working after 1999
+'\" The year number is a surprise after 1999.
 This document was formatted in 19\n(yr.
 @endExample
 
 @noindent
-can be corrected as follows:
+can be corrected to:
 
 @Example
 This document was formatted in \n[year].
 @endExample
 
 @noindent
-or, to be portable to older @code{troff} versions, as follows:
+or, to be portable across many @code{troff} implementations, to the
+following.
 
 @Example
 .nr y4 1900+\n(yr
@@ -6831,82 +6836,84 @@ This document was formatted in \n(y4.
 @vindex c.
 @cindex input line number register (@code{.c}, @code{c.})
 @cindex line number, input, register (@code{.c}, @code{c.})
-The current @emph{input} line number.  Register @samp{.c} is read-only,
-whereas @samp{c.} (a @code{gtroff} extension) is writable also,
-affecting both @samp{.c} and @samp{c.}.
+The current @emph{input} line number.  @samp{c.} (a @code{groff}
+extension) is also writable, affecting subsequent interpolations of both
+@samp{.c} and @samp{c.}.
 
 @item \n[ln]
 @vindex ln
 @cindex output line number register (@code{ln})
 @cindex line number, output, register (@code{ln})
 The current @emph{output} line number after a call to the @code{nm}
-request to activate line numbering.
-
-@xref{Miscellaneous}, for more information about line numbering.
+request to activate line numbering.  @xref{Miscellaneous}.
 
 @item \n[.x]
 @vindex .x
 @cindex major version number register (@code{.x})
 @cindex version number, major, register (@code{.x})
-The major version number.  For example, if the version number is 1.03
-then @code{.x} contains@tie{}@samp{1}.
+The major version number of the @code{groff} release in use.  For
+example, if the version number is 1.23.0, then @code{.x}
+contains@tie{}@samp{1}.
 
 @item \n[.y]
 @vindex .y
 @cindex minor version number register (@code{.y})
 @cindex version number, minor, register (@code{.y})
-The minor version number.  For example, if the version number is 1.03
-then @code{.y} contains@tie{}@samp{03}.
+The minor version number of the @code{groff} release in use.  For
+example, if the version number is 1.23.0, then @code{.x}
+contains@tie{}@samp{23}.
 
 @item \n[.Y]
 @vindex .Y
 @cindex revision number register (@code{.Y})
-The revision number of @code{groff}.
+The revision number of the @code{groff} release in use.  For example, if
+the version number is 1.23.0, then @code{.x} contains@tie{}@samp{0}.
 
 @item \n[$$]
 @vindex $$
-@cindex process ID of @code{gtroff} register (@code{$$})
-@cindex @code{gtroff}, process ID register (@code{$$})
-The process ID of @code{gtroff}.
+@cindex process ID of GNU @code{troff} register (@code{$$})
+@cindex PID of GNU @code{troff} register (@code{$$})
+@cindex GNU @code{troff}, process ID register (@code{$$})
+@cindex GNU @code{troff}, PID register (@code{$$})
+The process identifier (PID) of the GNU @code{troff} program in its
+operating environment.
 
 @item \n[.g]
 @vindex .g
-@cindex @code{gtroff}, identification register (@code{.g})
+@cindex GNU @code{troff}, identification register (@code{.g})
 @cindex GNU-specific register (@code{.g})
 Always@tie{}1.  Macros should use this to determine whether they are
 running under GNU @code{troff}.
 
 @item \n[.A]
 @vindex .A
-@cindex @acronym{ASCII} approximation output register (@code{.A})
-If the command-line option @option{-a} is used to produce an
-@acronym{ASCII} approximation of the output, this is set to@tie{}1, zero
-otherwise.  @xref{Groff Options}.
+@cindex approximation output register (@code{.A})
+@cindex plain text approximation output register (@code{.A})
+1 if GNU @code{troff} is called with the @option{-a} command-line option
+to produce a plain text approximation of the output, and zero otherwise.
+@xref{Groff Options}.
 
 @item \n[.O]
 @vindex .O
-This read-only register is set to the suppression nesting level (see
-escapes @code{\O}).  @xref{Suppressing output}.
+The suppression nesting level applied by @code{\O} escapes.
+@xref{Suppressing output}.
 
 @item \n[.P]
 @vindex .P
-This register is set to@tie{}1 (and to@tie{}0 otherwise) if the current
-page is actually being printed, i.e., if the @option{-o} option is being
-used to only print selected pages.  @xref{Groff Options}, for more
-information.
+1 if the current page is selected for printing and zero if it is not.
+GNU @code{troff} can be called with the  @option{-o} command-line option
+to format a subset of a document by page number(s).  @xref{Groff
+Options}.
 
 @item \n[.T]
 @vindex .T
-If @code{gtroff} is called with the @option{-T} command-line option, the
-register @code{.T} is set to@tie{}1, and zero otherwise.
-@xref{Groff Options}.
+1 if GNU @code{troff} is called with the @option{-T} command-line option
+to specify the typesetter device, and zero otherwise.  @xref{Groff
+Options}.
 @end table
 
 
 @c =====================================================================
-
-@codequotebacktick on
-@codequoteundirected on
 
 @node Manipulating Filling and Adjustment, Manipulating Hyphenation, Registers, gtroff Reference
 @section Manipulating Filling and Adjustment
