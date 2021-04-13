@@ -2068,9 +2068,9 @@ hyphenation codes must be set up.
 At start-up,
 .I groff
 assigns hyphenation codes to the letters \[lq]a\[en]z\[rq]
-(mapped to themselves)
-and to the letters \[lq]A\[en]Z\[rq]
-(mapped to \[lq]a\[en]z\[rq])
+(mapped to themselves),
+to the letters \[lq]A\[en]Z\[rq]
+(mapped to \[lq]a\[en]z\[rq]),
 and zero to all other characters.
 .
 Normally,
@@ -2088,42 +2088,6 @@ Latin alphabet;
 without it,
 words containing such letters won't be hyphenated properly even if the
 corresponding hyphenation patterns contain them.
-.
-For example,
-the following
-.B .hcode
-requests are necessary to assign hyphenation codes to the letters
-\[lq]\[:A]\[:a]\[:O]\[:o]\[:U]\[:u]\[ss]\[rq]
-(needed for German):
-.
-.
-.RS
-.IP
-.EX
-\&.hcode \[:a] \[:a]  \[:A] \[:a]
-\&.hcode \[:o] \[:o]  \[:O] \[:o]
-\&.hcode \[:u] \[:u]  \[:U] \[:u]
-\&.hcode \[ss] \[ss]
-.EE
-.RE
-.
-.
-.IP
-Without those assignments,
-.I groff
-treats German words like \[lq]Kinderg\[:a]rten\[rq]
-(the plural form of \[lq]kindergarten\[rq])
-as two substrings \[lq]kinderg\[rq] and \[lq]rten\[rq]) because the
-hyphenation code of the umlaut\~a is zero by default.
-.
-There is a German hyphenation pattern that covers \[lq]kinder\[rq],
-so
-.I groff
-finds the hyphenation \[lq]kin-der\[rq].
-.
-The other two hyphenation points
-(\[lq]kin-der-gär-ten\[rq])
-are missed.
 .
 .
 .TP
@@ -2152,7 +2116,7 @@ sets the default language to \[lq]us\[rq]
 .
 .
 .IP
-The hyphenation language is associated with the current environment.
+The hyphenation language is associated with the environment.
 .
 .
 .TP
@@ -2170,14 +2134,15 @@ If omitted,
 .I n
 is\~\-1.
 .
-This value is associated with the current environment.
+This value is associated with the environment.
 .
-Only lines output from an environment count towards the maximum
+Only lines output from a given environment count towards the maximum
 associated with that environment.
 .
 Hyphens resulting from
 .B \[rs]%
-are counted; explicit hyphens are not.
+are counted;
+explicit hyphens are not.
 .
 .
 .TP
@@ -2346,22 +2311,32 @@ of the environment.
 .TP
 .BI .hpfcode\~ "a b"\c
 .RI \~[ "c d" "] .\|.\|."
-Define mapping values for character codes in pattern files;
-after reading a pattern file with the
+Define mapping values for character codes in pattern files.
+.
+This is an older mechanism no longer used by
+.IR groff 's
+own macro files;
+for its successor,
+see
+.B .hcode
+above.
+.
 .B .hpf
 or
 .B .hpfa
-request,
-convert all characters with character
+aplly the mapping
+after reading or appending to the active list of patterns.
+.
+Its arguments are pairs of character codes\[em]integers from 0 to\~255.
+.
+The request maps character
 .RI code\~ a
-in the recently read patterns to character
+to
 .RI code\~ b ,
 .RI code\~ c
-.RI to\~ d ,
-and so on,
-before replacing or appending to the active list of patterns.
-.
-Each argument must be an integer in the range 0 to\~255.
+to
+.RI code\~ d ,
+and so on.
 .
 Character codes that would otherwise be invalid in
 .I groff
@@ -2393,7 +2368,7 @@ the default hyphenation margin is reset to its default value,
 The default scaling indicator
 .RB is\~\[lq] m \[rq].
 .
-The hyphenation margin is associated with the current environment.
+The hyphenation margin is associated with the environment.
 .
 .
 .IP
