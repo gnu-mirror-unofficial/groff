@@ -7706,10 +7706,10 @@ register @samp{.hla}; it is associated with the environment
 @cindex hyphenated lines, consecutive (@code{hlm})
 Set the maximum number of consecutive hyphenated lines to @var{n}.  If
 @var{n} is negative, there is no maximum.  If omitted, @var{n}
-is@tie{}@minus{}1.  This value is associated with the current
-environment (@pxref{Environments}).  Only lines output from a given
-environment count towards the maximum associated with that environment.
-Hyphens resulting from @code{\%} are counted; explicit hyphens are not.
+is@tie{}@minus{}1.  This value is associated with the environment
+(@pxref{Environments}).  Only lines output from a given environment
+count towards the maximum associated with that environment.  Hyphens
+resulting from @code{\%} are counted; explicit hyphens are not.
 
 @cindex hyphenation consecutive line limit register (@code{.hlm})
 @cindex hyphenation consecutive line count register (@code{.hlc})
@@ -7727,8 +7727,8 @@ Set the (right) hyphenation margin to @var{length}.  If the adjustment
 mode is not @samp{b} or @samp{n}, the line is not hyphenated if it is
 shorter than @var{length}.  Without an argument, the hyphenation margin
 is reset to its default value, 0.  The default scaling indicator is
-@samp{m}.  The hyphenation margin is associated with the current
-environment (@pxref{Environments}).
+@samp{m}.  The hyphenation margin is associated with the environment
+(@pxref{Environments}).
 
 A negative argument resets the hyphenation margin to zero, emitting a
 warning of type @samp{range}.
@@ -7748,7 +7748,7 @@ Suppress hyphenation of the line in adjustment modes @samp{b} or
 @var{hyphenation-space} extra space to each inter-word space.  Without
 an argument, the hyphenation space adjustment threshold is set to its
 default value, 0.  The default scaling indicator is @samp{m}.  The
-hyphenation space adjustment threshold is associated with the current
+hyphenation space adjustment threshold is associated with the
 environment (@pxref{Environments}).
 
 A negative argument resets the hyphenation space adjustment threshold to
@@ -8822,7 +8822,7 @@ Temporarily indent the next output line by @var{offset}.  If an
 increment or decrement value is specified, adjust the temporary
 indentation relative to the value set by the @code{in} request.
 
-This request causes a break; its value is associated with the current
+This request causes a break; its value is associated with the
 environment (@pxref{Environments}).  The default scaling indicator is
 @samp{m}.  A call of @code{ti} without an argument is ignored.
 
@@ -8987,7 +8987,7 @@ An intervening control line that causes a break is stronger than
 
 @cindex interrupted line register (@code{.int})
 The @code{.int} register contains a positive value if the last output
-line was interrupted with @code{\c}; this is associated with the current
+line was interrupted with @code{\c}; this is associated with the
 environment (@pxref{Environments}).
 @endDefesc
 
