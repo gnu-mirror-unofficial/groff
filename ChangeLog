@@ -1,3 +1,66 @@
+2021-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tmac]: Adjust editor file encoding hints.
+
+	* tmac/cs.tmac: Tell Vim the file is "iso-8859-2" (ISO Latin-2).
+	* tmac/en.tmac: Stop telling Emacs the file is "latin-1"; it's
+	ASCII.
+	* tmac/fr.tmac: Tell Vim file is "iso-8859-15" (ISO Latin-9).
+
+	Vim users may need to use ":e ++enc=iso-8859-2", for instance,
+	to see correct glyphs.
+
+2021-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Determine the groff locale (default input language) using the
+	system locale.  Use the environment if possible.  Try LC_ALL
+	first, then LANG.  "C" means English (en).  Otherwise, only the
+	first two characters of the locale name are used.
+
+	Unrecognized locales (those without a supporting xx.tmac file)
+	are ignored, and groff falls back to English.
+
+	Those who want groff's default locale to differ from LC_ALL/LANG
+	should edit the troffrc file to source the appropriate groff
+	locale macro file (cs.tmac, de.tmac, den.tmac, fr.tmac, ja.tmac,
+	sv.tmac, zh.tmac).
+
+	The first-order determinant of hyphenation points is language,
+	not territory.  Use ISO 639 2-letter language codes for
+	hyphenation and exception patterns instead of ISO 3166 2-letter
+	territory codes.
+
+	* tmac/*.us: Rename *.us files to *.en.
+	* tmac/troffrc: Change hyphenation language "us" to "en".
+	* tmac/en.tmac: Add English localization file.  Set hyphenation
+	mode to 4.
+	* tmac/troffrc: Derive groff locale from system.
+
+	* doc/groff.texi (Manipulating Hyphenation):
+	* man/groff.7.man (Hyphenation):
+	* man/groff_diff.7.man (Implementation differences): Refer to
+	"U.S. English" hyphenation patterns as simply "English"; they
+	will be mostly correct for Commonwealth English as well, and no
+	alternative English hyphenation patterns for other territories
+	are available.
+
+	* doc/groff.texi (Manipulating Hyphenation):
+	* man/groff_diff.7.man (New requests): Note that default
+	hyphenation mode depends on the language used on the system.
+	Add concept index entry for localization.  Add file index
+	entries for the locale macro files (cs.tmac, etc.).  Add
+	environment variable index entries for LANG and LC_ALL.
+	Describe how groff's idea of the locale is determined.  Update
+	to reflect rename of English hyphenation patterns and .hla
+	identifier from "us" to "en".
+
+	* src/roff/groff/tests/localization_works.sh: Add 10 test cases.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
+
+	* tmac/LOCALIZATION: Rewrite.
+
+	Fixes <https://savannah.gnu.org/bugs/?59814>.
+
 2021-04-12  Dave Kemper <saint.snit@gmail.com>
 
 	* doc/meref.me: Correct various small issues.

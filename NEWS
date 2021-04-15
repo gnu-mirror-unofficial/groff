@@ -13,6 +13,24 @@ VERSION 1.23.0
 troff
 -----
 
+o The groff locale (the default input language) is now determined using
+  the system locale.  The LC_ALL and LANG environment variables are
+  checked, in that order.  If set, the value's first two characters
+  determine the groff locale.  If these variables are not set, if the
+  first one found is set to "C", or if no groff localization file exists
+  for the language, groff falls back to English, loading en.tmac.
+
+  Those who want groff's default locale to differ from LC_ALL/LANG
+  should edit the troffrc file to source the appropriate groff locale
+  macro file (cs.tmac, de.tmac, den.tmac, fr.tmac, ja.tmac, sv.tmac,
+  zh.tmac).
+
+  The default hyphenation mode (as used by the .hy request) for users of
+  English is thus changed from "1", which was inappropriate for the
+  TeX-based hyphenation patterns groff has used since at least 1991, to
+  "4".  However, calling .hy without an argument remains synonymous with
+  ".hy 1".
+
 o A new read-only register ".cp" is implemented.  Within a .do request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
   groff_diff(7) or the groff Texinfo manual for rationale, use case, and
