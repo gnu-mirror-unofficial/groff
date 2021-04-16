@@ -4699,10 +4699,10 @@ collected from the input to exactly fill it---typically, there is room
 left over only for part of the next word.  The process of splitting a
 word so that it appears partially on one line (with a hyphen to indicate
 to the reader that the word has been broken) with the remainder of the
-word on the next is @dfn{hyphenation}.  GNU @code{troff} uses a
-hyphenation algorithm and language-specific pattern files (based on but
-simplified from those used in @TeX{}) to decide which words can be
-hyphenated and where.
+word on the next is @dfn{hyphenation}.  Hyphenation points can be
+manually specified; GNU @code{troff} also uses a hyphenation algorithm
+and language-specific pattern files (based on those used in @TeX{}) to
+decide which words can be hyphenated and where.
 
 Hyphenation does not always occur even when the hyphenation rules for a
 word allow it; it can be disabled, and when not disabled there are
@@ -4804,9 +4804,9 @@ These tab stops are by default located every half inch across the page.
 With them, simple tables can be made easily.@footnote{``Tab'' is short
 for ``tabulation'', revealing the term's origin as a spacing mechanism
 for table arrangement.}  However, this method can be deceptive as the
-appearance (and width) of the text on a terminal and the results from
-GNU @code{troff} can vary greatly, particularly when proportional
-typefaces are used.
+appearance (and width) of the text in an editor and the results from GNU
+@code{troff} can vary greatly, particularly when proportional typefaces
+are used.
 
 A tab character does not cause a break and therefore does not interrupt
 filling.  We use an arrow @arrow{} below to indicate an input tab
@@ -7394,16 +7394,16 @@ The hyphenation character is associated with the environment
 @cindex @code{tr} request, and soft hyphen character
 Set the @dfn{soft hyphen character},@footnote{``Soft hyphen
 @emph{character}'' is a misnomer since it is an output glyph.} inserted
-when a word is hyphenated automatically or at a hyphenation character
-@code{\%}, to@tie{}@var{glyph}.@footnote{It is ``soft'' because it only
-appears in output where hyphenation is actually performed; a ``hard''
-hyphen, as in ``long-term'', always appears.}  If the argument is
-omitted, the soft hyphen glyph is set to the default, @code{\[hy]}.  If
-the selected glyph does not exist in the font in use at a potential
-hyphenation point, then the line is not broken at that point.  Neither
-character definitions (specified with the @code{char} and similar
-requests) nor translations (specified with the @code{tr} request) are
-considered when assigning the soft hyphen glyph.
+when a word is hyphenated automatically or at a hyphenation character,
+to@tie{}@var{glyph}.@footnote{It is ``soft'' because it only appears in
+output where hyphenation is actually performed; a ``hard'' hyphen, as in
+``long-term'', always appears.}  If the argument is omitted, the soft
+hyphen glyph is set to the default, @code{\[hy]}.  If the selected glyph
+does not exist in the font in use at a potential hyphenation point, then
+the line is not broken at that point.  Neither character definitions
+(specified with the @code{char} and similar requests) nor translations
+(specified with the @code{tr} request) are considered when assigning the
+soft hyphen glyph.
 @endDefreq
 
 @cindex hyphenation parameters, automatic
