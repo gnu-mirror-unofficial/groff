@@ -1,3 +1,22 @@
+2021-04-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi: Drop workarounds for Texinfo pre-5.0 versions;
+	our local macros produced many warnings during generation of our
+	Texinfo manual.
+	(Langlemacro):
+	(Ranglemacro):
+	(Lparenmacro):
+	(Rparenmacro):
+	(Lbrackmacro):
+	(Rbrackmacro): Delete.  Replace call sites with literals.
+	(Lbracemacro):
+	(Rbracemacro): Delete.  Replace call sites with @lbracechar{}
+	and @rbracechar{}.
+	(angles): Reimplement in terms of @guilsinglleft{} and
+	@guilsinglright{}.  Flesh out comment.
+
+	Fixes remainder of <https://savannah.gnu.org/bugs/?59524>.
+
 2021-04-17  Dave Kemper <saint.snit@gmail.com>
 
 	* doc/meintro.me:

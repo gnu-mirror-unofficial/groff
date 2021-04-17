@@ -404,76 +404,10 @@ developing GNU and promoting software freedom.''
 @end macro
 
 
-@c <text>
-
-@tex
-\gdef\Langlemacro{\angleleft}
-\gdef\Ranglemacro{\angleright}
-@end tex
-
-@iftex
-@set Langlemacro @Langlemacro
-@set Ranglemacro @Ranglemacro
-@end iftex
-
-@ifnottex
-@set Langlemacro <
-@set Ranglemacro >
-@end ifnottex
+@c Render text with angle brackets around it, as in <text>.
 
 @macro angles{text}
-@value{Langlemacro}@r{\text\}@value{Ranglemacro}
-@end macro
-
-
-@c Special care is required with parentheses, brackets, and braces:
-@c
-@c . Real parentheses in @deffn produce an error while compiling with
-@c   TeX.
-@c . Real brackets use the wrong font in @deffn, overriding @t{}.
-@c
-@c . @{ and @} fail with info if used in a macro.
-@c
-@c Since macros aren't expanded in @deffn during -E, the following
-@c definitions are for non-TeX only.
-@c
-@c This is true for texinfo 4.0 and above.
-
-@iftex
-@set Lparenmacro @lparen
-@set Rparenmacro @rparen
-@set Lbrackmacro @lbrack
-@set Rbrackmacro @rbrack
-@set Lbracemacro @{
-@set Rbracemacro @}
-@end iftex
-
-@ifnottex
-@set Lparenmacro (
-@set Rparenmacro )
-@set Lbrackmacro [
-@set Rbrackmacro ]
-@set Lbracemacro @{
-@set Rbracemacro @}
-@end ifnottex
-
-@macro Lparen{}
-@value{Lparenmacro}
-@end macro
-@macro Rparen{}
-@value{Rparenmacro}
-@end macro
-@macro Lbrack{}
-@value{Lbrackmacro}
-@end macro
-@macro Rbrack{}
-@value{Rbrackmacro}
-@end macro
-@macro Lbrace{}
-@value{Lbracemacro}
-@end macro
-@macro Rbrace{}
-@value{Rbracemacro}
+@guilsinglleft{}@r{\text\}@guilsinglright{}
 @end macro
 
 
@@ -3344,8 +3278,8 @@ Prints all text following in the normal point size (that is, the value
 of the @code{PS} register).
 @endDefmac
 
-@DefstrList {@Lbrace{}, ms}
-@DefstrListEndx {@Rbrace{}, ms}
+@DefstrList {@lbracechar{}, ms}
+@DefstrListEndx {@rbracechar{}, ms}
 Text enclosed with @code{\*@{} and @code{\*@}} is printed as a
 superscript.
 @endDefstr
@@ -6504,8 +6438,8 @@ contents do not become inaccessible until it has no more names.
 Numeric registers can be accessed via the @code{\n} escape.
 
 @DefescList {\\n, , i, }
-@DefescItem {\\n, @Lparen{}, id, }
-@DefescListEnd {\\n, @Lbrack{}, ident, @Rbrack{}}
+@DefescItem {\\n, (, id, }
+@DefescListEnd {\\n, [, ident, ]}
 @cindex nested assignments
 @cindex assignments, nested
 @cindex indirect assignments
@@ -6558,10 +6492,10 @@ form.
 
 @DefescList {\\n, +, i, }
 @DefescItem {\\n, -, i, }
-@DefescItem {\\n, +@Lparen{}, id, }
-@DefescItem {\\n, -@Lparen{}, id, }
-@DefescItem {\\n, +@Lbrack{}, ident, @Rbrack{}}
-@DefescListEnd {\\n, -@Lbrack{}, ident, @Rbrack{}}
+@DefescItem {\\n, +(, id, }
+@DefescItem {\\n, -(, id, }
+@DefescItem {\\n, +[, ident, ]}
+@DefescListEnd {\\n, -[, ident, ]}
 Before interpolating, increment or decrement @var{ident} (one-character
 name@tie{}@var{i}, two-character name @var{id}) by the auto-increment
 value as specified with the @code{nr} request (or the @code{\R} escape).
@@ -6685,8 +6619,8 @@ then apply the @code{af} request to this other register.
 @endDefreq
 
 @DefescList {\\g, , i, }
-@DefescItem {\\g, @Lparen{}, id, }
-@DefescListEnd {\\g, @Lbrack{}, ident, @Rbrack{}}
+@DefescItem {\\g, (, id, }
+@DefescListEnd {\\g, [, ident, ]}
 @cindex format of register (@code{\g})
 @cindex register, format (@code{\g})
 Return the current format of the specified register @var{ident}
@@ -9317,8 +9251,8 @@ special symbols (Greek, mathematics).
 
 @DefreqList {ft, [@Var{font}]}
 @DefescItemx {\\f, , f, }
-@DefescItem {\\f, @Lparen{}, fn, }
-@DefescItem {\\f, @Lbrack{}, font, @Rbrack{}}
+@DefescItem {\\f, (, fn, }
+@DefescItem {\\f, [, font, ]}
 @DefregListEndx {.sty}
 @cindex changing fonts (@code{ft}, @code{\f})
 @cindex fonts, changing (@code{ft}, @code{\f})
@@ -9477,8 +9411,8 @@ different font family on the command line (@pxref{Groff Options}).
 @DefreqList {fam, [@Var{family}]}
 @DefregItemx {.fam}
 @DefescItemx {\\F, , f, }
-@DefescItem {\\F, @Lparen{}, fm, }
-@DefescItem {\\F, @Lbrack{}, family, @Rbrack{}}
+@DefescItem {\\F, (, fm, }
+@DefescItem {\\F, [, family, ]}
 @DefregListEndx {.fn}
 @cindex changing font family (@code{fam}, @code{\F})
 @cindex font family, changing (@code{fam}, @code{\F})
@@ -9660,8 +9594,8 @@ syntax forms to access font positions.
 
 @DefreqList {ft, nnn}
 @DefescItemx {\\f, , n, }
-@DefescItem {\\f, @Lparen{}, nn, }
-@DefescListEnd {\\f, @Lbrack{}, nnn, @Rbrack{}}
+@DefescItem {\\f, (, nn, }
+@DefescListEnd {\\f, [, nnn, ]}
 @cindex changing font position (@code{\f})
 @cindex font position, changing (@code{\f})
 @cindex @code{sty} request, and font positions
@@ -9882,9 +9816,9 @@ glyph names of the GGL can't be used in composite glyph names; for
 example, @code{^E_u0301} is invalid.
 @end itemize
 
-@DefescList {\\, @Lparen{}, nm, }
-@DefescItem {\\, @Lbrack{}, name, @Rbrack{}}
-@DefescListEnd {\\, @Lbrack{}, component1 component2 @dots{}, @Rbrack{}}
+@DefescList {\\, (, nm, }
+@DefescItem {\\, [, name, ]}
+@DefescListEnd {\\, [, component1 component2 @dots{}, ]}
 Insert a symbol @var{name} (two-character name @var{nm}) or a composite
 glyph with component glyphs @var{component1}, @var{component2},
 @enddots{}  There is no special syntax for one-character names---the
@@ -11127,11 +11061,11 @@ it as empty.
 @DefreqList {ds, name [@Var{string}]}
 @DefreqItemx {ds1, name [@Var{string}]}
 @DefescItemx {\\*, , n, }
-@DefescItem {\\*, @Lparen{}, nm, }
+@DefescItem {\\*, (, nm, }
 @c XXX: Can't mark the parameters with @Var because @Var gets called
 @c recursively if we do.
-@c @DefescListEnd {\\*, @Lbrack{}, name [@Var{arg1} @Var{arg2} @dots{}], @Rbrack{}}
-@DefescListEnd {\\*, @Lbrack{}, name @sansserif{[}arg1 arg2 @dots{}@sansserif{]}, @Rbrack{}}
+@c @DefescListEnd {\\*, [, name [@Var{arg1} @Var{arg2} @dots{}], ]}
+@DefescListEnd {\\*, [, name @sansserif{[}arg1 arg2 @dots{}@sansserif{]}, ]}
 @cindex string interpolation (@code{\*})
 @cindex string expansion (@code{\*})
 @cindex interpolation of strings (@code{\*})
@@ -12252,8 +12186,8 @@ Any individual argument can be retrieved with one of the following
 escapes:
 
 @DefescList {\\$, , n, }
-@DefescItem {\\$, @Lparen{}, nn, }
-@DefescListEnd {\\$, @Lbrack{}, nnn, @Rbrack{}}
+@DefescItem {\\$, (, nn, }
+@DefescListEnd {\\$, [, nnn, ]}
 @cindex copy mode, and macro arguments
 @cindex mode, copy, and macro arguments
 @cindex macro, arguments (@code{\$})
@@ -12612,8 +12546,8 @@ over that glyph.
 @endDefesc
 
 @DefescList {\\k, , p, }
-@DefescItem {\\k, @Lparen{}, ps, }
-@DefescListEnd {\\k, @Lbrack{}, position, @Rbrack{}}
+@DefescItem {\\k, (, ps, }
+@DefescListEnd {\\k, [, position, ]}
 @cindex saving horizontal input line position (@code{\k})
 @cindex horizontal input line position, saving (@code{\k})
 @cindex input line position, horizontal, saving (@code{\k})
@@ -14177,8 +14111,8 @@ Note that @code{f} is the default scaling indicator for the
 
 @DefreqList {gcolor, [@Var{color}]}
 @DefescItemx {\\m, , c, }
-@DefescItem {\\m, @Lparen{}, co, }
-@DefescItem {\\m, @Lbrack{}, color, @Rbrack{}}
+@DefescItem {\\m, (, co, }
+@DefescItem {\\m, [, color, ]}
 @DefregListEndx {.m}
 Set (glyph) drawing color.  The following examples show how to turn the
 next four words red.
@@ -14215,8 +14149,8 @@ a single character as an argument) to change the color on the fly:
 
 @DefreqList {fcolor, [@Var{color}]}
 @DefescItemx {\\M, , c, }
-@DefescItem {\\M, @Lparen{}, co, }
-@DefescItem {\\M, @Lbrack{}, color, @Rbrack{}}
+@DefescItem {\\M, (, co, }
+@DefescItem {\\M, [, color, ]}
 @DefregListEndx {.M}
 Set fill (background) color for filled objects drawn with the
 @code{\D'@dots{}'} commands.
@@ -14599,8 +14533,8 @@ Here a simple macro to write an index entry.
 @endDefreq
 
 @DefescList {\\V, , e, }
-@DefescItem {\\V, @Lparen{}, ev, }
-@DefescListEnd {\\V, @Lbrack{}, env, @Rbrack{}}
+@DefescItem {\\V, (, ev, }
+@DefescListEnd {\\V, [, env, ]}
 @cindex @code{\V}, and copy mode
 @cindex copy mode, and @code{\V}
 @cindex mode, copy, and @code{\V}
@@ -14661,8 +14595,8 @@ only.
 
 @DefreqList {devicem, xx}
 @DefescItemx {\\Y, , n, }
-@DefescItem {\\Y, @Lparen{}, nm, }
-@DefescListEnd {\\Y, @Lbrack{}, name, @Rbrack{}}
+@DefescItem {\\Y, (, nm, }
+@DefescListEnd {\\Y, [, name, ]}
 This is approximately equivalent to @samp{\X'\*[@var{name}]'}
 (one-character name@tie{}@var{n}, two-character name @var{nm}).
 However, the contents of the string or macro @var{name} are not
