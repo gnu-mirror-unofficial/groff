@@ -1,3 +1,14 @@
+2021-04-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-old.tmac (SH): Fix apparent thinko.  Pass the devtags
+	macro a literal "1" argument.  Passing it \n[an-level] wasn't
+	correct (it stores the relative inset level, not a sectioning
+	level), and was useless anyway: SH has already called
+	.an-set-margin by this point, which resets \n[an-level] to 1.
+	man(7) does not support nesting of SH macros.  Also call
+	.DEVTAG-NH by its alias .DEVTAG-SH since section headings are
+	not numbered in man(7).
+
 2021-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tmac]: Adjust editor file encoding hints.
