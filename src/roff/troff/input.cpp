@@ -5981,7 +5981,7 @@ void do_source(bool quietly)
 
 void source()
 {
-  do_source(0 /* not quietly*/ );
+  do_source(false /* not quietly*/ );
 }
 
 // .soquiet: like .so, but silently ignore files that can't be opened
@@ -5989,7 +5989,7 @@ void source()
 
 void source_quietly()
 {
-  do_source(1 /* quietly */ );
+  do_source(true /* quietly */ );
 }
 
 // like .so but use popen()
@@ -7844,7 +7844,7 @@ void do_macro_source(bool quietly)
 
 void macro_source()
 {
-  do_macro_source(0 /* not quietly (if WARN_FILE enabled) */ );
+  do_macro_source(false /* not quietly (if WARN_FILE enabled) */ );
 }
 
 // .msoquiet: like .mso, but silently ignore files that can't be opened
@@ -7852,7 +7852,7 @@ void macro_source()
 
 void macro_source_quietly()
 {
-  do_macro_source(1 /* quietly */ );
+  do_macro_source(true /* quietly */ );
 }
 
 static void process_input_file(const char *name)
