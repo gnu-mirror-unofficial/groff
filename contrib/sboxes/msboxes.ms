@@ -18,7 +18,9 @@
 .OF ''''
 .ds FAM H
 .TL
-Using PDF boxes with the \f[I]ms\f[] macros
+Using PDF boxes with the
+.BI ms
+macros
 .AU
 Deri James
 .AI
@@ -163,7 +165,9 @@ The above was produced by the following code.
 \&.OF ''''
 \&.ds FAM H
 \&.TL
-Using PDF boxes with the \ef[I]ms\ef[] macros
+Using PDF boxes with the
+\&.BI ms
+macros
 \&.AU
 Deri James
 \&.AI
