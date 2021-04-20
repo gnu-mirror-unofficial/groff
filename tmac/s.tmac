@@ -501,6 +501,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .af % 0
 .nr pg*page-number-in-decimal \\n%
 .af % \\*[pg*saved-page-number-format]
+.fam \\*[pg@titles-font-family]
 .ie \\n[pg*page-number-in-decimal]=1 .if \\n[pg*P1] .tl \\*[pg*OH]
 .el \{\
 .	ie o .tl \\*[pg*OH]
@@ -508,6 +509,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 ..
 .de BT
+.fam \\*[pg@titles-font-family]
 .ie o .tl \\*[pg*OF]
 .el .tl \\*[pg*EF]
 ..
@@ -713,6 +715,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .par@reset-env
 .fn*start-div
 .par@reset
+.fam \\*[fn@font-family]
 .ie \\n[.$] .FP \\$@
 .el .@LP
 ..
@@ -1156,6 +1159,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .if !rFPD .nr FPD \\n[PD]/2
 .ev
 .if !dFAM .ds FAM \\n[.fam]
+.ds pg@titles-font-family \\*[FAM]
+.ds fn@font-family \\*[FAM]
 .nr par*adj \\n[.j]
 .par*env-init
 .ev h
@@ -1210,7 +1215,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 .in (u;\\n[\\n[.ev]:li]+\\n[\\n[.ev]:pli])
 .ft 1
-.fam \\*[FAM]
+.ie '\\n[.ev]'fn' .fam \\*[fn@font-family]
+.el .fam \\*[FAM]
 .ie (\\n[\\n[.ev]:PS] >= 1000) \
 .	ps (\\n[\\n[.ev]:PS]z / 1000u)
 .el \

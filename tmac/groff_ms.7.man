@@ -1694,10 +1694,21 @@ respectively, in
 .
 The
 .B FAM
-string sets the default font family.
+string sets the font family for body text.
 .
 If this string is undefined at initialization,
-it is set to Times.
+it is set to
+.RB \[lq] T \[rq]
+(Times).
+.
+Setting
+.B \[rs]*[FAM]
+before the first call of a sectioning,
+paragraphing,
+or (non-date) document description macro also applies it to headers,
+footers,
+and footnotes
+(as well as the body text).
 .
 .
 .LP

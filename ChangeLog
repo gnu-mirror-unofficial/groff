@@ -1,3 +1,25 @@
+2021-04-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac: Make the FAM string work more sensibly; it now
+	applies to headers, footers, and footnotes only if set
+	before the first call of a sectioning, paragraphing, or
+	{non-date} document description macro.
+	(PT, BT): Set the font family to that saved for titles.
+	(fn*do-FS): Set the font family to that saved for footnotes.
+	(par@init): Copy the document font family to independent strings
+	for titles and footnotes.
+	(par@reset): If in a footnote environment, set the font family
+	to that saved for footnotes; otherwise use \*[FAM].
+
+	* tmac/groff_ms.7.man (Differences from troff ms/Text settings):
+	Describe placement-dependent effect of FAM string setting.
+
+	* doc/groff.texi (Highlighting in ms):
+	* doc/ms.ms (Highlighting): As above, and suggest different
+	occasions in which ".ds FAM C" and "CW" are convenient.
+
+	Fixes <https://savannah.gnu.org/bugs/?60422>.
+
 2021-04-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/input.cpp (source, source_quietly,

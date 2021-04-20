@@ -1207,20 +1207,6 @@ macro otherwise.
 .
 This is a Version\~10 Research Unix extension.
 .\" possibly V9, but definitely not Berkeley
-.
-.
-.sp \n[PD]u
-In
-.I "groff ms"
-you might prefer to change the font family to Courier\[em]a monospaced
-typeface\[em]by setting
-.CW \[rs]*[FAM]
-to
-.CW C \[rq]. \[lq]
-.
-You can then use all four style macros above,
-returning to the default family (Times) with
-.CW ".ds FAM T" \[rq]. \[lq]
 T}
 _
 \&.BX [txt]	T{
@@ -1292,6 +1278,44 @@ the value of the
 register).
 T}
 .TE
+.
+.
+.PP
+Rather than calling the
+.CW CW
+macro,
+in
+.I "groff ms"
+you might prefer to change the font family to Courier\[em]a monospaced
+typeface\[em]by setting
+.CW \[rs]*[FAM]
+to
+.CW C \[rq]. \[lq]
+.
+You can then use all four style macros above,
+returning to the default family (Times) with
+.CW ".ds FAM T" \[rq]. \[lq]
+.
+If you set
+.CW \[rs]*[FAM]
+before the first call of a sectioning,
+paragraphing,
+or (non-date) document description macro,
+it also applies to headers,
+footers,
+and footnotes
+(as well as the body text).
+.
+A change to
+.CW \[rs]*[FAM]
+takes effect at the next paragraph,
+so
+.CW .CW
+remains useful to \[lq]inline\[rq] a change to the font family,
+as used in this document to note syntactical elements of
+.I ms
+and
+.I groff .
 .
 .
 .NH 2

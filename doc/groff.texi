@@ -3241,11 +3241,6 @@ Sets its first argument in a @code{constant-width} (monospaced)
 roman typeface.  It operates similarly to the @code{B}@tie{}macro
 otherwise.  This is a Version@tie{}10 Research Unix extension.
 @c possibly V9, but definitely not Berkeley
-
-In @code{groff} @file{ms} you might prefer to change the font family to
-Courier, which is monospaced, by setting the @code{FAM} string to
-@samp{C}.  You can then use all four style macros above, returning to
-the default family (Times) with @samp{.ds FAM T}.
 @endDefmac
 
 @Defmac {BX, [@Var{txt}], ms}
@@ -3288,6 +3283,18 @@ superscript.
 @DefstrListEndx {>, ms}
 Text enclosed with @code{\*<} and @code{\*>} is printed as a subscript.
 @endDefstr
+
+Rather than calling the @code{CW} macro, in @code{groff} @file{ms} you
+might prefer to change the font family to Courier---a monospaced
+typeface---by setting the @code{FAM} string to @samp{C}.  You can then
+use all four style macros above, returning to the default family (Times)
+with @samp{.ds FAM T}.  If you set @code{FAM} before the first call of a
+sectioning, paragraphing, or (non-date) document description macro, it
+also applies to headers, footers, and footnotes (as well as the body
+text).  A change to @code{FAM} takes effect at the next paragraph, so
+@code{CW} remains useful to ``inline'' a change to the font family,
+similarly to the practice of this document in noting syntactical
+elements of @file{ms} and @code{groff}.
 
 @c ---------------------------------------------------------------------
 
