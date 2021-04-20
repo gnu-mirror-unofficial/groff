@@ -16,6 +16,7 @@
 .EF ''''
 .OH 'Using PDF boxes with the \f[I]ms\f[] macros''%'
 .OF ''''
+.ds FAM H
 .TL
 Using PDF boxes with the \f[I]ms\f[] macros
 .AU
@@ -23,7 +24,6 @@ Deri James
 .AI
 deri@chuzzlewit.myzen.co.uk
 .\" .AB no
-.ds FAM H
 .LP
 A recent extension to the Groff PDF driver allows coloured rectangles to be
 created beneath any output created by groff. The extension is a new "\eX'pdf:'"
@@ -161,6 +161,7 @@ The above was produced by the following code.
 \&.EF ''''
 \&.OH 'Using PDF boxes with the \ef[I]ms\ef[] macros''%'
 \&.OF ''''
+\&.ds FAM H
 \&.TL
 Using PDF boxes with the \ef[I]ms\ef[] macros
 \&.AU
@@ -168,7 +169,6 @@ Deri James
 \&.AI
 deri@chuzzlewit.myzen.co.uk
 \&.\" .AB no
-\&.ds FAM H
 \&.LP
 A recent extension to the Groff PDF driver allows coloured rectangles to be
 created beneath any output created by groff. The extension is a new "\eX'pdf:'"
