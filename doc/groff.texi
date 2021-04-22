@@ -432,7 +432,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle Autumn 2020
+@subtitle April 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -8723,7 +8723,7 @@ may not yield the expected result.  The initial value is 1@dmn{i}.
 For terminal output devices, it is set to 0 in the startup file
 @file{troffrc}; the default scaling indicator is @samp{m}.
 @cindex CSTR@tie{}#54 errata
-@cindex CSTR@tie{}#54 erratum, @code{.po} request
+@cindex CSTR@tie{}#54 erratum, @code{po} request
 This request is incorrectly documented in the @acronym{AT&T}
 @code{troff} manual as using a default scaling indicator of @samp{v}.
 
@@ -9105,10 +9105,11 @@ decrease) the page number of the next page (which becomes the current
 page after @code{bp} has finished).  The difference between @code{bp}
 and @code{pn} is that @code{pn} does not cause a break or actually
 eject a page.  @xref{Page Layout}.
-@c @cindex CSTR@tie{}#54 errata
-@c @cindex CSTR@tie{}#54 erratum, @code{\S} escape
-@c This request is incorrectly documented in the @acronym{AT&T}
-@c @code{troff} manual as taking a scaling indicator, but it does not.
+@cindex CSTR@tie{}#54 errata
+@cindex CSTR@tie{}#54 erratum, @code{br} request
+This request is incorrectly documented in the @acronym{AT&T}
+@code{troff} manual as using a default scaling indicator of @samp{v},
+but it takes no scaling indicator at all.
 
 @Example
 .de newpage                         \" define macro
