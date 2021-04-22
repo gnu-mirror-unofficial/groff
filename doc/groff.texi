@@ -13274,14 +13274,13 @@ most cases, this is not the expected behaviour.
 @cindex setting diversion trap (@code{dt})
 @cindex diversion trap, setting (@code{dt})
 @cindex trap, diversion, setting (@code{dt})
-Set a trap @emph{within} a diversion at location @var{dist}.  The
-location is interpreted relative to diversion rather than page
-boundaries.  If called with fewer than two arguments, the diversion trap
-is removed.
-
-There exists only a single diversion trap.
-
-The register @code{.t} works within diversions.  @xref{Diversions}.
+Set a trap @emph{within} a diversion at location @var{dist}, which is
+interpreted relative to diversion rather than page boundaries.  There
+exists only a single diversion trap per diversion.  If invoked with
+fewer than two arguments, any diversion trap in the current diversion is
+removed.  The register @code{.t} works within diversions.  It is an
+error to invoke @code{dt} in the top-level diversion.
+@xref{Diversions}.
 @endDefreq
 
 @c ---------------------------------------------------------------------
@@ -13297,18 +13296,19 @@ The register @code{.t} works within diversions.  @xref{Diversions}.
 @cindex input line trap, setting (@code{it})
 @cindex trap, input line, setting (@code{it})
 Set an input line trap, calling macro @var{name} after the next
-@var{n}@tie{}lines of text input have been read.  Lines beginning with
-the control character or no-break control character are not counted.
+@var{n}@tie{}text lines have been read; control lines are not
+counted.@footnote{@ref{Requests and Macros} defines control and text
+lines.}
 
-Consider a macro
-@samp{.B @var{n}} which sets the next @var{n}@tie{}input lines in bold.
+Consider a macro @samp{.ST @var{s n}} which sets the next
+@var{n}@tie{}input lines in the font style@tie{}@var{s}.
 
 @Example
-.de B
-.  it \\$1 EB
-.  ft B
+.de ST \" Use style $1 for next $2 text lines.
+.  it \\$2 ES
+.  ft \\$1
 ..
-.de EB \" end bold
+.de ES \" end ST
 .  ft R
 ..
 @endExample
@@ -13317,11 +13317,12 @@ Consider a macro
 @cindex interrupted lines and input line traps (@code{itc})
 @cindex traps, input line, and interrupted lines (@code{itc})
 @cindex lines, interrupted, and input line traps (@code{itc})
-With @code{itc}, interrupted text lines are not counted separately.
+With @code{itc}, text lines interrupted with the @code{\c} escape are
+not applied to the line count.
 
 @Example
 .de Monospace
-.  it \\$1 End-Monospace
+.  itc \\$1 End-Monospace
 .  fam C
 ..
 .de End-Monospace
@@ -13329,13 +13330,18 @@ With @code{itc}, interrupted text lines are not counted separately.
 ..
 Syntax:
 .Monospace 1
-.ft B
+.ST B 1 \" from previous example
 mycommand \c
 [\c
-.ft I
-operand \c
+.ST I 1
+operand\c
 ]
 @endExample
+
+In the above, the Courier font family is used to render input on the
+next four text lines because all but the last are interrupted with
+@code{\c}, while the style macros apply only to the next input line.
+@xref{Line Control}.
 @endDefreq
 
 Input traps are associated with the environment (@pxref{Environments});
