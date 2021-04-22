@@ -12947,13 +12947,13 @@ Instead, use the @code{eqn} preprocessor.
 @section Traps
 @cindex traps
 
-@dfn{Traps} are locations in the output, or conditions on the input
-that, when reached or fulfilled, cause a specified macro to be called.
-These traps can occur at a given location on the page, at a given
-location in the current diversion (together, these are known as
-@emph{vertical position traps}), at a blank line, at a line with
-leading space characters, after a certain number of input lines, or at
-the end of input.  Macros invoked by traps have no arguments.
+@dfn{Traps} are locations in the output or conditions on the input that,
+when reached or fulfilled, cause a specified macro to be called.  These
+traps can occur at a given location on the page, at a given location in
+the current diversion (together, these are known as @emph{vertical
+position traps}), at a blank line, at a line with leading space
+characters, after a certain number of input lines, or at the end of
+input.  Macros called by traps have no arguments.
 @cindex planting a trap
 @cindex trap, planting
 Setting a trap is also called @dfn{planting}.
@@ -13007,8 +13007,8 @@ Enable vertical position traps if @var{flag} is non-zero or absent;
 disable them otherwise.  Vertical position traps are those set by the
 @code{wh} request or by @code{dt} within a diversion.  The parameter
 that controls whether vertical position traps are enabled is global.
-Initially, vertical position traps are enabled.  The current setting of
-this is available in the @code{.vpt} read-only register.
+Initially, vertical position traps are enabled.  The current value is
+stored in the @code{.vpt} read-only register.
 
 A page can't be ejected if @code{vpt} is set to zero.
 @endDefreq
@@ -13226,11 +13226,12 @@ much sense to use it outside of trap macros.
 @cindex @code{bp} request, and traps (@code{.pe})
 @cindex traps, sprung by @code{bp} request (@code{.pe})
 @cindex page ejecting register (@code{.pe})
-A read-only register that is set to@tie{}1 while a page is ejected with
-the @code{bp} request (or by the end of input).
+A read-only register containing@tie{}1 while a page is being ejected
+with the @code{bp} request (or by the end of input), and
+0@tie{}otherwise.
 
-Outside of traps this register is always zero.  In the following
-example, only the second call to@tie{}@code{x} is caused by @code{bp}.
+In the following example, only the second call to@tie{}@code{x} is
+caused by @code{bp}.
 
 @Example
 .de x
@@ -13384,7 +13385,7 @@ and no motion is produced before calling @var{name}.
 @c XXX The following discussion does not seem to be correct; leading
 @c space traps don't "see" _any_ input tokens.  Nothing on the line is
 @c passed to it as arguments, and tokens after leading spaces are
-@c processed normally after the designated macro returns. XXX
+@c processed normally after the designated macro is interpolated. XXX
 @c
 @c The first thing a leading space macro sees is a token.  However, some
 @c escapes, like @code{\f} and @code{\m}, are handled on the fly
