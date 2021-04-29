@@ -1192,6 +1192,9 @@ Sets its first argument in
 It operates similarly to the
 .CW .B
 macro otherwise.
+.
+This is a Version\~10 Research Unix extension.
+.\" possibly V9, but definitely not Berkeley
 T}
 _
 \&.CW [txt [post [pre]]]	T{
