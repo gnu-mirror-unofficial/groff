@@ -2872,8 +2872,8 @@ following a call to this macro into the title until reaching an
 @Defmac {AU, , ms}
 Specify an author's name.  @file{ms} collects text on input lines
 following a call to this macro into the author's name until reaching an
-@code{AI}, @code{AB}, or heading or paragraph macro call.  Call
-@code{AU} repeatedly to specify multiple authors.
+@code{AI}, @code{AB}, another @code{AU}, or heading or paragraph macro
+call.  Call it repeatedly to specify multiple authors.
 @endDefmac
 
 @Defmac {AI, , ms}
@@ -3857,8 +3857,10 @@ after executing the @code{PT} macro.
 @subsubsection Margins
 @cindex @code{ms} macros, margins
 
-You control margins using a set of registers.  @xref{ms Document Control
-Settings}, for details.
+Control margins using registers.  See ``Margin Settings'' in @ref{ms
+Document Control Settings}.  There is no right margin setting; the
+combination of page offset and line length provide the information
+necessary to derive the right margin.
 
 @c ---------------------------------------------------------------------
 
@@ -3989,17 +3991,21 @@ change the string definitions to help in creating documents in languages
 other than English.
 
 @Defstr {REFERENCES, ms}
-Contains the string printed at the beginning of the references
-(bibliography) page.  The default is @samp{References}.
+Contains the string printed at the beginning of a references
+(bibliography) page produced with GNU @cite{refer@r{(1)}}.  The default
+is @samp{References}.
+@c XXX: Use of refer(1) with ms is insufficiently documented.
 @endDefstr
 
 @Defstr {ABSTRACT, ms}
 Contains the string printed at the beginning of the abstract.  The
-default is @samp{ABSTRACT}.
+default is @samp{\f[I]ABSTRACT\f[]}; it includes font style escapes to
+set the word in italics.
 @endDefstr
 
 @Defstr {TOC, ms}
 Contains the string printed at the beginning of the table of contents.
+The default is @samp{Table of Contents}.
 @endDefstr
 
 @DefstrList {MONTH1, ms}
@@ -4014,8 +4020,8 @@ Contains the string printed at the beginning of the table of contents.
 @DefstrItemx {MONTH10, ms}
 @DefstrItemx {MONTH11, ms}
 @DefstrListEndx {MONTH12, ms}
-Prints the full name of the month in dates.  The default is
-@samp{January}, @samp{February}, etc.
+Contain the full names of the calendar months.  The defaults are in
+English: @samp{January}, @samp{February}, and so on.
 @endDefstr
 
 The following special characters are available.@footnote{For an
@@ -4163,8 +4169,9 @@ The general error-handling policy of @code{groff} @file{ms} is to detect
 and report errors, rather than silently to ignore them.
 
 @item
-@code{groff} @file{ms} does not work in compatibility mode (that is,
-with the @option{-C} option).
+@code{groff} @file{ms} does not work in GNU @code{troff}'s
+@acronym{AT&T} compatibility mode.  If loaded when that mode is enabled,
+it aborts processing with a diagnostic message.
 
 @item
 There is no special support for terminal devices.
@@ -4177,9 +4184,13 @@ Multiple line spacing is not supported.  Use a larger vertical spacing
 instead.
 
 @item
-Some Unix @code{ms} documentation says that the @code{CW} and @code{GW}
-registers can be used to control the column width and gutter width,
-respectively.  These registers are not used in @code{groff} @file{ms}.
+The @acronym{AT&T} @code{troff} @file{ms} manual@footnote{@cite{Typing
+Documents on the UNIX System: Using the -ms Macros with Troff and
+Nroff}; M.@: E.@: Lesk; Bell Laboratories; 1978.} describes @code{CW}
+and @code{GW} registers that can be used to control the column width and
+gutter width, respectively.  These registers are not used in
+@code{groff} @file{ms}.  (However, see @code{MINGW} in @ref{ms Multiple
+Columns}.)
 
 @item
 Macros that cause a reset (paragraphs, headings, etc.@:) may change the
@@ -4204,10 +4215,8 @@ Displays are left-adjusted by default, not indented.  In @acronym{AT&T}
 @item
 Right-adjusted displays are available.  The @acronym{AT&T} @code{troff}
 @file{ms} manual observes that ``it is tempting to assume that @samp{.DS
-R} will right adjust lines, but it doesn't
-work''.@footnote{``Typing Documents on the UNIX System: Using the -ms
-Macros with Troff and Nroff''; M.@: E.@: Lesk; Bell Laboratories; 1978.}
-In @code{groff} @file{ms}, it does.
+R} will right adjust lines, but it doesn't work''.  In @code{groff}
+@file{ms}, it does.
 
 @item
 @code{groff} @file{ms} handles @code{S} as the first argument to the
@@ -4218,28 +4227,9 @@ In @code{groff} @file{ms}, it does.
 This register is set to@tie{}1 by the @code{groff} @file{ms} macros, but
 it is not used by the @acronym{AT&T} @code{troff} @file{ms} macros.
 Documents that need to determine whether they are being formatted with
-@acronym{AT&T} @samp{troff -ms} or @code{groff} @file{ms} should use
-this register.
+@code{groff} @file{ms} or another implementation should use this
+register.
 @endDefmpreg
-
-@c Emulations of a few ancient Bell Labs macros can be re-enabled by
-@c calling the otherwise undocumented @code{SC} section-header macro.
-@c Calling @code{SC} enables @code{UC} for marking up a product or
-@c application name, and the pair @code{P1}/@code{P2} for surrounding
-@c code example displays.
-@c
-@c These are not enabled by default because (a)@tie{}they were not
-@c documented in the original @code{ms} manual@footnote{@slanted{Ibid.}}
-@c and (b)@tie{}the @code{P1} and @code{UC} macros collide with
-@c different macros with the same names in the Berkeley version of
-@c @code{ms}.
-@c
-@c These @code{groff} emulations are sufficient to give back the 1976
-@c Kernighan@tie{}& Cherry @command{eqn} manual @cite{Typesetting
-@c Mathematics---User's Guide} its section headings, and restore some
-@c text that had gone missing as arguments of undefined macros.  No
-@c warranty express or implied is offered as to how well the typographic
-@c details these produce match the original Bell Labs macros.
 
 @menu
 * Missing ms Macros::
@@ -4322,7 +4312,7 @@ that was introduced in the Seventh Edition Unix (1979) version of the
 
 Several new strings are available as well.  You can change these to
 handle (for example) the local language.  @xref{ms Strings and Special
-Characters}, for details.
+Characters}.
 
 @c ---------------------------------------------------------------------
 

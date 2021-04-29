@@ -471,11 +471,11 @@ collects text on input lines following a call to this macro into the
 author's name until reaching an
 .CW .AI ,
 .CW .AB ,
+another
+.CW .AU ,
 or heading or paragraph macro.
 .
-Call
-.CW .AU
-repeatedly to specify multiple authors.
+Call it repeatedly to specify multiple authors.
 T}
 _
 \&.AI	T{
@@ -2464,14 +2464,43 @@ register that was documented but apparently not implemented in
 .I troff .
 Several new string registers are available as well.
 You can change these to handle (for example) the local language.
+.
+.
 .IP REFERENCES 0.5i
-Contains the string printed at the beginning of the
-references (bibliography) page.
+Contains the string printed at the beginning of a references
+(bibliography) page produced with GNU
+.I refer (1).
+.
+The default is
+.CW References \[rq]. \[lq]
+.\" XXX: Use of refer(1) with ms is insufficiently documented.
+.
+.
 .IP ABSTRACT
 Contains the string printed at the beginning of the abstract.
+.
+The default is
+.CW \[rs]f[I]ABSTRACT\[rs]f[] \[rq]; \[lq]
+it includes font style escapes to set the word in italics.
+.
+.
 .IP TOC
 .br
 Contains the string printed at the beginning of the table of contents.
+.
+The default is
+.CW "Table of Contents" \[rq]. \[lq]
+.
+.
+.IP "MONTH1, MONTH2, MONTH3, .\|.\|.\|, MONTH10, MONTH11, MONTH12"
+Contain the full names of the calendar months.
+.
+The defaults are in English:
+.CW January \[rq], \[lq]
+.CW February \[rq],\[lq]
+and so on.
+.
+.
 .\" ------------------------
 .if t .bp
 .NH 1

@@ -360,11 +360,11 @@ collects text on input lines following a call to this macro into the
 author's name until reaching an
 .BR .AI ,
 .BR .AB ,
-or heading or paragraph macro.
+another
+.BR .AU ,
+or heading or paragraph macro call.
 .
-Call
-.B .AU
-repeatedly to specify multiple authors.
+Call it repeatedly to specify multiple authors.
 .
 .
 .TP
@@ -1552,9 +1552,13 @@ does not.)
 .
 .IP \[bu]
 .I groff ms
-does not work in compatibility mode (e.g., with the
-.B \-C
-option).
+does not work in
+.IR \%@g@troff 's
+compatibility mode.
+.
+If loaded when that mode is enabled,
+it aborts processing with a diagnostic message.
+.
 .
 .IP \[bu]
 There is no support for typewriter-like devices.
@@ -1567,18 +1571,33 @@ does not provide cut marks.
 Multiple line spacing is not supported
 (use a larger vertical spacing instead).
 .
+.
 .IP \[bu]
-Some Unix
-.I ms
-documentation says that the
+The AT&T
+.I troff ms
+manual
+(\[lq]Typing Documents on the UNIX System: Using the \-ms Macros with
+Troff and Nroff\[rq];
+M.\& E.\& Lesk;
+Bell Laboratories;
+1978)
+describes
 .B CW
 and
 .B GW
-registers can be used to control the column width and gutter width,
+registers that can be used to control the column width and gutter width,
 respectively.
 .
 These registers are not used in
 .IR "groff ms" .
+.
+(However,
+see
+.B MINGW
+in the \[lq]Other Settings\[rq] table of subsection \[lq]Document
+control settings\[rq],
+above.
+.
 .
 .IP \[bu]
 Macros that cause a reset
@@ -1603,17 +1622,58 @@ macros.
 .IP \[bu]
 To make
 .I groff ms
-use the default page offset (which also specifies the left margin),
+use the default page offset
+(which also specifies the left margin),
 the
 .B PO
 register must stay undefined until the first
 .B ms
-macro is evaluated.
+macro is called.
 .
 This implies that
 .B PO
-should not be used early in the document, unless it is changed also:
-remember that accessing an undefined register automatically defines it.
+should not be used early in the document,
+unless it is changed also:
+accessing an undefined register automatically defines it.
+.
+.
+.IP \[bu]
+Displays are left-adjusted by default,
+not indented.
+.
+In AT&T
+.IR "troff ms" ,
+.B .DS
+is synonymous with
+.RB \[lq] ".DS I" \[rq];
+in
+.IR "groff ms" ,
+it is synonymous with
+.RB \[lq] ".DS L" \[rq].
+.
+.
+.IP \[bu]
+Right-adjusted displays are available.
+.
+The AT&T
+.I troff ms
+manual observes that \[lq]it is tempting to assume that \[oq].DS R\[cq]
+will right adjust lines,
+but it doesn't work\[rq].
+.
+In
+.IR "groff ms" ,
+it does.
+.
+.
+.IP \[bu]
+.I groff ms
+handles
+.RB \[lq] S \[rq]
+as the first argument to the
+.B NH
+macro specially,
+allowing explicit numbering of headings.
 .
 .
 .IP \[bu]
@@ -1622,16 +1682,13 @@ The register
 is set to\~1 by the
 .I groff ms
 macros,
-but is not used by the Unix
-.I ms
+but is not used by the AT&T
+.I troff ms
 macros.
 .
 Documents that need to determine whether they are being formatted with
-Unix
-.I ms
-or
 .I groff ms
-should use this register.
+or another implementation should use this register.
 .
 .
 .\" ====================================================================
@@ -1649,7 +1706,7 @@ lfCR lfCR.
 String	Default
 _
 REFERENCES	References
-ABSTRACT	ABSTRACT
+ABSTRACT	\[rs]f[I]ABSTRACT\[rs]f[]
 TOC	Table of Contents
 MONTH1	January
 MONTH2	February
@@ -1666,6 +1723,10 @@ MONTH12	December
 _
 .TE
 .RE
+.
+The default for
+.B ABSTRACT
+includes font style escapes to set the word in italics.
 .
 .
 .PP
