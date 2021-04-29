@@ -1599,6 +1599,23 @@ and
 .B RE
 macros.
 .
+.
+.IP \[bu]
+To make
+.I groff ms
+use the default page offset (which also specifies the left margin),
+the
+.B PO
+register must stay undefined until the first
+.B ms
+macro is evaluated.
+.
+This implies that
+.B PO
+should not be used early in the document, unless it is changed also:
+remember that accessing an undefined register automatically defines it.
+.
+.
 .IP \[bu]
 The register
 .B GS
@@ -1615,23 +1632,6 @@ Unix
 or
 .I groff ms
 should use this register.
-.
-.IP \[bu]
-To make
-.I groff ms
-use the default page offset (which also specifies the left margin),
-the
-.B PO
-register must stay undefined until the first
-.B ms
-macro is evaluated.
-.
-This implies that
-.B PO
-should not be used early in the document, unless it is changed also:
-remember that accessing an undefined register automatically defines it.
-.br
-.ne 23
 .
 .
 .\" ====================================================================
