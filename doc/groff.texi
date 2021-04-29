@@ -2409,13 +2409,13 @@ documentation.
 @section @file{ms}
 @cindex @code{ms} macros
 
-The @code{ms} (``manuscript'') package is suitable for the preparation
+The @file{ms} (``manuscript'') package is suitable for the preparation
 of reports, letters, memoranda, books, and manuals.  These @code{groff}
 macros support cover page and table of contents generation, section
 headings, multiple paragraph styles, text styling (including font
 changes), lists, footnotes, pagination control, and indexing.
 
-@code{ms} supports the @command{tbl}, @command{eqn}, @command{pic}, and
+@file{ms} supports the @command{tbl}, @command{eqn}, @command{pic}, and
 @command{refer} preprocessors for inclusion of tables, mathematical
 equations, diagrams, and standardized bibliographic citations.
 
@@ -2449,7 +2449,7 @@ re-implementation.  Some macros specific to @acronym{AT&T} or Berkeley
 @file{ms} are not included, while several features have been added; see
 @ref{Differences from AT&T ms}.
 
-If you're in a hurry to get started, you need only know that @code{ms}
+If you're in a hurry to get started, you need only know that @file{ms}
 needs one of its macros called at the beginning of a document so that it
 can initialize.  A paragraph macro like @code{PP} (if you want your
 paragraph to have a first-line indent) or @code{LP} (if you don't)
@@ -2858,7 +2858,6 @@ Use the ``report'' (@acronym{AT&T}: ``released paper'') format for your
 document, creating a separate cover page.  The default arrangement is to
 print most of the document description (title, author names and
 institutions, and abstract, but not the date) at the top of page@tie{}1.
-
 If the optional @code{no} argument is given, @file{ms} prints a cover
 page but does not repeat any of its information on page@tie{}1 (see the
 @code{DA} macro below regarding the date).
@@ -4155,7 +4154,7 @@ This section lists the (minor) differences between the @code{groff}
 @itemize @bullet
 @item
 The internals of @code{groff} @file{ms} differ from the internals of
-@acronym{AT&T} @samp{troff -ms}.  Documents that depend upon
+@acronym{AT&T} @code{troff} @file{ms}.  Documents that depend upon
 implementation details of @acronym{AT&T} @code{troff} @file{ms} may not
 format properly with @code{groff} @file{ms}.
 
@@ -4193,8 +4192,8 @@ and @code{RE} macros.
 @item
 To make @code{groff} @file{ms} use the default page offset (which also
 specifies the left margin), the @code{PO} register must stay undefined
-until the first @file{-ms} macro is evaluated.  This implies that
-@code{PO} should not be used early in the document, unless it is changed
+until the first @file{ms} macro is called.  This implies that
+@code{PO} should not be used early in the document unless it is changed
 also: accessing an undefined register automatically defines it.
 
 @item
@@ -4295,7 +4294,7 @@ setting code examples); @code{groff} @file{ms} does not.
 @subsubsection @code{groff} macros not appearing in @acronym{AT&T} @code{troff}
 
 The @code{groff} @file{ms} macros have a few minor extensions to the
-@acronym{AT&T} @samp{troff -ms} macros.
+@acronym{AT&T} @code{troff} @file{ms} macros.
 
 @Defmac {AM, , ms}
 Use improved accent marks.  @xref{ms Strings and Special Characters},
@@ -4318,7 +4317,7 @@ The following additional registers appear in @code{groff} @file{ms}.
 Specifies a minimum space (``gutter width'') between columns (for
 multi-column output); this takes the place of the @code{GW} register
 that was introduced in the Seventh Edition Unix (1979) version of the
-@acronym{AT&T} @samp{troff -ms} macros.
+@acronym{AT&T} @code{troff} @file{ms} macros.
 @endDefmpreg
 
 Several new strings are available as well.  You can change these to
@@ -4328,7 +4327,7 @@ Characters}, for details.
 @c ---------------------------------------------------------------------
 
 @node ms Naming Conventions,  , Differences from AT&T ms, ms
-@subsection ms Naming Conventions
+@subsection @file{ms} Naming Conventions
 @cindex @code{ms} macros, naming conventions
 @cindex naming conventions, @code{ms} macros
 

@@ -441,8 +441,6 @@ and abstract,
 but not the date)
 at the top of page\~1.
 .
-.
-.sp \n[PD]u
 If the optional
 .CW no
 argument is given,
