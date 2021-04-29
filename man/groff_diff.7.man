@@ -4539,6 +4539,19 @@ have become supported by other implementations.
 .
 .
 .P
+When adjusting to both margins,
+AT&T
+.I troff \" AT&T
+at first stretches spaces starting from the right;
+.I \%@g@troff
+begins from the left.
+.
+Both implementations stretch spaces from opposite ends on alternating
+output lines in this adjustment mode to prevent \[lq]rivers\[rq] in the
+text.
+.
+.
+.P
 .I groff
 does not always hyphenate words as
 .RI AT&T\~ troff
@@ -4584,7 +4597,7 @@ also interprets
 .B \[rs]*[
 and
 .B \[rs]n[
-as a reference to a string or number register,
+as an interpolation of a string or number register,
 respectively,
 called
 .RB \[lq] [ \[rq].
@@ -4690,7 +4703,7 @@ at the beginning of your file,
 followed by
 .RS
 .EX
-\&.cp _my_saved_C
+\&.cp \[rs]n[_my_saved_C]
 .EE
 .RE
 at the end.
@@ -4852,6 +4865,20 @@ it sets the point size to 10\~scaled points.
 .
 See subsection \[lq]Fractional point sizes and new scale indicators\[rq]
 above.
+.
+.
+.P
+The
+.B .bp
+request differs from AT&T
+.IR troff : \" AT&T
+GNU
+.I troff \" GNU
+does not accept a scaling indicator on the argument,
+a page number;
+the former
+(somewhat uselessly)
+does.
 .
 .
 .P
