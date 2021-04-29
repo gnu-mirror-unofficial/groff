@@ -2500,7 +2500,7 @@ Contain the full names of the calendar months.
 .
 The defaults are in English:
 .CW January \[rq], \[lq]
-.CW February \[rq],\[lq]
+.CW February \[rq], \[lq]
 and so on.
 .
 .
