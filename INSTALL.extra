@@ -141,9 +141,11 @@ displays the groff(1) man page with the `less' pager.  (You might prefer
 either the `-Tlatin' or `-Tutf8' option to `-Tascii' depending on the
 character set you're using.)
 
-The groff texinfo manual in GNU info format has to be installed to be
-usable by the info(1) command or Emacs's info mode, but it can be viewed
-as text as well (albeit text encoded in ISO Latin-1).
+The groff texinfo manual can be previewed as an info document.
+
+  info ./doc/groff.info
+
+It can be viewed as text as well (albeit text encoded in ISO Latin-1).
 
   iconv -f latin1 -t utf8 doc/groff.txt | less # for UTF-8 users
   less doc/groff.txt # for Latin-1 users
