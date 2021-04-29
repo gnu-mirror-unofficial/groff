@@ -4934,7 +4934,7 @@ Macro definitions can be collected into @dfn{macro files}, @code{roff}
 input files designed to produce no output themselves but instead ease
 the preparation of other @code{roff} documents.  There is no syntactical
 difference between a macro file and any other @code{roff} document; only
-its purpose distinguishes it.  When a macro file is installed into a
+its purpose distinguishes it.  When a macro file is installed at a
 standard location and suitable for use by a general audience, it is
 often termed a @dfn{macro package}.@footnote{Macro packages frequently
 define registers and strings as well.}  Macro packages can be loaded by
@@ -5029,8 +5029,8 @@ Some input encoding characters may not be available for a particular
 output driver.  For terminal devices, fallbacks are defined, like
 @samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.  For
 typesetter devices it usually suffices to install fonts that have
-compatible metrics with other fonts used in the document and contain the
-necessary glyphs.
+compatible metrics with other fonts used in the document and which
+contain the necessary glyphs.
 
 @pindex freeeuro.pfa
 @pindex ec.tmac
@@ -5057,7 +5057,7 @@ default).}
 Since GNU @code{troff} fills text automatically, it is common practice
 in @code{roff} languages to not attempt careful visual composition of
 text in input files: it is the esthetic appeal of the formatted output
-that matters.  Instead, @code{troff} input should be arranged such that
+that matters.  Therefore, @code{roff} input should be arranged such that
 it is easy for authors and maintainers to compose and develop the
 document, understand the syntax of @code{roff} requests, macro calls,
 and preprocessor languages used, and predict the behavior of the
@@ -5892,7 +5892,10 @@ yy: `A' `test with "quotes"' `.'
 @endExample
 
 @noindent
-since @code{gtroff} preserves the input level.
+@cindex input level
+@cindex level, input
+since GNU @code{troff} preserves the @dfn{input level}; that is, the
+nesting depth of interpolations.
 
 @item
 Use the double-quote glyph @code{\(dq}.  This works with and without
@@ -5900,12 +5903,12 @@ compatibility mode enabled since GNU @code{troff} doesn't convert
 @code{\(dq} back to a double-quote input character.
 
 This method won't work with @acronym{AT&T} @code{troff} since it doesn't
-define the `dq` special character.
+define the @code{dq} special character.
 @end itemize
 
 @cindex @code{ds} request, and double quotes
 Double quotes in the @code{ds} request are handled differently.
-@xref{Strings}, for more details.
+@xref{Strings}.
 
 @c ---------------------------------------------------------------------
 
@@ -6952,8 +6955,8 @@ ragged-right text.
 Adjust text to the right margin, producing ragged-left text.
 @end table
 
-Finally, @var{mode} can be the numeric argument returned by the
-@code{.j} register.
+Finally, @var{mode} can be a value previously stored in the @code{.j}
+register.
 
 Using @code{ad} without an argument is the same as @samp{.ad \n[.j]}.
 In particular, GNU @code{troff} adjusts lines in the same way it did
@@ -6998,13 +7001,13 @@ left
 @endExample
 
 @cindex adjustment mode register (@code{.j})
-The current adjustment mode is available in the read-only register
-@code{.j}; it can be stored and subsequently used to set adjustment.
-The adjustment mode and enablement status are associated with the
+The adjustment mode and enablement status are encoded in the read-only
+register @code{.j}.  These parameters are associated with the
 environment (@pxref{Environments}).
 
 The value of @code{.j} for any adjustment mode is an implementation
-detail and should not be relied upon as a programmer's interface.
+detail and should not be relied upon as a programmer's interface.  Do
+not write logic to interpret or perform arithmetic on it.
 @endDefreq
 
 @Defreq {na, }
@@ -8714,7 +8717,7 @@ For terminal output devices, it is set to 0 in the startup file
 @cindex CSTR@tie{}#54 errata
 @cindex CSTR@tie{}#54 erratum, @code{po} request
 This request is incorrectly documented in the @acronym{AT&T}
-@code{troff} manual as using a default scaling indicator of @samp{v}.
+@code{troff} manual as having a default scaling indicator of @samp{v}.
 
 The current page offset can be found in the read-only register
 @samp{.o}.
@@ -9071,9 +9074,6 @@ This doesn't affect the register@tie{}@code{%}.
 
 @xref{Traps}.
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
@@ -9095,10 +9095,9 @@ page after @code{bp} has finished).  The difference between @code{bp}
 and @code{pn} is that @code{pn} does not cause a break or actually
 eject a page.  @xref{Page Layout}.
 @cindex CSTR@tie{}#54 errata
-@cindex CSTR@tie{}#54 erratum, @code{br} request
+@cindex CSTR@tie{}#54 erratum, @code{bp} request
 This request is incorrectly documented in the @acronym{AT&T}
-@code{troff} manual as using a default scaling indicator of @samp{v},
-but it takes no scaling indicator at all.
+@code{troff} manual as having a default scaling indicator of @samp{v}.
 
 @Example
 .de newpage                         \" define macro
@@ -9214,6 +9213,9 @@ one.
 @xref{Diversions}, for a comparison with the @code{.h} and @code{.d}
 registers.
 @endDefreg
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
@@ -15363,6 +15365,14 @@ with documents written using old versions of @code{troff}.  Some GNU
 extensions to @code{troff} have become supported by other
 implementations.
 
+@cindex adjustment to both margins, difference from @acronym{AT&T} @code{troff}
+@cindex rivers
+When adjusting to both margins, @acronym{AT&T} @code{troff} at first
+stretches spaces starting from the right; GNU @code{troff} begins from
+the left.  Both implementations stretch spaces from opposite ends on
+alternating output lines in this adjustment mode to prevent ``rivers''
+in the text.
+
 @cindex hyphenation, incompatibilities with @acronym{AT&T} @code{troff}
 GNU @code{troff} does not always hyphenate words as @acronym{AT&T}
 @code{troff} does.  The @acronym{AT&T} implementation uses a set of
@@ -15380,17 +15390,15 @@ Long names may be GNU @code{troff}'s most obvious innovation.
 @acronym{AT&T} @code{troff} interprets @samp{.dsabcd} as defining a
 string @samp{ab} with contents @samp{cd}.  Normally, GNU @code{troff}
 interprets this as a call of a macro named @code{dsabcd}.
-@acronym{AT&T} @code{troff} also interprets @code{\*[} and @code{\n[} as
-a reference to a string or register, respectively, called @samp{[}.  In
-GNU @code{troff}, however, the @samp{[} is normally interpreted as
+@acronym{AT&T} @code{troff} also interprets @samp{\*[} and @samp{\n[} as
+an interpolation of a string or register, respectively, named @samp{[}.
+In GNU @code{troff}, however, the @samp{[} is normally interpreted as
 delimiting a long name.  In compatibility mode, GNU @code{troff}
 interprets names in the traditional way, which means that they are
 limited to one or two characters.
 
 @DefreqList {cp, [@Var{n}]}
-@DefreqItemx {do, name}
-@DefregItemx {.C}
-@DefregListEndx {.cp}
+@DefregListEndx {.C}
 If @var{n} is missing or non-zero, turn on compatibility mode;
 otherwise, turn it off.
 
@@ -15399,7 +15407,10 @@ The read-only register @code{.C} is@tie{}1 if compatibility mode is on,
 
 Compatibility mode can be also turned on with the @option{-C}
 command-line option.
+@endDefreq
 
+@DefreqList {do, name}
+@DefregListEndx {.cp}
 The @code{do} request interprets the string, request, diversion, or
 macro @var{name} (along with any further arguments) with compatibility
 mode disabled.  Compatibility mode is restored (only if it was active)
@@ -15457,21 +15468,22 @@ _my_saved_C \n(.C} will not work in compatibility mode; the register
 name is too long.  ``This is exactly what @code{do} is for,'' you think,
 @samp{.do nr _my_saved_C \n(.C}.  The foregoing will always save zero to
 your register, because @code{do} turns compatibility mode @emph{off}
-while it interprets its argument list.  What you need is:
+while it interprets its argument list.
+
+@need 375 @c 250 < x < 500
+To robustly save compatibility mode before switching it off, use
 
 @Example
 .do nr _my_saved_C \n[.cp]
 .cp 0
 @endExample
 
-@noindent
 at the beginning of your file, followed by
 
 @Example
-.cp _my_saved_C
+.cp \n[_my_saved_C]
 @endExample
 
-@noindent
 at the end.  As in the C language, we all have to share one big
 name space, so choose a register name that is unlikely to collide with
 other uses.
@@ -15560,6 +15572,11 @@ Fractional point sizes cause one noteworthy incompatibility.  In
 indicators and thus @samp{.ps 10u} sets the point size to
 10@tie{}points, whereas in GNU @code{troff} it sets the point size to
 10@tie{}scaled points.  @xref{Fractional Type Sizes}.
+
+@cindex @code{bp} request, incompatibilities with @acronym{AT&T} @code{troff}
+The @code{bp} request differs from @acronym{AT&T} @code{troff}:
+GNU @code{troff} does not accept a scaling indicator on the argument, a
+page number; the former (somewhat uselessly) does.
 
 @cindex @code{pm} request, incompatibilities with @acronym{AT&T} @code{troff}
 The @code{pm} request differs from @acronym{AT&T} @code{troff}:
