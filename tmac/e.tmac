@@ -1369,12 +1369,16 @@
 .\}
 ..
 .
-.de PE			\" *** end picture
+.de PF			\" *** end picture; "fly back" to top
 .if \\n(?n .PS_nm_check resume
 .ls
 .in
 .if \\n(g7 .fi
 .do HTML-IMAGE-END
+..
+.
+.de PE			\" *** end picture
+.PF
 .sp .6
 ..
 .
