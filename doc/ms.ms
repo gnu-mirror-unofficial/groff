@@ -2107,8 +2107,16 @@ lf(CR) lx .
 \f[CB]FF\f[] value	Description
 _
 0	T{
-Indent the footnote paragraph and set the marker as a superscript
-(default).
+Set an automatic number as a superscript
+(on typesetter devices)
+or surrounded by square brackets
+(on terminals).
+.
+The footnote paragraph is indented if there is an
+.CW .FS
+argument or an automatic number.
+.
+This is the default.
 T}
 1	T{
 Like

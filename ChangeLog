@@ -1,5 +1,26 @@
 2021-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac: Implement alternative rendering for automatic
+	footnote numbers in nroff mode, inspired by Heirloom Doctools
+	ms; since superscripting is not univerally available on
+	terminals, surround number with square brackets instead.
+	(fn@init): New macro finishes initializing footnote module,
+	setting up aliases to par@sup-{start,end} strings in troff mode
+	and otherwise defining fn@sup-{start,end} as brackets.  Define *
+	string here, using new strings.
+	(par): Call fn@init after par@sup-{start,end} are defined, and
+	prior to other footnote integration material.
+	(par*fp!0): Migrate from par@sup-{start,end} to
+	fn@sup-{start,end}.
+
+	* doc/groff.texi (ms Document Control Settings) <FF>:
+	* doc/ms.ms (Footnotes) <FF>:
+	* tmac/groff_ms.7.man (Usage/Footnotes) <FF>: Document it.
+
+	Fixes <https://savannah.gnu.org/bugs/?60228>.
+
+2021-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* test-groff.in: Stop passing the built groff executable -b and
 	-ww options by default.  This reverses a change from 2017.  Dave
 	Kemper has convincingly argued that there's no way to override

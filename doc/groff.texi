@@ -2757,8 +2757,10 @@ and those for which the @code{FS} request is given a marker argument, at
 the bottom of a column or page.  This is a Berkeley extension.
 @table @code
 @item 0
-Indent the footnote paragraph and set the marker as a superscript
-(default).
+Set an automatic number as a superscript (on typesetter devices) or
+surrounded by square brackets (on terminals).  The footnote paragraph is
+indented if there is an @code{FS} argument or an automatic number.  This
+is the default.
 
 @item 1
 Like @code{0}, but set the marker as regular text and follow an
