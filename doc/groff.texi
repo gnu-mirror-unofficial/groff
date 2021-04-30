@@ -3244,8 +3244,10 @@ otherwise.  This is a Version@tie{}10 Research Unix extension.
 @endDefmac
 
 @Defmac {BX, [@Var{txt}], ms}
-Prints its argument and draws a box around it.  If you want to box a
-string that contains spaces, use a digit-width space (@code{\0}).
+Prints @var{txt} and draws a box around it.  On terminal devices,
+reverse video is used instead.  If you want the argument to contain
+space, use non-breaking space escapes of appropriate width (@code{\~},
+@code{\^}, @code{\|}, @code{\0}) or @code{\h}.
 @endDefmac
 
 @Defmac {UL, [@Var{txt} [@Var{post}]], ms}

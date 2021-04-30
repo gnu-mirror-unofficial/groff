@@ -1529,10 +1529,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .\" box a word
 .de BX
-.nr par*bxw \w'\\$1'+.4m
-\Z'\v'.25m'\D'l 0 -1m'\D'l \\n[par*bxw]u 0'\D'l 0 1m'\D'l -\\n[par*bxw]u 0''\
-\Z'\h'.2m'\\$1'\
-\h'\\n[par*bxw]u'
+.nr par*bxw \w'\\$1'
+.ie t \{\
+.nr par*bxw +.4m
+\Z'\v'.25m'\
+\D'l 0 -1m'\D'l \\n[par*bxw]u 0'\D'l 0 1m'\D'l -\\n[par*bxw]u 0''\
+\Z'\h'.2m'\\$1'\h'\\n[par*bxw]u'
+.\}
+.el \m[black]\M[white]\Z'\\$1'\h'\\n[par*bxw]u'\m[]\M[]
 ..
 .\" The first time UX is used, put a registered mark after it.
 .ds par*ux-rg \(rg

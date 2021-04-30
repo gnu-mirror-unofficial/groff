@@ -861,10 +861,22 @@ This is a Version\~10 Research Unix extension.
 .TP
 .B .BX\c
 .RI " [" txt ]
-Prints its argument and draws a box around it.
+Prints
+.I txt
+and draws a box around it.
 .
-If you want to box a string that contains spaces,
-use a digit-width space (\[rs]0).
+On terminal devices,
+reverse video is used instead.
+.
+If you want the argument to contain space,
+use non-breaking space escapes of appropriate width
+.RB ( \[rs]\[ti] ,
+.BR \[rs]\[ha] ,
+.BR \[rs]| ,
+.BR \[rs]0 ),
+or
+.BR \[rs]h .
+.
 .
 .TP
 .B .UL\c

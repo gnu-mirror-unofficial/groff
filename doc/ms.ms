@@ -1211,12 +1211,24 @@ This is a Version\~10 Research Unix extension.
 T}
 _
 \&.BX [txt]	T{
-Prints its argument and draws a
+Prints
+.I txt
+and draws a
 .BX box
 around it.
 .
-If you want to box a string that contains spaces,
-use a digit-width space (\\0).
+On terminal devices,
+reverse video is used instead
+(see the implementation note below).
+.
+If you want the argument to contain space,
+use non-breaking space escapes of appropriate width
+.CW \[rs]\[ti] , (
+.CW \[rs]\[ha] ,
+.CW \[rs]| ,
+.CW \[rs]0 ),
+or
+.CW \[rs]h .
 T}
 _
 \&.UL [txt [post]]	T{
@@ -1317,6 +1329,56 @@ as used in this document to note syntactical elements of
 .I ms
 and
 .I groff .
+.
+.
+.nr PS -2
+.nr VS -2
+.B1
+.LP
+.hy 0
+.I "Implementation note:"
+In
+.CW nroff
+mode,
+the
+.CW BX
+macro \[lq]boxes\[rq] its argument by bracketing it with
+.I groff
+extension escapes to set the foreground color to black and the
+background to white and then reset them to the defaults;
+the terminal output driver,
+.I grotty (1),
+converts these to ISO\~6429 color escapes,
+which may be ignored or mishandled by some terminals,
+or may be disabled by
+.I grotty 's
+.CW \-c
+option.
+.
+Further,
+if the terminal is set up to use these colors in those roles already,
+.CW .BX
+will cause no visible effect in the output.
+.
+Surmounting these challenges would require adding features to
+.I grotty ,
+for instance to provide a mechanism to request ISO\~6429's
+\[lq]standout\[rq] mode \" That's "smso" and "rmso" in terminfo.
+(often supported on monochrome terminals),
+or to replace the presumed support of the terminal for ISO\~6429 escapes
+with the use of a library that can query the capabilities of the
+terminal and adapt the output sent to the device accordingly.
+.
+(Practically,
+this likely means adding a dependency on
+.CW libtinfo .)
+.
+Contact the
+.I groff
+development mailing list if you'd like to contribute.
+.B2
+.nr PS +2
+.nr VS +2
 .
 .
 .NH 2
