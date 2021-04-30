@@ -1013,6 +1013,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .el .@error-recover mismatched .DE
 ..
 .de DS
+.if '\\n(.z'ds*div' .@error-recover cannot begin display within display
 .br
 .di ds*div
 .ie '\\$1'B' \{\
