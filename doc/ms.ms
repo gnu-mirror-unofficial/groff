@@ -2143,7 +2143,7 @@ to align with contemporary typesetting practices.
 .
 In the past,\**
 .FS
-in Version 7 Unix
+Version\~7 Unix
 .I ms ,
 its descendants,
 and GNU
@@ -2175,7 +2175,8 @@ should be used in preference to
 in contemporary documents.
 .
 The footnote line length is effectively computed as
-.CW "\[rs]n[\f[I]column-width\f[]] * \[rs]*[FR]" \[rq]. \[lq]
+.I column-width "" \[lq]
+.CW "\~*\~\[rs]*[FR]" \[rq].
 .
 If an absolute footnote line length is required,
 recall that arithmetic expressions in
@@ -2190,7 +2191,7 @@ lf(CR).
 .TE
 .
 .
-.PP
+.LP \" continuing previous paragraph
 Changes to the footnote length ratio
 .CW \[rs]*[FR]
 take effect with the next footnote written in single-column

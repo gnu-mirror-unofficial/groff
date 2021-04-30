@@ -3757,17 +3757,17 @@ Control Settings}.
 The default footnote line length is 11/12ths of the normal line length
 for compatibility with the expectations of historical @file{ms}
 documents; you may wish to set the @code{FR} string to @samp{1} to align
-with contemporary typesetting practices.  In the past,@footnote{in
-Version 7 Unix @file{ms}, its descendants, and GNU @file{ms} prior to
-@code{groff} version 1.23.0} an @code{FL} register was used for the line
-length in footnotes; however, setting this register at document
-initialization time had no effect on the footnote line length in
-multi-column arrangements.@footnote{You could reset it after each call
-to @code{.1C}, @code{.2C}, or @code{.MC}.}
+with contemporary typesetting practices.  In the
+past,@footnote{Version@tie{}7 Unix @file{ms}, its descendants, and GNU
+@file{ms} prior to @code{groff} version 1.23.0} an @code{FL} register
+was used for the line length in footnotes; however, setting this
+register at document initialization time had no effect on the footnote
+line length in multi-column arrangements.@footnote{You could reset it
+after each call to @code{.1C}, @code{.2C}, or @code{.MC}.}
 
 @code{FR} should be used in preference to the old @code{FL} register in
 contemporary documents.  The footnote line length is effectively
-computed as @samp{\n[@slanted{column-width}] * \*[FR]}.  If an absolute
+computed as @samp{@slanted{column-width} * \*[FR]}.  If an absolute
 footnote line length is required, recall that arithmetic expressions in
 @code{roff} languages are evaluated from left to right.
 
