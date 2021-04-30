@@ -1,5 +1,17 @@
 2021-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* test-groff.in: Stop passing the built groff executable -b and
+	-ww options by default.  This reverses a change from 2017.  Dave
+	Kemper has convincingly argued that there's no way to override
+	-b and turn backtraces on warnings/errors back off, and that the
+	built groff should behave as much like a "normal" one as
+	possible.  The latter factor is of added importance now that we
+	are using test-groff for generation of documents.
+
+	* src/roff/groff/tests/regression_savannah_58153.sh: Adapt.
+
+2021-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/s.tmac (BX): Add alternative implementation for terminal
 	{nroff} devices.  Store width of boxed text, adding .4m only on
 	troff devices (to make room for the vertical box lines).  Break
