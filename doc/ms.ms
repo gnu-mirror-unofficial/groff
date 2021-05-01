@@ -2299,7 +2299,7 @@ These are summarized in the \[lq]Margins\[rq] section of the table in
 section \[lq]Document control settings\[rq] above.
 .
 There is no right margin setting;
-the combination of page offset and line length provide the information
+the combination of page offset and line length provides the information
 necessary to derive the right margin.
 .KE
 .
