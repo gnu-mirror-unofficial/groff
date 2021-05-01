@@ -1,9 +1,20 @@
 2021-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Add regression test for Savannah #60222.
+	Restore default IP paragraph indentation after an SH call.
 
-	* tmac/tests/s_SH_resets_IP_indentation_amount: Do it.
-	* tmac/tmac.am (tmac_TESTS): Run it.
+	* tmac/s.tmac (par@finish): Set "ai" register for the current
+	environment to the paragraph indent (PI) setting for the current
+	environment.
+
+	* doc/groff.texi (Highlighting in ms) <IP>:
+	* doc/ms.ms (Highlighting) <IP>:
+	* tmac/groff_ms.7.man (Usage/Highlighting) <IP>: Update
+	documentation.
+
+	* tmac/tests/s_SH_resets_IP_indentation_amount: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?60222>.
 
 2021-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 

@@ -695,9 +695,8 @@ Once specified,
 .I width
 applies to further
 .CW .IP
-calls until specified again or a different paragraphing
-.\" or heading (Savannah #60222)
-macro is called.
+calls until specified again or a heading or different paragraphing macro
+is called.
 T}
 _
 \&.QP	T{
