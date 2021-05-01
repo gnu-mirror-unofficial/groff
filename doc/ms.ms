@@ -1344,7 +1344,7 @@ the
 macro \[lq]boxes\[rq] its argument by bracketing it with
 .I groff
 extension escapes to set the foreground color to black and the
-background to white and then reset them to the defaults;
+background to white and then reset them to their previous values;
 the terminal output driver,
 .I grotty (1),
 converts these to ISO\~6429 color escapes,
