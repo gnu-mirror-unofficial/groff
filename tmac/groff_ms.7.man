@@ -1696,6 +1696,39 @@ allowing explicit numbering of headings.
 .
 .
 .IP \[bu]
+.I groff ms
+supports the
+.B PN
+register,
+but it is not necessary;
+you can access the page number via the usual
+.B %
+register and use the
+.B af
+request to assign a different format to it if desired.
+.
+(If you redefine the
+.I ms
+.B PT
+macro \" I wouldn't mention that, but Lesk 1978 encourages doing so. :-/
+and desire special treatment of certain page numbers\[em]like
+.\" I wouldn't mention that, but Lesk 1978 encourages doing so.  :-/
+.RB \[lq] 1 \[rq]\[em]you
+may need to handle a non-decimal page number format,
+as
+.IR "groff ms" 's
+.B .PT
+does;
+see the macro package source.
+.
+.I groff ms
+aliases the
+.B PN
+register to
+.BR % .)
+.
+.
+.IP \[bu]
 The register
 .B GS
 is set to\~1 by the

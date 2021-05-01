@@ -1,9 +1,22 @@
 2021-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Add regression test for Savannah #59923.
+	[ms]: Restore support for AT&T ms PN register.
+
+	* tmac/s.tmac (pg): Make register PN an alias of %.
+
+	* doc/groff.texi (Differences from AT&T ms):
+	* doc/ms.ms (Differences from AT&T ms):
+	* tmac/groff_ms.7.man (Differences from troff ms): We don't need
+	PN, and it was removed in commit 08291b40 (25 October 2020), but
+	since it is documented in Lesk 1978 we're stuck with it.  Advise
+	users to stick with %.  Also warn them of the hoop they must
+	jump through if they redefine the page trap macro PT, which Lesk
+	1978 also encourages.
 
 	* tmac/tests/s_PN-works.sh: Test it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?59823>.
 
 2021-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 

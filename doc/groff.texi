@@ -4221,6 +4221,17 @@ R} will right adjust lines, but it doesn't work''.  In @code{groff}
 @item
 @code{groff} @file{ms} handles @code{S} as the first argument to the
 @code{NH} macro specially, allowing explicit numbering of headings.
+
+@item
+@code{groff} @file{ms} supports the @code{PN} register, but it is not
+necessary; you can access the page number via the usual @code{%}
+register and use the @code{af} request to assign a different format to
+it if desired.@footnote{If you redefine the @file{ms} @code{PT} macro
+@c I wouldn't mention that, but Lesk 1978 encourages doing so.  :-/
+and desire special treatment of certain page numbers (like @samp{1}),
+you may need to handle a non-decimal page number format, as @code{groff}
+@file{ms}'s @code{PT} does; see the macro package source.  @code{groff}
+@file{ms} aliases the @code{PN} register to @code{%}.}
 @end itemize
 
 @Defmpreg {GS, ms}

@@ -2445,6 +2445,42 @@ macros and
 .Acr AT&T
 .I "troff ms"
 macros.
+.
+.
+.PP
+.I "groff ms"
+supports the
+.CW PN
+register,
+but it is not necessary;
+you can access the page number via the usual
+.CW %
+register and use the
+.CW af
+request to assign a different format to it if desired.\**
+.FS
+If you redefine the
+.I ms
+.CW PT
+macro \" I wouldn't mention that, but Lesk 1978 encourages doing so. :-/
+and desire special treatment of certain page numbers
+(like
+.CW 1 \[rq], \[lq]
+you may need to handle a non-decimal page number format,
+as
+.I "groff ms" 's
+.CW .PT
+does;
+see the macro package source.
+.
+.I "groff ms"
+aliases the
+.CW PN
+register to
+.CW % .
+.FE
+.
+.
 .NH 2
 .BI troff
 macros not appearing in
