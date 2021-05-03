@@ -20,7 +20,7 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-# Regression-test Savannah #59923.
+# Regression-test Savannah #59823.
 #
 # Ensure retention of superfluous but fossilized register PN.
 
