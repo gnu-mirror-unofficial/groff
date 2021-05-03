@@ -4165,7 +4165,12 @@ This section lists the (minor) differences between the @code{groff}
 The internals of @code{groff} @file{ms} differ from the internals of
 @acronym{AT&T} @code{troff} @file{ms}.  Documents that depend upon
 implementation details of @acronym{AT&T} @code{troff} @file{ms} may not
-format properly with @code{groff} @file{ms}.
+format properly with @code{groff} @file{ms}.  Such details include
+macros whose function was not documented in the @acronym{AT&T}
+@code{troff} @file{ms} manual.@footnote{@cite{Typing Documents on the
+UNIX System: Using the -ms Macros with Troff and Nroff}, M.@: E.@: Lesk,
+Bell Laboratories, 1978.}
+@c XXX: We support RT anyway; maybe we should stop?
 
 @item
 The general error-handling policy of @code{groff} @file{ms} is to detect
@@ -4175,9 +4180,6 @@ and report errors, rather than silently to ignore them.
 @code{groff} @file{ms} does not work in GNU @code{troff}'s
 @acronym{AT&T} compatibility mode.  If loaded when that mode is enabled,
 it aborts processing with a diagnostic message.
-
-@item
-@code{groff} @file{ms} does not provide cut marks.
 
 @item
 Multiple line spacing is not supported.  Use a larger vertical spacing

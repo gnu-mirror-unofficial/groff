@@ -1533,16 +1533,25 @@ they cannot be used with AT&T
 .
 Other differences include:
 .
+.
 .IP \[bu] 3n
 The internals of
 .I groff ms
-differ from the internals of Unix
-.IR ms .
+differ from the internals of AT&T
+.IR "troff ms" .
 .
-Documents that depend upon implementation details of Unix
+Documents that depend upon implementation details of AT&T
 .I ms
 may not format properly with
 .IR "groff ms" .
+.
+Such details include macros whose function was not documented in the
+AT&T
+.I troff ms
+manual [Lesk 1978].
+.\" TODO: Use refer(1)?
+.\" XXX: We support RT anyway; maybe we should stop?
+.
 .
 .IP \[bu]
 The error-handling policy of
@@ -1581,10 +1590,6 @@ compatibility mode.
 If loaded when that mode is enabled,
 it aborts processing with a diagnostic message.
 .
-.
-.IP \[bu]
-.I groff ms
-does not provide cut marks.
 .
 .IP \[bu]
 Multiple line spacing is not supported

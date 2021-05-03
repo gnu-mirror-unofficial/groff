@@ -2448,6 +2448,25 @@ macros.
 .
 .
 .PP
+The internals of
+.I "groff ms"
+differ from the internals of AT&T
+.I "troff ms" .
+.
+Documents that depend upon implementation details of AT&T
+.I ms
+may not format properly with
+.I "groff ms" .
+.
+Such details include macros whose function was not documented in the
+AT&T
+.I "troff ms"
+manual [Lesk 1978].
+.\" TODO: Use refer(1).
+.\" XXX: We support RT anyway; maybe we should stop?
+.
+.
+.PP
 .I "groff ms"
 supports the
 .CW PN
