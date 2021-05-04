@@ -384,7 +384,7 @@ can be called to set the document date
 (or other identifier)
 at any time before (a) the abstract,
 if present,
-or (b) the end of the first page.
+or (b) its information is required in a header or footer.
 .
 Use of these macros is optional,
 except that
