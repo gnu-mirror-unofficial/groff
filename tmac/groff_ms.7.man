@@ -53,26 +53,54 @@ groff_ms \- GNU roff manuscript macro package for formatting documents
 .SH Description
 .\" ====================================================================
 .
-This manual page describes the GNU version of the
+The GNU implementation of the
 .I ms
-macros,
-part of the
+macros is part of the
 .I groff
 typesetting system.
 .
 The
 .I ms
-macros are mostly compatible with the documented behavior of the 4.3
-BSD Unix
-.I ms
-macros (see
-.I Differences from AT&T ms
-below for details).
+package is suitable for the composition of
+letters,
+memoranda,
+reports,
+and books.
 .
-The
+.
+.LP
+These
+.I groff
+macros support cover page and table of contents generation,
+automatic section numbering,
+several different paragraph styles,
+a variety of text styling options,
+footnotes,
+multi-column page layouts,
+and indexing.
+.
 .I ms
-macros are suitable for reports, letters, books, and technical
-documentation.
+supports the
+.IR \%@g@tbl (@MAN1EXT@),
+.IR \%@g@eqn (@MAN1EXT@),
+.IR \%@g@pic (@MAN1EXT@),
+and
+.IR \%@g@refer (@MAN1EXT@)
+preprocessors for inclusion of tables,
+mathematical equations,
+diagrams,
+and standardized bibliographic citations.
+.AE
+.
+.
+.LP
+This implementation is mostly compatible with the documented interface
+and behavior of AT&T Version\~7 Unix
+.IR ms .
+.
+Several extensions from 4.2BSD
+.\" Few changes were made in 4.3, Reno, Tahoe, or 4.4.
+and Version\~10 Research Unix have been recreated.
 .
 .
 .\" ====================================================================

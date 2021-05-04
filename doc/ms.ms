@@ -38,28 +38,22 @@ kollar@alltel.net
 .AB no
 The
 .I ms
-(\[lq]manuscript\[rq]) package is suitable for the preparation
-of reports,
+(\[lq]manuscript\[rq]) package is suitable for the composition of
 letters,
 memoranda,
-books,
-and manuals.
+reports,
+and books.
 .
 These
 .I groff
-macros support cover page and table of contents generation,
-section
-headings,
-multiple paragraph styles,
-text styling
-(including font changes),
-lists,
+macros feature cover page and table of contents generation,
+automatic section numbering,
+several different paragraph styles,
+a variety of text styling options,
 footnotes,
-pagination control,
+multi-column page layouts,
 and indexing.
 .
-.
-.PP
 .I ms
 supports the
 .I tbl ,
@@ -71,6 +65,14 @@ preprocessors for inclusion of tables,
 mathematical equations,
 diagrams,
 and standardized bibliographic citations.
+.
+This implementation is mostly compatible with the documented interface
+and behavior of AT&T Version\~7 Unix
+.I ms .
+.
+Several extensions from 4.2BSD
+.\" Few changes were made in 4.3, Tahoe, Reno, or 4.4.
+and Version\~10 Research Unix have been recreated.
 .AE
 .
 .
@@ -107,26 +109,6 @@ the
 .I ms
 macros are also suitable for longer documents intended for printing and
 possible publication.
-.
-.
-.PP
-The
-.I ms
-macro package included with
-.I groff
-is a complete re-implementation.
-.
-Some macros
-specific to
-.Acr AT&T
-or Berkeley
-.I ms
-are not included,
-while several features have been added;
-see section \[lq]Differences from
-.Acr AT&T
-.I ms \[rq]
-below.
 .
 .
 .PP
