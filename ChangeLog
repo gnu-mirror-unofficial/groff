@@ -1,5 +1,16 @@
 2021-05-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac (NL, SM, LG): Issue warning diagnostic if macro
+	called with arguments.
+	(par*define-font-macro): Construct font macro with diagnostic to
+	warn if called with excess arguments.
+	(UL, BX): Issue warning diagnostic if macro called with excess
+	arguments.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60522>.
+
+2021-05-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/groff.texi: Delete redefinition of \putwordAppendix
 	Texinfo macro.  This restores the word "Appendix" to the names
 	of all appendices and fixes two bad internal links to Appendix

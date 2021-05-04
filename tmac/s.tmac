@@ -1506,20 +1506,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ..
 .\" In paragraph macros.
 .de NL
+.if \En[.$] .@warning arguments to .NL ignored
 .ie (\\n[\\n[.ev]:PS] >= 1000) \
 .	ps (\\n[\\n[.ev]:PS]z / 1000u)
 .el \
 .	ps \\n[\\n[.ev]:PS]
 ..
 .de SM
+.if \En[.$] .@warning arguments to .SM ignored
 .ps -2
 ..
 .de LG
+.if \En[.$] .@warning arguments to .LG ignored
 .ps +2
 ..
 .\" par*define-font-macro macro font
 .de par*define-font-macro
 .de \\$1
+.if \En[.$]>3 .@warning excess arguments to .\\$1 ignored
 .ie \En[.$] \{\
 .	nr par*prev-font \En[.f]
 \&\E$3\f[\\$2]\E$1\f[\En[par*prev-font]]\E$2
@@ -1535,10 +1539,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .el   .par*define-font-macro CW CR
 .\" underline a word
 .de UL
+.if \En[.$]>2 .@warning excess arguments to .UL ignored
 \Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
 ..
 .\" box a word
 .de BX
+.if \En[.$]>1 .@warning excess arguments to .BX ignored
 .nr par*bxw \w'\\$1'
 .ie t \{\
 .nr par*bxw +.4m
