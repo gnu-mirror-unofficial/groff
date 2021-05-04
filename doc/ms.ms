@@ -20,8 +20,8 @@
 .nr VS 13
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND March 2021
-.EH '%''March 2021'
+.ND May 2021
+.EH '%''May 2021'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -2446,6 +2446,30 @@ AT&T
 manual [Lesk 1978].
 .\" TODO: Use refer(1).
 .\" XXX: We support RT anyway; maybe we should stop?
+.
+.
+.PP
+.I "groff ms"
+uses the same header and footer defaults in both
+.CW nroff
+and
+.CW troff
+modes
+as AT&T
+.I ms
+does in
+.CW troff
+mode;
+AT&T's default in
+.CW nroff
+mode is to put the date,
+in U.S.\& traditional format
+(e.g.,
+\[lq]January 1, 2021\[rq]),
+in the center footer
+(the
+.CW CF
+string).
 .
 .
 .PP
