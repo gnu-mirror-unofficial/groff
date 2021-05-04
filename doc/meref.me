@@ -1492,7 +1492,17 @@ both in basic units.
 .TL
 .b .PE
 .DE
-End picture.
+End
+.i pic
+picture,
+leaving the current position at the bottom of the picture.
+.TL
+.b .PF
+.DE
+End
+.i pic
+picture,
+leaving the current position at the top of the picture.
 .TL
 .b .IS
 .DE
@@ -1504,13 +1514,15 @@ picture.
 .DE
 End
 .i ideal
-picture.
+picture,
+leaving the current position at the bottom of the picture.
 .TL
 .b .IF
 .DE
 End
 .i ideal
-picture (alternate form).
+picture,
+leaving the current position at the top of the picture.
 .TL
 .b .GS
 .i x
@@ -1532,13 +1544,15 @@ Default is centering the image.
 .DE
 End
 .i gremlin
-picture.
+picture,
+leaving the current position at the bottom of the picture.
 .TL
 .b .GF
 .DE
 End
 .i gremlin
-picture (alternate form).
+picture,
+leaving the current position at the top of the picture.
 .sh 1 "Miscellaneous"
 .TL
 .b .re
@@ -2044,14 +2058,14 @@ NAME	TYPE	DESCRIPTION
 \&.EN	M	end equation
 \&.EQ	M	begin equation
 \eL\'\fI\&d\fP\'	F\(sc	vertical line drawing function for distance \fI\&d\fP
-\&.GE	M\(de	end \fIgremlin\fP picture
-\&.GF	M\(de	end \fIgremlin\fP picture (with flyback)
+\&.GE	M\(de	end \fIgremlin\fP picture with position at bottom
+\&.GF	M\(de	end \fIgremlin\fP picture with position at top
 \&.GS	M\(de	start \fIgremlin\fP picture
-\&.IE	M\(de	end \fIideal\fP picture
-\&.IF	M\(de	end \fIideal\fP picture (with flyback)
+\&.IE	M\(de	end \fIideal\fP picture with position at bottom
+\&.IF	M\(de	end \fIideal\fP picture with position at top
 \&.IS	M\(de	start \fIideal\fP picture
-\&.PE	M\(de	end \fIpic\fP picture
-\&.PF	M\(de	end \fIpic\fP picture (with flyback)
+\&.PE	M\(de	end \fIpic\fP picture with position at bottom
+\&.PF	M\(de	end \fIpic\fP picture with position at top
 \&.PS	M\(de	start \fIpic\fP picture
 \&.TE	M	end table
 \&.TH	M	end header of table
