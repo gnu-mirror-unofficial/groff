@@ -269,7 +269,7 @@ consisting of paragraphs interspersed with headings
 and augmented by lists, footnotes, tables, and other
 common constructs.
 .
-See section \[lq]Body text\[lq] below.
+See section \[lq]Body text\[rq] below.
 .
 .
 .IP "\fBTable of contents\fP"
@@ -365,7 +365,7 @@ Other	\[rs]n[DD]	Display distance (spacing)	next \[ps]	0.5v
 .
 .
 .LP
-Changes to the footnote length ratio
+Changes to the footnote line length ratio
 .CW \[rs]*[FR]
 take effect with the next footnote written in single-column
 arrangements,
@@ -473,7 +473,7 @@ author's name until reaching an
 .CW .AB ,
 another
 .CW .AU ,
-or heading or paragraph macro.
+or heading or paragraph macro call.
 .
 Call it repeatedly to specify multiple authors.
 T}
@@ -502,7 +502,7 @@ _
 \&.DA \f[R][\f[I]x\f[] .\|.\|.\&]	T{
 Print the current date,
 or any
-.I x , arguments\~ x
+.I x , arguments\~
 in footers,
 and,
 if
@@ -516,7 +516,7 @@ _
 \&.ND \f[R][\f[I]x\f[] .\|.\|.\&]	T{
 Print the current date,
 or any
-.I x , arguments\~ x
+.I x , arguments\~
 if
 .CW .RP
 is also called,
@@ -639,7 +639,7 @@ All paragraphing macro calls cause the insertion of vertical space in
 the amount stored in the
 .CW PD
 register,
-except at page breaks.
+except at page or column breaks.
 .KE
 .
 .
@@ -2443,7 +2443,7 @@ This section lists the (minor) differences between the
 .I "groff ms"
 macros and
 .Acr AT&T
-.I "troff ms"
+.I ms
 macros.
 .
 .
@@ -2451,7 +2451,7 @@ macros.
 The internals of
 .I "groff ms"
 differ from the internals of AT&T
-.I "troff ms" .
+.I ms .
 .
 Documents that depend upon implementation details of AT&T
 .I ms
@@ -2460,7 +2460,7 @@ may not format properly with
 .
 Such details include macros whose function was not documented in the
 AT&T
-.I "troff ms"
+.I ms
 manual [Lesk 1978].
 .\" TODO: Use refer(1).
 .\" XXX: We support RT anyway; maybe we should stop?
@@ -2484,7 +2484,7 @@ If you redefine the
 macro \" I wouldn't mention that, but Lesk 1978 encourages doing so. :-/
 and desire special treatment of certain page numbers
 (like
-.CW 1 \[rq], \[lq]
+.CW 1 \[rq]), \[lq]
 you may need to handle a non-decimal page number format,
 as
 .I "groff ms" 's
@@ -2501,13 +2501,15 @@ register to
 .
 .
 .NH 2
-.BI troff
+AT&T
+.BI ms
 macros not appearing in
-.BI groff
+.BI "groff ms"
 .XS
-	\fItroff\fP
+	AT&T
+.I ms
 macros not appearing in
-.I groff
+.I "groff ms"
 .XE
 .LP
 Macros missing from
@@ -2548,22 +2550,22 @@ does not.
 .
 .
 .NH 2
-.BI groff
+.BI "groff ms"
 macros not appearing in
 AT&T
-.BI troff
+.BI ms
 .XS
-	\fIgroff\fP
+	\f[I]groff ms\f[]
 macros not appearing in
 AT&T
-.I troff
+.I ms
 .XE
 .LP
 The
 .I "groff ms"
 macros have a few minor extensions compared to the
 .Acr AT&T
-.I "troff ms"
+.I ms
 macros.
 .IP \&.AM 0.5i
 Improved accent marks.
@@ -2571,7 +2573,7 @@ Improved accent marks.
 Indented display.
 The default behavior of
 .Acr AT&T
-.I "troff ms"
+.I ms
 was to indent; the
 .I groff
 default prints displays flush left with the body text.

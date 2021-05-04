@@ -66,7 +66,7 @@ macros are mostly compatible with the documented behavior of the 4.3
 BSD Unix
 .I ms
 macros (see
-.I Differences from troff ms
+.I Differences from AT&T ms
 below for details).
 .
 The
@@ -462,7 +462,7 @@ All paragraphing macro calls cause the insertion of vertical space in
 the amount stored in the
 .B PD
 register,
-except at page breaks.
+except at page or column breaks.
 .
 .
 .PP
@@ -953,8 +953,7 @@ End the most recent indented region.
 .
 .PP
 You can use
-.BR .RS /
-.B .RE
+.BR .RS / .RE
 regions to line up text under hanging and indented paragraphs.
 .
 For example,
@@ -1184,7 +1183,7 @@ option is used.
 .\" ====================================================================
 .
 A footnote is typically anchored to a place in the text with a
-.I marker ,
+.IR marker ,
 which is a small integer,
 a symbol,
 or arbitrary user-specified text.
@@ -1518,7 +1517,7 @@ and
 .
 .
 .\" ====================================================================
-.SH "Differences from troff ms"
+.SH "Differences from AT&T ms"
 .\" ====================================================================
 .
 The
@@ -1538,7 +1537,7 @@ Other differences include:
 The internals of
 .I groff ms
 differ from the internals of AT&T
-.IR "troff ms" .
+.IR ms .
 .
 Documents that depend upon implementation details of AT&T
 .I ms
@@ -1547,8 +1546,13 @@ may not format properly with
 .
 Such details include macros whose function was not documented in the
 AT&T
-.I troff ms
-manual [Lesk 1978].
+.I ms
+manual
+(\[lq]Typing Documents on the UNIX System: Using the \-ms Macros with
+Troff and Nroff\[rq],
+M.\& E.\& Lesk,
+Bell Laboratories,
+1978).
 .\" TODO: Use refer(1)?
 .\" XXX: We support RT anyway; maybe we should stop?
 .
@@ -1598,14 +1602,8 @@ Multiple line spacing is not supported
 .
 .IP \[bu]
 The AT&T
-.I troff ms
-manual
-(\[lq]Typing Documents on the UNIX System: Using the \-ms Macros with
-Troff and Nroff\[rq];
-M.\& E.\& Lesk;
-Bell Laboratories;
-1978)
-describes
+.I ms
+manual describes
 .B CW
 and
 .B GW
@@ -1666,7 +1664,7 @@ Displays are left-adjusted by default,
 not indented.
 .
 In AT&T
-.IR "troff ms" ,
+.IR ms ,
 .B .DS
 is synonymous with
 .RB \[lq] ".DS I" \[rq];
@@ -1680,7 +1678,7 @@ it is synonymous with
 Right-adjusted displays are available.
 .
 The AT&T
-.I troff ms
+.I ms
 manual observes that \[lq]it is tempting to assume that \[oq].DS R\[cq]
 will right adjust lines,
 but it doesn't work\[rq].
@@ -1739,7 +1737,7 @@ is set to\~1 by the
 .I groff ms
 macros,
 but is not used by the AT&T
-.I troff ms
+.I ms
 macros.
 .
 Documents that need to determine whether they are being formatted with
@@ -1916,7 +1914,9 @@ Constructed names used to implement arrays are of the form
 .
 .
 .PP
-Thus the groff ms macros reserve the following names:
+Thus the
+.I groff ms
+macros reserve the following names:
 .
 .IP \[bu] 3n
 Names containing the characters

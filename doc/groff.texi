@@ -2978,10 +2978,10 @@ Several paragraph types are available, differing in how indentation is
 applied: to left, right, or both margins; to the first output line of
 the paragraph, all output lines, or all but the first.  All paragraphing
 macro calls cause the insertion of vertical space in the amount stored
-in the @code{PD} register, except at page breaks.  The @code{PORPHANS}
-register (@pxref{ms Document Control Settings}) operates in conjunction
-with each of these macros to inhibit the printing of orphaned lines at
-the bottom of any page.
+in the @code{PD} register, except at page or column breaks.  The
+@code{PORPHANS} register (@pxref{ms Document Control Settings}) operates
+in conjunction with each of these macros to inhibit the printing of
+orphaned lines at the bottom of any page.
 
 @Defmac {LP, , ms}
 Set a paragraph without any (additional) indentation.
@@ -4158,18 +4158,18 @@ Uppercase Æ ligature.
 @cindex @acronym{AT&T} @code{troff}, @code{ms} macro package differences
 
 This section lists the (minor) differences between the @code{groff}
-@file{ms} macros and @acronym{AT&T} @code{troff} @file{ms} macros.
+@file{ms} macros and @acronym{AT&T} @file{ms} macros.
 
 @itemize @bullet
 @item
 The internals of @code{groff} @file{ms} differ from the internals of
-@acronym{AT&T} @code{troff} @file{ms}.  Documents that depend upon
-implementation details of @acronym{AT&T} @code{troff} @file{ms} may not
-format properly with @code{groff} @file{ms}.  Such details include
-macros whose function was not documented in the @acronym{AT&T}
-@code{troff} @file{ms} manual.@footnote{@cite{Typing Documents on the
-UNIX System: Using the -ms Macros with Troff and Nroff}, M.@: E.@: Lesk,
-Bell Laboratories, 1978.}
+@acronym{AT&T} @file{ms}.  Documents that depend upon implementation
+details of @acronym{AT&T} @code{troff} @file{ms} may not format properly
+with @code{groff} @file{ms}.  Such details include macros whose function
+was not documented in the @acronym{AT&T} @code{troff} @file{ms}
+manual.@footnote{@cite{Typing Documents on the UNIX System: Using the
+-ms Macros with Troff and Nroff}, M.@: E.@: Lesk, Bell Laboratories,
+1978}
 @c XXX: We support RT anyway; maybe we should stop?
 
 @item
@@ -4186,13 +4186,10 @@ Multiple line spacing is not supported.  Use a larger vertical spacing
 instead.
 
 @item
-The @acronym{AT&T} @code{troff} @file{ms} manual@footnote{@cite{Typing
-Documents on the UNIX System: Using the -ms Macros with Troff and
-Nroff}; M.@: E.@: Lesk; Bell Laboratories; 1978.} describes @code{CW}
-and @code{GW} registers that can be used to control the column width and
-gutter width, respectively.  These registers are not used in
-@code{groff} @file{ms}.  (However, see @code{MINGW} in @ref{ms Multiple
-Columns}.)
+The @acronym{AT&T} @file{ms} manual describes @code{CW} and @code{GW}
+registers that can be used to control the column width and gutter width,
+respectively.  These registers are not used in @code{groff} @file{ms}.
+(However, see @code{MINGW} in @ref{ms Multiple Columns}.)
 
 @item
 Macros that cause a reset (paragraphs, headings, etc.@:) may change the
@@ -4211,14 +4208,14 @@ also: accessing an undefined register automatically defines it.
 
 @item
 Displays are left-adjusted by default, not indented.  In @acronym{AT&T}
-@code{troff} @file{ms}, @samp{.DS} is synonymous with @samp{.DS I}; in
-@code{groff} @file{ms}, it is synonymous with @samp{.DS L}.
+@file{ms}, @samp{.DS} is synonymous with @samp{.DS I}; in @code{groff}
+@file{ms}, it is synonymous with @samp{.DS L}.
 
 @item
-Right-adjusted displays are available.  The @acronym{AT&T} @code{troff}
-@file{ms} manual observes that ``it is tempting to assume that @samp{.DS
-R} will right adjust lines, but it doesn't work''.  In @code{groff}
-@file{ms}, it does.
+Right-adjusted displays are available.  The @acronym{AT&T} @file{ms}
+manual observes that ``it is tempting to assume that @samp{.DS R} will
+right adjust lines, but it doesn't work''.  In @code{groff} @file{ms},
+it does.
 
 @item
 @code{groff} @file{ms} handles @code{S} as the first argument to the
@@ -4238,10 +4235,9 @@ you may need to handle a non-decimal page number format, as @code{groff}
 
 @Defmpreg {GS, ms}
 This register is set to@tie{}1 by the @code{groff} @file{ms} macros, but
-it is not used by the @acronym{AT&T} @code{troff} @file{ms} macros.
-Documents that need to determine whether they are being formatted with
-@code{groff} @file{ms} or another implementation should use this
-register.
+it is not used by the @acronym{AT&T} @file{ms} macros.  Documents that
+need to determine whether they are being formatted with @code{groff}
+@file{ms} or another implementation should use this register.
 @endDefmpreg
 
 @menu
@@ -4252,7 +4248,7 @@ register.
 @c ---------------------------------------------------------------------
 
 @node Missing ms Macros, Additional ms Macros, Differences from AT&T ms, Differences from AT&T ms
-@subsubsection @code{troff} macros not appearing in @code{groff}
+@subsubsection @acronym{AT&T} @file{ms} macros not appearing in @code{groff} @file{ms}
 
 Macros missing from @code{groff} @file{ms} are specific to Bell Labs and
 Berkeley.  The macros known to be missing are:
@@ -4294,10 +4290,10 @@ setting code examples); @code{groff} @file{ms} does not.
 @c ---------------------------------------------------------------------
 
 @node Additional ms Macros,  , Missing ms Macros, Differences from AT&T ms
-@subsubsection @code{groff} macros not appearing in @acronym{AT&T} @code{troff}
+@subsubsection @code{groff} @file{ms} macros not appearing in @acronym{AT&T} @file{ms}
 
 The @code{groff} @file{ms} macros have a few minor extensions to the
-@acronym{AT&T} @code{troff} @file{ms} macros.
+@acronym{AT&T} @file{ms} macros.
 
 @Defmac {AM, , ms}
 Use improved accent marks.  @xref{ms Strings and Special Characters},
@@ -4320,7 +4316,7 @@ The following additional registers appear in @code{groff} @file{ms}.
 Specifies a minimum space (``gutter width'') between columns (for
 multi-column output); this takes the place of the @code{GW} register
 that was introduced in the Seventh Edition Unix (1979) version of the
-@acronym{AT&T} @code{troff} @file{ms} macros.
+@acronym{AT&T} @file{ms} macros.
 @endDefmpreg
 
 Several new strings are available as well.  You can change these to
