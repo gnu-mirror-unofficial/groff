@@ -930,17 +930,30 @@ see
 .
 .
 .\" ====================================================================
-.SS "Copy-in mode"
+.SS "Copy mode"
 .\" ====================================================================
 .
-The phase when groff reads a macro is called
-.I "copy-in mode"
-or
-.I "copy mode"
-in roff-talk.
-.
-This is comparable to the C\~preprocessing phase during the development
-of a program written in the C\~language.
+When
+.I groff
+processes certain requests,
+most importantly those which define a macro,
+string,
+or diversion,
+it does so in
+.IR "copy mode" :
+it copies the characters of the definition into a dedicated storage
+region,
+interpolating the escape sequences
+.BR \[rs]n ,
+.BR \[rs]$ ,
+and
+.BR \[rs]* ,
+intepreting
+.B \[rs]\[rs]
+and
+.BI \[rs] newline
+immediately,
+and storing all other escape sequences in an encoded form.
 .
 .
 .P
@@ -1093,9 +1106,9 @@ with a leading dot.
 .RE
 .
 .IP \(bu
-Write a comment macro that works both for copy-in and draft mode; for
-as escaping is off in draft mode, trouble might occur when normal
-comments are used.
+Write a comment macro that works both for copy and draft modes;
+since the escape character is off in draft mode,
+trouble might occur when comment escapes are used.
 .
 For example, the following macro just ignores its arguments, so it
 acts like a comment line:
