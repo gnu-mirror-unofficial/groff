@@ -1,5 +1,16 @@
 2021-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	If \*[HF] is a bold style, substitute bold italics for italics
+	in section and subsection headings, keeping the font weight
+	consistent.
+
+	* tmac/an-old.tmac (initialization): Set a flag for this based
+	on the interpolation of \*[HF] matching "B" as its last
+	character.
+	(SH, SS): Apply and reverse font remapping based on this flag.
+
+2021-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-ext.tmac (EX): Work around Savannah #59522 by changing
 	fonts differently on DVI output, avoiding a font warning.
 

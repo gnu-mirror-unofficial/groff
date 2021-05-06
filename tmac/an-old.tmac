@@ -1,6 +1,6 @@
 .\" an-old.tmac
 .\"
-.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"      Written by James Clark (jjc@jclark.com)
 .\"
 .\" This file is part of groff.
@@ -323,12 +323,14 @@
 .  nr an-break-flag 1
 .  ps \\n[PS-SH]u
 .  ft \\*[HF]
+.  if \\n[an-HF-remap-I-style] .ftr I BI
 .  ne (2v + 1u)
 .  if \\n[.$] \{\
 .    ds an-section-heading \\$*\"
 .    if \\n[CS] .stringup an-section-heading
 \&\\*[an-section-heading]
 .  \}
+.  if \\n[an-HF-remap-I-style] .ftr I I
 ..
 .
 .de1 SS
@@ -344,8 +346,10 @@
 .  nr an-break-flag 1
 .  ps \\n[PS-SS]u
 .  ft \\*[HF]
+.  if \\n[an-HF-remap-I-style] .ftr I BI
 .  ne (2v + 1u)
 .  if \\n[.$] \&\\$*
+.  if \\n[an-HF-remap-I-style] .ftr I I
 ..
 .
 .de1 B
@@ -825,6 +829,11 @@
 .\" (sub)section heading font
 .if !d HF \
 .  ds HF B\"
+.
+.\" If HF is a bold style, use bold italics for italics in headings.
+.ds an-heading-style \*[HF]
+.substring an-heading-style -1 -1
+.if '\*[an-heading-style]'B' .nr an-HF-remap-I-style 1
 .
 .if \n[cR] \
 .  an-set-up-continuous-rendering
