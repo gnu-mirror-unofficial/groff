@@ -3597,17 +3597,34 @@ large graphics or tables that do not need to appear exactly where
 specified.
 @endDefmac
 
-You can also use the @code{ne} request to force a page break if there is
-not enough vertical space remaining on the page.
+As an alternative to the keep mechanism, the @code{ne} request forces a
+page break if there is not at least the amount of vertical space
+specified in its argument remaining on the page (@pxref{Page Control}).
 
-Use the following macros to draw a box around a region of text (such as
-a display).
+Use the following macros to draw a box around a region of the page.
 
 @DefmacList {B1, , ms}
 @DefmacListEndx {B2, , ms}
 Marks the beginning and ending of text that is to have a box drawn
 around it.  The @code{B1} macro begins the box; the @code{B2} macro ends
 it.  Text in the box is automatically placed in a diversion (keep).
+
+These macros cause line breaks; if you need to box a word or phrase
+within a line, see the @code{BX} macro in @ref{Highlighting in ms}.  Box
+lines are drawn as close as possible to the text they enclose so that
+they are usable within paragraphs.  If you wish to box one (or more)
+paragraphs, you may improve the appearance by calling @code{B1} after
+the first paragraphing macro, and by adding a small amount of vertical
+space before calling @code{B2}.
+
+@CartoucheExample
+.LP
+.B1
+.I Warning:
+Happy Fun Ball may suddenly accelerate to lethal speeds.
+.sp \n[PD]/2
+.B2
+@endCartoucheExample
 @endDefmac
 
 @c ---------------------------------------------------------------------

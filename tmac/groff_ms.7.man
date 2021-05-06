@@ -1097,18 +1097,26 @@ that do not need to appear exactly where specified.
 .
 .
 .PP
-The macros
-.B B1
-and
-.B B2
-can be used to enclose a text within a box;
-.B .B1
-begins the box, and
-.B .B2
-ends it.
+Use the following macros to draw a box around a region of the page.
 .
-Text in the box is automatically placed in a diversion
-(keep).
+.
+.TS
+box;
+cb cb
+lf(CR) lx .
+Macro	Description
+_
+\&.B1	Begin a keep with a box drawn around it.
+\&.B2	End boxed keep.
+.TE
+.
+.
+.PP
+These macros cause line breaks;
+if you need to box a word or phrase within a line,
+see the
+.B BX
+macro in section \[lq]Highlighting\[rq] above.
 .
 .
 .\" ====================================================================

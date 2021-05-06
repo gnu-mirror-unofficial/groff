@@ -1735,11 +1735,63 @@ Use the
 and
 .CW .KE
 macros to specify a floating keep.
+.
+.
 .PP
-You can also use the
-.CW .ne
-request to force a page break if there is
-not enough vertical space remaining on the page.
+As an alternative to the keep mechanism,
+the
+.CW ne
+request forces a page break if there is not at least the amount of
+vertical space specified in its argument remaining on the page.
+.
+.
+.PP
+Use the following macros to draw a box around a region of the page.
+.
+.
+.TS
+box;
+cb cb
+lf(CR) lx .
+Macro	Description
+_
+\&.B1	Begin a keep with a box drawn around it.
+\&.B2	End boxed keep.
+.TE
+.
+.
+.LP
+These macros cause line breaks;
+if you need to box a word or phrase within a line,
+see the
+.CW BX
+macro in section \[lq]Highlighting\[rq] above.
+.
+Box lines are drawn as close as possible to the text they enclose so
+that they are usable within paragraphs.
+.
+If you wish to box one
+(or more)
+paragraphs,
+you may improve the appearance by calling
+.CW .B1
+after the first paragraphing macro,
+and by adding a small amount of vertical space before calling
+.CW .B2 .
+.
+.
+.TS
+box center;
+lf(CR).
+\&.LP
+\&.B1
+\&.I Warning:
+Happy Fun Ball may suddenly accelerate to lethal speeds.
+\&.sp \[rs]n[PD]/2
+\&.B2
+.TE
+.
+.
 .\" ----------------------------
 .KS
 .NH 2
