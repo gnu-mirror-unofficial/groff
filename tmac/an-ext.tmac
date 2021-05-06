@@ -192,8 +192,13 @@
 .  nr PD 1v
 .  nf
 .  nh
-.  do fam C
-.  ft R
+.  \" Work around Savannah #59522.
+.  ie !'\\*[.T]'dvi' \{\
+.    do fam C
+.    ft R
+.  \}
+.  el \
+.    ft CW
 ..
 .
 .
