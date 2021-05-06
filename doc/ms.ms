@@ -1314,8 +1314,8 @@ and
 .
 .nr PS -2
 .nr VS -2
-.B1
 .LP
+.B1
 .hy 0
 .I "Implementation note:"
 In
@@ -1357,6 +1357,7 @@ this likely means adding a dependency on
 Contact the
 .I groff
 development mailing list if you'd like to contribute.
+.sp \n[PD]/2
 .B2
 .nr PS +2
 .nr VS +2
