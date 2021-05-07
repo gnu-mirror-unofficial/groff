@@ -146,7 +146,7 @@ cb cb
 cf(CR) l .
 Unit	Description
 _
-i	inches
+i	inches (\[sd])
 c	centimeters
 p	points (1/72\[sd])
 P	picas (1/6\[sd])
