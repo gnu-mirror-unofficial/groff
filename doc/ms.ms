@@ -2333,9 +2333,12 @@ Control margins using registers.
 These are summarized in the \[lq]Margins\[rq] section of the table in
 section \[lq]Document control settings\[rq] above.
 .
-There is no right margin setting;
-the combination of page offset and line length provides the information
-necessary to derive the right margin.
+There is no explicit right margin setting;
+the combination of page offset
+.CW \[rs]n[PO]
+and line length
+.CW \[rs]n[LL]
+provides the information necessary to derive the right margin.
 .KE
 .
 .

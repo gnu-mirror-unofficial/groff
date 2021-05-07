@@ -2551,9 +2551,7 @@ presented in the syntax used to interpolate them.
 @unnumberedsubsubsec Margin Settings
 
 @Defmpreg {PO, ms}
-Defines the page offset (i.e., the left margin).  There is no explicit
-right margin setting; the combination of the @code{PO} and @code{LL}
-registers implicitly defines the right margin width.
+Defines the page offset (i.e., the left margin).
 @c not in V6
 
 Effective: next page.
@@ -3874,9 +3872,10 @@ after executing the @code{PT} macro.
 @cindex @code{ms} macros, margins
 
 Control margins using registers.  See ``Margin Settings'' in @ref{ms
-Document Control Settings}.  There is no right margin setting; the
-combination of page offset and line length provide the information
-necessary to derive the right margin.
+Document Control Settings}.  There is no explicit right margin setting;
+the combination of page offset @code{\n[PO]} and line length
+@code{\n[LL} provides the information necessary to derive the right
+margin.
 
 @c ---------------------------------------------------------------------
 
