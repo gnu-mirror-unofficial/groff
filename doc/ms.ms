@@ -512,7 +512,7 @@ This is the
 default.
 T}
 _
-\&.AB [no]	T{
+\&.AB \f[R][\f[]no\f[R]]	T{
 Begin the abstract.
 .
 .I ms
