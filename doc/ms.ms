@@ -1,9 +1,11 @@
 .\" Handle font requests with families, for instance in tbl(1) tables.
 .if n \{\
-.  ftr CR R
+.  ftr CR B \" for a visible distinction from roman
 .  ftr CB B
 .  ftr CI I
 .  ftr CBI BI
+.  \" Redefine CW so to use bold instead for a visible font change.
+.  als CW B
 .\}
 .fchar \[dg] *
 .fchar \[ps] paragraph
