@@ -1,5 +1,16 @@
 2021-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* man/groff_char.7.man (Glyph tables/Mathematical symbols): Fix
+	errors in special character descriptions; \[sqrt] is a "special"
+	glyph (that is, it uses mathematical metrics on typesetter
+	devices), and \[radicalex) is not (and is thus a "text" glyph).
+	See Werner Lemberg's ChangeLog entry of 2003-01-05.  Problem
+	dates to 07a6233ad, 27 May 2014.
+
+	The overloaded use of the word "special" really pinches here.
+
+2021-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tty.tmac: Replace fallback glyphs for radical extension
 	and square root extension; use \[rn] instead, which works fine.
 
