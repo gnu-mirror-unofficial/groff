@@ -7,7 +7,6 @@
 .\}
 .fchar \[dg] *
 .fchar \[ps] paragraph
-.fchar \[sd] \[dq]
 .\" Acronym (slightly smaller type)
 .de Acr
 \s-1\\$1\s0\\$2
