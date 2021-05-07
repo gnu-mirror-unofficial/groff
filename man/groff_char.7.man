@@ -118,28 +118,32 @@ The driver used in generation of this page was \[lq]\*[.T]\[rq].
 .
 .
 .P
-A few escape sequences that are not special character escapes also
-produce glyphs;
+A few escape sequences that are not
+.I groff
+special characters also produce glyphs;
 these exist for syntactical or historical reasons.
 .
-They include
-.BR \e\e ,
 .BR \e\[aq] ,
 .BR \e\[ga] ,
 .BR \e\- ,
+and
+.B \e_
+are translated on input to the special characters
+.BR \e[aq] ,
+.BR \e[ga] ,
+.BR \e[-] ,
+and
+.BR \e[ul] ,
+respectively.
+.
+Others include
+.BR \e\e ,
 .B \e.\&
 (backslash-dot),
 and
 .BR \ee ;
 see
 .IR groff (@MAN7EXT@).
-.
-Of these,
-only
-.B \e\-
-is also available as a special character of the same name,
-in the form
-.BR \e[\-] .
 .
 A small number of special characters represent glyphs that are not
 encoded in Unicode;
@@ -1323,6 +1327,17 @@ The Unicode-derived names of these three glyphs are approximations.
 .
 .
 .P
+The input character
+.B _
+always accesses the underscore glyph in a font;
+.\" unless one isn't available, but this seems to be only a theoretical
+.\" concern--what font doesn't support every ASCII codepoint these days?
+.BR \[rs][ul] ,
+by contrast,
+may be font-invariant on typesetter devices.
+.
+.
+.P
 The baseline rule
 .B \[rs][ru]
 is a font-invariant glyph,
@@ -1357,7 +1372,7 @@ _
 |	|	u007C	bar
 \[ba]	\e[ba]	u007C	bar
 \[br]	\e[br]	u2502	box rule +
-\&\_	\&_	u005F	underscore, low line +
+\&_	\&_	u005F	underscore, low line +
 \[ul]	\e[ul]	u005F	underscore, low line +
 \[rn]	\e[rn]	u203E	root extension, overline +
 \[ru]	\e[ru]	---	baseline rule +
