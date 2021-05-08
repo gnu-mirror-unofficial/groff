@@ -1,3 +1,17 @@
+2021-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Handle HF strings with an embedded font family when
+	applying bold-to-bold-italic remapping; the feature now works
+	on troff devices as well.
+
+	* tmac/an-old.tmac (initialization): Do more validity checking.
+	Store heading family in new string \*[an-heading-family].  Clean
+	up after self.
+	(SH, SS): Include the heading family in the remapping target.
+
+	* tmac/groff_man.7.man.in (Description/Document structure
+	macros) <.SH, .SS>: Document it.
+
 2021-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* man/groff_char.7.man (Glyph tables/Mathematical symbols): Fix

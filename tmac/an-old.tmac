@@ -323,7 +323,7 @@
 .  nr an-break-flag 1
 .  ps \\n[PS-SH]u
 .  ft \\*[HF]
-.  if \\n[an-HF-remap-I-style] .ftr I BI
+.  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
 .  ne (2v + 1u)
 .  if \\n[.$] \{\
 .    ds an-section-heading \\$*\"
@@ -346,7 +346,7 @@
 .  nr an-break-flag 1
 .  ps \\n[PS-SS]u
 .  ft \\*[HF]
-.  if \\n[an-HF-remap-I-style] .ftr I BI
+.  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
 .  ne (2v + 1u)
 .  if \\n[.$] \&\\$*
 .  if \\n[an-HF-remap-I-style] .ftr I I
@@ -831,9 +831,19 @@
 .  ds HF B\"
 .
 .\" If HF is a bold style, use bold italics for italics in headings.
-.ds an-heading-style \*[HF]
+.ds an-heading-style \*[HF]\"
 .substring an-heading-style -1 -1
-.if '\*[an-heading-style]'B' .nr an-HF-remap-I-style 1
+.ds an-heading-family \" empty
+.length an-HF-length \*[HF]
+.if (\n[an-HF-length] > 1) \{
+.  as an-heading-family \*[HF]\"
+.  substring an-heading-family 0 -2
+.\}
+.if '\*[an-heading-style]'B' \
+.  if F \*[an-heading-family]BI \
+.    nr an-HF-remap-I-style 1
+.rr an-HF-length
+.rm an-heading-style
 .
 .if \n[cR] \
 .  an-set-up-continuous-rendering
