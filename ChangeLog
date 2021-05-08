@@ -1,5 +1,13 @@
 2021-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac (@RT): Delete definition; make it an alias for
+	par@finish.  Until commit 021ba0e7 (1 May), they had identical
+	definitions.  I find it difficult to imagine what use it would
+	be to have an undocumentted reset macro that resets everything
+	_except_ the deeply internal \n[.ev]:ai.
+
+2021-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Handle HF strings with an embedded font family when
 	applying bold-to-bold-italic remapping; the feature now works
 	on troff devices as well.
