@@ -1,3 +1,16 @@
+2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* contrib/gpinyin/subs.pl (%tones_glyphs, %tones4_glyphs): Fix
+	hash keys to use the groff dotless i special character into
+	which a lowercase "i" has already been transforned instead of
+	'i' itself.
+	(vowel_n, vowel_t): Rename variable so that tone-transformed
+	vowel is stored separately.  Add "or warn" to test the result
+	and cheaply assert that we got a string back from our hash
+	lookup on the vowel.
+
+	Fixes <https://savannah.gnu.org/bugs/?60560>.
+
 2018-02-28  Werner LEMBERG  <wl@gnu.org>
 
 	* gpinyin.am (gpinyin): Use $(AM_V_GEN) to silence file generation.
