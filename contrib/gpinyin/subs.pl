@@ -525,8 +525,15 @@ sub vowel_t {	# named glyphs for troff
 
   # \o'\s-2\[:u]\s0\[a-]'
   if ( $vowel =~ /[üÜ]/ ) {
-    my $smaller = 2;
-    $vowel = q(\\o'\\s-) . $smaller . q(\\[:u]\\s0) .
+    my $ue, $smaller;
+    if ($vowel eq 'ü') {
+      $ue = q(\\[:u]);
+      $smaller = 2;
+    } else {
+      $ue = q(\\[:U]);
+      $smaller = 4;
+    }
+    $vowel = q(\\o'\\s-) . $smaller . $ue . q(\\s0) .
       $accents[$tone] . q(');
     return $vowel;
   }

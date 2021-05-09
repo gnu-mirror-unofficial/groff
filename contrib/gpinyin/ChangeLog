@@ -1,3 +1,15 @@
+2021-05-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* contrib/gpinyin/subs.pl (vowel_t): Fix incorrect rendering of
+	base glyph 'U', which was being forced to lowercase when a
+	dieresis and tone mark were both being applied.  This caused the
+	tone mark to overlap the dieresis, so decrease the font size of
+	the base glyph even more to compensate.  The result is ugly but
+	comprehensible.
+
+	See <https://savannah.gnu.org/bugs/?57524>, partially mitigated
+	but not completely resolved.
+
 2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* contrib/gpinyin/subs.pl (%tones1_Unicode): Fix copy and paste
