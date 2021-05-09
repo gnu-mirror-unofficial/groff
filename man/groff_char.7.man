@@ -8,7 +8,7 @@ groff_char \- GNU roff special character and glyph repertoire
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff (GNU roff), which is a free software
 .\" project.
@@ -360,7 +360,7 @@ Keycap	Appearance and meaning	Special character and meaning
 _
 "	" neutral double quote	\f[B]\[rs][dq]\f[] neutral double quote
 \[aq]	\[cq] closing single quote	\f[B]\[rs][aq]\f[] neutral apostrophe
-\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] hyphen-minus
+\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] minus sign
 \[rs]	(escape character)	\f[B]\[rs]e\f[] or \f[B]\[rs][rs]\f[] reverse solidus
 \[ha]	\[u02C6] modifier circumflex	\f[B]\[rs](ha\f[] circumflex/caret/\[lq]hat\[rq]
 \[ga]	\[oq] single opening quote	\f[B]\[rs](ga\f[] grave accent
@@ -384,7 +384,9 @@ dashes of varying widths.
 .
 For best results in
 .IR groff ,
-use the character in input without an escape
+use the
+.RB \[lq] \- \[rq]
+character in input without an escape
 .I only
 to mean a hyphen,
 as in the phrase \[lq]long-term\[rq].
@@ -398,10 +400,17 @@ in
 .I groff
 if you find it helps the clarity of the source document).
 .
+(Another minus sign,
+for use in mathematical equations,
+is available as
+.BR \[rs][mi] ).
+.
 AT&T
 .I troff
 supported em-dashes as
-.BR \[rs](em .
+.BR \[rs](em ,
+as does
+.IR groff .
 .
 .
 .P
@@ -648,7 +657,7 @@ the uninterpreted leader escape sequence.
 By default,
 .I groff
 defines a single glyph name of length one,
-namely the hyphen-minus,
+namely the minus sign,
 which can be accessed as either
 .B \[rs]\-
 or
