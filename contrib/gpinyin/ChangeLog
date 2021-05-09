@@ -1,5 +1,14 @@
 2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* contrib/gpinyin/subs.pl (%tones1_Unicode): Fix copy and paste
+	error.  Emit U+01D5 (Latin capital letter u with dieresis and
+	macron) for Ü with tone 1, instead of U+016A (Latin capital
+	letter u with macron).
+
+	Fixes <https://savannah.gnu.org/bugs/?60562>.
+
+2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* contrib/gpinyin/subs.pl (handle_word): Emit \[cq] instead of
 	\[aq] when interpolating an apostrophe before a vowel.
 
