@@ -388,7 +388,7 @@ sub handle_word {
     next unless ( %outsyll );
     for my $roff ( @roffs ) {
       my $out = $outsyll{$roff};
-      $out = '\\[aq]' . $out if ( $out && $out =~ /^[aeo]/ );
+      $out = '\\[cq]' . $out if ( $out && $out =~ /^[aeo]/ );
       $outword{$roff} .= $out;
 #&err('handle_word ' . $roff . ': ' . $outword{$roff});
     }

@@ -1,5 +1,12 @@
 2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* contrib/gpinyin/subs.pl (handle_word): Emit \[cq] instead of
+	\[aq] when interpolating an apostrophe before a vowel.
+
+	Fixes <https://savannah.gnu.org/bugs/?60561>.
+
+2021-05-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* contrib/gpinyin/subs.pl (%tones_glyphs, %tones4_glyphs): Fix
 	hash keys to use the groff dotless i special character into
 	which a lowercase "i" has already been transforned instead of
