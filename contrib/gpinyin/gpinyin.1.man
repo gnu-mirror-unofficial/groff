@@ -214,10 +214,11 @@ The tone numbers 0 and 5 are synonymous.
 .
 .
 .P
-The following table summarizes the tones.
-.
-Some output devices will not be able to render every output example.
-.
+.nr gpinyin*do-table 0
+.if t .nr gpinyin*do-table 1
+.if n .if '\*[.T]'utf8' .nr gpinyin*do-table 1
+.ie \n[gpinyin*do-table] \{\
+The tones are written as follows.
 .
 .P
 .\" XXX: This is so gross.  Why can't grops and gropdf figure this out?
@@ -237,6 +238,15 @@ fourth	falling	\[ga]	ma4	m\[a ga]
 fifth	neutral	(none)	ma0	ma
 \^	\^	\^	ma5	\^
 .TE
+.\}
+.el \{
+[The tone mark table is omitted from this rendering of the man page
+because the selected output device \[lq]\*[.T]\[rq] lacks the character
+repertoire to display it.
+.
+Try another output device.]
+.\}
+.rr gpinyin*do-table
 .
 .
 .P
