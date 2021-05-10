@@ -1354,24 +1354,8 @@ namely a rule of one-half em.
 .
 .
 .P
-In AT&T
-.IR troff ,
-.B \[rs](rn
-served as the horizontal extension of the radical
-(square root)
-sign,
-.BR \[rs](sr .
-.
-In
-.IR groff ,
-use
-.B \[rs][radicalex]
-instead of
 .B \[rs][rn]
-for continuation of the radical sign
-.BR \[rs][sqrt] .
-.
-See subsection \[lq]Mathematical symbols\[rq] below.
+also appears in subsection \[lq]Mathematical symbols\[rq] below.
 .
 .
 .TS
@@ -1383,7 +1367,7 @@ _
 \[br]	\e[br]	u2502	box rule +
 \&_	\&_	u005F	underscore, low line +
 \[ul]	\e[ul]	u005F	underscore, low line +
-\[rn]	\e[rn]	u203E	root extension, overline +
+\[rn]	\e[rn]	u203E	radical extension, overline +
 \[ru]	\e[ru]	---	baseline rule +
 \[bb]	\e[bb]	u00A6	broken bar
 \[sl]	/	u002F	slash, solidus +
@@ -1526,6 +1510,31 @@ and equals signs.
 Whether these variants differ in appearance or spacing will depend on
 the device and font selected.
 .
+.P
+In AT&T
+.IR troff ,
+.B \[rs](rn
+served as the horizontal extension of the radical
+(square root)
+sign,
+.BR \[rs](sr .
+.
+In
+.IR groff ,
+you can use
+.B \[rs][radicalex]
+instead of
+.B \[rs][rn]
+for continuation of the radical sign
+.BR \[rs][sr] ;
+these have text metrics.
+.
+.B \[rs][sqrt]
+and
+.B \[rs][sqrtex]
+are their counterparts with mathematical spacing.
+.
+.
 .TS
 l l l lx.
 Output	Input	Unicode	Notes
@@ -1596,8 +1605,9 @@ _
 \[coproduct]	\e[coproduct]	u2210	coproduct ***
 \[gr]	\e[gr]	u2207	gradient +
 \[sr]	\e[sr]	u221A	radical sign, square root +
-\[sqrt]	\e[sqrt]	u221A	radical sign, square root ***
+\[rn]	\e[rn]	u203E	radical extension, overline +
 \[radicalex]	\e[radicalex]	---	radical extension
+\[sqrt]	\e[sqrt]	u221A	radical sign, square root ***
 \[sqrtex]	\e[sqrtex]	---	radical extension ***
 
 \[lc]	\e[lc]	u2308	left ceiling +
