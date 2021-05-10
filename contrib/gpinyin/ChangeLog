@@ -1,5 +1,14 @@
 2021-05-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* contrib/gpinyin/gpinyin.1.man: Work around inability of grops
+	and gropdf to construct some Unicode composite characters.  Use
+	groff composite special characters for "a" with acute and grave
+	accents, and define strings for "a" with macron (overline) and
+	with háček/caron accents.  Use different string definitions for
+	nroff and troff modes so we don't regress UTF-8 terminal output.
+
+2021-05-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* contrib/gpinyin/subs.pl (vowel_t): Fix incorrect rendering of
 	base glyph 'U', which was being forced to lowercase when a
 	dieresis and tone mark were both being applied.  This caused the

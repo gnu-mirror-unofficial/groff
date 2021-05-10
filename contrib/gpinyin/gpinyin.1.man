@@ -219,15 +219,20 @@ Some output devices will not be able to render every output example.
 .
 .
 .P
+.\" XXX: This is so gross.  Why can't grops and gropdf figure this out?
+.if t .ds a- \za\[a-]
+.if n .ds a- \[a a-]
+.if t .ds a< \za\[ah]
+.if n .ds a< \[a ah]
 .if t .ne 8 \" Try to keep the table on one page for printed output.
 .TS
 l l l l l.
 Tone	Description	Diacritic	Example Input	Example Output
 _
-first	flat	\[a-]	ma1	m\[u0061_0304]
-second	rising	\[aa]	ma2	m\[u0061_0301]
-third	falling-rising	\[ah]	ma3	m\[u0061_030C]
-fourth	falling	\[ga]	ma4	m\[u0061_0300]
+first	flat	\[a-]	ma1	m\*[a-]
+second	rising	\[aa]	ma2	m\[a aa]
+third	falling-rising	\[ah]	ma3	m\*[a<]
+fourth	falling	\[ga]	ma4	m\[a ga]
 fifth	neutral	(none)	ma0	ma
 \^	\^	\^	ma5	\^
 .TE
