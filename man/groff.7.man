@@ -3048,6 +3048,36 @@ alternative facilities it provides to achieve the desired result.
 .SS "Escape short reference"
 .\" ====================================================================
 .
+The escape sequences
+.esc e ,
+.esc . ,
+.esc \[dq] ,
+.esc $ ,
+.esc * ,
+.esc a ,
+.esc n ,
+.esc t ,
+.esc g ,
+and
+.escarg \& newline
+are interpreted even in copy mode.
+.
+.
+.P
+Escape sequences starting with
+.esc (
+or
+.esc [
+do not represent single character escape sequences, but introduce escape
+names with two or more characters.
+.
+.
+.P
+If a backslash is followed by a character that does not constitute a
+defined escape sequence, the backslash is silently ignored and the
+character maps to itself.
+.
+.
 .PD 0
 .
 .\" ========= comments =========
@@ -3711,37 +3741,7 @@ and then restore the horizontal and vertical position;
 .I anything
 may not contain tabs or leaders.
 .
-.
 .PD
-.P
-The escape sequences
-.esc e ,
-.esc . ,
-.esc \[dq] ,
-.esc $ ,
-.esc * ,
-.esc a ,
-.esc n ,
-.esc t ,
-.esc g ,
-and
-.escarg \& newline
-are interpreted in copy mode.
-.
-.
-.P
-Escape sequences starting with
-.esc (
-or
-.esc [
-do not represent single character escape sequences, but introduce escape
-names with two or more characters.
-.
-.
-.P
-If a backslash is followed by a character that does not constitute a
-defined escape sequence, the backslash is silently ignored and the
-character maps to itself.
 .
 .
 .\" ====================================================================
