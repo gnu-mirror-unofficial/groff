@@ -8930,6 +8930,20 @@ The visual results depend on whether no-fill mode is active.
 
 @itemize @bullet
 @item
+@cindex @code{\c}, and fill mode
+@cindex fill mode, and @code{\c}
+@cindex mode, fill, and @code{\c}
+If fill mode is active (using the @code{fi} request), a word interrupted
+with @code{\c} is continued with the text on the next input text line,
+without an intervening space.
+
+@Example
+This is a te\c
+st.
+    @result{} This is a test.
+@endExample
+
+@item
 @cindex @code{\c}, and no-fill mode
 @cindex no-fill mode, and @code{\c}
 @cindex mode, no-fill, and @code{\c}
@@ -8941,20 +8955,6 @@ text line.
 .nf
 This is a \c
 test.
-    @result{} This is a test.
-@endExample
-
-@item
-@cindex @code{\c}, and fill mode
-@cindex fill mode, and @code{\c}
-@cindex mode, fill, and @code{\c}
-If fill mode is active (using the @code{fi} request), a word interrupted
-with @code{\c} is continued with the text on the next input text line,
-without an intervening space.
-
-@Example
-This is a te\c
-st.
     @result{} This is a test.
 @endExample
 @end itemize
