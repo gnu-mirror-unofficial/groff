@@ -1,3 +1,10 @@
+2021-05-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/andoc.tmac (reload-man): Delete no-op line that attempts
+	to restore compatibility mode.  Individual pages have to do
+	this, and ".do cp \n(.C" is not effective for the reason
+	discussed in the 2020-04-16 ChangeLog entry.
+
 2021-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/s.tmac (@RT): Delete definition; make it an alias for
