@@ -311,15 +311,6 @@ _
 .
 .
 .LP
-The
-.B \[rs]n[DD]
-distance used before and after each pair of display macros is also
-applied to regions of the document preprocessed with
-.IR \%@g@eqn (@MAN1EXT@),
-.IR \%@g@pic (@MAN1EXT@),
-and
-.IR \%@g@tbl (@MAN1EXT@).
-.
 The \[lq]gutter\[rq] affected by
 .B \[rs]n[MINGW]
 is the gap between columns in multiple-column page arrangements.
@@ -1066,6 +1057,14 @@ macro to end any display type.
 .
 .
 .PP
+The distance stored in
+.B \[rs]n[DD]
+is inserted before and after each pair of display macros.
+.
+This is a Berkeley extension.
+.
+.
+.PP
 The
 .B \[rs]n[DI]
 indentation is applied to only to displays created with
@@ -1161,6 +1160,14 @@ preprocessors:
 .IR \%@g@eqn ,
 and
 .IR \%@g@refer (@MAN1EXT@).
+.
+The
+.B \[rs]n[DD]
+distance is also applied to regions of the document preprocessed with
+.IR \%@g@eqn (@MAN1EXT@),
+.IR \%@g@pic (@MAN1EXT@),
+and
+.IR \%@g@tbl (@MAN1EXT@).
 .
 Mark text meant for preprocessors by enclosing it in pairs of tags as
 follows.

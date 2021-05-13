@@ -1693,14 +1693,11 @@ macro to end any display type.
 .
 .
 .PP
-The
+The distance stored in
 .CW \[rs]n[DD]
-distance used before and after each pair of display macros is also
-applied to regions of the document preprocessed with
-.I eqn (1),
-.I pic (1),
-and
-.I tbl (1).
+is inserted before and after each pair of display macros.
+.
+This is a Berkeley extension.
 .
 .
 .PP
@@ -1827,13 +1824,22 @@ The
 macros support the standard
 .I groff
 preprocessors:
-.I tbl ,
-.I pic ,
-.I eqn ,
+.I tbl (1),
+.I pic (1),
+.I eqn (1),
 and
-.I refer .
-You mark text meant for preprocessors by enclosing it
-in pairs of tags as follows:
+.I refer (1).
+.
+The
+.CW \[rs]n[DD]
+distance is also applied to regions of the document preprocessed with
+.I tbl (1),
+.I pic (1),
+and
+.I eqn (1).
+.
+Mark text meant for preprocessors by enclosing it in pairs of tags as
+follows.
 .
 .
 .TS
