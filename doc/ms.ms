@@ -345,7 +345,7 @@ Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
 \^	\[rs]*[FR]	Line length ratio	special	11/12
 _
-Other	\[rs]n[DD]	Display distance (spacing)	next \[ps]	0.5v
+Other	\[rs]n[DD]	Display distance (spacing)	disp-boundary	0.5v
 \^	\[rs]n[MINGW]	Minimum gutter width	next page	2n
 .TE
 .

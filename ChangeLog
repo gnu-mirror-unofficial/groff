@@ -1,3 +1,13 @@
+2021-05-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi (ms Document Control Settings) <DD>:
+	* doc/ms.ms (Document control settings) <DD>:
+	* tmac/groff_ms.7.man (Document control settings) <DD>: Fix
+	error; changes to \n[DD] take effect at the next display
+	boundary (including the end of the active one), not the next
+	"paragraph" (paragraph macros cannot be called inside a display
+	anyway).
+
 2021-05-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/andoc.tmac (reload-man): Delete no-op line that attempts
