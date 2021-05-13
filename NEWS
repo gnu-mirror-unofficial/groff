@@ -28,8 +28,8 @@ o The groff locale (the default input language) is now determined using
   The default hyphenation mode (as used by the .hy request) for users of
   English is thus changed from "1", which was inappropriate for the
   TeX-based hyphenation patterns groff has used since at least 1991, to
-  "4".  However, calling .hy without an argument remains synonymous with
-  ".hy 1".
+  "4".  However, invoking .hy without an argument remains synonymous
+  with ".hy 1".
 
 o A new read-only register ".cp" is implemented.  Within a .do request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
@@ -45,7 +45,7 @@ o A new read-only register ".nm" is implemented.  It reports the
 
 o Point-size escapes of the form '\sNN', where NN is in the range 10-39,
   are now recognized only in compatibility mode (groff -C); when
-  encountered, an error diagnostic is emitted.  In normal mode, \sN is
+  encountered, an error diagnostic is emitted.  Otherwise, \sN is
   interpreted as setting the point size to the single-digit value N,
   which ends the escape.  This change eliminates a quirk in the language
   grammar that dates back to the mid-1970s (AT&T troff by Ossanna) but
@@ -114,7 +114,7 @@ o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
 
 o The an (man) macro package supports a new AD string to put the default
   adjustment mode under user control.  The default is 'b' (adjust lines
-  to both margins) as has been the Unix man page default since 1979.
+  to both margins) as has been the Unix man(7) default since 1979.
 
 o The an (man) and doc (mdoc) macro packages support new CS and CT
   registers to control rendering of man page section headings and titles
@@ -204,9 +204,10 @@ o The semantics of the environment variable SOURCE_DATE_EPOCH (support
   the current time (or SOURCE_DATE_EPOCH) as a local time.  While a
   convenient and defensible choice for reproducible build efforts, it
   runs against the grain of user expectations.  Systems programmers like
-  monotonically increasing clocks; the broader user base usually prefers
-  a clock that follows an applicable civil calendar.  Users of
-  SOURCE_DATE_EPOCH may also wish to set the TZ environment variable.
+  time-zone invariant, monotonically increasing clocks; the broader
+  user base usually prefers a clock that follows an applicable civil
+  calendar.  Users of SOURCE_DATE_EPOCH may also wish to set the TZ
+  environment variable.
 
 o groffer has been deleted from the distribution.
 
