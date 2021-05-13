@@ -353,12 +353,6 @@ Other	\[rs]n[MINGW]	Minimum gutter width	next page	2n
 .
 .
 .LP
-Changes to the footnote line length ratio
-.CW \[rs]*[FR]
-take effect with the next footnote written in single-column
-arrangements,
-but on the next page in multiple-column contexts.
-.
 For entries marked \[lq]special\[rq] in the \[lq]Effective\[rq] column,
 see the discussion in the applicable section below.
 .
