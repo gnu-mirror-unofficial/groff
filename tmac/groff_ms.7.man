@@ -183,6 +183,11 @@ macro.
 .
 .
 .LP
+For entries marked \[lq]special\[rq] in the \[lq]Effective\[rq] column,
+see the discussion in the applicable section below.
+.
+.
+.LP
 .TS
 cb    s  s  s
 cb   cb cb cb
@@ -280,7 +285,19 @@ arrangements,
 but on the next page in multiple-column contexts.
 .
 .
-.LP
+.TS
+cb   s  s  s
+cb   cb cb cb
+lfCR lx  l  lfCR.
+Display settings
+Parameter	Definition	Effective	Default
+_
+\[rs]n[DD]	Display distance (spacing)	special	0.5v
+\[rs]n[DI]	Display indentation	special	0.5i
+_
+.TE
+.
+.
 .TS
 cb   s  s  s
 cb   cb cb cb
@@ -288,7 +305,6 @@ lfCR lx  l  lfCR.
 Other settings
 Parameter	Definition	Effective	Default
 _
-\[rs]n[DD]	Display distance (spacing)	disp-boundary	0.5v
 \[rs]n[MINGW]	Minimum gutter width	next page	2n
 _
 .TE
@@ -1047,6 +1063,19 @@ _
 Use the
 .B DE
 macro to end any display type.
+.
+.
+.PP
+The
+.B \[rs]n[DI]
+indentation is applied to only to displays created with
+.RB \[lq] ".DS I" \[rq]
+and
+.BR .ID .
+.
+Changes take effect at the next display boundary.
+.
+This is a GNU extension.
 .
 .
 .PP

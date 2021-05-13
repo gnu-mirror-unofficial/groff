@@ -345,8 +345,10 @@ Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
 \^	\[rs]*[FR]	Line length ratio	special	11/12
 _
-Other	\[rs]n[DD]	Display distance (spacing)	disp-boundary	0.5v
-\^	\[rs]n[MINGW]	Minimum gutter width	next page	2n
+Displays	\[rs]n[DD]	Display distance (spacing)	special	0.5v
+\^	\[rs]n[DI]	Display indentation	special	0.5i
+_
+Other	\[rs]n[MINGW]	Minimum gutter width	next page	2n
 .TE
 .
 .
@@ -356,6 +358,9 @@ Changes to the footnote line length ratio
 take effect with the next footnote written in single-column
 arrangements,
 but on the next page in multiple-column contexts.
+.
+For entries marked \[lq]special\[rq] in the \[lq]Effective\[rq] column,
+see the discussion in the applicable section below.
 .
 .
 .\" ------------------------
@@ -1696,6 +1701,19 @@ applied to regions of the document preprocessed with
 .I pic (1),
 and
 .I tbl (1).
+.
+.
+.PP
+The
+.CW \[rs]n[DI]
+indentation is applied to only to displays created with
+.CW ".DS I" \[rq] \[lq]
+and
+.B .ID .
+.
+Changes take effect at the next display boundary.
+.
+This is a GNU extension.
 .
 .
 .PP
