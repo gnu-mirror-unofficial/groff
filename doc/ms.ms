@@ -7,6 +7,9 @@
 .  \" Redefine CW so to use bold instead for a visible font change.
 .  als CW B
 .\}
+.\" This document doesn't require the minus sign but we do want a copy-
+.\" and-pastable hyphen-minus.
+.char \- \N'45'
 .fchar \[dg] *
 .fchar \[ps] paragraph
 .\" Acronym (slightly smaller type)
