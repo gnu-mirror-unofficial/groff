@@ -1235,8 +1235,8 @@ PFA=$INT.pfa
 AFM=$INT.afm
 GFN=RSR
 DIR=$HOME/.local/groff/font
-mkdir -p \[dq]$DIR\[dq]/devps
-fontforge -lang=ff -c \[dq]Open(\[rs]\[dq]$TTF\[rs]\[dq]);\[rs]
+mkdir \-p \[dq]$DIR\[dq]/devps
+fontforge \-lang=ff \-c \[dq]Open(\[rs]\[dq]$TTF\[rs]\[dq]);\[rs]
 \tGenerate(\[rs]\[dq]$DIR/devps/$PFA\[rs]\[dq]);\[dq]
 afmtodit \[dq]$DIR/devps/$AFM\[dq] \[dq]$MAP\[dq] \
 \[dq]$DIR/devps/$GFN\[dq]
@@ -1257,7 +1257,7 @@ The test procedure is simple.
 .RS 4
 .LP
 .EX
-printf \[dq].ft RSR\[rs]nHello, world!\[rs]n\[dq] | groff -F \
+printf \[dq].ft RSR\[rs]nHello, world!\[rs]n\[dq] | groff \-F \
 \[dq]$DIR\[dq] > hello.ps
 .EE
 .RE
