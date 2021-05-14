@@ -347,12 +347,13 @@ AC_DEFUN([GROFF_URW_FONTS_PATH],
      [urwfontsdir="$withval"])
    AC_SUBST(urwfontsdir)])
 
-# Check if URW fonts are available, either in the paths given by `gs
-# -h', in /usr/share/fonts/type1/gsfonts/ ,
-# /opt/local/share/fonts/urw-fonts (where font/devpdf/Foundry.in
-# expect them), or in the custom path passed to configure.
+# Check availability of URW fonts in the search path given by 'gs -h'
+# supplemented with
+# /usr/share/fonts/type1/gsfonts/:/opt/local/share/fonts/urw-fonts
+# (where font/devpdf/Foundry.in expects them), or in the custom
+# directory passed to 'configure'.
 AC_DEFUN([GROFF_URW_FONTS],
-  [AC_MSG_CHECKING([whether URW fonts in pfb format are available])
+  [AC_MSG_CHECKING([for URW fonts in Type 1/PFB format])
    AC_REQUIRE([GROFF_AWK_PATH])
    AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
    groff_have_urw_fonts=no
@@ -366,11 +367,17 @@ AC_DEFUN([GROFF_URW_FONTS],
        _list_paths="$ _list_paths $urwfontsdir"
      fi
      for k in $_list_paths; do
-       if test -f $k/a010013l.pfb; then
-         AC_MSG_RESULT([found in $k])
-         groff_have_urw_fonts=yes
-         break
-       fi
+       for _font_file in \
+         URWGothic-Book.t1 \
+         URWGothic-Book.pfb \
+         URWGothicL-Book.pfb \
+         a010013l.pfb; do
+         if test -f $k/$_font_file; then
+           AC_MSG_RESULT([found in $k])
+           groff_have_urw_fonts=yes
+           break 2
+         fi
+       done
      done
    fi
    if test $groff_have_urw_fonts = no; then
