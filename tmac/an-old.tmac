@@ -28,8 +28,6 @@
 .
 .do if d TH .nx
 .
-.do mso devtag.tmac
-.
 .do nr *groff_an-old_tmac_C \n[.cp]
 .cp 0
 .
@@ -51,6 +49,7 @@
 .    tm \*[an-old]:\\n[.F]:\\n[.c]: style: \\$*
 ..
 .
+.mso devtag.tmac
 .nr need_eo_h 0
 .nr need_col2 0
 .
@@ -65,11 +64,12 @@
 .\" increased to the necessary amount (this is needed for tables).
 .de an-ne
 .  ie \\n[.$] \
-.    nr an-need (v;\\$*)
+.    nr an-amount (v;\\$*)
 .  el \
-.    nr an-need 1v
-.  if (\\n[an-need] >= \\n[.t]) \
-.    pl +(\\n[an-need]u - \\n[.t]u + 1v)
+.    nr an-amount 1v
+.  if (\\n[an-amount] >= \\n[.t]) \
+.    pl +(\\n[an-amount]u - \\n[.t]u + 1v)
+.  rr an-amount
 ..
 .
 .\" This .bp replacement adjusts the page length to the current position
@@ -123,8 +123,6 @@
 .    DEVTAG-EO-TL
 .  \}
 .
-.  DT
-.
 .  nr PS    10z \" default point size
 .  nr PS-SS 10z
 .  nr PS-SH 10.95z
@@ -157,6 +155,7 @@
 .  ll \\n[LL]u
 .  ss 12
 .
+.  DT
 .  PD
 .  an-set-margin
 .
@@ -182,6 +181,10 @@
 .  el                  .ds an-extra3 \" empty
 .  \}\}\}\}\}\}\}\}\}\}
 .
+.  ds an-extra1 "\\$3\"
+.  ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
+.  el                  .ds an-extra2 \" empty
+.
 .  ie \\n[cR] \
 .    an-header
 .  el \{\
@@ -194,10 +197,6 @@
 .      el        .bp 1
 .    \}
 .  \}
-.
-.  ds an-extra1 "\\$3\"
-.  ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
-.  el                  .ds an-extra2 \" empty
 ..
 .
 .\" BSD compatibility macros: .AT and .UC
@@ -277,8 +276,6 @@
 .de1 an-footer
 '  bp
 ..
-.
-.af an-page-letter a
 .
 .de1 an-p-footer
 .  ev an-1
@@ -816,11 +813,13 @@
 .\"
 .\" Unlike most of these parameters, we do not set a default for X; only
 .\" the macro an-p-footer uses it.
-.if r X \
+.if r X \{\
+.  af an-page-letter a
 .  if \n[an-html] \{\
 .     tm \*[an-old]: ignoring page letter suffixing in HTML output
 .     rr X
 .  \}
+.\}
 .
 .\" adjustment mode
 .if !d AD \

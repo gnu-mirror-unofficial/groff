@@ -6,6 +6,18 @@
 	is even more guaranteed to exist; it is the macro name most
 	characteristic of the man(7) language and the andoc.tmac
 	superstructure relies on it.
+	(initialization): Relocate load of devtag package; we don't
+	need it before entering compatibility mode.  Move assignment of
+	format of an-page-letter register from a "loose declaration"
+	amid macro definitions to within existence test of X register.
+	(TH): Call DT in a less surprising place.
+	(TH): Initialize all header/footer-related strings before
+	calling header macros, even those not needed for the default
+	header configuration.
+	(an-ne): Rename register from "an-need", which is pretty
+	confusing in context, to "an-amount", since (1) a (vertical)
+	amount is what it is, and (2) it's only used within this macro.
+	Also due to factor (2), remove the register after using it.
 
 2021-05-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
