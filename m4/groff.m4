@@ -390,21 +390,32 @@ AC_DEFUN([GROFF_URW_FONTS],
 AC_DEFUN([GROFF_URW_FONTS_CHECK],
   [if test "$groff_have_urw_fonts" = no; then
   AC_MSG_NOTICE([
-  No URW fonts in .pfb format were found on your system, URW fonts
-  generation for 'devpdf' will not work properly.  These fonts can be
-  downloaded here:
+  No URW fonts in Type 1/PFB format were found on your system; URW font
+  generation for groff's 'gropdf' output driver will not work properly.
+  You can obtain the URW base 35 fonts from their GitHub project.
 
-    http://downloads.ghostscript.com/public/fonts/urw-base35-v1.10.zip
+  As of this writing (2021-05-15), you can find them in the 'fonts'
+  directory of the following archives (choose one).
 
-  By default groff will search these fonts in the paths given by `gs
-  -h' and in these 2 default directories:
-  '/usr/share/fonts/type1/gsfonts/' and
-  '/opt/local/share/fonts/urw-fonts/' (paths used by
-  font/devpdf/Foundry.in).  You can also pass the option
-  '--with-urw-fonts-dir=DIR' to 'configure' to set a custom path.  You
-  would need to re-run the 'configure' script after installing these
-  fonts.
-  
+    https://github.com/ArtifexSoftware/urw-base35-fonts/archive/refs/
+      tags/20200910.zip
+    https://github.com/ArtifexSoftware/urw-base35-fonts/archive/refs/
+      tags/20200910.tar.gz
+
+  You may wish to check for a newer release.
+
+    https://github.com/ArtifexSoftware/urw-base35-fonts/releases
+
+  By default, groff will look for these fonts in the search path shown
+  by the 'gs -h' command and in the two directories
+    /usr/share/fonts/type1/gsfonts/
+  and
+    /opt/local/share/fonts/urw-fonts/
+  (these locations are specified in font/devpdf/Foundry.in).  You will
+  need to re-run the 'configure' script after installing these fonts.
+
+  Alternatively, you can pass the option '--with-urw-fonts-dir=DIR'
+  to 'configure' to look for them in the directory DIR you specify.
   ])
   fi
   ])
