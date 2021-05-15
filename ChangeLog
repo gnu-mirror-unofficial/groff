@@ -1,5 +1,14 @@
 2021-05-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac (initialization): Key the reprocessing guard
+	{like a C language #include guard} on the existence of the TH
+	macro instead of RI.  The latter seemed kind of random and TH
+	is even more guaranteed to exist; it is the macro name most
+	characteristic of the man(7) language and the andoc.tmac
+	superstructure relies on it.
+
+2021-05-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* m4/groff.m4 (GROFF_URW_FONTS): Update configure script check
 	for URW fonts to recognize recent releases of the URW Base 35
 	fonts from Artifex Software.  Look for the AR (Arial roman
