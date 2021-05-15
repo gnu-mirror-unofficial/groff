@@ -109,10 +109,6 @@
 .  nr an-saved-prevailing-indent1 \\n[IN]
 ..
 .
-.ds an-extra1 \" empty
-.ds an-extra2 \" empty
-.ds an-extra3 \" empty
-.
 .\" .TH title section extra1 extra2 extra3
 .de1 TH
 .  if ((\\n[.$] < 2) : (\\n[.$] > 5)) \
@@ -183,7 +179,29 @@
 .
 .  ds an-extra1 "\\$3\"
 .  ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
-.  el                  .ds an-extra2 \" empty
+.  el                  .ds an-extra2 \" empty; but .AT/.UC can override
+.
+.  if '\\*[an-extra1]'' \{\
+.    ds an-msg .\\$0 missing third argument; suggest document\"
+.    as an-msg " modification date in ISO 8601 format (YYYY-MM-DD)\"
+.    an-style-warn \\*[an-msg]
+.    rm an-msg
+.  \}
+.
+.  if '\\*[an-extra2]'' \{\
+.    ds an-msg .\\$0 missing fourth argument; suggest package/project\"
+.    \" Yes that's one double quote, then three, then two.
+.    as an-msg " name and version (e.g., """groff 1.23.0"")\"
+.    an-style-warn \\*[an-msg]
+.    rm an-msg
+.  \}
+.
+.  if '\\*[an-extra3]'' \{\
+.    ds an-msg .\\$0 missing fifth argument and second argument '\\$2'\"
+.    as an-msg " not a recognized manual section; specify volume title\"
+.    an-style-warn \\*[an-msg]
+.    rm an-msg
+.  \}
 .
 .  ie \\n[cR] \
 .    an-header

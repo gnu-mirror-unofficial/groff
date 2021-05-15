@@ -10,10 +10,14 @@
 	need it before entering compatibility mode.  Move assignment of
 	format of an-page-letter register from a "loose declaration"
 	amid macro definitions to within existence test of X register.
+	Stop initializing an-extra[123] strings outside of any macro;
+	they need to be reinitialized at every TH call when batch
+	rendering.
 	(TH): Call DT in a less surprising place.
 	(TH): Initialize all header/footer-related strings before
 	calling header macros, even those not needed for the default
 	header configuration.
+	(TH): Add style warnings for underspecified arguments.
 	(an-ne): Rename register from "an-need", which is pretty
 	confusing in context, to "an-amount", since (1) a (vertical)
 	amount is what it is, and (2) it's only used within this macro.
