@@ -59,8 +59,8 @@
 .  do als em andoc-em
 .  do als bp andoc-bp
 .  do als ne andoc-ne
-.  do rm Dd          \" disable load-only-once, see doc.tmac
-.
+
+.  do rm Dd          \" force reinitialization of doc.tmac
 .  do mso doc.tmac
 .
 .  do als TH reload-man
@@ -79,10 +79,9 @@
 .
 .  do als em andoc-em
 .  do als bp andoc-bp
-.  do rm RI          \" disable load-only-once, see an-old.tmac
 .  do blm            \" no blank line macro
-.  do rm TH
 .
+.  do rm TH          \" force reinitialization of an-old.tmac
 .  do mso an-old.tmac
 .
 .  do als Dd reload-doc
