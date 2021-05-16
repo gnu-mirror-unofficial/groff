@@ -273,9 +273,8 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
 
      AC_MSG_WARN([missing program$plural:
 
-  The program$plural
-     $missing
-  cannot be found in the PATH.
+  The program$plural $missing cannot be found in the PATH.
+
   Consequently, groff's HTML backend (grohtml) will not work properly$docnote
      ])
      doc_dist_target_ok=no
@@ -328,6 +327,7 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
      AC_MSG_WARN([missing program$plural:
 
   The program$plural $missing cannot be found in the PATH.
+
   Consequently, groff's PDF formatter (pdfroff) will not work properly$docnote
      ])
      doc_dist_target_ok=no
@@ -358,7 +358,7 @@ AC_DEFUN([GROFF_URW_FONTS],
    AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
    groff_have_urw_fonts=no
    if test "$AWK" = "missing" -o "$GHOSTSCRIPT" = "missing"; then
-     AC_MSG_WARN([awk and gs are required, can't look for URW fonts])
+     AC_MSG_WARN([awk and gs are required; can't look for URW fonts])
    else
      _list_paths=`$GHOSTSCRIPT -h | $AWK 'BEGIN { found = 0 } /Search path:/ { found = 1 } /^[ ]*\// { print $'0' }'| tr : ' '`
      _list_paths="$_list_paths /usr/share/fonts/type1/gsfonts/ \
@@ -407,7 +407,7 @@ AC_DEFUN([GROFF_URW_FONTS_CHECK],
     https://github.com/ArtifexSoftware/urw-base35-fonts/releases
 
   By default, groff will look for these fonts in the search path shown
-  by the 'gs -h' command and in the two directories
+  by the 'gs -h' command (if available) and in the two directories
     /usr/share/fonts/type1/gsfonts/
   and
     /opt/local/share/fonts/urw-fonts/
