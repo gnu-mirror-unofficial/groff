@@ -1,5 +1,20 @@
 2021-05-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_GHOSTSCRIPT_VERSION_CHECK): Add new
+	autoconf macro to check if Ghostscript version.  Versions 9.00
+	<= x < 9.54 suffer from a rendering glitch that affects the AT&T
+	troff (and groff) special character \(lh; see
+	<https://bugs.ghostscript.com/show_bug.cgi?id=703187>.  Store
+	the result of the check.
+	(GROFF_GHOSTSCRIPT_VERSION_NOTICE): Add new macro to report the
+	problem detected by GROFF_GHOSTSCRIPT_VERSION_CHECK to the user.
+
+	* configure.ac: Call the macros in appropriate places.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59531>.
+
+2021-05-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/andoc.tmac (reload-man): Remove removal of RI macro, made
 	unnecessary by commit 551f138 (15 May).
 

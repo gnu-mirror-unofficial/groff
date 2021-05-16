@@ -457,6 +457,78 @@ AC_DEFUN([GROFF_GHOSTSCRIPT_PREFS],
     [ALT_GHOSTSCRIPT_PROGS="gs gswin32c gsos2"])
    AC_SUBST([ALT_GHOSTSCRIPT_PROGS])])
 
+# Ghostscript version check.  Versions 9.00 <= x < 9.54 suffer from a
+# rendering glitch that affects the AT&T troff (and groff) special
+# character \(lh; see
+#   <https://bugs.ghostscript.com/show_bug.cgi?id=703187>.
+
+AC_DEFUN([GROFF_GHOSTSCRIPT_VERSION_CHECK], [
+  if test "$GHOSTSCRIPT" != "missing"
+  then
+    AC_MSG_CHECKING([for gs version with good left sidebearing handling])
+    ghostscript_notice=
+    GHOSTSCRIPT_VERSION_GOOD=
+    GHOSTSCRIPT_V_STRING=`"$GHOSTSCRIPT" -v | sed 1q`
+    # Get first word.
+    GHOSTSCRIPT_WORDS=`echo "$GHOSTSCRIPT_V_STRING" | cut -d\  -f1-`
+
+    # If the first word is "GPL", discard it.
+    if expr "$GHOSTSCRIPT_WORDS" : "GPL" > /dev/null
+    then
+      GHOSTSCRIPT_WORDS=`echo "$GHOSTSCRIPT_WORDS" | cut -d\  -f2-`
+    fi
+
+    # Only do a version check if the program calls itself Ghostscript.
+    if expr "$GHOSTSCRIPT_WORDS" : "Ghostscript" > /dev/null
+    then
+      GHOSTSCRIPT_VERSION_GOOD=no
+      GHOSTSCRIPT_VERSION=`echo "$GHOSTSCRIPT_WORDS" | cut -d\  -f2`
+      GHOSTSCRIPT_MAJOR=`echo "$GHOSTSCRIPT_VERSION" | cut -d. -f1`
+      GHOSTSCRIPT_MINOR=`echo "$GHOSTSCRIPT_VERSION" | cut -d. -f2`
+
+      if test "$GHOSTSCRIPT_MAJOR" -lt 9
+      then
+        GHOSTSCRIPT_VERSION_GOOD=yes
+      elif test "$GHOSTSCRIPT_MAJOR" -ge 10
+      then
+        GHOSTSCRIPT_VERSION_GOOD=yes
+      elif test "$GHOSTSCRIPT_MINOR" -ge 54
+      then
+        GHOSTSCRIPT_VERSION_GOOD=yes
+      fi
+    fi
+
+    if test "$GHOSTSCRIPT_VERSION_GOOD" = "yes"
+    then
+      GHOSTSCRIPT_VERSION="$GHOSTSCRIPT_VERSION (good)"
+    elif test "$GHOSTSCRIPT_VERSION_GOOD" = "no"
+    then
+      GHOSTSCRIPT_VERSION="$GHOSTSCRIPT_VERSION (buggy)"
+      ghostscript_notice="Buggy version of Ghostscript detected."
+    else
+      ghostscript_notice="Unable to determine version of Ghostscript."
+    fi
+
+    if test -n "$GHOSTSCRIPT_VERSION"
+    then
+      AC_MSG_RESULT([got $GHOSTSCRIPT_VERSION])
+    else
+      AC_MSG_RESULT([unable to determine])
+    fi
+  fi])
+
+AC_DEFUN([GROFF_GHOSTSCRIPT_VERSION_NOTICE], [
+  if test -n "$ghostscript_notice"
+    then
+     AC_MSG_NOTICE([$ghostscript_notice
+
+  Ghostscript versions 9.00 <= x < 9.54 suffer from a rendering glitch
+  that affects the AT&T troff (and groff) special character \(lh; see
+  <https://bugs.ghostscript.com/show_bug.cgi?id=703187>.  If your
+  version of Ghostscript has not been patched to fix this problem, you
+  may need to work around it in groff documents you render for the
+  PostScript (and, for tbl(1) tables, HTML) output devices.])
+  fi])
 
 # Check location of 'awk'; allow '--with-awk=PROG' option to override.
 
