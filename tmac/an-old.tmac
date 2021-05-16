@@ -53,7 +53,7 @@
 .nr need_eo_h 0
 .nr need_col2 0
 .
-.nr an-first 1
+.nr an-first 1 \" is this a new man(7) document?
 .
 .nr an-html 0
 .if '\*[.T]'html' .nr an-html 1
@@ -109,10 +109,29 @@
 .  nr an-saved-prevailing-indent1 \\n[IN]
 ..
 .
+.\" Cause a page transition to a new man(7) document.  Clear the page
+.\" header trap so it is not sprung with stale information.  Update the
+.\" page number depending on the C (continuous page numbering) register.
+.de an-start-new-document
+.  ch an-header
+.  ie \\n[C] .bp (\\n[%] + 1)
+.  el        .bp 1
+..
+.
 .\" .TH title section extra1 extra2 extra3
 .de1 TH
 .  if ((\\n[.$] < 2) : (\\n[.$] > 5)) \
 .    an-style-warn .\\$0 expects 2 to 5 arguments, got \\n[.$]
+.
+.  \" If batch processing (rendering multiple) man page documents, we
+.  \" must handle the end of a previous document.
+.  if !\\n[an-first] \{\
+.    ie \\n[cR] .an-end
+.    el         .an-start-new-document
+.    \}
+.    nr an-first 1
+.  \}
+.
 .  if \\n[an-html] \{\
 .    DEVTAG-TL
 .    nop \\$1
@@ -203,18 +222,17 @@
 .    rm an-msg
 .  \}
 .
-.  ie \\n[cR] \
+.  if \\n[an-first] \
 .    an-header
-.  el \{\
+.
+.  if !\\n[cR] \{\
 .    wh 0 an-header
 .    wh -1i an-footer
 .    wh \\n[FT]u an-p-footer
-.
-.    if \\n[nl] \{\
-.      ie \\n[C] .bp (\\n[%] + 1)
-.      el        .bp 1
 .    \}
 .  \}
+.
+.  nr an-first 0
 ..
 .
 .\" BSD compatibility macros: .AT and .UC
@@ -266,12 +284,6 @@
 ..
 .
 .de1 an-header
-.  if \\n[cR] \{\
-.    ie \\n[an-first] \
-.      nr an-first 0
-.    el \
-.      sp .5i
-.  \}
 .  ev an-1
 .  ps \\n[PS]u
 .  vs \\n[VS]u

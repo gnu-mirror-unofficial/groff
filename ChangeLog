@@ -1,8 +1,40 @@
 2021-05-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Fix missing page footers when continuously rendering
+	multiple documents.  Resolving this uncovered entangled header
+	and footer management bugs with batch processing even when _not_
+	continuously rendering.
+
+	* tmac/an-old.tmac (an-start-new-document): New macro clears
+	header trap so it doesn't get called with stale information.
+	{The TH macro already re-sets a header trap with every man
+	page if not continuously rendering.)  This macro also absorbs
+	the break-page and page number incrementation logic from TH.
+	(TH): Adapt semantics of "an-first" register to mean not "first
+	page rendered" (apparently) but "first page of new document".
+	If we are _not_ on the first page of a new document and the TH
+	macro is called, we must be batch processing: force the previous
+	man page to end (call an-end if continuously rendering, or
+	an-start-new-document if not).  After all the header and footer
+	strings have been configured for the man page, call an-header if
+	we're on the first page of the document, not (just) if we're
+	continuously rendering.  Zero an-first register at end of macro
+	here unconditionally instead of conditionally in .an-header.
+	(an-header): Drop conditional on continuous rendering.
+
+	When I batch-render our 62 man pages to the terminal, I do note
+	one cosmetic regression: the lj4_font(5) page, when continuously
+	rendered in batch processing, has no space between its header
+	line and first section heading ("Name").  Another cosmetic issue
+	in this scenario is that the footers for every rendered page but
+	the last, which had (wrongly) been absent entirely, are set with
+	no space after them and the header of the next.
+
 	* tmac/tests/an-old_page-footers-present.sh:
 	* tmac/tests/an-old_page-header-has-current-data.sh: Add man
 	page header/footer regression tests.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60609>.
 
 2021-05-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
