@@ -1,3 +1,20 @@
+2021-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Apply italic corrections more consistently.
+
+	* tmac/an-old.tmac (BI, IB, IR, RI): Apply italic corrections
+	more consistently.  Add lengthy comment rationalizing approach.
+	(RI, BI): An italic correction is now applied after the last
+	argument if it is of even parity (i.e., the 2nd, 4th, 6th, ...).
+
+	* tmac/groff_man.7.man.in (Description/Font style macros): Note
+	that italic corrections are applied.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?53541>.
+
+	Thanks to Bjarni Ingi Gislason for the report and a suggested
+	patch.
+
 2021-05-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Ignore FT register when appropriate.
