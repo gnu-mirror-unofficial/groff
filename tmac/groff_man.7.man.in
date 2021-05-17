@@ -2605,16 +2605,19 @@ Because these macros are hooks for
 internals,
 man pages have no reason to call them.
 .
+A macro definition for these hooks typically consists of a \[lq].tl\[rq]
+request.
+.
 .
 .TP
 .B .BT
-Set the page footer
+Set the page footer text
 (\(lqbottom trap\(rq).
 .
 .
 .TP
 .B .PT
-Set the page header
+Set the page header text
 (\(lqpage trap\(rq).
 .
 .
@@ -2980,6 +2983,8 @@ Set distance of the footer,
 relative to the bottom of the page if negative or top if positive,
 to
 .IR footer-distance .
+.
+Ignored if continuous rendering is enabled.
 .
 The default is \-0.5i.
 .
