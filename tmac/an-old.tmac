@@ -226,9 +226,11 @@
 .    an-header
 .
 .  if !\\n[cR] \{\
+.    ie r FT .nr an-footer-location \\n[FT]
+.    el      .nr an-footer-location (-.5i)
 .    wh 0 an-header
-.    wh (2u * \\n[FT]u) an-footer
-.    wh \\n[FT]u an-p-footer
+.    wh (2u * \\n[an-footer-location]u) an-footer
+.    wh \\n[an-footer-location]u an-p-footer
 .    \}
 .  \}
 .
@@ -772,8 +774,35 @@
 .    \}
 .
 .\" footer distance
-.if !r FT \
-.  nr FT (-.5i)
+.\"
+.\" Unlike most of these parameters, we do not set a default for FT; the
+.\" TH macro places page location traps only if not continuously
+.\" rendering.
+.\"
+.if r FT \{\
+.  \" Validate it. Continuous rendering ignores FT.  Measuring a footer
+.  \" distance from the page top isn't done.  A footer distance of over
+.  \" half the page length is unlikely.  A footer distance of less than
+.  \" one line height is too.
+.  ie \n[cR] \
+.    ds an-msg footer distance when continuously rendering\"
+.  el \{\
+.    ie (\n[FT] : (\n[FT] = 0)) \
+.      ds an-msg non-negative footer distance: \n[FT]u\"
+.    el \{\
+.      ie (-(\n[FT]) > (\n[.p] / 2)) \
+.        ds an-msg implausibly large footer distance: \n[FT]u\"
+.      el \
+.        if ((v;\n[FT]) < 1v) \
+.          ds an-msg implausibly small footer distance: \n[FT]u\"
+.    \}
+.  \}
+.  if d an-msg \{\
+.    tm \*[an-old]: ignoring \*[an-msg]
+.    rr FT
+.    rm an-msg
+.  \}
+.\}
 .
 .\" hyphenation mode
 .if !r HY \{\

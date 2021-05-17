@@ -1,8 +1,20 @@
 2021-05-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Ignore FT register when appropriate.
+
+	* tmac/an-old.tmac (initialization): Validate user-specified
+	value of \n[FT].  Continuous rendering ignores FT (page location
+	traps are not used for footers in that mode).  Measuring a
+	footer distance from the page top isn't done.  A footer distance
+	of over half the page length is unlikely.  A footer distance of
+	less than one line height is too.  Issue diagnostics in all of
+	these cases.
+
 	* tmac/tests/tmac/tests/\
 	an-old_FT-bad-value-should-not-trash-titles.sh: Test it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60612>.
 
 2021-05-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
