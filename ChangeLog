@@ -1,3 +1,13 @@
+2021-05-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/an-old.tmac (TH): Plant the an-footer trap (where we
+	schedule a break in the page text prior to spacing down to the
+	footer) at twice the value of \n[FT], not a hard-coded -1i.
+	This way, the user can't make the an-p-footer trap (planted at
+	\n[FT]) spring before the an-footer trap that should precede it.
+
+	* tmac/groff_man.7.man.in (Options) <-rFT>: Document this.
+
 2021-05-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_GHOSTSCRIPT_VERSION_CHECK): Add new
