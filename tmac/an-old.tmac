@@ -513,13 +513,24 @@
 .  ns
 ..
 .
+.\"
+.\" Alternating font macros
+.\" -----------------------
+.\"
+.\" Implementation notes:
+.\"
+.\" We always emit a non-printing input break \& before the first
+.\" argument.  This is necessary only when the calling man page is in
+.\" compatibility mode; it works around the surprising AT&T semantics of
+.\" \f escapes at the beginning of an input line.  See "Implementation
+.\" differences" in groff_diff(7) or the groff Texinfo manual.
+.\"
 .\" The italic correction escapes can be visually confusing.  We apply
 .\" the following rules, always on the same input line.
 .\"   (1) Before any italic argument, emit a left italic correction \,
 .\"       before switching to the italic style.
 .\"   (2) After any italic argument, emit an italic correction \/
 .\"       before switching to another style.
-.\"
 .\" It is true that these macros cannot know what style is used in the
 .\" input stream before or after they are called.  We can make
 .\" assumptions based on pragmatics.  In most cases, the caller will not
@@ -533,30 +544,19 @@
 .\" caller would simply have added the relevant characters to the
 .\" arguments of the macro call.
 .\"
-.\" Unrelatedly,
-.\"   (3) Emit a non-printing input break \& before the first argument.
-.\"       This is necessary only when the calling man page is in
-.\"       compatibility mode; it works around the surprising AT&T
-.\"       semantics of \f escapes at the beginning of an input line.
-.\"       See "Implementation differences" in groff_diff(7) or the groff
-.\"       Texinfo manual.)
-.\"   (4) Prefix the string argument to an 'as' request with a double
-.\"       quote (") if it begins with a macro argument interpolation
-.\"       (which might start with a space).  (This would apply to 'ds'
-.\"       as well but for item (3) above.)
 .
 .de1 RI
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
-.    ds an-result \&\f[R]\\$1\"
-.    shift
+.    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \,\f[I]\\$1\/\f[R]\\$2\"
+.      as an-result \f[R]\\$1\,\f[I]\\$2\/\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
+.    if \\n[.$] .as an-result \f[R]\\$1\"
 \\*[an-result]
+.    rm an-result
 .    ft R
 .  \}
 ..
@@ -565,14 +565,14 @@
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
-.    ds an-result \&\,\f[I]\\$1\/\f[R]\"
-.    shift
+.    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result "\\$1\,\f[I]\\$2\/\f[R]\"
+.      as an-result \,\f[I]\\$1\/\f[R]\\$2\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result "\\$1\"
+.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
 \\*[an-result]
+.    rm an-result
 .    ft R
 .  \}
 ..
@@ -581,14 +581,14 @@
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
-.    ds an-result \&\,\f[I]\\$1\/\"
-.    shift
+.    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \f[B]\\$1\,\f[I]\\$2\/\"
+.      as an-result \,\f[I]\\$1\/\f[B]\\$2\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \f[B]\\$1\"
+.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
 \\*[an-result]
+.    rm an-result
 .    ft R
 .  \}
 ..
@@ -597,14 +597,14 @@
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
-.    ds an-result \&\f[B]\\$1\"
-.    shift
+.    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \,\f[I]\\$1\/\f[B]\\$2\"
+.      as an-result \f[B]\\$1\,\f[I]\\$2\/\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
+.    if \\n[.$] .as an-result \f[B]\\$1\"
 \\*[an-result]
+.    rm an-result
 .    ft R
 .  \}
 ..
@@ -612,27 +612,33 @@
 .de1 RB
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
-.  ds an-result \&\"
-.  while (\\n[.$] >= 2) \{\
-.    as an-result \f[R]\\$1\f[B]\\$2\"
-.    shift 2
-.  \}
-.  if \\n[.$] .as an-result \f[R]\\$1\"
+.  if \\n[.$] \{\
+.    ds an-result \&\"
+.    while (\\n[.$] >= 2) \{\
+.      as an-result \f[R]\\$1\f[B]\\$2\"
+.      shift 2
+.    \}
+.    if \\n[.$] .as an-result \f[R]\\$1\"
 \\*[an-result]
-.  ft R
+.    rm an-result
+.    ft R
+.  \}
 ..
 .
 .de1 BR
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
-.  ds an-result \&\"
-.  while (\\n[.$] >= 2) \{\
-.    as an-result \f[B]\\$1\f[R]\\$2\"
-.    shift 2
-.  \}
-.  if \\n[.$] .as an-result \f[B]\\$1\"
+.  if \\n[.$] \{\
+.    ds an-result \&\"
+.    while (\\n[.$] >= 2) \{\
+.      as an-result \f[B]\\$1\f[R]\\$2\"
+.      shift 2
+.    \}
+.    if \\n[.$] .as an-result \f[B]\\$1\"
 \\*[an-result]
-.  ft R
+.    rm an-result
+.    ft R
+.  \}
 ..
 .
 .de1 RS

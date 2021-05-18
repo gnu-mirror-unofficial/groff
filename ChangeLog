@@ -1,5 +1,23 @@
 2021-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac: Refactor alternating font macros.  These
+	macros are hard enough to understand without adding gratuitous
+	structural differences to the reader's burden.  Make their
+	implementations rigidly parallel.  Update comments.
+	(RI, IR, IB, BI, RB, BR): Always define the `an-result` string
+	as empty except for a non-printing input break for the sake of
+	compatibility mode.
+	(RI, IR, IB, BI): Defer interpolation of the first argument to
+	the while loop if there are at least two (like the existing RB,
+	BR).  This way the the font escape style names in the appendment
+	to `an-result` match the order of the letters in the macro name
+	{useful to make sense of diffs}.
+	(RI, IR, IB, BI, RB, BR): Always remove the `an-result` string
+	after interpolating it.
+	(RB, BR): Only do work if there are any arguments.
+
+2021-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Apply italic corrections more consistently.
 
 	* tmac/an-old.tmac (BI, IB, IR, RI): Apply italic corrections
