@@ -20,8 +20,8 @@
 .\" <http://www.gnu.org/licenses/>.
 .
 .
-.\" The file man.local is loaded at the end.  Put local additions there.
-.\" If you need to add things to TH, use '.am1 TH'.
+.\" Put local additions in the file man.local, loaded near the end of
+.\" this file.  If you need to add things to TH, use '.am1 TH'.
 .
 .if !\n(.g \
 .  ab groff man macros require groff extensions; aborting
@@ -31,14 +31,21 @@
 .do nr *groff_an-old_tmac_C \n[.cp]
 .cp 0
 .
+.\" Package-internal names start with "an-" and are subject to change.
+.
 .\" Define a string for use in diagnostic messages.
 .ds an-old an-old.tmac\"
 .
+.\" We use the .stringup request from groff 1.23, but nothing breaks if
+.\" it is undefined; the output is unchanged in appearance from earlier
+.\" releases.
 .if (\n[.x]\n[.y] < 118) \{\
 .  ds an-msg \*[an-old]: groff man macros require groff 1.18 or later,\"
 .  as an-msg " but found groff \n[.x].\n[.y]; aborting\"
 .  ab \*[an-msg]
 .\}
+.
+.\" === Define macros. ===
 .
 .de an-warn
 .  tm \*[an-old]:\\n[.F]:\\n[.c]: warning: \\$*
@@ -53,10 +60,10 @@
 .nr need_eo_h 0
 .nr need_col2 0
 .
-.nr an-first 1 \" is this a new man(7) document?
+.nr an-is-first-page-of-document 1 \" is this a new man(7) document?
 .
-.nr an-html 0
-.if '\*[.T]'html' .nr an-html 1
+.nr an-is-output-html 0
+.if '\*[.T]'html' .nr an-is-output-html 1
 .
 .\" Define alternate requests to handle continuous rendering.
 .\"
@@ -88,7 +95,7 @@
 .  pl +4v
 .  fl
 .  sp 3
-.  an-p-footer
+.  an-footer
 .  pl \\n[nl]u
 ..
 .
@@ -101,8 +108,8 @@
 .  em an-end
 ..
 .
-.de an-set-margin
-.  nr an-level 1
+.de an-reset-margin-and-inset-level
+.  nr an-inset-level 1
 .  nr an-margin \\n[IN]
 .  nr an-saved-margin1 \\n[IN]
 .  nr an-prevailing-indent \\n[IN]
@@ -125,14 +132,14 @@
 .
 .  \" If batch processing (rendering multiple) man page documents, we
 .  \" must handle the end of a previous document.
-.  if !\\n[an-first] \{\
+.  if !\\n[an-is-first-page-of-document] \{\
 .    ie \\n[cR] .an-end
 .    el         .an-start-new-document
 .    \}
-.    nr an-first 1
+.    nr an-is-first-page-of-document 1
 .  \}
 .
-.  if \\n[an-html] \{\
+.  if \\n[an-is-output-html] \{\
 .    DEVTAG-TL
 .    nop \\$1
 .    DEVTAG-EO-TL
@@ -172,12 +179,12 @@
 .
 .  DT
 .  PD
-.  an-set-margin
+.  an-reset-margin-and-inset-level
 .
-.  nr an-tag-sep 1n
-.  nr an-no-space-flag 0
-.  nr an-break-flag 0
-.  nr an-div? 0
+.  nr an-tag-separation 1n
+.  nr an-need-no-space-mode 0
+.  nr an-need-break 0
+.  nr an-is-in-diversion 0
 .
 .  ds an-title "\\$1\"
 .  if \\n[CT] .stringup an-title
@@ -209,7 +216,7 @@
 .
 .  if '\\*[an-extra2]'' \{\
 .    ds an-msg .\\$0 missing fourth argument; suggest package/project\"
-.    \" Yes that's one double quote, then three, then two.
+.    \" Yes, that's one double quote, then three, then two.
 .    as an-msg " name and version (e.g., """groff 1.23.0"")\"
 .    an-style-warn \\*[an-msg]
 .    rm an-msg
@@ -222,19 +229,19 @@
 .    rm an-msg
 .  \}
 .
-.  if \\n[an-first] \
+.  if \\n[an-is-first-page-of-document] \
 .    an-header
 .
 .  if !\\n[cR] \{\
 .    ie r FT .nr an-footer-location \\n[FT]
 .    el      .nr an-footer-location (-.5i)
 .    wh 0 an-header
-.    wh (2u * \\n[an-footer-location]u) an-footer
-.    wh \\n[an-footer-location]u an-p-footer
+.    wh (2u * \\n[an-footer-location]u) an-break-body-text
+.    wh \\n[an-footer-location]u an-footer
 .    \}
 .  \}
 .
-.  nr an-first 0
+.  nr an-is-first-page-of-document 0
 ..
 .
 .\" BSD compatibility macros: .AT and .UC
@@ -278,19 +285,19 @@
 .  if r ps4html \
 .    return
 .  ie \\n[D] \{\
-.    if o .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-page-string]'
-.    if e .tl '\\*[an-page-string]'\\*[an-extra1]'\\*[an-extra2]'
+.    if o .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-outer-footer-text]'
+.    if e .tl '\\*[an-outer-footer-text]'\\*[an-extra1]'\\*[an-extra2]'
 .  \}
 .  el \
-.    tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-page-string]'
+.    tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-outer-footer-text]'
 ..
 .
 .de1 an-header
-.  ev an-1
+.  ev an-env
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  ie \\n[an-html] \
+.  ie \\n[an-is-output-html] \
 .    tl ''''
 .  el \{\
 .    if !\\n[cR] \
@@ -305,17 +312,19 @@
 .  ns
 ..
 .
-.de1 an-footer
+.\" Schedule a page break when the next output line is written (not
+.\" called if continuously rendering).
+.de1 an-break-body-text
 '  bp
 ..
 .
-.de1 an-p-footer
-.  ev an-1
+.de1 an-footer
+.  ev an-env
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  ie \\n[an-html] \{\
-.    ds an-page-string \" empty
+.  ie \\n[an-is-output-html] \{\
+.    ds an-outer-footer-text \" empty
 .    ds an-extra1 \" empty
 .    ds an-extra2 \" empty
 .  \}
@@ -323,16 +332,16 @@
 .    ie r X \{\
 .      ie (\\n[%] > \\n[X]) \{\
 .        nr an-page-letter (\\n[%] - \\n[X])
-.        ds an-page-string \\n[X]\\n[an-page-letter]\"
+.        ds an-outer-footer-text \\n[X]\\n[an-page-letter]\"
 .      \}
 .      el \
-.        ds an-page-string \\n[%]\"
+.        ds an-outer-footer-text \\n[%]\"
 .    \}
 .    el \{\
 .      ie \\n[cR] \
-.        ds an-page-string "\\*[an-title](\\*[an-section])\"
+.        ds an-outer-footer-text "\\*[an-title](\\*[an-section])\"
 .      el \
-.        ds an-page-string \\n[%]\"
+.        ds an-outer-footer-text \\n[%]\"
 .    \}
 .  \}
 .  BT
@@ -341,15 +350,15 @@
 .
 .de1 SH
 .  sp \\n[PD]u
-.  an-set-margin
+.  an-reset-margin-and-inset-level
 .  fi
 .  in \\n[an-margin]u
 .  ti 0
 .  nr need_eo_h 1
 .  DEVTAG-SH 1
-.  itc 1 an-trap
-.  nr an-no-space-flag 1
-.  nr an-break-flag 1
+.  itc 1 an-input-trap
+.  nr an-need-no-space-mode 1
+.  nr an-need-break 1
 .  ps \\n[PS-SH]u
 .  ft \\*[HF]
 .  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
@@ -364,15 +373,15 @@
 .
 .de1 SS
 .  sp \\n[PD]u
-.  an-set-margin
+.  an-reset-margin-and-inset-level
 .  fi
 .  in \\n[IN]u
 .  ti \\n[SN]u
 .  nr need_eo_h 1
 .  DEVTAG-SH 2
-.  itc 1 an-trap
-.  nr an-no-space-flag 1
-.  nr an-break-flag 1
+.  itc 1 an-input-trap
+.  nr an-need-no-space-mode 1
+.  nr an-need-break 1
 .  ps \\n[PS-SS]u
 .  ft \\*[HF]
 .  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
@@ -382,25 +391,25 @@
 ..
 .
 .de1 B
-.  itc 1 an-trap
+.  itc 1 an-input-trap
 .  ft B
 .  if \\n[.$] \&\\$*
 ..
 .
 .de1 I
-.  itc 1 an-trap
+.  itc 1 an-input-trap
 .  ft I
 .  if \\n[.$] \,\\$*\/
 ..
 .
 .de1 SM
-.  itc 1 an-trap
+.  itc 1 an-input-trap
 .  ps -1
 .  if \\n[.$] \&\\$*
 ..
 .
 .de1 SB
-.  itc 1 an-trap
+.  itc 1 an-input-trap
 .  ps -1
 .  ft B
 .  if \\n[.$] \&\\$*
@@ -409,16 +418,16 @@
 .de1 TP
 .  sp \\n[PD]u
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
-.  itc 1 an-trap
+.  itc 1 an-input-trap
 .  in 0
-.  if !\\n[an-div?] \{\
+.  if !\\n[an-is-in-diversion] \{\
 .    ll -\\n[an-margin]u
 .    di an-div
 .  \}
-.  nr an-div? 1
+.  nr an-is-in-diversion 1
 ..
 .
-.de1 an-trap
+.de1 an-input-trap
 .  if \\n[need_eo_h]>0 .DEVTAG-EO-H
 .  nr need_eo_h 0
 .  if \\n[need_col2]>0 .DEVTAG-COL 2
@@ -426,21 +435,21 @@
 .  ft R
 .  ps \\n[PS]u
 .  vs \\n[VS]u
-.  if \\n[an-break-flag] \{\
+.  if \\n[an-need-break] \{\
 .    br
-.    nr an-break-flag 0
+.    nr an-need-break 0
 .  \}
-.  if \\n[an-no-space-flag] \{\
+.  if \\n[an-need-no-space-mode] \{\
 .    ns
-.    nr an-no-space-flag 0
+.    nr an-need-no-space-mode 0
 .  \}
-.  if \\n[an-div?] .an-do-tag
+.  if \\n[an-is-in-diversion] .an-write-paragraph-tag
 ..
 .
-.de an-do-tag
+.de an-write-paragraph-tag
 .  br
 .  di
-.  nr an-div? 0
+.  nr an-is-in-diversion 0
 .  ll
 .  \" We must emit the diversion in a separate environment to assure
 .  \" that a possible margin character is printed correctly.
@@ -449,7 +458,7 @@
 .  mc
 .  nf
 .  in \\n[an-margin]u
-.  ie (\\n[dl] + \\n[an-tag-sep] > \\n[an-prevailing-indent]) \{\
+.  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
 .    ne (2v + 1u)
 .    an-div
 .    ev
@@ -513,9 +522,7 @@
 .  ns
 ..
 .
-.\"
-.\" Alternating font macros
-.\" -----------------------
+.\" === Define alternating font macros. ===
 .\"
 .\" Implementation notes:
 .\"
@@ -648,22 +655,23 @@
 ..
 .
 .de1 RS
-.  nr an-saved-margin\\n[an-level] \\n[an-margin]
-.  nr an-saved-prevailing-indent\\n[an-level] \\n[an-prevailing-indent]
+.  nr an-saved-margin\\n[an-inset-level] \\n[an-margin]
+.  nr an-saved-prevailing-indent\\n[an-inset-level] \
+     \\n[an-prevailing-indent]
 .  ie \\n[.$] .nr an-margin +(n;\\$1)
 .  el         .nr an-margin +\\n[an-prevailing-indent]
 .  in \\n[an-margin]u
 .  nr an-prevailing-indent \\n[IN]
-.  nr an-level +1
+.  nr an-inset-level +1
 ..
 .
 .de1 RE
 .  ie \\n[.$] .nr an-RE-requested-level \\$1
-.  el         .nr an-RE-requested-level (\\n[an-level] - 1)
+.  el         .nr an-RE-requested-level (\\n[an-inset-level] - 1)
 .  ie \\n[.$] \{\
-.    if (\\n[an-RE-requested-level] = \\n[an-level]) \
-.      ds an-RE-problem redundant; already at level \\n[an-level]\"
-.    if (\\n[an-RE-requested-level] > \\n[an-level]) \
+.    if (\\n[an-RE-requested-level] = \\n[an-inset-level]) \
+.      ds an-RE-problem already at level \\n[an-inset-level]\"
+.    if (\\n[an-RE-requested-level] > \\n[an-inset-level]) \
 .      ds an-RE-problem too large\"
 .    if (\\n[an-RE-requested-level] < 1) \
 .      ds an-RE-problem too small\"
@@ -673,11 +681,12 @@
 .  \}
 .  el .if !(\\n[an-RE-requested-level]) .an-style-warn unbalanced .\\$0
 .  rr an-RE-requested-level
-.  ie \\n[.$] .nr an-level ((;\\$1) <? \\n[an-level])
-.  el         .nr an-level -1
-.  nr an-level (1 >? \\n[an-level])
-.  nr an-margin \\n[an-saved-margin\\n[an-level]]
-.  nr an-prevailing-indent \\n[an-saved-prevailing-indent\\n[an-level]]
+.  ie \\n[.$] .nr an-inset-level ((;\\$1) <? \\n[an-inset-level])
+.  el         .nr an-inset-level -1
+.  nr an-inset-level (1 >? \\n[an-inset-level])
+.  nr an-margin \\n[an-saved-margin\\n[an-inset-level]]
+.  nr an-prevailing-indent \
+     \\n[an-saved-prevailing-indent\\n[an-inset-level]]
 .  in \\n[an-margin]u
 ..
 .
@@ -690,7 +699,7 @@
 .  el \
 .    nr 3usekeeps 1
 .  sp \\n[PD]u
-.  if \\n[an-html] \{\
+.  if \\n[an-is-output-html] \{\
 .    nr an-TS-ll \\n[.l]
 .    ll 1000n
 .  \}
@@ -702,13 +711,13 @@
 .
 .de1 TE
 .  HTML-IMAGE-END
-.  if \\n[an-html] \
+.  if \\n[an-is-output-html] \
 .    ll \\n[an-TS-ll]u
 ..
 .
 .\" dummy equation delimiters
 .de1 EQ
-.  if \\n[an-html] \{\
+.  if \\n[an-is-output-html] \{\
 .    nr an-EQ-ll \\n[.l]
 .    ll 1000n
 .  \}
@@ -716,7 +725,7 @@
 ..
 .de1 EN
 .  HTML-IMAGE-END
-.  if \\n[an-html] \
+.  if \\n[an-is-output-html] \
 .    ll \\n[an-EQ-ll]u
 ..
 .
@@ -737,6 +746,8 @@
 .  \}
 ..
 .
+.\" === Define strings. ===
+.\"
 .\" These strings must work in compatibility mode also.
 .
 .ds S \s'\\n(PSu'\"
@@ -747,9 +758,10 @@
 .ie c\[rq] .ds rq \(rq\"
 .el        .ds rq ""\"
 .
-.\" For UTF-8, map the hyphen-minus to itself to facilitate copy and
-.\" paste of code examples, file names, and URLs embedding it.
+.\" === Define/remap characters. ===
 .
+.\" For UTF-8, map the minus sign to the hyphen-minus to facilitate
+.\" copy and paste of code examples, file names, and URLs embedding it.
 .if '\*[.T]'utf8' \{\
 .  char \- \N'45'
 .  char  - \N'45'
@@ -786,11 +798,11 @@
 .  nr C 0
 .el \
 .  if !\n[C] \
-.    if \n[an-html] \{\
+.    if \n[an-is-output-html] \{\
 .       tm \*[an-old]: ignoring continuous page numbering in HTML output
 .       nr C 1
 .    \}
-.if \n[an-html] \
+.if \n[an-is-output-html] \
 .  nr C 1
 .if r ps4html \
 .  nr C 1
@@ -812,7 +824,7 @@
 .  nr D 0
 .el \
 .  if \n[D] \
-.    if \n[an-html] \{\
+.    if \n[an-is-output-html] \{\
 .       tm \*[an-old]: ignoring double-sided layout in HTML output
 .       nr D 0
 .    \}
@@ -860,7 +872,7 @@
 .\" standard indentation
 .if !r IN \{\
 .  \" We must select an integer indentation value for nroff; see comment
-.  \" in an-do-tag.
+.  \" in an-write-paragraph-tag.
 .  ie t \
 .    nr IN 7.2n
 .  el \
@@ -889,7 +901,7 @@
 .\" used for internal purposes like image embedding.
 .\"
 .if r P \
-.  if \n[an-html] \
+.  if \n[an-is-output-html] \
 .    if !(\n[P] = 1) \{\
 .       tm \*[an-old]: ignoring starting page number in HTML output
 .       rr P
@@ -915,10 +927,10 @@
 .\" page number after which to apply letter suffixes
 .\"
 .\" Unlike most of these parameters, we do not set a default for X; only
-.\" the macro an-p-footer uses it.
+.\" the macro an-footer uses it.
 .if r X \{\
 .  af an-page-letter a
-.  if \n[an-html] \{\
+.  if \n[an-is-output-html] \{\
 .     tm \*[an-old]: ignoring page letter suffixing in HTML output
 .     rr X
 .  \}

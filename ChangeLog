@@ -1,5 +1,32 @@
 2021-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac: Rename many package macros, strings, and
+	registers (and the lone named environment) to be more expressive
+	of their function.  "an-footer" is now the proper complement of
+	"an-header" (setting up an environment and calling a
+	user-redefinable trap macro).
+	  an-first         -> an-is-first-page-of-document
+	  an-html          -> an-is-output-html
+	  an-footer        -> an-break-body-text
+	  an-p-footer      -> an-footer
+	  an-set-margin    -> an-reset-margin-and-inset-level
+	  an-level         -> an-inset-level
+	  an-tag-sep       -> an-tag-separation
+	  an-no-space-flag -> an-need-no-space-mode
+	  an-break-flag    -> an-need-break
+	  an-div?          -> an-is-in-diversion
+	  an-page-string   -> an-outer-footer-text
+	  an-trap          -> an-input-trap
+	  an-do-tag        -> an-write-paragraph-tag
+	  an-1             -> an-env
+
+	* tmac/andoc.tmac (reload-doc): ...as above for the exposed
+	parts of the interface.
+	  an-footer        -> an-break-body-text
+	  an-p-footer      -> an-footer
+
+2021-05-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac: Rearrange alternating font macros to be in
 	alphabetical order (and the order documented in groff_man(7).
 
