@@ -56,15 +56,6 @@
 .    tm \*[an-old]:\\n[.F]:\\n[.c]: style: \\$*
 ..
 .
-.mso devtag.tmac
-.nr need_eo_h 0
-.nr need_col2 0
-.
-.nr an-is-first-page-of-document 1 \" is this a new man(7) document?
-.
-.nr an-is-output-html 0
-.if '\*[.T]'html' .nr an-is-output-html 1
-.
 .\" Define alternate requests to handle continuous rendering.
 .\"
 .\" This .ne replacement avoids page breaks; instead, the page length is
@@ -765,6 +756,17 @@
 .  char \- \N'45'
 .  char  - \N'45'
 .\}
+.
+.\" === Initialize. ===
+.
+.mso devtag.tmac
+.nr need_eo_h 0 \" need to mark end of a heading?
+.nr need_col2 0 \" need two-column layout?
+.
+.nr an-is-first-page-of-document 1
+.
+.nr an-is-output-html 0
+.if '\*[.T]'html' .nr an-is-output-html 1
 .
 .\" Load man macro extensions.
 .mso an-ext.tmac
