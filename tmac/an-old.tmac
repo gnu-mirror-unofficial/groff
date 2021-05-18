@@ -545,32 +545,32 @@
 .\" arguments of the macro call.
 .\"
 .
-.de1 RI
+.de1 BI
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
 .    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \f[R]\\$1\,\f[I]\\$2\/\"
+.      as an-result \f[B]\\$1\,\f[I]\\$2\/\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \f[R]\\$1\"
+.    if \\n[.$] .as an-result \f[B]\\$1\"
 \\*[an-result]
 .    rm an-result
 .    ft R
 .  \}
 ..
 .
-.de1 IR
+.de1 BR
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
 .    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \,\f[I]\\$1\/\f[R]\\$2\"
+.      as an-result \f[B]\\$1\f[R]\\$2\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
+.    if \\n[.$] .as an-result \f[B]\\$1\"
 \\*[an-result]
 .    rm an-result
 .    ft R
@@ -593,16 +593,16 @@
 .  \}
 ..
 .
-.de1 BI
+.de1 IR
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
 .    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \f[B]\\$1\,\f[I]\\$2\/\"
+.      as an-result \,\f[I]\\$1\/\f[R]\\$2\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \f[B]\\$1\"
+.    if \\n[.$] .as an-result \,\f[I]\\$1\/\"
 \\*[an-result]
 .    rm an-result
 .    ft R
@@ -625,16 +625,16 @@
 .  \}
 ..
 .
-.de1 BR
+.de1 RI
 .  if (\\n[.$] < 2) \
 .    an-style-warn .\\$0 expects at least 2 arguments, got \\n[.$]
 .  if \\n[.$] \{\
 .    ds an-result \&\"
 .    while (\\n[.$] >= 2) \{\
-.      as an-result \f[B]\\$1\f[R]\\$2\"
+.      as an-result \f[R]\\$1\,\f[I]\\$2\/\"
 .      shift 2
 .    \}
-.    if \\n[.$] .as an-result \f[B]\\$1\"
+.    if \\n[.$] .as an-result \f[R]\\$1\"
 \\*[an-result]
 .    rm an-result
 .    ft R
