@@ -897,14 +897,18 @@
 .\" starting page number
 .\"
 .\" Unlike most of these parameters, we do not set a default for P;
-.\" groff supplies a default starting page number (1).  Also, when
-.\" rendering for the HTML output device, page numbers are concealed and
-.\" used for internal purposes like image embedding.
+.\" groff supplies a default starting page number (1).  When rendering
+.\" for the HTML output device, page numbers are concealed and used for
+.\" internal purposes like image embedding.  Page numbers are not
+.\" rendered at all in continuous rendering mode.
 .\"
-.if r P \
+.if r P \{\
 .  if \n[an-is-output-html] \
 .    if !(\n[P] = 1) \
 .      ds an-msg in HTML output\"
+.  if \n[cR] \
+.    ds an-msg when continuously rendering
+.\}
 .if d an-msg \{
 .  tm \*[an-old]: ignoring starting page number \*[an-msg]
 .  rr P
@@ -931,11 +935,15 @@
 .\" page number after which to apply letter suffixes
 .\"
 .\" Unlike most of these parameters, we do not set a default for X; only
-.\" the macro an-footer uses it.
+.\" the macro an-footer uses it.  Page numbers are not rendered at all
+.\" in continuous rendering mode.
+.\"
 .if r X \{\
 .  af an-page-letter a
 .  if \n[an-is-output-html] \
 .    ds an-msg in HTML output\"
+.  if \n[cR] \
+.    ds an-msg when continuously rendering
 .\}
 .if d an-msg \{
 .  tm \*[an-old]: ignoring page number suffix \*[an-msg]
