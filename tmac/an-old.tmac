@@ -73,9 +73,7 @@
 .\" This .bp replacement adjusts the page length to the current position
 .\" so that no empty lines are inserted.
 .de an-bp
-.  br
 .  pl \\n[nl]u
-.  an-real-bp \\$*
 ..
 .
 .\" We need an end macro for continuous rendering as well, to flush any
@@ -86,7 +84,7 @@
 .  fl
 .  sp 3
 .  an-footer
-.  pl \\n[nl]u
+.  bp
 ..
 .
 .\" Move macros into place for continuous rendering.
