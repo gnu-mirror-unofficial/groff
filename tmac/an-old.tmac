@@ -319,19 +319,16 @@
 .    ds an-extra2 \" empty
 .  \}
 .  el \{\
-.    ie r X \{\
-.      ie (\\n[%] > \\n[X]) \{\
-.        nr an-page-letter (\\n[%] - \\n[X])
-.        ds an-outer-footer-text \\n[X]\\n[an-page-letter]\"
-.      \}
-.      el \
-.        ds an-outer-footer-text \\n[%]\"
-.    \}
+.    ie \\n[cR] \
+.      ds an-outer-footer-text "\\*[an-title](\\*[an-section])\"
 .    el \{\
-.      ie \\n[cR] \
-.        ds an-outer-footer-text "\\*[an-title](\\*[an-section])\"
-.      el \
-.        ds an-outer-footer-text \\n[%]\"
+.      ds an-outer-footer-text \\n[%]\"
+.      if r X \{\
+.        if (\\n[%] > \\n[X]) \{\
+.          nr an-page-letter (\\n[%] - \\n[X])
+.          ds an-outer-footer-text \\n[X]\\n[an-page-letter]\"
+.        \}
+.      \}
 .    \}
 .  \}
 .  BT
