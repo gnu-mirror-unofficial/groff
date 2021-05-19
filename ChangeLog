@@ -1,5 +1,31 @@
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Fix stochastic vertical space loss problems in continuous
+	rendering mode by being more scrupulous about extending the page
+	length.  As noted in Savannah #60611, sometimes the vertical
+	space between a header line and the first section heading
+	{"Name"} would be reduced or removed altogether, in a way that
+	was highly sensitive to circumstances.  As far as I can tell,
+	the problem is that this vertical space disappeared only when we
+	were in double-secret probation no-space mode; this is the
+	special non-spacing mode {not apparent with inspection of
+	\n[.ns]} that happens when the internal stealth vertical
+	position trap is sprung.  This trap does not appear in .ptr
+	output but can be disabled with ".vpt 0", which is an
+	alternative fix for this problem {because continuous rendering
+	mode does not use vertical position traps at all}.  Another fix
+	might have been to simply call the moral equivalent of ".pl
+	MAXINT" as soon as continuous rendering mode was decided upon.
+
+	* tmac/an-old.tmac (an-header): In continuous rendering mode,
+	extend the page length by one line before calling PT to output
+	the page header, and afterwards, extend the page length by 3
+	vees and space by that amount (instead of half an inch).
+
+	Fixes half of <https://savannah.gnu.org/bugs/?60611>.
+
+2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (an-header, an-footer): Drop no-op .tl
 	requests.
 

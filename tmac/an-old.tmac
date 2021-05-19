@@ -287,11 +287,15 @@
 .  if !\\n[an-is-output-html] \
 .    if !\\n[cR] \
 .      sp .5i
+.    if \\n[cR] \
+.      pl +1v
 .    PT
 .    ie !\\n[cR] \
 .      sp |1i
-.    el \
-.      sp .5i
+.    el \{\
+.      pl +3v
+.      sp 3v
+.    \}
 .  \}
 .  ev
 .  ns
