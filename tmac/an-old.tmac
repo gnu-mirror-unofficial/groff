@@ -903,10 +903,13 @@
 .\"
 .if r P \
 .  if \n[an-is-output-html] \
-.    if !(\n[P] = 1) \{\
-.       tm \*[an-old]: ignoring starting page number in HTML output
-.       rr P
-.    \}
+.    if !(\n[P] = 1) \
+.      ds an-msg in HTML output\"
+.if d an-msg \{
+.  tm \*[an-old]: ignoring starting page number \*[an-msg]
+.  rr P
+.  rm an-msg
+.\}
 .
 .if !r ps4html \
 .  if r P \
@@ -931,10 +934,13 @@
 .\" the macro an-footer uses it.
 .if r X \{\
 .  af an-page-letter a
-.  if \n[an-is-output-html] \{\
-.     tm \*[an-old]: ignoring page letter suffixing in HTML output
-.     rr X
-.  \}
+.  if \n[an-is-output-html] \
+.    ds an-msg in HTML output\"
+.\}
+.if d an-msg \{
+.  tm \*[an-old]: ignoring page number suffix \*[an-msg]
+.  rr X
+.  rm an-msg
 .\}
 .
 .\" adjustment mode
