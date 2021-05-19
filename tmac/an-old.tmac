@@ -284,9 +284,7 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  ie \\n[an-is-output-html] \
-.    tl ''''
-.  el \{\
+.  if !\\n[an-is-output-html] \
 .    if !\\n[cR] \
 .      sp .5i
 .    PT
@@ -310,10 +308,7 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  ie \\n[an-is-output-html] \{\
-.    tl ''''
-.  \}
-.  el \{\
+.  if !\\n[an-is-output-html] \{\
 .    ie \\n[cR] \
 .      ds an-outer-footer-text "\\*[an-title](\\*[an-section])\"
 .    el \{\
