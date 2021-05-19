@@ -1,5 +1,16 @@
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac (an-bp): In continuous rendering mode, draw
+	a horizontal line between a page footer of one man page document
+	and the beginning of the next, but only if multiple documents
+	are beign rendered.
+	(initialization): Use variable to ensure we don't draw this line
+	after finishing the only document we render.
+
+	Fixes other half of <https://savannah.gnu.org/bugs/?60611>.
+
+2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Fix stochastic vertical space loss problems in continuous
 	rendering mode by being more scrupulous about extending the page
 	length.  As noted in Savannah #60611, sometimes the vertical

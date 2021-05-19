@@ -70,9 +70,20 @@
 .  rr an-amount
 ..
 .
-.\" This .bp replacement adjusts the page length to the current position
-.\" so that no empty lines are inserted.
+.\" This .bp replacement for continuous rendering mode draws a
+.\" horizontal line after each document if there is more than one, and
+.\" adjusts the page length to the current position so that no empty
+.\" lines are inserted.
 .de an-bp
+.  ie \\n[an-do-draw-line-after-document] \{\
+.    pl +1v
+.    nf
+.    ti 0
+\D'l \\n[LL]u 0'
+.    fi
+.  \}
+.  el \
+.    nr an-do-draw-line-after-document 1
 .  pl \\n[nl]u
 ..
 .
@@ -754,6 +765,7 @@
 .nr need_eo_h 0 \" need to mark end of a heading?
 .nr need_col2 0 \" need two-column layout?
 .
+.nr an-do-draw-line-after-document 0
 .nr an-is-first-page-of-document 1
 .
 .nr an-is-output-html 0
