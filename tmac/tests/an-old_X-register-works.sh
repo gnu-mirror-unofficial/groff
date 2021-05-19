@@ -25,11 +25,10 @@ groff="${abs_top_builddir:-.}/test-groff"
 INPUT='.TH foo 1 2021-05-19 "groff foo test suite"
 .TH bar 1 2021-05-19 "groff bar test suite"'
 
-OUTPUT=$(printf "%s\n" "$INPUT" \
-    | "$groff" -Tascii -P-cbou -rcR=0 -rC1 -rX1 -man)
 FAIL=
 
-#echo "$OUTPUT"
+OUTPUT=$(printf "%s\n" "$INPUT" \
+    | "$groff" -Tascii -P-cbou -rcR=0 -rC1 -rX1 -man)
 
 if ! echo "$OUTPUT" | grep -Eqx 'groff foo test suite +2021-05-19 +1'
 then
@@ -41,6 +40,21 @@ if ! echo "$OUTPUT" | grep -Eqx 'groff bar test suite +2021-05-19 +1a'
 then
     FAIL=yes
     echo "second page footer test failed" >&2
+fi
+
+INPUT='.TH baz 1 2021-05-19 "groff baz test suite"
+.SH Name
+baz \- neglect third stepchild
+.SH Description
+This program is the lowly third in line.'
+
+OUTPUT=$(printf "%s\n" "$INPUT" \
+    | "$groff" -Thtml -rcR=0 -rC1 -rX1 -man)
+
+if echo "$OUTPUT" | grep -q 'groff baz test suite'
+then
+    FAIL=yes
+    echo "HTML output unexpectedly contains footer text" >&2
 fi
 
 test -z "$FAIL"
