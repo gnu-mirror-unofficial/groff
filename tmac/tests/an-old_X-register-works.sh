@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2020 Free Software Foundation, Inc.
+# Copyright (C) 2020-2021 Free Software Foundation, Inc.
 #
 # This file is part of groff.
 #
@@ -20,12 +20,29 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-# Regression-test Savannah #59179.
-#
-# Don't lose track of the page number if we're continuously rendering
-# _and_ we've been given a page-letter suffixing threshold.
+# Ensure the X register takes effect on the right page and looks right.
 
-printf ".TH foo 1\n" | "$groff" -Tascii -P-cbou -rX1 -man \
-    | tail -n 1 | grep -Eq '^[[:space:]]+1$'
+INPUT='.TH foo 1 2021-05-19 "groff foo test suite"
+.TH bar 1 2021-05-19 "groff bar test suite"'
+
+OUTPUT=$(printf "%s\n" "$INPUT" \
+    | "$groff" -Tascii -P-cbou -rcR=0 -rC1 -rX1 -man)
+FAIL=
+
+#echo "$OUTPUT"
+
+if ! echo "$OUTPUT" | grep -Eqx 'groff foo test suite +2021-05-19 +1'
+then
+    FAIL=yes
+    echo "first page footer test failed" >&2
+fi
+
+if ! echo "$OUTPUT" | grep -Eqx 'groff bar test suite +2021-05-19 +1a'
+then
+    FAIL=yes
+    echo "second page footer test failed" >&2
+fi
+
+test -z "$FAIL"
 
 # vim:set ai et sw=4 ts=4 tw=72:
