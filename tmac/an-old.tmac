@@ -56,6 +56,11 @@
 .    tm \*[an-old]:\\n[.F]:\\n[.c]: style: \\$*
 ..
 .
+.de an-deprecation-warn
+.  if (\\n[CHECKSTYLE] > 1) \
+.    an-style-warn use of deprecated macro: .\\$0
+..
+.
 .\" Define alternate requests to handle continuous rendering.
 .\"
 .\" This .ne replacement avoids page breaks; instead, the page length is
@@ -273,10 +278,12 @@
 ..
 .
 .de1 DT
+\\*[an-deprecation-warn]\\
 .  an-reset-tab-stops
 ..
 .
 .de1 PD
+\\*[an-deprecation-warn]\\
 \\*[an-reset-paragraph-spacing]\\
 ..
 .

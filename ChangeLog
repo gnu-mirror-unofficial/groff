@@ -1,5 +1,14 @@
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Add warnings for macros deprecated in groff_man(7), emitted if
+	the CHECKSTYLE register is greater than 1.
+
+	* tmac/an-old.tmac (an-deprecation-warn): New macro emits
+	diagnostic.
+	(DT, PD): Call the foregoing, re-using arguments.
+
+2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac: Refactor to move bodies of DT and PD into
 	private macros.
 	(an-reset-tab-stops, an-reset-paragraphp-spacing): New names for
