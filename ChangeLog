@@ -3,7 +3,12 @@
 	* tmac/mdoc/doc-common-u (doc-end-macro): When continuously
 	rendering and after flushing the last line of the body text of a
 	page, vertically space by 3 vees instead of 1, for consistency
-	with our man(7) implementation.
+	with our man(7) implementation.  Also increase page length by
+	same amount _after_ flushing a pending output line, for symmetry
+	with other spacing requests (and to prevent nasty surprises
+	analogous to those in Savannah #60611).
+	(doc-header): Put 3 vees of space after the header in continuous
+	rendering mode, not 1 (and increase page length accordingly).
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
