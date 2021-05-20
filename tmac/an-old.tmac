@@ -107,6 +107,15 @@
 .  em an-end
 ..
 .
+.de an-reset-tab-stops
+.  ta T .5i
+..
+.
+.de an-reset-paragraph-spacing
+.  ie \\n[.$] .nr PD (v;\\$1)
+.  el         .nr PD (.4v >? \n[.V])
+..
+.
 .de an-reset-margin-and-inset-level
 .  nr an-inset-level 1
 .  nr an-margin \\n[IN]
@@ -176,8 +185,8 @@
 .  ll \\n[LL]u
 .  ss 12
 .
-.  DT
-.  PD
+.  an-reset-tab-stops
+.  an-reset-paragraph-spacing
 .  an-reset-margin-and-inset-level
 .
 .  nr an-tag-separation 1n
@@ -264,12 +273,11 @@
 ..
 .
 .de1 DT
-.  ta T .5i \" This sets tabs every .5 inches
+.  an-reset-tab-stops
 ..
 .
 .de1 PD
-.  ie \\n[.$] .nr PD (v;\\$1)
-.  el         .nr PD (.4v >? \n[.V])
+\\*[an-reset-paragraph-spacing]\\
 ..
 .
 .\" Redefine these to customize the header & footer
