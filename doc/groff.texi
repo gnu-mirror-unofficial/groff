@@ -12447,16 +12447,22 @@ example, consider a page bottom trap macro that prints a marker in the
 margin to indicate continuation of a footnote or something similar.
 @endDefesc
 
-There are some special-case escapes for vertical motion.
+@cindex CSTR@tie{}#54 errata
+There are some special-case escapes for vertical motion.  They were
+incorrectly documented in the @acronym{AT&T} @code{troff} manual as
+causing vertical motions in @samp{m} units, rather than @samp{v}.
 
+@cindex CSTR@tie{}#54 erratum, @code{\r} escape
 @Defesc {\\r, , , }
 Move upwards@tie{}1@dmn{v}.
 @endDefesc
 
+@cindex CSTR@tie{}#54 erratum, @code{\u} escape
 @Defesc {\\u, , , }
 Move upwards@tie{}.5@dmn{v}.
 @endDefesc
 
+@cindex CSTR@tie{}#54 erratum, @code{\d} escape
 @Defesc {\\d, , , }
 Move down@tie{}.5@dmn{v}.
 @endDefesc
