@@ -1,5 +1,19 @@
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Slightly refactor footer spacing management when continuously
+	rendering.
+
+	* tmac/an-old.tmac (an-end): Increase the page length _after_
+	flushing a pending output line.  Do so only by the amount of
+	spacing we actually perform next.  Make the scaling indicator on
+	the .sp request explicit.  The amount seemed magical because it
+	was accounting for the one line to be consumed by output of the
+	footer title line.  Instead, move that further increase of the
+	page length from here...
+	(an-footer): ...to here (~250 lines away), before calling BT.
+
+2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/mdoc/doc-common-u (doc-end-macro): When continuously
 	rendering and after flushing the last line of the body text of a
 	page, vertically space by 3 vees instead of 1, for consistency
