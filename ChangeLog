@@ -15,10 +15,10 @@
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* man/groff.7.man (Escape Sequences): Fix omission; an
-	the escape character in an unrecognized escape sequence is not
-	merely ignored; the sequence produces a warning diagnostic,
-	albeit of a type that is disabled by default.
+	* man/groff.7.man (Escape Sequences): Fix omission; the escape
+	character in an unrecognized escape sequence is not merely
+	ignored; the sequence produces a warning diagnostic, albeit of a
+	type that is disabled by default.
 	(Escape Sequences/Escape short reference): Fix omissions; \# and
 	\V are interpreted even in copy mode.
 
@@ -82,7 +82,7 @@
 
 	* tmac/an-old.tmac (an-bp): In continuous rendering mode, draw
 	a horizontal line between a page footer of one man page document
-	and the heading of the next, but only if multiple documents are
+	and the header of the next, but only if multiple documents are
 	being rendered.
 	(initialization): Use variable to ensure we don't draw this line
 	after finishing the only document we render.
@@ -100,13 +100,13 @@
 	the problem is that this vertical space disappeared only when we
 	were in double-secret probation no-space mode; this is the
 	special non-spacing mode {not apparent with inspection of
-	\n[.ns]} that happens when the internal stealth vertical
-	position trap is sprung.  This trap does not appear in .ptr
-	output but can be disabled with ".vpt 0", which is an
-	alternative fix for this problem {because continuous rendering
-	mode does not use vertical position traps at all}.  Another fix
-	might have been to simply call the moral equivalent of ".pl
-	MAXINT" as soon as continuous rendering mode was decided upon.
+	\n[.ns]} that happens when the internal stealth page location
+	trap is sprung.  This trap does not appear in .ptr output but
+	can be disabled with ".vpt 0", which is an alternative fix for
+	this problem {because continuous rendering mode does not use
+	vertical position traps at all}.  Another fix might have been to
+	simply call the moral equivalent of ".pl MAXINT" as soon as
+	continuous rendering mode was decided upon.
 
 	* tmac/an-old.tmac (an-header): In continuous rendering mode,
 	extend the page length by one line before calling PT to output
