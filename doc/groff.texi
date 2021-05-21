@@ -12159,6 +12159,9 @@ macro one level higher.  This is used to define a wrapper macro for
 
 @c ---------------------------------------------------------------------
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Copy Mode, Parameters, Writing Macros, Writing Macros
 @subsection Copy Mode
 @cindex copy mode
@@ -12174,15 +12177,20 @@ macro one level higher.  This is used to define a wrapper macro for
 When GNU @code{troff} processes certain requests, most importantly those
 which define a macro, string, or diversion, it does so in @dfn{copy
 mode}: it copies the characters of the definition into a dedicated
-storage region, interpolating the escape sequences @code{\n}, @code{\$},
-and @code{\*}, intepreting @code{\\} and @code{\@key{RET}} immediately,
-and storing all other escape sequences in an encoded form.
+storage region, interpolating the escape sequences @code{\n}, @code{\g},
+@code{\$}, @code{\*}, and @code{\V} normally; interpreting @code{\.} and
+@code{\@key{RET}} immediately; discarding comments @code{\"} and
+@code{\#}; interpolating the current leader, escape, or tab character
+with @code{\a}, @code{\e} or @code{\E}, and @code{\t}, respectively; and
+storing all other escape sequences in an encoded form.  @xref{Character
+Translations} for more on the use of @code{\e} and @code{\E}, and the
+distinction between them.
 
 Since the escape character escapes itself, you can control whether
 any escape sequence is interpreted at macro definition time or when it
-is later interpolated by selectively insulating the escapes with an
-extra backslash.@footnote{Compare this to the @code{\def} and
-@code{\edef} commands in @TeX{}.}
+is later interpolated by selectively insulating the escapes with another
+instace of the escape character.@footnote{Compare this to the
+@code{\def} and @code{\edef} commands in @TeX{}.}
 
 @Example
 .nr x 20
@@ -12201,6 +12209,9 @@ The complement of copy mode---a @code{roff} formatter's behavior when
 not defining or appending to a macro, string, or diversion---where all
 escapes and macros are interpolated and requests invoked immediately
 upon recognition, can be termed @dfn{interpretation mode}.
+
+@codequotebacktick off
+@codequoteundirected off
 
 @c ---------------------------------------------------------------------
 
