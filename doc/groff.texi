@@ -12333,13 +12333,16 @@ If a macro is called as a string (within another macro), the value of
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Page Motions, Drawing Requests, Writing Macros, gtroff Reference
 @section Page Motions
 @cindex page motions
 @cindex motions, page
 
-@xref{Manipulating Spacing}, for a discussion of the main request for
-vertical motion, @code{sp}.
+@xref{Manipulating Spacing}, for a discussion of the most commonly used
+request for vertical motion, @code{sp}, which spaces down by one line.
 
 @DefreqList {mk, [@Var{reg}]}
 @DefreqListEndx {rt, [@Var{dist}]}
@@ -12351,23 +12354,22 @@ vertical motion, @code{sp}.
 @cindex page location, vertical, returning to marked (@code{rt})
 @cindex location, vertical, page, returning to marked (@code{rt})
 @cindex vertical page location, returning to marked (@code{rt})
-The request @code{mk} can be used to mark a location on a page, for
-movement to later.  This request takes a register name as an argument in
-which to store the current page location.  With no argument it stores
-the location in an internal register.  The results of this can be used
-later by the @code{rt} or the @code{sp} request (or the @code{\v}
-escape).
+You can @dfn{mark} a location on a page for subsequent @dfn{return}.
+@code{mk} takes an argument, a register name in which to store the
+current page location.  If given no argument, it stores the location in
+an internal register.  This location can be used later by the @code{rt}
+or the @code{sp} requests (or the @code{\v} escape).
 
 The @code{rt} request returns @emph{upwards} to the location marked with
-the last @code{mk} request.  If used with an argument, return to a
-position which distance from the top of the page is @var{dist} (no
-previous call to @code{mk} is necessary in this case).  Default scaling
+the last @code{mk} request.  If used with an argument, it returns to a
+vertical position@tie{}@var{dist} from the top of the page (no previous
+call to @code{mk} is necessary in this case).  The default scaling
 indicator is @samp{v}.
 
-If a page break occurs between a @code{mk} request and its
-matching @code{rt} request, the @code{rt} is silently ignored.
+If a page break occurs between a @code{mk} request and its matching
+@code{rt} request, the @code{rt} request is silently ignored.
 
-Here a primitive solution for a two-column macro.
+A simple implementation of a macro to set text in two columns follows.
 
 @Example
 .nr column-length 1.5i
@@ -12434,23 +12436,24 @@ The following escapes give fine control of movements about the page.
 @Defesc {\\v, @code{'}, e, @code{'}}
 @cindex vertical motion (@code{\v})
 @cindex motion, vertical (@code{\v})
-Move vertically, usually from the current location on the page (if no
+Move vertically; usually from the current location on the page (if no
 absolute position operator @samp{|} is used).  The argument@tie{}@var{e}
 specifies the distance to move; positive is downwards and negative
-upwards.  The default scaling indicator for this escape is @samp{v}.
-Beware, however, that @code{gtroff} continues text processing at the
-point where the motion ends, so you should always balance motions to
-avoid interference with text processing.
+upwards.  The default scaling indicator is @samp{v}.  Beware, however,
+that GNU @code{troff} continues text processing at the point where the
+motion ends, so you should always balance motions to avoid interference
+with text processing.
 
-@code{\v} doesn't trigger a trap.  This can be quite useful; for
-example, consider a page bottom trap macro that prints a marker in the
-margin to indicate continuation of a footnote or something similar.
+@code{\v} doesn't trigger a trap.  This can be useful; for example,
+consider a page bottom trap macro that prints a marker in the margin to
+indicate continuation of a footnote or something similar.
 @endDefesc
 
 @cindex CSTR@tie{}#54 errata
-There are some special-case escapes for vertical motion.  They were
-incorrectly documented in the @acronym{AT&T} @code{troff} manual as
-causing vertical motions in @samp{m} units, rather than @samp{v}.
+There are some special-case escapes for vertical motion by lines or
+half-lines.  They were incorrectly documented in the @acronym{AT&T}
+@code{troff} manual as causing vertical motions in @samp{m} units,
+rather than @samp{v}.
 
 @cindex CSTR@tie{}#54 erratum, @code{\r} escape
 @Defesc {\\r, , , }
@@ -12473,7 +12476,7 @@ Move down@tie{}.5@dmn{v}.
 @cindex space, horizontal (@code{\h})
 @cindex horizontal motion (@code{\h})
 @cindex motion, horizontal (@code{\h})
-Move horizontally, usually from the current location (if no absolute
+Move horizontally; usually from the current location (if no absolute
 position operator @samp{|} is used).  The expression@tie{}@var{e}
 indicates how far to move: positive is rightwards and negative
 leftwards.  The default scaling indicator for this escape is @samp{m}.
@@ -12487,8 +12490,9 @@ There are a number of special-case escapes for horizontal motion.
 @Defesc {\\@key{SP}, , , }
 @cindex space, unbreakable
 @cindex unbreakable space
-An unbreakable and unpaddable (i.e.@: not expanded during filling)
-space.  (Note: This is a backslash followed by a space.)
+An unbreakable, unpaddable (i.e., not expanded during filling) space.
+(Note: This is a backslash followed by a space.)  Usually you want one
+of the following escapes instead, often @code{\~}.
 @endDefesc
 
 @Defesc {\\~, , , }
@@ -12497,30 +12501,31 @@ a line is adjusted.
 @endDefesc
 
 @Defesc {\\|, , , }
-A 1/6@dmn{th} em unbreakable space.  Ignored for TTY output devices
-(rounded to zero).
+A 1/6@dmn{th} em unbreakable space.  Ignored (rounded to zero width) on
+terminal output devices.
 
-However, if there is a glyph defined in the current font file with name
+However, if there is a glyph defined in the current font with name
 @code{\|} (note the leading backslash), the width of this glyph is used
-instead (even for TTYs).
+instead (even on terminals).
 @endDefesc
 
 @Defesc {\\^, , , }
-A 1/12@dmn{th} em unbreakable space.  Ignored for TTY output devices
-(rounded to zero).
+A 1/12@dmn{th} em unbreakable space.  Ignored (rounded to zero width) on
+terminal output devices.
 
-However, if there is a glyph defined in the current font file with name
+However, if there is a glyph defined in the current font with name
 @code{\^} (note the leading backslash), the width of this glyph is used
-instead (even for TTYs).
+instead (even on terminals).
 @endDefesc
 
 @Defesc {\\0, , , }
-@cindex space, width of a digit (@code{\0})
-@cindex digit width space (@code{\0})
-An unbreakable space the size of a digit.
+@cindex space, width of a digit (numeral) (@code{\0})
+@cindex digit-width space (@code{\0})
+@cindex numeral-width space (@code{\0})
+An unbreakable space the width of a numeral in the current font.
 @endDefesc
 
-The following string sets the @TeX{} logo:
+The following string definition sets the @TeX{} logo.
 
 @Example
 .ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
@@ -12535,13 +12540,13 @@ The following string sets the @TeX{} logo:
 @DefregItemx {ssc}
 @DefregListEndx {skw}
 @cindex width escape (@code{\w})
-Return the width of the specified @var{text} in basic units.  This
+Interpolate the width of the specified @var{text} in basic units.  This
 allows horizontal movement based on the width of some arbitrary text
-(e.g.@: given as an argument to a macro).
+(e.g., given as an argument to a macro).
 
 @Example
-The length of the string `abc' is \w'abc'u.
-    @result{} The length of the string `abc' is 72u.
+The length of the string 'abc' is \w'abc'u.
+    @result{} The length of the string 'abc' is 72u.
 @endExample
 
 Font changes may occur in @var{text}, which don't affect current
@@ -12641,7 +12646,7 @@ overstrike glyphs left-aligned.
 Print @var{anything}, then restore the horizontal and vertical position.
 The argument may not contain tabs or leaders.
 
-The following is an example of a strike-through macro:
+An example of a strike-through macro follows.
 
 @Example
 .de ST
@@ -12654,6 +12659,9 @@ This is
 an actual emergency!
 @endExample
 @endDefesc
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
