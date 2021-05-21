@@ -3043,6 +3043,15 @@ consult its documentation to learn of \[lq]safe\[rq] escapes or
 alternative facilities it provides to achieve the desired result.
 .
 .
+.P
+If the escape character is followed by a character that does not
+identify a defined operation,
+the escape character is ignored
+(producing a diagnostic of the \[lq]escape\[rq] warning type,
+which is not enabled by default)
+and the following character is processed normally.
+.
+.
 .\" ====================================================================
 .SS "Escape short reference"
 .\" ====================================================================
@@ -3051,32 +3060,20 @@ The escape sequences
 .esc e ,
 .esc . ,
 .esc \[dq] ,
+.esc # ,
 .esc $ ,
 .esc * ,
 .esc a ,
 .esc n ,
 .esc t ,
 .esc g ,
+.esc V ,
 and
 .escarg \& newline
 are interpreted even in copy mode.
 .
 .
 .P
-Escape sequences starting with
-.esc (
-or
-.esc [
-do not represent single character escape sequences, but introduce escape
-names with two or more characters.
-.
-.
-.P
-If a backslash is followed by a character that does not constitute a
-defined escape sequence, the backslash is silently ignored and the
-character maps to itself.
-.
-.
 .PD 0
 .
 .\" ========= comments =========
