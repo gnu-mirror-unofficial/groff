@@ -1665,7 +1665,7 @@ static int scanArguments(int argc, char **argv)
       else if (strcmp(optarg, "4") == 0)
 	dialect = html4;
       else
-	printf("unsupported html dialect %s (defaulting to html4)\n", optarg);
+	warning("unsupported HTML dialect: '%1'", optarg);
       break;
     case 'y':
       // handled by post-grohtml (create groff signature)

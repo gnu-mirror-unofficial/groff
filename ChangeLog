@@ -1,5 +1,14 @@
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/html/pre-html.cpp (scanArguments):
+	* src/devices/grohtml/post-html.cpp (main): Use libgroff's
+	warning() instead of printf() to emit diagnostic about
+	unrecognized paramter to `-x` option.  This sends the diagnostic
+	to the standard error stream and continues the long process of
+	fixing Savannah #52463.
+
+2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/groff_www.7.man: Stop using the "www" macro package.  The
 	macros it exposes are not part of the quasi-standardized man(7)
 	language, and thus should not be used in man(7) documents.  See
