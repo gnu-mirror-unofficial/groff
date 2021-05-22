@@ -1,6 +1,6 @@
 .TH grohtml @MAN1EXT@ "@MDATE@" "groff @VERSION@"
 .SH Name
-grohtml \- groff output driver for HTML
+grohtml, post\-grohtml, pre\-grohtml \- groff output driver for HTML
 .
 .
 .\" ====================================================================
@@ -34,33 +34,68 @@ grohtml \- groff output driver for HTML
 .SH Synopsis
 .\" ====================================================================
 .
-.SY grohtml
-.OP \-bhlnprVy
-.OP \-a aa-text-bits
-.OP \-D dir
-.OP \-F dir
-.OP \-g aa-graphic-bits
-.OP \-i resolution
-.OP \-I image-stem
-.OP \-j filename
-.OP \-o image-vertical-offset
-.OP \-s size
-.OP \-S level
-.OP \-x html-dialect
+.SY pre\-grohtml
+.RB [ \-epV ]
+.RB [ \-a
+.IR anti-aliasing-text-bits ]
+.RB [ \-D
+.IR image-directory ]
+.RB [ \-F
+.IR font-directory ]
+.RB [ \-g
+.IR anti-aliasing-graphic-bits ]
+.RB [ \-i
+.IR resolution ]
+.RB [ \-I
+.IR image-stem ]
+.RB [ \-o
+.IR image-vertical-offset ]
+.RB [ \-x
+.IR  html-dialect ]
 .RI [ file
 \&.\|.\|.\&]
 .YS
 .
 .
-.SY grohtml
+.SY pre\-grohtml
 .B \-\-help
 .YS
 .
 .
-.SY grohtml
+.SY pre\-grohtml
 .B \-v
 .
-.SY grohtml
+.SY pre\-grohtml
+.B \-\-version
+.YS
+.
+.
+.SY post\-grohtml
+.RB [ \-bhlnrVy ]
+.RB [ \-F
+.IR font-directory ]
+.RB [ \-j
+.IR output-stem ]
+.RB [ \-s
+.IR base-point-size ]
+.RB [ \-S
+.IR heading-level ]
+.RB [ \-x
+.IR html-dialect ]
+.RI [ file
+\&.\|.\|.\&]
+.YS
+.
+.
+.SY post\-grohtml
+.B \-\-help
+.YS
+.
+.
+.SY post\-grohtml
+.B \-v
+.
+.SY post\-grohtml
 .B \-\-version
 .YS
 .
@@ -153,7 +188,7 @@ both exit afterward.
 .
 .
 .TP
-.BI \-a \~aa-text-bits
+.BI \-a \~anti-aliasing-text-bits
 Number of bits of antialiasing information to be used by
 .I text
 when generating PNG images.
@@ -183,11 +218,11 @@ Initialize the background color to white.
 .
 .
 .TP
-.BI \-D \~dir
+.BI \-D \~image-directory
 Instruct
 .I grohtml
 to place all image files into directory
-.IR dir .
+.IR image-directory .
 .
 .
 .TP
@@ -211,9 +246,9 @@ is specified).
 .
 .
 .TP
-.BI \-F \~dir
+.BI \-F \~font-directory
 Prepend directory
-.RI dir /dev name
+.RI font-directory /dev name
 to the search path for font and device description files;
 .I name
 is the name of the device,
@@ -222,7 +257,7 @@ usually
 .
 .
 .TP
-.BI \-g \~aa-graphic-bits
+.BI \-g \~anti-aliasing-graphic-bits
 Number of bits of antialiasing information to be used by
 .I graphics
 when generating PNG images.
@@ -270,8 +305,8 @@ indicates 200 pixels per inch.
 .
 .
 .TP
-.BI \-I \~stem
-Determine the image stem name.
+.BI \-I \~image-stem
+Determine the image file name stem.
 .
 If omitted grohtml uses
 .IR \%grohtml\- XXXXX
@@ -281,19 +316,17 @@ is the process ID).
 .
 .
 .TP
-.BI \-j \~filename
+.BI \-j \~output-stem
 Instruct
 .I grohtml
 to split the HTML output into multiple files.
 .
-The
-.I filename
-is the stem and output is written to a new file at each section heading
+Output is written to a new file at each section heading
 (but see option
 .B \-S
 below)
 named
-.IR filename\- n .html .
+.IR output-stem\- n .html .
 .
 .
 .TP
@@ -316,7 +349,7 @@ This flag is automatically turned on if a heading contains an image.
 .
 .
 .TP
-.BI \-o \~vertical-offset
+.BI \-o \~image-vertical-offset
 Specify the vertical offset of images in points.
 .
 .
@@ -335,7 +368,7 @@ Turn off the automatic header and footer line
 .
 .
 .TP
-.BI \-s \~size
+.BI \-s \~base-point-size
 Set the base point size of the source file.
 .
 Thereafter when this point size is used in the source it will correspond
@@ -349,13 +382,13 @@ tag is emitted.
 .
 .
 .TP
-.BI \-S \~level
+.BI \-S \~heading-level
 When splitting HTML output
 (see option
 .B \-j
 above),
 split at each nested heading level defined by
-.IR level ,
+.IR heading-level ,
 or higher).
 .
 The default is
@@ -369,11 +402,11 @@ the document.
 .
 .
 .TP
-.BI \-x \~dialect
+.BI \-x \~html-dialect
 Select HTML dialect.
 .
 Currently,
-.I dialect
+.I html-dialect
 should be either the
 .RB digit\~ 4
 or the
