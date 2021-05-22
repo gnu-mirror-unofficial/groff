@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 2000-2020 Free Software Foundation, Inc.
  * Written by Gaius Mulley (gaius@glam.ac.uk).
  *
@@ -1551,15 +1550,21 @@ static char_buffer inputFile;
 
 static void usage(FILE *stream)
 {
-  fprintf(stream,
-    "\n"
-    "This program is not intended to be called stand-alone;\n"
-    "it is part of the groff pipeline to produce HTML output.\n"
-    "\n"
-    "If there is ever the need to call it manually (e.g., for\n"
-    "debugging purposes), add command-line option '-V' while calling\n"
-    "the 'groff' program to see which arguments are passed to it.\n"
-    "\n");
+  fprintf(stream, "usage: %s [-epV] [-a ANTI-ALIASING-TEXT-BITS]"
+	  " [-D IMAGE-DIRECTORY] [-F FONT-DIRECTORY]"
+	  " [-g ANTI-ALIASING-GRAPHICS-BITS] [-i RESOLUTION]"
+	  " [-I IMAGE-STEM] [-o IMAGE-VERTICAL-OFFSET]"
+	  " [-x HTML-DIALECT] [FILE ...]\n"
+	  "usage: %s -v\n"
+	  "\n"
+	  "This program is not intended to be called stand-alone;\n"
+	  "it is part of the groff pipeline to produce HTML output.\n"
+	  "\n"
+	  "If there is ever the need to call it manually (e.g., for\n"
+	  "debugging purposes), add command-line option '-V' while\n"
+	  "calling the 'groff' program to see which arguments are\n"
+	  "passed to it.\n"
+	  "\n", program_name, program_name);
 }
 
 /*
@@ -1620,7 +1625,7 @@ static int scanArguments(int argc, char **argv)
       }
       break;
     case 'h':
-      // handled by post-grohtml
+      // handled by post-grohtml (write headings with font size changes)
       break;
     case 'i':
       image_res = atoi(optarg);
@@ -1832,3 +1837,9 @@ static int do_file(const char *filename)
   current_filename = NULL;
   return 1;
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

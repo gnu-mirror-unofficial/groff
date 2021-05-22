@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 2000-2020 Free Software Foundation, Inc.
  *
  *  Gaius Mulley (gaius@glam.ac.uk) wrote post-html.cpp
@@ -5555,6 +5554,15 @@ int main(int argc, char **argv)
 
 static void usage(FILE *stream)
 {
-  fprintf(stream, "usage: %s [-vbelnhVy] [-D dir] [-I image_stem] [-F dir] [-x x] [files ...]\n",
+  fprintf(stream, "usage: %s [-bhlnrVy] [-F FONT-DIRECTORY]"
+	  " [-j OUTPUT-STEM] [-s BASE-POINT-SIZE] [-S HEADING-LEVEL]"
+	  " [-x HTML-DIALECT] [FILE ...]\n",
 	  program_name);
+  fprintf(stream, "usage: %s -v\n", program_name);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:
