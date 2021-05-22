@@ -1,5 +1,24 @@
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/groff_www.7.man: Stop using the "www" macro package.  The
+	macros it exposes are not part of the quasi-standardized man(7)
+	language, and thus should not be used in man(7) documents.  See
+	groff_man_style(7) for portability advice.  Besides, the
+	extension macros in the permissively-licensed an-ext.tmac are
+	sufficient to support URL and email hyperlinks, and our SH and
+	SS macro implementations already support anchor placement
+	without requiring explicit effort from page authors.
+	(initialization): Stop sourcing www.tmac.  Stop calling .LK and
+	.HR; the page-internal navigation links were being placed after
+	the apropos line instead of at the beginning of the page,
+	contradicting the comment that was there (possibly a bug).
+	(Requests) <URL, LK>: Stop calling .TAG.
+	<LK>: Drop paragraph advising reader to format page for groff's
+	HTML output device to observe the naviagtion links at that point
+	in the test.
+
+2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/groff.texi (Comments): Fix error in description of parser
 	operation; '.\"' is an effective whole-line comment not because
 	it is a call of an undefined macro named '\"' (no 'mac' warning
