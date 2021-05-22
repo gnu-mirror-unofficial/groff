@@ -114,15 +114,15 @@
 .
 .    \" Has there been one or more input lines for the link text?
 .    ie \\n(dn \{\
-.      do HTML-NS "<a href=""\\*(m1"">"
+.      nop \X^html:<a href="\\*(m1">^\c
 .      \" Yes, strip off final newline of diversion and emit it.
 .      do chop link-text-div
 .      do link-text-div
 \c
-.      do HTML-NS </a>
+.      nop \X^html:</a>^\c
 .    \}
 .    el \
-.      do HTML-NS "<a href=""\\*(m1"">\\*(m1</a>"
+.      nop \X^html:<a href="\\*(m1">\\*(m1</a>^\c
 \&\\$*\"
 .  \}
 .  el \{\
@@ -155,15 +155,15 @@
 .
 .    \" Has there been one or more input lines for the link text?
 .    ie \\n(dn \{\
-.      do HTML-NS "<a href=""mailto:\\*(m1"">"
+.      nop \X^html:<a href="mailto:\\*(m1">^\c
 .      \" Yes, strip off final newline of diversion and emit it.
 .      do chop link-text-div
 .      do link-text-div
 \c
-.      do HTML-NS </a>
+.      nop \X^html:</a>^\c
 .    \}
 .    el \
-.      do HTML-NS "<a href=""mailto:\\*(m1"">\\*(m1</a>"
+.      nop \X^html:<a href="mailto:\\*(m1">\\*(m1</a>^\c
 \&\\$*\"
 .  \}
 .  el \{\
