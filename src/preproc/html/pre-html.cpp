@@ -1786,13 +1786,13 @@ int main(int argc, char **argv)
   exit(1);
 #endif /* CAPTURE_MODE */
   device = "html";
+  i = scanArguments(argc, argv);
   if (!font::load_desc())
     fatal("cannot find devhtml/DESC exiting");
   image_gen = font::image_generator;
   if (image_gen == NULL || (strcmp(image_gen, "") == 0))
     fatal("devhtml/DESC must set the image_generator field, exiting");
   postscriptRes = get_resolution();
-  i = scanArguments(argc, argv);
   setupAntiAlias();
   checkImageDir();
   makeFileName();

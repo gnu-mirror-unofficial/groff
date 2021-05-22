@@ -1,5 +1,11 @@
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/html/pre-html.cpp (main): Call `scanArguments()`
+	earlier, before trying to load a font description, so that -v,
+	--version, and --help work.
+
+2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add -C and -G options to grohtml output driver, to suppress the
 	output of CreationDate and Creator HTML comments, respectively.
 	These can inject unwanted noise into build artifacts.
