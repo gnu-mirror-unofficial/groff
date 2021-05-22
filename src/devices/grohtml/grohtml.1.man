@@ -7,7 +7,7 @@ grohtml, post\-grohtml, pre\-grohtml \- groff output driver for HTML
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1999-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1999-2021 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -71,7 +71,7 @@ grohtml, post\-grohtml, pre\-grohtml \- groff output driver for HTML
 .
 .
 .SY post\-grohtml
-.RB [ \-bhlnrVy ]
+.RB [ \-bCGhlnrVy ]
 .RB [ \-F
 .IR font-directory ]
 .RB [ \-j
@@ -218,6 +218,11 @@ Initialize the background color to white.
 .
 .
 .TP
+.B \-C
+Suppress output of \[lq]CreationDate:\[rq] HTML comment.
+.
+.
+.TP
 .BI \-D \~image-directory
 Instruct
 .I grohtml
@@ -254,6 +259,11 @@ to the search path for font and device description files;
 is the name of the device,
 usually
 .BR html .
+.
+.
+.TP
+.B \-G
+Suppress output of \[lq]Creator:\[rq] HTML comment.
 .
 .
 .TP

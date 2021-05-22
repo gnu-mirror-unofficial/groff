@@ -1587,8 +1587,8 @@ static int scanArguments(int argc, char **argv)
     { "version", no_argument, 0, 'v' },
     { NULL, 0, 0, 0 }
   };
-  while ((c = getopt_long(argc, argv, "+a:bdD:eF:g:hi:I:j:lno:prs:S:vVx:y",
-			  long_options, NULL))
+  while ((c = getopt_long(argc, argv,
+	  "+a:bCdD:eF:g:Ghi:I:j:lno:prs:S:vVx:y", long_options, NULL))
 	 != EOF)
     switch(c) {
     case 'a':
@@ -1601,6 +1601,9 @@ static int scanArguments(int argc, char **argv)
       break;
     case 'b':
       // handled by post-grohtml (set background color to white)
+      break;
+    case 'C':
+      // handled by post-grohtml (don't write Creator HTML comment)
       break;
     case 'd':
 #if defined(DEBUGGING)
@@ -1623,6 +1626,9 @@ static int scanArguments(int argc, char **argv)
 	error("cannot use 3 bits of antialiasing information");
 	exit(1);
       }
+      break;
+    case 'G':
+      // handled by post-grohtml (don't write CreationDate HTML comment)
       break;
     case 'h':
       // handled by post-grohtml (write headings with font size changes)

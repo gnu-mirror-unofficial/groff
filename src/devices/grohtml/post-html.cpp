@@ -77,6 +77,8 @@ static int auto_rule  = TRUE;                        /* by default we enable an 
 static int simple_anchors = FALSE;                   /* default to anchors with heading text     */
 static int manufacture_headings = FALSE;             /* default is to use the Hn html headings,  */
                                                      /* rather than manufacture our own.         */
+static int do_write_creator_comment = TRUE;          /* write Creator HTML comment               */
+static int do_write_date_comment = TRUE;             /* write CreationDate HTML comment          */
 static color *default_background = NULL;             /* has user requested initial bg color?     */
 static string job_name;                              /* if set then the output is split into     */
                                                      /* multiple files with 'job_name'-%d.html   */
@@ -5007,16 +5009,20 @@ void html_printer::do_file_components (void)
       if (dialect == xhtml)
 	writeHeadMetaStyle();
 
-      html.begin_comment("Creator     : ")
-	.put_string("groff ")
-	.put_string("version ")
-	.put_string(Version_string)
-	.end_comment();
+      if (do_write_creator_comment) {
+	html.begin_comment("Creator     : ")
+	  .put_string("groff ")
+	  .put_string("version ")
+	  .put_string(Version_string)
+	  .end_comment();
+      }
 
-      t = current_time();
-      html.begin_comment("CreationDate: ")
-	.put_string(ctime(&t), strlen(ctime(&t))-1)
-	.end_comment();
+      if (do_write_date_comment) {
+	t = current_time();
+	html.begin_comment("CreationDate: ")
+	  .put_string(ctime(&t), strlen(ctime(&t))-1)
+	  .end_comment();
+      }
 
       if (dialect == html4)
 	writeHeadMetaStyle();
@@ -5120,16 +5126,20 @@ html_printer::~html_printer()
   if (dialect == xhtml)
     writeHeadMetaStyle();
 
-  html.begin_comment("Creator     : ")
-    .put_string("groff ")
-    .put_string("version ")
-    .put_string(Version_string)
-    .end_comment();
+  if (do_write_creator_comment) {
+    html.begin_comment("Creator     : ")
+      .put_string("groff ")
+      .put_string("version ")
+      .put_string(Version_string)
+      .end_comment();
+  }
 
-  t = current_time();
-  html.begin_comment("CreationDate: ")
-    .put_string(ctime(&t), strlen(ctime(&t))-1)
-    .end_comment();
+  if (do_write_date_comment) {
+    t = current_time();
+    html.begin_comment("CreationDate: ")
+      .put_string(ctime(&t), strlen(ctime(&t))-1)
+      .end_comment();
+  }
 
   if (dialect == html4)
     writeHeadMetaStyle();
@@ -5451,8 +5461,8 @@ int main(int argc, char **argv)
     { "version", no_argument, 0, 'v' },
     { NULL, 0, 0, 0 }
   };
-  while ((c = getopt_long(argc, argv, "a:bdD:eF:g:hi:I:j:lno:prs:S:vVx:y",
-			  long_options, NULL))
+  while ((c = getopt_long(argc, argv,
+	  "a:bCdD:eF:g:Ghi:I:j:lno:prs:S:vVx:y", long_options, NULL))
 	 != EOF)
     switch(c) {
     case 'a':
@@ -5462,6 +5472,10 @@ int main(int argc, char **argv)
       // set background color to white
       default_background = new color;
       default_background->set_gray(color::MAX_COLOR_VAL);
+      break;
+    case 'C':
+      // Don't write CreationDate HTML comments.
+      do_write_date_comment = FALSE;
       break;
     case 'd':
       /* handled by pre-html */
@@ -5477,6 +5491,10 @@ int main(int argc, char **argv)
       break;
     case 'g':
       /* graphic antialiasing bits - handled by pre-html */
+      break;
+    case 'G':
+      // Don't write Creator HTML comments.
+      do_write_creator_comment = FALSE;
       break;
     case 'h':
       /* do not use the Hn headings of html, but manufacture our own */
@@ -5554,7 +5572,7 @@ int main(int argc, char **argv)
 
 static void usage(FILE *stream)
 {
-  fprintf(stream, "usage: %s [-bhlnrVy] [-F FONT-DIRECTORY]"
+  fprintf(stream, "usage: %s [-bCGhlnrVy] [-F FONT-DIRECTORY]"
 	  " [-j OUTPUT-STEM] [-s BASE-POINT-SIZE] [-S HEADING-LEVEL]"
 	  " [-x HTML-DIALECT] [FILE ...]\n",
 	  program_name);

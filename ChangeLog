@@ -1,8 +1,27 @@
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Add -C and -G options to grohtml output driver, to suppress the
+	output of CreationDate and Creator HTML comments, respectively.
+	These can inject unwanted noise into build artifacts.
+
+	* src/devices/grohtml/post-html.cpp: Add static globals
+	`do_write_creator_comment` and `do_write_date_comment`.
+	(html_printer::{do_file_components,~html_printer}): Write
+	comments per corresponding global variables.
+	(main): Add to `getopt_long()` call parameter and set as needed.
+	(usage): Document them.
+
+	* src/preproc/html/pre-html.cpp (scanArguments): Add to
+	`getopt_long()` parameter, but ignore.
+
+	* src/devices/grohtml/grohtml.1.man (Synopsis, Options):
+	Document them.
+
 	* src/roff/groff/tests/output_driver_C_and_G_options_work.sh:
-	Add regression test for *grohtml.
+	Test them.
 	* tmac/tmac.am (groff_TESTS): Run test.
+
+	Fixes 1/3rd of <https://savannah.gnu.org/bugs/index.php?60655>.
 
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
