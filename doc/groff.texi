@@ -6164,129 +6164,107 @@ and @ref{Identifiers}.
 * Comments::
 @end menu
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Comments,  , Escapes, Escapes
 @subsubsection Comments
 @cindex comments
 
-One of the most common forms of escape is the comment.@footnote{This
-claim may be more aspirational than descriptive.}
+One of the most common forms of escape sequence is the
+comment.@footnote{This claim may be more aspirational than descriptive.}
 
 @Defesc {\\", , , }
-Start a comment.  Everything to the end of the input line is ignored.
+Start a comment.  Everything up to the next newline is ignored.
 
 This may sound simple, but it can be tricky to keep the comments from
-interfering with the appearance of the final output.
-
+interfering with the appearance of the output.
 @cindex @code{ds}, @code{ds1} requests, and comments
 @cindex @code{as}, @code{as1} requests, and comments
 If the escape is to the right of some text or a request, that portion of
-the line is ignored, but the space leading up to it is noticed by
-@code{gtroff}.  This only affects the @code{ds} and @code{as} request
-and its variants.
+the line is ignored, but spaces preceding it are processed normally by
+GNU @code{troff}.  This affects only the @code{ds} and @code{as}
+requests and their variants.
 
 @cindex tabs, before comments
 @cindex comments, lining up with tabs
 One possibly irritating idiosyncrasy is that tabs should not be used to
 vertically align comments in the source document.  Tab characters are
-not treated as separators between a request name and its argument, nor
-between arguments.
+not treated as separators between a request name and its first argument,
+nor between arguments.
 
 @cindex undefined request
 @cindex request, undefined
 A comment on a line by itself is treated as a blank line, because after
-eliminating the comment, that is all that remains:
+eliminating the comment, that is all that remains.
 
 @Example
 Test
 \" comment
 Test
+  @result{} Test
+  @result{}
+  @result{} Test
 @endExample
 
-@noindent
-produces
-
-@Example
-Test
-
-Test
-@endExample
-
-To avoid this, it is common to start the line with @code{.\"}, which
-causes the line to be treated as an undefined request and thus ignored
-completely.
+To avoid this, it is common to combine the empty request with the
+comment escape @samp{.\"}, causing the line to be ignored.
 
 @cindex @code{'}, as a comment
-Another commenting scheme seen sometimes is three consecutive single
-quotes (@code{'''}) at the beginning of a line.  This works, but
-@code{gtroff} gives a warning about an undefined macro (namely
-@code{''}), which is harmless, but irritating.
+Another commenting scheme sometimes seen is three consecutive single
+quotes (@code{'''}) at the beginning of a line.  This works, but GNU
+@code{troff} emits a warning diagnostic (if enabled) about an undefined
+macro (namely @samp{''}).
 @endDefesc
 
 @Defesc {\\#, , , }
-To avoid all this, @code{gtroff} has a new comment mechanism using the
-@code{\#} escape.  This escape works the same as @code{\"} except that
-the newline is also ignored:
+Start a comment; everything up to and including the next newline is
+ignored.  This @code{groff} extension was introduced to avoid the
+problems described above.
 
 @Example
 Test
 \# comment
 Test
+  @result{} Test Test
 @endExample
-
-@noindent
-produces
-
-@Example
-Test Test
-@endExample
-
-@noindent
-as expected.
 @endDefesc
 
 @Defreq {ig, [@Var{end}]}
-Ignore all input until @code{gtroff} encounters the macro named
-@code{.}@var{end} on a line by itself (or @code{..} if @var{end} is not
-specified).  This is useful for commenting out large blocks of text:
+Ignore input until GNU @code{troff} encounters a call of the @var{end}
+macro on a control line by itself (or @samp{..} if @var{end} is not
+specified).  This is useful for commenting out large regions of input.
 
 @Example
-text text text...
+text text text @r{@dots{}}
 .ig
-This is part of a large block
-of text that has been
+This is part of a large block of text that has been
 temporarily(?) commented out.
 
-We can restore it simply by removing
-the .ig request and the ".." at the
-end of the block.
+We can restore it simply by removing the .ig request
+and the ".." at the end of the block.
 ..
-More text text text...
+More text text text @r{@dots{}}
 @endExample
-
-@noindent
-produces
-
 @Example
-text text text@dots{}  More text text text@dots{}
+  @result{} text text text @dots{} More text text text @dots{}
 @endExample
 
 @noindent
-The commented-out block of text does not cause a break.
+The ignored region does not cause a break.
 
 @cindex @code{ig} request, and copy mode
 @cindex copy mode, and @code{ig} request
 @cindex mode, copy, and @code{ig} request
 @cindex @code{ig} request, and auto-increment
 @cindex auto-increment, and @code{ig} request
-The input is read in copy-mode; auto-incremented registers @emph{are}
-affected (@pxref{Auto-increment}).
+The ignored region is read in copy mode (@pxref{Copy Mode}); as a
+result, auto-incrementing register interpolations @emph{do} take effect
+(@pxref{Auto-increment}).
 @endDefreq
 
 
 @c =====================================================================
-
-@codequotebacktick on
-@codequoteundirected on
 
 @node Registers, Manipulating Filling and Adjustment, Embedded Commands, gtroff Reference
 @section Registers

@@ -1,5 +1,17 @@
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/groff.texi (Comments): Fix error in description of parser
+	operation; '.\"' is an effective whole-line comment not because
+	it is a call of an undefined macro named '\"' (no 'mac' warning
+	is emitted when that warning type is enabled), but because the
+	comment escape is recognized normally and what remains is
+	handled as the empty request.  Clarify that the optional
+	argument to the .ig request is the name of a macro (which will
+	be called normally _and_ end the ignored region; this is
+	analogous to ".de foo bar").
+
+2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-ext.tmac (UR, UE, MT, ME): Rename environment and
 	diversion for clarity; they apply to the link text, not the URL
 	{or email address}.  The latter might not visibly appear,
