@@ -703,17 +703,22 @@ Print anything and then restore the horizontal and vertical position;
 .I anything
 may not contain tabs or leaders.
 .
+.
 .TP
 .B \[rs]#
 Everything up to and including the next newline is ignored.
 .
-This is interpreted in copy mode.
+This escape is interpreted even in copy mode.
 .
-It is like
-.B \[rs]"
+.B \[rs]#
+is like
+.BR \[rs]" ,
 except that
 .B \[rs]"
-does not ignore the terminating newline.
+does not ignore a newline;
+the latter therefore cannot be used by itself for a whole-line
+comment\[em]it leaves a blank line on the input stream.
+.
 .
 .\" Keep \$0 before \$( in spite of collation.
 .TP
