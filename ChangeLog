@@ -1,5 +1,16 @@
 2021-05-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/mdoc/doc-common-u: Add comment warning source divers that
+	\n[doc-header-space] is re-used for a purpose for which it is
+	not documented.
+	* tmac/mdoc/doc-nroff-u: Initialize doc-{header,footer}-space
+	registers, which define the vertical spacing between body text
+	and the relevant titles (not between the titles and the page
+	margins) to 1v instead of 0.5i.  This is what mdoc(7) has always
+	done in practice, per Ingo Schwarze.
+
+2021-05-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grohtml/post-html.cpp (assert_state::add): Avoid
 	potential deallocation of statically-allocated strings.  Use
 	strsave() to duplicate them so that they can be safely handed to

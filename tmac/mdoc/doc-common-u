@@ -934,8 +934,10 @@
 .de doc-header
 .  ev doc-env-dh
 .  doc-setup-page-layout
-.  if !\n[cR] \
+.  if !\n[cR] \{\
+.    \" Re-use doc-header-space between page top and header.
 .    sp \n[doc-header-space]u
+.  \}
 .  nr doc-reg-dh \w'\*[doc-caption-font]\*[doc-header-string]\f[]'
 .  nr doc-reg-dh1 \w'\*[doc-caption-font2]\*[doc-volume]\f[]'
 .  if (\n[doc-reg-dh] + \n[doc-reg-dh1] + \n[doc-reg-dh] >= \n[.lt]) \{\
