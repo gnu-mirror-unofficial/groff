@@ -1738,13 +1738,14 @@ void assert_state::add (assert_pos **h,
     }
     if (v == NULL || v[0] != '=') {
       if (f == NULL)
-	f = "stdin";
+	f = strsave("stdin");
       if (l == NULL)
-	l = "<none>";
+	l = strsave("<none>");
       if (v == NULL)
 	v = "no value at all";
-      fprintf(stderr, "%s:%s:error in assert format of id=%s expecting value to be prefixed with an '=' got %s\n",
-	      f, l, i, v);
+      fprintf(stderr, "%s:%s:%s:error in assert format of id=%s;"
+	      " expecting value to be prefixed with an '=', got %s\n",
+	      program_name, f, l, i, v);
     }
     t->id = i;
     t->val = v;

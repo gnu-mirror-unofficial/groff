@@ -1,5 +1,17 @@
 2021-05-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/grohtml/post-html.cpp (assert_state::add): Avoid
+	potential deallocation of statically-allocated strings.  Use
+	strsave() to duplicate them so that they can be safely handed to
+	a_delete().  Also update diagnostic message to report name of
+	complaining program (continuing the long process of fixing
+	Savannah #52463).
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60656>.  Thanks
+	to Petru-Florin Mihancea for the report.
+
+2021-05-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/troffrc-end: Fix transposition error that broke most
 	table image generation in HTML output.
 
