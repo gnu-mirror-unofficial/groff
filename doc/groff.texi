@@ -7186,19 +7186,15 @@ example, some footnote styles collect the notes into a single paragraph
 with large spaces between each.
 
 @Example
-.ie n .ll 50n
-.el   .ll 2.75i
-.ss 12 48
-1. J. Fict. Ch. Soc. 6 (2020), 3\[en]14.
-2. Better known for other work.
-@endExample
-
-@noindent
-The result has obvious inter-sentence spacing.
-
-@Example
-1. J. Fict. Ch. Soc. 6 (2020), 3-14.     2. Better
-known for other work.
+.ll 48n
+1.\~J. Fict. Ch. Soc. 6 (2020), 3\[en]14.
+.ss 12 48 \" applies to next sentence ending
+Reprints no longer available through FCS.
+.ss 12 \" go back to normal
+2.\~Better known for other work.
+    @result{} 1.  J.  Fict. Ch. Soc. 6 (2020), 3-14.  Reprints
+    @result{} no longer available through FCS.      2.  Better
+    @result{} known for other work.
 @endExample
 
 @noindent
