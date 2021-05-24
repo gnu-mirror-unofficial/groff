@@ -6897,13 +6897,13 @@ no-break control character is used with any of these requests, GNU
 @cindex partially collected line
 An output line is said to be @dfn{pending} if some input has been
 collected but an output line corresponding to it has not yet been
-written.  If no output line is pending, it is as if a break has already
-happened; additional breaks, whether explicit or implicit, have no
-effect.
+written; such an output line is also termed @dfn{partially collected}.
+If no output line is pending, it is as if a break has already happened;
+additional breaks, whether explicit or implicit, have no effect.
 
 @Defreq {br, }
-Break the current line: any input collected on the pending output line
-is emitted without adjustment.
+Break the current line: the pending output line is emitted without
+adjustment.
 
 @Example
 foo bar
@@ -8911,9 +8911,9 @@ The @samp{|} operator is also affected.
 @cindex @code{\R}, after @code{\c}
 @code{\c} works on the output level.  Anything after this escape on the
 same line is ignored except @code{\R}, which works as usual.  Anything
-before @code{\c} on the same line is appended to the current partial
-output line.  The next non-command line after an interrupted line counts
-as a new input line.
+before @code{\c} on the same line is appended to the pending output
+line.  The next non-command line after an interrupted line counts as a
+new input line.
 
 The visual results depend on whether no-fill mode is active.
 
@@ -8949,7 +8949,7 @@ test.
 @end itemize
 
 An intervening control line that causes a break is stronger than
-@code{\c}, flushing out the current partial line in the usual way.
+@code{\c}, flushing out the pending output line in the usual way.
 
 @cindex interrupted line register (@code{.int})
 The @code{.int} register contains a positive value if the last output
@@ -9031,8 +9031,8 @@ control line length for text set by @code{tl}.
 A title line is not restricted to the top or bottom of a page.
 
 @item
-@code{tl} prints the title line immediately, ignoring a partially filled
-line (which stays untouched).
+@code{tl} prints the title line immediately, ignoring a partially
+collected line (which stays untouched).
 
 @item
 It is not an error to omit closing delimiters.  For example,
@@ -9169,7 +9169,7 @@ one line only.
 @code{sv} is similar to the @code{ne} request; it reserves the specified
 amount of vertical space.  If the desired amount of space exists before
 the next trap (or the bottom page boundary if no trap is set), the space
-is output immediately (ignoring a partially filled line, which stays
+is output immediately (ignoring a partially collected line, which stays
 untouched).  If there is not enough space, it is stored for later output
 via the @code{os} request.  The default value is@tie{}1@dmn{v} if no
 argument is given; the default scaling indicator is @samp{v}.
@@ -13603,17 +13603,17 @@ appends to an existing diversion.
 
 @code{di} or @code{da} without an argument ends the diversion.
 
-The current partially filled line is included into the diversion.  See
-the @code{box} request below for an example.  Switching to another
-(empty) environment (with the @code{ev} request) avoids the inclusion
-of the current partially filled line; @ref{Environments}.
+The pending output line is included into the diversion.  See the
+@code{box} request below for an example.  Switching to another (empty)
+environment (with the @code{ev} request) avoids the inclusion of the
+current partially collected line; @ref{Environments}.
 @endDefreq
 
 @DefreqList {box, macro}
 @DefreqListEndx {boxa, macro}
 Begin (or append to) a diversion like the @code{di} and @code{da}
 requests.  The difference is that @code{box} and @code{boxa} do not
-include a partially filled line in the diversion.
+include a partially collected line in the diversion.
 
 Compare this:
 
@@ -14320,7 +14320,7 @@ file@tie{}@file{f}, use
 @endExample
 
 @noindent
-The calls to @code{ev} prevent that the current partial input line
+The calls to @code{ev} prevent that the partially collected output line
 becomes part of the diversion.
 
 Both @code{trf} and @code{cf}, when used in a diversion, embeds an
@@ -14907,7 +14907,7 @@ It contains these elements.
 Elements 1, 7, and@tie{}8 are inserted by @code{gtroff}; the latter two
 (which are always present) specify the vertical extent of the last line,
 possibly modified by @code{\x}.  The @code{br} request finishes the
-current partial line, inserting a newline input token, which is
+pending output line, inserting a newline input token, which is
 subsequently converted to a space when the diversion is reread.  Note
 that the word space node has a fixed width that isn't adjustable
 anymore.  To convert horizontal space nodes back to input tokens, use
