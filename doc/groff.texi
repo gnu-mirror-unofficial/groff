@@ -651,7 +651,7 @@ The @code{soelim}, @code{pic}, @code{tbl}, and @code{eqn} preprocessors.
 @item
 @cindex X Window System (X11)
 @cindex @TeX{} Device-Independent (DVI) format
-Postprocessors for character devices, @sc{PostScript}, @TeX{}'s
+Postprocessors for character devices, PostScript, @TeX{}'s
 device-independent format (DVI), and the X@tie{}Window System (X11).
 GNU @code{troff} also eliminated the need for a separate @command{nroff}
 program with a postprocessor to produce output for @acronym{ASCII}
@@ -818,7 +818,7 @@ pictures (@code{ideal}).
 
 @code{groff} produces device-independent code that may be fed into a
 postprocessor to produce output for a particular device.  Currently,
-@code{groff} has postprocessors for @sc{PostScript} devices, character
+@code{groff} has postprocessors for PostScript devices, character
 terminals, X11 (for previewing), DVI, HP LaserJet@tie{}4 and Canon LBP
 printers (which use @acronym{CAPSL}), @acronym{HTML}, @acronym{XHTML},
 and @acronym{PDF}.
@@ -1166,7 +1166,7 @@ following are the output devices currently available:
 
 @table @code
 @item ps
-For @sc{PostScript} printers and previewers.
+For PostScript printers and previewers.
 
 @item pdf
 For @acronym{PDF} viewers or printers.
@@ -5073,10 +5073,10 @@ contain the necessary glyphs.
 @pindex freeeuro.pfa
 @pindex ec.tmac
 Due to the importance of the Euro glyph in Europe, @code{groff} is
-distributed with a @sc{PostScript} font called @file{freeeuro.pfa},
-which provides various glyph shapes for the Euro.  In other words,
-@w{Latin-9} encoding is supported for the @option{ps} driver out of the
-box (@w{Latin-2} isn't).
+distributed with a PostScript font called @file{freeeuro.pfa}, which
+provides various glyph shapes for the Euro.  In other words, @w{Latin-9}
+encoding is supported for the @option{ps} driver out of the box
+(@w{Latin-2} isn't).
 
 The @option{utf8} driver supports characters from all other input
 encodings.  The @option{dvi} driver has support for both @w{Latin-2} and
@@ -6340,13 +6340,13 @@ aaa bbb ccc ddd eee fff ggg hhh\h'0'\R':k \n[.k]'
     @result{} :k == 15000
 @endExample
 
-If you process this with the @sc{PostScript} device (@code{-Tps}),
-there will be a line break eventually after @code{ggg} in both input
-lines.  However, after processing the space after @code{ggg}, the
-partially collected line is not overfull yet, so GNU @code{troff}
-continues to collect input until it sees the space (or in this case,
-the newline) after @code{hhh}.  At this point, the line is longer
-than the line length, and the line gets broken.
+If you process this with the PostScript device (@code{-Tps}), there will
+be a line break eventually after @code{ggg} in both input lines.
+However, after processing the space after @code{ggg}, the partially
+collected line is not overfull yet, so GNU @code{troff} continues to
+collect input until it sees the space (or in this case, the newline)
+after @code{hhh}.  At this point, the line is longer than the line
+length, and the line gets broken.
 
 In the first input line, since the @code{\R} escape leaves no traces,
 the check for the overfull line hasn't been done yet at the point where
@@ -8600,9 +8600,9 @@ the former for terminal output, the latter for typesetters.  GNU
 GNU @command{nroff} program is available for convenience; it calls GNU
 @code{troff} to perform the formatting.} that sends its output to a
 device driver (@code{grotty} for terminal devices, @code{grops} for
-@sc{PostScript}, etc.)@: which interprets this intermediate output
-format.  When discussing @acronym{AT&T} @code{troff}, it makes sense to
-talk about @dfn{@code{nroff} mode} and @dfn{@code{troff} mode} since the
+PostScript, and so on) which interprets this intermediate output format.
+When discussing @acronym{AT&T} @code{troff}, it makes sense to talk
+about @dfn{@code{nroff} mode} and @dfn{@code{troff} mode} since the
 differences are hard-coded.  GNU @code{troff} takes information from
 device and font description files without handling requests specially if
 a terminal output device is used, so such a strong distinction is
@@ -9497,7 +9497,7 @@ current family corresponding to that style.
 The default family can be set with the @option{-f} option (@pxref{Groff
 Options}).  The @code{styles} command in the @file{DESC} file controls
 which font positions (if any) are initially associated with styles
-rather than fonts.  For example, the default setting for @sc{PostScript}
+rather than fonts.  For example, the default setting for PostScript
 fonts
 
 @Example
@@ -9518,7 +9518,7 @@ is equivalent to
 is valid; this can give surprising results if the current font position
 is associated with a style.
 
-In the following example, we want to access the @sc{PostScript} font
+In the following example, we want to access the PostScript font
 @code{FooBar} from the font family @code{Foo}:
 
 @Example
@@ -9528,7 +9528,7 @@ In the following example, we want to access the @sc{PostScript} font
 @endExample
 
 @noindent
-The default font position at start-up is@tie{}1; for the @sc{PostScript}
+The default font position at start-up is@tie{}1; for the PostScript
 device, this is associated with style @samp{R}, so @code{gtroff} tries
 to open @code{FooR}.
 
@@ -9675,13 +9675,13 @@ maps to a single glyph (this is a @dfn{ligature}---the most common is
 A @dfn{symbol} is simply a named glyph.  Within @code{gtroff}, all glyph
 names of a particular font are defined in its font file.  If the user
 requests a glyph not available in this font, @code{gtroff} looks up an
-ordered list of @dfn{special fonts}.  By default, the @sc{PostScript}
-output device supports the two special fonts @samp{SS} (slanted symbols)
-and @samp{S} (symbols) (the former is looked up before the latter).
-Other output devices use different names for special fonts.  Fonts
-mounted with the @code{fonts} keyword in the @file{DESC} file are
-globally available.  To install additional special fonts locally (i.e.@:
-for a particular font), use the @code{fspecial} request.
+ordered list of @dfn{special fonts}.  By default, the PostScript output
+device supports the two special fonts @samp{SS} (slanted symbols) and
+@samp{S} (symbols) (the former is looked up before the latter).  Other
+output devices use different names for special fonts.  Fonts mounted
+with the @code{fonts} keyword in the @file{DESC} file are globally
+available.  To install additional special fonts locally (i.e.@: for a
+particular font), use the @code{fspecial} request.
 
 Here are the exact rules how @code{gtroff} searches a given symbol:
 
@@ -10518,7 +10518,7 @@ ligature `fi' as in the word `file'.  This produces a cleaner look
 (albeit subtle) to the printed output.  Usually, ligatures are not
 available in fonts for TTY output devices.
 
-Most @sc{PostScript} fonts support the fi and fl ligatures.  The C/A/T
+Most PostScript fonts support the fi and fl ligatures.  The C/A/T
 typesetter that was the target of @acronym{AT&T} @code{troff} also
 supported `ff', `ffi', and `ffl' ligatures.  Advanced typesetters or
 `expert' fonts may include ligatures for `ft' and `ct', although GNU
@@ -10752,8 +10752,8 @@ GNU @code{troff} uses two dimensions with each line of text, type size
 and vertical spacing.  The @dfn{type size} is approximately the height
 of the tallest glyph.@footnote{This is usually the parenthesis.  In most
 cases the real dimensions of the glyphs in a font are @emph{not} related
-to its type size!  For example, the standard @sc{PostScript} font
-families `Times', `Helvetica', and `Courier' can't be used together at
+to its type size!  For example, the standard PostScript font families
+`Times', `Helvetica', and `Courier' can't be used together at
 10@dmn{pt}; to get acceptable output, the size of `Helvetica' has to be
 reduced by one point, and the size of `Courier' must be increased by one
 point.}  @dfn{Vertical spacing} is the amount of space @code{gtroff}
@@ -14598,8 +14598,8 @@ copy mode.
 @cindex access of postprocessor
 
 There are two escapes that give information directly to the
-postprocessor.  This is particularly useful for embedding
-@sc{PostScript} into the final document.
+postprocessor.  This is particularly useful for embedding PostScript
+into the final document.
 
 @DefreqList {device, xxx}
 @DefescListEndx {\\X, @code{'}, xxx, @code{'}}
@@ -14823,7 +14823,7 @@ But we can fake it with `\&'.  |
 @DefregListEndx {ury}
 @cindex PostScript, bounding box
 @cindex bounding box
-Retrieve the bounding box of the @sc{PostScript} image found in
+Retrieve the bounding box of the PostScript image found in
 @var{filename}.  The file must conform to Adobe's @dfn{Document
 Structuring Conventions} (DSC); the command searches for a
 @code{%%BoundingBox} comment and extracts the bounding box values into
@@ -16077,8 +16077,8 @@ is therefore no need to filter its output through @code{col}.
 @cindex @code{grops}, the program
 
 The postprocessor @command{grops} translates the output from GNU
-@command{troff} into a form suitable for Adobe @sc{PostScript}
-devices.  It is fully documented on its man page, @cite{grops@r{(1)}}.
+@command{troff} into a form suitable for Adobe PostScript devices.  It
+is fully documented on its man page, @cite{grops@r{(1)}}.
 
 
 @menu
@@ -16147,7 +16147,7 @@ Print the version number.
 @c ---------------------------------------------------------------------
 
 @node Embedding PostScript,  , Invoking grops, grops
-@subsection Embedding @sc{PostScript}
+@subsection Embedding PostScript
 @cindex embedding PostScript
 @cindex PostScript, embedding
 
@@ -16158,10 +16158,10 @@ The escape sequence
 
 @noindent
 places a rectangle of the specified @var{width} containing the
-@sc{PostScript} drawing from file @var{file} bound by the box from
-@var{llx} @var{lly} to @var{urx} @var{ury} (in @sc{PostScript}
-coordinates) at the insertion point.  If @var{height} is not
-specified, the embedded drawing is scaled proportionally.
+PostScript drawing from file @var{file} bound by the box from @var{llx}
+@var{lly} to @var{urx} @var{ury} (in PostScript coordinates) at the
+insertion point.  If @var{height} is not specified, the embedded drawing
+is scaled proportionally.
 
 @xref{Miscellaneous}, for the @code{psbb} request, which automatically
 generates the bounding box.
@@ -16582,7 +16582,7 @@ troff -Txhtml
 @endExample
 
 @cindex MathML
-The @sc{PostScript} device is used to create all the image files (for
+The PostScript device is used to create all the image files (for
 @option{-Thtml}; if @option{-Txhtml} is used, all equations are passed
 to @code{geqn} to produce @acronym{MathML}, and the register
 @code{ps4html} enables the macro sets to ignore floating keeps, footers,
@@ -17361,7 +17361,7 @@ x stop
 
 @noindent
 This output can be fed into @code{grops} to get its representation as a
-@sc{PostScript} file.
+PostScript file.
 
 @item Low-resolution device @code{latin1}
 
@@ -17469,12 +17469,12 @@ The classical quasi-device independence is not yet implemented.
 The old hardware was very different from what we use today.  So the
 @code{groff} devices are also fundamentally different from the ones
 in @acronym{AT&T} @code{troff}.  For example, the @acronym{AT&T}
-@sc{PostScript} device is called @code{post} and has a resolution of
-only 720 units per inch, suitable for printers 20 years ago, while
-@code{groff}'s @code{ps} device has a resolution of 72000 units per
-inch.  Maybe, by implementing some rescaling mechanism similar to the
-classical quasi-device independence, @code{groff} could emulate
-@acronym{AT&T}'s @code{post} device.
+PostScript device is called @code{post} and has a resolution of only 720
+units per inch, suitable for printers 20 years ago, while @code{groff}'s
+@code{ps} device has a resolution of 72000 units per inch.  Maybe, by
+implementing some rescaling mechanism similar to the classical
+quasi-device independence, @code{groff} could emulate @acronym{AT&T}'s
+@code{post} device.
 
 @item
 The B-spline command @samp{D~} is correctly handled by the intermediate
@@ -17535,7 +17535,7 @@ stored in a directory called @file{dev@var{name}}.  There are two types
 of file: a device description file called @file{DESC}, and for each
 font@tie{}@var{f}, a font file called@tie{}@file{@var{f}}, where @var{f}
 is usually an abbreviation of a font's name and/or style.  For example,
-the @samp{ps} (@sc{PostScript}) device has @code{groff} font description
+the @samp{ps} (PostScript) device has @code{groff} font description
 files for Times roman (@file{TR}) and Zapf Chancery Medium italic
 (@file{ZCMI}), among many others, while the @samp{utf8} device (for
 terminal emulators) has only font descriptions for the roman, italic,
@@ -17590,9 +17590,9 @@ quantities are rounded to be multiples of this value.
 @cindex PostScript, PNG image generation
 @cindex PNG image generation from PostScript
 Needed for @code{grohtml} only.  It specifies the program to generate
-PNG images from @sc{PostScript} input.  Under GNU/Linux this is
-usually @code{gs} but under other systems (notably cygwin) it might
-be set to another name.
+PNG images from PostScript input.  Under GNU/Linux this is usually
+@code{gs} but under other systems (notably cygwin) it might be set to
+another name.
 
 @item paperlength @var{n}
 @kindex paperlength
