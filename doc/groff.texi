@@ -13584,38 +13584,52 @@ output is being ``diverted'' immediately to the output device).
 Dereferencing an undefined diversion will create an empty one of that
 name and cause a warning of type @samp{mac} to be emitted
 (@pxref{Debugging}).  A diversion does not exist for the purpose of
-testing with the @code{d} conditional operator until it ends
-(@pxref{Operators in Conditionals}).  The @code{.z} register can be used
-to test the identity of the current diversion.  The following requests
-are used to create and alter diversions.
+testing with the @code{d} conditional operator until its initial
+definition ends (@pxref{Operators in Conditionals}).  The following
+requests are used to create and alter diversions.
 
-@DefreqList {di, macro}
-@DefreqListEndx {da, macro}
+@DefreqList {di, [@Var{name}]}
+@DefreqListEndx {da, [@Var{name}]}
 @cindex beginning diversion (@code{di})
 @cindex diversion, beginning (@code{di})
 @cindex ending diversion (@code{di})
 @cindex diversion, ending (@code{di})
 @cindex appending to a diversion (@code{da})
 @cindex diversion, appending (@code{da})
-Begin a diversion.  Like the @code{de} request, it takes an argument of
-a macro name to divert subsequent text into.  The @code{da} macro
-appends to an existing diversion.
+Begin a diversion called @var{name}.  The @code{da} request appends to
+the existing diversion called @var{name}, creating it if necessary.
+@code{di} or @code{da} without an argument stops diverting output to the
+diversion named by the most recent corresponding request.
 
-@code{di} or @code{da} without an argument ends the diversion.
+The pending output line is diverted as well.  Switching to another
+(empty) environment (with the @code{ev} request) avoids the inclusion of
+the current partially collected line; @ref{Environments}.
 
-The pending output line is included into the diversion.  See the
-@code{box} request below for an example.  Switching to another (empty)
-environment (with the @code{ev} request) avoids the inclusion of the
-current partially collected line; @ref{Environments}.
+@Example
+Before the diversion.
+.di yyy
+In the diversion.
+.br
+.di
+After the diversion.
+.br
+    @result{} After the diversion.
+.yyy
+    @result{} Before the diversion.  In the diversion.
+@endExample
 @endDefreq
 
-@DefreqList {box, macro}
-@DefreqListEndx {boxa, macro}
-Begin (or append to) a diversion like the @code{di} and @code{da}
-requests.  The difference is that @code{box} and @code{boxa} do not
-include a partially collected line in the diversion.
+Because it is often desirable to exclude the partially collected line
+from a diversion, @code{groff} supports an alternative form of diversion
+known as a @dfn{box}.
 
-Compare this:
+@DefreqList {box, [@Var{name}]}
+@DefreqListEndx {boxa, [@Var{name}]}
+Begin diverting (or appending) text to box @var{name}, similarly to the
+@code{di} and @code{da} requests.  Any output line pending when these
+requests are invoked is @emph{not} included in the box.  @code{box} or
+@code{boxa} without an argument stops diverting output to the box named
+by the most recent corresponding request.
 
 @Example
 Before the box.
@@ -13630,24 +13644,12 @@ After the box.
     @result{} In the box.
 @endExample
 
-@noindent
-with this:
-
-@Example
-Before the diversion.
-.di yyy
-In the diversion.
-.br
-.di
-After the diversion.
-.br
-    @result{} After the diversion.
-.yyy
-    @result{} Before the diversion.  In the diversion.
-@endExample
-
-@code{box} or @code{boxa} without an argument ends the diversion.
 @endDefreq
+
+Apart from pending output line inclusion and the request names that
+populate them, boxes are handled almost exactly as diversions are.  All
+of the following @code{groff} language elements can be used with them
+interchangeably; any exceptions are noted.
 
 @DefregList {.z}
 @DefregListEndx {.d}
@@ -13661,7 +13663,8 @@ After the diversion.
 Diversions may be nested.  The read-only string-valued register
 @code{.z} contains the name of the current diversion.  The read-only
 register @code{.d} contains the current vertical place in the diversion.
-If not in a diversion, it is the same as register @code{nl}.
+If the input text is not being diverted, @code{.d} reports the same
+location as the register @code{nl}.
 @endDefreg
 
 @Defreg {.h}
@@ -13687,8 +13690,8 @@ This is a test.
 @cindex @code{.h} register, difference to @code{nl}
 @cindex @code{nl} register, difference to @code{.h}
 @noindent
-As the previous example shows, empty lines are not considered in the
-return value of the @code{.h} register.
+As the previous example shows, empty lines are not counted in the value
+interpolated by the @code{.h} register.
 @endDefreg
 
 @DefregList {dn}
@@ -13701,8 +13704,9 @@ After completing a diversion, the writable registers @code{dn} and
 @code{dl} contain the vertical and horizontal size of the diversion.
 Only the just-processed lines are counted: for the computation of
 @code{dn} and @code{dl}, the requests @code{da} and @code{boxa} are
-handled as if @code{di} and @code{box} had been used---lines that have
-been already stored in a macro are not taken into account.
+handled as if @code{di} and @code{box} had been used,
+respectively---lines that have been already stored in the diversion
+(box) are not taken into account.
 
 @Example
 .\" Center text both horizontally and vertically.
@@ -13742,23 +13746,17 @@ been already stored in a macro are not taken into account.
 @endExample
 @endDefreg
 
-@DefescList {\\!, , , }
+@DefescList {\\!, , anything, }
 @DefescListEndx {\\?, , anything, \\?}
 @cindex transparent output (@code{\!}, @code{\?})
 @cindex output, transparent (@code{\!}, @code{\?})
-Prevent requests, macros, and escapes from being interpreted when read
-into a diversion.  Both escapes take the given text and
-@dfn{transparently} embed it into the diversion.  This is useful for
-macros that shouldn't be invoked until the diverted text is actually
-output.
-
-The @code{\!} escape transparently embeds text up to and including the
-end of the line.  The @code{\?} escape transparently embeds text until
-the next occurrence of the @code{\?} escape.  Example:
-
-@Example
-\?@var{anything}\?
-@endExample
+@dfn{Transparently} embed @var{anything} into the current diversion,
+preventing requests, macro calls, and escapes from being interpreted
+when read into a diversion.  This is useful for preventing them from
+taking effect until the diverted text is actually output.  The @code{\!}
+escape transparently embeds text up to and including the end of the
+line.  The @code{\?} escape transparently embeds text until the next
+occurrence of the @code{\?} escape.
 
 @cindex @code{\?}, and copy mode
 @cindex copy mode, and @code{\?}
@@ -13767,8 +13765,8 @@ the next occurrence of the @code{\?} escape.  Example:
 @cindex copy mode, and @code{\!}
 @cindex mode, copy, and @code{\!}
 @noindent
-@var{anything} may not contain newlines; use @code{\!}  to embed
-newlines in a diversion.  The escape sequence @code{\?} is also
+@var{anything} may not contain newlines; use @code{\!} by itself to
+embed newlines in a diversion.  The escape sequence @code{\?} is also
 recognized in copy mode and turned into a single internal code; it is
 this code that terminates @var{anything}.  Thus the following example
 prints@tie{}4.
@@ -13797,9 +13795,9 @@ Both escapes read the data in copy mode.
 @cindex top-level diversion, and @code{\!}
 @cindex diversion, top-level, and @code{\!}
 If @code{\!} is used in the top-level diversion, its argument is
-directly embedded into the @code{gtroff} intermediate output.  This can
-be used for example to control a postprocessor that processes the data
-before it is sent to the device driver.
+directly embedded into GNU @code{troff}'s intermediate output.  This can
+be used, for example, to control a postprocessor that processes the data
+before it is sent to an output driver.
 
 @cindex @code{\?}, in top-level diversion
 @cindex top-level diversion, and @code{\?}
@@ -13814,7 +13812,7 @@ at all; its argument is simply ignored.
 @cindex copy mode, and @code{output} request
 @cindex mode, copy, and @code{output} request
 @Defreq {output, string}
-Emit @var{string} directly to the @code{gtroff} intermediate output
+Emit @var{string} directly to GNU @code{troff}'s intermediate output
 (subject to copy mode interpretation); this is similar to @code{\!} used
 at the top level.  An initial double quote in @var{string} is stripped
 off to allow initial blanks.
@@ -13854,10 +13852,9 @@ register@tie{}@code{n} to@tie{}1.
 @endExample
 
 @code{asciify} cannot return all items in a diversion back to their
-source equivalent; nodes such as those produced by @code{\N[...]} will
-remain nodes, so the result cannot be guaranteed to be a pure string.
-
-@xref{Copy Mode}.
+source equivalent; nodes such as those produced by the @code{\N} escape
+will remain nodes, so the result cannot be guaranteed to be a pure
+string.  @xref{Copy Mode}.
 @endDefreq
 
 @Defreq {unformat, div}
@@ -13867,8 +13864,9 @@ usually arising from spaces or newlines in the input.  Tabs are treated
 as input tokens, and spaces become adjustable again.
 
 The vertical sizes of lines are not preserved, but glyph information
-(font, font size, space width, etc.)@: is retained.  @code{unformat} can
-be useful in conjunction with the @code{box} and @code{boxa} requests.
+(font, font size, space width, and so on) is retained.  @code{unformat}
+can be useful in conjunction with the @code{box} and @code{boxa}
+requests.
 @endDefreq
 
 @codequotebacktick off
