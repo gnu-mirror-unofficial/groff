@@ -8424,8 +8424,9 @@ Internals}, for more on this process).
 @DefreqList {tr, @Var{a}@Var{b}@Var{c}@Var{d}@dots{}}
 @DefreqListEndx {trin, @Var{a}@Var{b}@Var{c}@Var{d}@dots{}}
 Translate character @var{a} to glyph@tie{}@var{b}, character @var{c} to
-glyph@tie{}@var{d}, etc.  If there is an odd number of arguments, the
-last one is translated to an unstretchable space (@w{@samp{\ }}).
+glyph@tie{}@var{d}, and so on.  If there is an odd number of characters
+in the argument, the last one is translated to a fixed-width space (the
+same one obtained by the @w{@samp{\ }} escape).
 
 The @code{trin} request is identical to @code{tr}, but when you unformat
 a diversion with @code{asciify} it ignores the translation.
