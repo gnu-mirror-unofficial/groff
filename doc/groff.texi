@@ -7979,7 +7979,7 @@ The default unit of the @code{ta} request is @samp{m}.
 
 @item
 A tab stop is converted into a non-breakable horizontal movement that
-can be neither stretched nor squeezed.  For example,
+cannot be adjusted.  For example,
 
 @Example
 .ds foo a\tb\tc
@@ -8215,9 +8215,9 @@ is defined as the data between a pair of @dfn{delimiting characters}.
 It contains substrings that are separated by @dfn{padding characters}.
 The width of a field is the distance on the @emph{input} line from the
 position where the field starts to the next tab stop.  A padding
-character inserts stretchable space similar to @TeX{}'s @code{\hss}
+character inserts an adjustable space similar to @TeX{}'s @code{\hss}
 command (thus it can even be negative) to make the sum of all substring
-lengths plus the stretchable space equal to the field width.  If more
+lengths plus the adjustable space equal to the field width.  If more
 than one padding character is inserted, the available space is evenly
 distributed among them.
 
@@ -11285,8 +11285,8 @@ Usually, it is not predictable whether a diversion contains one or more
 output lines, so this mechanism should be avoided.  With @acronym{AT&T}
 @code{troff}, this was the only solution to strip off a final newline
 from a diversion.  Another disadvantage is that the spaces in the copied
-string are already formatted, making them unstretchable.  This can cause
-ugly results.
+string are already formatted, preventing their adjustment.  This can
+cause ugly results.
 
 @cindex stripping final newline in diversions
 @cindex diversion, stripping final newline
@@ -11297,7 +11297,7 @@ ugly results.
 @cindex unformatting horizontal space
 A clean solution to this problem is available in GNU @code{troff}, using
 the requests @code{chop} to remove the final newline of a diversion, and
-@code{unformat} to make the horizontal spaces stretchable again.
+@code{unformat} to make the horizontal spaces adjustable again.
 
 @Example
 .box xxx
@@ -12485,8 +12485,7 @@ of the following escapes instead, often @code{\~}.
 @endDefesc
 
 @Defesc {\\~, , , }
-An unbreakable space that stretches like a normal inter-word space when
-a line is adjusted.
+An unbreakable space that is adjustable like a normal inter-word space.
 @endDefesc
 
 @Defesc {\\|, , , }
@@ -13865,7 +13864,7 @@ remain nodes, so the result cannot be guaranteed to be a pure string.
 Like @code{asciify}, unformat the diversion @var{div}.  However,
 @code{unformat} handles only tabs and spaces between words, the latter
 usually arising from spaces or newlines in the input.  Tabs are treated
-as input tokens, and spaces become stretchable again.
+as input tokens, and spaces become adjustable again.
 
 The vertical sizes of lines are not preserved, but glyph information
 (font, font size, space width, etc.)@: is retained.  @code{unformat} can
@@ -14910,7 +14909,7 @@ Elements 1, 7, and@tie{}8 are inserted by @code{gtroff}; the latter two
 possibly modified by @code{\x}.  The @code{br} request finishes the
 current partial line, inserting a newline input token, which is
 subsequently converted to a space when the diversion is reread.  Note
-that the word space node has a fixed width that isn't stretchable
+that the word space node has a fixed width that isn't adjustable
 anymore.  To convert horizontal space nodes back to input tokens, use
 the @code{unformat} request.
 
@@ -15410,8 +15409,8 @@ implementations.
 @cindex adjustment to both margins, difference from @acronym{AT&T} @code{troff}
 @cindex rivers
 When adjusting to both margins, @acronym{AT&T} @code{troff} at first
-stretches spaces starting from the right; GNU @code{troff} begins from
-the left.  Both implementations stretch spaces from opposite ends on
+adjusts spaces starting from the right; GNU @code{troff} begins from
+the left.  Both implementations adjusts spaces from opposite ends on
 alternating output lines in this adjustment mode to prevent ``rivers''
 in the text.
 
@@ -16745,7 +16744,7 @@ more complicated structure; some recognize long command names, and some
 take a variable number of arguments.  So all @samp{D} and @samp{x}
 commands were designed to request a syntactical line break after their
 last argument.  Only one command, @w{@samp{x X}}, has an argument that
-can stretch over several lines; all other commands must have all of
+can span several input lines; all other commands must have all of
 their arguments on the same line as the command, i.e., the arguments may
 not be split by a line break.
 
