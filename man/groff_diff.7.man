@@ -2598,9 +2598,22 @@ does not exist.
 .
 .TP
 .BI .nop \~anything
-Execute
-.IR anything .
-This is similar to \[oq].if\~1\[cq].
+Interpret
+.I anything
+as if it were an input line.
+.
+This is similar to
+.RB \[lq] ".if 1" \[rq].
+.
+.B .nop
+is not really \[lq]no operation\[rq];
+its argument
+.I is
+processed\[em]unconditionally.
+.
+It can be used to cause text lines to share indentation with surrounding
+control lines.
+.
 .
 .TP
 .B .nroff
@@ -3309,27 +3322,65 @@ and\~\c
 At startup, it is set to\~\c
 .BR i .
 .
+.
 .TP
-.BI .while \~c\~anything
-While condition\~\c
-.I c
-is true, accept
+.BI .while \~cond-expr\~anything
+Evaluate the conditional expression
+.IR cond-expr ,
+and repeatedly execute
 .I anything
-as input;
-.IR c \~\c
-can be any condition acceptable to an
-.B if
-request;
-.I anything
-can comprise multiple lines if the first line starts with
-.B \[rs]{
-and the last line ends with
-.BR \[rs]} .
+unless and until
+.I cond-expr
+evaluates false.
+.
 See also the
 .B break
 and
 .B continue
 requests.
+.
+.
+.IP
+The body of a
+.B while
+request is treated like the body of a
+.B de
+request:
+.I \%@g@troff
+temporarily stores it in a macro that is deleted after the loop exits.
+.
+It can considerably slow down a macro if the body of the
+.B while
+request
+(within the macro)
+is large.
+.
+Each time the macro is executed,
+the
+.B while
+body is parsed and stored again as a temporary macro.
+.
+.
+.IP
+The traditional and often better solution
+(AT&T
+.I troff \" AT&T
+lacked the
+.B while
+request)
+is to use a recursive macro instead that is parsed only once during its
+definition.
+.
+The number of available recursion levels is set to\~1000
+(this is a compile-time constant value of
+.IR \%@g@troff .
+.
+.
+.IP
+The closing brace of a
+.B while
+body must end a line.
+.
 .
 .TP
 .BI .write\~ stream\~anything

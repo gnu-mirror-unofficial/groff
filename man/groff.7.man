@@ -907,7 +907,7 @@ Close current grouping
 .P
 Moreover,
 .I groff
-added the following operators for numerical expressions:
+provides the following additional operators for numerical expressions.
 .
 .
 .P
@@ -947,18 +947,123 @@ Texinfo manual.
 .
 .
 .\" ====================================================================
-.SH Conditions
+.SH "Control structures"
 .\" ====================================================================
 .
-.B Conditions
-are expressions tested by the
+.I groff
+has \[lq]if\[rq] and \[lq]while\[rq] control structures like other
+languages.
+.
+However,
+the syntax for grouping multiple input lines in the branches or bodies
+of these structures is unusual.
+.
+.
+.P
+They have a common form:
+the request name is
+(except for
+.request .el
+\[lq]else\[rq])
+followed by a conditional expression
+.IR cond-expr ,
+and then the remainder of the line
+.I anything
+is interpreted as if it were an input line.
+.
+Any number of spaces between arguments to requests serves only to
+separate them;
+leading spaces in
+.I anything
+are therefore not seen.
+.
+.I anything
+effectively
+.I cannot
+be omitted;
+if
+.I cond-expr
+is true and
+.I anything
+is empty,
+the newline at the end of the control line is interpreted as a blank
+line
+(and therefore a blank text line).
+.
+.
+.P
+It is frequently desirable for a control structure to govern more than
+one request,
+call more than one macro,
+span more than one input line of text,
+or mix the foregoing.
+.
+The opening and closing brace escapes
+.esc {
+and
+.esc }
+perform such grouping.
+.
+Brace escapes can be used outside of control structures,
+but when they are they have no meaning and produce no output.
+.
+.
+.P
+.esc {
+should appear
+(after optional spaces and tabs)
+immediately subsequent to the request's conditional expression.
+.
+.esc }
+should appear on a line with other occurrences of itself as necessary to
+match
+.esc {
+escapes.
+.
+It can be preceded by a control character,
+spaces,
+and tabs.
+.
+Input after a
+.esc }
+escape on the same line is only processed if all the preceding
+conditions to which the escapes correspond are true.
+.
+Furthermore,
+a
+.esc }
+closing the body of a
+.request .while
+request must be the last such escape on an input line.
+.
+.
+.\" ====================================================================
+.SH "Conditional expressions"
+.\" ====================================================================
+.
+In
 .request .if ,
 .request .ie ,
-and the
+and
 .request .while
-requests.
+requests,
+in addition to the numeric expressions described above,
+several Boolean operators are available;
+the members of this expanded class are termed
+.IR "conditional expressions" .
 .
-The following table characterizes the different types of conditions.
+.
+.P
+A numerical expression
+.I N
+yields true if its value is positive.
+.
+In
+.I roff
+languages,
+negative values are false,
+not true.
+.
 .
 .P
 .
@@ -966,32 +1071,12 @@ The following table characterizes the different types of conditions.
 .RS
 .
 .TPx
-.I N
-A numerical expression
-.I N
-yields true if its value is greater than\~0.
-.
-.TPx
-.BI ! N
-True if the value of
-.I N
-is \[<=]\~0
-(see below).
-.
-.TPx
 .BI \[aq] s1 \[aq] s2 \[aq]
-True if string\~\c
-.I s1
-is identical to string\~\c
-.IR s2 .
+True
+.RI if\~ s1
+produces the same formatted output
+.RI as\~ s2 .
 .
-.TPx
-.BI !\[aq] s1 \[aq] s2 \[aq]
-True if string\~\c
-.I s1
-is not identical to string\~\c
-.I s2
-(see below).
 .
 .TPx
 .BI c\~ g
@@ -1059,12 +1144,28 @@ implementations).
 .
 .
 .P
-Note that the
-.B !\&
-operator may only appear at the beginning of an expression,
-and negates the entire expression.
-This maintains bug-compatibility with AT&T
-.IR troff .
+These operators can't be combined with others like
+.RB \[lq] : \[rq]
+or
+.RB \[lq] & \[rq];
+only a leading
+.RB \[lq] ! \[rq]
+(without spaces or tabs between the exclamation mark and the operator)
+can be used to negate the result.
+.
+.
+.P
+Spaces and tabs are optional immediately after the
+.RB \[lq] r \[rq],
+.RB \[lq] d \[rq],
+and
+.RB \[lq] c \[rq]
+operators,
+but immediately after
+.RB \[lq] ! \[rq],
+they cause the condition to evaluate false
+(this bizarre behavior maintains compatibility with AT&T
+.IR troff ).
 .
 .
 .\" ====================================================================
@@ -1726,9 +1827,12 @@ Save current escape character.
 .
 .TPx
 .REQ .el "anything"
-Else part for if-else (\c
-.request .ie )
-request.
+Interpret
+.I anything
+as if it were an input line if the conditional expression of the
+corresponding
+.request .ie
+request was false.
 .
 .
 .TPx
@@ -2009,22 +2113,29 @@ extra space to each inter-word space
 (default scaling indicator\~\c
 .scaleindicator m ).
 .
-.TPx
-.REQ .ie "cond anything"
-If
-.I cond
-then
-.IR anything ,
-otherwise skip to
-.request .el .
 .
 .TPx
-.REQ .if "cond anything"
+.REQ .ie "cond-expr anything"
 If
-.I cond
-then
-.IR anything ;
-otherwise do nothing.
+.I cond-expr
+is true,
+interpret
+.I anything
+as if it were an input line,
+otherwise skip to a corresponding
+.request .el
+request.
+.
+.
+.TPx
+.REQ .if "cond-expr anything"
+If
+.I cond-expr
+is true,
+then interpret
+.I anything
+as if it were an input line.
+.
 .
 .TPx
 .REQ .ig
@@ -2264,10 +2375,13 @@ Do not number next
 .I N
 lines.
 .
+.
 .TPx
 .REQ .nop "anything"
-Always process
-.IR anything .
+Interpret
+.I anything
+as if it were an input line.
+.
 .
 .TPx
 .REQ .nr "register \[+-]N \fR[\fPM\fR]\fP"
@@ -2885,12 +2999,15 @@ is replaced.
 .
 .
 .TPx
-.REQ .while "cond anything"
-While condition
-.I cond
-is true, accept
+.REQ .while "cond-expr anything"
+Evaluate
+.IR cond-expr ,
+and repeatedly execute
 .I anything
-as input.
+unless and until
+.I cond-expr
+evaluates false.
+.
 .
 .TPx
 .REQ .write "stream anything"

@@ -11532,7 +11532,7 @@ itself is not destroyed until it has no more names.
 @cindex conditionals and loops
 @cindex loops and conditionals
 
-GNU @code{troff} has @code{if} and @code{while} control structures like
+@code{groff} has @code{if} and @code{while} control structures like
 other languages.  However, the syntax for grouping multiple input lines
 in the branches or bodies of these structures is unusual.
 
@@ -11552,9 +11552,12 @@ in the branches or bodies of these structures is unusual.
 @cindex @code{if} request, operators to use with
 @cindex @code{ie} request, operators to use with
 @cindex @code{while} request, operators to use with
-In @code{if}, @code{ie}, and @code{while} requests, in addition to
-ordinary numeric expressions (@pxref{Expressions}), several boolean
-operators are available.
+@cindex conditional expressions
+@cindex expressions, conditional
+In @code{if}, @code{ie}, and @code{while} requests, in addition to the
+numeric expressions described in @ref{Expressions}, several Boolean
+operators are available; the members of this expanded class are termed
+@dfn{conditional expressions}.
 
 @table @code
 @item c @var{glyph}
@@ -11668,9 +11671,9 @@ false
 @endExample
 @end table
 
-These operators can't be combined with other operators like @samp{:} or
-@samp{&}; only a leading @samp{!} (without spaces or tabs between the
-exclamation mark and the operator) can be used to negate the result.
+These operators can't be combined with others like @samp{:} or @samp{&};
+only a leading @samp{!} (without spaces or tabs between the exclamation
+mark and the operator) can be used to negate the result.
 
 @Example
 .nr x 1
@@ -11679,9 +11682,10 @@ exclamation mark and the operator) can be used to negate the result.
     @result{} register x is defined
 @endExample
 
-Spaces and tabs immediately after @samp{!} cause the condition to
-evaluate as zero (this bizarre behavior maintains compatibility with
-@acronym{AT&T} @code{troff}).
+Spaces and tabs are optional immediately after the @samp{r}, @samp{d},
+and @samp{c} operators, but immediately after @samp{!}, they cause the
+condition to evaluate false (this bizarre behavior maintains
+compatibility with @acronym{AT&T} @code{troff}).
 
 @Example
 .nr x 1
@@ -11691,12 +11695,9 @@ evaluate as zero (this bizarre behavior maintains compatibility with
 @endExample
 
 @noindent
-The unexpected appearance of @samp{r x} in the output is a clue that our
-conditional was not interpreted the way we planned, but matters may not
-always be so obvious.
-
-Spaces and tabs are optional before the arguments to the @samp{r},
-@samp{d}, and @samp{c} operators.
+The unexpected @samp{r x} in the output is a clue that our conditional
+was not interpreted as we planned, but matters may not always be so
+obvious.
 
 @c ---------------------------------------------------------------------
 
@@ -11704,24 +11705,48 @@ Spaces and tabs are optional before the arguments to the @samp{r},
 @subsection if-then
 @cindex if-then
 
-@Defreq {if, expr anything}
-
-Evaluate the expression @var{expr}, and execute @var{anything} (the
-remainder of the line) if @var{expr} evaluates true (that is, to a value
-greater than zero).  @var{anything} is interpreted as though it
-were on a line by itself (except that leading spaces are ignored).
-@xref{Operators in Conditionals}.
+@Defreq {if, cond-expr anything}
+Evaluate the conditional expression @var{cond-expr}, and if it evaluates
+true (that is, to a positive value), interpret the remainder of the line
+@var{anything} as if it were an input line.  Recall from @ref{Request
+and Macro Arguments} that any number of spaces between arguments to
+requests serves only to separate them; leading spaces in @var{anything}
+are thus not seen.  @var{anything} effectively @emph{cannot} be omitted;
+if @var{cond-expr} is true and @var{anything} is empty, the newline at
+the end of the control line is interpreted as a blank input line (and
+therefore a blank text line).
 
 @Example
-.nr xxx 1
-.nr yyy 2
-.if ((\n[xxx] == 1) & (\n[yyy] == 2)) true
-    @result{} true
+super\c
+tanker
+.nr force-word-break 1
+super\c
+.if ((\n[force-word-break] = 1) & \n[.int])
+tanker
+    @result{} supertanker super tanker
 @endExample
 @endDefreq
 
 @Defreq {nop, anything}
-Executes @var{anything}.  This is similar to @samp{.if@tie{}1}.
+Interpret @var{anything} as if it were an input line.  This is similar
+to @samp{.if@tie{}1}.  @code{nop} is not really ``no operation''; its
+argument @emph{is} processed---unconditionally.  It can be used to cause
+text lines to share indentation with surrounding control lines.
+
+@Example
+.als real-MAC MAC
+.de wrapped-MAC
+.  tm MAC: called with arguments \\$@@
+.  nop \\*[real-MAC]\\
+..
+.als MAC wrapped-MAC
+\# Later...
+.als MAC real-MAC
+@endExample
+
+In the above, we've used aliasing, @code{nop}, and the interpolation of
+a macro as a string to interpose a wrapper around the macro @samp{MAC}
+(perhaps to debug it).
 @endDefreq
 
 @c ---------------------------------------------------------------------
@@ -11730,18 +11755,16 @@ Executes @var{anything}.  This is similar to @samp{.if@tie{}1}.
 @subsection if-else
 @cindex if-else
 
-@DefreqList {ie, expr anything}
+@DefreqList {ie, cond-expr anything}
 @DefreqListEndx {el, anything}
 Use the @code{ie} and @code{el} requests to write an if-then-else.  The
 first request is the `if' part and the latter is the `else' part.
 
 @Example
-.ie n .ls 2 \" double-spacing in nroff
-.el   .ls 1 \" single-spacing in troff
+.ie n .ls 2 \" double-spacing in nroff mode
+.el   .ls 1 \" single-spacing in troff mode
 @endExample
 @endDefreq
-
-@xref{Expressions}.
 
 @c ---------------------------------------------------------------------
 
@@ -11780,7 +11803,8 @@ appear on a line with other occurrences of itself as necessary to match
 and tabs.  Input after an @code{\@}} escape on the same line
 is only processed if all the preceding conditions to which the escapes
 correspond are true.  Furthermore, a @code{\@}} closing the body of a
-@code{while} request must be the last such escape on an input line.
+@code{while} request (discussed below) must be the last such escape on
+an input line.
 
 @Example
 A
@@ -11830,9 +11854,8 @@ version
 Try omitting the @code{\@key{RET}}s from the foregoing example and see
 how the output changes.  Remember that, as noted above, after a true
 conditional (or after the @code{el} request if its counterpart @code{ie}
-condition was false) any spaces or tabs on the same input line are
-interpreted @emph{as if they were on an input line by themselves}.
-
+condition was false) the remainder of the input line is interpreted
+@emph{as if it were on an input line by itself}.
 @endDefesc
 
 @c ---------------------------------------------------------------------
@@ -11841,13 +11864,12 @@ interpreted @emph{as if they were on an input line by themselves}.
 @subsection while
 @cindex while
 
-GNU @code{troff} provides a looping construct using the @code{while}
+@code{groff} provides a looping construct using the @code{while}
 request, which is used much like the @code{if} request.
 
-@Defreq {while, expr anything}
-Evaluate the expression @var{expr}, and repeatedly execute
-@var{anything} (the remainder of the line) until @var{expr} evaluates
-false.
+@Defreq {while, cond-expr anything}
+Evaluate the conditional expression @var{cond-expr}, and repeatedly
+execute @var{anything} unless and until @var{cond-expr} evaluates false.
 
 @Example
 .nr a 0 1
@@ -11864,11 +11886,11 @@ Some remarks.
 @itemize @bullet
 @item
 The body of a @code{while} request is treated like the body of a
-@code{de} request: @code{gtroff} temporarily stores it in a macro that
-is deleted after the loop has been exited.  It can considerably slow
-down a macro if the body of the @code{while} request (within the macro)
-is large.  Each time the macro is executed, the @code{while} body is
-parsed and stored again as a temporary macro.
+@code{de} request: GNU @code{troff} temporarily stores it in a macro
+that is deleted after the loop exits.  It can considerably slow down a
+macro if the body of the @code{while} request (within the macro) is
+large.  Each time the macro is executed, the @code{while} body is parsed
+and stored again as a temporary macro.
 
 @Example
 .de xxx
@@ -11904,7 +11926,7 @@ that is parsed only once during its definition.
 
 @noindent
 The number of available recursion levels is set to@tie{}1000
-(this is a compile-time constant value of @code{gtroff}).
+(this is a compile-time constant value of GNU @code{troff}).
 
 @item
 The closing brace of a @code{while} body must end a line.
