@@ -7916,15 +7916,17 @@ This escape is a non-interpreted tab character.  In copy mode
 (@pxref{Copy Mode}), @code{\t} is the same as a real tab character.
 @endDefesc
 
-@DefreqList {ta, [@Var{n1} @Var{n2} @dots{} @Var{nn} @t{T} @Var{r1} @Var{r2} @dots{} @Var{rn}]}
+@DefreqList {ta, [[@Var{n1} @Var{n2} @dots{} @Var{nn} ]@t{T} @Var{r1} @
+ @Var{r2} @dots{} @Var{rn}]}
 @DefregListEndx {.tabs}
 Change tab stop positions.  This request takes a series of tab
 specifiers as arguments (optionally divided into two groups with the
-letter @samp{T}) that indicate where each tab stop is to be (overriding
-any previous settings).
+letter @samp{T}) that indicate where each tab stop is to be, overriding
+any previous settings.  Calling @code{ta} without an argument removes
+all tab stops.
 
-Tab stops can be specified absolutely, i.e., as the distance from the
-left margin.  For example, the following sets 6@tie{}tab stops every one
+Tab stops can be specified absolutely, i.e., as distances from the left
+margin.  For example, the following sets 6@tie{}tab stops every one
 inch.
 
 @Example
@@ -7939,29 +7941,32 @@ For example, the following is equivalent to the previous example.
 .ta 1i +1i +1i +1i +1i +1i
 @endExample
 
-@code{gtroff} supports an extended syntax to specify repeat values after
-the @samp{T} mark (these values are always taken as relative)---this is
-the usual way to specify tabs set at equal intervals.  The following is,
-yet again, the same as the previous examples.  It does even more since
-it defines an infinite number of tab stops separated by one inch.
+@code{groff} supports an extended syntax to specify repeating tab stops
+after the @samp{T} mark.  These values are always taken as relative
+distances from the previous tab stop.  This is the idiomatic way to
+specify tab stops at equal intervals in @code{groff}.  The following is,
+yet again, the same as the previous examples.  It does more, in fact,
+since it defines an infinite number of tab stops at one-inch intervals.
 
 @Example
 .ta T 1i
 @endExample
 
-Now we are ready to interpret the full syntax given at the beginning:
-Set tabs at positions @var{n1}, @var{n2}, @dots{}, @var{nn} and then set
-tabs at @var{nn}+@var{r1}, @var{nn}+@var{r2}, @dots{}, @var{nn}+@var{rn}
-and then at @var{nn}+@var{rn}+@var{r1}, @var{nn}+@var{rn}+@var{r2},
-@dots{}, @var{nn}+@var{rn}+@var{rn}, and so on.
+Now we are ready to interpret the full syntax given above.  The
+@code{ta} request sets tabs at positions @var{n1}, @var{n2}, @dots{},
+@var{nn}, then at @var{nn}+@var{r1}, @var{nn}+@var{r2}, @dots{},
+@var{nn}+@var{rn}, then at @var{nn}+@var{rn}+@var{r1},
+@var{nn}+@var{rn}+@var{r2}, @dots{}, @var{nn}+@var{rn}+@var{rn}, and so
+on.
 
-Example: @samp{4c +6c T 3c 5c 2c} is equivalent to @samp{4c 10c 13c 18c
-20c 23c 28c 30c @dots{}}.
+For example, @samp{4c +6c T 3c 5c 2c} is equivalent to @samp{4c 10c 13c
+18c 20c 23c 28c 30c @dots{}}.
 
-The material in each tab column (i.e., the column between two tab stops)
-may be justified to the right or left or centered in the column.  This
-is specified by appending @samp{R}, @samp{L}, or @samp{C} to the tab
-specifier.  The default justification is @samp{L}.  Example:
+Text written to a tab column (i.e., between two tab stops, or between a
+tab stop and an output line boundary) may be aligned to the right or
+left, or centered in the column.  This is specified by appending
+@samp{R}, @samp{L}, or @samp{C} to the tab specifier.  The default
+justification is @samp{L}.
 
 @Example
 .ta 1i 2iC 3iR
@@ -8037,9 +8042,6 @@ stop.
 
 @item
 Tab stops are associated with the environment (@pxref{Environments}).
-
-@item
-Calling @code{ta} without an argument removes all tab stops.
 
 @item
 @cindex tab stops, for TTY output devices

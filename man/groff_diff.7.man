@@ -3500,35 +3500,40 @@ and default to\~12.
 .TP
 .BR .ta\~ [[\c
 .IR "n1 n2\~" .\|.\|.\~ nn \~]\c
-.B T\c
+.B T\~\c
 .IR "r1 r2\~" .\|.\|.\~ rn ]
-Set tabs at positions
+.I groff
+supports an extended syntax to specify repeating tab stops after
+the
+.RB \[lq] T \[rq]
+mark.
+.
+These values are always taken as relative distances from the previous
+tab stop.
+.
+This is the idiomatic way to specify tab stops at equal intervals in
+.IR groff .
+.
+.
+.IP
+The syntax summary above instructs
+.I groff
+to set tabs at positions
 .IR n1 ,
 .IR n2 ,
 \&.\|.\|.\|,
-.I nn
-and then set tabs at
+.IR nn ,
+then at
 .IR nn \|+\| r1 ,
 .IR nn \|+\| r2 ,
 \&.\|.\|.\|,
-.IR nn \|+\| rn
-and then at
+.IR nn \|+\| rn ,
+then at
 .IR nn \|+\| rn \|+\| r1 ,
 .IR nn \|+\| rn \|+\| r2 ,
 \&.\|.\|.\|,
 .IR nn \|+\| rn \|+\| rn ,
 and so on.
-For example,
-.
-.RS
-.IP
-.EX
-\&.ta T .5i
-.EE
-.
-.P
-sets tabs every half an inch.
-.RE
 .
 .
 .\" ====================================================================
