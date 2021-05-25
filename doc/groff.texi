@@ -9182,49 +9182,45 @@ request allows negative values for @var{space}, @code{os} ignores them.
 @cindex position, vertical, current (@code{nl})
 This register contains the current vertical position.  If the vertical
 position is zero and the top of page transition hasn't happened yet,
-@code{nl} is set to negative value.  @code{gtroff} itself does this at
-the very beginning of a document before anything has been printed, but
-the main usage is to plant a header trap on a page if this page has
-already started.
-
-Consider the following:
+@code{nl} is negative.  GNU @code{troff} itself does this at the very
+beginning of a document before anything has been printed---but the main
+application for such a value is to plant and spring a header trap on a
+page if that page has already started (@pxref{Traps}).
 
 @Example
-.de xxx
+.de header
 .  sp
-.  tl ''Header''
+.  tl ''Goldbach Solution''
 .  sp
 ..
 .
 First page.
+@r{@dots{}}
 .bp
-.wh 0 xxx
+.wh 0 header \" plant header trap at top of page
 .nr nl (-1)
 Second page.
+@r{@dots{}}
 @endExample
-
-@noindent
-Result:
-
 @Example
-First page.
-
-...
-
-                             Header
-
-Second page.
-
-...
+    @result{} First page.
+    @result{}
+    @result{} @r{@dots{}}
+    @result{}
+    @result{}                   Goldbach Solution
+    @result{}
+    @result{} Second page.
+    @result{}
+    @result{} @r{@dots{}}
 @endExample
 
 @noindent
-Without resetting @code{nl} to a negative value, the just planted trap
+Without resetting @code{nl} to a negative value, the trap just planted
 would be active beginning with the @emph{next} page, not the current
 one.
 
-@xref{Diversions}, for a comparison with the @code{.h} and @code{.d}
-registers.
+@xref{Diversions}, for a comparison of @code{nl} with the @code{.h} and
+@code{.d} registers.
 @endDefreg
 
 @codequotebacktick off
