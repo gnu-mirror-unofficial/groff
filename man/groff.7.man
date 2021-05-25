@@ -2799,12 +2799,7 @@ request (default scaling indicator\~\c
 Execute program
 .IR command-line .
 .
-.TPx
-.REQ .ta "T N"
-Set tabs after every position that is a multiple of
-.I N
-(default scaling indicator\~\c
-.scaleindicator m ).
+.
 .TPx
 .REQ .ta "n1 n2 \fR\&.\|.\|.\&\fP n\fRn\fP \f[CB]T\f[] r1 r2 \
 \fR\&.\|.\|.\&\fP r\fRn\fP"
@@ -2819,7 +2814,33 @@ through
 .IR n n+ m \[tmu] r n+ r n,
 where
 .I m
-increments from 0, 1, 2, \&.\|.\|.\& to infinity.
+increments from 0,
+1,
+2,
+\&.\|.\|.\& to the output line length.
+.
+Each
+.IR n \~argument
+can be prefixed with
+.RB a\~\[lq] + \[rq]
+to place the tab stop
+.I ni
+at a distance relative to the previous,
+.IR n ( i \-1).
+.
+Each argument
+.IR ni \~or\~ ri
+can be suffixed with a letter to align text within the tab column
+bounded by tab stops
+.IR i \~and\~ i +1;
+.RB \[lq] L \[rq]
+for left-aligned
+(the default),
+.RB \[lq] C \[rq]
+for centered,
+and
+.RB \[lq] R \[rq]
+for right-aligned.
 .
 .
 .TPx
