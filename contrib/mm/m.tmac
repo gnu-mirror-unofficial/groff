@@ -3437,7 +3437,8 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .nf
 .if \\$3=1 .sp
 .sp
-.misc@toupper "\\$1, \\$2"
+.ie '\\$2'' .misc@toupper "\\$1"
+.el         .misc@toupper "\\$1, \\$2"
 .if \\$4 .sp
 .if \w'\\$5'&\\$4 \\$5
 .fi

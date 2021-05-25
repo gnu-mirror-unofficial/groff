@@ -1,5 +1,16 @@
 2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
+	* contrib/mm/m.tmac (let@sg_SP): Stop placing a comma after the
+	first argument (an author name set by AU) if the second argument
+	is empty (an author title set by AT).
+
+	Solves another part of bug #60373, "the writer's name at the
+	bottom is followed by a trailing comma".
+
+	Fixes <https://savannah.gnu.org/bugs/?60389>.
+
+2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+
 	* contrib/mm/m.tmac (let@print-head): Quote the interpolation of
 	the string `let*lo-SJ`.
 
