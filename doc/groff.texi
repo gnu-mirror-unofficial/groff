@@ -17541,20 +17541,21 @@ follow quite naturally.
 @cindex font files
 @cindex files, font
 
-The @code{groff} font format is a rough superset of the @acronym{AT&T}
-device-independent @code{troff} font format.  In distinction to the
-@acronym{AT&T} implementation, @code{groff} lacks a binary format; all
-files are text files.@footnote{Plan@tie{}9 @code{troff} has also
-abandoned the binary format.}  The font files for a device @var{name} are
-stored in a directory called @file{dev@var{name}}.  There are two types
-of file: a device description file called @file{DESC}, and for each
-font@tie{}@var{f}, a font file called@tie{}@file{@var{f}}, where @var{f}
-is usually an abbreviation of a font's name and/or style.  For example,
-the @samp{ps} (PostScript) device has @code{groff} font description
-files for Times roman (@file{TR}) and Zapf Chancery Medium italic
-(@file{ZCMI}), among many others, while the @samp{utf8} device (for
-terminal emulators) has only font descriptions for the roman, italic,
-bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
+The @code{groff} font and output device description formats are slight
+extensions of those used by @acronym{AT&T} device-independent
+@code{troff}.  In distinction to the @acronym{AT&T} implementation,
+@code{groff} lacks a binary format; all files are text
+files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the binary
+format.}  The device and font description files for a device @var{name}
+are stored in a directory called @file{dev@var{name}}.  The device
+description file is called @file{DESC}, and, for each font@tie{}@var{f}
+supported by the device, a font file called@tie{}@file{@var{f}}, where
+@var{f}@tie{}is usually an abbreviation of a font's name and/or style.
+For example, the @samp{ps} (PostScript) device has @code{groff} font
+description files for Times roman (@file{TR}) and Zapf Chancery Medium
+italic (@file{ZCMI}), among many others, while the @samp{utf8} device
+(for terminal emulators) has only font descriptions for the roman,
+italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 @file{BI}, respectively).
 
 @menu

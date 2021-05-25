@@ -34,10 +34,9 @@ groff_font \- GNU roff device and font description files
 .\" BEGIN Keep parallel with groff.texi node "Device and Font Files".
 The
 .I groff
-font format is a rough superset of the AT&T
-device-independent
-.I troff \" generic
-font format.
+font and output device description formats are slight
+extensions of those used by AT&T device-independent
+.IR troff . \" AT&T
 .
 In distinction to the AT&T implementation,
 .I groff
@@ -48,21 +47,22 @@ all files are text files.
 .I troff \" Plan 9
 has also abandoned the binary format.)
 .
-The font description files for a device
+The device and font description files for a device
 .I name
 are stored in a directory called
 .IR dev name.
 .
-There are two types of file:
-a device description file called
-.I DESC
-and for each
-.RI font \~f ,
-a font file called
-.RI \[lq] f \[rq],
+The device description file is called
+.IR DESC ,
+and,
+for each
+.RI font\~ f
+supported by the device,
+a font file
+.RI called\~\[lq] f \[rq],
 where
-.I f
-is usually an abbreviation of a font's name and/or style.
+.IR f \~is
+usually an abbreviation of a font's name and/or style.
 .
 For example,
 the
