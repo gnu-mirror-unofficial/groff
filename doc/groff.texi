@@ -10606,26 +10606,14 @@ this.
 @cindex roman glyph, correction after italic glyph (@code{\/})
 @cindex italic glyph, correction before roman glyph (@code{\/})
 @cindex glyph, italic correction (@code{\/})
-Increase the width of the preceding glyph so that the spacing between
-that glyph and the following glyph is correct if the following glyph is
-a roman glyph.  For example, if an italic@tie{}@code{f} is immediately
-followed by a roman right parenthesis, then in many fonts the top right
-portion of the@tie{}@code{f} overlaps the top left of the right
-parenthesis.  Use this escape sequence whenever an italic glyph is
+Apply an @dfn{italic correction}: increase the width of the preceding
+glyph so that the spacing between that glyph and the following glyph is
+correct if the following glyph is a roman glyph.  For example, if an
+italic@tie{}@samp{f} is immediately followed by a roman right
+parenthesis, then in many fonts the top right portion of
+the@tie{}@samp{f} overlaps the top left of the right parenthesis, which
+is ugly.  Use this escape sequence whenever an italic glyph is
 immediately followed by a roman glyph without any intervening space.
-This small amount of space is also called @dfn{italic correction}.
-
-@iftex
-@c can't use @Example...@endExample here
-@example
-@group
-\f[I]f\f[R])
-    @result{} {@it f}@r{)}
-\f[I]f\/\f[R])
-    @result{} @i{f}@r{)}
-@end group
-@end example
-@end iftex
 @endDefesc
 
 @Defesc {\\\,, , , }
@@ -10634,24 +10622,14 @@ This small amount of space is also called @dfn{italic correction}.
 @cindex glyph, left italic correction (@code{\,})
 @cindex roman glyph, correction before italic glyph (@code{\,})
 @cindex italic glyph, correction after roman glyph (@code{\,})
-Modify the spacing of the following glyph so that the spacing between
-that glyph and the preceding glyph is correct if the preceding glyph is
-a roman glyph.  Use this escape sequence whenever a roman glyph is
-immediately followed by an italic glyph without any intervening space.
-In analogy to above, this space could be called @dfn{left italic
-correction}, but this term isn't used widely.
-
-@iftex
-@c can't use @Example...@endExample here
-@example
-@group
-q\f[I]f
-    @result{} @r{q}@i{f}
-q\,\f[I]f
-    @result{} @r{q}@math{@ptexcomma}@i{f}
-@end group
-@end example
-@end iftex
+Apply a @dfn{left italic correction}: modify the spacing of the
+following glyph so that the spacing between that glyph and the preceding
+glyph is correct if the preceding glyph is a roman glyph.  For example,
+if a roman left parenthesis is immediately followed by an
+italic@tie{}@samp{f}, then in many fonts the bottom left portion of
+the@tie{}@samp{f} overlaps the bottom of the left parenthesis, which is
+ugly.  Use this escape sequence whenever a roman glyph is immediately
+followed by an italic glyph without any intervening space.
 @endDefesc
 
 @Defesc {\\&, , , }

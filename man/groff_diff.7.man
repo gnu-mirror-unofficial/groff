@@ -778,46 +778,67 @@ taking
 \&.\|.\|.\&
 as arguments.
 .
+.
 .\" Keep \/ before \, in spite of collation.
 .TP
 .B \[rs]/
-This increases the width of the preceding glyph so that the
-spacing between that glyph and the following glyph is
-correct if the following glyph is a roman glyph.
+Apply an
+.IR "italic correction" :
+increase the width of the preceding glyph so that the spacing between
+that glyph and the following glyph is correct if the following glyph is
+a roman glyph.
 .
+For example,
+if an italic\~\[lq]f\[rq] is immediately followed by a roman right
+parenthesis, then in many fonts the top right portion of
+the\[lq]\~f\[rq] overlaps the top left of the right parenthesis\c
+.if t producing \f[I]f\f[R])\c
+, which is ugly.
+.
+Inserting
+.B \[rs]/
+between them
 .if t \{\
-.  nop For example, if an italic\~f is immediately followed by a roman
-.  nop right parenthesis, then in many fonts the top right portion of
-.  nop the\~f overlaps the top left of the right parenthesis
-.  nop producing \f[I]f\f[R]), which is ugly.
-.  nop Inserting
-.  B \[rs]/
 .  nop produces
 .  ie \n(.g \f[I]f\/\f[R])
 .  el       \f[I]f\|\f[R])
-.  nop and avoids this problem.
+.  nop and
 .\}
-It is a good idea to use this escape sequence whenever an italic
-glyph is immediately followed by a roman glyph without any
-intervening space.
+avoids this problem.
+.
+Use this escape sequence whenever an italic glyph is immediately
+followed by a roman glyph without any intervening space.
+.
 .
 .TP
 .B \[rs],
-This modifies the spacing of the following glyph so that the
-spacing between that glyph and the preceding glyph is
-correct if the preceding glyph is a roman glyph.
+Apply a
+.IR "left italic correction" :
+modify the spacing of the following glyph so that the spacing between
+that glyph and the preceding glyph is correct if the preceding glyph is
+a roman glyph.
 .
+For example,
+if a roman left parenthesis is immediately followed by an
+italic\~\[lq]f\[rq],
+then in many fonts the bottom left portion of the\~\[lq]f\[rq] overlaps
+the bottom of the left parenthesis\c
+.if t producing \f[R](\f[I]f\f[R]\c
+, which is ugly.
+.
+Inserting
+.B \[rs],
+between them
 .if t \{\
-.  nop For example, inserting
-.  B \[rs],
-.  nop between the parenthesis and the\~f changes
-.  nop \f[R](\f[I]f\f[R] to
+.  nop produces
 .  ie \n(.g \f[R](\,\f[I]f\f[R].
 .  el       \f[R](\^\f[I]f\f[R].
+.  nop and
 .\}
-It is a good idea to use this escape sequence whenever a roman
-glyph is immediately followed by an italic glyph without any
-intervening space.
+avoids this problem.
+.
+Use this escape sequence whenever a roman glyph is immediately followed
+by an italic glyph without any intervening space.
 .
 .
 .TP
