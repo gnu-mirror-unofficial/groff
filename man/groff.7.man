@@ -1038,7 +1038,7 @@ request must be the last such escape on an input line.
 .
 .
 .\" ====================================================================
-.SH "Conditional expressions"
+.SS "Conditional expressions"
 .\" ====================================================================
 .
 In
@@ -1055,92 +1055,99 @@ the members of this expanded class are termed
 .
 .P
 A numerical expression
-.I N
-yields true if its value is positive.
+.I expr
+is true if its value is positive.
 .
 In
 .I roff
 languages,
-negative values are false,
-not true.
+negative values are false.
+.
+The truth values of other conditional expression operators are as shown
+below.
 .
 .
 .P
-.
-.PD 0
-.RS
-.
-.TPx
+.ne 14v
+.TS
+rf(BI) lB
+rB lx.
+cond-expr\f[R].\|.\|.	.\|.\|.is true if.\|.\|.
+_
+T{
 .BI \[aq] s1 \[aq] s2 \[aq]
-True
-.RI if\~ s1
-produces the same formatted output
-.RI as\~ s2 .
-.
-.
-.TPx
+T}	T{
+.I s1
+produces the same formatted output as
+.IR s2 .
+T}
+T{
 .BI c\~ g
-True if a glyph
+T}	T{
+a glyph
 .I g
 is available.
-.
-.TPx
-.BI d\~ name
-True if there is a string,
+T}
+T{
+.BI d\~ m
+T}	T{
+a string,
 macro,
 diversion,
-or request called
-.IR name .
-.
-.TPx
-.B e
-Current page number is even.
-.
-.TPx
-.BI F\~ font
-True if a font called
-.I font
-exists.
-.
-.TPx
-.BI m\~ color
-True if there is a color called
-.IR color .
-.
-.TPx
-.B n
-Formatter is
-.IR nroff .
-.
-.TPx
-.B o
-Current page number is odd.
-.
-.TPx
-.BI r\~ reg
-True if there is a number register called
-.IR reg .
-.
-.TPx
-.BI S\~ style
-True if a style called
-.I style
-has been registered.
-.
-.TPx
-.B t
-Formatter is
-.IR troff .
-.
-.TPx
-.B v
-Always false
-(for compatibilty with other
+or request
+.I m
+is defined.
+T}
+e	T{
+the current page number is even.
+T}
+T{
+.BI F\~ f
+T}	T{
+a font named
+.I f
+is available.
+T}
+T{
+.BI m\~ c
+T}	T{
+a color named
+.I c
+is defined.
+T}
+n	T{
+the formatter is in
+.I nroff
+mode.
+T}
+o	T{
+the current page number is odd.
+T}
+T{
+.BI r\~ n
+T}	T{
+a register named
+.I n
+is defined.
+T}
+T{
+.BI S\~ s
+T}	T{
+a font style named
+.I s
+is available.
+T}
+t	T{
+the formatter is in
 .I troff
-implementations).
-.
-.RE
-.PD
+mode.
+T}
+v	T{
+n/a
+(historical artifact;
+always false).
+T}
+.TE
 .
 .
 .P
@@ -1151,15 +1158,18 @@ or
 only a leading
 .RB \[lq] ! \[rq]
 (without spaces or tabs between the exclamation mark and the operator)
-can be used to negate the result.
+can be used to complement the result.
 .
 .
 .P
 Spaces and tabs are optional immediately after the
-.RB \[lq] r \[rq],
+.RB \[lq] c \[rq],
 .RB \[lq] d \[rq],
+.RB \[lq] F \[rq],
+.RB \[lq] m \[rq],
+.RB \[lq] r \[rq],
 and
-.RB \[lq] c \[rq]
+.RB \[lq] S \[rq]
 operators,
 but immediately after
 .RB \[lq] ! \[rq],
