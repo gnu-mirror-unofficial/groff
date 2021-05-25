@@ -61,6 +61,20 @@
 .    an-style-warn use of deprecated macro: .\\$0
 ..
 .
+.de an-blank-line-trap
+.  if (\\n[CHECKSTYLE] > 2) \
+.    an-style-warn blank line in input
+.  sp
+..
+.
+.de an-leading-space-trap
+.  if (\\n[CHECKSTYLE] > 2) \
+.    if \\n[.u] \
+.      an-style-warn \\n[lsn] leading space(s) on input line
+.  br
+.  nop \h'\\n[lss]u'\c
+..
+.
 .\" Define alternate requests to handle continuous rendering.
 .\"
 .\" This .ne replacement avoids page breaks; instead, the page length is
@@ -142,6 +156,9 @@
 .de1 TH
 .  if ((\\n[.$] < 2) : (\\n[.$] > 5)) \
 .    an-style-warn .\\$0 expects 2 to 5 arguments, got \\n[.$]
+.
+.  blm an-blank-line-trap
+.  lsm an-leading-space-trap
 .
 .  \" If batch processing (rendering multiple) man page documents, we
 .  \" must handle the end of a previous document.

@@ -1,5 +1,21 @@
 2021-05-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Add style warnings for man(7) documents with input lines that
+	are blank or have leading spaces, since they can cause
+	surprising rendering; enabled if the CHECKSTYLE register is
+	greater than 2.
+
+	* tmac/an-old.tmac (an-blank-line-trap, an-leading-space-trap):
+	Issue style warning if enabled (and only if fill mode enabled in
+	leading space trap); in any event, recreate the default *roff
+	behavior.
+	(TH): Install traps.
+
+	* doc/andoc.tmac (reload-doc): Remove man(7) traps before
+	loading doc.tmac.
+
+2021-05-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/andoc.tmac (reload-doc): Fix spurious blank line.
 
 2021-05-25  G. Branden Robinson <g.branden.robinson@gmail.com>
