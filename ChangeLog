@@ -1,5 +1,13 @@
 2021-05-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libdriver/inout.cpp (do_file): Make fatal diagnostic
+	from output driver when the device description file "DESC" can't
+	be found more informative by including the name of the device
+	for which the input was prepared.  Also makes malformed input of
+	intermediate format more obvious.
+
+2021-05-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/tbl/tbl.1.man (Miscellaneous): Add paragraph
 	cautioning users against making tbl(1) tables conditional
 	document content.
