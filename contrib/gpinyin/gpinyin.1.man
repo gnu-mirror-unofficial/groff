@@ -217,8 +217,12 @@ The tone numbers 0 and 5 are synonymous.
 .nr gpinyin*do-table 0
 .if t .nr gpinyin*do-table 1
 .if n .if '\*[.T]'utf8' .nr gpinyin*do-table 1
+.\" XXX: One hack necessitates another; since our table is conditional,
+.\" we need to save the input line counter.
+.nr gpinyin*.c \n[.c]
 .ie \n[gpinyin*do-table] \{\
 The tones are written as follows.
+.
 .
 .P
 .\" XXX: This is so gross.  Why can't grops and gropdf figure this out?
@@ -239,6 +243,7 @@ fifth	neutral	(none)	ma0	ma
 \^	\^	\^	ma5	\^
 .TE
 .\}
+.lf (\n[gpinyin*.c] + 25) \" XXX part 2: Restore input line counter.
 .el \{\
 [The tone mark table is omitted from this rendering of the man page
 because the selected output device \[lq]\*[.T]\[rq] lacks the character
