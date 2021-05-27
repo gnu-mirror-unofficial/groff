@@ -985,6 +985,36 @@ instead of the standard call to the
 macro.
 .
 .
+.LP
+Using
+.I tbl
+macros within conditional input
+(that is,
+contingent upon an
+.BR .if ,
+.BR .ie ,
+.BR .el ,
+or
+.B .while
+request)
+can result in misleading line numbers in subsequent diagnostics.
+.
+.I tbl
+unconditionally injects its output into the source document,
+but the conditional branch containing it may not be taken,
+and if it is not,
+the
+.B .lf
+requests that
+.I tbl
+injects to restore the source line number cannot take effect.
+.
+Consider copying the input line counter register
+.B .c
+and restoring its value at a convenient location after applicable
+arithmetic.
+.
+.
 .\" ====================================================================
 .SS "Interaction with \f[I]\%@g@eqn\f[]"
 .\" ====================================================================
