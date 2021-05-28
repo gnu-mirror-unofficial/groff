@@ -14235,32 +14235,32 @@ environment (@pxref{Environments}).
 @DefreqListEndx {soquiet, file}
 @cindex including a file (@code{so})
 @cindex file, inclusion (@code{so})
-Read in the specified @var{file} and include it in place of the
-@code{so} request.  If @var{file} does not exist, a warning of type
-@samp{file} is emitted and the request has no other effect.
-@xref{Debugging}, for information about warnings.  This is quite useful
-for large documents, e.g.@: keeping each chapter in a separate file.
-@xref{gsoelim}, for more information.
+Replace the @code{so} request's control line with the contents of the
+file named by the argument, ``sourcing'' it.  @var{file} is sought in
+the directories specified by @option{-I} command-line option.  If
+@var{file} does not exist, a warning of type @samp{file} is emitted and
+the request has no further effect.  @xref{Debugging}, for information
+about warnings.
 
-Since @code{gtroff} replaces the @code{so} request with the contents of
-@code{file}, it makes a difference whether the data is terminated with a
-newline or not: Assuming that file @file{xxx} contains the word
-@samp{foo} without a final newline, this
+@code{so} can be useful for large documents; e.g., allowing each chapter
+of a book to be kept in a separate file.  However, files interpolated
+with @code{so} are not preprocessed; to overcome this limitation, see
+the @cite{gsoelim@r{(1)}} man page.
+
+Since GNU @code{troff} replaces the entire control line with the
+contents of a file, it matters whether @code{file} is terminated with a
+newline or not.  Assume that file @file{xxx} contains only the word
+@samp{foo} without a trailing newline.
 
 @Example
-This is
+The situation is
 .so xxx
-bar
+bar.
+    @result{} The situation is foobar.
 @endExample
 
-@noindent
-yields @samp{This is foobar}.
-
-The search path for @var{file} can be controlled with the @option{-I}
-command-line option.
-
-@code{soquiet} works the same way, except that no warning diagnostic
-is issued if @var{file} does not exist.
+@code{soquiet} works the same way, except that no warning diagnostic is
+issued if @var{file} does not exist.
 @endDefreq
 
 @Defreq {pso, command}
