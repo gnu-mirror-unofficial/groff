@@ -16688,14 +16688,20 @@ used any longer by @code{gtroff}.
 @node Language Concepts, Command Reference, gtroff Output, gtroff Output
 @subsection Language Concepts
 
-During the run of @code{gtroff}, the input data is cracked down to the
-information on what has to be printed at what position on the intended
-device.  So the language of the intermediate output format can be quite
-small.  Its only elements are commands with and without arguments.  In
-this section, the term @dfn{command} always refers to the intermediate
-output language, and never to the @code{gtroff} language used for
-document formatting.  There are commands for positioning and text
-writing, for drawing, and for device controlling.
+The fundamental operation of the GNU @code{troff} formatter is the
+translation of the @code{groff} input language into a device-independent
+form primarily concerned with what has to be written or drawn at
+specific positions on the output device.  This language is simple and
+imperative.  In the following discussion, the term @dfn{command} always
+refers to this intermediate output language, and never to the
+@code{groff} language intended for direct use by document authors.
+Intermediate output commands comprise several categories: glyph output;
+font, color, and text size selection; motion of the printing position;
+page advancement; drawing of geometric primitives; and device control
+commands, a catch-all for operations not easily classified as any of the
+foregoing, such as directives to start and stop output, identify the
+intended output device, or place URL hyperlinks in supported output
+formats.
 
 @menu
 * Separation::
