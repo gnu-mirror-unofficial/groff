@@ -688,7 +688,7 @@ _
 Set a paragraph indented from both left and right margins by
 .CW \[rs]n[QI] .
 .
-This is a Berkeley extension.
+This macro and register are Berkeley extensions.
 T}
 _
 T{
