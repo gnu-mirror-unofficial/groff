@@ -901,6 +901,8 @@ and
 .CW SN\-NO\-DOT
 (with the terminating period omitted).
 .
+These are GNU extensions.
+.
 .
 .PP
 You can control the style used to print numbered headings by defining an
