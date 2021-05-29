@@ -19,7 +19,7 @@
 
 2021-05-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Add style warnings for man(7) documents with input lines that
+	[man]: Add style warnings for documents with input lines that
 	are blank or have leading spaces, since they can cause
 	surprising rendering; enabled if the CHECKSTYLE register is
 	greater than 2.
@@ -114,7 +114,7 @@
 
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Add -C and -G options to grohtml output driver, to suppress the
+	[grohtml]: Add -C and -G options to postprocessor, to suppress
 	output of CreationDate and Creator HTML comments, respectively.
 	These can inject unwanted noise into build artifacts.
 
@@ -168,7 +168,7 @@
 	contradicting the comment that was there (possibly a bug).
 	(Requests) <URL, LK>: Stop calling .TAG.
 	<LK>: Drop paragraph advising reader to format page for groff's
-	HTML output device to observe the naviagtion links at that point
+	HTML output device to observe the navigation links at that point
 	in the test.
 
 2021-05-22  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -228,8 +228,8 @@
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Slightly refactor footer spacing management when continuously
-	rendering.
+	[man]: Slightly refactor footer spacing management when
+	continuously rendering.
 
 	* tmac/an-old.tmac (an-end): Increase the page length _after_
 	flushing a pending output line.  Do so only by the amount of
@@ -254,8 +254,8 @@
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Add warnings for macros deprecated in groff_man(7), emitted if
-	the CHECKSTYLE register is greater than 1.
+	[man]: Add warnings for macros deprecated in groff_man(7),
+	emitted if the CHECKSTYLE register is greater than 1.
 
 	* tmac/an-old.tmac (an-deprecation-warn): New macro emits
 	diagnostic.
@@ -283,7 +283,7 @@
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Fix stochastic vertical space loss problems in continuous
+	[man]: Fix stochastic vertical space loss problems in continuous
 	rendering mode by being more scrupulous about extending the page
 	length.  As noted in Savannah #60611, sometimes the vertical
 	space between a header line and the first section heading
@@ -292,7 +292,7 @@
 	the problem is that this vertical space disappeared only when we
 	were in double-secret probation no-space mode; this is the
 	special non-spacing mode {not apparent with inspection of
-	\n[.ns]} that happens when the internal stealth page location
+	\n[.ns]} that happens when the stealth internal page location
 	trap is sprung.  This trap does not appear in .ptr output but
 	can be disabled with ".vpt 0", which is an alternative fix for
 	this problem {because continuous rendering mode does not use
@@ -469,8 +469,8 @@
 2021-05-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_GHOSTSCRIPT_VERSION_CHECK): Add new
-	autoconf macro to check if Ghostscript version.  Versions 9.00
-	<= x < 9.54 suffer from a rendering glitch that affects the AT&T
+	autoconf macro to check Ghostscript version.  Versions 9.00 <= x
+	< 9.54 suffer from a rendering glitch that affects the AT&T
 	troff (and groff) special character \(lh; see
 	<https://bugs.ghostscript.com/show_bug.cgi?id=703187>.  Store
 	the result of the check.
@@ -611,7 +611,7 @@
 	* tmac/s.tmac (@RT): Delete definition; make it an alias for
 	par@finish.  Until commit 021ba0e7 (1 May), they had identical
 	definitions.  I find it difficult to imagine what use it would
-	be to have an undocumentted reset macro that resets everything
+	be to have an undocumented reset macro that resets everything
 	_except_ the deeply internal \n[.ev]:ai.
 
 2021-05-08  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -654,9 +654,9 @@
 
 2021-05-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	If \*[HF] is a bold style, substitute bold italics for italics
-	in section and subsection headings, keeping the font weight
-	consistent.
+	[man]: If \*[HF] is a bold style, substitute bold italics for
+	italics in section and subsection headings, keeping the font
+	weight consistent.
 
 	* tmac/an-old.tmac (initialization): Set a flag for this based
 	on the interpolation of \*[HF] matching "B" as its last
@@ -739,7 +739,7 @@
 
 2021-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Restore default IP paragraph indentation after an SH call.
+	[ms]: Restore default IP paragraph indentation after an SH call.
 
 	* tmac/s.tmac (par@finish): Set "ai" register for the current
 	environment to the paragraph indent (PI) setting for the current
