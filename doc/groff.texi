@@ -1522,12 +1522,6 @@ In groff, the page size for @code{gtroff} and for output devices are
 handled separately.  @xref{Page Layout}, for vertical manipulation of
 the page size.  @xref{Line Layout}, for horizontal changes.
 
-A default paper size can be set in the device's @file{DESC} file.  Most
-output devices also have a command-line option @option{-p} to override
-the default paper size and option @option{-l} to use landscape
-orientation.  @xref{DESC File Format}, for a description of the
-@code{papersize} keyword, which takes the same argument as @option{-p}.
-
 @pindex papersize.tmac
 @pindex troffrc
 A convenient shorthand to set a particular paper size for @code{gtroff}
@@ -1539,15 +1533,21 @@ in the start-up file @file{troffrc} by default).  Possible values for
 @code{a7}--@code{d7}.  An appended @samp{l} (ell) character denotes
 landscape orientation.
 
+It is up to the particular macro package to respect default page
+dimensions set in this way (most do).
+
+A default paper size can be set in the device's @file{DESC} file.  Most
+output devices also have a command-line option @option{-p} to override
+the default paper size and option @option{-l} to use landscape
+orientation.  @xref{DESC File Format}, for a description of the
+@code{papersize} keyword, which takes the same argument as @option{-p}.
+
 For example, use the following for PS output on A4 paper in landscape
 orientation:
 
 @Example
 groff -Tps -dpaper=a4l -P-pa4 -P-l -ms foo.ms > foo.ps
 @endExample
-
-It is up to the particular macro package to respect default page
-dimensions set in this way (most do).
 
 
 @c =====================================================================
