@@ -1,3 +1,13 @@
+2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Add regression test for Savannah #57034.
+
+	* contrib/mm/tests/MT_5_includes_AT_in_SG.sh: Test it.  Thanks
+	to Ken Mandelberg for the reproducer.
+	* contrib/mm/mm.am (mm_TESTS): Add variable storing script name.
+	(TESTS): Append `mm_TESTS` to run it.
+	(EXTRA_DIST):  Append `mm_TESTS` to ship it.
+
 2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
 	* contrib/mm/mm/5.MT (cov@print-title): Fix missing diagnostic.
