@@ -1,3 +1,13 @@
+2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* contrib/mm/m.tmac: Update diagnostics.  When aborting,
+	explicitly tell the user we are doing so (see
+	a334cc97abbdfb9c41e28fcd7c187b81a0a3ceac, 25 September 2020).
+	(@mm): Define new string to hold prefix for diagnostic messages.
+	(@warning, @error): Use @mm.  Reorder diagnostic messages to
+	conform with GNU Coding Standards.
+	(OK, PM): Use @warning instead of `tm` request directly.
+
 2021-05-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/papersize.tmac: Improve diagnostic message; when

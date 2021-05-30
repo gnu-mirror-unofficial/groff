@@ -25,9 +25,12 @@ Extern names	module@name
 Env.var		environ:name
 Index		array!index
 ..
-.if !\n(.g .ab These mm macros require groff.
+.if !\n(.g \
+.  ab groff mm macros require groff extensions; aborting
 .do if d PH .nx
-.if \n(.C .ab The groff mm macros do not work in compatibility mode.
+.if \n(.C \
+.  ab groff mm macros do not work in compatibility mode; aborting
+.ds @mm m.tmac\"
 .if (\n[.warn] == 65543) .warn
 .mso devtag.tmac
 .\" ######## init #######
@@ -375,15 +378,15 @@ Index		array!index
 .vs \\n[@vs]u
 ..
 .de @warning
-'tm WARNING:(\\n[.F]) input line \\n[.c]:\\$*
+'tm \\*[@mm]:\\n[.F]:\\n[.c]: warning: \\$*
 .if \\n[D] .backtrace
 ..
 .de @error
 'tm ******************
-'tm ERROR:(\\n[.F]) input line \\n[.c]:\\$*
+'tm \\*[@mm]:\\n[.F]:\\n[.c]: error: \\$*
 .if \\n[D] .backtrace
 'tm ******************
-.ab "Input aborted, syntax error"
+.ab \\*[@mm]: syntax error; aborting
 ..
 .de misc@toupper
 .tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
@@ -927,10 +930,10 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\" ######## module uni #################
 .\" unimplemented macros
 .de OK
-'tm "OK: not implemented"
+.@warning OK: not implemented
 ..
 .de PM
-'tm "PM: not implemented"
+.@warning PM: not implemented
 ..
 .\" ######## module hd #################
 .\" support for usermacro
