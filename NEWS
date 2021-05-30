@@ -147,6 +147,11 @@ o The doc (mdoc) macro package now honors the HY register as the an
   furthermore recognizes but ignores the AD string (see above) for
   compatibility with an (man).
 
+o The m (mm) and s (ms) macro packages no longer manipulate the warning
+  level.  If you want all warnings on, use the ".warn" request with no
+  arguments in your document or pass "-w w" to groff (see troff(1) or
+  the groff Texinfo manual for more on warnings).
+
 o The s (ms) macro package supports a new string, FR, which defines the
   ratio of the footnote line length to the current line length.  The
   default expression is "11/12", 11/12ths of the normal line length,
@@ -170,11 +175,6 @@ o The s (ms) macro package has added strings, \*< and \*>, to perform
   subscripting within a paragraph.  They work analogously to the \*{ and
   \*} superscripting strings that have been present in groff ms since
   1991 or earlier.
-
-o The s (ms) macro package no longer manipulates the warning level.  If
-  you want all warnings on, use the ".warn" request with no arguments in
-  your ms document or pass "-w w" to groff (see troff(1) or the groff
-  Texinfo manual for more on warnings).
 
 grotty
 ------
