@@ -6620,8 +6620,8 @@ The following example produces @samp{10, X, j, 010}:
 @cindex maximum values of Roman numerals
 @cindex minimum values of Roman numerals
 The largest number representable for the @samp{i} and @samp{I} formats
-is 39999 (or @minus{}39999); Unix @code{troff} uses @samp{z} and
-@samp{w} to represent 10000 and 5000 in Roman numerals, and so does
+is 39999 (or @minus{}39999); @acronym{AT&T} @code{troff} uses @samp{z}
+and @samp{w} to represent 10000 and 5000 in Roman numerals, and so does
 @code{gtroff}.  Currently, the correct glyphs of Roman numeral five
 thousand and Roman numeral ten thousand (Unicode code points
 @code{U+2182} and @code{U+2181}, respectively) are not available.
@@ -14327,8 +14327,8 @@ from becoming part of the diversion (@pxref{Diversions}).
 Both @code{trf} and @code{cf}, when used in a diversion, embeds an
 object in the diversion which, when reread, causes the contents of
 @var{file} to be transparently copied through to the output.  In
-Unix @code{troff}, the contents of @var{file} is immediately copied
-through to the output regardless of whether there is a current
+@acronym{AT&T} @code{troff}, the contents of @var{file} is immediately
+copied through to the output regardless of whether there is a current
 diversion; this behaviour is so anomalous that it must be considered a
 bug.
 
@@ -14651,9 +14651,9 @@ However, the contents of the string or macro @var{name} are not
 interpreted; also it is permitted for @var{name} to have been defined as
 a macro and thus contain newlines (it is not permitted for the argument
 to @code{\X} to contain newlines).  The inclusion of newlines requires
-an extension to the Unix @code{troff} output format, and confuses
-drivers that do not know about this extension (@pxref{Device Control
-Commands}).
+an extension to the @acronym{AT&T} @code{troff} output format, and
+confuses drivers that do not know about this extension (@pxref{Device
+Control Commands}).
 @endDefesc
 
 @xref{Output Devices}.
