@@ -1,109 +1,3 @@
-2021-05-31  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* contrib/mm/groff_mm.7.man (Description/Macros) <LT>: Document
-	the "SP" (simplified) letter style more completely.  Salutations
-	and formal closings are omitted.
-
-	Solves the remaining part of bug #60373, "the formal closing is
-	omitted completely".  And, regarding the salutation, #60390.
-
-	Fixes <https://savannah.gnu.org/bugs/?60373> and
-	<https://savannah.gnu.org/bugs/index.php?60390>.
-
-2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
-
-	* contrib/mm/m.tmac (let@sg_SP): Stop placing a comma after the
-	first argument (an author name set by AU) if the second argument
-	is empty (an author title set by AT).
-
-	Solves another part of bug #60373, "the writer's name at the
-	bottom is followed by a trailing comma".
-
-	Fixes <https://savannah.gnu.org/bugs/?60389>.
-
-2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
-
-	* contrib/mm/m.tmac (let@print-head): Quote the interpolation of
-	the string `let*lo-SJ`.
-
-	Solves part of bug #60373, "[t]he subject line shows only the
-	first word".
-
-	Fixes <https://savannah.gnu.org/bugs/?60388>.
-
-2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	Add regression tests for Savannah #60373.
-
-	* contrib/mm/tests/LT_SP_AU_without_AT_works.sh:
-	* contrib/mm/tests/LT_SP_multi-word_LO_SJ_works.sh: Add tests.
-	* contrib/mm/mm.am (mm_TESTS): Run tests.
-
-2021-05-30  Tadziu Hoffman <hoffmann@usm.uni-muenchen.de>
-
-	Fix Savannah #57034.
-
-	* contrib/mm/m.tmac (AT): Count author title declarations.
-	(let*mt-sign): Use correct index when iterating author names.
-	Prevent page break between author names and titles.  Iterate
-	author titles and write them.
-
-	Fixes <https://savannah.gnu.org/bugs/?57034>.
-
-2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	Add regression test for Savannah #57034.
-
-	* contrib/mm/tests/MT_5_includes_AT_in_SG.sh: Test it.  Thanks
-	to Ken Mandelberg for the reproducer.
-	* contrib/mm/mm.am (mm_TESTS): Add variable storing script name.
-	(TESTS): Append `mm_TESTS` to run it.
-	(EXTRA_DIST):  Append `mm_TESTS` to ship it.
-
-2021-05-30  Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
-
-	* contrib/mm/mm/5.MT (cov@print-title): Fix missing diagnostic.
-	Memorandum type 5 now requires a title to be declared with .TL.
-
-	Fixes <https://savannah.gnu.org/bugs/?59563>.
-
-2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	[mm]: Cease warning level manipulation.
-
-	Stop mm macro package from manipulating warnings.
-
-	* contrib/mm/m.tmac: Remove code that attempted to enable all
-	warnings if none were given on the command line.  It did this by
-	simply comparing the value of the warning register (\n[.warn])
-	against the default value; but of course, a user could specify
-	-w options that exactly matched the default and the test would
-	not be able to tell, causing puzzling and undesired behavior.
-	Furthermore, the hard-coded default was out of date and did not
-	correspond to recent releases of groff.  If you want all
-	warnings on, use the ".warn" request with no arguments in your
-	mm document or pass "-w w" to groff (see troff(1) or the Texinfo
-	manual for more on warnings).
-
-	See commit 5aa934e7, 20 February 2020.
-
-2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* contrib/mm/examples/letter.mm: Revise to be a better example:
-	use macro package more effectively, follow *roff input
-	conventions more carefully, and incorporate more accurate
-	comments.
-
-2021-05-30  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* contrib/mm/m.tmac: Update diagnostics.  When aborting,
-	explicitly tell the user we are doing so (see
-	a334cc97abbdfb9c41e28fcd7c187b81a0a3ceac, 25 September 2020).
-	(@mm): Define new string to hold prefix for diagnostic messages.
-	(@warning, @error): Use @mm.  Reorder diagnostic messages to
-	conform with GNU Coding Standards.
-	(OK, PM): Use @warning instead of `tm` request directly.
-
 2021-05-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/papersize.tmac: Improve diagnostic message; when
@@ -1451,14 +1345,6 @@
 
 2021-02-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	[rfc1345]: Add smoke test.
-
-	* contrib/rfc1345/tests/rfc1345-smoke-test.sh: Add test.
-	* contrib/rfc1345/rfc1345.am (rfc1345_TESTS, TESTS, EXTRA_DIST):
-	Run test.
-
-2021-02-03  G. Branden Robinson <g.branden.robinson@gmail.com>
-
 	* test-groff.in: Add support for rfc1345.tmac.
 
 2021-02-02  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -1467,20 +1353,6 @@
 
 	* contrib/rfc1345/rfc1345.am: Do it.
 	* Makefile.am: Include contrib/rfc1345/rfc1345.am.
-
-2021-02-02  Dorai Sitaram <ds26gte@yahoo.com>
-
-	contrib/rfc1345: Add new macro file.
-
-	Add new macro file that defines special characters implementing
-	RFC 1345 mnemonics (plus some additions from Vim, which itself
-	uses RFC 1345 for its digraphs).
-
-	* contrib/rfc1345/COPYRIGHT:
-	* contrib/rfc1345/groff_rfc1345.7.man:
-	* contrib/rfc1345/rfc1345.tmac: Add new macro package.
-
-	Fixes <https://savannah.gnu.org/bugs/?59839>.
 
 2021-02-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
