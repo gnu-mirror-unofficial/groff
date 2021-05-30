@@ -1518,32 +1518,33 @@ those directories during the installation process.
 @cindex orientation, landscape
 @cindex page orientation, landscape
 
-In groff, the page size for @code{gtroff} and for output devices are
-handled separately.  @xref{Page Layout}, for vertical manipulation of
-the page size.  @xref{Line Layout}, for horizontal changes.
-
+In @code{groff}, the page dimensions for the formatter GNU @code{troff}
+and for output devices are handled separately.  @xref{Page Layout}, for
+vertical manipulation of the page size, and @xref{Line Layout}, for
+horizontal changes.
 @pindex papersize.tmac
 @pindex troffrc
-A convenient shorthand to set a particular paper size for @code{gtroff}
-is command-line option @option{-dpaper=@var{size}}.  This defines string
-@code{paper}, which is processed in file @file{papersize.tmac} (loaded
-in the start-up file @file{troffrc} by default).  Possible values for
-@var{size} are the same as the predefined values for the
-@code{papersize} keyword (but only in lowercase) except
-@code{a7}--@code{d7}.  An appended @samp{l} (ell) character denotes
-landscape orientation.
+The @file{papersize} macro package, normally loaded by @file{troffrc} at
+start-up, provides an interface for configuring page dimensions by
+convenient names, like @samp{letter} or @samp{a4}; see
+@cite{groff_tmac@r{(5)}}.  The default used by the formatter depends on
+its build configuration, but is usually one of the foregoing, as
+geographically appropriate.
 
-It is up to the particular macro package to respect default page
-dimensions set in this way (most do).
+It is up to each macro package to respect the page dimensions configured
+in this way.
 
-A default paper size can be set in the device's @file{DESC} file.  Most
-output devices also have a command-line option @option{-p} to override
-the default paper size and option @option{-l} to use landscape
-orientation.  @xref{DESC File Format}, for a description of the
-@code{papersize} keyword, which takes the same argument as @option{-p}.
+For each output driver, the size of the output medium can be set in its
+@file{DESC} file.  Most output devices also recognize a command-line
+option @option{-p} to override the default dimensions and an option
+@option{-l} to use landscape orientation.  @xref{DESC File Format}, for
+a description of the @code{papersize} keyword, which takes an argument
+of the same form as @option{-p}.  The output driver's man page, such as
+@cite{grops@r{(1)}}, may also be helpful.
 
-For example, use the following for PS output on A4 paper in landscape
-orientation:
+@code{groff} uses the command-line option @option{-P} to pass options to
+postprocessors; for example, use the following for PostScript output on
+A4 paper in landscape orientation.
 
 @Example
 groff -Tps -dpaper=a4l -P-pa4 -P-l -ms foo.ms > foo.ps
@@ -8690,6 +8691,11 @@ text is printed.
 @dfn{Line length}---this is the distance from the left margin to right
 margin.
 @end ftable
+
+@cindex margin, right
+@cindex right margin
+The right margin is not explicitly configured; the combination of page
+offset and line length provides the information necessary to derive it.
 
 A simple demonstration:
 

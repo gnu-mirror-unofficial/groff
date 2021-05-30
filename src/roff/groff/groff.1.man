@@ -776,46 +776,85 @@ system.
 .SS "Paper size"
 .\" ====================================================================
 .
-The
-.I virtual
-paper size used by
-.B troff
-to format the input is controlled globally with the requests
-.BR .po ,
-.BR .pl ,
-and
-.BR .ll .
+In
+.IR groff ,
+the page dimensions for the formatter
+.I \%@g@troff
+and for output devices are handled separately.
 .
-See
-.BR groff_tmac (@MAN5EXT@)
-for the \[oq]papersize\[cq] macro package which provides a convenient
-interface.
+In the formatter,
+requests are used to set the page length
+.RB ( .pl ),
+page offset
+(or left margin,
+.BR .po ),
+and line length
+.RB ( .ll ).
+.
+The right margin is not explicitly configured;
+the combination of page offset and line length provides the information
+necessary to derive it.
+.
+The
+.I papersize
+macro package,
+automatically loaded by
+.I troffrc
+at start-up,
+provides an interface for configuring page dimensions by convenient
+names,
+like \[lq]letter\[rq] or
+\[lq]A4\[rq];
+see
+.IR groff_tmac (@MAN5EXT@).
+.
+The default used by the formatter depends on its build configuration,
+but is usually one of the foregoing,
+as geographically appropriate.
 .
 .
 .P
-The
-.I physical
-paper size, giving the actual dimensions of the paper sheets, is
-controlled by output devices like
-.B grops
-with the command-line options
+It is up to each macro package to respect the page dimensions configured
+in this way.
+.
+.
+.P
+For each output driver,
+the size of the output medium can be set in its
+.I DESC
+file.
+.
+Most output devices also recognize a command-line option
 .B \-p
-and
-.BR \-l .
+to override the default dimensions and an option
+.B \-l
+to use landscape orientation.
 .
 See
-.BR groff_font (@MAN5EXT@)
-and the man pages of the output devices for more details.
+.IR groff_font (@MAN5EXT@)
+for a description of the
+.B papersize
+keyword,
+which takes an argument of the same form as
+.BR \-p .
+.
+The output driver's man page,
+such as
+.IR grops (@MAN1EXT@),
+may also be helpful.
 .
 .B groff
 uses the command-line option
 .B \-P
-to pass options to output devices; for example, the following selects
-A4 paper in landscape orientation for the PS device:
+to pass options to output devices;
+for example,
+use the following for PostScript output on A4 paper in landscape
+orientation.
+.
 .
 .IP
 .EX
-groff \-Tps \-P\-pa4 \-P\-l ...
+groff \-Tps \-dpaper=a4l \-P\-pa4 \-P\-l \-ms foo.ms > foo.ps
 .EE
 .
 .

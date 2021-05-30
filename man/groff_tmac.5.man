@@ -343,46 +343,61 @@ See
 .
 .TP
 .I papersize
-This macro file is automatically loaded at start-up by
-.B @g@troff
-so it isn't necessary to call it explicitly.
+This macro file is normally loaded at start-up by the
+.I troffrc
+file,
+so it is seldom necessary to call it explicitly.
 .
 It provides an interface to set the paper size on the command line with
-the option \f[B]\%\-dpaper=\f[]\,\f[I]size\f[].
+the option
+.BI \-\%dpaper= size
+to
+.I groff
+or
+.IR \%@g@troff .
 .
 Possible values for
 .I size
-are the same as the predefined
-.B papersize
-values in the DESC file (only lowercase; see
-.BR groff_font (@MAN5EXT@)
-for more) except
-.BR a7 \[en] d7 .
+are the ISO and DIN formats
+\[lq]A0\[en]A6\[rq],
+\[lq]B0\[en]B6\[rq],
+\[lq]C0\[en]C6\[rq],
+and
+\[lq]D0\[en]D6\[rq];
+the U.S.\& formats
+\[lq]letter\[rq],
+\[lq]legal\[rq],
+\[lq]tabloid\[rq],
+\[lq]ledger\[rq],
+\[lq]statement\[rq],
+and
+\[lq]executive\[rq];
+and the envelope formats
+\[lq]com10\[rq],
+\[lq]monarch\[rq],
+and
+\[lq]dl\[rq].
 .
-An appended
-.B l
-(ell) character denotes landscape orientation.
+All formats,
+even those for envelopes,
+are in portrait orientation,
+with their longer dimension as the length.
 .
-Examples:
-.BR a4 ,
-.BR c3l ,
-.BR letterl .
+Appending \[lq]l\[rq] (ell) to any of these denotes landscape
+orientation instead.
 .
-.IP
-Most output drivers need additional command-line switches
+An output driver typically requires command-line switches
 .B \-p
 and
 .B \-l
-to override the default paper length and orientation as set in the
-driver-specific DESC file.
-.
-For example, use the following for PS output on A4 paper in landscape
-orientation:
-.
-.IP
-.EX
-\fIsh#\fP groff \-Tps \-dpaper=a4l \-P\-pa4 \-P\-l \-ms foo.ms > foo.ps
-.EE
+to override the paper dimensions and orientation,
+respectively,
+defined in its
+.I DESC
+file;
+see subsection \[lq]Paper sizes\[rq]
+of
+.IR groff (@MAN1EXT@).
 .
 .
 .TP
