@@ -843,7 +843,7 @@ such as
 .IR grops (@MAN1EXT@),
 may also be helpful.
 .
-.B groff
+.I groff
 uses the command-line option
 .B \-P
 to pass options to output devices;
@@ -863,7 +863,7 @@ groff \-Tps \-dpaper=a4l \-P\-pa4 \-P\-l \-ms foo.ms > foo.ps
 .\" ====================================================================
 .
 The
-.B groff
+.I groff
 program is a wrapper around the
 .IR \%@g@troff (@MAN1EXT@)
 program.
@@ -872,17 +872,18 @@ It allows one to specify the preprocessors by command-line options and
 automatically runs the postprocessor that is appropriate for the
 selected device.
 .
-Doing so, the sometimes tedious piping mechanism of classical
-.BR roff (@MAN7EXT@)
-can be avoided.
+Doing so,
+the sometimes tedious piping mechanism of traditional
+.IR roff (@MAN7EXT@)
+systems can be avoided.
 .
 .
 .P
 The
-.BR grog (@MAN1EXT@)
-program can be used for guessing the correct
+.IR grog (@MAN1EXT@)
+program can be used to infer an appropriate
 .I groff
-command line to format a file.
+command line to format a document.
 .
 .
 .\" ====================================================================
@@ -905,7 +906,7 @@ for mathematical formulae,
 .TP
 .IR \%@g@grn (@MAN1EXT@)
 for including
-.BR gremlin (1)
+.IR gremlin (1)
 pictures,
 .
 .TP
@@ -917,11 +918,11 @@ for drawing diagrams,
 for chemical structure diagrams,
 .
 .TP
-.BR \%@g@refer (@MAN1EXT@)
+.IR \%@g@refer (@MAN1EXT@)
 for bibliographic references,
 .
 .TP
-.BR \%@g@soelim (@MAN1EXT@)
+.IR \%@g@soelim (@MAN1EXT@)
 for including macro files from standard locations,
 .
 .P
@@ -935,15 +936,16 @@ for tables.
 A new preprocessor not available in classical
 .I troff
 is
-.BR \%preconv (@MAN1EXT@)
+.IR \%preconv (@MAN1EXT@)
 which converts various input encodings to something
-.B groff
+.I groff
 can understand.
 .
 It is always run first before any other preprocessor.
 .
 .P
-Besides these, there are some internal preprocessors that are
+Besides these,
+there are some internal preprocessors that are
 automatically run with some devices.
 .
 These aren't visible to the user.
