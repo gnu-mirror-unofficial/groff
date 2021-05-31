@@ -25,6 +25,9 @@ groff \- front-end for the GNU roff document formatting system
 .do nr *groff_groff_1_man_C \n[.cp]
 .cp 0
 .
+.\" Define a string for the TeX logo.
+.ie t .ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
+.el   .ds TeX TeX
 .
 .\" ====================================================================
 .SH Synopsis
@@ -729,47 +732,172 @@ for names.
 .
 .TP
 .BI \-W\  name
-disable warning
+disable warning category
 .IR name .
 .
 See
 .IR \%@g@troff (@MAN1EXT@)
-for names.
+or the
+.I groff
+Texinfo manual for a list names.
 .
 .
 .\" ====================================================================
 .SH Usage
 .\" ====================================================================
 .
-The
-.I groff system
-implements the infrastructure of classical roff; see
-.BR roff (@MAN7EXT@)
-for a survey on how a
+The architecture of the GNU
 .I roff
-system works in general.
+system
+follows that of other device-independent
+.I roff
+implementations,
+comprising preprocessors,
+macro packages,
+output drivers
+(or \[lq]postprocessors\[rq]),
+a suite of utilities,
+and the formatter
+.I \%@g@troff
+at its heart.
 .
-Due to the front-end programs available within the
-.I groff
-system, using
-.I groff
-is much easier than
-.IR "classical roff" .
+See
+.IR roff (@MAN7EXT@)
+for a survey of how a
+.I roff
+system works.
 .
-This section gives an overview of the parts that constitute the
-.I groff
+.
+.P
+The front-end programs available in the GNU
+.I roff
+system make it easier to use than traditional
+.IR roff s
+that required the construction of pipelines or use of temporary files to
+carry a source document from maintainable form to device-ready output.
+.
+The discussion below summarizes the constituent parts of the GNU
+.I roff
 system.
 .
 It complements
-.BR roff (@MAN7EXT@)
+.IR roff (@MAN7EXT@)
 with
 .IR groff -specific
-features.
+information.
 .
-This section can be regarded as a guide to the documentation around
-the
+.
+.\" ====================================================================
+.SS "Getting started"
+.\" ====================================================================
+.
+Those who prefer to learn by experimenting or are desirous of rapid
+feedback from the system may wish to start with a \[lq]Hello,
+world!\[rq]\& document.
+.
+.
+.P
+.EX
+$ \c
+.B echo \[dq]Hello, world!\[dq] | groff \-Tascii | sed \[aq]/^$/d\[aq]
+Hello, world!
+.EE
+.
+.
+.P
+We used a
+.I sed
+command only to eliminate the 65 blank lines that would otherwise flood
+the terminal screen.
+.
+.RI ( roff
+systems were developed in the days of paper-based terminals with 66
+lines to a page.)
+.
+.
+.P
+Today's users may prefer output to a UTF-8-capable terminal.
+.
+.
+.P
+.EX
+$ \c
+.B echo \[dq]Hello, world!\[dq] | groff \-Tutf8 | sed \[aq]/^$/d\[aq]
+.EE
+.
+.
+.P
+Producing PDF,
+HTML,
+or \*[TeX]'s DVI is also straightforward.
+.
+The hard part may be selecting a viewer program for the output.
+.
+.
+.P
+.EX
+$ \c
+.B echo \[dq]Hello, world!\[dq] | groff \-Tpdf > hello.pdf
+$ \c
+.B evince hello.pdf
+$ \c
+.B echo \[dq]Hello, world!\[dq] | groff \-Thtml > hello.html
+$ \c
+.B firefox hello.html
+$ \c
+.B echo \[dq]Hello, world!\[dq] | groff \-Tdvi > hello.dvi
+$ \c
+.B xdvi hello.html
+.EE
+.
+.
+.\" ====================================================================
+.SS "Using \f[I]groff\f[] as a REPL"
+.\" ====================================================================
+.
+Those with a programmer's bent may be pleased to know that they can use
 .I groff
-system.
+in a read-evaluate-print loop (REPL).
+.
+Doing so can be handy to verify one's understanding of the formatter's
+behavior and/or the syntax it accepts.
+.
+Turning on all warnings with
+.B \-ww
+can aid this goal.
+.
+.
+.P
+.EX
+$ \c
+.B groff \-ww \-Tutf8
+.B \[rs]# This is a comment.  Let\[aq]s define a register.
+.B .nr a 1
+.B \[rs]# Do integer arithmetic with operators evaluated left-to-right.
+.B .nr b (\[rs]n[a]+5/2)
+.B \[rs]# Let\[aq]s get the result on the standard error stream.
+.B .tm \[rs]n[b]
+3
+.B \[rs]# We can see that the division rounded toward zero.
+.B \[rs]# Now we\[aq]ll define a string.
+.B .ds name Leslie\[rs]" This is another form of comment.
+.B .nr b (\[rs]n[a]+7/2)
+.B \[rs]# Center the next two text input lines.
+.B .ce 2
+.B Hi, \[rs]*[name].
+.B Your secret number is \[rs]n[b].
+.B It is
+.B \[rs]# Here\[aq]s an if-else control structure.
+.B .ie (\[rs]n[b] % 2) odd.
+.B .el even.
+.B \[rs]# This trick set the page length to the current vertical
+.B \[rs]# position, so that blank lines don't spew when we're done.
+.B .pl \[rs]n[nl]u
+.I <Control-D>
+                           Hi, Leslie.
+                    Your secret number is 4.
+It is even.
+.EE
 .
 .
 .\" ====================================================================
