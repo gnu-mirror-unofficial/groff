@@ -6933,15 +6933,32 @@ Several other requests also cause breaks implicitly.  These are
 @code{bp}, @code{ce}, @code{cf}, @code{fi}, @code{fl}, @code{in},
 @code{nf}, @code{rj}, @code{sp}, @code{ti}, and @code{trf}.  If the
 no-break control character is used with any of these requests, GNU
-@code{troff} suppresses the break.
+@code{troff} suppresses the break; instead the requested operation takes
+effect at the next break.
 
+@Example
+.ll 55n
+This line is normally filled and adjusted.
+.br
+A line's alignment is decided
+'ce \" Center the next input line (no break).
+when it is output.
+This line returns to normal filling and adjustment.
+    @result{} This line is normally filled and adjusted.
+    @result{}    A line's alignment is decided when it is output.
+    @result{} This line returns to normal filling and adjustment.
+@endExample
+
+@noindent
 @cindex pending output line
 @cindex partially collected line
-An output line is said to be @dfn{pending} if some input has been
-collected but an output line corresponding to it has not yet been
-written; such an output line is also termed @dfn{partially collected}.
-If no output line is pending, it is as if a break has already happened;
-additional breaks, whether explicit or implicit, have no effect.
+Output line properties like adjustment and indentation are not
+determined until the line has been broken.  An output line is said to be
+@dfn{pending} if some input has been collected but an output line
+corresponding to it has not yet been written; such an output line is
+also termed @dfn{partially collected}.  If no output line is pending, it
+is as if a break has already happened; additional breaks, whether
+explicit or implicit, have no effect.
 
 @Defreq {br, }
 Break the current line: the pending output line is emitted without
