@@ -2150,7 +2150,7 @@ With two non-zero arguments, it scales to the maximum height.
 How Scaling is Handled
 .PP
 When \fBpic\fP processes a picture description on input, it passes
-\fB.PS\fP and \fB.PE\fP through to the postprocessor.
+\fB.PS\fP, \fB.PE\fP, and \fB.PF\fP through to the postprocessor.
 The \fB.PS\fP gets decorated with two numeric arguments which are the X
 and Y\~dimensions of the picture in inches.
 The post-processor can use these to reserve space for the picture and
@@ -2182,9 +2182,9 @@ the following definitions:
 .vs
 .KE
 .LP
-Equivalent definition is supplied by GNU \fIpic\/\fP(1) if you use
-the \-mpic option; this should make it usable with macro pages other
-than \fIms\/\fR(1).
+Equivalent definitions of these and of \fB.PF\fP are supplied by GNU
+\fIpic\/\fP(1) if you use the \-mpic option; this should make it usable
+with macro pages other than \fIms\/\fR(1).
 .PP
 If \fB.PF\fP is used instead of \fB.PE\fP, the \fBtroff\fP position is
 restored to what it was at the picture start (Kernighan notes that
@@ -2196,7 +2196,7 @@ The invocation
 .DE
 .LP
 causes the contents of \fIfile\fP to replace the \fB.PS\fP line.
-This feature is deprecated; use `\fBcopy\fP \fIfile\fR' instead).
+This feature is deprecated; use `\fBcopy\fP \fIfile\fR' instead.
 .
 .NH 2
 PIC and [gt]roff commands

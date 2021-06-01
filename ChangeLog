@@ -1,3 +1,21 @@
+2021-08-06  Dave Kemper <saint.snit@gmail.com>
+
+	GNU pic recognizes two possible endings of a pic block: .PE or
+	.PF.  This fact was documented in doc/pic.ms but not in the pic
+	man page.  The minimal pic implementation provided by pic.tmac
+	also did not include a .PF definition.
+
+	* src/preproc/pic/main.cpp (main): Add dummy definition of `PF`
+	macro.
+	* tmac/pic.tmac (PF): Add macro that performs indentation only.
+	(PE): Call PF for indentation.
+
+	* doc/pic.ms (Interface to [gt]roff/How Scaling is Handled):
+	* src/preproc/pic/pic.1.man (Description, Options): Mention `PF`
+	in addition to `PS` and `PE`.
+
+	Fixes <https://savannah.gnu.org/bugs/?60504>.
+
 2021-08-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/refer-ms.tmac:

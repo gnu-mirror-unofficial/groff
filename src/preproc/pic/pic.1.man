@@ -101,9 +101,20 @@ It copies the contents of each
 to the standard output stream,
 except that lines between
 .B .PS
-and
+and either
 .B .PE
+or
+.B .PF
 are interpreted as picture descriptions.
+.
+Ending a
+.I \%@g@pic
+picture with
+.B .PE
+leaves the page position at the bottom of the picture;
+ending it with
+.B .PF
+leaves the position at the top.
 .
 Normally,
 .I \%@g@pic
@@ -126,9 +137,10 @@ the standard input stream is read.
 .LP
 It is the user's responsibility to provide appropriate definitions
 of the
-.B PS
+.BR PS ,
+.BR PE ,
 and
-.B PE
+.B PF
 macros.
 .
 When the macro package being used does not supply such definitions
@@ -136,7 +148,7 @@ When the macro package being used does not supply such definitions
 old versions of \-ms),
 appropriate definitions can be
 obtained with
-.BR \-mpic :
+.BR \-mpic ;
 these will center each picture.
 .
 .
@@ -193,9 +205,10 @@ variable.
 .TP
 .B \-C
 Recognize
-.B .PS
+.BR .PS ,
+.BR .PE ,
 and
-.B .PE
+.B .PF
 even when followed by a character other than space or newline.
 .
 .
@@ -1432,9 +1445,10 @@ package.
 .TP
 .I @MACRODIR@/pic.tmac
 Example definitions of the
-.B PS
+.BR PS ,
+.BR PE ,
 and
-.B PE
+.B PF
 macros.
 .
 .
