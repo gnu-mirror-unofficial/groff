@@ -4708,8 +4708,7 @@ regular output is omitted below.
 
 @Example
 $ perl -e 'print "#" x 80, "\n";' | nroff
-    @error{} troff: <standard input>:1: warning [p 1, 0.0i]:
-    @error{} can't break line
+    @error{} warning: can't break line
 @endExample
 
 The remedy for these cases is to tell GNU @code{troff} where the line
@@ -9360,7 +9359,7 @@ Font translations cannot be chained.
 .ftr XXX TR
 .ftr XXX YYY
 .ft XXX
-    @result{} warning: can't find font 'XXX'
+    @error{} warning: can't find font 'XXX'
 @endExample
 @endDefreq
 
@@ -9526,7 +9525,7 @@ In the following example, we want to access the PostScript font
 @Example
 .sty \n[.fp] Bar
 .fam Foo
-    @result{} warning: can't find font `FooR'
+    @error{} warning: can't find font 'FooR'
 @endExample
 
 @noindent
@@ -11479,8 +11478,7 @@ Now consider this example.
 ..
 .
 .bar
-    @error{} input stack limit exceeded
-    @error{} (probable infinite loop)
+    @error{} input stack limit exceeded (probable infinite loop)
 @endExample
 
 @noindent
@@ -11917,7 +11915,7 @@ The closing brace of a @code{while} body must end a line.
 .  while (\n[a] < 10) \@{\
 .    nop \n+[a]
 .\@}\@}
-    @result{} unbalanced \@{ \@}
+    @error{} unbalanced \@{ \@}
 @endExample
 @end itemize
 @endDefreq
@@ -12035,7 +12033,7 @@ The value of xxx is \\n[xxx].
 .cp 1
 .
 .aa
-    @result{} warning: number register `[' not defined
+    @error{} warning: number register '[' not defined
     @result{} The value of xxx is 0xxx].
 .bb
     @result{} The value of xxx is 12345.
