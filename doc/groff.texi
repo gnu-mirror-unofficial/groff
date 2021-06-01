@@ -471,6 +471,9 @@ developing GNU and promoting software freedom.''
 @c =====================================================================
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Introduction, Invoking groff, Top, Top
 @chapter Introduction
 @cindex introduction
@@ -485,7 +488,8 @@ for some thirty years.  It is well entrenched in the Unix community.
 * @code{groff} Capabilities::
 * Macro Package Intro::
 * Preprocessor Intro::
-* Output device intro::
+* Output Device Intro::
+* Conventions Used in This Manual::
 * Credits::
 @end menu
 
@@ -771,7 +775,7 @@ the most common (and the ones described in this manual) are @file{man},
 
 @c =====================================================================
 
-@node Preprocessor Intro, Output device intro, Macro Package Intro, Introduction
+@node Preprocessor Intro, Output Device Intro, Macro Package Intro, Introduction
 @section Preprocessors
 @cindex preprocessors
 
@@ -810,7 +814,7 @@ pictures (@code{ideal}).
 
 @c =====================================================================
 
-@node Output device intro, Credits, Preprocessor Intro, Introduction
+@node Output Device Intro, Credits, Preprocessor Intro, Introduction
 @section Output Devices
 @cindex postprocessors
 @cindex output devices
@@ -826,7 +830,40 @@ and @acronym{PDF}.
 
 @c =====================================================================
 
-@node Credits,  , Output device intro, Introduction
+@node Conventions Used in This Manual, Credits, Output Device Intro, Introduction
+@section Conventions Used in This Manual
+
+We use Texinfo's ``result'' (@result{}) and @error{} notations to
+present output written to the standard output and standard error
+streams, respectively.  Diagnostic messages from the GNU @code{troff}
+formatter and other programs are examples of the latter, but the
+formatter can also be directed to write user-specified messages to the
+standard error stream.  The notation then serves to distinguish the
+output stream and does not necessarily mean that an error has occurred.
+
+@Example
+$ echo "Twelve o'clock and" | groff -Tascii | sed '/^$/d'
+    @result{} Twelve o'clock and
+$ echo '.tm all is well.' | groff > /dev/null
+    @error{} all is well.
+@endExample
+
+We also present diagnostic messages in an abbreviated form, often
+omitting the name of the program issuing them, the input file name, and
+line number or other positional information when such data do not serve
+to illuminate the topic under discussion.
+
+You are encouraged to try the examples yourself, and to alter them to
+better learn @code{groff}'s behavior.  Our examples frequently need to
+direct the formatter to set a line length (with @samp{.ll}) that will
+fit within the page margins of this manual.  We mention this so that you
+know why it is there before we discuss the @code{ll} request
+formally.@footnote{@xref{Line Layout}.}
+
+
+@c =====================================================================
+
+@node Credits,  , Conventions Used in This Manual, Introduction
 @section Credits
 @cindex credits
 
@@ -836,6 +873,8 @@ and Eric Allman's papers on the @file{me} macro package.
 
 Larry Kollar contributed the section on the @file{ms} macro package.
 
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
