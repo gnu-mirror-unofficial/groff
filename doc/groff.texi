@@ -4738,7 +4738,7 @@ an automatic break, GNU @code{troff} adjusts the line if applicable (see
 below), and then resumes collecting and filling text on the next output
 line.
 
-Sometimes, a line cannot be broken automatically.  This typically does
+Sometimes, a line cannot be broken automatically.  This usually does
 not happen with natural language text unless the output line length has
 been manipulated to be extremely short, but it can with specialized
 text like program source code.  We can use @code{perl} at the shell
@@ -4860,8 +4860,8 @@ An input line beginning with a control character is called a
 @dfn{control line}.
 @cindex text line
 Every line of input that is not a control line is a @dfn{text
-line}.@footnote{The @key{\RET} escape can alter how an input line is
-classified; see @ref{Line Control}.}
+line}.@footnote{The @key{\RET} escape sequence can alter how an input
+line is classified; see @ref{Line Control}.}
 
 @cindex argument
 Requests often take @dfn{arguments}, words (separated from the request
@@ -5014,11 +5014,12 @@ the preparation of other @code{roff} documents.  There is no syntactical
 difference between a macro file and any other @code{roff} document; only
 its purpose distinguishes it.  When a macro file is installed at a
 standard location and suitable for use by a general audience, it is
-often termed a @dfn{macro package}.@footnote{Macro packages frequently
-define registers and strings as well.}  Macro packages can be loaded by
-supplying the @option{-m} option to @command{groff} or @command{troff}.
-Alternatively, a @code{groff} document wishing to use a macro package
-can load it with the @code{mso} (``macro source'') request.
+often termed a @dfn{macro package}.@footnote{Macro files and packages
+frequently define registers and strings as well.}  Macro packages can be
+loaded by supplying the @option{-m} option to @command{groff} or
+@command{troff}.  Alternatively, a @code{groff} document wishing to use
+a macro package can load it with the @code{mso} (``macro source'')
+request.
 
 @c ---------------------------------------------------------------------
 
