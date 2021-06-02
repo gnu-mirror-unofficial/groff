@@ -5104,27 +5104,29 @@ of your document or use @samp{-mlatin9} as a command-line argument to
 @code{groff}.
 @end table
 
-Some input encoding characters may not be available for a particular
-output driver.  For terminal devices, fallbacks are defined, like
+Some characters from an input encoding may not be available with a
+particular output driver, or their glyphs may not have representation in
+the font used.  For terminal devices, fallbacks are defined, like
 @samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.  For
-typesetter devices it usually suffices to install fonts that have
-compatible metrics with other fonts used in the document and which
-contain the necessary glyphs.
+typesetter devices, it usually suffices to install fonts that contain
+the necessary glyphs and have compatible metrics with other fonts used
+in the document.
 
 @pindex freeeuro.pfa
 @pindex ec.tmac
 Due to the importance of the Euro glyph in Europe, @code{groff} is
 distributed with a PostScript font called @file{freeeuro.pfa}, which
-provides various glyph shapes for the Euro.  In other words, @w{Latin-9}
-encoding is supported for the @option{ps} driver out of the box
-(@w{Latin-2} isn't).
+provides various glyph shapes for the Euro.  Thus, the
+@w{Latin-9} encoding is supported for the @option{ps} and @option{pdf}
+drivers out of the box, while @w{Latin-2} is is not.
 
-The @option{utf8} driver supports characters from all other input
-encodings.  The @option{dvi} driver has support for both @w{Latin-2} and
-@w{Latin-9} if the command-line option @option{-mec} is used also to
-load the file @file{ec.tmac}.@footnote{This macro file uses the EC fonts
-instead of the Computer Modern (CM) fonts (the DVI output driver
-default).}
+Unicode supports characters from all other input encodings; the
+@option{utf8} output driver for terminals therefore does as well.  The
+DVI output driver supports both the @w{Latin-2} and @w{Latin-9}
+encodings if the command-line option @option{-mec} is used as well.
+@footnote{The DVI output device defaults to using the Computer Modern
+(CM) fonts; @file{ec.tmac} loads the EC fonts instead, which have
+greater code point coverage.}
 
 @c ---------------------------------------------------------------------
 
