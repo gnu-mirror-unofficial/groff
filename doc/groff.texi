@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle May 2021
+@subtitle June 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -6983,32 +6983,36 @@ the @code{fi} request.
 
 @DefreqList {fi, }
 @DefregListEndx {.u}
-@cindex fill mode (@code{fi})
-@cindex mode, fill (@code{fi})
-Activate fill mode; a pending output line is broken.  The read-only
-register @code{.u} is set to@tie{}1.  The fill mode enablement status is
-associated with the environment (@pxref{Environments}).
-
-See @ref{Line Control}, for interaction with the @code{\c} escape.
+@cindex filling of output, enabling (@code{fi})
+@cindex output, filling, enablement of (@code{fi})
+@cindex fill mode (@code{fi}), enabling
+@cindex mode, fill (@code{fi}), enabling
+Enable filling of output lines; a pending output line is broken.  The
+read-only register @code{.u} is set to@tie{}1.  The filling enablement
+status, sometimes called @dfn{fill mode}, is associated with the
+environment (@pxref{Environments}).  See @ref{Line Control}, for
+interaction with the @code{\c} escape.
 @endDefreq
 
 @Defreq {nf, }
-@cindex no-fill mode (@code{nf})
-@cindex mode, no-fill (@code{nf})
-Activate no-fill mode: the output line length (@pxref{Line Layout}) is
-ignored and output lines are broken where the input lines are.  A
-pending output line is broken and adjustment is suppressed.  The
-register @code{.u} is set to@tie{}0.  The fill mode enablement status is
-associated with the environment (@pxref{Environments}).
-
-See @ref{Line Control}, for interaction with the @code{\c} escape.
+@cindex filling of output, disabling (@code{nf})
+@cindex output, filling, disablement of (@code{nf})
+@cindex no-fill mode
+@cindex mode, no-fill
+@cindex fill mode, disabling
+@cindex mode, fill, disabling
+Disable filling of output lines: the output line length (@pxref{Line
+Layout}) is ignored and output lines are broken where the input lines
+are.  A pending output line is broken and adjustment is suppressed.  The
+register @code{.u} is set to@tie{}0.  The filling enablement status is
+associated with the environment (@pxref{Environments}).  See @ref{Line
+Control}, for interaction with the @code{\c} escape.
 @endDefreq
 
 @DefreqList {ad, [@Var{mode}]}
 @DefregListEndx {.j}
 Set adjustment mode to @var{mode}, taking effect when the pending (or
-next) output line is broken.   Adjustment is suppressed in no-fill mode.
-
+next) output line is broken.   Adjustment is suppressed when filling is.
 @var{mode} can have one of the following values.
 
 @table @code
@@ -7226,7 +7230,7 @@ respectively.  These parameters are associated with the environment
 (@pxref{Environments}), and rounded down to the nearest multiple
 of@tie{}12 on terminal output devices.
 
-@cindex fill mode, and inter-sentence space
+@cindex filling, and inter-sentence space
 @cindex mode, fill, and inter-sentence space
 Additional inter-sentence spacing is used only if the output line is not
 full when the end of a sentence occurs in the input.  If a sentence ends
@@ -8979,16 +8983,16 @@ before @code{\c} on the same line is appended to the pending output
 line.  The next non-command line after an interrupted line counts as a
 new input line.
 
-The visual results depend on whether no-fill mode is active.
+The visual results depend on whether filling is enabled;
+@xref{Manipulating Filling and Adjustment}.
 
 @itemize @bullet
 @item
-@cindex @code{\c}, and fill mode
+@cindex @code{\c}, when filling enabled
 @cindex fill mode, and @code{\c}
 @cindex mode, fill, and @code{\c}
-If fill mode is active (using the @code{fi} request), a word interrupted
-with @code{\c} is continued with the text on the next input text line,
-without an intervening space.
+If filling is enabled, a word interrupted with @code{\c} is continued
+with the text on the next input text line, without an intervening space.
 
 @Example
 This is a te\c
@@ -8997,12 +9001,11 @@ st.
 @endExample
 
 @item
-@cindex @code{\c}, and no-fill mode
+@cindex @code{\c}, when filling disabled
 @cindex no-fill mode, and @code{\c}
 @cindex mode, no-fill, and @code{\c}
-If no-fill mode is active (using the @code{nf} request), the next input
-text line after @code{\c} is handled as a continuation of the same input
-text line.
+If filling is disabled, the next input text line after @code{\c} is
+handled as a continuation of the same input text line.
 
 @Example
 .nf
@@ -15322,10 +15325,11 @@ Invalid numeric expressions.  This is enabled by default.
 
 @item break
 @itemx 4
-@cindex fill mode, and @code{break} warnings
+@cindex filling, and @code{break} warnings
 @cindex mode, fill, and @code{break} warnings
-In fill mode, lines that could not be broken so that their length was
-less than the line length.  This is enabled by default.
+When filling is enabled, a line could not be broken such that its length
+was less than the output line length @samp{\n[.l]}.  This is enabled by
+default.
 
 @item delim
 @itemx 8

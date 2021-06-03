@@ -2212,7 +2212,8 @@ bugs, but point size and font changes are usually safe.
 Point sizes and font changes are also safe within text strings, as
 long as they are undone before the end of string.
 .PP
-The state of \fB[gt]roff\fP's fill mode is preserved across pictures.
+The enablement of output line filling by \fB[gt]roff\fP is preserved
+across pictures.
 .
 .NH 2
 PIC and EQN

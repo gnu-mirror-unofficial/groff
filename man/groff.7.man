@@ -1919,9 +1919,15 @@ Set fill color to previous fill color.
 Set fill color to
 .IR c .
 .
+.
 .TPx
 .REQ .fi
-Fill output lines.
+Enable filling of output lines;
+a pending output line is broken.
+.
+Sets
+.BR \[rs]n[.u] .
+.
 .
 .TPx
 .REQ .fl
@@ -2357,9 +2363,15 @@ Need
 vertical space (default scaling indicator\~\c
 .scaleindicator v ).
 .
+.
 .TPx
 .REQ .nf
-No filling or adjusting of output lines.
+Disable filling of output lines;
+a pending output line is broken.
+.
+Clears
+.BR \[rs]n[.u] .
+.
 .
 .TPx
 .REQ .nh
@@ -4812,9 +4824,12 @@ minus the amount of vertical motion produced by
 Useful in conjunction with the
 .register .ne .
 .
+.
 .TPx
 .REG .u
-Equal to 1 in fill mode and 0 in no-fill mode.
+Equal to 1 if filling is enabled,
+0 otherwise.
+.
 .
 .TPx
 .REG .U
