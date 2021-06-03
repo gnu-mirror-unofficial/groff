@@ -1,8 +1,22 @@
 2021-06-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/tests/an-old_title-abbreviation-works.sh: Add regression
-	test for Savannah #43532.
+	* tmac/an-old.tmac (an-abbreviate-title): Add new internal macro
+	to reduce the length of a man page title (i.e., the "ls" in
+	"ls(1)", if it is too wide to fit in the page header (and would
+	overwrite the center header material, usually the title of the
+	manual section).  Since the beginning and end of the title might
+	be important for disambiguation, truncation at either end would
+	be unwise; replace the middle of the title with an ellipsis.
+	Define new an-pageref and an-title-abbv strings for use by other
+	macros and user-defined PT and BT traps.
+	(PT, an-footer): Use new an-pageref string for economy.
+	(an-header): Call an-abbreviate-title after setting the title
+	length.
+
+	* tmac/tests/an-old_title-abbreviation-works.sh: Test it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?43532>.
 
 2021-06-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
