@@ -335,52 +335,6 @@ and
 .squoted_char ] .
 .
 .
-.P
-The roff language provides flexible instruments for writing language
-extension, such as macros.
-.
-When interpreting macro definitions, the roff system enters a special
-operating mode, called the
-.BR "copy mode" .
-.
-.
-.P
-The copy mode behaviour can be quite tricky, but there are some rules
-that ensure a safe usage.
-.
-.IP 1.
-Printable backslashes must be denoted as
-.esc e .
-To be more precise,
-.esc e
-represents the current escape character.
-.
-To get a backslash glyph, use
-.esc (rs
-or
-.esc [rs] .
-.IP 2.
-Double all backslashes.
-.IP 3.
-Begin all text lines with the non-printing input break
-.esc & .
-.
-.
-.P
-This does not produce the most efficient code, but it should work as a
-first measure.
-.
-For better strategies, see the
-.I groff
-Texinfo manual and
-.BR groff_tmac (@MAN5EXT@).
-.
-.
-.P
-Reading roff source files is easier, just reduce all double backslashes
-to a single one in all macro definitions.
-.
-.
 .\" ====================================================================
 .SH "\f[I]groff\f[] elements"
 .\" ====================================================================
@@ -5253,6 +5207,76 @@ See
 or the
 .I groff
 Texinfo manual for further details.
+.
+.
+.\" ====================================================================
+.SH "Copy mode"
+.\" ====================================================================
+.
+When
+.I \%@g@troff
+processes certain requests,
+most importantly those which define or append to a macro,
+string,
+or diversion,
+it does so in
+.IR "copy mode" :
+it copies the characters of the definition into a dedicated storage
+region,
+interpolating the escape sequences
+.esc n ,
+.esc g ,
+.esc $ ,
+.esc * ,
+and
+.esc V
+normally;
+interpreting
+.esc .\&
+and
+.BI \[rs] newline
+immediately;
+discarding comments
+.esc "
+and
+.esc # ;
+interpolating the current leader,
+escape,
+or tab character with
+.esc a ,
+.esc e
+or
+.esc E ,
+and
+.esc t ,
+respectively;
+and storing all other escape sequences in an encoded form.
+.
+See section \[lq]Character Translations\[rq] of the
+.I groff
+Texinfo manual
+for more on the use of
+.esc e
+and
+.esc E ,
+and the distinction between them.
+.
+.
+.P
+Since the escape character escapes itself,
+you can control whether any escape sequence is interpreted at macro
+definition time or when it is later interpolated by preceding it with an
+additional instance of the escape character.
+.
+The complement of copy mode\[em]a
+.I roff
+formatter's behavior when not defining or appending to a macro,
+string,
+or diversion\[em]where all macros are interpolated,
+requests invoked,
+and valid escape sequences processed immediately upon recognition,
+can be termed
+.IR "interpretation mode" .
 .
 .
 .\" ====================================================================
