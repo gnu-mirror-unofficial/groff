@@ -7011,9 +7011,9 @@ Control}, for interaction with the @code{\c} escape.
 
 @DefreqList {ad, [@Var{mode}]}
 @DefregListEndx {.j}
-Set adjustment mode to @var{mode}, taking effect when the pending (or
-next) output line is broken.   Adjustment is suppressed when filling is.
-@var{mode} can have one of the following values.
+Enable output line adjustment in @var{mode}, taking effect when the
+pending (or next) output line is broken.   Adjustment is suppressed when
+filling is.  @var{mode} can have one of the following values.
 
 @table @code
 @item b
@@ -7036,15 +7036,15 @@ ragged-right text.
 Adjust text to the right margin, producing ragged-left text.
 @end table
 
-Finally, @var{mode} can be a value previously stored in the @code{.j}
+@var{mode} can also be a value previously stored in the @code{.j}
 register.
 
 Using @code{ad} without an argument is the same as @samp{.ad \n[.j]}.
 In particular, GNU @code{troff} adjusts lines in the same way it did
-before adjustment was deactivated (with a call to @code{na}, say).  For
-example, this input code
+before adjustment was disabled (with a call to @code{na}, say).
 
 @Example
+.ll 48n
 .de AD
 .  br
 .  ad \\$1
@@ -7057,7 +7057,7 @@ example, this input code
 .
 left
 .AD r
-.nr ad \n[.j]
+.nr ad \n(.j
 right
 .AD c
 center
@@ -7065,20 +7065,16 @@ center
 left
 .AD
 center
-.AD \n[ad]
+.AD \n(ad
 right
 @endExample
-
-@noindent
-produces the following output:
-
 @Example
-left
-                                                    right
-                          center
-left
-                          center
-                                                    right
+    @result{} left
+    @result{}                                            right
+    @result{}                      center
+    @result{} left
+    @result{}                      center
+    @result{}                                            right
 @endExample
 
 @cindex adjustment mode register (@code{.j})
@@ -7092,25 +7088,25 @@ not write logic to interpret or perform arithmetic on it.
 @endDefreq
 
 @Defreq {na, }
-Disable adjustment.  This produces the same output as adjustment to the
-left margin, but the value of the adjustment mode register @code{.j} is
-altered differently.  The adjustment mode and enablement status are
-associated with the environment (@pxref{Environments}).
+Disable output line adjustment.  This produces the same output as
+adjustment to the left margin, but the value of the adjustment mode
+register @code{.j} is altered differently.  The adjustment mode and
+enablement status are associated with the environment
+(@pxref{Environments}).
 @endDefreq
 
 @DefreqList {brp, }
 @DefescListEndx {\\p, , , }
-Break, adjusting the line per the current adjustment mode.
+Break, adjusting the line per the current adjustment mode.  @code{\p}
+schedules a break with adjustment at the next word boundary.  The escape
+sequence is itself neither a break nor a space of any kind; it can thus
+be placed in the middle of a word to cause a break at the end of that
+word.
 
-With @code{\p}, this break will happen at the next word boundary.  The
-@code{\p} itself is removed entirely, adding neither a break nor a space
-where it appears in input; it can thus be placed in the middle of a word
-to cause a break at the end of that word.
-
-In most cases this produces ugly results since GNU @code{troff} doesn't
-have a sophisticated paragraph-building algorithm (as @TeX{} has, for
-example); instead, GNU @code{troff} fills and adjusts a paragraph line
-by line.
+Breaking with immediate adjustment can produce ugly results since GNU
+@code{troff} doesn't have a sophisticated paragraph-building algorithm,
+as @TeX{} has, for example.  Instead, GNU @code{troff} fills and adjusts
+a paragraph line by line.
 
 @Example
 .ll 4.5i
@@ -7173,8 +7169,8 @@ request).  Temporary indentation is ignored.
 
 The previous example illustrates a common idiom of turning centering on
 for a quantity of lines far in excess of what is required, and off again
-after the text to be centered.  This pattern is useful for any request
-that takes a count of input lines as an argument.
+after the text to be centered.  This pattern is useful to avoid counting
+lines for any request that takes a count of input lines as an argument.
 
 The @code{.ce} read-only register contains the number of lines remaining
 to be centered, as set by the @code{ce} request.

@@ -1298,12 +1298,13 @@ on standard error, exit program.
 .
 .TPx
 .REQ .ad
-Enable output line adjustment.
+Enable output line adjustment using mode stored in
+.BR \[rs]n[.j] .
 .
 .
 .TPx
 .REQ .ad c
-Adjust output lines in mode
+Enable output line adjustment in mode
 .I c
 .RI ( c =\c
 .BR b , c , l , n , r ).
@@ -2349,7 +2350,7 @@ does not exist.
 .
 .TPx
 .REQ .na
-Disable line adjustment.
+Disable output line adjustment.
 .
 .
 .TPx
@@ -3743,7 +3744,8 @@ Mainly for internal use.
 .
 .TP
 .ESC p
-Break output line at next word boundary; adjust if applicable.
+Break output line at next word boundary;
+adjust if applicable.
 .
 .
 .TP
