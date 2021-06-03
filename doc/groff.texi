@@ -12215,16 +12215,16 @@ macro one level higher.  This is used to define a wrapper macro for
 @cindex @code{\\}, when reading text for a macro
 @cindex \@key{RET}, when reading text for a macro
 When GNU @code{troff} processes certain requests, most importantly those
-which define a macro, string, or diversion, it does so in @dfn{copy
-mode}: it copies the characters of the definition into a dedicated
-storage region, interpolating the escape sequences @code{\n}, @code{\g},
-@code{\$}, @code{\*}, and @code{\V} normally; interpreting @code{\.} and
-@code{\@key{RET}} immediately; discarding comments @code{\"} and
-@code{\#}; interpolating the current leader, escape, or tab character
-with @code{\a}, @code{\e} or @code{\E}, and @code{\t}, respectively; and
-storing all other escape sequences in an encoded form.  @xref{Character
-Translations} for more on the use of @code{\e} and @code{\E}, and the
-distinction between them.
+which define or append to a macro, string, or diversion, it does so in
+@dfn{copy mode}: it copies the characters of the definition into a
+dedicated storage region, interpolating the escape sequences @code{\n},
+@code{\g}, @code{\$}, @code{\*}, and @code{\V} normally; interpreting
+@code{\.} and @code{\@key{RET}} immediately; discarding comments
+@code{\"} and @code{\#}; interpolating the current leader, escape, or
+tab character with @code{\a}, @code{\e} or @code{\E}, and @code{\t},
+respectively; and storing all other escape sequences in an encoded form.
+@xref{Character Translations} for more on the use of @code{\e} and
+@code{\E}, and the distinction between them.
 
 Since the escape character escapes itself, you can control whether any
 escape sequence is interpreted at macro definition time or when it is
