@@ -5855,7 +5855,7 @@ void if_request()
 void else_request()
 {
   if (if_else_stack.is_empty()) {
-    warning(WARN_EL, "unbalanced .el request");
+    warning(WARN_EL, "unbalanced 'el' request");
     skip_alternative();
   }
   else {
@@ -5905,7 +5905,7 @@ void while_request()
     }
   }
   if (level != 0)
-    error("unbalanced \\{ \\}");
+    error("unbalanced brace escape sequences");
   else {
     while_depth++;
     input_stack::add_boundary();
@@ -5997,7 +5997,7 @@ void source_quietly()
 void pipe_source()
 {
   if (!unsafe_flag) {
-    error(".pso request not allowed in safer mode");
+    error("'pso' request not allowed in safer mode");
     skip_line();
   }
   else {
@@ -6747,7 +6747,7 @@ void do_open(int append)
 void open_request()
 {
   if (!unsafe_flag) {
-    error(".open request not allowed in safer mode");
+    error("'open' request not allowed in safer mode");
     skip_line();
   }
   else
@@ -6757,7 +6757,7 @@ void open_request()
 void opena_request()
 {
   if (!unsafe_flag) {
-    error(".opena request not allowed in safer mode");
+    error("'opena' request not allowed in safer mode");
     skip_line();
   }
   else
@@ -7549,7 +7549,7 @@ char *read_string()
 void pipe_output()
 {
   if (!unsafe_flag) {
-    error(".pi request not allowed in safer mode");
+    error("'pi' request not allowed in safer mode");
     skip_line();
   }
   else {
@@ -7586,7 +7586,7 @@ static int system_status;
 void system_request()
 {
   if (!unsafe_flag) {
-    error(".sy request not allowed in safer mode");
+    error("'sy' request not allowed in safer mode");
     skip_line();
   }
   else {
