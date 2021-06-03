@@ -11794,11 +11794,17 @@ a macro as a string to interpose a wrapper around the macro @samp{MAC}
 @DefreqList {ie, cond-expr anything}
 @DefreqListEndx {el, anything}
 Use the @code{ie} and @code{el} requests to write an if-then-else.  The
-first request is the `if' part and the latter is the `else' part.
+first request is the ``if'' part and the latter is the ``else'' part.
+Unusually among programming languages, any number of non-conditional
+requests may be interposed between the @code{ie} branch and the
+@code{el} branch.
 
 @Example
-.ie n .ls 2 \" double-spacing in nroff mode
-.el   .ls 1 \" single-spacing in troff mode
+.nr a 0
+.ie \na a is nonzero.
+.nr a +1
+.el a was not positive but is now \na.
+    @result{} a was not positive but is now 1.
 @endExample
 @endDefreq
 
@@ -11836,11 +11842,10 @@ meaning and produce no output.
 subsequent to the request's conditional expression.  @code{\@}} should
 appear on a line with other occurrences of itself as necessary to match
 @code{\@{} escapes.  It can be preceded by a control character, spaces,
-and tabs.  Input after an @code{\@}} escape on the same line
-is only processed if all the preceding conditions to which the escapes
-correspond are true.  Furthermore, a @code{\@}} closing the body of a
-@code{while} request (discussed below) must be the last such escape on
-an input line.
+and tabs.  Input after a @code{\@}} escape on the same line is processed
+only if all of the preceding conditions to which the escapes correspond
+are true.  Furthermore, a @code{\@}} closing the body of a @code{while}
+request (discussed below) must be the last such escape on an input line.
 
 @Example
 A
@@ -11862,12 +11867,13 @@ U
     @result{} N O U
 @endExample
 
-If the above behavior challenges the intuition, keep in mind that it was
-implemented to retain compatibility with @acronym{AT&T} @code{troff}.
-For clarity, it is common practice to end input lines with @code{\@{},
-optionally followed by @code{\@key{RET}} to suppress a break before
-subsequent text lines, and to have nothing more than a control
-character, spaces, and tabs before any lines containing @code{\@}}.
+The above behavior may challenge the intuition; it was implemented to
+retain compatibility with @acronym{AT&T} @code{troff}.  For clarity, it
+is idiomatic to end input lines with @code{\@{}, followed by
+@code{\@key{RET}} if desired to prevent the newline from being
+interpreted as a blank text line, and to have nothing more than a
+control character, spaces, and tabs preceding @code{\@}} on an input
+line.
 
 @Example
 .de DEBUG
@@ -11965,7 +11971,8 @@ The number of available recursion levels is set to@tie{}1000
 (this is a compile-time constant value of GNU @code{troff}).
 
 @item
-The closing brace of a @code{while} body must end a line.
+As noted above, the closing brace of a @code{while} body must end an
+input line.
 
 @Example
 .if 1 \@{\
