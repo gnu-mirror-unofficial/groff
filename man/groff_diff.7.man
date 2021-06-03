@@ -1166,17 +1166,22 @@ the default blank line behavior is (re-)established.
 .
 .
 .TP
-.BI .box\~ xx
+.BI .box\~ name
 .TQ
-.BI .boxa\~ xx
+.BI .boxa\~ name
 These requests are similar to the
 .B di
 and
 .B da
-requests with the exception that a partially filled line does not
-become part of the diversion (i.e., the diversion always starts with a
-new line) but is restored after ending the diversion, discarding the
-partially filled line which possibly comes from the diversion.
+requests,
+respectively,
+with the exception that any pending output line does not become part of
+the diversion
+(i.e.,
+the diversion always starts with a new line)
+but is restored after ending the diversion,
+discarding any partially collected line pending in the diversion.
+.
 .
 .TP
 .B .break
