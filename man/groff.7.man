@@ -1478,23 +1478,28 @@ Set blank line macro (trap) to
 .
 .TPx
 .REQ .box
-End current diversion.
+Stop directing output to current box diversion.
+.
 .
 .TPx
-.REQ .box "macro"
-Divert to
-.IR macro ,
+.REQ .box "name"
+Divert output to
+.IR name ,
 omitting a partially filled line.
+.
 .
 .TPx
 .REQ .boxa
-End current diversion.
+Stop appending output to current box diversion.
+.
 .
 .TPx
-.REQ .boxa "macro"
-Divert and append to
-.IR macro ,
+.REQ .boxa "name"
+Divert output,
+appending it to
+.IR name ,
 omitting a partially filled line.
+.
 .
 .TPx
 .REQ .bp
@@ -3917,8 +3922,7 @@ a register,
 a name
 (macro,
 string,
-diversion,
-or box),
+or diversion),
 an environment,
 a font,
 a style,
@@ -4367,9 +4371,7 @@ double quotes in any other location are included in the string
 .P
 Strings,
 macros,
-and diversions
-(and boxes)
-share the same name space.
+and diversions share a name space.
 .
 Internally,
 the same mechanism is used to store them.
@@ -5610,8 +5612,7 @@ to halt further processing when continuing would be fruitless.
 The state of the formatter can be examined with requests that write
 lists of defined macros,
 strings,
-diversions,
-and boxes
+and diversions
 .RB ( .pm );
 environments
 .RB ( .pev ),

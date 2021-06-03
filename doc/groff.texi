@@ -5592,10 +5592,9 @@ expressions, unless the entire expression is surrounded by parentheses.
 
 Like any other language, GNU @code{troff} has rules for properly formed
 @dfn{identifiers}---labels for objects with syntactical importance,
-like registers, names (macros, strings, diversions, or boxes),
-environments, fonts, styles, and glyphs.  In GNU @code{troff}, an
-identifier is a sequence of one or more characters with the following
-exceptions.
+like registers, names (macros, strings, or diversions), environments,
+fonts, styles, and glyphs.  In GNU @code{troff}, an identifier is a
+sequence of one or more characters with the following exceptions.
 
 @itemize @bullet
 @item
@@ -5714,14 +5713,12 @@ value of@tie{}0.
 
 @xref{Warnings}, @ref{Interpolating Registers}, and @ref{Strings}.
 
-@cindex name space, common, of macros, diversions, boxes, and strings
-@cindex common name space of macros, diversions, boxes, and strings
-@cindex macros, shared name space with strings, diversions, and boxes
-@cindex strings, shared name space with macros, diversions, and boxes
-@cindex diversions, shared name space with macros, strings, and boxes
-@cindex boxes, shared name space with macros, strings, and diversions
-Identifiers for macros, strings, diversions (and boxes) share a name
-space.
+@cindex name space, common, of macros, diversions, and strings
+@cindex common name space of macros, diversions, and strings
+@cindex macros, shared name space with strings and diversions
+@cindex strings, shared name space with macros and diversions
+@cindex diversions, shared name space with macros and strings
+Identifiers for macros, strings, diversions share a name space.
 
 @Example
 .de xxx
@@ -11223,10 +11220,10 @@ It is not possible to embed a newline in a string that will be
 interpreted as such when the string is interpolated.  To achieve that
 effect, use the @code{\*} escape to interpolate a macro instead.
 
-Strings, macros, diversions (and boxes) share a same name space;
-@ref{Identifiers}.  Internally, the same mechanism is used to store
-them.  It is thus possible to invoke a macro with string interpolation
-syntax and vice versa.
+Strings, macros, and diversions share a name space; @ref{Identifiers}.
+Internally, the same mechanism is used to store them.  It is thus
+possible to invoke a macro with string interpolation syntax and vice
+versa.
 
 @Example
 .de subject
@@ -11285,8 +11282,8 @@ is
 The latter calling syntax doesn't change the value of @code{\$0}, which
 is then inherited from the calling macro (@pxref{Parameters}).
 
-Diversions and boxes can be also called with string syntax.  It is
-sometimes convenient to copy one-line diversions or boxes to a string.
+Diversions can be also called with string syntax.  It is sometimes
+convenient to copy one-line diversions to a string.
 
 @Example
 .di xxx
@@ -12137,11 +12134,10 @@ off in a single document.
 Using @file{trace.tmac}, you can trace calls to @code{de} and
 @code{de1}.
 
-Macro identifiers share their name space with identifiers for strings,
-diversions, and boxes; @ref{Identifiers}.
-
-@xref{als,,the description of the @code{als} request}, for possible
-pitfalls if redefining a macro that has been aliased.
+Macro identifiers share their name space with those for strings and
+diversions; @ref{Identifiers}.  @xref{als,,the description of the
+@code{als} request}, for possible pitfalls if redefining a macro that
+has been aliased.
 @endDefreq
 
 @DefreqList {am, name [@Var{end}]}
@@ -12178,7 +12174,7 @@ Using @file{trace.tmac}, you can trace calls to @code{am} and
 @code{am1}.
 @endDefreq
 
-@xref{Strings}, for the @code{als} and @code{rn} request to create an
+@xref{Strings}, for the @code{als} and @code{rn} requests to create an
 alias and rename a macro, respectively.
 
 @cindex object creation
@@ -12764,7 +12760,7 @@ interpreting a drawing glyph as a scaling indicator if the glyph is
 represented by a single character) use @code{\&}.
 
 @Example
-.de box
+.de textbox
 \[br]\\$*\[br]\l'|0\[rn]'\l'|0\[ul]'
 ..
 @endExample
@@ -12833,7 +12829,7 @@ string; for simplicity, the box margin is taken as a fixed value,
 0.2@dmn{m}.
 
 @Example
-.de BOX
+.de TEXTBOX
 .  nr @@wd \w'\\$1'
 \h'.2m'\
 \h'-.2m'\v'(.2m - \\n[rsb]u)'\
@@ -12940,7 +12936,7 @@ The box must be drawn before the text since colors in GNU @code{troff}
 are not transparent; the filled polygon would hide the text completely.
 
 @Example
-.de BOX
+.de TEXTBOX
 .  nr @@wd \w'\\$1'
 \h'.2m'\
 \h'-.2m'\v'(.2m - \\n[rsb]u)'\
@@ -13684,14 +13680,15 @@ After the diversion.
 @endExample
 @endDefreq
 
+@cindex box (diversion type)
 Because it is often desirable to exclude the partially collected line
 from a diversion, @code{groff} supports an alternative form of diversion
 known as a @dfn{box}.
 
 @DefreqList {box, [@Var{name}]}
 @DefreqListEndx {boxa, [@Var{name}]}
-Begin diverting (or appending) text to box @var{name}, similarly to the
-@code{di} and @code{da} requests.  Any output line pending when these
+Divert (or append) output to @var{name}, similarly to the @code{di} and
+@code{da} requests, respectively.  Any output line pending when these
 requests are invoked is @emph{not} included in the box.  @code{box} or
 @code{boxa} without an argument stops diverting output to the box named
 by the most recent corresponding request.
