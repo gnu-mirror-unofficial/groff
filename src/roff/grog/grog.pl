@@ -34,6 +34,8 @@ use strict;
 
 # $Bin is the directory where this script is located
 use FindBin;
+# We need to portably construct file specifications.
+use File::Spec::Functions 'catfile';
 
 my $before_make;	# script before run of 'make'
 {
@@ -41,35 +43,27 @@ my $before_make;	# script before run of 'make'
   $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";
 }
 
-
 our %at_at;
-my $grog_dir;
 
-if ($before_make) { # before installation
-  my $grog_source_dir = $FindBin::Bin;
-  $at_at{'BINDIR'} = $grog_source_dir;
-# $grog_dir = $grog_source_dir;
-  $grog_dir = '.';
-  my $top = $grog_source_dir . '/../../../';
-  open FILE, '<', $top . 'VERSION' ||
-    die 'grog: could not open file "VERSION"';
-  my $version = <FILE>;
-  chomp $version;
-  close FILE;
-  open FILE, '<', $top . 'REVISION' ||
-    die 'grog: could not open file "REVISION"';
-  my $revision = <FILE>;
-  chomp $revision;
-  $at_at{'GROFF_VERSION'} = $version . '.' . $revision;
-} else { # after installation}
+if ($before_make) {
+  $at_at{'GROFF_VERSION'} = "DEVELOPMENT";
+} else {
   $at_at{'GROFF_VERSION'} = '@VERSION@';
-  $at_at{'BINDIR'} = '@BINDIR@';
-  $grog_dir = '@grog_dir@';
-} # before make
+}
 
+# Locate our subroutines file.  We might be installed, in a source tree,
+# or in a separate build tree.
+my $grog_dir = $FindBin::Bin;
 die 'grog: "' . $grog_dir . '" does not exist or is not a directory'
   unless -d $grog_dir;
 
+foreach my $dir ( $grog_dir, './src/roff/grog', '../src/roff/grog' ) {
+  my $subs = catfile("$dir", "subs.pl");
+  if ( -f $subs ) {
+    $grog_dir = $dir;
+    last;
+  }
+}
 
 #############
 # import subs
