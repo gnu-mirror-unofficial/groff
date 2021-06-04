@@ -36,11 +36,11 @@ groff \- front end to the GNU roff document formatting system
 .SY groff
 .OP \-abcegijklpstzCEGNRSUVXZ
 .OP \-d cs
-.OP \-D arg
+.OP \-D enc
 .OP \-f fam
 .OP \-F dir
 .OP \-I dir
-.OP \-K arg
+.OP \-K enc
 .OP \-L arg
 .OP \-m name
 .OP \-M dir
@@ -102,8 +102,10 @@ devices and file formats.
 .SH Options
 .\" ====================================================================
 .
+.B \-h
+and
 .B \-\-help
-displays a usage message and exits.
+display a usage message and exit.
 .
 .
 .P
@@ -142,11 +144,11 @@ or are interpreted differently by
 .
 .
 .TP
-.BI \-D\~ arg
+.BI \-D\~ enc
 Set default input encoding used by
 .IR preconv (@MAN1EXT@)
 to
-.IR arg .
+.IR enc .
 .
 Implies
 .BR \-k .
@@ -215,11 +217,11 @@ options is also specified.
 .
 .
 .TP
-.BI \-K\~ arg
+.BI \-K\~ enc
 Set input encoding used by
 .IR preconv (@MAN1EXT@)
 to
-.IR arg .
+.IR enc .
 .
 Implies
 .BR \-k .
@@ -231,7 +233,7 @@ Send the output to a spooler program for printing.
 .
 The command that should be used for this is specified by the
 .B print
-command in the device description file,
+command in the device description file;
 see
 .IR \%groff_font (@MAN5EXT@).
 .
@@ -250,17 +252,21 @@ and
 .BI \-L\~ arg
 Pass
 .I arg
-to the spooler program.
+to the print spooler program.
 .
-Several arguments should be passed with a separate
-\-L
+If multiple
+.IR arg s
+are required,
+each should be passed with a separate
+.B \-L
 option each.
 .
 Note that
 .I groff
 does not prepend
-\[oq]\-\[cq]
-(a minus sign) to
+\[lq]\-\[rq]
+(a minus sign)
+to
 .I arg
 before passing it to the spooler program.
 .
@@ -524,10 +530,8 @@ The default device is
 .
 .TP
 .B \-U
-Unsafe mode.
-.
-Reverts to the (old) unsafe behaviour;
-see option
+Unsafe mode;
+see
 .BR \-S .
 .
 .
@@ -588,12 +592,11 @@ and
 .
 The default resolution for previewing
 .B \-Tps
-output is 75\|dpi;
-this can be changed by passing the
+output is 75\|dpi,
+but this can be changed by passing the
 .B \-resolution
 option to
-.IR \%gxditview ,
-for example
+.IR \%gxditview .
 .
 .RS
 .IP
@@ -613,17 +616,15 @@ Only error messages are printed.
 .
 .TP
 .B \-Z
-Do not automatically postprocess
-.I groff intermediate output
-in the usual manner.
+Disable postprocessing.
 .
-This will cause the
 .I \%@g@troff
-.I output
-to appear on standard output,
-replacing the usual postprocessor output;
+output will appear on the standard output stream
+(unless suppressed with
+.BR \-z );
 see
-.IR \%groff_out (@MAN5EXT@).
+.IR \%groff_out (@MAN5EXT@)
+for a description of this format.
 .
 .
 .\" ====================================================================
