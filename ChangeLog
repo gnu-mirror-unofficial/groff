@@ -1,5 +1,24 @@
 2021-06-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/groff/groff.cpp: Revise usage message.
+	(synopsis): Set primary synopsis on a single output line, for
+	convenience of parsing and also because we have no control over
+	the width of the program name in character cells; it comes from
+	argv[0] and is under user control.  There is thus no point in
+	trying to get pretty formatting.  Also include separate synopsis
+	lines for short and long help options.  Use opposite case from
+	option flags for option arguments.
+	(help): Collate option flags in English lexicographic order.
+	Include space after flag letters for options that take
+	arguments.  Consistently use capitals for options arguments
+	because they are space-separated here.  Illustrate longer forms
+	of -d and -r options.  Update language (some, like "tmac.name",
+	was very old).  Add reference to groff(1) man page at end.
+	(usage): Drop appendnment of notice regarding -h option; this is
+	now covered in `synopsis()` unconditionally.
+
+2021-06-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Eliminate "groff_opts_no_arg.txt" and "groff_opts_with_arg.txt"
 	files from distribution.  They are not needed by any live code
 	in the tree; possibly only groffer ever used them.
