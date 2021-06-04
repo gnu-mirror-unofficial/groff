@@ -5545,22 +5545,22 @@ For vertical movements, it specifies the distance from the top of the
 page; for horizontal movements, it gives the distance from the beginning
 of the @emph{input} line.
 
-@cindex @code{bp} request, using @code{+} and@tie{}@code{-}
-@cindex @code{in} request, using @code{+} and@tie{}@code{-}
-@cindex @code{ll} request, using @code{+} and@tie{}@code{-}
-@cindex @code{lt} request, using @code{+} and@tie{}@code{-}
-@cindex @code{nm} request, using @code{+} and@tie{}@code{-}
-@cindex @code{nr} request, using @code{+} and@tie{}@code{-}
-@cindex @code{pl} request, using @code{+} and@tie{}@code{-}
-@cindex @code{pn} request, using @code{+} and@tie{}@code{-}
-@cindex @code{po} request, using @code{+} and@tie{}@code{-}
-@cindex @code{ps} request, using @code{+} and@tie{}@code{-}
-@cindex @code{pvs} request, using @code{+} and@tie{}@code{-}
-@cindex @code{rt} request, using @code{+} and@tie{}@code{-}
-@cindex @code{ti} request, using @code{+} and@tie{}@code{-}
-@cindex @code{\H}, using @code{+} and@tie{}@code{-}
-@cindex @code{\R}, using @code{+} and@tie{}@code{-}
-@cindex @code{\s}, using @code{+} and@tie{}@code{-}
+@cindex @code{bp} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{in} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{ll} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{lt} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{nm} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{nr} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{pl} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{pn} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{po} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{ps} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{pvs} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{rt} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{ti} request, using @code{+} and@tie{}@code{-} with
+@cindex @code{\H}, using @code{+} and@tie{}@code{-} with
+@cindex @code{\R}, using @code{+} and@tie{}@code{-} with
+@cindex @code{\s}, using @code{+} and@tie{}@code{-} with
 @samp{+} and @samp{-} are also treated differently by the following
 requests and escapes: @code{bp}, @code{in}, @code{ll}, @code{lt},
 @code{nm}, @code{nr}, @code{pl}, @code{pn}, @code{po}, @code{ps},
@@ -6063,39 +6063,34 @@ in Paris
 @noindent
 possible, but it is better not to use this feature to avoid confusion.
 
-@cindex @code{\%}, used as delimiter
-@cindex @code{\@key{SP}}, used as delimiter
-@cindex @code{\|}, used as delimiter
-@cindex @code{\^}, used as delimiter
-@cindex @code{\@{}, used as delimiter
-@cindex @code{\@}}, used as delimiter
-@cindex @code{\'}, used as delimiter
-@cindex @code{\`}, used as delimiter
-@cindex @code{\-}, used as delimiter
-@cindex @code{\_}, used as delimiter
-@cindex @code{\!}, used as delimiter
-@cindex @code{\?}, used as delimiter
-@cindex @code{\)}, used as delimiter
-@cindex @code{\/}, used as delimiter
-@cindex @code{\,}, used as delimiter
-@cindex @code{\&}, used as delimiter
-@ifnotinfo
-@cindex @code{\:}, used as delimiter
-@end ifnotinfo
-@ifinfo
-@cindex @code{\@r{<colon>}}, used as delimiter
-@end ifinfo
-@cindex @code{\~}, used as delimiter
-@cindex @code{\0}, used as delimiter
-@cindex @code{\a}, used as delimiter
-@cindex @code{\c}, used as delimiter
-@cindex @code{\d}, used as delimiter
-@cindex @code{\e}, used as delimiter
-@cindex @code{\E}, used as delimiter
-@cindex @code{\p}, used as delimiter
-@cindex @code{\r}, used as delimiter
-@cindex @code{\t}, used as delimiter
-@cindex @code{\u}, used as delimiter
+@cindex @code{\%}, as delimiter
+@cindex @code{\@key{SP}}, as delimiter
+@cindex @code{\|}, as delimiter
+@cindex @code{\^}, as delimiter
+@cindex @code{\@{}, as delimiter
+@cindex @code{\@}}, as delimiter
+@cindex @code{\'}, as delimiter
+@cindex @code{\`}, as delimiter
+@cindex @code{\-}, as delimiter
+@cindex @code{\_}, as delimiter
+@cindex @code{\!}, as delimiter
+@cindex @code{\?}, as delimiter
+@cindex @code{\)}, as delimiter
+@cindex @code{\/}, as delimiter
+@cindex @code{\,}, as delimiter
+@cindex @code{\&}, as delimiter
+@cindex @code{\:}, as delimiter
+@cindex @code{\~}, as delimiter
+@cindex @code{\0}, as delimiter
+@cindex @code{\a}, as delimiter
+@cindex @code{\c}, as delimiter
+@cindex @code{\d}, as delimiter
+@cindex @code{\e}, as delimiter
+@cindex @code{\E}, as delimiter
+@cindex @code{\p}, as delimiter
+@cindex @code{\r}, as delimiter
+@cindex @code{\t}, as delimiter
+@cindex @code{\u}, as delimiter
 The following escape sequences (which are handled similarly to
 characters since they don't take a parameter) are also allowed as
 delimiters: @code{\%}, @w{@samp{\ }}, @code{\|}, @code{\^}, @code{\@{},
@@ -6166,24 +6161,19 @@ The (single-character) operators @samp{+-/*%<>=&:().}.
 The space, tab, and newline characters.
 
 @item
-@cindex @code{\%}, used as delimiter
-@ifnotinfo
-@cindex @code{\:}, used as delimiter
-@end ifnotinfo
-@ifinfo
-@cindex @code{\@r{<colon>}}, used as delimiter
-@end ifinfo
-@cindex @code{\@{}, used as delimiter
-@cindex @code{\@}}, used as delimiter
-@cindex @code{\'}, used as delimiter
-@cindex @code{\`}, used as delimiter
-@cindex @code{\-}, used as delimiter
-@cindex @code{\_}, used as delimiter
-@cindex @code{\!}, used as delimiter
-@cindex @code{\/}, used as delimiter
-@cindex @code{\c}, used as delimiter
-@cindex @code{\e}, used as delimiter
-@cindex @code{\p}, used as delimiter
+@cindex @code{\%}, as delimiter
+@cindex @code{\:}, as delimiter
+@cindex @code{\@{}, as delimiter
+@cindex @code{\@}}, as delimiter
+@cindex @code{\'}, as delimiter
+@cindex @code{\`}, as delimiter
+@cindex @code{\-}, as delimiter
+@cindex @code{\_}, as delimiter
+@cindex @code{\!}, as delimiter
+@cindex @code{\/}, as delimiter
+@cindex @code{\c}, as delimiter
+@cindex @code{\e}, as delimiter
+@cindex @code{\p}, as delimiter
 All escape sequences except @code{\%}, @code{\:}, @code{\@{},
 @code{\@}}, @code{\'}, @code{\`}, @code{\-}, @code{\_}, @code{\!},
 @code{\/}, @code{\c}, @code{\e}, and @code{\p}.
@@ -6915,17 +6905,17 @@ Options}.
 
 @cindex break
 @cindex line break
-@cindex @code{bp} request, causing implicit linebreak
-@cindex @code{ce} request, causing implicit linebreak
-@cindex @code{cf} request, causing implicit linebreak
-@cindex @code{fi} request, causing implicit linebreak
-@cindex @code{fl} request, causing implicit linebreak
-@cindex @code{in} request, causing implicit linebreak
-@cindex @code{nf} request, causing implicit linebreak
-@cindex @code{rj} request, causing implicit linebreak
-@cindex @code{sp} request, causing implicit linebreak
-@cindex @code{ti} request, causing implicit linebreak
-@cindex @code{trf} request, causing implicit linebreak
+@cindex @code{bp} request, causing implicit break
+@cindex @code{ce} request, causing implicit break
+@cindex @code{cf} request, causing implicit break
+@cindex @code{fi} request, causing implicit break
+@cindex @code{fl} request, causing implicit break
+@cindex @code{in} request, causing implicit break
+@cindex @code{nf} request, causing implicit break
+@cindex @code{rj} request, causing implicit break
+@cindex @code{sp} request, causing implicit break
+@cindex @code{ti} request, causing implicit break
+@cindex @code{trf} request, causing implicit break
 A break interrupts filling.  Various ways of causing breaks were shown
 in @ref{Breaking}.  The @code{br} request likewise causes a break.
 Several other requests also cause breaks implicitly.  These are
