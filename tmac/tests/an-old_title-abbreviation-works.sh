@@ -37,7 +37,7 @@ if ! echo "$OUTPUT" \
     | grep -Eq 'foo\(1\) +General Commands Manual +foo\(1\)'
 then
     FAIL=yes
-    echo "short command name test failed" >&2
+    echo "short page title test failed" >&2
 fi
 
 INPUT='.TH CosNotifyChannelAdmin_StructuredProxyPushSupplier 3erl \
@@ -53,7 +53,7 @@ PATTERN="$TITLE_ABBV Erlang Module Definition $TITLE_ABBV"
 if ! echo "$OUTPUT" | grep -Fq "$PATTERN"
 then
     FAIL=yes
-    echo "long command name test failed" >&2
+    echo "long page title test failed" >&2
 fi
 
 test -z "$FAIL"
