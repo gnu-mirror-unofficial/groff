@@ -107,23 +107,28 @@ displays a usage message and exits.
 .
 .
 .P
-As
-.B groff
-is a wrapper program for
-.I \%@g@troff
-both programs share a set of options.
+Because
+.I groff
+is intended to subsume most users' direct invocations of the
+.IR \%@g@troff (@MAN1EXT@)
+formatter,
+the two programs share a set of options.
 .
-But the
-.B groff
-program has some additional, native options and gives a new meaning to
-some
+However,
+.I groff
+has some options specific to it,
+some of which
 .I \%@g@troff
-options.
+does not share,
+and others which
+.I groff
+interprets differently.
 .
-On the other hand, not all
+At the same time,
+not all valid
 .I \%@g@troff
-options can be fed into
-.BR groff .
+options can be given into
+.IR groff .
 .
 .
 .\" ====================================================================
@@ -132,14 +137,14 @@ options can be fed into
 .
 The following options either do not exist for
 .I \%@g@troff
-or are differently interpreted by
-.BR groff .
+or are interpreted differently by
+.IR groff .
 .
 .
 .TP
-.BI \-D\  arg
+.BI \-D\~ arg
 Set default input encoding used by
-.B preconv
+.IR preconv (@MAN1EXT@)
 to
 .IR arg .
 .
@@ -149,22 +154,24 @@ Implies
 .
 .TP
 .B \-e
-Preprocess with
-.IR \%@g@eqn .
+Run
+.IR \%@g@eqn (@MAN1EXT@)
+preprocessor.
 .
 .
 .TP
 .B \-g
-Preprocess with
-.IR \%@g@grn .
+Run
+.IR \%@g@grn (@MAN1EXT@)
+preprocessor.
 .
 .
 .TP
 .B \-G
-Preprocess with
-.BR grap .
-.
-Implies
+Run
+.IR grap (1)
+preprocessor;
+implies
 .BR \-p .
 .
 .
@@ -179,38 +186,38 @@ but also implies
 and passes the
 .B \-I
 options to
-.IR soelim .
+.IR \%@g@soelim (@MAN1EXT@).
 .
 .
 .TP
 .B \-j
-Preprocess with
-.IR \%@g@chem .
-.
-Implies
+Run
+.IR \%@g@chem (@MAN1EXT@)
+preprocessor;
+implies
 .BR \-p .
 .
 .
 .TP
 .B \-k
-Preprocess with
-.BR preconv .
-.
-This is run before any other preprocessor.
+Run
+.IR preconv (@MAN1EXT@),
+which is run before any other preprocessor.
 .
 Please refer to
-.BR preconv 's
-manual page for its behaviour if no
+.IR preconv 's
+manual page for its behavior if neither of
+.IR groff 's
 .B \-K
-(or
-.BR \-D )
-option is specified.
+or
+.B \-D
+options is also specified.
 .
 .
 .TP
-.BI \-K\  arg
+.BI \-K\~ arg
 Set input encoding used by
-.B preconv
+.IR preconv (@MAN1EXT@)
 to
 .IR arg .
 .
@@ -224,11 +231,13 @@ Send the output to a spooler program for printing.
 .
 The command that should be used for this is specified by the
 .B print
-command in the device description file, see
-.BR \%groff_font (@MAN5EXT@).
+command in the device description file,
+see
+.IR \%groff_font (@MAN5EXT@).
 .
-If this command is not present, the output is piped into the
-.BR lpr (1)
+If this command is not present,
+the output is piped into the
+.IR lpr (1)
 program by default.
 .
 See options
@@ -238,7 +247,7 @@ and
 .
 .
 .TP
-.BI \-L\  arg
+.BI \-L\~ arg
 Pass
 .I arg
 to the spooler program.
@@ -248,7 +257,7 @@ Several arguments should be passed with a separate
 option each.
 .
 Note that
-.B groff
+.I groff
 does not prepend
 \[oq]\-\[cq]
 (a minus sign) to
@@ -259,19 +268,20 @@ before passing it to the spooler program.
 .TP
 .B \-N
 Don't allow newlines within
-.I eqn
+.I eqn \" language
 delimiters.
 .
 This is the same as the
 .B \-N
 option in
-.IR \%@g@eqn .
+.IR \%@g@eqn (@MAN1EXT@).
 .
 .
 .TP
 .B \-p
-Preprocess with
-.IR \%@g@pic .
+Run
+.IR \%@g@pic (@MAN1EXT@)
+preprocessor.
 .
 .
 .TP
@@ -306,7 +316,7 @@ the shell command
 .RS
 .RS
 .EX
-.B groff \-X \-P \-title \-P \[aq]trial run\[aq] mydoc.t
+groff \-X \-P \-title \-P \[aq]trial run\[aq] mydoc.t
 .EE
 .RE
 .
@@ -314,7 +324,7 @@ is equivalent to
 .
 .RS
 .EX
-.B groff \-X \-Z mydoc.t | gxditview \-title \[aq]trial run\[aq] \-
+groff \-X \-Z mydoc.t | gxditview \-title \[aq]trial run\[aq] \-
 .EE
 .RE
 .RE
@@ -322,8 +332,9 @@ is equivalent to
 .
 .TP
 .B \-R
-Preprocess with
-.IR \%@g@refer .
+Run
+.IR \%@g@refer (@MAN1EXT@)
+preprocessor.
 .
 No mechanism is provided for passing arguments to
 .I \%@g@refer
@@ -333,14 +344,15 @@ options have equivalent language elements that can be specified within
 the document.
 .
 See
-.BR \%@g@refer (@MAN1EXT@)
+.IR \%@g@refer (@MAN1EXT@)
 for more details.
 .
 .
 .TP
 .B \-s
-Preprocess with
-.IR \%@g@soelim .
+Run
+.IR \%@g@soelim (@MAN1EXT@)
+preprocessor.
 .
 .
 .TP
@@ -361,62 +373,62 @@ requests:
 and
 .BR .pi .
 .
-For security reasons, safer mode is enabled by default.
+For security reasons,
+safer mode is enabled by default.
 .
 .
 .TP
 .B \-t
-Preprocess with
-.IR \%@g@tbl .
+Run
+.IR \%@g@tbl (@MAN1EXT@)
+preprocessor.
 .
 .
 .TP
-.BI \-T\  dev
-Set output device to
+.BI \-T\~ dev
+Prepare output for the device type
+.IR dev ;
+.I \%@g@troff
+generates \[lq]intermediate output\[rq]
+.RI ( \%groff_out (@MAN5EXT@))
+appropriate to the device.
+.
+.I groff
+then calls a postprocessor to convert
+.IR \%@g@troff 's
+output to a form appropriate for
 .IR dev .
 .
-For this device,
-.I \%@g@troff
-generates the
-.I intermediate
-.IR output ;
-see
-.BR \%groff_out (@MAN5EXT@).
-.
-Then
-.B groff
-calls a postprocessor to convert
-.IR \%@g@troff 's
-.I intermediate output
-to its final format.
-.
 Real devices in
-.B groff
+.I groff
 are
 .
 .RS
 .RS
 .TP
 dvi
-TeX DVI format (postprocessor is
-.BR grodvi ).
+TeX DVI format
+(postprocessor is
+.IR grodvi (@MAN1EXT@)).
 .
 .TP
 html
 .TQ
 xhtml
-HTML and XHTML output (preprocessors are
+HTML and XHTML output
+(preprocessors are
 .I \%@g@soelim
 and
-.BR \%pre-grohtml ,
+.IR \%pre-grohtml ,
 postprocessor is
-.BR \%post-grohtml ).
+.IR \%post-grohtml ).
 .
 .TP
 lbp
-Canon CAPSL printers (\%LBP-4 and \%LBP-8 series laser printers;
+Canon CAPSL printers
+(\%LBP-4 and \%LBP-8 series laser printers;
 postprocessor is
-.BR grolbp ).
+.IR grolbp (@MAN1EXT@)).
 .
 .TP
 lj4
@@ -425,70 +437,83 @@ HP LaserJet4-compatible
 printers
 (postprocessor
 is
-.BR grolj4 ).
+.IR grolj4 (@MAN1EXT@)).
 .
 .TP
 ps
 PostScript output (postprocessor is
-.BR grops ).
+.IR grops (@MAN1EXT@)).
 .
 .TP
 pdf
 Portable Document Format (PDF) output (postprocessor is
-.BR gropdf ).
+.IR gropdf (@MAN1EXT@)).
 .RE
 .RE
 .
 .
 .IP
-For the following TTY output devices (postprocessor is always
-.BR grotty ),
+For the following TTY output devices
+(where postprocessor is
+.IR grotty (@MAN1EXT@)),
 .B \-T
 selects the output encoding:
+.
 .
 .RS
 .RS
 .TP
 ascii
-7bit \f[CR]ASCII\f[].
+ISO 646 1991:IRV,
+also known as US-ASCII.
+.
 .
 .TP
 cp1047
-\%Latin-1 character set for EBCDIC hosts.
+IBM code page 1047,
+an EBCDIC arrangement of ISO Latin-1.
+.
 .
 .TP
 latin1
-ISO \%8859-1.
+ISO Latin-1
+(ISO 8859-1).
+.
 .
 .TP
 utf8
-Unicode character set in \%UTF-8 encoding.
+ISO 10646 (\[lq]Unicode\[rq]) character set in UTF-8 encoding.
 .
-This mode has the most useful fonts for TTY mode, so it is the best
-mode for TTY output.
+This encoding has the largest character repertoire,
+so it is the best choice for terminal output.
 .RE
 .RE
 .
 .
 .IP
 The following arguments select
-.B \%gxditview
-as the \[oq]postprocessor\[cq] (it is rather a viewing program):
+.I \%gxditview
+as the postprocessor.
+.
 .
 .RS
 .RS
 .TP
 X75
-75\|dpi resolution, 10\|pt document base font.
+75\|dpi resolution,
+10\|pt document base font.
 .TP
 X75\-12
-75\|dpi resolution, 12\|pt document base font.
+75\|dpi resolution,
+12\|pt document base font.
 .TP
 X100
-100\|dpi resolution, 10\|pt document base font.
+100\|dpi resolution,
+10\|pt document base font.
 .TP
 X100\-12
-100\|dpi resolution, 12\|pt document base font.
+100\|dpi resolution,
+12\|pt document base font.
 .RE
 .RE
 .
@@ -501,7 +526,8 @@ The default device is
 .B \-U
 Unsafe mode.
 .
-Reverts to the (old) unsafe behaviour; see option
+Reverts to the (old) unsafe behaviour;
+see option
 .BR \-S .
 .
 .
@@ -509,10 +535,12 @@ Reverts to the (old) unsafe behaviour; see option
 .B \-v
 .TQ
 .B \-\-version
-Output version information of
-.B groff
-and of all programs that are run by it; that is, the given command line
-is parsed in the usual way, passing
+Write version information of
+.I groff
+and of all programs run by it to the standard output stream;
+that is,
+the given command line is processed in the usual way,
+passing
 .B \-v
 to all subprograms.
 .
@@ -520,17 +548,19 @@ to all subprograms.
 .TP
 .B \-V
 Output the pipeline that would be run by
-.B groff
-(as a wrapper program) on the standard output, but do not execute it.
+.I groff
+(as a wrapper program)
+to the standard output stream,
+but do not execute it.
 .
 If given more than once,
-the commands are both printed on the standard error and run.
+the commands are both written to the standard error stream and run.
 .
 .
 .TP
 .B \-X
 Use
-.B \%gxditview
+.IR \%gxditview (@MAN1EXT@)
 instead of using the usual postprocessor to (pre)view a document.
 .
 The printing spooler behavior as outlined with options
@@ -538,11 +568,10 @@ The printing spooler behavior as outlined with options
 and
 .B \-L
 is carried over to
-.BR \%gxditview (@MAN1EXT@)
-by determining an argument for the
+.I \%gxditview
+by determining an argument for its
 .B \-printCommand
-option of
-.BR \%gxditview (@MAN1EXT@).
+option.
 .
 This sets the default
 .B Print
@@ -559,10 +588,11 @@ and
 .
 The default resolution for previewing
 .B \-Tps
-output is 75\|dpi; this can be changed by passing the
+output is 75\|dpi;
+this can be changed by passing the
 .B \-resolution
 option to
-.BR \%gxditview ,
+.IR \%gxditview ,
 for example
 .
 .RS
@@ -591,8 +621,9 @@ This will cause the
 .I \%@g@troff
 .I output
 to appear on standard output,
-replacing the usual postprocessor output; see
-.BR \%groff_out (@MAN5EXT@).
+replacing the usual postprocessor output;
+see
+.IR \%groff_out (@MAN5EXT@).
 .
 .
 .\" ====================================================================
@@ -603,7 +634,7 @@ The following options are transparently handed over to the formatter
 program
 .I \%@g@troff
 that is called by
-.B groff
+.I groff
 subsequently.
 .
 These options are described in more detail in
@@ -624,7 +655,7 @@ Backtrace on error or warning.
 Disable color output.
 .
 Please consult the
-.BR \%grotty (@MAN1EXT@)
+.IR \%grotty (@MAN1EXT@)
 man page for more details.
 .
 .TP
@@ -632,9 +663,9 @@ man page for more details.
 Enable compatibility mode.
 .
 .TP
-.BI \-d\  cs
+.BI \-d\~ cs
 .TQ
-.BI \-d\  name = s
+.BI \-d\~ name = s
 Define string.
 .
 .TP
@@ -647,11 +678,11 @@ implies
 .
 .
 .TP
-.BI \-f\  fam
+.BI \-f\~ fam
 Set default font family.
 .
 .TP
-.BI \-F\  dir
+.BI \-F\~ dir
 Set path for device
 .I DESC
 files.
@@ -678,45 +709,49 @@ escape).
 Process standard input after the specified input files.
 .
 .TP
-.BI \-m\  name
+.BI \-m\~ name
 Include macro file
 .RI name .tmac
 (or
 .IR tmac. name);
 see also
-.BR \%groff_tmac (@MAN5EXT@).
+.IR \%groff_tmac (@MAN5EXT@).
 .
 .TP
-.BI \-M\  dir
+.BI \-M\~ dir
 Path for macro files.
 .
 .TP
-.BI \-n\  num
+.BI \-n\~ num
 Number the first page
 .IR num .
 .
 .TP
-.BI \-o\  list
+.BI \-o\~ list
 Output only pages in
 .IR list .
 .
 .TP
-.BI \-r\  cn
+.BI \-r\~ cn
 .TQ
-.BI \-r\  name = n
+.BI \-r\~ name = n
 Set number register.
 .
+.
 .TP
-.BI \-w\  name
-Enable warning
+.BI \-w\~ name
+Enable warning category
 .IR name .
 .
 See
 .IR \%@g@troff (@MAN1EXT@)
-for names.
+or the
+.I groff
+Texinfo manual for a list of names.
+.
 .
 .TP
-.BI \-W\  name
+.BI \-W\~ name
 disable warning category
 .IR name .
 .
