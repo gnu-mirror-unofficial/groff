@@ -1,5 +1,17 @@
 2021-06-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Eliminate "groff_opts_no_arg.txt" and "groff_opts_with_arg.txt"
+	files from distribution.  They are not needed by any live code
+	in the tree; possibly only groffer ever used them.
+
+	* src/roff/groff/groff.am (GROFF_OPTS_OUTPUT, groffoptsdir,
+	groffopts_DATA): Delete variables.
+	(MOSTLYCLEANFILES): Stop adding to target.
+	(groff_opts.tmp, groff_opts_no_arg.txt,
+	groff_opts_with_arg.txt): Delete targets.
+
+2021-06-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/grog/subs.pl (version): Report version information in
 	a format consistent with our other programs.
 
