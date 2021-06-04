@@ -7,7 +7,7 @@ groff \- front-end for the GNU roff document formatting system
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -1083,9 +1083,9 @@ These aren't visible to the user.
 .SS "Macro packages"
 .\" ====================================================================
 .
-Macro packages can be included in a
+Macro packages can be loaded prior to a
 .I roff
-document by using option
+input document by using the option
 .BR \-m .
 .
 The
@@ -1108,7 +1108,7 @@ and
 option letter used to invoke them,
 sometimes to punning effect,
 as with \[lq]man\[rq]
-(short for \[lq]manual\[rq])
+(short for \[lq]manual\[rq]),
 and even with the option dash,
 as in the case of the
 .I s
@@ -1120,71 +1120,89 @@ or even
 .
 .
 .P
-Available macro packages include:
+Macro packages serve a variety of purposes.
+.
+Some are \[lq]full-service\[rq] packages,
+adopting responsibility for page layout among other fundamental tasks,
+and defining their own lexicon of macros for document composition;
+each of these stands alone and a given document can use at most one.
+.
+GNU
+.I roff
+provides the following such packages.
 .
 .
 .TP
 .I an
-is the man page formatter originating in Version\~7 Unix (1979);
+is used to compose man pages in the format originating in Version\~7
+Unix (1979);
 see
 .IR groff_man (@MAN7EXT@).
 .
 It can be specified on the command line as
-.B \-man
-or
-.BR \-m\~man .
+.BR \-man\-old ;
+the package name \[lq]an\[rq] is used to force the loading of
+.I \%andoc
+instead
+(see below).
 .
 .
 .TP
 .I doc
-is the man page formatter originating in 4.3BSD-Reno (1990);
+is used to compose man pages in the format originating in 4.3BSD-Reno
+(1990);
 see
 .IR groff_mdoc (@MAN7EXT@).
 .
 It can be specified on the command line as
-.B \-mdoc
-or
-.BR \-m\~mdoc .
+.BR \-mdoc .
 .
 .
 .TP
 .I andoc
-is a wrapper that automatically recognizes whether a document uses
+is a wrapper package specific to
+.I groff
+that recognizes whether a document uses
 .I man
 or
 .I mdoc
-format and branches to the corresponding macro package.
+format and loads the corresponding macro package.
 .
 It can be specified on the command line as
 .B \%\-mandoc
 or
-.BR \-m\~\%mandoc .
+.BR \-man ;
+.I groff
+redirects
+.B \-man
+users through this wrapper because users typically are not aware of
+which macro package was used to compose a given man page.
 .
 .
 .TP
 .I e
-is the BSD general-purpose
-document formatter;
+is the Berkeley general-purpose
+document formatter,
+developed as an alternative to AT&T's
+.IR s ;
 see
 .IR groff_me (@MAN7EXT@).
 .
 It can be specified on the command line as
-.B \-me
-or
-.BR \-m\~me .
+.BR \-me .
 .
 .
 .TP
 .I m
 is the second-generation AT&T general-purpose
-document formatter;
+document formatter,
+a successor to
+.IR s ;
 see
 .IR groff_mm (@MAN7EXT@).
 .
 It can be specified on the command line as
-.B \-mm
-or
-.BR \-m\~mm .
+.BR \-mm .
 .
 .
 .TP
@@ -1202,39 +1220,34 @@ for extensive documentation.
 She\[em]for
 .I mom
 takes the female pronoun\[em]can be specified on the command line as
-.B \-mom
-or
-.BR \-m\~mom . \" along with -m om and -mmom...
+.BR \-mom .
 .
 .
 .TP
 .I s
 is the original AT&T general-purpose
 .I ms
-document formatter; see
-.BR groff_ms (@MAN7EXT@).
+document formatter;
+see
+.IR groff_ms (@MAN7EXT@).
 .
 It can be specified on the command line as
-.B \-ms
-or
-.BR \-m\~ms .
+.BR \-ms .
 .
-.
-.TP
-.I www
-is a supplemental package providing
-HTML-like macros for inclusion in arbitrary
-.I groff
-documents;
-see
-.IR groff_www (@MAN7EXT@).
 .
 .P
-Details on the naming of macro files and their placement can be found
+Others are supplemental,
+and augment the function of the full-service packages,
+or of
+.I roff
+documents that do not employ such a package\[em]the latter are sometimes
+characterized as \[lq]raw\[rq].
+.
+Such auxiliary packages are described,
+along with
+details of macro file naming and placement,
 in
-.IR groff_tmac (@MAN5EXT@);
-this page also documents some other,
-minor auxiliary macro packages not mentioned here.
+.IR groff_tmac (@MAN5EXT@).
 .
 .
 .\" ====================================================================
