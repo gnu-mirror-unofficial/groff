@@ -1247,8 +1247,7 @@ EOF
 
 sub version {
   our %at_at;
-  print "Perl version of GNU $Prog " .
-    "in groff version " . $at_at{'GROFF_VERSION'};
+  print "$Prog (groff) " . $at_at{'GROFF_VERSION'};
   exit 0;
 } # version()
 
