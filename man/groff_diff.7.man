@@ -4051,10 +4051,11 @@ register stores the current year minus 1900.
 .SS Miscellaneous
 .\" ====================================================================
 .
-.I \%@g@troff
+GNU
+.I troff \" GNU
 predefines a string,
-.BR \[rs]*[.T] ;
-it contains the argument given to the
+.B \[rs]*[.T]
+containing the argument given to the
 .B \-T
 command-line option,
 namely the current output device
@@ -4063,17 +4064,34 @@ namely the current output device
 or
 .BR utf8 ).
 .
-This is not the same as the (read-only) register
-.BR \[rs]n[.T] ,
-which is defined to be\~1 if
+The existence of this string is a common feature of post-CSTR\~#54
+.IR troff s \" generic
+(for example,
+DWB\~3.3,
+Solaris,
+Heirloom Doctools,
+and Plan\~9
+.I troff \" foreign
+all support it)
+but valid values are specific to each implementation.
+.
+.
+.P
+The (read-only) register
+.B \[rs]n[.T]
+is defined to be\~1 if
 .I \%@g@troff
 is called with the
 .B \-T
 command-line option,
-and zero otherwise.
+and\~0 otherwise.
 .
 This behavior differs from AT&T
-.IR troff . \" AT&T
+.IR troff , \" AT&T
+which set this register to\~1 when
+.I nroff \" AT&T
+was the formatter,
+and\~0 otherwise.
 .
 .
 .P
