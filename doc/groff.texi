@@ -1294,8 +1294,12 @@ and Font Files}.)  This can be overridden with the @option{-X} option.
 @item -U
 @cindex mode, unsafe
 @cindex unsafe mode
-Unsafe mode.  This enables the @code{open}, @code{opena}, @code{pso},
-@code{sy}, and @code{pi} requests.
+Operate in @dfn{unsafe mode}, which enables the @code{open},
+@code{opena}, @code{pi}, @code{pso}, and @code{sy} requests.  These
+requests are disabled by default because they allow an untrusted input
+document to write to arbitrary file names and run arbitrary commands.
+This option also adds the current directory to the macro search path;
+see the @option{-m} option above.
 
 @item -w@var{name}
 Enable warning @var{name}.  Available warnings are described in

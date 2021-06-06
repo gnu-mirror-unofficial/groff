@@ -935,6 +935,26 @@ inter-word space when a line is adjusted.
 .
 .
 .\" ====================================================================
+.SS "Restricted requests"
+.\" ====================================================================
+.
+To mitigate risks from untrusted input documents,
+the
+.BR open ,
+.BR opena ,
+.BR pi ,
+.BR pso ,
+and
+.B sy
+requests are disabled by default.
+.
+.IR \%@g@troff (@MAN1EXT@)'s
+.B \-U
+option enables the formatter's \[lq]unsafe mode\[rq],
+restoring their function.
+.
+.
+.\" ====================================================================
 .SS "New requests"
 .\" ====================================================================
 .
@@ -3875,12 +3895,15 @@ Useful in conjunction with the
 .B \[rs]n[.ne]
 register.
 .
+.
 .TP
 .B \[rs]n[.U]
-Set to\~1 if in safer mode and to\~0 if in unsafe mode (as given with
-the
+Set to\~1 if in safer mode and to\~0 if in unsafe mode
+(as determined by
+.IR \%@g@troff 's
 .B \-U
 command-line option).
+.
 .
 .TP
 .B \[rs]n[.vpt]

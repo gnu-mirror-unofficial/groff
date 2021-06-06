@@ -362,23 +362,24 @@ for a more detailed description.
 .TP
 .B \-U
 Operate in
-.IR "unsafe mode" ;
-enabling the
+.IR "unsafe mode" ,
+which enables the
 .BR .open ,
 .BR .opena ,
+.BR .pi ,
 .BR .pso ,
-.BR .sy ,
 and
-.B .pi
+.B .sy
 requests.
 .
-For security reasons,
-these potentially dangerous requests are disabled otherwise.
+These requests are disabled by default because they allow an untrusted
+input document to write to arbitrary file names and run arbitrary
+commands.
 .
-It also adds the current directory to the macro search path;
-see
+This option also adds the current directory to the macro search path;
+see the
 .B \-m
-above.
+option above.
 .
 .
 .TP
