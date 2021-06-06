@@ -1374,9 +1374,12 @@ implies @code{groff}'s command-line option @option{-k} (that is,
 
 @item GROFF_FONT_PATH
 @tindex GROFF_FONT_PATH@r{, environment variable}
-A colon-separated list of directories in which to search for the
-@code{dev}@var{name} directory (before the default directories are
-tried).  @xref{Font Directories}.
+A list of directories in which to seek the selected output device's
+directory of device and font description files.  GNU @code{troff}
+will search directories given as arguments to any specified @option{-F}
+options before these, and a built-in list of directories after them.
+@xref{Font Directories} and the @cite{troff@r{(1)}} or
+@cite{gtroff@r{(1)}} man pages.
 
 @item GROFF_TMAC_PATH
 @tindex GROFF_TMAC_PATH@r{, environment variable}
