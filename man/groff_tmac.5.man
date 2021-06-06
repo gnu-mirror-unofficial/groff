@@ -7,7 +7,7 @@ groff_tmac \- macro files in the GNU roff typesetting system
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2000-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 2000-2021 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff typesetting system.
 .\"
@@ -30,67 +30,117 @@ groff_tmac \- macro files in the GNU roff typesetting system
 .SH Description
 .\" ====================================================================
 .
-The
-.BR roff (@MAN7EXT@)
-typesetting system provides a set of macro packages suitable for
-special kinds of documents.
+Definitions of macros,
+strings,
+and registers for use in a
+.IR roff (@MAN7EXT@)
+document can be collected into
+.IR "macro files" ,
+.I roff
+input files designed to produce no output themselves but instead ease
+the preparation of other
+.I roff
+documents.
 .
-Each macro package stores its macros and definitions in a file called
-the package's
-.BR "tmac file" .
+There is no syntactical difference between a macro file and any other
+.I roff
+document;
+only its purpose distinguishes it.
 .
-The name is derived from
-.RB \[oq] T\c
-.IB roff MAC\c
-.IR ros \[cq].
+When a macro file is installed at a standard location and suitable for
+use by a general audience,
+it is often termed a
+.IR "macro package" .
+.
+Macro packages can be loaded by supplying the
+.B \-m
+option to
+.IR groff (@MAN1EXT@)
+or
+.IR \%@g@troff (@MAN1EXT@).
+.
+Alternatively,
+a
+.I groff
+document wishing to use a macro package can load it with the
+.B mso
+(\[lq]macro source\[rq]) request.
 .
 .
 .P
-The tmac files are normal roff source documents, except that they
-usually contain only definitions and setup commands, but no text.
+Each macro package stores its macro,
+string,
+and register definition in one or more
+.I tmac
+files.
 .
-All tmac files are kept in a single or a small number of directories,
-the
-.B tmac
-directories.
+This name originated in early Unix culture as an abbreviation of
+.RI \[lq] troff \" generic
+macros\[rq].
+.
+.
+.P
+A macro package must be named
+.RI name .tmac
+and be placed in a
+.RI \[lq] tmac
+directory\[rq] to be loadable with the
+.B \-m
+option.
+.
+Section \[lq]Environment\[rq] of
+.IR \%@g@troff (@MAN1EXT@)
+lists these directories.
+.
+Like any other
+.I roff
+document,
+a macro package can use the
+.RB \[lq] so \[rq]
+request (\[lq]source\[rq]) to load further files relative to its own
+location,
+ignoring the
+.I tmac
+directory search process.
 .
 .
 .\" ====================================================================
 .SH "Macro packages"
 .\" ====================================================================
 .
+Macro packages come in two varieties;
+those which assume responsibility for page layout and other critical
+functions
+(\[lq]major\[rq] or \[lq]full-service\[rq])
+and those which do not
+(\[lq]supplemental\[rq] or \[lq]auxiliary\[rq]).
+.
+GNU
+.I roff
+provides most major macro packages found in AT&T and BSD Unix systems,
+an additional full-service package,
+and many supplemental packages.
+.
+Multiple full-service macro packages cannot be used by the same
+document.
+.
+Auxiliary packages can generally be freely combined,
+though attention to their use of the
 .I groff
-provides all classical macro packages, some more full packages, and
-some secondary packages for special purposes.
+language name spaces for identifiers
+(particularly registers,
+macros,
+strings,
+and diversions)
+should be paid.
 .
-Multiple primary macro packages cannot be used simultaneously; saying,
-e.g.,
-.
-.IP
-.EX
-\fIsh#\fP groff \-m man \-m ms foo
-.EE
-.
-.
-.P
-or
-.
-.IP
-.EX
-\fIsh#\fP groff \-m man foo \-m ms bar
-.EE
-.
-.P
-fails.
-.
-An exception to this is the use of man pages written with either the
-.B mdoc
-or the
-.B man
-macro package.
-See below the description of the
-.I andoc.tmac
-file.
+Name space management was a significant challenge in AT&T
+.IR troff ;
+.IR groff 's
+support for arbitrarily long identifiers affords few excuses for name
+collisions,
+apart from attempts at compatibility with the demands of historical
+documents.
 .
 .
 .\" ====================================================================
@@ -825,18 +875,6 @@ to invoke
 .EE
 .
 .
-.P
-If you want to write your own groff macro file, call it
-.RI whatever .tmac
-and put it in a directory in the tmac path;
-see section \[lq]Files\[rq] below.
-.
-Then documents can include it with the
-.B .mso
-request or the option
-.BR \-m .
-.
-.
 .ig
 .\" ====================================================================
 .SH Convention
@@ -1201,80 +1239,6 @@ within a macro definition and end it within another macro.
 .
 Then everything between each call of this macro pair is stored within
 the diversion and can be manipulated from within the macros.
-.
-.
-.\" ====================================================================
-.SH Files
-.\" ====================================================================
-.
-All macro package files must be named
-.RI name .tmac
-to fully use the tmac mechanism.
-.
-.IR tmac. name
-as with classical packages is possible as well, but deprecated.
-.
-.
-.P
-The macro files are kept in the
-.IR "tmac directories" ;
-a colon-separated list of these constitutes the
-.IR "tmac path" .
-.
-.
-.P
-The search sequence for macro files is (in this order):
-.
-.IP \(bu
-the directories specified with troff/groff's
-.B \-M
-command-line option
-.
-.IP \(bu
-the directories given in the
-.I GROFF_TMAC_PATH
-environment variable
-.
-.IP \(bu
-the current directory (only if in unsafe mode, which is enabled by the
-.B \-U
-command-line switch)
-.
-.IP \(bu
-the home directory
-.
-.IP \(bu
-a platform-specific directory, being
-.
-.RS
-.IP
-.I @SYSTEMMACRODIR@
-.RE
-.
-.IP
-in this installation
-.
-.IP \(bu
-a site-specific (platform-independent) directory, being
-.
-.RS
-.IP
-.I @LOCALMACRODIR@
-.RE
-.
-.IP
-in this installation
-.
-.IP \(bu
-the main tmac directory, being
-.
-.RS
-.IP
-.I @MACRODIR@
-.RE
-.
-.IP
-in this installation
 .
 .
 .\" ====================================================================
