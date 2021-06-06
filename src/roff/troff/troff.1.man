@@ -633,6 +633,22 @@ All warnings.
 .\" ====================================================================
 .
 .TP
+.I GROFF_FONT_PATH
+A colon separated list of directories in which to search for the
+.IR dev name
+directory.
+.
+.I \%@g@troff
+will scan directories given in the
+.B \-F
+option before these, and in standard directories
+.RI ( @LOCALFONTDIR@ ,
+.IR @FONTDIR@ ,
+.IR @LEGACYFONTDIR@ )
+after these.
+.
+.
+.TP
 .I GROFF_TMAC_PATH
 A colon separated list of directories in which to search for
 macro files.
@@ -647,24 +663,10 @@ in unsafe mode, home directory,
 .IR @MACRODIR@ )
 after these.
 .
+.
 .TP
 .I GROFF_TYPESETTER
 Default device.
-.
-.TP
-.I GROFF_FONT_PATH
-A colon separated list of directories in which to search for the
-.IR dev name
-directory.
-.
-.I \%@g@troff
-will scan directories given in the
-.B \-F
-option before these, and in standard directories
-.RI ( @LOCALFONTDIR@ ,
-.IR @FONTDIR@ ,
-.IR @LEGACYFONTDIR@ )
-after these.
 .
 .
 .TP
