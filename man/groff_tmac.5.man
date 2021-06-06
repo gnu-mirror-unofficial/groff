@@ -151,7 +151,7 @@ documents.
 .I man
 This is the classical macro package for Unix manual pages
 (man\~pages); it is quite handy and easy to use; see
-.BR groff_man (@MAN7EXT@).
+.IR groff_man (@MAN7EXT@).
 .
 .
 .TP
@@ -161,7 +161,7 @@ This is the classical macro package for Unix manual pages
 An alternative macro package for man\~pages mainly used in BSD
 systems; it provides many new features, but it is not the standard for
 man\~pages; see
-.BR groff_mdoc (@MAN7EXT@).
+.IR groff_mdoc (@MAN7EXT@).
 .
 .
 .TP
@@ -192,7 +192,7 @@ to use.
 The classical
 .I me
 macro package; see
-.BR groff_me (@MAN7EXT@).
+.IR groff_me (@MAN7EXT@).
 .
 .
 .TP
@@ -200,7 +200,7 @@ macro package; see
 The semi-classical
 .I mm
 macro package; see
-.BR groff_mm (@MAN7EXT@).
+.IR groff_mm (@MAN7EXT@).
 .
 .
 .TP
@@ -213,7 +213,7 @@ As this was not based on other packages, it was freely designed as
 quite a nice, modern macro package.
 .
 See
-.BR groff_mom (@MAN7EXT@).
+.IR groff_mom (@MAN7EXT@).
 .
 .
 .TP
@@ -221,7 +221,7 @@ See
 The classical
 .I ms
 macro package; see
-.BR groff_ms (@MAN7EXT@).
+.IR groff_ms (@MAN7EXT@).
 .
 .
 .\" ====================================================================
@@ -283,7 +283,7 @@ Swedish localization support, including the me, mom, and ms macro
 packages.
 .
 Swedish for the mm macros is handled separately; see
-.BR groff_mmse (@MAN7EXT@).
+.IR groff_mmse (@MAN7EXT@).
 .
 It should be the last macro package on the command line.
 .
@@ -365,7 +365,7 @@ integers (allowing safe multiplication of 31-bit integers, for example).
 Switch to the EC and TC font families.
 .
 To be used with
-.BR \%grodvi (@MAN1EXT@)
+.IR \%grodvi (@MAN1EXT@)
 \[em] this man page also gives more details of how to use it.
 .
 .
@@ -378,7 +378,7 @@ model.
 Note that
 .I hdtbl
 is a macro package, not a preprocessor like
-.BR tbl (@MAN1EXT@).
+.IR tbl (@MAN1EXT@).
 .
 .I hdtbl
 works only with the
@@ -388,7 +388,7 @@ and
 output drivers.
 .
 See
-.BR groff_hdtbl (@MAN7EXT@).
+.IR groff_hdtbl (@MAN7EXT@).
 .
 .
 .TP
@@ -486,7 +486,7 @@ This file provides proper definitions for the macros
 and
 .BR PE ,
 needed for the
-.BR @g@pic (@MAN1EXT@)
+.IR @g@pic (@MAN1EXT@)
 preprocessor.
 .
 They center each picture.
@@ -600,7 +600,7 @@ image's width.
 A single macro is provided in this file,
 .BR xx ,
 for formatting permuted index entries as produced by the GNU
-.BR ptx (1)
+.IR ptx (1)
 program.
 .
 If you need different formatting, copy the macro into your document and
@@ -613,7 +613,7 @@ defines special character escape sequences based on the glyph mnemonics
 specified in RFC 1345 and the digraph table of the text editor Vim.
 .
 See
-.BR groff_rfc1345 (@MAN7EXT@).
+.IR groff_rfc1345 (@MAN7EXT@).
 .
 .
 .TP
@@ -623,7 +623,7 @@ Use this for tracing macro calls.
 It is only useful for debugging.
 .
 See
-.BR groff_trace (@MAN7EXT@).
+.IR groff_trace (@MAN7EXT@).
 .
 .
 .TP
@@ -646,7 +646,7 @@ Additions of elements known from the HTML format, as used in World
 Wide Web pages; this includes URL links and mail addresses.
 .
 See
-.BR groff_www (@MAN7EXT@).
+.IR groff_www (@MAN7EXT@).
 .
 .
 .\" ====================================================================
@@ -655,7 +655,7 @@ See
 .
 Classical roff systems were designed before the conventions of the
 modern C
-.BR getopt (3)
+.IR getopt (3)
 call evolved, and used a naming scheme for macro packages that looks
 odd to modern eyes.
 .
@@ -700,7 +700,7 @@ command-line option for activating this package reads
 .
 .P
 To cope with all situations, actual versions of
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 are smart about both naming schemes by providing two macro files
 for the inflicted macro packages; one with a leading \[oq]m\[cq]
 the other one without it.
@@ -760,7 +760,7 @@ is specified.
 .P
 The easiest way to find out which macro packages are available on a
 system is to check the man\~page
-.BR groff (@MAN1EXT@),
+.IR groff (@MAN1EXT@),
 or the contents of the
 .I tmac
 directories.
@@ -770,7 +770,7 @@ directories.
 In
 .IR groff ,
 most macro packages are described in\~man pages called
-.BR groff_\f[I]name\f[] (@MAN7EXT@),
+.IR groff_ name(@MAN7EXT@),
 with a leading \[oq]m\[cq] for the classical packages.
 .
 .
@@ -815,8 +815,9 @@ In order to resolve the
 .B .so
 and
 .B .mso
-requests, the roff preprocessor
-.BR soelim (@MAN1EXT@)
+requests,
+the roff preprocessor
+.IR \%@g@soelim (@MAN1EXT@)
 must be called if the files to be included need preprocessing.
 .
 This can be done either directly by a pipeline on the command line or
@@ -868,7 +869,7 @@ or
 In both cases, the formatter should be called with option
 .B \-s
 to invoke
-.BR soelim .
+.IR \%@g@soelim .
 .IP
 .EX
 \fIsh#\fP groff \-s docu.roff
@@ -884,7 +885,7 @@ to invoke
 .
 There is a convention that is supported by many modern roff
 typesetters and
-.BR man (1)
+.IR man (1)
 programs, the
 .I preprocessor word
 described in the following.
@@ -902,29 +903,29 @@ Mostly, only the letters corresponding to the options for the
 preprocessors are recognized,
 \[oq]e\[cq]
 (for
-.BR eqn ),
+.IR eqn ),
 .\" \[oq]G\[cq],
 .\" \[oq]g\[cq],
 \[oq]p\[cq]
 (for
-.BR pic ),
+.IR pic ),
 \[oq]R\[cq]
 (for
-.BR refer ),
+.IR refer ),
 \[oq]s\[cq]
 (for
-.BR soelim ),
+.IR soelim ),
 and
 \[oq]t\[cq]
 (for
-.BR tbl ).
+.IR tbl ).
 (see
-.BR roff (@MAN7EXT@)).
+.IR roff (@MAN7EXT@)).
 .
 .
 .P
 Besides being a good reminder for the user, some formatters (like the
-.BR man (1)
+.IR man (1)
 program) are even able to automatically start the preprocessors
 specified in the preprocessor word, but do not bet on this.
 .
@@ -943,13 +944,13 @@ man\~pages only the following characters should be used:
 .\" ====================================================================
 .
 A
-.BR roff (@MAN7EXT@)
+.IR roff (@MAN7EXT@)
 document is a text file that is enriched by predefined formatting
 constructs, such as requests, escape sequences, strings, numeric
 registers, and macros from a macro package.
 .
 These elements are described in
-.BR roff (@MAN7EXT@).
+.IR roff (@MAN7EXT@).
 .
 .
 .P
@@ -979,7 +980,7 @@ the name under which the macro was called is in
 and the number of arguments is in register
 .BR \[rs]n[.$] ;
 see
-.BR groff (@MAN7EXT@).
+.IR groff (@MAN7EXT@).
 .
 .
 .\" ====================================================================
@@ -1277,38 +1278,38 @@ is maintained by the Linux Foundation.
 .
 .
 .TP
-.BR groff (@MAN1EXT@)
+.IR groff (@MAN1EXT@)
 is an overview of the
 .I groff
 system.
 .
 .
 .TP
-.BR groff_man (@MAN7EXT@),
+.IR groff_man (@MAN7EXT@),
 .TQ
-.BR groff_mdoc (@MAN7EXT@),
+.IR groff_mdoc (@MAN7EXT@),
 .TQ
-.BR groff_me (@MAN7EXT@),
+.IR groff_me (@MAN7EXT@),
 .TQ
-.BR groff_mm (@MAN7EXT@),
+.IR groff_mm (@MAN7EXT@),
 .TQ
-.BR groff_mom (@MAN7EXT@),
+.IR groff_mom (@MAN7EXT@),
 .TQ
-.BR groff_ms (@MAN7EXT@),
+.IR groff_ms (@MAN7EXT@),
 .TQ
-.BR groff_rfc1345 (@MAN7EXT@),
+.IR groff_rfc1345 (@MAN7EXT@),
 .TQ
-.BR groff_trace (@MAN7EXT@),
+.IR groff_trace (@MAN7EXT@),
 \~and
 .TQ
-.BR groff_www (@MAN7EXT@)
+.IR groff_www (@MAN7EXT@)
 are
 .I groff
 macro packages.
 .
 .
 .TP
-.BR groff (@MAN7EXT@)
+.IR groff (@MAN7EXT@)
 summarizes the language recognized by GNU
 .IR troff . \" GNU
 .
