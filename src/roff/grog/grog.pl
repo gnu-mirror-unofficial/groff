@@ -53,17 +53,21 @@ if ($before_make) {
 
 # Locate our subroutines file.  We might be installed, in a source tree,
 # or in a separate build tree.
-my $grog_dir = $FindBin::Bin;
-die 'grog: "' . $grog_dir . '" does not exist or is not a directory'
-  unless -d $grog_dir;
+my $grog_dir;
 
-foreach my $dir ( $grog_dir, './src/roff/grog', '../src/roff/grog' ) {
+foreach my $dir ( $FindBin::Bin,
+                  catfile('.', 'src', 'roff', 'grog'),
+                  catfile('..', 'src', 'roff', 'grog')) {
   my $subs = catfile("$dir", "subs.pl");
   if ( -f $subs ) {
     $grog_dir = $dir;
     last;
   }
 }
+
+die 'grog: cannot load subroutines; "' . $grog_dir . '" does not'
+    . ' exist or is not a directory'
+  unless -d $grog_dir;
 
 #############
 # import subs
