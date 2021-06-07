@@ -1,5 +1,21 @@
 2021-06-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Refactor grog even more aggressively.  Make the tedious search
+	for subs.pl unnecessary by inlining it into grog.pl directly.
+	This makes the script stand alone and much more convenient to
+	work with, and doesn't contribute to bloat, in my
+	opinion--subs.pl was 10 times the size of grog.pl, and most of
+	the code in the latter was dedicated to trying to locate
+	subs.pl.
+
+	* src/roff/grog/grog.am (GROG, dist_grog_DATA): Drop variables.
+	(grog): Remove target's dependency on `$(GROG)`.
+	* src/roff/grog/grog.pl: Inline most of subs.pl (except for
+	author/license comment banenr).  Delete sub-hunting logic.
+	* src/roff/grog/subs.pl: Delete.
+
+2021-06-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/pic.ms (Basic PIC Concepts, Decorating Objects/Filled
 	Objects, PIC Reference/Semi-Formal Grammar): Fix error; the
 	keyword "solid" set a line style, not a fill for a closed
