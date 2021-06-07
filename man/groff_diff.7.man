@@ -4091,34 +4091,14 @@ namely the current output device
 or
 .BR utf8 ).
 .
-The existence of this string is a common feature of post-CSTR\~#54
-.IR troff s \" generic
-(for example,
-DWB\~3.3,
-Solaris,
-Heirloom Doctools,
-and Plan\~9
-.I troff \" foreign
-all support it)
-but valid values are specific to each implementation.
-.
-.
-.P
 The (read-only) register
 .B \[rs]n[.T]
-is defined to be\~1 if
+interpolates\~1 if
 .I \%@g@troff
 is called with the
 .B \-T
 command-line option,
-and\~0 otherwise.
-.
-This behavior differs from AT&T
-.IR troff , \" AT&T
-which set this register to\~1 when
-.I nroff \" AT&T
-was the formatter,
-and\~0 otherwise.
+and 0\~otherwise.
 .
 .
 .P
@@ -4865,6 +4845,27 @@ at the end.
 As in the C language,
 we all have to share one big name space,
 so choose a register name that is unlikely to collide with other uses.
+.
+.
+.P
+The existence of the
+.B .T
+string is a common feature of post-CSTR\~#54
+.IR troff s\[em]DWB\~3.3, \" others
+Solaris,
+Heirloom Doctools,
+and Plan\~9
+.I troff \" foreign
+all support it\[em]but valid values are specific to each implementation.
+.
+This behavior of the
+.B .T
+register differs from AT&T
+.IR troff , \" AT&T
+which interpolated\~1 only if
+.I nroff \" AT&T
+was the formatter and was called with
+.BR \-T .
 .
 .
 .P

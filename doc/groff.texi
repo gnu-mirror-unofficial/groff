@@ -15598,16 +15598,16 @@ GNU @code{troff} predefines a string @code{.T} containing the argument
 given to the @option{-T} command-line option, namely the current output
 device (for example, @samp{pdf} or @samp{utf8}).  The existence of this
 string is a common feature of post-CSTR@tie{}#54
-@code{troff}s@footnote{For example, DWB@tie{}3.3, Solaris, Heirloom
-Doctools, and Plan@tie{}9 @code{troff} all support it.} but valid values
-are specific to each implementation.
+@code{troff}s@footnote{DWB@tie{}3.3, Solaris, Heirloom Doctools, and
+Plan@tie{}9 @code{troff} all support it.} but valid values are specific
+to each implementation.
 
 @cindex output device usage register (@code{.T}), incompatibility with @acronym{AT&T} @code{troff}
-The (read-only) register @code{.T} is defined to be@tie{}1 if GNU
+The (read-only) register @code{.T} interpolates@tie{}1 if GNU
 @code{troff} is called with the @option{-T} command-line option, and
-zero otherwise.  This behavior differs from AT&T @code{troff}, which set
-this register to@tie{}1 when @code{nroff} was the formatter, was the
-formatter, and@tie{}0 otherwise.
+0@tie{}otherwise.  This behavior differs from AT&T @code{troff}, which
+interpolated@tie{}1 only if @code{nroff} was the formatter and was
+called with @option{-T}.
 
 @cindex @code{lf} request, incompatibilities with @acronym{AT&T} @code{troff}
 @acronym{AT&T} @code{troff} and other implementations handle the
