@@ -81,6 +81,10 @@ encoded an acute accent and
 .B \e(sc
 a section sign.
 .
+(Characters that don't require an escape sequence for their expression,
+like \[lq]a\[rq],
+are termed \[lq]ordinary\[rq].)
+.
 .
 .P
 As in other respects,
@@ -158,7 +162,7 @@ In
 .IR groff ,
 you can test output driver support for any character
 (ordinary or special)
-with the conditional
+with the conditional expression operator
 .RB \[lq] c \[rq].
 .
 .RS
@@ -990,7 +994,7 @@ _
 .
 All of these glyphs can be composed using combining glyph names as
 described in subsection \[lq]Special character escape forms\[rq] above;
-the names below can be thought of short aliases for convenience.
+the names below can be thought of convenient short aliases.
 .
 .TS
 l l l lx.
@@ -1149,7 +1153,8 @@ _
 On typestter devices,
 the bracket extensions are font-invariant glyphs;
 that is,
-they are rendered the same way regardless of font.
+they are rendered the same way regardless of font
+(with a drawing escape sequence).
 .
 On terminals,
 they are
