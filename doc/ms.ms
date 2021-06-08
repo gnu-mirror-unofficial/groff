@@ -1702,7 +1702,7 @@ The
 indentation is applied to only to displays created with
 .CW ".DS I" \[rq] \[lq]
 and
-.B .ID .
+.CW .ID .
 .
 Changes take effect at the next display boundary.
 .
@@ -1829,10 +1829,10 @@ and
 The
 .CW \[rs]n[DD]
 distance is also applied to regions of the document preprocessed with
-.I tbl (1),
-.I pic (1),
+.I tbl ,
+.I pic ,
 and
-.I eqn (1).
+.I eqn .
 .
 Mark text meant for preprocessors by enclosing it in pairs of tags as
 follows.
@@ -1845,7 +1845,10 @@ lf(CR) lx .
 Tag pair	Description
 _
 T{
-\&.TS [H]
+\&.TS
+.R
+.CW H ] [
+.CW
 .br
 \&.TE
 T}	T{
@@ -1854,7 +1857,7 @@ Denotes a table to be processed by the
 preprocessor.
 .
 The optional
-.B H
+.CW H
 argument to
 .CW .TS
 instructs
@@ -1880,19 +1883,17 @@ Denotes a graphic to be processed by the
 .I pic
 preprocessor.
 .
-You can create a
+You can create
 .I pic
-file by hand using the
-.Acr AT&T
-.I pic
-manual available on the Web as a reference,
-or by using a graphics program such as
-.I xfig .
+input manually or by using a program such as
+.I xfig (1).
 T}
 _
 T{
 \&.EQ
+.R
 .I align ] [
+.CW
 .br
 \&.EN
 T}	T{
@@ -1900,17 +1901,19 @@ Denotes an equation to be processed by the
 .I eqn
 preprocessor.
 .
-The optional
+The equation is center-aligned by default;
+the optional
 .I align
-argument can be
-.B C ,
-.B L ,
+parameter can be
+.CW C ,
+.CW L ,
 or
-.B I
-to center
-(the default),
-left-justify,
-or indent the equation.
+.CW I
+to center,
+left-align,
+or indent it by
+.CW \[rs]n[DI] ,
+respectively.
 T}
 _
 T{
@@ -2391,12 +2394,12 @@ cb cb
 lf(CR) lx .
 Macro	Description
 _
-\&.1C	Single-column mode.
+\&.1C	Arrange page text in a single column (the default).
 _
-\&.2C	Two-column mode.
+\&.2C	Arrange page text in two columns.
 _
-\&.MC [\fIwidth\fP [\fIgutter\fP]]	T{
-Multi-column mode.
+\&.MC \fR[\fIwidth\fP [\fIgutter\fP]]	T{
+Arrange page text in multiple columns.
 .
 If you specify no arguments,
 it is equivalent to the
@@ -2407,11 +2410,11 @@ Otherwise,
 .I width
 is the width of each column and
 .I gutter
-is the space between columns.
+is the minimum distance between columns.
 .
-The
-.CW MINGW
-number register is the default gutter width.
+.CW \[rs]n[MINGW]
+is the default gutter width;
+it is a GNU extension.
 T}
 .TE
 .KE
