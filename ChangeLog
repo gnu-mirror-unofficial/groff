@@ -8,8 +8,13 @@
 	the code in the latter was dedicated to trying to locate
 	subs.pl.
 
-	* src/roff/grog/grog.am (GROG, dist_grog_DATA): Drop variables.
-	(grog): Remove target's dependency on `$(GROG)`.
+	* Makefile.am: Delete references to $(grog_dir).
+	* configure.ac: Delete call of `GROFF_GROGDIR_DEFAULT` macro.
+	* m4/groff.m4: Delete definition of same.
+	* src/roff/grog/grog.am (GROG, dist_grog_DATA, grogdir): Drop
+	variables.
+	(grog): Remove target's dependency on `$(GROG)`.  Remove sed
+	expression replacing `@grog_dir@` with `$(grog_dir)` in grog.pl.
 	* src/roff/grog/grog.pl: Inline most of subs.pl (except for
 	author/license comment banenr).  Delete sub-hunting logic.
 	* src/roff/grog/subs.pl: Delete.

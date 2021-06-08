@@ -200,7 +200,6 @@ localtmacdir=$(dataprogramdir)/site-tmac
 # gxditview.
 
 # glilypond_dir
-# grog_dir
 # gpinyin_dir
 
 # `tmacpath' says where to look for macro files.
@@ -794,9 +793,6 @@ uninstall_groffdirs:
 	    rmdir $(DESTDIR)$(localfontdir); \
 	  fi; \
 	  rmdir $(DESTDIR)$(dataprogramdir); \
-	fi
-	if test -d $(DESTDIR)$(grog_dir); then \
-	  rmdir $(DESTDIR)$(grog_dir); \
 	fi
 	if test -d $(DESTDIR)$(libprogramdir); then \
 	  if test -d $(DESTDIR)$(systemtmacdir); then \

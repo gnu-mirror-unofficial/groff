@@ -1656,10 +1656,6 @@ AC_DEFUN([GROFF_GPINYINDIR_DEFAULT],
   AC_SUBST([gpinyin_dir]))
 
 
-AC_DEFUN([GROFF_GROGDIR_DEFAULT],
-  grog_dir=$libprogramdir/grog
-  AC_SUBST([grog_dir]))
-
 AC_DEFUN([GROFF_REFERDIR_DEFAULT],
   referdir=$libprogramdir/refer
   AC_SUBST([referdir]))
