@@ -81,8 +81,8 @@ my %Groff =
 
    'pic' => 0,
    'PS' => 0,		# opening for pic
-   'PF' => 0,		# alternative opening for pic
    'PE' => 0,		# closing for pic
+   'PF' => 0,		# alternative closing for pic
 
    'refer' => 0,
    'refer_open' => 0,
@@ -652,17 +652,17 @@ sub do_line {
 
 ####### do_line()
 
-  # pic can be opened by .PS or .PF and closed by .PE
+  # pic is opened by .PS and can be closed by either .PE or .PF
   if ( $command =~ /^\.PS$/ ) {
-    $Groff{'pic'}++;		# normal opening for pic
-    return;
-  }
-  if ( $command =~ /^\.PF$/ ) {
-    $Groff{'PF'}++;		# alternate opening for pic
+    $Groff{'PS'}++;		# opening for pic
     return;
   }
   if ( $command =~ /^\.PE$/ ) {
     $Groff{'PE'}++;		# closing for pic
+    return;
+  }
+  if ( $command =~ /^\.PF$/ ) {
+    $Groff{'PF'}++;		# alternate closing for pic
     return;
   }
 
@@ -968,7 +968,7 @@ sub make_groff_preproc {
   }
 
   # preprocessors with 'groff' option
-  if ( ( $Groff{'PS'} ||  $Groff{'PF'} ) &&  $Groff{'PE'} ) {
+  if ( $Groff{'PS'} &&  ( $Groff{'PE'} ||  $Groff{'PF'} ) ) {
     $Groff{'pic'} = 1;
   }
   if ( $Groff{'gideal'} ) {
