@@ -1025,6 +1025,20 @@ should always be called before
 .RI ( groff (@MAN1EXT@)
 automatically takes care of the correct order of preprocessors).
 .
+Don't call the
+.B EQ
+and
+.B EN
+macros within tables;
+instead,
+set up delimeters in your
+.I eqn \" generic
+input and use the
+.B delim()
+table option so that
+.I \%@g@tbl
+will recognize them.
+.
 .
 .\" ====================================================================
 .SS "GNU \f[I]tbl\f[] enhancements"
