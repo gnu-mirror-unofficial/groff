@@ -3210,8 +3210,8 @@ adjustment mechanism is in effect.
 If the @code{GROWPS} register is set to a value greater than the
 @var{level} argument to @code{NH} or @code{SH}, the point size of
 a heading produced by these macros increases by @code{PSINCR} units over
-the size specified by @code{PS} multiplied by the difference between
-@var{level} and @code{GROWPS}.  The value stored in @code{PSINCR} is
+the size specified by @code{PS} multiplied by the difference of
+@code{GROWPS} and @var{level}.  The value stored in @code{PSINCR} is
 interpreted in @code{groff} basic units; the @code{p} scaling indicator
 should be employed when assigning a value specified in points.  For
 example, the sequence
@@ -3671,7 +3671,7 @@ it.  Text in the box is automatically placed in a diversion (keep).
 These macros cause line breaks; if you need to box a word or phrase
 within a line, see the @code{BX} macro in @ref{Highlighting in ms}.  Box
 lines are drawn as close as possible to the text they enclose so that
-they are usable within paragraphs.  If you wish to box one (or more)
+they are usable within paragraphs.  If you wish to box one or more
 paragraphs, you may improve the appearance by calling @code{B1} after
 the first paragraphing macro, and by adding a small amount of vertical
 space before calling @code{B2}.

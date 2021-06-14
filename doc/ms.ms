@@ -1028,10 +1028,10 @@ the point size of a heading produced by these macros increases by
 .CW \[rs]n[PSINCR]
 units over
 .CW \[rs]n[PS]
-multiplied by the difference between
-.I level
+multiplied by the difference of
+.CW \[rs]n[GROWPS]
 and
-.CW \[rs]n[GROWPS] .
+.I level .
 .
 .
 For example,
@@ -1785,9 +1785,7 @@ macro in section \[lq]Highlighting\[rq] above.
 Box lines are drawn as close as possible to the text they enclose so
 that they are usable within paragraphs.
 .
-If you wish to box one
-(or more)
-paragraphs,
+If you wish to box one or more paragraphs,
 you may improve the appearance by calling
 .CW .B1
 after the first paragraphing macro,
