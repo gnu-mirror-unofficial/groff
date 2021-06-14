@@ -1764,6 +1764,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de EN
 ..
 .de @EQ
+.if \\n[tbl@within-table] \
+.	@error .EQ is not allowed within a .TS/.TE table
 .br
 .ds eqn*num "\\$2
 .ie '\\$1'L' .nr eqn*type 0
@@ -1854,6 +1856,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" ******** module tbl ********
 .\" ****************************
 .\" Tbl support.
+.nr tbl@within-table 0
 .nr tbl*have-header 0
 .\" This gets called if TS occurs before the first paragraph.
 .de TS
@@ -1862,6 +1865,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \\*[TS]\\
 ..
 .de @TS
+.nr tbl@within-table 1
 .sp \\n[DD]u
 .if '\\$1'H' \{\
 .	ds tbl*stem .TS H table inside\"
@@ -1924,6 +1928,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	ll \\n[tbl*ll]u
 .\" reset tabs
 .TA
+.nr tbl@within-table 0
 ..
 .de tbl@bottom-hook
 .if \\n[tbl*have-header] \{\

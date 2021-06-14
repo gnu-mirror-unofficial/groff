@@ -1,5 +1,16 @@
 2021-06-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac: Add diagnostic error if .EQ used within .TS/.TE.
+	Introduce register `tbl@within-table` to track whether we're
+	inside a table.
+	(@EQ): Check register and issue error if it is true.
+	(@TS): Set register.
+	(@TE): Clear register.
+
+	Prompted by Savannah #55754.
+
+2021-06-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/s.tmac: Permit document to start with .PS.
 	(cov*ab-init): Alias PS to @PS.
 	(PS): Call LP, then re-execute (aliased) self as TS does.
