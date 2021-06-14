@@ -287,6 +287,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .als MC @MC
 .als EQ @EQ
 .als EN @EN
+.als PS @PS
 .als TS @TS
 .als AB cov*err-not-after-ab
 .als AU par@AU
@@ -1857,7 +1858,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" This gets called if TS occurs before the first paragraph.
 .de TS
 .LP
-.\" cov*ab-init aliases TS to @TS
+.\" cov*ab-init, called by LP, aliases TS to @TS.
 \\*[TS]\\
 ..
 .de @TS
@@ -1936,8 +1937,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" ******** module pic ********
 .\" ****************************
 .\" Pic support.
-.\" PS height width
+.\" This gets called if PS occurs before the first paragraph.
 .de PS
+.LP
+.\" cov*ab-init, called by LP, aliases PS to @PS.
+\\*[PS]\\
+..
+.\" @PS height width
+.de @PS
 .br
 .sp \\n[DD]u
 .ie \\n[.$]<2 .@error bad arguments to .PS (not preprocessed with pic?)
