@@ -528,8 +528,8 @@
 .  mc
 .  nf
 .  in \\n[an-margin]u
+.  ne (2v + 1u)
 .  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
-.    ne (2v + 1u)
 .    an-div
 .    ev
 .    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
@@ -538,7 +538,6 @@
 .    \" In nroff mode, the indentation value should be an integer
 .    \" multiple of the character cell, to avoid different results
 .    \" compared to the .ie part above.
-.    ne (1v + 1u)
 .    DEVTAG-COL 1
 .    an-div
 .    sp -1

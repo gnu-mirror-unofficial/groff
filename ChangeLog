@@ -1,8 +1,22 @@
 2021-06-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Don't spuriously break a page after a paragraph tag when
+	the tag is short enough to fit within the paragraph's
+	indentation.
+
+	* tmac/an-old.tmac (an-write-paragraph-tag): Reserve ("need") 2
+	vees plus 1 basic unit of vertical space regardless of the width
+	of the tag.  In the short tag case, we reverse space by one vee
+	after outputting the diversion in which the tag is stored, but
+	it will always contain a break, and by the time we reverse, we
+	might have already hit a page location trap
+	{an-break-body-text}, and by then it's too late to back up.
+
 	* tmac/tests/an-old_no-break-after-short-paragraph-tags.sh: Test
 	it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60624>.
 
 2021-06-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
