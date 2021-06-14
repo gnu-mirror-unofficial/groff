@@ -282,13 +282,22 @@ but quoting it protects it from macro expansion.
 .
 .TP
 .BI chartype\~ "t text"
-Unquoted groups of characters are split up into individual characters,
-and the type of each character is looked up;
-this changes the type that is stored for each character;
-it says that the characters in
-.I text
-from now on have
+Each (unquoted) character
+.RI in\~ text
+is assigned
 .RI type\~ t .
+.
+The
+.RI type\~ t
+can also be
+.RB \[lq] letter \[rq]
+or
+.RB \[lq] digit \[rq];
+in these cases
+.B chartype
+changes the font style of the characters.
+.
+See subsection \[lq]Fonts\[rq] below.
 .
 For example,
 .
@@ -302,20 +311,10 @@ chartype "punctuation" .,;:
 .
 .
 .IP
-would make the characters \[lq].,;:\[rq] have type punctuation whenever
-they subsequently appeared in an equation.
-.
-The
-.RI type\~ t
-can also be
-.B letter
-or
-.BR digit ;
-in these cases
-.B chartype
-changes the font type of the characters.
-.
-See subsection \[lq]Fonts\[rq] below.
+assigns the
+.RB \[lq] punctuation \[rq]
+type to each of the characters in \[lq].,;:\[rq] wherever they
+subsequently appear in an equation.
 .
 .
 .\" ====================================================================
@@ -908,7 +907,7 @@ you are using.
 .
 .TP
 .B default_rule_thickness
-This should set to the thickness of the
+This should be set to the thickness of the
 .B \[rs][ru]
 character,
 or the thickness of horizontal lines produced with the
@@ -983,8 +982,8 @@ the subscript is shifted down by at least this amount.
 .
 .TP
 .B sup_drop
-The baseline of a superscript is no more than this much amount below
-the top of the object on which the superscript is set.
+The baseline of a superscript is no more than this much below the top of
+the object on which the superscript is set.
 .
 .
 .TP
