@@ -46,6 +46,11 @@
 .\}
 .
 .\" === Define macros. ===
+.\"
+.\" Macros that are part of the external interface (TH, SH, P, etc.) or
+.\" which are called by traps of any kind must be defined with `de1`
+.\" because they might be called from a context where compatibility mode
+.\" is enabled.  For other macros, `de` suffices.
 .
 .de an-warn
 .  tm \*[an-old]:\\n[.F]:\\n[.c]: warning: \\$*
@@ -152,7 +157,8 @@
 .  el        .bp 1
 ..
 .
-.\" .TH title section extra1 extra2 extra3
+.\" Begin man page.
+.\" .TH title section[ extra1[ extra2[ extra3]]]
 .de1 TH
 .  if ((\\n[.$] < 2) : (\\n[.$] > 5)) \
 .    an-style-warn .\\$0 expects 2 to 5 arguments, got \\n[.$]
@@ -272,8 +278,9 @@
 .  nr an-is-first-page-of-document 0
 ..
 .
-.\" BSD compatibility macros: .AT and .UC
+.\" Support legacy AT&T and BSD Unix man pages.
 .
+.\" Designate an AT&T Unix man page.
 .de1 AT
 .  ds an-extra2 "7th Edition\"
 .  if "\\$1"3" .ds an-extra2 "7th Edition\"
@@ -284,6 +291,7 @@
 .  \}
 ..
 .
+.\" Designate a BSD Unix man page.
 .de1 UC
 .  ds an-extra2 "3rd Berkeley Distribution\"
 .  if "\\$1"3" .ds an-extra2 "3rd Berkeley Distribution\"
@@ -293,22 +301,24 @@
 .  if "\\$1"7" .ds an-extra2 "4.4 Berkeley Distribution\"
 ..
 .
+.\" Restore tab stops to defaults.
 .de1 DT
 \\*[an-deprecation-warn]\\
 .  an-reset-tab-stops
 ..
 .
+.\" Restore inter-paragraph spacing to default (or set it to argument).
 .de1 PD
 \\*[an-deprecation-warn]\\
 \\*[an-reset-paragraph-spacing]\\
 ..
 .
-.\" Redefine these to customize the header & footer
-.
+.\" Write the page footer; can be redefined by the user.
 .de1 PT
 .  tl '\\*[an-pageref]'\\*[an-extra3]'\\*[an-pageref]'
 ..
 .
+.\" Write the page header; can be redefined by the user.
 .de1 BT
 .  if r ps4html \
 .    return
@@ -365,6 +375,7 @@
 .  rm an-ellipsis
 ..
 .
+.\" Prepare the header for a page of the document.
 .de1 an-header
 .  ev an-env-header-or-footer
 .  ps \\n[PS]u
@@ -394,6 +405,7 @@
 '  bp
 ..
 .
+.\" Prepare the footer for a page of the document.
 .de1 an-footer
 .  ev an-env-header-or-footer
 .  ps \\n[PS]u
@@ -418,37 +430,43 @@
 .  ev
 ..
 .
+.\" Output the tag of a tagged paragraph, or of an indented paragraph
+.\" (IP) that has a tag.  Whether we break depends on the tag width.
 .de an-write-paragraph-tag
 .  br
 .  di
 .  nr an-is-in-diversion 0
 .  ll
-.  \" We must emit the diversion in a separate environment to assure
+.  \" We must emit the diversion in a separate environment to ensure
 .  \" that a possible margin character is printed correctly.
 .  ev an-env-paragraph-tag
 .  evc 0
 .  mc
 .  nf
 .  in \\n[an-margin]u
+.  \" Prevent page break between the tag and the rest of the paragraph.
 .  ne (2v + 1u)
+.  \" Is the tag too wide?
 .  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
 .    an-div
 .    ev
 .    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
 .  \}
 .  el \{\
-.    \" In nroff mode, the indentation value should be an integer
-.    \" multiple of the character cell, to avoid different results
-.    \" compared to the .ie part above.
 .    DEVTAG-COL 1
 .    an-div
 .    sp -1
 .    ev
+.    \" In nroff mode, the indentation value should be an integer
+.    \" multiple of the character cell, to avoid different results
+.    \" compared to the .ie part above.
 .    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
 .    DEVTAG-COL-NEXT 2
 .  \}
 ..
 .
+.\" Handle macros that may take an "argument" on the next input line;
+.\" .SH, .SS, .B, .I, .SM, .SB--and .TP, which does so mandatorily.
 .de1 an-input-trap
 .  if \\n[need_eo_h]>0 .DEVTAG-EO-H
 .  nr need_eo_h 0
@@ -468,6 +486,7 @@
 .  if \\n[an-is-in-diversion] .an-write-paragraph-tag
 ..
 .
+.\" Set a section heading.
 .de1 SH
 .  sp \\n[PD]u
 .  an-reset-margin-and-inset-level
@@ -491,6 +510,7 @@
 .  if \\n[an-HF-remap-I-style] .ftr I I
 ..
 .
+.\" Set a subsection heading.
 .de1 SS
 .  sp \\n[PD]u
 .  an-reset-margin-and-inset-level
@@ -510,24 +530,29 @@
 .  if \\n[an-HF-remap-I-style] .ftr I I
 ..
 .
+.\" Set arguments (or the next input line if none) in bold style.
 .de1 B
 .  itc 1 an-input-trap
 .  ft B
 .  if \\n[.$] \&\\$*
 ..
 .
+.\" Set arguments (or the next input line if none) in italic style.
 .de1 I
 .  itc 1 an-input-trap
 .  ft I
 .  if \\n[.$] \,\\$*\/
 ..
 .
+.\" Set arguments (or the next input line if none) at smaller type size.
 .de1 SM
 .  itc 1 an-input-trap
 .  ps -1
 .  if \\n[.$] \&\\$*
 ..
 .
+.\" Set arguments (or the next input line if none) in bold style at
+.\" smaller type size.
 .de1 SB
 .  itc 1 an-input-trap
 .  ps -1
@@ -535,6 +560,7 @@
 .  if \\n[.$] \&\\$*
 ..
 .
+.\" Set a tagged paragraph.
 .de1 TP
 .  sp \\n[PD]u
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
@@ -547,6 +573,7 @@
 .  nr an-is-in-diversion 1
 ..
 .
+.\" Set an ordinary paragraph.
 .de1 LP
 .  sp \\n[PD]u
 .  ps \\n[PS]u
@@ -560,6 +587,8 @@
 .als PP LP
 .als P LP
 .
+.\" Set an indented paragraph.
+.\" .IP [marker[ indentation-amount]]
 .de1 IP
 .  ie !\\n[.$] \{\
 .    ps \\n[PS]u
@@ -577,6 +606,7 @@
 .  \}
 ..
 .
+.\" Set a paragraph with a hanging indentation.
 .de1 HP
 .  ps \\n[PS]u
 .  vs \\n[VS]u
@@ -723,6 +753,7 @@
 .  \}
 ..
 .
+.\" Start a relative inset level (by the amount given in the argument).
 .de1 RS
 .  nr an-saved-margin\\n[an-inset-level] \\n[an-margin]
 .  nr an-saved-prevailing-indent\\n[an-inset-level] \
@@ -734,6 +765,8 @@
 .  nr an-inset-level +1
 ..
 .
+.\" End relative inset level, backing up by one level (or to the level
+.\" given by the argument).
 .de1 RE
 .  ie \\n[.$] .nr an-RE-requested-level \\$1
 .  el         .nr an-RE-requested-level (\\n[an-inset-level] - 1)
@@ -759,8 +792,9 @@
 .  in \\n[an-margin]u
 ..
 .
-.\" table support
+.\" tbl(1) table support
 .
+.\" Start table.
 .de1 TS
 .  \" If continuous rendering, tell tbl not to use keeps.
 .  ie \\n[cR] \
@@ -775,16 +809,20 @@
 .  HTML-IMAGE
 ..
 .
+.\" Mark start of table data after table heading rows (ignored).
 .de1 T&
 ..
 .
+.\" End table.
 .de1 TE
 .  HTML-IMAGE-END
 .  if \\n[an-is-output-html] \
 .    ll \\n[an-TS-ll]u
 ..
 .
-.\" dummy equation delimiters
+.\" eqn(1) equation support
+.
+.\" Start equation.
 .de1 EQ
 .  if \\n[an-is-output-html] \{\
 .    nr an-EQ-ll \\n[.l]
@@ -792,12 +830,17 @@
 .  \}
 .  HTML-IMAGE
 ..
+.
+.\" End equation.
 .de1 EN
 .  HTML-IMAGE-END
 .  if \\n[an-is-output-html] \
 .    ll \\n[an-EQ-ll]u
 ..
 .
+.\" Define R "string".  Some ms(7) veterans confusedly use '.R' in man
+.\" pages to try to switch to the roman font style.  Attempt to catch
+.\" this misuse by checking for arguments and warning about it.
 .de1 R
 \c
 .  ie \\n[.$] \{\
@@ -888,7 +931,7 @@
 .if r ps4html \
 .  nr C 1
 .
-.\" emit diagnostics for man page style problems
+.\" diagnostics desired for man page style problems
 .if !r CHECKSTYLE \
 .  nr CHECKSTYLE 0
 .
@@ -915,7 +958,6 @@
 .\" Unlike most of these parameters, we do not set a default for FT; the
 .\" TH macro places page location traps only if not continuously
 .\" rendering.
-.\"
 .if r FT \{\
 .  \" Validate it. Continuous rendering ignores FT.  Measuring a footer
 .  \" distance from the page top isn't done.  A footer distance of over
@@ -981,7 +1023,6 @@
 .\" for the HTML output device, page numbers are concealed and used for
 .\" internal purposes like image embedding.  Page numbers are not
 .\" rendered at all in continuous rendering mode.
-.\"
 .if r P \{\
 .  if \n[an-is-output-html] \
 .    if !(\n[P] = 1) \
@@ -1017,7 +1058,6 @@
 .\" Unlike most of these parameters, we do not set a default for X; only
 .\" the macro an-footer uses it.  Page numbers are not rendered at all
 .\" in continuous rendering mode.
-.\"
 .if r X \{\
 .  af an-page-letter a
 .  if \n[an-is-output-html] \
