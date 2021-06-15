@@ -574,7 +574,7 @@
 ..
 .
 .\" Set an ordinary paragraph.
-.de1 LP
+.de1 P
 .  sp \\n[PD]u
 .  ps \\n[PS]u
 .  vs \\n[VS]u
@@ -584,8 +584,9 @@
 .  ns
 ..
 .
-.als PP LP
-.als P LP
+.\" Accommodate ms(7) paragraphing refugees.
+.als LP P
+.als PP P
 .
 .\" Set an indented paragraph.
 .\" .IP [marker[ indentation-amount]]

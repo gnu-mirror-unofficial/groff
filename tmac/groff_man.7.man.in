@@ -477,7 +477,7 @@ their default values.
 Text on input lines after
 .I heading-text
 is set as an ordinary paragraph
-.RB ( .PP ).
+.RB ( .P ).
 .
 .
 .IP
@@ -518,7 +518,7 @@ Set
 .I subheading-text
 as a subsection heading indented between a section heading and an
 ordinary paragraph
-.RB ( .PP ).
+.RB ( .P ).
 .
 See subsection \(lqHorizontal and vertical spacing\(rq below for the
 indentation amount.
@@ -547,7 +547,7 @@ their default values.
 Text on input lines after
 .I subheading-text
 is set as an ordinary paragraph
-.RB ( .PP ).
+.RB ( .P ).
 .
 .
 .TP
@@ -642,7 +642,7 @@ move the left margin one level back.
 .\" ====================================================================
 .
 An ordinary paragraph
-.RB ( .PP )
+.RB ( .P )
 _ifstyle()dnl
 like this one
 _endif()dnl
@@ -688,11 +688,11 @@ see subsection \(lqFont style macros\(rq below.
 .
 .
 .TP
+.B .P
+.TQ
 .B .LP
 .TQ
 .B .PP
-.TQ
-.B .P
 Begin a new paragraph;
 these macros are synonymous.
 .
@@ -776,10 +776,10 @@ _ifstyle()dnl
 .
 .IP
 The descriptions of
+.BR .P ,
 .BR .LP ,
-.BR .PP ,
 and
-.B .P
+.B .PP
 above were written using
 .B .TP
 and
@@ -883,7 +883,7 @@ Begin synopsis.
 A new paragraph is begun at the left margin
 _ifstyle()dnl
 (like
-.B .PP
+.B .P
 and its aliases)
 _endif()dnl
 unless
@@ -1672,7 +1672,7 @@ or
 .BR .SH ,
 .BR .SS ,
 or
-.B .PP
+.B .P
 or its synonyms is called;
 these clear the indentation entirely.
 .
@@ -1689,7 +1689,7 @@ is called.
 .
 .PP
 The indentation amount exhibited by ordinary paragraphs set with
-.B .PP
+.B .P
 (and its synonyms)
 not within an
 .BR .RS / .RE
@@ -1762,7 +1762,7 @@ and deprecated
 .B .HP
 macros,
 and cancelled by
-.B .PP
+.B .P
 and its synonyms.
 .
 An extensive example follows.
@@ -1770,7 +1770,7 @@ An extensive example follows.
 .
 .PP
 This ordinary
-.RB ( .PP )
+.RB ( .P )
 paragraph is not in a relative inset nor does it possess an indentation.
 .
 .
@@ -1782,7 +1782,7 @@ moved the left margin)
 with
 .B .RS
 and started another block paragraph with
-.BR .PP .
+.BR .P .
 .
 .
 .TP
@@ -1830,7 +1830,7 @@ but both affect the text of the paragraph.
 .
 .PP
 This ordinary
-.RB ( .PP )
+.RB ( .P )
 paragraph resets the indentation,
 but the left margin is still inset.
 .
@@ -1854,7 +1854,7 @@ pair)
 has reset the left margin to the default.
 .
 This is an ordinary
-.B .PP
+.B .P
 paragraph.
 .
 .
@@ -1881,7 +1881,7 @@ The following macros break the output line and insert vertical space:
 .BR .SH ,
 .BR .SS ,
 .BR .TP ,
-.B .PP
+.B .P
 (and its synonyms),
 .BR .IP ,
 and the deprecated
@@ -3028,7 +3028,7 @@ and\~6 otherwise.
 .TP
 .BI \-rIN= standard-indent
 Set the amount of indentation used for ordinary paragraphs
-.RB ( .PP
+.RB ( .P
 and its synonyms)
 and the default indentation amount used by
 .BR .IP ,
@@ -3338,7 +3338,7 @@ that is,
 the position at which an
 .I ordinary
 paragraph
-.RB ( .PP
+.RB ( .P
 and its synonyms)
 will be set.
 .
@@ -3357,7 +3357,7 @@ or give
 .B .RS
 an indentation argument that is at least as much as the paragraph's
 indentation amount relative to an adjacent
-.B .PP
+.B .P
 paragraph.
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
