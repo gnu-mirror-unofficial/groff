@@ -418,6 +418,56 @@
 .  ev
 ..
 .
+.de an-write-paragraph-tag
+.  br
+.  di
+.  nr an-is-in-diversion 0
+.  ll
+.  \" We must emit the diversion in a separate environment to assure
+.  \" that a possible margin character is printed correctly.
+.  ev an-env-paragraph-tag
+.  evc 0
+.  mc
+.  nf
+.  in \\n[an-margin]u
+.  ne (2v + 1u)
+.  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
+.    an-div
+.    ev
+.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
+.  \}
+.  el \{\
+.    \" In nroff mode, the indentation value should be an integer
+.    \" multiple of the character cell, to avoid different results
+.    \" compared to the .ie part above.
+.    DEVTAG-COL 1
+.    an-div
+.    sp -1
+.    ev
+.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
+.    DEVTAG-COL-NEXT 2
+.  \}
+..
+.
+.de1 an-input-trap
+.  if \\n[need_eo_h]>0 .DEVTAG-EO-H
+.  nr need_eo_h 0
+.  if \\n[need_col2]>0 .DEVTAG-COL 2
+.  nr need_col2 0
+.  ft R
+.  ps \\n[PS]u
+.  vs \\n[VS]u
+.  if \\n[an-need-break] \{\
+.    br
+.    nr an-need-break 0
+.  \}
+.  if \\n[an-need-no-space-mode] \{\
+.    ns
+.    nr an-need-no-space-mode 0
+.  \}
+.  if \\n[an-is-in-diversion] .an-write-paragraph-tag
+..
+.
 .de1 SH
 .  sp \\n[PD]u
 .  an-reset-margin-and-inset-level
@@ -495,56 +545,6 @@
 .    di an-div
 .  \}
 .  nr an-is-in-diversion 1
-..
-.
-.de1 an-input-trap
-.  if \\n[need_eo_h]>0 .DEVTAG-EO-H
-.  nr need_eo_h 0
-.  if \\n[need_col2]>0 .DEVTAG-COL 2
-.  nr need_col2 0
-.  ft R
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  if \\n[an-need-break] \{\
-.    br
-.    nr an-need-break 0
-.  \}
-.  if \\n[an-need-no-space-mode] \{\
-.    ns
-.    nr an-need-no-space-mode 0
-.  \}
-.  if \\n[an-is-in-diversion] .an-write-paragraph-tag
-..
-.
-.de an-write-paragraph-tag
-.  br
-.  di
-.  nr an-is-in-diversion 0
-.  ll
-.  \" We must emit the diversion in a separate environment to assure
-.  \" that a possible margin character is printed correctly.
-.  ev an-env-paragraph-tag
-.  evc 0
-.  mc
-.  nf
-.  in \\n[an-margin]u
-.  ne (2v + 1u)
-.  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
-.    an-div
-.    ev
-.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
-.  \}
-.  el \{\
-.    \" In nroff mode, the indentation value should be an integer
-.    \" multiple of the character cell, to avoid different results
-.    \" compared to the .ie part above.
-.    DEVTAG-COL 1
-.    an-div
-.    sp -1
-.    ev
-.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
-.    DEVTAG-COL-NEXT 2
-.  \}
 ..
 .
 .de1 LP
