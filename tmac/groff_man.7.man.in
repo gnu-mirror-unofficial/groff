@@ -114,7 +114,7 @@ is used to produce manual pages
 like the one you are reading.
 .
 .
-.PP
+.P
 This document presents the macros thematically;
 for those needing only a quick reference,
 the following table lists them alphabetically,
@@ -122,7 +122,7 @@ with cross-references to appropriate subsections below.
 .
 .
 _ifnotstyle()dnl
-.PP
+.P
 Man page authors and maintainers who are not already experienced
 .I groff
 users should consult
@@ -138,7 +138,7 @@ typesetting system.
 .
 .
 _endif()dnl
-.PP
+.P
 .TS
 l l l.
 Macro	Meaning	Subsection
@@ -178,7 +178,7 @@ _
 .TE
 .
 .
-.PP
+.P
 Macros whose use we discourage
 .RB ( .AT ,
 .BR .DT ,
@@ -206,7 +206,7 @@ _ifstyle()dnl
 .\" ====================================================================
 .\" .SS "Input file format"
 .\" ====================================================================
-.PP
+.P
 Man pages should be encoded using Unicode basic Latin code points
 exclusively,
 and employ the Unix line-ending convention
@@ -249,7 +249,7 @@ are grouped together.
 .
 .
 _ifstyle()dnl
-.PP
+.P
 A macro call appears on a line starting with a dot (\(lq.\(rq),
 followed by zero or more spaces and then the macro name.
 .
@@ -264,7 +264,7 @@ terminates the macro call.
 .
 .
 _endif()dnl
-.PP
+.P
 _ifstyle()dnl
 Optional macro arguments are indicated by surrounding them with square
 brackets.
@@ -290,7 +290,7 @@ exceptions are noted.
 .
 .
 _ifstyle()dnl
-.PP
+.P
 Bear in mind that
 .I groff
 is fundamentally a programming system for typesetting.
@@ -864,7 +864,7 @@ with command-line options of some formats indicated by
 .BR .OP .
 .
 .
-.PP
+.P
 These macros are GNU extensions not defined on systems running
 AT&T,
 Plan\~9,
@@ -934,7 +934,7 @@ Restore previous indentation and initial hyphenation mode.
 _ifstyle()dnl
 .
 .
-.PP
+.P
 Multiple
 .BR .SY / .YS
 blocks can be specified,
@@ -944,7 +944,7 @@ command like
 each will be vertically separated as paragraphs are.
 .
 .
-.PP
+.P
 .B .SY
 can also be repeated multiple times before a closing
 .BR .YS ,
@@ -952,7 +952,7 @@ which is useful to indicate synonymous ways of invoking a particular
 mode of operation.
 .
 .
-.PP
+.P
 For example,
 .
 .
@@ -993,7 +993,7 @@ For example,
 .EE
 .
 .
-.PP
+.P
 produces the following output.
 .
 .
@@ -1029,7 +1029,7 @@ produces the following output.
 .RE
 .
 .
-.PP
+.P
 Several features of the above example are of note.
 .
 .
@@ -1095,7 +1095,7 @@ and URL hyperlinks with
 .BR .UR / .UE .
 .
 .
-.PP
+.P
 These macros are GNU extensions not defined on systems running
 AT&T,
 Plan\~9,
@@ -1282,7 +1282,7 @@ with no space separating them.
 _ifstyle()dnl
 .
 .
-.PP
+.P
 Because font styles are presentational rather than semantic,
 conflicting traditions have arisen regarding which font styles should be
 used to mark file or path names,
@@ -1292,7 +1292,7 @@ and man page cross-references.
 _endif()dnl
 .
 .
-.PP
+.P
 The default point size and family for typesetter devices is 10-point
 Times,
 except on the
@@ -1432,7 +1432,7 @@ normal size;
 it will be hidden from readers using such devices.
 .
 .
-.PP
+.P
 Note what is
 .I not
 prescribed for setting in bold or italics above:
@@ -1455,7 +1455,7 @@ by practically universal convention,
 set in roman.
 .
 .
-.PP
+.P
 Be frugal with italics for emphasis,
 and particularly with bold.
 .
@@ -1473,7 +1473,7 @@ escapes in subsection \(lqPortability\(rq below.
 .
 .
 _endif()dnl
-.PP
+.P
 Unlike the above font style macros,
 the font style alternation macros below accept only arguments on the
 same line as the macro call.
@@ -1687,7 +1687,7 @@ or
 is called.
 .
 .
-.PP
+.P
 The indentation amount exhibited by ordinary paragraphs set with
 .B .P
 (and its synonyms)
@@ -1726,7 +1726,7 @@ the HTML output device ignores indentation completely.
 _ifstyle()dnl
 .
 .
-.PP
+.P
 It may be helpful to think of the left margin and indentation as related
 but distinct concepts;
 .IR groff 's
@@ -1768,14 +1768,14 @@ and its synonyms.
 An extensive example follows.
 .
 .
-.PP
+.P
 This ordinary
 .RB ( .P )
 paragraph is not in a relative inset nor does it possess an indentation.
 .
 .
 .RS
-.PP
+.P
 Now we have created a relative inset
 (in other words,
 moved the left margin)
@@ -1828,7 +1828,7 @@ only the former affects the tag,
 but both affect the text of the paragraph.
 .
 .
-.PP
+.P
 This ordinary
 .RB ( .P )
 paragraph resets the indentation,
@@ -1843,7 +1843,7 @@ by the left margin.
 .RE
 .
 .
-.PP
+.P
 Finally,
 we have ended the relative inset by using
 .BR .RE ,
@@ -1858,7 +1858,7 @@ This is an ordinary
 paragraph.
 .
 .
-.PP
+.P
 Resist the temptation to mock up tabular or multi-column output with
 horizontal tab characters or the indentation arguments to
 .BR .IP ,
@@ -1876,7 +1876,7 @@ can likely meet your needs.
 _endif()dnl
 .
 .
-.PP
+.P
 The following macros break the output line and insert vertical space:
 .BR .SH ,
 .BR .SS ,
@@ -1986,7 +1986,7 @@ and \(lq(TM)\(rq otherwise.
 _ifstyle()dnl
 .
 .
-.PP
+.P
 None of the above is necessary in a contemporary man page.
 .
 .B \e*S
@@ -2028,7 +2028,7 @@ a hint can be given to the man page librarian by making the first line
 of a man page look like this:
 .
 .
-.PP
+.P
 .RS
 .BI "\(aq\e\(dq " word
 .\" AT&T: .BI "'\e"" " word
@@ -2036,7 +2036,7 @@ of a man page look like this:
 .RE
 .
 .
-.PP
+.P
 The line starts with an apostrophe (\(aq),
 not a dot,
 and a single space character follows the double quote.
@@ -2058,7 +2058,7 @@ program can use this information to automatically call the required
 preprocessor(s) in the right order.
 .
 .
-.PP
+.P
 The usual
 .I tbl
 and
@@ -2097,7 +2097,7 @@ supplement the functionality of
 with these lower-level elements where necessary.
 .
 .
-.PP
+.P
 Note,
 however,
 that using raw
@@ -2119,7 +2119,7 @@ a problem that can lead to portions of your text being omitted
 or presented incomprehensibly.
 .
 .
-.PP
+.P
 For portability to modern viewers,
 it is best to write your page entirely with the macros described in this
 page
@@ -2142,7 +2142,7 @@ See
 in section \(lqFiles\(rq below.
 .
 .
-.PP
+.P
 Similar caveats apply to escapes.
 .
 Some escape sequences are however required for correct typesetting
@@ -2577,7 +2577,7 @@ source than
 escapes do.
 .
 .
-.PP
+.P
 For maximum portability,
 escape sequences and special characters not listed above are better
 avoided in man pages.
@@ -3237,7 +3237,7 @@ _ifstyle()dnl
 .
 .RS
 .RS
-.PP
+.P
 .EX
 \&.\e" Use narrower indentation on terminals and similar.
 \&.if n .nr IN 4n
@@ -3433,7 +3433,7 @@ using them when he edited the first volume of the Version 7 Unix manual,
 a compilation of all man pages supplied by the system.
 .
 .
-.PP
+.P
 The GNU version of the
 .I man
 macro package was written by James Clark and contributors.
@@ -3448,7 +3448,7 @@ Eric S.\& Raymond
 .ME .
 .
 .
-.PP
+.P
 This document was originally written for the Debian GNU/Linux system by
 .MT sgk@\:debian\:.org
 Susan G.\& Kleinmann
@@ -3476,19 +3476,19 @@ and
 are preprocessors used with man pages.
 .
 .
-.PP
+.P
 .IR man (1)
 describes the man page librarian on your system.
 .
 .
-.PP
+.P
 .IR groff_mdoc (@MAN7EXT@)
 describes the
 .I groff
 version of the BSD-originated alternative macro package for man pages.
 .
 .
-.PP
+.P
 _ifstyle()dnl
 .IR groff_man (@MAN7EXT@),
 _endif()dnl
