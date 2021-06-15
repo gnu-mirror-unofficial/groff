@@ -2596,7 +2596,7 @@ void exit_troff()
     tok.next();
     process_input_stack();
   }
-  // This will only happen if a trap-invoked macro starts a diversion,
+  // This will only happen if a trap-called macro starts a diversion,
   // or if vertical position traps have been disabled.
   cleanup_and_exit(0);
 }
@@ -4075,7 +4075,7 @@ void spring_trap(symbol nm)
   request_or_macro *p = lookup_request(nm);
   macro *m = p->to_macro();
   if (m)
-    input_stack::push(new macro_iterator(nm, *m, "trap-invoked macro"));
+    input_stack::push(new macro_iterator(nm, *m, "trap-called macro"));
   else
     error("you can't invoke a request with a trap");
   input_stack::push(make_temp_iterator(buf));
