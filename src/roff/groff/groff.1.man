@@ -129,7 +129,7 @@ interprets differently.
 At the same time,
 not all valid
 .I \%@g@troff
-options can be given into
+options can be given to
 .IR groff .
 .
 .
@@ -231,16 +231,16 @@ Implies
 .B \-l
 Send the output to a spooler program for printing.
 .
-The command that should be used for this is specified by the
-.B print
-command in the device description file;
+The
+.RB \[lq] print \[rq]
+directive in the device description file
+specifies the default command to be used;
 see
 .IR \%groff_font (@MAN5EXT@).
 .
-If this command is not present,
-the output is piped into the
-.IR lpr (1)
-program by default.
+If no such directive is present for the output device,
+output is piped to
+.IR lpr (1).
 .
 See options
 .B \-L
@@ -261,7 +261,6 @@ each should be passed with a separate
 .B \-L
 option each.
 .
-Note that
 .I groff
 does not prepend
 \[lq]\-\[rq]
@@ -347,11 +346,9 @@ No mechanism is provided for passing arguments to
 because most
 .I \%@g@refer
 options have equivalent language elements that can be specified within
-the document.
-.
-See
-.IR \%@g@refer (@MAN1EXT@)
-for more details.
+the document;
+see
+.IR \%@g@refer (@MAN1EXT@).
 .
 .
 .TP
@@ -651,13 +648,15 @@ Generate a plain text approximation of the typeset output.
 .B \-b
 Backtrace on error or warning.
 .
+.
 .TP
 .B \-c
-Disable color output.
+Disable color output
+(to any device)
+and use legacy output format for terminal devices;
+see
+.IR \%grotty (@MAN1EXT@).
 .
-Please consult the
-.IR \%grotty (@MAN1EXT@)
-man page for more details.
 .
 .TP
 .B \-C
@@ -753,7 +752,7 @@ Texinfo manual for a list of names.
 .
 .TP
 .BI \-W\~ name
-disable warning category
+Disable warning category
 .IR name .
 .
 See
@@ -1741,36 +1740,37 @@ A list of directories in which to seek macro files.
 See
 .IR \%@g@troff (@MAN1EXT@)
 and
-.IR \%groff_tmac (@MAN5EXT@)
-for more details.
+.IR \%groff_tmac (@MAN5EXT@).
 .
 .
 .TP
 .I GROFF_TMPDIR
 The directory in which temporary files are created.
 .
-If this is not set but the environment variable
+If not set,
+but the environment variable
 .I \%TMPDIR
-instead, temporary files are created in the directory
-.IR \%TMPDIR .
+is set,
+temporary files are created there instead.
 .
-On MS-DOS and Windows platforms, the environment variables
+On MS-DOS and Windows platforms,
+if neither of the foregoing are set,
+the environment variables
 .I TMP
 and
 .I TEMP
-(in that order) are searched also, after
-.I \%GROFF_TMPDIR
-and
-.IR \%TMPDIR .
+(in that order)
+are checked also.
 .
-Otherwise, temporary files are created in
+Otherwise,
+temporary files are created in
 .IR /tmp .
 .
 The
-.BR \%@g@refer (@MAN1EXT@),
-.BR \%grohtml (@MAN1EXT@),
+.IR \%@g@refer (@MAN1EXT@),
+.IR \%grohtml (@MAN1EXT@),
 and
-.BR grops (@MAN1EXT@)
+.IR grops (@MAN1EXT@)
 commands use temporary files.
 .
 .
@@ -1778,12 +1778,14 @@ commands use temporary files.
 .I GROFF_TYPESETTER
 Preset the default device.
 .
-If this is not set the
+If not set,
 .B @DEVICE@
 device is used as default.
 .
-This device name is overwritten by the option
-.BR \-T .
+The
+.B \-T
+option overrides
+.IR GROFF_TYPESETTER .
 .
 .
 .TP
