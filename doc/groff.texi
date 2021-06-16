@@ -15469,6 +15469,14 @@ with documents written using old versions of @code{troff}.  Some GNU
 extensions to @code{troff} have become supported by other
 implementations.
 
+@cindex @code{pi} request, disabled by default
+@cindex @code{sy} request, disabled by default
+The formatter operates in ``safer'' mode by default; to mitigate risks
+from untrusted input documents, the @code{pi} and @code{sy} requests are
+disabled.  GNU @code{troff}'s @option{-U} option enables ``unsafe
+mode'', restoring their function (and enabling additional @code{groff}
+extension requests, @code{open}, @code{opena}, and @code{pso}).
+
 @cindex adjustment to both margins, difference from @acronym{AT&T} @code{troff}
 @cindex rivers
 When adjusting to both margins, @acronym{AT&T} @code{troff} at first

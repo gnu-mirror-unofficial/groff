@@ -943,10 +943,7 @@ inter-word space when a line is adjusted.
 .
 To mitigate risks from untrusted input documents,
 the
-.BR open ,
-.BR opena ,
-.BR pi ,
-.BR pso ,
+.B pi
 and
 .B sy
 requests are disabled by default.
@@ -954,7 +951,14 @@ requests are disabled by default.
 .IR \%@g@troff (@MAN1EXT@)'s
 .B \-U
 option enables the formatter's \[lq]unsafe mode\[rq],
-restoring their function.
+restoring their function
+(and enabling additional
+.I groff
+extension requests,
+.BR open ,
+.BR opena ,
+and
+.BR pso ).
 .
 .
 .\" ====================================================================
