@@ -1,5 +1,16 @@
 2021-06-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-old.tmac: Properly situate devtag flag-related
+	register names in the package name space.  Rename `need_eo_h` to
+	`an-devtag-needs-end-of-heading'.  Rename `need_col2` to
+	`an-devtag-needs-second-column`.
+	(an-input-trap, SH, SS, HP, (initialization)): Do it.
+	(an-input-trap): Test their values more idiomatically.
+
+	Fixes one third of <https://savannah.gnu.org/bugs/?42515>.
+
+2021-06-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (do_if_request): Improve diagnostic
 	message; say "conditional operator", not just "conditional".
 

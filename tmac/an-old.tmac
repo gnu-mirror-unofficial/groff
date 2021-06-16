@@ -468,10 +468,10 @@
 .\" Handle macros that may take an "argument" on the next input line;
 .\" .SH, .SS, .B, .I, .SM, .SB--and .TP, which does so mandatorily.
 .de1 an-input-trap
-.  if \\n[need_eo_h]>0 .DEVTAG-EO-H
-.  nr need_eo_h 0
-.  if \\n[need_col2]>0 .DEVTAG-COL 2
-.  nr need_col2 0
+.  if \\n[an-devtag-needs-end-of-heading] .DEVTAG-EO-H
+.  nr an-devtag-needs-end-of-heading 0
+.  if \\n[an-devtag-needs-second-column] .DEVTAG-COL 2
+.  nr an-devtag-needs-second-column 0
 .  ft R
 .  ps \\n[PS]u
 .  vs \\n[VS]u
@@ -493,7 +493,7 @@
 .  fi
 .  in \\n[an-margin]u
 .  ti 0
-.  nr need_eo_h 1
+.  nr an-devtag-needs-end-of-heading 1
 .  DEVTAG-SH 1
 .  itc 1 an-input-trap
 .  nr an-need-no-space-mode 1
@@ -517,7 +517,7 @@
 .  fi
 .  in \\n[IN]u
 .  ti \\n[SN]u
-.  nr need_eo_h 1
+.  nr an-devtag-needs-end-of-heading 1
 .  DEVTAG-SH 2
 .  itc 1 an-input-trap
 .  nr an-need-no-space-mode 1
@@ -618,7 +618,7 @@
 .  in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
 .  ti \\n[an-margin]u
 .  DEVTAG-COL 1
-.  nr need_col2 1
+.  nr an-devtag-needs-second-column 1
 .  ns
 ..
 .
@@ -883,8 +883,8 @@
 .\" === Initialize. ===
 .
 .mso devtag.tmac
-.nr need_eo_h 0 \" need to mark end of a heading?
-.nr need_col2 0 \" need two-column layout?
+.nr an-devtag-needs-end-of-heading 0
+.nr an-devtag-needs-second-column 0
 .
 .nr an-do-draw-line-after-document 0
 .nr an-is-first-page-of-document 1
