@@ -268,10 +268,10 @@
 .nr ?H 0
 .nr ?c \\n(?C
 .nr ?C 0
-.if !"\\*(|4"" .rn |4 |0
-.if !"\\*(|5"" .rn |5 |1
-.if !"\\*(|6"" .rn |6 |2
-.if !"\\*(|7"" .rn |7 |3
+.do if d |4 .rn |4 |0
+.do if d |5 .rn |5 |1
+.do if d |6 .rn |6 |2
+.do if d |7 .rn |7 |3
 .nr _w 0			\" reset max footnote width
 .nr ?W 0			\" no wide floats this page (yet)
 .nr ?I 1
