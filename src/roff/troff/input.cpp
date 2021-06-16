@@ -5712,7 +5712,8 @@ int do_if_request()
     case 'm':
     case 'r':
       warning(WARN_SYNTAX,
-	      "conditional '%1' used in compatibility mode", c);
+	      "conditional operator '%1' used in compatibility mode",
+	      c);
       break;
     default:
       break;
