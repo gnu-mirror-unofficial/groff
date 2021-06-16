@@ -1,3 +1,19 @@
+2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac-u: Rename registers for clarity.  Unlike other
+	macro packages supplied by groff, "me" mostly remains within the
+	AT&T 2-character name space, accessing extended names
+	selectively through `do` and `de1` requests.  The package
+	therefore has no characteristic name prefix.
+	  need_eo_h  -> devtag-needs-end-of-heading
+	  need_eo_tl -> devtag-needs-end-of-title
+	  need_tl    -> devtag-needs-title
+	(@html_check_need_title, sh, EQ): The foregoing registers are
+	effectively Booleans, so perform Boolean-style tests on their
+	interpolations.
+
+	Fixes a second third of <https://savannah.gnu.org/bugs/?42515>.
+
 2021-06-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac-u: Work in compatibility mode.  It seems this was
