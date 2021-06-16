@@ -1,5 +1,16 @@
 2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/s.tmac: Properly situate devtag flag-related register
+	names in the package name space.  Rename `need_eo_h` to
+	`s@devtag-needs-end-of-heading'.  Rename `need_eo_tl` to
+	`s@devtag-needs-end-of-title`.
+	((initialization), par@reset, @SH, par@finish, @NH): Do it.
+	(par@reset): Test their values more idiomatically.
+
+	Fixes last third of <https://savannah.gnu.org/bugs/?42515>.
+
+2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/e.tmac-u (@h): Migrate SCCS revision 2.37 to be idiomatic
 	for groff (and not throw warnings of type 'mac').
 

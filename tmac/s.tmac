@@ -28,10 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .\" See if already loaded.
 .if r GS .nx
-.mso devtag.tmac
 .nr GS 1
-.nr need_eo_h 0
-.nr need_eo_tl 0
+.
+.mso devtag.tmac
+.nr s@devtag-needs-end-of-heading 0
+.nr s@devtag-needs-end-of-title 0
 .
 .\" Define a string for use in diagnostic messages.
 .ds @s s.tmac\"
@@ -1207,10 +1208,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" par@reset
 .de par@reset
 .br
-.if \\n[need_eo_tl]>0 .DEVTAG-EO-TL
-.nr need_eo_tl 0
-.if \\n[need_eo_h]>0 .DEVTAG-EO-H
-.nr need_eo_h 0
+.if \\n[s@devtag-needs-end-of-title] .DEVTAG-EO-TL
+.nr s@devtag-needs-end-of-title 0
+.if \\n[s@devtag-needs-end-of-heading] .DEVTAG-EO-H
+.nr s@devtag-needs-end-of-heading 0
 .ce 0
 .rj 0
 .ul 0
@@ -1480,7 +1481,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  if 0\\$1>0 .nr sh*psincr (\\n[GROWPS]-0\\$1)*\\n[PSINCR]
 .  SH-NO-TAG
 .  DEVTAG-SH 1
-.  if '\*(.T'html' .nr need_eo_h 1
+.  if '\*(.T'html' .nr s@devtag-needs-end-of-heading 1
 ..
 .\" TL, AU, and AI are aliased to these in cov*ab-init.
 .de par@TL
@@ -1491,7 +1492,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .vs +3p
 .ce 9999
 .DEVTAG-TL
-.nr need_eo_tl 1
+.nr s@devtag-needs-end-of-title 1
 ..
 .de par@AU
 .par@finish
@@ -1683,7 +1684,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr sh*psincr (\\n[GROWPS]-\\n[nh*hl])*\\n[PSINCR]
 .SH-NO-TAG
 .DEVTAG-NH "\\$1"
-.  if '\*(.T'html' .nr need_eo_h 1
+.  if '\*(.T'html' .nr s@devtag-needs-end-of-heading 1
 \\*[SN-STYLE]
 ..
 .\" ****************************
