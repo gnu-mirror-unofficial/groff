@@ -801,7 +801,7 @@ lf(CR) lx .
 Macro	Description
 _
 \&.NH \f[I]level\f[]	T{
-Numbered heading.
+Automatically numbered heading.
 .
 The
 .I level
