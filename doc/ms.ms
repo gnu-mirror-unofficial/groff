@@ -611,8 +611,8 @@ Paragraphs
 .
 .LP
 Several paragraph types are available,
-differing in how indentation is
-applied:
+differing in how indentation
+applies to them:
 to left,
 right,
 or both margins;
