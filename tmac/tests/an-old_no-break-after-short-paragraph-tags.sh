@@ -22,8 +22,8 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # Regression-test Savannah #60624.
 #
-# A page break should not follow the tag in a a tagged paragraph when
-# the tag can fit within the indentation.
+# A page break should not follow the tag in a tagged paragraph when the
+# tag can fit within the indentation.
 
 FAIL=
 
