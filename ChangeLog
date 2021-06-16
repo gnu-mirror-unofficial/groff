@@ -1,5 +1,17 @@
 2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Improve diagnostics during documentation
+	generation; none should occur normally, but when they do, seeing
+	troff complain about "<standard input>" is disheartening.
+	(DOC_GROFF_ONLY): Add -b option so we get backtraces (also kill
+	off trailing whitespace).
+	(DOC_GROFF):
+	(doc/pic.html):
+	(doc/webpage.html): Add sed expression to inject `lf` request
+	into the stream to identify the file being processed.
+
+2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/me-revisions: Supplement history with subsequent BSD work
 	from versions 2.29 (1998-04-22) to 8.1 (1993-06-05).
 
