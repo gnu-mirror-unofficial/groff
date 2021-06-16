@@ -1,5 +1,32 @@
 2021-06-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/e.tmac-u: Work in compatibility mode.  It seems this was
+	the intention (reasonable, since "me" originates in pre-groff
+	BSD Unix), but there were several problems.
+	(@R): Prefix register existence test with `do`.
+	(@html_check_need_title): Define with `do` since the macro name
+	is long, and also with `de1` so that we can freely use groff
+	extensions within.  Drop many `do` requests from macro
+	definition.
+	(@check_need_title): Define with `do`, as above.  Add comment
+	explaining why `de1` is not needed for this macro definition.
+	(@S): Prefix macro/string existence test with `do`.  Remove
+	spurious space so that the argument string name is truly defined
+	as empty.
+	(nm, n1, n2): Prefix handling of long register names `_#p` and
+	`_#f` with `do` request.
+	(top level): Prefix `mso` request with `do`.
+	((x-html): Define with `do` and `de1` instead of `de`.  Drop
+	now-unnecessary `do` requests from macro body.
+	()x-html): Define with `do` and `de1` instead of `de` for
+	symmetry.
+	(xp-html): Define with `do` and `de1` instead of `de`.  Drop
+	now-unnecessary `do` requests from macro body.
+
+	Fixes <https://savannah.gnu.org/bugs/?60785>.
+
+2021-06-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/devtag.tmac: Work in compatibility mode; define macros
 	with the `de1` instead of the `de` request.
 

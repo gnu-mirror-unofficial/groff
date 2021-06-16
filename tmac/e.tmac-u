@@ -45,27 +45,28 @@
 .
 .if !\n(.g .ig
 .de @R		\" --- initialize number register to 0, if undefined
-.if !r\\$1 .nr \\$1 0
+.do if !r\\$1 .nr \\$1 0
 ..
 .
 .\" --- check whether grohtml needs end of title/heading
-.de @html_check_need_title
-.do if (\\n[need_eo_tl] == 1) \
+.do de1 @html_check_need_title
+.if (\\n[need_eo_tl] == 1) \
 \{\
-.	do nr need_eo_tl 0
-.	do DEVTAG-EO-TL
+.	nr need_eo_tl 0
+.	DEVTAG-EO-TL
 .\}
-.do if (\\n[need_tl] == 1) \
+.if (\\n[need_tl] == 1) \
 \{\
-.	do DEVTAG-TL
-.	do nr need_tl 0
-.	do nr need_eo_tl 1
+.	DEVTAG-TL
+.	nr need_tl 0
+.	nr need_eo_tl 1
 .\}
-.do if \\n[need_eo_h]>0 .do DEVTAG-EO-H
-.do nr need_eo_h 0
+.if \\n[need_eo_h]>0 .do DEVTAG-EO-H
+.nr need_eo_h 0
 ..
 .
-.de @check_need_title
+.\" If this macro were non-empty, we'd want to define it with .de1.
+.do de @check_need_title
 ..
 .
 .ie '\*(.T'html' \
@@ -78,7 +79,7 @@
 .
 .if !\n(.g .ig
 .de @S		\" --- initialize string/macro to empty, if undefined
-.if !d\\$1 .ds \\$1 \" empty
+.do if !d\\$1 .ds \\$1\" empty
 ..
 .
 .@R @\"			\" debugging level
@@ -137,8 +138,8 @@
 \{\
 .	nr _S \\n(.s
 .	nr _F \\n(.f
-.	if r _#p .ps \\n[_#p]
-.	if r _#f .ft \\n[_#f]
+.	do if r _#p .do ps \\n[_#p]
+.	do if r _#f .do ft \\n[_#f]
 .	@# \\$1 \\$2 \\$3 \\$4
 .	ft \\n(_F
 .	ps \\n(_S
@@ -540,8 +541,8 @@
 .de n1			\" *** line numbering 1
 .ll -\w'0000'u
 .nr ?n 1
-.nr _#p \\n(.s
-.nr _#f \\n(.f
+.do nr _#p \\n(.s
+.do nr _#f \\n(.f
 .nm 1
 ..
 .
@@ -566,8 +567,8 @@
 .				nr ln (\\n[_ln])-\\*(|j
 .			el \
 .				nr ln \\$1  \" unsigned N
-.		nr _#p \\n(.s
-.		nr _#f \\n(.f
+.		do nr _#p \\n(.s
+.		do nr _#f \\n(.f
 .		nm \\n(ln
 .		nr ?n 2
 .		rm |i |j
@@ -1284,7 +1285,7 @@
 .\"
 .\"	REFER
 .\"
-.mso refer-me.tmac
+.do mso refer-me.tmac
 .
 .\"
 .\"	IDEAL
@@ -1715,48 +1716,48 @@
 .\"		*** HTML VERSIONS OF .x(, .x), AND .xp ***
 .
 .
-.de (x-html    \" --- create TAG and divert text
+.do de1 (x-html    \" --- create TAG and divert text
 .nr _x +1
-.do nr _xn +1
-.do TAG "_x\\n[_x]
+.nr _xn +1
+.TAG "_x\\n[_x]
 .br
-.do di |x\\n[_xn]
+.di |x\\n[_xn]
 .br
 ..
 .
-.de )x-html    \" --- end diversion
+.do de1 )x-html    \" --- end diversion
 .br
 .di
 ..
 .
-.de xp-html    \" --- create list of links
-.do nr _xx 1
+.do de1 xp-html    \" --- create list of links
+.nr _xx 1
 .br
-.do ev xp-html-ev
+.ev xp-html-ev
 .sp
-.do ULS
-.do while \\n[_xx]<=\\n[_xn] \
+.ULS
+.while \\n[_xx]<=\\n[_xn] \
 \{\
 .	br
-.	do unformat |x\\n[_xx]
-.	do di xp-html-div
+.	unformat |x\\n[_xx]
+.	di xp-html-div
 .	br
 .	ll 100i
 .	fi
-.	do |x\\n[_xx]
+.	|x\\n[_xx]
 .	br
 .	di
-.	do asciify xp-html-div
-.	do rm xp-html-as
-.	do as xp-html-as #
-.	do as xp-html-as _x\\n[_xx]
+.	asciify xp-html-div
+.	rm xp-html-as
+.	as xp-html-as #
+.	as xp-html-as _x\\n[_xx]
 .	ll
 .	LI
-.	do URL \\*[xp-html-as] "\\*[xp-html-div]
-.	do rm xp-html-as
-.	do nr _xx +1
+.	URL \\*[xp-html-as] "\\*[xp-html-div]
+.	rm xp-html-as
+.	nr _xx +1
 .\}
-.do ULE
+.ULE
 .sp
 .ev
 ..
