@@ -1047,8 +1047,14 @@ Display macro	Type of display
 With keep	No keep
 _
 \&.DS L	\&.LD	Left-justified.
-\&.DS I [\,\fIindent\/\fP]	\&.ID	T{
-Indented (default indent in the \fBDI\fP register).
+\&.DS I \f[R][\,\f[I]indent\/\f[]]	\
+\&.ID \f[R][\,\f[I]indent\/\f[]]	T{
+Indented
+(by
+.I indent
+if given,
+otherwise the value of
+.BR \[rs]n[DI] ).
 T}
 \&.DS B	\&.BD	T{
 Block-centered (left-justified, longest line centered).

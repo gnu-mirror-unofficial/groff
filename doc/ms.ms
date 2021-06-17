@@ -1665,7 +1665,8 @@ Display macro	Description
 With keep	No keep
 _
 \&.DS L	\&.LD	Left-aligns display.
-\&.DS I [\fIindent\fP]	\&.ID	T{
+\&.DS I \f[R][\,\f[I]indent\/\f[]]	\
+\&.ID \f[R][\,\f[I]indent\/\f[]]	T{
 Indents display
 (by
 .I indent

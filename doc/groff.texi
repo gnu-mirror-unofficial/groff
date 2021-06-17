@@ -2871,8 +2871,8 @@ Default: 0.5@dmn{v}.
 @endDefmpreg
 
 @Defmpreg {DI, ms}
-Sets the amount by which to indent a display started with @samp{.DS I}
-or @code{ID}.  This is a GNU extension.
+Sets the default amount by which to indent a display started with
+@samp{.DS I} or @code{ID}.  This is a GNU extension.
 
 Effective: next indented display.
 
@@ -3595,13 +3595,14 @@ macro allows the display to break across pages.  The @code{DE} macro
 ends the display.
 @endDefmac
 
-@DefmacList {DS, @t{I}, ms}
-@DefmacItemx {ID, , ms}
+@DefmacList {DS, @t{I} [@Var{indent}], ms}
+@DefmacItemx {ID, [@Var{indent}], ms}
 @DefmacListEndx {DE, , ms}
-Indents the display as defined by the @code{DI} register.  The @samp{.DS
-I} call generates a page break, if necessary, to keep the entire display
-on one page.  The @code{ID} macro allows the display to break across
-pages.  The @code{DE} macro ends the display.
+Indents the display by @var{indent} if specified (and by the amount of
+the @code{DI} register otherwise).  The @samp{.DS I} call generates a
+page break, if necessary, to keep the entire display on one page.  The
+@code{ID} macro allows the display to break across pages.  The @code{DE}
+macro ends the display.
 @endDefmac
 
 @DefmacList {DS, @t{B}, ms}

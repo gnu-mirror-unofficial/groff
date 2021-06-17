@@ -1,3 +1,17 @@
+2021-06-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[ms]: Fix doc omission; .ID can take an argument.
+
+	* doc/groff.texi (ms Document Control Settings) <DI>:
+	Characterize register setting as a _default_.
+	(ms Displays and Keeps): Add optional variable "indent" argument
+	to syntax summary of ".DS I" and ".ID".  Note that the given
+	indentation is used if present, and \n[DI] otherwise.
+	* doc/ms.ms (Displays and keeps): Add optional variable "indent"
+	argument to syntax summary of ".ID".  Switch fonts more
+	carefully and apply italic corrections.
+	* tmac/groff_ms.7.man (Displays and keeps): Sync with doc/ms.ms.
+
 2021-06-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/s.tmac: Properly situate devtag flag-related register
