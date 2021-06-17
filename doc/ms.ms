@@ -24,8 +24,8 @@
 .nr VS 13
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND May 2021
-.EH '%''May 2021'
+.ND June 2021
+.EH '%''June 2021'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
