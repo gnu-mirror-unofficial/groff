@@ -3015,7 +3015,6 @@ footnotes, and inclusions of material such as tables and figures.
 * Highlighting in ms::
 * Lists in ms::
 * Indented regions in ms::
-* Tab stops in ms::
 * ms Displays and Keeps::
 * ms Insertions::
 * Example multi-page table::
@@ -3498,7 +3497,7 @@ money
 
 @c ---------------------------------------------------------------------
 
-@node Indented regions in ms, Tab stops in ms, Lists in ms, ms Body Text
+@node Indented regions in ms, ms Displays and Keeps, Lists in ms, ms Body Text
 @subsubsection Indented regions
 
 You may need to indent a region of text while still wrapping and
@@ -3558,21 +3557,7 @@ disabled.
 
 @c ---------------------------------------------------------------------
 
-@node Tab stops in ms, ms Displays and Keeps, Indented regions in ms, ms Body Text
-@subsubsection Tab stops
-
-Use the @code{ta} request to define tab stops as needed.  @xref{Tabs and
-Fields}.
-
-@Defmac {TA, , ms}
-Use this macro to reset the tab stops to the default for @file{ms}
-(every 5n).  You can redefine the @code{TA} macro to create a different
-set of default tab stops.
-@endDefmac
-
-@c ---------------------------------------------------------------------
-
-@node ms Displays and Keeps, ms Insertions, Tab stops in ms, ms Body Text
+@node ms Displays and Keeps, ms Insertions, Indented regions in ms, ms Body Text
 @subsubsection Displays and keeps
 @cindex @code{ms} macros, displays
 @cindex @code{ms} macros, keeps
@@ -3863,6 +3848,7 @@ You can change the layout by setting the proper registers and strings.
 
 @menu
 * ms Headers and Footers::
+* Tab Stops in ms::
 * ms Margins::
 * ms Multiple Columns::
 * ms TOC::
@@ -3871,7 +3857,7 @@ You can change the layout by setting the proper registers and strings.
 
 @c ---------------------------------------------------------------------
 
-@node ms Headers and Footers, ms Margins, ms Page Layout, ms Page Layout
+@node ms Headers and Footers, Tab Stops in ms, ms Page Layout, ms Page Layout
 @subsubsection Headers and footers
 @cindex @code{ms} macros, headers
 @cindex @code{ms} macros, footers
@@ -3929,7 +3915,21 @@ that page.  This is a Berkeley extension.
 
 @c ---------------------------------------------------------------------
 
-@node ms Margins, ms Multiple Columns, ms Headers and Footers, ms Page Layout
+@node Tab Stops in ms, ms Margins, ms Headers and Footers, ms Page Layout
+@subsubsection Tab stops
+
+Use the @code{ta} request to define tab stops as needed.  @xref{Tabs and
+Fields}.
+
+@Defmac {TA, , ms}
+Use this macro to reset the tab stops to the default for @file{ms}
+(every 5n).  You can redefine the @code{TA} macro to create a different
+set of default tab stops.
+@endDefmac
+
+@c ---------------------------------------------------------------------
+
+@node ms Margins, ms Multiple Columns, Tab Stops in ms, ms Page Layout
 @subsubsection Margins
 @cindex @code{ms} macros, margins
 
