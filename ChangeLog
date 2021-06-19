@@ -204,18 +204,17 @@
 
 2021-06-11  Tadziu Hoffmann <hoffmann@usm.uni-muenchen.de>
 
-	Fix Savannah #59604.  Indent an IP paragraph based on the type
-	size of the paragraph text, not a preceding heading.  We have to
-	delay evaluating IP's argument until the font size has been
-	reset, which I've attempted to do by simply passing the argument
-	unevaluated down the call hierarchy, instead of saving it in a
-	number register right away, as appears customary in this ms
-	implementation.
+	Indent an IP paragraph based on the type size of the paragraph
+	text, not a preceding heading.  We have to delay evaluating IP's
+	argument until the font size has been reset, which I've
+	attempted to do by simply passing the argument unevaluated down
+	the call hierarchy, instead of saving it in a number register
+	right away, as appears customary in this ms implementation.
 
-	However, par@reset is called from a great number of places,
-	and these usually set the indent registers beforehand.
-	I've left this as it is, so now two ways of setting the
-	indents exist: via register and optionally via argument.
+	However, par@reset is called from a great number of places, and
+	these usually set the indent registers beforehand.  I've left
+	this as it is, so now two ways of setting the indents exist: via
+	register and optionally via argument.
 
 	* tmac/s.tmac (par@reset): Move font-size setting stuff before
 	indent-setting stuff; set registers from optional arguments with
@@ -223,6 +222,8 @@
 	(par*start, par@finish): Don't set registers, but instead pass
 	arguments to par@reset.
 	(@IP): Pass argument unevaluated to par*start.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?59604>.
 
 2021-06-11  Tadziu Hoffmann <hoffmann@usm.uni-muenchen.de>
 
