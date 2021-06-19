@@ -446,23 +446,16 @@
 .  in \\n[an-margin]u
 .  \" Prevent page break between the tag and the rest of the paragraph.
 .  ne (2v + 1u)
-.  \" Is the tag too wide?
-.  ie (\\n[dl] + \\n[an-tag-separation] > \\n[an-prevailing-indent]) \{\
-.    an-div
-.    ev
-.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
-.  \}
-.  el \{\
-.    DEVTAG-COL 1
-.    an-div
-.    sp -1v
-.    ev
-.    \" In nroff mode, the indentation value should be an integer
-.    \" multiple of the character cell, to avoid different results
-.    \" compared to the .ie part above.
-.    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
-.    DEVTAG-COL-NEXT 2
-.  \}
+.  \" Does the tag fit within the paragraph indentation?
+.  nr an-tag-fits \
+     (\\n[dl] + \\n[an-tag-separation] <= \\n[an-prevailing-indent])
+.  if \\n[an-tag-fits] .DEVTAG-COL 1
+.  an-div
+.  if \\n[an-tag-fits] .sp -1v
+.  ev
+.  in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
+.  if \\n[an-tag-fits] .DEVTAG-COL 2
+.  rr an-tag-fits
 ..
 .
 .\" Handle macros that may take an "argument" on the next input line;
@@ -918,7 +911,7 @@
 .\"
 .\" \n[C] may get set to 1 redundantly in the below; we could replace
 .\" that with a complex conditional, but it doesn't seem to be worth the
-.\" trouble given AT&T-compatible restrictions on '!' placement.
+.\" trouble given restrictions on use of '!', '&', and ':' operators.
 .ie !r C \
 .  nr C 0
 .el \
@@ -960,7 +953,7 @@
 .\" TH macro places page location traps only if not continuously
 .\" rendering.
 .if r FT \{\
-.  \" Validate it. Continuous rendering ignores FT.  Measuring a footer
+.  \" Validate it.  Continuous rendering ignores FT.  Measuring a footer
 .  \" distance from the page top isn't done.  A footer distance of over
 .  \" half the page length is unlikely.  A footer distance of less than
 .  \" one line height is too.
@@ -995,8 +988,9 @@
 .
 .\" standard indentation
 .if !r IN \{\
-.  \" We must select an integer indentation value for nroff; see comment
-.  \" in an-write-paragraph-tag.
+.  \" We select an integer indentation value in nroff mode because this
+.  \" value is used additively for multiple purposes; rounding of
+.  \" accumulating fractions would produce inconsistent results.
 .  ie t \
 .    nr IN 7.2n
 .  el \
