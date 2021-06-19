@@ -260,7 +260,7 @@
 2021-06-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/pic.ms (Basic PIC Concepts, Decorating Objects/Filled
-	Objects, PIC Reference/Semi-Formal Grammar): Fix error; the
+	Objects, PIC Reference/Semi-Formal Grammar): Fix error: the
 	keyword "solid" sets a line style, not a fill for a closed
 	figure.  Thanks to Dave Kemper and Wim Stockman for reporting
 	and researching this issue.
@@ -382,7 +382,7 @@
 
 2021-05-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/groff_ms.7.man (Usage/Paragraphs) <QP>: Fix error; .QP
+	* tmac/groff_ms.7.man (Usage/Paragraphs) <QP>: Fix error: .QP
 	paragraphs are indented by \n[QI], not \n[PI].
 
 2021-05-27  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -438,7 +438,7 @@
 
 2021-05-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* man/groff.7.man (Registers/Writable registers): Fix error;
+	* man/groff.7.man (Registers/Writable registers): Fix error:
 	\n[nl] interpolates the current vertical position, not the
 	vertical position of the "last printed text baseline"; the
 	latter is \n[.h].
@@ -1362,7 +1362,7 @@
 
 2021-04-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi (Setting Registers) <rnn>: Fix error; the
+	* doc/groff.texi (Setting Registers) <rnn>: Fix error: the
 	request is not ignored if the second argument (the new name)
 	does not exist.  Problem dates back to 52a6d12a (11 May 2000).
 
@@ -2337,7 +2337,7 @@
 
 2020-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* src/preproc/preconv/preconv.1.man (Description): Fix error;
+	* src/preproc/preconv/preconv.1.man (Description): Fix error:
 	groff's -K option, not -k, specifies a character econding (and
 	overrides GROFF_ENCODING in the environment).  Also explain how
 	valid encoding strings are determined.
@@ -2436,7 +2436,7 @@
 
 2020-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/groff_mdoc.7.man (Predefined strings): Fix error; the
+	* tmac/groff_mdoc.7.man (Predefined strings): Fix error: the
 	\*[Lq] and \*[Rq] strings degrade to neutral double quotes (")
 	on "nroff" devices (-Tascii and -Tlatin1), not "``" and "''".
 
@@ -3576,7 +3576,7 @@
 
 2020-07-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/groff_man.7.man (.PP, .LP, .P): Fix error; these macros
+	* tmac/groff_man.7.man (.PP, .LP, .P): Fix error: these macros
 	do not reset the left margin.
 
 2020-07-16  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -3597,7 +3597,7 @@
 
 2020-07-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/groff_man.7.man (.EE, .YS): Fix error; refer to "initial
+	* tmac/groff_man.7.man (.EE, .YS): Fix error: refer to "initial
 	hyphenation setting" instead of "previous hyphenation mode".
 	Incidentally, this fact points out why putting ".hy 0" or ".nh"
 	in your man page is futile.
@@ -3635,7 +3635,7 @@
 
 2020-06-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* man/groff_diff.7.man (Language/Long names): Fix error; groff
+	* man/groff_diff.7.man (Language/Long names): Fix error: groff
 	adds three new requests with short names, not two.  List them in
 	an adjacent comment.
 
