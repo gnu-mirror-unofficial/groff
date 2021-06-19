@@ -500,14 +500,14 @@
 .  nr an-need-break 1
 .  ps \\n[PS-SH]u
 .  ft \\*[HF]
-.  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
+.  if \\n[an-remap-I-style-in-headings] .ftr I \\*[an-heading-family]BI
 .  ne (2v + 1u)
 .  if \\n[.$] \{\
 .    ds an-section-heading \\$*\"
 .    if \\n[CS] .stringup an-section-heading
 \&\\*[an-section-heading]
 .  \}
-.  if \\n[an-HF-remap-I-style] .ftr I I
+.  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
 .
 .\" Set a subsection heading.
@@ -524,10 +524,10 @@
 .  nr an-need-break 1
 .  ps \\n[PS-SS]u
 .  ft \\*[HF]
-.  if \\n[an-HF-remap-I-style] .ftr I \\*[an-heading-family]BI
+.  if \\n[an-remap-I-style-in-headings] .ftr I \\*[an-heading-family]BI
 .  ne (2v + 1u)
 .  if \\n[.$] \&\\$*
-.  if \\n[an-HF-remap-I-style] .ftr I I
+.  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
 .
 .\" Set arguments (or the next input line if none) in bold style.
@@ -1091,7 +1091,7 @@
 .\}
 .if '\*[an-heading-style]'B' \
 .  if F \*[an-heading-family]BI \
-.    nr an-HF-remap-I-style 1
+.    nr an-remap-I-style-in-headings 1
 .rr an-HF-length
 .rm an-heading-style
 .
