@@ -1,5 +1,12 @@
 2021-06-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/mdoc/doc-nroff-u: Set the usekeeps register used by tbl
+	to the logical complement of the cR (continuous rendering)
+	register.  This prevents blank lines from creeping into tables
+	in that mode.
+
+2021-06-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (an-blank-line-trap, an-leading-space-trap):
 	We say in a comment, "Macros ... that are called by traps of any
 	kind must be defined with `de1` because they might be called
