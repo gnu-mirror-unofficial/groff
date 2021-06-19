@@ -48,7 +48,7 @@
 .\" === Define macros. ===
 .\"
 .\" Macros that are part of the external interface (TH, SH, P, etc.) or
-.\" which are called by traps of any kind must be defined with `de1`
+.\" that are called by traps of any kind must be defined with `de1`
 .\" because they might be called from a context where compatibility mode
 .\" is enabled.  For other macros, `de` suffices.
 .
@@ -66,13 +66,13 @@
 .    an-style-warn use of deprecated macro: .\\$0
 ..
 .
-.de an-blank-line-trap
+.de1 an-blank-line-trap
 .  if (\\n[CHECKSTYLE] > 2) \
 .    an-style-warn blank line in input
 .  sp
 ..
 .
-.de an-leading-space-trap
+.de1 an-leading-space-trap
 .  if (\\n[CHECKSTYLE] > 2) \
 .    if \\n[.u] \
 .      an-style-warn \\n[lsn] leading space(s) on input line
