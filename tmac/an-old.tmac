@@ -383,17 +383,14 @@
 .  lt \\n[LT]u
 .  an-abbreviate-title
 .  if !\\n[an-is-output-html] \{\
-.    if !\\n[cR] \
-.      sp .5i
-.    if \\n[cR] \
-.      pl +1v
+.    ie \\n[cR] .pl +1v
+.    el         .sp .5i
 .    PT
-.    ie !\\n[cR] \
-.      sp |1i
-.    el \{\
+.    ie \\n[cR] \{\
 .      pl +1v
 .      sp 1v
 .    \}
+.    el .sp |1i
 .  \}
 .  ev
 .  ns
