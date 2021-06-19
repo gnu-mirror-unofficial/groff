@@ -11163,7 +11163,7 @@ can introduce unwanted space into a string when they are set off from
 the material they annotate, as is conventional.
 
 @Example
-.ds TeX T\h'-.2m'\v'.2m'E\v'-.2m'\h'-.1m'X \" Knuth's TeX
+.ds H2O H\v'+.3m'\s'-2'2\v'-.3m'\s0O \" water
 @endExample
 
 @noindent
@@ -11171,7 +11171,7 @@ Instead, place the comment on another line or put the comment escape
 immediately adjacent to the last character of the string.
 
 @Example
-.ds TeX T\h'-.2m'\v'.2m'E\v'-.2m'\h'-.1m'X\" Knuth's TeX
+.ds H2O H\v'+.3m'\s'-2'2\v'-.3m'\s0O\" water
 @endExample
 
 It is good style to end string definitions (and appendments; see below)
@@ -12577,10 +12577,12 @@ instead (even on terminals).
 An unbreakable space the width of a numeral in the current font.
 @endDefesc
 
-The following string definition sets the @TeX{} logo.
+The following string definition sets the @TeX{}
+logo.@footnote{@ref{Strings}, for an explanation of the trailing
+@samp{\"}.}
 
 @Example
-.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X
+.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X\"
 @endExample
 
 @DefescList {\\w, @code{'}, text, @code{'}}
