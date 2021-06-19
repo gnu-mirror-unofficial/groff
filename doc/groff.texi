@@ -6930,12 +6930,11 @@ Options}.
 @cindex @code{trf} request, causing implicit break
 A break interrupts filling.  Various ways of causing breaks were shown
 in @ref{Breaking}.  The @code{br} request likewise causes a break.
-Several other requests also cause breaks implicitly.  These are
-@code{bp}, @code{ce}, @code{cf}, @code{fi}, @code{fl}, @code{in},
-@code{nf}, @code{rj}, @code{sp}, @code{ti}, and @code{trf}.  If the
-no-break control character is used with any of these requests, GNU
-@code{troff} suppresses the break; instead the requested operation takes
-effect at the next break.
+A break is implied by several other requests:@: @code{bp}, @code{ce},
+@code{cf}, @code{fi}, @code{fl}, @code{in}, @code{nf}, @code{rj},
+@code{sp}, @code{ti}, and @code{trf}.  If the no-break control character
+is used with any of these requests, GNU @code{troff} suppresses the
+break; instead the requested operation takes effect at the next break.
 
 @Example
 .ll 55n
