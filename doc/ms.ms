@@ -2347,6 +2347,30 @@ T}
 .\" ------------------------
 .KS
 .NH 2
+Tab stops
+.XS
+	Tab stops
+.XE
+.
+.
+.LP
+Use the
+.B ta
+request to set tab stops as needed.
+.
+Use the
+.B TA
+macro to reset tabs to the default (every 5n).
+.
+You can redefine the
+.B TA
+macro to create a different set of default tab stops.
+.KE
+.
+.
+.\" ------------------------
+.KS
+.NH 2
 Margins
 .XS
 	Margins
