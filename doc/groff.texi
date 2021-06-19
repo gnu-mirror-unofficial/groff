@@ -3015,7 +3015,7 @@ footnotes, and inclusions of material such as tables and figures.
 * Highlighting in ms::
 * Lists in ms::
 * Indented regions in ms::
-* ms Displays and Keeps::
+* ms keeps and displays::
 * ms Insertions::
 * Example multi-page table::
 * ms Footnotes::
@@ -3497,26 +3497,26 @@ money
 
 @c ---------------------------------------------------------------------
 
-@node Indented regions in ms, ms Displays and Keeps, Lists in ms, ms Body Text
+@node Indented regions in ms, ms keeps and displays, Lists in ms, ms Body Text
 @subsubsection Indented regions
 
-You may need to indent a region of text while still wrapping and
-filling.
+You may need to indent a region of text while still letting @code{groff}
+automatically break lines and fill the text.
 
 @Defmac {RS, , ms}
-Begin a region indented by the amount stored in the @code{PI} register,
-affecting the placement of headings, paragraphs, and displays.
+Begin a region where headings, paragraphs, and displays are indented by
+the amount stored in the @code{PI} register.
 @endDefmac
 
 @Defmac {RE, , ms}
 End the most recent indented region.
 @endDefmac
 
-You can use @code{RS}/@code{RE} regions to line up text under hanging
-and indented paragraphs.
+You can use indented regions to line up text under hanging and indented
+paragraphs.
 @cindex @code{ms} macros, nested lists
 @cindex nested lists [@code{ms}]
-For example, you may wish to nest lists; the input
+For example, you may wish to nest lists.
 
 @CartoucheExample
 .IP \[bu] 2
@@ -3552,129 +3552,130 @@ produces
 @noindent
 as output.
 
-@xref{ms Displays and Keeps}, for macros to indent regions with filling
-disabled.
-
 @c ---------------------------------------------------------------------
 
-@node ms Displays and Keeps, ms Insertions, Indented regions in ms, ms Body Text
-@subsubsection Displays and keeps
+@node ms keeps and displays, ms Insertions, Indented regions in ms, ms Body Text
+@subsubsection Keeps and displays
 @cindex @code{ms} macros, displays
 @cindex @code{ms} macros, keeps
 @cindex keeps [@code{ms}]
-@cindex displays [@code{ms}]
 
-Use displays to show text-based examples or figures (such as code
-listings).
+On occasion, you may want to @dfn{keep} several lines of text, or a
+region of a document, together on a single page, preventing an automatic
+page break within certain boundaries.  This can cause a page break to
+occur earlier than it normally would.  For example, you may want to keep
+two paragraphs together, or a paragraph that refers to a table, list, or
+figure adjacent to the item it discusses.  The @file{ms} macros provide
+the @code{KS} and @code{KE} macros for this purpose.
 
-Displays turn off filling, so lines of code are displayed as-is without
-inserting @code{br} requests in between each line.  Displays can be
-@dfn{kept} on a single page, or allowed to break across pages.
-
-@DefmacList {DS, @t{L}, ms}
-@DefmacItemx {LD, , ms}
-@DefmacListEndx {DE, , ms}
-Left-justified display.  The @samp{.DS L} call generates a page break,
-if necessary, to keep the entire display on one page.  The @code{LD}
-macro allows the display to break across pages.  The @code{DE} macro
-ends the display.
-@endDefmac
-
-@DefmacList {DS, @t{I} [@Var{indent}], ms}
-@DefmacItemx {ID, [@Var{indent}], ms}
-@DefmacListEndx {DE, , ms}
-Indents the display by @var{indent} if specified (and by the amount of
-the @code{DI} register otherwise).  The @samp{.DS I} call generates a
-page break, if necessary, to keep the entire display on one page.  The
-@code{ID} macro allows the display to break across pages.  The @code{DE}
-macro ends the display.
-@endDefmac
-
-@DefmacList {DS, @t{B}, ms}
-@DefmacItemx {BD, , ms}
-@DefmacListEndx {DE, , ms}
-Sets a block-centered display: the entire display is left-justified, but
-indented so that the longest line in the display is centered on the
-page.  The @samp{.DS B} call generates a page break, if necessary, to
-keep the entire display on one page.  The @code{BD} macro allows the
-display to break across pages.  The @code{DE} macro ends the display.
-@endDefmac
-
-@DefmacList {DS, @t{C}, ms}
-@DefmacItemx {CD, , ms}
-@DefmacListEndx {DE, , ms}
-Sets a centered display: each line in the display is centered.  The
-@samp{.DS C} call generates a page break, if necessary, to keep the
-entire display on one page.  The @code{CD} macro allows the display to
-break across pages.  The @code{DE} macro ends the display.
-@endDefmac
-
-@DefmacList {DS, @t{R}, ms}
-@DefmacItemx {RD, , ms}
-@DefmacListEndx {DE, , ms}
-Right-justifies each line in the display.  The @samp{.DS R} call
-generates a page break, if necessary, to keep the entire display on one
-page.  The @code{RD} macro allows the display to break across pages.
-The @code{DE} macro ends the display.
-@endDefmac
-
-On occasion, you may want to @dfn{keep} other text together on a page.
-For example, you may want to keep two paragraphs together, or a
-paragraph that refers to a table (or list, or other item) immediately
-following.  The @file{ms} macros provide the @code{KS} and @code{KE}
-macros for this purpose.
+You can alternatively specify a @dfn{floating keep}; if a keep cannot
+fit on the current page, @file{ms} holds its contents and
+allows material following the keep (in the source document) to fill the
+remainder of the current page.  When the page breaks, whether by an
+explicit @code{bp} request or by reaching the end of the page, @file{ms}
+puts the floating keep at the beginning of the next page.  This is
+useful for placing large graphics or tables that do not need to appear
+exactly where they occur in the source document.
 
 @DefmacList {KS, , ms}
+@DefmacItemx {KF, , ms}
 @DefmacListEndx {KE, , ms}
-The @code{KS} macro begins a block of text to be kept on a single page,
-and the @code{KE} macro ends the block.
-@endDefmac
-
-@DefmacList {KF, , ms}
-@DefmacListEndx {KE, , ms}
-Specifies a @dfn{floating keep}; if the keep cannot fit on the current
-page, @code{groff} holds the contents of the keep and allows text
-following the keep (in the source file) to fill in the remainder of the
-current page.  When the page breaks, whether by an explicit @code{bp}
-request or by reaching the end of the page, @code{groff} prints the
-floating keep at the top of the new page.  This is useful for printing
-large graphics or tables that do not need to appear exactly where
-specified.
+@code{KS} begins a keep, @code{KF} a floating keep, and @code{KE} ends a
+keep of either kind.
 @endDefmac
 
 As an alternative to the keep mechanism, the @code{ne} request forces a
 page break if there is not at least the amount of vertical space
 specified in its argument remaining on the page (@pxref{Page Control}).
+One application of @code{ne} is to reserve space on the page for a
+figure or illustration to be included later.
 
-Use the following macros to draw a box around a region of the page.
+@cindex boxes [@code{ms}]
+A keep can also be @dfn{boxed}.  Text in a box is automatically placed
+in a diversion (keep).
 
 @DefmacList {B1, , ms}
 @DefmacListEndx {B2, , ms}
-Marks the beginning and ending of text that is to have a box drawn
-around it.  The @code{B1} macro begins the box; the @code{B2} macro ends
-it.  Text in the box is automatically placed in a diversion (keep).
+@code{B1} begins a keep with a box drawn around it.  @code{B2} ends a
+boxed keep.
+@endDefmac
 
-These macros cause line breaks; if you need to box a word or phrase
-within a line, see the @code{BX} macro in @ref{Highlighting in ms}.  Box
-lines are drawn as close as possible to the text they enclose so that
-they are usable within paragraphs.  If you wish to box one or more
-paragraphs, you may improve the appearance by calling @code{B1} after
-the first paragraphing macro, and by adding a small amount of vertical
-space before calling @code{B2}.
+Box macros cause line breaks; if you need to box a word or phrase within
+a line, see the @code{BX} macro in @ref{Highlighting in ms}.  Box lines
+are drawn as close as possible to the text they enclose so that they are
+usable within paragraphs.  If you wish to box one or more paragraphs,
+you may improve the appearance by calling @code{B1} after the first
+paragraphing macro, and by adding a small amount of vertical space
+before calling @code{B2}.
 
+@c Wrap example at 56 columns.
 @CartoucheExample
 .LP
 .B1
 .I Warning:
-Happy Fun Ball may suddenly accelerate to lethal speeds.
+Happy Fun Ball may suddenly accelerate to dangerous
+speeds.
 .sp \n[PD]/2
 .B2
 @endCartoucheExample
+
+If you want a box to float, you will need to enclose the @code{B1} and
+@code{B2} calls within a pair of @code{KF} and @code{KE} calls.
+
+@cindex displays [@code{ms}]
+@dfn{Displays} turn off filling; lines of verse or program code are
+shown with their lines broken as in the source document without
+requiring @code{br} requests between lines.  Displays can be kept on a
+single page or allowed to break across pages.  The @code{DS} macro
+begins a kept display of the layout specified in its first argument;
+non-kept displays are begun with dedicated macros corresponding to their
+layout.
+
+@DefmacList {DS, @t{L}, ms}
+@DefmacListEndx {LD, , ms}
+Begin (@code{DS}:@: kept) left-aligned display.
 @endDefmac
+
+@DefmacList {DS, @t{I} [@Var{indent}], ms}
+@DefmacListEndx {ID, [@Var{indent}], ms}
+Begin (@code{DS}:@: kept) display indented by @var{indent} if specified,
+and by the amount of the @code{DI} register otherwise.
+@endDefmac
+
+@DefmacList {DS, @t{B}, ms}
+@DefmacListEndx {BD, , ms}
+Begin a (@code{DS}:@: kept) a block display:@: the entire display is
+left-aligned, but indented such that the longest line in the display
+is centered on the page.
+@endDefmac
+
+@DefmacList {DS, @t{C}, ms}
+@DefmacListEndx {CD, , ms}
+Begin a (@code{DS}:@: kept) centered display:@: each line in the display
+is centered.
+ @endDefmac
+
+@DefmacList {DS, @t{R}, ms}
+@DefmacListEndx {RD, , ms}
+Begin a (@code{DS}:@: kept) right-aligned display.
+@endDefmac
+
+@Defmac {ED, , ms}
+End any display.
+@endDefmac
+
+The distance stored in the @code{DD} register is inserted before and
+after each pair of display macros.  This is a Berkeley extension.
+
+The identation amount stored in the @code{DI} register is applied only
+to displays created with @samp{.DS I} and @code{ID}.  This is a GNU
+extension.
+
+Changes to either register take effect at the next display boundary.
 
 @c ---------------------------------------------------------------------
 
-@node ms Insertions, Example multi-page table, ms Displays and Keeps, ms Body Text
+@node ms Insertions, Example multi-page table, ms keeps and displays, ms Body Text
 @subsubsection Tables, figures, equations, and references
 @cindex @code{ms} macros, tables
 @cindex @code{ms} macros, figures

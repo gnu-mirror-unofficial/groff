@@ -1557,8 +1557,9 @@ Indented regions
 .
 .
 .LP
-You may need to indent a region of text while still wrapping and
-filling.
+You may need to indent a region of text while still letting
+.I groff
+automatically break lines and fill the text.
 .
 .
 .TS
@@ -1568,11 +1569,10 @@ lf(CR) lx .
 Macro	Description
 _
 \&.RS	T{
-Begin a region indented by
-.CW \[rs]n[PI] ,
-affecting the placement of headings,
+Begin a region where headings,
 paragraphs,
-and displays.
+and displays are indented by
+.CW \[rs]n[PI] .
 T}
 \&.RE	T{
 End the most recent indented region.
@@ -1581,10 +1581,8 @@ T}
 .
 .
 .PP
-You can use
-.CW .RS /
-.CW .RE
-regions to line up text under hanging and indented paragraphs.
+You can use indented regions to line up text under hanging and indented
+paragraphs.
 .
 For example,
 you may wish to nest lists.
@@ -1635,122 +1633,69 @@ T}
 .
 .
 .NH 2
-Displays and keeps
+Keeps, boxed keeps, and displays
 .XS
-	Displays and keeps
+	Keeps, boxed keeps, and displays
 .XE
+.
+.
 .LP
-Use displays to show text-based examples or figures
-(such as code listings).
-This document shows
-.I groff
-code examples inside displays, for example.
+On occasion,
+you may want to
+.I keep
+several lines of text,
+or a region of a document,
+together on a single page,
+preventing an automatic page break within certain boundaries.
+.
+This can cause a page break to occur earlier than it normally would.
+.
+For example,
+you may want to keep two paragraphs together,
+or a paragraph that refers to a table,
+list,
+or figure adjacent to the item it discusses.
+.
+The
+.I ms
+macros provide the
+.CW KS
+and
+.CW KE
+macros for this purpose.
+.
+.
 .PP
-Displays turn off filling, so lines of code can be
-displayed as-is without inserting
-.CW .br
-requests in between each line.
-Displays can be 
-.I kept
-on a single page, or allowed to break across pages.
-The following table shows the display types available.
+You can alternatively specify a
+.I "floating keep" ;
+if a keep cannot fit on the current page,
+.I ms
+holds its contents and allows material following the keep
+(in the source document)
+to fill the remainder of the current page.
+.
+When the page breaks,
+whether by an explicit
+.CW bp
+request or by reaching the end of the page,
+.I ms
+puts the floating keep at the beginning of the next page.
+.
+This is useful for placing large graphics or tables that do not need to
+appear exactly where they occur in the source document.
 .
 .
 .TS
 box;
-cb s | cb
-cb cb | ^
-lf(CR) lf(CR) | lx .
-Display macro	Description
-With keep	No keep
+cb cb
+lf(CR) lx .
+Macro	Description
 _
-\&.DS L	\&.LD	Left-aligns display.
-\&.DS I \f[R][\,\f[I]indent\/\f[]]	\
-\&.ID \f[R][\,\f[I]indent\/\f[]]	T{
-Indents display
-(by
-.I indent
-if given,
-otherwise the value of
-.CW \[rs]n[DI] ).
-T}
-\&.DS B	\&.BD	T{
-Block-centers display
-(left-aligns with the longest line centered).
-T}
-\&.DS C	\&.CD	Centers all lines in the display.
-\&.DS R	\&.RD	Right-aligns all lines in the display.
+\&.KS	Begin a keep.
+\&.KF	Begin a floating keep.
+_
+\&.KE	End (floating) keep.
 .TE
-.
-.
-.LP
-Use the
-.CW .DE
-macro to end any display type.
-.
-.
-.PP
-The distance stored in
-.CW \[rs]n[DD]
-is inserted before and after each pair of display macros.
-.
-This is a Berkeley extension.
-.
-.
-.PP
-The
-.CW \[rs]n[DI]
-indentation is applied to only to displays created with
-.CW ".DS I" \[rq] \[lq]
-and
-.CW .ID .
-.
-Changes take effect at the next display boundary.
-.
-This is a GNU extension.
-.
-.
-.PP
-On occasion, you may want to
-.I keep
-other text together on a page.
-For example, you may want to keep two paragraphs together, or
-a paragraph that refers to a table (or list, or other item)
-immediately following.
-The
-.I ms
-macros provide the
-.CW .KS
-and
-.CW .KE
-macros for this purpose.
-The
-.CW .KS
-macro begins a block of text to be kept on a single page,
-and the
-.CW .KE
-macro ends the block.
-.PP
-You can specify a
-.I "floating keep" ;
-if the keep cannot fit on the current page,
-.I groff
-holds the contents of the keep and allows text following
-the keep (in the source file) to fill in the remainder of
-the current page.
-When the page breaks,
-whether by an explicit
-.CW .bp
-request or by reaching the end of the page,
-.I groff
-prints the floating keep at the top of the new page.
-This is useful for printing large graphics or tables
-that do not need to appear exactly where specified.
-Use the
-.CW .KF
-and
-.CW .KE
-macros to specify a floating keep.
 .
 .
 .PP
@@ -1760,9 +1705,17 @@ the
 request forces a page break if there is not at least the amount of
 vertical space specified in its argument remaining on the page.
 .
+One application of
+.CW ne
+is to reserve space on the page for a figure or illustration to be
+included later.
+.
 .
 .PP
-Use the following macros to draw a box around a region of the page.
+A keep can also be
+.I boxed .
+.
+Text in a box is automatically placed in a diversion (keep).
 .
 .
 .TS
@@ -1777,7 +1730,7 @@ _
 .
 .
 .LP
-These macros cause line breaks;
+Box macros cause line breaks;
 if you need to box a word or phrase within a line,
 see the
 .CW BX
@@ -1800,10 +1753,94 @@ lf(CR).
 \&.LP
 \&.B1
 \&.I Warning:
-Happy Fun Ball may suddenly accelerate to lethal speeds.
+Happy Fun Ball may suddenly accelerate to dangerous speeds.
 \&.sp \[rs]n[PD]/2
 \&.B2
 .TE
+.
+.
+.LP
+If you want a box to float,
+you will need to enclose the
+.CW .B1
+and
+.CW .B2
+calls within a pair of
+.CW .KF
+and
+.CW .KE
+calls.
+.
+.
+.PP
+.I Displays
+turn off filling;
+lines of verse or program code are shown with their lines broken as in
+the source document without requiring
+.CW br
+requests between lines.
+.
+Displays can be kept on a single page or allowed to break across pages.
+.
+The
+.CW DS
+macro begins a kept display of the layout specified in its first
+argument;
+non-kept displays are begun with dedicated macros corresponding to their
+layout.
+.
+.
+.TS
+box;
+cb s | cb
+cb cb | ^
+lf(CR) lf(CR) | lx .
+Display macro	Description
+With keep	Without keep
+_
+\&.DS L	\&.LD	Begin left-aligned display.
+\&.DS I \f[R][\,\f[I]indent\/\f[]]	\
+\&.ID \f[R][\,\f[I]indent\/\f[]]	T{
+Begin display indented by
+.I indent
+if given,
+.CW \[rs]n[DI]
+otherwise.
+T}
+\&.DS B	\&.BD	T{
+Begin block display
+(left-aligned with longest line centered).
+T}
+\&.DS C	\&.CD	Begin centered display.
+\&.DS R	\&.RD	Begin right-aligned display.
+_
+.T&
+cf(CR) s | lx .
+\&.ED	End any display.
+.TE
+.
+.
+.PP
+The distance stored in
+.CW \[rs]n[DD]
+is inserted before and after each pair of display macros.
+.
+This is a Berkeley extension.
+.
+.
+.PP
+The
+.CW \[rs]n[DI]
+indentation is applied to only to displays created with
+.CW ".DS I" \[rq] \[lq]
+and
+.CW .ID .
+.
+This is a GNU extension.
+.
+.
+.PP
+Changes to either register take effect at the next display boundary.
 .
 .
 .\" ----------------------------
@@ -2325,6 +2362,25 @@ The syntax for these macros is as follows:
 .LP
 You can replace the neutral apostrophes (\[aq]) with any character not
 appearing in the header or footer text.
+.
+.
+.PP
+You can redefine the
+.CW PT
+and
+.CW BT
+macros to change the behavior of
+the header and footer,
+respectively.
+.
+The header process also calls the (undefined)
+.CW HD
+macro after
+.CW .PT ;
+you can define this macro if you need additional processing after
+printing the header
+(for example,
+to draw a line below the header).
 .
 .
 .TS

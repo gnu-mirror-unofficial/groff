@@ -975,17 +975,17 @@ as a subscript.
 .SS "Indented regions"
 .\" ====================================================================
 .
-You may need to indent a region of text while still wrapping and
-filling.
+You may need to indent a region of text while still letting
+.I groff
+automatically break lines and fill the text.
 .
 .
 .TP
 .B .RS
-Begin a region indented by
-.BR \[rs]n[PI] ,
-affecting the placement of headings,
+Begin a region where headings,
 paragraphs,
-and displays.
+and displays are indented by
+.BR \[rs]n[PI] .
 .
 .
 .TP
@@ -993,136 +993,65 @@ and displays.
 End the most recent indented region.
 .
 .
-.PP
-You can use
-.BR .RS / .RE
-regions to line up text under hanging and indented paragraphs.
-.
-For example,
-you may wish to nest lists.
-.
-.
 .\" ====================================================================
-.SS "Displays and keeps"
+.SS "Keeps, boxed keeps, and displays"
 .\" ====================================================================
 .
-Use displays to show text-based examples or figures
-(such as code listings).
-.
-Displays turn off filling, so lines of code can be displayed as-is
-without inserting
-.B br
-requests in between each line.
-.
-Displays can be
-.I kept
-on a single page, or allowed to break across pages.
-.
-The following table shows the display types available.
-.
-.RS
-.ne 11v
-.TS
-cb   s    cbt
-cb   cb   ^
-lfCR lfCR lx.
-Display macro	Type of display
-With keep	No keep
-_
-\&.DS L	\&.LD	Left-justified.
-\&.DS I \f[R][\,\f[I]indent\/\f[]]	\
-\&.ID \f[R][\,\f[I]indent\/\f[]]	T{
-Indented
-(by
-.I indent
-if given,
-otherwise the value of
-.BR \[rs]n[DI] ).
-T}
-\&.DS B	\&.BD	T{
-Block-centered (left-justified, longest line centered).
-T}
-\&.DS C	\&.CD	Centered.
-\&.DS R	\&.RD	Right-justified.
-_
-.TE
-.RE
-.
-.LP
-Use the
-.B DE
-macro to end any display type.
-.
-.
-.PP
-The distance stored in
-.B \[rs]n[DD]
-is inserted before and after each pair of display macros.
-.
-This is a Berkeley extension.
-.
-.
-.PP
-The
-.B \[rs]n[DI]
-indentation is applied to only to displays created with
-.RB \[lq] ".DS I" \[rq]
-and
-.BR .ID .
-.
-Changes take effect at the next display boundary.
-.
-This is a GNU extension.
-.
-.
-.PP
-To
+On occasion,
+you may want to
 .I keep
-text together on a page,
-such as
-a paragraph that refers to a table (or list, or other item)
-immediately following, use the
-.B KS
-and
-.B KE
-macros.
+several lines of text,
+or a region of a document,
+together on a single page,
+preventing an automatic page break within certain boundaries.
 .
-The
-.B KS
-macro begins a block of text to be kept on a single page,
-and the
-.B KE
-macro ends the block.
+This can cause a page break to occur earlier than it normally would.
 .
 .
-.PP
-You can specify a
-.I floating keep
-using the
-.B KF
-and
-.B KE
-macros.
-.
-If the keep cannot fit on the current page,
-.I groff
-holds the contents of the keep and allows text following
-the keep (in the source file) to fill in the remainder of
-the current page.
+.P
+You can alternatively specify a
+.IR "floating keep" ;
+if a keep cannot fit on the current page,
+.I ms
+holds its contents and allows text following the keep
+(in the source document)
+to fill in the remainder of the current page.
 .
 When the page breaks,
 whether by an explicit
 .B bp
 request or by reaching the end of the page,
-.I groff
-prints the floating keep at the top of the new page.
+.I ms
+puts the floating keep at the beginning of the next page.
 .
-This is useful for printing large graphics or tables
-that do not need to appear exactly where specified.
+.
+.TP
+.B .KS
+Begin a keep.
+.
+.
+.TP
+.B .KF
+Begin a floating keep.
+.
+.
+.TP
+.B .KE
+End (floating) keep.
+.
+.
+.P
+As an alternative to the keep mechanism,
+the
+.B ne
+request forces a page break if there is not at least the amount of
+vertical space specified in its argument remaining on the page.
 .
 .
 .PP
-Use the following macros to draw a box around a region of the page.
+A keep can also be boxed.
+.
+Text in a box is automatically placed in a diversion (keep).
 .
 .
 .TP
@@ -1135,12 +1064,136 @@ Begin a keep with a box drawn around it.
 End boxed keep.
 .
 .
-.PP
-These macros cause line breaks;
+.P
+Box macros cause line breaks;
 if you need to box a word or phrase within a line,
 see the
 .B BX
 macro in section \[lq]Highlighting\[rq] above.
+.
+Box lines are drawn as close as possible to the text they enclose so
+that they are usable within paragraphs.
+.
+If you wish to box one or more paragraphs,
+you may improve the appearance by calling
+.B .B1
+after the first paragraphing macro,
+and by adding a small amount of vertical space before calling
+.B .B2 .
+.
+.
+.P
+If you want a box to float,
+you will need to enclose the
+.B .B1
+and
+.B .B2
+calls within a pair of
+.B .KF
+and
+.B .KE
+calls.
+.
+.
+.P
+.I Displays
+turn off filling;
+lines of verse or program code are shown with their lines broken as in
+the source document without requiring
+.B br
+requests between lines.
+.
+Displays can be kept on a single page or allowed to break across pages.
+.
+The
+.B DS
+macro begins a kept display of the layout specified in its first
+argument;
+non-kept displays are begun with dedicated macros corresponding to their
+layout.
+.
+.
+.TP
+.B .DS L
+.TQ
+.B .LD
+Begin
+.RB ( DS ": kept)"
+left-aligned display.
+.
+.
+.TP
+.B .DS I \c
+.RI [ indent ]
+.TQ
+.B ID \c
+.RI [ indent ]
+Begin
+.RB ( DS ": kept)"
+display indented by
+.I indent
+if specified,
+.B \[rs]n[DI]
+otherwise.
+.
+.
+.TP
+.B .DS B
+.TQ
+.B .BD
+Begin
+.RB ( DS ": kept)"
+block display:
+the entire display is left-aligned,
+but indented such that the longest line in the display is centered on
+the page.
+.
+.
+.TP
+.B .DS C
+.TQ
+.B .CD
+Begin
+.RB ( DS ": kept)"
+centered display:
+each line in the display is centered.
+.
+.
+.TP
+.B .DS R
+.TQ
+.B .RD
+Begin
+.RB ( DS ": kept)"
+right-aligned display.
+.
+.
+.TP
+.B .ED
+End any display.
+.
+.
+.P
+The distance stored in
+.B \[rs]n[DD]
+is inserted before and after each pair of display macros.
+.
+This is a Berkeley extension.
+.
+.
+.P
+The
+.B \[rs]n[DI]
+indentation is applied only to displays created with
+.RB \[lq] ".DS I" \[rq]
+and
+.B .ID .
+.
+This is a GNU extension.
+.
+.
+.P
+Changes to either register take effect at the next display boundary.
 .
 .
 .\" ====================================================================
