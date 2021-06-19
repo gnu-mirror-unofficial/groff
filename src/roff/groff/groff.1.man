@@ -148,9 +148,8 @@ or are interpreted differently by
 Set default input encoding used by
 .IR preconv (@MAN1EXT@)
 to
-.IR enc .
-.
-Implies
+.IR enc ;
+implies
 .BR \-k .
 .
 .
@@ -221,9 +220,8 @@ options is also specified.
 Set input encoding used by
 .IR preconv (@MAN1EXT@)
 to
-.IR enc .
-.
-Implies
+.IR enc ;
+implies
 .BR \-k .
 .
 .
@@ -575,7 +573,7 @@ by determining an argument for its
 option.
 .
 This sets the default
-.B Print
+.RB \[lq] Print \[rq]
 action and the corresponding menu entry to that value.
 .
 .B \-X
@@ -983,7 +981,7 @@ See
 .IR groff_font (@MAN5EXT@)
 for a description of the
 .B papersize
-keyword,
+directive,
 which takes an argument of the same form as
 .BR \-p .
 .
@@ -1072,7 +1070,10 @@ for bibliographic references,
 .
 .TP
 .IR \%@g@soelim (@MAN1EXT@)
-for including macro files from standard locations,
+to preprocess files included with
+.I groff \" language
+.B .so
+requests.
 .
 .P
 and
@@ -1441,8 +1442,9 @@ A variant for a 12\|pt document base font is
 .P
 The postprocessor to be used for a device is specified by the
 .B postpro
-command in the device description file; see
-.BR \%groff_font (@MAN5EXT@).
+directive in the device description file;
+see
+.IR \%groff_font (@MAN5EXT@).
 .
 This can be overridden with the
 .B \-X
