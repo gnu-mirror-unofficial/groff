@@ -4778,12 +4778,17 @@ behavior can be modified; see @ref{Blank Line Traps}.  Macro packages
 may discourage or disable the blank line method of paragraphing in favor
 of their own macros.
 
+@cindex leading spaces
+@cindex spaces, leading and trailing
+@cindex trailing spaces on text lines
 @cindex leading space macro (@code{lsm})
 A line that begins with one or more spaces causes a break.  The spaces
 are output at the beginning of the next line without being
 @emph{adjusted} (see below); however, this behavior can be modified
 (@pxref{Leading Space Traps}).  Again, macro packages may provide other
-methods of producing indented paragraphs.
+methods of producing indented paragraphs.  Trailing spaces on text lines
+are ignored.@footnote{``Text lines'' are defined in @ref{Requests and
+Macros}.}
 
 What if there is no next input word?  Or the file ends before enough
 words have been collected to fill an output line?  The end of the file
@@ -4796,17 +4801,13 @@ cause breaks, implicitly or explicitly.  This is discussed in
 @node Adjustment, Tab Stops, Breaking, Text
 @subsection Adjustment
 
-@cindex leading spaces
-@cindex spaces, leading and trailing
-@cindex extra spaces
-@cindex trailing spaces
+@cindex extra spaces between words
 After GNU @code{troff} performs an automatic line break, it then tries
 to @dfn{adjust} the line: inter-word spaces are widened until the text
-reaches the right margin.  Extra spaces between words are preserved, but
-trailing spaces on an input line are ignored.  Leading spaces are
-handled as noted above.  Text can be adjusted to the left or right
-margins only (instead of both), or centered; see @ref{Manipulating
-Filling and Adjustment}.
+reaches the right margin.  Extra spaces between words are preserved.
+Leading and trailing spaces are handled as noted above.  Text can be
+adjusted to the left or right margins only (instead of both), or
+centered; see @ref{Manipulating Filling and Adjustment}.
 
 @c ---------------------------------------------------------------------
 
@@ -11153,6 +11154,7 @@ defined as empty, and a warning of type @samp{mac} is emitted
 If @code{ds} is called with only one argument, @var{name} is defined as
 an empty string.
 
+@cindex trailing spaces in string definitions and appendments
 @cindex comments, with @code{ds}
 @cindex @code{ds} request, and comments
 @strong{Caution:} Unlike other requests, the second argument to the
