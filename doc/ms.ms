@@ -10,8 +10,8 @@
 .\" This document doesn't require the minus sign but we do want a copy-
 .\" and-pastable hyphen-minus.
 .char \- \N'45'
+.\" A very limited output device might not have a dagger glyph.
 .fchar \[dg] *
-.fchar \[ps] paragraph
 .\" Acronym (slightly smaller type)
 .de Acr
 \s-1\\$1\s0\\$2
@@ -318,20 +318,20 @@ Type	Parameter	Definition	Effective	Default
 _
 .TH
 Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
-\^	\[rs]n[LL]	Line length	next \[ps]	6i
-\^	\[rs]n[LT]	Header/footer (title) length	next \[ps]	6i
+\^	\[rs]n[LL]	Line length	next paragraph	6i
+\^	\[rs]n[LT]	Header/footer (title) length	next paragraph	6i
 \^	\[rs]n[HM]	Top (header) margin	next page	1i
 \^	\[rs]n[FM]	Bottom (footer) margin	next page	1i
 _
-Text	\[rs]n[PS]	Point size	next \[ps]	10p
-\^	\[rs]n[VS]	Line spacing (leading)	next \[ps]	12p
-\^	\[rs]n[HY]	Hyphenation mode	next \[ps]	6
-\^	\[rs]*[FAM]	Font family	next \[ps]	T
+Text	\[rs]n[PS]	Point size	next paragraph	10p
+\^	\[rs]n[VS]	Vertical spacing (leading)	next paragraph	12p
+\^	\[rs]n[HY]	Hyphenation mode	next paragraph	6
+\^	\[rs]*[FAM]	Font family	next paragraph	T
 _
-Paragraphs	\[rs]n[PI]	Initial indent	next \[ps]	5n
-\^	\[rs]n[PD]	Space between paragraphs	next \[ps]	0.3v
-\^	\[rs]n[QI]	Quoted paragraph indent	next \[ps]	5n
-\^	\[rs]n[PORPHANS]	# of initial lines kept	next \[ps]	1
+Paragraphs	\[rs]n[PI]	Indentation	next paragraph	5n
+\^	\[rs]n[PD]	Paragraph distance (spacing)	next paragraph	0.3v
+\^	\[rs]n[QI]	Quotation indentation	next paragraph	5n
+\^	\[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
 _
 Headings	\[rs]n[PSINCR]	Point size increment	next heading	1p
 \^	\[rs]n[GROWPS]	Size increase level limit	next heading	0
@@ -341,7 +341,7 @@ _
 Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FF]	Format	next footnote	0
 \^	\[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2
-\^	\[rs]n[FVS]	Vertical spacing	next footnote	\[rs]n[FPS]+2
+\^	\[rs]n[FVS]	Vertical spacing (leading)	next footnote	\[rs]n[FPS]+2
 \^	\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
 \^	\[rs]*[FR]	Line length ratio	special	11/12
 _
