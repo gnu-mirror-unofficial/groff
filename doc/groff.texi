@@ -4821,13 +4821,13 @@ centered; see @ref{Manipulating Filling and Adjustment}.
 @cindex character, horizontal tab
 GNU @code{troff} translates horizontal tab characters, also called
 simply ``tabs'', in the input into movements to the next tab stop.
-These tab stops are by default located every half inch across the page.
-With them, simple tables can be made easily.@footnote{``Tab'' is short
-for ``tabulation'', revealing the term's origin as a spacing mechanism
-for table arrangement.}  However, this method can be deceptive as the
-appearance (and width) of the text in an editor and the results from GNU
-@code{troff} can vary greatly, particularly when proportional typefaces
-are used.
+These tab stops are by default located every half inch measured from the
+current position on the input line.  With them, simple tables can be
+made.@footnote{``Tab'' is short for ``tabulation'', revealing the term's
+origin as a spacing mechanism for table arrangement.}  However, this
+method can be deceptive, as the appearance (and width) of the text in an
+editor and the results from GNU @code{troff} can vary greatly,
+particularly when proportional typefaces are used.
 
 A tab character does not cause a break and therefore does not interrupt
 filling.  We use an arrow @arrow{} below to indicate an input tab
