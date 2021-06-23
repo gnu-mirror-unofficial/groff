@@ -12,10 +12,6 @@
 .char \- \N'45'
 .\" A very limited output device might not have a dagger glyph.
 .fchar \[dg] *
-.\" Acronym (slightly smaller type)
-.de Acr
-\s-1\\$1\s0\\$2
-..
 .\".RP
 .ie t .nr LL 6.5i
 .el   .nr LL 91n
@@ -160,7 +156,7 @@ m	\[lq]ems\[rq]; width of an \[lq]M\[rq] using the current font
 .
 .
 .PP
-Set registers with using the
+Set registers with the
 .CW .nr
 request
 and strings with the
@@ -187,6 +183,8 @@ General structure of an
 .I ms
 document
 .XE
+.
+.
 .LP
 The
 .I ms
@@ -227,7 +225,7 @@ and are not supported in
 .
 .
 .IP "\fBFormat and layout\fP"
-By setting number registers,
+By setting registers,
 you can change your document's type (font and size),
 margins, spacing, headers and footers, and footnotes.
 .
@@ -284,6 +282,8 @@ output was intended for hardcopy,
 the standard procedure was to manually relocate the pages containing
 the table of contents between the cover page and the
 body text.
+.
+.
 .\" ------------------------
 .if t .bp
 .NH 1
@@ -319,9 +319,22 @@ _
 .TH
 Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
 \^	\[rs]n[LL]	Line length	next paragraph	6i
-\^	\[rs]n[LT]	Header/footer (title) length	next paragraph	6i
+\^	\[rs]n[LT]	Title line length	next paragraph	6i
 \^	\[rs]n[HM]	Top (header) margin	next page	1i
 \^	\[rs]n[FM]	Bottom (footer) margin	next page	1i
+_
+T{
+Titles
+.br
+(headers,
+.br
+footers)
+T}	\[rs]*[LH]	Left header text	next header	\f[I]empty
+\^	\[rs]*[CH]	Center header text	next header	\-\[rs]n[%]\-
+\^	\[rs]*[RH]	Right header text	next header	\f[I]empty
+\^	\[rs]*[LF]	Left footer text	next footer	\f[I]empty
+\^	\[rs]*[CF]	Center footer text	next footer	\f[I]empty
+\^	\[rs]*[RF]	Right footer text	next footer	\f[I]empty
 _
 Text	\[rs]n[PS]	Point size	next paragraph	10p
 \^	\[rs]n[VS]	Vertical spacing (leading)	next paragraph	12p
@@ -329,7 +342,7 @@ Text	\[rs]n[PS]	Point size	next paragraph	10p
 \^	\[rs]*[FAM]	Font family	next paragraph	T
 _
 Paragraphs	\[rs]n[PI]	Indentation	next paragraph	5n
-\^	\[rs]n[PD]	Paragraph distance (spacing)	next paragraph	0.3v
+\^	\[rs]n[PD]	Paragraph distance (spacing)	next paragraph	0.3v \f[R](\f[]1v\f[R])
 \^	\[rs]n[QI]	Quotation indentation	next paragraph	5n
 \^	\[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
 _
@@ -342,19 +355,30 @@ Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
 \^	\[rs]n[FF]	Format	next footnote	0
 \^	\[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2
 \^	\[rs]n[FVS]	Vertical spacing (leading)	next footnote	\[rs]n[FPS]+2
-\^	\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
-\^	\[rs]*[FR]	Line length ratio	special	11/12
+\^	\[rs]n[FPD]	Paragraph distance (spacing)	next footnote	\[rs]n[PD]/2
+\^	\[rs]*[FR]	Line length ratio	\f[I]special	11/12
 _
-Displays	\[rs]n[DD]	Display distance (spacing)	special	0.5v
-\^	\[rs]n[DI]	Display indentation	special	0.5i
+Displays	\[rs]n[DD]	Display distance (spacing)	\f[I]special	0.5v \f[R](\f[]1v\f[R])
+\^	\[rs]n[DI]	Display indentation	\f[I]special	0.5i
 _
 Other	\[rs]n[MINGW]	Minimum gutter width	next page	2n
 .TE
 .
 .
 .LP
-For entries marked \[lq]special\[rq] in the \[lq]Effective\[rq] column,
+For entries marked
+.I special
+in the \[lq]Effective\[rq] column,
 see the discussion in the applicable section below.
+.
+The
+.CW PD
+and
+.CW DD
+registers use the larger value if the vertical resolution of the output
+device is too coarse for the smaller one;
+usually,
+this is the case only for output to terminals and emulators thereof.
 .
 .
 .\" ------------------------
@@ -367,7 +391,14 @@ Document description macros
 .
 .
 .LP
-All but the simplest documents bear a title.
+All but the simplest documents bear a title.\**
+.
+.FS
+Distinguish a document title from \[lq]titles\[rq],
+which is what
+.I roff
+systems call headers and footers collectively.
+.FE
 .
 As their level of sophistication
 (or complexity)
@@ -488,14 +519,13 @@ _
 Print the current date,
 or any
 .I x , arguments\~
-in footers,
+in the center footer,
 and,
 if
 .CW .RP
 is also called,
 left-aligned after other document description information on the cover
 page.
-.\" see Savannah #59826
 T}
 _
 \&.ND \f[R][\f[I]x\f[] .\|.\|.\&]	T{
@@ -506,8 +536,7 @@ if
 .CW .RP
 is also called,
 left-aligned after other document description information on the cover
-page,
-but not in footers.
+page.
 .
 This is the
 .I "groff ms"
@@ -788,7 +817,7 @@ using the same font family and,
 by default,
 point size as the body text.
 .
-Numbered and unnumbered headings are available.
+Headings are available with and without automatic numbering.
 .
 Text lines after heading macros are treated as part of the heading,
 rendered on the same output line in the same style.
@@ -1091,7 +1120,11 @@ region between the heading and the subsequent paragraph suppresses this
 grouping.
 .
 .
-.KS
+.\" The next table is huge and we need a lot of room for it, but we
+.\" can't use a keep because it's a boxed repeated-heading table.  Flush
+.\" the pending output line and demand half a page.
+.br
+.ne (\n[.p]u / 2u)
 .NH 2
 Highlighting
 .XS
@@ -1103,7 +1136,6 @@ Highlighting
 The
 .I ms
 macros provide a variety of methods to highlight or emphasize text.
-.KE
 .
 .
 .TS H
@@ -1305,16 +1337,37 @@ footers,
 and footnotes
 (as well as the body text).
 .
-A change to
+Because
 .CW \[rs]*[FAM]
 takes effect at the next paragraph,
-so
+this document uses
 .CW .CW
-remains useful to \[lq]inline\[rq] a change to the font family,
-as used in this document to note syntactical elements of
+to \[lq]inline\[rq] a change to the font family,
+marking syntactical elements of
 .I ms
 and
 .I groff .
+.
+.
+.PP
+.I "groff ms"
+also supports strings to begin and end super- and subscripting.
+.
+These are all GNU extensions.
+.
+.
+.TS
+box;
+lb lb
+lf(CR) lx.
+String	Description
+_
+\[rs]*{	Begin superscripting.
+\[rs]*}	End superscripting.
+_
+\[rs]*<	Begin subscripting.
+\[rs]*>	End subscripting.
+.TE
 .
 .
 .nr PS -2
@@ -1812,7 +1865,10 @@ Begin block display
 (left-aligned with longest line centered).
 T}
 \&.DS C	\&.CD	Begin centered display.
-\&.DS R	\&.RD	Begin right-aligned display.
+\&.DS R	\&.RD	T{
+Begin right-aligned display.
+This is a GNU extension.
+T}
 _
 .T&
 cf(CR) s | lx .
@@ -1823,23 +1879,17 @@ cf(CR) s | lx .
 .PP
 The distance stored in
 .CW \[rs]n[DD]
-is inserted before and after each pair of display macros.
+is inserted before and after each pair of display macros;
+this is a Berkeley extension.
 .
-This is a Berkeley extension.
-.
-.
-.PP
 The
 .CW \[rs]n[DI]
 indentation is applied to only to displays created with
 .CW ".DS I" \[rq] \[lq]
 and
-.CW .ID .
+.CW .ID ;
+this is a GNU extension.
 .
-This is a GNU extension.
-.
-.
-.PP
 Changes to either register take effect at the next display boundary.
 .
 .
@@ -1888,7 +1938,7 @@ T{
 .br
 \&.TE
 T}	T{
-Denotes a table to be processed by the
+Denote a table to be processed by the
 .I tbl
 preprocessor.
 .
@@ -1898,16 +1948,13 @@ argument to
 .CW .TS
 instructs
 .I groff
-to create a running header with the information
-up to the
-.CW .TH
-macro.
-.
-.I groff
-prints the header at the beginning of the table;
-if the table runs onto another page,
-.I groff
-prints the header on the next page as well.
+to repeat table rows
+(often column headings)
+at the top of each new page the table spans,
+if applicable;
+calling the
+.CW TH
+macro marks the end of such rows.
 T}
 _
 T{
@@ -1915,7 +1962,7 @@ T{
 .br
 \&.PE
 T}	T{
-Denotes a graphic to be processed by the
+Denote a graphic to be processed by the
 .I pic
 preprocessor.
 .
@@ -1933,14 +1980,14 @@ T{
 .br
 \&.EN
 T}	T{
-Denotes an equation to be processed by the
+Denote an equation to be processed by the
 .I eqn
 preprocessor.
 .
 The equation is center-aligned by default;
 the optional
 .I align
-parameter can be
+argument can be
 .CW C ,
 .CW L ,
 or
@@ -1957,12 +2004,11 @@ T{
 .br
 \&.]
 T}	T{
-Denotes a reference to be processed by the
+Denote a reference to be processed by the
 .I refer
 preprocessor.
 .
-The
-.Acr GNU
+The GNU
 .I refer (1)
 man page provides a comprehensive reference to the preprocessor and the
 format of the bibliographic database.
@@ -2041,19 +2087,17 @@ a symbol\[dg],
 like this symbolic footnote
 .FE
 or arbitrary user-specified text.
-.
-The footnote text is set at the nearest available \[lq]foot\[rq],
-or bottom,
-of a text column or page.
 .KE
 .
 .
-.PP
-Automatic numbering of footnotes is available.
-.
-The
-.CW *
-string places such a footnote marker in the text.
+.TS
+box;
+lb lb
+lf(CR) lx.
+String	Description
+_
+\[rs]**	T{
+Place an automatically numbered footnote marker in the text.
 .
 Each time this string is interpolated,
 the number it produces increments by one.
@@ -2061,6 +2105,18 @@ the number it produces increments by one.
 Automatic footnote numbers start at 1.
 .
 This is a Berkeley extension.
+T}
+.TE
+.
+.
+.PP
+Enclose the footnote text in
+.CW FS
+and
+.CW FE
+macro calls to set it at the nearest available \[lq]foot\[rq],
+or bottom,
+of a text column or page.
 .
 .
 .TS
@@ -2315,72 +2371,84 @@ The default output from the
 .I ms
 macros provides a minimalist
 page layout:
-it prints a single column, with
-the page number centered at the top of each page.
+it prints a single column,
+with the page number centered between hyphens at the top of each page.
+.
 It prints no footers.
+.
+.
 .PP
-You can change the layout by setting
-the proper number registers and strings.
+You can change the layout by setting appropriate registers and strings.
+.
+.
 .NH 2
 Headers and footers
 .XS
 	Headers and footers
 .XE
+.
+.
 .LP
-There are two ways to define headers and footers:
-.IP \(bu 2
-Set the strings
+There are multiple ways to produce headers and footers.
+.
+One is to define the strings
 .CW LH ,
 .CW CH ,
 and
-.CW RH ,
-to set the left, center, and right headers; and
+.CW RH
+to set the left,
+center,
+and right headers,
+respectively;
+and
 .CW LF ,
 .CW CF ,
 and
 .CW RF
-to set the left, center, and right footers.
-This works best for documents that do not distinguish
-between odd and even pages.
-.IP \(bu
-Use the
-.CW .OH
-and
-.CW .EH
-macros to define headers for the odd and even pages; and
-.CW .OF
-and
-.CW .EF
-macros to define footers for the odd and even pages.
-This is more flexible than defining the individual strings.
-The syntax for these macros is as follows:
-.DS I
-.CW
-\&.OH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]
-.R
-.DE
-.LP
+to set the left,
+center,
+and right footers similarly.
+.
+This approach works best for documents that do not distinguish between
+odd and even pages.
+.
+.
+.PP
+Another method is to call macros with arguments that set headers or
+footers for odd or even pages;
+these variables produce four combinations,
+so four macros are available.
+.
+They each take a delimiter separating the left,
+center,
+and right header or footer texts from each other.
+.
 You can replace the neutral apostrophes (\[aq]) with any character not
 appearing in the header or footer text.
 .
 .
-.PP
-You can redefine the
-.CW PT
-and
-.CW BT
-macros to change the behavior of
-the header and footer,
-respectively.
+.TS
+box;
+lb lb
+lf(CR) lx.
+Macro	Description
+_
+\&.OH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
+	Set the left, center, and right headers on odd-numbered pages.
+\&.OF \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
+	Set the left, center, and right footers on odd-numbered pages.
+\&.EH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
+	Set the left, center, and right headers on even-numbered pages.
+\&.EF \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
+	Set the left, center, and right footers on even-numbered pages.
+.TE
 .
-The header process also calls the (undefined)
-.CW HD
-macro after
-.CW .PT ;
-you can define this macro if you need additional processing after
-printing the header
-(for example,
-to draw a line below the header).
+.
+.PP
+By default,
+.I ms
+prints no header on any page numbered \[lq]1\[rq]
+(regardless of its assigned format).
 .
 .
 .TS
@@ -2392,12 +2460,59 @@ _
 \&.P1	T{
 Print the header on page\~1.
 .
-By default,
-no header is printed on that page.
+To be effective,
+this macro must be called before the header trap is sprung on any page
+numbered \[lq]1\[rq];
+in practice,
+unless your page numbering is unusual,
+this means that you should call it early,
+before
+.CW .TL
+or any sectioning or paragraphing macro.
 .
 This is a Berkeley extension.
 T}
 .TE
+.
+.
+.PP
+For even greater flexibility,
+.I ms
+is designed to permit the redefinition of the macros that are called
+when the
+.I groff
+traps that ordinarily cause the headers and footers to be output are
+sprung.
+.
+.CW PT
+(\[lq]page trap\[rq])
+is called by
+.I ms
+when the header is to be written,
+and
+.CW BT
+(\[lq]bottom trap\[rq])
+when the footer is to be.
+.
+The
+.I groff
+trap that
+.I ms
+sets up to process the header also calls the
+(normally undefined)
+.CW HD
+macro after
+.CW .PT ;
+you can define
+.CW .HD
+if you need additional processing after printing the header
+(for example,
+to draw a line below it).
+.
+Any such macros you (re)define must implement any desired specialization
+for odd-,
+even-,
+or first-numbered pages.
 .
 .
 .\" ------------------------
@@ -2411,16 +2526,17 @@ Tab stops
 .
 .LP
 Use the
-.B ta
+.CW ta
 request to set tab stops as needed.
 .
 Use the
-.B TA
-macro to reset tabs to the default (every 5n).
+.CW TA
+macro to reset tabs to the default
+(every 5 ens).
 .
-You can redefine the
-.B TA
-macro to create a different set of default tab stops.
+Redefine
+.CW .TA
+to create a different set of default tab stops.
 .KE
 .
 .
@@ -2454,16 +2570,22 @@ Multiple columns
 .XS
 	Multiple columns
 .XE
+.
+.
 .LP
 The
 .I ms
-macros can set text in as many columns as will reasonably
-fit on the page.
+macros can set text in as many columns as will reasonably fit on the
+page.
+.
 The following macros are available.
+.
 All of them force a page break if a multi-column mode is already set.
-However, if the current mode is single-column, starting a multi-column
-mode does
-.B not
+.
+However,
+if the current mode is single-column,
+starting a multi-column mode does
+.I not
 force a page break.
 .
 .
@@ -2477,18 +2599,18 @@ _
 _
 \&.2C	Arrange page text in two columns.
 _
-\&.MC \fR[\fIwidth\fP [\fIgutter\fP]]	T{
+\&.MC \f[R][\f[I]column-width\f[] [\f[I]gutter-width\f[]]]	T{
 Arrange page text in multiple columns.
 .
 If you specify no arguments,
 it is equivalent to the
-.CW .2C
+.CW 2C
 macro.
 .
 Otherwise,
-.I width
+.I column-width
 is the width of each column and
-.I gutter
+.I gutter-width
 is the minimum distance between columns.
 .
 .CW \[rs]n[MINGW]
@@ -2585,8 +2707,7 @@ Differences from AT&T
 .LP
 This section lists the (minor) differences between the
 .I "groff ms"
-macros and
-.Acr AT&T
+macros and AT&T
 .I ms
 macros.
 .
@@ -2635,6 +2756,51 @@ string).
 .
 .
 .PP
+Displays are left-adjusted by default,
+not indented.
+.
+In AT&T
+.I ms ,
+.CW .DS
+is synonymous with
+.CW ".DS I" ;
+in
+.I "groff ms" ,
+it is synonymous with
+.CW ".DS L" .
+.
+.
+.PP
+Block displays were not documented in the AT&T
+.I ms
+manual
+(Berkeley corrected this oversight),
+but Version\~7 Unix
+.I ms
+supported them nevertheless,
+as does
+.I "groff ms"
+(this is thus only an
+.I apparent
+difference).
+.
+.
+.PP
+Right-aligned displays are available.
+.
+The AT&T
+.I ms
+manual observes that \[lq]it is tempting to assume that
+.CW ".DS R"
+will right adjust lines,
+but it doesn't work\[rq].
+.
+In
+.I "groff ms" ,
+it does.
+.
+.
+.PP
 .I "groff ms"
 supports the
 .CW PN
@@ -2668,6 +2834,55 @@ register to
 .FE
 .
 .
+.PP
+The AT&T
+.I ms
+manual documents registers
+.CW CW
+and
+.CW GW
+as setting the default column width and \[lq]intercolumn gap\[rq],
+respectively,
+and which applied when
+.CW .MC
+was called with fewer than two arguments.
+.
+.I "groff ms"
+instead treats
+.CW .MC
+without arguments as synonymous with
+.CW .2C ;
+there is thus no occasion for a default column width register.
+.
+Further,
+the
+.CW MINGW
+register
+and the second argument to
+.CW .MC
+specify a
+.I minimum
+space between columns,
+not the fixed gutter width of AT&T
+.I ms .
+.
+.
+.PP
+The register
+.CW GS
+is set to\~1 by the
+.I "groff ms"
+macros,
+but is not used by the AT&T
+.I ms
+package.
+.
+Documents that need to determine whether they are being formatted with
+.I "groff ms"
+or another implementation should test this register.
+.
+.
+.\" ------------------------
 .NH 2
 AT&T
 .BI ms
@@ -2723,80 +2938,74 @@ macros not appearing in
 AT&T
 .BI ms
 .XS
-	\f[I]groff ms\f[]
+	\c
+.I "groff ms"
 macros not appearing in
 AT&T
 .I ms
 .XE
+.
+.
 .LP
 The
 .I "groff ms"
-macros have a few minor extensions compared to the
-.Acr AT&T
+macros have some minor extensions,
+not already discussed above,
+compared to the AT&T
 .I ms
 macros.
+.
 .IP \&.AM 0.5i
 Improved accent marks.
-.IP "\&.DS I"
-Indented display.
-The default behavior of
-.Acr AT&T
-.I ms
-was to indent; the
-.I groff
-default prints displays flush left with the body text.
-.IP \&.CW
-Print text in
-.CW "constant width"
-(Courier) font.
+.
+.
 .IP \&.IX
-Indexing term (printed on standard error).
+Indexing term
+(printed on standard error).
+.
+.
+.\" ------------------------
+.NH 2
+Localization strings
+.XS
+	Localization strings
+.XE
+.
+.
+.LP
+Redefine the following strings to adapt the
+.I "groff ms"
+macro package to languages other than English.
+.
+.
+.TS
+box center;
+cb lb
+lf(CR) lf(CR) .
+String	Default
+_
+\[rs]*[REFERENCES]	References
+\[rs]*[ABSTRACT]	\[rs]f[I]ABSTRACT\[rs]f[]
+\[rs]*[TOC]	Table of Contents
+\[rs]*[MONTH1]	January
+\[rs]*[MONTH2]	February
+\[rs]*[MONTH3]	March
+\[rs]*[MONTH4]	April
+\[rs]*[MONTH5]	May
+\[rs]*[MONTH6]	June
+\[rs]*[MONTH7]	July
+\[rs]*[MONTH8]	August
+\[rs]*[MONTH9]	September
+\[rs]*[MONTH10]	October
+\[rs]*[MONTH11]	November
+\[rs]*[MONTH12]	December
+.TE
+.
+.
 .PP
-The
-.CW MINGW
-number register specifies a minimum space between columns
-(for multi-column output); this takes the place of the
-.CW GW
-register that was documented but apparently not implemented in
-.Acr AT&T
-.I troff .
-Several new string registers are available as well.
-You can change these to handle (for example) the local language.
-.
-.
-.IP REFERENCES 0.5i
-Contains the string printed at the beginning of a references
-(bibliography) page produced with GNU
-.I refer (1).
-.
-The default is
-.CW References \[rq]. \[lq]
-.\" XXX: Use of refer(1) with ms is insufficiently documented.
-.
-.
-.IP ABSTRACT
-Contains the string printed at the beginning of the abstract.
-.
-The default is
-.CW \[rs]f[I]ABSTRACT\[rs]f[] \[rq]; \[lq]
-it includes font style escapes to set the word in italics.
-.
-.
-.IP TOC
-.br
-Contains the string printed at the beginning of the table of contents.
-.
-The default is
-.CW "Table of Contents" \[rq]. \[lq]
-.
-.
-.IP "MONTH1, MONTH2, MONTH3, .\|.\|.\|, MONTH10, MONTH11, MONTH12"
-Contain the full names of the calendar months.
-.
-The defaults are in English:
-.CW January \[rq], \[lq]
-.CW February \[rq], \[lq]
-and so on.
+The default for
+.CW \[rs]*[ABSTRACT]
+includes font style escapes to set the word in italics.
 .
 .
 .\" ------------------------
@@ -2816,9 +3025,7 @@ by Dean Allen Provins.
 .IP \(bu
 .I "Using the -ms Macros with Troff and Nroff" ,
 .R
-the original
-.Acr AT&T
-document by M. E. Lesk.
+the original AT&T document by M. E. Lesk.
 .LP
 Without these documents close at hand,
 writing this document would have been a
