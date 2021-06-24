@@ -177,6 +177,9 @@
 .    nop \\$1
 .    DEVTAG-EO-TL
 .  \}
+.  \" Set up rendering parameters.  We do this in TH instead of only
+.  \" once when initializing the package because when rendering multiple
+.  \" pages, a previous page might have changed them.
 .
 .  nr PS    10z \" default point size
 .  nr PS-SS 10z
@@ -203,8 +206,6 @@
 .
 .  ps \\n[PS]u
 .  vs \\n[VS]u
-.
-.  \" Restore parameters that a previous man page might have messed up.
 .  ad \\*[AD]
 .  hy \\n[HY]
 .  ll \\n[LL]u
@@ -279,6 +280,7 @@
 .\" Support legacy AT&T and BSD Unix man pages.
 .
 .\" Designate an AT&T Unix man page.
+.\" .AT [system-id[ release-id]]
 .de1 AT
 .  ds an-extra2 "7th Edition\"
 .  if "\\$1"3" .ds an-extra2 "7th Edition\"
@@ -290,6 +292,7 @@
 ..
 .
 .\" Designate a BSD Unix man page.
+.\" .UC [system-id]
 .de1 UC
 .  ds an-extra2 "3rd Berkeley Distribution\"
 .  if "\\$1"3" .ds an-extra2 "3rd Berkeley Distribution\"
@@ -306,17 +309,18 @@
 ..
 .
 .\" Restore inter-paragraph spacing to default (or set it to argument).
+.\" .PD [distance]
 .de1 PD
 \\*[an-deprecation-warn]\\
 \\*[an-reset-paragraph-spacing]\\
 ..
 .
-.\" Write the page footer; can be redefined by man.local.
+.\" Write the page header; can be redefined by man.local.
 .de1 PT
 .  tl '\\*[an-pageref]'\\*[an-extra3]'\\*[an-pageref]'
 ..
 .
-.\" Write the page header; can be redefined by man.local.
+.\" Write the page footer; can be redefined by man.local.
 .de1 BT
 .  if r ps4html \
 .    return
@@ -474,7 +478,7 @@
 .  if \\n[an-is-in-diversion] .an-write-paragraph-tag
 ..
 .
-.\" Set a section heading.
+.\" Set arguments (or next input line if none) as a section heading.
 .de1 SH
 .  sp \\n[PD]u
 .  an-reset-margin-and-inset-level
@@ -498,7 +502,7 @@
 .  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
 .
-.\" Set a subsection heading.
+.\" Set arguments (or next input line if none) as a subsection heading.
 .de1 SS
 .  sp \\n[PD]u
 .  an-reset-margin-and-inset-level
@@ -518,29 +522,29 @@
 .  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
 .
-.\" Set arguments (or the next input line if none) in bold style.
+.\" Set arguments (or next input line if none) in bold style.
 .de1 B
 .  itc 1 an-input-trap
 .  ft B
 .  if \\n[.$] \&\\$*
 ..
 .
-.\" Set arguments (or the next input line if none) in italic style.
+.\" Set arguments (or next input line if none) in italic style.
 .de1 I
 .  itc 1 an-input-trap
 .  ft I
 .  if \\n[.$] \,\\$*\/
 ..
 .
-.\" Set arguments (or the next input line if none) at smaller type size.
+.\" Set arguments (or next input line if none) at smaller type size.
 .de1 SM
 .  itc 1 an-input-trap
 .  ps -1
 .  if \\n[.$] \&\\$*
 ..
 .
-.\" Set arguments (or the next input line if none) in bold style at
-.\" smaller type size.
+.\" Set arguments (or next input line if none) in bold style at smaller
+.\" type size.
 .de1 SB
 .  itc 1 an-input-trap
 .  ps -1
@@ -548,7 +552,8 @@
 .  if \\n[.$] \&\\$*
 ..
 .
-.\" Set a tagged paragraph.
+.\" Set a tagged paragraph.  The tag must be on the next input line.
+.\" .TP [indent]
 .de1 TP
 .  sp \\n[PD]u
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
@@ -596,6 +601,7 @@
 ..
 .
 .\" Set a paragraph with a hanging indentation.
+.\" .HP [indent]
 .de1 HP
 .  ps \\n[PS]u
 .  vs \\n[VS]u
@@ -743,6 +749,7 @@
 ..
 .
 .\" Start a relative inset level (by the amount given in the argument).
+.\" .RS [indent]
 .de1 RS
 .  nr an-saved-margin\\n[an-inset-level] \\n[an-margin]
 .  nr an-saved-prevailing-indent\\n[an-inset-level] \
@@ -756,6 +763,7 @@
 .
 .\" End relative inset level, backing up by one level (or to the level
 .\" given by the argument).
+.\" .RE [inset-level]
 .de1 RE
 .  ie \\n[.$] .nr an-RE-requested-level \\$1
 .  el         .nr an-RE-requested-level (\\n[an-inset-level] - 1)
@@ -997,7 +1005,7 @@
 .\" starting page number
 .\"
 .\" Unlike most of these parameters, we do not set a default for P;
-.\" groff supplies a default starting page number (1).  When rendering
+.\" troff supplies a default starting page number (1).  When rendering
 .\" for the HTML output device, page numbers are concealed and used for
 .\" internal purposes like image embedding.  Page numbers are not
 .\" rendered at all in continuous rendering mode.
