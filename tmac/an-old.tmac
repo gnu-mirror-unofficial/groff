@@ -172,11 +172,6 @@
 .    nr an-is-first-page-of-document 1
 .  \}
 .
-.  if \\n[an-is-output-html] \{\
-.    DEVTAG-TL
-.    nop \\$1
-.    DEVTAG-EO-TL
-.  \}
 .  \" Set up rendering parameters.  We do this in TH instead of only
 .  \" once when initializing the package because when rendering multiple
 .  \" pages, a previous page might have changed them.
@@ -261,6 +256,12 @@
 .    as an-msg " not a recognized manual section; specify volume title\"
 .    an-style-warn \\*[an-msg]
 .    rm an-msg
+.  \}
+.
+.  if \\n[an-is-output-html] \{\
+.    DEVTAG-TL
+.    nop \\*[an-title]
+.    DEVTAG-EO-TL
 .  \}
 .
 .  an-header
