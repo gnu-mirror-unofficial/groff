@@ -2617,7 +2617,7 @@ Default: 6@dmn{i}.
 @endDefmpreg
 
 @Defmpreg {LT, ms}
-Defines the title length (i.e., the header and footer width).  This
+Defines the title line length (i.e., the header and footer width).  This
 is usually the same as @code{LL}, but not necessarily.
 
 Effective: next paragraph.
@@ -2642,6 +2642,56 @@ Effective: next page.
 
 Default: 1@dmn{i}.
 @endDefmpreg
+
+@unnumberedsubsubsec Titles (headers, footers)
+
+@Defstr {LH, ms}
+Defines the text displayed in the left header position.
+
+Effective: next header.
+
+Default: empty.
+@endDefstr
+
+@Defstr {CH, ms}
+Defines the text displayed in the center header position.
+
+Effective: next header.
+
+Default: @samp{-\n[%]-}.
+@endDefstr
+
+@Defstr {RH, ms}
+Defines the text displayed in the right header position.
+
+Effective: next header.
+
+Default: empty.
+@endDefstr
+
+@Defstr {LF, ms}
+Defines the text displayed in the left footer position.
+
+Effective: next footer.
+
+Default: empty.
+@endDefstr
+
+@Defstr {CF, ms}
+Defines the text displayed in the center footer position.
+
+Effective: next footer.
+
+Default: empty.
+@endDefstr
+
+@Defstr {RF, ms}
+Defines the text displayed in the right footer position.
+
+Effective: next footer.
+
+Default: empty.
+@endDefstr
 
 @unnumberedsubsubsec Text Settings
 
@@ -2705,7 +2755,7 @@ Defines the space between paragraphs.
 
 Effective: next paragraph.
 
-Default: 0.3@dmn{v}.
+Default: 0.3@dmn{v} (1@dmn{v} on low-resolution devices).
 @endDefmpreg
 
 @Defmpreg {QI, ms}
@@ -2861,13 +2911,13 @@ Default: @math{11/12}.
 @unnumberedsubsubsec Display Settings
 
 @Defmpreg {DD, ms}
-Sets the vertical spacing before and after a display, a @code{tbl}
-table, an @code{eqn} equation, or a @code{pic} image.  This is a
-Berkeley extension.
+Sets the display distance---the vertical spacing before and after a
+display, a @code{tbl} table, an @code{eqn} equation, or a @code{pic}
+image.  This is a Berkeley extension.
 
 Effective: next display boundary.
 
-Default: 0.5@dmn{v}.
+Default: 0.5@dmn{v} (1@dmn{v} on low-resolution devices).
 @endDefmpreg
 
 @Defmpreg {DI, ms}
@@ -2897,17 +2947,19 @@ Default: 2@dmn{n}.
 @cindex @code{ms} macros, document description
 @cindex document description macros, [@code{ms}]
 
-All but the simplest documents bear a title.  As their level of
-sophistication (or complexity) increases, they tend to acquire dates of
-revision, explicitly identified authors, sponsoring institutions for
-authors, and, at the rarefied heights, an abstract of their content.
-Define these data by using the macros below in the order shown;
-@code{DA} or @code{ND} can be called to set the document date (or other
-identifier) at any time before (a) the abstract, if present, or (b) its
-information is required in a header or footer.  Use of these macros is
-optional, except that @code{TL} is mandatory if any of @code{RP},
-@code{AU}, @code{AI}, or @code{AB} is called, and @code{AE} is mandatory
-if @code{AB} is called.
+All but the simplest documents bear a title.@footnote{Distinguish a
+document title from ``titles'', which is what @code{roff} systems call
+headers and footers collectively.}  As their level of sophistication (or
+complexity) increases, they tend to acquire dates of revision,
+explicitly identified authors, sponsoring institutions for authors, and,
+at the rarefied heights, an abstract of their content.  Define these
+data by using the macros below in the order shown; @code{DA} or
+@code{ND} can be called to set the document date (or other identifier)
+at any time before (a) the abstract, if present, or (b) its information
+is required in a header or footer.  Use of these macros is optional,
+except that @code{TL} is mandatory if any of @code{RP}, @code{AU},
+@code{AI}, or @code{AB} is called, and @code{AE} is mandatory if
+@code{AB} is called.
 
 @Defmac {RP, [@code{no}], ms}
 Use the ``report'' (@acronym{AT&T}: ``released paper'') format for your
@@ -2941,17 +2993,15 @@ reaching an @code{AU}, @code{AB}, or heading or paragraph macro call.
 @endDefmac
 
 @Defmac {DA, [@Var{x} @dots{}], ms}
-Print the current date, or any arguments @var{x} in footers, and, if
-@code{RP} is also called, left-aligned after other document description
-information on the cover page.
-@c see Savannah #59826
+Print the current date, or any arguments @var{x} in the center footer,
+and, if @code{RP} is also called, left-aligned after other document
+description information on the cover page.
 @endDefmac
 
 @Defmac {ND, [@Var{x} @dots{}], ms}
 Print the current date, or any arguments @var{x}, if @code{RP} is also
 called, left-aligned after other document description information on the
-cover page, but not in footers.  This is the @code{groff} @file{ms}
-default.
+cover page.  This is the @code{groff} @file{ms} default.
 @endDefmac
 
 @Defmac {AB, [@code{no}], ms}
@@ -3117,9 +3167,9 @@ software.
 Use headings to create a sequential or hierarchical structure for your
 document.  The @file{ms} macros print headings in @strong{bold} using
 the same font family and, by default, point size as the body text.
-Numbered and unnumbered headings are available.  Text lines after
-heading macros are treated as part of the heading, rendered on the same
-output line in the same style.
+Headings are available with and without automatic numbering.  Text lines
+after heading macros are treated as part of the heading, rendered on the
+same output line in the same style.
 
 @DefmacList {NH, @Var{level}, ms}
 @DefmacListEnd {NH, @t{S} @Var{heading-level-index} @dots{}, ms}
@@ -3329,15 +3379,17 @@ Prints all text following in the normal point size (that is, the value
 of the @code{PS} register).
 @endDefmac
 
+@code{groff} @file{ms} also supports strings to begin and end super- and
+subscripting.  These are all GNU extensions.
+
 @DefstrList {@lbracechar{}, ms}
 @DefstrListEndx {@rbracechar{}, ms}
-Text enclosed with @code{\*@{} and @code{\*@}} is printed as a
-superscript.
+Begin and end superscripting, respectively.
 @endDefstr
 
 @DefstrList {<, ms}
 @DefstrListEndx {>, ms}
-Text enclosed with @code{\*<} and @code{\*>} is printed as a subscript.
+Begin and end subscripting, respectively.
 @endDefstr
 
 Rather than calling the @code{CW} macro, in @code{groff} @file{ms} you
@@ -3347,10 +3399,10 @@ use all four style macros above, returning to the default family (Times)
 with @samp{.ds FAM T}.  If you set @code{FAM} before the first call of a
 sectioning, paragraphing, or (non-date) document description macro, it
 also applies to headers, footers, and footnotes (as well as the body
-text).  A change to @code{FAM} takes effect at the next paragraph, so
-@code{CW} remains useful to ``inline'' a change to the font family,
-similarly to the practice of this document in noting syntactical
-elements of @file{ms} and @code{groff}.
+text).  Because @code{FAM} takes effect at the next paragraph, @code{CW}
+remains useful to ``inline'' a change to the font family, similarly to
+the practice of this document in noting syntactical elements of
+@file{ms} and @code{groff}.
 
 @c ---------------------------------------------------------------------
 
@@ -3657,7 +3709,8 @@ is centered.
 
 @DefmacList {DS, @t{R}, ms}
 @DefmacListEndx {RD, , ms}
-Begin a (@code{DS}:@: kept) right-aligned display.
+Begin a (@code{DS}:@: kept) right-aligned display.  This is a GNU
+extension.
 @endDefmac
 
 @Defmac {ED, , ms}
@@ -3665,13 +3718,11 @@ End any display.
 @endDefmac
 
 The distance stored in the @code{DD} register is inserted before and
-after each pair of display macros.  This is a Berkeley extension.
-
-The identation amount stored in the @code{DI} register is applied only
-to displays created with @samp{.DS I} and @code{ID}.  This is a GNU
-extension.
-
-Changes to either register take effect at the next display boundary.
+after each pair of display macros; this is a Berkeley extension.  The
+identation amount stored in the @code{DI} register is applied only to
+displays created with @samp{.DS I} and @code{ID}; this is a GNU
+extension.  Changes to either register take effect at the next display
+boundary.
 
 @c ---------------------------------------------------------------------
 
@@ -3697,33 +3748,31 @@ as follows.
 
 @DefmacList {TS, [@code{H}], ms}
 @DefmacListEndx {TE, , ms}
-Denotes a table, to be processed by the @code{tbl} preprocessor.  The
+Denote a table to be processed by the @code{tbl} preprocessor.  The
 optional argument@tie{}@code{H} to @code{TS} instructs @code{groff} to
-create a running header with the information up to the @code{TH} macro.
-@code{groff} prints the header at the beginning of the table; if the
-table runs onto another page, @code{groff} prints the header on the next
-page as well.
+repeat table rows (often column headings) at the top of each new page
+the table spans, if applicable; calling the @code{TH} macro marks the
+end of such rows.
 @endDefmac
 
 @DefmacList {PS, , ms}
 @DefmacListEndx {PE, , ms}
-Denotes a graphic, to be processed by the @code{pic} preprocessor.  You
-can create a @code{pic} file by hand, using the @acronym{AT&T}
-@code{pic} manual available on the Web as a reference, or by using a
-graphics program such as @code{xfig}.
+Denote a graphic to be processed by the @code{pic} preprocessor.  You
+can create @code{pic} input manually or by using a program such as
+@code{xfig}.
 @endDefmac
 
 @DefmacList {EQ, [@Var{align}], ms}
 @DefmacListEndx {EN, , ms}
-Denotes an equation, to be processed by the @code{eqn} preprocessor.
-The optional @var{align} argument can be @code{C}, @code{L},
-or@tie{}@code{I} to center (the default), left-justify, or indent the
-equation.
+Denote an equation to be processed by the @code{eqn} preprocessor.  The
+equation is center-aligned by default; the optional @var{align} argument
+can be @samp{C}, @samp{L}, or @samp{I} to center, left-align, or indent
+it by the amount stored in the @code{DI} register, respectively.
 @endDefmac
 
 @DefmacList {[, , ms}
 @DefmacListEndx {], , ms}
-Denotes a reference, to be processed by the @code{refer} preprocessor.
+Denote a reference to be processed by the @code{refer} preprocessor.
 The GNU @cite{refer@r{(1)}} man page provides a comprehensive reference
 to the preprocessor and the format of the bibliographic database.  Type
 @samp{man refer} at the command line to view it.
@@ -3768,16 +3817,17 @@ l | l .
 @cindex marker, footnote [@code{ms}]
 A footnote is typically anchored to a place in the text with a
 @dfn{marker}, which is a small integer, a symbol such as a dagger, or
-arbitrary user-specified text.  The footnote text is set at the nearest
-available ``foot'', or bottom, of a text column or page.
-
-Automatic numbering of footnotes is available.
+arbitrary user-specified text.
 
 @Defstr {*, ms}
 Place an automatically numbered footnote marker in the text.  Each time
 this string is interpolated, the number it produces increments by one.
 Automatic footnote numbers start at 1.  This is a Berkeley extension.
 @endDefesc
+
+Enclose the footnote text in @code{FS} and @code{FE} macro calls to set
+it at the nearest available ``foot'', or bottom, of a text column or
+page.
 
 @DefmacList {FS, [@Var{marker}], ms}
 @DefmacListEndx {FE, , ms}
@@ -3842,10 +3892,10 @@ footnote line length is required, recall that arithmetic expressions in
 @cindex page layout [@code{ms}]
 
 The default output from the @file{ms} macros provides a minimalist page
-layout: it prints a single column, with the page number centered at the
-top of each page.  It prints no footers.
+layout: it prints a single column, with the page number centered between
+hyphens at the top of each page.  It prints no footers.
 
-You can change the layout by setting the proper registers and strings.
+You can change the layout by setting appropriate registers and strings.
 
 @menu
 * ms Headers and Footers::
@@ -3865,23 +3915,19 @@ You can change the layout by setting the proper registers and strings.
 @cindex headers [@code{ms}]
 @cindex footers [@code{ms}]
 
-For documents that do not distinguish between odd and even pages, set
-the following strings:
+There are multiple ways to produce headers and footers.  One is to
+define the strings @code{LH}, @code{CH}, and @code{RH} to set the left,
+center, and right headers, respectively; and @code{LF}, @code{CF}, and
+@code{RF} to set the left, center, and right footers similarly.  This
+approach works best for documents that do not distinguish between odd
+and even pages.
 
-@DefstrList {LH, ms}
-@DefstrItemx {CH, ms}
-@DefstrListEndx {RH, ms}
-Sets the left, center, and right headers.
-@endDefstr
-
-@DefstrList {LF, ms}
-@DefstrItemx {CF, ms}
-@DefstrListEndx {RF, ms}
-Sets the left, center, and right footers.
-@endDefstr
-
-For documents that need different information printed in the even and
-odd pages, use the following macros:
+Another method is to call macros with arguments that set headers or
+footers for odd or even pages; these variables produce four
+combinations, so four macros are available.  They each take a delimiter
+separating the left, center, and right header or footer texts from each
+other.  You can replace the neutral apostrophes (@code{'}) with any
+character not appearing in the header or footer text.
 
 @DefmacList {OH, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
 @DefmacItemx {EH, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
@@ -3889,30 +3935,31 @@ odd pages, use the following macros:
 @DefmacListEndx {EF, @code{'}@Var{left}@code{'}@Var{center}@code{'}@Var{right}@code{'}, ms}
 The @code{OH} and @code{EH} macros define headers for the odd and even
 pages; the @code{OF} and @code{EF} macros define footers for the odd and
-even pages.  This is more flexible than defining the individual strings.
-
-You can replace the quote (@code{'}) marks with any character not
-appearing in the header or footer text.
+even pages.
 @endDefmac
 
-To specify custom header and footer processing, redefine the following
-macros:
-
-@DefmacList {PT,, ms}
-@DefmacItemx {HD,, ms}
-@DefmacListEndx {BT,, ms}
-The @code{PT} macro defines a custom header; the @code{BT} macro defines
-a custom footer.  These macros must handle odd/even/first page
-differences if necessary.
-
-The @code{HD} macro defines additional header processing to take place
-after executing the @code{PT} macro.
-@endDefmac
+By default, @file{ms} prints no header on any page numbered ``1''
+(regardless of its assigned format).
 
 @Defmac {P1, , ms}
-Print the header on page@tie{}1.  By default, no header is printed on
-that page.  This is a Berkeley extension.
+Print the header on page@tie{}1.  To be effective, this macro must be
+called before the header trap is sprung on any page numbered ``1''; in
+practice, unless your page numbering is unusual, this means that you
+should call it early, before @code{TL} or any sectioning or paragraphing
+macro.  This is a Berkeley extension.
 @endDefmac
+
+For even greater flexibility, @file{ms} is designed to permit the
+redefinition of the macros that are called when the @code{groff} traps
+that ordinarily cause the headers and footers to be output are sprung.
+@code{PT} (``page trap'') is called by @file{ms} when the header is to
+be written, and @code{BT} (``bottom trap'') when the footer is to be.
+The @code{groff} trap that @file{ms} sets up to process the header also
+calls the (normally undefined) @code{HD} macro after @code{PT}; you can
+define @code{HD} if you need additional processing after printing the
+header (for example, to draw a line below it).  Any such macros you
+(re)define must implement any desired specialization for odd-, even-, or
+first-numbered pages.
 
 @c ---------------------------------------------------------------------
 
@@ -3924,8 +3971,8 @@ Fields}.
 
 @Defmac {TA, , ms}
 Use this macro to reset the tab stops to the default for @file{ms}
-(every 5n).  You can redefine the @code{TA} macro to create a different
-set of default tab stops.
+(every 5 ens).  Redefine the @code{TA} macro to create a different set
+of default tab stops.
 @endDefmac
 
 @c ---------------------------------------------------------------------
@@ -3948,24 +3995,25 @@ margin.
 @cindex multiple columns [@code{ms}]
 
 The @file{ms} macros can set text in as many columns as reasonably fit
-on the page.  The following macros are available; all of them force a
-page break if a multi-column mode is already set.  If the current mode
-is single-column, starting a multi-column mode does @emph{not} force a
-page break.
+on the page.  The following macros are available.  All of them force a
+page break if a multi-column mode is already set.  However, if the
+current mode is single-column, starting a multi-column mode does
+@emph{not} force a page break.
 
 @Defmac {1C, , ms}
-Single-column mode.
+Arrange page text in a single column (the default).
 @endDefmac
 
 @Defmac {2C, , ms}
-Two-column mode.
+Arrange page text in two columns.
 @endDefmac
 
-@Defmac {MC, [@Var{width} [@Var{gutter}]], ms}
-Multi-column mode.  If you specify no arguments, it is equivalent to the
-@code{2C} macro.  Otherwise, @var{width} is the width of each column and
-@var{gutter} is the space between columns.  The @code{MINGW} register
-controls the default gutter width.
+@Defmac {MC, [@Var{column-width} [@Var{gutter-width}]], ms}
+Arrange page text in multiple columns.  If you specify no arguments, it
+is equivalent to the @code{2C} macro.  Otherwise, @var{column-width} is
+the width of each column and @var{gutter-width} is the minimum distance
+between columns.  The @code{MINGW} register stores default gutter width;
+it is a GNU extension.
 @endDefmac
 
 @c ---------------------------------------------------------------------
@@ -4064,9 +4112,8 @@ deal of time in the long run if you use @file{ms} regularly.
 @cindex special characters [@code{ms}]
 @cindex strings [@code{ms}]
 
-The @file{ms} macros provide the following predefined strings.  You can
-change the string definitions to help in creating documents in languages
-other than English.
+Redefine the following strings to adapt the @code{groff} @file{ms} macro
+package to languages other than English.
 
 @Defstr {REFERENCES, ms}
 Contains the string printed at the beginning of a references
@@ -4268,12 +4315,6 @@ put the date, in U.S.@: traditional format (e.g., ``January 1, 2021''),
 in the center footer (the @code{CF} string).
 
 @item
-The @acronym{AT&T} @file{ms} manual describes @code{CW} and @code{GW}
-registers that can be used to control the column width and gutter width,
-respectively.  These registers are not used in @code{groff} @file{ms}.
-(However, see @code{MINGW} in @ref{ms Multiple Columns}.)
-
-@item
 Macros that cause a reset (paragraphs, headings, etc.@:) may change the
 indentation.  Macros that change the indentation do not increment or
 decrement the indentation, but rather set it absolutely.  This can cause
@@ -4294,7 +4335,13 @@ Displays are left-adjusted by default, not indented.  In @acronym{AT&T}
 @file{ms}, it is synonymous with @samp{.DS L}.
 
 @item
-Right-adjusted displays are available.  The @acronym{AT&T} @file{ms}
+Block displays were not documented in the @acronym{AT&T} @file{ms}
+manual (Berkeley corrected this oversight), but Version@tie{}7 Unix
+@file{ms} supported them nevertheless, as does @code{groff} @file{ms}
+(this is thus only an @emph{apparent} difference).
+
+@item
+Right-aligned displays are available.  The @acronym{AT&T} @file{ms}
 manual observes that ``it is tempting to assume that @samp{.DS R} will
 right adjust lines, but it doesn't work''.  In @code{groff} @file{ms},
 it does.
@@ -4313,13 +4360,25 @@ and desire special treatment of certain page numbers (like @samp{1}),
 you may need to handle a non-decimal page number format, as @code{groff}
 @file{ms}'s @code{PT} does; see the macro package source.  @code{groff}
 @file{ms} aliases the @code{PN} register to @code{%}.}
+
+@item
+The @acronym{AT&T} @file{ms} manual documents registers @code{CW} and
+@code{GW} as setting the default column width and ``intercolumn gap'',
+respectively, and which applied when @code{MC} was called with fewer
+than two arguments.  @code{groff} @file{ms} instead treats @code{MC}
+without arguments as synonymous with @code{2C}; there is thus no
+occasion for a default column width register.  Further, the @code{MINGW}
+register and the second argument to @code{MC} specify a @emph{minimum}
+space between columns, not the fixed gutter width of @acronym{AT&T}
+@file{ms}.
 @end itemize
 
 @Defmpreg {GS, ms}
-This register is set to@tie{}1 by the @code{groff} @file{ms} macros, but
-it is not used by the @acronym{AT&T} @file{ms} macros.  Documents that
-need to determine whether they are being formatted with @code{groff}
-@file{ms} or another implementation should use this register.
+The register @code{GS} is set to@tie{}1 by the @code{groff} @file{ms}
+macros, but is not used by the @acronym{AT&T} @code{ms} package.
+Documents that need to determine whether they are being formatted with
+@code{groff} @file{ms} or another implementation should test this
+register.
 @endDefmpreg
 
 @menu
@@ -4391,15 +4450,6 @@ Version@tie{}10 Research Unix extension.
 Write an indexing term to the standard error stream.  You can write a
 script to capture and process an index generated in this manner.
 @endDefmac
-
-The following additional registers appear in @code{groff} @file{ms}.
-
-@Defmpreg {MINGW, ms}
-Specifies a minimum space (``gutter width'') between columns (for
-multi-column output); this takes the place of the @code{GW} register
-that was introduced in the Seventh Edition Unix (1979) version of the
-@acronym{AT&T} @file{ms} macros.
-@endDefmpreg
 
 Several new strings are available as well.  You can change these to
 handle (for example) the local language.  @xref{ms Strings and Special
