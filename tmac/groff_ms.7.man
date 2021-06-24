@@ -1814,23 +1814,28 @@ string).
 .
 .
 .IP \[bu]
-Macros that cause a reset
-(paragraphs, headings, etc.\&)
-may change the indent.
-.
-Macros that change the indent do not increment or decrement the
-indent, but rather set it absolutely.
+Macros that cause
+.I groff ms
+to internally reset its paragraph rendering parameters
+(paragraphs,
+headings,
+and displays,
+among others)
+may change the indentation;
+they do so not by incrementing or decrementing it,
+but set it absolutely.
 .
 This can cause problems for documents that define additional macros of
-their own.
+their own that try to manipulate indentation.
 .
-The solution is to use not the
+The solution is to use,
+not the
 .B in
-request but instead the
-.B RS
+request,
+but
+.B .RS
 and
-.B RE
-macros.
+.BR .RE .
 .
 .
 .IP \[bu]

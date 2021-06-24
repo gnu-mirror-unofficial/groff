@@ -2756,6 +2756,31 @@ string).
 .
 .
 .PP
+Macros that cause
+.I "groff ms"
+to internally reset its paragraph rendering parameters
+(paragraphs,
+headings,
+and displays,
+among others)
+may change the indentation;
+they do so not by incrementing or decrementing it,
+but set it absolutely.
+.
+This can cause problems for documents that define additional macros of
+their own that try to manipulate indentation.
+.
+The solution is to use,
+not the
+.CW in
+request,
+but
+.CW .RS
+and
+.CW .RE .
+.
+.
+.PP
 Displays are left-adjusted by default,
 not indented.
 .

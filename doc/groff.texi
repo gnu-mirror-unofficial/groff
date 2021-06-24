@@ -4315,12 +4315,13 @@ put the date, in U.S.@: traditional format (e.g., ``January 1, 2021''),
 in the center footer (the @code{CF} string).
 
 @item
-Macros that cause a reset (paragraphs, headings, etc.@:) may change the
-indentation.  Macros that change the indentation do not increment or
-decrement the indentation, but rather set it absolutely.  This can cause
-problems for documents that define additional macros of their own.  The
-solution is to use not the @code{in} request but instead the @code{RS}
-and @code{RE} macros.
+Macros that cause @code{groff} @file{ms} to internally reset its
+paragraph rendering parameters (paragraphs, headings, and displays,
+among others) may change the indentation; they do so not by incrementing
+or decrementing it, but set it absolutely.  This can cause problems for
+documents that define additional macros of their own that try to
+manipulate indentation.  The solution is to use, not the @code{in}
+request, but the @file{ms} @code{RS} and @code{RE} macros.
 
 @item
 To make @code{groff} @file{ms} use the default page offset (which also
