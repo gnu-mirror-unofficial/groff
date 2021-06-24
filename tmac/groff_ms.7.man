@@ -183,38 +183,53 @@ macro.
 .
 .
 .LP
-For entries marked \[lq]special\[rq] in the \[lq]Effective\[rq] column,
-see the discussion in the applicable section below.
-.
-.
-.LP
 .ne 7v
 .TS
 cb    s  s  s
 cb   cb cb cb
-lfCR lx  l  lfCR.
+lf(CR) lx  l  lf(CR).
 Margin settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[PO]	Page offset (left margin)	next page	1i
 \[rs]n[LL]	Line length	next paragraph	6i
-\[rs]n[LT]	Header/footer length	next paragraph	6i
+\[rs]n[LT]	Title line length	next paragraph	6i
 \[rs]n[HM]	Top (header) margin	next page	1i
 \[rs]n[FM]	Bottom (footer) margin	next page	1i
 _
 .TE
+.
+.
+.LP
+.ne 8v
+.TS
+cb    s  s  s
+cb   cb cb cb
+lf(CR) lx  l  lf(CR).
+Titles (headers, footers)
+Parameter	Definition	Effective	Default
+_
+\[rs]*[LH]	Left header text	next header	\f[I]empty
+\[rs]*[CH]	Center header text	next header	\-\[rs]n[%]\-
+\[rs]*[RH]	Right header text	next header	\f[I]empty
+\[rs]*[LF]	Left footer text	next footer	\f[I]empty
+\[rs]*[CF]	Center footer text	next footer	\f[I]empty
+\[rs]*[RF]	Right footer text	next footer	\f[I]empty
+_
+.TE
+.
 .
 .LP
 .ne 6v
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx l  lfCR.
+lf(CR) lx l  lf(CR).
 Text settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[PS]	Point size	next paragraph	10p
-\[rs]n[VS]	Line spacing (leading)	next paragraph	12p
+\[rs]n[VS]	Vertical spacing (leading)	next paragraph	12p
 \[rs]n[HY]	Hyphenation mode	next paragraph	6
 \[rs]*[FAM]	Font family	next paragraph	T
 _
@@ -226,24 +241,25 @@ _
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx l  lfCR.
+lf(CR)2 lx l  lf(CR).
 Paragraph settings
 Parameter	Definition	Effective	Default
 _
-\[rs]n[PI]	Initial indent	next paragraph	5n
-\[rs]n[PD]	Space between paragraphs	next paragraph	0.3v
-\[rs]n[QI]	Quoted paragraph indent	next paragraph	5n
+\[rs]n[PI]	Indentation	next paragraph	5n
+\[rs]n[PD]	Paragraph distance (spacing)	next paragraph	0.3v\
+ \f[R](\f[]1v\f[R])
+\[rs]n[QI]	Quotation indentation	next paragraph	5n
 \[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
 _
 .TE
 .
 .
+.ne 10v \" Keep table and subsequent paragraph together.
 .LP
-.ne 6v
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx l  lfCR.
+lf(CR) lx l  lf(CR).
 Heading settings
 Parameter	Definition	Effective	Default
 _
@@ -269,16 +285,16 @@ request.
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx  l  lfCR.
+lf(CR) lx  l  lf(CR).
 Footnote settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[FI]	Indentation	next footnote	2n
 \[rs]n[FF]	Format	next footnote	0
 \[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2
-\[rs]n[FVS]	Vertical spacing	next footnote	\[rs]n[FPS]+2
-\[rs]n[FPD]	Paragraph spacing	next footnote	\[rs]n[PD]/2
-\[rs]*[FR]	Line length ratio	special	11/12
+\[rs]n[FVS]	Vertical spacing (leading)	next footnote	\[rs]n[FPS]+2
+\[rs]n[FPD]	Paragraph distance (spacing)	next footnote	\[rs]n[PD]/2
+\[rs]*[FR]	Line length ratio	\f[I]special	11/12
 _
 .TE
 .
@@ -288,12 +304,13 @@ _
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx  l  lfCR.
+lf(CR) lx  l  lf(CR).
 Display settings
 Parameter	Definition	Effective	Default
 _
-\[rs]n[DD]	Display distance (spacing)	special	0.5v
-\[rs]n[DI]	Display indentation	special	0.5i
+\[rs]n[DD]	Display distance (spacing)	\f[I]special	0.5v\
+ \f[R](\f[]1v\f[R])
+\[rs]n[DI]	Display indentation	\f[I]special	0.5i
 _
 .TE
 .
@@ -303,7 +320,7 @@ _
 .TS
 cb   s  s  s
 cb   cb cb cb
-lfCR lx  l  lfCR.
+lf(CR) lx  l  lf(CR).
 Other settings
 Parameter	Definition	Effective	Default
 _
@@ -313,6 +330,20 @@ _
 .
 .
 .LP
+For entries marked
+.RI \[lq] special \[rq]
+in the \[lq]Effective\[rq] column,
+see the discussion in the applicable section below.
+.
+The
+.B PD
+and
+.B DD
+registers use the larger value if the vertical resolution of the output
+device is too coarse for the smaller one;
+usually,
+this is the case only for output to terminals and emulators thereof.
+.
 The \[lq]gutter\[rq] affected by
 .B \[rs]n[MINGW]
 is the gap between columns in multiple-column page arrangements.
@@ -431,14 +462,13 @@ or heading or paragraph macro call.
 Print the current date,
 or any
 .RI arguments\~ x ,
-in footers,
+in the center footer,
 and,
 if
 .B .RP
 is also called,
 left-aligned after other document description information on the cover
 page.
-.\" see Savannah #59826
 .
 .
 .TP
@@ -451,8 +481,7 @@ if
 .B .RP
 is also called,
 left-aligned after other document description information on the cover
-page,
-but not in footers.
+page.
 .
 This is the
 .I groff ms
@@ -611,7 +640,7 @@ using the same font family and,
 by default,
 point size as the body text.
 .
-Numbered and unnumbered headings are available.
+Headings are available with and without automatic numbering.
 .
 Text lines after heading macros are treated as part of the heading,
 rendered on the same output line in the same style.
@@ -833,18 +862,6 @@ in the previous font
 .B before
 the first argument.
 .
-For example,
-.RS
-.
-.IP
-\&.B foo ) (
-.RE
-.
-.IP
-prints
-.RB \[lq]( foo )\[rq].
-.
-.IP
 If you give this macro no arguments,
 .I groff
 prints all text following in bold until
@@ -957,18 +974,27 @@ the normal point size
 register).
 .
 .
-.TP
-.BI \[rs]*{ text \[rs]*}
-Print the enclosed
-.I text
-as a superscript.
+.P
+.I groff ms
+also supports strings to begin and end super- and subscripting.
+.
+These are all GNU extensions.
 .
 .
 .TP
-.BI \[rs]*< text \[rs]*>
-Print the enclosed
-.I text
-as a subscript.
+.BI \[rs]*{
+.TQ
+.BI \[rs]*}
+Begin and end superscripting,
+respectively.
+.
+.
+.TP
+.BI \[rs]*<
+.TQ
+.BI \[rs]*>
+Begin and end subscripting,
+respectively.
 .
 .
 .\" ====================================================================
@@ -1126,7 +1152,7 @@ left-aligned display.
 .B .DS I \c
 .RI [ indent ]
 .TQ
-.B ID \c
+.B .ID \c
 .RI [ indent ]
 Begin
 .RB ( DS ": kept)"
@@ -1167,6 +1193,8 @@ Begin
 .RB ( DS ": kept)"
 right-aligned display.
 .
+This is a GNU extension.
+.
 .
 .TP
 .B .ED
@@ -1176,23 +1204,17 @@ End any display.
 .P
 The distance stored in
 .B \[rs]n[DD]
-is inserted before and after each pair of display macros.
+is inserted before and after each pair of display macros;
+this is a Berkeley extension.
 .
-This is a Berkeley extension.
-.
-.
-.P
 The
 .B \[rs]n[DI]
 indentation is applied only to displays created with
 .RB \[lq] ".DS I" \[rq]
 and
-.B .ID .
+.BR .ID ;
+this is a GNU extension.
 .
-This is a GNU extension.
-.
-.
-.P
 Changes to either register take effect at the next display boundary.
 .
 .
@@ -1224,7 +1246,9 @@ follows.
 .
 .
 .TP
-.BR .TS " [" H "] and " .TE
+.BR .TS " [" H "]
+.TQ
+.B .TE
 Denote a table to be processed by the
 .I tbl
 preprocessor.
@@ -1233,52 +1257,51 @@ The optional
 .BR H "\~argument"
 instructs
 .I groff
-to create a running header with the information
-up to the
+to repeat table rows
+(often column headings)
+at the top of each new page the table spans,
+if applicable;
+calling the
 .B TH
-macro.
+macro marks the end of such rows.
 .
-.I groff
-prints the header at the beginning of the table;
-if the table runs onto another page,
-.I groff
-prints the header on the next page as well.
 .
 .TP
-.BR .PS " and " .PE
+.B .PS
+.TQ
+.B .PE
 Denote a graphic to be processed by the
 .I pic
 preprocessor.
 .
-You can create a
-.I pic
-file by hand, using the
-AT&T
-.I pic
-manual available on the Web as a reference,
-or by using a graphics program such as
-.IR xfig .
 .
 .TP
 .B .EQ\c
-.RI " [" align "] and "\c
+.RI " [" align ]
+.TQ
 .B .EN
 Denote an equation to be processed by the
 .I eqn
 preprocessor.
 .
-The optional
+The equation is center-aligned by default;
+the optional
 .I align
 argument can be
 .BR C ,
 .BR L ,
-or\~\c
-.B I
-to center (the default), left-justify, or indent
-the equation, respectively.
+.RB or\~ I
+to center,
+left-align,
+or indent it by
+.BR \[rs]n[DI] ,
+respectively.
+.
 .
 .TP
-.BR .[ " and " .]
+.B .[
+.TQ
+.B .]
 Denote a reference to be processed by the
 .I refer
 preprocessor.
@@ -1309,17 +1332,10 @@ which is a small integer,
 a symbol,
 or arbitrary user-specified text.
 .
-The footnote text is set at the nearest available \[lq]foot\[rq],
-or bottom,
-of a text column or page.
 .
-.
-.PP
-Automatic numbering of footnotes is available.
-.
-The
-.B *
-string places such a footnote marker in the text.
+.TP
+.B \[rs]**
+Place an automatically numbered footnote marker in the text.
 .
 Each time this string is interpolated,
 the number it produces increments by one.
@@ -1327,6 +1343,16 @@ the number it produces increments by one.
 Automatic footnote numbers start at 1.
 .
 This is a Berkeley extension.
+.
+.
+.P
+Enclose the footnote text in
+.B FS
+and
+.B FE
+macro calls to set it at the nearest available \[lq]foot\[rq],
+or bottom,
+of a text column or page.
 .
 .
 .TP
@@ -1405,87 +1431,122 @@ but set the footnote paragraph with the marker hanging.
 .SS "Headers and footers"
 .\" ====================================================================
 .
-There are three ways to define headers and footers:
+There are multiple ways to produce headers and footers.
 .
-.IP \[bu] 3n
-Use the strings
+One is to define the strings
 .BR LH ,
 .BR CH ,
 and
 .B RH
-to set the left, center, and right headers.
-Use
+to set the left,
+center,
+and right headers,
+respectively;
+and
 .BR LF ,
 .BR CF ,
 and
 .B RF
-to set the left, center, and right footers.
+to set the left,
+center,
+and right footers similarly.
 .
-The string-setting approach works best for documents that do not
-distinguish between odd and even pages.
+The approach works best for documents that do not distinguish between
+odd and even pages.
 .
-.IP \[bu]
-Use the
-.B OH
-and
-.B EH
-macros to define headers for the odd and even pages,
-and
-.B OF
-and
-.B EF
-macros to define footers for the odd and even pages.
 .
-This is more flexible than defining the individual strings.
+.P
+Another method is to call macros with arguments that set headers or
+footers for odd or even pages;
+these variables produce four combinations,
+so four macros are available.
 .
-The syntax for these macros is as follows:
-.RS
+They each take a delimiter separating the left,
+center,
+and right header or footer texts from each other.
 .
-.IP
-.BI . XX " \[aq]" left \[aq] center \[aq] right \[aq]
-.RE
-.
-.IP
-where
-.I XX
-is one of the foregoing four macros and each of
-.IR left ,
-.IR center ,
-and
-.I right
-is text of your choice.
-.
-You can replace the quote (\[aq]) marks with any character not
+You can replace the neutral apostrophes (\[aq]) with any character not
 appearing in the header or footer text.
 .
 .
-.IP \[bu]
-You can redefine the
-.B PT
+.TP
+.B .OH \c
+.RI \[aq] left \[aq] center \[aq] right \[aq]
+.TQ
+.B .OF \c
+.RI \[aq] left \[aq] center \[aq] right \[aq]
+.TQ
+.B .EH \c
+.RI \[aq] left \[aq] center \[aq] right \[aq]
+.TQ
+.B .EF \c
+.RI \[aq] left \[aq] center \[aq] right \[aq]
+The
+.B OH
 and
-.B BT
-macros to change the behavior of
-the header and footer,
-respectively.
+.B EH
+macros define headers for the odd and even pages;
+the
+.B OF
+and
+.B EF
+macros define footers for the odd and even pages.
 .
-The header process also calls the (undefined)
-.B HD
-macro after
-.BR PT ;
-you can define this macro if you need additional processing after
-printing the header
-(for example,
-to draw a line below the header).
+.
+.P
+By default,
+.I ms
+prints no header on any page numbered \[lq]1\[rq]
+(regardless of its assigned format).
 .
 .
 .TP
 .B .P1
 Print the header on page\~1.
 .
-By default,
-no header is printed on that page.
+To be effective,
+this macro must be called before the header trap is sprung on any page
+numbered \[lq]1\[rq].
 .
 This is a Berkeley extension.
+.
+.
+.P
+For even greater flexibility,
+.I ms
+is designed to permit the redefinition of the macros that are called
+when the
+.I groff
+traps that ordinarily cause the headers and footers to be output are
+sprung.
+.
+.B PT
+(\[lq]page trap\[rq])
+is called by
+.I ms
+when the header is to be written,
+and
+.B BT
+(\[lq]bottom trap\[rq])
+when the footer is to be.
+.
+The
+.I groff
+trap that
+.I ms
+sets up to process the header also calls the
+(normally undefined)
+.B HD
+macro after
+.BR .PT ;
+you can define
+.B .HD
+if you need additional processing after printing the header.
+.
+Any such macros you (re)define must implement any desired specialization
+for odd-,
+even-,
+or first-numbered pages.
 .
 .
 .\" ====================================================================
@@ -1498,7 +1559,8 @@ request to set tab stops as needed.
 .
 Use the
 .B TA
-macro to reset tabs to the default (every 5n).
+macro to reset tabs to the default
+(every 5n).
 .
 You can redefine the
 .B TA
@@ -1535,25 +1597,31 @@ The following macros are available.
 .
 All of them force a page break if a multi-column mode is already set.
 .
-However, if the current mode is single-column, starting a multi-column
-mode does
+However,
+if the current mode is single-column,
+starting a multi-column mode does
 .I not
 force a page break.
 .
+.
 .TP
 .B .1C
-Single-column mode.
+Arrange page text in a single column
+(the default).
+.
 .
 .TP
 .B .2C
-Two-column mode.
+Arrange page text in two columns.
+.
 .
 .TP
 .B .MC\c
 .RI " [" column-width " [" gutter-width ]]
-Multi-column mode.
+Arrange page text in multiple columns.
 .
-If you specify no arguments, it is equivalent to the
+If you specify no arguments,
+it is equivalent to the
 .B 2C
 macro.
 .
@@ -1561,11 +1629,11 @@ Otherwise,
 .I column-width
 is the width of each column and
 .I gutter-width
-is the space between columns.
+is the minimum distance between columns.
 .
-The
-.B MINGW
-register is the default gutter width.
+.B \[rs]n[MINGW]
+is the default gutter width;
+it is a GNU extension.
 .
 .
 .\" ====================================================================
@@ -1586,7 +1654,7 @@ resetting the page number to\~\c
 (Roman numeral\~1).
 .
 .
-.PP
+.P
 You can manually create a table of contents
 by specifying a page number as the first argument to
 .BR XS .
@@ -1595,32 +1663,13 @@ Add subsequent entries using the
 .B XA
 macro.
 .
-For example:
-.RS
-.
-.PP
-.ne 8
-.EX
-\&.XS 1
-Introduction
-\&.XA 2
-A Brief History of the Universe
-\&.XA 729
-Details of Galactic Formation
-\&.\|.\|.
-\&.XE
-.EE
-.RE
-.
-.
-.LP
 Use the
 .B PX
 macro to print a manually-generated table of contents
 without resetting the page number.
 .
 .
-.PP
+.P
 If you give the argument
 .RB \[lq] no \[rq]
 to either
@@ -1645,9 +1694,6 @@ and vertical spacing.
 .
 To overcome this restriction, values larger than or equal to 1000 are
 taken as fractional values, multiplied by 1000.
-.
-For example, \[oq].nr\~PS\~10250\[cq] sets the font size to 10.25
-points.
 .
 .
 .LP
@@ -1785,7 +1831,7 @@ see
 .B MINGW
 in the \[lq]Other Settings\[rq] table of subsection \[lq]Document
 control settings\[rq],
-above.
+above.)
 .
 .
 .IP \[bu]
@@ -1842,11 +1888,27 @@ it is synonymous with
 .
 .
 .IP \[bu]
-Right-adjusted displays are available.
+Block displays were not documented in the AT&T
+.I ms
+manual
+(Berkeley corrected this oversight),
+but Version\~7 Unix
+.I ms
+supported them nevertheless,
+as does
+.I groff ms
+(this is thus only an
+.I apparent
+difference).
+.
+.
+.IP \[bu]
+Right-aligned displays are available.
 .
 The AT&T
 .I ms
-manual observes that \[lq]it is tempting to assume that \[oq].DS R\[cq]
+manual observes that \[lq]it is tempting to assume that
+.RB \[lq] ".DS R" \[rq]
 will right adjust lines,
 but it doesn't work\[rq].
 .
@@ -1898,6 +1960,39 @@ register to
 .
 .
 .IP \[bu]
+The AT&T
+.I ms
+manual documents registers
+.B CW
+and
+.B GW
+as setting the default column width and \[lq]intercolumn gap\[rq],
+respectively,
+and which applied when
+.B .MC
+was called with fewer than two arguments.
+.
+.I groff ms
+instead treats
+.B .MC
+without arguments as synonymous with
+.B .2C ;
+there is thus no occasion for a default column width register.
+.
+Further,
+the
+.B MINGW
+register
+and the second argument to
+.B .MC
+specify a
+.I minimum
+space between columns,
+not the fixed gutter width of AT&T
+.IR ms .
+.
+.
+.IP \[bu]
 The register
 .B GS
 is set to\~1 by the
@@ -1905,11 +2000,11 @@ is set to\~1 by the
 macros,
 but is not used by the AT&T
 .I ms
-macros.
+package.
 .
 Documents that need to determine whether they are being formatted with
 .I groff ms
-or another implementation should use this register.
+or another implementation should test this register.
 .
 .
 .\" ====================================================================
@@ -1918,29 +2013,29 @@ or another implementation should use this register.
 .
 You can redefine the following strings to adapt the
 .I groff ms
-macros to languages other than English.
+macro package to languages other than English.
 .
 .RS
 .TS
 cb   cb
-lfCR lfCR.
+lf(CR) lf(CR).
 String	Default
 _
-REFERENCES	References
-ABSTRACT	\[rs]f[I]ABSTRACT\[rs]f[]
-TOC	Table of Contents
-MONTH1	January
-MONTH2	February
-MONTH3	March
-MONTH4	April
-MONTH5	May
-MONTH6	June
-MONTH7	July
-MONTH8	August
-MONTH9	September
-MONTH10	October
-MONTH11	November
-MONTH12	December
+\[rs]*[REFERENCES]	References
+\[rs]*[ABSTRACT]	\[rs]f[I]ABSTRACT\[rs]f[]
+\[rs]*[TOC]	Table of Contents
+\[rs]*[MONTH1]	January
+\[rs]*[MONTH2]	February
+\[rs]*[MONTH3]	March
+\[rs]*[MONTH4]	April
+\[rs]*[MONTH5]	May
+\[rs]*[MONTH6]	June
+\[rs]*[MONTH7]	July
+\[rs]*[MONTH8]	August
+\[rs]*[MONTH9]	September
+\[rs]*[MONTH10]	October
+\[rs]*[MONTH11]	November
+\[rs]*[MONTH12]	December
 _
 .TE
 .RE
@@ -1950,22 +2045,24 @@ The default for
 includes font style escapes to set the word in italics.
 .
 .
-.PP
-The
-.B \[rs]*\-
-string produces an em dash\[em]like this.
-.
-.
-.PP
-Use
-.B \[rs]*Q
-and
-.B \[rs]*U
-to get a left and right typographer's quote,
-respectively, in
-.I troff
-(and plain quotes in
-.IR nroff ).
+.\" TODO: Put this in a legacy feature support section, alongside AT&T
+.\" accent marks and .AM.
+.\".PP
+.\"The
+.\".B \[rs]*\-
+.\"string produces an em dash\[em]like this.
+.\".
+.\".
+.\".PP
+.\"Use
+.\".B \[rs]*Q
+.\"and
+.\".B \[rs]*U
+.\"to get a left and right typographer's quote,
+.\"respectively, in
+.\".I troff
+.\"(and plain quotes in
+.\".IR nroff ).
 .
 .
 .\" ====================================================================
@@ -2018,21 +2115,19 @@ register;
 the default is\~6.
 .
 .
-.PP
-Improved accent marks
-(as originally defined in Berkeley's
-.I ms
-version)
-are available by specifying the
-.B AM
-macro at the beginning of your document.
-.
-You can place an accent over most characters by specifying the string
-defining the accent directly after the character.
-.
-For example,
-.B n\[rs]*\[ti]
-produces an n with a tilde over it.
+.\" TODO: Put this in a legacy feature support section, alongside AT&T
+.\" accent marks and the \*-, \*Q, \*U strings.
+.\".PP
+.\"Improved accent marks
+.\"(as originally defined in Berkeley's
+.\".I ms
+.\"version)
+.\"are available by specifying the
+.\".B AM
+.\"macro at the beginning of your document.
+.\".
+.\"You can place an accent over most characters by specifying the string
+.\"defining the accent directly after the character.
 .
 .
 .\" ====================================================================
