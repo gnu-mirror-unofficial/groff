@@ -85,10 +85,8 @@
 .\" This .ne replacement avoids page breaks; instead, the page length is
 .\" increased to the necessary amount (this is needed for tables).
 .de an-ne
-.  ie \\n[.$] \
-.    nr an-amount (v;\\$*)
-.  el \
-.    nr an-amount 1v
+.  ie \\n[.$] .nr an-amount (v;\\$*)
+.  el         .nr an-amount 1v
 .  if (\\n[an-amount] >= \\n[.t]) \
 .    pl +(\\n[an-amount]u - \\n[.t]u + 1v)
 .  rr an-amount
@@ -287,7 +285,7 @@
 .  if "\\$1"4" .ds an-extra2 "System III\"
 .  if "\\$1"5" \{\
 .    ie "\\$2"" .ds an-extra2 "System V\"
-.    el .ds an-extra2 "System V Release \\$2\"
+.    el         .ds an-extra2 "System V Release \\$2\"
 .  \}
 ..
 .
@@ -788,10 +786,8 @@
 .\" Start table.
 .de1 TS
 .  \" If continuous rendering, tell tbl not to use keeps.
-.  ie \\n[cR] \
-.    nr 3usekeeps 0
-.  el \
-.    nr 3usekeeps 1
+.  ie \\n[cR] .nr 3usekeeps 0
+.  el         .nr 3usekeeps 1
 .  sp \\n[PD]u
 .  if \\n[an-is-output-html] \{\
 .    nr an-TS-ll \\n[.l]
@@ -842,10 +838,8 @@
 .    nop \\$*
 .  \}
 .  el \{\
-.    ie c\[rg] \
-.      nop \[rg]\c
-.    el \
-.      nop (Reg.)\c
+.    ie c\[rg] .nop \[rg]\c
+.    el        .nop (Reg.)\c
 .  \}
 ..
 .
@@ -893,10 +887,8 @@
 .
 .\" continous rendering (one long page)
 .if !r cR \{\
-.  ie n \
-.    nr cR 1
-.  el \
-.    nr cR 0
+.  ie n .nr cR 1
+.  el   .nr cR 0
 .\}
 .
 .\" continuous page numbering over multiple documents
@@ -977,10 +969,8 @@
 .\" hyphenation mode
 .if !r HY \{\
 .  \" No page breaks occur in continuous rendering.
-.  ie \n[cR] \
-.    nr HY 4
-.  el \
-.    nr HY 6
+.  ie \n[cR] .nr HY 4
+.  el        .nr HY 6
 .\}
 .
 .\" standard indentation
@@ -988,20 +978,16 @@
 .  \" We select an integer indentation value in nroff mode because this
 .  \" value is used additively for multiple purposes; rounding of
 .  \" accumulating fractions would produce inconsistent results.
-.  ie t \
-.    nr IN 7.2n
-.  el \
-.    nr IN 7n
+.  ie t .nr IN 7.2n
+.  el   .nr IN 7n
 .\}
 .
 .\" line length
 .if !r LL \{\
 .  \" If in troff mode, respect device default.
-.  ie t \
-.    nr LL \n[.l]
+.  ie t .nr LL \n[.l]
 .  \" Otherwise, override nroff mode default of 65n.
-.  el \
-.    nr LL 78n
+.  el   .nr LL 78n
 .\}
 .
 .\" title (header, footer) length
