@@ -5640,11 +5640,12 @@ Return@tie{}1 if @var{anything} is a valid numeric expression; or@tie{}0
 if @var{anything} is empty or not a valid numeric expression.
 @endDefesc
 
+Registers interpolated in expressions must be in a decimal format if
+used as operands to an arithmetic operator; @xref{Assigning Formats}.
 @cindex space characters, in expressions
 @cindex expressions, and space characters
 Due to the way arguments are parsed, spaces are not allowed in
 expressions, unless the entire expression is surrounded by parentheses.
-
 @xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
 
 
@@ -6643,6 +6644,9 @@ To change the increment value without changing the value of a register
 .nr a \na 10
 @endExample
 
+@codequotebacktick on
+@codequoteundirected on
+
 @c ---------------------------------------------------------------------
 
 @node Assigning Formats, Built-in Registers, Auto-increment, Registers
@@ -6650,30 +6654,29 @@ To change the increment value without changing the value of a register
 @cindex assigning formats (@code{af})
 @cindex formats, assigning (@code{af})
 
-When a register is used, it is always textually replaced (or
-interpolated) with a representation of that number.  This output format
-can be changed to a variety of formats (numbers, Roman numerals, etc.).
-This is done using the @code{af} request.
+When a register is interpolated, its value is replaced with a
+representation of a number.  The @code{af} request permits a register's
+value to be interpolated in a variety of formats.
 
-@Defreq {af, ident format}
-Change the output format of a register.  The first argument @var{ident}
-is the name of the register to be changed, and the second argument
-@var{format} is the output format.  The following output formats are
-available:
+@Defreq {af, reg format}
+Set the format used to interpolate a register.  The first argument
+@var{reg} is the name of the register to be affected, and the second
+argument @var{format} is the format.  Valid formats are as follows.
 
 @table @code
-@item 1
-Decimal arabic numbers.  This is the default format: 0, 1, 2,
-3,@tie{}@enddots{}
+@item 0
+Decimal Arabic numbers 0, 1, 2, 3,@tie{}@enddots{}  This is the default
+format.
 
 @item 0@dots{}0
-Decimal numbers with as many digits as specified.  So, @samp{00} would
-result in printing numbers as 01, 02, 03,@tie{}@enddots{}
+Decimal Arabic numbers zero-padded on the left if necessary to at least
+as many digits as specified (interpolations never truncate a register
+value).  @samp{00} would interpolate register values as 01, 02,
+03,@tie{}@enddots{}
 
-In fact, any digit instead of zero does work; @code{gtroff} only counts
-how many digits are specified.  As a consequence, @code{af}'s default
-format @samp{1} could be specified as @samp{0} also (and exactly this is
-returned by the @code{\g} escape, see below).
+Any decimal digit is equivalent to @samp{0}; GNU @code{troff} simply
+counts the digits specified.  Zeroes represent decimal Arabic formats
+when the @code{\g} escape is used; see below.
 
 @item I
 @cindex Roman numerals
@@ -6690,11 +6693,8 @@ Upper-case letters: 0, A, B, C, @dots{},@tie{}Z, AA, AB,@tie{}@enddots{}
 Lower-case letters: 0, a, b, c, @dots{},@tie{}z, aa, ab,@tie{}@enddots{}
 @end table
 
-Omitting the register format causes a warning of type @samp{missing}.
-@xref{Debugging}, for more details.  Specifying a nonexistent format
-causes an error.
-
-The following example produces @samp{10, X, j, 010}:
+Omitting the register format causes a warning of type @samp{missing};
+@xref{Debugging}.  Specifying a nonexistent format is an error.
 
 @Example
 .nr a 10
@@ -6706,6 +6706,7 @@ The following example produces @samp{10, X, j, 010}:
 \na,
 .af a 001
 \na
+    @result{} 10, X, j, 010
 @endExample
 
 @cindex Roman numerals, maximum and minimum
@@ -6714,35 +6715,55 @@ The following example produces @samp{10, X, j, 010}:
 The largest number representable for the @samp{i} and @samp{I} formats
 is 39999 (or @minus{}39999); @acronym{AT&T} @code{troff} uses @samp{z}
 and @samp{w} to represent 10000 and 5000 in Roman numerals, and so does
-@code{gtroff}.  Currently, the correct glyphs of Roman numeral five
+GNU @code{troff}.  Currently, the correct glyphs of Roman numeral five
 thousand and Roman numeral ten thousand (Unicode code points
-@code{U+2182} and @code{U+2181}, respectively) are not available.
+@code{U+2182} and @code{U+2181}, respectively) are not used.
 
-If @var{ident} doesn't exist, it is created.
+If @var{reg} doesn't exist, it is created and assigned a zero value.
 
 @cindex read-only register, changing format
 @cindex changing format, and read-only registers
-Changing the output format of a read-only register causes an error.  It
-is necessary to first copy the register's value to a writable register,
-then apply the @code{af} request to this other register.
+Assigning the format of a read-only register is an error.  It is
+necessary to copy the read-only register's value to, and assign a format
+to, a writable register.
 @endDefreq
 
-@DefescList {\\g, , i, }
-@DefescItem {\\g, (, id, }
-@DefescListEnd {\\g, [, ident, ]}
+@DefescList {\\g, , r, }
+@DefescItem {\\g, (, rg, }
+@DefescListEnd {\\g, [, reg, ]}
 @cindex format of register (@code{\g})
 @cindex register, format (@code{\g})
-Return the current format of the specified register @var{ident}
-(one-character name@tie{}@var{i}, two-character name @var{id}).  For
-example, @samp{\ga} after the previous example would produce the string
-@samp{000}.  If the register hasn't been defined yet, nothing is
-returned.
+Interpolate the format of the register @var{reg} (one-character
+name@tie{}@var{r}, two-character name @var{rg}).  If the register is not
+defined, nothing is interpolated.
+
+@samp{\ga} after the previous example would interpolate @samp{000}.
 @endDefesc
 
-@c ---------------------------------------------------------------------
+@cindex register format, in expressions
+@cindex expressions, and register format
+GNU @code{troff}'s input parser understands only decimal Arabic formats
+(including leading zeroes).  The Roman or letter formats cannot be used
+as operands to arithmetic operators in expressions
+(@pxref{Expressions}).  For instance, it may be desirable to test the
+page number independently of its format.
 
-@codequotebacktick on
-@codequoteundirected on
+@Example
+.af % i \" front matter
+@r{@dots{}}
+.\" To test the page number, we need it in decimal.
+.ds saved-page-number-format \\g%\"
+.af % 0
+.nr page-number-in-decimal \\n%
+.af % \\*[saved-page-number-format]
+.ie \\n[page-number-in-decimal]=1 .do-first-page-stuff
+.el \@{\
+.  ie o .do-odd-numbered-page-stuff
+.  el   .do-even-numbered-page-stuff
+.\@}
+@endExample
+
+@c ---------------------------------------------------------------------
 
 @node Built-in Registers,  , Assigning Formats, Registers
 @subsection Built-in Registers
