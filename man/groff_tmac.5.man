@@ -225,73 +225,145 @@ macro package; see
 .
 .
 .\" ====================================================================
-.SS "Language-specific packages"
+.SS "Localization packages"
 .\" ====================================================================
+.
+.I groff
+handles localization automatically.
+.
+By default,
+.I troffrc
+checks the environment variables
+.I LC_ALL
+and
+.I LANG
+(in that order)
+and attempts to load a localization file matching the first two
+characters of the variable's value.
+.
+If the environment variables are not set or set to \[lq]C\[rq],
+or a localization file for the locale does not exist,
+the English localization file is used.
+.
+.
+.P
+For Western languages,
+the localization file sets the hyphenation mode and loads hyphenation
+patterns and exceptions.
+.
+Localization files can also adjust the date format and provide
+translations of strings used by some of the full-service macro packages;
+alter the input encoding
+(see the next section);
+and change the amount of inter-sentence space.
+.
+.
+.P
+As of
+.I groff
+1.23.0,
+the following localization files exist.
+.
+If you load them from the command line,
+the
+.B \-C
+option to enable compatibility mode cannot be used.
+.
 .
 .TP
 .I cs
-This file adds support for Czech localization, including the main macro
-packages (me, mom, mm, and ms).
+Czech;
+localizes
+.IR me ,
+.IR mm ,
+.IR mom ,
+and
+.IR ms .
 .
-.IP
-Note that
-.I cs.tmac
-sets the input encoding to latin-2.
+Sets the input encoding to Latin-2 by loading
+.IR latin2.tmac .
 .
 .
 .TP
 .I de
 .TQ
 .I den
-German localization support, including the main macro packages (me, mom,
-mm, and ms).
+German;
+localizes
+.IR me ,
+.IR mm ,
+.IR mom ,
+and
+.IR ms .
+.
+Sets the input encoding to Latin-1 by loading
+.IR latin1.tmac .
+.
 .
 .IP
 .I de.tmac
-selects hyphenation patterns for traditional orthography, and
+selects hyphenation patterns for traditional orthography,
+and
 .I den.tmac
 does the same for the new orthography
-(\[oq]Recht\%schreib\%reform\[cq]).
+(\[lq]Recht\%schreib\%reform\[rq]).
+.\" There should be a better way to select the orthography via locale
+.\" settings.  Have Germans come up with an @ modifier for this, e.g.,
+.\" 'LANG=de_DE@rechtschreibreform'?
 .
-It should be the last macro package on the command line.
+.
+.TP
+.I en
+English.
 .
 .
 .TP
 .I fr
-This file adds support for French localization, including the main macro
-packages (me, mom, mm, and ms).
+French;
+localizes
+.IR me ,
+.IR mm ,
+.IR mom ,
+and
+.IR ms .
+.
+Sets the input encoding to Latin-9 by loading
+.IR latin9.tmac .
 .
 .
-Example:
-.RS
-.IP
-.EX
-\fIsh#\fP groff \-ms \-mfr foo.ms > foo.ps
-.EE
-.RE
-.
-.IP
-Note that
-.I fr.tmac
-sets the input encoding to latin-9 to get proper support of the
-\[oq]oe\[cq] ligature.
+.TP
+.I ja
+Japanese.
 .
 .
 .TP
 .I sv
-Swedish localization support, including the me, mom, and ms macro
-packages.
+Swedish;
+localizes
+.IR me ,
+.IR mm ,
+.IR mom ,
+and
+.IR ms .
 .
-Swedish for the mm macros is handled separately; see
+Sets the input encoding to Latin-1 by loading
+.IR latin1.tmac .
+.
+Some of the localization of the
+.I mm
+package is handled separately;
+see
 .IR groff_mmse (@MAN7EXT@).
 .
-It should be the last macro package on the command line.
+.
+.TP
+.I zh
+Chinese.
 .
 .
 .\" ====================================================================
 .SS "Input encodings"
 .\" ====================================================================
-.
 .
 .TP
 .I latin1
