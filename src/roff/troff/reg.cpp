@@ -42,12 +42,12 @@ void reg::decrement()
 
 void reg::set_increment(units /*n*/)
 {
-  error("can't auto increment read-only register");
+  error("can't automatically increment read-only register");
 }
 
 void reg::alter_format(char /*f*/, int /*w*/)
 {
-  error("can't alter format of read-only register");
+  error("can't assign format of read-only register");
 }
 
 const char *reg::get_format()
