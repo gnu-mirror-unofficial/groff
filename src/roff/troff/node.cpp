@@ -6175,7 +6175,7 @@ void remove_font_special_character()
   symbol f = font_table[n]->get_name();
   while (!tok.newline() && !tok.eof()) {
     if (!tok.space() && !tok.tab()) {
-      charinfo *s = tok.get_char(1);
+      charinfo *s = tok.get_char(true /* required */);
       string gl(f.contents());
       gl += ' ';
       gl += s->nm.contents();

@@ -3595,7 +3595,7 @@ static void hyphen_word()
     int i = 0;
     int npos = 0;
     while (i < WORD_MAX && !tok.space() && !tok.newline() && !tok.eof()) {
-      charinfo *ci = tok.get_char(1);
+      charinfo *ci = tok.get_char(true /* required */);
       if (ci == 0) {
 	skip_line();
 	return;

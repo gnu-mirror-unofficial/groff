@@ -1462,7 +1462,7 @@ node *do_overstrike()
       on->overstrike(n);
     }
     else {
-      charinfo *ci = tok.get_char(1);
+      charinfo *ci = tok.get_char(true /* required */);
       if (ci) {
 	node *n = curenv->make_char_node(ci);
 	if (n)
@@ -1494,7 +1494,7 @@ static node *do_bracket()
     if (tok == start
 	&& (compatible_flag || input_stack::get_level() == start_level))
       break;
-    charinfo *ci = tok.get_char(1);
+    charinfo *ci = tok.get_char(true /* required */);
     if (ci) {
       node *n = curenv->make_char_node(ci);
       if (n)
@@ -2236,7 +2236,7 @@ void token::next()
 	  if (type == TOKEN_NODE || type == TOKEN_HORIZONTAL_SPACE)
 	    nd = new zero_width_node(nd);
 	  else {
-  	    charinfo *ci = get_char(1);
+	    charinfo *ci = get_char(true /* required */);
 	    if (ci == 0)
 	      break;
 	    node *gn = curenv->make_char_node(ci);
@@ -4231,7 +4231,7 @@ void do_define_character(char_mode mode, const char *font_name)
   node *n = 0;		// pacify compiler
   int c;
   tok.skip();
-  charinfo *ci = tok.get_char(1);
+  charinfo *ci = tok.get_char(true /* required */);
   if (ci == 0) {
     skip_line();
     return;
@@ -4293,7 +4293,7 @@ static void remove_character()
   tok.skip();
   while (!tok.newline() && !tok.eof()) {
     if (!tok.space() && !tok.tab()) {
-      charinfo *ci = tok.get_char(1);
+      charinfo *ci = tok.get_char(true /* required */);
       if (!ci)
 	break;
       macro *m = ci->set_macro(0);
@@ -5024,7 +5024,7 @@ static int get_line_arg(units *n, unsigned char si, charinfo **cp)
     if (tok.dummy() || tok.transparent_dummy())
       tok.next();
     if (!(start == tok && input_stack::get_level() == start_level)) {
-      *cp = tok.get_char(1);
+      *cp = tok.get_char(true /* required */);
       tok.next();
     }
     if (!(start == tok && input_stack::get_level() == start_level))
@@ -5401,7 +5401,7 @@ static void encode_char(macro *mac, char c)
 {
   if (c == '\0') {
     if ((font::use_charnames_in_special) && tok.special()) {
-      charinfo *ci = tok.get_char(1);
+      charinfo *ci = tok.get_char(true /* required */);
       const char *s = ci->get_symbol()->contents();
       if (s[0] != (char)0) {
 	mac->append('\\');
@@ -5762,7 +5762,7 @@ int do_if_request()
   else if (c == 'c') {
     tok.next();
     tok.skip();
-    charinfo *ci = tok.get_char(1);
+    charinfo *ci = tok.get_char(true /* required */);
     if (ci == 0) {
       skip_alternative();
       return 0;
@@ -6946,7 +6946,7 @@ static void do_translate(int translate_transparent, int translate_input)
       tok.next();
       continue;
     }
-    charinfo *ci1 = tok.get_char(1);
+    charinfo *ci1 = tok.get_char(true /* required */);
     if (ci1 == 0)
       break;
     tok.next();
@@ -6968,7 +6968,7 @@ static void do_translate(int translate_transparent, int translate_input)
       ci1->set_special_translation(charinfo::TRANSLATE_HYPHEN_INDICATOR,
 				   translate_transparent);
     else {
-      charinfo *ci2 = tok.get_char(1);
+      charinfo *ci2 = tok.get_char(true /* required */);
       if (ci2 == 0)
 	break;
       if (ci1 == ci2)
@@ -7001,7 +7001,7 @@ void char_flags()
   int flags;
   if (get_integer(&flags))
     while (has_arg()) {
-      charinfo *ci = tok.get_char(1);
+      charinfo *ci = tok.get_char(true /* required */);
       if (ci) {
 	charinfo *tem = ci->get_translation();
 	if (tem)
@@ -7017,7 +7017,7 @@ void hyphenation_code()
 {
   tok.skip();
   while (!tok.newline() && !tok.eof()) {
-    charinfo *ci = tok.get_char(1);
+    charinfo *ci = tok.get_char(true /* required */);
     if (ci == 0)
       break;
     tok.next();
@@ -7084,7 +7084,7 @@ void define_class()
     tok.skip();
     if (child1 != 0 && tok.ch() == '-') {
       tok.next();
-      child2 = tok.get_char(1);
+      child2 = tok.get_char(true /* required */);
       if (!child2) {
 	warning(WARN_MISSING,
 		"missing end of character range in class '%1'",
@@ -7137,7 +7137,7 @@ void define_class()
       }
       child1 = 0;
     }
-    child1 = tok.get_char(1);
+    child1 = tok.get_char(true /* required */);
     tok.next();
     if (!child1) {
       if (!tok.newline())
@@ -7178,7 +7178,7 @@ void define_class()
   skip_line();
 }
 
-charinfo *token::get_char(int required)
+charinfo *token::get_char(bool required)
 {
   if (type == TOKEN_CHAR)
     return charset_table[c];

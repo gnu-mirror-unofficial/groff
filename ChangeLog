@@ -1,5 +1,23 @@
 2021-06-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Slightly refactor.  Make the source code slightly more
+	accessible by using a `bool` type for a member function's
+	default parameter used as a Boolean, and comment it at call
+	sites where the default is overridden.
+
+	* src/roff/troff/token.h (token::get_char): Change type of
+	parameter from `int` to `bool` and default from 0 to `false`.
+	* src/roff/troff/input.cpp (token::get_char): Update definition.
+	* src/roff/troff/env.cpp (hyphen_word):
+	* src/roff/troff/node.cpp (remove_font_special_character):
+	* src/roff/troff/input.cpp (do_overstrike, do_bracket, next,
+	do_define_character, remove_character, get_line_arg,
+	encode_char, do_if_request, do_translate, char_flags,
+	hyphenation_code, define_class): Update call sites.  Add comment
+	indicating meaning of parameter.
+
+2021-06-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (TH): When outputting HTML, write the
 	possibly case-transformed (but not yet abbreviated) page title
 	as the `title` element instead of the unaltered first argument

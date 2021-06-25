@@ -92,7 +92,7 @@ public:
   int operator==(const token &); // need this for delimiters, and for conditions
   int operator!=(const token &); // ditto
   unsigned char ch();
-  charinfo *get_char(int required = 0);
+  charinfo *get_char(bool required = false);
   int add_to_node_list(node **);
   int title();
   void make_space();
