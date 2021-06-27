@@ -1,5 +1,34 @@
 2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Revise operand handling, diagnostics, and exit status.
+
+	* src/utils/grog/grog.pl: Track more state so that we can
+	process the argument list more intelligently and exit with a
+	meaningful status.  Add `had_inference_problem`,
+	`had_processing_problem`, and `have_any_valid_args` Boolean
+	scalars.
+	(fail): Add diagnostic subroutine for serious problems; sets
+	`had_processing_problem`.
+	(handle_args, handle_file_ext): Stop complaining here about
+	unopenable file operands.
+	(handle_whole_files): Complain only here, with `fail` if a file
+	operand cannot be opened.
+	(make_groff_line_rest): Don't exit immediately if there is a
+	macro package inference clash, because there might be more
+	operands to process.  Instead, set `had_inference_problem`.
+	Stop exiting from this subroutine.
+	(top level): Only call the inference subroutines if we had a
+	valid operand to work with (including an implicit read from
+	stdin).  Exit with a status corresponding to the Booleans
+	declared above.
+
+	* src/utils/grog/grog.1.man (Exit status): Add section; describe
+	semantics of exit status values.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60833>.
+
+2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grog]: Revise diagnostic messages.
 
 	* src/utils/grog/grog.1.man (err): Rename from this...

@@ -163,6 +163,17 @@ my @filespec;
 
 my $tmac_ext = '';
 
+my $had_inference_problem = 0;
+my $had_processing_problem = 0;
+my $have_any_valid_args = 0;
+
+
+sub fail {
+  my $text = shift;
+  print STDERR "$Prog: error: $text";
+  $had_processing_problem = 1;
+}
+
 
 sub warn {
   my $text = shift;
@@ -202,9 +213,6 @@ sub handle_args {
     }
 
     unless ( $arg =~ /^-/ ) { # file name, no opt, no optarg
-      unless (-f $arg && -r $arg) {
-	print 'unknown file name: ' . $arg;
-      }
       push @filespec, $arg;
       next;
     }
@@ -299,13 +307,8 @@ sub handle_file_ext {
   # globals: @filespec, $tmac_ext;
 
   foreach my $file ( @filespec ) {
-    # test for each file name in the arguments
-    unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	"$Prog: can't open \'$file\': $!";
-      next;
-    }
-
+    # We will complain about unopenable files in &handle_whole_files.
+    next unless ( open(FILE, $file eq "-" ? $file : "< $file") );
     next unless ( $file =~ /\./ ); # file name has no dot '.'
 
     # get extension
@@ -397,10 +400,10 @@ sub handle_whole_files {
 
   foreach my $file ( @filespec ) {
     unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	"$Prog: can't open \'$file\': $!";
+      &fail("cannot open '$file': $!");
       next;
     }
+    $have_any_valid_args = 1;
     my $line = <FILE>; # get single line
 
     unless ( defined($line) ) {
@@ -1107,7 +1110,7 @@ sub make_groff_line_rest {
       print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
 	'More than 1 -m arguments were guessed: ' . @m;
       print STDERR __FILE__ . ' ' .  __LINE__ . ': ' . 'Guessing stopped.';
-      exit 1;
+      $had_inference_problem = 1;
     } elsif ( $nr_m_guessed == 1 ) {
       $final_m = $m[0];
     } else {
@@ -1127,8 +1130,6 @@ sub make_groff_line_rest {
   } else {
     print "@Command";
   }
-
-  exit 0;
 } # make_groff_line_rest()
 
 
@@ -1184,15 +1185,20 @@ if ($before_make) {
   $at_at{'GROFF_VERSION'} = '@VERSION@';
 }
 
-
 &handle_args();
 &handle_file_ext(); # see $tmac_ext for gotten value
 &handle_whole_files();
-&make_groff_device();
-&make_groff_preproc();
-&make_groff_tmac_man_ms() || &make_groff_tmac_others();
-&make_groff_line_rest();
 
+if ($have_any_valid_args) {
+  &make_groff_device();
+  &make_groff_preproc();
+  &make_groff_tmac_man_ms() || &make_groff_tmac_others();
+  &make_groff_line_rest();
+}
+
+exit 2 if ($had_processing_problem);
+exit 1 if ($had_inference_problem);
+exit 0;
 
 1;
 # Local Variables:

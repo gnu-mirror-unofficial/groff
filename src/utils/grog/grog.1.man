@@ -361,6 +361,29 @@ groff \-s \-t \-T ps 1.roff
 .
 .
 .\" ====================================================================
+.SH "Exit status"
+.\" ====================================================================
+.
+.I grog
+exits with error status
+.B 1
+if the input document appears to be malformed,
+or
+.B 2
+if there were problems handling an option or operand.
+.
+It otherwise exits with status
+.BR 0 .
+.
+Inferring no preprocessors or macro packages is not an error condition;
+a valid
+.I roff
+document need not use either,
+and even plain text is valid input,
+if one is mindful of the syntax of the control and escape characters.
+.
+.
+.\" ====================================================================
 .SH Examples
 .\" ====================================================================
 .
