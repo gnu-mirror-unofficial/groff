@@ -25,8 +25,6 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/gpl-2.0.html>.
 
-########################################################################
-
 require v5.6;
 
 use warnings;
@@ -166,19 +164,11 @@ my @filespec;
 my $tmac_ext = '';
 
 
-########################################################################
-# err()
-########################################################################
-
 sub err {
   my $text = shift;
   print STDERR $text;
 }
 
-
-########################################################################
-# handle_args()
-########################################################################
 
 sub handle_args {
   my $double_minus = 0;
@@ -302,11 +292,6 @@ sub handle_args {
 } # handle_args()
 
 
-
-########################################################################
-# handle_file_ext()
-########################################################################
-
 sub handle_file_ext {
   # get tmac from file name extension
   # output number of found single tmac
@@ -407,10 +392,6 @@ sub handle_file_ext {
 } # handle_file_ext()
 
 
-########################################################################
-# handle_whole_files()
-########################################################################
-
 sub handle_whole_files {
   # globals: @filespec
 
@@ -447,10 +428,6 @@ sub handle_whole_files {
 } # handle_whole_files()
 
 
-########################################################################
-# do_first_line()
-########################################################################
-
 # As documented for the 'man' program, the first line can be
 # used as a groff option line.  This is done by:
 # - start the line with '\" (apostrophe, backslash, double quote)
@@ -458,7 +435,6 @@ sub handle_whole_files {
 # - a word using the following characters can be appended: 'egGjJpRst'.
 #     Each of these characters means an option for the generated
 #     'groff' command line, e.g. '-t'.
-
 sub do_first_line {
   my ( $line, $file ) = @_;
 
@@ -535,10 +511,6 @@ sub do_first_line {
   }
 } # do_first_line()
 
-
-########################################################################
-# do_line()
-########################################################################
 
 my $before_first_command = 1; # for check of .TH
 
@@ -870,10 +842,6 @@ sub do_line {
 } # do_line()
 
 
-########################################################################
-# sub make_groff_device
-########################################################################
-
 my @m = ();
 my @preprograms = ();
 my $correct_tmac = '';
@@ -930,10 +898,6 @@ EOF
 } # make_groff_device()
 
 
-########################################################################
-# make_groff_preproc()
-########################################################################
-
 sub make_groff_preproc {
   # globals: %Groff, @preprograms, @Command
 
@@ -977,10 +941,6 @@ sub make_groff_preproc {
   }
 } # make_groff_preproc()
 
-
-########################################################################
-# make_groff_tmac_man_ms()
-########################################################################
 
 sub make_groff_tmac_man_ms {
   # globals: @filespec, $tmac_ext, %Groff
@@ -1035,11 +995,6 @@ sub make_groff_tmac_man_ms {
 } # make_groff_tmac_man_ms()
 
 
-
-########################################################################
-# make_groff_tmac_others()
-########################################################################
-
 sub make_groff_tmac_others {
   # globals: @filespec, $tmac_ext, %Groff
 
@@ -1078,10 +1033,6 @@ sub make_groff_tmac_others {
   }
 } # make_groff_tmac_others()
 
-
-########################################################################
-# make_groff_line_rest()
-########################################################################
 
 sub make_groff_line_rest {
   my $file_args_included;	# file args now only at 1st preproc
@@ -1181,10 +1132,6 @@ sub make_groff_line_rest {
 } # make_groff_line_rest()
 
 
-########################################################################
-# sub help
-########################################################################
-
 sub help {
   print <<EOF;
 usage: grog [option]... [--] [filespec]...
@@ -1214,10 +1161,6 @@ EOF
 } # help()
 
 
-########################################################################
-# sub version
-########################################################################
-
 sub version {
   our %at_at;
   print "$Prog (groff) " . $at_at{'GROFF_VERSION'};
@@ -1225,7 +1168,6 @@ sub version {
 } # version()
 
 
-############
 # initialize
 
 my $before_make;	# script before run of 'make'
@@ -1242,9 +1184,6 @@ if ($before_make) {
   $at_at{'GROFF_VERSION'} = '@VERSION@';
 }
 
-
-##########
-# run subs
 
 &handle_args();
 &handle_file_ext(); # see $tmac_ext for gotten value
