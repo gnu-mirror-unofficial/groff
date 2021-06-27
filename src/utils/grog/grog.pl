@@ -182,7 +182,7 @@ sub warn {
 
 
 sub handle_args {
-  my $double_minus = 0;
+  my $no_more_options = 0;
   my $was_minus = 0;
   my $was_T = 0;
   my $optarg = 0;
@@ -196,13 +196,8 @@ sub handle_args {
       next;
     }
 
-    if ( $double_minus ) {
-      if (-f $arg && -r $arg) {
-	push @filespec, $arg;
-      } else {
-	print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	  "grog: $arg is not a readable file.";
-      }
+    if ($no_more_options) {
+      push @filespec, $arg;
       next;
     }
 
@@ -228,8 +223,7 @@ sub handle_args {
     }
 
     if ($arg eq '--') {
-      $double_minus = 1;
-      push(@filespec, $arg);
+      $no_more_options = 1;
       next;
     }
 

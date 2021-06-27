@@ -1,5 +1,18 @@
 2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Handle "--" argument as documented.
+
+	* src/utils/grog/grog.pl (handle_args): Rename scalar
+	`double_minus` to `no_more_options` so it actually communicates
+	something.  Drop openability check of operand encountered after
+	"--"; since it's on the operand list, it will be checked later
+	{in `handle_whole_files`}.  Stop pushing "--" itself onto the
+	`filespec` list.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?60834>.
+
+2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grog]: Revise operand handling, diagnostics, and exit status.
 
 	* src/utils/grog/grog.pl: Track more state so that we can
