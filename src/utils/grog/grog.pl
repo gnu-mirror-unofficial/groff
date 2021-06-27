@@ -161,7 +161,7 @@ my %preprocs_tmacs =
 
 my @filespec;
 
-my $tmac_ext = '';
+my $inferred_main_package = '';
 
 my $had_inference_problem = 0;
 my $had_processing_problem = 0;
@@ -844,7 +844,7 @@ sub make_groff_preproc {
 
 
 sub make_groff_tmac_man_ms {
-  # globals: @filespec, $tmac_ext, %Groff
+  # globals: @filespec, $inferred_main_package, %Groff
 
   # 'man' requests, not from 'ms'
   if ( $Groff{'SS'} || $Groff{'SY'} || $Groff{'OP'} ||
@@ -852,10 +852,11 @@ sub make_groff_tmac_man_ms {
     $Groff{'man'} = 1;
     push(@m, '-man');
 
-    $tmac_ext = 'man' unless ( $tmac_ext );
+    $inferred_main_package = 'man' unless ( $inferred_main_package );
     &warn("man macro calls found, but file name extension was '"
-	  . $tmac_ext . "'") unless ( $tmac_ext eq 'man' );
-    $tmac_ext = 'man';
+	  . $inferred_main_package . "'")
+       unless ( $inferred_main_package eq 'man' );
+    $inferred_main_package = 'man';
     return 1;	# true
   }
 
@@ -871,10 +872,11 @@ sub make_groff_tmac_man_ms {
     $Groff{'ms'} = 1;
     push(@m, '-ms');
 
-    $tmac_ext = 'ms' unless ( $tmac_ext );
+    $inferred_main_package = 'ms' unless ( $inferred_main_package );
     &warn("ms macro calls found, but file name extension was '"
-	  . $tmac_ext . "'") unless ( $tmac_ext eq 'ms' );
-    $tmac_ext = 'ms';
+	  . $inferred_main_package . "'")
+       unless ( $inferred_main_package eq 'ms' );
+    $inferred_main_package = 'ms';
     return 1;	# true
   }
 
@@ -882,11 +884,11 @@ sub make_groff_tmac_man_ms {
   # both 'man' and 'ms' requests
   if ( $Groff{'P'} || $Groff{'IP'}  ||
        $Groff{'LP'} || $Groff{'PP'} || $Groff{'SH'} ) {
-    if ( $tmac_ext eq 'man' ) {
+    if ( $inferred_main_package eq 'man' ) {
       $Groff{'man'} = 1;
       push(@m, '-man');
       return 1;	# true
-    } elsif ( $tmac_ext eq 'ms' ) {
+    } elsif ( $inferred_main_package eq 'ms' ) {
       $Groff{'ms'} = 1;
       push(@m, '-ms');
       return 1;	# true
@@ -897,7 +899,7 @@ sub make_groff_tmac_man_ms {
 
 
 sub make_groff_tmac_others {
-  # globals: @filespec, $tmac_ext, %Groff
+  # globals: @filespec, $inferred_main_package, %Groff
 
   # mdoc
   if ( ( $Groff{'Oo'} && $Groff{'Oc'} ) || $Groff{'Dd'} ) {
