@@ -283,8 +283,7 @@ sub handle_args {
 	# arg finished
 	next;
       } else {		# not a groff opt
-	print STDERR __FILE__ . ' '  . __LINE__ . ': ' .
-	  'unknown argument ' . $arg;
+	&warn("unrecognized groff option: $arg");
 	push(@Command, $arg);
 	next;
       }
