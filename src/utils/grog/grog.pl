@@ -293,101 +293,6 @@ sub handle_args {
 } # handle_args()
 
 
-sub handle_file_ext {
-  # get tmac from file name extension
-  # output number of found single tmac
-
-  # globals: @filespec, $tmac_ext;
-
-  foreach my $file ( @filespec ) {
-    # We will complain about unopenable files in &handle_whole_files.
-    next unless ( open(FILE, $file eq "-" ? $file : "< $file") );
-    next unless ( $file =~ /\./ ); # file name has no dot '.'
-
-    # get extension
-    my $ext = $file;
-    $ext =~ s/^
-	      .*
-	      \.
-	      ([^.]*)
-	      $
-	     /$1/x;
-    next unless ( $ext );
-
-    # these extensions are correct, but not based on a tmac
-    next if ( $ext =~ /^(
-			 chem|
-			 eqn|
-			 g|
-			 grap|
-			 grn|
-			 groff|
-			 hdtbl|
-			 pdfroff|
-			 pic|
-			 pinyin|
-			 ref|
-			 roff|
-			 t|
-			 tbl|
-			 tr|
-			 www
-		       )$/x );
-
-    # extensions for man tmac
-    if ( $ext =~ /^(
-		      [1-9lno]|
-		      man|
-		      n|
-		      1b
-		    )$/x ) {
-      # 'man|n' from 'groff' source
-      # '1b' from 'heirloom'
-      # '[1-9lno]' from man-pages
-      if ( $tmac_ext && $tmac_ext ne 'man' ) {
-	# found tmac is not 'man'
-	print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	  '2 different file name extensions found ' .
-	    $tmac_ext . ' and ' . $ext;
-	$tmac_ext = '';
-	next;
-      }
-
-      $tmac_ext = 'man';
-      next;
-    }
-
-    if ( $ext =~ /^(
-		    mandoc|
-		    mdoc|
-		    me|
-		    mm|
-		    mmse|
-		    mom|
-		    ms|
-		    $)/x ) {
-      if ( $tmac_ext && $tmac_ext ne $ext ) {
-	# found tmac is not identical to former found tmac
-	print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	  '2 different file name extensions found ' .
-	    $tmac_ext . ' and ' . $ext;
-	$tmac_ext = '';
-	next;
-      }
-
-      $tmac_ext = $ext;
-      next;
-    }
-
-    print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-      'Unknown file name extension '. $file . '.';
-    next;
-  } # end foreach file
-
-  1;
-} # handle_file_ext()
-
-
 sub handle_whole_files {
   # globals: @filespec
 
@@ -1179,7 +1084,6 @@ if ($before_make) {
 }
 
 &handle_args();
-&handle_file_ext(); # see $tmac_ext for gotten value
 &handle_whole_files();
 
 if ($have_any_valid_args) {
