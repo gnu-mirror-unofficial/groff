@@ -440,7 +440,7 @@ sub do_line {
   }
 
   # split command
-  $line =~ /^(\.\w+)\s*(.*)$/;
+  $line =~ /^\.(\w+)\s*(.*)$/;
   my $command = $1;
   $command = '' unless ( defined $command );
   my $args = $2;
@@ -480,71 +480,70 @@ sub do_line {
   ######################################################################
   # preprocessors
 
-  if ( $command =~ /^(\.cstart)|(begin\s+chem)$/ ) {
+  if ( $command =~ /^(cstart)|(begin\s+chem)$/ ) {
     $Groff{'chem'}++;		# for chem
     return;
   }
-  if ( $command =~ /^\.EQ$/ ) {
+  if ( $command =~ /^EQ$/ ) {
     $Groff{'eqn'}++;		# for eqn
     return;
   }
-  if ( $command =~ /^\.G1$/ ) {
+  if ( $command =~ /^G1$/ ) {
     $Groff{'grap'}++;		# for grap
     return;
   }
-  if ( $command =~ /^\.Perl/ ) {
+  if ( $command =~ /^Perl/ ) {
     $Groff{'gperl'}++;		# for gperl
     return;
   }
-  if ( $command =~ /^\.pinyin/ ) {
+  if ( $command =~ /^pinyin/ ) {
     $Groff{'gpinyin'}++;		# for gperl
     return;
   }
-  if ( $command =~ /^\.GS$/ ) {
+  if ( $command =~ /^GS$/ ) {
     $Groff{'grn'}++;		# for grn
     return;
   }
-  if ( $command =~ /^\.IS$/ ) {
+  if ( $command =~ /^IS$/ ) {
     $Groff{'gideal'}++;		# preproc gideal for ideal
     return;
   }
-  if ( $command =~ /^\.lilypond$/ ) {
+  if ( $command =~ /^lilypond$/ ) {
     $Groff{'lilypond'}++;	# for glilypond
     return;
   }
 
-
   # pic is opened by .PS and can be closed by either .PE or .PF
-  if ( $command =~ /^\.PS$/ ) {
+  if ( $command =~ /^PS$/ ) {
     $Groff{'PS'}++;		# opening for pic
     return;
   }
-  if ( $command =~ /^\.PE$/ ) {
+  if ( $command =~ /^PE$/ ) {
     $Groff{'PE'}++;		# closing for pic
     return;
   }
-  if ( $command =~ /^\.PF$/ ) {
+  if ( $command =~ /^PF$/ ) {
     $Groff{'PF'}++;		# alternate closing for pic
     return;
   }
 
-  if ( $command =~ /^\.R1$/ ) {
+  if ( $command =~ /^R1$/ ) {
     $Groff{'refer'}++;		# for refer
     return;
   }
-  if ( $command =~ /^\.\[$/ ) {
+  if ( $command =~ /^\[$/ ) {
     $Groff{'refer_open'}++;	# for refer open
     return;
   }
-  if ( $command =~ /^\.\]$/ ) {
+  if ( $command =~ /^\]$/ ) {
     $Groff{'refer_close'}++;	# for refer close
     return;
   }
-  if ( $command =~ /^\.TS$/ ) {
+  if ( $command =~ /^TS$/ ) {
     $Groff{'tbl'}++;		# for tbl
     return;
   }
-  if ( $command =~ /^\.TH$/ ) {
+  if ( $command =~ /^TH$/ ) {
     unless ( $Groff{'TH_first'} ) {
       $Groff{'TH_later'}++;		# for tbl
     }
@@ -559,14 +558,14 @@ sub do_line {
   ##########
   # modern mdoc
 
-  if ( $command =~ /^\.(Dd)$/ ) {
+  if ( $command =~ /^(Dd)$/ ) {
     $Groff{'Dd'}++;		# for modern mdoc
     return;
   }
 
   # In the old version of -mdoc 'Oo' is a toggle, in the new it's
   # closed by 'Oc'.
-  if ( $command =~ /^\.Oc$/ ) {
+  if ( $command =~ /^Oc$/ ) {
     $Groff{'Oc'}++;		# only for modern mdoc
     return;
   }
@@ -575,7 +574,7 @@ sub do_line {
   ##########
   # old and modern mdoc
 
-  if ( $command =~ /^\.Oo$/ ) {
+  if ( $command =~ /^Oo$/ ) {
     $Groff{'Oo'}++;		# for mdoc and mdoc-old
     return;
   }
@@ -583,7 +582,7 @@ sub do_line {
 
   ##########
   # old mdoc
-  if ( $command =~ /^\.(Tp|Dp|De|Cx|Cl)$/ ) {
+  if ( $command =~ /^(Tp|Dp|De|Cx|Cl)$/ ) {
     $Groff{'mdoc_old'}++;	# true for old mdoc
     return;
   }
@@ -592,31 +591,31 @@ sub do_line {
   ##########
   # for ms
 
-  if ( $command =~ /^\.AB$/ ) {
+  if ( $command =~ /^AB$/ ) {
     $Groff{'AB'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.AE$/ ) {
+  if ( $command =~ /^AE$/ ) {
     $Groff{'AE'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.AI$/ ) {
+  if ( $command =~ /^AI$/ ) {
     $Groff{'AI'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.AU$/ ) {
+  if ( $command =~ /^AU$/ ) {
     $Groff{'AU'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.NH$/ ) {
+  if ( $command =~ /^NH$/ ) {
     $Groff{'NH'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.TL$/ ) {
+  if ( $command =~ /^TL$/ ) {
     $Groff{'TL'}++;		# for ms
     return;
   }
-  if ( $command =~ /^\.XP$/ ) {
+  if ( $command =~ /^XP$/ ) {
     $Groff{'XP'}++;		# for ms
     return;
   }
@@ -625,27 +624,27 @@ sub do_line {
   ##########
   # for man and ms
 
-  if ( $command =~ /^\.IP$/ ) {
+  if ( $command =~ /^IP$/ ) {
     $Groff{'IP'}++;		# for man and ms
     return;
   }
-  if ( $command =~ /^\.LP$/ ) {
+  if ( $command =~ /^LP$/ ) {
     $Groff{'LP'}++;		# for man and ms
     return;
   }
-  if ( $command =~ /^\.P$/ ) {
+  if ( $command =~ /^P$/ ) {
     $Groff{'P'}++;		# for man and ms
     return;
   }
-  if ( $command =~ /^\.PP$/ ) {
+  if ( $command =~ /^PP$/ ) {
     $Groff{'PP'}++;		# for man and ms
     return;
   }
-  if ( $command =~ /^\.SH$/ ) {
+  if ( $command =~ /^SH$/ ) {
     $Groff{'SH'}++;		# for man and ms
     return;
   }
-  if ( $command =~ /^\.UL$/ ) {
+  if ( $command =~ /^UL$/ ) {
     $Groff{'UL'}++;		# for man and ms
     return;
   }
@@ -654,27 +653,27 @@ sub do_line {
   ##########
   # for man only
 
-  if ( $command =~ /^\.OP$/ ) {	# for man
+  if ( $command =~ /^OP$/ ) {	# for man
     $Groff{'OP'}++;
     return;
   }
-  if ( $command =~ /^\.SS$/ ) {	# for man
+  if ( $command =~ /^SS$/ ) {	# for man
     $Groff{'SS'}++;
     return;
   }
-  if ( $command =~ /^\.SY$/ ) {	# for man
+  if ( $command =~ /^SY$/ ) {	# for man
     $Groff{'SY'}++;
     return;
   }
-  if ( $command =~ /^\.TP$/ ) {	# for man
+  if ( $command =~ /^TP$/ ) {	# for man
     $Groff{'TP'}++;
     return;
   }
-  if ( $command =~ /^\.UR$/ ) {
+  if ( $command =~ /^UR$/ ) {
     $Groff{'UR'}++;		# for man
     return;
   }
-  if ( $command =~ /^\.YS$/ ) {	# for man
+  if ( $command =~ /^YS$/ ) {	# for man
    $Groff{'YS'}++;
     return;
   }
@@ -683,7 +682,7 @@ sub do_line {
   ##########
   # me
 
-  if ( $command =~ /^\.(
+  if ( $command =~ /^(
 		      [ilnp]p|
 		      sh
 		    )$/x ) {
@@ -695,7 +694,7 @@ sub do_line {
   #############
   # mm and mmse
 
-  if ( $command =~ /^\.(
+  if ( $command =~ /^(
 		      H|
 		      MULB|
 		      LO|
@@ -706,11 +705,11 @@ sub do_line {
 		      SA
 		    )$/x ) {
     $Groff{'mm'}++;		# for mm and mmse
-    if ( $command =~ /^\.LO$/ ) {
+    if ( $command =~ /^LO$/ ) {
       if ( $args =~ /^(DNAMN|MDAT|BIL|KOMP|DBET|BET|SIDOR)/ ) {
 	$Groff{'mmse'}++;	# for mmse
       }
-    } elsif ( $command =~ /^\.LT$/ ) {
+    } elsif ( $command =~ /^LT$/ ) {
       if ( $args =~ /^(SVV|SVH)/ ) {
 	$Groff{'mmse'}++;	# for mmse
       }

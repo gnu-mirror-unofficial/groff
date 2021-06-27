@@ -2,7 +2,10 @@
 
 	[grog]: Refactor.  Discard filename extension-based inference.
 
-	* src/utils/grog/grog.pl (handle_file_ext): Delete.
+	* src/utils/grog/grog.pl (do_line): Stop saving the control
+	character in the matched scalar `command` (the request or macro
+	name).  We don't need it, and it simplifies much later matching.
+	(handle_file_ext): Delete.
 	(top level): Drop call site.
 
 	* src/utils/grog/grog.pl: Rename `tmac_ext` scalar to
