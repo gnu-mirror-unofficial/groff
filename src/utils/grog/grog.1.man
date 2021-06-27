@@ -175,7 +175,7 @@ options are required to correctly render the input:
 .\" .BR \-J ,
 .BR \-p ,
 .BR \-R ,
-.BR \-s ,
+.\".BR \-s ,
 .B \-t
 (preprocessors);
 and
@@ -265,6 +265,99 @@ will infer a
 command without an
 .B \-m
 option.
+.
+.
+.\" ====================================================================
+.SS Limitations
+.\" ====================================================================
+.
+Detection of the
+.B \-s
+option
+(the
+.IR \%@g@soelim (@MAN1EXT@)
+preprocessor)
+is tricky;
+to correctly infer its necessity would require
+.I grog
+to recursively open all files given as arguments to the
+.B .so
+request under the same conditions that
+.I \%@g@soelim
+itself does so;
+see its man page.
+.
+Recall that
+.I \%@g@soelim
+is only necessary if sourced files need to be preprocessed.
+.
+Therefore,
+as a workaround,
+you may want to run the input through
+.I \%@g@soelim
+manually,
+piping it to
+.IR grog ,
+and compare the output to running
+.I grog
+on the input directly.
+.
+If the
+.IR \%@g@soelim 'ed
+input causes
+.I grog
+to infer additional preprocessor options,
+then
+.B \-s
+is likely necessary.
+.
+.
+.RS
+.P
+.EX
+$ \c
+.B printf \[dq].TS\[rs]nl.\[rs]nThis is my table.\[rs]n.TE\[rs]n\[dq] >\
+ 3.roff
+$ \c
+.B printf \[dq].so 3.roff\[rs]n\[dq] > 2.roff
+$ \c
+.B printf \[dq].so 2.roff\[rs]n\[dq] > 1.roff
+$ \c
+.B grog 1.roff
+groff \-T ps 1.roff
+$ \c
+.B \%@g@soelim 1.roff | grog
+groff \-T ps \-t \-
+.EE
+.RE
+.
+.
+.P
+In the foregoing example,
+we see that this procedure enabled
+.I grog
+to detect
+.IR @g@tbl (@MAN1EXT@)
+macros,
+so we would add
+.B \-s
+as well as the detected
+.B \-t
+option to a revised
+.I grog
+or
+.I groff
+command.
+.
+.
+.RS
+.P
+.EX
+$ \c
+.B grog \-st 1.roff
+groff \-s \-t \-T ps 1.roff
+.EE
+.RE
 .
 .
 .\" ====================================================================
