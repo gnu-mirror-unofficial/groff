@@ -1,5 +1,17 @@
 2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Revise diagnostic messages.
+
+	* src/utils/grog/grog.1.man (err): Rename from this...
+	(warn): ...to this.  Prefix diagnostic with command name and
+	diagnostic severity level.  The subroutine didn't change the
+	exit status and was not used to report serious trouble, so
+	"warning" seems appropriate.
+	(make_groff_tmac_man_ms): Update call sites.  Modify diagnostic
+	wording to stop calling macros "requests".
+
+2021-06-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.1.man (Limitations): Add subsection
 	covering the problem grog has with soelim inference.  Undocument
 	groff's -s option as one that can be inferred, because at

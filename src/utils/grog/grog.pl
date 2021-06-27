@@ -164,9 +164,9 @@ my @filespec;
 my $tmac_ext = '';
 
 
-sub err {
+sub warn {
   my $text = shift;
-  print STDERR $text;
+  print STDERR "$Prog: warning: $text";
 }
 
 
@@ -952,8 +952,8 @@ sub make_groff_tmac_man_ms {
     push(@m, '-man');
 
     $tmac_ext = 'man' unless ( $tmac_ext );
-    &err('man requests found, but file name extension ' .
-	 'was: ' . $tmac_ext) unless ( $tmac_ext eq 'man' );
+    &warn("man macro calls found, but file name extension was '"
+	  . $tmac_ext . "'") unless ( $tmac_ext eq 'man' );
     $tmac_ext = 'man';
     return 1;	# true
   }
@@ -971,8 +971,8 @@ sub make_groff_tmac_man_ms {
     push(@m, '-ms');
 
     $tmac_ext = 'ms' unless ( $tmac_ext );
-    &err('ms requests found, but file name extension ' .
-	 'was: ' . $tmac_ext) unless ( $tmac_ext eq 'ms' );
+    &warn("ms macro calls found, but file name extension was '"
+	  . $tmac_ext . "'") unless ( $tmac_ext eq 'ms' );
     $tmac_ext = 'ms';
     return 1;	# true
   }
