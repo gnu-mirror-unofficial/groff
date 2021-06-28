@@ -26,119 +26,119 @@ src="${abs_top_srcdir:-..}"
 doc=src/preproc/eqn/neqn.1
 echo "testing simple man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -man '"$doc"
+	    grep -Fqx 'groff -man '"$doc"
 
 doc=src/preproc/tbl/tbl.1
 echo "testing tbl(1)-using man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -man '"$doc"
+    grep -Fqx 'groff -t -man '"$doc"
 
 doc=man/groff_diff.7
 echo "testing eqn(1)-using man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -e -man '"$doc"
+    grep -Fqx 'groff -e -man '"$doc"
 
 doc=src/preproc/soelim/soelim.1
 echo "testing pic(1)-using man(7) page $doc" >&2
 # BUG: grog spuriously detects a need for soelim(1).
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -s -p -man '"$doc"
+    grep -Fqx 'groff -s -p -man '"$doc"
 
 doc=tmac/groff_mdoc.7
 echo "testing tbl(1)-using mdoc(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -mdoc '"$doc"
+    grep -Fqx 'groff -t -mdoc '"$doc"
 
 doc=$src/doc/meintro.me
 echo "testing me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -me '"$doc"
+    grep -Fqx 'groff -me '"$doc"
 
 doc=$src/doc/meintro_fr.me
 echo "testing tbl(1)-using me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -me '"$doc"
+    grep -Fqx 'groff -t -me '"$doc"
 
 doc=$src/doc/meref.me
 echo "testing me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -me '"$doc"
+    grep -Fqx 'groff -me '"$doc"
 
 doc=$src/doc/grnexmpl.me
 echo "testing grn(1)- and eqn(1)-using me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -e -g -me '"$doc"
+    grep -Fqx 'groff -e -g -me '"$doc"
 
 doc=$src/contrib/mm/examples/letter.mm
 echo "testing mm(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mm '"$doc"
+    grep -Fqx 'groff -mm '"$doc"
 
 doc=$src/contrib/mom/examples/copyright-chapter.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/copyright-default.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/letter.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/mom-pdf.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/mon_premier_doc.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/sample_docs.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/mom/examples/slide-demo.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -e -p -mom '"$doc"
+    grep -Fqx 'groff -t -e -p -mom '"$doc"
 
 doc=$src/contrib/mom/examples/typesetting.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -mom '"$doc"
+    grep -Fqx 'groff -mom '"$doc"
 
 doc=$src/contrib/pdfmark/cover.ms
 echo "testing ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -ms '"$doc"
+    grep -Fqx 'groff -ms '"$doc"
 
 doc=$src/contrib/pdfmark/pdfmark.ms
 echo "testing ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -ms '"$doc"
+    grep -Fqx 'groff -ms '"$doc"
 
 doc=$src/doc/ms.ms
 echo "testing tbl(1)-using ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -ms '"$doc"
+    grep -Fqx 'groff -t -ms '"$doc"
 
 doc=$src/doc/pic.ms
 echo "testing tbl(1)-, eqn(1)-, and pic(1)-using ms(7) document $doc" \
     >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -t -e -p -ms '"$doc"
+    grep -Fqx 'groff -t -e -p -ms '"$doc"
 
 doc=$src/doc/webpage.ms
 echo "testing ms(7) document $doc" >&2
 # BUG: Should detect -mwww (and -mpspic?) too.
 "$grog" "$doc" | \
-    grep -Fqx 'groff -T ps -ms '"$doc"
+    grep -Fqx 'groff -ms '"$doc"
 
 # vim:set ai et sw=4 ts=4 tw=72:

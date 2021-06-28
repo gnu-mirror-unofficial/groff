@@ -1,5 +1,28 @@
 2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Refactor device (`-T` option) handling.
+
+	* src/utils/grog/grog.pl: Redeclare `device` as a scalar instead
+	of a list.
+	(process_arguments): Generalize handling of `-T` and `-m`
+	options to permit optional whitespace.  Rename scalar `was_T` to
+	`delayed_option`.
+	(infer_device): Stop unconditionally adding a `-T ps` argument
+	to the generated groff command.  Remove logic that validates any
+	given `-T` option argument; instead, let groff fail if a bad one
+	is supplied (its own diagnostics in this scenario were improved
+	in commit 5a721a30, 27 May).  This makes grog agnostic about any
+	differently configured default device in groff itself, and about
+	the GROFF_TYPESETTER environment variable.
+
+	Fixes <https://savannah.gnu.org/bugs/?55301> by getting out of
+	the way.
+
+	* src/utils/grog/tests/PF-does-not-start-pic-region.sh:
+	* src/utils/grog/tests/smoke-test.sh: Update expected output.
+
+2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.am (grog): Drop sed replacement of unused
 	configuration variables @g@, @BINDIR@, @libdir@, and @EGREP@.
 	* src/utils/grog/grog.pl (process_arguments, construct_command):

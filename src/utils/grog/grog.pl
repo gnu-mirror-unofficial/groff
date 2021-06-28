@@ -45,7 +45,7 @@ my $groff_opts =
   'abcCd:D:eEf:F:gGhiI:jJkK:lL:m:M:n:No:pP:r:RsStT:UvVw:W:XzZ';
 
 my @command = ();		# the constructed groff command
-my @device = ();		# stores -T
+my $device = '';		# argument to '-T' grog option
 my @requested_package = ();	# arguments to '-m' grog options
 
 my $do_run = 0;			# run generated 'groff' command
@@ -182,12 +182,11 @@ sub warn {
 
 sub process_arguments {
   my $no_more_options = 0;
+  my $delayed_option = '';
   my $was_minus = 0;
-  my $was_T = 0;
   my $optarg = 0;
 
   foreach my $arg (@ARGV) {
-
     if ( $optarg ) {
       push @command, $arg;
       $optarg = 0;
@@ -199,9 +198,10 @@ sub process_arguments {
       next;
     }
 
-    if ( $was_T ) {
-      push @device, $arg;
-      $was_T = 0;
+    if ($delayed_option) {
+      push @requested_package, $arg if ($delayed_option eq 'm');
+      $device = $arg if ($delayed_option eq 'T');
+      $delayed_option = '';
       next;
     }
 
@@ -245,6 +245,15 @@ sub process_arguments {
       next;
     }
 
+    # Handle '-m' or '-T' followed by whitespace.
+    if ($arg =~ /^-[mT]$/) {
+      $delayed_option = $arg;
+      $delayed_option =~ s/-//;
+      next;
+    }
+
+    # Handle '-m' and '-T' without whitespace.
+
     if ($arg =~ /^-m/) {
       my $package = $arg;
       $package =~ s/-m//;
@@ -252,13 +261,10 @@ sub process_arguments {
       next;
     }
 
-    if ($arg =~ /^-T$/) {
-      $was_T = 1;
-      next;
-    }
-
-    if ($arg =~ s/^-T(\w+)$/$1/) {
-      push @device, $1;
+    if ($arg =~ /^-T/) {
+      my $dev = $arg;
+      $dev =~ s/-T//;
+      $device = $dev;
       next;
     }
 
@@ -691,37 +697,9 @@ my @supplemental_package = ();
 my @preprocessor = ();
 
 sub infer_device {
-  # default device is 'ps' when without '-T'
-  # XXX: No, that depends on how the 'configure' script was called (but
-  # most people don't seem to change it).  Also we should check
-  # GROFF_TYPESETTER.  --GBR
-  my $device;
-  push @device, 'ps' unless ( @device );
-
-  for my $d (@device) {
-    if ( $d =~ /^(		# suitable devices
-		  dvi|
-		  html|
-		  xhtml|
-		  lbp|
-		  lj4|
-		  ps|
-		  pdf|
-		  ascii|
-		  cp1047|
-		  latin1|
-		  utf8
-		)$/x ) {
-      $device = $d;
-    } else {
-      next;
-    }
-
-
-    if ( $device ) {
-      push @command, '-T';
-      push @command, $device;
-    }
+  if ($device) {
+    push @command, '-T';
+    push @command, $device;
   }
 
   if ( $device eq 'pdf' ) {

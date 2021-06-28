@@ -28,6 +28,6 @@ DOC='.PF
 .PE'
 
 echo "$DOC" | "$grog" \
-    | grep -q 'groff -T ps -$'
+    | grep -Fqx 'groff -'
 
 # vim:set ai et sw=4 ts=4 tw=72:
