@@ -3,11 +3,12 @@
 # Inspired by doctype script in Kernighan & Pike, Unix Programming
 # Environment, pp 306-8.
 
-# Copyright (C) 1993-2020 Free Software Foundation, Inc.
+# Copyright (C) 1993-2021 Free Software Foundation, Inc.
 # Written by James Clark.
 # Rewritten with Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
 # The macros for identifying the devices were taken from Ralph
 # Corderoy's 'grog.sh' of 2006.
+# Hacked up by G. Branden Robinson, 2021.
 
 # This file is part of 'grog', which is part of 'groff'.
 
@@ -32,39 +33,61 @@ use strict;
 
 use File::Spec;
 
-# printing of hashes: my %hash = ...; print Dumper(\%hash);
-use Data::Dumper;
-
 # for running shell based programs within Perl; use `` instead of
 # use IPC::System::Simple qw(capture capturex run runx system systemx);
 
 $\ = "\n";
 
-# my $Sp = "[\\s\\n]";
-# my $Sp = qr([\s\n]);
-# my $Sp = '' if $arg eq '-C';
-my $Sp = '';
+my $groff_version = 'DEVELOPMENT';
 
 # from 'src/roff/groff/groff.cpp' near 'getopt_long'
 my $groff_opts =
   'abcCd:D:eEf:F:gGhiI:jJkK:lL:m:M:n:No:pP:r:RsStT:UvVw:W:XzZ';
 
-my @Command = ();		# stores the final output
-my @Mparams = ();		# stores the options '-m*'
-my @devices = ();		# stores -T
+my @command = ();		# the constructed groff command
+my @device = ();		# stores -T
+my @requested_package = ();	# arguments to '-m' grog options
 
 my $do_run = 0;			# run generated 'groff' command
 my $pdf_with_ligatures = 0;	# '-P-y -PU' for 'pdf' device
-my $with_warnings = 0;
+my $with_warnings = 0;		# XXX: more like "hints"  --GBR
 
-my $Prog = $0;
+my $program_name = $0;
 {
-  my ($v, $d, $f) = File::Spec->splitpath($Prog);
-  $Prog = $f;
+  my ($v, $d, $f) = File::Spec->splitpath($program_name);
+  $program_name = $f;
 }
 
+my @macro_ms = ('RP', 'TL', 'AU', 'AI', 'DA', 'ND', 'AB', 'AE',
+		'QP', 'QS', 'QE', 'XP',
+		'NH',
+		'R',
+		'CW',
+		'BX', 'UL', 'LG', 'NL',
+		'KS', 'KF', 'KE', 'B1', 'B2',
+		'DS', 'DE', 'LD', 'ID', 'BD', 'CD', 'RD',
+		'FS', 'FE',
+		'OH', 'OF', 'EH', 'EF', 'P1',
+		'TA', '1C', '2C', 'MC',
+		'XS', 'XE', 'XA', 'TC', 'PX',
+		'IX', 'SG');
 
-my %macros;
+my @macro_man = ('BR', 'IB', 'IR', 'RB', 'RI', 'P', 'TH', 'TP', 'SS',
+		 'HP', 'PD',
+		 'AT', 'UC',
+		 'SB',
+		 'EE', 'EX',
+		 'OP',
+		 'MT', 'ME', 'SY', 'YS', 'TQ', 'UR', 'UE');
+
+my @macro_man_or_ms = ('B', 'I', 'BI',
+		       'DT',
+		       'RS', 'RE',
+		       'SH',
+		       'SM',
+		       'IP', 'LP', 'PP');
+
+my %user_macro;
 my %Groff =
   (
    # preprocessors
@@ -88,41 +111,6 @@ my %Groff =
    'soelim' => 0,
    'tbl' => 0,
 
-   # tmacs
-#   'man' => 0,
-#   'mandoc' => 0,
-#   'mdoc' => 0,
-#   'mdoc_old' => 0,
-#   'me' => 0,
-#   'mm' => 0,
-#   'mom' => 0,
-#   'ms' => 0,
-
-   # requests
-   'AB' => 0,		# ms
-   'AE' => 0,		# ms
-   'AI' => 0,		# ms
-   'AU' => 0,		# ms
-   'NH' => 0,		# ms
-   'TH_later' => 0,	# TH not 1st command is ms
-   'TL' => 0,		# ms
-   'UL' => 0,		# ms
-   'XP' => 0,		# ms
-
-   'IP' => 0,		# man and ms
-   'LP' => 0,		# man and ms
-   'P' => 0,		# man and ms
-   'PP' => 0,		# man and ms
-   'SH' => 0,		# man and ms
-
-   'OP' => 0,		# man
-   'SS' => 0,		# man
-   'SY' => 0,		# man
-   'TH_first' => 0,	# TH as 1st command is man
-   'TP' => 0,		# man
-   'UR' => 0,		# man
-   'YS' => 0,		# man
-
    # for mdoc and mdoc-old
    # .Oo and .Oc for modern mdoc, only .Oo for mdoc-old
    'Oo' => 0,		# mdoc and mdoc-old
@@ -130,6 +118,11 @@ my %Groff =
    'Dd' => 0,		# mdoc
   ); # end of %Groff
 
+my @standard_macro = ();
+push(@standard_macro, @macro_ms, @macro_man, @macro_man_or_ms);
+for my $key (@standard_macro) {
+  $Groff{$key} = 0;
+}
 
 # for first line check
 my %preprocs_tmacs =
@@ -161,37 +154,42 @@ my %preprocs_tmacs =
 
 my @filespec;
 
+my @main_package = ('an', 'doc', 'doc-old', 'e', 'm', 'om', 's');
 my $inferred_main_package = '';
+# man(7) and ms(7) use many of the same macro names; do extra checking.
+my $man_score = 0;
+my $ms_score = 0;
+# .TH is both a man(7) macro and often used with tbl(1).
+my $inside_tbl_table = 0;
 
 my $had_inference_problem = 0;
 my $had_processing_problem = 0;
-my $have_any_valid_args = 0;
+my $have_any_valid_arguments = 0;
 
 
 sub fail {
   my $text = shift;
-  print STDERR "$Prog: error: $text";
+  print STDERR "$program_name: error: $text";
   $had_processing_problem = 1;
 }
 
 
 sub warn {
   my $text = shift;
-  print STDERR "$Prog: warning: $text";
+  print STDERR "$program_name: warning: $text";
 }
 
 
-sub handle_args {
+sub process_arguments {
   my $no_more_options = 0;
   my $was_minus = 0;
   my $was_T = 0;
   my $optarg = 0;
-  # globals: @filespec, @Command, @devices, @Mparams
 
   foreach my $arg (@ARGV) {
 
     if ( $optarg ) {
-      push @Command, $arg;
+      push @command, $arg;
       $optarg = 0;
       next;
     }
@@ -202,7 +200,7 @@ sub handle_args {
     }
 
     if ( $was_T ) {
-      push @devices, $arg;
+      push @device, $arg;
       $was_T = 0;
       next;
     }
@@ -227,6 +225,7 @@ sub handle_args {
       next;
     }
 
+    # XXX: Stop matching these sloppily.  --GBR
     &version() if $arg =~ /^--?v/;	# --version, with exit
     &help() if $arg  =~ /--?h/;		# --help, with exit
 
@@ -247,7 +246,9 @@ sub handle_args {
     }
 
     if ($arg =~ /^-m/) {
-      push @Mparams, $arg;
+      my $package = $arg;
+      $package =~ s/-m//;
+      push @requested_package, $package;
       next;
     }
 
@@ -257,7 +258,7 @@ sub handle_args {
     }
 
     if ($arg =~ s/^-T(\w+)$/$1/) {
-      push @devices, $1;
+      push @device, $1;
       next;
     }
 
@@ -267,15 +268,15 @@ sub handle_args {
       my $others = $2;
       if ( $groff_opts =~ /$opt_char_with_arg/ ) {	# groff optarg
 	if ( $others ) {	# optarg is here
-	  push @Command, '-' . $opt_char;
-	  push @Command, '-' . $others;
+	  push @command, '-' . $opt_char;
+	  push @command, '-' . $others;
 	  next;
 	}
 	# next arg is optarg
 	$optarg = 1;
 	next;
       } elsif ( $groff_opts =~ /$opt_char/ ) {	# groff no optarg
-	push @Command, '-' . $opt_char;
+	push @command, '-' . $opt_char;
 	if ( $others ) {	# $others is now an opt collection
 	  $arg = '-' . $others;
 	  redo;
@@ -284,24 +285,22 @@ sub handle_args {
 	next;
       } else {		# not a groff opt
 	&warn("unrecognized groff option: $arg");
-	push(@Command, $arg);
+	push(@command, $arg);
 	next;
       }
     }
   }
   @filespec = ('-') unless (@filespec);
-} # handle_args()
+} # process_arguments()
 
 
-sub handle_whole_files {
-  # globals: @filespec
-
+sub process_input {
   foreach my $file ( @filespec ) {
     unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
       &fail("cannot open '$file': $!");
       next;
     }
-    $have_any_valid_args = 1;
+    $have_any_valid_arguments = 1;
     my $line = <FILE>; # get single line
 
     unless ( defined($line) ) {
@@ -326,7 +325,7 @@ sub handle_whole_files {
     }
     close(FILE);
   } # end foreach
-} # handle_whole_files()
+} # process_input()
 
 
 # As documented for the 'man' program, the first line can be
@@ -336,10 +335,16 @@ sub handle_whole_files {
 # - a word using the following characters can be appended: 'egGjJpRst'.
 #     Each of these characters means an option for the generated
 #     'groff' command line, e.g. '-t'.
+#
+# XXX: The above is not accurate; man(7)'s preprocessor encoding
+# convention does not map perfectly to groff(1) command-line options.
+# The letter for 'refer' is 'r', not 'R', and there is also the
+# historical legacy of vgrind ('v') to consider.  In any case, why
+# should that comment line override what we can infer from actual macro
+# calls within the document?  Contemplate getting rid of this subroutine
+# and %preprocs_tmacs altogether.  --GBR
 sub do_first_line {
   my ( $line, $file ) = @_;
-
-  # globals: %preprocs_tmacs
 
   # For a leading groff options line use only [egGjJpRst]
   if  ( $line =~ /^[.']\\"[\segGjJpRst]+&/ ) {
@@ -430,13 +435,11 @@ sub do_line {
   return if ( $line =~ /^\.\.$/ );	# ignore ..
 
   if ( $before_first_command ) { # so far without 1st command
-    if ( $line =~ /^\.TH/ ) {
-      # check if .TH is 1st command for man
-      $Groff{'TH_first'} = 1 if ( $line =~ /^\.\s*TH/ );
+    if ( $line =~ /^\.\s*TH/ ) {
+      # .TH as the first macro call in a document screams man(7).
+      $man_score += 100;
     }
-    if ( $line =~ /^\./ ) {
-      $before_first_command = 0;
-    }
+    $before_first_command = 0;
   }
 
   # split command
@@ -461,20 +464,31 @@ sub do_line {
   }
 
   ######################################################################
-  # macros
+  # user-defined macros
 
+  # XXX: Macros can also be defined with .am, .am1.  Handle that.  And
+  # with .dei{,1}, ami{,1} as well, but supporting that would be a heavy
+  # lift for the benefit of users that probably don't require grog's
+  # help.  --GBR
   if ( $line =~ /^\.de1?\W?/ ) {
-    # this line is a macro definition, add it to %macros
-    my $macro = $line;
-    $macro =~ s/^\.de1?\s+(\w+)\W*/.$1/;
-    return if ( exists $macros{$macro} );
-    $macros{$macro} = 1;
+    # this line is a macro definition, add it to %user_macro
+    my $macro_name = $line;
+    # Strip off any end macro.
+    $macro_name =~ s/^\.de1?\s+(\w+)\W*/.$1/;
+    # XXX: If the macro name shadows a standard macro name, maybe we
+    # should delete the latter from our lists and hashes.  This might
+    # depend on whether the document is trying to remain compatibile
+    # with an existing interface, or simply colliding with names they
+    # don't care about (consider a raw roff document that defines 'PP').
+    # --GBR
+    return if ( exists $user_macro{$macro_name} );
+    $user_macro{$macro_name} = 1;
     return;
   }
 
 
   # if line command is a defined macro, just ignore this line
-  return if ( exists $macros{$command} );
+  return if ( exists $user_macro{$command} );
 
 
   ######################################################################
@@ -541,11 +555,17 @@ sub do_line {
   }
   if ( $command =~ /^TS$/ ) {
     $Groff{'tbl'}++;		# for tbl
+    $inside_tbl_table = 1;
+    return;
+  }
+  if ( $command =~ /^TE$/ ) {
+    $Groff{'tbl'}++;		# for tbl
+    $inside_tbl_table = 0;
     return;
   }
   if ( $command =~ /^TH$/ ) {
-    unless ( $Groff{'TH_first'} ) {
-      $Groff{'TH_later'}++;		# for tbl
+    if ($inside_tbl_table) {
+      $Groff{'tbl'}++;		# for tbl
     }
     return;
   }
@@ -583,101 +603,9 @@ sub do_line {
   ##########
   # old mdoc
   if ( $command =~ /^(Tp|Dp|De|Cx|Cl)$/ ) {
-    $Groff{'mdoc_old'}++;	# true for old mdoc
+    $Groff{'mdoc-old'}++;	# true for old mdoc
     return;
   }
-
-
-  ##########
-  # for ms
-
-  if ( $command =~ /^AB$/ ) {
-    $Groff{'AB'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^AE$/ ) {
-    $Groff{'AE'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^AI$/ ) {
-    $Groff{'AI'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^AU$/ ) {
-    $Groff{'AU'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^NH$/ ) {
-    $Groff{'NH'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^TL$/ ) {
-    $Groff{'TL'}++;		# for ms
-    return;
-  }
-  if ( $command =~ /^XP$/ ) {
-    $Groff{'XP'}++;		# for ms
-    return;
-  }
-
-
-  ##########
-  # for man and ms
-
-  if ( $command =~ /^IP$/ ) {
-    $Groff{'IP'}++;		# for man and ms
-    return;
-  }
-  if ( $command =~ /^LP$/ ) {
-    $Groff{'LP'}++;		# for man and ms
-    return;
-  }
-  if ( $command =~ /^P$/ ) {
-    $Groff{'P'}++;		# for man and ms
-    return;
-  }
-  if ( $command =~ /^PP$/ ) {
-    $Groff{'PP'}++;		# for man and ms
-    return;
-  }
-  if ( $command =~ /^SH$/ ) {
-    $Groff{'SH'}++;		# for man and ms
-    return;
-  }
-  if ( $command =~ /^UL$/ ) {
-    $Groff{'UL'}++;		# for man and ms
-    return;
-  }
-
-
-  ##########
-  # for man only
-
-  if ( $command =~ /^OP$/ ) {	# for man
-    $Groff{'OP'}++;
-    return;
-  }
-  if ( $command =~ /^SS$/ ) {	# for man
-    $Groff{'SS'}++;
-    return;
-  }
-  if ( $command =~ /^SY$/ ) {	# for man
-    $Groff{'SY'}++;
-    return;
-  }
-  if ( $command =~ /^TP$/ ) {	# for man
-    $Groff{'TP'}++;
-    return;
-  }
-  if ( $command =~ /^UR$/ ) {
-    $Groff{'UR'}++;		# for man
-    return;
-  }
-  if ( $command =~ /^YS$/ ) {	# for man
-   $Groff{'YS'}++;
-    return;
-  }
-
 
   ##########
   # me
@@ -700,7 +628,6 @@ sub do_line {
 		      LO|
 		      LT|
 		      NCOL|
-		      P\$|
 		      PH|
 		      SA
 		    )$/x ) {
@@ -720,40 +647,59 @@ sub do_line {
   ##########
   # mom
 
-  if ( $line =~ /^\.(
+  if ( $command =~ /^(
 		   ALD|
+		   AUTHOR|
+		   CHAPTER|
+		   CHAPTER_TITLE|
+		   COLLATE|
+		   DOC_COVER|
+		   DOCHEADER|
+		   DOCTITLE|
 		   DOCTYPE|
 		   FAMILY|
 		   FT|
 		   FAM|
+		   LEFT|
 		   LL|
 		   LS|
 		   NEWPAGE|
+		   NO_TOC_ENTRY|
 		   PAGE|
+		   PAGENUMBER|
+		   PAGINATION|
 		   PAPER|
 		   PRINTSTYLE|
 		   PT_SIZE|
-		   T_MARGIN
+		   SP|
+		   START|
+		   T_MARGIN|
+		   TITLE|
+		   TOC|
+		   TOC_AFTER_HERE
 		 )$/x ) {
     $Groff{'mom'}++;		# for mom
     return;
   }
 
+  for my $key (@standard_macro) {
+    $Groff{$key}++ if ($command eq $key);
+  }
 } # do_line()
 
-
 my @m = ();
-my @preprograms = ();
-my $correct_tmac = '';
+my @supplemental_package = ();
+my @preprocessor = ();
 
-sub make_groff_device {
-  # globals: @devices
-
+sub infer_device {
   # default device is 'ps' when without '-T'
+  # XXX: No, that depends on how the 'configure' script was called (but
+  # most people don't seem to change it).  Also we should check
+  # GROFF_TYPESETTER.  --GBR
   my $device;
-  push @devices, 'ps' unless ( @devices );
+  push @device, 'ps' unless ( @device );
 
-  for my $d ( @devices ) {
+  for my $d (@device) {
     if ( $d =~ /^(		# suitable devices
 		  dvi|
 		  html|
@@ -774,15 +720,15 @@ sub make_groff_device {
 
 
     if ( $device ) {
-      push @Command, '-T';
-      push @Command, $device;
+      push @command, '-T';
+      push @command, $device;
     }
   }
 
   if ( $device eq 'pdf' ) {
     if ( $pdf_with_ligatures ) {	# with --ligature argument
-      push( @Command, '-P-y' );
-      push( @Command, '-PU' );
+      push( @command, '-P-y' );
+      push( @command, '-PU' );
     } else {	# no --ligature argument
       if ( $with_warnings ) {
 	print STDERR <<EOF;
@@ -795,21 +741,19 @@ EOF
       }	# end of warning
     }	# end of ligature
   }	# end of pdf device
-} # make_groff_device()
+} # infer_device()
 
 
-sub make_groff_preproc {
-  # globals: %Groff, @preprograms, @Command
-
+sub infer_preprocessors {
   # preprocessors without 'groff' option
   if ( $Groff{'lilypond'} ) {
-    push @preprograms, 'glilypond';
+    push @preprocessor, 'glilypond';
   }
   if ( $Groff{'gperl'} ) {
-    push @preprograms, 'gperl';
+    push @preprocessor, 'gperl';
   }
   if ( $Groff{'gpinyin'} ) {
-    push @preprograms, 'gpinyin';
+    push @preprocessor, 'gpinyin';
   }
 
   # preprocessors with 'groff' option
@@ -825,211 +769,159 @@ sub make_groff_preproc {
   if ( $Groff{'chem'} || $Groff{'eqn'} ||  $Groff{'gideal'} ||
        $Groff{'grap'} || $Groff{'grn'} || $Groff{'pic'} ||
        $Groff{'refer'} || $Groff{'tbl'} ) {
-    push(@Command, '-s') if $Groff{'soelim'};
+    push(@command, '-s') if $Groff{'soelim'};
 
-    push(@Command, '-R') if $Groff{'refer'};
+    push(@command, '-R') if $Groff{'refer'};
 
-    push(@Command, '-t') if $Groff{'tbl'};	# tbl before eqn
-    push(@Command, '-e') if $Groff{'eqn'};
+    push(@command, '-t') if $Groff{'tbl'};	# tbl before eqn
+    push(@command, '-e') if $Groff{'eqn'};
 
-    push(@Command, '-j') if $Groff{'chem'};	# chem produces pic code
-    push(@Command, '-J') if $Groff{'gideal'};	# gideal produces pic
-    push(@Command, '-G') if $Groff{'grap'};
-    push(@Command, '-g') if $Groff{'grn'};	# gremlin files for -me
-    push(@Command, '-p') if $Groff{'pic'};
+    push(@command, '-j') if $Groff{'chem'};	# chem produces pic code
+    push(@command, '-J') if $Groff{'gideal'};	# gideal produces pic
+    push(@command, '-G') if $Groff{'grap'};
+    push(@command, '-g') if $Groff{'grn'};	# gremlin files for -me
+    push(@command, '-p') if $Groff{'pic'};
 
   }
-} # make_groff_preproc()
+} # infer_preprocessors()
 
 
-sub make_groff_tmac_man_ms {
-  # globals: @filespec, $inferred_main_package, %Groff
-
-  # 'man' requests, not from 'ms'
-  if ( $Groff{'SS'} || $Groff{'SY'} || $Groff{'OP'} ||
-       $Groff{'TH_first'} || $Groff{'TP'} || $Groff{'UR'} ) {
-    $Groff{'man'} = 1;
-    push(@m, '-man');
-
-    $inferred_main_package = 'man' unless ( $inferred_main_package );
-    &warn("man macro calls found, but file name extension was '"
-	  . $inferred_main_package . "'")
-       unless ( $inferred_main_package eq 'man' );
-    $inferred_main_package = 'man';
-    return 1;	# true
+# Return true (1) if a main/full-service/exclusive package is inferred.
+sub infer_man_or_ms_package {
+  # Compute a score for each package by counting occurrences of their
+  # characteristic macros.
+  foreach my $key (@macro_man_or_ms) {
+    $man_score += $Groff{$key};
+    $ms_score += $Groff{$key};
   }
 
-  # 'ms' requests, not from 'man'
-  if (
-      $Groff{'1C'} || $Groff{'2C'} ||
-      $Groff{'AB'} || $Groff{'AE'} || $Groff{'AI'} || $Groff{'AU'} ||
-      $Groff{'BX'} || $Groff{'CD'} || $Groff{'DA'} || $Groff{'DE'} ||
-      $Groff{'DS'} || $Groff{'ID'} || $Groff{'LD'} || $Groff{'NH'} ||
-      $Groff{'TH_later'} ||
-      $Groff{'TL'} || $Groff{'UL'} || $Groff{'XP'}
-     ) {
-    $Groff{'ms'} = 1;
-    push(@m, '-ms');
-
-    $inferred_main_package = 'ms' unless ( $inferred_main_package );
-    &warn("ms macro calls found, but file name extension was '"
-	  . $inferred_main_package . "'")
-       unless ( $inferred_main_package eq 'ms' );
-    $inferred_main_package = 'ms';
-    return 1;	# true
+  foreach my $key (@macro_man) {
+    $man_score += $Groff{$key};
   }
 
+  foreach my $key (@macro_ms) {
+    $ms_score += $Groff{$key};
+  }
 
-  # both 'man' and 'ms' requests
-  if ( $Groff{'P'} || $Groff{'IP'}  ||
-       $Groff{'LP'} || $Groff{'PP'} || $Groff{'SH'} ) {
-    if ( $inferred_main_package eq 'man' ) {
-      $Groff{'man'} = 1;
-      push(@m, '-man');
-      return 1;	# true
-    } elsif ( $inferred_main_package eq 'ms' ) {
-      $Groff{'ms'} = 1;
-      push(@m, '-ms');
-      return 1;	# true
+  if (!$ms_score && !$man_score) {
+    # The input may be a "raw" roff document; this is not a problem.
+    # Do nothing special.
+  } elsif ($ms_score == $man_score) {
+    # If there was no TH call, it's not a (valid) man(7) document.
+    if (!$Groff{'TH'}) {
+      $inferred_main_package = 's';
+    } else {
+      &warn("document ambiguous; disambiguate with -man or -ms option");
+      $had_inference_problem = 1;
     }
     return 0;
+  } elsif ($ms_score > $man_score) {
+    $inferred_main_package = 's';
+  } else {
+    $inferred_main_package = 'an';
   }
-} # make_groff_tmac_man_ms()
+
+  return 1;
+} # infer_man_or_ms_package()
 
 
-sub make_groff_tmac_others {
-  # globals: @filespec, $inferred_main_package, %Groff
-
+# Return true (1) if a main/full-service/exclusive package is inferred.
+sub infer_macro_packages {
   # mdoc
   if ( ( $Groff{'Oo'} && $Groff{'Oc'} ) || $Groff{'Dd'} ) {
     $Groff{'Oc'} = 0;
     $Groff{'Oo'} = 0;
-    push(@m, '-mdoc');
+    $inferred_main_package = 'doc';
     return 1;	# true
   }
-  if ( $Groff{'mdoc_old'} || $Groff{'Oo'} ) {
-    push(@m, '-mdoc_old');
+  if ( $Groff{'mdoc-old'} || $Groff{'Oo'} ) {
+    $inferred_main_package = 'doc';
     return 1;	# true
   }
 
   # me
   if ( $Groff{'me'} ) {
-    push(@m, '-me');
+    $inferred_main_package = 'e';
     return 1;	# true
   }
 
   # mm and mmse
   if ( $Groff{'mm'} ) {
-    push(@m, '-mm');
+    $inferred_main_package = 'm';
     return 1;	# true
   }
+  # XXX: Is this necessary?  mmse .mso's mm, but we probably already
+  # detected mm macro calls anyway.  --GBR
   if ( $Groff{'mmse'} ) {	# Swedish mm
-    push(@m, '-mmse');
     return 1;	# true
   }
 
   # mom
   if ( $Groff{'mom'} ) {
-    push(@m, '-mom');
+    $inferred_main_package = 'om';
     return 1;	# true
   }
-} # make_groff_tmac_others()
+
+  return 0;
+} # infer_macro_packages()
 
 
-sub make_groff_line_rest {
+sub construct_command {
   my $file_args_included;	# file args now only at 1st preproc
-  unshift @Command, 'groff';
-  if ( @preprograms ) {
+  unshift @command, 'groff';
+  if (@preprocessor) {
     my @progs;
-    $progs[0] = shift @preprograms;
+    $progs[0] = shift @preprocessor;
     push(@progs, @filespec);
-    for ( @preprograms ) {
+    for (@preprocessor) {
       push @progs, '|';
       push @progs, $_;
     }
     push @progs, '|';
-    unshift @Command, @progs;
+    unshift @command, @progs;
     $file_args_included = 1;
   } else {
     $file_args_included = 0;
   }
 
-  foreach (@Command) {
+  foreach (@command) {
     next unless /\s/;
     # when one argument has several words, use accents
     $_ = "'" . $_ . "'";
   }
 
+  my @msupp = ();
 
-  ##########
-  # -m arguments
-  my $nr_m_guessed = scalar @m;
-  if ( $nr_m_guessed > 1 ) {
-    print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-      'argument for -m found: ' . @m;
-  }
-
-
-  my $nr_m_args = scalar @Mparams;	# m-arguments for grog
-  my $last_m_arg = '';	# last provided -m option
-  if ( $nr_m_args > 1 ) {
-    # take the last given -m argument of grog call,
-    # ignore other -m arguments and the found ones
-    $last_m_arg = $Mparams[-1];	# take the last -m argument
-    print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-      $Prog . ": more than 1 '-m' argument: @Mparams";
-    print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-      'We take the last one: ' . $last_m_arg;
-  } elsif ( $nr_m_args == 1 ) {
-    $last_m_arg = $Mparams[0];
-  }
-
-  my $final_m = '';
-  if ( $last_m_arg ) {
-    my $is_equal = 0;
-    for ( @m ) {
-      if ( $_ eq $last_m_arg ) {
-	$is_equal = 1;
-	last;
-      }
-      next;
-    }	# end for @m
-    if ( $is_equal ) {
-      $final_m = $last_m_arg;
-    } else {
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	'Provided -m argument ' . $last_m_arg .
-	  ' differs from guessed -m args: ' . @m;
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	'The argument is taken.';
-      $final_m = $last_m_arg;
+  # If a full-service package was explicitly requested, it had better
+  # not clash with what we inferred.  If it does, explicitly unset
+  # $inferred_main_package so that the -m arguments are placed in the
+  # same order that the user gave them; caveat dictator.
+  for my $pkg (@requested_package) {
+    if (grep(/$pkg/, @main_package)
+	&& ($pkg ne $inferred_main_package)) {
+      &warn("overriding inferred package 'm$inferred_main_package'"
+	    . " with requested package 'm$pkg'");
+      $inferred_main_package = '';
     }
-  } else {	# no -m arg provided
-    if ( $nr_m_guessed > 1 ) {
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' .
-	'More than 1 -m arguments were guessed: ' . @m;
-      print STDERR __FILE__ . ' ' .  __LINE__ . ': ' . 'Guessing stopped.';
-      $had_inference_problem = 1;
-    } elsif ( $nr_m_guessed == 1 ) {
-      $final_m = $m[0];
-    } else {
-      # no -m provided or guessed
-    }
+    push @msupp, '-m' . $pkg;
   }
-  push @Command, $final_m if ( $final_m );
 
-  push(@Command, @filespec) unless ( $file_args_included );
+  push @m, '-m' . $inferred_main_package if ($inferred_main_package);
+
+  push @command, @m, @msupp;
+
+  push(@command, @filespec) unless ( $file_args_included );
 
   #########
   # execute the 'groff' command here with option '--run'
   if ( $do_run ) { # with --run
-    print STDERR __FILE__ . ' ' .  __LINE__ . ': ' . "@Command";
-    my $cmd = join ' ', @Command;
+    print STDERR "@command";
+    my $cmd = join ' ', @command;
     system($cmd);
   } else {
-    print "@Command";
+    print "@command";
   }
-} # make_groff_line_rest()
+} # construct_command()
 
 
 sub help {
@@ -1062,36 +954,29 @@ EOF
 
 
 sub version {
-  our %at_at;
-  print "$Prog (groff) " . $at_at{'GROFF_VERSION'};
+  print "$program_name (groff) $groff_version";
   exit 0;
 } # version()
 
 
 # initialize
 
-my $before_make;	# script before run of 'make'
+my $in_source_tree = 0;
 {
   my $at = '@';
-  $before_make = 1 if '@VERSION@' eq "${at}VERSION${at}";
+  $in_source_tree = 1 if '@VERSION@' eq "${at}VERSION${at}";
 }
 
-our %at_at;
+$groff_version = '@VERSION@' unless ($in_source_tree);
 
-if ($before_make) {
-  $at_at{'GROFF_VERSION'} = "DEVELOPMENT";
-} else {
-  $at_at{'GROFF_VERSION'} = '@VERSION@';
-}
+&process_arguments();
+&process_input();
 
-&handle_args();
-&handle_whole_files();
-
-if ($have_any_valid_args) {
-  &make_groff_device();
-  &make_groff_preproc();
-  &make_groff_tmac_man_ms() || &make_groff_tmac_others();
-  &make_groff_line_rest();
+if ($have_any_valid_arguments) {
+  &infer_device();
+  &infer_preprocessors();
+  &infer_macro_packages() || &infer_man_or_ms_package();
+  &construct_command();
 }
 
 exit 2 if ($had_processing_problem);
@@ -1102,3 +987,4 @@ exit 0;
 # Local Variables:
 # mode: CPerl
 # End:
+# vim: set autoindent textwidth=72:

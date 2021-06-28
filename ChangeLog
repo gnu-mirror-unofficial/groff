@@ -1,5 +1,125 @@
 2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Heavily refactor.
+
+	* src/utils/grog/grog.pl:
+	  - Drop import of unused module `Data::Dumper`.
+	  - Drop unused scalars `Sp` and `correct_tmac`.
+	  - Simplify determination of version number.  Drop hash `at_at`
+	    which only stored one key, `GROFF_VERSION`.  Initialize
+	    scalar `groff_version` to "DEVELOPMENT".  Rename scalar
+	    `before_make` to `in_source_tree` and initialize to zero.
+	    Update `groff_version` with Automake-determined version
+	    variable if it is defined (i.e., grog is not running in an
+	    unbuilt source tree).
+	  - Drop unused `Mparams` list.  Replace it with new list
+	    `requested_package`, which stores the arguments to any grog
+	    `-m` options specified by the user.
+	  - Rename many objects so that I, and others, can better
+	    comprehend their purpose, and for consistent letter casing.
+	    . @Command -> @command
+	    . @devices -> @device
+	    . $Prog -> $program_name
+	    . %macros -> %user_macro
+	    . $have_any_valid_args -> $have_any_valid_arguments
+	    . &handle_args -> &process_arguments
+	    . &handle_whole_files -> &process_input
+	    . @preprograms -> @preprocessor
+	    . &make_groff_device -> &infer_device
+	    . &make_groff_preproc -> &infer_preprocessors
+	    . &make_groff_tmac_man_ms -> &infer_man_or_ms_package
+	    . &make_groff_line_rest -> &construct_command
+	  - Drop many unused keys in `Groff` hash.
+	  - Add new lists, `macro_ms`, `macro_man`, and
+	    `macro_man_or_ms` to support new scoring technique to
+	    disambiguate input documents between these two packages.
+	  - Append the foregoing 3 lists to new list `standard_macro`,
+	    and add these as keys to the `Groff` hash.
+	  - Add new list `main_package` to keep track of full-service
+	    package names.
+	  - Add new scalars `man_score`, `ms_score`, and
+	    `inside_tbl_table` to aid disambiguation of .TH macro calls
+	    and the many macro names shared between man(7) and ms(7).
+	  (process_arguments): Strip '-m' off of argument before storing
+	  the remainder in `@requested_package`.
+	  (do_line): Detect .TH macro call even if white space occurs
+	  between the control character and the macro name.
+	  (do_line): Inflate `$man_score` by 100 if .TH is the first
+	  macro call seen in a document.
+	  (do_line): Fix bug; clear `$before_first_command` in correct
+	  scope--after any macro call, not just if we saw a .TH as the
+	  first macro call.
+	  (do_line): Set `$inside_tbl_table` when we see a .TS call.
+	  (do_line): Clear `$inside_tbl_table` when we see a .TE call.
+	  Also increment `$Groff{'tbl')' again, increasing the "score"
+	  of tbl(1) usage evidence.
+	  (do_line): Drop a lot of code that manually increments %Groff
+	  keys corresponding to man and ms macros.  This is now done
+	  differently and elsewhere.
+	  (do_line): Drop "P" from list of characteristic mm(7) macros.
+	  (do_line): Simplify matching of mom(7) macros (match $command,
+	  not $line).  Extend list of characteristic mom(7) macros.
+	  (do_line): Increment $Groff{$key} if $key is in
+	  @standard_macro.
+	  (infer_man_or_ms_package): Rewrite.  Compute a score for each
+	  package by counting occurrences of their characteristic
+	  macros.  If both have a score of zero, assume that the input
+	  is a raw roff document.  If the scores are equal
+	  {doc/webpage.ms, startlingly, comes within 1 point of a tied
+	  score}, infer ms(7) if 'TH' was never called, and if it was,
+	  issue a diagnostic advising user to supply a disambiguating
+	  `-m` option.  Otherwise, the scores are unequal, and infer the
+	  package of the winner. Set scalar `inferred_main_package`
+	  instead of pushing `-m` options onto `@m`.
+	  (infer_macro_packages): Set scalar `inferred_main_package`
+	  instead of pushing `-m` options onto `@m`.  Explicitly return
+	  0 if we fall off the end of the function.
+	  (construct_command): Rewrite handling of -m options.  Add new
+	  list `msupp` to store supplementary (non-main) macro package
+	  arguments.  If a full-service package was explicitly
+	  requested, it had better not clash with what we inferred.  If
+	  it does, explicitly unset $inferred_main_package so that the
+	  -m arguments are placed in the same order that the user gave
+	  them; caveat dictator.  If `--run` option was given, just
+	  print the command; don't preface it with __FILE__ and __LINE__
+	  noise.
+	  - Remove comments documenting shared variables used by
+	    subroutines.  These are far from useless but too tedious to
+	    keep up to date while the code is in flux.
+	  - Note several places for further code review or refactoring
+	    with "XXX" comments.
+	  - Add Vim modeline.
+
+	grog now passes all its tests and correctly infers arguments for
+	all in-tree groff documents (except for a known, and already
+	documented in grog(1), false positive detection of soelim in
+	soelim(1)).  This refactor also obviates or resolves several
+	outstanding Savannah tickets.
+
+	Fixes <https://savannah.gnu.org/bugs/?44707> by obviating it;
+	grog no longer cares about file name extensions on man pages (or
+	any other input).
+
+	Fixes <https://savannah.gnu.org/bugs/?55302>; same.  The quality
+	of diagnostic messages has been improved as well.
+
+	Fixes <https://savannah.gnu.org/bugs/?59753>; same.
+
+	Fixes <https://savannah.gnu.org/bugs/?59664>.  The attached
+	patch was a less aggressive refactor of &do_line and %Groff.
+	Its author made the following claim for it: "With this patch,
+	all 'man', 'me', 'mom, and 'ms' files in the repository are
+	correctly identified.  The only example of a 'mm'-file is
+	"letter.mm", which is not recognized correctly."  As noted
+	above, the present refactor achieves correct recognition of all
+	of the files including letter.mm.
+
+	Fixes <https://savannah.gnu.org/bugs/?60833>.
+
+	Fixes <https://savannah.gnu.org/bugs/?60834>.
+
+2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/tests/smoke-test.sh: Perform whole-line
 	matches.  Apply DRY principle to expected output.  In
 	anticipation of pending changes to grog.pl, uncomment and add
