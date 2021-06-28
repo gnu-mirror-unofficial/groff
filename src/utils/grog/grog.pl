@@ -891,15 +891,16 @@ sub construct_command {
 
   my @msupp = ();
 
-  # If a full-service package was explicitly requested, it had better
-  # not clash with what we inferred.  If it does, explicitly unset
-  # $inferred_main_package so that the -m arguments are placed in the
+  # If a full-service package was explicitly requested, clear any
+  # inferred package (and warn if the inference differs from the
+  # request).  This also ensures that all -m arguments are placed in the
   # same order that the user gave them; caveat dictator.
   for my $pkg (@requested_package) {
-    if (grep(/$pkg/, @main_package)
-	&& ($pkg ne $inferred_main_package)) {
-      &warn("overriding inferred package '$inferred_main_package'"
-	    . " with requested package '$pkg'");
+    if (grep(/$pkg/, @main_package)) {
+      if ($pkg ne $inferred_main_package) {
+        &warn("overriding inferred package '$inferred_main_package'"
+	      . " with requested package '$pkg'");
+      }
       $inferred_main_package = '';
     }
     push @msupp, '-m' . $pkg;

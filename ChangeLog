@@ -12,6 +12,10 @@
 	one major implementation thereof (man-db man), and not used by
 	other types of roff documents; at this point, we don't yet know
 	if the document we're processing is a man page.
+	(construct_command): Correct comment and related logic error.
+	Clear the inferred main macro package if _any_ `-m` argument
+	matching any main macro package is given.  Warn only if what is
+	specified doesn't match the inference.
 
 2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
