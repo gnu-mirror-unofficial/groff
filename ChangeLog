@@ -5,6 +5,13 @@
 	* src/utils/grog/grog.pl (process_arguments, construct_command):
 	Tweak warning diagnostics to use a style where an empty argument
 	will be easy to spot.
+	(do_first_line): Stop emitting pseudo-diagnostic (to standard
+	output!) if we see a "groff options line" [it's not] of
+	incorrect form.  The preprocessor encoding hint convention of
+	concern here is particular to man pages, disregarded by at least
+	one major implementation thereof (man-db man), and not used by
+	other types of roff documents; at this point, we don't yet know
+	if the document we're processing is a man page.
 
 2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 

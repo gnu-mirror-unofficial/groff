@@ -341,20 +341,17 @@ sub process_input {
 # The letter for 'refer' is 'r', not 'R', and there is also the
 # historical legacy of vgrind ('v') to consider.  In any case, why
 # should that comment line override what we can infer from actual macro
-# calls within the document?  Contemplate getting rid of this subroutine
+# calls within the document?  Furthermore this hint encoding convention
+# is particular to man pages, disregarded by at least one major
+# implementation thereof (man-db man), and not used by other types of
+# roff documents; at this point, we don't yet know if the document we're
+# processing is a man page.  Contemplate getting rid of this subroutine
 # and %preprocs_tmacs altogether.  --GBR
 sub do_first_line {
   my ( $line, $file ) = @_;
 
-  # For a leading groff options line use only [egGjJpRst]
+  # For a leading groff options line [sic], use only [egGjJpRst].
   if  ( $line =~ /^[.']\\"[\segGjJpRst]+&/ ) {
-    # this is a groff options leading line
-    if ( $line =~ /^\./ ) {
-      # line is a groff options line with . instead of '
-      print "First line in $file must start with an apostrophe \ " .
-	"instead of a period . for groff options line!";
-    }
-
     if ( $line =~ /j/ ) {
       $Groff{'chem'}++;
     }
@@ -451,6 +448,8 @@ sub do_line {
 
 
   ######################################################################
+  # XXX: Dubious.  See <https://savannah.gnu.org/bugs/?60421>.  --GBR
+
   # soelim
   if ( $line =~ /^\.(do)?\s*(so|mso|PS\s*<|SO_START).*$/ ) {
     # '.so', '.mso', '.PS<...', '.SO_START'
