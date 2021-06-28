@@ -284,7 +284,7 @@ sub process_arguments {
 	# arg finished
 	next;
       } else {		# not a groff opt
-	&warn("unrecognized groff option: $arg");
+	&warn("unrecognized groff option '$arg'");
 	push(@command, $arg);
 	next;
       }
@@ -899,8 +899,8 @@ sub construct_command {
   for my $pkg (@requested_package) {
     if (grep(/$pkg/, @main_package)
 	&& ($pkg ne $inferred_main_package)) {
-      &warn("overriding inferred package 'm$inferred_main_package'"
-	    . " with requested package 'm$pkg'");
+      &warn("overriding inferred package '$inferred_main_package'"
+	    . " with requested package '$pkg'");
       $inferred_main_package = '';
     }
     push @msupp, '-m' . $pkg;
