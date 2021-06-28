@@ -26,95 +26,119 @@ src="${abs_top_srcdir:-..}"
 doc=src/preproc/eqn/neqn.1
 echo "testing simple man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -man src/preproc/eqn/neqn.1'
+    grep -Fqx 'groff -T ps -man '"$doc"
 
 doc=src/preproc/tbl/tbl.1
 echo "testing tbl(1)-using man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -t -man src/preproc/tbl/tbl.1'
+    grep -Fqx 'groff -T ps -t -man '"$doc"
 
 doc=man/groff_diff.7
 echo "testing eqn(1)-using man(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -e -man man/groff_diff.7'
+    grep -Fqx 'groff -T ps -e -man '"$doc"
 
 doc=src/preproc/soelim/soelim.1
 echo "testing pic(1)-using man(7) page $doc" >&2
 # BUG: grog spuriously detects a need for soelim(1).
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -s -p -man src/preproc/soelim/soelim.1'
+    grep -Fqx 'groff -T ps -s -p -man '"$doc"
 
 doc=tmac/groff_mdoc.7
 echo "testing tbl(1)-using mdoc(7) page $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -t -mdoc tmac/groff_mdoc.7'
+    grep -Fqx 'groff -T ps -t -mdoc '"$doc"
 
 doc=$src/doc/meintro.me
 echo "testing me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -me '"$src"'/doc/meintro.me'
+    grep -Fqx 'groff -T ps -me '"$doc"
 
 doc=$src/doc/meintro_fr.me
 echo "testing tbl(1)-using me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -t -me '"$src"'/doc/meintro_fr.me'
+    grep -Fqx 'groff -T ps -t -me '"$doc"
 
-# BUG: Just plain wrong.
-#   "ms requests found, but file name extension was: me"
-#doc=$src/doc/meref.me
-#echo "testing me(7) document $doc" >&2
-#"$grog" "$doc" | \
-#    grep -Fq 'groff -T ps -me '"$src"'/doc/meref.me'
+doc=$src/doc/meref.me
+echo "testing me(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -me '"$doc"
 
 doc=$src/doc/grnexmpl.me
 echo "testing grn(1)- and eqn(1)-using me(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -e -g -me '"$src"'/doc/grnexmpl.me'
+    grep -Fqx 'groff -T ps -e -g -me '"$doc"
 
 doc=$src/contrib/mm/examples/letter.mm
 echo "testing mm(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -mm '"$src"'/contrib/mm/examples/letter.mm'
+    grep -Fqx 'groff -T ps -mm '"$doc"
 
-# BUG: Detection of mom documents is all messed up.
-# groff -T ps ../contrib/mom/examples/copyright-chapter.mom
-# groff -T ps ../contrib/mom/examples/copyright-default.mom
-# groff -T ps ../contrib/mom/examples/letter.mom
-# groff -T ps ../contrib/mom/examples/mom-pdf.mom
-# groff -T ps ../contrib/mom/examples/mon_premier_doc.mom
-# groff -T ps ../contrib/mom/examples/sample_docs.mom
-# man requests found, but file name extension was: mom
-# groff -T ps -t -e -p -man ../contrib/mom/examples/slide-demo.mom
-# man requests found, but file name extension was: mom
-# groff -T ps -man ../contrib/mom/examples/typesetting.mom
+doc=$src/contrib/mom/examples/copyright-chapter.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/copyright-default.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/letter.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/mom-pdf.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/mon_premier_doc.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/sample_docs.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
+
+doc=$src/contrib/mom/examples/slide-demo.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -t -e -p -mom '"$doc"
+
+doc=$src/contrib/mom/examples/typesetting.mom
+echo "testing mom(7) document $doc" >&2
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -mom '"$doc"
 
 doc=$src/contrib/pdfmark/cover.ms
 echo "testing ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -ms '"$src"'/contrib/pdfmark/cover.ms'
+    grep -Fqx 'groff -T ps -ms '"$doc"
 
 doc=$src/contrib/pdfmark/pdfmark.ms
 echo "testing ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -ms '"$src"'/contrib/pdfmark/pdfmark.ms'
+    grep -Fqx 'groff -T ps -ms '"$doc"
 
 doc=$src/doc/ms.ms
 echo "testing tbl(1)-using ms(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -t -ms '"$src"'/doc/ms.ms'
+    grep -Fqx 'groff -T ps -t -ms '"$doc"
 
 doc=$src/doc/pic.ms
 echo "testing tbl(1)-, eqn(1)-, and pic(1)-using ms(7) document $doc" \
     >&2
 "$grog" "$doc" | \
-    grep -Fq 'groff -T ps -t -e -p -ms '"$src"'/doc/pic.ms'
+    grep -Fqx 'groff -T ps -t -e -p -ms '"$doc"
 
-# XXX: Commented out while grog refactor is underway.
-#doc=$src/doc/webpage.ms
-#echo "testing ms(7) document $doc" \
-#    >&2
-## BUG: Should detect -mwww (and -mpspic?) too.
-#"$grog" "$doc" | \
-#    grep -Fq 'groff -T ps -ms '"$src"'/doc/webpage.ms'
+doc=$src/doc/webpage.ms
+echo "testing ms(7) document $doc" >&2
+# BUG: Should detect -mwww (and -mpspic?) too.
+"$grog" "$doc" | \
+    grep -Fqx 'groff -T ps -ms '"$doc"
 
 # vim:set ai et sw=4 ts=4 tw=72:
