@@ -40,17 +40,10 @@ $\ = "\n";
 
 my $groff_version = 'DEVELOPMENT';
 
-# from 'src/roff/groff/groff.cpp' near 'getopt_long'
-my $groff_opts =
-  'abcCd:D:eEf:F:gGhiI:jJkK:lL:m:M:n:No:pP:r:RsStT:UvVw:W:XzZ';
-
 my @command = ();		# the constructed groff command
-my $device = '';		# argument to '-T' grog option
 my @requested_package = ();	# arguments to '-m' grog options
 
 my $do_run = 0;			# run generated 'groff' command
-my $pdf_with_ligatures = 0;	# '-P-y -PU' for 'pdf' device
-my $with_warnings = 0;		# XXX: more like "hints"  --GBR
 
 my $program_name = $0;
 {
@@ -185,6 +178,7 @@ sub process_arguments {
   my $delayed_option = '';
   my $was_minus = 0;
   my $optarg = 0;
+  my $pdf_with_ligatures = 0;
 
   foreach my $arg (@ARGV) {
     if ( $optarg ) {
@@ -199,8 +193,13 @@ sub process_arguments {
     }
 
     if ($delayed_option) {
-      push @requested_package, $arg if ($delayed_option eq 'm');
-      $device = $arg if ($delayed_option eq 'T');
+      if ($delayed_option eq '-m') {
+	push @requested_package, $arg;
+      } else {
+	push @command, $delayed_option;
+      }
+
+      push @command, $arg;
       $delayed_option = '';
       next;
     }
@@ -225,35 +224,29 @@ sub process_arguments {
       next;
     }
 
-    # XXX: Stop matching these sloppily.  --GBR
-    &version() if $arg =~ /^--?v/;	# --version, with exit
-    &help() if $arg  =~ /--?h/;		# --help, with exit
+    # Handle options that cause an early exit.
+    &version() if ($arg eq '-v' || $arg eq '--version');
+    &help() if ($arg eq '-h' || $arg eq '--help');
 
-    if ( $arg =~ /^--r/ ) {		#  --run, no exit
-      $do_run = 1;
+    if ($arg =~ '^--.') {
+      if ($arg =~ '^--(run|with-ligatures)$') {
+	$do_run = 1             if ($arg eq '--run');
+	$pdf_with_ligatures = 1 if ($arg eq '--with-ligatures');
+      } else {
+        &fail("unrecognized grog option '$arg'; ignored");
+      }
       next;
     }
 
-    if ( $arg =~ /^--wa/ ) {		#  --warnings, no exit
-      $with_warnings = 1;
-      next;
-    }
+    # Handle groff options that take an argument.
 
-    if ( $arg =~ /^--(wi|l)/ ) { # --ligatures, no exit
-      # the old --with_ligatures is only kept for compatibility
-      $pdf_with_ligatures = 1;
-      next;
-    }
-
-    # Handle '-m' or '-T' followed by whitespace.
-    if ($arg =~ /^-[mT]$/) {
+    # Handle the option argument being separated by whitespace.
+    if ($arg =~ /^-[dfFIKLmMnoPrTwW]$/) {
       $delayed_option = $arg;
-      $delayed_option =~ s/-//;
       next;
     }
 
-    # Handle '-m' and '-T' without whitespace.
-
+    # Handle '-m' option without subsequent whitespace.
     if ($arg =~ /^-m/) {
       my $package = $arg;
       $package =~ s/-m//;
@@ -261,41 +254,16 @@ sub process_arguments {
       next;
     }
 
-    if ($arg =~ /^-T/) {
-      my $dev = $arg;
-      $dev =~ s/-T//;
-      $device = $dev;
-      next;
-    }
-
-    if ($arg =~ /^-(\w)(\w*)$/) {	# maybe a groff option
-      my $opt_char = $1;
-      my $opt_char_with_arg = $opt_char . ':';
-      my $others = $2;
-      if ( $groff_opts =~ /$opt_char_with_arg/ ) {	# groff optarg
-	if ( $others ) {	# optarg is here
-	  push @command, '-' . $opt_char;
-	  push @command, '-' . $others;
-	  next;
-	}
-	# next arg is optarg
-	$optarg = 1;
-	next;
-      } elsif ( $groff_opts =~ /$opt_char/ ) {	# groff no optarg
-	push @command, '-' . $opt_char;
-	if ( $others ) {	# $others is now an opt collection
-	  $arg = '-' . $others;
-	  redo;
-	}
-	# arg finished
-	next;
-      } else {		# not a groff opt
-	&warn("unrecognized groff option '$arg'");
-	push(@command, $arg);
-	next;
-      }
-    }
+    # Treat anything else as (possibly clustered) groff options that
+    # take no arguments.
+    push @command, $arg;
   }
+
+  if ($pdf_with_ligatures) {
+    push @command, '-P-y';
+    push @command, '-PU';
+  }
+
   @filespec = ('-') unless (@filespec);
 } # process_arguments()
 
@@ -696,30 +664,6 @@ my @m = ();
 my @supplemental_package = ();
 my @preprocessor = ();
 
-sub infer_device {
-  if ($device) {
-    push @command, '-T';
-    push @command, $device;
-  }
-
-  if ( $device eq 'pdf' ) {
-    if ( $pdf_with_ligatures ) {	# with --ligature argument
-      push( @command, '-P-y' );
-      push( @command, '-PU' );
-    } else {	# no --ligature argument
-      if ( $with_warnings ) {
-	print STDERR <<EOF;
-If you have trouble with ligatures like 'fi' in the 'groff' output, you
-can proceed as one of
-- add 'grog' option '--with_ligatures' or
-- use the 'grog' option combination '-P-y -PU' or
-- try to remove the font named similar to 'fonts-texgyre' from your system.
-EOF
-      }	# end of warning
-    }	# end of ligature
-  }	# end of pdf device
-} # infer_device()
-
 
 sub infer_preprocessors {
   # preprocessors without 'groff' option
@@ -827,7 +771,7 @@ sub infer_macro_packages {
     $inferred_main_package = 'm';
     return 1;	# true
   }
-  # XXX: Is this necessary?  mmse .mso's mm, but we probably already
+  # XXX: Is this necessary?  mmse "mso"s mm, but we probably already
   # detected mm macro calls anyway.  --GBR
   if ( $Groff{'mmse'} ) {	# Swedish mm
     return 1;	# true
@@ -920,7 +864,6 @@ names, even if they start with a '-' character.
 --ligatures	include options '-P-y -PU' for internal font, which
 		preserves the ligatures like 'fi'
 --run		run the checked-out groff command
---warnings	display more warnings to standard error
 
 All other options should be 'groff' 1-character options.  These are then
 appended to the generated 'groff' command line.  The '-m' options will
@@ -951,7 +894,6 @@ $groff_version = '@VERSION@' unless ($in_source_tree);
 &process_input();
 
 if ($have_any_valid_arguments) {
-  &infer_device();
   &infer_preprocessors();
   &infer_macro_packages() || &infer_man_or_ms_package();
   &construct_command();
@@ -963,6 +905,7 @@ exit 0;
 
 1;
 # Local Variables:
+# fill-column: 72
 # mode: CPerl
 # End:
-# vim: set autoindent textwidth=72:
+# vim: set autoindent noexpandtab shiftwidth=2 textwidth=72:

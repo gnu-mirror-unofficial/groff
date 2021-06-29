@@ -1,5 +1,46 @@
 2021-06-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Refactor command-line argument handling.
+
+	* src/utils/grog/grog.pl:
+	  - Drop scalars `groff_opts`, `device`, and `with_warnings`.
+	  - Move scalar `pdf_with_ligatures`...
+	  (process_arguments): ...here.  Recognize all groff options
+	  that take an optionally whitespace-separated option argument
+	  and apply the existing "delayed option" handling to them.
+	  Push any groff option except `-m` as-is onto the constructed
+	  groff command's argument list (`-m` handling is unchanged).
+	  Match long option names exactly, not sloppily.  Stop
+	  recognizing `--with-warnings` option.  Emit error diagnostic
+	  if unrecognized long option encountered.
+	  (infer_device): Delete subroutine and its top-level call site.
+	  (help): Undocument `--warnings`.
+
+	* src/utils/grog/grog.1.man:
+	  (Synopsis): Use font style macros instead of .OP.  Undocument
+	  `--warnings`.
+	  (Options): Note that the groff arguments produced by the grog
+	  `--ligatures` option are supported only by the `pdf` device.
+	  Undocument `--warnings`.  Undocument groff-incompatible
+	  restriction on whitespace before option arguments; grog is
+	  compatible now.  Simplify discussion in light of simplified
+	  grog logic.
+	  (Details): Undocument scenario where grog infers multiple
+	  main/major/full-service macro packages; this no longer
+	  happens.
+	  (Examples): Update to no longer illustrate includion of `-T
+	  ps` option; this no longer happens by default.
+
+	* NEWS: Document removal of grog's `--warnings` option.
+
+	Fixes <https://savannah.gnu.org/bugs/?55301>; grog no longer
+	mandatorily specifies a `-T` option to groff.
+
+	Fixes <https://savannah.gnu.org/bugs/?57873>; groff options are
+	no longer "mangled".
+
+2021-06-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #57873.
 
 	* src/utils/grog/tests/preserve-groff-options.sh: Test it.
