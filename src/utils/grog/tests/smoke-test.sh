@@ -38,11 +38,11 @@ echo "testing eqn(1)-using man(7) page $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -e -man '"$doc"
 
-doc=src/preproc/soelim/soelim.1
-echo "testing pic(1)-using man(7) page $doc" >&2
-# BUG: grog spuriously detects a need for soelim(1).
-"$grog" "$doc" | \
-    grep -Fqx 'groff -s -p -man '"$doc"
+# BUG: grog doesn't yet handle .if, .ie, .while.
+#doc=src/preproc/soelim/soelim.1
+#echo "testing pic(1)-using man(7) page $doc" >&2
+#"$grog" "$doc" | \
+#    grep -Fqx 'groff -p -man '"$doc"
 
 doc=tmac/groff_mdoc.7
 echo "testing tbl(1)-using mdoc(7) page $doc" >&2

@@ -1,5 +1,69 @@
 2021-06-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Refactor input parsing.
+
+	* src/utils/grog/grog.pl:
+	  - Add scalar `use_compatibility_mode` (see below).
+	  - Add list `request` to store the names of all requests
+	    recognized by groff so that they aren't confused with macro
+	    names.
+	  - Add scalars `have_seen_first_macro_call` (replaces
+	    `before_first_command`, but at global scope),
+	    `is_continued_line` and `logical_line`.  The latter two
+	    enable us to handle *roff input line continuation correctly.
+	  (process_arguments): Set `use_compatibility_mode` if `-C`
+	  option specified.
+	  (process_input): Refactor to greatly simplify, to not attempt
+	  to read the first line of an input file as a special case, and
+	  to avoid sending `do_line` an undefined argument (when EOF is
+	  reached).
+	  (do_first_line): Delete.
+	  (do_line): Rewrite the early stages of input parsing.
+	  - Concatenate continued input lines, setting
+	    `is_continued_line` and returning early as each one is seen,
+	    storing the accumulating input in `logical_line`.
+	  - Check the input line for the form of comment deposited by
+	    Perl's Pod::Man, which uses a highly accented dialect of
+	    man(7); if it's present, inflate `man_score` to compensate
+	    for the page-private `IX` macro it defines but which
+	    duplicates the name and function of a 4.2BSD-era ms(7)
+	    extension that would otherwise deceives our scoring
+	    mechanism, because Pod::Man produces `IX` calls to
+	    metastatic excess.  (An alternative to this kludge is
+	    documented in comments: if a "standard" macro is redefined,
+	    we could delete it from the relevant lists and hashes.)
+	  - Strip *roff comments from input.
+	  - Normalize control lines; convert the no-break control
+	    character to the regular one and remove unnecessary
+	    white space.
+	  - Remove brace escapes.
+	  - Recognize two-character macro calls when not followed by
+	    white space in compatibility mode.
+	  - Drop logic that erroneously attempted to infer soelim(1) use
+	    from macro calls and request invocations.  The grog(1) and
+	    soelim(1) man pages now both explain why such an effort was
+	    misguided.
+	  - Recognize macro definitions created by .am and .am1 requests
+	    {not just .de and .de1}.
+	  - Ignore all other *roff requests.
+	  - What remains must be a ("standard") macro call, so set
+	    `have_seen_first_macro_call`.
+
+	* src/utils/grog/grog.1.man (Limitations): Document a further
+	restriction: don't change the escape character, either.
+
+	* src/utils/grog/tests/smoke-test.sh: Comment out pic-detection
+	test on soelim(1).  The pic macro calls are guarded by roff
+	control structures and only worked previously by accident
+	because grog did not recognize *roff input line continuation,
+	now it does and the illusion is dispelled.  (A reliable way to
+	fool grog before and after my refactoring is now documented in
+	its man page.)
+
+	Fixes <https://savannah.gnu.org/bugs/?59622>.
+
+2021-06-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #59622.
 
 	* src/utils/grog/tests/recognize-perl-pod.sh: Test it.

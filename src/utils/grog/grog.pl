@@ -42,14 +42,40 @@ my $groff_version = 'DEVELOPMENT';
 
 my @command = ();		# the constructed groff command
 my @requested_package = ();	# arguments to '-m' grog options
-
 my $do_run = 0;			# run generated 'groff' command
+my $use_compatibility_mode = 0;	# is -C being passed to groff?
 
 my $program_name = $0;
 {
   my ($v, $d, $f) = File::Spec->splitpath($program_name);
   $program_name = $f;
 }
+
+my @request = ('ab', 'ad', 'af', 'aln', 'als', 'am', 'am1', 'ami',
+	       'ami1', 'as', 'as1', 'asciify', 'backtrace', 'bd', 'blm',
+	       'box', 'boxa', 'bp', 'br', 'brp', 'break', 'c2', 'cc',
+	       'ce', 'cf', 'cflags', 'ch', 'char', 'chop', 'class',
+	       'close', 'color', 'composite', 'continue', 'cp', 'cs',
+	       'cu', 'da', 'de', 'de1', 'defcolor', 'dei', 'dei1',
+	       'device', 'devicem', 'di', 'do', 'ds', 'ds1', 'dt', 'ec',
+	       'ecr', 'ecs', 'el', 'em', 'eo', 'ev', 'evc', 'ex', 'fam',
+	       'fc', 'fchar', 'fcolor', 'fi', 'fp', 'fschar',
+	       'fspecial', 'ft', 'ftr', 'fzoom', 'gcolor', 'hc',
+	       'hcode', 'hla', 'hlm', 'hpf', 'hpfa', 'hpfcode', 'hw',
+	       'hy', 'hym', 'hys', 'ie', 'if', 'ig', 'in', 'it', 'itc',
+	       'kern', 'lc', 'length', 'linetabs', 'lf', 'lg', 'll',
+	       'lsm', 'ls', 'lt', 'mc', 'mk', 'mso', 'msoquiet', 'na',
+	       'ne', 'nf', 'nh', 'nm', 'nn', 'nop', 'nr', 'nroff', 'ns',
+	       'nx', 'open', 'opena', 'os', 'output', 'pc', 'pev', 'pi',
+	       'pl', 'pm', 'pn', 'pnr', 'po', 'ps', 'psbb', 'pso',
+	       'ptr', 'pvs', 'rchar', 'rd', 'return', 'rfschar', 'rj',
+	       'rm', 'rn', 'rnn', 'rr', 'rs', 'rt', 'schar', 'shc',
+	       'shift', 'sizes', 'so', 'soquiet', 'sp', 'special',
+	       'spreadwarn', 'ss', 'stringdown', 'stringup', 'sty',
+	       'substring', 'sv', 'sy', 'ta', 'tc', 'ti', 'tkf', 'tl',
+	       'tm', 'tm1', 'tmc', 'tr', 'trf', 'trin', 'trnt', 'troff',
+	       'uf', 'ul', 'unformat', 'vpt', 'vs', 'warn', 'warnscale',
+	       'wh', 'while', 'write', 'writec', 'writem');
 
 my @macro_ms = ('RP', 'TL', 'AU', 'AI', 'DA', 'ND', 'AB', 'AE',
 		'QP', 'QS', 'QE', 'XP',
@@ -149,12 +175,18 @@ my @filespec;
 
 my @main_package = ('an', 'doc', 'doc-old', 'e', 'm', 'om', 's');
 my $inferred_main_package = '';
+
+# .TH is both a man(7) macro and often used with tbl(1).  We expect to
+# find .TH in ms(7) documents only between .TS and .TE calls, and in
+# man(7) documents only as the first macro call.
+my $have_seen_first_macro_call = 0;
+my $inside_tbl_table = 0;
 # man(7) and ms(7) use many of the same macro names; do extra checking.
 my $man_score = 0;
 my $ms_score = 0;
-# .TH is both a man(7) macro and often used with tbl(1).
-my $inside_tbl_table = 0;
 
+my $is_continued_line = 0;
+my $logical_line = '';
 my $had_inference_problem = 0;
 my $had_processing_problem = 0;
 my $have_any_valid_arguments = 0;
@@ -256,6 +288,10 @@ sub process_arguments {
 
     # Treat anything else as (possibly clustered) groff options that
     # take no arguments.
+
+    # Our do_line() needs to know if it should do compatibility parsing.
+    $use_compatibility_mode = 1 if ($arg =~ /C/);
+
     push @command, $arg;
   }
 
@@ -274,194 +310,117 @@ sub process_input {
       &fail("cannot open '$file': $!");
       next;
     }
+
     $have_any_valid_arguments = 1;
-    my $line = <FILE>; # get single line
 
-    unless ( defined($line) ) {
-      # empty file, go to next filearg
-      close (FILE);
-      next;
-    }
-
-    if ( $line ) {
+    while (my $line = <FILE>) {
       chomp $line;
-      unless ( &do_first_line( $line, $file ) ) {
-	# not an option line
-	&do_line( $line, $file );
-      }
-    } else { # empty line
-      next;
+      &do_line($line);
     }
 
-    while (<FILE>) { # get lines by and by
-      chomp;
-      &do_line( $_, $file );
-    }
     close(FILE);
   } # end foreach
 } # process_input()
 
 
-# As documented for the 'man' program, the first line can be
-# used as a groff option line.  This is done by:
-# - start the line with '\" (apostrophe, backslash, double quote)
-# - add a space character
-# - a word using the following characters can be appended: 'egGjJpRst'.
-#     Each of these characters means an option for the generated
-#     'groff' command line, e.g. '-t'.
-#
-# XXX: The above is not accurate; man(7)'s preprocessor encoding
-# convention does not map perfectly to groff(1) command-line options.
-# The letter for 'refer' is 'r', not 'R', and there is also the
-# historical legacy of vgrind ('v') to consider.  In any case, why
-# should that comment line override what we can infer from actual macro
-# calls within the document?  Furthermore this hint encoding convention
-# is particular to man pages, disregarded by at least one major
-# implementation thereof (man-db man), and not used by other types of
-# roff documents; at this point, we don't yet know if the document we're
-# processing is a man page.  Contemplate getting rid of this subroutine
-# and %preprocs_tmacs altogether.  --GBR
-sub do_first_line {
-  my ( $line, $file ) = @_;
-
-  # For a leading groff options line [sic], use only [egGjJpRst].
-  if  ( $line =~ /^[.']\\"[\segGjJpRst]+&/ ) {
-    if ( $line =~ /j/ ) {
-      $Groff{'chem'}++;
-    }
-    if ( $line =~ /e/ ) {
-      $Groff{'eqn'}++;
-    }
-    if ( $line =~ /g/ ) {
-      $Groff{'grn'}++;
-    }
-    if ( $line =~ /G/ ) {
-      $Groff{'grap'}++;
-    }
-    if ( $line =~ /i/ ) {
-      $Groff{'gideal'}++;
-    }
-    if ( $line =~ /p/ ) {
-      $Groff{'pic'}++;
-    }
-    if ( $line =~ /R/ ) {
-      $Groff{'refer'}++;
-    }
-    if ( $line =~ /s/ ) {
-      $Groff{'soelim'}++;
-    }
-    if ( $line =~ /t/ ) {
-      $Groff{'tbl'}++;
-    }
-    return 1;	# a leading groff options line, 1 means yes, 0 means no
-  }
-
-  # not a leading short groff options line
-
-  return 0 if ( $line !~ /^[.']\\"\s*(.*)$/ );	# ignore non-comments
-
-  return 0 unless ( $1 );	# for empty comment
-
-  # all following array members are either preprocs or 1 tmac
-  my @words = split '\s+', $1;
-
-  my @in = ();
-  my $word;
-  for $word ( @words ) {
-    if ( $word eq 'ideal' ) {
-      $word = 'gideal';
-    } elsif ( $word eq 'gpic' ) {
-      $word = 'pic';
-    } elsif ( $word =~ /^(gn|)eqn$/ ) {
-      $word = 'eqn';
-    }
-    if ( exists $preprocs_tmacs{$word} ) {
-      push @in, $word;
-    } else {
-      # not word for preproc or tmac
-      return 0;
-    }
-  }
-
-  for $word ( @in ) {
-    $Groff{$word}++;
-  }
-} # do_first_line()
-
-
-my $before_first_command = 1; # for check of .TH
-
 sub do_line {
-  my ( $line, $file ) = @_;
+  my $command;			# request or macro name
+  my $args;			# request or macro arguments
 
-  return if ( $line =~ /^[.']\s*\\"/ );	# comment
+  my $line = shift;
 
-  return unless ( $line =~ /^[.']/ );	# ignore text lines
-
-  $line =~ s/^['.]\s*/./;	# let only a dot as leading character,
-				# remove spaces after the leading dot
-  $line =~ s/\s+$//;		# remove final spaces
-
-  return if ( $line =~ /^\.$/ );	# ignore .
-  return if ( $line =~ /^\.\.$/ );	# ignore ..
-
-  if ( $before_first_command ) { # so far without 1st command
-    if ( $line =~ /^\.\s*TH/ ) {
-      # .TH as the first macro call in a document screams man(7).
-      $man_score += 100;
-    }
-    $before_first_command = 0;
+  if ($is_continued_line) {
+    $logical_line .= $line;
+  } else {
+    $logical_line = $line;
   }
 
-  # split command
-  $line =~ /^\.(\w+)\s*(.*)$/;
-  my $command = $1;
-  $command = '' unless ( defined $command );
-  my $args = $2;
-  $args = '' unless ( defined $args );
-
-
-  ######################################################################
-  # XXX: Dubious.  See <https://savannah.gnu.org/bugs/?60421>.  --GBR
-
-  # soelim
-  if ( $line =~ /^\.(do)?\s*(so|mso|PS\s*<|SO_START).*$/ ) {
-    # '.so', '.mso', '.PS<...', '.SO_START'
-    $Groff{'soelim'}++;
+  if ($logical_line =~ s/\\$//) {
+    $is_continued_line = 1;
     return;
+  } else {
+    $is_continued_line = 0;
   }
-  if ( $line =~ /^\.(do)?\s*(so|mso|PS\s*<|SO_START).*$/ ) {
-    # '.do so', '.do mso', '.do PS<...', '.do SO_START'
-    $Groff{'soelim'}++;
-    return;
+
+  # Check for a Perl Pod::Man comment.
+  #
+  # An alternative to this kludge is noted below: if a "standard" macro
+  # is redefined, we could delete it from the relevant lists and
+  # hashes.)
+  if ($logical_line =~ /\\\" Automatically generated by Pod::Man/) {
+    $man_score += 100;
+  }
+
+  # Strip comments.
+  $logical_line =~ s/\\".*//;
+  $logical_line =~ s/\\#.*//;
+
+  return unless ($logical_line =~ /^[.']/);	# Ignore text lines.
+
+  # Normalize control lines; convert no-break control character to the
+  # regular one and remove unnecesssary whitespace.
+  $logical_line =~ s/^['.]\s*/./;
+  $logical_line =~ s/\s+$//;
+
+  return if ($logical_line =~ /^\.$/);		# Ignore empty request.
+  return if ($logical_line =~ /^\.\\?\.$/);	# Ignore macro def ends.
+
+  $logical_line =~ s/\\[{}]//g;		# Remove any brace escapes.
+
+  # Split control line into a request or macro call and its arguments.
+
+  # Handle single-letter macro names.
+  if ($logical_line =~ /^\.(\w)(\s+(.*))?$/) {
+    $command = $1;
+    $args = $2;
+  # Handle two-letter macro/request names in compatibility mode.
+  } elsif ($use_compatibility_mode) {
+    $logical_line =~ /^\.(\w\w)\s*(.*)$/;
+    $command = $1;
+    $args = $2;
+  # Handle multi-letter macro/request names in groff mode.
+  } else {
+    $logical_line =~ /^\.(\w+)(\s+(.*))?$/;
+    $command = $1;
+    $args = $3;
+  }
+
+  $command = '' unless ($command);
+  $args = '' unless ($args);
+
+  if ((!$have_seen_first_macro_call) && ($command eq 'TH')) {
+    # .TH as the first macro call in a document screams man(7).
+    $man_score += 100;
   }
 
   ######################################################################
   # user-defined macros
 
-  # XXX: Macros can also be defined with .am, .am1.  Handle that.  And
-  # with .dei{,1}, ami{,1} as well, but supporting that would be a heavy
-  # lift for the benefit of users that probably don't require grog's
-  # help.  --GBR
-  if ( $line =~ /^\.de1?\W?/ ) {
+  # If the line calls a user-defined macro, skip it.
+  return if (exists $user_macro{$command});
+
+  # Macros can also be defined with .dei{,1}, ami{,1}, but supporting
+  # that would be a heavy lift for the benefit of users that probably
+  # don't require grog's help.  --GBR
+  if ($command =~ /^(de|am)1?$/) {
     # this line is a macro definition, add it to %user_macro
-    my $macro_name = $line;
+    my $name = $args;
     # Strip off any end macro.
-    $macro_name =~ s/^\.de1?\s+(\w+)\W*/.$1/;
+    $name =~ s/\W*$//;
     # XXX: If the macro name shadows a standard macro name, maybe we
     # should delete the latter from our lists and hashes.  This might
     # depend on whether the document is trying to remain compatibile
     # with an existing interface, or simply colliding with names they
     # don't care about (consider a raw roff document that defines 'PP').
     # --GBR
-    return if ( exists $user_macro{$macro_name} );
-    $user_macro{$macro_name} = 1;
+    $user_macro{$name} = 0 unless (exists $user_macro{$name});
     return;
   }
 
+  # Ignore all other requests.
+  return if (grep(/$command/, @request));
 
-  # if line command is a defined macro, just ignore this line
-  return if ( exists $user_macro{$command} );
+  $have_seen_first_macro_call = 1;
 
 
   ######################################################################
@@ -820,7 +779,7 @@ sub construct_command {
   for my $pkg (@requested_package) {
     if (grep(/$pkg/, @main_package)) {
       if ($pkg ne $inferred_main_package) {
-        &warn("overriding inferred package '$inferred_main_package'"
+	&warn("overriding inferred package '$inferred_main_package'"
 	      . " with requested package '$pkg'");
       }
       $inferred_main_package = '';
@@ -908,4 +867,4 @@ exit 0;
 # fill-column: 72
 # mode: CPerl
 # End:
-# vim: set autoindent noexpandtab shiftwidth=2 textwidth=72:
+# vim: set autoindent noexpandtab shiftwidth=2 softtabstop=2 textwidth=72:
