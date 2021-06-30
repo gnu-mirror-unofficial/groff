@@ -370,7 +370,7 @@ reg *lookup_number_reg(symbol nm)
 {
   reg *r = (reg *)number_reg_dictionary.lookup(nm);
   if (r == 0) {
-    warning(WARN_REG, "number register '%1' not defined", nm.contents());
+    warning(WARN_REG, "register '%1' not defined", nm.contents());
     r = new number_reg;
     number_reg_dictionary.define(nm, r);
   }
@@ -426,7 +426,7 @@ void alias_reg()
     symbol s2 = get_name(1);
     if (!s2.is_null()) {
       if (!number_reg_dictionary.alias(s1, s2))
-	warning(WARN_REG, "number register '%1' not defined", s2.contents());
+	warning(WARN_REG, "register '%1' not defined", s2.contents());
     }
   }
   skip_line();
