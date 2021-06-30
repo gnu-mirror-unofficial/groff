@@ -329,10 +329,10 @@ $ \c
 .B printf \[dq].so 2.roff\[rs]n\[dq] > 1.roff
 $ \c
 .B grog 1.roff
-groff \-T ps 1.roff
+groff 1.roff
 $ \c
 .B \%@g@soelim 1.roff | grog
-groff \-T ps \-t \-
+groff \-t \-
 .EE
 .RE
 .
@@ -360,7 +360,7 @@ command.
 .EX
 $ \c
 .B grog \-st 1.roff
-groff \-s \-t \-T ps 1.roff
+groff \-st 1.roff
 .EE
 .RE
 .
@@ -454,30 +454,35 @@ for
 .IR pic .
 .
 .
-.P
-If both of the former example files are combined in the command
-.
-.RS
-.EX
-.B grog meintro.me pic.ms
-.EE
-.RE
-.
-a diagnostic message is sent to the standard error stream because some
-macro packages cannot be combined.
-.
-Nevertheless the corresponding output with the wrong options is written
-to standard output:
-.
-.RS
-.EX
-groff \-T ps \-t \-e \-p \-ms meintro.me pic.ms
-.EE
-.RE
-.
-and
-.I grog
-terminates with an error exit status.
+.\" XXX: grog no longer (June 2021) attempts to detect this scenario.
+.\" It's also not a practical one; full-service macro packages don't
+.\" generally support being "unloaded" for subsequent processing of
+.\" another document using a different one.  We do achieve it, with
+.\" care, in groff with man(7) and mdoc(7) (see andoc.tmac).
+.\" .P
+.\" If both of the former example files are combined in the command
+.\" .
+.\" .RS
+.\" .EX
+.\" .B grog meintro.me pic.ms
+.\" .EE
+.\" .RE
+.\" .
+.\" a diagnostic message is sent to the standard error stream because
+.\" some macro packages cannot be combined.
+.\" .
+.\" Nevertheless the corresponding output with the wrong options is
+.\" written to standard output:
+.\" .
+.\" .RS
+.\" .EX
+.\" groff \-t \-e \-p \-ms meintro.me pic.ms
+.\" .EE
+.\" .RE
+.\" .
+.\" and
+.\" .I grog
+.\" terminates with an error exit status.
 .
 .
 .P
@@ -505,7 +510,7 @@ The output is
 .
 .RS
 .EX
-groff \-k \-s \-S \-T dvi grnexmpl.g
+groff \-ksS \-T dvi grnexmpl.g
 .EE
 .RE
 .
