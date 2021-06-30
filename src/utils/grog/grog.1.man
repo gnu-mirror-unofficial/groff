@@ -237,6 +237,45 @@ option.
 .SS Limitations
 .\" ====================================================================
 .
+.I grog
+presumes that the input does not change the control and no-break control
+characters.
+.
+.
+.P
+.I grog
+does not parse
+.I roff
+control structures
+(the
+.RB \[lq] if \[rq],
+.RB \[lq] ie \[rq],
+and
+.RB \[lq] el \[rq]
+requests)
+nor
+.IR groff 's
+.RB \[lq] while \[rq].
+.
+Thus the input
+.
+.RS
+.EX
+\&.if t .PS
+\&.if t .PE
+.EE
+.RE
+.
+will not,
+for example,
+cause
+.I grog
+to infer use of the
+.IR \%@g@pic (1)
+preprocessor.
+.
+.
+.P
 Detection of the
 .B \-s
 option
