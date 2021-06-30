@@ -11,8 +11,8 @@
 	  Push any groff option except `-m` as-is onto the constructed
 	  groff command's argument list (`-m` handling is unchanged).
 	  Match long option names exactly, not sloppily.  Stop
-	  recognizing `--with-warnings` option.  Emit error diagnostic
-	  if unrecognized long option encountered.
+	  recognizing `--warnings` option.  Emit error diagnostic if
+	  unrecognized long option encountered.
 	  (infer_device): Delete subroutine and its top-level call site.
 	  (help): Undocument `--warnings`.
 
@@ -156,8 +156,8 @@
 	  {doc/webpage.ms, startlingly, comes within 1 point of a tied
 	  score}, infer ms(7) if 'TH' was never called, and if it was,
 	  issue a diagnostic advising user to supply a disambiguating
-	  `-m` option.  Otherwise, the scores are unequal, and infer the
-	  package of the winner. Set scalar `inferred_main_package`
+	  `-m` option.  Otherwise, the scores are unequal: infer the
+	  package of the winner.  Set scalar `inferred_main_package`
 	  instead of pushing `-m` options onto `@m`.
 	  (infer_macro_packages): Set scalar `inferred_main_package`
 	  instead of pushing `-m` options onto `@m`.  Explicitly return
