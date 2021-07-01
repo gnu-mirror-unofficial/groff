@@ -6652,9 +6652,8 @@ To change the increment value without changing the value of a register
 @cindex assigning formats (@code{af})
 @cindex formats, assigning (@code{af})
 
-When a register is interpolated, its value is replaced with a
-representation of a number.  The @code{af} request permits a register's
-value to be interpolated in a variety of formats.
+When a (writable) register is interpolated, its value is replaced with a
+representation of a number.  A variety of formats are available.
 
 @Defreq {af, reg format}
 Set the format used to interpolate a register.  The first argument
@@ -6674,7 +6673,7 @@ value).  @samp{00} would interpolate register values as 01, 02,
 
 Any decimal digit is equivalent to @samp{0}; GNU @code{troff} simply
 counts the digits specified.  Zeroes represent decimal Arabic formats
-when the @code{\g} escape is used; see below.
+when the @code{\g} escape sequence is used; see below.
 
 @item I
 @cindex Roman numerals
@@ -6741,24 +6740,27 @@ defined, nothing is interpolated.
 @cindex register format, in expressions
 @cindex expressions, and register format
 GNU @code{troff}'s input parser understands only decimal Arabic formats
-(including leading zeroes).  The Roman or letter formats cannot be used
-as operands to arithmetic operators in expressions
+(including leading zeroes).  The Roman or alphabetic formats cannot be
+used as operands to arithmetic operators in expressions
 (@pxref{Expressions}).  For instance, it may be desirable to test the
 page number independently of its format.
 
 @Example
 .af % i \" front matter
 @r{@dots{}}
-.\" To test the page number, we need it in decimal.
-.ds saved-page-number-format \\g%\"
-.af % 0
-.nr page-number-in-decimal \\n%
-.af % \\*[saved-page-number-format]
-.ie \\n[page-number-in-decimal]=1 .do-first-page-stuff
-.el \@{\
-.  ie o .do-odd-numbered-page-stuff
-.  el   .do-even-numbered-page-stuff
-.\@}
+.de header-trap
+.  \" To test the page number, we need it in decimal.
+.  ds saved-page-number-format \\g%\"
+.  af % 0
+.  nr page-number-in-decimal \\n%
+.  af % \\*[saved-page-number-format]
+.  ie \\n[page-number-in-decimal]=1 .do-first-page-stuff
+.  el \@{\
+.    ie o .do-odd-numbered-page-stuff
+.    el   .do-even-numbered-page-stuff
+.  \@}
+..
+.wh 0 header-trap
 @endExample
 
 @c ---------------------------------------------------------------------
