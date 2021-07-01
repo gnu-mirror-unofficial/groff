@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle June 2021
+@subtitle July 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -2784,8 +2784,8 @@ Default: 1.
 @unnumberedsubsubsec Heading Settings
 
 @Defmpreg {PSINCR, ms}
-Defines an increment in point size to be applied to headings at nesting
-levels more significant (numerically less) than the value specified in
+Defines an increment in point size to be applied to a headings at a
+level more significant (numerically less) than the value specified in
 @code{GROWPS}.  The value of @code{PSINCR} should be specified in points
 with the @dmn{p} scaling indicator and may include a fractional
 component; for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size
@@ -2798,12 +2798,10 @@ Default: 1@dmn{p}.
 
 @Defmpreg {GROWPS, ms}
 Defines the heading level at which the point size increment set by
-@code{PSINCR} becomes effective.  Headings more significant (numerically
-less) than that specified by @code{GROWPS} are printed at the point size
-set by @code{PS}; for each level below the value of @code{GROWPS}, the
-point size is increased by @code{PSINCR}.  Setting @code{GROWPS} to any
-value less than@tie{}2 disables the incremental heading size feature.
-This is a GNU extension.
+@code{PSINCR} becomes effective.  For each level below the value of
+@code{GROWPS}, the point size is increased by @code{PSINCR}.  Setting
+@code{GROWPS} to any value less than@tie{}2 disables the incremental
+heading size feature.  This is a GNU extension.
 
 Effective: next heading.
 
@@ -3182,8 +3180,8 @@ significant level is increased.  ``1''@tie{}is the most significant or
 coarsest division of the document.  Only nonzero values are output.
 
 If you specify heading levels with a gap in an ascending sequence, such
-as by invoking @samp{.NH 3} after @samp{.NH 1}, @code{groff} @file{ms}
-emits a warning on the standard error stream.
+as by calling @samp{.NH 1} and then @samp{.NH 1} as the next such call,
+@code{groff} @file{ms} emits a warning on the standard error stream.
 
 Alternatively, a first argument of@tie{}@code{S} can be given, followed
 by integral arguments to number the levels of the heading explicitly.

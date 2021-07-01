@@ -20,8 +20,8 @@
 .nr VS 13
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND June 2021
-.EH '%''June 2021'
+.ND July 2021
+.EH '%''July 2021'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -852,10 +852,11 @@ document.
 Only nonzero values are output.
 .
 If you specify heading levels with a gap in an ascending sequence,
-such as by invoking
+such as by
+.CW ".NH\~1" \[rq] \[lq]
+and then
 .CW ".NH\~3" \[rq] \[lq]
-after
-.CW ".NH\~1" \[rq], \[lq]
+as the next such call,
 .I "groff ms"
 emits a warning on the standard error stream.
 T}
@@ -993,8 +994,10 @@ T}
 .PP
 The
 .CW PSINCR
-register defines an increment in point size to be applied to headings
-at nesting levels more significant
+register defines an increment in point size to be applied to a heading
+at a
+.I level
+more significant
 (numerically less)
 than the value specified in
 .CW \[rs]n[GROWPS] .
@@ -1026,13 +1029,9 @@ by
 .CW \[rs]n[PSINCR]
 becomes effective.
 .
-Headings more significant
-(numerically less)
-than that specified by
-.CW \[rs]n[GROWPS]
-are printed at the point size set by
-.CW \[rs]n[PS] ;
-for each level below the value of
+For each heading
+.I level
+below the value of
 .CW \[rs]n[GROWPS] ,
 the point size is increased by
 .CW \[rs]n[PSINCR] .

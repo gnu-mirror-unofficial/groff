@@ -666,10 +666,11 @@ the most significant or coarsest division of the document.
 Only nonzero values are output.
 .
 If you specify heading levels with a gap in an ascending sequence,
-such as by invoking
+such as by
+.RB \[lq] ".NH\~1" \[rq]
+and then
 .RB \[lq] ".NH\~3" \[rq]
-after
-.RB \[lq] ".NH\~1" \[rq],
+as the next such call,
 .I groff ms
 emits a warning on the standard error stream.
 .
@@ -751,8 +752,10 @@ heading size adjustment mechanism is in effect.
 .PP
 The
 .B PSINCR
-register defines an increment in point size to be applied to headings
-at nesting levels more significant
+register defines an increment in point size to be applied to a heading
+at a
+.I level
+more significant
 (numerically less)
 than the value specified in
 .BR \[rs]n[GROWPS] .
@@ -772,13 +775,9 @@ by
 .B \[rs]n[PSINCR]
 becomes effective.
 .
-Headings more significant
-(numerically less)
-than that specified by
-.B \[rs]n[GROWPS]
-are printed at the point size set by
-.BR \[rs]n[PS] ;
-for each level below the value of
+For each heading
+.I level
+below the value of
 .BR \[rs]n[GROWPS] ,
 the point size is increased by
 .BR \[rs]n[PSINCR] .
