@@ -1,5 +1,18 @@
 2021-07-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Skip the stripper, part 1/3 ("me").
+
+	* tmac/e.tmac-u: Rename to...
+	* tmac/e.tmac: ...this.
+
+	* tmac/tmac.am (TMACNORMALFILES): Add tmac/e.tmac.
+	(TMACUNSTRIPFILES): Remove tmac/e.tmac-u.
+	(TMACSTRIPFILES): Add tmac/e.tmac.
+
+	Fixes one third of <https://savannah.gnu.org/bugs/?55091>.
+
+2021-07-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Simplify parsing.  Dave Kemper pointed
 	out that preprocessors like pic(1) use pretty unsophisticated
 	*roff parsing to determine where to perform their textual
