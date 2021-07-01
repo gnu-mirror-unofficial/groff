@@ -247,8 +247,8 @@ and no-break control characters.
 .I grog
 does not parse
 .I roff
-control structures
-(the
+input line continuation or control structures
+(brace escape sequences and the
 .RB \[lq] if \[rq],
 .RB \[lq] ie \[rq],
 and
@@ -262,18 +262,38 @@ Thus the input
 .
 .RS
 .EX
-\&.if t .PS
-\&.if t .PE
+\&.if \[rs]
+t .NH 1
+\&.if n .SH
+Introduction
 .EE
 .RE
 .
-will not,
+will conceal the use of the
+.I ms
+macros
+.B NH
+and
+.B SH
+from
+.IR grog .
+.
+Such constructions are regarded by
+.IR grog 's
+implementors as insufficiently common to cause many inference problems;
+further,
+preprocessors are typically even stricter when matching the macro calls
+they use to bracket the regions of an input file they textually replace.
+.
+.IR pic ,
 for example,
-cause
-.I grog
-to infer use of the
-.IR \%@g@pic (1)
-preprocessor.
+requires
+.B PS
+and
+.B PE
+calls to immediately follow the default control character at the
+beginning of a line,
+with no intervening spaces or tabs.
 .
 .
 .P
