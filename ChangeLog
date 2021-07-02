@@ -1,3 +1,35 @@
+2021-07-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tmac]: Flesh out Italian localization.
+
+	* tmac/hyphen.it: Add hyphenation patterns from TeX hyph-utf8
+	project.
+	* tmac/it.tmac:
+	  - Revise copyright date to just this year (it had been copied
+	    from fr.tmac).
+	  - Use grave accents instead of acute ones to indicate stress
+	    on word-final vowels.  Per the University of Wikipedia and a
+	    sampling of apparently well-typeset Italian language
+	    documents online, this appears to be correct.  Yell at me if
+	    I'm wrong.
+	  - Source latin1.tmac instead of latin9.tmac; Italian doesn't
+	    require any letter code points from Latin-9, unlike the
+	    French file upon which this one was based, and Latin-1 is
+	    less of a pain to work with.
+	  - Set the hyphenation mode to 1 instead of 4 for congruence
+	    with the requirements of the hyphenation patterns.
+	  - Set up hyphenation codes.  This (and sourcing latin1.tmac)
+	    might not be necessary as the hyphenation pattern file, of a
+	    more recent vintage than the others we're using, is pure
+	    ASCII.  However I don't understand these issues perfectly so
+	    I am making the conservative choice.  Again per the
+	    University of Wikipedia, Italian requires only acute and
+	    grave accents, in contrast to the rich French diacritical
+	    bouillabaisse.
+	  - Set the hyphenation language and load the pattern file.
+	  - Add comments in parallel with other localization files and
+	    to supply text editors with hints.
+
 2021-07-02  Edmond Orignac <edmond.orignac@wanadoo.fr>
 
 	* tmac/it.tmac: Add Italian localization.

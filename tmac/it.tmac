@@ -1,6 +1,6 @@
 .\" Italian localization for groff
 .\"
-.\" Copyright (C) 2006-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 2021 Free Software Foundation, Inc.
 .\"   Written by Edmond Orignac (edmond.orignac@wanadoo.fr)
 .\"
 .\" This file is part of groff.
@@ -40,7 +40,7 @@
 .ds \*[locale]-endnote_string ANNOTAZIONI\"
 .ds \*[locale]-february Febbraio\"
 .ds \*[locale]-finis_string FINE\"
-.ds \*[locale]-friday Venerd\[i ']\"
+.ds \*[locale]-friday Venerd\[i `]\"
 .ds \*[locale]-january Gennaio\"
 .ds \*[locale]-july Luglio\"
 .ds \*[locale]-june Giugno\"
@@ -49,7 +49,7 @@
 .ds \*[locale]-letat ALLA CORTESE ATTENZIONE DI:\"
 .ds \*[locale]-letcn CONFIDENZIALE\"
 .ds \*[locale]-letdate Data\"
-.ds \*[locale]-letfc Accolga, signore, l'espressione dei miei sentimenti pi\[u '] distinti.\"
+.ds \*[locale]-letfc Accolga, signore, l'espressione dei miei sentimenti pi\[u `] distinti.\"
 .ds \*[locale]-letns!0 Copia ad\"
 .ds \*[locale]-letns!1 Esemplare (con destinatario) a\"
 .ds \*[locale]-letns!10 Esemplare (con destinatarie) a\"
@@ -80,7 +80,7 @@
 .ds \*[locale]-lx ELENCO DEI DOCUMENTI\"
 .ds \*[locale]-march Marzo\"
 .ds \*[locale]-may Maggio\"
-.ds \*[locale]-monday Luned\[i ']\"
+.ds \*[locale]-monday Luned\[i `]\"
 .ds \*[locale]-november Novembre\"
 .ds \*[locale]-october Ottobre\"
 .ds \*[locale]-paper A4\"
@@ -91,11 +91,11 @@
 .ds \*[locale]-saturday Sabato\"
 .ds \*[locale]-september Settembre\"
 .ds \*[locale]-sunday Domenica\"
-.ds \*[locale]-thursday Gioved\[i ']\"
+.ds \*[locale]-thursday Gioved\[i `]\"
 .ds \*[locale]-toc Indice\"
 .ds \*[locale]-toc_header_string Indice\"
-.ds \*[locale]-tuesday Marted\[i ']\"
-.ds \*[locale]-wednesday Mercoled\[i ']\"
+.ds \*[locale]-tuesday Marted\[i `]\"
+.ds \*[locale]-wednesday Mercoled\[i `]\"
 .
 .
 .\" Activate the translations
@@ -162,10 +162,33 @@
 .
 .
 .\" Default encoding
-.mso latin9.tmac
+.mso latin1.tmac
 .
-.
-.\" French hyphenation (\lefthyphenmin=2, \righthyphenmin=3)
 .ss 12 0
-.hy 4
-.hcode 
+.
+.\" Italian hyphenation (\lefthyphenmin=2, \righthyphenmin=2)
+.hy 1
+.hcode á á  Á á
+.hcode à à  À à
+.hcode è è  È è
+.hcode é é  É é
+.hcode í í  Í í
+.hcode ì ì  Ì ì
+.hcode ó ó  Ó ó
+.hcode ò ò  Ò ò
+.hcode ú ú  Ú ú
+.hcode ù ù  Ù ù
+.
+.hla it
+.hpf hyphen.it
+.
+.
+.\" man, mdoc and mdoc-old are intentionally left untouched: usually
+.\" these packages are translated in the sources of the documents.
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" coding: latin-1
+.\" fill-column: 72
+.\" End:
+.\" vim: set fileencoding=iso-8859-1 filetype=groff textwidth=72:
