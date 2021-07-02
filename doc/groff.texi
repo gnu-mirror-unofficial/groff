@@ -7620,6 +7620,7 @@ the @cite{groff_tmac@r{(5)}} man page for more information on GNU
 @item        French             @tab fr           @tab 2        @tab 3
 @item        German traditional @tab det          @tab 2        @tab 2
 @item        German reformed    @tab den          @tab 2        @tab 2
+@item        Italian            @tab it           @tab 2        @tab 2
 @item        Swedish            @tab sv           @tab 1        @tab 2
 @end multitable
 
@@ -7702,6 +7703,7 @@ be used.  By default, every code maps to itself except those for letters
 @pindex de.tmac
 @pindex en.tmac
 @pindex fr.tmac
+@pindex it.tmac
 @pindex ja.tmac
 @pindex sv.tmac
 @pindex zh.tmac
@@ -7715,12 +7717,12 @@ environment variables @env{LC_ALL} and @env{LANG} (in that order) and
 attempts to load a localization file matching the first two characters
 of the variable's value.@footnote{As of @code{groff} 1.23.0,
 localization files for Czech (@code{cs}), German (@code{de}), English
-(@code{en}), French (@code{fr}), Japanese (@code{ja}), Swedish
-(@code{sv}), and Chinese (@code{zh}) exist.}  For Western languages, the
-localization file sets the hyphenation mode and loads hyphenation
-patterns and exceptions.  If the environment variables are not set or
-set to ``C'', or a localization file for the locale does not exist, the
-English localization file is used.
+(@code{en}), French (@code{fr}), Italian (@code{it}), Japanese
+(@code{ja}), Swedish (@code{sv}), and Chinese (@code{zh}) exist.}  For
+Western languages, the localization file sets the hyphenation mode and
+loads hyphenation patterns and exceptions.  If the environment variables
+are not set or set to ``C'', or a localization file for the locale does
+not exist, the English localization file is used.
 
 A second call to @code{hpf} (for the same language) replaces the
 hyphenation patterns with the new ones.  Invoking @code{hpf} or

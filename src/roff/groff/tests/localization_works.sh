@@ -73,6 +73,12 @@ LANG=fr_FR
 OUTPUT=$(echo "$DOC" | "$groff" -Tascii)
 echo "$OUTPUT" | grep -qx french
 
+echo "testing that LC_ALL= LANG=it_IT loads Italian localization" >&2
+LC_ALL=
+LANG=it_IT
+OUTPUT=$(echo "$DOC" | "$groff" -Tascii)
+echo "$OUTPUT" | grep -qx italian
+
 echo "testing that LC_ALL= LANG=ja_JP loads Japanese localization" >&2
 LC_ALL=
 LANG=ja_JP

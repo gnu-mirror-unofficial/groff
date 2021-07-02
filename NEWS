@@ -22,8 +22,8 @@ o The groff locale (the default input language) is now determined using
 
   Those who want groff's default locale to differ from LC_ALL/LANG
   should edit the troffrc file to source the appropriate groff locale
-  macro file (cs.tmac, de.tmac, den.tmac, fr.tmac, ja.tmac, sv.tmac,
-  zh.tmac).
+  macro file (cs.tmac, de.tmac, den.tmac, fr.tmac, it.tmac, ja.tmac,
+  sv.tmac, zh.tmac).
 
   The default hyphenation mode (as used by the .hy request) for users of
   English is thus changed from "1", which was inappropriate for the
@@ -199,6 +199,10 @@ o On the Latin-1 output device ("groff -T latin1") the output glyph
 
 Miscellaneous
 -------------
+
+o Italian language input documents are now supported, including
+  hyphenation patterns from the hyph-utf8 project and localized strings
+  for the ms, me, mm, and mom packages.  Thanks to Edmond Orignac.
 
 o The semantics of the environment variable SOURCE_DATE_EPOCH (support
   for which was added in 1.22.4) to groff were not established with
