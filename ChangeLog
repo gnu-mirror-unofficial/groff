@@ -1,5 +1,27 @@
 2021-07-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tmac]: Simplify `mso` requests.
+
+	* tmac/X.tmac:
+	* tmac/Xps.tmac:
+	* tmac/dvi.tmac:
+	* tmac/html.tmac:
+	* tmac/lbp.tmac:
+	* tmac/lj4.tmac:
+	* tmac/ps.tmac:
+	* tmac/tty-char.tmac:
+	* tmac/tty.tmac:
+	* tmac/www.tmac.in: Move `mso` requests to be inside regions
+	where compatibility mode is turned off.  I believe they were
+	placed where they were because things didn't work when the
+	compatibility mode register being saved was .C, rather than the
+	.cp register introduced in commit 6a37bb5f, 17 April 2020.  Now
+	the logic is less mysterious.  Also, remove the register used to
+	save compatibility mode after we're done with it, to reduce name
+	space clutter.
+
+2021-07-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/it.tmac: Drop sourcing of `latin1.tmac` and set up of
 	hyphenation codes; since the `hyphen.it` file is pure ASCII, we
 	don't need to expect Latin-1-encoded code points in it.
