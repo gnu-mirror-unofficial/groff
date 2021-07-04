@@ -30,6 +30,29 @@
 	(EXTRA_DIST): Drop `$(TMACMDOCUNSTRIPFILES)`.
 	($(TMACSTRIPFILES), $(TMACMDOCSTRIPFILES)): Drop targets.
 
+	* tmac/doc.tmac:
+	* tmac/mdoc/doc-common:
+	* tmac/mdoc/doc-ditroff:
+	* tmac/mdoc/doc-nroff:
+	* tmac/mdoc/doc-syms: Bracket macro definitions tightly with
+	`eo` and `ec` requests since they were written under this
+	assumption.  The files in general were also drafted under the
+	assumption that they'd be stripped, so `eo` was in effect for
+	broad swaths of the file including portions outside of any macro
+	definition where comments were used.  But comments are expressed
+	using the escape character!  So we got warnings about an
+	undefined '\"' macro, and that was just the beginning of a
+	wrecking ball of trouble that smashed through the
+	implementation.  Some--but not all--string definitions (and
+	appendments) needed to be bracketed with `eo` and `ec` as well,
+	to delay interpolation of embedded string names that are not
+	defined until macros interpolate them later.  I did what
+	appeared necessary to pass our tests and keep -Tutf8 and -Tps
+	renderings of tmac/groff_mdoc.7 from changing from their
+	pre-stripped output.  Subtle bugs might linger, but some won't
+	be the fault of the unstripping process.  (For instance, try
+	provoking a usage message on the `Hf` macro.)
+
 2021-07-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man pages]: Remove compatibility save register.
