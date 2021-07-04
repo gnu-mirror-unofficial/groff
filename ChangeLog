@@ -16,6 +16,20 @@
 	* tmac/mdoc/doc-nroff:
 	* tmac/mdoc/doc-syms: ...to these.
 
+	* tmac/tmac.am (TMACNORMALFILES): Add `doc-old.tmac` and
+	`doc.tmac`.
+	(TMACUNSTRIPFILES, TMACSTRIPFILES): Delete variables.
+	(dist_tmac_DATA): Drop `$(TMACUNSTRIPFILES)`.
+	(nodist_tmac_DATA): Drop `$(TMACSTRIPFILES)`.
+	(TMACMDOCSTRIPFILES): Rename...
+	(TMACMDOCFILES): ...to this.
+	(nodist_mdoc_DATA, MOSTLYCLEANFILES): Reflect above rename.
+	(nodist_mdoc_DATA): Rename...
+	(dist_mdoc_DATA): ...to this.
+	(TMACMDOCUNSTRIPFILES): Delete variable.
+	(EXTRA_DIST): Drop `$(TMACMDOCUNSTRIPFILES)`.
+	($(TMACSTRIPFILES), $(TMACMDOCSTRIPFILES)): Drop targets.
+
 2021-07-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man pages]: Remove compatibility save register.
