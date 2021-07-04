@@ -1,3 +1,23 @@
+2021-07-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Remove the stripper script and its vestiges.
+
+	* contrib/hdtbl/hdmisc.tmac:
+	* contrib/hdtbl/hdtbl.tmac:
+	* contrib/mom/om.tmac:
+	* tmac/doc.tmac:
+	* tmac/e.tmac:
+	* tmac/mdoc/doc-common:
+	* tmac/mdoc/doc-ditroff:
+	* tmac/mdoc/doc-nroff:
+	* tmac/mdoc/doc-syms: Remove `%beginstrip` comment.
+
+	* tmac/strip.sed: Delete.
+
+	* tmac/tmac.am (EXTRA_DIST): Stop shipping `strip.sed`.
+
+	Fixes <https://savannah.gnu.org/bugs/?55091>.
+
 2021-07-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Skip the stripper, part 3/3 (mdoc).
