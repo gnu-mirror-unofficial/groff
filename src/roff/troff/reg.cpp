@@ -402,9 +402,9 @@ void alter_format()
   else if (c == 'i' || c == 'I' || c == 'a' || c == 'A')
     r->alter_format(c);
   else if (tok.newline() || tok.eof())
-    warning(WARN_MISSING, "missing number register format");
+    warning(WARN_MISSING, "missing register format");
   else
-    error("bad number register format (got %1)", tok.description());
+    error("bad register format (got %1)", tok.description());
   skip_line();
 }
 
