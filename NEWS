@@ -112,6 +112,17 @@ o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
   some additions from Vim, which itself uses RFC 1345 for its digraphs).
   It is documented in the groff_rfc1345(7) man page.
 
+o Part of the an (man) macro package has been renamed from "an-old.tmac"
+  to "an.tmac", replacing a file that sourced the "andoc.tmac" wrapper.
+  This means that the "-man" argument to groff (or nroff, or troff) will
+  no longer load the andoc wrapper, and not successfully format mdoc(7)
+  man pages.  If you are not sure which macro package a given man page
+  uses, or you wish to batch-process a series of man pages written
+  variously in the man and mdoc formats, be sure to call the formatter
+  with the "-mandoc" option explicitly, as "-man" will no longer do
+  this.  The man-db man(1) implementation has, since 2001, used
+  "-mandoc" preferentially if available when man-db is configured.
+
 o The an (man) macro package supports a new AD string to put the default
   adjustment mode under user control.  The default is 'b' (adjust lines
   to both margins) as has been the Unix man(7) default since 1979.
