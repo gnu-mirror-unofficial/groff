@@ -80,7 +80,7 @@ public:
   int tab();			// is the current token a tab?
   int leader();
   int backspace();
-  int delimiter(int warn = 0);	// is it suitable for use as a delimiter?
+  int delimiter(bool err = false);	// usable as a delimiter?
   int dummy();
   int transparent_dummy();
   int transparent();

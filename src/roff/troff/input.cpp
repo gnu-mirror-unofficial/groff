@@ -1534,7 +1534,7 @@ static int do_expr_test()
   token start;
   start.next();
   int start_level = input_stack::get_level();
-  if (!start.delimiter(1))
+  if (!start.delimiter(true /* report error */))
     return 0;
   tok.next();
   // disable all warning and error messages temporarily
@@ -2325,7 +2325,7 @@ int token::operator!=(const token &t)
 
 // is token a suitable delimiter (like ')?
 
-int token::delimiter(int err)
+int token::delimiter(bool err)
 {
   switch(type) {
   case TOKEN_CHAR:
@@ -4986,7 +4986,7 @@ static int get_delim_number(units *n, unsigned char si, int prev_value)
 {
   token start;
   start.next();
-  if (start.delimiter(1)) {
+  if (start.delimiter(true /* report error */)) {
     tok.next();
     if (get_number(n, si, prev_value)) {
       if (start != tok)
@@ -5001,7 +5001,7 @@ static int get_delim_number(units *n, unsigned char si)
 {
   token start;
   start.next();
-  if (start.delimiter(1)) {
+  if (start.delimiter(true /* report error */)) {
     tok.next();
     if (get_number(n, si)) {
       if (start != tok)
@@ -5017,7 +5017,7 @@ static int get_line_arg(units *n, unsigned char si, charinfo **cp)
   token start;
   start.next();
   int start_level = input_stack::get_level();
-  if (!start.delimiter(1))
+  if (!start.delimiter(true /* report error */))
     return 0;
   tok.next();
   if (get_number(n, si)) {
@@ -5097,7 +5097,7 @@ static int read_size(int *x)
     }
     val *= sizescale;
   }
-  else if (!tok.delimiter(1))
+  else if (!tok.delimiter(true /* report error */))
     return 0;
   else {
     token start(tok);
@@ -5220,7 +5220,7 @@ static void do_register()
 {
   token start;
   start.next();
-  if (!start.delimiter(1))
+  if (!start.delimiter(true /* report error */))
     return;
   tok.next();
   symbol nm = get_long_name(true /* required */);
@@ -8471,7 +8471,7 @@ static node *read_draw_node()
 {
   token start;
   start.next();
-  if (!start.delimiter(1)){
+  if (!start.delimiter(true /* report error */)){
     do {
       tok.next();
     } while (tok != start && !tok.newline() && !tok.eof());

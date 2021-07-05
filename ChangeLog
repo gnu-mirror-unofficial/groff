@@ -29,6 +29,19 @@
 	alter_format, alias_reg, rename_reg): Update call sites.  Add
 	comment indicating meaning of parameter.
 
+	Do similarly for token::delimiter() member function.
+
+	* src/roff/troff/token.h (token::delimiter): Change type of
+	parameter from `int` to `bool`, name from `warn` to `err` (to
+	match definition and behavior in input.cpp) and default from 0
+	to `false`.
+	* src/roff/troff/input.cpp (token::delimiter): Change type of
+	parameter from `int` to `bool` in definition.
+	* src/roff/troff/input.cpp (do_expr_test, get_delim_number,
+	get_line_arg, read_size, do_register, read_draw_node):
+	* src/roff/troff/reg.cpp (inline_define_reg): Update call sites.
+	Add comment indicating meaning of parameter.
+
 2021-07-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an-old.tmac (an-footer): Remove string

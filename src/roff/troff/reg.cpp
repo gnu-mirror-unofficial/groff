@@ -328,7 +328,7 @@ void inline_define_reg()
 {
   token start;
   start.next();
-  if (!start.delimiter(1))
+  if (!start.delimiter(true /* report error */))
     return;
   tok.next();
   symbol nm = get_name(true /* required */);
