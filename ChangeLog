@@ -1,5 +1,36 @@
 2021-07-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Slightly refactor.  Make the source code slightly more
+	accessible by using a `bool` type for a function's default
+	parameter used as a Boolean, and comment it at call sites where
+	the default is overridden.
+
+	* src/roff/troff/token.h (get_name, get_long_name): Change type
+	of parameter from `int` to `bool` and default from 0 to `false`.
+	* src/roff/troff/input.cpp (do_get_long_name,
+	empty_name_warning, get_name, get_long_name): Change type of
+	parameter from `int` to `bool` in declarations and definitions.
+	* src/roff/troff/column.cpp (column_justify):
+	* src/roff/troff/div.cpp (diversion_trap):
+	* src/roff/troff/env.cpp (environment_switch, environment_copy,
+	do_input_trap, set_hyphenation_language,
+	do_hyphenation_patterns_file):
+	* src/roff/troff/input.cpp (define_color, composite_request,
+	do_define_string, do_define_macro, rename_macro, alias_macro,
+	chop_macro, do_string_case_transform, substring_request,
+	length_request, asciify_macro, unformat_macro, do_register,
+	device_macro_request, do_if_request, do_source, ps_bbox_request,
+	do_open, close_request, do_write_request, write_macro_request,
+	define_class, copy_file, vjustify, transparent_file,
+	do_macro_source):
+	* src/roff/troff/node.cpp (font_translate, font_position, style,
+	get_fontno):
+	* src/roff/troff/reg.cpp (define_number_reg, inline_define_reg,
+	alter_format, alias_reg, rename_reg): Update call sites.  Add
+	comment indicating meaning of parameter.
+
+2021-07-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-old.tmac (an-footer): Remove string
 	`an-outer-footer-text` after we're done with it.
 

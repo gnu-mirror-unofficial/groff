@@ -892,7 +892,7 @@ void diversion_trap()
 
 void change_trap()
 {
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!s.is_null()) {
     vunits x;
     if (has_arg() && get_vunits(&x, 'v'))

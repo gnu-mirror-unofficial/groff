@@ -5982,7 +5982,7 @@ void mount_style(int n, symbol name)
 
 void font_translate()
 {
-  symbol from = get_name(1);
+  symbol from = get_name(true /* required */);
   if (!from.is_null()) {
     symbol to = get_name();
     if (to.is_null() || from == to)
@@ -6000,7 +6000,7 @@ void font_position()
     if (n < 0)
       error("negative font position");
     else {
-      symbol internal_name = get_name(1);
+      symbol internal_name = get_name(true /* required */);
       if (!internal_name.is_null()) {
 	symbol external_name = get_long_name();
 	mount_font(n, internal_name, external_name); // ignore error
@@ -6106,7 +6106,7 @@ void style()
     if (n < 0)
       error("negative font position");
     else {
-      symbol internal_name = get_name(1);
+      symbol internal_name = get_name(true /* required */);
       if (!internal_name.is_null())
 	mount_style(n, internal_name);
     }
@@ -6119,7 +6119,7 @@ static int get_fontno()
   int n;
   tok.skip();
   if (tok.delimiter()) {
-    symbol s = get_name(1);
+    symbol s = get_name(true /* required */);
     if (!s.is_null()) {
       n = symbol_fontno(s);
       if (n < 0) {

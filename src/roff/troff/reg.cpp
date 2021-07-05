@@ -301,7 +301,7 @@ int variable_reg::get_value(units *res)
 
 void define_number_reg()
 {
-  symbol nm = get_name(1);
+  symbol nm = get_name(true /* required */);
   if (nm.is_null()) {
     skip_line();
     return;
@@ -331,7 +331,7 @@ void inline_define_reg()
   if (!start.delimiter(1))
     return;
   tok.next();
-  symbol nm = get_name(1);
+  symbol nm = get_name(true /* required */);
   if (nm.is_null())
     return;
   reg *r = (reg *)number_reg_dictionary.lookup(nm);
@@ -379,7 +379,7 @@ reg *lookup_number_reg(symbol nm)
 
 void alter_format()
 {
-  symbol nm = get_name(1);
+  symbol nm = get_name(true /* required */);
   if (nm.is_null()) {
     skip_line();
     return;
@@ -421,9 +421,9 @@ void remove_reg()
 
 void alias_reg()
 {
-  symbol s1 = get_name(1);
+  symbol s1 = get_name(true /* required */);
   if (!s1.is_null()) {
-    symbol s2 = get_name(1);
+    symbol s2 = get_name(true /* required */);
     if (!s2.is_null()) {
       if (!number_reg_dictionary.alias(s1, s2))
 	warning(WARN_REG, "register '%1' not defined", s2.contents());
@@ -434,9 +434,9 @@ void alias_reg()
 
 void rename_reg()
 {
-  symbol s1 = get_name(1);
+  symbol s1 = get_name(true /* required */);
   if (!s1.is_null()) {
-    symbol s2 = get_name(1);
+    symbol s2 = get_name(true /* required */);
     if (!s2.is_null())
       number_reg_dictionary.rename(s1, s2);
   }

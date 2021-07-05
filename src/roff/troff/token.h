@@ -105,8 +105,8 @@ public:
 
 extern token tok;		// the current token
 
-extern symbol get_name(int required = 0);
-extern symbol get_long_name(int required = 0);
+extern symbol get_name(bool required = false);
+extern symbol get_long_name(bool required = false);
 extern charinfo *get_optional_char();
 extern char *read_string();
 extern void check_missing_character();

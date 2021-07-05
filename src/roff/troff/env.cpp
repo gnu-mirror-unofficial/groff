@@ -1124,7 +1124,7 @@ void environment_switch()
 	pop = 2;
     }
     else {
-      nm = get_long_name(1);
+      nm = get_long_name(true /* required */);
       if (nm.is_null())
 	pop = 2;
     }
@@ -1175,7 +1175,7 @@ void environment_copy()
     }
   }
   else
-    nm = get_long_name(1);
+    nm = get_long_name(true /* required */);
   if (!e && !nm.is_null())
     e = (environment *)env_dictionary.lookup(nm);
   if (e == 0) {
@@ -2558,7 +2558,7 @@ void do_input_trap(int continued)
       warning(WARN_RANGE,
 	      "number of lines for input trap must be greater than zero");
     else {
-      symbol s = get_name(1);
+      symbol s = get_name(true /* required */);
       if (!s.is_null()) {
 	curenv->input_trap_count = n;
 	curenv->input_trap = s;
@@ -3565,7 +3565,7 @@ hyphenation_language *current_language = 0;
 
 static void set_hyphenation_language()
 {
-  symbol nm = get_name(1);
+  symbol nm = get_name(true /* required */);
   if (!nm.is_null()) {
     current_language = (hyphenation_language *)language_dictionary.lookup(nm);
     if (!current_language) {
@@ -4084,7 +4084,7 @@ void hyphenate(hyphen_list *h, unsigned flags)
 
 static void do_hyphenation_patterns_file(int append)
 {
-  symbol name = get_long_name(1);
+  symbol name = get_long_name(true /* required */);
   if (!name.is_null()) {
     if (!current_language)
       error("no current hyphenation language");

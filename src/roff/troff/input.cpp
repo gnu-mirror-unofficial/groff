@@ -148,7 +148,7 @@ static void interpolate_arg(symbol);
 static request_or_macro *lookup_request(symbol);
 static int get_delim_number(units *, unsigned char);
 static int get_delim_number(units *, unsigned char, units);
-static symbol do_get_long_name(int, char);
+static symbol do_get_long_name(bool, char);
 static int get_line_arg(units *res, unsigned char si, charinfo **cp);
 static int read_size(int *);
 static symbol get_delim_name();
@@ -1396,7 +1396,7 @@ static void activate_color()
 
 static void define_color()
 {
-  symbol color_name = get_long_name(1);
+  symbol color_name = get_long_name(true /* required */);
   if (color_name.is_null()) {
     skip_line();
     return;
@@ -1406,7 +1406,7 @@ static void define_color()
     skip_line();
     return;
   }
-  symbol style = get_long_name(1);
+  symbol style = get_long_name(true /* required */);
   if (style.is_null()) {
     skip_line();
     return;
@@ -2462,7 +2462,7 @@ void compatible()
   skip_line();
 }
 
-static void empty_name_warning(int required)
+static void empty_name_warning(bool required)
 {
   if (tok.newline() || tok.eof()) {
     if (required)
@@ -2493,7 +2493,7 @@ static void non_empty_name_warning()
     error("%1 is not allowed in a name", tok.description());
 }
 
-symbol get_name(int required)
+symbol get_name(bool required)
 {
   if (compatible_flag) {
     char buf[3];
@@ -2517,12 +2517,12 @@ symbol get_name(int required)
     return get_long_name(required);
 }
 
-symbol get_long_name(int required)
+symbol get_long_name(bool required)
 {
   return do_get_long_name(required, 0);
 }
 
-static symbol do_get_long_name(int required, char end)
+static symbol do_get_long_name(bool required, char end)
 {
   while (tok.space())
     tok.next();
@@ -3965,7 +3965,7 @@ dictionary composite_dictionary(17);
 
 void composite_request()
 {
-  symbol from = get_name(1);
+  symbol from = get_name(true /* required */);
   if (!from.is_null()) {
     const char *from_gn = glyph_name_to_unicode(from.contents());
     if (!from_gn) {
@@ -3979,7 +3979,7 @@ void composite_request()
     const char *from_decomposed = decompose_unicode(from_gn);
     if (from_decomposed)
       from_gn = &from_decomposed[1];
-    symbol to = get_name(1);
+    symbol to = get_name(true /* required */);
     if (to.is_null())
       composite_dictionary.remove(symbol(from_gn));
     else {
@@ -4158,7 +4158,7 @@ void do_define_string(define_mode mode, comp_mode comp)
   symbol nm;
   node *n = 0;		// pacify compiler
   int c;
-  nm = get_name(1);
+  nm = get_name(true /* required */);
   if (nm.is_null()) {
     skip_line();
     return;
@@ -4463,7 +4463,7 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
 {
   symbol nm, term;
   if (calling == CALLING_INDIRECT) {
-    symbol temp1 = get_name(1);
+    symbol temp1 = get_name(true /* required */);
     if (temp1.is_null()) {
       skip_line();
       return;
@@ -4479,7 +4479,7 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
     tok.next();
   }
   if (mode == DEFINE_NORMAL || mode == DEFINE_APPEND) {
-    nm = get_name(1);
+    nm = get_name(true /* required */);
     if (nm.is_null()) {
       skip_line();
       return;
@@ -4662,9 +4662,9 @@ void remove_macro()
 
 void rename_macro()
 {
-  symbol s1 = get_name(1);
+  symbol s1 = get_name(true /* required */);
   if (!s1.is_null()) {
-    symbol s2 = get_name(1);
+    symbol s2 = get_name(true /* required */);
     if (!s2.is_null())
       request_dictionary.rename(s1, s2);
   }
@@ -4673,9 +4673,9 @@ void rename_macro()
 
 void alias_macro()
 {
-  symbol s1 = get_name(1);
+  symbol s1 = get_name(true /* required */);
   if (!s1.is_null()) {
-    symbol s2 = get_name(1);
+    symbol s2 = get_name(true /* required */);
     if (!s2.is_null()) {
       if (!request_dictionary.alias(s1, s2))
 	warning(WARN_MAC, "macro '%1' not defined", s2.contents());
@@ -4686,7 +4686,7 @@ void alias_macro()
 
 void chop_macro()
 {
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!s.is_null()) {
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
@@ -4730,7 +4730,7 @@ enum case_xform_mode { STRING_UPCASE, STRING_DOWNCASE };
 void do_string_case_transform(case_xform_mode mode)
 {
   assert((mode == STRING_DOWNCASE) || (mode == STRING_UPCASE));
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (s.is_null()) {
     skip_line();
     return;
@@ -4778,7 +4778,7 @@ void stringup_request() {
 void substring_request()
 {
   int start;				// 0, 1, ..., n-1  or  -1, -2, ...
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!s.is_null() && get_integer(&start)) {
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
@@ -4867,7 +4867,7 @@ void substring_request()
 void length_request()
 {
   symbol ret;
-  ret = get_name(1);
+  ret = get_name(true /* required */);
   if (ret.is_null()) {
     skip_line();
     return;
@@ -4904,7 +4904,7 @@ void length_request()
 
 void asciify_macro()
 {
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!s.is_null()) {
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
@@ -4931,7 +4931,7 @@ void asciify_macro()
 
 void unformat_macro()
 {
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!s.is_null()) {
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
@@ -5223,7 +5223,7 @@ static void do_register()
   if (!start.delimiter(1))
     return;
   tok.next();
-  symbol nm = get_long_name(1);
+  symbol nm = get_long_name(true /* required */);
   if (nm.is_null())
     return;
   while (tok.space())
@@ -5492,7 +5492,7 @@ void device_request()
 
 void device_macro_request()
 {
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (!(s.is_null() || s.is_empty())) {
     request_or_macro *p = lookup_request(s);
     macro *m = p->to_macro();
@@ -5740,7 +5740,7 @@ int do_if_request()
   }
   else if (c == 'd' || c == 'r') {
     tok.next();
-    symbol nm = get_name(1);
+    symbol nm = get_name(true /* required */);
     if (nm.is_null()) {
       skip_alternative();
       return 0;
@@ -5751,7 +5751,7 @@ int do_if_request()
   }
   else if (c == 'm') {
     tok.next();
-    symbol nm = get_long_name(1);
+    symbol nm = get_long_name(true /* required */);
     if (nm.is_null()) {
       skip_alternative();
       return 0;
@@ -5772,7 +5772,7 @@ int do_if_request()
   }
   else if (c == 'F') {
     tok.next();
-    symbol nm = get_long_name(1);
+    symbol nm = get_long_name(true /* required */);
     if (nm.is_null()) {
       skip_alternative();
       return 0;
@@ -5781,7 +5781,7 @@ int do_if_request()
   }
   else if (c == 'S') {
     tok.next();
-    symbol nm = get_long_name(1);
+    symbol nm = get_long_name(true /* required */);
     if (nm.is_null()) {
       skip_alternative();
       return 0;
@@ -5959,7 +5959,7 @@ void while_continue_request()
 
 void do_source(bool quietly)
 {
-  symbol nm = get_long_name(1);
+  symbol nm = get_long_name(true /* required */);
   if (nm.is_null())
     skip_line();
   else {
@@ -6492,7 +6492,7 @@ void ps_bbox_request()
 {
   // Parse input line, to extract file name.
   //
-  symbol nm = get_long_name(1);
+  symbol nm = get_long_name(true /* required */);
   if (nm.is_null())
     //
     // No file name specified: ignore the entire request.
@@ -6723,9 +6723,9 @@ dictionary stream_dictionary(20);
 
 void do_open(int append)
 {
-  symbol stream = get_name(1);
+  symbol stream = get_name(true /* required */);
   if (!stream.is_null()) {
-    symbol filename = get_long_name(1);
+    symbol filename = get_long_name(true /* required */);
     if (!filename.is_null()) {
       errno = 0;
       FILE *fp = fopen(filename.contents(), append ? "a" : "w");
@@ -6767,7 +6767,7 @@ void opena_request()
 
 void close_request()
 {
-  symbol stream = get_name(1);
+  symbol stream = get_name(true /* required */);
   if (!stream.is_null()) {
     FILE *fp = (FILE *)stream_dictionary.remove(stream);
     if (!fp)
@@ -6782,7 +6782,7 @@ void close_request()
 
 void do_write_request(int newline)
 {
-  symbol stream = get_name(1);
+  symbol stream = get_name(true /* required */);
   if (stream.is_null()) {
     skip_line();
     return;
@@ -6818,7 +6818,7 @@ void write_request_continue()
 
 void write_macro_request()
 {
-  symbol stream = get_name(1);
+  symbol stream = get_name(true /* required */);
   if (stream.is_null()) {
     skip_line();
     return;
@@ -6829,7 +6829,7 @@ void write_macro_request()
     skip_line();
     return;
   }
-  symbol s = get_name(1);
+  symbol s = get_name(true /* required */);
   if (s.is_null()) {
     skip_line();
     return;
@@ -7073,7 +7073,7 @@ dictionary char_class_dictionary(501);
 void define_class()
 {
   tok.skip();
-  symbol nm = get_name(1);
+  symbol nm = get_name(true /* required */);
   if (nm.is_null()) {
     skip_line();
     return;
@@ -7607,7 +7607,7 @@ void copy_file()
     handle_initial_request(COPY_FILE_REQUEST);
     return;
   }
-  symbol filename = get_long_name(1);
+  symbol filename = get_long_name(true /* required */);
   while (!tok.newline() && !tok.eof())
     tok.next();
   if (break_flag)
@@ -7625,7 +7625,7 @@ void vjustify()
     handle_initial_request(VJUSTIFY_REQUEST);
     return;
   }
-  symbol type = get_long_name(1);
+  symbol type = get_long_name(true /* required */);
   if (!type.is_null())
     curdiv->vjustify(type);
   skip_line();
@@ -7639,7 +7639,7 @@ void transparent_file()
     handle_initial_request(TRANSPARENT_FILE_REQUEST);
     return;
   }
-  symbol filename = get_long_name(1);
+  symbol filename = get_long_name(true /* required */);
   while (!tok.newline() && !tok.eof())
     tok.next();
   if (break_flag)
@@ -7794,7 +7794,7 @@ static void process_startup_file(const char *filename)
 
 void do_macro_source(bool quietly)
 {
-  symbol nm = get_long_name(1);
+  symbol nm = get_long_name(true /* required */);
   if (nm.is_null())
     skip_line();
   else {
