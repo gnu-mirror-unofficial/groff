@@ -47,6 +47,13 @@
 
 	* tmac/tmac.am (TMACNORMALFILES): Remove an-old.tmac.
 	(tmac_TESTS): Reflect renames of test files above.
+	(tmac/stamp-wrap): Macro-source `an.tmac` in the man wrapper.
+
+	* tmac/andoc.tmac: Refer to (and macro-source) an.tmac.
+	* tmac/man.tmac: Macro-source `an.tmac`, not `andoc.tmac`.
+	* tmac/tests/andoc_flush-between-packages.sh: Call groff with
+	`-mandoc` option instead of `-man`.  Henceforth, if you want the
+	andoc wrapper, you have to ask for it.
 
 2021-07-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
