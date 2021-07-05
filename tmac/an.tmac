@@ -1,4 +1,4 @@
-.\" an-old.tmac
+.\" an.tmac
 .\"
 .\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"      Written by James Clark (jjc@jclark.com)
@@ -28,19 +28,19 @@
 .
 .do if d TH .nx
 .
-.do nr *groff_an-old_tmac_C \n[.cp]
+.do nr *groff_an_tmac_C \n[.cp]
 .cp 0
 .
 .\" Package-internal names start with "an-" and are subject to change.
 .
 .\" Define a string for use in diagnostic messages.
-.ds an-old an-old.tmac\"
+.ds an an.tmac\"
 .
 .\" We use the .stringup request from groff 1.23, but nothing breaks if
 .\" it is undefined; the output is unchanged in appearance from earlier
 .\" releases.
 .if (\n[.x]\n[.y] < 118) \{\
-.  ds an-msg \*[an-old]: groff man macros require groff 1.18 or later,\"
+.  ds an-msg \*[an]: groff man macros require groff 1.18 or later,\"
 .  as an-msg " but found groff \n[.x].\n[.y]; aborting\"
 .  ab \*[an-msg]
 .\}
@@ -53,12 +53,12 @@
 .\" is enabled.  For other macros, `de` suffices.
 .
 .de an-warn
-.  tm \*[an-old]:\\n[.F]:\\n[.c]: warning: \\$*
+.  tm \*[an]:\\n[.F]:\\n[.c]: warning: \\$*
 ..
 .
 .de an-style-warn
 .  if \\n[CHECKSTYLE] \
-.    tm \*[an-old]:\\n[.F]:\\n[.c]: style: \\$*
+.    tm \*[an]:\\n[.F]:\\n[.c]: style: \\$*
 ..
 .
 .de an-deprecation-warn
@@ -916,7 +916,7 @@
 .el \
 .  if !\n[C] \
 .    if \n[an-is-output-html] \{\
-.       tm \*[an-old]: ignoring continuous page numbering in HTML output
+.       tm \*[an]: ignoring continuous page numbering in HTML output
 .       nr C 1
 .    \}
 .if \n[an-is-output-html] \
@@ -942,7 +942,7 @@
 .el \
 .  if \n[D] \
 .    if \n[an-is-output-html] \{\
-.       tm \*[an-old]: ignoring double-sided layout in HTML output
+.       tm \*[an]: ignoring double-sided layout in HTML output
 .       nr D 0
 .    \}
 .
@@ -970,7 +970,7 @@
 .    \}
 .  \}
 .  if d an-msg \{\
-.    tm \*[an-old]: ignoring \*[an-msg]
+.    tm \*[an]: ignoring \*[an-msg]
 .    rr FT
 .    rm an-msg
 .  \}
@@ -1019,7 +1019,7 @@
 .    ds an-msg when continuously rendering
 .\}
 .if d an-msg \{
-.  tm \*[an-old]: ignoring starting page number \*[an-msg]
+.  tm \*[an]: ignoring starting page number \*[an-msg]
 .  rr P
 .  rm an-msg
 .\}
@@ -1054,7 +1054,7 @@
 .    ds an-msg when continuously rendering
 .\}
 .if d an-msg \{
-.  tm \*[an-old]: ignoring page number suffix \*[an-msg]
+.  tm \*[an]: ignoring page number suffix \*[an-msg]
 .  rr X
 .  rm an-msg
 .\}
@@ -1085,7 +1085,7 @@
 .if \n[cR] \
 .  an-set-up-continuous-rendering
 .
-.cp \n[*groff_an-old_tmac_C]
+.cp \n[*groff_an_tmac_C]
 .
 .\" Local Variables:
 .\" mode: nroff
