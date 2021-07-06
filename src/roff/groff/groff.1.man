@@ -896,14 +896,14 @@ $ \c
 .B \[rs]# Let\[aq]s get the result on the standard error stream.
 .B .tm \[rs]n[b]
 3
-.B \[rs]# We can see that the division rounded toward zero.
 .B \[rs]# Now we\[aq]ll define a string.
 .B .ds name Leslie\[rs]" This is another form of comment.
-.B .nr b (\[rs]n[a] + 7/2)
+.B .nr b (\[rs]n[a] + (7/2))
 .B \[rs]# Center the next two text input lines.
 .B .ce 2
 .B Hi, \[rs]*[name].
 .B Your secret number is \[rs]n[b].
+.B \[rs]# We will see that the division rounded toward zero.
 .B It is
 .B \[rs]# Here\[aq]s an if-else control structure.
 .B .ie (\[rs]n[b] % 2) odd.
