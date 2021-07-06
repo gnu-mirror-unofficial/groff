@@ -3139,11 +3139,14 @@ _endif()dnl
 .\" ====================================================================
 .
 .TP
-.I \%@MACRODIR@/\:man\:.tmac
-.TQ
 .I \%@MACRODIR@/\:an\:.tmac
-These are wrapper files to call
-.IR andoc.tmac .
+Most
+.I man
+macros are contained in this file.
+.
+It also loads the extensions from
+.I an\-ext.tmac
+(see below).
 .
 .
 .TP
@@ -3163,30 +3166,20 @@ or
 respectively,
 as their first macro.
 .
-Because the wrappers above load this file,
-a
+A
 .I man
 program or user typing,
 for example,
-\(lqgroff \-man page.1\(rq,
+\(lqgroff \-mandoc page.1\(rq,
 need not know which package the file
 .I page.1
 uses.
 .
 Multiple man pages,
 in either format,
-can be handled.
-.
-.
-.TP
-.I \%@MACRODIR@/\:an\-old\:.tmac
-Most
-.I man
-macros are contained in this file.
-.
-It also loads the extensions from
-.I an\-ext.tmac
-(see below).
+can be handled;
+.I \%andoc
+reloads each macro package as necessary.
 .
 .
 .TP
@@ -3230,6 +3223,18 @@ it is wise to `define' such page-local macros
 after the \(lqName\(rq section to accommodate timid
 .I mandb
 implementations that may give up their scan for indexing material early.
+.
+.
+.TP
+.I \%@MACRODIR@/\:man\:.tmac
+This is a wrapper that loads
+.IR an.tmac .
+.
+.
+.TP
+.I \%@MACRODIR@/\:mandoc\:.tmac
+This is a wrapper that loads
+.IR \%andoc.tmac .
 .
 .
 .TP

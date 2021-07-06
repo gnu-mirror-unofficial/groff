@@ -148,9 +148,15 @@ documents.
 .\" ====================================================================
 .
 .TP
+.I an
+.TQ
 .I man
-This is the classical macro package for Unix manual pages
-(man\~pages); it is quite handy and easy to use; see
+.I an
+is used to compose man pages in the format originating in Version\~7
+Unix (1979).
+.
+It has a small macro interface and is widely used;
+see
 .IR groff_man (@MAN7EXT@).
 .
 .
@@ -158,22 +164,43 @@ This is the classical macro package for Unix manual pages
 .I doc
 .TQ
 .I mdoc
-An alternative macro package for man\~pages mainly used in BSD
-systems; it provides many new features, but it is not the standard for
-man\~pages; see
+.I doc
+is used to compose man pages in the format originating in 4.3BSD-Reno
+(1990).
+.
+It provides many more features than
+.IR an ,
+but is also larger,
+more complex,
+and not as widely adopted;
+see
 .IR groff_mdoc (@MAN7EXT@).
 .
 .
+.P
+Because readers of man pages often do not know in advance which macros
+are used to format a given document,
+a wrapper is available.
+.
+.
 .TP
-.I andoc
+.I \%andoc
 .TQ
 .I mandoc
-Use this file if you don't know whether the
-.B man
-macros or the
-.B mdoc
-package should be used.
-Multiple man pages (in either format) can be handled.
+This macro file,
+specific to
+.IR groff ,
+recognizes whether a document uses
+.I man
+or
+.I mdoc
+format and loads the corresponding macro package.
+.
+Multiple man pages,
+in either format,
+can be handled;
+.I \%andoc
+reloads each macro package as necessary.
 .
 .
 .\" ====================================================================

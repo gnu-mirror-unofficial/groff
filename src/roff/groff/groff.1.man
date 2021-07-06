@@ -1162,11 +1162,7 @@ see
 .IR groff_man (@MAN7EXT@).
 .
 It can be specified on the command line as
-.BR \-man\-old ;
-the package name \[lq]an\[rq] is used to force the loading of
-.I \%andoc
-instead
-(see below).
+.BR \-man .
 .
 .
 .TP
@@ -1178,27 +1174,6 @@ see
 .
 It can be specified on the command line as
 .BR \-mdoc .
-.
-.
-.TP
-.I andoc
-is a wrapper package specific to
-.I groff
-that recognizes whether a document uses
-.I man
-or
-.I mdoc
-format and loads the corresponding macro package.
-.
-It can be specified on the command line as
-.B \%\-mandoc
-or
-.BR \-man ;
-.I groff
-redirects
-.B \-man
-users through this wrapper because users typically are not aware of
-which macro package was used to compose a given man page.
 .
 .
 .TP
@@ -1258,8 +1233,34 @@ It can be specified on the command line as
 .
 .
 .P
-Others are supplemental,
-and augment the function of the full-service packages,
+Others are supplemental.
+.
+For instance,
+.
+.I \%andoc
+is a wrapper package specific to
+.I groff
+that recognizes whether a document uses
+.I man
+or
+.I mdoc
+format and loads the corresponding macro package.
+.
+It can be specified on the command line as
+.BR \%\-mandoc .
+.
+A
+.IR man (1)
+librarian program \" such as man-db, since 2001
+may use this macro file to delegate loading of the correct macro
+package;
+it is thus unnecessary for
+.I man
+itself to scan the contents of a document to decide the issue.
+.
+.
+.P
+Many macro files augment the function of the full-service packages,
 or of
 .I roff
 documents that do not employ such a package\[em]the latter are sometimes
