@@ -2194,14 +2194,16 @@ maintenance.
 .B \e%
 Control hyphenation.
 .
-If hyphenation is enabled,
-the location of this escape within a word marks a hyphenation point,
-overriding
+The location of this escape within a word marks a hyphenation point,
+supplementing
 .IR groff 's
-hyphenation patterns.
+automatic hyphenation patterns.
 .
 At the beginning of a word,
-it suppresses hyphenation entirely.
+it suppresses any automatic hyphenation points within;
+any specified with
+.B \e%
+are still honored.
 .
 .
 .TP
