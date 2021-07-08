@@ -24,9 +24,9 @@ set -e
 
 DOC='\*[locale]'
 
-#echo "testing default localization (English)" >&2
-#OUTPUT=$(echo "$DOC" | "$groff" -Tascii)
-#echo "$OUTPUT" | grep -qx english
+echo "testing default localization (English)" >&2
+OUTPUT=$(echo "$DOC" | "$groff" -Tascii)
+echo "$OUTPUT" | grep -qx english
 
 echo "testing Czech localization" >&2
 OUTPUT=$(echo "$DOC" | "$groff" -Tascii -m cs)
