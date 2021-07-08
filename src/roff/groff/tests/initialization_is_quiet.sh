@@ -31,8 +31,8 @@ for COMPAT in "" -C
 do
   for LOCALE in cs de en fr it ja sv zh
   do
-    echo "testing LANG=$LOCALE; COMPAT=\"$COMPAT\""
-    OUTPUT=$(LANG=$LOCALE "$groff" -ww "$COMPAT" < /dev/null 2>&1)
+    echo "testing \"-m $LOCALE\"; COMPAT=\"$COMPAT\""
+    OUTPUT=$("$groff" -ww -m $LOCALE "$COMPAT" < /dev/null 2>&1)
     test -z "$OUTPUT"
   done
 done
