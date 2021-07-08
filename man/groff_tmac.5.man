@@ -255,24 +255,6 @@ macro package; see
 .SS "Localization packages"
 .\" ====================================================================
 .
-.I groff
-handles localization automatically.
-.
-By default,
-.I troffrc
-checks the environment variables
-.I LC_ALL
-and
-.I LANG
-(in that order)
-and attempts to load a localization file matching the first two
-characters of the variable's value.
-.
-If the environment variables are not set or set to \[lq]C\[rq],
-or a localization file for the locale does not exist,
-the English localization file is used.
-.
-.
 .P
 For Western languages,
 the localization file sets the hyphenation mode and loads hyphenation
@@ -284,17 +266,16 @@ alter the input encoding
 (see the next section);
 and change the amount of inter-sentence space.
 .
+By default,
+.I troffrc
+loads the localization file for English.
+.
 .
 .P
 As of
 .I groff
 1.23.0,
 the following localization files exist.
-.
-If you load them from the command line,
-the
-.B \-C
-option to enable compatibility mode cannot be used.
 .
 .
 .TP
@@ -334,9 +315,6 @@ and
 .I den.tmac
 does the same for the new orthography
 (\[lq]Recht\%schreib\%reform\[rq]).
-.\" There should be a better way to select the orthography via locale
-.\" settings.  Have Germans come up with an @ modifier for this, e.g.,
-.\" 'LANG=de_DE@rechtschreibreform'?
 .
 .
 .TP
