@@ -15,16 +15,17 @@ troff
 
 o English localization has been split into a dedicated macro file,
   en.tmac, for better parallelism with other localization files and to
-  improve support for multilingual documents.  The default hyphenation
-  mode (as used by the .hy request) for users of English is thus changed
-  from "1", which was inappropriate for the TeX-based hyphenation
-  patterns groff has used since at least 1991, to "4".  However,
-  invoking .hy without an argument remains synonymous with ".hy 1".
+  improve support for multilingual documents.  Those who want a
+  different default input language should edit the troffrc file to
+  source the desired groff locale macro file (cs.tmac, de.tmac,
+  den.tmac, fr.tmac, it.tmac, ja.tmac, sv.tmac, or zh.tmac) instead of
+  en.tmac.
 
-  Those who want a different default input language should edit the
-  troffrc file to source the desired groff locale macro file (cs.tmac,
-  de.tmac, den.tmac, fr.tmac, it.tmac, ja.tmac, sv.tmac, zh.tmac)
-  instead of en.tmac.
+  The default hyphenation mode (as used by the .hy request) for users of
+  English has changed from "1", which was inappropriate for the
+  TeX-based hyphenation patterns groff has used since at least 1991, to
+  "4".  However, invoking .hy without an argument remains synonymous
+  with ".hy 1".
 
 o A new read-only register ".cp" is implemented.  Within a .do request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
