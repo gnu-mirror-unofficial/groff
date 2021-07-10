@@ -1,3 +1,37 @@
+2021-07-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Update English hyphenation patterns.
+
+	* NEWS: Add item.
+	* tmac/hyphen.en: Update file using `hyph-en-us.tex` patterns
+	file from the TeX hyph-utf8 project.
+	* tmac/hyphenex.en: Remove explicit hyphenations for words that
+	no longer require them when using the new patterns.  Add one
+	item scraped from an erratum comment in hyphen.en
+	{"dem-o-crat"}.
+
+	The new patterns likely _will_ change the automatic hyphenation
+	break points of your English documents.  Here is a sample of
+	affected words found within groff's own documentary corpus.
+
+	OLD			NEW
+	===			===
+	ar‐range‐ment		arrange‐ment
+	col‐umns		columns
+	con‐struc‐ted		con‐structed
+	cus‐tom‐ized		cus‐tomized
+	def‐i‐ni‐tions		de‐f‐i‐n‐i‐tions
+	der‐i‐va‐tions		de‐riva‐tions
+	hy‐phen‐a‐tion		hy‐phen‐ation
+	ma‐te‐rial		ma‐te‐r‐ial
+	Mi‐cro‐soft		Mi‐crosoft
+	pipe‐lines		pipelines
+	post‐pro‐ces‐sors	post‐proces‐sors
+	pro‐cessed		processed
+	pro‐cesses		processes
+	spa‐ces			spaces
+	Wer‐ner			Werner
+
 2021-07-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Add unit test for `substring` request.

@@ -27,6 +27,11 @@ o English localization has been split into a dedicated macro file,
   "4".  However, invoking .hy without an argument remains synonymous
   with ".hy 1".
 
+o The hyphenation patterns for English have been updated using the
+  `hyph-en-us.tex` patterns file from the TeX hyph-utf8 project.  The
+  new patterns likely _will_ change the automatic hyphenation break
+  points of your English documents.
+
 o A new read-only register ".cp" is implemented.  Within a .do request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
   groff_diff(7) or the groff Texinfo manual for rationale, use case, and
