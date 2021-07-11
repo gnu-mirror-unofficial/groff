@@ -2494,7 +2494,7 @@ and
 when the footer is to be.
 .
 The
-.I groff
+.I roff
 trap that
 .I ms
 sets up to process the header also calls the
@@ -2507,6 +2507,10 @@ you can define
 if you need additional processing after printing the header
 (for example,
 to draw a line below it).
+.
+The
+.CW HD
+hook is a Berkeley extension.
 .
 Any such macros you (re)define must implement any desired specialization
 for odd-,

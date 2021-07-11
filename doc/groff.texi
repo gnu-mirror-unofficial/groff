@@ -3954,9 +3954,9 @@ be written, and @code{BT} (``bottom trap'') when the footer is to be.
 The @code{groff} trap that @file{ms} sets up to process the header also
 calls the (normally undefined) @code{HD} macro after @code{PT}; you can
 define @code{HD} if you need additional processing after printing the
-header (for example, to draw a line below it).  Any such macros you
-(re)define must implement any desired specialization for odd-, even-, or
-first-numbered pages.
+header (for example, to draw a line below it).  The @code{HD} hook is a
+Berkeley extension.  Any such macros you (re)define must implement any
+desired specialization for odd-, even-, or first-numbered pages.
 
 @c ---------------------------------------------------------------------
 
