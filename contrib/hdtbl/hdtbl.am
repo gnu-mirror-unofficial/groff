@@ -19,12 +19,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 hdtbl_srcdir = $(top_srcdir)/contrib/hdtbl
-hdtbl_builddir = $(top_builddir)/contrib/hdtbl
 
 man7_MANS += contrib/hdtbl/groff_hdtbl.7
 
 # Groff command used to generate .ps files
-HDTBL_TFLAG = -M$(hdtbl_srcdir) -M$(hdtbl_builddir)
+HDTBL_TFLAG = -M$(hdtbl_srcdir)
 HDTBL_PFLAG=-t -p -e -U
 HDTBLGROFF = \
   GROFF_COMMAND_PREFIX= \
