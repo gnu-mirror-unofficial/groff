@@ -35,13 +35,13 @@ groff_ms \- GNU roff manuscript macro package for formatting documents
 .SH Synopsis
 .\" ====================================================================
 .
-.SY "groff \-ms"
+.SY "groff \-m@TMAC_S_PREFIX@s"
 .RI [ option
 \&.\|.\|.\&]
 .RI [ input-file
 \&.\|.\|.\&]
 .
-.SY "groff \-m ms"
+.SY "groff \-m m@TMAC_S_PREFIX@s"
 .RI [ option
 \&.\|.\|.\&]
 .RI [ input-file
@@ -2184,7 +2184,7 @@ Names containing only uppercase letters and digits.
 .\" ====================================================================
 .
 .TP
-.I \%@MACRODIR@/\:s\:.tmac
+.I \%@MACRODIR@/\:@TMAC_M_PREFIX@s\:.tmac
 .I groff
 implementation of manuscript macros.
 .
