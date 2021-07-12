@@ -14018,13 +14018,15 @@ requests.
 @cindex environments
 
 It happens frequently that some text should be printed in a certain
-format regardless of what may be in effect at the time, for example, in
-a trap invoked macro to print headers and footers.  To solve this
-@code{gtroff} processes text in @dfn{environments}.  An environment
-contains most of the parameters that control text processing.  It is
-possible to switch amongst these environments; by default @code{gtroff}
-processes text in environment@tie{}0.  The following is the information
-kept in an environment.
+format regardless of what may be in effect at the time.  For example,
+headers and footers are typically rendered by macros called by traps,
+and their text should be set in a consistent style and size regardless
+of how the body text is being rendered at that time.  To address this
+need, @code{roff} systems process text in an @dfn{environment} which
+stores most of the parameters that control text processing.  It is
+possible to create new environments and switch among them; the default
+is named @samp{0} (zero).  The following is the information kept in an
+environment.
 
 @itemize @bullet
 @item
@@ -14037,7 +14039,7 @@ spacing, indentation, line numbering, centering, right-justifying,
 underlining, hyphenation data)
 
 @item
-fill and adjust mode
+filling enablement, adjustment enablement and mode
 
 @item
 tab stops, tab and leader characters, escape character, no-break and
@@ -14053,25 +14055,19 @@ input traps
 drawing and fill colours
 @end itemize
 
-These environments may be given arbitrary names (@pxref{Identifiers}.)
-Old versions of @code{troff} only had environments named @samp{0},
-@samp{1}, and @samp{2}.
-
-@DefreqList {ev, [@Var{env}]}
+@DefreqList {ev, [@Var{ident}]}
 @DefregListEndx {.ev}
 @cindex switching environments (@code{ev})
 @cindex environment, switching (@code{ev})
 @cindex environment number/name register (@code{.ev})
-Switch to another environment.  The argument @var{env} is the name of
-the environment to switch to.  With no argument, @code{gtroff} switches
-back to the previous environment.  There is no limit on the number of
-named environments; they are created the first time that they are
-referenced.  The read-only string-valued register @code{.ev} contains
-the name or number of the current environment.
+Enter the environment @var{ident}, which is created if it does not
+already exist.  With no argument, GNU @code{troff} switches back to the
+previous environment.  The read-only string-valued register @code{.ev}
+contains the name of the current environment.
 
 A call to @code{ev} (with argument) pushes the previously active
 environment onto a stack.  If, say, environments @samp{foo},
-@samp{bar}, and @samp{zap} are called (in that order), the first
+@samp{bar}, and @samp{zap} are entered (in that order), the first
 @code{ev} request without parameter switches back to environment
 @samp{bar} (which is popped off the stack), and a second call switches
 back to environment @samp{foo}.
@@ -14086,10 +14082,10 @@ Here is an example:
 .ll -.5i
 .ev
 
-...
+@r{@dots{}}
 
 .ev footnote-env
-\(dg Note the large, friendly letters.
+\[dg] Note the large, friendly letters.
 .ev
 @endExample
 @endDefreq
@@ -15698,6 +15694,12 @@ called with @option{-T}.
 @acronym{AT&T} @code{troff} and other implementations handle the
 @code{lf} request differently.  For them, its @var{line} argument
 changes the line number of the @emph{current} line.
+
+@cindex environment availability and naming, incompatibilities with
+@acronym{AT&T} @code{troff} had only environments named @samp{0},
+@samp{1}, and @samp{2}.  In GNU @code{troff}, any number of environments
+may exist, using any valid identifiers for their names
+(@pxref{Identifiers}.)
 
 @cindex input level in delimited arguments
 @cindex delimited arguments, incompatibilities with @acronym{AT&T} @code{troff}
