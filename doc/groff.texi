@@ -1282,10 +1282,10 @@ and a postprocessor (@code{post-grohtml}).
 
 @cindex output device name string (@code{.T})
 @cindex output device usage register (@code{.T})
-The predefined @code{gtroff} string @code{.T} contains the
-current output device; the read-only register @code{.T} is set to@tie{}1
-if this option is used (which is always true if @code{groff} is used to
-call @code{gtroff}).  @xref{Built-in Registers}.
+The predefined GNU @code{troff} string @code{.T} contains the name of
+the output device; the read-only register @code{.T} is set to@tie{}1 if
+this option is used (which is always true if @code{groff} is used to
+call GNU @code{troff}).  @xref{Built-in Registers}.
 
 The postprocessor to be used for a device is specified by the
 @code{postpro} command in the device description file.  (@xref{Device
@@ -10958,10 +10958,10 @@ Some devices may only have certain permissible sizes, in which case
 file specifies which sizes are permissible for the device.
 
 Use the @code{sizes} request to change the permissible sizes for the
-current output device.  Arguments are in scaled points; the
-@code{sizescale} line in the @file{DESC} file for the output device
-provides the scaling factor.  For example, if the scaling factor is
-1000, then the value 12000 is 12@tie{}points.
+output device.  Arguments are in scaled points; the @code{sizescale}
+line in the @file{DESC} file for the output device provides the scaling
+factor.  For example, if the scaling factor is 1000, then the value
+12000 is 12@tie{}points.
 
 Each argument can be a single point size (such as @samp{12000}), or a
 range of sizes (such as @samp{4000-72000}).  You can optionally end the
