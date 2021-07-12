@@ -396,7 +396,7 @@ All but the simplest documents bear a title.\**
 .
 .FS
 Distinguish a document title from \[lq]titles\[rq],
-which is what
+which are what
 .I roff
 systems call headers and footers collectively.
 .FE
