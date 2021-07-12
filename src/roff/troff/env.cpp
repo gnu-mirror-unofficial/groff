@@ -54,15 +54,13 @@ enum {
   HYPHEN_MAX = 63,
 };
 
-struct env_list {
+struct env_list_node {
   environment *env;
-  env_list *next;
-  env_list(environment *e, env_list *p) : env(e), next(p) {}
+  env_list_node *next;
+  env_list_node(environment *e, env_list_node *p) : env(e), next(p) {}
 };
 
-env_list *env_stack;
-const int NENVIRONMENTS = 10;
-environment *env_table[NENVIRONMENTS];
+env_list_node *env_stack;
 dictionary env_dictionary(10);
 environment *curenv;
 static int next_line_number = 0;
@@ -267,9 +265,12 @@ int font_size::to_units()
 // we can't do this in a static constructor because various dictionaries
 // have to get initialized first
 
+static symbol default_environment_name("0");
+
 void init_environments()
 {
-  curenv = env_table[0] = new environment("0");
+  curenv = new environment(default_environment_name);
+  (void)env_dictionary.lookup(default_environment_name, curenv);
 }
 
 void tab_character()
@@ -1100,60 +1101,35 @@ node *environment::extract_output_line()
 
 void environment_switch()
 {
-  int pop = 0;	// 1 means pop, 2 means pop but no error message on underflow
-  if (curenv->is_dummy())
-    error("can't switch environments when current environment is dummy");
-  else if (!has_arg())
-    pop = 1;
+  if (curenv->is_dummy()) {
+    error("cannot switch out of dummy environment");
+  }
   else {
-    symbol nm;
-    if (!tok.delimiter()) {
-      // It looks like a number.
-      int n;
-      if (get_integer(&n)) {
-	if (n >= 0 && n < NENVIRONMENTS) {
-	  env_stack = new env_list(curenv, env_stack);
-	  if (env_table[n] == 0)
-	    env_table[n] = new environment(i_to_a(n));
-	  curenv = env_table[n];
-	}
-	else
-	  nm = i_to_a(n);
+    symbol nm = get_long_name();
+    if (nm.is_null()) {
+      if (env_stack == 0)
+	error("environment stack underflow");
+      else {
+	int seen_space = curenv->seen_space;
+	int seen_eol   = curenv->seen_eol;
+	int suppress_next_eol = curenv->suppress_next_eol;
+	curenv = env_stack->env;
+	curenv->seen_space = seen_space;
+	curenv->seen_eol   = seen_eol;
+	curenv->suppress_next_eol = suppress_next_eol;
+	env_list_node *tem = env_stack;
+	env_stack = env_stack->next;
+	delete tem;
       }
-      else
-	pop = 2;
     }
     else {
-      nm = get_long_name(true /* required */);
-      if (nm.is_null())
-	pop = 2;
-    }
-    if (!nm.is_null()) {
       environment *e = (environment *)env_dictionary.lookup(nm);
       if (!e) {
 	e = new environment(nm);
 	(void)env_dictionary.lookup(nm, e);
       }
-      env_stack = new env_list(curenv, env_stack);
+      env_stack = new env_list_node(curenv, env_stack);
       curenv = e;
-    }
-  }
-  if (pop) {
-    if (env_stack == 0) {
-      if (pop == 1)
-	error("environment stack underflow");
-    }
-    else {
-      int seen_space = curenv->seen_space;
-      int seen_eol   = curenv->seen_eol;
-      int suppress_next_eol = curenv->suppress_next_eol;
-      curenv = env_stack->env;
-      curenv->seen_space = seen_space;
-      curenv->seen_eol   = seen_eol;
-      curenv->suppress_next_eol = suppress_next_eol;
-      env_list *tem = env_stack;
-      env_stack = env_stack->next;
-      delete tem;
     }
   }
   skip_line();
@@ -1161,29 +1137,20 @@ void environment_switch()
 
 void environment_copy()
 {
-  symbol nm;
   environment *e=0;
   tok.skip();
-  if (!tok.delimiter()) {
-    // It looks like a number.
-    int n;
-    if (get_integer(&n)) {
-      if (n >= 0 && n < NENVIRONMENTS)
-	e = env_table[n];
-      else
-	nm = i_to_a(n);
-    }
+  symbol nm = get_long_name();
+  if (nm.is_null()) {
+    error("no environment specified to copy from");
   }
-  else
-    nm = get_long_name(true /* required */);
-  if (!e && !nm.is_null())
+  else {
     e = (environment *)env_dictionary.lookup(nm);
-  if (e == 0) {
-    error("No environment to copy from");
-    return;
-  }
-  else
+  if (e)
     curenv->copy(e);
+  else
+    error("cannot copy from nonexistent environment '%1'",
+	  nm.contents());
+  }
   skip_line();
 }
 
@@ -3378,15 +3345,6 @@ void print_env()
 {
   errprint("Current Environment:\n");
   curenv->print_env();
-  for (int i = 0; i < NENVIRONMENTS; i++) {
-    if (env_table[i]) {
-      errprint("Environment %1:\n", i);
-      if (env_table[i] != curenv)
-	env_table[i]->print_env();
-      else
-	errprint("  current\n");
-    }
-  }
   dictionary_iterator iter(env_dictionary);
   symbol s;
   environment *e;

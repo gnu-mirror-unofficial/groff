@@ -1,5 +1,44 @@
 2021-07-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Refactor environment initialization, switching, and
+	copying.
+
+	* src/roff/troff/env.cpp: Rename struct `env_list` to
+	`env_list_node` since it describes a node of a singly-linked
+	list.  Remove constant `NENVIRONMENTS` and array `env_table`.
+	Add static symbol `default_environment_name` to replace string
+	literal.
+	(init_environments): Stop initializing `curenv` through
+	`env_table`.  Use `default_environment_name` for that
+	initialization and add the default environment to
+	`env_dictionary`.
+	(environment_switch): Simplify.  Shorten "dummy environment"
+	diagnostic message.  Stop creating an integer-named
+	environment inside the `env_table` array, only falling through
+	to use the `env_dictionary` if the named environment is not a
+	valid integer or if the array is full.  Instead use
+	`env_dictionary` always.  Drop no longer needed `pop`
+	quasi-Boolean integer with extra state to suppress environment
+	stack underflow errors.  Instead report the error if underflow
+	occurs, regardless of any other circumstance.
+	(environment_copy): Simplify.  Stop searching the `env_table`
+	array for an environment to copy from, only falling through to
+	use the `env_dictionary` if the named environment is not a valid
+	integer or if the array is full.  Instead search
+	`env_dictionary` always.  Emit "no environment specified to copy
+	from" diagnostic only if the `evc` request is given no argument.
+	If the source environment to copy from is given but not found,
+	emit a new diagnostic naming the nonexistent environment.  Fix
+	bug: stop returning early if no copying could be done; instead
+	fall through to the end of the function, which calls
+	`skip_line()` and prevents anything on the remainder of the
+	{invalid} control line from being interpreted.  Problem dates
+	back to commit da3b7137, 6 March 2000 (groff 1.16).
+
+	Fixes <https://savannah.gnu.org/bugs/?60913>.
+
+2021-07-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/evc_produces_no_output_if_invalid.sh:
 	  Regression-test Savannah #60913.
 	* src/utils/grog/grog.am (grog_TESTS): Run test.
