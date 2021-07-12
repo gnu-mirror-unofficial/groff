@@ -3916,8 +3916,8 @@ There are multiple ways to produce headers and footers.  One is to
 define the strings @code{LH}, @code{CH}, and @code{RH} to set the left,
 center, and right headers, respectively; and @code{LF}, @code{CF}, and
 @code{RF} to set the left, center, and right footers similarly.  This
-approach works best for documents that do not distinguish between odd
-and even pages.
+approach works best for documents that do not distinguish odd and even
+pages.
 
 Another method is to call macros with arguments that set headers or
 footers for odd or even pages; these variables produce four
@@ -3967,9 +3967,8 @@ Use the @code{ta} request to define tab stops as needed.  @xref{Tabs and
 Fields}.
 
 @Defmac {TA, , ms}
-Use this macro to reset the tab stops to the default for @file{ms}
-(every 5 ens).  Redefine the @code{TA} macro to create a different set
-of default tab stops.
+Reset the tab stops to the @file{ms} default (every 5 ens).
+Redefine this macro to create a different set of default tab stops.
 @endDefmac
 
 @c ---------------------------------------------------------------------
@@ -4315,10 +4314,10 @@ in the center footer (the @code{CF} string).
 Macros that cause @code{groff} @file{ms} to internally reset its
 paragraph rendering parameters (paragraphs, headings, and displays,
 among others) may change the indentation; they do so not by incrementing
-or decrementing it, but set it absolutely.  This can cause problems for
-documents that define additional macros of their own that try to
-manipulate indentation.  The solution is to use, not the @code{in}
-request, but the @file{ms} @code{RS} and @code{RE} macros.
+or decrementing it, but by setting it absolutely.  This can cause
+problems for documents that define additional macros of their own that
+try to manipulate indentation.  The solution is to use, not the
+@code{in} request, but the @file{ms} @code{RS} and @code{RE} macros.
 
 @item
 To make @code{groff} @file{ms} use the default page offset (which also
@@ -4854,8 +4853,8 @@ After GNU @code{troff} performs an automatic line break, it then tries
 to @dfn{adjust} the line: inter-word spaces are widened until the text
 reaches the right margin.  Extra spaces between words are preserved.
 Leading and trailing spaces are handled as noted above.  Text can be
-adjusted to the left or right margins only (instead of both), or
-centered; see @ref{Manipulating Filling and Adjustment}.
+aligned to the left or right margins or centered; see @ref{Manipulating
+Filling and Adjustment}.
 
 @c ---------------------------------------------------------------------
 

@@ -1451,8 +1451,8 @@ to set the left,
 center,
 and right footers similarly.
 .
-The approach works best for documents that do not distinguish between
-odd and even pages.
+The approach works best for documents that do not distinguish odd and
+even pages.
 .
 .
 .P
@@ -1561,14 +1561,15 @@ Use the
 .B ta
 request to set tab stops as needed.
 .
-Use the
-.B TA
-macro to reset tabs to the default
-(every 5n).
 .
-You can redefine the
-.B TA
-macro to create a different set of default tab stops.
+.TP
+.B .TA
+Reset the tab stops to the
+.I ms
+default
+(every 5 ens).
+.
+Redefine this macro to create a different set of default tab stops.
 .
 .
 .\" ====================================================================
@@ -1827,7 +1828,7 @@ and displays,
 among others)
 may change the indentation;
 they do so not by incrementing or decrementing it,
-but set it absolutely.
+but by setting it absolutely.
 .
 This can cause problems for documents that define additional macros of
 their own that try to manipulate indentation.

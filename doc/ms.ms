@@ -18,6 +18,7 @@
 .nr LT \n[LL]
 .nr PS 11
 .nr VS 13
+.ds FR 1
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
 .ND July 2021
@@ -2408,8 +2409,8 @@ to set the left,
 center,
 and right footers similarly.
 .
-This approach works best for documents that do not distinguish between
-odd and even pages.
+This approach works best for documents that do not distinguish odd and
+even pages.
 .
 .
 .PP
@@ -2532,14 +2533,22 @@ Use the
 .CW ta
 request to set tab stops as needed.
 .
-Use the
-.CW TA
-macro to reset tabs to the default
+.
+.TS
+box;
+lb lb
+lf(CR) lx.
+Macro	Description
+_
+\&.TA	T{
+Reset the tab stops to the
+.I ms
+default
 (every 5 ens).
 .
-Redefine
-.CW .TA
-to create a different set of default tab stops.
+Redefine this macro to create a different set of default tab stops.
+T}
+.TE
 .KE
 .
 .
@@ -2768,7 +2777,7 @@ and displays,
 among others)
 may change the indentation;
 they do so not by incrementing or decrementing it,
-but set it absolutely.
+but by setting it absolutely.
 .
 This can cause problems for documents that define additional macros of
 their own that try to manipulate indentation.
