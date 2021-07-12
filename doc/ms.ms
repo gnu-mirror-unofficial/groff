@@ -2793,7 +2793,7 @@ and
 .
 .
 .PP
-Displays are left-adjusted by default,
+Displays are left-aligned by default,
 not indented.
 .
 In AT&T

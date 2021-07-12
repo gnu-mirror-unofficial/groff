@@ -880,12 +880,12 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\}
 ..
 .\" external picture
-.\" -L	left adjust
+.\" -L	left align
 .de EPIC
 .if \\n[.$]<2 .@error "EPIC: Not enough arguments"
 .nr pict*adj 0		\" centered
 .if '\\$1'-L' \{\
-.	shift 1		\" left adjust
+.	shift 1		\" left align
 .	nr pict*adj 1
 .\}
 .if \\n[nl]<0 \&
