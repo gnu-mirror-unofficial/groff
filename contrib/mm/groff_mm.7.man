@@ -53,12 +53,27 @@ groff_mm \- memorandum macros for GNU roff
 .SH Description
 .\" ====================================================================
 .
+The GNU implementation of the
+.I mm
+macro package is part of the
+.I groff
+document formatting system.
+.
 The
-.IR groff (@MAN7EXT@)
 .I mm
-macros are intended to be compatible with the DWB
+package is suitable for the composition of
+letters,
+memoranda,
+reports,
+and books.
+.
+.
+.P
+.I groff mm
+is intended to be compatible with the
 .I mm
-macros with the following limitations.
+implementation found in the AT&T Documenter's Workbench (DWB),
+with the following limitations.
 .
 .
 .IP \[bu]
@@ -74,25 +89,22 @@ are not implemented.
 .
 .
 .IP \[bu]
-.I groff mm
-does not support cut marks.
+Cut marks are not supported.
 .
 .
 .LP
-.I m@TMAC_M_PREFIX@m
-is intended to support easy localization.
+.I groff mm
+is designed to support easy localization.
 .
 Use
 .I m@TMAC_M_PREFIX@mse
-as an example how to adapt the output format to a national standard.
+as an example of how to adapt the output format to a national standard.
 .
 Localized strings are collected in the file
 .IR @MACRODIR@/ xx .tmac ,
 where
 .I xx
-denotes the two-letter code for the
-.IR language ,
-as defined in the ISO 639 standard.
+is an ISO\~639 two-letter language identifier.
 .
 For Swedish,
 this is
@@ -101,25 +113,16 @@ this is
 not
 \[lq]se\[rq].
 .
-The ISO 639 language code,
-not the ISO 3166 territory code,
-is used.
-.
 .
 .LP
 A file called
 .I locale
 or
 .RI territory _locale
-is read after the initialization of the global variables.
+is read after package initialization.
 .
 It is therefore possible to localize the macros with a different company
 name and so on.
-.
-.
-.LP
-In this manual,
-square brackets are used to show optional arguments.
 .
 .
 .\" ====================================================================
