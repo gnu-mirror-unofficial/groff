@@ -1806,18 +1806,23 @@ is called instead of printing \[oq]INDEX\[cq], and
 is called after the printing and should take care of restoring to
 normal operation again.
 .
+.
 .TP
-.B ISODATE \fR[\fP0\fR]\fP
-Change the predefined date string in
-.B DT
-to ISO-format, this is, \[oq]YYYY-MM-DD\[cq].
+.BR ISODATE\~ [ 0 ]
+Change the date used by some cover sheet and memorandum types to
+ISO\~8601 format;
+that is,
+.IR YYYY - MM - DD .
 .
-This can also be done by adding
-.B \-rIso=1
-on the command line.
+Must be called before
+.B ND
+to be effective.
 .
-Reverts to old date format if argument is\~\c
-.BR 0 .
+If given an argument
+.RB of\~ 0,
+U.S.\& traditional date format is used
+(this is the default).
+.
 .
 .TP
 .BI IR\  "\fR[\fPitalic-text \fR[\fProman-text \fR[\fPitalic-text \fR[.\|.\|.]]]]\fP"
@@ -3654,12 +3659,19 @@ l l.
 .IP
 Default is\~0.
 .
+.
 .TP
 .B Iso
-Set this variable to\~1 on the command line to get an ISO-formatted
-date string (\fB\-rIso=1\fP).
+Define this register
+(to any value)
+on the command line to use ISO\~8601 date format
+(e.g.,
+.RB \[lq] \-rIso=1 \[rq]).
 .
-Useless inside of a document.
+See macro
+.B ISODATE
+above.
+.
 .
 .TP
 .B L
