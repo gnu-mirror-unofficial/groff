@@ -444,10 +444,10 @@ is non-zero.
 .
 This is the default.
 .
-The appendix always appears in the \[oq]List of contents\[cq] with
+The appendix always appears in the \[lq]List of contents\[rq] with
 correct page numbers.
 .
-The name \[oq]APPENDIX\[cq] can be changed by setting the string
+The name \[lq]APPENDIX\[rq] can be changed by setting the string
 .B App
 to the desired text.
 .
@@ -469,7 +469,8 @@ included as appendices.
 .BI AS\  "\fR[\fParg \fR[\fPindent\fR]]\fP"
 Abstract start.
 .
-Indentation is specified in \[oq]ens\[cq], but scaling is allowed.
+Indentation is specified in \[lq]ens\[rq],
+but scaling is allowed.
 .
 Argument
 .I arg
@@ -506,7 +507,7 @@ text indentation is used.
 .BI AST\  \fR[\fPtitle\fR]\fP
 Abstract title.
 .
-Default is \[oq]ABSTRACT\[cq].
+Default is \[lq]ABSTRACT\[rq].
 .
 Sets the text above the abstract text.
 .
@@ -560,11 +561,11 @@ Approval signature.
 .
 Generates an approval line with place for signature and date.
 .
-The text \[oq]APPROVED:\[cq] can be changed with the string
+The text \[lq]APPROVED:\[rq] can be changed with the string
 .BR Letapp ;
 it is replaced with an empty lin if there is a second argument.
 .
-The text \[oq]Date\[cq] can be changed with the string
+The text \[lq]Date\[rq] can be changed with the string
 .BR Letdate .
 .
 .TP
@@ -868,9 +869,16 @@ RB@Right-adjust the whole display as a block.
 .RE
 .
 .IP
-The values \[oq]L\[cq], \[oq]I\[cq], \[oq]C\[cq], and \[oq]CB\[cq] can
-also be specified as \[oq]0\[cq], \[oq]1\[cq], \[oq]2\[cq], and
-\[oq]3\[cq], respectively, for compatibility reasons.
+The values \[lq]L\[rq],
+\[lq]I\[rq],
+\[lq]C\[rq],
+and \[lq]CB\[rq] can also be specified as \[lq]0\[rq],
+\[lq]1\[rq],
+\[lq]2\[rq],
+and
+\[lq]3\[rq],
+respectively,
+for compatibility reasons.
 .
 .IP
 .B fill
@@ -888,8 +896,9 @@ F@Line-filling turned on.
 .RE
 .
 .IP
-\[oq]N\[cq] and \[oq]F\[cq] can also be specified as \[oq]0\[cq] and
-\[oq]1\[cq], respectively.
+\[lq]N\[rq] and \[lq]F\[rq] can also be specified as \[lq]0\[rq] and
+\[lq]1\[rq],
+respectively.
 .
 .IP
 By default, an empty line is printed before and after the display.
@@ -957,7 +966,7 @@ the format of title uses a dash instead of a dot after the number.
 The string
 .B Le
 controls the title of the List of Equations;
-default is \[oq]LIST OF EQUATIONS\[cq].
+default is \[lq]LIST OF EQUATIONS\[rq].
 .
 The List of Equations is printed only if register
 .B Le
@@ -967,15 +976,17 @@ The default is\~0.
 .
 The string
 .B Liec
-contains the word \[oq]Equation\[cq], which is printed before the
-number.
+contains the word \[lq]Equation\[rq],
+which is printed before the number.
 .
 If
 .I refname
 is used,
 then the equation number is saved with
 .BR .SETR ,
-and can be retrieved with \[oq]\fB.GETST\fP \fIrefname\fP\[cq].
+and can be retrieved with
+.RB \[lq] .GETST
+.IR refname \[rq].
 .
 .IP
 Special handling of the title occurs if
@@ -1113,7 +1124,7 @@ as a counter.
 The string
 .B Lx
 controls the title of the List of Exhibits;
-default is \[oq]LIST OF EXHIBITS\[cq].
+default is \[lq]LIST OF EXHIBITS\[rq].
 .
 The List of Exhibits is printed only if register
 .B Lx
@@ -1122,14 +1133,16 @@ which is the default.
 .
 The string
 .B Liex
-contains the word \[oq]Exhibit\[cq], which is printed before the
-number.
+contains the word \[lq]Exhibit\[rq],
+which is printed before the number.
 .
 If
 .I refname
 is used, the exhibit number is saved with
 .BR .SETR ,
-and can be retrieved with \[oq]\fB.GETST\fP \fIrefname\fP\[cq].
+and can be retrieved with
+.RB \[lq] .GETST
+.IR refname \[rq].
 .
 .IP
 Special handling of the title occurs if
@@ -1141,8 +1154,8 @@ it is not affected by the format of
 .
 .TP
 .BI FC\  \fR[\fPclosing\fR]\fP
-Print \[oq]Yours\~very\~truly,\[cq] as a formal closing of a letter or
-memorandum.
+Print \[lq]Yours very truly,\[rq]
+as a formal closing of a letter or memorandum.
 .
 The argument replaces the default string.
 .
@@ -1206,7 +1219,7 @@ as a counter.
 The string
 .B Lf
 controls the title of the List of Figures;
-default is \[oq]LIST OF FIGURES\[cq].
+default is \[lq]LIST OF FIGURES\[rq].
 .
 The List of Figures is printed only if register
 .B Lf
@@ -1214,14 +1227,16 @@ is\~1, which is the default.
 .
 The string
 .B Lifg
-contains the word \[oq]Figure\[cq], which is printed before the
-number.
+contains the word \[lq]Figure\[rq],
+which is printed before the number.
 .
 If
 .I refname
 is used, then the figure number is saved with
 .BR .SETR ,
-and can be retrieved with \[oq]\fB.GETST\fP \fIrefname\fP\[cq].
+and can be retrieved with
+.RB \[lq] .GETST
+.IR refname \[rq].
 .
 .IP
 Special handling of the title occurs if
@@ -1259,10 +1274,12 @@ default value is\~1.
 .
 .TP
 .BI GETHN\  "refname \fR[\fPvarname\fR]\fP"
-Include the header number where the corresponding \[oq]\fBSETR\fP
-\fIrefname\fP\[cq] was placed.
+Include the header number where the corresponding
+.RB \[lq] .SETR
+.IR refname \[rq]
+was placed.
 .
-This is displayed as \[oq]X.X.X.\[cq] in pass\~1.
+This is displayed as \[lq]X.X.X.\[rq] in pass\~1.
 .
 See
 .BR INITR .
@@ -1277,10 +1294,12 @@ to the header number.
 .
 .TP
 .BI GETPN\  "refname \fR[\fPvarname\fR]\fP"
-Include the page number where the corresponding \[oq]\fBSETR\fP
-\fIrefname\fP\[cq] was placed.
+Include the page number where the corresponding
+.RB \[lq] .SETR
+.IR refname \[rq]
+was placed.
 .
-This is displayed as \[oq]9999\[cq] in pass\~1.
+This is displayed as \[lq]9999\[rq] in pass\~1.
 .
 See
 .BR INITR .
@@ -1299,7 +1318,7 @@ Combine
 .B GETHN
 and
 .B GETPN
-with the text \[oq]chapter\[cq] and \[oq],\~page\[cq].
+with the text \[lq]chapter\[rq] and \[lq],\~page\[rq].
 .
 The string
 .B Qrf
@@ -1681,7 +1700,7 @@ Can be used to change the page header according to the section heading.
 .BI HC\  \fR[\fPhyphenation-character\fR]\fP
 Set hyphenation character.
 .
-Default value is \[oq]\[rs]%\[cq].
+Default value is \[lq]\[rs]%\[rq].
 .
 Resets to the default if called without argument.
 .
@@ -1883,7 +1902,9 @@ arg1\[rs]tpage number\[rs]theader mark
 .B INDP
 Print the index by running the command specified by the string
 .BR Indcmd ,
-which has \[oq]sort\ \-t\[rs]t\[cq] as the default value.
+which has
+.RB \[lq] sort\~\-t\[rs]t \[rq]
+as the default value.
 .
 .B INDP
 reads the output from the command to form the index,
@@ -1892,8 +1913,8 @@ by default in two columns (this can be changed by defining
 .
 The index is printed with the string
 .B Index
-as header,
-default is \[oq]INDEX\[cq].
+as header;
+the default is \[lq]INDEX\[rq].
 .
 One-column processing is reactivated after the list.
 .
@@ -1906,9 +1927,10 @@ and
 if defined.
 .
 .B TXIND
-is called before printing the string \[oq]INDEX\[cq],
+is called before printing the string \[lq]INDEX\[rq],
 .B TYIND
-is called instead of printing \[oq]INDEX\[cq], and
+is called instead of printing \[lq]INDEX\[rq],
+and
 .B TZIND
 is called after the printing and should take care of restoring to
 normal operation again.
@@ -2002,8 +2024,11 @@ using arabic numbers if
 is empty.
 .
 .I mark
-can then be any of \[oq]1\[cq], \[oq]A\[cq], \[oq]a\[cq], \[oq]I\[cq],
-or \[oq]i\[cq].
+can then be any of \[lq]1\[rq],
+\[lq]A\[rq],
+\[lq]a\[rq],
+\[lq]I\[rq],
+or \[lq]i\[rq].
 .
 .IP
 .I type
@@ -2081,7 +2106,7 @@ makes
 a prefix to the current mark.
 .
 There is no separating space between the prefix and the mark if the
-second argument is \[oq]2\[cq] instead of \[oq]1\[cq].
+second argument is \[lq]2\[rq] instead of \[lq]1\[rq].
 .
 This behaviour can also be achieved by setting register
 .B Limsp
@@ -2196,16 +2221,16 @@ tab(@);
 l lx.
 CN@T{
 Confidential notation.
-Prints \[oq]CONFIDENTIAL\[cq] on the second line below the date line.
+Prints \[lq]CONFIDENTIAL\[rq] on the second line below the date line.
 .
-Any argument replaces \[oq]CONFIDENTIAL\[cq].
+Any argument replaces \[lq]CONFIDENTIAL\[rq].
 .
 See also string
 .BR LetCN .
 T}
 RN@T{
 Reference notation.
-Prints \[oq]In reference to:\[cq] and the argument two lines below the
+Prints \[lq]In reference to:\[rq] and the argument two lines below the
 date line.
 .
 See also string
@@ -2213,13 +2238,13 @@ See also string
 T}
 AT@T{
 Attention.
-Prints \[oq]ATTENTION:\[cq] and the argument below the inside address.
+Prints \[lq]ATTENTION:\[rq] and the argument below the inside address.
 See also string
 .BR LetAT .
 T}
 SA@T{
 Salutation.
-Prints \[cq]To Whom It May Concern:\[cq] or the argument if it was
+Prints \[rq]To Whom It May Concern:\[rq] or the argument if it was
 present.
 .
 The salutation is printed two lines below the inside address.
@@ -2228,9 +2253,9 @@ See also string
 T}
 SJ@T{
 Subject line.
-Prints the argument as subject prefixed with \[oq]SUBJECT:\[cq]
+Prints the argument as subject prefixed with \[lq]SUBJECT:\[rq]
 two lines below the inside address,
-except in letter type \[oq]SP\[cq],
+except in letter type \[lq]SP\[rq],
 where the subject is printed in all-capital without any prefix.
 See also string
 .BR LetSJ .
@@ -2354,9 +2379,10 @@ starts a diversion, and
 .B MULE
 ends the diversion and prints the columns.
 .
-The unit for the width and space arguments is \[oq]n\[cq], but
+The unit for the width and space arguments is \[lq]n\[rq],
+but
 .B MULB
-accepts all normal unit specifications like \[oq]c\[cq] and \[oq]i\[cq].
+accepts all normal unit specifications like \[lq]c\[rq] and \[lq]i\[rq].
 .
 .B MULB
 operates in a separate environment.
@@ -2397,7 +2423,8 @@ If the second argument is available,
 then the argument becomes the entire notation.
 .
 If the argument doesn't select a predefined type,
-it is printed as \[oq]Copy (\fIarg\/\fP) to\[cq].
+it is printed as
+.RI "\[lq]Copy (" arg ") to\[rq]."
 .
 It is possible to add more standard notations;
 see the strings
@@ -2618,7 +2645,7 @@ are printed left-justified, centered, and right justified, respectively.
 .
 Within the argument to
 .BR PH ,
-the character \[oq]%\[cq] is changed to the current page number.
+the character \[lq]%\[rq] is changed to the current page number.
 .
 The default argument is
 .
@@ -2759,7 +2786,7 @@ to\~0 suppresses the line.
 .IP
 The string
 .B Rp
-contains the reference page title and is set to \[oq]REFERENCES\[cq]
+contains the reference page title and is set to \[lq]REFERENCES\[rq]
 by default.
 .
 The register
@@ -2794,11 +2821,13 @@ later in the text.
 .BI S\  "\fR[\fPsize \fR[\fPspacing\fR]]\fP"
 Set point size and vertical spacing.
 .
-If any argument is equal to \[oq]P\[cq], the previous value is used.
+If any argument is equal to \[lq]P\[rq],
+the previous value is used.
 .
-A \[oq]C\[cq] means current value, and \[oq]D\[cq] the default value.
+A \[lq]C\[rq] means the current value,
+and \[lq]D\[rq] the default value.
 .
-If \[oq]+\[cq] or \[oq]\-\[cq] is used before the value,
+If \[lq]+\[rq] or \[lq]\-\[rq] is used before the value,
 the current value is incremented or decremented, respectively.
 .
 .TP
@@ -2807,8 +2836,8 @@ Set right-margin justification.
 .
 Justification is turned on by default.
 .
-No argument or value \[oq]0\[cq] turns off justification,
-and \[oq]1\[cq] turns on justification.
+No argument or value \[lq]0\[rq] turns off justification,
+and \[lq]1\[rq] turns on justification.
 .
 .TP
 .BI SETR\  "refname \fR[\fPstring\fR]\fP"
@@ -2885,7 +2914,8 @@ is made smaller.
 Space vertically.
 .
 .I lines
-can have any scaling factor, like \[oq]3i\[cq] or \[oq]8v\[cq].
+can have any scaling factor,
+like \[lq]3i\[rq] or \[lq]8v\[rq].
 .
 Several
 .B SP
@@ -2921,7 +2951,7 @@ as a counter.
 The string
 .B Lt
 controls the title of the List of Tables;
-default value is \[oq]LIST OF TABLES\[cq].
+default value is \[lq]LIST OF TABLES\[rq].
 .
 The List of Tables is printed only if register
 .B Lt
@@ -2929,7 +2959,8 @@ is\~1, which is the default.
 .
 The string
 .B Litb
-contains the word \[oq]TABLE\[cq], which is printed before the number.
+contains the word \[lq]TABLE\[rq],
+which is printed before the number.
 .
 .IP
 Special handling of the title occurs if
@@ -2987,10 +3018,10 @@ are used if
 is called with at most four arguments.
 .
 .B TX
-is called before the printing of the string \[oq]CONTENTS\[cq],
+is called before the printing of the string \[lq]CONTENTS\[rq],
 and
 .B TY
-is called instead of printing \[oq]CONTENTS\[cq].
+is called instead of printing \[lq]CONTENTS\[rq].
 .
 .IP
 Equivalent macros can be defined for list of figures, tables, equations
@@ -3000,7 +3031,10 @@ or
 .BI TY xx\fR,\fP
 where
 .I xx
-is \[oq]Fg\[cq], \[oq]TB\[cq], \[oq]EC\[cq], or \[oq]EX\[cq],
+is \[lq]Fg\[rq],
+\[lq]TB\[rq],
+\[lq]EC\[rq],
+or \[lq]EX\[rq],
 respectively.
 .
 .IP
@@ -3027,8 +3061,12 @@ The strings
 .BR Liec ,
 and
 .B Licon
-contain \[oq]Figure\[cq], \[oq]TABLE\[cq], \[oq]Exhibit\[cq],
-\[oq]Equation\[cq], and \[oq]CONTENTS\[cq], respectively.
+contain \[lq]Figure\[rq],
+\[lq]TABLE\[rq],
+\[lq]Exhibit\[rq],
+\[lq]Equation\[rq],
+and \[lq]CONTENTS\[rq],
+respectively.
 .
 These can be redefined to other languages.
 .
@@ -3051,7 +3089,7 @@ ends the header of the table.
 .
 This header is printed again if a page break occurs.
 .
-Argument \[oq]N\[cq] isn't implemented yet.
+Argument \[lq]N\[rq] isn't implemented yet.
 .
 .TP
 .BI TL\  "\fR[\fPcharging-case-number \fR[\fPfiling-case-number\fR]]\fP"
@@ -3112,7 +3150,7 @@ This is the start of a table specification to
 ends with
 .BR TE .
 .
-Argument \[oq]H\[cq] tells
+Argument \[lq]H\[rq] tells
 .B m@TMAC_M_PREFIX@m
 that the table has a header.
 .
@@ -3125,7 +3163,7 @@ User-defined table of contents exit.
 .
 This macro is called just before
 .B TC
-prints the word \[oq]CONTENTS\[cq].
+prints the word \[lq]CONTENTS\[rq].
 .
 See
 .BR TC .
@@ -3134,7 +3172,7 @@ See
 .B TY
 User-defined table of contents exit.
 .
-This macro is called instead of printing \[oq]CONTENTS\[cq].
+This macro is called instead of printing \[lq]CONTENTS\[rq].
 .
 See
 .BR TC .
@@ -3179,10 +3217,10 @@ It contains all arguments to the
 .IR \%@g@troff (@MAN1EXT@)
 command
 .BR .nm ,
-normally \[oq]1\[cq].
+normally \[lq]1\[rq].
 T}
 16@T{
-Indent the verbose text by \[oq]5n\[cq].
+Indent the verbose text by \[lq]5n\[rq].
 .
 This is controlled by the register
 .B Verbin
@@ -3228,7 +3266,8 @@ and
 .IR bottom .
 .
 If no argument is given, reset the margin to zero, or to the default
-(\[oq]7v 5v\[cq]) if
+(\[lq]7v 5v\[rq])
+if
 .B \-T
 is used.
 .
@@ -3302,7 +3341,7 @@ T}
 .
 .TP
 .B App
-A string containing the word \[oq]APPENDIX\[cq].
+A string containing the word \[lq]APPENDIX\[rq].
 .
 .TP
 .B Apptxt
@@ -3324,7 +3363,8 @@ Also updated in table of contents & friends.
 .
 .TP
 .B HF
-Font list for headings, \[oq]2 2 2 2 2 2 2\[cq] by default.
+Font list for headings,
+\[lq]2 2 2 2 2 2 2\[rq] by default.
 .
 Non-numeric font names may also be used.
 .
@@ -3332,100 +3372,102 @@ Non-numeric font names may also be used.
 .B HP
 Point size list for headings.
 .
-By default, this is \[cq]0 0 0 0 0 0 0\[cq] which is the same as \[oq]10
-10 10 10 10 10 10\[cq].
+By default,
+this is \[lq]0 0 0 0 0 0 0\[rq] which is the same as \[lq]10 10 10 10 10
+10 10\[rq].
 .
 .TP
 .B Index
-Contains the string \[oq]INDEX\[cq].
+Contains the string \[lq]INDEX\[rq].
 .
 .TP
 .B Indcmd
 Contains the index command.
 .
-Default value is \[oq]sort\ \-t\[rs]t\[cq].
+Default value is
+.RB \[lq] sort\~\-t\[rs]t \[rq].
 .
 .TP
 .B Lifg
-String containing \[oq]Figure\[cq].
+String containing \[lq]Figure\[rq].
 .
 .TP
 .B Litb
-String containing \[oq]TABLE\[cq].
+String containing \[lq]TABLE\[rq].
 .
 .TP
 .B Liex
-String containing \[oq]Exhibit\[cq].
+String containing \[lq]Exhibit\[rq].
 .
 .TP
 .B Liec
-String containing \[oq]Equation\[cq].
+String containing \[lq]Equation\[rq].
 .
 .TP
 .B Licon
-String containing \[oq]CONTENTS\[cq].
+String containing \[lq]CONTENTS\[rq].
 .
 .TP
 .B Lf
-Contains the string \[oq]LIST OF FIGURES\[cq].
+Contains the string \[lq]LIST OF FIGURES\[rq].
 .
 .TP
 .B Lt
-Contains the string \[oq]LIST OF TABLES\[cq].
+Contains the string \[lq]LIST OF TABLES\[rq].
 .
 .TP
 .B Lx
-Contains the string \[oq]LIST OF EXHIBITS\[cq].
+Contains the string \[lq]LIST OF EXHIBITS\[rq].
 .
 .TP
 .B Le
-Contains the string \[oq]LIST OF EQUATIONS\[cq].
+Contains the string \[lq]LIST OF EQUATIONS\[rq].
 .
 .TP
 .B Letfc
-Contains the string \[oq]Yours very truly,\[cq],
+Contains the string \[lq]Yours very truly,\[rq],
 used in
 .BR .FC .
 .
 .TP
 .B Letapp
-Contains the string \[oq]APPROVED:\[cq],
+Contains the string \[lq]APPROVED:\[rq],
 used in
 .BR .AV .
 .
 .TP
 .B Letdate
-Contains the string \[oq]Date\[cq],
+Contains the string \[lq]Date\[rq],
 used in
 .BR .AV .
 .
 .TP
 .B LetCN
-Contains the string \[oq]CONFIDENTIAL\[cq],
+Contains the string \[lq]CONFIDENTIAL\[rq],
 used in
 .BR ".LO CN" .
 .
 .TP
 .B LetSA
-Contains the string \[oq]To Whom It May Concern:\[cq],
+Contains the string \[lq]To Whom It May Concern:\[rq],
 used in
 .BR ".LO SA" .
 .
 .TP
 .B LetAT
-Contains the string \[oq]ATTENTION:\[cq],
+Contains the string \[lq]ATTENTION:\[rq],
 used in
 .BR ".LO AT" .
 .
 .TP
 .B LetSJ
-Contains the string \[oq]SUBJECT:\[cq],
+Contains the string \[lq]SUBJECT:\[rq],
 used in
 .BR ".LO SJ" .
 .
 .TP
 .B LetRN
-Contains the string \[oq]In reference to:\[cq],
+Contains the string \[lq]In reference to:\[rq],
 used in
 .BR ".LO RN" .
 .
@@ -3448,7 +3490,7 @@ as a prefix and
 .B Letns!to
 as a suffix.
 .
-Observe the space after \[oq]Copy\[cq] and before \[oq]to\[cq].
+Observe the space after \[lq]Copy\[rq] and before \[lq]to\[rq].
 .
 .RS
 .IP
@@ -3486,17 +3528,17 @@ Default is\~0.
 .
 .TP
 .B "MO1 \(en MO12"
-Strings containing the month names \[oq]January\[cq] through
-\[oq]December\[cq].
+Strings containing the month names \[lq]January\[rq] through
+\[lq]December\[rq].
 .
 .TP
 .B Qrf
-String containing \[oq]See chapter \[rs]\[rs]*[Qrfh], page
-\[rs]\[rs]n[Qrfp].\[cq].
+String containing \[lq]See chapter \[rs]\[rs]*[Qrfh],
+page \[rs]\[rs]n[Qrfp].\[rq].
 .
 .TP
 .B Rp
-Contains the string \[oq]REFERENCES\[cq].
+Contains the string \[lq]REFERENCES\[rq].
 .
 .TP
 .B Tcst
@@ -3527,7 +3569,8 @@ ap@Appendix
 .
 .TP
 .B Tm
-Contains the string \[oq]\[rs](tm\[cq], the trade mark symbol.
+Contains the string \[lq]\[rs](tm\[rq],
+the trade mark symbol.
 .
 .TP
 .B Verbnm
@@ -3551,8 +3594,8 @@ is non-zero.
 .
 No output occurs if
 .B Aph
-is zero, but there is always an appendix entry in the \[oq]List of
-contents\[cq].
+is zero,
+but there is always an appendix entry in the \[lq]List of contents\[rq].
 .
 .TP
 .B Cl
@@ -3685,7 +3728,7 @@ l lx.
 0@no indentation, left margin
 1@T{
 indent to the right, similar to
-.RB \[oq] ".P 1" \[cq]
+.RB \[lq] ".P 1" \[rq]
 T}
 2@T{
 indent to line up with text part of preceding heading
@@ -3869,10 +3912,10 @@ l lx.
 header replaces footer on first page, header is empty.
 T}
 2@page header is removed on the first page.
-3@\[oq]section-page\[cq] numbering style enabled.
+3@\[lq]section-page\[rq] numbering style enabled.
 4@page header is removed on the first page.
 5@T{
-\[oq]section-page\[cq] and \[oq]section-figure\[cq] numbering style
+\[lq]section-page\[rq] and \[lq]section-figure\[rq] numbering style
 enabled.
 T}
 .TE
@@ -3926,8 +3969,9 @@ Default is\~0.
 .
 .TP
 .B P
-Current page-number, normally the same as \[oq]%\[cq] unless
-\[oq]section-page\[cq] numbering style is enabled.
+Current page number,
+normally the same as \[lq]%\[rq] unless
+\[lq]section-page\[rq] numbering style is enabled.
 .
 .TP
 .B Pi
@@ -4003,7 +4047,7 @@ Default is\~0.
 .
 .TP
 .B Sectf
-A flag controlling \[oq]section-figures\[cq] numbering style.
+A flag controlling \[lq]section-figures\[rq] numbering style.
 .
 A non-zero value enables this.
 .
@@ -4012,7 +4056,7 @@ See also register\~\c
 .
 .TP
 .B Sectp
-A flag controlling \[cq]section-page\[cq] numbering style.
+A flag controlling \[lq]section-page\[rq] numbering style.
 .
 A non-zero value enables this.
 .
