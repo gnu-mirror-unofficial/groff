@@ -153,7 +153,7 @@ it might be set to another name.
 .
 .TP
 .BI paperlength\~ n
-The physical vertical dimension of the output medium in machine units.
+The physical vertical dimension of the output medium in basic units.
 .
 This isn't used by
 .I \%@g@troff
@@ -171,24 +171,28 @@ instead.
 .BI papersize\~ string
 Select a paper size.
 .
-Valid values for
+Valid values of
 .I string
-are the ISO paper types
+are the ISO and DIN formats
 .BR A0 \[en] A7 ,
 .BR B0 \[en] B7 ,
 .BR C0 \[en] C7 ,
-.BR D0 \[en] D7 ,
-.BR DL ,
-and the U.S.\& paper types
+and
+.BR D0 \[en] D7 ;
+.\" XXX: tmac/papersize.tmac does not support [ABCD]7.
+the U.S.\& formats
 .BR letter ,
 .BR legal ,
 .BR tabloid ,
 .BR ledger ,
 .BR statement ,
-.BR executive ,
-.BR com10 ,
 and
-.BR monarch .
+.BR executive ;
+and the envelope formats
+.BR com10 ,
+.BR monarch ,
+and
+.BR DL .
 .
 Case is not significant for
 .I string
@@ -200,24 +204,24 @@ can be a file name
 (e.g.,
 .IR /etc/papersize );
 if the file can be opened,
-.I groff
+.I \%@g@troff
 reads the first line and tests for the above paper sizes.
 .
 Finally,
 .I string
 can be a custom paper size in the format
 .IB length , width
-(no spaces before and after the comma).
+(with no spaces before or after the comma).
 .
 Both
 .I length
 and
 .I width
 must have a unit appended;
-valid values are \[oq]i\[cq] for inches,
-\[oq]c\[cq] for centimeters,
-\[oq]p\[cq] for points,
-and \[oq]P\[cq] for picas.
+valid values are \[lq]i\[rq] for inches,
+\[lq]c\[rq] for centimeters,
+\[lq]p\[rq] for points,
+and \[lq]P\[rq] for picas.
 .
 Example:
 .BR 12c,235p .
@@ -226,28 +230,28 @@ An argument which starts with a digit is always treated as a custom
 paper format.
 .
 .B papersize
-sets both the vertical and horizontal dimension of the output medium.
+sets both the vertical and horizontal dimensions of the output medium.
 .
 .IP
 More than one argument can be specified;
-.I groff
+.I \%@g@troff
 scans from left to right and uses the first valid paper specification.
 .
 .
 .TP
 .BI paperwidth\~ n
-The physical horizontal dimension of the output medium in machine units.
+The physical horizontal dimension of the output medium in basic units.
+.
+This isn't used by
+.I \%@g@troff
+itself,
+but by output devices.
 .
 Deprecated.
 .
 Use
 .B papersize
 instead.
-.
-This isn't used by
-.I \%@g@troff
-itself,
-but by output devices.
 .
 .
 .TP

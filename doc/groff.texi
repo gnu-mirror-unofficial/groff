@@ -17773,36 +17773,36 @@ another name.
 @item paperlength @var{n}
 @kindex paperlength
 The physical vertical dimension of the output medium in basic units.
-This isn't used by @code{troff} itself but by output devices.
+This isn't used by GNU @code{troff} itself, but by output devices.
 Deprecated.  Use @code{papersize} instead.
 
 @item papersize @var{string} @dots{}
 @kindex papersize
-Select a paper size.  Valid values for @var{string} are the ISO paper
-types @code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
-@code{D0}--@code{D7}, @code{DL}, and the US paper types @code{letter},
-@code{legal}, @code{tabloid}, @code{ledger}, @code{statement},
-@code{executive}, @code{com10}, and @code{monarch}.  Case is not
-significant for @var{string} if it holds predefined paper types.
-Alternatively, @var{string} can be a file name (e.g.@:
-@file{/etc/papersize}); if the file can be opened, @code{groff} reads
-the first line and tests for the above paper sizes.  Finally,
-@var{string} can be a custom paper size in the format
-@code{@var{length},@var{width}} (no spaces before and after the comma).
-Both @var{length} and @var{width} must have a unit appended; valid
-values are @samp{i} for inches, @samp{c} for centimeters, @samp{p} for
-points, and @samp{P} for picas.  Example: @code{12c,235p}.  An argument
-that starts with a digit is always treated as a custom paper format.
-@code{papersize} sets both the vertical and horizontal dimension of the
-output medium.
+Select a paper size.  Valid values for @var{string} are the ISO and DIN
+formats @code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
+@code{D0}--@code{D7}; the U.S.@: paper types @code{letter},
+@code{legal}, @code{tabloid}, @code{ledger}, @code{statement}, and
+@code{executive}; and the envelope formats @code{com10}, @code{monarch},
+and @code{DL}.  Case is not significant for @var{string} if it holds
+predefined paper types.  Alternatively, @var{string} can be a file name
+(e.g., @file{/etc/papersize}); if the file can be opened, GNU
+@code{troff} reads the first line and tests for the above paper sizes.
+Finally, @var{string} can be a custom paper size in the format
+@code{@var{length},@var{width}} (with no spaces before or after the
+comma).  Both @var{length} and @var{width} must have a unit appended;
+valid values are @samp{i} for inches, @samp{c} for centimeters, @samp{p}
+for points, and @samp{P} for picas.  Example: @code{12c,235p}.  An
+argument that starts with a digit is always treated as a custom paper
+format.  @code{papersize} sets both the vertical and horizontal
+dimensions of the output medium.
 
-More than one argument can be specified; @code{groff} scans from left to
-right and uses the first valid paper specification.
+More than one argument can be specified; GNU @code{troff} scans from
+left to right and uses the first valid paper specification.
 
 @item paperwidth @var{n}
 @kindex paperwidth
 The physical horizontal dimension of the output medium in basic units.
-This isn't used by @code{troff} itself but by output devices.
+This isn't used by GNU @code{troff} itself, but by output devices.
 Deprecated.  Use @code{papersize} instead.
 
 @item pass_filenames
