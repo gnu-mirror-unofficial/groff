@@ -549,11 +549,11 @@ Approval signature.
 .
 Generates an approval line with place for signature and date.
 .
-The string \[oq]APPROVED:\[cq] can be changed with variable
+The text \[oq]APPROVED:\[cq] can be changed with the string
 .BR Letapp ;
 it is replaced with an empty lin if there is a second argument.
 .
-The string \[oq]Date\[cq] can be changed with variable
+The text \[oq]Date\[cq] can be changed with the string
 .BR Letdate .
 .
 .TP
@@ -1119,7 +1119,7 @@ memorandum.
 .
 The argument replaces the default string.
 .
-The default is stored in string variable
+The default is stored in the string
 .BR Letfc .
 .
 .TP
@@ -1244,7 +1244,7 @@ If
 .I varname
 is used,
 .B GETHN
-sets the string variable
+sets the string
 .I varname
 to the header number.
 .
@@ -1262,7 +1262,7 @@ If
 .I varname
 is used,
 .B GETPN
-sets the stringvariable
+sets the string
 .I varname
 to the page number.
 .
@@ -1854,7 +1854,7 @@ arg1\[rs]tpage number\[rs]theader mark
 .
 .TP
 .B INDP
-Print the index by running the command specified by string variable
+Print the index by running the command specified by the string
 .BR Indcmd ,
 which has \[oq]sort\ \-t\[rs]t\[cq] as the default value.
 .
@@ -1863,7 +1863,7 @@ reads the output from the command to form the index,
 by default in two columns (this can be changed by defining
 .BR TYIND ).
 .
-The index is printed with string variable
+The index is printed with the string
 .B Index
 as header,
 default is \[oq]INDEX\[cq].
@@ -2173,7 +2173,7 @@ Prints \[oq]CONFIDENTIAL\[cq] on the second line below the date line.
 .
 Any argument replaces \[oq]CONFIDENTIAL\[cq].
 .
-See also string variable
+See also string
 .BR LetCN .
 T}
 RN@T{
@@ -2181,13 +2181,13 @@ Reference notation.
 Prints \[oq]In reference to:\[cq] and the argument two lines below the
 date line.
 .
-See also string variable
+See also string
 .BR LetRN .
 T}
 AT@T{
 Attention.
 Prints \[oq]ATTENTION:\[cq] and the argument below the inside address.
-See also string variable
+See also string
 .BR LetAT .
 T}
 SA@T{
@@ -2196,7 +2196,7 @@ Prints \[cq]To Whom It May Concern:\[cq] or the argument if it was
 present.
 .
 The salutation is printed two lines below the inside address.
-See also string variable
+See also string
 .BR LetSA .
 T}
 SJ@T{
@@ -2205,7 +2205,7 @@ Prints the argument as subject prefixed with \[oq]SUBJECT:\[cq]
 two lines below the inside address,
 except in letter type \[oq]SP\[cq],
 where the subject is printed in all-capital without any prefix.
-See also string variable
+See also string
 .BR LetSJ .
 T}
 .TE
@@ -2372,8 +2372,8 @@ then the argument becomes the entire notation.
 If the argument doesn't select a predefined type,
 it is printed as \[oq]Copy (\fIarg\/\fP) to\[cq].
 .
-It is possible to add more standard notations,
-see the string variables
+It is possible to add more standard notations;
+see the strings
 .B Letns
 and
 .BR Letnsdef .
@@ -2993,7 +2993,7 @@ By default, the indentation is controlled by the maximum length of
 headings in each level.
 .
 .IP
-The string variables
+The strings
 .BR Lifg ,
 .BR Litb ,
 .BR Liex ,
@@ -3146,7 +3146,7 @@ T}
 8@T{
 Print the verbose text with numbered lines.
 This adds four digit-sized spaces in the beginning of each line.
-Finer control is available with the string variable
+Finer control is available through the string
 .BR Verbnm .
 It contains all arguments to the
 .IR \%@g@troff (@MAN1EXT@)
@@ -3407,7 +3407,10 @@ used in
 is an array containing the different strings used in
 .BR .NS .
 .
-It is really a number of string variables prefixed with
+Since
+.I roff
+languages lack true array types,
+it is implemented as a set of strings prefixed with
 .BR Letns! .
 .
 If the argument doesn't exist, it is included between
@@ -4088,7 +4091,7 @@ is defined, where
 is the letter type.
 .
 .B .LO
-then assigns the argument to the string variable
+then assigns the argument to the string
 .BI let*lo- type\fR.\fP
 .
 .
