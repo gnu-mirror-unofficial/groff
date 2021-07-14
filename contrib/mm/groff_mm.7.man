@@ -2167,42 +2167,56 @@ sets the indent and overrides
 .
 A third argument prohibits printing of a blank line before each item.
 .
+.
 .TP
-.BI MT\  "\fR[\fParg \fR[\fPaddressee\fR]]\fP"
+.B MT\~\c
+.RI [ number \~[ addressee ]]
 Memorandum type.
 .
 The argument
-.I arg
-is part of a filename in
-.IR @TMAC_MDIR@/ * .MT .
+.I number
+is used to construct the file name
+.IR @TMAC_MDIR@/ number .MT
+and load it with the
+.B mso
+request.
 .
-Memorandum types 0 to\~5 are supported, including type
-\[oq]string\[cq] (which gets internally mapped to type\~6).
+Memorandum types 0 to\~5 are supported;
+any other value of
+.I number
+is mapped to type\~6.
+.
+If
+.I number
+is omitted,
+.B 0
+is implied.
 .
 .I addressee
-just sets a variable, used in the AT&T macros.
-.
-.IP
-.B arg
+sets a string analogous to one used by AT&T cover sheet macros that are
+not implemented in
+.IR "groff mm" .
 .
 .RS
 .IP
 .TS
 tab(@);
-l l.
+lB l.
 0@Normal memorandum, no type printed.
-1@Memorandum with \[oq]MEMORANDUM FOR FILE\[cq] printed.
-2@Memorandum with \[oq]PROGRAMMER'S NOTES\[cq] printed.
-3@Memorandum with \[oq]ENGINEER'S NOTES\[cq] printed.
+1@Memorandum with \[lq]MEMORANDUM FOR FILE\[rq] printed.
+2@Memorandum with \[lq]PROGRAMMER'S NOTES\[rq] printed.
+3@Memorandum with \[lq]ENGINEER'S NOTES\[rq] printed.
 4@Released paper style.
 5@External letter style.
 .TE
 .RE
 .
+.
 .IP
 See also
 .BR COVER / COVEND ,
-a more flexible type of front page.
+a more flexible type of cover page.
+.
 .
 .TP
 .BI MOVE\  "y-pos \fR[\fPx-pos \fR[\fPline-length\fR]]\fP"
@@ -4012,7 +4026,20 @@ then assigns the argument to the string variable
 .TP
 .IR @TMAC_MDIR@/ * .cov
 .TP
-.IR @TMAC_MDIR@/ * .MT
+.I @TMAC_MDIR@/0.MT
+implements memorandum types 0\[en]3 and 6.
+.
+.
+.TP
+.I @TMAC_MDIR@/4.MT
+implements memorandum type 4.
+.
+.
+.TP
+.I @TMAC_MDIR@/5.MT
+implements memorandum type 5.
+.
+.
 .TP
 .I @TMAC_MDIR@/locale
 .
