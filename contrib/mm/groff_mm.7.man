@@ -126,12 +126,12 @@ name and so on.
 .
 .
 .\" ====================================================================
-.SS "Number registers and strings"
+.SS "Registers and strings"
 .\" ====================================================================
 .
-Many macros can be controlled by number registers and strings.
+The behavior of many macros can be configured by registers and strings.
 .
-A number register is assigned with the
+A register is assigned with the
 .B nr
 request.
 .
@@ -154,7 +154,7 @@ the increment value for auto-increment.
 have a plus or minus sign as a prefix if an increment
 or decrement of the current value is wanted.
 .
-(Auto-increment or auto-decrement occurs if the number register is
+(Auto-increment or auto-decrement occurs if the register is
 used with a plus or minus sign,
 .BI \[rs]n+[ XXX ]
 or
@@ -186,14 +186,16 @@ should be prefixed with a double-quote.
 .
 .
 .\" ====================================================================
-.SS "Special formatting of number registers"
+.SS "Register format"
 .\" ====================================================================
 .
-A number register is printed with normal digits if no format has been
-given.
+A register is interpolated using Arabic numerals if no other format has
+been assigned to it.
 .
-Set the format with
-.BR af :
+Assign a format to a register with the
+.B af
+request.
+.
 .
 .RS
 .LP
@@ -353,8 +355,8 @@ The appendices start with\~\c
 .B A
 if automatic naming is used.
 .
-A new page is ejected, and a header is also produced if the number
-variable
+A new page is ejected,
+and a header is also produced if the register
 .B Aph
 is non-zero.
 .
@@ -528,8 +530,7 @@ list item (see
 .BR LI ).
 .
 .I text-indent
-overrides the default indentation of the list items set by number
-register
+overrides the default indentation of the list items set by register
 .BR Pi .
 .
 A third argument prohibits printing of a blank line before each item.
@@ -641,7 +642,8 @@ and
 .I rindent
 are the same as in
 .BR DS .
-Floating displays are controlled by the two number registers
+.
+Floating displays are controlled by the registers
 .B De
 and
 .BR Df .
@@ -711,8 +713,7 @@ Dash list start.
 Begins a list where each item is printed after a dash.
 .
 .I text-indent
-changes the default indentation of the list items set by number
-register
+changes the default indentation of the list items set by register
 .BR Pi .
 .
 A second argument prevents an empty line between each list item.
@@ -747,7 +748,7 @@ l lx.
 none@No indentation.
 L@No indentation.
 I@T{
-Indent text with the value of number register
+Indent text with the value of register
 .BR Si .
 T}
 C@Center each line.
@@ -784,7 +785,7 @@ F@Line-filling turned on.
 .IP
 By default, an empty line is printed before and after the display.
 .
-Setting number register
+Setting register
 .B Ds
 to\~0 prevents this.
 .
@@ -830,7 +831,7 @@ T}
 .
 .IP
 .B EC
-uses the number register
+uses the register
 .B Ec
 as a counter.
 .
@@ -838,10 +839,10 @@ It is possible to use
 .B .af
 to change the format of the number.
 .
-If number register
+If register
 .B Of
-is\~1, the format of title uses a dash instead of a dot after the
-number.
+is\~1,
+the format of title uses a dash instead of a dot after the number.
 .
 .IP
 The string
@@ -849,7 +850,7 @@ The string
 controls the title of the List of Equations;
 default is \[oq]LIST OF EQUATIONS\[cq].
 .
-The List of Equations is only printed if number register
+The List of Equations is printed only if register
 .B Le
 is\~1.
 .
@@ -974,7 +975,7 @@ argument appears at the right margin of the equation,
 centered vertically within the
 .BR DS / DE
 block,
-unless number register
+unless register
 .B Eq
 is\~1.
 .
@@ -996,7 +997,7 @@ The arguments are the same as for
 .BR EC .
 .
 .B EX
-uses the number register
+uses the register
 .B Ex
 as a counter.
 .
@@ -1005,7 +1006,7 @@ The string
 controls the title of the List of Exhibits;
 default is \[oq]LIST OF EXHIBITS\[cq].
 .
-The List of Exhibits is only printed if number register
+The List of Exhibits is printed only if register
 .B Lx
 is\~1,
 which is the default.
@@ -1089,7 +1090,7 @@ Figure title.
 The arguments are the same as for
 .BR EC .
 .B FG
-uses the number register
+uses the register
 .B Fg
 as a counter.
 .
@@ -1098,7 +1099,7 @@ The string
 controls the title of the List of Figures;
 default is \[oq]LIST OF FIGURES\[cq].
 .
-The List of Figures is only printed if number register
+The List of Figures is printed only if register
 .B Lf
 is\~1, which is the default.
 .
@@ -1143,7 +1144,7 @@ it is possible to have other number or names on the footnotes.
 Footnotes in displays are now possible.
 .
 An empty line separates footnotes;
-the height of the line is controlled by number register
+the height of the line is controlled by register
 .BR Fs ,
 default value is\~1.
 .
@@ -1267,15 +1268,14 @@ care of spacing and indentation.
 .
 .RS
 .IP
-Number register
+Register
 .B Ej
 controls page ejection before the heading.
 .
 By default, a level-one heading gets two blank lines before it;
 higher levels only get one.
 .
-A new page is ejected before each first-level heading if number
-register
+A new page is ejected before each first-level heading if register
 .B Ej
 is\~1.
 .
@@ -1294,7 +1294,7 @@ is\~0.
 .RS
 .IP
 A line break occurs after the heading if the heading level is less
-or equal to number register
+or equal to register
 .BR Hb .
 .
 Default value is\~2.
@@ -1306,7 +1306,7 @@ Default value is\~2.
 .RS
 .IP
 A blank line is inserted after the heading if the heading level is
-less or equal to number register
+less or equal to register
 .BR Hs .
 .
 Default value is\~2.
@@ -1324,8 +1324,7 @@ and
 .
 .RS
 .IP
-Indentation of the text after the heading is controlled by number
-register
+Indentation of the text after the heading is controlled by register
 .BR Hi .
 .
 Default value is\~0.
@@ -1337,8 +1336,7 @@ tab(@);
 l lx.
 0@The text is left-justified.
 1@T{
-Indentation of the text follows the value of number
-register
+Indentation of the text follows the value of register
 .B Pt ,
 see
 .BR P .
@@ -1354,7 +1352,7 @@ T}
 .
 .RS
 .IP
-All headings whose level is equal or below number register
+All headings whose level is equal or below register
 .B Hc
 and also less than or equal to
 .B Hb
@@ -1433,7 +1431,7 @@ and/or
 .
 .RS
 .IP
-Fourteen number registers named
+Fourteen registers named
 .B H1
 up to
 .B H14
@@ -1447,7 +1445,7 @@ this can be changed with the macro
 All marks are concatenated before printing.
 .
 To avoid this,
-set number register
+set register
 .B Ht
 to\~1.
 .
@@ -1459,7 +1457,7 @@ This only prints the current heading counter at each heading.
 .
 .RS
 .IP
-All headings whose level is equal or below number register
+All headings whose level is equal or below register
 .B Cl
 are saved to be printed in the table of contents.
 .
@@ -1484,7 +1482,7 @@ but\~0 for unnumbered headings (see
 Argument
 .I rlevel
 is the real level;
-it is set to number register
+it is set to register
 .B Hu
 for unnumbered headings.
 .
@@ -1578,7 +1576,7 @@ Default value is \[oq]\[rs]%\[cq].
 .
 Resets to the default if called without argument.
 .
-Hyphenation can be turned off by setting number register
+Hyphenation can be turned off by setting register
 .B Hy
 to\~0 at the beginning of the file.
 .
@@ -1612,7 +1610,7 @@ Unnumbered section header.
 .B HU
 behaves like
 .B H
-at the level in number register
+at the level in register
 .BR Hu .
 .
 See\~\c
@@ -1976,7 +1974,7 @@ a prefix to the current mark.
 There is no separating space between the prefix and the mark if the
 second argument is \[oq]2\[cq] instead of \[oq]1\[cq].
 .
-This behaviour can also be achieved by setting number register
+This behaviour can also be achieved by setting register
 .B Limsp
 to zero.
 .
@@ -1987,7 +1985,7 @@ makes a hanging indentation instead.
 .IP
 A blank line is printed before the list item by default.
 .
-This behaviour can be controlled by number register
+This behaviour can be controlled by register
 .BR Ls .
 .
 Pre-spacing occurs for each list level less than or equal to
@@ -1998,7 +1996,7 @@ Default value is 99.
 There is no nesting limit.
 .
 .IP
-The indentation can be changed through number register
+The indentation can be changed through register
 .BR Li .
 Default is\~6.
 .
@@ -2381,14 +2379,14 @@ to\~0.
 If the argument is\~1,
 the first line of text following\~\c
 .B P
-is indented by the number of spaces in number register
+is indented by the number of spaces in register
 .BR Pi ,
 by default\~5.
 .
 .IP
 Instead of giving an argument to\~\c
 .B P
-it is possible to set the paragraph type in number register
+it is possible to set the paragraph type in register
 .BR Pt .
 .
 Using 0 and\~1 is the same as adding that value to
@@ -2400,7 +2398,7 @@ and displays (this value can't be used as an argument to
 itself).
 .
 .IP
-The space between two paragraphs is controlled by number register
+The space between two paragraphs is controlled by register
 .BR Ps ,
 and is\~1 by default (one blank line).
 .
@@ -2645,7 +2643,7 @@ l lx.
 .IP
 The reference items are separated by a blank line.
 .
-Setting number register
+Setting register
 .B Ls
 to\~0 suppresses the line.
 .
@@ -2655,7 +2653,7 @@ The string
 contains the reference page title and is set to \[oq]REFERENCES\[cq]
 by default.
 .
-The number register
+The register
 .B Rpe
 holds the default value for the second argument of
 .BR RP ;
@@ -2671,7 +2669,7 @@ where the reference mark should be and write the reference between
 .BR RS / RF
 at next new line after the reference mark.
 .
-The reference number is stored in number register
+The reference number is stored in register
 .BR :R .
 .
 If
@@ -2807,7 +2805,7 @@ The arguments are the same as for
 .BR EC .
 .
 .B TB
-uses the number register
+uses the register
 .B Tb
 as a counter.
 .
@@ -2816,7 +2814,7 @@ The string
 controls the title of the List of Tables;
 default value is \[oq]LIST OF TABLES\[cq].
 .
-The List of Tables is only printed if number register
+The List of Tables is printed only if register
 .B Lt
 is\~1, which is the default.
 .
@@ -2839,7 +2837,7 @@ Table of contents.
 This macro is normally used as the last line of the document.
 .
 It generates a table of contents with headings up to the level
-controlled by number register
+controlled by register
 .BR Cl .
 .
 Note that
@@ -3077,7 +3075,7 @@ T}
 16@T{
 Indent the verbose text by \[oq]5n\[cq].
 .
-This is controlled by the number-variable
+This is controlled by the register
 .B Verbin
 (in units).
 T}
@@ -3431,12 +3429,12 @@ Default is\~1.
 .
 .
 .\" ====================================================================
-.SS "Number variables used in \f[I]m@TMAC_M_PREFIX@m\f[]"
+.SS "Registers used in \f[I]m@TMAC_M_PREFIX@m\f[]"
 .\" ====================================================================
 .
 .TP
 .B Aph
-Print an appendix page for every new appendix  if this number variable
+Print an appendix page for every new appendix if this register
 is non-zero.
 .
 No output occurs if
@@ -3537,7 +3535,7 @@ Default is\~1.
 .
 .TP
 .B H1h
-A copy of number register
+A copy of register
 .BR H1 ,
 but it is incremented just before the page break.
 .
@@ -3593,7 +3591,7 @@ two lines precede the section heading instead of one.
 .
 Default is first level only.
 .
-The real amount of lines is controlled by the variables
+The real amount of lines is controlled by the registers
 .B Hps1
 and
 .BR Hps2 .
@@ -3771,7 +3769,7 @@ T}
 .IP
 Default is\~0.
 .
-See also the number registers
+See also the registers
 .B Sectf
 and
 .BR Sectp .
@@ -3945,7 +3943,7 @@ either in the territory-specific macro file,
 or as local additions.
 .
 .B .LT
-sets the number variables
+sets the registers
 .B Pt
 and
 .B Pi
@@ -3958,7 +3956,7 @@ The following strings and macros must be defined for a new letter type.
 This macro is called directly by
 .BR .LT .
 .
-It is supposed to initialize variables and other stuff.
+It is supposed to initialize registers and other stuff.
 .
 .TP
 .BI let@head_ type
