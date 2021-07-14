@@ -283,33 +283,63 @@ A@0, A, B, C, .\|.\|., Z, AA, AB, .\|.\|.
 .\" ====================================================================
 .
 In
-.BR m@TMAC_M_PREFIX@m ,
-the fonts (or rather, font styles)
+.IR "groff mm" ,
+the fonts
+(or rather,
+font styles)
 .BR R \~(normal),
 .BR I \~(italic),
 and
 .BR B \~(bold)
-are hardwired to font positions
+are mounted at font positions
 .BR 1 ,
 .BR 2 ,
-and\~\c
-.BR 3 ,
+.RB and\~ 3 ,
 respectively.
 .
-Internally, font positions are used for backwards compatibility.
+Internally,
+font positions are used for backwards compatibility.
 .
-From a practical point of view it doesn't make a big difference
-\[en] a different font family can still be selected with a call to the
-.B .fam
-request or using
-.BR groff 's
+From a practical point of view,
+it doesn't make a big difference\[em]a different font family can still
+be selected by invoking
+.IR groff 's
+.B fam
+request or using its
 .B \-f
 command-line option.
 .
-On the other hand, if you want to replace just, say, font
+On the other hand,
+if you want to replace just,
+for example,
+.RB font\~ I
+with Zapf Chancery Medium italic
+(available on
+.IR groff 's
+.B pdf
+and
+.B ps
+output devices),
+you have to use the
+.B fp
+request,
+replacing the font at position\~2 with
+.RB \[lq] .fp\~2\~ZCMI \[rq]).
+.
+Because the cover sheet,
+memorandum type,
+and
+.IR \%@g@refer (@MAN1EXT@)
+integration macros explicitly request fonts named
 .BR B ,
-you have to replace the font at position\~2 (with a call to
-\[oq].fp\~2\~.\|.\|.\[cq]).
+.BR I ,
+and
+.BR R ,
+you will also need to remap these font names with the
+.B ftr
+request,
+for instance with
+.RB \[lq] .ftr\~I\~ZCMI \[rq].
 .
 .
 .\" ====================================================================
