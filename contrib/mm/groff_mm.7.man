@@ -511,14 +511,20 @@ Default is \[oq]ABSTRACT\[cq].
 Sets the text above the abstract text.
 .
 .TP
-.BI AT\  "title1 \fR[\fPtitle2 \fR[.\|.\|.]]\fP"
-Author's title.
+.B AT\~\c
+.IR title \~[.\|.\|.]
+Author's title(s).
 .
+If present,
 .B AT
-must appear just after each
+must appear just after the corresponding author's
 .BR AU .
 .
-The title shows up after the name in the signature block.
+Each title shows up on a separate output line after the name in the
+signature block and in the
+.B ms
+cover sheet style.
+.
 .
 .TP
 .B AU\~\c
@@ -533,15 +539,20 @@ The title shows up after the name in the signature block.
 .RI [ arg3 ]]]]]]]]]
 Author information.
 .
-Specifies the author of the memo or paper, and is printed on the cover
-sheet and on other similar places.
+Specifies the author of the memo or paper,
+and is printed on the cover sheet and in other similar places.
+.
 .B AU
 must not appear before
 .BR TL .
 .
-The author information can contain initials, location, department,
-telephone extension, room number or name and up to three extra
-arguments.
+The author information can contain initials,
+location,
+department,
+telephone extension,
+room number or name,
+and up to three additional arguments.
+.
 .
 .TP
 .BI AV\  \fR[\fPname\  \fR[\fP1\fR]]\fP
@@ -650,30 +661,43 @@ the distance from the current indentation to the mark.
 .
 A third argument prohibits printing of a blank line before each item.
 .
+.
 .TP
-.BI COVER\  \fR[\fParg\fR]\fP
-Begin a coversheet definition.
+.B COVER\~\c
+.RI [ style ]
+Begin a cover sheet description.
 .
 It is important that
 .B .COVER
-appears before any normal text.
+appear before any of the body text
+(or main matter)
+of a document.
 .
-This macro uses
-.I arg
-to build the filename
-.IR @TMAC_MDIR@/ arg .cov .
+The argument
+.I style
+is used to construct the file name
+.IR @TMAC_MDIR@/ style .cov
+and load it with the
+.B mso
+request.
 .
 Therefore it is possible to create unlimited types of cover sheets.
 .
-.I ms.cov
-is supposed to look like the ms cover sheet.
+The default
+.I style
+is
+.BR ms ;
+it structures a cover sheet to resemble that used by the
+.I ms
+package.
 .
 .B .COVER
 requires a
 .B .COVEND
-at the end of the cover definition.
+at the end of the cover description.
 .
-Always use this order of the cover macros:
+Always use the following ordering of the cover sheet macros.
+.
 .
 .RS
 .IP
@@ -689,18 +713,21 @@ Always use this order of the cover macros:
 .EE
 .RE
 .
+.
 .IP
-However, only
+Only
 .B .TL
 and
 .B .AU
 are required.
 .
+.
 .TP
 .B COVEND
-Finish the cover description and print the cover page.
+End the cover description and output the cover page.
 .
-It is defined in the cover file.
+This macro is defined in the cover sheet macro file.
+.
 .
 .TP
 .B DE
@@ -4106,8 +4133,24 @@ then assigns the argument to the string
 .
 .TP
 .I @MACRODIR@/@TMAC_M_PREFIX@m.tmac
+is the
+.I groff
+implementation of the memorandum macros.
+.
+.
 .TP
-.IR @TMAC_MDIR@/ * .cov
+.I @MACRODIR@/mm.tmac
+is wrapper to load
+.IR m.tmac .
+.
+.
+.TP
+.I @TMAC_MDIR@/ms.cov
+implements an
+.IR ms -like
+cover sheet.
+.
+.
 .TP
 .I @TMAC_MDIR@/0.MT
 implements memorandum types 0\[en]3 and 6.
@@ -4125,6 +4168,8 @@ implements memorandum type 5.
 .
 .TP
 .I @TMAC_MDIR@/locale
+performs any (further) desired necessary localization;
+empty by default.
 .
 .
 .\" ====================================================================
