@@ -137,52 +137,104 @@ request.
 .
 .
 .RS
-.LP
-.BI .nr\  "XXX \fR[\fP\fB\[+-]\fP\fR]\fPn \fR[\fPi\fR]\fP\""
+.P
+.B .nr
+.I ident
+.RB [ \[+-] ]\c
+.I n
+.RI [ i ]
 .RE
 .
 .
-.LP
-.I XXX
+.P
+.I ident
 is the name of the register,
+and
 .IR n \~is
-the value to be assigned, and
-.IR i \~is
-the increment value for auto-increment.
+the value to be assigned.
 .
 .IR n \~can
-have a plus or minus sign as a prefix if an increment
-or decrement of the current value is wanted.
+be prefixed with a plus or minus sign if incrementation or
+decrementation (respectively) of the register's existing value is
+desired.
 .
-(Auto-increment or auto-decrement occurs if the register is
-used with a plus or minus sign,
-.BI \[rs]n+[ XXX ]
-or
-.BI \[rs]n\-[ XXX ]\fR.)\fP
+If assignment of a (possibly) negative
+.IR n \~is
+required,
+further prefix it with a zero or enclose it in parentheses.
+.
+If
+.IR i \~is
+specified,
+the register is automatically modified
+.RI by \~i
+prior to interpolation if a plus or minus sign is included in the escape
+sequence as follows.
 .
 .
-.LP
+.RS
+.P
+.B \[rs]n\c
+.RB [ \[+-] ]\c
+.BI [ ident ]
+.RE
+.
+.
+.P
+.IR i \~can
+be negative;
+it combines algebraically with the sign in the interpolation escape.
+.
+.
+.P
 Strings are defined with the
 .B ds
 request.
 .
 .
 .RS
-.LP
-\fB\&.ds\fP \fIYYY string\fP
+.P
+.B .ds
+.I ident string
 .RE
 .
 .
-.LP
-The string is assigned everything to the end of the line,
-even blanks.
+.P
+The string is assigned everything up to the end of the line,
+including trailing spaces.
 .
-Initial blanks in
+It is a good practice to end
 .I string
-should be prefixed with a double-quote.
+with a comment escape sequence
+.RB ( \[rs]\[dq] )
+so that extraneous spaces do not intrude during document maintenance.
 .
-(Strings are used in the text as
-.BI \[rs]*[ YYY ]\fR.)\fP
+To include leading spaces in
+.IR string ,
+prefix it with a double quote.
+.
+Strings are interpolated with the
+.B \[rs]*
+escape sequence.
+.
+.
+.RS
+.P
+.B \[rs]*\c
+.BI [ ident ]
+.RE
+.
+.
+.P
+Register and string name spaces are distinct,
+but strings and macros share a name space.
+.
+Defining a string with the same name as an
+.I mm
+macro is not supported and may cause incorrect rendering,
+the emission of diagnostic messages,
+and an error exit status from
+.IR \%@g@troff .
 .
 .
 .\" ====================================================================
