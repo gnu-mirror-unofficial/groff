@@ -1775,22 +1775,26 @@ at position
 .
 .TPx
 .REQ .ec
-Reset escape character to
+Set escape character to
 .squoted_char \[rs] .
+.
 .
 .TPx
 .REQ .ec "c"
 Set escape character to
 .IR c .
 .
+.
 .TPx
 .REQ .ecr
 Restore escape character saved with
 .request .ecs .
 .
+.
 .TPx
 .REQ .ecs
 Save current escape character.
+.
 .
 .TPx
 .REQ .el "anything"
@@ -1811,24 +1815,28 @@ after the end of input.
 .
 .TPx
 .REQ .eo
-Turn off escape character mechanism.
+Unset escape character,
+turning off escape interpretation.
+.
 .
 .TPx
 .REQ .ev
-Switch to previous environment and pop it off the stack.
+Pop environment stack,
+returning to previous one.
+.
 .
 .TPx
 .REQ .ev "env"
-Push down environment number or name
-.I env
-to the stack and switch to it.
+Push current environment onto stack and switch to
+.IR env .
+.
 .
 .TPx
 .REQ .evc "env"
-Copy the contents of environment
+Copy environment
 .I env
-to the current environment.
-No pushing or popping.
+to the current one.
+.
 .
 .TPx
 .REQ .ex
