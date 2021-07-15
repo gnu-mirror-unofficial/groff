@@ -18021,37 +18021,6 @@ The name @samp{---} is special and indicates that the glyph is unnamed;
 such glyphs can only be used by means of the @code{\N} escape sequence
 in @code{gtroff}.
 
-The @var{type} field gives the glyph type:
-
-@table @code
-@item 1
-the glyph has a descender, for example, @samp{p};
-
-@item 2
-the glyph has an ascender, for example, @samp{b};
-
-@item 3
-the glyph has both an ascender and a descender, for example, @samp{(}.
-@end table
-
-The @var{code} field gives the code that the postprocessor uses to
-print the glyph.  The glyph can also be input to @code{gtroff} using
-this code by means of the @code{\N} escape sequence.  @var{code} can be
-any integer.  If it starts with @samp{0} it is interpreted as octal; if
-it starts with @samp{0x} or @samp{0X} it is interpreted as hexadecimal.
-Note, however, that the @code{\N} escape sequence only accepts a decimal
-integer.
-
-The @var{entity-name} field gives an @acronym{ASCII} string identifying
-the glyph that the postprocessor uses to print the @code{gtroff} glyph
-@var{name}.  This field is optional and has been introduced so that the
-@code{grohtml} device driver can encode its character set.  For example,
-the glyph @samp{\[Po]} is represented as @samp{&pound;} in
-@acronym{HTML} 4.0.
-
-Anything on the line after the @var{entity-name} field resp.@: after
-@samp{--} is ignored.
-
 The @var{metrics} field has the form:
 
 @display
@@ -18083,6 +18052,37 @@ should be added before the glyph when it is immediately to be preceded
 by a glyph from a roman font.  The @var{subscript-correction} gives the
 amount of space that should be added after a glyph before adding a
 subscript.  This should be less than the italic correction.
+
+The @var{type} field gives the glyph type:
+
+@table @code
+@item 1
+the glyph has a descender, for example, @samp{p};
+
+@item 2
+the glyph has an ascender, for example, @samp{b};
+
+@item 3
+the glyph has both an ascender and a descender, for example, @samp{(}.
+@end table
+
+The @var{code} field gives the code that the postprocessor uses to
+print the glyph.  The glyph can also be input to @code{gtroff} using
+this code by means of the @code{\N} escape sequence.  @var{code} can be
+any integer.  If it starts with @samp{0} it is interpreted as octal; if
+it starts with @samp{0x} or @samp{0X} it is interpreted as hexadecimal.
+Note, however, that the @code{\N} escape sequence only accepts a decimal
+integer.
+
+The @var{entity-name} field gives an @acronym{ASCII} string identifying
+the glyph that the postprocessor uses to print the @code{gtroff} glyph
+@var{name}.  This field is optional and has been introduced so that the
+@code{grohtml} device driver can encode its character set.  For example,
+the glyph @samp{\[Po]} is represented as @samp{&pound;} in
+@acronym{HTML} 4.0.
+
+Anything on the line after the @var{entity-name} field resp.@: after
+@samp{--} is ignored.
 
 A line in the @code{charset} section can also have the format
 

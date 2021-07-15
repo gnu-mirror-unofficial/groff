@@ -580,6 +580,74 @@ escape sequence in
 .
 .LP
 The
+.I metrics
+field has the form
+(on one line;
+it may be broken here for the sake of readability):
+.
+.IP
+.I width\/\c
+.RI [\fB, \:height\/\c
+.RI [\fB, \:depth\/\c
+.RI [\fB, \:\%italic-correction\/\c
+.RI [\fB, \:\%left-italic-correction\/\c
+.RI [\fB, \:\%subscript-correction ]]]]]
+.
+.LP
+There must not be any spaces between these subfields.
+.
+Missing subfields are assumed to be\~0.
+.
+The subfields are all decimal integers.
+.
+Since there is no associated binary format,
+these values are not required to fit into a variable of type
+.B char
+as they are in ditroff.
+.
+The
+.I width
+subfields gives the width of the glyph.
+.
+The
+.I height
+subfield gives the height of the glyph
+(upwards is positive);
+if a glyph does not extend above the baseline,
+it should be given a zero height,
+rather than a negative height.
+.
+The
+.I depth
+subfield gives the depth of the glyph,
+that is,
+the distance below the baseline to which the glyph extends
+(downwards is positive);
+if a glyph does not extend below the baseline,
+it should be given a zero depth,
+rather than a negative depth.
+.
+The
+.I italic-correction
+subfield gives the amount of space that should be added after the
+glyph when it is immediately to be followed by a glyph
+from a roman font.
+.
+The
+.I left-italic-correction
+subfield gives the amount of space that should be added before the
+glyph when it is immediately to be preceded by a glyph
+from a roman font.
+.
+The
+.I subscript-correction
+gives the amount of space that should be added after a glyph
+before adding a subscript.
+.
+This should be less than the italic correction.
+.
+.LP
+The
 .I type
 field gives the glyph type:
 .
@@ -649,74 +717,6 @@ but for efficiency reasons these data are now compiled directly into
 .LP
 Anything on the line after the encoding field or \[oq]\-\-\[cq] are
 ignored.
-.
-.LP
-The
-.I metrics
-field has the form
-(on one line;
-it may be broken here for the sake of readability):
-.
-.IP
-.I width\/\c
-.RI [\fB, \:height\/\c
-.RI [\fB, \:depth\/\c
-.RI [\fB, \:\%italic-correction\/\c
-.RI [\fB, \:\%left-italic-correction\/\c
-.RI [\fB, \:\%subscript-correction ]]]]]
-.
-.LP
-There must not be any spaces between these subfields.
-.
-Missing subfields are assumed to be\~0.
-.
-The subfields are all decimal integers.
-.
-Since there is no associated binary format,
-these values are not required to fit into a variable of type
-.B char
-as they are in ditroff.
-.
-The
-.I width
-subfields gives the width of the glyph.
-.
-The
-.I height
-subfield gives the height of the glyph
-(upwards is positive);
-if a glyph does not extend above the baseline,
-it should be given a zero height,
-rather than a negative height.
-.
-The
-.I depth
-subfield gives the depth of the glyph,
-that is,
-the distance below the baseline to which the glyph extends
-(downwards is positive);
-if a glyph does not extend below the baseline,
-it should be given a zero depth,
-rather than a negative depth.
-.
-The
-.I italic-correction
-subfield gives the amount of space that should be added after the
-glyph when it is immediately to be followed by a glyph
-from a roman font.
-.
-The
-.I left-italic-correction
-subfield gives the amount of space that should be added before the
-glyph when it is immediately to be preceded by a glyph
-from a roman font.
-.
-The
-.I subscript-correction
-gives the amount of space that should be added after a glyph
-before adding a subscript.
-.
-This should be less than the italic correction.
 .
 .LP
 A line in the charset section can also have the format
