@@ -17744,7 +17744,9 @@ however, override previous values.  Empty lines are ignored.
 @item charset
 @kindex charset
 This line and everything following it in the file are ignored.  It is
-recognized for backwards compatibility.
+recognized for compatibility with other @code{troff} implementations.
+In GNU @code{troff}, character set repertoire is defined on a
+per-font-description basis.
 
 @item family @var{fam}
 @kindex family
@@ -17754,9 +17756,9 @@ The default font family is @var{fam}.
 @kindex fonts
 Fonts @var{F1} @dots{} @var{Fn} are mounted in the font positions
 @var{m}+1, @dots{}, @var{m}+@var{n} where @var{m} is the number of
-styles.  This command may extend over more than one line.  A font name
-of@tie{}@code{0} causes no font to be mounted at the corresponding
-position.
+@code{styles} (see below).  This directive may extend over more than one
+line.  A font name of@tie{}@code{0} causes no font to be mounted at the
+corresponding position.
 
 @item hor @var{n}
 @kindex hor
@@ -17765,56 +17767,59 @@ position.
 The horizontal resolution is @var{n}@tie{}basic units.  All horizontal
 quantities are rounded to multiples of this value.
 
-@item image_generator @var{string}
+@item image_generator @var{program}
 @kindex image_generator
 @cindex PostScript, PNG image generation
 @cindex PNG image generation from PostScript
-Specify the program used to generate PNG images from PostScript input;
-needed for @code{grohtml} only.  Under GNU/Linux, this is usually
-@code{gs}, but under other systems (notably Cygwin) it might be set to
-another name.
+Use @var{program} to generate PNG images from PostScript input.  Under
+GNU/Linux, this is usually @code{gs}, but under other systems (notably
+Cygwin) it might be set to another name.  The @code{grohtml} driver uses
+this directive.
 
 @item paperlength @var{n}
 @kindex paperlength
-The physical vertical dimension of the output medium in basic units.
-This isn't used by GNU @code{troff} itself, but by output devices.
-Deprecated.  Use @code{papersize} instead.
+The vertical dimension of the physical output medium is
+@var{n}@tie{}basic units.  Deprecated: use @code{papersize} instead.
 
-@item papersize @var{string} @r{@dots{}}
+@item papersize @var{format-or-dimension-pair-or-file-name} @r{@dots{}}
 @kindex papersize
-Select a paper size.  Valid values for @var{string} are the ISO and DIN
-formats @code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
+Set the dimensions of the physical output medium according to the
+argument, which is either a standard paper format, a pair of dimensions,
+or the name of a plain text file containing either of the foregoing.
+
+Recognized paper formats are the ISO and DIN formats
+@code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
 @code{D0}--@code{D7}; the U.S.@: paper types @code{letter},
 @code{legal}, @code{tabloid}, @code{ledger}, @code{statement}, and
 @code{executive}; and the envelope formats @code{com10}, @code{monarch},
-and @code{DL}.  Case is not significant for @var{string} if it holds
-predefined paper types.  Alternatively, @var{string} can be a file name
-(e.g., @file{/etc/papersize}); if the file can be opened, GNU
-@code{troff} reads the first line and tests for the above paper sizes.
-Finally, @var{string} can be a custom paper size in the format
+and @code{DL}.  Case is not significant for the argument if it holds
+predefined paper types.
+
+Alternatively, the argument can be a custom paper size in the format
 @code{@var{length},@var{width}} (with no spaces before or after the
 comma).  Both @var{length} and @var{width} must have a unit appended;
-valid values are @samp{i} for inches, @samp{c} for centimeters, @samp{p}
+valid units are @samp{i} for inches, @samp{c} for centimeters, @samp{p}
 for points, and @samp{P} for picas.  Example: @samp{12c,235p}.  An
 argument that starts with a digit is always treated as a custom paper
-format.  @code{papersize} sets both the vertical and horizontal
-dimensions of the output medium.
+format.
+
+Finally, the argument can be a file name (e.g., @file{/etc/papersize});
+if the file can be opened, GNU @code{troff} reads the first line and
+attempts to match the above forms.  No comment syntax is supported.
 
 More than one argument can be specified; GNU @code{troff} scans from
 left to right and uses the first valid paper specification.
 
 @item paperwidth @var{n}
 @kindex paperwidth
-The physical horizontal dimension of the output medium in basic units.
-This isn't used by GNU @code{troff} itself, but by output devices.
-Deprecated.  Use @code{papersize} instead.
+The horizontal dimension of the physical output medium is
+@var{n}@tie{}basic units.  Deprecated: use @code{papersize} instead.
 
 @item pass_filenames
 @kindex pass_filenames
 Direct GNU @code{troff} to emit the name of the source file being
 processed.  This is achieved with the intermediate output command
-@samp{x F}.  Currently, this is used only by the @code{grohtml} output
-driver.
+@samp{x F}.  The @code{grohtml} driver uses this directive.
 
 @item postpro @var{program}
 @kindex postpro
@@ -17822,9 +17827,8 @@ Use @var{program} as the postprocessor.
 
 @item prepro @var{program}
 @kindex prepro
-Use @var{program} as a preprocessor.  Currently, this keyword is used
-only when GNU @code{troff} is directed to use the @code{html} or
-@code{xhtml} output devices.
+Use @var{program} as a preprocessor.  The @code{html} and @code{xhtml}
+output devices use this directive.
 
 @item print @var{program}
 @kindex print
@@ -17839,18 +17843,17 @@ The device has @var{n}@tie{}basic units per inch.
 
 @item sizes @var{s1} @r{@dots{}} @var{sn} 0
 @kindex sizes
-The device has fonts at @var{s1}, @dots{}, @var{sn} scaled points.  The
-below).  The list of sizes must be terminated by@tie{}@code{0} (this is
-digit zero).  Each
+The device has fonts at @var{s1}, @dots{}, @var{sn} scaled points (see
+below).  The list of sizes must be terminated by@tie{}@code{0}.  Each
 @var{si} can also be a range of sizes @var{m}--@var{n}.  The list can
 extend over more than one line.
 
 @item sizescale @var{n}
 @kindex sizescale
-The scale factor for point sizes.  By default this has a value
-of@tie{}@code{1}.  One scaled point is equal to one point divided
-by@tie{}@var{n}.  The arguments to the @code{unitwidth} and @code{sizes}
-commands are given in scaled points.  @xref{Fractional Type Sizes}.
+Set the scale factor for point sizes to one divided by@tie{}@var{n}.
+The default is@tie{}@code{1}.  The arguments to the @code{unitwidth} and
+@code{sizes} directives are given in scaled points.  @xref{Fractional
+Type Sizes}.
 
 @item styles @var{S1} @r{@dots{}} @var{Sm}
 @kindex styles
@@ -17874,8 +17877,8 @@ the font description files since the Unicode handling built into
 section, they either override the default mappings for those particular
 characters or add new mappings (normally for composite characters).
 
-This is used by the @code{utf8}, @code{html}, and @code{xhtml} output
-devices.
+The @code{utf8}, @code{html}, and @code{xhtml} output devices use this
+directive.
 
 @item unitwidth @var{n}
 @kindex unitwidth
@@ -17885,20 +17888,20 @@ point size is @var{n}@tie{}scaled points.
 @item unscaled_charwidths
 @kindex unscaled_charwidths
 Make the font handling module always return unscaled character widths.
-Needed by the @code{grohtml} driver.
+The @code{grohtml} driver uses this directive.
 
 @item use_charnames_in_special
 @kindex use_charnames_in_special
-This command indicates that GNU @code{troff} should encode special
-characters inside special commands.  Currently, this is used only by the
-@code{grohtml} output driver.  @xref{Postprocessor Access}.
+This directive indicates that GNU @code{troff} should encode special
+characters inside special commands; @xref{Postprocessor Access}.  The
+@code{grohtml} driver uses this directive.
 
 @item vert @var{n}
 @kindex vert
 @cindex vertical resolution
 @cindex resolution, vertical
 The vertical resolution is @var{n}@tie{}basic units.  All vertical
-quantities are rounded to be multiples of this value.
+quantities are rounded to multiples of this value.
 @end table
 
 @kindex spare1
@@ -17942,16 +17945,16 @@ section are optional.
 @table @code
 @item slant @var{n}
 @kindex slant
-The glyphs of the font have a slant of @var{n}@tie{}degrees.  (Positive
-means forward.)
+The glyphs of the font have a slant of @var{n}@tie{}degrees, where a
+positive @var{n} slants in the direction of text flow.
 
 @item ligatures @var{lig1} @r{@dots{}} @var{lign} @r{[}0@r{]}
 @kindex ligatures
 Glyphs @var{lig1}, @dots{}, @var{lign} are ligatures; possible ligatures
 are @samp{ff}, @samp{fi}, @samp{fl}, @samp{ffi} and @samp{ffl}.  For
-backwards compatibility, the list of ligatures may be terminated with
-a@tie{}@code{0}.  The list of ligatures may not extend over more than
-one line.
+compatibility with other @code{troff} implementations, the list of
+ligatures may be terminated with a@tie{}@code{0}.  The list of ligatures
+must not extend over more than one line.
 
 @item special
 @cindex special fonts
@@ -17961,7 +17964,7 @@ that is not present in the current font, it is searched for in any
 special fonts that are mounted.
 @end table
 
-Other commands are ignored by GNU @code{troff} but may be used by
+Other directives are ignored by GNU @code{troff} but may be used by
 postprocessors to store arbitrary information about the font in the
 file.
 
@@ -18025,7 +18028,7 @@ sequence @samp{\[@var{name}]}.
 @c connections between input and output encoding, which prevents use of
 @c different (input) character sets.
 A name consisting of three minus signs, @samp{---}, is special and
-indicates that the glyph is unnamed; such glyphs can only be accessed by
+indicates that the glyph is unnamed: such glyphs can only be accessed by
 means of the @code{\N} escape sequence in @code{troff}.
 
 The form of the @var{metrics} field is as follows.
@@ -18041,9 +18044,8 @@ The form of the @var{metrics} field is as follows.
 There must not be any spaces between these subfields (it has been split
 here into two lines only for better legibility).  Missing subfields are
 assumed to be@tie{}@code{0}.  The subfields are all decimal integers.
-Since
-there is no associated binary format, these values are not required to
-fit into the C language data type @samp{char} as they are in
+Since there is no associated binary format, these values are not
+required to fit into the C language data type @samp{char} as they are in
 @acronym{AT&T} device-independent @code{troff}.  The @var{width}
 subfield gives the width of the glyph.  The @var{height} subfield gives
 the height of the glyph (upwards is positive); if a glyph does not
@@ -18052,11 +18054,12 @@ a negative height.  The @var{depth} subfield gives the depth of the
 glyph, that is, the distance below the baseline to which the glyph
 extends (downwards is positive); if a glyph does not extend below the
 baseline, it should be given a zero depth, rather than a negative depth.
+Italic corrections are relevant to glyphs in italic or oblique styles.
 The @var{italic-correction} subfield gives the amount of space that
-should be added after the glyph when it is immediately to be followed by
+should be added after the glyph when it is to be immediately followed by
 a glyph from an upright style.  The @var{left-italic-correction}
 subfield gives the amount of space that should be added before the glyph
-when it is immediately to be preceded by a glyph from an upright style.
+when it is to be immediately preceded by a glyph from an upright style.
 The @var{subscript-correction} gives the amount of space that should be
 added after a glyph before adding a subscript.  This should be less than
 the italic correction.
@@ -18078,8 +18081,8 @@ is true of parentheses in some fonts).
 The @var{code} field gives a numeric identifier that the postprocessor
 uses to render the glyph.  The glyph can be specified to @code{troff}
 using this code by means of the @code{\N} escape sequence.  @var{code}
-can be any integer.@footnote{any integer parsable by the C standard
-library's @code{strotol} function, that is}
+can be any integer.@footnote{That is, any integer parsable by the C
+standard library's @code{strotol} function.}
 
 The @var{entity-name} field defines an identifier for the glyph that the
 postprocessor uses to print the GNU @code{troff} glyph @var{name}.  This
