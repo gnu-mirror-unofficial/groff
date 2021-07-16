@@ -17733,41 +17733,41 @@ italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 @pindex DESC@r{ file format}
 
 The @file{DESC} file can contain the following types of line.  Except
-for the @code{charset} keyword, which must come last (if at all), the
+for the @code{charset} directive, which must come last (if at all), the
 order of the lines is not important.  Later entries in the file,
-however, override previous values.
+however, override previous values.  Empty lines are ignored.
 
 @table @code
 @item charset
 @kindex charset
-This line and everything following in the file are ignored.  It is
-allowed for the sake of backwards compatibility.
+This line and everything following it in the file are ignored.  It is
+recognized for backwards compatibility.
 
 @item family @var{fam}
 @kindex family
 The default font family is @var{fam}.
 
-@item fonts @var{n} @var{F1} @var{F2} @var{F3} @dots{} @var{Fn}
+@item fonts @var{n} @var{F1} @dots{} @var{Fn}
 @kindex fonts
 Fonts @var{F1} @dots{} @var{Fn} are mounted in the font positions
 @var{m}+1, @dots{}, @var{m}+@var{n} where @var{m} is the number of
 styles.  This command may extend over more than one line.  A font name
-of@tie{}0 means no font is mounted on the corresponding font position.
+of@tie{}0 causes no font to be mounted at the corresponding position.
 
 @item hor @var{n}
 @kindex hor
 @cindex horizontal resolution
 @cindex resolution, horizontal
 The horizontal resolution is @var{n}@tie{}basic units.  All horizontal
-quantities are rounded to be multiples of this value.
+quantities are rounded to multiples of this value.
 
 @item image_generator @var{string}
 @kindex image_generator
 @cindex PostScript, PNG image generation
 @cindex PNG image generation from PostScript
-Needed for @code{grohtml} only.  It specifies the program to generate
-PNG images from PostScript input.  Under GNU/Linux this is usually
-@code{gs} but under other systems (notably cygwin) it might be set to
+Specify the program used to generate PNG images from PostScript input;
+needed for @code{grohtml} only.  Under GNU/Linux, this is usually
+@code{gs}, but under other systems (notably Cygwin) it might be set to
 another name.
 
 @item paperlength @var{n}
@@ -17807,27 +17807,20 @@ Deprecated.  Use @code{papersize} instead.
 
 @item pass_filenames
 @kindex pass_filenames
-Tell @code{gtroff} to emit the name of the source file currently being
-processed.  This is achieved by the intermediate output command
-@samp{F}.  Currently, this is only used by the @code{grohtml} output
-device.
+Direct GNU @code{troff} to emit the name of the source file being
+processed.  This is achieved with the intermediate output command
+@samp{x F}.  Currently, this is used only by the @code{grohtml} output
+driver.
 
 @item postpro @var{program}
 @kindex postpro
-Call @var{program} as a postprocessor.  For example, the line
-
-@Example
-postpro grodvi
-@endExample
-
-@noindent
-in the file @file{devdvi/DESC} makes @code{groff} call @command{grodvi}
-if option @option{-Tdvi} is given (and @option{-Z} isn't used).
+Use @var{program} as the postprocessor.
 
 @item prepro @var{program}
 @kindex prepro
-Call @var{program} as a preprocessor.  Currently, this keyword is used
-by @code{groff} with option @option{-Thtml} or @option{-Txhtml} only.
+Use @var{program} as a preprocessor.  Currently, this keyword is used
+only when GNU @code{troff} is directed to use the @code{html} or
+@code{xhtml} output devices.
 
 @item print @var{program}
 @kindex print
@@ -17838,37 +17831,37 @@ Use @var{program} as a spooler program for printing.  If omitted, the
 @kindex res
 @cindex device resolution
 @cindex resolution, device
-There are @var{n}@tie{}basic units per inch.
+The device has @var{n}@tie{}basic units per inch.
 
-@item sizes @var{s1} @var{s2} @dots{} @var{sn} 0
+@item sizes @var{s1} @dots{} @var{sn} 0
 @kindex sizes
-This means that the device has fonts at @var{s1}, @var{s2}, @dots{}
-@var{sn} scaled points.  The list of sizes must be terminated by@tie{}0
-(this is digit zero).  Each @var{si} can also be a range of sizes
-@var{m}--@var{n}.  The list can extend over more than one line.
+The device has fonts at @var{s1}, @dots{}, @var{sn} scaled points.  The
+list of sizes must be terminated by@tie{}0 (this is digit zero).  Each
+@var{si} can also be a range of sizes @var{m}--@var{n}.  The list can
+extend over more than one line.
 
 @item sizescale @var{n}
 @kindex sizescale
 The scale factor for point sizes.  By default this has a value
-of@tie{}1.  One scaled point is equal to one point/@var{n}.  The
-arguments to the @code{unitwidth} and @code{sizes} commands are given in
-scaled points.  @xref{Fractional Type Sizes}.
+of@tie{}1.  One scaled point is equal to one point divided by @var{n}.
+The arguments to the @code{unitwidth} and @code{sizes} commands are
+given in scaled points.  @xref{Fractional Type Sizes}.
 
-@item styles @var{S1} @var{S2} @dots{} @var{Sm}
+@item styles @var{S1} @dots{} @var{Sm}
 @kindex styles
 The first @var{m}@tie{}font positions are associated with styles
-@var{S1} @dots{} @var{Sm}.
+@var{S1}, @dots{}, @var{Sm}.
 
 @item tcommand
 @kindex tcommand
-This means that the postprocessor can handle the @samp{t} and @samp{u}
-intermediate output commands.
+The postprocessor can handle the @samp{t} and @samp{u} intermediate
+output commands.
 
 @item unicode
 @kindex unicode
-Indicate that the output device supports the complete Unicode
-repertoire.  Useful only for devices that produce @emph{character
-entities} instead of glyphs.
+The output device supports the complete Unicode repertoire.  This
+directive is useful only for devices that produce character entities
+instead of glyphs.
 
 If @code{unicode} is present, no @code{charset} section is required in
 the font description files since the Unicode handling built into
@@ -17876,7 +17869,8 @@ the font description files since the Unicode handling built into
 section, they either override the default mappings for those particular
 characters or add new mappings (normally for composite characters).
 
-This is used for @option{-Tutf8}, @option{-Thtml}, and @option{-Txhtml}.
+This is used by the @code{utf8}, @code{html}, and @code{xhtml} output
+devices.
 
 @item unitwidth @var{n}
 @kindex unitwidth
@@ -17886,13 +17880,13 @@ point size is @var{n}@tie{}scaled points.
 @item unscaled_charwidths
 @kindex unscaled_charwidths
 Make the font handling module always return unscaled character widths.
-Needed for the @code{grohtml} device.
+Needed by the @code{grohtml} driver.
 
 @item use_charnames_in_special
 @kindex use_charnames_in_special
-This command indicates that @code{gtroff} should encode special
-characters inside special commands.  Currently, this is only used by the
-@code{grohtml} output device.  @xref{Postprocessor Access}.
+This command indicates that GNU @code{troff} should encode special
+characters inside special commands.  Currently, this is used only by the
+@code{grohtml} output driver.  @xref{Postprocessor Access}.
 
 @item vert @var{n}
 @kindex vert
@@ -17902,16 +17896,16 @@ The vertical resolution is @var{n}@tie{}basic units.  All vertical
 quantities are rounded to be multiples of this value.
 @end table
 
-The @code{res}, @code{unitwidth}, @code{fonts}, and @code{sizes} lines
-are mandatory.  Other commands are ignored by @code{gtroff} but may be
-used by postprocessors to store arbitrary information about the device
-in the @file{DESC} file.
-
 @kindex spare1
 @kindex spare2
 @kindex biggestfont
-GNU @code{troff} recognizes but completely ignores the obsolete keywords
-@code{spare1}, @code{spare2}, and @code{biggestfont}.
+GNU @code{troff} recognizes but ignores the directives @code{spare1},
+@code{spare2}, and @code{biggestfont}.
+
+The @code{res}, @code{unitwidth}, @code{fonts}, and @code{sizes} lines
+are mandatory.  Directives not listed above are ignored by GNU
+@code{troff} but may be used by postprocessors to store arbitrary
+information about a device in the @file{DESC} file.
 
 @c ---------------------------------------------------------------------
 
@@ -17922,11 +17916,10 @@ GNU @code{troff} recognizes but completely ignores the obsolete keywords
 @cindex format of font files
 @cindex format of font description files
 
-A @dfn{font file}, also (and probably better) called a @dfn{font
-description file}, has two sections.  The first section is a sequence of
-lines each containing a sequence of blank-delimited words; the first
-word in the line is a key, and subsequent words give a value for that
-key.
+A font description file has two sections; empty lines are ignored in
+both.  The first section is a sequence of lines each containing a
+sequence of space-delimited words; the first word in the line is a key,
+and subsequent words associate a value with that key.
 
 @table @code
 @item name @var{f}
@@ -17935,20 +17928,22 @@ The name of the font is@tie{}@var{f}.
 
 @item spacewidth @var{n}
 @kindex spacewidth
-The normal width of a space is@tie{}@var{n}.
+The normal width of a space is@tie{}@var{n} basic units.
+
+The above directives are mandatory; the remaining ones in the first
+section are optional.
 
 @item slant @var{n}
 @kindex slant
 The glyphs of the font have a slant of @var{n}@tie{}degrees.  (Positive
 means forward.)
 
-@item ligatures @var{lig1} @var{lig2} @dots{} @var{lign} [0]
+@item ligatures @var{lig1} @dots{} @var{lign} [0]
 @kindex ligatures
-Glyphs @var{lig1}, @var{lig2}, @dots{}, @var{lign} are ligatures;
-possible ligatures are @samp{ff}, @samp{fi}, @samp{fl}, @samp{ffi} and
-@samp{ffl}.  For backwards compatibility, the list of ligatures may be
-terminated with a@tie{}0.  The list of ligatures may not extend over
-more than one line.
+Glyphs @var{lig1}, @dots{}, @var{lign} are ligatures; possible ligatures
+are @samp{ff}, @samp{fi}, @samp{fl}, @samp{ffi} and @samp{ffl}.  For
+backwards compatibility, the list of ligatures may be terminated with
+a@tie{}0.  The list of ligatures may not extend over more than one line.
 
 @item special
 @cindex special fonts
@@ -17958,8 +17953,8 @@ that is not present in the current font, it is searched for in any
 special fonts that are mounted.
 @end table
 
-Other commands are ignored by @code{gtroff} but may be used by
-postprocessors to store arbitrary information about the font in the font
+Other commands are ignored by GNU @code{troff} but may be used by
+postprocessors to store arbitrary information about the font in the
 file.
 
 @cindex comments in font files
@@ -17970,15 +17965,16 @@ character and extend to the end of a line.
 
 The second section contains one or two subsections.  It must contain a
 @code{charset} subsection and it may also contain a @code{kernpairs}
-subsection.  These subsections can appear in any order.  Each subsection
-starts with a word on a line by itself.
+subsection.  These subsections can appear in either order.  Each
+subsection starts with a directive on a line by itself.
 
 @kindex charset
-The word @code{charset} starts the character set
-subsection.@footnote{This keyword is misnamed since it starts a list of
-ordered glyphs, not characters.}  The @code{charset} line is followed by
-a sequence of lines.  Each line gives information for one glyph.  A line
-comprises a number of fields separated by blanks or tabs.  The format is
+The directive @code{charset} starts the character set
+subsection.@footnote{This keyword is misnamed since it starts an ordered
+list of glyphs, not characters.}  The @code{charset} line is followed by
+a sequence of lines, each with information about one glyph.  A line
+comprises a number of fields separated by spaces or tabs.  The format is
+as follows.
 
 @quotation
 @var{name} @var{metrics} @var{type} @var{code} [@var{entity-name}]
@@ -17993,35 +17989,38 @@ comprises a number of fields separated by blanks or tabs.  The format is
 @cindex glyphs, unnamed, accessing with @code{\N}
 @kindex ---
 @noindent
-@var{name} identifies the glyph name:@footnote{The distinction between
-input, characters, and output, glyphs, is not clearly separated in the
-terminology of @code{groff}; for example, the @code{char} request should
-be called @code{glyph} since it defines an output entity.} if
-@var{name} is a single character@tie{}@var{c} then it corresponds to the
-@code{gtroff} input character@tie{}@var{c}; if it is of the form
-@samp{\@var{c}} where @var{c} is a single character, then it corresponds
-to the special character @code{\[@var{c}]}; otherwise it corresponds to
-the special character @samp{\[@var{name}]}.  If it is exactly two
-characters @var{xx} it can be entered as @samp{\(@var{xx}}.
-Single-letter special characters can't be accessed as @samp{\@var{c}};
-the only exception is @samp{\-}, which is identical to @code{\[-]}.
+@var{name} identifies the glyph:
+@c XXX: Move this footnote to a more general discussion since it is
+@c applicable to the groff system overall.
+@c
+@c @footnote{The distinction between input, characters, and output,
+@c glyphs, is not clearly separated in the terminology of @code{groff};
+@c for example, the @code{char} request should be called @code{glyph}
+@c since it defines an output entity.}
+if @var{name} is a single character@tie{}@var{c}, it corresponds to the
+@code{troff} input character@tie{}@var{c}.  Otherwise, it must be of the
+form @samp{\@var{name}} where @var{name} is at least one character; it
+then corresponds to the GNU @code{troff} special character escape
+sequence @samp{\[@var{name}]}.
+@c XXX: Commented out because the charXXX feature is very legacy, and as
+@c noted below, discouraged in font description files.
+@c
+@c GNU @code{troff} supports 8-bit input characters; however some
+@c utilities have difficulties with eight-bit characters.  For this
+@c reason, there is a convention that the entity name @samp{char@var{n}}
+@c is equivalent to the single input character whose code
+@c is@tie{}@var{n}.  For example, @samp{char163} would be equivalent to
+@c the character with code@tie{}163, which is the pounds sterling sign
+@c in the ISO@tie{}@w{Latin-1} character set.  You shouldn't use
+@c @samp{char@var{n}} entities in font description files since they are
+@c related to input, not output.  Otherwise, you get hard-coded
+@c connections between input and output encoding, which prevents use of
+@c different (input) character sets.
+A name consisting of three minus signs, @samp{---}, is special and
+indicates that the glyph is unnamed; such glyphs can only be accessed by
+means of the @code{\N} escape sequence in @code{troff}.
 
-@code{gtroff} supports 8-bit input characters; however some utilities
-have difficulties with eight-bit characters.  For this reason, there is
-a convention that the entity name @samp{char@var{n}} is equivalent to
-the single input character whose code is@tie{}@var{n}.  For example,
-@samp{char163} would be equivalent to the character with code@tie{}163,
-which is the pounds sterling sign in the ISO@tie{}@w{Latin-1} character
-set.  You shouldn't use @samp{char@var{n}} entities in font description
-files since they are related to input, not output.  Otherwise, you get
-hard-coded connections between input and output encoding, which prevents
-use of different (input) character sets.
-
-The name @samp{---} is special and indicates that the glyph is unnamed;
-such glyphs can only be used by means of the @code{\N} escape sequence
-in @code{gtroff}.
-
-The @var{metrics} field has the form:
+The form of the @var{metrics} field is as follows.
 
 @display
 @group
@@ -18032,80 +18031,82 @@ The @var{metrics} field has the form:
 
 @noindent
 There must not be any spaces between these subfields (it has been split
-here into two lines for better legibility only).  Missing subfields are
+here into two lines only for better legibility).  Missing subfields are
 assumed to be@tie{}0.  The subfields are all decimal integers.  Since
 there is no associated binary format, these values are not required to
-fit into a variable of type @samp{char} as they are in @acronym{AT&T}
-device-independent @code{troff}.  The @var{width} subfield gives the
-width of the glyph.  The @var{height} subfield gives the height of the
-glyph (upwards is positive); if a glyph does not extend above the
-baseline, it should be given a zero height, rather than a negative
-height.  The @var{depth} subfield gives the depth of the glyph, that is,
-the distance from the baseline to the lowest point below the baseline to
-which the glyph extends (downwards is positive); if a glyph does not
-extend below the baseline, it should be given a zero depth, rather than
-a negative depth.  The @var{italic-correction} subfield gives the amount
-of space that should be added after the glyph when it is immediately to
-be followed by a glyph from a roman font.  The
-@var{left-italic-correction} subfield gives the amount of space that
-should be added before the glyph when it is immediately to be preceded
-by a glyph from a roman font.  The @var{subscript-correction} gives the
-amount of space that should be added after a glyph before adding a
-subscript.  This should be less than the italic correction.
+fit into the C language data type @samp{char} as they are in
+@acronym{AT&T} device-independent @code{troff}.  The @var{width}
+subfield gives the width of the glyph.  The @var{height} subfield gives
+the height of the glyph (upwards is positive); if a glyph does not
+extend above the baseline, it should be given a zero height, rather than
+a negative height.  The @var{depth} subfield gives the depth of the
+glyph, that is, the distance below the baseline to which the glyph
+extends (downwards is positive); if a glyph does not extend below the
+baseline, it should be given a zero depth, rather than a negative depth.
+The @var{italic-correction} subfield gives the amount of space that
+should be added after the glyph when it is immediately to be followed by
+a glyph from an upright style.  The @var{left-italic-correction}
+subfield gives the amount of space that should be added before the glyph
+when it is immediately to be preceded by a glyph from an upright style.
+The @var{subscript-correction} gives the amount of space that should be
+added after a glyph before adding a subscript.  This should be less than
+the italic correction.
 
-The @var{type} field gives the glyph type:
+The @var{type} field gives a featural description of the glyph.
 
 @table @code
 @item 1
-the glyph has a descender, for example, @samp{p};
+means the glyph has a descender (for example, @samp{p});
 
 @item 2
-the glyph has an ascender, for example, @samp{b};
+means the glyph has an ascender, (for example, @samp{b}); and
 
 @item 3
-the glyph has both an ascender and a descender, for example, @samp{(}.
+means the glyph has both an ascender and a descender (for example, this
+is true of parentheses in some fonts).
 @end table
 
-The @var{code} field gives the code that the postprocessor uses to
-print the glyph.  The glyph can also be input to @code{gtroff} using
-this code by means of the @code{\N} escape sequence.  @var{code} can be
-any integer.  If it starts with @samp{0} it is interpreted as octal; if
-it starts with @samp{0x} or @samp{0X} it is interpreted as hexadecimal.
-Note, however, that the @code{\N} escape sequence only accepts a decimal
-integer.
+The @var{code} field gives a numeric identifier that the postprocessor
+uses to render the glyph.  The glyph can be specified to @code{troff}
+using this code by means of the @code{\N} escape sequence.  @var{code}
+can be any integer.@footnote{any integer parsable by the C standard
+library's @code{strotol} function, that is}.
 
-The @var{entity-name} field gives an @acronym{ASCII} string identifying
-the glyph that the postprocessor uses to print the @code{gtroff} glyph
-@var{name}.  This field is optional and has been introduced so that the
-@code{grohtml} device driver can encode its character set.  For example,
-the glyph @samp{\[Po]} is represented as @samp{&pound;} in
-@acronym{HTML} 4.0.
+The @var{entity-name} field defines an identifier for the glyph that the
+postprocessor uses to print the GNU @code{troff} glyph @var{name}.  This
+field is optional; it was introduced so that the @code{grohtml} output
+driver could encode its character set.  For example, the glyph
+@samp{\[Po]} is represented by @samp{&pound;} in @acronym{HTML} 4.0.
+For efficiency, these data are now compiled directly into
+@code{grohtml}.  @code{grops} uses the field to build sub-encoding
+arrays for PostScript fonts containing more than 256 glyphs.
 
-Anything on the line after the @var{entity-name} field resp.@: after
-@samp{--} is ignored.
+Anything on the line after the @var{entity-name} field or @samp{--} is
+ignored.
 
-A line in the @code{charset} section can also have the format
+A line in the @code{charset} section can also have the following format.
 
 @Example
 @var{name} "
 @endExample
 
 @noindent
-This indicates that @var{name} is just another name for the glyph
-mentioned in the preceding line.
+This notation indicates that @var{name} is another name for the glyph
+named on the preceding line.  Such aliases can be chained.
 
 @kindex kernpairs
-The word @code{kernpairs} starts the kernpairs section.  This contains a
-sequence of lines of the form:
+The word @code{kernpairs} starts a section listing kerning pairs.  It
+contains a sequence of lines formatted as follows.
 
 @Example
 @var{c1} @var{c2} @var{n}
 @endExample
 
 @noindent
-This means that when glyph @var{c1} appears next to glyph @var{c2} the
-space between them should be increased by@tie{}@var{n}.  Most entries in
-the kernpairs section have a negative value for@tie{}@var{n}.
+The foregoing means that when glyph @var{c1} is typeset immediately
+before @var{c2}, the space between them should be increased
+by@tie{}@var{n}.  Most kerning pairs should have a negative value
+for@tie{}@var{n}.
 @c END Keep parallel with groff_font(5).
 
 
