@@ -17695,6 +17695,9 @@ follow quite naturally.
 
 @c =====================================================================
 
+@codequotebacktick on
+@codequoteundirected on
+
 @c BEGIN Keep parallel with groff_font(5).
 @node Device and Font Files,  , gtroff Output, File formats
 @section Device and Font Files
@@ -17711,9 +17714,9 @@ are stored in a directory called @file{dev@var{name}}.  The device
 description file is called @file{DESC}, and, for each font@tie{}@var{f}
 supported by the device, a font file called@tie{}@file{@var{f}}, where
 @var{f}@tie{}is usually an abbreviation of a font's name and/or style.
-For example, the @samp{ps} (PostScript) device has @code{groff} font
+For example, the @code{ps} (PostScript) device has @code{groff} font
 description files for Times roman (@file{TR}) and Zapf Chancery Medium
-italic (@file{ZCMI}), among many others, while the @samp{utf8} device
+italic (@file{ZCMI}), among many others, while the @code{utf8} device
 (for terminal emulators) has only font descriptions for the roman,
 italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 @file{BI}, respectively).
@@ -17747,12 +17750,13 @@ recognized for backwards compatibility.
 @kindex family
 The default font family is @var{fam}.
 
-@item fonts @var{n} @var{F1} @dots{} @var{Fn}
+@item fonts @var{n} @var{F1} @r{@dots{}} @var{Fn}
 @kindex fonts
 Fonts @var{F1} @dots{} @var{Fn} are mounted in the font positions
 @var{m}+1, @dots{}, @var{m}+@var{n} where @var{m} is the number of
 styles.  This command may extend over more than one line.  A font name
-of@tie{}0 causes no font to be mounted at the corresponding position.
+of@tie{}@code{0} causes no font to be mounted at the corresponding
+position.
 
 @item hor @var{n}
 @kindex hor
@@ -17776,7 +17780,7 @@ The physical vertical dimension of the output medium in basic units.
 This isn't used by GNU @code{troff} itself, but by output devices.
 Deprecated.  Use @code{papersize} instead.
 
-@item papersize @var{string} @dots{}
+@item papersize @var{string} @r{@dots{}}
 @kindex papersize
 Select a paper size.  Valid values for @var{string} are the ISO and DIN
 formats @code{A0}--@code{A7}, @code{B0}--@code{B7}, @code{C0}--@code{C7},
@@ -17791,7 +17795,7 @@ Finally, @var{string} can be a custom paper size in the format
 @code{@var{length},@var{width}} (with no spaces before or after the
 comma).  Both @var{length} and @var{width} must have a unit appended;
 valid values are @samp{i} for inches, @samp{c} for centimeters, @samp{p}
-for points, and @samp{P} for picas.  Example: @code{12c,235p}.  An
+for points, and @samp{P} for picas.  Example: @samp{12c,235p}.  An
 argument that starts with a digit is always treated as a custom paper
 format.  @code{papersize} sets both the vertical and horizontal
 dimensions of the output medium.
@@ -17833,21 +17837,22 @@ Use @var{program} as a spooler program for printing.  If omitted, the
 @cindex resolution, device
 The device has @var{n}@tie{}basic units per inch.
 
-@item sizes @var{s1} @dots{} @var{sn} 0
+@item sizes @var{s1} @r{@dots{}} @var{sn} 0
 @kindex sizes
 The device has fonts at @var{s1}, @dots{}, @var{sn} scaled points.  The
-list of sizes must be terminated by@tie{}0 (this is digit zero).  Each
+below).  The list of sizes must be terminated by@tie{}@code{0} (this is
+digit zero).  Each
 @var{si} can also be a range of sizes @var{m}--@var{n}.  The list can
 extend over more than one line.
 
 @item sizescale @var{n}
 @kindex sizescale
 The scale factor for point sizes.  By default this has a value
-of@tie{}1.  One scaled point is equal to one point divided by @var{n}.
-The arguments to the @code{unitwidth} and @code{sizes} commands are
-given in scaled points.  @xref{Fractional Type Sizes}.
+of@tie{}@code{1}.  One scaled point is equal to one point divided
+by@tie{}@var{n}.  The arguments to the @code{unitwidth} and @code{sizes}
+commands are given in scaled points.  @xref{Fractional Type Sizes}.
 
-@item styles @var{S1} @dots{} @var{Sm}
+@item styles @var{S1} @r{@dots{}} @var{Sm}
 @kindex styles
 The first @var{m}@tie{}font positions are associated with styles
 @var{S1}, @dots{}, @var{Sm}.
@@ -17929,21 +17934,24 @@ The name of the font is@tie{}@var{f}.
 @item spacewidth @var{n}
 @kindex spacewidth
 The normal width of a space is@tie{}@var{n} basic units.
+@end table
 
 The above directives are mandatory; the remaining ones in the first
 section are optional.
 
+@table @code
 @item slant @var{n}
 @kindex slant
 The glyphs of the font have a slant of @var{n}@tie{}degrees.  (Positive
 means forward.)
 
-@item ligatures @var{lig1} @dots{} @var{lign} [0]
+@item ligatures @var{lig1} @r{@dots{}} @var{lign} @r{[}0@r{]}
 @kindex ligatures
 Glyphs @var{lig1}, @dots{}, @var{lign} are ligatures; possible ligatures
 are @samp{ff}, @samp{fi}, @samp{fl}, @samp{ffi} and @samp{ffl}.  For
 backwards compatibility, the list of ligatures may be terminated with
-a@tie{}0.  The list of ligatures may not extend over more than one line.
+a@tie{}@code{0}.  The list of ligatures may not extend over more than
+one line.
 
 @item special
 @cindex special fonts
@@ -18032,7 +18040,8 @@ The form of the @var{metrics} field is as follows.
 @noindent
 There must not be any spaces between these subfields (it has been split
 here into two lines only for better legibility).  Missing subfields are
-assumed to be@tie{}0.  The subfields are all decimal integers.  Since
+assumed to be@tie{}@code{0}.  The subfields are all decimal integers.
+Since
 there is no associated binary format, these values are not required to
 fit into the C language data type @samp{char} as they are in
 @acronym{AT&T} device-independent @code{troff}.  The @var{width}
@@ -18070,7 +18079,7 @@ The @var{code} field gives a numeric identifier that the postprocessor
 uses to render the glyph.  The glyph can be specified to @code{troff}
 using this code by means of the @code{\N} escape sequence.  @var{code}
 can be any integer.@footnote{any integer parsable by the C standard
-library's @code{strotol} function, that is}.
+library's @code{strotol} function, that is}
 
 The @var{entity-name} field defines an identifier for the glyph that the
 postprocessor uses to print the GNU @code{troff} glyph @var{name}.  This
@@ -18108,6 +18117,9 @@ before @var{c2}, the space between them should be increased
 by@tie{}@var{n}.  Most kerning pairs should have a negative value
 for@tie{}@var{n}.
 @c END Keep parallel with groff_font(5).
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
