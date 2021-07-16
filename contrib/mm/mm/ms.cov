@@ -25,18 +25,21 @@ http://savannah.gnu.org/bugs/?group=groff.
 .\" Cover sheet. Mostly like ms cover.
 .\"------------
 .de cov@print-title
-.in 0
-.misc@ev-keep cov*ev
-.init@reset
-.ad c
-.hy 0
-.fi
-.B
-.cov*title
-.br
-.ad b
-.R
-.ev
+.ie !d cov*title .@error COVEND: no title (TL) defined
+.el \{
+.	in 0
+.	misc@ev-keep cov*ev
+.	init@reset
+.	ad c
+.	hy 0
+.	fi
+.	B
+.	cov*title
+.	br
+.	ad b
+.	R
+.	ev
+.\}
 ..
 .\"------------
 .de cov@print-authors

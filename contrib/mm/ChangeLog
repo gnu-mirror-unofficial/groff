@@ -1,5 +1,12 @@
 2021-07-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* mm/ms.cov (cov@print-title): Enforce requirement documented in
+	groff_mm(7) that .TL is mandatory if .COVER is used.  Emit
+	diagnostic if `cov*title` is not defined, and skip remainder of
+	macro definition.
+
+2021-07-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* mm/ms.cov (COVEND): Fix thinko; test for existence of
 	`cov*abs-arg` register with `r` conditional operator, not `d`.
 
