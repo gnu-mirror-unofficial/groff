@@ -1,5 +1,24 @@
 2021-07-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Stop installing empty macro files.
+
+	* mm.am: Delete variable `MMLOCALE`.
+	(install_mm): Delete `for` loop that touches the files.
+	(uninstall_mm): Delete `for` loop that deletes the files.
+	* m.tmac: Update initializtion.
+	  - Load the `\*[@country]_locale` file with `msoquiet` instead
+	    of `mso`.
+	  - Add version check to require groff 1.23 or later, since
+	    the `msoquiet` request is now being used.
+	  - Move "include guard" to follow the compatibility mode and
+	    groff version checks.  Remove its `do` prefix.
+	* groff_mm.7.man (Localization): Migrate topic into its own
+	subsection and update discussion.
+
+	Fixes <https://savannah.gnu.org/bugs/?60700>.
+
+2021-07-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* mm/ms.cov (cov@print-firm): Do nothing if the `cov*firm`
 	string is not defined.  Silences a `mac` warning and prevents
 	the document date from being incorrectly aligned.
@@ -1130,6 +1149,8 @@ are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.
 
 Local Variables:
-version-control: never
+fill-column: 72
 mode: change-log
+version-control: never
 End:
+vim:set autoindent textwidth=72:

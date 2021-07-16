@@ -92,15 +92,14 @@ are not implemented.
 Cut marks are not supported.
 .
 .
-.LP
+.\" ====================================================================
+.SS Localization
+.\" ====================================================================
+.
 .I groff mm
-is designed to support easy localization.
+is designed to be easily localized.
 .
-Use
-.I m@TMAC_M_PREFIX@mse
-as an example of how to adapt the output format to a national standard.
-.
-Localized strings are collected in the file
+Strings that can appear in output are collected in the file
 .IR @MACRODIR@/ xx .tmac ,
 where
 .I xx
@@ -108,21 +107,30 @@ is an ISO\~639 two-letter language identifier.
 .
 For Swedish,
 this is
-.I sv.tmac;
+.IR sv.tmac ;
 \[lq]sv\[rq],
 not
 \[lq]se\[rq].
 .
 .
-.LP
-A file called
-.I locale
-or
-.RI territory _locale
-is read after package initialization.
+.P
+This package can also be localized by site or territory;
+for example,
+.I @MACRODIR@/@TMAC_M_PREFIX@mse.tmac
+illustrates how to adapt the output to a national standard using its ISO
+3166 territory code.
 .
-It is therefore possible to localize the macros with a different company
-name and so on.
+Such a package can define an internal string that causes a macro file
+called
+.RI territory _locale
+to be loaded at package initialization.
+.
+If this mechanism is not used,
+a macro file called
+.I locale
+is loaded instead.
+.
+No diagnostic is produced if these macro files do not exist.
 .
 .
 .\" ====================================================================

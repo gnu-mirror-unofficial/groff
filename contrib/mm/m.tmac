@@ -27,10 +27,20 @@ Index		array!index
 ..
 .if !\n(.g \
 .  ab groff mm macros require groff extensions; aborting
-.do if d PH .nx
+.
 .if \n(.C \
 .  ab groff mm macros do not work in compatibility mode; aborting
+.
 .ds @mm m.tmac\"
+.
+.if (\n[.x]\n[.y] < 123) \{\
+.  ds mm-msg \*[@mm]: groff mm macros require groff 1.23 or later,\"
+.  as mm-msg " but found groff \n[.x].\n[.y]; aborting\"
+.  ab \*[mm-msg]
+.\}
+.
+.if d PH .nx
+.
 .mso devtag.tmac
 .\" ######## init #######
 .\"	Contents level [0:14], contents saved if heading level <= Cl
@@ -360,8 +370,8 @@ Index		array!index
 .\"
 .\"---------------------------------------------
 .\" set local variables.
-.ie d @country .mso mm/\*[@country]_locale
-.el .mso mm/locale
+.ie d @country .msoquiet mm/\*[@country]_locale
+.el .msoquiet mm/locale
 .\"---------------------------------------------
 .if \n[D] .tm Groff mm, version \*[RE].
 .\" ####### module init ######
