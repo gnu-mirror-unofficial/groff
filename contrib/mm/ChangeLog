@@ -1,7 +1,13 @@
 2021-07-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* mm/ms.cov (cov@print-firm): Do nothing if the `cov*firm`
+	string is not defined.  Silences a `mac` warning and prevents
+	the document date from being incorrectly aligned.
+
 	* tests/ms_cover_sheet_robust_to_missing_AF.sh: Test it.
 	* mm.am (mm_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?60915>.
 
 2021-07-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 

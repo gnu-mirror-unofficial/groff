@@ -58,9 +58,11 @@ http://savannah.gnu.org/bugs/?group=groff.
 ..
 .\"------------
 .de cov@print-firm
-.SP .5
-.ce
-\\*[cov*firm]
+.if d cov*firm \{\
+.	SP .5
+.	ce
+.	nop \\*[cov*firm]
+.\}
 ..
 .\"------------
 .de cov@print-abstract
