@@ -474,42 +474,73 @@ This is used when diagrams or other non-formatted documents are
 included as appendices.
 .
 .TP
-.BI AS\  "\fR[\fParg \fR[\fPindent\fR]]\fP"
+.B AS\~\c
+.RI [ arg \~[ indent ]]
 Abstract start.
 .
-Indentation is specified in \[lq]ens\[rq],
-but scaling is allowed.
-.
-Argument
+Depending on the cover sheet macros used,
 .I arg
-controls where the abstract is printed.
+influences the placement of the abstract.
 .
+The default cover sheet style used when
+.B .COVER
+is called without arguments
+(and
+.B .MT
+is not called at all)
+places the abstract on the cover sheet and ignores
+.IR arg .
+.
+.
+.IP
+The memorandum types interpret
+.I arg
+as follows.
+.
+.
+.IP
 .RS
 .TS
 tab(@);
-lb lb
+lf(BI) lb
 l lx.
-\fBArg@Placement\fP
+arg@Placement
 0@T{
-Abstract is printed on page\~1 and on the cover sheet if used in the
-released-paper style (\fBMT 4\fP),
-otherwise it is printed on page\~1 without a cover sheet.
+The abstract is printed on page\~1 and on the cover sheet if used in the
+released-paper style
+.RB ( "MT 4" );
+otherwise,
+it is printed on page\~1 without a cover sheet.
 T}
-1@Abstract is only printed on the cover sheet (\fBMT 4\fP only).
-2@T{
-Abstract is printed only on the cover sheet (if not \fBMT 4\fP).
-The cover sheet is printed without a need for \fBCS\fP.
+1@T{
+The abstract is printed only on the cover sheet
+.RB ( "MT 4"
+only).
 T}
+.\" XXX: This does not appear to be implemented.
+.\"2@T{
+.\"The abstract is printed only on the cover sheet (if not
+.\".BR "MT 4" )
+.\".
+.\"The cover sheet is printed without a need for \fBCS\fP.
+.\"T}
 .TE
 .RE
 .
-.IP
-An abstract is not printed at all in external letters (\fBMT 5\fP).
 .
+.IP
+An abstract is not printed at all in external letters
+.RB ( "MT 5" ).
+.
+.
+.IP
 The
 .I indent
-parameter controls the indentation of both margins, otherwise normal
-text indentation is used.
+parameter controls the indentation of both margins;
+otherwise normal text indentation is used.
+.
+Its value is interpreted in ens by default.
+.
 .
 .TP
 .BI AST\  \fR[\fPtitle\fR]\fP

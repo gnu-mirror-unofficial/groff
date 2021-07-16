@@ -91,7 +91,8 @@ http://savannah.gnu.org/bugs/?group=groff.
 .\"-----------------
 .de COVEND
 .br
-.if d cov*default-firm .if !d cov*firm .ds cov*firm \\*[cov*default-firm]
+.if d cov*default-firm \
+.	if !d cov*firm .ds cov*firm \\*[cov*default-firm]
 .sp |4.2c
 .cov@print-title
 .cov@print-authors
@@ -101,8 +102,14 @@ http://savannah.gnu.org/bugs/?group=groff.
 .pg@enable-top-trap
 .bp 1
 .pg@enable-trap
-.if d cov*abs-arg .if \\n[cov*abs-arg] \{\
+.if r cov*abs-arg .if \\n[cov*abs-arg] \{\
 .	cov@print-abstract ABSTRACT
 .	SP 2
 .\}
 ..
+.
+.\" Local Variables:
+.\" mode: nroff
+.\" fill-column: 72
+.\" End:
+.\" vim: set filetype=groff textwidth=72:
