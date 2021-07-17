@@ -3012,23 +3012,27 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .\" .AU name [initials [loc [dept [ext [room [arg [arg [arg]]]]]]]]
 .de AU
 .cov@title-end
-.pg@disable-top-trap
-.nr cov*au +1
-.nr cov*i 0 1
-.ds cov*au!\\n[cov*au]!1
-.while \\n[.$]>=\\n+[cov*i] \{\
-.	ds cov*au!\\n[cov*au]!\\n[cov*i] "\\$[\\n[cov*i]]
-.\}
-.if (\\n[.$]>=3)&(\w@\\$3@) \{\
-.	if d cov*location-\\$3] \{\
-.		ds cov*au!3!\\n[cov*au] \\*[cov*location-\\$3]
+.ie !\\n[.$] .@error AU: no arguments
+.el \{\
+.	pg@disable-top-trap
+.	nr cov*au +1
+.	nr cov*at!\\n[cov*au] 0 \" no titles for this author yet
+.	nr cov*i 0 1
+.	ds cov*au!\\n[cov*au]!1
+.	while \\n[.$]>=\\n+[cov*i] \{\
+.		ds cov*au!\\n[cov*au]!\\n[cov*i] "\\$[\\n[cov*i]]
+.	\}
+.	if (\\n[.$]>=3)&(\w@\\$3@) \{\
+.		if d cov*location-\\$3] \{\
+.			ds cov*au!3!\\n[cov*au] \\*[cov*location-\\$3]
+.		\}
 .	\}
 .\}
 ..
 .\"-------------------
-.\" .AT title1 [title2 [... [title9] ]]]]
-.\" Well, thats all that COVEND look for.
-.\" Must appear directly after .AU
+.\" .AT title [...]
+.\" Any quantity of titles may be declared.
+.\" Must be called directly after the corresponding .AU.
 .de AT
 .if \\n[.$]<1 .@error "AT: no arguments"
 .nr cov*at!\\n[cov*au] \\n[.$]

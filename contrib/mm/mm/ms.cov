@@ -43,20 +43,23 @@ http://savannah.gnu.org/bugs/?group=groff.
 ..
 .\"------------
 .de cov@print-authors
-.SP
-.nr cov*i 0 1
-.while \\n+[cov*i]<=\\n[cov*au] \{\
-.	ce
-\fI\\*[cov*au!\\n[cov*i]!1]\fP
-.	nr cov*j 0 1
-.	while \\n+[cov*j]<=9 \{\
-.		if d cov*at!\\n[cov*i]!\\n[cov*j] \{\
-.			if \w'\\*[cov*at!\\n[cov*i]!\\n[cov*j]]' \{\
-.				ce
-\s-1\\*[cov*at!\\n[cov*i]!\\n[cov*j]]\s0
-.			.\}
+.ie !\\n[cov*au] .@error COVEND: no authors (AU) defined
+.el \{
+.	SP
+.	nr cov*i 0 1
+.	while \\n+[cov*i]<=\\n[cov*au] \{\
+.		ds cov*aname \\*[cov*au!\\n[cov*i]!1]
+.		ce
+.		nop \fI\\*[cov*aname]\fP
+.		nr cov*j 0 1
+.		while \\n+[cov*j]<=\\n[cov*at!\\n[cov*i]] \{\
+.			ds cov*atitle \\*[cov*at!\\n[cov*i]!\\n[cov*j]]
+.			ce
+.			nop \s-1\\*[cov*atitle]\s0
 .		\}
+.		rm cov*atitle
 .	\}
+.	rm cov*aname
 .\}
 ..
 .\"------------
