@@ -95,7 +95,7 @@ do
     --help)
       cat <<EOF
 usage: $prog [-bcCEhikpStUVz] [-dCS] [-dNAME=STRING] [-Karg] [-mNAME]\
- [-Mdir] [-nNUM] [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tname] [-wNAME]\
+ [-Mdir] [-nNUM] [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tdev] [-wNAME]\
  [-Wname] [FILE ...]
 usage: $prog {--help | -v | --version}
 EOF
