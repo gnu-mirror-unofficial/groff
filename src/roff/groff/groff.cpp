@@ -781,9 +781,10 @@ char **possible_command::get_argv()
 void synopsis(FILE *stream)
 {
   fprintf(stream,
-"usage: %1$s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-Denc] [-fFAM] [-Fdir]"
-" [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-Parg]"
-" [-rCN] [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
+"usage: %1$s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-dNAME=STRING] [-Denc]"
+" [-fFAM] [-Fdir] [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM]"
+" [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tdev] [-wNAME] [-Wname]"
+" [FILE ...]\n"
 "usage: %1$s {-h | --help | -v | --version}\n",
 	  program_name);
 }
@@ -796,8 +797,8 @@ void help()
 "-b\tprint backtraces with errors or warnings\n"
 "-c\tdisable color output\n"
 "-C\tenable compatibility mode\n"
-"-d CS\tdefine string C as S\n"
-"-d C=S\tdefine string C as S; C can be multiple characters\n"
+"-d CS\tdefine one-character string name C as string S\n"
+"-d NAME=STRING\n\tdefine string NAME as STRING\n"
 "-D ENC\tfall back to ENC as default input encoding; implies -k\n"
 "-e\tpreprocess with eqn\n"
 "-E\tsuppress error diagnostics\n"
@@ -821,8 +822,8 @@ void help()
 "-o LIST\toutput only page in LIST (\"1\"; \"2,4\"; \"3,7-11\")\n"
 "-p\tpreprocess with pic\n"
 "-P ARG\tpass ARG to the postprocessor\n"
-"-r CN\tdefine register C as N\n"
-"-r C=N\tdefine register C as N; C can be multiple characters\n"
+"-r CN\tdefine one-character register name C as numeric expression N\n"
+"-r REG=EXPR\n\tdefine register REG as numeric expression EXPR\n"
 "-R\tpreprocess with refer\n"
 "-s\tpreprocess with soelim\n"
 "-S\tenable safer mode (the default)\n"

@@ -37,6 +37,9 @@ groff \- front end to the GNU roff document formatting system
 .RB [ \-abcCeEgGijklNpRsStUVXzZ ]
 .RB [ \-d\~\c
 .IR cs ]
+.RB [ \-d\~\c
+.IB name =\c
+.IR string ]
 .RB [ \-D\~\c
 .IR enc ]
 .RB [ \-f\~\c
@@ -61,6 +64,9 @@ groff \- front end to the GNU roff document formatting system
 .IR arg ]
 .RB [ \-r\~\c
 .IR cn ]
+.RB [ \-r\~\c
+.IB reg =\c
+.IR expr ]
 .RB [ \-T\~\c
 .IR dev ]
 .RB [ \-w\~\c
@@ -676,11 +682,13 @@ see
 .B \-C
 Enable compatibility mode.
 .
+.
 .TP
 .BI \-d\~ cs
 .TQ
-.BI \-d\~ name = s
+.BI \-d\~ name = string
 Define string.
+.
 .
 .TP
 .B \-E
@@ -745,11 +753,12 @@ Number the first page
 Output only pages in
 .IR list .
 .
+.
 .TP
 .BI \-r\~ cn
 .TQ
-.BI \-r\~ name = n
-Set number register.
+.BI \-r\~ reg = expr
+Define register.
 .
 .
 .TP

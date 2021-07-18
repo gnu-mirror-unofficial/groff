@@ -35,6 +35,9 @@
 .RB [ \-abcCEiRUz ]
 .RB [ \-d\~\c
 .IR cs ]
+.RB [ \-d\~\c
+.IB name =\c
+.IR string ]
 .RB [ \-f\~\c
 .IR  fam ]
 .RB [ \-F\~\c
@@ -51,6 +54,9 @@
 .IR  list ]
 .RB [ \-r\~\c
 .IR  cn ]
+.RB [ \-r\~\c
+.IB reg =\c
+.IR expr ]
 .RB [ \-T\~\c
 .IR  dev ]
 .RB [ \-w\~\c
@@ -183,17 +189,31 @@ implies \-c.
 .
 .
 .TP
-.BI \-d cs
+.BI \-d\~ cs
 .TQ
-.BI \-d name = s
+.BI \-d\~ name = string
 Define
-.I c
+.I roff
+.RI string\~ c
 or
 .I name
-to be a string
-.IR s ;
+.RI as\~ s
+or
+.IR string ;
 .I c
-must be a one letter name.
+must be a one-character name.
+.
+Due to
+.IR getopt_long (3)
+limitations,
+.IR c\~ cannot
+be and
+.I name
+cannot contain an equals sign,
+even though that is a valid character in a
+.I roff
+identifier.
+.
 .
 .TP
 .B \-E
@@ -335,22 +355,36 @@ means print every page from
 .I \%@g@troff
 will exit after printing the last page in the list.
 .
+.
 .TP
-.BI \-r cn
+.BI \-r\~ cn
 .TQ
-.BI \-r name = n
-Set number register
-.I c
-or
-.I name
-to
-.IR n ;
-.I c
-must be a one character name;
-.I n
-can be any
+.BI \-r\~ reg = n
+Define
 .I roff
-numeric expression.
+.RI register\~ c
+or
+.I reg
+as
+.I groff
+numeric
+.RI expression\~ n
+or
+.IR expr ;
+.IR c \~must
+be a one-character name.
+.
+Due to
+.IR getopt_long (3)
+limitations,
+.IR c\~ cannot
+be and
+.I reg
+cannot contain an equals sign,
+even though that is a valid character in a
+.I roff
+identifier.
+.
 .
 .TP
 .B \-R

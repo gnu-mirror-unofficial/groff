@@ -94,9 +94,9 @@ do
       opts="$opts $1" ;;
     --help)
       cat <<EOF
-usage: $prog [-bcCEhikpStUVz] [-dCS] [-Karg] [-mNAME] [-Mdir] [-nNUM]\
- [-oLIST] [-Parg] [-rCN] [-Tname] [-wNAME] [-Wname] [--version]\
- [FILE ...]
+usage: $prog [-bcCEhikpStUVz] [-dCS] [-dNAME=STRING] [-Karg] [-mNAME]\
+ [-Mdir] [-nNUM] [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tname] [-wNAME]\
+ [-Wname] [FILE ...]
 usage: $prog {--help | -v | --version}
 EOF
       exit 0 ;;
