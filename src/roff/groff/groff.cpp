@@ -176,7 +176,7 @@ int main(int argc, char **argv)
       commands[TBL_INDEX].set_name(command_prefix, "tbl");
       break;
     case 'J':
-      commands[IDEAL_INDEX].set_name(command_prefix, "gideal");
+      // commands[IDEAL_INDEX].set_name(command_prefix, "gideal");
       // need_pic = 1;
       break;
     case 'j':
@@ -780,6 +780,7 @@ char **possible_command::get_argv()
 
 void synopsis(FILE *stream)
 {
+  // Add `J` to the cluster if we ever get ideal(1) support.
   fprintf(stream,
 "usage: %1$s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-dNAME=STRING] [-Denc]"
 " [-fFAM] [-Fdir] [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM]"
@@ -810,7 +811,7 @@ void help()
 "-i\tread standard input after all FILEs\n"
 "-I DIR\tsearch DIR for input files; implies -s\n"
 "-j\tpreprocess with chem\n"
-"-J\tpreprocess with gideal\n"
+// "-J\tpreprocess with gideal\n"
 "-k\tpreprocess with preconv\n"
 "-K ENC\tuse ENC as input encoding; implies -k\n"
 "-l\tspool the output\n"

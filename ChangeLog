@@ -1,3 +1,18 @@
+2021-07-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[groff]: Comment out vestiges of gideal support.  It would be
+	lovely to have, but no free (and GPL-compatible) implementation
+	has showed up after decades of waiting.  Production of the
+	original was a Ph.D. thesis.  Excited by de Moivre's theorem?
+	Take a stab at it.
+
+	* src/roff/groff/groff.cpp (main): Comment out effect of `-J`
+	option.  It remains recognized, but silently ignored (instead of
+	attempting to execute a nonexistent preprocessor).
+	(synopsis): Add comment reminding us to document the option if
+	we ever get the support.
+	(help): Comment out documentation of option.
+
 2021-07-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[[gnt]roff]: Make usage messages more accurate.
