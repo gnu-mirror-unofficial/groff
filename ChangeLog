@@ -1,20 +1,20 @@
-2021-07-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+2021-07-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[[gnt]roff]: Make usage messages more accurate.
 
 	* src/roff/groff/groff.cpp (synopsis): Drop `-h` and `-v` from
-	normal operation synopsis.  Tighten presentation of alternate
-	usage forms.
+	normal operation synopsis.  Sort options in en_US lexicographic
+	order.  Tighten presentation of alternate usage forms.
 	* src/roff/nroff/nroff.sh: Report `$prog` instead of "nroff"
 	literal.  Refer to `-P` option argument as "arg" instead of
 	"opt", for consistency with groff usage message.  Use opposite
 	case from option letter for option argument.
 	* src/roff/troff/input.cpp (usage): Put brackets around options.
-	Sort options taking arguments in en_US lexicographic order.
-	Drop `-v` from normal operation synopsis.  Use opposite case
-	from option letter for option argument.  Put operand name in
-	capitals.  Set valid usage forms on one physical line each (see
-	89648fb4, 5 June).  Add synopsis line for alternate usage forms.
+	Sort options in en_US lexicographic order.  Drop `-v` from
+	normal operation synopsis.  Use opposite case from option letter
+	for option argument.  Put operand name in capitals.  Set valid
+	usage forms on one physical line each (see 89648fb4, 5 June).
+	Add synopsis line for alternate usage forms.
 
 2021-07-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 

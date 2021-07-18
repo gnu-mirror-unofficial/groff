@@ -781,7 +781,7 @@ char **possible_command::get_argv()
 void synopsis(FILE *stream)
 {
   fprintf(stream,
-"usage: %1$s [-abcegijklpstzCEGNRSUVXZ] [-dCS] [-Denc] [-fFAM] [-Fdir]"
+"usage: %1$s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-Denc] [-fFAM] [-Fdir]"
 " [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-Parg]"
 " [-rCN] [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
 "usage: %1$s {-h | --help | -v | --version}\n",
