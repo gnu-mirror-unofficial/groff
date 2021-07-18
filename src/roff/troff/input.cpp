@@ -8078,12 +8078,18 @@ int main(int argc, char **argv)
     case 'd':
       if (*optarg == '\0')
 	error("'-d' requires non-empty argument");
+      else if (*optarg == '=')
+	error("malformed argument to '-d'; string name cannot be empty"
+	      " or contain an equals sign");
       else
 	add_string(optarg, &string_assignments);
       break;
     case 'r':
       if (*optarg == '\0')
 	error("'-r' requires non-empty argument");
+      else if (*optarg == '=')
+	error("malformed argument to '-r'; register name cannot be"
+	      " empty or contain an equals sign");
       else
 	add_string(optarg, &register_assignments);
       break;

@@ -1,5 +1,13 @@
 2021-07-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (main): Emit error diagnostic if `-d`
+	or `-r` option is given a malformed argument.  This prevents a
+	string or register with an empty name from being created.
+
+	Fixes <https://savannah.gnu.org/bugs/?60935>.
+
+2021-07-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/nroff/nroff.sh:
 	* src/roff/troff/input.cpp (usage): Use "dev" as metasyntactic
 	variable name for -T option argument to achieve consistency with
