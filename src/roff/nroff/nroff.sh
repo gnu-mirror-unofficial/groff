@@ -93,10 +93,11 @@ do
       echo "GNU nroff (groff) version @VERSION@"
       opts="$opts $1" ;;
     --help)
-      # Wrap usage message at 80 columns.
       cat <<EOF
-usage: nroff [-bcCEhikpStUVz] [-dCS] [-Karg] [-mNAME] [-MDIR] [-nNUM] [-oLIST]
-             [-Popt ...] [-rCN] [-Tname] [-wNAME] [-WNAME] [FILE ...]
+usage: $prog [-bcCEhikpStUVz] [-dCS] [-Karg] [-mNAME] [-Mdir] [-nNUM]\
+ [-oLIST] [-Parg] [-rCN] [-Tname] [-wNAME] [-Wname] [--version]\
+ [FILE ...]
+usage: $prog {--help | -v | --version}
 EOF
       exit 0 ;;
     --)

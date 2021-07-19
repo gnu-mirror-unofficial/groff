@@ -7960,8 +7960,10 @@ static void add_string(const char *s, string_list **p)
 void usage(FILE *stream, const char *prog)
 {
   fprintf(stream,
-"usage: %s -abcivzCERU -wname -Wname -dcs -ffam -mname -nnum -olist\n"
-"       -rcn -Tname -Fdir -Idir -Mdir [files...]\n",
+"usage: %1$s [-abcizCERU] [-dCS] [-fFAM] [-Fdir] [-Idir] [-mNAME]"
+" [-Mdir] [-nNUM] [-oLIST] [-rCN] [-Tname] [-wNAME] [-Wname]"
+" [FILE ...]\n"
+"usage: %1$s {-h | --help | -v | --version}\n",
 	  prog);
 }
 

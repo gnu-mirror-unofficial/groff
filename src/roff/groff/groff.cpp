@@ -781,11 +781,10 @@ char **possible_command::get_argv()
 void synopsis(FILE *stream)
 {
   fprintf(stream,
-"usage: %1$s [-abceghijklpstvzCEGNRSUVXZ] [-dCS] [-Denc] [-fFAM]"
-" [-Fdir] [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM] [-oLIST]"
-" [-Parg] [-rCN] [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
-"usage: %1$s -h\n"
-"usage: %1$s --help\n",
+"usage: %1$s [-abcegijklpstzCEGNRSUVXZ] [-dCS] [-Denc] [-fFAM] [-Fdir]"
+" [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-Parg]"
+" [-rCN] [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
+"usage: %1$s {-h | --help | -v | --version}\n",
 	  program_name);
 }
 
