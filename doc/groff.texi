@@ -13764,15 +13764,17 @@ known as a @dfn{box}.
 @DefreqListEndx {boxa, [@Var{name}]}
 Divert (or append) output to @var{name}, similarly to the @code{di} and
 @code{da} requests, respectively.  Any output line pending when these
-requests are invoked is @emph{not} included in the box.  @code{box} or
-@code{boxa} without an argument stops diverting output to the box named
-by the most recent corresponding request.
+requests are invoked is @emph{not} included in the box.  Calling
+@code{box} or @code{boxa} without an argument stops diverting output to
+the box named by the most recent corresponding request; a pending output
+line inside a diversion is discarded.
 
 @Example
 Before the box.
 .box xxx
 In the box.
 .br
+Hidden treasure.
 .box
 After the box.
 .br
@@ -13780,7 +13782,6 @@ After the box.
 .xxx
     @result{} In the box.
 @endExample
-
 @endDefreq
 
 Apart from pending output line inclusion and the request names that
