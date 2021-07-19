@@ -7,7 +7,7 @@
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -36,39 +36,34 @@
 .
 .SY @g@nroff
 .RB [ \-bcCEhikpStUVz ]
-[\c
-.BI \-d cs\c
-]
-[\c
-.BI \-K arg\c
-]
-[\c
-.BI \-m name\c
-]
-[\c
-.BI \-M dir\c
-]
-[\c
-.BI \-n num\c
-]
-[\c
-.BI \-o list\c
-]
-[\c
-.BI \-P post-proc-option\c
-]
-[\c
-.BI \-r cn\c
-]
-[\c
-.BI \-T dev\c
-]
-[\c
-.BI \-w warning\c
-]
-[\c
-.BI \-W warning\c
-]
+.RB [ \-d\~\c
+.IR cs ]
+.RB [ \-d\~\c
+.IB name =\c
+.IR string ]
+.RB [ \-K\~\c
+.IR enc ]
+.RB [ \-m\~\c
+.IR name ]
+.RB [ \-M\~\c
+.IR dir ]
+.RB [ \-n\~\c
+.IR num ]
+.RB [ \-o\~\c
+.IR list ]
+.RB [ \-P\~\c
+.IR arg ]
+.RB [ \-r\~\c
+.IR cn ]
+.RB [ \-r\~\c
+.IB reg =\c
+.IR expr ]
+.RB [ \-T\~\c
+.IR dev ]
+.RB [ \-w\~\c
+.IR name ]
+.RB [ \-W\~\c
+.IR name ]
 .RI [ file\~\c
 \&.\|.\|.\&]
 .YS
@@ -143,10 +138,6 @@ is implied.
 .
 .
 .P
-Whitespace is
-.I not
-permitted between an option and its argument.
-.
 The
 .BR \-b ,
 .BR \-C ,
@@ -218,6 +209,28 @@ while
 .B \-\-help
 displays a usage message;
 all exit afterward.
+.
+.
+.\" ====================================================================
+.SH "Exit status"
+.\" ====================================================================
+.
+.I \%@g@nroff
+exits with error
+.RB status\~ 2
+if there was a problem parsing its arguments,
+with
+.RB status\~ 0
+if any of the options
+.BR \-V ,
+.BR \-v ,
+.BR \-\-version ,
+or
+.B \-\-help
+were specified,
+and with the status of
+.I groff
+otherwise.
 .
 .
 .\" ====================================================================

@@ -1,3 +1,28 @@
+2021-07-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[nroff]: Support space between option flags and their arguments.
+
+	* src/roff/nroff/nroff.sh: Add new `is_option_argument_pending`
+	flag to add an additional state to the option parser.  Set it if
+	an argument-requiring option is encountered with no abutting
+	argument.  If it is set when a new argument is encountered,
+	absorb the argument into the groff option list and clear the
+	flag.  Moderize script in a couple of other ways.
+	  - Exit with status 2 upon usage errors so that this is
+	    condition is easily distinguished form a groff abort (which
+	    exits with status 1).
+	  - Test shell variables for non-nullity with test(1) -n
+	    operator instead of a string comparison.
+	* src/roff/nroff/tests/verbose_option_works.sh: Test correct
+	construction of groff command using this input form.
+	* src/roff/nroff/nroff.1.man (Options): Add spaces between
+	option flags and option arguments.  Sync metasyntactic variable
+	names with groff(1) while we're at it.
+	(Description): Drop sentence warning of whitespace prohibition.
+	(Exit status): Add new section.
+
+	Fixes <https://savannah.gnu.org/bugs/?60943>.
+
 2021-07-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/input.cpp (main): Emit error diagnostic if `-d`

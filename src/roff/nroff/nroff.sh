@@ -1,7 +1,7 @@
 #! /bin/sh
 # Emulate nroff with groff.
 #
-# Copyright (C) 1992-2020 Free Software Foundation, Inc.
+# Copyright (C) 1992-2021 Free Software Foundation, Inc.
 #
 # Written by James Clark.
 
@@ -62,8 +62,19 @@ esac
 Topt=
 opts=
 dry_run=
+is_option_argument_pending=
 for i
 do
+  # Remember last argument seen for a usage diagnostic after loop exits.
+  arg=$1
+
+  if [ -n "$is_option_argument_pending" ]
+  then
+    is_option_argument_pending=
+    opts="$opts $1"
+    shift
+  fi
+
   case $1 in
     -c)
       opts="$opts -P-c" ;;
@@ -73,8 +84,8 @@ do
       # ignore these options
       ;;
     -[dKmMnoPrTwW])
-      echo "$prog: option '$1' requires an argument" >&2
-      exit 1 ;;
+      is_option_argument_pending=yes
+      opts="$opts $1" ;;
     -[bCEikpStUz] | -[dKMmrnoPwW]*)
       opts="$opts $1" ;;
     -T*)
@@ -106,19 +117,26 @@ EOF
     -)
       break ;;
     -*)
-      echo "$prog: invalid option '$1'; see '$prog --help'" >&2
-      exit 1 ;;
+      echo "$prog: usage error: invalid option '$1';" \
+           " see '$prog --help'" >&2
+      exit 2 ;;
     *)
       break ;;
   esac
   shift
 done
 
-if test "x$Topt" != x
+if [ -n "$is_option_argument_pending" ]
+then
+    echo "$prog: usage error: option '$arg' requires an argument" >&2
+    exit 2
+fi
+
+if [ -n "$Topt" ]
 then
   T=$Topt
 else
-  if test "x$Tenv" != x
+  if [ -n "$Tenv" ]
   then
     T=-T$Tenv
   fi
