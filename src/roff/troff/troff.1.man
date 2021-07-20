@@ -463,26 +463,36 @@ Suppress formatted output.
 .SH Warnings
 .\" ====================================================================
 .
-The warnings that can be given by
+.\" BEGIN Keep parallel with groff.texi node "Warnings".
+.\" Caveat: the Texinfo manual sorts them by number, not name.
+Warning diagnostics emitted by
 .I \%@g@troff
-are divided into the following categories.
+are divided into named,
+numbered categories.
 .
-The name associated with each warning is used by the
+The name associated with each warning category is used by the
 .B \-w
 and
 .B \-W
-options; the number is used by the
+options.
+.
+Each category is also assigned a power of two;
+the sum of enabled category codes is used by the
 .B warn
-request, and by the
+request and the
 .B .warn
-register; it is always a power of 2 to allow bitwise composition.
+register.
+.
+Warnings of each category are produced under the following
+circumstances.
+.
 .
 .P
 .TS
 tab(@), center, box;
 c c c | c c c
 r rI lB | r rI lB.
-Bit@Code@Warning@Bit@Code@Warning
+Bit@Code@Category@Bit@Code@Category
 _
 0@1@char@10@1024@reg
 1@2@number@11@2048@tab
@@ -496,6 +506,7 @@ _
 9@512@mac@19@524288@color
 @@@20@1048576@file
 .TE
+.
 .
 .P
 .nr x \w'\fBright-brace'+1n+\w'00000'u
@@ -514,17 +525,27 @@ This is enabled by default.
 .
 .TP
 .BR char "\t1"
-Non-existent characters.
+An undefined glyph was requested for output.
 .
-This is enabled by default.
+.RB (\[lq] char \[rq]
+is a misnomer since it reports missing glyphs\[em]there are no
+\[lq]missing\[rq] input characters,
+only invalid ones.)
+.
+This cateogry is enabled by default.
+.
 .
 .TP
 .BR color "\t524288"
-Color-related warnings.
+An undefined color was dereferenced,
+an attempt was made to define a color using an unrecognized color space,
+an invalid component in a color definition was encountered,
+or an attempt was made to redefine the default color.
+.
 .
 .TP
 .BR delim "\t8"
-Missing or mismatched closing delimiters.
+The closing delimiter in an escape sequence was missing or mismatched.
 .
 .
 .TP
@@ -541,45 +562,53 @@ diversion.
 .
 .TP
 .BR el "\t16"
-Use of the
+The
 .B el
-request with no matching
+request was encountered with no prior corresponding
 .B ie
 request.
 .
+.
 .TP
 .BR escape "\t32768"
-Unrecognized escape sequences.
+An unsupported escape sequence was encountered.
 .
-When an unrecognized escape sequence is encountered, the escape
-character is ignored.
+In such a sequence
+.BI \[rs] X\c
+,
+the escape character is ignored and
+.IR X \~is
+output.
+.
 .
 .TP
 .BR file "\t1048576"
-Indicates a missing file for the
-.B mso
-request.
+An attempt was made to load a file that does not exist.
 .
-Enabled by default.
+This category is enabled by default.
+.
 .
 .TP
 .BR font "\t131072"
-Non-existent fonts.
+A non-existent font was dereferenced.
 .
-This is enabled by default.
+This category is enabled by default.
+.
 .
 .TP
 .BR ig "\t262144"
-Invalid escapes in text ignored with the
+An invalid escape sequence occurred in input ignored using the
 .B ig
 request.
 .
-These are conditions that are errors when they do not occur in ignored
-text.
+This warning category diagnoses a condition that is an error when it
+occurs in non-ignored input.
+.
 .
 .TP
 .BR input "\t16384"
-Invalid input characters.
+An invalid character occurred on the input stream.
+.
 .
 .TP
 .BR mac "\t512"
@@ -608,82 +637,108 @@ so it is not created if it does not exist.
 .
 .TP
 .BR missing "\t8192"
-Requests that are missing non-optional arguments.
+A request was invoked with a mandatory argument absent.
+.
 .
 .TP
 .BR number "\t2"
-Invalid numeric expressions.
+An invalid numeric expression was encountered.
 .
-This is enabled by default.
+This category is enabled by default.
+.
 .
 .TP
 .BR range "\t64"
-Out of range arguments.
+A numeric expression was out of range for its context.
+.
 .
 .TP
 .BR reg "\t1024"
-Use of undefined number registers.
+An undefined register was used.
 .
-When an undefined number register is used, that register is
-automatically defined to have a value of\~0.
+When an undefined register is dereferenced,
+it is automatically defined with a value of\~0.
 .
-So, in most cases, at most one warning will be given for use of a
-particular name.
+So, in most cases, at most one warning is given for each name.
+.
 .
 .TP
 .BR right-brace "\t4096"
-Use of
-.B \(rs}
-where a number was expected.
+A right brace escape sequence
+.B \[rs]}
+was encountered where a number was expected.
+.
 .
 .TP
 .BR scale "\t32"
-Meaningless scaling indicators.
+An inappropriate scaling indicator was used in a numeric expression.
+.
 .
 .TP
 .BR space "\t65536"
-Missing space between a request or macro and its argument.
+A space was missing between a request or macro and its argument.
 .
-This warning will be given when an undefined name longer than two
-characters is encountered, and the first two characters of the name
-make a defined name.
+This warning is produced when an undefined name longer than two
+characters is encountered and the first two characters of the name
+constitute a defined name.
 .
-The request or macro will not be invoked.
+No request is invoked,
+no macro called,
+and an empty macro is not defined.
 .
-When this warning is given, no macro is automatically defined.
+This category is enabled by default.
 .
-This is enabled by default.
+It never occurs in compatibility mode.
 .
-This warning will never occur in compatibility mode.
 .
 .TP
 .BR syntax "\t128"
-Invalid syntax.
+A self-contradictory hyphenation mode was requested;
+an empty or incomplete numeric expression was encountered;
+an operand to a numeric operator was missing;
+an attempt was made to define a recursive,
+empty,
+or nonsensical character class;
+or a
+.I groff
+extension conditional expression operator was used while in
+compatibility mode.
+.
 .
 .TP
 .BR tab "\t2048"
-Inappropriate use of a tab character.
+A tab character was encountered where a number was expected,
+or appeared in an unquoted macro argument.
 .
-Either use of a tab character where a number was expected, or use of tab
-character in an unquoted macro argument.
 .
 .P
-There are also names that can be used to refer to groups of warnings:
+Two warning names group other warning categories for convenience.
+.
 .
 .TP
 .B all
-All warnings except
+All warning categories except
 .BR di ,
 .BR mac ,
 and
 .BR reg .
 .
-It is intended that this covers all warnings that are useful with
-traditional macro packages.
+This shorthand is intended to produce all warnings that are useful with
+macro packages written for AT&T
+.I troff \" AT&T
+and its descendants,
+which have less fastidious diagnostics than GNU
+.IR troff . \" GNU
+.
 .
 .TP
 .B w
-All warnings.
+All warning categories.
+.
+Authors of documents and macro packages targeting
+.I groff
+are encouraged to use this setting.
+.\" END Keep parallel with groff.texi node "Warnings".
 .
 .
 .\" ====================================================================

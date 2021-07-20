@@ -15374,57 +15374,69 @@ The read-only register @code{.warn} contains the current warning level.
 
 @c ---------------------------------------------------------------------
 
+@c BEGIN Keep parallel with section "Warnings" of troff(1).
+@c Caveat: the man page sorts them by name, not number.
 @node Warnings,  , Debugging, Debugging
 @subsection Warnings
 @cindex warnings
 
-The warnings that can be given to @code{gtroff} are divided into the
-following categories.  The name associated with each warning is used by
-the @option{-w} and @option{-W} options; the number is used by the
-@code{warn} request and by the @code{.warn} register.
+Warning diagnostics emitted by GNU @code{troff} are divided into named,
+numbered categories.  The name associated with each warning category is
+used by the @option{-w} and @option{-W} options.  Each category is also
+assigned a power of two; the sum of enabled category values is used by
+the @code{warn} request and the @code{.warn} register.
+
+Warnings of each category are produced under the following
+circumstances.
 
 @table @samp
 @item char
 @itemx 1
-Non-existent glyphs.@footnote{@code{char} is a misnomer since it reports
-missing glyphs---there aren't missing input characters, only invalid
-ones.}  This is enabled by default.
+An undefined glyph was requested for output.@footnote{@code{char} is a
+misnomer since it reports missing glyphs---there are no ``missing''
+input characters, only invalid ones.}  This category is enabled by
+default.
 
 @item number
 @itemx 2
-Invalid numeric expressions.  This is enabled by default.
+An invalid numeric expression was encountered.  This category is enabled
+by default.
 @xref{Expressions}.
 
 @item break
 @itemx 4
 @cindex filling, and @code{break} warnings
 @cindex mode, fill, and @code{break} warnings
-When filling is enabled, a line could not be broken such that its length
-was less than the output line length @samp{\n[.l]}.  This is enabled by
-default.
+A line could not be broken such that its length was less than the output
+line length, @samp{\n[.l]}; this can occur only when filling is enabled.
+This category is enabled by default.
 
 @item delim
 @itemx 8
-Missing or mismatched closing delimiters.
+The closing delimiter in an escape sequence was missing or mismatched.
 
 @item el
 @itemx 16
 @cindex @code{ie} request, and warnings
 @cindex @code{el} request, and warnings
-Use of the @code{el} request with no matching @code{ie} request.
-@xref{if-else}.
+The @code{el} request was encountered with no prior corresponding
+@code{ie} request.  @xref{if-else}.
 
 @item scale
 @itemx 32
-Meaningless scaling indicators.
+An inappropriate scaling indicator was used in a numeric expression.
 
 @item range
 @itemx 64
-Out of range arguments.
+A numeric expression was out of range for its context.
 
 @item syntax
 @itemx 128
-Invalid syntax.
+A self-contradictory hyphenation mode was requested; an empty or
+incomplete numeric expression was encountered; an operand to a numeric
+operator was missing; an attempt was made to define a recursive, empty,
+or nonsensical character class; or a @code{groff} extension conditional
+expression operator was used while in compatibility mode.
 
 @item di
 @itemx 256
@@ -15458,71 +15470,85 @@ This warning is also emitted upon an attempt to move an unplanted trap
 @cindex @code{nr} request, and warnings
 @cindex @code{\R}, and warnings
 @cindex @code{\n}, and warnings
-Use of undefined registers.  When an undefined register is used, that
-register is automatically defined to have a value of@tie{}0.  So, in
-most cases, at most one warning is given for use of a particular name.
+An undefined register was used.  When an undefined register is
+dereferenced, it is automatically defined with a value of@tie{}0.  So,
+in most cases, at most one warning is given for each name.
 
 @item tab
 @itemx 2048
 @cindex @code{\t}, and warnings
-Use of a tab character where a number was expected.
+A tab character was encountered where a number was expected, or appeared
+in an unquoted macro argument.
 
 @item right-brace
 @itemx 4096
 @cindex @code{\@}}, and warnings
-Use of @code{\@}} where a number was expected.
+A right brace escape sequence @code{\@}} was encountered where a number
+was expected.
 
 @item missing
 @itemx 8192
-Requests that are missing non-optional arguments.
+A request was invoked with a mandatory argument absent.
 
 @item input
 @itemx 16384
-Invalid input characters.
+An invalid character occurred on the input stream.
 
 @item escape
 @itemx 32768
-Unrecognized escape sequences.  When an unrecognized escape sequence
-@code{\@var{X}} is encountered, the escape character is ignored, and
-@var{X} is printed.
+An unsupported escape sequence was encountered.  In such a sequence
+@code{\@var{X}}, the escape character is ignored and @var{X}@tie{}is
+output.
 
 @item space
 @itemx 65536
 @cindex compatibility mode
-Missing space between a request or macro and its argument.  This warning
-is given when an undefined name longer than two characters is
-encountered, and the first two characters of the name make a defined
-name.  The request or macro is not invoked.  When this warning is given,
-no macro is automatically defined.  This is enabled by default.  This
-warning never occurs in compatibility mode.
+A space was missing between a request or macro and its argument.  This
+warning is produced when an undefined name longer than two characters is
+encountered and the first two characters of the name constitute a
+defined name.  No request is invoked, no macro called, and an empty
+macro is not defined.  This category is enabled by default.  It never
+occurs in compatibility mode.
 
 @item font
 @itemx 131072
-Non-existent fonts.  This is enabled by default.
+A non-existent font was dereferenced.  This category is enabled by
+default.
 
 @item ig
 @itemx 262144
-Invalid escapes in text ignored with the @code{ig} request.  These are
-conditions that are errors when they do not occur in ignored text.
+An invalid escape sequence occurred in input ignored using the @code{ig}
+request.  This warning category diagnoses a condition that is an error
+when it occurs in non-ignored input.
 
 @item color
 @itemx 524288
-Color related warnings.
+An undefined color was dereferenced, an attempt was made to define a
+color using an unrecognized color space, an invalid component in a color
+definition was encountered, or an attempt was made to redefine the
+default color.
 
 @item file
 @itemx 1048576
-Missing files.  The @code{mso} request gives this warning when the
-requested macro file does not exist.  This is enabled by default.
-
-@item all
-All warnings except @samp{di}, @samp{mac} and @samp{reg}.  It is
-intended that this covers all warnings that are useful with traditional
-macro packages.
-
-@item w
-All warnings.
+An attempt was made to load a file that does not exist.  This category
+is enabled by default.
 @end table
 
+Two warning names group other warning categories for convenience.
+
+@table @samp
+@item all
+All warning categories except @samp{di}, @samp{mac} and @samp{reg}.
+This shorthand is intended to produce all warnings that are useful with
+macro packages written for @acronym{AT&T} @code{troff} and its
+descendants, which have less fastidious diagnostics than GNU
+@code{troff}.
+
+@item w
+All warning categoriess.  Authors of documents and macro packages
+targeting @code{groff} are encouraged to use this setting.
+@end table
+@c END Keep parallel with section "Warnings" of troff(1).
 
 @c =====================================================================
 
