@@ -483,14 +483,11 @@ See
 .I papersize
 This macro file is normally loaded at start-up by the
 .I troffrc
-file,
-so it is seldom necessary to call it explicitly.
+file.
 .
 It provides an interface to set the paper size on the command line with
 the option
-.BI \%\-dpaper= size
-to
-.I groff
+.BI "\-d \%paper=" size
 or
 .IR \%@g@troff .
 .
@@ -525,7 +522,7 @@ with their longer dimension as the length.
 Appending \[lq]l\[rq] (ell) to any of these denotes landscape
 orientation instead.
 .
-An output driver typically requires command-line switches
+An output device typically requires command-line options
 .B \-p
 and
 .B \-l
