@@ -1,5 +1,12 @@
 2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (define_color): Tweak warning
+	diagnostics for clarity.  Only one value is expected when
+	defining a color in the `gray` color space.  Quote recognized
+	color space names when complaining of an unknown one.
+
+2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[nroff]: Pass `-c` option to groff.  While at present this does
 	little more than `-P-c` already achieves, that might not be true
 	forever.  Further, there is a distinction between ignoring

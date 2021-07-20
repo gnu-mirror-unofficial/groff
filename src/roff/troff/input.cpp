@@ -1360,7 +1360,7 @@ static color *read_gray(char end = 0)
 {
   symbol component = do_get_long_name(0, end);
   if (component.is_null()) {
-    warning(WARN_COLOR, "missing gray values");
+    warning(WARN_COLOR, "missing gray value");
     return 0;
   }
   const char *s = component.contents();
@@ -1423,9 +1423,8 @@ static void define_color()
   else if (strcmp(style.contents(), "cmy") == 0)
     col = read_cmy();
   else {
-    warning(WARN_COLOR,
-	    "unknown color space '%1'; use rgb, cmyk, gray or cmy",
-	    style.contents());
+    warning(WARN_COLOR, "unknown color space '%1';"
+	    " use 'rgb', 'cmyk', 'gray' or 'cmy'", style.contents());
     skip_line();
     return;
   }
