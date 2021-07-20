@@ -160,14 +160,13 @@ output are subject to change.
 .
 .TP
 .B \-b
-Print a backtrace with each warning or error message.
+Write an input stack backtrace to the standard error stream with each
+.I \%@g@troff
+diagnostic message.
 .
-This backtrace should help track down the cause of the error.
-.
-The line numbers given in the backtrace may not always be correct,
-for
+The line numbers given in the backtrace might not always be correct;
 .IR \%@g@troff 's
-idea of line numbers gets confused by
+idea of line numbers can be confused by
 .B .as
 or
 .B .am
@@ -431,29 +430,17 @@ option above.
 .
 .TP
 .BI \-w name
-Enable warning
-.IR  name .
-.
-Available warnings are described in section \(lqWarnings\(rq below.
-.
-To enable most useful warnings use
-.B \-w
-.BR all .
-To enable absolutely all warnings use
-.B \-w w
-instead.
-Multiple
-.B \-w
-options are allowed.
-.
-.TP
+.TQ
 .BI \-W name
-Inhibit warning
+Enable
+.RB ( \-w )
+or inhibit
+.RB ( \-W )
+emission of warnings in category
 .IR name .
 .
-Multiple
-.B \-W
-options are allowed.
+See subsection \[lq]Warnings\[rq] below.
+.
 .
 .TP
 .B \-z
