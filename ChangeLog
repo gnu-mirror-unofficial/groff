@@ -1,5 +1,18 @@
 2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/number.cpp (parse_term): Tweak diagnostic
+	messages.  When a left operand to a binary operator is empty,
+	report the operator in question (helpful for string
+	interpolations in complex expressions).  When handling input
+	scaling indicators, drop word "this" from "this context", since
+	the parser's context might not be clear from a file name and
+	line number.  Say "scaling indicator" instead of "scale
+	indicator".
+	(parse_expr, parse_term): Rename function parameter from
+	`scale_indicator` to `scaling_indictor`.
+
+2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (define_color): Tweak warning
 	diagnostics for clarity.  Only one value is expected when
 	defining a color in the `gray` color space.  Quote recognized
