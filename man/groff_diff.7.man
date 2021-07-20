@@ -494,14 +494,18 @@ i.e., to return to the previous font.
 .BI \[rs]F[ fam ]
 Change font family.
 .
-This is the same as the
+See the
 .B .fam
-request.
+request below.
 .
 .B \[rs]F[]
-switches back to the previous font family (note that
+switches to the previous font family,
+or to the default family if there is none.
+.
 .B \[rs]FP
-won't work; it selects font family \[oq]P\[cq] instead).
+won't do this;
+it selects font family \[lq]P\[rq] instead.
+.
 .
 .TP
 .BI \[rs]k( rg
@@ -1108,7 +1112,7 @@ and
 .I Unformat
 the diversion
 .I div
-in a way such that Unicode basic Latin (ASCI) characters,
+in a way such that Unicode basic Latin (ASCII) characters,
 characters translated with the
 .B .trin
 request,
@@ -1925,13 +1929,13 @@ FOO groff FOO compatibility c1 \[ti]
 as output.
 .RE \" this "extra" RE avoids indentation of the remaining paragraphs
 .
+.
 .TP
 .BI .ds1\~ "name string"
 Similar to
 .BR .ds ,
 but compatibility mode is switched off when the string is later
 interpolated.
-but compatibility mode is switched off during expansion.
 .
 To be more precise,
 a \[lq]compatibility save\[rq] token is inserted at the beginning of the
@@ -1941,41 +1945,92 @@ and a \[lq]compatibility restore\[rq] token at the end.
 .
 .TP
 .B .ecr
-Restore escape character saved with
-.BR ecs .
-Without a previous call to
+Restore the escape character saved with
 .BR ecs ,
-.RB \[oq] \[rs] \[cq]
-will be the new escape character.
+or set escape character to
+.RB \[lq] \[rs] \[rq]
+if none has been saved.
 .
 .
 .TP
 .B .ecs
-Save current escape character.
+Save the current escape character.
 .
 .
 .TP
-.BI .evc\~ xx
-Copy the contents of environment
-.I xx
+.BI .evc\~ environment
+Copy the contents of
+.I environment
 to the current environment.
 .
-No pushing or popping of environments is done.
+.
+.IP
+The following environment data are not copied:
+.
+.
+.RS
+.IP \[bu]
+a partially collected line, if present;
+.
+.
+.IP \[bu]
+the interruption status of the previous input line
+(due to use of the
+.B \[rs]c
+escape sequence);
+.
+.
+.IP \[bu]
+the count of remaining lines to center,
+to right-justify,
+or to underline
+(with or without underlined spaces;
+all set to zero);
+.
+.
+.IP \[bu]
+the activation status of temporary indentation;
+.
+.
+.IP \[bu]
+input traps and their associated data;
+.
+.
+.IP \[bu]
+the activation status of line numbering
+(which can be reactivated with
+.RB \[lq] .nm\~+0 \[rq]);
+and
+.
+.
+.IP \[bu]
+the count of consecutive hyphenated lines
+(set to zero).
+.RE
+.
 .
 .TP
-.BI .fam\~ xx
-Set the current font family to
-.IR xx .
-The current font family is part of the current environment.
-If
-.I xx
-is missing, switch back to previous font family.
+.BR .fam\~ [\c
+.IR family ]
+Set the font family to
+.IR family .
 .
-The value at start-up is \[oq]T\[cq].
+If no argument is given,
+switch to the previous font family,
+or the default family if there is none.
 .
-See the description of the
-.B sty
-request for more information on font families.
+Use
+.RB \[lq] \[rs]F[] \[rq]
+to do this with an escape sequence;
+.RB \[lq] \[rs]FP \[rq]
+selects font family \[lq]P\[rq] instead.
+.
+The initial font family is \[lq]T\[rq] (Times),
+but can be overridden by the output device\[em]see
+.IR groff_font (@MAN5EXT@)).
+.
+The current font family is associated with the environment.
+.
 .
 .TP
 .BI .fchar\~ c\~string
@@ -2177,7 +2232,7 @@ or
 file;
 see the
 .B .hpf
-request above.
+request below.
 .
 .
 .IP
@@ -3510,20 +3565,6 @@ respectively:
 a \[lq]compatibility save\[rq] token is inserted at the beginning,
 and a \[lq]compatibility restore\[rq] token at the end,
 with compatibility mode switched on during execution.
-.
-.
-.TP
-.BI .ev\~ xx
-If
-.I xx
-is not a number, this switches to a named environment called
-.IR xx .
-The environment should be popped with a matching
-.B ev
-request without any arguments, just as for numbered environments.
-.
-There is no limit on the number of named environments; they are
-created the first time that they are referenced.
 .
 .
 .TP

@@ -8444,13 +8444,13 @@ it is executed literally.
 
 @DefreqList {ecs, }
 @DefreqListEndx {ecr, }
-The @code{ecs} request saves the current escape character in an internal
-register.  Use this request in combination with the @code{ec} request to
-temporarily change the escape character.
+The @code{ecs} request saves the current escape character.  Use this
+request in combination with the @code{ec} request to temporarily change
+the escape character.
 
 The @code{ecr} request restores the escape character saved with
-@code{ecs}.  Without a previous call to @code{ecs}, this request sets
-the escape character to @code{\}.
+@code{ecs}, or sets the escape character to @samp{\} if none has been
+saved.
 @endDefreq
 
 @DefescList {\\\\, , , }
@@ -9558,14 +9558,15 @@ different font family on the command line (@pxref{Groff Options}).
 @DefregListEndx {.fn}
 @cindex changing font family (@code{fam}, @code{\F})
 @cindex font family, changing (@code{fam}, @code{\F})
-Switch font family to @var{family} (one-character name@tie{}@var{f},
-two-character name @var{fm}).  If no argument is given, switch back to
-the previous font family.  Use @code{\F[]} to do this with the escape;
-@code{\FP} selects font family @samp{P} instead.
-
-The value at start-up is @samp{T}.  The current font family is available
-in the read-only string-valued register @samp{.fam}; it is associated
-with the environment (@pxref{Environments}).
+Set the font family to @var{family} (one-character name@tie{}@var{f},
+two-character name @var{fm}).  If no argument is given, switch to the
+previous font family, or the default family if there is none.  Use
+@samp{\F[]} to do this with an escape sequence; @samp{\FP} selects font
+family @samp{P} instead.  The initial font family is @samp{T} (Times),
+but can be overridden by the output device description file---@xref{DESC
+File Format}.  The current font family is available in the read-only
+string-valued register @code{.fam}; it is associated with the
+environment (@pxref{Environments}).
 
 @Example
 spam,
@@ -9589,7 +9590,7 @@ a single character as an argument) to change the font family on the fly.
 .mc \F[P]x\F[]
 @endExample
 
-The read-only string-valued register @samp{.fn} contains the current
+The read-only string-valued register @code{.fn} contains the current
 @dfn{real font name} of the current font.  If the current font is a
 style, the value of @code{\n[.fn]} is the proper concatenation of family
 and style name.
@@ -14091,36 +14092,38 @@ Here is an example:
 @endExample
 @endDefreq
 
-@Defreq {evc, env}
+@Defreq {evc, environment}
 @cindex copying environment (@code{evc})
 @cindex environment, copying (@code{evc})
-Copy the environment @var{env} into the current environment.
+Copy the contents of @var{environment} to the current environment.
 
 The following environment data are not copied:
 
 @itemize @bullet
 @item
-A partially collected line, if present.
+a partially collected line, if present;
 
 @item
-The status whether the previous line was interrupted.
+the interruption status of the previous input line (due to use of the
+@code{\c} escape sequence);
 
 @item
-The number of lines still to center, or to right-justify, or to
-underline (with or without underlined spaces); they are set to zero.
+the count of remaining lines to center, to right-justify, or to
+underline (with or without underlined spaces; these counts are set to
+zero);
 
 @item
-The status whether a temporary indentation is active.
+the activation status of temporary indentation;
 
 @item
-Input traps and their associated data.
+input traps and their associated data;
 
 @item
-Line numbering mode is disabled; it can be reactivated with @w{@samp{.nm
-+0}}.
+the activation status of line numbering (which can be reactivated with
+@w{@samp{.nm +0}}); and
 
 @item
-The number of consecutive hyphenated lines (set to zero).
+the count of consecutive hyphenated lines (set to zero).
 @end itemize
 @endDefreq
 
