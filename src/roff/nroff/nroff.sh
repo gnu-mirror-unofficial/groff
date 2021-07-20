@@ -77,7 +77,7 @@ do
 
   case $1 in
     -c)
-      opts="$opts -P-c" ;;
+      opts="$opts $1 -P-c" ;;
     -h)
       opts="$opts -P-h" ;;
     -[eq] | -s*)

@@ -1,3 +1,19 @@
+2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[nroff]: Pass `-c` option to groff.  While at present this does
+	little more than `-P-c` already achieves, that might not be true
+	forever.  Further, there is a distinction between ignoring
+	color-related requests in groff input documents and ignoring
+	color-related commands in device-independent output.  This
+	distinction would make it unwise to adapt `-c` to any other
+	purpose in nroff in the future.
+
+	* NEWS: Update item from commit dd725dce, 10 February 2020.
+	* src/roff/nroff/nroff.sh: Pass `-c` option to groff in addition
+	to synthesizing a `-P-c` option (for grotty) when it is seen.
+	* src/roff/nroff/nroff.1.man (Options): Document `-c` as an
+	option recognized by troff(1).
+
 2021-07-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[nroff]: Support space between option flags and their arguments.
