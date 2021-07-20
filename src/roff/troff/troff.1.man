@@ -184,8 +184,11 @@ devices.
 .
 .TP
 .B \-C
-Enable compatibility mode;
-implies \-c.
+Enable AT&T
+.I troff \" AT&T
+compatibility mode;
+implies
+.BR \-c .
 .
 .
 .TP
@@ -223,8 +226,10 @@ error messages;
 implies
 .B \-Ww.
 .
-Note that this doesn't suppress messages sent to the standard error
-stream by documents or macro packages using
+This option does
+.I not
+suppress messages sent to the standard error stream by documents or
+macro packages using
 .B .tm
 or related requests.
 .
@@ -395,14 +400,13 @@ and
 .
 .
 .TP
-.BI \-T name
+.BI \-T dev
 Prepare output for device
-.IR name ,
-rather than the default
+.IR dev ,
+rather than the default,
 .RB \[lq] @DEVICE@ \[rq];
 see
-.IR groff (@MAN1EXT@)
-for a more detailed description.
+.IR groff (@MAN1EXT@).
 .
 .
 .TP
@@ -856,12 +860,12 @@ of device
 .
 .
 .P
-Note that
 .I troffrc
 and
 .I troffrc\-end
-are searched for neither in the current nor the home directory by
-default for security reasons (even if the
+are sought neither in the current nor the home directory by default for
+security reasons
+(even if the
 .B \-U
 option is given).
 .
