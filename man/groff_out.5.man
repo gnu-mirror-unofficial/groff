@@ -4,6 +4,7 @@
 groff_out \- GNU roff intermediate output format
 .
 .
+.\" XXX: This page needs review and editing.
 .\" ====================================================================
 .\" Legal Terms
 .\" ====================================================================
@@ -343,7 +344,7 @@ They are just ignored.
 .
 Some commands take integer arguments that are assumed to represent
 values in a measurement unit, but the letter for the corresponding
-.I scale indicator
+.I scaling indicator
 is not written with the output command arguments;
 see
 .BR groff (@MAN7EXT@)
@@ -354,16 +355,18 @@ the
 Texinfo manual,
 for more on this topic.
 .
-Most commands assume the scale indicator\~\c
-.BR u ,
-the basic unit of the device, some use\~\c
-.BR z ,
+Most commands assume the scaling
+.RB indicator\~\[lq] u \[rq],
+the basic unit of the device, some
+.RB use\~\[lq] z \[rq],
 the
 .I scaled point unit
-of the device, while others, such as the color commands expect plain
-integers.
+of the device,
+while others,
+such as the color commands,
+expect plain integers.
 .
-Note that these scale indicators are relative to the chosen device.
+Note that these scaling indicators are relative to the chosen device.
 .
 They are defined by the parameters specified in the device's
 .I DESC

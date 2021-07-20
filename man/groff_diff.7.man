@@ -77,7 +77,7 @@ features identifiers of arbitrary length,
 supports non-integral point sizes,
 adds new escapes and requests,
 provides new conditional tests,
-recognizes additional scale indicators and numerical operators,
+recognizes additional scaling indicators and numerical operators,
 and extends the function of some escapes and requests already present in
 .RI AT&T\~ troff .
 .
@@ -109,7 +109,7 @@ within can be of arbitrary length.
 .
 .
 .\" ====================================================================
-.SS "Fractional point sizes and new scale indicators"
+.SS "Fractional point sizes and new scaling indicators"
 .\" ====================================================================
 .
 A
@@ -133,7 +133,7 @@ Requests and escapes in
 interpret arguments that represent a point size as being in units of
 scaled points;
 that is,
-they evaluate such arguments using an implied default scale indicator
+they evaluate such arguments using an implied default scaling indicator
 .RB of\~\[lq] z \[rq].
 .
 Arguments treated in this way comprise those to the escapes
@@ -181,7 +181,7 @@ returns the point size in scaled points.
 .P
 It makes no sense to use the
 .RB \[lq] z \[rq]\~scale
-indicator in a numeric expression whose default scale indicator is
+indicator in a numeric expression whose default scaling indicator is
 neither
 .RB \[lq] u \[rq]
 .RB nor\~\[lq] z \[rq],
@@ -193,7 +193,7 @@ Similarly,
 it is nonsensical to use a scaling indicator other
 .RB than\~\[lq] z \[rq]
 .RB or\~\[lq] u \[rq]
-in a numeric expression whose default scale indicator
+in a numeric expression whose default scaling indicator
 .RB is\~\[lq] z \[rq],
 so
 .I groff
@@ -201,7 +201,7 @@ disallows this as well.
 .
 .
 .P
-Another new scale indicator,
+Another new scaling indicator,
 .RB \[lq] s \[rq],
 multiplies by the number of basic units in a scaled point.
 .
@@ -215,7 +215,7 @@ Do not confuse the
 .RB \[lq] s \[rq]
 and
 .RB \[lq] z \[rq]
-scale indicators.
+scaling indicators.
 .
 .
 .P
@@ -662,8 +662,8 @@ Set the point size to
 .I n
 scaled points;
 .I n
-is a numeric expression with a default scale indicator of\~\c
-.BR z .
+is a numeric expression with a default scaling indicator
+.RB of\~\[lq] z \[rq].
 .
 .TP
 .BI \[rs]V x
@@ -1762,11 +1762,11 @@ internally multiplied by\~257), the latter in the range 0\[en]65535.
 .
 Examples: #FFC0CB (pink), ##ffff0000ffff (magenta).
 .
-A new scaling indicator\~\c
-.B f
-has been introduced which multiplies its value by\~65536; this makes
-it convenient to specify color components as fractions in the range 0
-to\~1.
+A new scaling indicator,
+.RB \[lq] f \[rq]\~has
+has been introduced which multiplies its value by\~65536;
+this makes it convenient to specify color components as fractions in the
+range 0 to\~1.
 .
 Example:
 .
@@ -2766,8 +2766,8 @@ can affect the priority of subsequently planted traps.
 .BI .pvs \~\[+-]n
 Set the post-vertical line space to\~\c
 .IR n ;
-default scale indicator is\~\c
-.BR p .
+default scaling indicator
+.RB is\~\[lq] p \[rq].
 .
 This value is added to each line after it has been output.
 .
@@ -5032,15 +5032,15 @@ In
 .RI AT&T\~ troff
 the
 .B .ps
-request ignores scale indicators and thus
+request ignores scaling indicators and thus
 .RB \[lq] .ps\~10u \[rq]
 sets the point size to 10\~points,
 whereas in
 .I groff
 it sets the point size to 10\~scaled points.
 .
-See subsection \[lq]Fractional point sizes and new scale indicators\[rq]
-above.
+See subsection \[lq]Fractional point sizes and new scaling
+indicators\[rq] above.
 .
 .
 .P

@@ -11077,14 +11077,14 @@ spacing; it is associated with the environment (@pxref{Environments}).
 @cindex @code{\s}, with fractional type sizes
 A @dfn{scaled point} is equal to @math{1/@var{sizescale}} points, where
 @var{sizescale} is specified in the device description file @file{DESC},
-and defaults to 1@tie{}.  A new scale indicator @samp{z} has has the
+and defaults to 1@tie{}.  A new scaling indicator @samp{z} has has the
 effect of multiplying by @var{sizescale}.  Requests and escape sequences
 in GNU @code{troff} interpret arguments that represent a point size as
 being in units of scaled points; that is, they evaluate each such
-argument using a default scale indicator of @samp{z}.  Arguments treated
-in this way comprise those to the escapes @code{\H} and @code{\s}, to
-the request @code{ps}, the third argument to the @code{cs} request, and
-the second and fourth arguments to the @code{tkf} request.
+argument using a default scaling indicator of @samp{z}.  Arguments
+treated in this way comprise those to the escapes @code{\H} and
+@code{\s}, to the request @code{ps}, the third argument to the @code{cs}
+request, and the second and fourth arguments to the @code{tkf} request.
 
 For example, if @var{sizescale} is@tie{}1000, then a scaled point
 is one one-thousandth of a point.  The request @samp{.ps 10.25} is
@@ -11094,14 +11094,14 @@ synonymous with @samp{.ps 10.25z} and sets the point size to
 Consequently, in GNU @code{troff}, the register @code{.s} can contain a
 non-integral point size.
 
-It makes no sense to use the @samp{z} scale indicator in a numeric
-expression whose default scale indicator is neither @samp{u} nor
+It makes no sense to use the @samp{z} scaling indicator in a numeric
+expression whose default scaling indicator is neither @samp{u} nor
 @samp{z}, so GNU @code{troff} disallows this.  Similarly, it is
 nonsensical to use a scaling indicator other than @samp{z} or @samp{u}
-in a numeric expression whose default scale indicator is @samp{z}, and
+in a numeric expression whose default scaling indicator is @samp{z}, and
 so GNU @code{troff} disallows this as well.
 
-Another new scale indicator @samp{s} multiplies by the number of basic
+Another new scaling indicator @samp{s} multiplies by the number of basic
 units in a scaled point.  For instance, @samp{\n[.ps]s} is equal to
 @samp{1m} by definition.  Do not confuse the @samp{s} and @samp{z} scale
 indicators.
@@ -11138,7 +11138,7 @@ fractional type sizes:
 @item \s[@var{n}]
 @itemx \s'@var{n}'
 Set the point size to @var{n}@tie{}scaled points; @var{n}@tie{}is a
-numeric expression with a default scale indicator of @samp{z}.
+numeric expression with a default scaling indicator of @samp{z}.
 
 @item \s[+@var{n}]
 @itemx \s[-@var{n}]
@@ -11150,7 +11150,7 @@ numeric expression with a default scale indicator of @samp{z}.
 @itemx \s-'@var{n}'
 Increase or decrease the point size by @var{n}@tie{}scaled points;
 @var{n}@tie{}is a numeric expression (which may start with a minus sign)
-with a default scale indicator of @samp{z}.
+with a default scaling indicator of @samp{z}.
 @end table
 
 @xref{Device and Font Files}.
@@ -16832,6 +16832,7 @@ following two sections describe their format.
 
 @c =====================================================================
 
+@c BEGIN TODO: Make parallel with groff_out(5).
 @node gtroff Output, Device and Font Files, File formats, File formats
 @section @code{gtroff} Output
 @cindex @code{gtroff}, output
@@ -16957,7 +16958,7 @@ can occur everywhere.  They are just ignored.
 Some commands take integer arguments that are assumed to represent
 values in a measurement unit, but the letter for the corresponding scale
 indicator is not written with the output command arguments.  Most
-commands assume the scale indicator @samp{u}, the basic unit of the
+commands assume the scaling indicator @samp{u}, the basic unit of the
 device, some use @samp{z}, the scaled point unit of the device, while
 others, such as the color commands, expect plain integers.
 
@@ -17718,6 +17719,7 @@ follow quite naturally.
 @end ignore
 
 @end itemize
+@c END TODO: Make parallel with groff_out(5).
 
 
 @c =====================================================================
