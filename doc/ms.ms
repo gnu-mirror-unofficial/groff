@@ -1537,7 +1537,7 @@ request to force a break after printing the term or label.
 Second,
 you could apply the
 .CW \[rs]p
-escape to force a break.
+escape sequence to force a break.
 .
 The space following the escape is important;
 if you omit it,
