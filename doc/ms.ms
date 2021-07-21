@@ -845,7 +845,7 @@ to number headings in the form
 .I c .\|.\|.,
 to any depth desired,
 with the numbering of each level increasing automatically and being
-reset when a more significant level is increased.
+reset to zero when a more significant level is increased.
 .
 \[lq]1\[rq]\~is the most significant or coarsest division of the
 document.
