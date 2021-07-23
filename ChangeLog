@@ -151,7 +151,7 @@
 
 	* src/roff/groff/tests/evc_produces_no_output_if_invalid.sh:
 	  Regression-test Savannah #60913.
-	* src/utils/grog/grog.am (grog_TESTS): Run test.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
 
 2021-07-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -763,8 +763,8 @@
 	    scalar `groff_version` to "DEVELOPMENT".  Rename scalar
 	    `before_make` to `in_source_tree` and initialize to zero.
 	    Update `groff_version` with Automake-determined version
-	    variable if it is defined (i.e., grog is not running in an
-	    unbuilt source tree).
+	    variable if it is defined (i.e., grog is not running outside
+	    of, or in an unbuilt, groff source or binary distribution).
 	  - Drop unused `Mparams` list.  Replace it with new list
 	    `requested_package`, which stores the arguments to any grog
 	    `-m` options specified by the user.
@@ -832,7 +832,7 @@
 	  list `msupp` to store supplementary (non-main) macro package
 	  arguments.  If a full-service package was explicitly
 	  requested, it had better not clash with what we inferred.  If
-	  it does, explicitly unset $inferred_main_package so that the
+	  it does, explicitly unset `inferred_main_package` so that the
 	  -m arguments are placed in the same order that the user gave
 	  them; caveat dictator.  If `--run` option was given, just
 	  print the command; don't preface it with __FILE__ and __LINE__
