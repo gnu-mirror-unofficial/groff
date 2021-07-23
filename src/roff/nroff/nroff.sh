@@ -63,21 +63,19 @@ Topt=
 opts=
 dry_run=
 is_option_argument_pending=
-for i
-do
-  # Remember last argument seen for a usage diagnostic after loop exits.
-  arg=$1
 
+for arg
+do
   if [ -n "$is_option_argument_pending" ]
   then
     is_option_argument_pending=
-    opts="$opts $1"
+    opts="$opts $arg"
     shift
   fi
 
   case $1 in
     -c)
-      opts="$opts $1 -P-c" ;;
+      opts="$opts $arg -P-c" ;;
     -h)
       opts="$opts -P-h" ;;
     -[eq] | -s*)
@@ -85,11 +83,11 @@ do
       ;;
     -[dKmMnoPrTwW])
       is_option_argument_pending=yes
-      opts="$opts $1" ;;
+      opts="$opts $arg" ;;
     -[bCEikpStUz] | -[dKMmrnoPwW]*)
-      opts="$opts $1" ;;
+      opts="$opts $arg" ;;
     -T*)
-      Topt=$1 ;;
+      Topt=$arg ;;
     -u*)
       # -u is for Solaris compatibility and not otherwise documented.
       #
@@ -102,7 +100,7 @@ do
       dry_run=yes ;;
     -v | --version)
       echo "GNU nroff (groff) version @VERSION@"
-      opts="$opts $1" ;;
+      opts="$opts $arg" ;;
     --help)
       cat <<EOF
 usage: $prog [-bcCEhikpStUVz] [-dCS] [-dNAME=STRING] [-Karg] [-mNAME]\
@@ -117,7 +115,7 @@ EOF
     -)
       break ;;
     -*)
-      echo "$prog: usage error: invalid option '$1';" \
+      echo "$prog: usage error: invalid option '$arg';" \
            " see '$prog --help'" >&2
       exit 2 ;;
     *)
