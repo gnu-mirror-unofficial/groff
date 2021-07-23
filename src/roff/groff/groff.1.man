@@ -147,8 +147,7 @@ the two programs share a set of options.
 .
 However,
 .I groff
-has some options specific to it,
-some of which
+has some options that
 .I \%@g@troff
 does not share,
 and others which
@@ -213,9 +212,7 @@ option
 (see below),
 but also implies
 .B \-s
-and passes the
-.B \-I
-options to
+and is passed to
 .IR \%@g@soelim (@MAN1EXT@).
 .
 .
@@ -286,7 +283,7 @@ If multiple
 are required,
 each should be passed with a separate
 .B \-L
-option each.
+option.
 .
 .I groff
 does not prepend
@@ -318,48 +315,24 @@ preprocessor.
 .
 .TP
 .BI \-P\~ arg
-.TQ
-.BI "\-P \-" option
-.TQ
-.BI "\-P \-" option\~ \-P\~ arg
-Pass arguments to the postprocessor.
+Pass
+.I arg
+to the postprocessor.
 .
+If multiple
+.IR arg s
+are required,
+each should be passed with a separate
+.B \-P
+option.
 .
-.IP
-Each command-line
-.I option
-to a postprocessor must be specified with any required leading dashes
-.RB \[lq] \- \[rq]
-.\" No GNU roff postprocessor uses long options for anything except
-.\" --help or --version.
-.\"or
-.\".RB \[lq] \-\- \[rq]
-because
 .I groff
-passes the arguments as-is to the postprocessor;
-this permits arbitrary arguments to be transmitted.
-.
-For example,
-to pass a title to the
-.I gxditview
-postprocessor,
-the shell command
-.
-.RS
-.RS
-.EX
-groff \-X \-P \-title \-P \[aq]trial run\[aq] mydoc.t
-.EE
-.RE
-.
-is equivalent to
-.
-.RS
-.EX
-groff \-X \-Z mydoc.t | gxditview \-title \[aq]trial run\[aq] \-
-.EE
-.RE
-.RE
+does not prepend
+\[lq]\-\[rq]
+(a minus sign)
+to
+.I arg
+before passing it to the postprocessor.
 .
 .
 .TP
@@ -387,21 +360,10 @@ preprocessor.
 .
 .TP
 .B \-S
-Safer mode.
-.
-Pass the
-.B \-S
-option to
-.I \%@g@pic
-and disable the following
-.I \%@g@troff
-requests:
-.BR .open ,
-.BR .opena ,
-.BR .pso ,
-.BR .sy ,
-and
-.BR .pi .
+Operate in \[lq]safer\[rq] mode;
+see
+.B \-U
+below for its opposite.
 .
 For security reasons,
 safer mode is enabled by default.
@@ -416,147 +378,32 @@ preprocessor.
 .
 .TP
 .BI \-T\~ dev
-Prepare output for the device type
-.IR dev ;
+Direct
 .I \%@g@troff
-generates \[lq]intermediate output\[rq]
-.RI ( \%groff_out (@MAN5EXT@))
-appropriate to the device.
+to format the input for the device
+.IR dev .
 .
 .I groff
 then calls a postprocessor to convert
 .IR \%@g@troff 's
-output to a form appropriate for
+output to a format appropriate for
 .IR dev .
 .
-Real devices in
-.I groff
-are
-.
-.RS
-.RS
-.TP
-dvi
-TeX DVI format
-(postprocessor is
-.IR grodvi (@MAN1EXT@)).
-.
-.TP
-html
-.TQ
-xhtml
-HTML and XHTML output
-(preprocessors are
-.I \%@g@soelim
-and
-.IR \%pre-grohtml ,
-postprocessor is
-.IR \%post-grohtml ).
-.
-.TP
-lbp
-Canon CAPSL printers
-(\%LBP-4 and \%LBP-8 series laser printers;
-postprocessor is
-.IR grolbp (@MAN1EXT@)).
-.
-.TP
-lj4
-HP LaserJet4-compatible
-(or other PCL5-compatible)
-printers
-(postprocessor
-is
-.IR grolj4 (@MAN1EXT@)).
-.
-.TP
-ps
-PostScript output (postprocessor is
-.IR grops (@MAN1EXT@)).
-.
-.TP
-pdf
-Portable Document Format (PDF) output (postprocessor is
-.IR gropdf (@MAN1EXT@)).
-.RE
-.RE
-.
-.
-.IP
-For the following TTY output devices
-(where postprocessor is
-.IR grotty (@MAN1EXT@)),
-.B \-T
-selects the output encoding:
-.
-.
-.RS
-.RS
-.TP
-ascii
-ISO 646 1991:IRV,
-also known as US-ASCII.
-.
-.
-.TP
-cp1047
-IBM code page 1047,
-an EBCDIC arrangement of ISO Latin-1.
-.
-.
-.TP
-latin1
-ISO Latin-1
-(ISO 8859-1).
-.
-.
-.TP
-utf8
-ISO 10646 (\[lq]Unicode\[rq]) character set in UTF-8 encoding.
-.
-This encoding has the largest character repertoire,
-so it is the best choice for terminal output.
-.RE
-.RE
-.
-.
-.IP
-The following arguments select
-.I \%gxditview
-as the postprocessor.
-.
-.
-.RS
-.RS
-.TP
-X75
-75\|dpi resolution,
-10\|pt document base font.
-.TP
-X75\-12
-75\|dpi resolution,
-12\|pt document base font.
-.TP
-X100
-100\|dpi resolution,
-10\|pt document base font.
-.TP
-X100\-12
-100\|dpi resolution,
-12\|pt document base font.
-.RE
-.RE
-.
-.IP
-The default device is
-.BR @DEVICE@ .
+See subsection \[lq]Devices\[rq] below.
 .
 .
 .TP
 .B \-U
-Unsafe mode;
+Operate in unsafe mode;
 see
 .BR \-S .
+.
+Pass the
+.B \-U
+option to
+.I \%@g@pic
+and
+.IR \%@g@troff .
 .
 .
 .TP
@@ -570,7 +417,7 @@ that is,
 the given command line is processed in the usual way,
 passing
 .B \-v
-to all subprograms.
+to the formatter and any pre- or postprocessors invoked.
 .
 .
 .TP
@@ -582,52 +429,15 @@ to the standard output stream,
 but do not execute it.
 .
 If given more than once,
-the commands are both written to the standard error stream and run.
+the pipeline is both written to the standard error stream and run.
 .
 .
 .TP
 .B \-X
 Use
 .IR \%gxditview (@MAN1EXT@)
-instead of using the usual postprocessor to (pre)view a document.
-.
-The printing spooler behavior as outlined with options
-.B \-l
-and
-.B \-L
-is carried over to
-.I \%gxditview
-by determining an argument for its
-.B \-printCommand
-option.
-.
-This sets the default
-.RB \[lq] Print \[rq]
-action and the corresponding menu entry to that value.
-.
-.B \-X
-produces good results only with
-.BR \-Tps ,
-.BR \-TX75 ,
-.BR \-TX75\-12 ,
-.BR \-TX100 ,
-and
-.BR \-TX100\-12 .
-.
-The default resolution for previewing
-.B \-Tps
-output is 75\|dpi,
-but this can be changed by passing the
-.B \-resolution
-option to
-.IR \%gxditview .
-.
-.RS
-.IP
-.EX
-groff \-X \-P\-resolution \-P100 \-man foo.1
-.EE
-.RE
+instead of the usual postprocessor to (pre)view a document on an X11
+display.
 .
 .
 .TP
@@ -665,21 +475,21 @@ Generate a plain text approximation of the typeset output.
 .
 .TP
 .B \-b
-Backtrace on error or warning.
+Write a backtrace to the standard error stream on each error or warning.
 .
 .
 .TP
 .B \-c
-Disable color output
-(to any device)
-and use legacy output format for terminal devices;
-see
-.IR \%grotty (@MAN1EXT@).
+Start with color output disabled.
 .
 .
 .TP
 .B \-C
-Enable compatibility mode.
+Enable AT&T
+.I troff \" AT&T
+compatibility mode;
+implies
+.BR \-c .
 .
 .
 .TP
@@ -702,11 +512,19 @@ implies
 .BI \-f\~ fam
 Set default font family.
 .
+.
 .TP
 .BI \-F\~ dir
-Set path for device
-.I DESC
-files.
+Search in directory
+.I dir
+for the selected output device's directory of device and font
+description files.
+.
+.
+.TP
+.B \-i
+Process standard input after the specified input files.
+.
 .
 .TP
 .BI \-I\~ dir
@@ -726,26 +544,24 @@ escape).
 .
 .
 .TP
-.B \-i
-Process standard input after the specified input files.
-.
-.TP
 .BI \-m\~ name
-Include macro file
+Process
 .RI name .tmac
-(or
-.IR tmac. name);
-see also
-.IR \%groff_tmac (@MAN5EXT@).
+before any input files.
+.
 .
 .TP
 .BI \-M\~ dir
-Path for macro files.
+Search directory
+.I dir
+for macro files.
+.
 .
 .TP
 .BI \-n\~ num
 Number the first page
 .IR num .
+.
 .
 .TP
 .BI \-o\~ list
@@ -762,26 +578,14 @@ Define register.
 .
 .TP
 .BI \-w\~ name
-Enable warning category
-.IR name .
-.
-See
-.IR \%@g@troff (@MAN1EXT@)
-or the
-.I groff
-Texinfo manual for a list of names.
-.
-.
-.TP
+.TQ
 .BI \-W\~ name
-Disable warning category
+Enable
+.RB ( \-w )
+or inhibit
+.RB ( \-W )
+emission of warnings in category
 .IR name .
-.
-See
-.IR \%@g@troff (@MAN1EXT@)
-or the
-.I groff
-Texinfo manual for a list of names.
 .
 .
 .TP
@@ -1381,6 +1185,128 @@ documented in
 .SS Devices
 .\" ====================================================================
 .
+Real devices in
+.I groff
+are
+.
+.RS
+.RS
+.TP
+dvi
+TeX DVI format
+(postprocessor is
+.IR grodvi (@MAN1EXT@)).
+.
+.TP
+html
+.TQ
+xhtml
+HTML and XHTML output
+(preprocessors are
+.I \%@g@soelim
+and
+.IR \%pre-grohtml ,
+postprocessor is
+.IR \%post-grohtml ).
+.
+.TP
+lbp
+Canon CAPSL printers
+(\%LBP-4 and \%LBP-8 series laser printers;
+postprocessor is
+.IR grolbp (@MAN1EXT@)).
+.
+.TP
+lj4
+HP LaserJet4-compatible
+(or other PCL5-compatible)
+printers
+(postprocessor
+is
+.IR grolj4 (@MAN1EXT@)).
+.
+.TP
+ps
+PostScript output (postprocessor is
+.IR grops (@MAN1EXT@)).
+.
+.TP
+pdf
+Portable Document Format (PDF) output (postprocessor is
+.IR gropdf (@MAN1EXT@)).
+.RE
+.RE
+.
+.
+.IP
+For the following TTY output devices
+(where postprocessor is
+.IR grotty (@MAN1EXT@)),
+.B \-T
+selects the output encoding:
+.
+.
+.RS
+.RS
+.TP
+ascii
+ISO 646 1991:IRV,
+also known as US-ASCII.
+.
+.
+.TP
+cp1047
+IBM code page 1047,
+an EBCDIC arrangement of ISO Latin-1.
+.
+.
+.TP
+latin1
+ISO Latin-1
+(ISO 8859-1).
+.
+.
+.TP
+utf8
+ISO 10646 (\[lq]Unicode\[rq]) character set in UTF-8 encoding.
+.
+This encoding has the largest character repertoire,
+so it is the best choice for terminal output.
+.RE
+.RE
+.
+.
+.IP
+The following arguments select
+.I \%gxditview
+as the postprocessor.
+.
+.
+.RS
+.RS
+.TP
+X75
+75\|dpi resolution,
+10\|pt document base font.
+.TP
+X75\-12
+75\|dpi resolution,
+12\|pt document base font.
+.TP
+X100
+100\|dpi resolution,
+10\|pt document base font.
+.TP
+X100\-12
+100\|dpi resolution,
+12\|pt document base font.
+.RE
+.RE
+.
+.IP
+The default device is
+.BR @DEVICE@ .
+.
 In
 .IR roff ,
 the output targets are called
@@ -1847,10 +1773,23 @@ see
 .SH Examples
 .\" ====================================================================
 .
-The following example illustrates the power of the
+.I roff
+systems are best known for formatting man pages.
+.
+Once it is has located a man page,
+.RI a\~ man (1)
+librarian program may execute a
 .I groff
-program as a wrapper around
-.IR \%@g@troff .
+command much like the following,
+constructing a pipeline to page the output.
+.
+.
+.RS
+.P
+.EX
+groff \-t \-man /usr/share/man/man1/groff.1.man | less \-R
+.EE
+.RE
 .
 .
 .P
@@ -1863,7 +1802,7 @@ and
 and the
 .I me
 macro package in the way to which AT&T
-.I troff
+.I troff \" AT&T
 users were accustomed,
 one would type
 (or script)
@@ -1896,6 +1835,43 @@ using the command substitution feature of the shell.
 .EX
 $(grog \-Tutf8 foo.me)
 .EE
+.
+.
+.P
+Each command-line
+.I option
+to a postprocessor must be specified with any required leading dashes
+.RB \[lq] \- \[rq]
+.\" No GNU roff postprocessor uses long options for anything except
+.\" --help or --version.
+.\"or
+.\".RB \[lq] \-\- \[rq]
+because
+.I groff
+passes the arguments as-is to the postprocessor;
+this permits arbitrary arguments to be transmitted.
+.
+For example,
+to pass a title to the
+.I gxditview
+postprocessor,
+the shell commands
+.
+.RS
+.EX
+groff \-X \-P \-title \-P \[aq]trial run\[aq] mydoc.t
+.EE
+.RE
+.
+and
+.
+.RS
+.EX
+groff \-X \-Z mydoc.t | gxditview \-title \[aq]trial run\[aq] \-
+.EE
+.RE
+.
+are equivalent.
 .
 .
 .\" ====================================================================
