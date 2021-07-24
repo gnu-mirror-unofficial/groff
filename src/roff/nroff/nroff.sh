@@ -115,6 +115,7 @@ fi
 # variables.
 if [ -z "$T" ]
 then
+  # The separate `exec` is to work around a ~2004 bug in Cygwin sh.exe.
   case "`exec 2>/dev/null ; locale charmap`" in
     UTF-8)
       Tloc=utf8 ;;
@@ -123,6 +124,8 @@ then
     IBM-1047)
       Tloc=cp1047 ;;
     *)
+      # Some old shells don't support ${FOO:-bar} expansion syntax.  We
+      # should switch to it when it is safe to abandon support for them.
       case "${LC_ALL-${LC_CTYPE-${LANG}}}" in
         *.UTF-8)
           Tloc=utf8 ;;
@@ -155,7 +158,7 @@ opts="-mtty-char$opts"
 @GROFF_BIN_PATH_SETUP@
 export GROFF_BIN_PATH
 
-# Let our test harness redirect us.
+# Let our test harness redirect us.  See LC_ALL comment above.
 groff=${GROFF_TEST_GROFF-groff}
 
 # Note 1: It would be nice to apply the DRY ("Don't Repeat Yourself")
@@ -172,16 +175,17 @@ groff=${GROFF_TEST_GROFF-groff}
 # Naïve attempts to solve the problem fail when arguments to nroff
 # contain embedded whitespace or shell metacharacters.  The solution
 # below works with those, but there is insufficient quoting in -V (dry
-# run) mode, such that you can't cut-and-paste the output of 'nroff -V'
+# run) mode, such that you can't copy-and-paste the output of 'nroff -V'
 # if you pass it a filename like foo"bar (with the embedded quotation
 # mark) and expect it to run without further quoting.
 #
 # If POSIX adopts Bash's ${var@Q} or an equivalent, this issue can be
 # revisited.
 #
-# Note 2: The construction '${1+"@$"}' is not for compatibility with old
-# or buggy shells, but to preserve the absence of arguments.  We don't
-# want 'nroff' to become 'groff ... ""' if $# equals zero.
+# Note 2: The construction '${1+"@$"}' preserves the absence of
+# arguments in old shells; see "Shell Substitutions" in the GNU Autoconf
+# manual.  We don't want 'nroff' to become 'groff ... ""' if $# equals
+# zero.
 if [ -n "$dry_run" ]
 then
   echo PATH="$GROFF_RUNTIME$PATH" $groff $T $opts ${1+"$@"}
