@@ -1,5 +1,17 @@
 2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/nroff/nroff.sh: Use Version 7 Unix sh-compatible form
+	of parameter expansion; per the GNU Autoconf manual[1], "[o]ld
+	BSD shells, including the Ultrix sh, don't accept the colon for
+	any shell substitution, and complain and die."  This is also the
+	form of such substitutions used elsewhere in the script, so they
+	should be mutually consistent.
+
+	[1] https://www.gnu.org/software/autoconf/manual/autoconf-2.60/\
+	html_node/Shell-Substitutions.html
+
+2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/nroff/nroff.sh: Slightly refactor.  Rename formerly
 	unused loop index variable from `i` to `arg` to leverage it in a
 	later diagnostic message without a separate definition.  Inside
