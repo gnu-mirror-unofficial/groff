@@ -22,43 +22,7 @@
 
 prog="$0"
 
-# Default device.
-
-# Check the GROFF_TYPESETTER environment variable.
-Tenv=$GROFF_TYPESETTER
-
-# Try the 'locale charmap' command first because it is most reliable.
-# On systems where it doesn't exist, look at the environment variables.
-case "`exec 2>/dev/null ; locale charmap`" in
-  UTF-8)
-    Tloc=utf8 ;;
-  ISO-8859-1 | ISO-8859-15)
-    Tloc=latin1 ;;
-  IBM-1047)
-    Tloc=cp1047 ;;
-  *)
-    case "${LC_ALL-${LC_CTYPE-${LANG}}}" in
-      *.UTF-8)
-        Tloc=utf8 ;;
-      iso_8859_1 | *.ISO-8859-1 | *.ISO8859-1 | \
-      iso_8859_15 | *.ISO-8859-15 | *.ISO8859-15)
-        Tloc=latin1 ;;
-      *.IBM-1047)
-        Tloc=cp1047 ;;
-      *)
-        case "$LESSCHARSET" in
-          utf-8)
-            Tloc=utf8 ;;
-          latin1)
-            Tloc=latin1 ;;
-          cp1047)
-            Tloc=cp1047 ;;
-          *)
-            Tloc=ascii ;;
-        esac ;;
-    esac ;;
-esac
-
+T=
 Topt=
 opts=
 dry_run=
@@ -130,23 +94,58 @@ then
     exit 2
 fi
 
-if [ -n "$Topt" ]
+# Determine the -T option.  Was a valid one specified?
+case "$Topt" in
+  -Tascii | -Tlatin1 | -Tutf8 | -Tcp1047)
+    T=$Topt ;;
+esac
+
+# -T option absent or invalid; try environment.
+if [ -z "$T" ]
 then
-  T=$Topt
-else
-  if [ -n "$Tenv" ]
-  then
-    T=-T$Tenv
-  fi
+  Tenv=-T$GROFF_TYPESETTER
+  case "$Tenv" in
+    -Tascii | -Tlatin1 | -Tutf8 | -Tcp1047)
+      T=$Tenv ;;
+  esac
 fi
 
-case $T in
-  -Tascii | -Tlatin1 | -Tutf8 | -Tcp1047)
-    ;;
-  *)
-    # ignore other devices and use locale fallback
-    T=-T$Tloc ;;
-esac
+# Finally, infer a -T option from the locale.  Try 'locale charmap'
+# first because it is the most reliable, then look at environment
+# variables.
+if [ -z "$T" ]
+then
+  case "`exec 2>/dev/null ; locale charmap`" in
+    UTF-8)
+      Tloc=utf8 ;;
+    ISO-8859-1 | ISO-8859-15)
+      Tloc=latin1 ;;
+    IBM-1047)
+      Tloc=cp1047 ;;
+    *)
+      case "${LC_ALL-${LC_CTYPE-${LANG}}}" in
+        *.UTF-8)
+          Tloc=utf8 ;;
+        iso_8859_1 | *.ISO-8859-1 | *.ISO8859-1 | \
+        iso_8859_15 | *.ISO-8859-15 | *.ISO8859-15)
+          Tloc=latin1 ;;
+        *.IBM-1047)
+          Tloc=cp1047 ;;
+        *)
+          case "$LESSCHARSET" in
+            utf-8)
+              Tloc=utf8 ;;
+            latin1)
+              Tloc=latin1 ;;
+            cp1047)
+              Tloc=cp1047 ;;
+            *)
+              Tloc=ascii ;;
+          esac ;;
+      esac ;;
+  esac
+  T=-T$Tloc
+fi
 
 # Load nroff-style character definitions too.
 opts="-mtty-char$opts"

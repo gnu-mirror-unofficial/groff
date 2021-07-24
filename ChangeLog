@@ -1,5 +1,12 @@
 2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/nroff/nroff.sh: Refactor, mostly by relocation.  Move
+	locale character set inference logic so that we only run it if
+	we have to (no `-T` option was given and `GROFF_TYPESETTER` was
+	not set in the environment).  Initalize `T` variable as empty.
+
+2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/nroff/nroff.sh: Use Version 7 Unix sh-compatible form
 	of parameter expansion; per the GNU Autoconf manual[1], "[o]ld
 	BSD shells, including the Ultrix sh, don't accept the colon for
