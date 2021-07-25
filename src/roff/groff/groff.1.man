@@ -982,15 +982,28 @@ it is run before any other preprocessors.
 .SS "Macro packages"
 .\" ====================================================================
 .
-Macro packages can be loaded prior to a
+Macro files are
 .I roff
-input document by using the option
-.BR \-m .
+input files designed to produce no output themselves but instead ease
+the preparation of other
+.I roff
+documents.
+.
+When a macro file is installed at a standard location and suitable for
+use by a general audience,
+it is termed a macro package.
+.
+.
+.P
+Macro packages can be loaded prior to any
+.I roff
+input documents with the
+.BR \-m \~option.
 .
 The
 .I groff
 system implements most well-known macro packages for AT&T
-.I troff
+.I troff \" AT&T
 .\" exceptions: mpm, mv
 in a compatible way,
 extends them,
@@ -1024,7 +1037,7 @@ Macro packages serve a variety of purposes.
 Some are \[lq]full-service\[rq] packages,
 adopting responsibility for page layout among other fundamental tasks,
 and defining their own lexicon of macros for document composition;
-each of these stands alone and a given document can use at most one.
+each such package stands alone and a given document can use at most one.
 .
 GNU
 .I roff
@@ -1055,8 +1068,7 @@ It can be specified on the command line as
 .
 .TP
 .I e
-is the Berkeley general-purpose
-document formatter,
+is the Berkeley general-purpose macro suite,
 developed as an alternative to AT&T's
 .IR s ;
 see
@@ -1068,8 +1080,8 @@ It can be specified on the command line as
 .
 .TP
 .I m
-is the second-generation AT&T general-purpose
-document formatter,
+implements the format used by the
+second-generation AT&T macro suite for general documents,
 a successor to
 .IR s ;
 see
@@ -1099,9 +1111,7 @@ takes the female pronoun\[em]can be specified on the command line as
 .
 .TP
 .I s
-is the original AT&T general-purpose
-.I ms
-document formatter;
+is the original AT&T general-purpose document format;
 see
 .IR groff_ms (@MAN7EXT@).
 .
