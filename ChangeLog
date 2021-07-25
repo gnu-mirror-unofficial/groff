@@ -1,3 +1,18 @@
+2021-07-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/utils/hpftodit/hpftodit.cpp (show_symset): Prevent
+	sprintf() from overunning a static buffer.  Thanks to Bjarni
+	Ingi Gislason for the report.  Resize buffer to be large enough
+	to accommodate a 64-bit unsigned int type formatted as decimal.
+	Also add assert() before the sprintf() to abort if the int type
+	is even larger than that.  Use "%u" conversion instead of "%d"
+	since the quantity is unsigned.
+	(hp_msl_to_ucode_name): Similar, but for a signed int.
+	(unicode_to_ucode_name): Similar, but for a signed int formatted
+	as (unsigned) hexadecimal.
+
+	Fixes <https://savannah.gnu.org/bugs/?60964>.
+
 2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/nroff/nroff.sh: Refactor, mostly by relocation.  Move
