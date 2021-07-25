@@ -457,15 +457,9 @@ for a description of this format.
 .SS "Transparent options"
 .\" ====================================================================
 .
-The following options are transparently handed over to the formatter
-program
-.I \%@g@troff
-that is called by
-.I groff
-subsequently.
-.
-These options are described in more detail in
-.IR \%@g@troff (@MAN1EXT@).
+The following options are passed as-is to the formatter program
+.IR \%@g@troff (@MAN1EXT@),
+and described in more detail in its man page.
 .
 .
 .TP
@@ -530,17 +524,7 @@ Process standard input after the specified input files.
 .BI \-I\~ dir
 Search
 .I dir
-for files
-(those on the command line,
-those named in
-.B .psbb
-and
-.B .so
-requests,
-and
-those named in certain device commands issued with the
-.B \[rs]X
-escape).
+for input files.
 .
 .
 .TP
