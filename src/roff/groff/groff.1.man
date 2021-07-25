@@ -826,7 +826,7 @@ groff \-Tps \-dpaper=a4l \-P\-pa4 \-P\-l \-ms foo.ms > foo.ps
 .
 .
 .\" ====================================================================
-.SS "Front ends"
+.SS "Front end"
 .\" ====================================================================
 .
 The
@@ -835,17 +835,16 @@ program is a wrapper around the
 .IR \%@g@troff (@MAN1EXT@)
 program.
 .
-It allows one to specify the preprocessors by command-line options and
-automatically runs the postprocessor that is appropriate for the
-selected device.
+It allows one to specify preprocessors via command-line options and
+automatically runs the appropriate postprocessor for the selected
+output device.
 .
 Doing so,
-the sometimes tedious piping mechanism of traditional
+the manual construction of pipelines or management of temporary files
+required of users of traditional
 .IR roff (@MAN7EXT@)
 systems can be avoided.
 .
-.
-.P
 The
 .IR grog (@MAN1EXT@)
 program can be used to infer an appropriate
