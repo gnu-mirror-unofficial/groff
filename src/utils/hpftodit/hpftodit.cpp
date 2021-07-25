@@ -1286,7 +1286,7 @@ hp_msl_to_ucode_name(int msl)
       ustr = uname_decomposed + 1;
   }
   char *value = new char[strlen(ustr) + 1];
-  sprintf(value, equal(ustr, UNNAMED) ? ustr : "u%s", ustr);
+  sprintf(value, equal(ustr, UNNAMED) ? UNNAMED : "u%s", ustr);
   return value;
 }
 
@@ -1312,7 +1312,7 @@ unicode_to_ucode_name(int ucode)
       ustr = uname_decomposed + 1;
   }
   char *value = new char[strlen(ustr) + 1];
-  sprintf(value, equal(ustr, UNNAMED) ? ustr : "u%s", ustr);
+  sprintf(value, equal(ustr, UNNAMED) ? UNNAMED : "u%s", ustr);
   return value;
 }
 

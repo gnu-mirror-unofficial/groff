@@ -1,3 +1,11 @@
+2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/utils/hpftodit/hpftodit.cpp (hp_msl_to_ucode_name,
+	unicode_to_ucode_name): Hush "format nonliteral" compiler
+	warnings by using a preprocessor-defined string literal as an
+	sprint() format string instead of a C variable that just
+	compared identically to the same thing.
+
 2021-07-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/utils/hpftodit/hpftodit.cpp (show_symset): Prevent
