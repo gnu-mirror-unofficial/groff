@@ -856,68 +856,90 @@ command line to format a document.
 .SS Preprocessors
 .\" ====================================================================
 .
-The
-.I groff
-preprocessors are reimplementations of the classical preprocessors
-with moderate extensions.
+A preprocessor is an interpreter of a domain-specific language that
+produces
+.I roff
+language output.
 .
-The standard preprocessors distributed with the
-.I groff
-package are
+Frequently,
+such input is confined to sections or regions of a
+.I roff
+input file
+(bracketed with macro calls specific to each preprocessor),
+which it replaces.
 .
+Preprocessors therefore often interpret a subset of
+.I roff
+syntax along with their own language.
+.
+GNU
+.I roff
+provides reimplementations of most preprocessors familiar to users of
+AT&T
+.IR troff ; \" AT&T
+these routinely have extended features and/or require GNU
+.I troff \" GNU
+to format their output.
+.
+Preprocessors distributed with GNU
+.I roff
+include
+.
+.
+.RS
 .TP
 .IR \%@g@eqn (@MAN1EXT@)
 for mathematical formulae,
 .
+.
 .TP
 .IR \%@g@grn (@MAN1EXT@)
-for including
+for pictures in
 .IR gremlin (1)
-pictures,
+format,
+.
 .
 .TP
 .IR \%@g@pic (@MAN1EXT@)
-for drawing diagrams,
+for diagrams,
+.
 .
 .TP
 .IR \%@g@chem (@MAN1EXT@)
 for chemical structure diagrams,
 .
+.
 .TP
 .IR \%@g@refer (@MAN1EXT@)
 for bibliographic references,
 .
+.
 .TP
 .IR \%@g@soelim (@MAN1EXT@)
 to preprocess files included with
-.I groff \" language
+.I roff \" language
 .B .so
-requests.
-.
-.P
+requests,
 and
+.
 .
 .TP
 .IR \%@g@tbl (@MAN1EXT@)
 for tables.
+.RE
+.
 .
 .P
-A new preprocessor not available in classical
-.I troff
+A preprocessor unique to GNU
+.I roff
 is
-.IR \%preconv (@MAN1EXT@)
-which converts various input encodings to something
-.I groff
+.IR \%preconv (@MAN1EXT@),
+which converts various input encodings to something GNU
+.I troff \" GNU
 can understand.
 .
-It is always run first before any other preprocessor.
-.
-.P
-Besides these,
-there are some internal preprocessors that are
-automatically run with some devices.
-.
-These aren't visible to the user.
+When used,
+it is run before any other preprocessors.
 .
 .
 .\" ====================================================================
