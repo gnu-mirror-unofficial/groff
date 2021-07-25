@@ -2,8 +2,9 @@
 
 	* src/roff/nroff/nroff.sh: Refactor, mostly by relocation.  Move
 	locale character set inference logic so that we only run it if
-	we have to (no `-T` option was given and `GROFF_TYPESETTER` was
-	not set in the environment).  Initalize `T` variable as empty.
+	we have to (`-T` option was invalid or not given and
+	`GROFF_TYPESETTER` was not set in the environment or invalid).
+	Initalize `T` variable as empty.
 
 2021-07-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -79,9 +80,9 @@
 	argument.  If it is set when a new argument is encountered,
 	absorb the argument into the groff option list and clear the
 	flag.  Modernize script in a couple of other ways.
-	  - Exit with status 2 upon usage errors so that this is
-	    condition is easily distinguished from a groff abort (which
-	    exits with status 1).
+	  - Exit with status 2 upon usage errors so that this condition
+	    is easily distinguished from a groff abort (which exits with
+	    status 1).
 	  - Test shell variables for non-nullity with test(1) -n
 	    operator instead of a string comparison.
 	* src/roff/nroff/tests/verbose_option_works.sh: Test correct
@@ -901,7 +902,7 @@
 	correctly identified.  The only example of a 'mm'-file is
 	"letter.mm", which is not recognized correctly."  As noted
 	above, the present refactor achieves correct recognition of all
-	of the files including letter.mm.
+	of the files, including letter.mm.
 
 2021-06-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
