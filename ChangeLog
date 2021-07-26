@@ -1,5 +1,18 @@
 2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Fix Savannah #60971.
+
+	* src/preproc/html/pre-html.cpp (makeFileName): Consistently put
+	a dash at the end of `macroset_template` whether the image file
+	name stem is user-supplied or the default.  Stop adding the dash
+	before the image number in `image_template` instead.  This makes
+	the image file name format reliable whether the image needs to
+	be subdivided (eqn) or not (tbl).
+
+	Fixes <https://savannah.gnu.org/bugs/?60971>.
+
+2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Reduce noise to standard error stream.
 
 	* src/preproc/html/pre-html.cpp (imageList::createImage): Fix

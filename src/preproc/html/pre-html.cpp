@@ -530,20 +530,21 @@ static void makeFileName(void)
   }
 
   if (image_template == NULL)
-    macroset_template = make_message("%sgrohtml-%d", image_dir,
+    macroset_template = make_message("%sgrohtml-%d-", image_dir,
 				     (int)getpid());
   else
-    macroset_template = make_message("%s%s", image_dir, image_template);
+    macroset_template = make_message("%s%s-", image_dir,
+				     image_template);
 
   if (macroset_template == NULL)
     sys_fatal("make_message");
 
   image_template =
-    (char *)malloc(strlen("-%d") + strlen(macroset_template) + 1);
+    (char *)malloc(strlen("%d") + strlen(macroset_template) + 1);
   if (image_template == NULL)
     sys_fatal("malloc");
   strcpy(image_template, macroset_template);
-  strcat(image_template, "-%d");
+  strcat(image_template, "%d");
 }
 
 /*
