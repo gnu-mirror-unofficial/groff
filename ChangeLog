@@ -1,5 +1,15 @@
 2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Reduce noise to standard error stream.
+
+	* src/preproc/html/pre-html.cpp (imageList::createImage): Fix
+	apparent oversight: `EXE_EXT` was not being applied to the
+	second of three commands being run in a pipeline (did Windows
+	users notice?).  Also issue (undocumented!) `-quiet` option to
+	`pnmtopng` to shut up its commentary about counting colors.
+
+2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Stop discarding standard error output.
 
 	* src/preproc/html/pre-html.cpp (html_system): Stop sending the

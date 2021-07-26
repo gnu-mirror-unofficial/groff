@@ -1013,10 +1013,12 @@ void imageList::createImage(imageItem *i)
 	     + 1 + IMAGE_BORDER_PIXELS;
     if (createPage(i->pageNo) == 0) {
       s = make_message("pnmcut%s %d %d %d %d < %s "
-		       "| pnmcrop -quiet | pnmtopng%s %s > %s\n",
+		       "| pnmcrop%s -quiet | pnmtopng%s -quiet %s"
+		       "> %s\n",
 		       EXE_EXT,
 		       x1, y1, x2 - x1 + 1, y2 - y1 + 1,
 		       imagePageName,
+		       EXE_EXT,
 		       EXE_EXT,
 		       TRANSPARENT,
 		       i->imageName);
