@@ -324,28 +324,20 @@ void html_system(const char *s, int redirect_stdout)
   }
 #endif
   {
-    // Redirect standard error to the null device.  This is more
-    // portable than using "2> /dev/null", since it doesn't require a
-    // Unixy shell.
-    int save_stderr = dup(2);
-    int save_stdout = dup(1);
+    int saved_stdout = dup(1);
     int fdnull = open(NULL_DEV, O_WRONLY|O_BINARY, 0666);
-    if (save_stderr > 2 && fdnull > 2)
-      dup2(fdnull, 2);
-    if (redirect_stdout && save_stdout > 1 && fdnull > 1)
+    if (redirect_stdout && saved_stdout > 1 && fdnull > 1)
       dup2(fdnull, 1);
     if (fdnull >= 0)
       close(fdnull);
     int status = system(s);
-    dup2(save_stderr, 2);
     if (redirect_stdout)
-      dup2(save_stdout, 1);
+      dup2(saved_stdout, 1);
     if (status == -1)
       fprintf(stderr, "Calling '%s' failed\n", s);
     else if (status)
       fprintf(stderr, "Calling '%s' returned status %d\n", s, status);
-    close(save_stderr);
-    close(save_stdout);
+    close(saved_stdout);
   }
 }
 

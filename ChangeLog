@@ -1,5 +1,14 @@
 2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Stop discarding standard error output.
+
+	* src/preproc/html/pre-html.cpp (html_system): Stop sending the
+	standard error stream to /dev/null; this just makes debugging
+	harder, and doesn't produce much more output for well-formed
+	input documents.  Rename `save_stdout` to `saved_stdout`.
+
+2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Fix misspelled variable.
 
 	* src/preproc/html/pre-html.cpp: Rename `IMAGE_BOARDER_PIXELS`
