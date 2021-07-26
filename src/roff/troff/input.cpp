@@ -8702,7 +8702,7 @@ static void copy_mode_error(const char *format,
     error(format, arg1, arg2, arg3);
 }
 
-enum error_type { WARNING, OUTPUT_WARNING, ERROR, FATAL };
+enum error_type { DEBUG, WARNING, OUTPUT_WARNING, ERROR, FATAL };
 
 static void do_error(error_type type,
 		     const char *format,
@@ -8735,6 +8735,9 @@ static void do_error(error_type type,
   case WARNING:
     fputs("warning: ", stderr);
     break;
+  case DEBUG:
+    fputs("debug: ", stderr);
+    break;
   case OUTPUT_WARNING:
     double fromtop = topdiv->get_vertical_position().to_units() / warn_scale;
     fprintf(stderr, "warning [p %d, %.1f%c",
@@ -8753,6 +8756,14 @@ static void do_error(error_type type,
   fflush(stderr);
   if (type == FATAL)
     cleanup_and_exit(1);
+}
+
+void debug(const char *format,
+	   const errarg &arg1,
+	   const errarg &arg2,
+	   const errarg &arg3)
+{
+  do_error(DEBUG, format, arg1, arg2, arg3);
 }
 
 int warning(warning_type t,
@@ -8821,6 +8832,21 @@ void error_with_file_and_line(const char *filename, int lineno,
   if (program_name)
     fprintf(stderr, "%s: ", program_name);
   fprintf(stderr, "%s:%d: error: ", filename, lineno);
+  errprint(format, arg1, arg2, arg3);
+  fputc('\n', stderr);
+  fflush(stderr);
+}
+
+void debug_with_file_and_line(const char *filename,
+			      int lineno,
+			      const char *format,
+			      const errarg &arg1,
+			      const errarg &arg2,
+			      const errarg &arg3)
+{
+  if (program_name)
+    fprintf(stderr, "%s: ", program_name);
+  fprintf(stderr, "%s:%d: debug: ", filename, lineno);
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);

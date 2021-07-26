@@ -1,5 +1,22 @@
 2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff, troff]: Add debug diagnostic level.
+
+	* src/include/error.h: Declare functions
+	`debug_with_file_and_line` and `debug`.
+	* src/libs/libgroff/error.cpp: Add `DEBUG` to enum `error_type`.
+	(do_error_with_file_and_line): Add case for `DEBUG` in switch.
+	(debug, debug_with_file_and_line): Add new functions.
+
+	Do the same for troff since it has a private implementation of
+	the diagnostic functions (thanks to `output_warning()`).
+
+	* src/roff/troff/input.cpp: Add `DEBUG` to enum `error_type`.
+	(do_error_with_file_and_line): Add case for `DEBUG` in switch.
+	(debug, debug_with_file_and_line): Add new functions.
+
+2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/hpftodit/hpftodit.cpp (hp_msl_to_ucode_name,
 	unicode_to_ucode_name): Hush "format nonliteral" compiler
 	warnings by using a preprocessor-defined string literal as an
