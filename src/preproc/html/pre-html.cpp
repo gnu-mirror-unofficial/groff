@@ -3,19 +3,20 @@
  *
  * This file is part of groff.
  *
- * groff is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * groff is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * groff is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * groff is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with groff; see the file COPYING.  If not, write to the Free Software
- * Foundation, 51 Franklin St - Fifth Floor, Boston, MA 02110-1301, USA. 
+ * You should have received a copy of the GNU General Public License
+ * along with groff; see the file COPYING.  If not, write to the Free
+ * Software Foundation, 51 Franklin St - Fifth Floor, Boston, MA
+ * 02110-1301, USA.
  */
 
 #define PREHTMLC
@@ -148,7 +149,7 @@ extern "C" const char *Version_string;
 
 #define DEFAULT_LINE_LENGTH 7	// inches wide
 #define DEFAULT_IMAGE_RES 100	// number of pixels per inch resolution
-#define IMAGE_BOARDER_PIXELS 0
+#define IMAGE_BORDER_PIXELS 0
 #define INLINE_LEADER_CHAR '\\'
 
 // Don't use colour names here!  Otherwise there is a dependency on
@@ -1007,17 +1008,17 @@ void imageList::createImage(imageItem *i)
   if (i->X1 != -1) {
     char *s;
     int x1 = max(min(i->X1, i->X2) * image_res / postscriptRes
-		   - IMAGE_BOARDER_PIXELS,
+		   - IMAGE_BORDER_PIXELS,
 		 0);
     int y1 = max(image_res * vertical_offset / 72
 		   + min(i->Y1, i->Y2) * image_res / postscriptRes
-		   - IMAGE_BOARDER_PIXELS,
+		   - IMAGE_BORDER_PIXELS,
 		 0);
     int x2 = max(i->X1, i->X2) * image_res / postscriptRes
-	     + IMAGE_BOARDER_PIXELS;
+	     + IMAGE_BORDER_PIXELS;
     int y2 = image_res * vertical_offset / 72
 	     + max(i->Y1, i->Y2) * image_res / postscriptRes
-	     + 1 + IMAGE_BOARDER_PIXELS;
+	     + 1 + IMAGE_BORDER_PIXELS;
     if (createPage(i->pageNo) == 0) {
       s = make_message("pnmcut%s %d %d %d %d < %s "
 		       "| pnmcrop -quiet | pnmtopng%s %s > %s\n",
