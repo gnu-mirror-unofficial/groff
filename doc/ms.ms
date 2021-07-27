@@ -2877,7 +2877,7 @@ macro \" I wouldn't mention that, but Lesk 1978 encourages doing so. :-/
 and desire special treatment of certain page numbers
 (like
 .CW 1 \[rq]), \[lq]
-you may need to handle a non-decimal page number format,
+you may need to handle a non-Arabic page number format,
 as
 .I "groff ms" 's
 .CW .PT
