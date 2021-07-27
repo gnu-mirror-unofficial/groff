@@ -2849,6 +2849,16 @@ it does.
 .
 .PP
 .I "groff ms"
+handles
+.CW S \[rq] \[lq]
+as the first argument to the
+.CW NH
+macro specially,
+allowing alteration of the automatic heading numbering sequence.
+.
+.
+.PP
+.I "groff ms"
 supports the
 .CW PN
 register,
