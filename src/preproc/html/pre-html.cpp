@@ -544,6 +544,7 @@ static void makeFileName(void)
   if (image_template == NULL)
     sys_fatal("malloc");
   strcpy(image_template, macroset_template);
+  // Keep this format string synced with troff:suppress_node::tprint().
   strcat(image_template, "%d");
 }
 

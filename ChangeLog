@@ -1,3 +1,37 @@
+2021-07-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Avoid using sprintf() with user-controlled format
+	string.
+
+	* src/preproc/html/pre-html.cpp (makeFileName): Add comment
+	noting need for implementation synchrony between this function,
+	which generates \O5 escape sequences, and troff's
+	suppress_node::tprint member function, which interprets them.
+	* src/roff/troff/node.cpp: Rename 2 static globals for clarity.
+	  - `last_image_filename` -> `image_filename`
+	  - `last_image_id` -> `subimage_counter`
+	(suppress_node::tprint): Set up the buffer for image file name
+	to be written using a constant rather than an embedded literal.
+	Unconditionally initialize the buffer with a string terminator,
+	so there is no chance of a read from unitialized storage.  Drop
+	unused code involving `tem`.  Drop stale comments.  Clarify
+	comment: an `image_filename` doesn't _always_ contain a format
+	string, only sometimes.  Replace use of `sprintf` with manual
+	construction of a new image filename string.  There are two
+	cases, one where a format string {presently "%d"} is present,
+	and one where it is not.  If it is present, locate it
+	{`percent`}.  This means a limited/bounded image ("subimage") is
+	being processed; increment the subimage counter.  Write a new
+	image file name preserving the parts before and after "%d" (the
+	"prefix" and "suffix", and replacing only the middle, using
+	`sprintf` with the subimage counter and the (string literal)
+	format.  Be mindful of string bounds and memory allocation,
+	issuing diagnostics or aborting as necessary.  If the image file
+	name does _not_ contain a format string, but needs only to be
+	copied, do that (`strcpy`), again instead of using `sprintf`.
+
+	Fixes <https://savannah.gnu.org/bugs/?60977>.
+
 2021-07-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grohtml]: Fix Savannah #60971.

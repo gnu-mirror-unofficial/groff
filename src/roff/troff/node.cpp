@@ -4053,8 +4053,8 @@ void suppress_node::put(troff_output_file *out, const char *s)
  */
 
 static char last_position = 0;
-static const char *last_image_filename = 0;
-static int last_image_id = 0;
+static const char *image_filename = 0;
+static int subimage_counter = 0;
 
 inline int min(int a, int b)
 {
@@ -4086,23 +4086,62 @@ void suppress_node::tprint(troff_output_file *out)
   if (is_on == 2) {
     // remember position and filename
     last_position = position;
-    char *tem = (char *)last_image_filename;
-    last_image_filename = strsave(filename.contents());
-    if (tem)
-      free(tem);
-    last_image_id = image_id;
-    // printf("start of image and page = %d\n", current_page);
+    image_filename = strsave(filename.contents());
   }
   else {
-    // now check whether the suppress node requires us to issue limits.
+    // Now check whether the suppress node requires us to issue limits.
     if (emit_limits) {
-      char name[8192];
-      // remember that the filename will contain a %d in which the
-      // last_image_id is placed
-      if (last_image_filename == (char *) 0)
-	*name = '\0';
-      else
-	sprintf(name, last_image_filename, last_image_id);
+      const size_t namebuflen = 8192;
+      char name[namebuflen] = { '\0' };
+      // Jump through a flaming hoop to avoid a "format nonliteral"
+      // warning from blindly using sprintf...and avoid trouble from
+      // mischievous image stems.
+      //
+      // Keep this format string synced with pre-html:makeFileName().
+      const char format[] = "%d";
+      const size_t format_len = strlen(format);
+      const char *percent_position = strstr(image_filename, format);
+      if (percent_position) {
+	subimage_counter++;
+	assert(sizeof subimage_counter <= 8);
+	// A 64-bit signed int produces up to 19 decimal digits.
+	char *subimage_number = (char *)malloc(20); // 19 digits + \0
+	if (0 == subimage_number)
+	  fatal("memory allocation failure");
+	// Replace the %d in the filename with this number.
+	size_t enough = strlen(image_filename) + 19 - format_len;
+	char *new_name = (char *)malloc(enough);
+	if (0 == new_name)
+	  fatal("memory allocation failure");
+	ptrdiff_t prefix_length = percent_position - image_filename;
+	strncpy(new_name, image_filename, prefix_length);
+	sprintf(subimage_number, "%d", subimage_counter);
+	size_t number_length = strlen(subimage_number);
+	strcpy(new_name + prefix_length, subimage_number);
+	// Skip over the format in the source string.
+	const char *suffix_src = image_filename + prefix_length
+	  + format_len;
+	char *suffix_dst = new_name + prefix_length + number_length;
+	strcpy(suffix_dst, suffix_src);
+	// Ensure the new string fits with room for a terminal '\0'.
+	const size_t len = strlen(new_name);
+	if (len > (namebuflen - 1))
+	  error("constructed file name in suppressed output escape is"
+		" too long (>= %1 bytes); skipping image",
+		(int)namebuflen);
+	else
+	  strncpy(name, new_name, (namebuflen - 1));
+	free(new_name);
+	free(subimage_number);
+      }
+      else {
+	const size_t len = strlen(image_filename);
+	if (len > (namebuflen - 1))
+	  error("file name in suppressed output escape is too long"
+		" (>= %1 bytes); skipping image", (int)namebuflen);
+	else
+	  strcpy(name, image_filename);
+      }
       if (is_html) {
 	switch (last_position) {
 	case 'c':
