@@ -2466,6 +2466,7 @@ and Version@tie{}10 Research Unix have been recreated.
 * ms Introduction::
 * ms Document Structure::
 * ms Document Control Settings::
+* Fractional point sizes in ms::
 * ms Document Description Macros::
 * ms Body Text::
 * ms Page Layout::
@@ -2939,7 +2940,21 @@ Default: 2@dmn{n}.
 
 @c ---------------------------------------------------------------------
 
-@node ms Document Description Macros, ms Body Text, ms Document Control Settings, ms
+@node Fractional point sizes in ms, ms Document Description Macros, ms Document Control Settings, ms
+@subsection Fractional point sizes
+@cindex fractional point sizes in @code{ms} macros
+@cindex @code{ms} macros, fractional point sizes in
+
+@acronym{AT&T} @file{ms} supported only integer values for the type size
+and vertical spacing.  To overcome this restriction, for certain
+registers @code{groff} @file{ms} interprets values equal to or larger
+than 1000 as decimal fractions multiplied by 1000.  The registers
+@code{PS}, @code{VS}, @code{FPS}, and @code{FVS} accept fractional point
+sizes.
+
+@c ---------------------------------------------------------------------
+
+@node ms Document Description Macros, ms Body Text, Fractional point sizes in ms, ms
 @subsection Document Description Macros
 @cindex @code{ms} macros, document description
 @cindex document description macros, [@code{ms}]

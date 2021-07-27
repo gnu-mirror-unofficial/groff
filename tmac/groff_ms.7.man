@@ -350,6 +350,29 @@ is the gap between columns in multiple-column page arrangements.
 .
 .
 .\" ====================================================================
+.SS "Fractional point sizes"
+.\" ====================================================================
+.
+AT&T
+.I ms
+supported only integer values for the type size and vertical spacing.
+.
+To overcome this restriction,
+for certain registers
+.I groff ms
+interprets values equal to or larger than\~1000 as decimal fractions
+multiplied by\~1000.
+.
+The registers
+.BR PS ,
+.BR VS ,
+.BR FPS ,
+and
+.B FVS
+accept fractional point sizes.
+.
+.
+.\" ====================================================================
 .SS "Document description macros"
 .\" ====================================================================
 .
@@ -1687,28 +1710,6 @@ suppresses printing the title
 specified by the
 .B \[rs]*[TOC]
 string.
-.
-.
-.\" ====================================================================
-.SS "Fractional point sizes"
-.\" ====================================================================
-.
-Traditionally, the
-.I ms
-macros only support integer values for the document's font size
-and vertical spacing.
-.
-To overcome this restriction, values larger than or equal to 1000 are
-taken as fractional values, multiplied by 1000.
-.
-.
-.LP
-The following four registers accept fractional point sizes:
-.BR PS ,
-.BR VS ,
-.BR FPS ,
-and
-.BR FVS .
 .
 .
 .\" ====================================================================

@@ -383,6 +383,34 @@ this is the case only for output to terminals and emulators thereof.
 .
 .
 .\" ------------------------
+.NH 2
+Fractional point sizes
+.XS
+	Fractional point sizes
+.XE
+.
+.
+.LP
+AT&T
+.I ms
+supported only integer values for the type size and vertical spacing.
+.
+To overcome this restriction,
+for certain registers
+.I "groff ms"
+interprets values equal to or larger than\~1000 as decimal fractions
+multiplied by\~1000.
+.
+The registers
+.CW PS ,
+.CW VS ,
+.CW FPS ,
+and
+.CW FVS
+accept fractional point sizes.
+.
+.
+.\" ------------------------
 .bp
 .NH 1
 Document description macros
