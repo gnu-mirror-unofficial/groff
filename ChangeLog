@@ -1,5 +1,17 @@
 2021-07-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (do_suppress): Recast diagnostic
+	messages for clarity, to communicate in terms of what the
+	escape sequence _is_, and to quote literals expected as input.
+	* src/roff/troff/node.cpp (suppress_node::tprint): Recast
+	diagnostic to prevent misinterpretation of image "description"
+	as being HTML IMG tag alt text or something like that.
+	Unfortunately, the new language speaks in terms of internal
+	implementation details ("grohtml-info"), but at least that way
+	it's easier for a user to decide if they care about it.
+
+2021-07-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Avoid using sprintf() with user-controlled format
 	string.
 

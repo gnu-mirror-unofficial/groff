@@ -4170,8 +4170,8 @@ void suppress_node::tprint(troff_output_file *out)
       else {
 	// postscript (or other device)
 	if (suppress_start_page > 0 && current_page != suppress_start_page)
-	  error("suppression limit registers span more than one page;"
-		" image description %1 will be wrong", image_no);
+	  error("suppression limit registers span more than a page;"
+		" grohtml-info for image %1 will be wrong", image_no);
 	// if (topdiv->get_page_number() != suppress_start_page)
 	//  fprintf(stderr, "end of image and topdiv page = %d   and  suppress_start_page = %d\n",
 	//	  topdiv->get_page_number(), suppress_start_page);

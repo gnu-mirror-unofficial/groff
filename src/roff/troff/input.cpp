@@ -5528,7 +5528,7 @@ extern int image_no;		// from node.cpp
 static node *do_suppress(symbol nm)
 {
   if (nm.is_null() || nm.is_empty()) {
-    error("expecting an argument to escape \\O");
+    error("output suppression escape sequence requires an argument");
     return 0;
   }
   const char *s = nm.contents();
@@ -5560,19 +5560,22 @@ static node *do_suppress(symbol nm)
       s++;			// move over '5'
       char position = *s;
       if (*s == (char)0) {
-	error("missing position and filename in \\O");
+	error("missing position and filename in output suppression"
+	      " escape sequence");
 	return 0;
       }
       if (!(position == 'l'
 	    || position == 'r'
 	    || position == 'c'
 	    || position == 'i')) {
-	error("l, r, c, or i position expected (got %1 in \\O)", position);
+	error("expected position 'l', 'r', 'c', or 'i' in output"
+	      " suppression escape sequence, got '%1'", position);
 	return 0;
       }
       s++;			// onto image name
       if (s == (char *)0) {
-	error("missing image name for \\O");
+	error("missing image name in output suppression escape"
+	      " sequence");
 	return 0;
       }
       image_no++;
@@ -5583,7 +5586,8 @@ static node *do_suppress(symbol nm)
     }
     break;
   default:
-    error("'%1' is an invalid argument to \\O", *s);
+    error("invalid argument '%1' to output suppression escape sequence",
+	  *s);
   }
   return 0;
 }
