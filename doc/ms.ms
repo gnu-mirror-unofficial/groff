@@ -2627,7 +2627,7 @@ is the width of each column and
 is the minimum distance between columns.
 .
 .CW \[rs]n[MINGW]
-is the default gutter width;
+is the default minimum gutter width;
 it is a GNU extension.
 T}
 .TE
