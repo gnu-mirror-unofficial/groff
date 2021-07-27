@@ -259,15 +259,23 @@ request.
 .
 .RS
 .LP
-.BI .af\  "R c"
+.BI .af\~ "R c"
 .RE
 .
 .
 .LP
 .IR R \~is
 the name of the register,
+and
 .IR c \~is
 the format.
+.
+If
+.IR c \~is
+a sequence of Arabic numerals,
+their quantity defines a zero-padded minimum width for the interpolated
+register value.
+.
 .
 .RS
 .LP
@@ -276,8 +284,8 @@ tab(@);
 lb lb
 l l.
 Form@Sequence
-1@0, 1, 2, 3, .\|.\|.
-001@000, 001, 002, 003, .\|.\|.
+1@0, 1, 2, 3, .\|.\|., 10, .\|.\|.
+001@000, 001, 002, 003, .\|.\|., 1000, .\|.\|.
 i@0, i, ii, iii, iv, .\|.\|.
 I@0, I, II, III, IV, .\|.\|.
 a@0, a, b, c, .\|.\|., z, aa, ab, .\|.\|.
