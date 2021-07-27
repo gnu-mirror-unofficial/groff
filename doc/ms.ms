@@ -1906,11 +1906,11 @@ The
 macros support the standard
 .I groff
 preprocessors:
-.I tbl (1),
-.I pic (1),
-.I eqn (1),
+.I tbl ,
+.I pic ,
+.I eqn ,
 and
-.I refer (1).
+.I refer .
 .
 The
 .CW \[rs]n[DD]
@@ -1921,7 +1921,8 @@ and
 .I eqn .
 .
 Mark text meant for preprocessors by enclosing it in pairs of tags as
-follows.
+follows,
+with no space between the dot and the macro name.
 .
 .
 .TS
