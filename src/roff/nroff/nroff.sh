@@ -35,9 +35,10 @@ do
     is_option_argument_pending=
     opts="$opts $arg"
     shift
+    continue
   fi
 
-  case $1 in
+  case $arg in
     -c)
       opts="$opts $arg -P-c" ;;
     -h)

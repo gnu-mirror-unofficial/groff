@@ -1,5 +1,13 @@
 2021-07-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/nroff/nroff.sh: Fix straggling use of `$1`, which
+	might not have a clear meaning in some shells after being
+	shifted (what if we just shifted the last argument?).  Also
+	`continue` after processing a (groff) option argument, as we
+	should make no attempt to parse it.
+
+2021-07-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/groff/tests/regression_savannah_59202.sh: Remove any
 	core file before running troff so we don't throw a false
 	positive.
