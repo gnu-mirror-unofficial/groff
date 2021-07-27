@@ -2745,6 +2745,16 @@ manual [Lesk 1978].
 .
 .PP
 .I "groff ms"
+does not work in GNU
+.I troff 's \" GNU
+AT&T compatibility mode.
+.
+If loaded when that mode is enabled,
+it aborts processing with a diagnostic message.
+.
+.
+.PP
+.I "groff ms"
 uses the same header and footer defaults in both
 .CW nroff
 and
