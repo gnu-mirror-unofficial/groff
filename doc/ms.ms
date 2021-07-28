@@ -391,18 +391,15 @@ AT&T
 supported only integer values for the type size and vertical spacing.
 .
 To overcome this restriction,
-for certain registers
-.I "groff ms"
-interprets values equal to or larger than\~1000 as decimal fractions
-multiplied by\~1000.
-.
-The registers
+for the registers
 .CW PS ,
 .CW VS ,
 .CW FPS ,
 and
-.CW FVS
-accept such point sizes.
+.CW FVS ,
+.I "groff ms"
+interprets values equal to or larger than\~1000 as decimal fractions
+multiplied by\~1000.
 .
 For example,
 .CW ".nr PS 10500" \[rq] \[lq]
