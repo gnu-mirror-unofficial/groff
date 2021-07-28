@@ -2694,9 +2694,10 @@ Default: empty.
 
 @Defmpreg {PS, ms}
 Defines the point size of the body text.  If the value is larger than or
-equal to 1000, divide it by 1000 to get a fractional point size.  For
-example, @samp{.nr PS 10250} sets the document's point size to
-10.25@dmn{p}.
+equal to 1000, it is divided by 1000 to get a fractional point size.
+For example, @samp{.nr PS 10500} sets the document's type size to
+10.5@dmn{points}.  This rescaling of large point sizes is a GNU
+extension.
 
 Effective: next paragraph.
 
@@ -2705,8 +2706,9 @@ Default: 10@dmn{p}.
 
 @Defmpreg {VS, ms}
 Defines the space between lines (line height plus leading).  If the
-value is larger than or equal to 1000, divide it by 1000 to get a
-fractional point size.
+value is larger than or equal to 1000, it is divided by 1000 to get a
+fractional point size.  This rescaling of large point sizes is a GNU
+extension.  See register @code{PS} above.
 
 Effective: next paragraph.
 
@@ -2867,8 +2869,9 @@ Default: 0.
 
 @Defmpreg {FPS, ms}
 Defines the footnote point size.  If the value is larger than or equal
-to 1000, divide it by 1000 to get a fractional point size.  This is a
-GNU extension.
+to 1000, it is divided by 1000 to get a fractional point size.  This
+rescaling of large point sizes is a GNU extension.  See register
+@code{PS} above.
 
 Effective: next footnote.
 
@@ -2877,8 +2880,9 @@ Default: @math{@code{@\n[PS]} - 2p}.
 
 @Defmpreg {FVS, ms}
 Defines the footnote vertical spacing.  If the value is larger than or
-equal to 1000, divide it by 1000 to get a fractional point size.  This
-is a GNU extension.
+equal to 1000, it is divided by 1000 to get a fractional point size.
+This rescaling of large point sizes is a GNU extension.  See register
+@code{PS} above.
 
 Effective: next footnote.
 
