@@ -133,8 +133,8 @@
 
 #ifdef DEBUGGING
 // For a DEBUGGING version, we need some additional macros,
-// to direct the captured debug mode output to appropriately named files
-// in the specified DEBUG_FILE_DIR.
+// to direct the captured debugging mode output to appropriately named
+// files in the specified DEBUG_FILE_DIR.
 
 # define DEBUG_TEXT(text) #text
 # define DEBUG_NAME(text) DEBUG_TEXT(text)
@@ -205,7 +205,7 @@ static int show_progress = FALSE;	// should we display page numbers as
 					// they are processed?
 static int currentPageNo = -1;		// current image page number
 #if defined(DEBUGGING)
-static int debug = FALSE;
+static int debugging = FALSE;
 static char *troffFileName = NULL;	// output of pre-html output which
 					// is sent to troff -Tps
 static char *htmlFileName = NULL;	// output of pre-html output which
@@ -317,7 +317,7 @@ static unsigned int get_resolution(void)
 void html_system(const char *s, int redirect_stdout)
 {
 #if defined(DEBUGGING)
-  if (debug) {
+  if (debugging) {
     fprintf(stderr, "executing: ");
     fwrite(s, sizeof(char), strlen(s), stderr);
     fflush(stderr);
@@ -918,7 +918,7 @@ int imageList::createPage(int pageno)
   }
 
 #if defined(DEBUGGING)
-  if (debug)
+  if (debugging)
     fprintf(stderr, "creating page %d\n", pageno);
 #endif
 
@@ -1037,7 +1037,7 @@ void imageList::createImage(imageItem *i)
 #if defined(DEBUGGING)
   }
   else {
-    if (debug) {
+    if (debugging) {
       fprintf(stderr, "ignoring image as x1 coord is -1\n");
       fflush(stderr);
     }
@@ -1281,7 +1281,7 @@ void dump_args(int argc, char *argv[])
 
 void print_args(int argc, char *argv[])
 {
-  if (debug) {
+  if (debugging) {
     fprintf(stderr, "executing: ");
     for (int i = 0; i < argc; i++)
       fprintf(stderr, "%s ", argv[i]);
@@ -1483,7 +1483,7 @@ int char_buffer::do_html(int argc, char *argv[])
 #if defined(DEBUGGING)
 # define HTML_DEBUG_STREAM  OUTPUT_STREAM(htmlFileName)
   // slight security risk so only enabled if compiled with defined(DEBUGGING)
-  if (debug) {
+  if (debugging) {
     int saved_stdout = save_and_redirect(STDOUT_FILENO, HTML_DEBUG_STREAM);
     emit_troff_output(DEVICE_FORMAT(HTML_OUTPUT_FILTER));
     set_redirection(STDOUT_FILENO, saved_stdout);
@@ -1529,7 +1529,7 @@ int char_buffer::do_image(int argc, char *argv[])
 #if defined(DEBUGGING)
 # define IMAGE_DEBUG_STREAM  OUTPUT_STREAM(troffFileName)
   // slight security risk so only enabled if compiled with defined(DEBUGGING)
-  if (debug) {
+  if (debugging) {
     int saved_stdout = save_and_redirect(STDOUT_FILENO, IMAGE_DEBUG_STREAM);
     emit_troff_output(DEVICE_FORMAT(IMAGE_OUTPUT_FILTER));
     set_redirection(STDOUT_FILENO, saved_stdout);
@@ -1604,7 +1604,7 @@ static int scanArguments(int argc, char **argv)
       break;
     case 'd':
 #if defined(DEBUGGING)
-      debug = TRUE;
+      debugging = TRUE;
 #endif
       break;
     case 'D':
