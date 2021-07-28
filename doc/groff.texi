@@ -2697,7 +2697,9 @@ Defines the point size of the body text.  If the value is larger than or
 equal to 1000, it is divided by 1000 to get a fractional point size.
 For example, @samp{.nr PS 10500} sets the document's type size to
 10.5@dmn{points}.  This rescaling of large point sizes is a GNU
-extension.
+extension.  In @file{ms} documents that don't need to be portable to
+other implementations, using a scaling indicator, as in @samp{.nr PS
+10.5p}, is preferable.
 
 Effective: next paragraph.
 
@@ -2950,8 +2952,9 @@ Default: 2@dmn{n}.
 and vertical spacing.  To overcome this restriction, for certain
 registers @code{groff} @file{ms} interprets values equal to or larger
 than 1000 as decimal fractions multiplied by 1000.  The registers
-@code{PS}, @code{VS}, @code{FPS}, and @code{FVS} accept fractional point
-sizes.
+@code{PS}, @code{VS}, @code{FPS}, and @code{FVS} accept such point
+sizes.  See the @code{PS} register in @ref{ms Document Control
+Settings}.
 
 @c ---------------------------------------------------------------------
 

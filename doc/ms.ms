@@ -402,7 +402,19 @@ The registers
 .CW FPS ,
 and
 .CW FVS
-accept fractional point sizes.
+accept such point sizes.
+.
+For example,
+.CW ".nr PS 10500" \[rq] \[lq]
+sets the document's type size to 10.5\~points.
+.
+In
+.I ms
+documents that don't need to be portable to other implementations,
+using a scaling indicator,
+as in
+.CW ".nr PS 10.5p" \[rq], \[lq]
+is preferable.
 .
 .
 .\" ------------------------
