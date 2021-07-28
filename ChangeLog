@@ -1,5 +1,39 @@
 2021-07-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Fix Savannah #60981.  Refactor device description
+	file handling, make it more robust, and make this preprocessor's
+	-F option work as documented, and to honor documented device
+	description file semantics.
+
+	* src/preproc/html/pre-html.cpp: Store partial filespecs of HTML
+	and PostScript device files in constant strings.
+	(get_resolution): Initialize `res` to zero.  Only `free()` the
+	pointer `pathp` if `open_file()` succeeded (populating it).
+	Stop checking for valid `sscanf()` conversions of an integer to
+	store in `res`, and don't return early.  Instead process the
+	whole DESC file; per our Texinfo manual and groff_font(5),
+	"Later entries in the file ... override previous values."
+	(get_image_generator): Add new function, paralleling
+	`get_resolution()`, replacing open-coded logic in `main()`.
+	Only the body of the `while` loop significantly differs.
+	Instead of using `sscanf`, process the input character by
+	character matching the keyword and {1,} spaces or tabs
+	after it.  Whatever follows in `linebuf` must be the program
+	name.
+	(imageList::createPage): Add `assert()` to cause failure if an
+	empty image generator program gets this far, because it creates
+	repeated messes if it does.  (Something isn't checking exit
+	statuses.)
+	(main): Condense `image_gen` collection to a function call, a
+	null pointer check, and a fatal diagnostic.  Add a sanity check
+	and a fatal diagnostic if the PostScript resolution is garbage.
+	{It's initialized to -1 and `get_resolution()` will return 0 if
+	it doesn't find one.}
+
+	Fixes <https://savannah.gnu.org/bugs/?60981>.
+
+2021-07-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Delete or rename `debug` symbols to avoid clash with
 	new `debug` function in libgroff.
 

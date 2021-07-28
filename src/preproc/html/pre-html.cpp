@@ -1,4 +1,4 @@
-/* Copyright (C) 2000-2020 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2021 Free Software Foundation, Inc.
  * Written by Gaius Mulley (gaius@glam.ac.uk).
  *
  * This file is part of groff.
@@ -217,6 +217,9 @@ static char *linebuf = NULL;		// for scanning devps/DESC
 static int linebufsize = 0;
 static const char *image_gen = NULL;    // the 'gs' program
 
+static const char devhtml_desc[] = "devhtml/DESC";
+static const char devps_desc[] = "devps/DESC";
+
 const char *const FONT_ENV_VAR = "GROFF_FONT_PATH";
 static search_path font_path(FONT_ENV_VAR, FONTPATH, 0, 0);
 static html_dialect dialect = html4;
@@ -287,27 +290,61 @@ int get_line(FILE *f)
 }
 
 /*
- *  get_resolution - Return the postscript resolution from devps/DESC.
+ *  get_resolution - Return the PostScript device resolution.
  */
 
 static unsigned int get_resolution(void)
 {
   char *pathp;
   FILE *f;
-  unsigned int res;
-  f = font_path.open_file("devps/DESC", &pathp);
+  unsigned int res = 0;
+  f = font_path.open_file(devps_desc, &pathp);
+  if (0 == f)
+    fatal("cannot open file '%1'", devps_desc);
   free(pathp);
-  if (f == 0)
-    fatal("can't open devps/DESC");
   while (get_line(f)) {
-    int n = sscanf(linebuf, "res %u", &res);
-    if (n >= 1) {
-      fclose(f);
-      return res;
+    (void) sscanf(linebuf, "res %u", &res);
+  }
+  fclose(f);
+  return res;
+}
+
+
+/*
+ *  get_image_generator - Return the declared program from the HTML
+ *                        device description.
+ */
+
+static char *get_image_generator(void)
+{
+  char *pathp;
+  FILE *f;
+  char *generator = 0;
+  const char keyword[] = "image_generator";
+  size_t keyword_len = strlen(keyword);
+  f = font_path.open_file(devhtml_desc, &pathp);
+  if (0 == f)
+    fatal("cannot open file '%1'", devhtml_desc);
+  free(pathp);
+  while (get_line(f)) {
+    char *cursor = linebuf;
+    size_t limit = strlen(linebuf);
+    char *end = linebuf + limit;
+    if (0 == (strncmp(linebuf, keyword, keyword_len))) {
+      cursor += keyword_len;
+      // At least one space or tab is required.
+      if(!(' ' == *cursor) || ('\t' == *cursor))
+	continue;
+      cursor++;
+      while((cursor < end) && (' ' == *cursor) || ('\t' == *cursor))
+	cursor++;
+      if (cursor == end)
+	continue;
+      generator = cursor;
     }
   }
-  fatal("can't find 'res' keyword in devps/DESC");
-  return 0;
+  fclose(f);
+  return generator;
 }
 
 /*
@@ -929,6 +966,7 @@ int imageList::createPage(int pageno)
     sys_fatal("make_message");
   html_system(s, 1);
 
+  assert(strlen(image_gen) > 0);
   s = make_message("echo showpage | "
 		   "%s%s -q -dBATCH -dSAFER "
 		   "-dDEVICEHEIGHTPOINTS=792 "
@@ -1784,12 +1822,14 @@ int main(int argc, char **argv)
 #endif /* CAPTURE_MODE */
   device = "html";
   i = scanArguments(argc, argv);
-  if (!font::load_desc())
-    fatal("cannot find devhtml/DESC exiting");
-  image_gen = font::image_generator;
-  if (image_gen == NULL || (strcmp(image_gen, "") == 0))
-    fatal("devhtml/DESC must set the image_generator field, exiting");
+  image_gen = strsave(get_image_generator());
+  if (0 == image_gen)
+    fatal("'image_generator' directive not found in file '%1'",
+	  devhtml_desc);
   postscriptRes = get_resolution();
+  if (postscriptRes < 1) // TODO: what's a more sane minimum value?
+    fatal("'res' directive missing or invalid in file '%1'",
+	  devps_desc);
   setupAntiAlias();
   checkImageDir();
   makeFileName();
