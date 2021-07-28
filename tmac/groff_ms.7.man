@@ -175,11 +175,11 @@ macro at the end of your document.
 .
 The following tables list the document control registers and strings.
 .
-For the sake of consistency,
-set parameters related to margins at the beginning of your document,
-or just after the
-.B RP
-macro.
+For any parameter whose default is unsatisfactory,
+define its register or string before calling any
+.I ms
+macro other than
+.BR RP .
 .
 .
 .LP
@@ -534,6 +534,39 @@ suppresses this heading.
 .TP
 .B .AE
 End the abstract.
+.
+.
+.\" ====================================================================
+.SS "Text settings"
+.\" ====================================================================
+.
+The
+.B FAM
+string sets the font family for body text.
+.
+If this string is undefined at initialization,
+it is set to
+.RB \[lq] T \[rq]
+(Times).
+.
+Setting
+.B \[rs]*[FAM]
+before the first call of a sectioning,
+paragraphing,
+or (non-date) document description macro also applies it to headers,
+footers,
+and footnotes
+(as well as the body text).
+.
+.
+.P
+The hyphenation flags
+(as used by the
+.B hy
+request)
+are set using the
+.B HY
+register.
 .
 .
 .\" ====================================================================
@@ -1404,6 +1437,25 @@ End footnote text.
 .
 .
 .P
+Footnote text is formatted as paragraphs are,
+using analogous parameters.
+.
+The registers
+.BR FI ,
+.BR FPD ,
+.BR FPS ,
+and
+.B FVS
+correspond to
+.BR PI ,
+.BR PD ,
+.BR PS ,
+and
+.BR VS ,
+respectively.
+.
+.
+.P
 The
 .B FF
 register controls the formatting of automatically numbered footnotes,
@@ -2054,56 +2106,6 @@ includes font style escapes to set the word in italics.
 .\".I troff
 .\"(and plain quotes in
 .\".IR nroff ).
-.
-.
-.\" ====================================================================
-.SS "Text settings"
-.\" ====================================================================
-.
-The
-.B FAM
-string sets the font family for body text.
-.
-If this string is undefined at initialization,
-it is set to
-.RB \[lq] T \[rq]
-(Times).
-.
-Setting
-.B \[rs]*[FAM]
-before the first call of a sectioning,
-paragraphing,
-or (non-date) document description macro also applies it to headers,
-footers,
-and footnotes
-(as well as the body text).
-.
-.
-.LP
-The point size, vertical spacing, and inter-paragraph spacing for
-footnotes are controlled by the registers
-.BR FPS ,
-.BR FVS ,
-and
-.BR FPD ;
-at initialization these are set to
-.BR \[rs]n(PS\-2 ,
-.BR \[rs]n[FPS]+2 ,
-and
-.BR \[rs]n(PD/2 ,
-respectively.
-.
-If any of these registers are defined before initialization,
-the initialization macro does not change them.
-.
-.
-.LP
-The hyphenation flags (as set by the
-.B hy
-request) are set from the
-.B HY
-register;
-the default is\~6.
 .
 .
 .\" TODO: Put this in a legacy feature support section, alongside AT&T

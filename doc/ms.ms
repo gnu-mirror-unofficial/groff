@@ -295,20 +295,15 @@ Document control settings
 .
 .
 .LP
-For consistent document rendering,
-set registers related to margins at the beginning of your document,
-or just after calling
-.CW .RP .
-.
-You can set other registers later in your document,
-but keeping them together at the beginning makes them easy to find and
-edit as necessary.
-.
-.
-.PP
 A list of document control registers and strings follows.
 .
 They are presented in the syntax used to interpolate them.
+.
+For any parameter whose default is unsatisfactory,
+define its register or string before calling any
+.I ms
+macro other than
+.CW RP .
 .
 .
 .TS H
@@ -657,6 +652,45 @@ Examples include paragraphs,
 headings,
 footnotes,
 and inclusions of material such as tables and figures.
+.
+.
+.KS
+.NH 2
+Text settings
+.XS
+	Text settings
+.XE
+.
+.
+.LP
+The
+.CW FAM
+string sets the font family for body text.
+.
+If this string is undefined at initialization,
+it is set to
+.CW T \[rq] \[lq]
+(Times).
+.
+Setting
+.CW \[rs]*[FAM]
+before the first call of a sectioning,
+paragraphing,
+or (non-date) document description macro also applies it to headers,
+footers,
+and footnotes
+(as well as the body text).
+.
+.
+.PP
+The hyphenation flags
+(as used by the
+.CW hy
+request)
+are set using the
+.CW HY
+register.
+.KE
 .
 .
 .KS
@@ -1354,16 +1388,6 @@ to
 You can then use all four style macros above,
 returning to the default family (Times) with
 .CW ".ds FAM T" \[rq]. \[lq]
-.
-If you set
-.CW \[rs]*[FAM]
-before the first call of a sectioning,
-paragraphing,
-or (non-date) document description macro,
-it also applies to headers,
-footers,
-and footnotes
-(as well as the body text).
 .
 Because
 .CW \[rs]*[FAM]
@@ -2267,8 +2291,6 @@ correspond to
 and
 .CW VS ,
 respectively.
-.
-See section \[lq]Document control settings\[rq] above.
 .
 .
 .KS

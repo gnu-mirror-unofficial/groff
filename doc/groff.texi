@@ -2589,13 +2589,10 @@ Set string @var{name} to @var{contents}.  If @var{name} exists, it is
 removed first.
 @endDefreq
 
-For consistent document rendering, set registers related to margins at
-the beginning of your document, or just after the @code{RP} macro.  You
-can set other registers later in your document, but keeping them
-together at the beginning makes them easy to find and edit as necessary.
-
 A list of document control registers and strings follows.  They are
-presented in the syntax used to interpolate them.
+presented in the syntax used to interpolate them.  For any parameter
+whose default is unsatisfactory, define its register or string before
+calling any @file{ms} macro other than @code{RP}.
 
 @unnumberedsubsubsec Margin Settings
 
@@ -3071,6 +3068,15 @@ A variety of macros, registers, and strings can be used to structure and
 style the body of your document.  Examples include paragraphs, headings,
 footnotes, and inclusions of material such as tables and figures.
 
+The @code{FAM} string sets the font family for body text.  If this
+string is undefined at initialization, it is set to @samp{T} (Times).
+Setting the @code{FAM} string before the first call of a sectioning,
+paragraphing, or (non-date) document description macro also applies it
+to headers, footers, and footnotes (as well as the body text).
+
+The hyphenation flags (as used by the @code{hy} request) are set using
+the @code{HY} register.
+
 @menu
 * Paragraphs in ms::
 * Headings in ms::
@@ -3408,13 +3414,10 @@ Rather than calling the @code{CW} macro, in @code{groff} @file{ms} you
 might prefer to change the font family to Courier---a monospaced
 typeface---by setting the @code{FAM} string to @samp{C}.  You can then
 use all four style macros above, returning to the default family (Times)
-with @samp{.ds FAM T}.  If you set @code{FAM} before the first call of a
-sectioning, paragraphing, or (non-date) document description macro, it
-also applies to headers, footers, and footnotes (as well as the body
-text).  Because @code{FAM} takes effect at the next paragraph, @code{CW}
-remains useful to ``inline'' a change to the font family, similarly to
-the practice of this document in noting syntactical elements of
-@file{ms} and @code{groff}.
+with @samp{.ds FAM T}.  Because @code{FAM} takes effect at the next
+paragraph, @code{CW} remains useful to ``inline'' a change to the font
+family, similarly to the practice of this document in noting syntactical
+elements of @file{ms} and @code{groff}.
 
 @c ---------------------------------------------------------------------
 
@@ -3870,10 +3873,16 @@ can place a second @code{\**} interpolation between a @code{\**} and its
 corresponding @code{FS} call as long as each @code{FS} call occurs
 @emph{after} the corresponding @code{\**} and the occurrences of
 @code{FS} are in the same order as the corresponding occurrences of
-@code{\**}.  You can control how @file{ms} presents footnotes by
-changing the values of the @code{FI}, @code{FF}, @code{FPS}, @code{FVS},
-and @code{FPD} registers; and the @code{FR} string.  @xref{ms Document
-Control Settings}.
+@code{\**}.
+
+Footnote text is formatted as paragraphs are, using analogous
+parameters.  The registers @code{FI}, @code{FPD}, @code{FPS}, and
+@code{FVS} correspond to @code{PI}, @code{PD}, @code{PS}, and @code{CS},
+respectively.
+
+The @code{FF} register controls the formatting of automatically numbered
+footnotes and those for which @code{FS} is given a marker argument.
+@xref{ms Document Control Settings}.
 
 The default footnote line length is 11/12ths of the normal line length
 for compatibility with the expectations of historical @file{ms}
