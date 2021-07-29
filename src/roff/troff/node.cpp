@@ -4090,6 +4090,10 @@ void suppress_node::tprint(troff_output_file *out)
   else {
     // Now check whether the suppress node requires us to issue limits.
     if (emit_limits) {
+      if ((0 == image_filename) || (strlen(image_filename) == 0))
+	error("cannot emit suppresion node placement information"
+	      " without a (saved) filename; skipping");
+      else {
       const size_t namebuflen = 8192;
       char name[namebuflen] = { '\0' };
       // Jump through a flaming hoop to avoid a "format nonliteral"
@@ -4189,6 +4193,7 @@ void suppress_node::tprint(troff_output_file *out)
 		get_register(".o") + get_register(".l"),
 		name, hresolution, vresolution, get_string(".F"));
 	fflush(stderr);
+      }
       }
     }
     else {

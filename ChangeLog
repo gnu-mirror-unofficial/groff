@@ -1,5 +1,24 @@
 2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Add sanity check to prevent SEGV.
+
+	* src/roff/troff/node.cpp (suppress_node::tprint): If emitting
+	bounding box limits for an image filename, ensure that
+	`image_filename` is not a null pointer (and furthermore that
+	it's not a zero-length string even if the pointer is valid).
+	Emit an error diagnostic and skip further processing of the node
+	if they are if they are.  This problem implies nonsensical input
+	{so we should guard against it}, but I cannot reproduce the
+	problem _except_ with pdfroff during a build of the groff tree,
+	which has been reliably failing to relocate the table of
+	contents in pdfmark.pdf since commit
+	e876d4bfd193abb9a7d1fb6e76519349bded482a, 27 July.  If I extract
+	the groff and troff commands that pdfroff is running and execute
+	them in the build directory, they complete successfully, which
+	suggests to me an environment problems or a race condition.
+
+2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Refactor some internal functions.
 
 	* src/roff/troff/node.cpp: Rename two functions that have only
