@@ -4168,17 +4168,20 @@ void suppress_node::tprint(troff_output_file *out)
       }
       else {
 	// postscript (or other device)
-	if (suppress_start_page > 0 && current_page != suppress_start_page)
+	if (suppress_start_page > 0
+	    && (current_page != suppress_start_page))
 	  error("suppression limit registers span more than a page;"
 		" grohtml-info for image %1 will be wrong", image_no);
 	// if (topdiv->get_page_number() != suppress_start_page)
-	//  fprintf(stderr, "end of image and topdiv page = %d   and  suppress_start_page = %d\n",
+	//  fprintf(stderr, "end of image and topdiv page = %d   and"
+	//		      " suppress_start_page = %d\n",
 	//	  topdiv->get_page_number(), suppress_start_page);
 
 	// remember that the filename will contain a %d in which the
 	// image_no is placed
 	fprintf(stderr,
-		"grohtml-info:page %d  %d  %d  %d  %d  %d  %s  %d  %d  %s\n",
+		"grohtml-info:page %d  %d  %d  %d  %d  %d  %s  %d  %d"
+		"  %s\n",
 		topdiv->get_page_number(),
 		get_register("opminx"), get_register("opminy"),
 		get_register("opmaxx"), get_register("opmaxy"),
