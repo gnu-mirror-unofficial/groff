@@ -1,5 +1,24 @@
 2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Refactor some internal functions.
+
+	* src/roff/troff/node.cpp: Rename two functions that have only
+	one caller.
+	  - get_reg_int -> get_register
+	  - get_reg_str -> get_string
+	We now have:
+	(get_register, get_string): Use `assert()` aggressively because
+	these are deeply internal and validation is imperative.  Get rid
+	of diagnostic messages (one of which perpetuated the dubious
+	"number register" nomenclature) accordingly.
+	(fetch_register): Also rename `prev_value`, misleadingly
+	specific and semmingly copy-and-pasted out of a context where an
+	auto-increment or -decrement might have been applied.  It's just
+	the `value`.
+	(suppress_node::tprint): Update call site.
+
+2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Refactor `get_value` member functions.  Given their
 	names and popular "getter/setter" paradigms from many OO
 	languages, the return type is misleading.  Change it from `int`

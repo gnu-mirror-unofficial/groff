@@ -4018,25 +4018,24 @@ int tag_node::ends_sentence()
   return 2;
 }
 
-int get_reg_int(const char *p)
+// Get contents of register `p`--used only by suppress_node::tprint().
+static int get_register(const char *p)
 {
+  assert(0 != p);
   reg *r = (reg *)number_reg_dictionary.lookup(p);
-  units prev_value;
-  if (r && (r->get_value(&prev_value)))
-    return (int)prev_value;
-  else
-    warning(WARN_REG, "number register '%1' not defined", p);
-  return 0;
+  assert(0 != r);
+  units value;
+  assert(r->get_value(&value));
+  return (int)value;
 }
 
-const char *get_reg_str(const char *p)
+// Get contents of string `p`--used only by suppress_node::tprint().
+static const char *get_string(const char *p)
 {
+  assert(0 != p);
   reg *r = (reg *)number_reg_dictionary.lookup(p);
-  if (r)
-    return r->get_string();
-  else
-    warning(WARN_REG, "register '%1' not defined", p);
-  return 0;
+  assert(0 != r);
+  return r->get_string();
 }
 
 void suppress_node::put(troff_output_file *out, const char *s)
@@ -4181,11 +4180,11 @@ void suppress_node::tprint(troff_output_file *out)
 	fprintf(stderr,
 		"grohtml-info:page %d  %d  %d  %d  %d  %d  %s  %d  %d  %s\n",
 		topdiv->get_page_number(),
-		get_reg_int("opminx"), get_reg_int("opminy"),
-		get_reg_int("opmaxx"), get_reg_int("opmaxy"),
+		get_register("opminx"), get_register("opminy"),
+		get_register("opmaxx"), get_register("opmaxy"),
 		// page offset + line length
-		get_reg_int(".o") + get_reg_int(".l"),
-		name, hresolution, vresolution, get_reg_str(".F"));
+		get_register(".o") + get_register(".l"),
+		name, hresolution, vresolution, get_string(".F"));
 	fflush(stderr);
       }
     }
