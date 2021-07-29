@@ -25,9 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 object_dictionary number_reg_dictionary(101);
 
-int reg::get_value(units * /*d*/)
+bool reg::get_value(units * /*d*/)
 {
-  return 0;
+  return false;
 }
 
 void reg::increment()
@@ -265,7 +265,7 @@ class number_reg : public general_reg {
   units value;
 public:
   number_reg();
-  int get_value(units *);
+  bool get_value(units *);
   void set_value(units);
 };
 
@@ -273,10 +273,10 @@ number_reg::number_reg() : value(0)
 {
 }
 
-int number_reg::get_value(units *res)
+bool number_reg::get_value(units *res)
 {
   *res = value;
-  return 1;
+  return true;
 }
 
 void number_reg::set_value(units n)
@@ -293,10 +293,10 @@ void variable_reg::set_value(units n)
   *ptr = n;
 }
 
-int variable_reg::get_value(units *res)
+bool variable_reg::get_value(units *res)
 {
   *res = *ptr;
-  return 1;
+  return true;
 }
 
 void define_number_reg()

@@ -1,3 +1,24 @@
+2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Refactor `get_value` member functions.  Given their
+	names and popular "getter/setter" paradigms from many OO
+	languages, the return type is misleading.  Change it from `int`
+	to `bool` since it returns only a success/failure status and
+	modifies an argument (passed by reference) to deliver the
+	requested data.
+
+	* src/roff/troff/reg.h (reg, variable_reg):
+	* src/roff/troff/div.cpp (page_offset_reg, page_length_reg,
+	vertical_position_reg, high_water_mark_reg,
+	distance_to_next_trap_reg, page_number_reg, no_space_mode_reg):
+	* src/roff/troff/env.cpp (int_env_reg, vunits_env_reg,
+	hunits_env_reg, horizontal_place_reg):
+	* src/roff/troff/input.cpp (writable_lineno_reg):
+	* src/roff/troff/reg.cpp (reg, number_reg, variable_reg): Update
+	class and member function definitions to reflect the new type.
+	Update member function definitions to return appropriate Boolean
+	literals instead of 0 and 1.
+
 2021-07-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grohtml]: Fix Savannah #60981.  Refactor device description

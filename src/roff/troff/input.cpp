@@ -7427,21 +7427,21 @@ class writable_lineno_reg : public general_reg {
 public:
   writable_lineno_reg();
   void set_value(units);
-  int get_value(units *);
+  bool get_value(units *);
 };
 
 writable_lineno_reg::writable_lineno_reg()
 {
 }
 
-int writable_lineno_reg::get_value(units *res)
+bool writable_lineno_reg::get_value(units *res)
 {
   int line;
   const char *file;
   if (!input_stack::get_location(0, &file, &line))
-    return 0;
+    return false;
   *res = line;
-  return 1;
+  return true;
 }
 
 void writable_lineno_reg::set_value(units n)

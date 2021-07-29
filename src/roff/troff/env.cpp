@@ -3010,7 +3010,7 @@ class int_env_reg : public reg {
  public:
   int_env_reg(INT_FUNCP);
   const char *get_string();
-  int get_value(units *val);
+  bool get_value(units *val);
 };
 
 class vunits_env_reg : public reg {
@@ -3018,7 +3018,7 @@ class vunits_env_reg : public reg {
  public:
   vunits_env_reg(VUNITS_FUNCP f);
   const char *get_string();
-  int get_value(units *val);
+  bool get_value(units *val);
 };
 
 
@@ -3027,7 +3027,7 @@ class hunits_env_reg : public reg {
  public:
   hunits_env_reg(HUNITS_FUNCP f);
   const char *get_string();
-  int get_value(units *val);
+  bool get_value(units *val);
 };
 
 class string_env_reg : public reg {
@@ -3041,10 +3041,10 @@ int_env_reg::int_env_reg(INT_FUNCP f) : func(f)
 {
 }
 
-int int_env_reg::get_value(units *val)
+bool int_env_reg::get_value(units *val)
 {
   *val = (curenv->*func)();
-  return 1;
+  return true;
 }
 
 const char *int_env_reg::get_string()
@@ -3056,10 +3056,10 @@ vunits_env_reg::vunits_env_reg(VUNITS_FUNCP f) : func(f)
 {
 }
 
-int vunits_env_reg::get_value(units *val)
+bool vunits_env_reg::get_value(units *val)
 {
   *val = (curenv->*func)().to_units();
-  return 1;
+  return true;
 }
 
 const char *vunits_env_reg::get_string()
@@ -3071,10 +3071,10 @@ hunits_env_reg::hunits_env_reg(HUNITS_FUNCP f) : func(f)
 {
 }
 
-int hunits_env_reg::get_value(units *val)
+bool hunits_env_reg::get_value(units *val)
 {
   *val = (curenv->*func)().to_units();
-  return 1;
+  return true;
 }
 
 const char *hunits_env_reg::get_string()
@@ -3094,7 +3094,7 @@ const char *string_env_reg::get_string()
 class horizontal_place_reg : public general_reg {
 public:
   horizontal_place_reg();
-  int get_value(units *);
+  bool get_value(units *);
   void set_value(units);
 };
 
@@ -3102,10 +3102,10 @@ horizontal_place_reg::horizontal_place_reg()
 {
 }
 
-int horizontal_place_reg::get_value(units *res)
+bool horizontal_place_reg::get_value(units *res)
 {
   *res = curenv->get_input_line_position().to_units();
-  return 1;
+  return true;
 }
 
 void horizontal_place_reg::set_value(units n)
