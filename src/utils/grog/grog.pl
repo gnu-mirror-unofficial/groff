@@ -790,28 +790,23 @@ sub construct_command {
 
 
 sub help {
+  my $grog = $program_name;
   print <<EOF;
-usage: grog [option]... [--] [filespec]...
+usage: $grog [--ligatures] [--run] [GROFF-OPTION ...] [--] [FILE ...]
+       $grog { -h | --help | -v | --version }
 
-"filespec" is either the name of an existing, readable file or "-" for
-standard input.  If no 'filespec' is specified, standard input is
-assumed automatically.  All arguments after a '--' are regarded as file
-names, even if they start with a '-' character.
+$grog reads each roff(7) input FILE and attempts to infer an appropriate
+groff(1) command to format it.  If FILE is missing or is "-", then $grog
+reads the standard input stream.  All arguments after a "--" argument
+are treated as FILEs.
 
-'option' is either a 'groff' option or one of these:
-
--h|--help	print this uasge message and exit
--v|--version	print version information and exit
-
--C		compatibility mode
---ligatures	include options '-P-y -PU' for internal font, which
-		preserves the ligatures like 'fi'
---run		run the checked-out groff command
-
-All other options should be 'groff' 1-character options.  These are then
-appended to the generated 'groff' command line.  The '-m' options will
-be checked by 'grog'.
-
+Options:
+  -h, --help      Display this uasge message and exit.
+  --ligatures     Include options '-P-y -PU' for gropdf(1) output driver,
+                    which produces ligatures.  Requires '-T pdf'.
+  --run           Report inferred command to the standard error stream
+                    and then execute it.
+  -v, --version   Display version information and exit.
 EOF
   exit 0;
 } # help()
@@ -825,13 +820,13 @@ sub version {
 
 # initialize
 
-my $in_source_tree = 0;
+my $in_unbuilt_source_tree = 0;
 {
   my $at = '@';
-  $in_source_tree = 1 if '@VERSION@' eq "${at}VERSION${at}";
+  $in_unbuilt_source_tree = 1 if '@VERSION@' eq "${at}VERSION${at}";
 }
 
-$groff_version = '@VERSION@' unless ($in_source_tree);
+$groff_version = '@VERSION@' unless ($in_unbuilt_source_tree);
 
 &process_arguments();
 &process_input();
@@ -846,7 +841,6 @@ exit 2 if ($had_processing_problem);
 exit 1 if ($had_inference_problem);
 exit 0;
 
-1;
 # Local Variables:
 # fill-column: 72
 # mode: CPerl
