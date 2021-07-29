@@ -23,7 +23,7 @@
 	of diagnostic messages (one of which perpetuated the dubious
 	"number register" nomenclature) accordingly.
 	(fetch_register): Also rename `prev_value`, misleadingly
-	specific and semmingly copy-and-pasted out of a context where an
+	specific and seemingly copy-and-pasted out of a context where an
 	auto-increment or -decrement might have been applied.  It's just
 	the `value`.
 	(suppress_node::tprint): Update call site.
@@ -290,12 +290,12 @@
 
 2021-07-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	[nroff]: Pass `-c` option to groff.  While at present this does
-	little more than `-P-c` already achieves, that might not be true
-	forever.  Further, there is a distinction between ignoring
-	color-related requests in groff input documents and ignoring
-	color-related commands in device-independent output.  This
-	distinction would make it unwise to adapt `-c` to any other
+	[nroff]: Pass a supplied `-c` option to groff.  While at present
+	this does little more than `-P-c` already achieves, that might
+	not be true forever.  Further, there is a distinction between
+	ignoring color-related requests in groff input documents and
+	ignoring color-related commands in device-independent output.
+	This distinction would make it unwise to adapt `-c` to any other
 	purpose in nroff in the future.
 
 	* NEWS: Update item from commit dd725dce, 10 February 2020.
