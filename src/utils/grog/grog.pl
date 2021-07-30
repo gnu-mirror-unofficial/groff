@@ -143,34 +143,6 @@ for my $key (@standard_macro) {
   $Groff{$key} = 0;
 }
 
-# for first line check
-my %preprocs_tmacs =
-  (
-   'chem' => 0,
-   'eqn' => 0,
-   'gideal' => 0,
-   'gpinyin' => 0,
-   'grap' => 0,
-   'grn' => 0,
-   'pic' => 0,
-   'refer' => 0,
-   'soelim' => 0,
-   'tbl' => 0,
-
-   'geqn' => 0,
-   'gpic' => 0,
-   'neqn' => 0,
-
-   'man' => 0,
-   'mandoc' => 0,
-   'mdoc' => 0,
-   'mdoc-old' => 0,
-   'me' => 0,
-   'mm' => 0,
-   'mom' => 0,
-   'ms' => 0,
-  );
-
 my @filespec;
 
 my @main_package = ('an', 'doc', 'doc-old', 'e', 'm', 'om', 's');
