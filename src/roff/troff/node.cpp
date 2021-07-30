@@ -4053,12 +4053,8 @@ void suppress_node::put(troff_output_file *out, const char *s)
 
 static char last_position = 0;
 static const char *image_filename = "";
+static size_t image_filename_len = 0;
 static int subimage_counter = 0;
-
-inline int min(int a, int b)
-{
-  return a < b ? a : b;
-}
 
 /*
  *  tprint - if (is_on == 2)
@@ -4086,6 +4082,7 @@ void suppress_node::tprint(troff_output_file *out)
     // remember position and filename
     last_position = position;
     image_filename = strsave(filename.contents());
+    image_filename_len = strlen(image_filename);
   }
   else {
     // Now check whether the suppress node requires us to issue limits.
@@ -4108,7 +4105,7 @@ void suppress_node::tprint(troff_output_file *out)
 	if (0 == subimage_number)
 	  fatal("memory allocation failure");
 	// Replace the %d in the filename with this number.
-	size_t enough = strlen(image_filename) + 19 - format_len;
+	size_t enough = image_filename_len + 19 - format_len;
 	char *new_name = (char *)malloc(enough);
 	if (0 == new_name)
 	  fatal("memory allocation failure");
@@ -4134,8 +4131,7 @@ void suppress_node::tprint(troff_output_file *out)
 	free(subimage_number);
       }
       else {
-	const size_t len = strlen(image_filename);
-	if (len > (namebuflen - 1))
+	if (image_filename_len > (namebuflen - 1))
 	  error("file name in suppressed output escape is too long"
 		" (>= %1 bytes); skipping image", (int)namebuflen);
 	else

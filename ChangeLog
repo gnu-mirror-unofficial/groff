@@ -1,5 +1,17 @@
 2021-07-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Slightly refactor.
+
+	* src/roff/troff/node.cpp: Add static `image_filename_len` to
+	store length of cached image file name, so we don't wastefully
+	recompute its length every time one is re-used.
+	(suppress_node::tprint): Compute image file name length only
+	when saving a new image file name.  Use saved length in later
+	expressions.
+	(min): Drop unused inline function.
+
+2021-07-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Fix regression (breaking important pdfmark/pdfroff
 	features) caused by my commit
 	e876d4bfd193abb9a7d1fb6e76519349bded482a, 27 July.  An empty
