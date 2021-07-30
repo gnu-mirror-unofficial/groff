@@ -17913,9 +17913,7 @@ extend over more than one line.
 @item sizescale @var{n}
 @kindex sizescale
 Set the scale factor for point sizes to one divided by@tie{}@var{n}.
-The default is@tie{}@code{1}.  The arguments to the @code{unitwidth} and
-@code{sizes} directives are given in scaled points.  @xref{Fractional
-Type Sizes}.
+The default is@tie{}@code{1}.  @xref{Fractional Type Sizes}.
 
 @item styles @var{S1} @r{@dots{}} @var{Sm}
 @kindex styles
@@ -17986,6 +17984,24 @@ information about a device in the @file{DESC} file.
 @cindex format of font files
 @cindex format of font description files
 
+On typesetting output devices, each font is typically available at
+multiple sizes.  While paper size measurements in the device description
+file are in absolute units, measurements applicable to fonts must be
+proportionate to the type size.  @code{groff} achieves this using the
+system pioneered by @acronym{AT&T} device-independent @code{troff} one
+size of a font is chosen as a norm, and all other sizes are scaled
+linearly relative to that basis.  The ``unit width'' is the number of
+basic units per point.
+
+For instance, @code{groff}'s @code{lbp} device uses a @code{unitwidth}
+of@tie{}800.  In its Times roman font @samp{TR}, its @code{spacewidth}
+is@tie{}833; this is also the width of its comma, period, centered
+period, and mathematical asterisk, while its @samp{M} is 2963 basic
+units.  Thus, an @samp{M} on the @code{lbp} device is 2,963 basic units
+wide at a notional type size of 800@tie{}points.@footnote{800-point type
+is not practical for most purposes, but using it enables the quantities
+in the font description files to be expressed as integers.}
+
 A font description file has two sections; empty lines are ignored in
 both.  The first section is a sequence of lines each containing a
 sequence of space-delimited words; the first word in the line is a key,
@@ -17998,7 +18014,8 @@ The name of the font is@tie{}@var{f}.
 
 @item spacewidth @var{n}
 @kindex spacewidth
-The normal width of a space is@tie{}@var{n} basic units.
+The width of a normal, unadjusted space is @var{n}@tie{}basic units at
+a type size of @var{unit-width} points.
 @end table
 
 The above directives are mandatory; the remaining ones in the first
