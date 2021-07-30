@@ -4052,7 +4052,7 @@ void suppress_node::put(troff_output_file *out, const char *s)
  */
 
 static char last_position = 0;
-static const char *image_filename = 0;
+static const char *image_filename = "";
 static int subimage_counter = 0;
 
 inline int min(int a, int b)

@@ -1,3 +1,14 @@
+2021-07-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Fix regression (breaking important pdfmark/pdfroff
+	features) caused by my commit
+	e876d4bfd193abb9a7d1fb6e76519349bded482a, 27 July.  An empty
+	image file name is in fact semantically valid when writing a
+	bounding box; pdfmark uses such boxes to frame hyperlinks.
+	Avoid null pointer dereference by initializing `image_filename`
+	to an empty string literal.  Thanks to Tadziu Hoffman and Keith
+	Marshall for their patient explanations.
+
 2021-07-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Refactor some internal functions.
