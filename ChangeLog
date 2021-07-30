@@ -1,5 +1,14 @@
 2021-07-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Fix code nit.
+
+	* src/preproc/html/pre-html.cpp (get_image_generator):
+	Type-qualify `keyword_len` as `const` to encourage the compiler
+	to compute this value (the length of a string literal) at build
+	time.
+
+2021-07-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Slightly refactor.
 
 	* src/roff/troff/node.cpp: Add static `image_filename_len` to

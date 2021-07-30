@@ -321,7 +321,7 @@ static char *get_image_generator(void)
   FILE *f;
   char *generator = 0;
   const char keyword[] = "image_generator";
-  size_t keyword_len = strlen(keyword);
+  const size_t keyword_len = strlen(keyword);
   f = font_path.open_file(devhtml_desc, &pathp);
   if (0 == f)
     fatal("cannot open file '%1'", devhtml_desc);
