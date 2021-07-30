@@ -838,7 +838,7 @@ to set a paragraph with a short
 that is not semantically important,
 such as a bullet (\(bu)\(emobtained with the
 .B \e(bu
-special character escape\(emor list enumerator,
+special character escape sequence\(emor list enumerator,
 as seen in this very paragraph.
 .RE \" Move left margin back to .IP indentation.
 .RE \" Move left margin back to standard position.
@@ -2188,16 +2188,16 @@ a series of lines ending in backslash-newline appears to
 .I groff
 as a single input line.
 .
-Use this escape to break excessively long input lines for document
-maintenance.
+Use this escape sequence to break excessively long input lines for
+document maintenance.
 .
 .
 .TP
 .B \e%
 Control hyphenation.
 .
-The location of this escape within a word marks a hyphenation point,
-supplementing
+The location of this escape sequence within a word marks a hyphenation
+point, supplementing
 .IR groff 's
 automatic hyphenation patterns.
 .
@@ -2212,8 +2212,8 @@ are still honored.
 .B \e\(ti
 Adjustable non-breaking space.
 .
-Use this escape to prevent a break inside a short phrase or between a
-numerical quantity and its corresponding unit(s).
+Use this escape sequence to prevent a break inside a short phrase or
+between a numerical quantity and its corresponding unit(s).
 .
 .
 .RS
@@ -2257,7 +2257,8 @@ and PDF.
 .B \e\-
 Minus sign or basic Latin hyphen-minus.
 .
-This escape produces the Unix command-line option dash in the output.
+This escape sequence produces the Unix command-line option dash in the
+output.
 .
 .RB \(lq \- \(rq
 is a hyphen to
@@ -2414,8 +2415,8 @@ The next line is interpreted as usual and can `include' a macro call
 .BI \e newline\/\c
 ).
 .
-This escape is useful when three different font styles are needed in a
-single word or on a single line in
+This escape sequence is useful when three different font styles are
+needed in a single word or on a single line in
 .BR .EX / .EE
 examples.
 .
@@ -2452,7 +2453,7 @@ When using this trick with the
 or
 .B .RI
 macros,
-you will need to manually add an italic correction escape
+you will need to manually add an italic correction escape sequence
 .\" Normally we don't quote escapes, but these use potentially-confusing
 .\" prose punctuation.
 .RB \(lq \e/ \(rq,
@@ -2561,7 +2562,7 @@ if desired and if supported by your implementation.
 reliably returns to the style in use immediately preceding the
 previous
 .B \ef
-escape only if no
+escape sequence only if no
 sectioning,
 paragraph,
 or style macro calls have intervened.
