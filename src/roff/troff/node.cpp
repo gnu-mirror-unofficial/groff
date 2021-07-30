@@ -4048,7 +4048,9 @@ void suppress_node::put(troff_output_file *out, const char *s)
 }
 
 /*
- *  We need to remember the start of the image and its name.
+ *  We need to remember the start of the image and its name (\O5).  But
+ *  we won't always need this information; for instance, \O2 is used to
+ *  produce a bounding box with no associated image or position thereof.
  */
 
 static char last_position = 0;
@@ -4076,15 +4078,14 @@ static int subimage_counter = 0;
 void suppress_node::tprint(troff_output_file *out)
 {
   int current_page = topdiv->get_page_number();
-  // firstly check to see whether this suppress node contains
-  // an image filename & position.
+  // Does the node have an associated position and file name?
   if (is_on == 2) {
-    // remember position and filename
+    // Save them for future bounding box limits.
     last_position = position;
     image_filename = strsave(filename.contents());
     image_filename_len = strlen(image_filename);
   }
-  else {
+  else { // is_on = 0 or 1
     // Now check whether the suppress node requires us to issue limits.
     if (emit_limits) {
       const size_t namebuflen = 8192;
@@ -4187,17 +4188,16 @@ void suppress_node::tprint(troff_output_file *out)
 	fflush(stderr);
       }
     }
-    else {
+    else { // We are not emitting limits.
       if (is_on) {
 	out->on();
-	// lastly we reset the output registers
 	reset_output_registers();
       }
       else
 	out->off();
       suppress_start_page = current_page;
     }
-  }
+  } // is_on
 }
 
 int suppress_node::force_tprint()
