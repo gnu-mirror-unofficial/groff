@@ -108,14 +108,7 @@ my @macro_man_or_ms = ('B', 'I', 'BI',
 		       'IP', 'LP', 'PP');
 
 my %user_macro;
-my %Groff =
-  (
-   # for mdoc and mdoc-old
-   # .Oo and .Oc for modern mdoc, only .Oo for mdoc-old
-   'Oo' => 0,		# mdoc and mdoc-old
-   'Oc' => 0,		# mdoc
-   'Dd' => 0,		# mdoc
-  ); # end of %Groff
+my %Groff = ();
 
 my @standard_macro = ();
 push(@standard_macro, @macro_ms, @macro_man, @macro_man_or_ms);
@@ -393,6 +386,7 @@ sub do_line {
   return if (grep(/^\Q$command\E$/, @request));
 
   $have_seen_first_macro_call = 1;
+  $Groff{$command}++;
 
 
   ######################################################################
@@ -400,34 +394,16 @@ sub do_line {
   ######################################################################
 
   ##########
-  # modern mdoc
-
-  if ( $command =~ /^(Dd)$/ ) {
-    $Groff{'Dd'}++;		# for modern mdoc
+  # mdoc
+  if ( $command =~ /^Dd$/ ) {
+    $inferred_main_package = 'doc';
     return;
   }
-
-  # In the old version of -mdoc 'Oo' is a toggle, in the new it's
-  # closed by 'Oc'.
-  if ( $command =~ /^Oc$/ ) {
-    $Groff{'Oc'}++;		# only for modern mdoc
-    return;
-  }
-
-
-  ##########
-  # old and modern mdoc
-
-  if ( $command =~ /^Oo$/ ) {
-    $Groff{'Oo'}++;		# for mdoc and mdoc-old
-    return;
-  }
-
 
   ##########
   # old mdoc
   if ( $command =~ /^(Tp|Dp|De|Cx|Cl)$/ ) {
-    $Groff{'mdoc-old'}++;	# true for old mdoc
+    $inferred_main_package = 'doc-old';
     return;
   }
 
@@ -438,7 +414,7 @@ sub do_line {
 		      [ilnp]p|
 		      sh
 		    )$/x ) {
-    $Groff{'me'}++;		# for me
+    $inferred_main_package = 'e';
     return;
   }
 
@@ -455,16 +431,18 @@ sub do_line {
 		      PH|
 		      SA
 		    )$/x ) {
-    $Groff{'mm'}++;		# for mm and mmse
     if ( $command =~ /^LO$/ ) {
       if ( $args =~ /^(DNAMN|MDAT|BIL|KOMP|DBET|BET|SIDOR)/ ) {
-	$Groff{'mmse'}++;	# for mmse
+	$inferred_main_package = 'mse';
+	return;
       }
     } elsif ( $command =~ /^LT$/ ) {
       if ( $args =~ /^(SVV|SVH)/ ) {
-	$Groff{'mmse'}++;	# for mmse
+	$inferred_main_package = 'mse';
+	return;
       }
     }
+    $inferred_main_package = 'm';
     return;
   }
 
@@ -495,19 +473,14 @@ sub do_line {
 		   PAPER|
 		   PRINTSTYLE|
 		   PT_SIZE|
-		   SP|
 		   START|
 		   T_MARGIN|
 		   TITLE|
 		   TOC|
 		   TOC_AFTER_HERE
 		 )$/x ) {
-    $Groff{'mom'}++;		# for mom
+    $inferred_main_package = 'om';
     return;
-  }
-
-  for my $key (@standard_macro) {
-    $Groff{$key}++ if ($command eq $key);
   }
 } # do_line()
 
@@ -564,8 +537,9 @@ sub infer_man_or_ms_package {
   }
 
   if (!$ms_score && !$man_score) {
-    # The input may be a "raw" roff document; this is not a problem.
-    # Do nothing special.
+    # The input may be a "raw" roff document; this is not a problem,
+    # but it does mean no package was inferred.
+    return 0;
   } elsif ($ms_score == $man_score) {
     # If there was no TH call, it's not a (valid) man(7) document.
     if (!$Groff{'TH'}) {
@@ -583,47 +557,6 @@ sub infer_man_or_ms_package {
 
   return 1;
 } # infer_man_or_ms_package()
-
-
-# Return true (1) if a main/full-service/exclusive package is inferred.
-sub infer_macro_packages {
-  # mdoc
-  if ( ( $Groff{'Oo'} && $Groff{'Oc'} ) || $Groff{'Dd'} ) {
-    $Groff{'Oc'} = 0;
-    $Groff{'Oo'} = 0;
-    $inferred_main_package = 'doc';
-    return 1;	# true
-  }
-  if ( $Groff{'mdoc-old'} || $Groff{'Oo'} ) {
-    $inferred_main_package = 'doc';
-    return 1;	# true
-  }
-
-  # me
-  if ( $Groff{'me'} ) {
-    $inferred_main_package = 'e';
-    return 1;	# true
-  }
-
-  # mm and mmse
-  if ( $Groff{'mm'} ) {
-    $inferred_main_package = 'm';
-    return 1;	# true
-  }
-  # XXX: Is this necessary?  mmse "mso"s mm, but we probably already
-  # detected mm macro calls anyway.  --GBR
-  if ( $Groff{'mmse'} ) {	# Swedish mm
-    return 1;	# true
-  }
-
-  # mom
-  if ( $Groff{'mom'} ) {
-    $inferred_main_package = 'om';
-    return 1;	# true
-  }
-
-  return 0;
-} # infer_macro_packages()
 
 
 sub construct_command {
@@ -729,7 +662,7 @@ $groff_version = '@VERSION@' unless ($in_unbuilt_source_tree);
 
 if ($have_any_valid_arguments) {
   &infer_preprocessors();
-  &infer_macro_packages() || &infer_man_or_ms_package();
+  &infer_man_or_ms_package() unless ($inferred_main_package);
   &construct_command();
 }
 
@@ -741,4 +674,4 @@ exit 0;
 # fill-column: 72
 # mode: CPerl
 # End:
-# vim: set autoindent noexpandtab shiftwidth=2 softtabstop=2 textwidth=72:
+# vim: set cindent noexpandtab shiftwidth=2 softtabstop=2 textwidth=72:

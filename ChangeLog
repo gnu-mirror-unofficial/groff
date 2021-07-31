@@ -1,5 +1,22 @@
 2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/grog/grog.pl: Refactor macro package inference.
+	  - Stop manually populating `Groff` hash.  (It's itching for a
+	    rename.)
+	  - Stop calling now-dead subroutine `infer_macro_packages`.
+	(do_line): Always store the names of all macros called to the
+	`Groff` hash, incrementing it.  Now it's a proper scoreboard.
+	Populate `inferred_main_package` from here upon encountering
+	characteristic (i.e., uniquely named) macros of each package.
+	Bug fix: drop "SP" from list of characteristic mom(7) macros;
+	it's shared with mm(7).
+	(infer_man_or_ms_package): Update comment.  Return 0 (false) if
+	document appears to be "raw", using no full-service macro
+	package.
+	(infer_macro_packages): Delete; do_line() does this work.
+
+2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Refactor preprocessor inference.
 	  - Add new list, `inferred_preprocessor`.
 	  - Drop preprocessor-related keys from `Groff` hash.
