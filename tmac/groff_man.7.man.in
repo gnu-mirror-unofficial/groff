@@ -2197,7 +2197,8 @@ document maintenance.
 Control hyphenation.
 .
 The location of this escape sequence within a word marks a hyphenation
-point, supplementing
+point,
+supplementing
 .IR groff 's
 automatic hyphenation patterns.
 .
@@ -2454,8 +2455,8 @@ or
 .B .RI
 macros,
 you will need to manually add an italic correction escape sequence
-.\" Normally we don't quote escapes, but these use potentially-confusing
-.\" prose punctuation.
+.\" Normally, we don't quote escape sequences, but these use potentially
+.\" confusing prose punctuation.
 .RB \(lq \e/ \(rq,
 a GNU extension,
 before the
@@ -2516,7 +2517,7 @@ and it is slightly more portable than the more explicit
 .
 .
 .TP
-.BR \efB ,\  \efI ,\  \efR ,\  \efP
+.BR \efB ,\~ \efI ,\~ \efR ,\~ \efP
 Switch to bold,
 italic,
 roman,
@@ -2888,13 +2889,11 @@ SunOS\~4.0 (1988) may have been the first to support
 The following
 .I groff
 options set registers
-(with the
-.B \-r
-option)
+(with
+.BR \-r )
 and strings
-(with the
-.B \-d
-option)
+(with
+.BR \-d )
 recognized and used by the
 .I man
 macro package.
@@ -3112,7 +3111,7 @@ default.
 .TP
 .BI \-rX p
 After
-.RI page " p" ,
+.RI page\~ p ,
 number pages as
 .IR p a,
 .IR p b,
@@ -3132,7 +3131,7 @@ numbers: 1,
 2,
 2a,
 2b,
-\&.\|.\|.\&,
+\&.\|.\|.\|,
 2aa,
 2ab,
 and so on.
@@ -3306,7 +3305,7 @@ often a shorter or clearer alternative is available.
 .TS
 c c
 lfCB lfCB.
-Instead of.\|.\.	.\|.\|.do this.
+Instead of.\|.\|.	.\|.\|.do this.
 _
 \&.TP \(dq\(dq	.TP
 \&.BI \(dq\(dq italic-text bold-text	.IB italic-text bold-text
@@ -3343,7 +3342,7 @@ which can be overlooked in source and rendered forms.
 .
 .
 .TP
-.RB \(bu " .RS" " doesn't indent relative to my indented paragraph"
+.RB \(bu " .RS" " doesn't indent relative to my indented paragraph."
 The
 .B .RS
 macro sets the left margin;
@@ -3378,7 +3377,7 @@ values.
 .
 .
 .TP
-.RB \(bu " .RE" " doesn't move the inset back to the expected level"
+.RB \(bu " .RE" " doesn't move the inset back to the expected level."
 .TQ
 \(bu warning: scaling indicator invalid in this context
 .TQ
