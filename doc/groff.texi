@@ -4936,15 +4936,17 @@ languages, with an exception already noted several times in passing.
 @cindex no-break control character
 A @dfn{request} is an instruction to the formatter that occurs after a
 control character.  A @dfn{control character} must occur at the
-beginning of an input line to be recognized.@footnote{Occasionally a
-control character is expected as part of another request, such as
-@code{if} or @code{while}.}  The regular control character has a
-counterpart, the @dfn{no-break control character}, which suppresses the
-break that is implied by some requests.  The default control characters
-are the dot (@code{.}) and the neutral apostrophe (@code{'}), the latter
-being the no-break control character.  These characters were chosen
-because it is uncommon for lines of text in natural languages to begin
-with periods or apostrophes.
+beginning of an input line to be recognized.@footnote{A control
+character is also expected in arguments to the @code{if}, @code{ie},
+@code{el}, and @code{while} requests.}  The regular control character has a counterpart, the
+@dfn{no-break control character}, which suppresses the break that is
+implied by some requests.  The default control characters are the dot
+(@code{.}) and the neutral apostrophe (@code{'}), the latter being the
+no-break control character.  These characters were chosen because it is
+uncommon for lines of text in natural languages to begin with periods or
+apostrophes.  If you require a literal period or neutral
+apostrophe where GNU @code{troff} is expecting a control character,
+prefix it with the non-printing input break escape sequence, @samp{\&}.
 
 @cindex control line
 An input line beginning with a control character is called a
