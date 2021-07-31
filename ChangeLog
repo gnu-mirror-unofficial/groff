@@ -1,5 +1,13 @@
 2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/grog/grog.pl (do_line): When matching macro/request
+	names, accept any non-whitespace character (Perl: \S) instead of
+	just a word-constituent character (Perl: \w), since roff
+	identifiers can contain unusual characters (refer(1) and
+	groff_me(7) illustrate some real-world cases).
+
+2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Refactor macro package inference.
 	  - Stop manually populating `Groff` hash.  (It's itching for a
 	    rename.)

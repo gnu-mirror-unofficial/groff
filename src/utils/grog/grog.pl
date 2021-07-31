@@ -309,7 +309,7 @@ sub do_line {
   my $boundary = '\\b';
   $boundary = '' if ($use_compatibility_mode);
 
-  if ($line =~ /^\.(\w\w)$boundary/ || $line =~ /^\.(\[)/) {
+  if ($line =~ /^\.(\S\S)$boundary/ || $line =~ /^\.(\[)/) {
     my $macro = $1;
     # groff identifiers can have extremely weird characters in them.
     # The ones we care about are conventionally named, but me(7)
@@ -333,17 +333,17 @@ sub do_line {
   # Split control line into a request or macro call and its arguments.
 
   # Handle single-letter macro names.
-  if ($line =~ /^\.(\w)(\s+(.*))?$/) {
+  if ($line =~ /^\.(\S)(\s+(.*))?$/) {
     $command = $1;
     $args = $2;
   # Handle two-letter macro/request names in compatibility mode.
   } elsif ($use_compatibility_mode) {
-    $line =~ /^\.(\w\w)\s*(.*)$/;
+    $line =~ /^\.(\S\S)\s*(.*)$/;
     $command = $1;
     $args = $2;
   # Handle multi-letter macro/request names in groff mode.
   } else {
-    $line =~ /^\.(\w+)(\s+(.*))?$/;
+    $line =~ /^\.(\S+)(\s+(.*))?$/;
     $command = $1;
     $args = $3;
   }
