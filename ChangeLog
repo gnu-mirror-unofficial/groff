@@ -1,5 +1,20 @@
 2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/grog/grog.pl: Refactor through relocation and
+	renaming.  Move several global objects into subroutines.
+	  - `@request` -> `&do_line`
+	  - `@macro_ms`, `@macro_man`, `@macro_man_or_ms` ->
+	    `&infer_man_or_ms_package`
+	  - `@main_package` -> `&construct_command`
+	Rename some objects for clarity.
+	  - `%Groff` -> `%score`
+	  - `@filespec` -> `$input_file`
+	Delete unused object.
+	  - `@standard_macro`
+	Add comments.
+
+2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl (do_line): When matching macro/request
 	names, accept any non-whitespace character (Perl: \S) instead of
 	just a word-constituent character (Perl: \w), since roff

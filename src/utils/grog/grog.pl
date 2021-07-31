@@ -52,73 +52,11 @@ my $program_name = $0;
   $program_name = $f;
 }
 
-my @request = ('ab', 'ad', 'af', 'aln', 'als', 'am', 'am1', 'ami',
-	       'ami1', 'as', 'as1', 'asciify', 'backtrace', 'bd', 'blm',
-	       'box', 'boxa', 'bp', 'br', 'brp', 'break', 'c2', 'cc',
-	       'ce', 'cf', 'cflags', 'ch', 'char', 'chop', 'class',
-	       'close', 'color', 'composite', 'continue', 'cp', 'cs',
-	       'cu', 'da', 'de', 'de1', 'defcolor', 'dei', 'dei1',
-	       'device', 'devicem', 'di', 'do', 'ds', 'ds1', 'dt', 'ec',
-	       'ecr', 'ecs', 'el', 'em', 'eo', 'ev', 'evc', 'ex', 'fam',
-	       'fc', 'fchar', 'fcolor', 'fi', 'fp', 'fschar',
-	       'fspecial', 'ft', 'ftr', 'fzoom', 'gcolor', 'hc',
-	       'hcode', 'hla', 'hlm', 'hpf', 'hpfa', 'hpfcode', 'hw',
-	       'hy', 'hym', 'hys', 'ie', 'if', 'ig', 'in', 'it', 'itc',
-	       'kern', 'lc', 'length', 'linetabs', 'lf', 'lg', 'll',
-	       'lsm', 'ls', 'lt', 'mc', 'mk', 'mso', 'msoquiet', 'na',
-	       'ne', 'nf', 'nh', 'nm', 'nn', 'nop', 'nr', 'nroff', 'ns',
-	       'nx', 'open', 'opena', 'os', 'output', 'pc', 'pev', 'pi',
-	       'pl', 'pm', 'pn', 'pnr', 'po', 'ps', 'psbb', 'pso',
-	       'ptr', 'pvs', 'rchar', 'rd', 'return', 'rfschar', 'rj',
-	       'rm', 'rn', 'rnn', 'rr', 'rs', 'rt', 'schar', 'shc',
-	       'shift', 'sizes', 'so', 'soquiet', 'sp', 'special',
-	       'spreadwarn', 'ss', 'stringdown', 'stringup', 'sty',
-	       'substring', 'sv', 'sy', 'ta', 'tc', 'ti', 'tkf', 'tl',
-	       'tm', 'tm1', 'tmc', 'tr', 'trf', 'trin', 'trnt', 'troff',
-	       'uf', 'ul', 'unformat', 'vpt', 'vs', 'warn', 'warnscale',
-	       'wh', 'while', 'write', 'writec', 'writem');
-
-my @macro_ms = ('RP', 'TL', 'AU', 'AI', 'DA', 'ND', 'AB', 'AE',
-		'QP', 'QS', 'QE', 'XP',
-		'NH',
-		'R',
-		'CW',
-		'BX', 'UL', 'LG', 'NL',
-		'KS', 'KF', 'KE', 'B1', 'B2',
-		'DS', 'DE', 'LD', 'ID', 'BD', 'CD', 'RD',
-		'FS', 'FE',
-		'OH', 'OF', 'EH', 'EF', 'P1',
-		'TA', '1C', '2C', 'MC',
-		'XS', 'XE', 'XA', 'TC', 'PX',
-		'IX', 'SG');
-
-my @macro_man = ('BR', 'IB', 'IR', 'RB', 'RI', 'P', 'TH', 'TP', 'SS',
-		 'HP', 'PD',
-		 'AT', 'UC',
-		 'SB',
-		 'EE', 'EX',
-		 'OP',
-		 'MT', 'ME', 'SY', 'YS', 'TQ', 'UR', 'UE');
-
-my @macro_man_or_ms = ('B', 'I', 'BI',
-		       'DT',
-		       'RS', 'RE',
-		       'SH',
-		       'SM',
-		       'IP', 'LP', 'PP');
-
 my %user_macro;
-my %Groff = ();
+my %score = ();
 
-my @standard_macro = ();
-push(@standard_macro, @macro_ms, @macro_man, @macro_man_or_ms);
-for my $key (@standard_macro) {
-  $Groff{$key} = 0;
-}
+my @input_file;
 
-my @filespec;
-
-my @main_package = ('an', 'doc', 'doc-old', 'e', 'm', 'om', 's');
 my $inferred_main_package = '';
 
 # .TH is both a man(7) macro and often used with tbl(1).  We expect to
@@ -162,7 +100,7 @@ sub process_arguments {
     }
 
     if ($no_more_options) {
-      push @filespec, $arg;
+      push @input_file, $arg;
       next;
     }
 
@@ -179,7 +117,7 @@ sub process_arguments {
     }
 
     unless ( $arg =~ /^-/ ) { # file name, no opt, no optarg
-      push @filespec, $arg;
+      push @input_file, $arg;
       next;
     }
 
@@ -187,7 +125,7 @@ sub process_arguments {
 
     if ($arg eq '-') {
       unless ($was_minus) {
-	push @filespec, $arg;
+	push @input_file, $arg;
 	$was_minus = 1;
       }
       next;
@@ -242,12 +180,12 @@ sub process_arguments {
     push @command, '-PU';
   }
 
-  @filespec = ('-') unless (@filespec);
+  @input_file = ('-') unless (@input_file);
 } # process_arguments()
 
 
 sub process_input {
-  foreach my $file ( @filespec ) {
+  foreach my $file (@input_file) {
     unless ( open(FILE, $file eq "-" ? $file : "< $file") ) {
       &fail("cannot open '$file': $!");
       next;
@@ -362,6 +300,34 @@ sub do_line {
   # If the line calls a user-defined macro, skip it.
   return if (exists $user_macro{$command});
 
+  # These are all requests supported by groff 1.23.0.
+  my @request = ('ab', 'ad', 'af', 'aln', 'als', 'am', 'am1', 'ami',
+		 'ami1', 'as', 'as1', 'asciify', 'backtrace', 'bd',
+		 'blm', 'box', 'boxa', 'bp', 'br', 'brp', 'break', 'c2',
+		 'cc', 'ce', 'cf', 'cflags', 'ch', 'char', 'chop',
+		 'class', 'close', 'color', 'composite', 'continue',
+		 'cp', 'cs', 'cu', 'da', 'de', 'de1', 'defcolor', 'dei',
+		 'dei1', 'device', 'devicem', 'di', 'do', 'ds', 'ds1',
+		 'dt', 'ec', 'ecr', 'ecs', 'el', 'em', 'eo', 'ev',
+		 'evc', 'ex', 'fam', 'fc', 'fchar', 'fcolor', 'fi',
+		 'fp', 'fschar', 'fspecial', 'ft', 'ftr', 'fzoom',
+		 'gcolor', 'hc', 'hcode', 'hla', 'hlm', 'hpf', 'hpfa',
+		 'hpfcode', 'hw', 'hy', 'hym', 'hys', 'ie', 'if', 'ig',
+		 'in', 'it', 'itc', 'kern', 'lc', 'length', 'linetabs',
+		 'lf', 'lg', 'll', 'lsm', 'ls', 'lt', 'mc', 'mk', 'mso',
+		 'msoquiet', 'na', 'ne', 'nf', 'nh', 'nm', 'nn', 'nop',
+		 'nr', 'nroff', 'ns', 'nx', 'open', 'opena', 'os',
+		 'output', 'pc', 'pev', 'pi', 'pl', 'pm', 'pn', 'pnr',
+		 'po', 'ps', 'psbb', 'pso', 'ptr', 'pvs', 'rchar', 'rd',
+		 'return', 'rfschar', 'rj', 'rm', 'rn', 'rnn', 'rr',
+		 'rs', 'rt', 'schar', 'shc', 'shift', 'sizes', 'so',
+		 'soquiet', 'sp', 'special', 'spreadwarn', 'ss',
+		 'stringdown', 'stringup', 'sty', 'substring', 'sv',
+		 'sy', 'ta', 'tc', 'ti', 'tkf', 'tl', 'tm', 'tm1',
+		 'tmc', 'tr', 'trf', 'trin', 'trnt', 'troff', 'uf',
+		 'ul', 'unformat', 'vpt', 'vs', 'warn', 'warnscale',
+		 'wh', 'while', 'write', 'writec', 'writem');
+
   # Add user-defined macro names to %user_macros.
   #
   # Macros can also be defined with .dei{,1}, ami{,1}, but supporting
@@ -381,28 +347,35 @@ sub do_line {
     return;
   }
 
+  # XXX: Handle .rm as well?
+
   # Ignore all other requests.  Again, macro names can contain Perl
   # regex metacharacters, so be careful.
   return if (grep(/^\Q$command\E$/, @request));
+  # What remains must be a macro name.
+  my $macro = $command;
 
   $have_seen_first_macro_call = 1;
-  $Groff{$command}++;
+  $score{$macro}++;
 
 
   ######################################################################
   # macro package (tmac)
   ######################################################################
 
+  # man and ms share too many macro names for the following approch to
+  # be fruitful for many documents; see &infer_man_or_ms_package.
+
   ##########
   # mdoc
-  if ( $command =~ /^Dd$/ ) {
+  if ($macro =~ /^Dd$/) {
     $inferred_main_package = 'doc';
     return;
   }
 
   ##########
   # old mdoc
-  if ( $command =~ /^(Tp|Dp|De|Cx|Cl)$/ ) {
+  if ($macro =~ /^(Tp|Dp|De|Cx|Cl)$/) {
     $inferred_main_package = 'doc-old';
     return;
   }
@@ -410,10 +383,10 @@ sub do_line {
   ##########
   # me
 
-  if ( $command =~ /^(
-		      [ilnp]p|
-		      sh
-		    )$/x ) {
+  if ($macro =~ /^(
+		   [ilnp]p|
+		   sh
+		  )$/x) {
     $inferred_main_package = 'e';
     return;
   }
@@ -422,21 +395,21 @@ sub do_line {
   #############
   # mm and mmse
 
-  if ( $command =~ /^(
-		      H|
-		      MULB|
-		      LO|
-		      LT|
-		      NCOL|
-		      PH|
-		      SA
-		    )$/x ) {
-    if ( $command =~ /^LO$/ ) {
+  if ($macro =~ /^(
+		   H|
+		   MULB|
+		   LO|
+		   LT|
+		   NCOL|
+		   PH|
+		   SA
+		  )$/x) {
+    if ($macro =~ /^LO$/) {
       if ( $args =~ /^(DNAMN|MDAT|BIL|KOMP|DBET|BET|SIDOR)/ ) {
 	$inferred_main_package = 'mse';
 	return;
       }
-    } elsif ( $command =~ /^LT$/ ) {
+    } elsif ($macro =~ /^LT$/) {
       if ( $args =~ /^(SVV|SVH)/ ) {
 	$inferred_main_package = 'mse';
 	return;
@@ -449,36 +422,36 @@ sub do_line {
   ##########
   # mom
 
-  if ( $command =~ /^(
+  if ($macro =~ /^(
 		   ALD|
 		   AUTHOR|
-		   CHAPTER|
 		   CHAPTER_TITLE|
+		   CHAPTER|
 		   COLLATE|
-		   DOC_COVER|
 		   DOCHEADER|
 		   DOCTITLE|
 		   DOCTYPE|
+		   DOC_COVER|
 		   FAMILY|
-		   FT|
 		   FAM|
+		   FT|
 		   LEFT|
 		   LL|
 		   LS|
 		   NEWPAGE|
 		   NO_TOC_ENTRY|
-		   PAGE|
 		   PAGENUMBER|
+		   PAGE|
 		   PAGINATION|
 		   PAPER|
 		   PRINTSTYLE|
 		   PT_SIZE|
 		   START|
-		   T_MARGIN|
 		   TITLE|
-		   TOC|
 		   TOC_AFTER_HERE
-		 )$/x ) {
+		   TOC|
+		   T_MARGIN|
+		  )$/x) {
     $inferred_main_package = 'om';
     return;
   }
@@ -521,19 +494,52 @@ sub infer_preprocessors {
 
 # Return true (1) if a main/full-service/exclusive package is inferred.
 sub infer_man_or_ms_package {
+  my @macro_ms = ('RP', 'TL', 'AU', 'AI', 'DA', 'ND', 'AB', 'AE',
+		  'QP', 'QS', 'QE', 'XP',
+		  'NH',
+		  'R',
+		  'CW',
+		  'BX', 'UL', 'LG', 'NL',
+		  'KS', 'KF', 'KE', 'B1', 'B2',
+		  'DS', 'DE', 'LD', 'ID', 'BD', 'CD', 'RD',
+		  'FS', 'FE',
+		  'OH', 'OF', 'EH', 'EF', 'P1',
+		  'TA', '1C', '2C', 'MC',
+		  'XS', 'XE', 'XA', 'TC', 'PX',
+		  'IX', 'SG');
+
+  my @macro_man = ('BR', 'IB', 'IR', 'RB', 'RI', 'P', 'TH', 'TP', 'SS',
+		   'HP', 'PD',
+		   'AT', 'UC',
+		   'SB',
+		   'EE', 'EX',
+		   'OP',
+		   'MT', 'ME', 'SY', 'YS', 'TQ', 'UR', 'UE');
+
+  my @macro_man_or_ms = ('B', 'I', 'BI',
+			 'DT',
+			 'RS', 'RE',
+			 'SH',
+			 'SM',
+			 'IP', 'LP', 'PP');
+
+  for my $key (@macro_man_or_ms, @macro_man, @macro_ms) {
+    $score{$key} = 0 unless exists $score{$key};
+  }
+
   # Compute a score for each package by counting occurrences of their
   # characteristic macros.
   foreach my $key (@macro_man_or_ms) {
-    $man_score += $Groff{$key};
-    $ms_score += $Groff{$key};
+    $man_score += $score{$key};
+    $ms_score += $score{$key};
   }
 
   foreach my $key (@macro_man) {
-    $man_score += $Groff{$key};
+    $man_score += $score{$key};
   }
 
   foreach my $key (@macro_ms) {
-    $ms_score += $Groff{$key};
+    $ms_score += $score{$key};
   }
 
   if (!$ms_score && !$man_score) {
@@ -542,7 +548,7 @@ sub infer_man_or_ms_package {
     return 0;
   } elsif ($ms_score == $man_score) {
     # If there was no TH call, it's not a (valid) man(7) document.
-    if (!$Groff{'TH'}) {
+    if (!$score{'TH'}) {
       $inferred_main_package = 's';
     } else {
       &warn("document ambiguous; disambiguate with -man or -ms option");
@@ -560,12 +566,13 @@ sub infer_man_or_ms_package {
 
 
 sub construct_command {
+  my @main_package = ('an', 'doc', 'doc-old', 'e', 'm', 'om', 's');
   my $file_args_included;	# file args now only at 1st preproc
   unshift @command, 'groff';
   if (@preprocessor) {
     my @progs;
     $progs[0] = shift @preprocessor;
-    push(@progs, @filespec);
+    push(@progs, @input_file);
     for (@preprocessor) {
       push @progs, '|';
       push @progs, $_;
@@ -604,7 +611,7 @@ sub construct_command {
 
   push @command, @m, @msupp;
 
-  push(@command, @filespec) unless ( $file_args_included );
+  push(@command, @input_file) unless ($file_args_included);
 
   #########
   # execute the 'groff' command here with option '--run'
