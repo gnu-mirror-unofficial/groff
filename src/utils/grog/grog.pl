@@ -42,6 +42,7 @@ my $groff_version = 'DEVELOPMENT';
 
 my @command = ();		# the constructed groff command
 my @requested_package = ();	# arguments to '-m' grog options
+my @inferred_preprocessor = ();	# preprocessors the document uses
 my $do_run = 0;			# run generated 'groff' command
 my $use_compatibility_mode = 0;	# is -C being passed to groff?
 
@@ -109,27 +110,6 @@ my @macro_man_or_ms = ('B', 'I', 'BI',
 my %user_macro;
 my %Groff =
   (
-   # preprocessors
-   'chem' => 0,
-   'eqn' => 0,
-   'gperl' => 0,
-   'grap' => 0,
-   'grn' => 0,
-   'gideal' => 0,
-   'gpinyin' => 0,
-   'lilypond' => 0,
-
-   'pic' => 0,
-   'PS' => 0,		# opening for pic
-   'PE' => 0,		# closing for pic
-   'PF' => 0,		# alternative closing for pic
-
-   'refer' => 0,
-   'refer_open' => 0,
-   'refer_close' => 0,
-   'soelim' => 0,
-   'tbl' => 0,
-
    # for mdoc and mdoc-old
    # .Oo and .Oc for modern mdoc, only .Oo for mdoc-old
    'Oo' => 0,		# mdoc and mdoc-old
@@ -152,7 +132,6 @@ my $inferred_main_package = '';
 # find .TH in ms(7) documents only between .TS and .TE calls, and in
 # man(7) documents only as the first macro call.
 my $have_seen_first_macro_call = 0;
-my $inside_tbl_table = 0;
 # man(7) and ms(7) use many of the same macro names; do extra checking.
 my $man_score = 0;
 my $ms_score = 0;
@@ -314,6 +293,42 @@ sub do_line {
 
   return unless ($line =~ /^[.']/);	# Ignore text lines.
 
+  # Perform preprocessor checks; they scan their inputs using a rump
+  # interpretation of roff(7) syntax that requires the default control
+  # character and no space between it and the macro name.  In AT&T
+  # compatibility mode, no space (or newline!) is required after the
+  # macro name, either.  We mimic the preprocessors themselves; eqn(1),
+  # for instance, does not recognize '.EN' if '.EQ' has not been seen.
+  my %preprocessor_for_macro = (
+    'EQ', 'eqn',
+    'G1', 'grap',
+    'GS', 'grn',
+    'PS', 'pic',
+    '[',  'refer',
+    #'so', 'soelim', # Can't be inferred this way; see grog man page.
+    'TS', 'tbl',
+    'cstart',   'chem',
+    'lilypond', 'glilypond',
+    'Perl',     'gperl',
+    'pinyin',   'gpinyin',
+  );
+
+  my $boundary = '\\b';
+  $boundary = '' if ($use_compatibility_mode);
+
+  if ($line =~ /^\.(\w\w)$boundary/ || $line =~ /^\.(\[)/) {
+    my $macro = $1;
+    # groff identifiers can have extremely weird characters in them.
+    # The ones we care about are conventionally named, but me(7)
+    # documents can call macros like '+c', so quote carefully.
+    if (grep(/^\Q$macro\E$/, keys %preprocessor_for_macro)) {
+      my $preproc = $preprocessor_for_macro{$macro};
+      if (!grep(/$preproc/, @inferred_preprocessor)) {
+	push @inferred_preprocessor, $preproc;
+      }
+    }
+  }
+
   # Normalize control lines; convert no-break control character to the
   # regular one and remove unnecessary whitespace.
   $line =~ s/^['.]\s*/./;
@@ -373,90 +388,11 @@ sub do_line {
     return;
   }
 
-  # Ignore all other requests.
-  return if (grep(/$command/, @request));
+  # Ignore all other requests.  Again, macro names can contain Perl
+  # regex metacharacters, so be careful.
+  return if (grep(/^\Q$command\E$/, @request));
 
   $have_seen_first_macro_call = 1;
-
-
-  ######################################################################
-  # preprocessors
-
-  if ( $command =~ /^(cstart)|(begin\s+chem)$/ ) {
-    $Groff{'chem'}++;		# for chem
-    return;
-  }
-  if ( $command =~ /^EQ$/ ) {
-    $Groff{'eqn'}++;		# for eqn
-    return;
-  }
-  if ( $command =~ /^G1$/ ) {
-    $Groff{'grap'}++;		# for grap
-    return;
-  }
-  if ( $command =~ /^Perl/ ) {
-    $Groff{'gperl'}++;		# for gperl
-    return;
-  }
-  if ( $command =~ /^pinyin/ ) {
-    $Groff{'gpinyin'}++;		# for gperl
-    return;
-  }
-  if ( $command =~ /^GS$/ ) {
-    $Groff{'grn'}++;		# for grn
-    return;
-  }
-  if ( $command =~ /^IS$/ ) {
-    $Groff{'gideal'}++;		# preproc gideal for ideal
-    return;
-  }
-  if ( $command =~ /^lilypond$/ ) {
-    $Groff{'lilypond'}++;	# for glilypond
-    return;
-  }
-
-  # pic is opened by .PS and can be closed by either .PE or .PF
-  if ( $command =~ /^PS$/ ) {
-    $Groff{'PS'}++;		# opening for pic
-    return;
-  }
-  if ( $command =~ /^PE$/ ) {
-    $Groff{'PE'}++;		# closing for pic
-    return;
-  }
-  if ( $command =~ /^PF$/ ) {
-    $Groff{'PF'}++;		# alternate closing for pic
-    return;
-  }
-
-  if ( $command =~ /^R1$/ ) {
-    $Groff{'refer'}++;		# for refer
-    return;
-  }
-  if ( $command =~ /^\[$/ ) {
-    $Groff{'refer_open'}++;	# for refer open
-    return;
-  }
-  if ( $command =~ /^\]$/ ) {
-    $Groff{'refer_close'}++;	# for refer close
-    return;
-  }
-  if ( $command =~ /^TS$/ ) {
-    $Groff{'tbl'}++;		# for tbl
-    $inside_tbl_table = 1;
-    return;
-  }
-  if ( $command =~ /^TE$/ ) {
-    $Groff{'tbl'}++;		# for tbl
-    $inside_tbl_table = 0;
-    return;
-  }
-  if ( $command =~ /^TH$/ ) {
-    if ($inside_tbl_table) {
-      $Groff{'tbl'}++;		# for tbl
-    }
-    return;
-  }
 
 
   ######################################################################
@@ -581,44 +517,32 @@ my @preprocessor = ();
 
 
 sub infer_preprocessors {
-  # preprocessors without 'groff' option
-  if ( $Groff{'lilypond'} ) {
-    push @preprocessor, 'glilypond';
+  my %option_for_preprocessor =  (
+    'eqn', '-e',
+    'grap', '-G',
+    'grn', '-g',
+    'pic', '-p',
+    'refer', '-R',
+    #'soelim', '-s', # Can't be inferred this way; see grog man page.
+    'tbl', '-t',
+    'chem', '-j'
+  );
+
+  # Use a temporary list we can sort later.  We want the options to show
+  # up in a stable order for testing purposes instead of the order their
+  # macros turn up in the input.  groff doesn't care about the order.
+  my @opt = ();
+
+  foreach my $preproc (@inferred_preprocessor) {
+    my $preproc_option = $option_for_preprocessor{$preproc};
+
+    if ($preproc_option) {
+      push @opt, $preproc_option;
+    } else {
+      push @preprocessor, $preproc;
+    }
   }
-  if ( $Groff{'gperl'} ) {
-    push @preprocessor, 'gperl';
-  }
-  if ( $Groff{'gpinyin'} ) {
-    push @preprocessor, 'gpinyin';
-  }
-
-  # preprocessors with 'groff' option
-  if ( $Groff{'PS'} &&  ( $Groff{'PE'} ||  $Groff{'PF'} ) ) {
-    $Groff{'pic'} = 1;
-  }
-  if ( $Groff{'gideal'} ) {
-    $Groff{'pic'} = 1;
-  }
-
-  $Groff{'refer'} ||= $Groff{'refer_open'} && $Groff{'refer_close'};
-
-  if ( $Groff{'chem'} || $Groff{'eqn'} ||  $Groff{'gideal'} ||
-       $Groff{'grap'} || $Groff{'grn'} || $Groff{'pic'} ||
-       $Groff{'refer'} || $Groff{'tbl'} ) {
-    push(@command, '-s') if $Groff{'soelim'};
-
-    push(@command, '-R') if $Groff{'refer'};
-
-    push(@command, '-t') if $Groff{'tbl'};	# tbl before eqn
-    push(@command, '-e') if $Groff{'eqn'};
-
-    push(@command, '-j') if $Groff{'chem'};	# chem produces pic code
-    push(@command, '-J') if $Groff{'gideal'};	# gideal produces pic
-    push(@command, '-G') if $Groff{'grap'};
-    push(@command, '-g') if $Groff{'grn'};	# gremlin files for -me
-    push(@command, '-p') if $Groff{'pic'};
-
-  }
+  push @command, sort @opt;
 } # infer_preprocessors()
 
 

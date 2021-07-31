@@ -107,7 +107,7 @@ echo "testing mom(7) document $doc" >&2
 doc=$src/contrib/mom/examples/slide-demo.mom
 echo "testing mom(7) document $doc" >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -t -e -p -mom '"$doc"
+    grep -Fqx 'groff -e -p -t -mom '"$doc"
 
 doc=$src/contrib/mom/examples/typesetting.mom
 echo "testing mom(7) document $doc" >&2
@@ -133,7 +133,7 @@ doc=$src/doc/pic.ms
 echo "testing tbl(1)-, eqn(1)-, and pic(1)-using ms(7) document $doc" \
     >&2
 "$grog" "$doc" | \
-    grep -Fqx 'groff -t -e -p -ms '"$doc"
+    grep -Fqx 'groff -e -p -t -ms '"$doc"
 
 doc=$src/doc/webpage.ms
 echo "testing ms(7) document $doc" >&2

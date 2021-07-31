@@ -1,5 +1,26 @@
 2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/grog/grog.pl: Refactor preprocessor inference.
+	  - Add new list, `inferred_preprocessor`.
+	  - Drop preprocessor-related keys from `Groff` hash.
+	  - Drop scalar `inside_tbl_table`.
+	(do_line): Set up hash `preprocessor_for_macro`.  Detect
+	preprocessor macros the way the preprocessors do, explained in a
+	comment.  Respect AT&T compatibility mode when doing so.  Build
+	list of inferred preprocessors.  This replaces the extensive and
+	gaseous series of `if` statements that manipulated `Groff` hash.
+	(infer_preprocessors): Completely replace.  Set up a hash
+	`option_for_preprocessor` mapping preprocessor names to groff
+	options (where applicable).  Append to `command` and
+	`preprocessor` lists as appropriate.  Sort the preprocessor
+	options so they don't move around in the argument list depending
+	on the order of their macros' appearance in the input.
+
+	* src/utils/grog/tests/smoke-test.sh: Update test cases to
+	expect preprocessor options to show up in sorted order.
+
+2021-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Drop dead code.  Delete global
 	hash `preprocs_tmacs`, unused since commit b0de53c9, 30 June.
 
