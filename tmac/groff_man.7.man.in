@@ -3296,7 +3296,57 @@ Some tips on troubleshooting your man pages follow.
 .
 .
 .TP
+\(bu Some ASCII characters look funny or copy and paste wrong.
+.
+On devices with large glyph repertoires,
+like UTF-8-capable terminals and PDF,
+several keyboard glyphs are mapped to code points outside the Unicode
+basic Latin range because that usually results in better typography in
+the general case.
+.
+When documenting GNU/Linux command or C language syntax,
+however,
+this translation is sometimes not desirable.
+.
+.TS
+c c
+rfCB lfCB.
+To get a \(lqliteral\(rq.\|.\|.	.\|.\|.should be input.
+_
+\(aq	\(rs(aq
+\-	\(rs-
+\(rs	\(rs(rs
+\(ha	\(rs(ha
+\(ga	\(rs(ga
+\(ti	\(rs(ti
+_
+.TE
+.
+.
+.IP
+Additionally,
+if a neutral double quote (") is needed in a macro argument,
+you can use
+.B \(rs(dq
+to get it.
+.
+You should
+.I not
+use
+.B \(rs(aq
+for an ordinary apostrophe
+(as in \(lqcan't\(rq)
+or
+.B \(rs-
+for an ordinary hyphen
+(as in \(lqword-aligned\(rq).
+.
+Review subsection \(lqPortability\(rq above.
+.
+.
+.TP
 \(bu Do I ever need to use an empty macro argument ("")?
+.
 Probably not.
 .
 When this seems necessary,
@@ -3305,13 +3355,22 @@ often a shorter or clearer alternative is available.
 .TS
 c c
 lfCB lfCB.
-Instead of.\|.\|.	.\|.\|.do this.
+Instead of.\|.\|.	.\|.\|.should be considered.
 _
 \&.TP \(dq\(dq	.TP
-\&.BI \(dq\(dq italic-text bold-text	.IB italic-text bold-text
+_
+\&.BI \(dq\(dq \fIitalic-text bold-text	.IB \fIitalic-text bold-text
+_
 \&.TH foo 1 \(dq\(dq \(dqfoo 1.2.3\(dq	.TH foo 1 \
 \f(CIyyyy\fP-\f(CImm\fP-\f(CIdd\fP \(dqfoo 1.2.3\(dq
-\&.IP \(dq\(dq 4n	.TP 4n
+_
+\&.IP \(dq\(dq 4n	.IP
+_
+\&.IP \(dq\(dq 4n	.RS 4n
+\fIparagraph	.P
+\fR.\|.\|.	\fIparagraph
+\fR.\|.\|.	.RE
+_
 \&.B one two \(dq\(dq three	.B one two three
 .TE
 .
@@ -3325,6 +3384,28 @@ it should not be omitted.
 .
 Ideally,
 a page maintainer will keep both up to date.
+.
+.
+.IP
+.B .IP
+is sometimes ill-understood and misused,
+especially when no marker argument is supplied\(eman indentation
+argument is not required.
+.
+By setting an explicit indentation,
+you may be overriding the reader's preference as set with the
+.B \-rIN
+option.
+.
+If your page renders adequately without one,
+use the simpler form.
+.
+If you need to indent multiple (unmarked) paragraphs,
+consider an setting an indented region with
+.B .RS
+and
+.B .RE
+instead.
 .
 .
 .IP
@@ -3343,6 +3424,7 @@ which can be overlooked in source and rendered forms.
 .
 .TP
 .RB \(bu " .RS" " doesn't indent relative to my indented paragraph."
+.
 The
 .B .RS
 macro sets the left margin;
@@ -3379,13 +3461,14 @@ values.
 .TP
 .RB \(bu " .RE" " doesn't move the inset back to the expected level."
 .TQ
-\(bu warning: scaling indicator invalid in this context
+\(bu warning: scaling indicator invalid in context
 .TQ
 \(bu warning: number register \(aqan\-saved\-margin\c
 .IR n "\(aq not defined"
 .TQ
 \(bu warning: number register \(aqan\-saved\-prevailing\-indent\c
 .IR n "\(aq not defined"
+.
 The
 .B .RS
 macro takes an
@@ -3426,6 +3509,27 @@ all relative insets are cleared and calls to
 have no effect until
 .B .RS
 is used again.
+.
+.
+.TP
+\(bu Do I need to keep typing the indent in a series of \c
+.BR .IP " calls?"
+.
+You don't need to if you don't want to change the indentation.
+.
+Review subsection \(lqHorizontal and vertical spacing\(rq above.
+.
+.TS
+c c
+lfCB lfCB.
+Instead of.\|.\|.	.\|.\|.should be considered.
+_
+\&.IP \(rs(bu 4n	.IP \(rs(bu 4n
+\fIparagraph	\fIparagraph
+\&.IP \(rs(bu 4n	.IP \(rs(bu
+\fIanother-paragraph	\fIanother-paragraph
+_
+.TE
 _endif()dnl
 .
 .
