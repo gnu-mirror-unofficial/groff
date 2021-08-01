@@ -578,7 +578,7 @@ _endif()dnl
 .IP
 .\" Also see subsection "History" below...
 These macros are extensions,
-introduced in Version\~9 Unix,
+introduced in Version\~9 Research Unix,
 to the original
 .I man
 package.
@@ -1569,7 +1569,7 @@ it is possible with the
 .B \ec
 and/or
 .B \ef
-escapes,
+escape sequences,
 but
 _endif()dnl
 see subsection \(lqPortability\(rq
@@ -1856,7 +1856,7 @@ Now we have created a relative inset
 moved the left margin)
 with
 .B .RS
-and started another block paragraph with
+and started another ordinary paragraph with
 .BR .P .
 .
 .
@@ -2364,7 +2364,8 @@ Use these for paired directional single quotes,
 .
 .TP
 .B \e(dq
-Basic Latin double-quote.
+Basic Latin quotation mark
+(double quote).
 .
 Use in macro calls to prevent
 .\" This page prefers double quotes, but not here because they are more
@@ -2469,14 +2470,15 @@ the end of an input line is treated like a space;
 .\" end-of-sentence detection is performed, and...
 an output line
 .I may
-be broken there\" if filling enabled
+be broken there if filling is enabled,
 (if not,
 an adjustable space is inserted)
 and
 .I will
-be broken there in
+be broken there when filling is disabled,
+as in
 .BR .EX / .EE
-examples.\" i.e., when filling is disabled
+examples.
 .
 Anything after
 .B \ec
@@ -2985,7 +2987,9 @@ Number output pages continuously.
 .
 If multiple man pages are processed,
 number the output pages in strictly increasing sequence,
-rather than resetting the page number to\~1 at each new man page.
+rather than resetting the page number to\~1 at each new
+.I man
+document.
 .
 .
 .TP
