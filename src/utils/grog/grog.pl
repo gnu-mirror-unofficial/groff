@@ -5,9 +5,7 @@
 
 # Copyright (C) 1993-2021 Free Software Foundation, Inc.
 # Written by James Clark.
-# Rewritten with Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
-# The macros for identifying the devices were taken from Ralph
-# Corderoy's 'grog.sh' of 2006.
+# Rewritten in Perl by Bernd Warken <groff-bernd.warken-72@web.de>.
 # Hacked up by G. Branden Robinson, 2021.
 
 # This file is part of 'grog', which is part of 'groff'.
