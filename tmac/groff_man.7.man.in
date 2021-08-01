@@ -2522,37 +2522,6 @@ $ \ec
 .
 .
 .IP
-When using this trick with the
-.B .BI
-or
-.B .RI
-macros,
-you will need to manually add an italic correction escape sequence
-.\" Normally, we don't quote escape sequences, but these use potentially
-.\" confusing prose punctuation.
-.RB \(lq \e/ \(rq,
-a GNU extension,
-before the
-.B \ec
-due to way macros expand their arguments\(emif
-you value the improved typesetter output quality over the potential
-reduction in document portability.
-.
-.
-.RS
-.IP
-.\" from contrib/mom/groff_mom.7.man
-.EX
-Files processed with
-\&.B groff \e\-mom
-(or
-\&.BI "\e\-m " mom\e/\ec
-) produce PostScript output by default.
-.EE
-.RE
-.
-.
-.IP
 Alternatively,
 and perhaps with better portability,
 the
