@@ -867,7 +867,15 @@ with command-line options of some formats indicated by
 .
 .
 .P
-These macros are GNU extensions not defined on systems running
+These macros are extensions
+.RB ( .OP
+from Documenter's Workbench
+.IR troff ,
+.B .SY
+and
+.B .YS
+from GNU)
+not defined on systems running
 AT&T,
 Plan\~9,
 or
@@ -955,43 +963,55 @@ mode of operation.
 .
 .
 .P
-For example,
+.IR groff 's
+own command-line interface serves to illustrate most of the specimens
+of synopsis syntax one is likely to encounter.
 .
 .
 .IP
 .\" from src/roff/groff/groff.1.man
 .EX
 \&.SY groff
-\&.OP \e\-abcegiklpstzCEGNRSUVXZ
-\&.OP \e\-d cs
-\&.OP \e\-f fam
-\&.OP \e\-F dir
-\&.OP \e\-I dir
-\&.OP \e\-K arg
-\&.OP \e\-L arg
-\&.OP \e\-m name
-\&.OP \e\-M dir
-\&.OP \e\-n num
-\&.OP \e\-o list
-\&.OP \e\-P arg
-\&.OP \e\-r cn
-\&.OP \e\-T dev
-\&.OP \e\-w name
-\&.OP \e\-W name
-\&.RI [ file
+\&.RB [ \e-abcCeEgGijklNpRsStUVXzZ ]
+\&.RB [ \e-d\e\(ti\ec
+\&.IR cs ]
+\&.RB [ \e-d\e\(ti\ec
+\&.IB name =\ec
+\&.IR string ]
+\&.RB [ \e-D\e\(ti\ec
+\&.IR enc ]
+.EE
+.
+.I (and so on similarly)
+.
+.EX
+\&.RI [ file\e\(ti\ec
 \e&.\e|.\e|.\e&]
 \&.YS
 \&.
 \&.
 \&.SY groff
-\&.B \e\-h
+\&.B \e-h
 \&.
 \&.SY groff
-\&.B \e\-\e\-help
+\&.B \e-\e-help
 \&.YS
-.
-.
-.IP
+\&.
+\&.
+\&.SY groff
+\&.B \e-v
+\&.RI [ option
+\e&.\e|.\e|.\e&]
+\&.RI [ file
+\e&.\e|.\e|.\e&]
+\&.
+\&.SY groff
+\&.B \e-\e-version
+\&.RI [ option
+\e&.\e|.\e|.\e&]
+\&.RI [ file
+\e&.\e|.\e|.\e&]
+\&.YS
 .EE
 .
 .
@@ -1001,23 +1021,46 @@ produces the following output.
 .
 .RS
 .SY groff
-.OP \-abcegiklpstzCEGNRSUVXZ
-.OP \-d cs
-.OP \-f fam
-.OP \-F dir
-.OP \-I dir
-.OP \-K arg
-.OP \-L arg
-.OP \-m name
-.OP \-M dir
-.OP \-n num
-.OP \-o list
-.OP \-P arg
-.OP \-r cn
-.OP \-T dev
-.OP \-w name
-.OP \-W name
-.RI [ file
+.RB [ \-abcCeEgGijklNpRsStUVXzZ ]
+.RB [ \-d\~\c
+.IR cs ]
+.RB [ \-d\~\c
+.IB name =\c
+.IR string ]
+.RB [ \-D\~\c
+.IR enc ]
+.RB [ \-f\~\c
+.IR fam ]
+.RB [ \-F\~\c
+.IR dir ]
+.RB [ \-I\~\c
+.IR dir ]
+.RB [ \-K\~\c
+.IR enc ]
+.RB [ \-L\~\c
+.IR arg ]
+.RB [ \-m\~\c
+.IR name ]
+.RB [ \-M\~\c
+.IR dir ]
+.RB [ \-n\~\c
+.IR num ]
+.RB [ \-o\~\c
+.IR list ]
+.RB [ \-P\~\c
+.IR arg ]
+.RB [ \-r\~\c
+.IR cn ]
+.RB [ \-r\~\c
+.IB reg =\c
+.IR expr ]
+.RB [ \-T\~\c
+.IR dev ]
+.RB [ \-w\~\c
+.IR name ]
+.RB [ \-W\~\c
+.IR name ]
+.RI [ file\~\c
 \&.\|.\|.\&]
 .YS
 .
@@ -1027,6 +1070,22 @@ produces the following output.
 .
 .SY groff
 .B \-\-help
+.YS
+.
+.
+.SY groff
+.B \-v
+.RI [ option
+\&.\|.\|.\&]
+.RI [ file
+\&.\|.\|.\&]
+.
+.SY groff
+.B \-\-version
+.RI [ option
+\&.\|.\|.\&]
+.RI [ file
+\&.\|.\|.\&]
 .YS
 .RE
 .
@@ -1055,8 +1114,8 @@ Option dashes are specified with the
 .B \e\-
 escape sequence;
 this is an important practice to make them clearly visible and to
-facilitate cut-and-paste from the rendered man page to a shell prompt or
-text file.
+facilitate copy-and-paste from the rendered man page to a shell prompt
+or text file.
 .
 .
 .IP \(bu
@@ -1067,21 +1126,38 @@ to cue the user that they must be replaced with appropriate text.
 .
 .
 .IP \(bu
-Symbols that are neither to be typed literally nor simply replaced
-appear in the roman style;
+Symbols that are neither to be typed literally nor replaced at the
+user's discretion appear in the roman style;
 brackets surround optional arguments,
 and an ellipsis indicates that the previous syntactical element may be
 repeated arbitrarily.
 .
 .
-.IP
-Authors of man pages should note the non-printing input break escape
-sequence
+.IP \(bu
+The non-breaking adjustable space escape sequence
+.B \e\(ti
+is used to prevent the output line from being broken within the option
+brackets.
+.
+.
+.IP \(bu
+The output line continuation escape sequence
+.B \ec
+is used with font style alternation macros to allow all three font
+styles to be set without (breakable) space among them;
+see subsection \(lqPortability\(rq below.
+.
+.
+.IP \(bu
+The non-printing input break escape sequence
 .B \e&
-preceding the ellipsis,
-which prevents it from being misinterpreted as an invalid control line,
-and after it,
-which prevents it from being misinterpreted as the end of a sentence.
+precedes the ellipsis to prevent the input line from being
+interpreted as an (invalid) control line,
+and follows it,
+keeping its last period from being interpreted as the end of a sentence,
+.\" ...because it is followed by characters that are transparent to
+.\" end-of-sentence detection, and a newline...
+which would cause additional inter-sentence space to be placed after it.
 .
 See subsection \(lqPortability\(rq below.
 _endif()dnl
@@ -1230,10 +1306,10 @@ The use of
 to insert non-printing break points is a GNU extension and can be
 omitted.
 .
-We place them
+We place a break point
 .I before
-each period so that the reader does not mistake them for sentence
-endings.
+each period so that the reader does not interpret the period as ending
+a sentence.
 .
 .
 _endif()dnl
