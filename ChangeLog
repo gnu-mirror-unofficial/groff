@@ -1,5 +1,13 @@
 2021-08-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tman/an-ext.tmac (EX, EE): Stop manipulating hyphenation.
+	It's redundant since disabling fill mode already prevents
+	automatic breaking, and therefore automatic hyphenation.
+	* tmac/groff_man.7.man.in (Description/Document structure
+	macros) <EX, EE>: Update documentation.
+
+2021-08-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Update authorship credits.  I appear
 	to have removed or refactored all of the "device" (recte: macro
 	package) inference logic adapted from Ralph Corderoy's grog.sh;
