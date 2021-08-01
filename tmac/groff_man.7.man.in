@@ -978,8 +978,7 @@ of synopsis syntax one is likely to encounter.
 .I (and so on similarly)
 .
 .EX
-\&.RI [ file\e\(ti\ec
-\e&.\e|.\e|.\e&]
+\&.RI [ file\e\(ti .\e|.\e|.]
 \&.YS
 \&.
 \&.
@@ -993,17 +992,13 @@ of synopsis syntax one is likely to encounter.
 \&.
 \&.SY groff
 \&.B \e-v
-\&.RI [ option
-\e&.\e|.\e|.\e&]
-\&.RI [ file
-\e&.\e|.\e|.\e&]
+\&.RI [ option\e\(ti .\e|.\e|.\e&]
+\&.RI [ file\e\(ti .\e|.\e|.]
 \&.
 \&.SY groff
 \&.B \e-\e-version
-\&.RI [ option
-\e&.\e|.\e|.\e&]
-\&.RI [ file
-\e&.\e|.\e|.\e&]
+\&.RI [ option\e\(ti .\e|.\e|.\e&]
+\&.RI [ file\e\(ti .\e|.\e|.]
 \&.YS
 .EE
 .
@@ -1053,8 +1048,7 @@ produces the following output.
 .IR name ]
 .RB [ \-W\~\c
 .IR name ]
-.RI [ file\~\c
-\&.\|.\|.\&]
+.RI [ file\~ .\|.\|.]
 .YS
 .
 .
@@ -1068,17 +1062,13 @@ produces the following output.
 .
 .SY groff
 .B \-v
-.RI [ option
-\&.\|.\|.\&]
-.RI [ file
-\&.\|.\|.\&]
+.RI [ option\~ .\|.\|.\&]
+.RI [ file\~ .\|.\|.]
 .
 .SY groff
 .B \-\-version
-.RI [ option
-\&.\|.\|.\&]
-.RI [ file
-\&.\|.\|.\&]
+.RI [ option\~ .\|.\|.\&]
+.RI [ file\~ .\|.\|.]
 .YS
 .RE
 .
@@ -1591,7 +1581,7 @@ _ifstyle()dnl
 .IP
 .\" from src/roff/troff/troff.1.man
 .EX
-\&.BI \e\-r name = n
+\&.BI \(rs\-r\(rs\(ti reg = n
 .EE
 .RE
 .
@@ -1609,11 +1599,9 @@ _ifstyle()dnl
 .IP
 .\" from tmac/groff_ms.7.man
 .EX
-Any such change becomes effective with the first
-use of
+After invocation of
 \&.BR .NH ,
-\&.I after
-the new alias is defined.
+the assigned number is made available in the strings
 .EE
 .RE
 .
@@ -1631,11 +1619,11 @@ _ifstyle()dnl
 .IP
 .\" from man/groff_tmac.5.man
 .EX
-All macro package files must be named
-\&.IB name .tmac
-to fully use the
-\&.I tmac
-mechanism.
+\&.I groff
+copes with this situation by searching for both
+\&.IB anything .tmac
+and
+\&.BI tmac. anything
 .EE
 .RE
 .
@@ -1651,10 +1639,12 @@ alternately.
 _ifstyle()dnl
 .RS
 .IP
-.\" from man/groff_out.5.man
+.\" from src/utils/tfmtodit/tfmtodit.1.man
 .EX
-This is the first command of the
-\&.IR prologue .
+The
+\&.I groff
+font file is written to
+\&.IR font .
 .EE
 .RE
 .
@@ -1672,10 +1662,9 @@ _ifstyle()dnl
 .IP
 .\" from src/preproc/eqn/eqn.1.man
 .EX
-Also,
-the statement
-\&.RB \e(oq "delim on" \e(cq
-is not handled specially.
+and do not handle the
+\&.RB \e(lq "delim on" \e(rq
+statement specially.
 .RE
 .EE
 .
@@ -1691,10 +1680,9 @@ alternately.
 _ifstyle()dnl
 .RS
 .IP
-.\" from contrib/mm/groff_mm.7.man
+.\" from various pages
 .EX
-\&.RI [ file
-\e&.\e|.\e|.\e&]
+\&.RI [ file\e\(ti .\e|.\e|.]
 .EE
 .RE
 .
@@ -2376,7 +2364,8 @@ or simply for readability.
 .IP
 .\" from src/preproc/eqn/eqn.1.man
 .EX
-\&.BI split\e\[ti]\e(dq text \e(dq
+\&.TP
+\&.BI \(dqsplit \e(dq\(dq text \e(dq
 .EE
 .RE
 .
@@ -2488,21 +2477,25 @@ The next line is interpreted as usual and can `include' a macro call
 ).
 .
 This escape sequence is useful when three different font styles are
-needed in a single word or on a single line in
-.BR .EX / .EE
-examples.
+needed in a single word,
+as in a command synopsis,
 .
 .
 .RS
 .IP
 .\" from contrib/pdfmark/pdfroff.1.man
 .EX
-Normally,
-the final output file should be named
-\&.IB file .pdf\ec
-\e&.
+\&.RB [ \e\-\e\-stylesheet=\ec
+\&.IR name ]
 .EE
 .RE
+.
+.
+.IP
+or on a single line,
+as in
+.BR .EX / .EE
+examples.
 .
 .
 .RS
