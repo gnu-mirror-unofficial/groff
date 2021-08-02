@@ -69,26 +69,55 @@
 .SH Description
 .\" ====================================================================
 .
-This file documents the GNU version of
-.IR \%refer , \" generic
-which is part of the
+The GNU implementation of
+.I \%refer \" generic
+is part of the
 .IR groff (@MAN1EXT@)
 document formatting system.
 .
 .I \%@g@refer
-copies the contents of each
+is a
+.IR \%@g@troff (@MAN1EXT@)
+preprocessor that prepares bibilographic citations by looking up
+keywords specified in a
+.IR roff (@MAN7EXT@)
+input document,
+obviating the need to type such annotations,
+and permitting the citation style in formatted output to be altered
+independently and systematically.
+.
+It copies the contents of each
 .I file
 to the standard output stream,
-except that lines between
+except that it interprets lines between
 .B .[
 and
 .B .]\&
-are interpreted as citations,
+as citations to be translated into
+.I groff
+input,
 and lines between
 .B .R1
 and
 .B .R2
-are interpreted as commands about how citations are to be processed.
+as instructions regarding how citations are to be processed.
+.
+Normally,
+.I \%@g@refer
+is not executed directly by the user,
+but invoked by specifying the
+.B \-R
+option to
+.IR groff (@MAN1EXT@).
+.
+If no
+.I file
+operands are given on the command line,
+or if
+.I file
+is
+.RB \[lq] \- \[rq],
+the standard input stream is read.
 .
 .
 .LP
@@ -143,7 +172,7 @@ The interpretation of lines between
 .B .R1
 and
 .B .R2
-as commands is a new feature of GNU
+as prepreocessor commands is a new feature of GNU
 .IR \%refer . \" GNU
 .
 Documents making use of this feature can still be processed by AT&T

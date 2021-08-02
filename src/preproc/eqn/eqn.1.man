@@ -78,31 +78,52 @@
 .SH Description
 .\" ====================================================================
 .
-The GNU version of
+The GNU implemenation of
 .I eqn \" GNU
 is part of the
 .IR groff (@MAN7EXT@)
 document formatting system.
 .
 .I \%@g@eqn
-compiles descriptions of equations embedded in
+is a
+.IR \%@g@troff (@MAN1EXT@)
+preprocessor that translates descriptions of equations embedded in
 .IR roff (@MAN7EXT@)
-input files into commands that are understood by
+input files into the language understood by
 .IR \%@g@troff (@MAN1EXT@).
 .
+It copies the contents of each
+.I file
+to the standard output stream,
+except that lines between
+.B .EQ
+and
+.B .EN
+(or \[lq]inline\[rq] within a pair of user-specified delimiters)
+are interpreted as equation descriptions.
+.
 Normally,
-it should be invoked using the
+.I \%@g@eqn
+is not executed directly by the user,
+but invoked by specifying the
 .B \-e
-option of
+option to
 .IR groff (@MAN1EXT@).
 .
-Although its syntax is compatible with
-AT&T
+While GNU
+.IR eqn 's \" GNU
+input syntax is highly compatible with AT&T
 .IR eqn , \" AT&T
-its output cannot be processed with AT&T
+the output
+.I \%@g@eqn
+produces cannot be processed by AT&T
 .IR troff ; \" AT&T
-it must be processed with GNU
-.IR troff . \" GNU
+GNU
+.I troff \" GNU
+(or a
+.I troff \" generic
+implementing relevant GNU extensions)
+must be used.
 .
 If no
 .I file
