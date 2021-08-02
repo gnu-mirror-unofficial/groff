@@ -223,7 +223,7 @@ see subsection \[lq]Commands\[rq] below).
 .
 .TP
 .B \-n
-.B no\-default\-database
+.B \%no\-default\-database
 .
 .
 .TP
@@ -238,7 +238,7 @@ see subsection \[lq]Commands\[rq] below).
 .
 .TP
 .B \-S
-.B label \[dq](A.n|Q) \[aq], \[aq] (D.y|D)\[dq]; \
+.B \%label \[dq](A.n|Q) \[aq], \[aq] (D.y|D)\[dq]; \
 \%bracket-\%label \[dq]\~(\[dq]\~)\~\[dq];\~\[dq]
 .
 .
@@ -256,7 +256,7 @@ see subsection \[lq]Commands\[rq] below).
 .
 .TP
 .BI \-f\~ n
-.B label
+.B \%label
 .BI % n
 .
 .
@@ -268,37 +268,37 @@ see subsection \[lq]Commands\[rq] below).
 .
 .TP
 .B \-k
-.B label
+.B \%label
 .B L\[ti]%a
 .
 .
 .TP
 .BI \-k\~ field
-.B label
+.B \%label
 .IB field \[ti]%a
 .
 .
 .TP
 .B \-l
-.B label
+.B \%label
 .B A.nD.y%a
 .
 .
 .TP
 .BI \-l\~ m
-.B label
+.B \%label
 .BI A.n+ m D.y%a
 .
 .
 .TP
 .BI \-l\~, n
-.B label
+.B \%label
 .BI A.nD.y\- n %a
 .
 .
 .TP
 .BI \-l\~ m , n
-.B label
+.B \%label
 .BI A.n+ m D.y\- n %a
 .
 .
@@ -320,12 +320,12 @@ see subsection \[lq]Commands\[rq] below).
 .I n
 .
 .
-.LP
-These options are equivalent to the following commands with the
-addition that the file names specified on the command line are
-processed as if they were arguments to the
-.B bibliography
-command instead of in the normal way:
+.P
+The next options are equivalent to commands with the addition that the
+file names specified on the command line are processed as if they were
+arguments to the
+.B \%bibliography
+command instead of in the normal way.
 .
 .
 .TP 16n
@@ -341,8 +341,8 @@ command instead of in the normal way:
 .B \%no\-label\-in\-reference
 .
 .
-.LP
-The following options have no equivalent commands:
+.P
+The following option has no synonymous command.
 .
 .
 .TP
@@ -442,9 +442,9 @@ Where the work has editors and no authors,
 the names of the editors should be given as
 .B %A
 fields and
-.B ,\~(ed.)\&
+.RB \[lq] ,\~(ed.)\& \[rq]
 or
-.B ,\~(eds.)\&
+.RB \[lq] ,\~(eds.)\& \[rq]
 should be appended to the last author.
 .
 .
@@ -621,14 +621,14 @@ The
 .I opening-text
 and
 .I closing-text
-component specifies strings to be used to bracket the label instead of
-the strings specified in the
-.B bracket\-label
+components specify strings to be used to bracket the label instead of
+those in the
+.B \%bracket\-label
 command.
 .
 If either of these components is non-empty,
 the strings specified in the
-.B bracket\-label
+.B \%bracket\-label
 command will not be used;
 this behavior can be altered using the
 .B [
@@ -656,10 +656,10 @@ The following flags are currently recognized.
 .TP
 .B #
 Use the label specified by the
-.B short\-label
+.B \%short\-label
 command,
 instead of that specified by the
-.B label
+.B \%label
 command.
 .
 If no short label has been specified,
@@ -677,7 +677,7 @@ is supposed to be suggestive of a numeric type of label.
 Precede
 .I opening-text
 with the first string specified in the
-.B bracket\-label
+.B \%bracket\-label
 command.
 .
 .
@@ -686,7 +686,7 @@ command.
 Follow
 .I closing-text
 with the second string specified in the
-.B bracket\-label
+.B \%bracket\-label
 command.
 .
 .
@@ -740,10 +740,10 @@ See the description of the
 .B <>
 label expression,
 and of the
-.B sort\-adjacent\-labels
+.B \%sort\-adjacent\-labels
 and
-.B abbreviate\-label\-ranges
-command.
+.B \%abbreviate\-label\-ranges
+commands.
 .
 A label will not be merged if its citation has a non-empty
 .I opening-text
@@ -767,9 +767,10 @@ or the second citation's
 is non-empty.
 .
 (If you wish to prevent this,
-just make the first citation's
-.I closing-text
-.BR \[rs]& .)
+use the non-printing input break escape sequence
+.B \[rs]&
+as the first citation's
+.IR closing-text .)
 .
 .
 .\" ====================================================================
@@ -871,10 +872,7 @@ An initial letter will be separated from another initial letter by
 from the last name by
 .IR string2 ,
 and from anything else
-(such as a
-.B von
-or
-.BR de )
+(such as \[lq]von\[rq] or \[lq]de\[rq])
 by
 .IR string3 .
 .
@@ -971,11 +969,10 @@ and should be ignored at the beginning of
 fields when sorting.
 .
 Initially,
-.BR the ,
-.B a
+\[lq]a\[rq],
+\[lq]an\[rq],
 and
-.B an
-are recognized as articles.
+\[lq]the\[rq] are recognized as articles.
 .
 .
 .TP
@@ -1068,11 +1065,14 @@ author and date.
 In most cases you should also use the
 .B \%no\-label\-in\-reference
 command.
+.
 For example,
 .
 .RS
+.EX
 .IP
 .B date\-as\-label D.+yD.y%a*D.\-y
+.EE
 .
 .
 .LP
@@ -1094,7 +1094,7 @@ determines whether the default database should be searched
 on the first occasion that it needs to do a search.
 .
 Thus a
-.B no\-default\-database
+.B \%no\-default\-database
 command must be given before then,
 in order to be effective.
 .
@@ -1225,7 +1225,7 @@ For each reference output a label in the text.
 .
 The label will be separated from the surrounding text as described in
 the
-.B bracket\-label
+.B \%bracket\-label
 command.
 .
 This is the default behavior,
@@ -1316,7 +1316,7 @@ context,
 and so it may be desirable to omit the author or authors from the label.
 .
 The
-.B short\-label
+.B \%short\-label
 command will typically be used to specify a label containing just
 a date and possibly a disambiguating letter.
 .
@@ -1352,7 +1352,7 @@ Sort labels that are adjacent in the text according to their position
 in the reference list.
 .
 This command should usually be given if the
-.B abbreviate\-label\-ranges
+.B \%abbreviate\-label\-ranges
 command has been given,
 or if the label expression contains a
 .B <>
@@ -1376,9 +1376,9 @@ is used to gather the information that normal evaluation needs to
 disambiguate the label.
 .
 Label expressions specified by the
-.B date\-as\-label
+.B \%date\-as\-label
 and
-.B short\-label
+.B \%short\-label
 commands are not evaluated tentatively.
 .
 Normal and tentative evaluation are the same for all types of expression
@@ -1418,7 +1418,7 @@ literally.
 .TP
 .B @
 All the authors joined as specified by the
-.B join\-authors
+.B \%join\-authors
 command.
 .
 The whole of each author's name will be used.
@@ -1456,7 +1456,7 @@ proper initial subsequence.
 .
 When an initial subsequence of authors is used,
 the remaining authors are replaced by the string specified by the
-.B et\-al
+.B \%et\-al
 command;
 this command may also specify additional requirements that must be
 met before an initial subsequence can be used.
@@ -1547,7 +1547,7 @@ reversed so that the last name is first.
 with first names abbreviated.
 .
 Fields specified in the
-.B abbreviate
+.B \%abbreviate
 command are abbreviated before any labels are evaluated.
 .
 Thus
@@ -1647,7 +1647,7 @@ which are separated by
 Two adjacent two-part labels which have the same first part will be
 merged by appending the second part of the second label onto the first
 label separated by the string specified in the
-.B separate\-label\-second\-parts
+.B \%separate\-label\-second\-parts
 command
 (initially,
 a comma followed by a space);
@@ -1657,7 +1657,7 @@ and so additional labels can be merged into it.
 .
 It is permissible for the first part to be empty;
 this may be desirable for expressions used in the
-.B short\-label
+.B \%short\-label
 command.
 .
 .
@@ -1758,7 +1758,7 @@ or
 .BR \%tech\-report .
 .
 Groups of references that have been accumulated or are produced by the
-.B bibliography
+.B \%bibliography
 command are preceded by a call to the
 .B ]<
 macro and followed by a call to the
