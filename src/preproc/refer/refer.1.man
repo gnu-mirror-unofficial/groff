@@ -1811,6 +1811,109 @@ expressions.
 .
 .
 .\" ====================================================================
+.SH Examples
+.\" ====================================================================
+.
+We can illustrate the operation of
+.I \%@g@refer
+with a sample bibliographic database containing one entry and a simple
+.I roff
+document to cite that entry.
+.
+.
+.P
+.RS
+.EX
+$ \c
+.B cat > db
+.B %A Daniel P.\[rs]& Friedman
+.B %A Matthias Felleisen
+.B %C Cambridge, Massachusetts
+.B %D 1996
+.B %I The MIT Press
+.B %T The Little Schemer, Fourth Edition
+$ \c
+.B @g@refer \-p db
+\&.lf 1 scheme.roff
+Read the book\[rs]*([.1\[rs]*(.]
+\&.ds [F 1
+\&.]\-
+\&.ds [A Daniel P. Friedman and Matthias Felleisen
+\&.ds [C Cambridge, Massachusetts
+\&.ds [D 1996
+\&.ds [I The MIT Press
+\&.ds [T The Little Schemer, Fourth Edition
+\&.nr [T 0
+\&.nr [A 0
+\&.][ 2 book
+\&.lf 5 scheme.roff
+on your summer vacation.
+.EE
+.RE
+.
+.
+.P
+The foregoing shows us that
+.I \%@g@refer
+(a) produces a label \[lq]1\[rq];
+(b) brackets that label with interpolations of the
+.RB \[lq] [. \[rq]
+and
+.RB \[lq] .] \[rq]
+strings;
+(c) calls a macro
+.RB \[lq] ]\- \[rq];
+and defines strings and registers with the label and bibliographic data.
+.
+As discussed in subsection \[lq]Macro interface\[rq] above,
+it is up to the document or a macro package to employ and format this
+information usefully.
+.
+Let us see how we might turn
+.IR groff_ms (@MAN7EXT@)
+to this task.
+.
+.
+.P
+.RS
+.EX
+$ \c
+.B @g@refer \-p db | groff \-ms
+.B .LP
+.B Read the book
+.B .[
+.B friedman
+.B .]
+.B on your summer vacation.
+.B Commentary is available.\[rs]*{*\[rs]*}
+.B .FS \[rs]*{*\[rs]*}
+.B Space reserved for penetrating insight.
+.B .FE
+.EE
+.RE
+.
+.
+.LP
+We have used
+.IR \%@g@refer 's
+.I opening-text
+and
+.I closing-text
+parameters with
+.IR "groff ms" 's
+superscripting strings to produce a superscripted footnote for the label
+inserted by
+.IR \%@g@refer .
+.
+.IR ms 's
+automatic footnote numbering mechanism is not aware of
+.IR \%@g@refer 's
+label numbering,
+so we have manually specified a symbolic footnote for our
+non-bibliographic aside.
+.
+.
+.\" ====================================================================
 .SH "See also"
 .\" ====================================================================
 .
