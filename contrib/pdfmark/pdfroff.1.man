@@ -41,21 +41,7 @@ pdfroff \- construct files in Portable Document Format using groff
 .\" ====================================================================
 .
 .SY pdfroff
-.OP \-abcegilpstzCEGNRSUVXZ
-.OP \-d cs
-.OP \-f fam
-.OP \-F dir
-.OP \-I dir
-.OP \-L arg
-.OP \-m name
-.OP \-M dir
-.OP \-n num
-.OP \-o list
-.OP \-P arg
-.OP \-r cn
-.OP \-T dev
-.OP \-w name
-.OP \-W name
+.RI [ groff-option ]
 .OP \-\-emit\-ps
 .OP \-\-no\-toc\-relocation
 .OP \-\-no\-kill\-null\-pages
@@ -91,6 +77,18 @@ pdfroff \- construct files in Portable Document Format using groff
 .RI [ groff-option
 \&.\|.\|.\&]
 .YS
+.
+.
+.P
+.I groff-option
+is any short option supported by
+.IR groff (@MAN1EXT@)
+except for
+.BR \-h ,
+.BR \-T ,
+and
+.BR \-v ;
+see section \[lq]Usage\[rq] below.
 .
 .
 .\" ====================================================================
