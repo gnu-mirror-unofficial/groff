@@ -383,6 +383,7 @@ sub do_line {
 
   if ($macro =~ /^(
 		   [ilnp]p|
+		   n[12]|
 		   sh
 		  )$/x) {
     $inferred_main_package = 'e';
