@@ -142,48 +142,52 @@ string arguments with uppercase.
 An optional macro argument such as
 .I x
 appears in brackets,
-.BI [ x \/\c
-.BR ] .
+.BI [ x ].
 .
-Note that arguments to macros generally must be quoted if they contain
-whitespace.
+Arguments to macros generally must be quoted if they contain spaces or
+tabs.
 .
-An exception is the argument to header and footer macros, which require
-some explanation.
+An exception is the argument to header and footer macros,
+which require some explanation.
+.
 They take the form
 .RI \(lq c
 .I left c middle c right
 .IR c \(rq,
 with spaces added here for clarity.
+.
 The strings
 .IR left ,
 .IR middle ,
 and
 .I right
 correspond to their page placement and can contain unprotected
-whitespace, but must not contain the (non-space) character
+spaces and/or tabs,
+but must not contain the (non-space) character
 .IR c ,
 which delimits them.
-For brevity, the table presents header and footer arguments as
+.
+For brevity,
+the table presents header and footer arguments as
 .IR clcmcrc .
+.
 Popular choices for
 .I c
-are the ASCII apostrophe
+are the neutral apostrophe
 .RB \(lq \(aq \(rq
-and the ASCII double quote
+and the neutral double quote
 .RB \(lq \(dq \(rq.
 .
 .
-.PP
+.P
 This list is incomplete;
-some requests are too complex to summarize in a table, and some that
-are listed below accept additional arguments not shown.
-See the
-.I \-me Reference Manual
-for interesting details.
+some requests are too complex to summarize in a table,
+and some that are listed below accept additional arguments not shown.
+.
+See the \[lq]\-me Reference Manual\[rq] for further details.
 .
 .
-.PP
+.P
 .TS
 l l l lx.
 Request	Initial	Causes	Explanation
@@ -489,7 +493,7 @@ macro packages limited themselves to a single-letter namespace
 .IR ms ,
 .IR mv ,
 .IR mn ,
-etc.).
+and so on).
 .
 .\" 'When I started writing the -me macros it began as something in my
 .\" private tree (I don't remember what I called it).  Then some other
