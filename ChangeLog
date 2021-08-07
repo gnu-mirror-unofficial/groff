@@ -1,5 +1,30 @@
 2021-08-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Fix PS/n1 combination diagnostic spew and apparent logic
+	error.
+
+	* tmac/e.tmac (@h): Place comment escape sequence immediately
+	after macro argument.  (When redefining a request, one needs to
+	remember that request arguments are not parsed exactly as macro
+	arguments are.)
+	(n2): Prefix with `do` requests using long register names.
+	(n2): Add macro-local register `|l` to store length of first
+	argument.  Don't attempt to extract a substring beyond its
+	bounds, which produces a warning diagnostic.
+	(&&): Define no-op macro for use as end macro in nested macro
+	definition.
+	(PS): Fix unbalanced-else diagnostic by changing `if` to `ie`.
+	(PS): Initialize `PS_nm_cnt` register to 0 instead of relying on
+	implicit definition.
+	(PS): Prefix with `do` definition of long macro name.
+	(PS): Indent call of end macro.
+	(PS): Add comment after escaped space.
+	(PS, PF): Prefix with `do` call of long macro name.
+
+	Fixes <https://savannah.gnu.org/bugs/?61019>.
+
+2021-08-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl (do_line): Recognize `n1` and `n2` as
 	characteristic me(7) macros.
 

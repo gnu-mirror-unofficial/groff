@@ -288,7 +288,7 @@
 .	sp |\\n(tmu		\" move to top of text
 .ev
 .mk _k				\" for columned output
-.if \\n(?n=1 .nm 1		\" restore line numbering if n1 mode
+.if \\n(?n=1 .nm 1\"		restore line numbering if n1 mode
 .nr $c 1			\" set first column
 .if \n@>4 .tm -- @h >> .ns nl=\\n(nl %=\\n% _k=\\n(_k tm=\\n(tm
 .ie \\n(?s \
@@ -577,14 +577,16 @@
 \{\
 .		ds |i \\$1
 .		ds |j \\$1
+.		nr |l 0
 .		\" Pick off leading char and rest to check.
 .		do substring |i 0 0  \"
-.		do substring |j 1    \" for +N / -N
+.		do length |l \\$1
+.		if \\n(|l>1 .do substring |j 1	\" for +N / -N
 .		ie `\\*(|i`+` \
-.			nr ln (\\n[_ln])+\\*(|j
+.			do nr ln (\\n[_ln])+\\*(|j
 .		el \
 .			ie `\\*(|i`-` \
-.				nr ln (\\n[_ln])-\\*(|j
+.				do nr ln (\\n[_ln])-\\*(|j
 .			el \
 .				nr ln \\$1  \" unsigned N
 .		do nr _#p \\n(.s
@@ -592,6 +594,7 @@
 .		nm \\n(ln
 .		nr ?n 2
 .		rm |i |j
+.		rr |l
 .\}
 .	el \
 .		tm Line \\n(.c -- Bad .n2 value
@@ -599,7 +602,7 @@
 .el \
 \{\
 .	nm
-.	nr _ln \\n(ln
+.	do nr _ln \\n(ln
 .	po +\w'0000'u
 .	ll \\n($lu
 .	nr ?n 0
@@ -1325,6 +1328,9 @@
 .ls
 ..
 .
+.de && \" no-op so we can define and end one macro inside another
+..
+.
 .\"
 .\"	PIC
 .\"
@@ -1336,9 +1342,10 @@
 .ne \\$1u
 .nr g7 \\n(.u
 .ls 1
-.if \\n(?n \
+.ie \\n(?n \
 \{\
-.	de PS_nm_check && \" define macro to emit .nm at top diversion
+.	do nr PS_nm_cnt 0
+.	do de PS_nm_check && \" define macro to emit .nm at top diversion
 .	if \n@>4 .tm -- PS: \\\\$1 \\\\$2 .z=\\\\n(.z PS_nm_cnt=\\\\n[PS_nm_cnt]
 .	\" Multiple .PS/.PE in a keep.
 .	if `\\\\$2`init` \
@@ -1359,18 +1366,18 @@
 .\}
 .\}
 .el \!.PS_nm_check \\\\$1
-.&&
+.	&&
 .	mk _q		\" emit a single numbered line for PS picture
 .	rs
-\&\ 
+\&\ \" space
 .	br
 .	rt \\n(_qu
-.	PS_nm_check suspend init
+.	do PS_nm_check suspend init
 .\}
 ..
 .
 .de PF			\" *** end picture; "fly back" to top
-.if \\n(?n .PS_nm_check resume
+.if \\n(?n .do PS_nm_check resume
 .ls
 .in
 .if \\n(g7 .fi
