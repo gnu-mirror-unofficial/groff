@@ -1981,8 +1981,9 @@ normal operation again.
 .
 .TP
 .BR ISODATE\~ [ 0 ]
-Change the date used by some cover sheet and memorandum types to
-ISO\~8601 format;
+Use ISO\~8601 format for the date string
+.B DT
+used by some cover sheet and memorandum types;
 that is,
 .IR YYYY - MM - DD .
 .
@@ -1992,8 +1993,10 @@ to be effective.
 .
 If given an argument
 .RB of\~ 0,
-U.S.\& traditional date format is used
-(this is the default).
+the traditional date format for the
+.I groff
+locale is used;
+this is also the default.
 .
 .
 .TP
@@ -3389,6 +3392,25 @@ A string containing the word \[lq]APPENDIX\[rq].
 .TP
 .B Apptxt
 The current appendix text.
+.
+.
+.TP
+.B DT
+The date;
+set by the
+.B ND
+macro
+(defaults to the date the document is formatted).
+.
+The format is the conventional one for the
+.I groff
+locale,
+but see the
+.B ISODATE
+macro and
+.B Iso
+register.
+.
 .
 .TP
 .B EM
