@@ -5205,11 +5205,52 @@ or the line can instead be adjusted with up to a certain amount of
 additional inter-word space
 .RB ( .hys ).
 .
-See
-.IR groff_diff (@MAN7EXT@)
-or the
+.
+.\" ====================================================================
+.SH Localization
+.\" ====================================================================
+.
+The set of hyphenation patterns is associated with the hyphenation
+language set by the
+.B .hla
+request.
+.
+The
+.B .hpf
+request is usually invoked by a localization file loaded by the
+.I troffrc
+file.
+.
+By default,
+.I troffrc
+loads the localization file for English.
+.
+(As of
 .I groff
-Texinfo manual for further details.
+1.23.0,
+localization files for Czech
+.RI ( cs ),
+German
+.RI ( de ),
+English
+.RI ( en ),
+French
+.RI ( fr ),
+Japanese
+.RI ( ja ),
+Swedish
+.RI ( sv ),
+and Chinese
+.RI ( zh )
+exist.)
+.
+For Western languages,
+the localization file sets the hyphenation mode and loads hyphenation
+patterns and exceptions.
+.
+It also (re-)defines translatable strings and macros that packages use
+to handle localization tasks,
+such as formatting the calendar date.
 .
 .
 .\" ====================================================================
