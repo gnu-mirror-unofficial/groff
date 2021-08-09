@@ -7730,7 +7730,6 @@ be used.  By default, every code maps to itself except those for letters
 
 @cindex localization
 @pindex troffrc
-@pindex troffrc-end
 @pindex cs.tmac
 @pindex de.tmac
 @pindex en.tmac
@@ -7741,14 +7740,14 @@ be used.  By default, every code maps to itself except those for letters
 @pindex zh.tmac
 The set of hyphenation patterns is associated with the language set by
 the @code{hla} request (see below).  The @code{hpf} request is usually
-invoked by a localization file loaded by the @file{troffrc} or
-@file{troffrc-end} file.  By default, @file{troffrc} loads the
-localization file for English.@footnote{As of @code{groff} 1.23.0,
-localization files for Czech (@code{cs}), German (@code{de}), English
-(@code{en}), French (@code{fr}), Italian (@code{it}), Japanese
-(@code{ja}), Swedish (@code{sv}), and Chinese (@code{zh}) exist.}  For
-Western languages, the localization file sets the hyphenation mode and
-loads hyphenation patterns and exceptions.
+invoked by a localization file loaded by the @file{troffrc} file.  By
+default, @file{troffrc} loads the localization file for
+English.@footnote{As of @code{groff} 1.23.0, localization files for
+Czech (@code{cs}), German (@code{de}), English (@code{en}), French
+(@code{fr}), Italian (@code{it}), Japanese (@code{ja}), Swedish
+(@code{sv}), and Chinese (@code{zh}) exist.}  For Western languages, the
+localization file sets the hyphenation mode and loads hyphenation
+patterns and exceptions.
 
 A second call to @code{hpf} (for the same language) replaces the
 hyphenation patterns with the new ones.  Invoking @code{hpf} or
