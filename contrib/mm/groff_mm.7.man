@@ -617,17 +617,21 @@ Letter signature.
 .
 Generates a line with place for signature.
 .
+.
 .TP
 .B B\~\c
 .RI [ bold-text\~\c
-.RI [ prev-font-text\~\c
-.RI [ bold-text\~ .\|.\|.\&]]]
-Begin boldface.
+.RI [ previous-font-text ]]\~.\|.\|.
+Join
+.I bold-text
+in boldface with
+.I previous-font-text
+in the previous font,
+without space between the arguments.
 .
-No limit on the number of arguments.
+If no arguments,
+switch font to bold style.
 .
-All arguments are concatenated to one word; the first, third and so on
-is printed in boldface.
 .
 .TP
 .B B1
@@ -650,13 +654,18 @@ Finishes the box started with
 End bottom block, see
 .BR BS .
 .
-.TP
-.BI BI\  "\fR[\fPbold-text \fR[\fPitalic-text \fR[\fPbold-text \fR[.\|.\|.]]]]\fP"
-Bold-italic.
 .
-No limit on the number of arguments,
-see\~\c
-.BR B .
+.TP
+.B BI\~\c
+.RI [ bold-text\~\c
+.RI [ italic-text ]]\~.\|.\|.
+Join
+.I bold-text
+in boldface with
+.I italic-text
+in italics,
+without space between the arguments.
+.
 .
 .TP
 .BI BL\  \fR[\fPtext-indent\  \fR[\fP1\fR]]\fP
@@ -672,10 +681,18 @@ overrides the default indentation of the list items set by register
 .
 A third argument prohibits printing of a blank line before each item.
 .
+.
 .TP
-.BI BR\  "\fR[\fPbold-text \fR[\fProman-text \fR[\fPbold-text \fR[.\|.\|.]]]]\fP"
-Bold-roman.
-No limit on the number of arguments.
+.B BR\~\c
+.RI [ bold-text\~\c
+.RI [ roman-text ]]\~.\|.\|.
+Join
+.I bold-text
+in boldface with
+.I roman-text
+in roman style,
+without space between the arguments.
+.
 .
 .TP
 .B BS
@@ -1814,19 +1831,21 @@ Called just after printing the header.
 See\~\c
 .BR H .
 .
+.
 .TP
-.BI I\  "\fR[\fPitalic-text \fR[\fPprev-font-text \fR[\fPitalic-text \fR[.\|.\|.]]]]\fP"
-Italic.
+.B I\~\c
+.RI [ italic-text\~\c
+.RI [ previous-font-text ]]\~.\|.\|.
+Join
+.I italic-text
+in italics with
+.I previous-font-text
+in the previous font,
+without space between the arguments.
 .
-Changes the font to italic if called without arguments.
+If no arguments,
+switch font to italic style.
 .
-With one argument it sets the word in italic.
-.
-With two arguments it concatenates them and sets the first
-word in italic and the second in the previous font.
-.
-There is no limit on the number of argument;
-all are concatenated.
 .
 .TP
 .BI IA\  "\fR[\fPaddressee-name \fR[\fPtitle\fR]]\fP"
@@ -1840,14 +1859,18 @@ but only one address.
 See
 .BR LT .
 .
+.
 .TP
-.BI IB\  "\fR[\fPitalic-text \fR[\fPbold-text \fR[\fPitalic-text \fR[.\|.\|.]]]]\fP"
-Italic-bold.
+.B IB\~\c
+.RI [ italic-text\~\c
+.RI [ bold-text ]]\~.\|.\|.
+Join
+.I italic-text
+in italics with
+.I bold-text
+in boldface,
+without space between the arguments.
 .
-Even arguments are printed in italic, odd in boldface.
-.
-See\~\c
-.BR I .
 .
 .TP
 .B IE
@@ -1978,14 +2001,17 @@ and
 is called after the printing and should take care of restoring to
 normal operation again.
 .
+.
 .TP
-.BI IR\  "\fR[\fPitalic-text \fR[\fProman-text \fR[\fPitalic-text \fR[.\|.\|.]]]]\fP"
-Italic-roman.
-.
-Even arguments are printed in italic, odd in roman.
-.
-See\~\c
-.BR I .
+.B IR\~\c
+.RI [ italic-text\~\c
+.RI [ roman-text ]]\~.\|.\|.
+Join
+.I italic-text
+in italics with
+.I roman-text
+in roman style,
+without space between the arguments.
 .
 .
 .TP
@@ -2722,21 +2748,33 @@ This macro is called just after the printing of the page header in
 .I no-space
 mode.
 .
-.TP
-.B R
-Roman.
-.
-Return to roman font, see also\~\c
-.BR I .
 .
 .TP
-.BI RB\  "\fR[\fProman-text \fR[\fPbold-text \fR[\fProman-text \fR[.\|.\|.]]]]\fP"
-Roman-bold.
+.B R\~\c
+.RI [ roman-text\~\c
+.RI [ previous-font-text ]]\~.\|.\|.
+Join
+.I roman-text
+in roman style with
+.I previous-font-text
+in the previous font,
+without space between the arguments.
 .
-Even arguments are printed in roman, odd in boldface.
+If no arguments,
+switch font to roman style.
 .
-See\~\c
-.BR I .
+.
+.TP
+.B RB\~\c
+.RI [ roman-text\~\c
+.RI [ bold-text ]]\~.\|.\|.
+Join
+.I roman-text
+in roman style with
+.I bold-text
+in boldface,
+without space between the arguments.
+.
 .
 .TP
 .BI RD\  "\fR[\fPprompt \fR[\fPdiversion \fR[\fPstring\fR]]]\fP"
@@ -2766,12 +2804,18 @@ Ends a reference definition and returns to normal processing.
 See
 .BR RS .
 .
-.TP
-.BI RI\  "\fR[\fProman-text \fR[\fPitalic-text \fR[\fProman-text \fR[.\|.\|.]]]]\fP"
-Print even arguments in roman, odd in italic.
 .
-See\~\c
-.BR I .
+.TP
+.B RI\~\c
+.RI [ roman-text\~\c
+.RI [ italic-text ]]\~.\|.\|.
+Join
+.I roman-text
+in roman style with
+.I italic-text
+in italics,
+without space between the arguments.
+.
 .
 .TP
 .BI RL\  \fR[\fPtext-indent \fR[\fP1\fR]]\fP
