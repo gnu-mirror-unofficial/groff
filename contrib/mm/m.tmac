@@ -2728,10 +2728,6 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 ..
 .\"########################### module fnt ############################
 .\" some font macros.
-.de R
-.ft 1
-.ul 0
-..
 .\"-----------
 .de fnt@switch
 .ul 0
@@ -2754,6 +2750,10 @@ in=\\n[.i] fi=\\n[.u] .d=\\n[.d] nl=\\n[nl] pg=\\n[%]
 .de I
 .ie \\n[.$] .fnt@switch \f2 \f[\\n[.f]] \\$@
 .el .ft 2
+..
+.de R
+.ft 1
+.ul 0
 ..
 .de IB
 .if \\n[.$] .fnt@switch \f2 \f3 \\$@
