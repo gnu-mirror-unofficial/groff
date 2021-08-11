@@ -13817,9 +13817,9 @@ After the box.
 @endDefreq
 
 Apart from pending output line inclusion and the request names that
-populate them, boxes are handled almost exactly as diversions are.  All
-of the following @code{groff} language elements can be used with them
-interchangeably; any exceptions are noted.
+populate them, boxes are handled exactly as diversions are.  All of the
+following @code{groff} language elements can be used with them
+interchangeably.
 
 @DefregList {.z}
 @DefregListEndx {.d}
@@ -14022,22 +14022,20 @@ register@tie{}@code{n} to@tie{}1.
 .x
 @endExample
 
-@code{asciify} cannot return all items in a diversion back to their
-source equivalent; nodes such as those produced by the @code{\N} escape
-will remain nodes, so the result cannot be guaranteed to be a pure
-string.  @xref{Copy Mode}.
+@code{asciify} cannot return all items in a diversion to their source
+equivalent: nodes such as those produced by the @code{\N} escape
+sequence will remain nodes, so the result cannot be guaranteed to be a
+pure string.  @xref{Copy Mode}.  Glyph parameters such as the type face
+and size are not preserved; use @code{unformat} to achieve that.
 @endDefreq
 
 @Defreq {unformat, div}
 Like @code{asciify}, unformat the diversion @var{div}.  However,
 @code{unformat} handles only tabs and spaces between words, the latter
 usually arising from spaces or newlines in the input.  Tabs are treated
-as input tokens, and spaces become adjustable again.
-
-The vertical sizes of lines are not preserved, but glyph information
-(font, font size, space width, and so on) is retained.  @code{unformat}
-can be useful in conjunction with the @code{box} and @code{boxa}
-requests.
+as input tokens, and spaces become adjustable again.  The vertical sizes
+of lines are not preserved, but glyph information (font, type size,
+space width, and so on) is retained.
 @endDefreq
 
 @codequotebacktick off

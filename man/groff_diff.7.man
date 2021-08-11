@@ -1154,22 +1154,19 @@ to\~1.
 .
 .IP
 .B .asciify
-cannot return all items in a diversion back to their source equivalent;
+cannot return all items in a diversion to their source equivalent:
 nodes such as those produced by
 .BR \[rs]N[ .\|.\|.\& ]
 will remain nodes,
 so the result cannot be guaranteed to be a pure string.
 .
+See section \[lq]Copy mode\[rq] in
+.IR groff (@MAN7EXT@).
 .
-.IP
-Glyph information
-(font,
-point size,
-etc.)
-is not preserved;
+Glyph parameters such as the type face and size are not preserved;
 use
 .B .unformat
-instead to achieve that.
+to achieve that.
 .
 .
 .TP
@@ -3333,35 +3330,26 @@ request.
 .
 .TP
 .BI .unformat\~ div
-\[lq]Unformat\[rq]
-the diversion
+Like
+.BR .asciify ,
+unformat the diversion
 .IR div .
 .
-In contrast to the
-.B .asciify
-request,
-which tries to convert formatted elements of the diversion back to input
-tokens as much as possible,
+However,
 .B .unformat
 handles only tabs and spaces between words,
 the latter usually arising from spaces or newlines in the input.
 .
 Tabs are treated as input tokens,
-and spaces become are stretchable again.
-.
-Note that the vertical size of lines is not preserved.
+and spaces become adjustable again.
 .
 The vertical sizes of lines are not preserved,
 but glyph information
-(font, font size, space width, etc.\&)
+(font,
+type size,
+space width,
+and so on)
 is retained.
-.
-.B .unformat
-can be useful in conjunction with the
-.B .box
-and
-.B .boxa
-requests.
 .
 .
 .TP
