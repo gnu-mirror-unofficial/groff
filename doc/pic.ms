@@ -144,23 +144,40 @@ The normal definitions of \fB.PS\fP and \fB.PE\fP in the \fIms\fP macro
 package and elsewhere have also the side-effect of centering the
 \fBpic\fP output on the page.
 .
+.KS
 .NH 2
 PIC Error Messages
 .PP
-If you make a \fBpic\fP syntax error, \fIgpic\/\fP(1) issues an
-error message in the standard \fIgcc\/\fP(1)-like syntax.
-A typical error message looks like this
-.KS
+If you make a mistake in \fBpic\fP input such that the program cannot
+interpret what you mean,
+\fIgpic\/\fP(1) issues a diagnostic message in the format prescribed by
+the GNU Coding Standards.
+.
+A typical error message looks like
+.
+.
+.ds FAM C
 .DS
-.CW
-pic:pic.ms:<nnn>: parse error before `<token>'
-pic:pic.ms:<nnn>: giving up on this picture
+pic:\fIfile\fP:\fInnn\fP: syntax error before \[aq]\fItoken\fP\[aq]
+pic:\fIfile\fP:\fInnn\fP: giving up on this picture
 .DE
-.R
-.KE
+.ds FAM T
+.
+.
 .LP
-where \[la]nnn\[ra] is a line number, and \[la]token\[ra] is a token near (usually
-just after) the error location.
+where
+.I file
+is the name of the file being processed,
+.I nnn
+is a line number within that file,
+and
+.I token
+is a symbol in the \fBpic\fP language
+(often a keyword)
+near
+(usually just after)
+the error location.
+.KE
 .
 .
 .NH 1
