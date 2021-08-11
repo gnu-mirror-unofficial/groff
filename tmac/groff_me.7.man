@@ -96,7 +96,9 @@ Many
 .I roff
 requests are unsafe in conjunction with this package; however, the
 following requests may be used with impunity after the first
-.BR .pp :
+.B pp
+macro call.
+.
 .TS
 l l.
 \fB.bp\fP	begin new page
@@ -118,13 +120,18 @@ when using the
 package,
 the
 .B .sp
-request will
+request
+(redefined by
+.I me
+as a macro)
+will
 .I not
 put space at the top of a page.
 .
 .
 .P
 Output of the
+.IR grn ,
 .IR pic ,
 .IR eqn ,
 .IR refer ,
