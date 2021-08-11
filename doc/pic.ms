@@ -2662,8 +2662,8 @@ Lexical Items
 .PP
 In general, \fBpic\fP is a free-format, token-oriented language that
 ignores whitespace outside strings.
-But certain lines and contructs are specially interpreted at the lexical
-level:
+But certain lines and constructs are specially interpreted at the
+lexical level:
 .PP
 A comment begins with \fB#\fP and continues to \fB\en\fP (comments may
 also follow text in a line).
