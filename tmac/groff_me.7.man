@@ -198,9 +198,11 @@ See the \[lq]\-me Reference Manual\[rq] for further details.
 .
 .P
 .TS
-l l l lx.
-Request	Initial	Causes	Explanation
-	Value	Break
+lB lB lB lBx
+lB lB lB lBx
+lB l l lx.
+Macro	Initial	Causes	Explanation
+\^	Value	Break	\^
 _
 \&.(c	\-	yes	T{
 Begin centered block.
@@ -215,7 +217,7 @@ T}
 \&.(q	\-	yes	T{
 Begin major quote.
 T}
-\&.(x [\fIX\fP]	\-	no	T{
+\&.(x \fR[\fIX\fP]	\-	no	T{
 Begin item in index (named
 .IR X ).
 T}
@@ -241,7 +243,7 @@ T}
 \&.)z	\-	yes	T{
 End floating keep.
 T}
-\&.++ \fIM\fP [\fIclcmcrc\fP]	\-	no	T{
+\&.++ \fIM\fP \fR[\fIclcmcrc\fP]	\-	no	T{
 Define paper section as
 .IR M ,
 which must be one of
@@ -263,7 +265,7 @@ or
 (and set page header to
 .IR clcmcrc ).
 T}
-\&.+c [\fIT\fP]	\-	yes	T{
+\&.+c \fR[\fIT\fP]	\-	yes	T{
 Begin chapter (or appendix, etc., as set by
 .BR .++ )
 (with title
@@ -282,7 +284,7 @@ produced by
 or
 .IR neqn .
 T}
-\&.EQ [\fIM\fP [\fIT\fP]]	\-	yes	T{
+\&.EQ \fR[\fIM\fP [\fIT\fP]]	\-	yes	T{
 Begin displayed equation (with indentation
 .IR M ,
 which must be one of
@@ -339,14 +341,14 @@ End heading of
 .I tbl
 table.
 T}
-\&.TS [\fBH\fP]	\-	yes	T{
+\&.TS \fR[\fBH\fP]	\-	yes	T{
 Begin
 .I tbl
 table; if
 .BR H ,
 table repeats heading on each page.
 T}
-\&.b [\fIX\fP [\fIY\fP]]	\-	no	T{
+\&.b \fR[\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
 .I X
 in bold (appending
@@ -361,7 +363,7 @@ T}
 \&.bc	\-	yes	T{
 Begin new column.
 T}
-\&.bi [\fIX\fP [\fIY\fP]]	\-	no	T{
+\&.bi \fR[\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
 .I X
 in bold italics (appending
@@ -371,7 +373,7 @@ T}
 \&.bu	\-	yes	T{
 Begin bulleted paragraph.
 T}
-\&.bx [\fIX\fP [\fIY\fP]]	\-	no	T{
+\&.bx \fR[\fIX\fP [\fIY\fP]]	\-	no	T{
 Print \fIX\fP in a box (with Y appended).
 Renders reliably only if filling disabled.
 T}
@@ -393,14 +395,14 @@ T}
 \&.hl	\-	yes	T{
 Draw a horizontal line.
 T}
-\&.i [\fIX\fP [\fIY\fP]]	\-	no	T{
+\&.i \fR[\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
 .I X
 in italics (appending
 .I Y
 in the previous font); if no arguments, switch to italics.
 T}
-\&.ip [\fIX\fP [\fIn\fP]]	\fIn\fP=5n	yes	T{
+\&.ip \fR[\fIX\fP [\fIn\fP]]	\fIn\fP=5n	yes	T{
 Start indented paragraph (with hanging tag
 .I X
 (and indentation
@@ -414,7 +416,7 @@ Number lines from one,
 in margin,
 on each page.
 T}
-\&.n2 [\fIN\fP]	\-	no	T{
+\&.n2 \fR[\fIN\fP]	\-	no	T{
 Number lines from \fIN\fP,
 in margin.
 .
@@ -437,7 +439,7 @@ T}
 \&.pp	\-	yes	T{
 Begin paragraph with indented first line.
 T}
-\&.r [\fIX\fP [\fIY\fP]]	\-	no	T{
+\&.r \fR[\fIX\fP [\fIY\fP]]	\-	no	T{
 Print
 .I X
 in roman (appending
@@ -447,7 +449,7 @@ T}
 \&.re	0.5i	no	T{
 Reset tabs to default values.
 T}
-\&.sh [\fIn\fP [\fIT\fP]]	\fIn\fP=1	yes	T{
+\&.sh \fR[\fIn\fP [\fIT\fP]]	\fIn\fP=1	yes	T{
 Start numbered section; print section number (set to
 .I n
 (and title
@@ -458,7 +460,7 @@ T}
 Leave the next page blank.
 Only one page is remembered ahead.
 T}
-\&.sm \fIX\fP [\fIY\fP]	\-	no	T{
+\&.sm \fIX\fP \fR[\fIY\fP]	\-	no	T{
 Print
 .I X
 in a smaller point size (appending
@@ -473,7 +475,7 @@ T}
 \&.tp	\-	yes	T{
 Begin title page.
 T}
-\&.u \fIX\fP [\fIY\fP]	\-	no	T{
+\&.u \fIX\fP \fR[\fIY\fP]	\-	no	T{
 Underline
 .I X
 (appending
@@ -481,12 +483,12 @@ Underline
 without underlining).
 Renders reliably only if filling disabled.
 T}
-\&.uh [\fIT\fP]	\-	yes	T{
+\&.uh \fR[\fIT\fP]	\-	yes	T{
 Start unnumbered section (and print title
 .I T
 in bold).
 T}
-\&.xp [\fIX\fP]	\-	no	T{
+\&.xp \fR[\fIX\fP]	\-	no	T{
 Print index (named
 .IR X ).
 T}
