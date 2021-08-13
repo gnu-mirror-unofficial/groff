@@ -1077,7 +1077,7 @@ void troff_output_file::put_char_width(charinfo *ci, tfont *tf,
     put('\n');
     hpos += w.to_units() + kk;
   }
-  else if (tcommand_flag) {
+  else if (device_has_tcommand) {
     if (tbuf_len > 0 && hpos == output_hpos && vpos == output_vpos
 	&& (!gcol || gcol == current_glyph_color)
 	&& (!fcol || fcol == current_fill_color)

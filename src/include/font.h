@@ -105,11 +105,11 @@ public:
   };
 
   virtual ~font();	// Destructor.
-  int contains(glyph *);	// Return 1 if this font contains the given
-			// glyph, 0 otherwise.
-  int is_special();	// Return 1 if this font is special, 0 otherwise.
-			// See section 'Special Fonts' in the info file of
-			// groff.  Used by make_glyph_node().
+  bool contains(glyph *);	// This font contains the given glyph.
+  bool is_special();	// This font is searched for glyphs not defined
+			// in the current font.  See section 'Special
+			// Fonts' in the groff Texinfo manual.  Used by
+			// make_glyph_node().
   int get_width(glyph *, int);	// A rectangle represents the shape of the
 			// given glyph (arg1) at the given point size
 			// (arg2).  Return the horizontal dimension of this
@@ -158,9 +158,8 @@ public:
 			// natural and artificial slant.  It basically means
 			// how much an accent must be shifted horizontally
 			// to put it on the optical axis of the glyph.
-  int has_ligature(int);	// Return a non-zero value if this font has
-			// the given ligature type (one of LIG_ff, LIG_fi,
-			// etc.), 0 otherwise.
+  bool has_ligature(int);	// This font has the given ligature type
+			// (one of LIG_ff, LIG_fi, ...).
   int get_italic_correction(glyph *, int);	// If the given glyph (arg1)
 			// at the given point size (arg2) is followed by an
 			// unslanted glyph, some horizontal white space may
@@ -244,16 +243,14 @@ public:
 			// DESC file.
   static int spare2;
   static int sizescale;	// The 'sizescale' attribute given in the DESC file.
-  static int tcommand;  // Nonzero if the DESC file has the 'tcommand'
-			// attribute.
-  static int unscaled_charwidths;	// Nonzero if the DESC file has the
-			// 'unscaled_charwidths' attribute.
-  static int pass_filenames;	// Nonzero if the DESC file has the
-			// 'pass_filenames' attribute.
-  static int use_charnames_in_special;	// Nonzero if the DESC file has the
-			// 'use_charnames_in_special' attribute.
-  static int is_unicode; // Nonzero if the DESC file has the 'unicode'
-			// attribute.
+  static bool has_tcommand;	// DESC file has 'tcommand' directive.
+  static bool unscaled_charwidths;	// DESC file has
+			// 'unscaled_charwidths' directive.
+  static bool pass_filenames;	// DESC file has 'pass_filenames'
+			// directive.
+  static bool use_charnames_in_special;	// DESC file has
+			// 'use_charnames_in_special' directive.
+  static bool is_unicode; // DESC file has the 'unicode' directive.
   static const char *image_generator;	// The 'image_generator' attribute
 			// given in the DESC file.
   static const char **font_name_table;	// The 'fonts' attribute given in
@@ -275,8 +272,7 @@ private:
 			// Used by get_kern().
   int space_width;	// The normal width of a space.  Used by
 			// get_space_width().
-  int special;		// 1 if this font is special, 0 otherwise.  Used by
-			// is_special().
+  bool special;		// See public is_special() above.
   char *name;		// The name of this font.  Used by get_name().
   char *internalname;	// The 'internalname' attribute of this font, or
 			// NULL.  Used by get_internal_name().
@@ -344,4 +340,8 @@ protected:
 			// case of failure.
 };
 
-// end of font.h
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

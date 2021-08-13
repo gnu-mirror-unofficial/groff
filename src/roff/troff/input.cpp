@@ -112,7 +112,7 @@ int have_input = 0;		// whether \f, \F, \D'F...', \H, \m, \M,
 				// \O[345], \R, \s, or \S has been processed
 				// in token::next()
 int old_have_input = 0;		// value of have_input right before \n
-int tcommand_flag = 0;
+bool device_has_tcommand = false;	// 't' ouput command supported
 int unsafe_flag = 0;		// safer by default
 
 int have_string_arg = 0;	// whether we have \*[foo bar...]
@@ -8135,7 +8135,7 @@ int main(int argc, char **argv)
   hresolution = font::hor;
   vresolution = font::vert;
   sizescale = font::sizescale;
-  tcommand_flag = font::tcommand;
+  device_has_tcommand = font::has_tcommand;
   warn_scale = (double)units_per_inch;
   warn_scaling_indicator = 'i';
   if (!fflag && font::family != 0 && *font::family != '\0')

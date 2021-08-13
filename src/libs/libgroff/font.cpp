@@ -191,7 +191,7 @@ int glyph_to_unicode(glyph *g)
 /* font functions */
 
 font::font(const char *s)
-: ligatures(0), kern_hash_table(0), space_width(0), special(0),
+: ligatures(0), kern_hash_table(0), space_width(0), special(false),
   ch_index(0), nindices(0), ch(0), ch_used(0), ch_size(0), widths_cache(0)
 {
   name = new char[strlen(s) + 1];
@@ -300,26 +300,26 @@ int font::get_skew(glyph *g, int point_size, int sl)
   return int(h * tan((slant + sl) * PI / 180.0) + .5);
 }
 
-int font::contains(glyph *g)
+bool font::contains(glyph *g)
 {
   int idx = glyph_to_index(g);
   assert(idx >= 0);
   // Explicitly enumerated glyph?
   if (idx < nindices && ch_index[idx] >= 0)
-    return 1;
+    return true;
   if (is_unicode) {
     // Unicode font
     // ASCII or Unicode character, or groff glyph name that maps to Unicode?
     if (glyph_to_unicode(g) >= 0)
-      return 1;
+      return true;
     // Numbered character?
     if (glyph_to_number(g) >= 0)
-      return 1;
+      return true;
   }
-  return 0;
+  return false;
 }
 
-int font::is_special()
+bool font::is_special()
 {
   return special;
 }
@@ -522,9 +522,9 @@ int font::get_kern(glyph *g1, glyph *g2, int point_size)
   return 0;
 }
 
-int font::has_ligature(int mask)
+bool font::has_ligature(int mask)
 {
-  return mask & ligatures;
+  return (bool) (mask & ligatures);
 }
 
 int font::get_character_type(glyph *g)
@@ -837,7 +837,7 @@ int font::load(int *not_found, int head_only)
       strcpy(internalname, p);
     }
     else if (strcmp(p, "special") == 0) {
-      special = 1;
+      special = true;
     }
     else if (strcmp(p, "kernpairs") != 0 && strcmp(p, "charset") != 0) {
       char *command = p;
@@ -1121,9 +1121,9 @@ int font::load_desc()
       }
     }
     else if (strcmp("unscaled_charwidths", p) == 0)
-      unscaled_charwidths = 1;
+      unscaled_charwidths = true;
     else if (strcmp("pass_filenames", p) == 0)
-      pass_filenames = 1;
+      pass_filenames = true;
     else if (strcmp("sizes", p) == 0) {
       int n = 16;
       sizes = new int[n];
@@ -1195,11 +1195,11 @@ int font::load_desc()
       }
     }
     else if (strcmp("tcommand", p) == 0)
-      tcommand = 1;
+      has_tcommand = true;
     else if (strcmp("use_charnames_in_special", p) == 0)
-      use_charnames_in_special = 1;
+      use_charnames_in_special = true;
     else if (strcmp("unicode", p) == 0)
-      is_unicode = 1;
+      is_unicode = true;
     else if (strcmp("image_generator", p) == 0) {
       p = strtok(0, WS);
       if (!p) {
@@ -1259,3 +1259,9 @@ font::set_unknown_desc_command_handler(FONT_COMMAND_HANDLER func)
   unknown_desc_command_handler = func;
   return prev;
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

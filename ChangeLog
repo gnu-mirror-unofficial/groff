@@ -1,5 +1,41 @@
 2021-08-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Convert font class `int` members to `bool` where appropriate.
+
+	* src/include/font.h (font class): Demote integers to Booleans
+	and use Boolean literals where possible.  Rename some member
+	variables to look like logical predicates.
+	  - contains()
+	  - is_special()
+	  - has_ligature()
+	  - tcommand -> has_tcommand
+	  - unscaled_charwidths
+	  - pass_filenames
+	  - use_charnames_in_special
+	  - is_unicode
+	  - special (private)
+	* src/libs/libgroff/font.cpp (font::font): Construct object
+	using Boolean literal.
+	(font::contains):
+	(font::is_special):
+	(font::has_ligature): Convert return type to `bool`.
+	(font::load):
+	(font::load_desc): Assign to member variables using Boolean
+	literals.
+	* src/libs/libgroff/fontfile.cpp: Initialize appropriate globals
+	using `bool` type and Boolean literals.
+	* src/roff/troff/troff.h:
+	* src/roff/troff/input.cpp (main):
+	* src/roff/troff/node.cpp (troff_output_file::put_char_width):
+	Rename `tcommand_flag` to `device_has_command` to suggest a
+	logical predicate, and to emphasize the formatter's concern with
+	what the output device can accept in the intermediate output
+	language.
+	* src/roff/troff/input.cpp: Initialize `device_has_tcommand`
+	global using `bool` type and Boolean literal.
+
+2021-08-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[me]: Clarify breadth of application of `ll` macro.
 
 	* doc/meref.me: Document application of .ll macro only to the 3
