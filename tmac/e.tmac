@@ -113,7 +113,7 @@
 .\"		*** INTERNAL GP MACROS ***
 .
 .
-.de @C			\" --- change ev's, taking info with us
+.de @C			\" --- change environments, taking info with us
 .nr _S \\n(.s
 .nr _V \\n(.v
 .nr _F \\n(.f
@@ -514,10 +514,10 @@
 ..
 .
 .rn ll xl		\" *** special line length (local)
-.de ll			\" *** line length (global to environments)
+.de ll
 .xl \\$1
 .lt \\$1
-.nr $l \\n(.l
+.nr $l \\n(.l		\" *** line length (copied among ev 0, 1, and 2)
 .if (\\n($m<=1):(\\n($l>\\n(_L) \
 .	nr _L \\n(.l
 ..

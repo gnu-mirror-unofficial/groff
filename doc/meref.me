@@ -1621,10 +1621,25 @@ because it only affects the current environment.
 .b .ll
 .i +N
 .DE
-Set line length in all environments
+Set line length in all environments used by
+.i me
 to
 .i N
-[6.0i].
+[6.0i].\**
+.(f
+\**
+.i me
+uses only the three environments of AT&T
+.i troff ,
+but in GNU
+.i troff ,
+the user can create additional ones.
+.
+.b .ll
+works like
+.b .xl
+for the latter.
+.)f
 This should not be used
 after output has begun,
 and particularly not in two-column output.
