@@ -302,9 +302,11 @@ static unsigned int get_resolution(void)
   if (0 == f)
     fatal("cannot open file '%1'", devps_desc);
   free(pathp);
-  while (get_line(f)) {
+  // XXX: We should break out of this loop if we hit a "charset" line.
+  // "This line and everything following it in the file are ignored."
+  // (groff_font(5))
+  while (get_line(f))
     (void) sscanf(linebuf, "res %u", &res);
-  }
   fclose(f);
   return res;
 }
@@ -326,6 +328,9 @@ static char *get_image_generator(void)
   if (0 == f)
     fatal("cannot open file '%1'", devhtml_desc);
   free(pathp);
+  // XXX: We should break out of this loop if we hit a "charset" line.
+  // "This line and everything following it in the file are ignored."
+  // (groff_font(5))
   while (get_line(f)) {
     char *cursor = linebuf;
     size_t limit = strlen(linebuf);
