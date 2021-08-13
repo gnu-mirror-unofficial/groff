@@ -422,9 +422,7 @@ The conventional meaning of each field is as follows:
 .B %A
 The name of an author.
 .
-If the name contains a title such as
-.B Jr.\&
-at the end,
+If the name contains a suffix such as \[lq]Jr.\&\[rq],
 it should be separated from the last name by a comma.
 .
 There can be multiple occurrences of the
@@ -730,7 +728,7 @@ command.
 .
 .
 .LP
-One advantages of using the
+An advantage of using the
 .B [
 and
 .B ]
@@ -745,8 +743,8 @@ changing the
 .B \%bracket\-label
 command.
 .
-Another advantage is that sorting and merging of citations will not
-necessarily be inhibited if the flags are used.
+Another is that sorting and merging of citations will not necessarily be
+inhibited if the flags are used.
 .
 .
 .LP
@@ -834,7 +832,7 @@ Neither
 nor
 .B .R2
 lines,
-nor anything between them
+nor anything between them,
 is output.
 .
 .
@@ -863,8 +861,8 @@ to a single double quote.
 .
 Neither a hash sign nor a semicolon is recognized inside double quotes.
 .
-A line can be continued by ending it with
-.BR \[rs][rs] ;
+A line can be continued by ending it with a backslash
+.RB \[lq] \[rs] \[rq];
 this works everywhere except after a hash sign.
 .
 .
@@ -935,7 +933,7 @@ Names are abbreviated before sorting and before label construction.
 Three or more adjacent labels that refer to consecutive references
 will be abbreviated to a label consisting of the first label,
 followed by
-.I string
+.IR string ,
 followed by the last label.
 .
 This is mainly useful with numeric labels.
@@ -956,7 +954,6 @@ of the form
 .
 .RS
 .RS
-.IP
 .EX
 .B .[
 .B $LIST$
@@ -1021,7 +1018,7 @@ and
 Write out all the references contained in each bibliographic database
 .IR file .
 .
-This command should come last in a
+This command should come last in an
 .BR .R1 / .R2
 block.
 .
@@ -1043,10 +1040,12 @@ will be turned into
 .
 The default behavior is as follows.
 .
+.RS \" RS twice to get inboard of the tagged paragraph indentation.
 .RS
-.IP
-.B
-bracket-label \e*([. \e*(.] ", "
+.EX
+.B bracket-label \e*([. \e*(.] \[dq], \[dq]
+.EE
+.RE
 .RE
 .
 .
@@ -1107,14 +1106,13 @@ command.
 .
 For example,
 .
+.RS \" RS twice to get inboard of the tagged paragraph indentation.
 .RS
 .EX
-.IP
 .B date\-as\-label D.+yD.y%a*D.\-y
 .EE
+.RE
 .
-.
-.LP
 would attach a disambiguating letter to the year part of the
 .B D
 field in the reference.
@@ -1181,15 +1179,13 @@ is not less than
 .
 The default behavior is as follows.
 .
+.RS \" RS twice to get inboard of the tagged paragraph indentation.
 .RS
-.IP
 .EX
 .B et\-al \[dq] et al\[dq] 2 3
 .EE
 .RE
 .
-.
-.IP
 Note the absence of a dot from the end of the abbreviation,
 which is arguably not correct.
 .
@@ -1200,6 +1196,7 @@ as
 .I etc.\&
 is short for
 .IR "et cetera".)
+.RE
 .
 .
 .TP
@@ -1738,7 +1735,7 @@ string
 corresponds to field
 .IR X .
 .
-The number register
+The register
 .B [P
 is set to\~1 if the
 .B P
@@ -1749,17 +1746,18 @@ The
 .B [A
 and
 .B [O
-number registers are set to\~1 according as the
+registers are set to\~1 according as the
 .BR T ,
 .B A
 and
 .B O
-fields end with one of the characters
-.BR .?! .
+fields end with any of
+.B .?!\&
+(an end-of-sentence character).
 .
 The
 .B [E
-number register will be set to\~1 if the
+register will be set to\~1 if the
 .B [E
 string contains more than one name.
 .
@@ -1910,8 +1908,11 @@ strings;
 .RB \[lq] ]\- \[rq];
 (d) defines strings and registers containing the label and bibliographic
 data for the reference;
-and (e) calls a macro
-.RB \[lq] ][ \[rq].
+(e) calls a macro
+.RB \[lq] ][ \[rq];
+and (f) uses the
+.B lf
+request to restore the line numbers of the original input.
 .
 As discussed in subsection \[lq]Macro interface\[rq] above,
 it is up to the document or a macro package to employ and format this
@@ -1926,7 +1927,7 @@ to this task.
 .RS
 .EX
 $ \c
-.B (export REFER=my\-db\-file; groff \-R \-ms)
+.B REFER=my\-db\-file groff \-R \-ms
 .B .LP
 .B Read the book
 .B .[
