@@ -674,7 +674,7 @@ additions of a replacement for @code{refer}, an implementation of the
 @file{ms} and @file{mm} macros, and a program to deduce how to format a
 document (@code{grog}).
 
-It was declared a stable (i.e.@: non-beta) package with the release of
+It was declared a stable (i.e., non-beta) package with the release of
 version@tie{}1.04 around November@tie{}1991.
 
 Beginning in@tie{}1999, @code{groff} has new maintainers (the package
@@ -710,7 +710,7 @@ page control
 font and glyph size control
 
 @item
-vertical spacing (e.g.@: double-spacing)
+vertical spacing (e.g., double-spacing)
 
 @item
 line length and indenting
@@ -765,12 +765,12 @@ output and error messages
 
 Since @code{groff} provides such low-level facilities, it can be quite
 difficult to use by itself.  However, @code{groff} provides a
-@dfn{macro} facility to specify how certain routine operations
-(e.g.@tie{}starting paragraphs, printing headers and footers, etc.)@:
-should be done.  These macros can be collected together into a
-@dfn{macro package}.  There are a number of macro packages available;
-the most common (and the ones described in this manual) are @file{man},
-@file{mdoc}, @file{me}, @file{ms}, and @file{mm}.
+@dfn{macro} facility to specify how certain routine operations, such as
+starting paragraphs, or printing headers and footers, should be done.
+These macros can be collected together into a @dfn{macro package}.
+There are a number of macro packages available; the most common (and the
+ones described in this manual) are @file{man}, @file{mdoc}, @file{me},
+@file{ms}, and @file{mm}.
 
 
 @c =====================================================================
@@ -780,7 +780,7 @@ the most common (and the ones described in this manual) are @file{man},
 @cindex preprocessors
 
 Although @code{groff} provides most functions needed to format a
-document, some operations would be unwieldy (e.g.@: to draw pictures).
+document, some operations would be unwieldy (e.g., to draw pictures).
 Therefore, programs called @dfn{preprocessors} were written that
 understand their own language and produce the necessary @code{groff}
 operations.  These preprocessors are able to differentiate their own
@@ -1698,7 +1698,7 @@ Unix shell prompt:
 
 @noindent
 As this example shows, it is still necessary to redirect the output to
-something meaningful (i.e.@: either a file or a pager program like
+something meaningful (i.e., either a file or a pager program like
 @code{less}).
 
 
@@ -2067,7 +2067,7 @@ of automatically numbering either type of annotation.
 (usually the page number) attached to each entry after a row of dots.
 The table accumulates throughout the paper until printed, usually after
 the paper has ended.  Many macro packages provide the ability to have
-several tables of contents (e.g.@: a standard table of contents, a list
+several tables of contents (e.g., a standard table of contents, a list
 of tables, etc).
 
 @c ---------------------------------------------------------------------
@@ -7986,7 +7986,7 @@ alternatives to @code{ls}.
 
 @DefescList {\\x, @code{'}, spacing, @code{'}}
 @DefregListEndx {.a}
-Sometimes, extra vertical spacing is only needed occasionally, e.g.@: to
+Sometimes, extra vertical spacing is only needed occasionally, e.g., to
 allow space for a tall construct (like an equation).  The @code{\x}
 escape does this.  The escape is given a numerical argument, usually
 enclosed in quotes (like @samp{\x'3p'}); the default scaling indicator
@@ -8669,7 +8669,7 @@ not possible to map the space character to any other glyph; requests
 like @w{@samp{.tr aa x}} undo @w{@samp{.tr aa \&}} instead.
 
 If justification is active, lines are justified in spite of the `empty'
-space character (but there is no minimal distance, i.e.@: the space
+space character (but there is no minimal distance, i.e., the space
 character, between words).
 
 @item
@@ -9838,7 +9838,7 @@ device supports the two special fonts @samp{SS} (slanted symbols) and
 @samp{S} (symbols) (the former is looked up before the latter).  Other
 output devices use different names for special fonts.  Fonts mounted
 with the @code{fonts} keyword in the @file{DESC} file are globally
-available.  To install additional special fonts locally (i.e.@: for a
+available.  To install additional special fonts locally (i.e., for a
 particular font), use the @code{fspecial} request.
 
 Here are the exact rules how @code{gtroff} searches a given symbol:
@@ -10571,7 +10571,7 @@ argument, the next line is underlined.  If @var{lines} is zero or
 negative, stop the effects of @code{ul} (if it was active).  Requests
 and empty lines do not count for computing the number of underlined
 input lines, even if they produce some output like @code{tl}.  Lines
-inserted by macros (e.g.@: invoked by a trap) do count.
+inserted by macros (e.g., invoked by a trap) do count.
 
 At the beginning of @code{ul}, the current font is stored and the
 underline font is activated.  Within the span of a @code{ul} request, it
@@ -12847,7 +12847,7 @@ draw to the right; its end point is the new current location.  Negative
 values are handled differently: The line starts at the current location
 and draws to the left, but the current location doesn't move.
 
-@var{l} can also be specified absolutely (i.e.@: with a leading
+@var{l} can also be specified absolutely (i.e., with a leading
 @samp{|}), which draws back to the beginning of the input line.  Default
 scaling indicator is @samp{m}.
 
@@ -17261,7 +17261,7 @@ break} means a syntactical line break as defined above.
 @table @code
 @item D~ @var{h1} @var{v1} @var{h2} @var{v2} @dots{} @var{hn} @var{vn}@angles{line break}
 Draw B-spline from current position to offset (@var{h1},@var{v1}), then
-to offset (@var{h2},@var{v2}), if given, etc.@: up to
+to offset (@var{h2},@var{v2}), if given, etc., up to
 (@var{hn},@var{vn}).  This command takes a variable number of argument
 pairs; the current position is moved to the terminal point of the drawn
 curve.
@@ -17370,7 +17370,7 @@ line.
 
 @item Dp @var{h1} @var{v1} @var{h2} @var{v2} @dots{} @var{hn} @var{vn}@angles{line break}
 Draw a polygon line from current position to offset (@var{h1},@var{v1}),
-from there to offset (@var{h2},@var{v2}), etc.@: up to offset
+from there to offset (@var{h2},@var{v2}), etc., up to offset
 (@var{hn},@var{vn}), and from there back to the starting position.  For
 historical reasons, the position is changed by adding the sum of all
 arguments with odd index to the actual horizontal position and the even
