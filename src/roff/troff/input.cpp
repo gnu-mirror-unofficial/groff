@@ -7963,11 +7963,11 @@ static void add_string(const char *s, string_list **p)
 void usage(FILE *stream, const char *prog)
 {
   fprintf(stream,
-"usage: %1$s [-abcCEiRUz] [-dCS] [-dNAME=STRING] [-fFAM] [-Fdir]"
+"usage: %s [-abcCEiRUz] [-dCS] [-dNAME=STRING] [-fFAM] [-Fdir]"
 " [-Idir] [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-rCN] [-rREG=EXPR]"
 " [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
-"usage: %1$s {-h | --help | -v | --version}\n",
-	  prog);
+"usage: %s {-h | --help | -v | --version}\n",
+	  prog, prog);
 }
 
 int main(int argc, char **argv)

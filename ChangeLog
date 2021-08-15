@@ -1,5 +1,29 @@
 2021-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Resolve compiler warnings relating to format string security and
+	ISO C++98 conformance.
+
+	* src/preproc/eqn/delim.cpp (define_extensible_string):
+	* src/preproc/pic/pic.ypp (do_sprintf): Use #pragma to silence
+	GCC "format-nonliteral" warning and explain why our usage is
+	safe in a comment.
+
+	* src/preproc/preconv/preconv.cpp (detect_file_encoding): Use
+	`l` modifier to `%u` `fprintf()` conversion instead of `z`, and
+	cast return values of `size_t` to unsigned long; "ISO C++98
+	does not support the ‘z’ gnu_printf length modifier" (it doesn't
+	support `ll` either).  N.B. this is debugging output only.
+
+	* src/roff/groff/groff.cpp (synopsis):
+	* src/roff/troff/input.cpp (usage): Repeat variadic argument for
+	`%s` conversion in `fprintf()` call because "ISO C++98 does not
+	support %n$ operand number formats".
+
+	* src/roff/troff/env.cpp: Initialize adjustment and hyphenation
+	mode enums without commas at the end of the enumeration lists.
+
+2021-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Clean up the interface between `an-footer` and `BT`, and
 	HTML header and footer suppression generally.  Move
 	responsibility for checking the `ps4html` register from the

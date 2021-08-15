@@ -39,7 +39,7 @@ enum { ADJUST_LEFT = 0,
   ADJUST_BOTH = 1,
   ADJUST_CENTER = 3,
   ADJUST_RIGHT = 5,
-  ADJUST_MAX = 5,
+  ADJUST_MAX = 5
 };
 
 enum {
@@ -51,7 +51,7 @@ enum {
   HYPHEN_NOT_FIRST_CHARS = 8,
   HYPHEN_LAST_CHAR = 16,
   HYPHEN_FIRST_CHAR = 32,
-  HYPHEN_MAX = 63,
+  HYPHEN_MAX = 63
 };
 
 struct env_list_node {

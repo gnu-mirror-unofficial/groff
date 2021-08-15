@@ -314,9 +314,14 @@ static void define_extensible_string(char *delim, int uid,
 	 "\\{",
 	 current_roman_font, d->small, axis_height,
 	 current_roman_font, d->small);
-	 
+
   char buf[256];
+// The format string in the sprintf below comes from a struct
+// initializer above, and is not subject to external influence.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
   sprintf(buf, d->chain_format, "\\\\n[" INDEX_REG "]");
+#pragma GCC diagnostic pop
   printf(".nr " INDEX_REG " 0\n"
 	 ".de " TEMP_MACRO "\n"
 	 ".ie c%s \\{\\\n"

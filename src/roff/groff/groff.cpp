@@ -782,12 +782,12 @@ void synopsis(FILE *stream)
 {
   // Add `J` to the cluster if we ever get ideal(1) support.
   fprintf(stream,
-"usage: %1$s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-dNAME=STRING] [-Denc]"
+"usage: %s [-abcCeEgGijklNpRsStUVXzZ] [-dCS] [-dNAME=STRING] [-Denc]"
 " [-fFAM] [-Fdir] [-Idir] [-Kenc] [-Larg] [-mNAME] [-Mdir] [-nNUM]"
 " [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tdev] [-wNAME] [-Wname]"
 " [FILE ...]\n"
-"usage: %1$s {-h | --help | -v | --version}\n",
-	  program_name);
+"usage: %s {-h | --help | -v | --version}\n",
+	  program_name, program_name);
 }
 
 void help()
