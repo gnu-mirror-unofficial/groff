@@ -323,8 +323,6 @@
 .
 .\" Write the page footer; can be redefined by man.local.
 .de1 BT
-.  if r ps4html \
-.    return
 .  ie \\n[D] \{\
 .    if o .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-outer-footer-text]'
 .    if e .tl '\\*[an-outer-footer-text]'\\*[an-extra1]'\\*[an-extra2]'
@@ -380,21 +378,20 @@
 .
 .\" Prepare the header for a page of the document.
 .de1 an-header
+.  if \\n[an-suppress-header-and-footer] .return
 .  ev an-env-header-or-footer
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
 .  an-abbreviate-title
-.  if !\\n[an-is-output-html] \{\
-.    ie \\n[cR] .pl +1v
-.    el         .sp .5i
-.    PT
-.    ie \\n[cR] \{\
-.      pl +1v
-.      sp 1v
-.    \}
-.    el .sp |1i
+.  ie \\n[cR] .pl +1v
+.  el         .sp .5i
+.  PT
+.  ie \\n[cR] \{\
+.    pl +1v
+.    sp 1v
 .  \}
+.  el .sp |1i
 .  ev
 .  ns
 ..
@@ -407,27 +404,26 @@
 .
 .\" Prepare the footer for a page of the document.
 .de1 an-footer
+.  if \\n[an-suppress-header-and-footer] .return
 .  ev an-env-header-or-footer
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  if !\\n[an-is-output-html] \{\
-.    ie \\n[cR] \
-.      ds an-outer-footer-text "\\*[an-pageref]\"
-.    el \{\
-.      ds an-outer-footer-text \\n[%]\"
-.      if r X \{\
-.        if (\\n[%] > \\n[X]) \{\
-.          nr an-page-letter (\\n[%] - \\n[X])
-.          ds an-outer-footer-text \\n[X]\\n[an-page-letter]\"
-.        \}
+.  ie \\n[cR] \
+.    ds an-outer-footer-text "\\*[an-pageref]\"
+.  el \{\
+.    ds an-outer-footer-text \\n[%]\"
+.    if r X \{\
+.      if (\\n[%] > \\n[X]) \{\
+.        nr an-page-letter (\\n[%] - \\n[X])
+.        ds an-outer-footer-text \\n[X]\\n[an-page-letter]\"
 .      \}
 .    \}
-.    if \\n[cR] .pl +1v
-.    BT
 .  \}
-.  ev
+.  if \\n[cR] .pl +1v
+.  BT
 .  rm an-outer-footer-text
+.  ev
 ..
 .
 .\" Output the tag of a tagged paragraph, or of an indented paragraph
@@ -1081,6 +1077,11 @@
 .
 .if \n[cR] \
 .  an-set-up-continuous-rendering
+.
+.\" If rendering HTML, suppress headers and footers.
+.nr an-suppress-header-and-footer 0
+.if \n[an-is-output-html] .nr an-suppress-header-and-footer 1
+.if r ps4html             .nr an-suppress-header-and-footer 1
 .
 .cp \n[*groff_an_tmac_C]
 .do rr *groff_an_tmac_C

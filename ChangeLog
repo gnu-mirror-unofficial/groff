@@ -1,3 +1,20 @@
+2021-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Clean up the interface between `an-footer` and `BT`, and
+	HTML header and footer suppression generally.  Move
+	responsibility for checking the `ps4html` register from the
+	latter to the former.  This is not something a `BT` redefiner
+	{see groff_man(7)} should have to worry about.
+
+	* tmac/an.tmac (BT): Drop test of `ps4html` register and early
+	return.
+	(an-header, an-footer): Return immediately if
+	`an-suppress-header-and-footer` is true.  Remove conditional on
+	`an-is-output-html`.
+	(initialization): Define `an-suppress-header-and-footer`
+	register; true if `an-is-output-html` is true, or if `ps4html`
+	is defined.
+
 2021-08-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/html/pre-html.cpp (get_resolution): Unbrace a
