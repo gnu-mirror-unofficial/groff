@@ -148,7 +148,11 @@ DBRead(register FILE *file)
 	  if (string[0] == '*') {	/* SUN gremlin file */
 	    lastpoint = TRUE;
 	  } else {
-	    (void) sscanf(string, "%lf%lf", &x, &y);
+	    if (!sscanf(string, "%lf%lf", &x, &y)) {
+	      error("expected coordinate pair, got '%1';"
+		    " giving up on this picture", string);
+	      return(elist);
+	    }
 	    if ((x == -1.00 && y == -1.00) && (!SUNFILE))
 	      lastpoint = TRUE;
 	    else {

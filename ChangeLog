@@ -1,3 +1,15 @@
+2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/grn/hdb.cpp (DBRead): Check return value of
+	`sscanf()` and call `fatal()` if no conversions succeeded.  The
+	blithe discard of a useful return value is bad enough, but this
+	one took place inside a do-while such that it could loop
+	forever trying fruitlessly to parse two doubles out of strings
+	that didn't contain them (the loop never checked the EOF status
+	of the file stream from which it was reading, and relied on
+	`fgets()` to keep advancing the stream pointer).  Discovered
+	while root-causing Savannah #61043.
+
 2021-08-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Resolve compiler warnings relating to format string security and
