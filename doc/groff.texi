@@ -18093,7 +18093,9 @@ if @var{name} is a single character@tie{}@var{c}, it corresponds to the
 @code{troff} input character@tie{}@var{c}.  Otherwise, it must be of the
 form @samp{\@var{name}} where @var{name} is at least one character; it
 then corresponds to the GNU @code{troff} special character escape
-sequence @samp{\[@var{name}]}.
+sequence @samp{\[@var{name}]},
+or the one-sixth and one-twelfth unbreakable space escape sequences,
+@code{\|} and @code{\^} (``thin'' and ``hair'' spaces, respectively).
 @c XXX: Commented out because the charXXX feature is very legacy, and as
 @c noted below, discouraged in font description files.
 @c
@@ -18110,7 +18112,9 @@ sequence @samp{\[@var{name}]}.
 @c different (input) character sets.
 A name consisting of three minus signs, @samp{---}, is special and
 indicates that the glyph is unnamed: such glyphs can only be accessed by
-means of the @code{\N} escape sequence in @code{troff}.
+means of the @code{\N} escape sequence in @code{troff}.  A special
+character named @samp{---} can still be defined using @code{char} and
+similar requests.
 
 The form of the @var{metrics} field is as follows.
 

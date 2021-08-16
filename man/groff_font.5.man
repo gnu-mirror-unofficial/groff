@@ -691,15 +691,25 @@ it then corresponds to the
 .I groff
 special character escape sequence
 .BI \[rs][ name ]\c
-\&.
+\&,
+or the one-sixth and one-twelfth unbreakable space escape sequences,
+\[rs]| and \[rs]\[ha]
+(\[lq]thin\[rq] and \[lq]hair\[rq] spaces,
+respectively).
 .
 A name consisting of three minus signs,
 .RB \[lq] \-\-\- \[rq],
-is special and indicates that the glyph is unnamed:
+indicates that the glyph is unnamed:
 such glyphs can only be accessed by means of the
 .B \[rs]N
 escape sequence in
 .IR troff . \" generic; \N is portable
+.
+A special character named
+.RB \[lq] \-\-\- \[rq]
+can still be defined using
+.B .char
+and similar requests.
 .
 .
 .P
