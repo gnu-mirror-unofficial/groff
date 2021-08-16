@@ -9060,9 +9060,9 @@ continuation; the latter is also called @dfn{interrupting} a line.
 @DefescList {\\@key{RET}, , ,}
 @DefescItemx {\\c, , ,}
 @DefregListEndx {.int}
-Continue a line.  @code{\@key{RET}} (this is a backslash at the end of a
-line immediately followed by a newline) works on the input level,
-suppressing the effects of the following newline in the input.
+Continue an input line.  @code{\@key{RET}} (this is a backslash at the
+end of a line immediately followed by a newline) suppresses the effects
+of the following newline in the input.
 
 @Example
 This is a \
@@ -9073,11 +9073,10 @@ This is a \
 The @samp{|} operator is also affected.
 
 @cindex @code{\R}, after @code{\c}
-@code{\c} works on the output level.  Anything after this escape on the
-same line is ignored except @code{\R}, which works as usual.  Anything
-before @code{\c} on the same line is appended to the pending output
-line.  The next non-command line after an interrupted line counts as a
-new input line.
+Continue an output line.  Anything on the input line after @code{\c} is
+ignored except @code{\R}, which works as usual.  In contrast to
+@code{\@key{RET}}, a line after @code{\c} is treated as an input line,
+so a control character is recognized at its beginning.
 
 The visual results depend on whether filling is enabled;
 @xref{Manipulating Filling and Adjustment}.
@@ -9111,13 +9110,19 @@ test.
 @endExample
 @end itemize
 
-An intervening control line that causes a break is stronger than
-@code{\c}, flushing out the pending output line in the usual way.
+An intervening control line that causes a break overrides @code{\c},
+flushing out the pending output line in the usual way.
 
 @cindex interrupted line register (@code{.int})
+@cindex continued output line register (@code{.int})
 The @code{.int} register contains a positive value if the last output
-line was interrupted with @code{\c}; this is associated with the
-environment (@pxref{Environments}).
+line was continued with @code{\c}; this datum is associated with the
+environment (@pxref{Environments}).@footnote{Historically, the @code{\c}
+escape sequence has proven challenging to characterize.  Some sources
+say it ``connects the next input text'' (to the input line on which it
+appears); others describe it as ``interrupting'' text, on the grounds
+that a text line is interrupted without breaking, perhaps to inject a
+request invocation or macro call.}
 @endDefesc
 
 

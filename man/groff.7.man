@@ -676,7 +676,7 @@ use the escape sequences
 .esc \[ha] ,
 or
 .esc h ;
-see section \[lq]Escape Sequences\[rq] below.
+see section \[lq]Escape sequences\[rq] below.
 .
 An adjustable but non-breaking space is available with
 .esc \[ti] .
@@ -687,19 +687,70 @@ In text,
 a newline puts an inter-word space onto the output and triggers
 end-of-sentence recognition on the preceding text.
 .
-.esc c
-at the end of an input line suppresses these functions.
-.
-Continuation lines can be specified by an escaped newline, i.e., by
-specifying a backslash
-.squoted_char \[rs]
-as the last character of a line.
+See section \[lq]Line continuation\[rq] below.
 .
 .IP \f[CI]tab\f[]
 If a tab character occurs during text the interpreter makes a
 horizontal jump to the next pre-defined tab position.
 .
 There is a sophisticated interface for handling tab positions.
+.
+.
+.\" ====================================================================
+.SH "Line continuation"
+.\" ====================================================================
+.
+A backslash
+.B \[rs]
+at the end of a line immediately followed by a newline suppresses the
+effects of that newline on the input.
+.
+The next input line thus retains the classification of its predecessor
+as a control or text line.
+.
+The
+.esc c
+escape sequence continues an output line.
+.
+Anything on the input line after
+.esc c
+is ignored except
+.esc R ,
+which works as usual.
+.
+In contrast to
+.BI \[rs] newline\c
+,
+a line after
+.esc c
+is treated as an input line,
+so a control character is recognized at its beginning.
+.
+The visual results depend on whether filling is enabled.
+.
+An intervening control line that causes a break overrides
+.esc c ,
+flushing out the pending output line in the usual way.
+.
+The
+.register .int
+contains a positive value if the last output line was continued with
+.esc c ;
+this datum is associated with the
+environment.
+.
+.
+.P
+Historically,
+the
+.esc c
+escape sequence has proven challenging to characterize.
+.
+Some sources say it \[lq]connects the next input text\[rq]
+(to the input line on which it appears);
+others describe it as \[lq]interrupting\[rq] text,
+on the grounds that a text line is interrupted without breaking,
+perhaps to inject a request invocation or macro call.
 .
 .
 .\" ====================================================================
@@ -3413,7 +3464,8 @@ but without a soft hyphen character).
 .
 .TP
 .ESC "" newline
-Ignored newline, for continuation lines.
+Continue current input line on the next.
+.
 .
 .\" ========= structuring =========
 .
@@ -3470,18 +3522,11 @@ If
 is acceptable as a valid numeric expression it expands to\~1, and
 to\~0 otherwise.
 .
+.
 .TP
 .ESC c
 Continue output line at next input line.
-Anything after this escape on the same line is ignored except
-.ESC R
-(which works as usual).
-Anything before
-.ESC c
-on the same line is appended to the current partial output line.
-The next non-command line after a line interrupted with
-.ESC c
-counts as a new input line.
+.
 .
 .TP
 .ESCq C glyph
