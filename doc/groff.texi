@@ -6067,8 +6067,10 @@ yy: `A' `test with "quotes"' `.'
 @noindent
 @cindex input level
 @cindex level, input
-since GNU @code{troff} preserves the @dfn{input level}; that is, the
-nesting depth of interpolations.
+@cindex interpolation depth
+@cindex depth, interpolation
+since GNU @code{troff} tracks the nesting depth of
+interpolations.
 
 @item
 Use the double-quote glyph @code{\(dq}.  This works with and without
@@ -12412,8 +12414,8 @@ example, to pass the arguments along to another macro).  The @code{\$*}
 escape concatenates all the arguments separated by spaces.  A similar
 escape is @code{\$@@}, which concatenates all the arguments with each
 surrounded by double quotes, and separated by spaces.  If not in
-compatibility mode, the input level of double quotes is preserved
-(@pxref{Request and Macro Arguments}).
+compatibility mode, the interpolation depth of double quotes is
+preserved (@pxref{Request and Macro Arguments}).
 @endDefesc
 
 @Defesc {\\$^, , , }
@@ -15764,9 +15766,10 @@ may exist, using any valid identifiers for their names
 (@pxref{Identifiers}.)
 
 @cindex input level in delimited arguments
+@cindex interpolation depth in delimited arguments
 @cindex delimited arguments, incompatibilities with @acronym{AT&T} @code{troff}
-Normally, GNU @code{troff} preserves the input level in delimited
-arguments, but not in compatibility mode.
+Normally, GNU @code{troff} preserves the interpolation depth in
+delimited arguments, but not in compatibility mode.
 
 @Example
 .ds xx '

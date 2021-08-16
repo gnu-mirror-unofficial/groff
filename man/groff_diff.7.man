@@ -4181,7 +4181,7 @@ between them.
 .
 .P
 In a string comparison in a condition,
-characters that appear at different input levels from the first
+characters that appear at different interpolation depths from the first
 delimiter character are not recognized as the second or third
 delimiters.
 .
@@ -4192,8 +4192,8 @@ request.
 In a
 .B \[rs]w
 escape sequence,
-a character that appears at a different input level from the starting
-delimiter character is not recognized as the closing delimiter
+a character that appears at a different interpolation depth from the
+starting delimiter character is not recognized as the closing delimiter
 character.
 .
 The same is true for
@@ -4210,24 +4210,24 @@ and
 .
 When decoding a macro or string argument that is delimited by double
 quotes,
-a character that appears at a different input level from the starting
-delimiter character is not recognized as the closing delimiter
+a character that appears at a different interpolation depth from the
+starting delimiter character is not recognized as the closing delimiter
 character.
 .
 The implementation of
 .B \[rs]$@
 ensures that the double quotes surrounding an argument appear at the
-same input level,
-which is differs from the input level of the argument itself.
+same interpolation depth,
+which is differs from the depth of the argument itself.
 .
 In a long escape name
 .B ]
 is not recognized as a closing delimiter except when it occurs at
-the same input level as the
+the same interpolation depth as the
 .RB opening\~ [ .
 .
 In compatibility mode,
-no attention is paid to the input level.
+no attention is paid to the interpolation depth.
 .
 .
 .P
@@ -4924,7 +4924,7 @@ using any valid identifiers for their names.
 .P
 Normally,
 .I groff
-preserves the input level in delimited arguments,
+preserves the interpolation depth in delimited arguments,
 but not in compatibility mode.
 .
 For example,
