@@ -71,6 +71,7 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <errno.h> // errno
 #include "gprint.h"
 
 #include "device.h"
@@ -236,6 +237,17 @@ void savestate();
 int has_polygon(register ELT *elist);
 void interpret(char *line);
 
+void *
+grnmalloc(size_t size,
+	  const char *what)
+{
+  void *ptr = 0;
+  ptr = malloc(size);
+  if (!ptr) {
+    fatal("memory allocation failed for %1: %2", what, strerror(errno));
+  }
+  return ptr;
+}
 
 void
 usage(FILE *stream)
@@ -291,9 +303,8 @@ main(int argc,
   int file_cur_size = INIT_FILE_SIZE;
   char *operand(int *argcp, char ***argvp);
 
-  if ((file = (char **) malloc(file_cur_size * sizeof(char *))) == NULL) {
-    fatal("unable to create file array");
-  }
+  file = (char **) grnmalloc(file_cur_size * sizeof(char *),
+			     "file array");
   while (--argc) {
     if (**++argv != '-')
       file = add_file(file, *argv, &gfil, &file_cur_size);
@@ -787,21 +798,21 @@ interpret(char *line)
   case 'r':			/* roman */
     if (str2[0] < '0')
       goto nofont;
-    tfont[0] = (char *) malloc(strlen(str2) + 1);
+    tfont[0] = (char *) grnmalloc(strlen(str2) + 1, "roman command");
     strcpy(tfont[0], str2);
     break;
 
   case 'i':			/* italics */
     if (str2[0] < '0')
       goto nofont;
-    tfont[1] = (char *) malloc(strlen(str2) + 1);
+    tfont[1] = (char *) grnmalloc(strlen(str2) + 1, "italics command");
     strcpy(tfont[1], str2);
     break;
 
   case 'b':			/* bold */
     if (str2[0] < '0')
       goto nofont;
-    tfont[2] = (char *) malloc(strlen(str2) + 1);
+    tfont[2] = (char *) grnmalloc(strlen(str2) + 1, "bold command");
     strcpy(tfont[2], str2);
     break;
 
@@ -817,7 +828,7 @@ interpret(char *line)
     if (str1[1] == 't')
       goto stipplecommand;	/* or stipple */
 
-    tfont[3] = (char *) malloc(strlen(str2) + 1);
+    tfont[3] = (char *) grnmalloc(strlen(str2) + 1, "special command");
     strcpy(tfont[3], str2);
     break;
 
@@ -840,7 +851,7 @@ interpret(char *line)
     }
 
   stipplecommand:		/* set stipple name */
-    stipple = (char *) malloc(strlen(str2) + 1);
+    stipple = (char *) grnmalloc(strlen(str2) + 1, "stipple command");
     strcpy(stipple, str2);
     /* if it's a 'known' font (currently only 'cf'), set indices    */
     if (strcmp(stipple, "cf") == 0)
@@ -946,4 +957,8 @@ has_polygon(register ELT *elist)
   return (0);
 }
 
-/* EOF */
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

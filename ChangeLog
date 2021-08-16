@@ -1,5 +1,20 @@
 2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grn]: Add and use `malloc()` wrapper.
+
+	* /src/preproc/grn/main.cpp (grnmalloc): New function takes
+	argument of `size_t` type and constant string argument to
+	describe what is being allocated.  Return non-null pointer from
+	`malloc()`, otherwise call `fatal()`, describing what was being
+	allocated and the problem reported by the system.
+
+	* src/preproc/grn/hdb.cpp (DBCreateElt):
+	* src/preproc/grn/hpoint.cpp (PTMakePoint):
+	* /src/preproc/grn/main.cpp (main, interpret): Migrate
+	`malloc()` callers to `grnmalloc()`.
+
+2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/grn/hdb.cpp (DBRead): Check return value of
 	`sscanf()` and call `fatal()` if no conversions succeeded.  The
 	blithe discard of a useful return value is bad enough, but this

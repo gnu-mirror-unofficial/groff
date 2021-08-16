@@ -27,6 +27,7 @@ extern int linenum;		/* current line number in input file */
 extern char gremlinfile[];	/* name of file currently reading */
 extern int SUNFILE;		/* TRUE if SUN gremlin file */
 extern int compatibility_flag;	/* TRUE if in compatibility mode */
+extern void *grnmalloc(size_t size, const char *what);
 extern void savebounds(double x, double y);
 
 /* imports from hpoint.cpp */
@@ -63,7 +64,7 @@ DBCreateElt(int type,
 {
   register ELT *temp;
 
-  temp = (ELT *) malloc(sizeof(ELT));
+  temp = (ELT *) grnmalloc(sizeof(ELT), "picture element");
   temp->nextelt = *db;
   temp->type = type;
   temp->ptlist = pointlist;
@@ -192,7 +193,7 @@ DBRead(register FILE *file)
       (void) fscanf(file, "%d%d\n", &brush, &size);
       (void) fscanf(file, "%d", &len);	/* text length */
       (void) getc(file);		/* eat blank */
-      txt = (char *) malloc((unsigned) len + 1);
+      txt = (char *) grnmalloc((unsigned) len + 1, "element text");
       for (i = 0; i < len; ++i) {	/* read text */
         int c = getc(file);
         if (c == EOF)
@@ -354,4 +355,8 @@ xscanf(FILE *f,
 }
 #endif	/* UW_FASTSCAN */
 
-/* EOF */
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

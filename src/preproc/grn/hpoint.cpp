@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include "gprint.h"
 
+/* imports from main.cpp */
+extern void *grnmalloc(size_t size, const char *what);
 
 /*
  * Return pointer to empty point list.
@@ -35,12 +37,12 @@ PTMakePoint(double x,
   register POINT *pt;
 
   if (Nullpoint(pt = *pplist)) {	/* empty list */
-    *pplist = (POINT *) malloc(sizeof(POINT));
+    *pplist = (POINT *) grnmalloc(sizeof(POINT), "initial point");
     pt = *pplist;
   } else {
     while (!Nullpoint(pt->nextpt))
       pt = pt->nextpt;
-    pt->nextpt = (POINT *) malloc(sizeof(POINT));
+    pt->nextpt = (POINT *) grnmalloc(sizeof(POINT), "subsequent point");
     pt = pt->nextpt;
   }
 
@@ -50,4 +52,8 @@ PTMakePoint(double x,
   return (pt);
 }				/* end PTMakePoint */
 
-/* EOF */
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:
