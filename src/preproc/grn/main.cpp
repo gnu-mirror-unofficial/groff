@@ -6,64 +6,70 @@
  *
  *
  * This file contains the main and file system dependent routines for
- * processing gremlin files into troff input.  The program watches input go
- * by to standard output, only interpreting things between .GS and .GE
- * lines.  Default values (font, size, scale, thickness) may be overridden
- * with a 'default' command and are further overridden by commands in the
- * input.
+ * processing gremlin files into troff input.  The program watches input
+ * go by to standard output, only interpreting things between .GS and
+ * .GE lines.  Default values (font, size, scale, thickness) may be
+ * overridden with a 'default' command and are further overridden by
+ * commands in the input.
  *
- * Inside the GS and GE, commands are accepted to reconfigure the picture.
- * At most one command may reside on each line, and each command is followed
- * by a parameter separated by white space.  The commands are as follows,
- * and may be abbreviated down to one character (with exception of 'scale'
- * and 'stipple' down to "sc" and "st") and may be upper or lower case.
+ * Inside the GS and GE, commands are accepted to reconfigure the
+ * picture.  At most one command may reside on each line, and each
+ * command is followed by a parameter separated by white space.  The
+ * commands are as follows, and may be abbreviated down to one character
+ * (with exception of 'scale' and 'stipple' down to "sc" and "st") and
+ * may be upper or lower case.
  *
  *                        default  -  Make all settings in the current
- *                                    .GS/.GE the global defaults.  Height,
- *                                    width and file are NOT saved.
- *                     1, 2, 3, 4  -  Set size 1, 2, 3, or 4 (followed by an
- *                                    integer point size).
- *  roman, italics, bold, special  -  Set gremlin's fonts to any other troff
- *                                    font (one or two characters).
- *                     stipple, l  -  Use a stipple font for polygons.  Arg
- *                                    is troff font name.  No Default.  Can
- *                                    use only one stipple font per picture.
- *                                    (See below for stipple font index.)
+ *                                    .GS/.GE the global defaults.
+ *                                    Height, width and file are NOT
+ *                                    saved.
+ *                     1, 2, 3, 4  -  Set size 1, 2, 3, or 4 (followed
+ *                                    by an integer point size).
+ *  roman, italics, bold, special  -  Set gremlin's fonts to any other
+ *                                    troff font (1 or 2 characters).
+ *                     stipple, l  -  Use a stipple font for polygons.
+ *                                    Arg is troff font name.  No
+ *                                    default.  Can use only one stipple
+ *                                    font per picture.  (See below for
+ *                                    stipple font index.)
  *                       scale, x  -  Scale is IN ADDITION to the global
  *                                    scale factor from the default.
- *                     pointscale  -  Turn on scaling point sizes to match
- *                                    'scale' commands.  (Optional operand
- *                                    'off' to turn it off.)
+ *                     pointscale  -  Turn on scaling point sizes to
+ *                                    match 'scale' commands.  (Optional
+ *                                    operand 'off' to turn it off.)
  *          narrow, medium, thick  -  Set widths of lines.
- *                           file  -  Set the file name to read the gremlin
- *                                    picture from.  If the file isn't in
- *                                    the current directory, the gremlin
- *                                    library is tried.
+ *                           file  -  Set the file name to read the
+ *                                    gremlin picture from.  If the file
+ *                                    isn't in the current directory,
+ *                                    the gremlin library is tried.
  *                  width, height  -  These two commands override any
- *                                    scaling factor that is in effect, and
- *                                    forces the picture to fit into either
- *                                    the height or width specified,
- *                                    whichever makes the picture smaller.
- *                                    The operand for these two commands is
- *                                    a floating-point number in units of
+ *                                    scaling factor that is in effect,
+ *                                    and forces the picture to fit into
+ *                                    either the height or width
+ *                                    specified, whichever makes the
+ *                                    picture smaller.  The operand for
+ *                                    these two commands is a
+ *                                    floating-point number in units of
  *                                    inches.
- *            l<nn> (integer <nn>) -  Set association between stipple <nn>
- *                                    and a stipple 'character'.  <nn> must
- *                                    be in the range 0 to NSTIPPLES (16)
- *                                    inclusive.  The integer operand is an
- *                                    index in the stipple font selected.
- *                                    Valid cf (cifplot) indices are 1-32
- *                                    (although 24 is not defined), valid ug
- *                                    (unigrafix) indices are 1-14, and
- *                                    valid gs (gray scale) indices are
- *                                    0-16.  Nonetheless, any number between
- *                                    0 and 255 is accepted since new
- *                                    stipple fonts may be added.  An
- *                                    integer operand is required.
+ *            l<nn> (integer <nn>) -  Set association between stipple
+ *                                    <nn> and a stipple 'character'.
+ *                                    <nn> must be in the range 0 to
+ *                                    NSTIPPLES (16) inclusive.  The
+ *                                    integer operand is an index in the
+ *                                    stipple font selected.  Valid cf
+ *                                    (cifplot) indices are 1-32
+ *                                    (although 24 is not defined),
+ *                                    valid ug (unigrafix) indices are
+ *                                    1-14, and valid gs (gray scale)
+ *                                    indices are 0-16.  Nonetheless,
+ *                                    any number between 0 and 255 is
+ *                                    accepted since new stipple fonts
+ *                                    may be added.  An integer operand
+ *                                    is required.
  *
- * Troff number registers used:  g1 through g9.  g1 is the width of the
- * picture, and g2 is the height.  g3, and g4, save information, g8 and g9
- * are used for text processing and g5-g7 are reserved.
+ * Troff number registers used: g1 through g9.  g1 is the width of the
+ * picture, and g2 is the height.  g3, and g4, save information, g8 and
+ * g9 are used for text processing and g5-g7 are reserved.
  */
 
 
@@ -93,7 +99,7 @@ extern ELT *DBRead(FILE *file);
 extern POINT *PTInit();
 extern POINT *PTMakePoint(double x, double y, POINT **pplist);
 
-#define INIT_FILE_SIZE 50  /* Initial size of array of files from cmd line. */
+#define INIT_FILE_SIZE 50  /* Initial sz of file array from cmd line. */
 #define FILE_SIZE_INCR 50  /* Amount to increase array of files by. */
 
 #define SUN_SCALEFACTOR 0.70
@@ -101,13 +107,13 @@ extern POINT *PTMakePoint(double x, double y, POINT **pplist);
 /* #define DEFSTIPPLE    "gs" */
 #define DEFSTIPPLE	"cf"
 /*
- * This grn implementation emits '.st' requests to control stipple effects,
- * but groff does not (currently) support any such request.
+ * This grn implementation emits '.st' requests to control stipple
+ * effects, but groff does not (currently) support any such request.
  *
- * This hack disables the emission of such requests, without destroying the
- * infrastructure necessary to support the feature in the future; to enable
- * the emission of '.st' requests, at a future date when groff can support
- * them, simply rewrite the following #define as:
+ * This hack disables the emission of such requests, without destroying
+ * the infrastructure necessary to support the feature in the future; to
+ * enable the emission of '.st' requests, at a future date when groff
+ * can support them, simply rewrite the following #define as:
  *
  *   #define USE_ST_REQUEST  stipple
  *
@@ -119,7 +125,7 @@ extern POINT *PTMakePoint(double x, double y, POINT **pplist);
 
 #define SCREENtoINCH	0.02	/* scaling factor, screen to inches */
 
-#define BIG	999999999999.0	/* unweildly large floating number */
+#define BIG	999999999999.0	/* unwieldy large floating number */
 
 
 /* static char sccsid[] = "@(#) (Berkeley) 8/5/85, 12/28/99"; */
@@ -130,12 +136,13 @@ int dotshifter;			/* for the length of dotted curves */
 
 double linethickness;		/* brush styles */
 int linmod;
-int lastx;			/* point registers for printing elements */
-int lasty;
-int lastyline;			/* A line's vertical position is NOT the  */
-				/* same after that line is over, so for a */
-				/* line of drawing commands, vertical     */
-				/* spacing is kept in lastyline           */
+int lastx;			/* point registers for printing */
+int lasty;			/* elements                     */
+int lastyline;			/* A line's vertical position is NOT  */
+				/* the same after that line is over,  */
+				/* so for a line of drawing commands, */
+				/* vertical spacing is kept in        */
+				/* lastyline.                         */
 
 /* These are the default fonts, sizes, line styles, */
 /* and thicknesses.  They can be modified from a    */
@@ -156,12 +163,12 @@ double defthick[STYLES] =
  1 * BASE_THICKNESS,
  3 * BASE_THICKNESS};
 
-/* int cf_stipple_index[NSTIPPLES + 1] =                                  */
-/* {0, 1, 3, 12, 14, 16, 19, 21, 23};                                     */
-/* a logarithmic scale looks better than a linear one for the gray shades */
-/*                                                                        */
-/* int other_stipple_index[NSTIPPLES + 1] =                               */
-/* {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};            */
+/* int cf_stipple_index[NSTIPPLES + 1] =                              */
+/* {0, 1, 3, 12, 14, 16, 19, 21, 23};                                 */
+/* a logarithmic scale looks better than a linear one for gray shades */
+/*                                                                    */
+/* int other_stipple_index[NSTIPPLES + 1] =                           */
+/* {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};        */
 
 int cf_stipple_index[NSTIPPLES + 1] =
 {0, 18, 32, 56, 100, 178, 316, 562, 1000};	/* only 1-8 used */
@@ -175,7 +182,7 @@ int *defstipple_index = cf_stipple_index;
 int style[STYLES] =
 {DOTTED, DOTDASHED, SOLID, DASHED, SOLID, SOLID};
 double scale = 1.0;		/* no scaling, default */
-int defpoint = 0;		/* flag for pointsize scaling */
+int defpoint = 0;		/* flag for point size scaling */
 char *defstipple = (char *) 0;
 enum E {
   OUTLINE, FILL, BOTH
@@ -188,33 +195,32 @@ double adj2 = 0.0;
 double adj3 = 0.0;
 double adj4 = 0.0;
 
-double thick[STYLES];		/* thicknesses set by defaults, then by */
-				/* commands                             */
-char *tfont[FONTS];		/* fonts originally set to deffont values, */
-				/* then                                    */
-int tsize[SIZES];		/* optionally changed by commands inside */
-				/* grn                                   */
-int stipple_index[NSTIPPLES + 1];	/* stipple font file indices */
+double thick[STYLES];		/* thicknesses set by defaults, then  */
+				/* by commands                        */
+char *tfont[FONTS];		/* fonts originally set to deffont    */
+				/* values, then optionally changed by */
+int tsize[SIZES];		/* commands inside grn                */
+int stipple_index[NSTIPPLES + 1];	/* stipple font file indices  */
 char *stipple;
 
-double xscale;			/* scaling factor from individual pictures */
-double troffscale;		/* scaling factor at output time */
+double xscale;		/* scaling factor from individual pictures */
+double troffscale;	/* scaling factor at output time */
 
-double width;			/* user-request maximum width for picture */
-				/* (in inches)                            */
-double height;			/* user-request height */
-int pointscale;			/* flag for pointsize scaling */
-int setdefault;			/* flag for a .GS/.GE to remember all */
-				/* settings                           */
-int sflag;			/* -s flag: sort order (do polyfill first) */
+double width;		/* user-request maximum width for picture */
+			/* (in inches)                            */
+double height;		/* user-request height */
+int pointscale;		/* flag for point size scaling */
+int setdefault;		/* flag for a .GS/.GE to remember all */
+			/* settings                           */
+int sflag;		/* -s flag: sort order (do polyfill first) */
 
-double toppoint;		/* remember the picture */
-double bottompoint;		/* bounds in these variables */
+double toppoint;	/* remember the picture */
+double bottompoint;	/* bounds in these variables */
 double leftpoint;
 double rightpoint;
 
-int ytop;			/* these are integer versions of the above */
-int ybottom;			/* so not to convert each time they're used */
+int ytop;		/* these are integer versions of the above */
+int ybottom;		/* so not to convert each time they're used */
 int xleft;
 int xright;
 
@@ -280,14 +286,14 @@ add_file(char **file,
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	main (argument_count, argument_pointer)
  |
- | Results:	Parses the command line, accumulating input file names, then
- |		reads the inputs, passing it directly to output until a '.GS'
- |		line is read.  Main then passes control to 'conv' to do the
- |		gremlin file conversions.
- *----------------------------------------------------------------------------*/
+ | Results:	Parses the command line, accumulating input file names,
+ |		then reads the inputs, passing it directly to output
+ |		until a '.GS' line is read.  Main then passes control to
+ |		'conv' to do the gremlin file conversions.
+ *--------------------------------------------------------------------*/
 
 int
 main(int argc,
@@ -356,7 +362,7 @@ main(int argc,
       }
   }
 
-  getres();			/* set the resolution for an output device */
+  getres();		/* set the resolution for an output device */
 
   if (gfil == 0) {		/* no filename, use standard input */
     file[0] = NULL;
@@ -386,16 +392,16 @@ main(int argc,
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	char  * operand (& argc, & argv)
  |
  | Results:	Returns address of the operand given with a command-line
- |		option.  It uses either '-Xoperand' or '-X operand', whichever
- |		is present.  The program is terminated if no option is
- |		present.
+ |		option.  It uses either '-Xoperand' or '-X operand',
+ |		whichever is present.  The program is terminated if no
+ |		option is present.
  |
  | Side Efct:	argc and argv are updated as necessary.
- *----------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------*/
 
 char *
 operand(int *argcp,
@@ -411,11 +417,11 @@ operand(int *argcp,
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	getres ()
  |
  | Results:	Sets 'res' to the resolution of the output device.
- *----------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------*/
 
 void
 getres()
@@ -443,7 +449,7 @@ getres()
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	int  doinput (file_pointer)
  |
  | Results:	A line of input is read into 'inputline'.
@@ -452,7 +458,7 @@ getres()
  |
  | Bugs:	Lines longer than MAXINLINE are NOT checked, except for
  |		updating 'linenum'.
- *----------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------*/
 
 int
 doinput(FILE *fp)
@@ -465,14 +471,14 @@ doinput(FILE *fp)
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	initpic ( )
  |
  | Results:	Sets all parameters to the normal defaults, possibly
- |		overridden by a setdefault command.  Initialize the picture
- |		variables, and output the startup commands to troff to begin
- |		the picture.
- *----------------------------------------------------------------------------*/
+ |		overridden by a setdefault command.  Initialize the
+ |		picture variables, and output the startup commands to
+ |		troff to begin the picture.
+ *--------------------------------------------------------------------*/
 
 void
 initpic()
@@ -488,22 +494,23 @@ initpic()
   for (i = 0; i < SIZES; i++) {		/* font size defaults */
     tsize[i] = defsize[i];
   }
-  for (i = 0; i <= NSTIPPLES; i++) {	/* stipple font file default indices */
+  for (i = 0; i <= NSTIPPLES; i++) {	/* stipple font file default */
+					/* indices                   */
     stipple_index[i] = defstipple_index[i];
   }
   stipple = defstipple;
 
   gremlinfile[0] = 0;		/* filename is 'null' */
-  setdefault = 0;		/* this is not the default settings (yet) */
+  setdefault = 0;		/* not the default settings (yet) */
 
   toppoint = BIG;		/* set the picture bounds out */
   bottompoint = -BIG;		/* of range so they'll be set */
   leftpoint = BIG;		/* by 'savebounds' on input */
   rightpoint = -BIG;
 
-  pointscale = defpoint;	/* flag for scaling point sizes default */
-  xscale = scale;		/* default scale of individual pictures */
-  width = 0.0;			/* size specifications input by user */
+  pointscale = defpoint;/* flag for scaling point sizes default */
+  xscale = scale;	/* default scale of individual pictures */
+  width = 0.0;		/* size specifications input by user */
   height = 0.0;
 
   linethickness = DEFTHICK;	/* brush styles */
@@ -511,30 +518,30 @@ initpic()
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	conv (file_pointer, starting_line)
  |
  | Results:	At this point, we just passed a '.GS' line in the input
- |		file.  conv reads the input and calls 'interpret' to process
- |		commands, gathering up information until a '.GE' line is
- |		found.  It then calls 'HGPrint' to do the translation of the
- |		gremlin file to troff commands.
- *----------------------------------------------------------------------------*/
+ |		file.  conv reads the input and calls 'interpret' to
+ |		process commands, gathering up information until a '.GE'
+ |		line is found.  It then calls 'HGPrint' to do the
+ |		translation of the gremlin file to troff commands.
+ *--------------------------------------------------------------------*/
 
 void
 conv(FILE *fp,
      int baseline)
 {
-  FILE *gfp = NULL;		/* input file pointer */
-  int done = 0;		/* flag to remember if finished */
-  ELT *e;			/* current element pointer */
-  ELT *PICTURE;			/* whole picture data base pointer */
-  double temp;			/* temporary calculating area */
-  /* POINT ptr; */		/* coordinates of a point to pass to 'mov' */
-				/* routine                                 */
-  int flyback;			/* flag 'want to end up at the top of the */
-				/* picture?'                              */
-  int compat;			/* test character after .GE or .GF */
+  FILE *gfp = NULL;	/* input file pointer */
+  int done = 0;	/* flag to remember if finished */
+  ELT *e;		/* current element pointer */
+  ELT *PICTURE;		/* whole picture data base pointer */
+  double temp;		/* temporary calculating area */
+  /* POINT ptr; */	/* coordinates of a point to pass to 'mov' */
+			/* routine                                 */
+  int flyback;		/* flag 'want to end up at the top of the */
+			/* picture?'                              */
+  int compat;		/* test character after .GE or .GF */
 
 
   initpic();			/* set defaults, ranges, etc. */
@@ -571,7 +578,7 @@ conv(FILE *fp,
 
       if (stipple == (char *) NULL)	/* if user forgot stipple    */
 	if (has_polygon(PICTURE))	/* and picture has a polygon */
-	  stipple = (char *)DEFSTIPPLE;		/* then set the default      */
+	  stipple = (char *)DEFSTIPPLE;	/* then set the default      */
 
       if ((temp = bottompoint - toppoint) < 0.1)
 	temp = 0.1;
@@ -585,21 +592,22 @@ conv(FILE *fp,
       else {
 	if (temp < troffscale)
 	  troffscale = temp;
-      }				/* here, troffscale is the */
+      }				/* here, troffscale is the  */
 				/* picture's scaling factor */
       if (pointscale) {
-	int i;			/* do pointscaling here, when */
+	int i;			/* do point scaling here, when   */
 				/* scale is known, before output */
 	for (i = 0; i < SIZES; i++)
 	  tsize[i] = (int) (troffscale * (double) tsize[i] + 0.5);
       }
 
-						/* change to device units */
-      troffscale *= SCREENtoINCH * res;		/* from screen units */
+					/* change to device units */
+      troffscale *= SCREENtoINCH * res;	/* from screen units      */
 
-      ytop = (int) (toppoint * troffscale);		/* calculate integer */
-      ybottom = (int) (bottompoint * troffscale);	/* versions of the   */
-      xleft = (int) (leftpoint * troffscale);		/* picture limits    */
+      /* Calculate integer versions of the picture limits. */
+      ytop = (int) (toppoint * troffscale);
+      ybottom = (int) (bottompoint * troffscale);
+      xleft = (int) (leftpoint * troffscale);
       xright = (int) (rightpoint * troffscale);
 
       /* save stuff in number registers,    */
@@ -630,11 +638,11 @@ conv(FILE *fp,
        * print only the interiors of filled polygons (as borderless
        * polygons).  Second time, print the outline as series of line
        * segments.  This way, postprocessors that overwrite rather than
-       * merge picture elements (such as Postscript) can still have text and
-       * graphics on a shaded background.
+       * merge picture elements (such as Postscript) can still have text
+       * and graphics on a shaded background.
        */
       /* if (sflag) */
-      if (!sflag) {		/* changing the default for filled polygons */
+      if (!sflag) {	/* changing the default for filled polygons */
 	e = PICTURE;
 	polyfill = FILL;
 	while (!DBNullelt(e)) {
@@ -650,7 +658,7 @@ conv(FILE *fp,
       e = PICTURE;
 
       /* polyfill = !sflag ? BOTH : OUTLINE; */
-      polyfill = sflag ? BOTH : OUTLINE;	/* changing the default */
+      polyfill = sflag ? BOTH : OUTLINE;	/* changing default */
       while (!DBNullelt(e)) {
 	printf(".mk\n");
 	HGPrintElt(e, baseline);
@@ -662,9 +670,9 @@ conv(FILE *fp,
 
       /* decide where to end picture */
 
-      /* I changed everything here.  I always use the combination .mk and */
-      /* .rt so once finished I just space down the heigth of the picture */
-      /* that is \n(g2u                                                   */
+      /* I [Senderowicz?] changed everything here.  I always use the */
+      /* combination .mk and .rt, so once finished I just space down */
+      /* height of the picture that is \n(g2u.                       */
       if (flyback) {		/* end picture at upper left */
 	/* ptr.x = leftpoint;
 	   ptr.y = toppoint; */
@@ -676,8 +684,8 @@ conv(FILE *fp,
 
       /* tmove(&ptr); */	/* restore default line parameters */
 
-      /* restore everything to the way it was before the .GS, then put */
-      /* out the '.GE' line from user                                  */
+      /* Restore everything to the way it was before the .GS, then */
+      /* put out the '.GE' line from user                          */
 
       /* printf("\\D't %du'\\D's %du'\n", DEFTHICK, DEFSTYLE); */
       /* groff doesn't understand the \Ds command */
@@ -697,16 +705,16 @@ conv(FILE *fp,
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	savestate  ( )
  |
- | Results:	all the current  scaling / font size / font name / thickness
- |		/ pointscale settings are saved to be the defaults.  Scaled
- |		point sizes are NOT saved.  The scaling is done each time a
- |		new picture is started.
+ | Results:	All the current scaling/font size/font name/thickness/
+ |		pointscale settings are made the defaults.  Scaled
+ |		point sizes are NOT saved.  The scaling is done each
+ |		time a new picture is started.
  |
  | Side Efct:	scale, and def* are modified.
- *----------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------*/
 
 void
 savestate()
@@ -719,24 +727,25 @@ savestate()
     deffont[i] = tfont[i];
   for (i = 0; i < SIZES; i++)	/* font size defaults */
     defsize[i] = tsize[i];
-  for (i = 0; i <= NSTIPPLES; i++)	/* stipple font file default indices */
+  /* stipple font file default indices */
+  for (i = 0; i <= NSTIPPLES; i++)
     defstipple_index[i] = stipple_index[i];
 
-  defstipple = stipple;		/* if stipple has been set, it's remembered */
-  scale *= xscale;		/* default scale of individual pictures */
-  defpoint = pointscale;	/* flag for scaling pointsizes from x factors */
+  defstipple = stipple;	/* if stipple has been set, it's remembered */
+  scale *= xscale;	/* default scale of individual pictures */
+  defpoint = pointscale;/* flag to scale point sizes from x factors */
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	savebounds (x_coordinate, y_coordinate)
  |
- | Results:	Keeps track of the maximum and minimum extent of a picture
- |		in the global variables: left-, right-, top- and
- |		bottompoint.  'savebounds' assumes that the points have been
- |		oriented to the correct direction.  No scaling has taken
- |		place, though.
- *----------------------------------------------------------------------------*/
+ | Results:	Keeps track of the maximum and minimum extent of a
+ |		picture in the global variables: left-, right-, top- and
+ |		bottompoint.  'savebounds' assumes that the points have
+ |		been oriented to the correct direction.  No scaling has
+ |		taken place, though.
+ *--------------------------------------------------------------------*/
 
 void
 savebounds(double x,
@@ -753,19 +762,18 @@ savebounds(double x,
 }
 
 
-/*----------------------------------------------------------------------------*
+/*--------------------------------------------------------------------*
  | Routine:	interpret (character_string)
  |
  | Results:	Commands are taken from the input string and performed.
- |		Commands are separated by the endofline, and are of the
+ |		Commands are separated by newlines, and are of the
  |		format:
  |			string1 string2
+ |		where string1 is the command, string2 the argument.
  |
- |		where string1 is the command and string2 is the argument.
- |
- | Side Efct:	Font and size strings, plus the gremlin file name and the
- |		width and height variables are set by this routine.
- *----------------------------------------------------------------------------*/
+ | Side Efct:	Font and size strings, plus the gremlin file name and
+ |		the width and height variables are set by this routine.
+ *--------------------------------------------------------------------*/
 
 void
 interpret(char *line)

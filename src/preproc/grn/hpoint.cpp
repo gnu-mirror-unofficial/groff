@@ -1,8 +1,8 @@
 /* Last non-groff version: hpoint.c  1.1  84/10/08 */
 
 /*
- * This file contains routines for manipulating the point data structures
- * for the gremlin picture editor.
+ * This file contains routines for manipulating the point data
+ * structures for the gremlin picture editor.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -26,8 +26,8 @@ PTInit()
 
 
 /*
- * This routine creates a new point with coordinates x and y and links it
- * into the pointlist.
+ * This routine creates a new point with coordinates x and y and links
+ * it into the point list.
  */
 POINT *
 PTMakePoint(double x,

@@ -2,8 +2,8 @@
  *
  * Copyright -C- 1982 Barry S. Roitblat
  *
- * This file contains database routines for the hard copy programs of the
- * gremlin picture editor.
+ * This file contains database routines for the hard copy programs of
+ * the gremlin picture editor.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -41,8 +41,8 @@ int DBGetType(char *s);
 long lineno = 0;
 
 /*
- * This routine returns a pointer to an initialized database element which
- * would be the only element in an empty list.
+ * This routine returns a pointer to an initialized database element
+ * which would be the only element in an empty list.
  */
 ELT *
 DBInit()
@@ -140,10 +140,11 @@ DBRead(FILE *file)
 
       /*
        * Files created on the SUN have point lists terminated by a line
-       * containing only an asterik ('*').  Files created on the AED have
-       * point lists terminated by the coordinate pair (-1.00 -1.00).
+       * containing only an asterisk ('*').  Files created on the AED
+       * have point lists terminated by the coordinate pair (-1.00
+       * -1.00).
        */
-      if (TEXT(type)) {		/* read only first point for TEXT elements */
+      if (TEXT(type)) {	/* read only first point for TEXT elements */
 	nx = xorn(x, y);
 	y = yorn(x, y);
 	(void) PTMakePoint(nx, y, &plist);
@@ -254,7 +255,7 @@ DBGetType(char *s)
       if (s[5] == '\n')
 	return (CURVE);
       switch (s[7]) {
-      case 'S': 
+      case 'S':
 	return(BSPLINE);
       case 'E':
 	warning_with_file_and_line(gremlinfile, lineno,
@@ -313,9 +314,9 @@ DBGetType(char *s)
 #ifdef UW_FASTSCAN
 /*
  * Optimization hack added by solomon@crys.wisc.edu, 12/2/86.
- * A huge fraction of the time was spent reading floating point numbers from
- * the input file, but the numbers always have the format 'ddd.dd'.  Thus
- * the following special-purpose version of fscanf.
+ * A huge fraction of the time was spent reading floating point numbers
+ * from the input file, but the numbers always have the format 'ddd.dd'.
+ * Thus the following special-purpose version of fscanf.
  *
  * xscanf(f,xp,yp) does roughly what fscanf(f,"%f%f",xp,yp) does except:
  *   -the next piece of input must be of the form
