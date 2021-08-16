@@ -1872,24 +1872,28 @@ or macro
 with compatibility mode disabled.
 .
 Note that compatibility mode is restored
-(if and only if it was active)
+(only if it was active)
 when the
 .I expansion
 of
 .I name
 is interpreted;
 that is,
-the restored compatibility state applies to the contents of the macro
-(string, \&.\|.\|.\&)
+the restored compatibility state applies to the contents of the macro,
+string,
+or diversion
 .I name
-as well as file or pipe data read if
+as well as data read from files or pipes if
 .I name
-is the
-.BR .so ,
-.BR .mso ,
+is any of the
+.BR so ,
+.BR soquiet ,
+.BR mso ,
+.BR msoquiet ,
 or
-.B .pso
-request.
+.B pso
+requests.
+.
 .
 .IP
 For example,

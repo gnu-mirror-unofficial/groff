@@ -6040,7 +6040,7 @@ Enclose the whole argument with double quotes and use two consecutive
 double quotes to represent a single one.  This traditional solution has
 the disadvantage that double quotes don't survive argument expansion
 again if called in compatibility mode (using the @option{-C} option of
-@code{groff}):
+GNU @code{troff}).
 
 @Example
 .de xx
@@ -15663,9 +15663,10 @@ The @code{do} request interprets the string, request, diversion, or
 macro @var{name} (along with any further arguments) with compatibility
 mode disabled.  Compatibility mode is restored (only if it was active)
 when the @emph{expansion} of @var{name} is interpreted; that is, the
-restored compatibility state applies to the contents of the macro
-(string, @dots{}) @var{name} as well as file or pipe data read if
-@var{name} is the @code{so}, @code{mso}, or @code{pso} request.
+restored compatibility state applies to the contents of the macro,
+string, or diversion @var{name} as well as data read from files or pipes
+if @var{name} is any of the @code{so}, @code{soquiet}, @code{mso},
+@code{msoquiet}, or @code{pso} requests.
 
 The following example illustrates several aspects of @code{do} behavior.
 
