@@ -1,5 +1,24 @@
 2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/grn/hdb.cpp: Perform more input validation.
+	Improve diagnostics by taking advantage of libgroff
+	infrastructure and tracking the line number of the input file.
+	Add global `lineno`.
+	(DBRead): Increment `lineno` after reading newlines from input.
+	Call `error_with_file_and_line()` instead of `error()`.  If
+	input reports a negative length for the text (string) to follow
+	in the file, exit with a fatal diagnostic.  Check for EOF while
+	reading text string.
+	(DBGetType): Convert `fprintf()` call for warning diagnostic to
+	`warning_with_file_and_line()`.
+	(DBRead, DBGetType): Add contextual information to diagnostic
+	messages.
+
+	Fixes <https://savannah.gnu.org/bugs/?61043>.  Thanks to
+	Savannah user eqkws for the report.
+
+2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/grn/main.cpp (usage): Update usage message.
 
 2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>

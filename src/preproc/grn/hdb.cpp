@@ -38,6 +38,7 @@ extern POINT *PTMakePoint(double x, double y, POINT ** pplist);
 
 int DBGetType(register char *s);
 
+long lineno = 0;
 
 /*
  * This routine returns a pointer to an initialized database element which
@@ -97,15 +98,18 @@ DBRead(register FILE *file)
   SUNFILE = FALSE;
   elist = DBInit();
   (void) fscanf(file, "%" MAXSTRING_S "s%*[^\n]\n", string);
+  lineno++;
   if (strcmp(string, "gremlinfile")) {
     if (strcmp(string, "sungremlinfile")) {
-      error("'%1' is not a gremlin file", gremlinfile);
+      error_with_file_and_line(gremlinfile, lineno,
+			       "not a gremlin file");
       return (elist);
     }
     SUNFILE = TRUE;
   }
 
   (void) fscanf(file, "%d%lf%lf\n", &size, &x, &y);
+  lineno++;
   /* ignore orientation and file positioning point */
 
   done = FALSE;
@@ -114,9 +118,11 @@ DBRead(register FILE *file)
     /* I changed the scanf format because the element */
     /* can have two words (e.g. CURVE SPLINE)         */
     if (fscanf(file, "\n%" MAXSTRING_S "[^\n]%*[^\n]\n", string) == EOF) {
-      error("'%1', error in file format", gremlinfile);
+      lineno++;
+      error_with_file_and_line(gremlinfile, lineno, "error in format");
       return (elist);
     }
+    lineno++;
 
     type = DBGetType(string);	/* interpret element type */
     if (type < 0) {		/* no more data */
@@ -126,6 +132,7 @@ DBRead(register FILE *file)
       (void) xscanf(file, &x, &y);		/* always one point */
 #else
       (void) fscanf(file, "%lf%lf\n", &x, &y);	/* always one point */
+      lineno++;
 #endif	/* UW_FASTSCAN */
       plist = PTInit();		/* NULL point list */
 
@@ -146,6 +153,7 @@ DBRead(register FILE *file)
 	lastpoint = FALSE;
 	do {
 	  fgets(string, MAXSTRING, file);
+	  lineno++;
 	  if (string[0] == '*') {	/* SUN gremlin file */
 	    lastpoint = TRUE;
 	  } else {
@@ -180,6 +188,7 @@ DBRead(register FILE *file)
 	  savebounds(nx, y);
 
 	  fgets(string, MAXSTRING, file);
+	  lineno++;
 	  if (string[0] == '*') {	/* SUN gremlin file */
 	    lastpoint = TRUE;
 	  } else {
@@ -191,14 +200,26 @@ DBRead(register FILE *file)
 #endif	/* UW_FASTSCAN */
       }
       (void) fscanf(file, "%d%d\n", &brush, &size);
+      lineno++;
       (void) fscanf(file, "%d", &len);	/* text length */
       (void) getc(file);		/* eat blank */
+      lineno++;				/* advance line counter early */
+      if (len < 0) {
+	fatal_with_file_and_line(gremlinfile, lineno,
+				"length claimed for text is nonsense:"
+				" '%1'", len);
+      }
       txt = (char *) grnmalloc((unsigned) len + 1, "element text");
       for (i = 0; i < len; ++i) {	/* read text */
         int c = getc(file);
         if (c == EOF)
           break;
 	txt[i] = c;
+      }
+      if (feof(file)) {
+	fatal_with_file_and_line(gremlinfile, lineno,
+				 "end of file while reading text of"
+				 " length %1", len);
       }
       txt[len] = '\0';
       (void) DBCreateElt(type, plist, brush, size, txt, &elist);
@@ -234,8 +255,8 @@ DBGetType(register char *s)
       case 'S': 
 	return(BSPLINE);
       case 'E':
-	fprintf(stderr,
-		"Warning: Bezier Curves will be printed as B-Splines\n");
+	warning_with_file_and_line(gremlinfile, lineno,
+				   "using B-spline for Bezier curve");
 	return(BSPLINE);
       default:
 	return(CURVE);
@@ -249,8 +270,9 @@ DBGetType(register char *s)
     case 'R':
       return (CENTRIGHT);
     default:
-      fatal("unknown element type");
-      // fatal() does not return
+      fatal_with_file_and_line(gremlinfile, lineno,
+			       "unknown element type '%1'", s);
+      // fatal_with_file_and_line() does not return
     }
   case 'B':
     switch (s[3]) {
@@ -261,8 +283,9 @@ DBGetType(register char *s)
     case 'R':
       return (BOTRIGHT);
     default:
-      fatal("unknown element type");
-      // fatal() does not return
+      fatal_with_file_and_line(gremlinfile, lineno,
+			       "unknown element type '%1'", s);
+      // fatal_with_file_and_line() does not return
     }
   case 'T':
     switch (s[3]) {
@@ -273,11 +296,13 @@ DBGetType(register char *s)
     case 'R':
       return (TOPRIGHT);
     default:
-      fatal("unknown element type");
-      // fatal() does not return
+      fatal_with_file_and_line(gremlinfile, lineno,
+			       "unknown element type '%1'", s);
+      // fatal_with_file_and_line() does not return
     }
   default:
-    fatal("unknown element type");
+    fatal_with_file_and_line(gremlinfile, lineno,
+			     "unknown element type '%1'", s);
   }
 
   return 0;				/* never reached */
