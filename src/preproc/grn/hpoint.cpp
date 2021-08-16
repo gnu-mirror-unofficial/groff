@@ -34,7 +34,7 @@ PTMakePoint(double x,
 	    double y,
 	    POINT **pplist)
 {
-  register POINT *pt;
+  POINT *pt;
 
   if (Nullpoint(pt = *pplist)) {	/* empty list */
     *pplist = (POINT *) grnmalloc(sizeof(POINT), "initial point");

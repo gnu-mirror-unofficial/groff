@@ -89,7 +89,7 @@ extern "C" const char *Version_string;
 
 extern void HGPrintElt(ELT *element, int baseline);
 extern ELT *DBInit();
-extern ELT *DBRead(register FILE *file);
+extern ELT *DBRead(FILE *file);
 extern POINT *PTInit();
 extern POINT *PTMakePoint(double x, double y, POINT **pplist);
 
@@ -232,9 +232,9 @@ int compatibility_flag = FALSE;	/* TRUE if in compatibility mode */
 
 void getres();
 int doinput(FILE *fp);
-void conv(register FILE *fp, int baseline);
+void conv(FILE *fp, int baseline);
 void savestate();
-int has_polygon(register ELT *elist);
+int has_polygon(ELT *elist);
 void interpret(char *line);
 
 void *
@@ -268,7 +268,7 @@ add_file(char **file,
 {
   if (*count >= *cur_size) {
     *cur_size += FILE_SIZE_INCR;
-    file = (char **) realloc((char **) file, *cur_size * sizeof(char *));
+    file = (char **) realloc(file, *cur_size * sizeof(char *));
     if (file == NULL) {
       fatal("unable to extend file array");
     }
@@ -295,9 +295,9 @@ main(int argc,
 {
   setlocale(LC_NUMERIC, "C");
   program_name = argv[0];
-  register FILE *fp;
-  register int k;
-  register char c;
+  FILE *fp;
+  int k;
+  char c;
   int gfil = 0;
   char **file = NULL;
   int file_cur_size = INIT_FILE_SIZE;
@@ -477,7 +477,7 @@ doinput(FILE *fp)
 void
 initpic()
 {
-  register int i;
+  int i;
 
   for (i = 0; i < STYLES; i++) {	/* line thickness defaults */
     thick[i] = defthick[i];
@@ -522,12 +522,12 @@ initpic()
  *----------------------------------------------------------------------------*/
 
 void
-conv(register FILE *fp,
+conv(FILE *fp,
      int baseline)
 {
-  register FILE *gfp = NULL;	/* input file pointer */
-  register int done = 0;	/* flag to remember if finished */
-  register ELT *e;		/* current element pointer */
+  FILE *gfp = NULL;		/* input file pointer */
+  int done = 0;		/* flag to remember if finished */
+  ELT *e;			/* current element pointer */
   ELT *PICTURE;			/* whole picture data base pointer */
   double temp;			/* temporary calculating area */
   /* POINT ptr; */		/* coordinates of a point to pass to 'mov' */
@@ -554,7 +554,7 @@ conv(register FILE *fp,
 
       if (!gremlinfile[0]) {
 	if (!setdefault)
-	  error("no picture filename at line %1", baseline);
+	  error("no picture file name at line %1", baseline);
 	return;
       }
       char *path;
@@ -588,7 +588,7 @@ conv(register FILE *fp,
       }				/* here, troffscale is the */
 				/* picture's scaling factor */
       if (pointscale) {
-	register int i;		/* do pointscaling here, when */
+	int i;			/* do pointscaling here, when */
 				/* scale is known, before output */
 	for (i = 0; i < SIZES; i++)
 	  tsize[i] = (int) (troffscale * (double) tsize[i] + 0.5);
@@ -711,7 +711,7 @@ conv(register FILE *fp,
 void
 savestate()
 {
-  register int i;
+  int i;
 
   for (i = 0; i < STYLES; i++)	/* line thickness defaults */
     defthick[i] = thick[i];
@@ -772,8 +772,8 @@ interpret(char *line)
 {
   char str1[MAXINLINE];
   char str2[MAXINLINE];
-  register char *chr;
-  register int i;
+  char *chr;
+  int i;
   double par;
 
   str2[0] = '\0';
@@ -822,7 +822,7 @@ interpret(char *line)
 
     if (str2[0] < '0') {
   nofont:
-      error("no fontname specified in line %1", linenum);
+      error("no font name specified in line %1", linenum);
       break;
     }
     if (str1[1] == 't')
@@ -946,7 +946,7 @@ interpret(char *line)
  */
 
 int
-has_polygon(register ELT *elist)
+has_polygon(ELT *elist)
 {
   while (!DBNullelt(elist)) {
     if (elist->type == POLYGON)

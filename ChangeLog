@@ -1,5 +1,25 @@
 2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grn]: Fix code style issues.
+
+	* src/preproc/grn/hgraph.cpp:
+	* src/preproc/grn/hpoint.cpp:
+	* src/preproc/grn/main.cpp:
+	* src/preproc/grn/hdb.cpp: Drop use of `register` storage class.
+
+	* src/preproc/grn/hgraph.cpp (len, HGPrintElt, picurve):
+	* src/preproc/grn/hdb.cpp (DBRead): Wrap long lines.
+
+	* src/preproc/grn/hgraph.cpp: Rename function from
+	`Paramaterize` to `Parameterize`.
+	(HGCurve): Update call site.
+
+	* src/preproc/grn/main.cpp (add_file): Drop redundant cast in
+	`realloc()` call.
+	(conv, interpret): Use standard English in diagnostic messages.
+
+2021-08-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/grn/hdb.cpp: Perform more input validation.
 	Improve diagnostics by taking advantage of libgroff
 	infrastructure and tracking the line number of the input file.

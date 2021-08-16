@@ -36,7 +36,7 @@ extern POINT *PTInit();
 extern POINT *PTMakePoint(double x, double y, POINT ** pplist);
 
 
-int DBGetType(register char *s);
+int DBGetType(char *s);
 
 long lineno = 0;
 
@@ -63,7 +63,7 @@ DBCreateElt(int type,
 	    char *text,
 	    ELT **db)
 {
-  register ELT *temp;
+  ELT *temp = 0;
 
   temp = (ELT *) grnmalloc(sizeof(ELT), "picture element");
   temp->nextelt = *db;
@@ -82,11 +82,11 @@ DBCreateElt(int type,
  * pointer to that database.
  */
 ELT *
-DBRead(register FILE *file)
+DBRead(FILE *file)
 {
-  register int i;
-  register int done;		/* flag for input exhausted */
-  register double nx;		/* x holder so x is not set before orienting */
+  int i;
+  int done;		/* flag for input exhausted */
+  double nx;		/* x holder so x is not set before orienting */
   int type;			/* element type */
   ELT *elist;			/* pointer to the file's elements */
   POINT *plist;			/* pointer for reading in points */
@@ -117,7 +117,9 @@ DBRead(register FILE *file)
     /* if (fscanf(file,"%" MAXSTRING_S "s\n", string) == EOF) */
     /* I changed the scanf format because the element */
     /* can have two words (e.g. CURVE SPLINE)         */
-    if (fscanf(file, "\n%" MAXSTRING_S "[^\n]%*[^\n]\n", string) == EOF) {
+    if (fscanf(file, "\n%"
+		      MAXSTRING_S
+		     "[^\n]%*[^\n]\n", string) == EOF) {
       lineno++;
       error_with_file_and_line(gremlinfile, lineno, "error in format");
       return (elist);
@@ -235,7 +237,7 @@ DBRead(register FILE *file)
  * New file format has literal names for element types.
  */
 int
-DBGetType(register char *s)
+DBGetType(char *s)
 {
   if (isdigit(s[0]) || (s[0] == '-'))	/* old element format or EOF */
     return (atoi(s));
@@ -328,7 +330,7 @@ xscanf(FILE *f,
        double *xp,
        double *yp)
 {
-  register int c, i, j, m, frac;
+  int c, i, j, m, frac;
   int iscale = 1, jscale = 1;	/* x = i/scale, y=j/jscale */
 
   while ((c = getc(f)) == ' ');
