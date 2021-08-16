@@ -12645,27 +12645,31 @@ There are a number of special-case escapes for horizontal motion.
 @Defesc {\\@key{SP}, , , }
 @cindex space, unbreakable
 @cindex unbreakable space
-An unbreakable, unpaddable (i.e., not expanded during filling) space.
-(Note: This is a backslash followed by a space.)  Usually you want one
-of the following escapes instead, often @code{\~}.
+An unbreakable, non-adjustable space.  (This is a backslash followed by
+a space.)  Usually you want one of the following escapes instead, often
+@code{\~}.
 @endDefesc
 
 @Defesc {\\~, , , }
 An unbreakable space that is adjustable like a normal inter-word space.
 @endDefesc
 
+@cindex thin space
+@cindex space, thin
 @Defesc {\\|, , , }
-A 1/6@dmn{th} em unbreakable space.  Ignored (rounded to zero width) on
-terminal output devices.
+A one-sixth @dmn{em} unbreakable (``thin'') space.  Ignored (rounded to
+zero width) on terminal output devices.
 
 However, if there is a glyph defined in the current font with name
 @code{\|} (note the leading backslash), the width of this glyph is used
 instead (even on terminals).
 @endDefesc
 
+@cindex hair space
+@cindex space, hair
 @Defesc {\\^, , , }
-A 1/12@dmn{th} em unbreakable space.  Ignored (rounded to zero width) on
-terminal output devices.
+A one-twelfth @dmn{em} unbreakable (``hair'') space.  Ignored (rounded
+to zero width) on terminal output devices.
 
 However, if there is a glyph defined in the current font with name
 @code{\^} (note the leading backslash), the width of this glyph is used
