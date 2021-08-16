@@ -224,7 +224,7 @@ int ybottom;		/* so not to convert each time they're used */
 int xleft;
 int xright;
 
-int linenum = 0;		/* line number of input file */
+static int linenum = 0;		/* line number of troff input file */
 char inputline[MAXINLINE];	/* spot to filter through the file */
 char *c1 = inputline;		/* c1, c2, and c3 will be used to */
 char *c2 = inputline + 1;	/* hunt for lines that begin with */

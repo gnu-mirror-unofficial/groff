@@ -23,7 +23,6 @@
 
 /* imports from main.cpp */
 
-extern int linenum;		/* current line number in input file */
 extern char gremlinfile[];	/* name of file currently reading */
 extern int SUNFILE;		/* TRUE if SUN gremlin file */
 extern int compatibility_flag;	/* TRUE if in compatibility mode */
@@ -38,7 +37,7 @@ extern POINT *PTMakePoint(double x, double y, POINT ** pplist);
 
 int DBGetType(char *s);
 
-long lineno = 0;
+static long lineno = 0;		/* line number of gremlin file */
 
 /*
  * This routine returns a pointer to an initialized database element
