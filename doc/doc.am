@@ -11,8 +11,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -28,7 +28,7 @@ DOC_GROFF_ONLY=\
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
   $(GROFFBIN) -I$(abs_top_builddir) -M $(doc_srcdir) \
-	$(TFLAG) $(FFLAG) -Upet -ww -b
+	$(TFLAG) $(FFLAG) -pet -ww -b
 
 DOC_GROFF = $(DOC_SED) -e '1i\
 .lf 1 $<' $< | $(DOC_GROFF_ONLY)
