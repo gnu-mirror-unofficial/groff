@@ -12034,42 +12034,43 @@ restarting the next iteration.
 @cindex writing macros
 @cindex macros, writing
 
-A @dfn{macro} is a collection of text and embedded commands that can be
-invoked multiple times.  Use macros to define common operations.
+A @dfn{macro} is a stored collection of text and control lines that can
+be used multiple times.  Use macros to define common operations.
 @xref{Strings}, for a (limited) alternative syntax to call macros.
-
-Although the following requests can be used to create macros,
-simply using an undefined macro will cause it to be defined as empty.
+While requests exist for the purpose of creating macros, simply
+interpolating an undefined macro will cause it to be defined as empty.
 @xref{Identifiers}.
 
-@DefreqList {de, name [@Var{end}]}
-@DefreqItemx {de1, name [@Var{end}]}
-@DefreqItemx {dei, name [@Var{end}]}
-@DefreqListEndx {dei1, name [@Var{end}]}
-Define a new macro named @var{name}.  GNU @code{troff} copies subsequent
-lines (starting with the next one) into an internal buffer until it
-encounters the line @samp{..} (two dots).  If the optional second
-argument to @code{de} is present it is used as the macro closure
-request instead of @samp{..}.
+@Defreq {de, name [@Var{end}]}
+Define a macro @var{name}, replacing the definition of any existing
+request, macro, string, or diversion called @var{name}.  GNU
+@code{troff} stores subsequent lines to an internal buffer in ``copy
+mode'' (see below).  If the optional second argument is not specified,
+the macro definition ends with the control line @samp{..} (two dots).
+Alternatively, @var{end} names a macro which, upon being subsequently
+called, ends the definition of @var{name}.
 
-There can be spaces or tabs after the first dot in the line containing
+Spaces or tabs are permitted after the first dot in the line containing
 the ending token (either @samp{.} or macro @samp{@var{end}}).  Don't
-insert a tab character immediately after the @samp{..}, otherwise it
-isn't recognized as the end-of-macro symbol.@footnote{While it is
-possible to define and call a macro @samp{.} with
-
-@Example
-.de .
-.  tm foo
-..
-.
-..    \" This calls macro '.'!
-@endExample
-
-@noindent
-you can't use this as the end-of-macro macro: during a macro definition,
-@samp{..} is never handled as a call to @samp{.}, even if you say
-@samp{.de foo .} explicitly.}
+insert a tab character immediately after the @samp{..}, or it will fail
+to be recognized as ending the macro definition.@footnote{While it is
+possible to define and call a macro @samp{.}, you can't use it as the
+end-of-macro macro: during a macro definition, @samp{..} is never
+handled as calling @samp{.}, even if you say @samp{.de @var{name} .}
+explicitly.}
+@c
+@c @Example
+@c .de .
+@c (dot macro)
+@c ..
+@c .
+@c ..    \" This calls macro '.'!
+@c .de m1 .
+@c (m1 macro)
+@c ..    \" This does not.
+@c .m1
+@c     @result{} (dot macro) (m1 macro)
+@c @endExample
 
 Here is a small example macro called @samp{P} that causes a break and
 inserts some vertical space.  It could be used to separate paragraphs.
@@ -12081,59 +12082,67 @@ inserts some vertical space.  It could be used to separate paragraphs.
 ..
 @endExample
 
-The following example defines a macro within another.  Remember that
-expansion must be protected twice; once for reading the macro and once
-for executing.
+We can define one macro within another.  Attempting to nest @samp{..}
+naïvely will end the outer definition because the inner definition
+isn't interpreted as such until the outer macro is later interpolated.
+We can use an end macro instead.  Each level of nesting should use a
+unique end macro.
 
 @Example
-\# a dummy macro to avoid a warning
-.de end
+.de en \" a do-nothing macro
 ..
-.
-.de foo
-.  de bar end
-.    nop \f[B]Hello \\\\$1!\f[]
-.  end
+.de mo
+.  de mi en
+Hello, Joe.
+What do you know?
+.  en
 ..
-.
-.foo
-.bar Joe
-    @result{} @b{Hello Joe!}
+.mo
+.mi
+    @result{} Hello, Joe.  What do you know?
 @endExample
 
 @noindent
-Since @code{\f} has no expansion, it isn't necessary to protect its
-backslash.  Had we defined another macro within @code{bar} that takes a
-parameter, eight backslashes would be necessary before @samp{$1}.
+A nested macro definition @emph{can} be terminated with @samp{..},
+and nested macros @emph{can} reuse end macros, but these control lines
+must be escaped twice for each level of nesting.  The necessity of this
+escaping and the utility of nested macro definitions will become clearer
+when we employ macro parameters and consider the behavior of copy mode
+in detail.
+@endDefreq
 
-The @code{de1} request turns off compatibility mode while executing the
-macro.  On entry, the current compatibility mode is saved and restored
-at exit.
+@Defreq {de1, name [@Var{end}]}
+The @code{de1} request defines a macro that executes with compatibility
+mode disabled (@pxref{Implementation Differences}).  On entry, the state
+of compatibility mode enablement is saved, and on exit it is restored.
+Observe the extra backlash before the interpolation of register
+@samp{xxx}; we'll explore this subject in @ref{Copy Mode}.
 
 @Example
 .nr xxx 12345
-.
 .de aa
 The value of xxx is \\n[xxx].
+.  br
 ..
 .de1 bb
 The value of xxx is \\n[xxx].
 ..
-.
 .cp 1
-.
 .aa
     @error{} warning: register '[' not defined
     @result{} The value of xxx is 0xxx].
 .bb
     @result{} The value of xxx is 12345.
 @endExample
+@endDefreq
 
-The @code{dei} request defines a macro indirectly.  That is, it expands
-strings whose names are @var{name} or @var{end} before performing the
-append.
+@DefreqList {dei, name [@Var{end}]}
+@DefreqListEndx {dei1, name [@Var{end}]}
+The @code{dei} request defines a macro indirectly.  That is, it
+interpolates strings named @var{name} and @var{end} before performing
+the definition.
 
-This:
+The following examples are equivalent.
 
 @Example
 .ds xx aa
@@ -12141,32 +12150,23 @@ This:
 .dei xx yy
 @endExample
 
-@noindent
-is equivalent to:
-
 @Example
 .de aa bb
 @endExample
 
-The @code{dei1} request is similar to @code{dei} but with compatibility
+The @code{dei1} request is similar to @code{dei}, but with compatibility
 mode switched off during execution of the defined macro.
 
-If compatibility mode is on, @code{de} (and @code{dei}) behave similar
-to @code{de1} (and @code{dei1}): A ``compatibility save'' token is
-inserted at the beginning, and a ``compatibility restore'' token at the
-end, with compatibility mode switched on during execution.  @xref{Gtroff
-Internals}, for more information on switching compatibility mode on and
-off in a single document.
+If compatibility mode is on, @code{de} and @code{dei} behave similarly
+to @code{de1} and @code{dei1}, respectively:@: a ``compatibility save''
+token is inserted at the beginning, and a ``compatibility restore''
+token at the end, with compatibility mode switched on during execution.
+@endDefreq
 
-@pindex trace.tmac
-Using @file{trace.tmac}, you can trace calls to @code{de} and
-@code{de1}.
-
-Macro identifiers share their name space with those for strings and
+Macro identifiers share their name space with requests, strings, and
 diversions; @ref{Identifiers}.  @xref{als,,the description of the
 @code{als} request}, for possible pitfalls if redefining a macro that
 has been aliased.
-@endDefreq
 
 @DefreqList {am, name [@Var{end}]}
 @DefreqItemx {am1, name [@Var{end}]}
@@ -12174,10 +12174,11 @@ has been aliased.
 @DefreqListEndx {ami1, name [@Var{end}]}
 @cindex appending to a macro (@code{am})
 @cindex macro, appending to (@code{am})
-Works similarly to @code{de} except it appends onto the macro named
-@var{name}.  So, to make the previously defined @samp{P} macro set
-indented instead of block paragraphs, add the necessary code to the
-existing macro.
+@code{am} appends subsequent input lines to macro @var{name}, extending
+its definition, and otherwise working as @code{de} does.
+
+To make the previously defined @samp{P} macro set indented instead of
+block paragraphs, add the necessary code to the existing macro.
 
 @Example
 .am P
@@ -12185,25 +12186,25 @@ existing macro.
 ..
 @endExample
 
-The @code{am1} request turns off compatibility mode while executing the
-appended macro piece.  To be more precise, a @dfn{compatibility save}
-input token is inserted at the beginning of the appended code, and a
-@dfn{compatibility restore} input token at the end.
-
-The @code{ami} request appends indirectly, meaning that GNU @code{troff}
-expands strings whose names are @var{name} or @var{end} before
-performing the append.
-
-The @code{ami1} request is similar to @code{ami} but compatibility mode
-is switched off during execution of the defined macro.
-
-@pindex trace.tmac
-Using @file{trace.tmac}, you can trace calls to @code{am} and
-@code{am1}.
+The other requests are analogous to their @samp{de} counterparts.  The
+@code{am1} request turns off compatibility mode while executing the
+appendment:@: a @dfn{compatibility save} input token is inserted before
+the appended input lines, and a @dfn{compatibility restore} input token
+after the end.  The @code{ami} request appends indirectly, meaning that
+strings @var{name} and @var{end} are interpolated with the resulting
+names used before appending.  The @code{ami1} request is similar to
+@code{ami}, disabling compatibility mode during interpretation of the
+appended lines.
 @endDefreq
 
-@xref{Strings}, for the @code{als} and @code{rn} requests to create an
-alias and rename a macro, respectively.
+@pindex trace.tmac
+Using @file{trace.tmac}, you can trace calls to @code{de},
+@code{de1}, @code{am}, and @code{am1}.  You can also use the
+@code{backtrace} request at any point desired to troubleshoot tricky
+spots (@pxref{Debugging}).
+
+@xref{Strings}, for the @code{als}, @code{rm}, and @code{rn} requests to
+create an alias of, remove, and rename a macro, respectively.
 
 @cindex object creation
 The @code{am}, @code{as}, @code{da}, @code{de}, @code{di}, and @code{ds}
@@ -12213,10 +12214,9 @@ is defined as a request; normally, they modify the value of an existing
 object.
 
 @Defreq {return, [@Var{anything}]}
-Exit a macro, immediately returning to the caller.
-
-If called with an argument, exit twice, namely the current macro and the
-macro one level higher.  This is used to define a wrapper macro for
+Exit a macro, immediately returning to the caller.  If called with an
+argument @var{anything}, exit twice---the current macro and the macro
+one level higher.  This is used to define a wrapper macro for
 @code{return} in @file{trace.tmac}.
 @endDefreq
 
@@ -12231,90 +12231,96 @@ macro one level higher.  This is used to define a wrapper macro for
 @subsection Parameters
 @cindex parameters
 
-The arguments to a macro or string can be examined using a variety of
-escapes.
+Macro calls and string interpolations optionally accept a list of
+arguments; recall @ref{Request and Macro Arguments}.  At the time such
+an interpolation takes place, these @dfn{parameters} can be examined
+using a register and a variety of escape sequences starting with
+@code{\$}.
 
 @Defreg {.$}
-@cindex number of arguments register (@code{.$})
-The number of arguments passed to a macro or string.  This is a
-read-only register.
-
-The @code{shift} request can change its value.
+@cindex parameter count register (@code{.$})
+The count of parameters available to a macro or string is kept in this
+read-only register.  The @code{shift} request can change its value.
 @endDefreg
 
-Any individual argument can be retrieved with one of the following
-escapes:
+Any individual parameter can be accessed by its position in the list of
+arguments to the macro call, numbered from left to right starting at 1,
+with one of the following escapes.
 
 @DefescList {\\$, , n, }
 @DefescItem {\\$, (, nn, }
 @DefescListEnd {\\$, [, nnn, ]}
-@cindex copy mode, and macro arguments
-@cindex mode, copy, and macro arguments
-@cindex macro, arguments (@code{\$})
-@cindex arguments, macro (@code{\$})
-Retrieve the @var{n}@dmn{th}, @var{nn}@dmn{th} or @var{nnn}@dmn{th}
-argument.  As usual, the first form only accepts a single number (larger
-than zero), the second a two-digit number (larger than or equal
-to@tie{}10), and the third any positive integer value (larger than
-zero).  Macros and strings can have an unlimited number of arguments.
-Because string and macro definitions are read in copy mode, use two
-backslashes on these in practice to prevent their interpolation until
-the macro is actually invoked.
+Interpolate the @var{n}@dmn{th}, @var{nn}@dmn{th}, or @var{nnn}@dmn{th}
+parameter.  The first form only accepts a single digit
+(1@leq{}@var{n}@leq{}9)), the second two digits
+(01@leq{}@var{nn}@leq{}99)), and the third any positive integer
+@var{nnn}.  Macros and strings can accept an unlimited number of
+parameters.
 @endDefesc
 
 @Defreq {shift, [@Var{n}]}
-Shift the arguments 1@tie{}position, or as many positions as specified
-by its argument.  After executing this request, argument@tie{}@var{i}
-becomes argument @math{@var{i}-@var{n}}; arguments 1 to@tie{}@var{n} are
-no longer available.  Shifting by negative amounts is currently
-undefined.
-
-The register @code{.$} is adjusted accordingly.
+Shift the parameters @var{n} places (1@tie{}by default).  This is a
+``left shift'': what was parameter@tie{}@var{i} becomes parameter
+@math{@var{i}-@var{n}} and so on.  The parameters formerly in positions
+1 to@tie{}@var{n} are no longer available.  Shifting by a nonpositive
+amount performs no operation.  The register @code{.$} is adjusted
+accordingly.
 @endDefreq
 
-@DefescList {\\$*, , , }
-@DefescListEndx {\\$@@, , , }
-In some cases it is convenient to use all of the arguments at once (for
-example, to pass the arguments along to another macro).  The @code{\$*}
-escape concatenates all the arguments separated by spaces.  A similar
-escape is @code{\$@@}, which concatenates all the arguments with each
-surrounded by double quotes, and separated by spaces.  If not in
-compatibility mode, the interpolation depth of double quotes is
-preserved (@pxref{Request and Macro Arguments}).
-@endDefesc
+@cindex copy mode, and macro parameters
+@cindex mode, copy, and macro parameters
+@cindex macro, parameters (@code{\$})
+@cindex parameters, macro (@code{\$})
+In practice, parameter interpolations are usually seen prefixed with an
+extra escape character.  This is because the @code{\$} family of escape
+sequences is interpreted even in copy mode.@footnote{If they were not,
+parameter interpolations would be similar to command-line
+parameters---fixed for the entire duration of a @code{roff} program's
+run.  The advantage of interpolating @code{\$} escape sequences even in
+copy mode is that they can change from one interpolation to the next,
+like parameters to a function call.  The additional escape character is
+the price of this power.}
 
-@Defesc {\\$^, , , }
-Handle the parameters of a macro as if they were an argument to the
-@code{ds} or similar requests.
+@DefescList {\\$*, , , }
+@DefescItemx {\\$@@, , , }
+@DefescListEndx {\\$^, , , }
+In some cases it is convenient to interpolate all of the parameters at
+once (to pass them to a request, for instance).  The @code{\$*} escape
+concatenates the parameters, separating them with spaces.  @code{\$@@}
+is similar, concatenating the parameters, surrounding each by double
+quotes and separating them with spaces.  If not in compatibility mode,
+the interpolation depth of double quotes is preserved (@pxref{Request
+and Macro Arguments}).  @code{\$^} interpolates all parameters as if
+they were arguments to the @code{ds} request.
 
 @Example
 .de foo
-.  tm $1='\\$1'
-.  tm $2='\\$2'
 .  tm $*='\\$*'
 .  tm $@@='\\$@@'
 .  tm $^='\\$^'
 ..
 .foo " This is a "test"
-    @result{} $1=' This is a '
-    @result{} $2='test"'
-    @result{} $*=' This is a  test"'
-    @result{} $@@='" This is a " "test""'
-    @result{} $^='" This is a "test"'
+    @error{} $*=' This is a  test"'
+    @error{} $@@='" This is a " "test""'
+    @error{} $^='" This is a "test"'
 @endExample
 
-This escape is useful mainly for macro packages like @file{trace.tmac},
+@code{\$*} is useful when writing a macro that doesn't need to
+distinguish its arguments, or even to not interpret them; examples
+include macros that produce diagnostic messages by wrapping the
+@code{tm} or @code{ab} requests.  Use @code{\$@@} when writing a macro
+that may need to shift its parameters and/or wrap a macro or request
+that finds the count significant.  If in doubt, prefer @code{\$@@} to
+@code{\$*}.  An application of @code{\$^} is seen in @file{trace.tmac},
 which redefines some requests and macros for debugging purposes.
 @endDefesc
 
 @Defesc {\\$0, , , }
 @cindex macro name register (@code{\$0})
 @cindex @code{als} request, and @code{\$0}
-The name used to invoke the current macro.  The @code{als} request can
-make a macro have more than one name.
-
-If a macro is called as a string (within another macro), the value of
-@code{\$0} isn't changed.
+Interpolate the name by which the executing macro was called.  The
+@code{als} request can cause a macro to have more than one name.
+Applying string interpolation to a macro does not change this name.
 
 @Example
 .de foo
@@ -12350,8 +12356,6 @@ If a macro is called as a string (within another macro), the value of
 @endExample
 @endDefesc
 
-@xref{Request and Macro Arguments}.
-
 @c ---------------------------------------------------------------------
 
 @node Copy Mode, , Parameters, Writing Macros
@@ -12364,25 +12368,32 @@ If a macro is called as a string (within another macro), the value of
 @cindex @code{\n}, when reading text for a macro
 @cindex @code{\$}, when reading text for a macro
 @cindex @code{\*}, when reading text for a macro
-@cindex @code{\\}, when reading text for a macro
 @cindex \@key{RET}, when reading text for a macro
 When GNU @code{troff} processes certain requests, most importantly those
-which define or append to a macro, string, or diversion, it does so in
-@dfn{copy mode}: it copies the characters of the definition into a
-dedicated storage region, interpolating the escape sequences @code{\n},
-@code{\g}, @code{\$}, @code{\*}, and @code{\V} normally; interpreting
-@code{\.} and @code{\@key{RET}} immediately; discarding comments
-@code{\"} and @code{\#}; interpolating the current leader, escape, or
-tab character with @code{\a}, @code{\e} or @code{\E}, and @code{\t},
-respectively; and storing all other escape sequences in an encoded form.
-@xref{Character Translations} for more on the use of @code{\e} and
-@code{\E}, and the distinction between them.
+which define or append to a macro or string, it does so in @dfn{copy
+mode}: it copies the characters of the definition into a dedicated
+storage region, interpolating the escape sequences @code{\n}, @code{\g},
+@code{\$}, @code{\*}, and @code{\V} normally; interpreting
+@code{\@key{RET}} immediately; discarding comments @code{\"} and
+@code{\#}; interpolating the current leader, escape, or tab character
+with @code{\a}, @code{\e}, and @code{\t}, respectively; and storing all
+other escape sequences in an encoded form.
 
-Since the escape character escapes itself, you can control whether any
-escape sequence is interpreted at macro definition time or when it is
-later interpolated by preceding it with an additional instance of the
-escape character.@footnote{Compare this to the @code{\def} and
-@code{\edef} commands in @TeX{}.}
+@cindex interpretation mode
+@cindex mode, interpretation
+The complement of copy mode---a @code{roff} formatter's behavior when
+not defining or appending to a macro, string, or diversion---where all
+macros are interpolated, requests invoked, and valid escape sequences
+processed immediately upon recognition, can be termed
+@dfn{interpretation mode}.
+
+@Defesc {\\\\, , , }
+The escape character, @code{\} by default, escapes itself.  Thus you can
+control whether a given @code{\n}, @code{\g}, @code{\$}, @code{\*}, or
+@code{\V} escape sequence is interpreted at the time the macro
+containing it is defined, or later when the macro is
+called.@footnote{Compare this to the @code{\def} and @code{\edef}
+commands in @TeX{}.}
 
 @Example
 .nr x 20
@@ -12395,85 +12406,28 @@ escape character.@footnote{Compare this to the @code{\def} and
     @result{} 20 10
 @endExample
 
-@cindex interpretation mode
-@cindex mode, interpretation
-The complement of copy mode---a @code{roff} formatter's behavior when
-not defining or appending to a macro, string, or diversion---where all
-macros are interpolated, requests invoked, and valid escape sequences
-processed immediately upon recognition, can be termed
-@dfn{interpretation mode}.
-
-@DefescList {\\\\, , , }
-@DefescListEndx {\\E, , , }
-@code{\\} is a `delayed' backslash; more precisely, it is the default
-escape character followed by a backslash, which no longer has special
-meaning due to the leading escape character.  It is @emph{not} an escape
-sequence in the usual sense!  In any unknown escape sequence
-@code{\@var{X}} the escape character is ignored and @var{X} is printed.
-But if @var{X} is equal to the current escape character, no warning is
-emitted.
-
-@cindex @code{\E}, and copy mode
-@cindex copy mode, and @code{\E}
-@cindex mode, copy, and @code{\E}
-As a consequence, only at the top level or in a diversion is a backslash
-glyph printed; in copy mode, it expands to a single backslash, which
-then combines with the following character to form an escape sequence.
-
-The @code{\E} escape differs from @code{\e} by printing an escape
-character that is not interpreted in copy mode.  Use this to define
-strings with escapes that work when used in copy mode (for example, as a
-macro argument).  The following example defines strings to begin and end
-a superscript:
-
-@Example
-.ds @{ \v'-.3m'\s'\En[.s]*60/100'
-.ds @} \s0\v'.3m'
-@endExample
-
-Another example to demonstrate the differences between the various
-escape sequences, using a strange escape character, @samp{-}.
-
-@Example
-.ec -
-.de xxx
---A'foo'
-..
-.xxx
-    @result{} -A'foo'
-@endExample
-
-@noindent
-The result is surprising for most users, expecting @samp{1} since
-@samp{foo} is a valid identifier.  What has happened?  As mentioned
-above, the leading escape character makes the following character
-ordinary.  Written with the default escape character the sequence
-@samp{--} becomes @samp{\-}---this is the minus sign.
-
-If the escape character followed by itself is a valid escape sequence,
-only @code{\E} yields the expected result:
-
-@Example
-.ec -
-.de xxx
--EA'foo'
-..
-.xxx
-    @result{} 1
-@endExample
+You can think of @code{\\} as a ``delayed'' backslash; it is the escape
+character followed by a backslash from which the escape character has
+removed its special meaning.  Consequently, @samp{\\} is not an escape
+sequence in the usual sense.  In any escape sequence @samp{\@var{X}}
+that GNU @code{troff} does not recognize, the escape character is
+ignored and @var{X} is output, with two exceptions---@samp{\\} is the
+first.
 @endDefesc
 
+@cindex @code{\\}, when reading text for a macro
 @Defesc {\\., , , }
-Similar to @code{\\}, the sequence @code{\.} isn't a real escape
-sequence.  As before, a warning message is suppressed if the escape
-character is followed by a dot, and the dot itself is printed.
+@code{\.} escapes the control character.  It is similar to @code{\\} in
+that it isn't a true escape sequence.  It is used to permit nested macro
+definitions to end without a named macro call to conclude them.  Without
+a syntax for escaping the control character, this would not be possible.
 
 @Example
-.de foo
-.  nop foo
+.de m1
+foo
 .
-.  de bar
-.    nop bar
+.  de m2
+bar
 \\..
 .
 ..
@@ -12484,8 +12438,118 @@ character is followed by a dot, and the dot itself is printed.
 
 @noindent
 The first backslash is consumed while the macro is read, and the second
-is swallowed while executing macro @code{foo}.
+is interpreted while executing macro @code{foo}.
 @endDefesc
+
+@code{roff} documents should not use the @code{\\} or @code{\.}
+tokens outside of copy mode; they serve only to obfuscate the input.
+Use @code{\e} to obtain the escape character, @code{\[rs]} to obtain a
+backslash glyph, and @code{\&} before @code{.} and @code{'} where GNU
+@code{troff} expects them as control characters if you mean to use them
+literally (recall @ref{Requests and Macros}).
+
+Macro definitions can be nested to arbitrary depth.  The mechanics of
+parsing the escape character have significant consequences for this
+practice.
+
+@Example
+.de M1
+\\$1
+.  de M2
+\\\\$1
+.    de M3
+\\\\\\\\$1
+\\\\..
+.    M3 hand.
+\\..
+.  M2 of
+..
+This is getting
+.M1 out
+    @result{} This is getting out of hand.
+@endExample
+
+Each escape character is interpreted twice---once in copy mode, when the
+macro is defined, and once in interpretation mode, when it is executed.
+As seen above, this fact leads to exponential growth in the number of
+escape characters required to delay interpolation of @code{\n},
+@code{\g}, @code{\$}, @code{\*}, and @code{\V} at each nesting level,
+which can be daunting.  GNU @code{troff} offers a solution.
+
+@Defesc {\\E, , , }
+@code{\E} represents an escape character that is not interpreted in copy
+mode.  You can use it to ease the writing of nested macro definitions.
+
+@Example
+.de M1
+.  nop \E$1
+.  de M2
+.    nop \E$1
+.    de M3
+.      nop \E$1
+\\\\..
+.    M3 better.
+\\..
+.  M2 bit
+..
+This vehicle handles
+.M1 a
+    @result{} This vehicle handles a bit better.
+@endExample
+
+Observe that because @code{\.} is not a true escape sequence, we can't
+use @code{\E} to keep @samp{..} from ending a macro definition
+prematurely.  If the multiplicity of backslashes complicates
+maintenance, use end macros.
+
+@code{\E} is also convenient to define strings that contain escape
+sequences that need to work when used in copy mode (for example, as
+macro arguments) We might define strings to begin and end superscripting
+as follows.@footnote{These are lightly adapted from the @code{groff}
+implmentation of the @file{ms} macros.}
+
+@Example
+.ds @{ \v'-.9m\s'\En[.s]*7u/10u'+.7m'
+.ds @} \v'-.7m\s0+.9m'
+@endExample
+
+When the @code{ec} request is used to redefine the escape character,
+@code{\E} also makes it easier to distinguish the semantics of an escape
+character from the other meaning(s) its character might have.  Consider
+the use of an unusual escape character, @samp{-}.
+
+@Example
+.nr a 1
+.ec -
+.de xx
+--na
+..
+.xx
+    @result{} -na
+@endExample
+
+@noindent
+This result may surprise you; some people expect @samp{1} to be output
+since register @samp{a} has clearly been defined with that value.  What
+has happened?  The robotic replacement of @samp{\} with @samp{-} has led
+us astray.  As mentioned above, the leading escape character makes
+the following character ordinary.  Written with the default escape
+character, the sequence @samp{--} becomes @samp{\-}, which you may
+recognize as the special character escape sequence for the minus sign
+glyph.  Since the escape character followed by itself is a valid escape
+sequence, only @code{\E} yields the expected result.
+
+@Example
+.nr a 1
+.ec -
+.de xx
+-Ena
+..
+.xx
+    @result{} 1
+@endExample
+@endDefesc
+
 
 @c =====================================================================
 

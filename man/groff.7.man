@@ -5299,63 +5299,131 @@ such as formatting the calendar date.
 .
 .
 .\" ====================================================================
-.SH "Copy mode"
+.SH "Writing macros"
+.\" ====================================================================
+.
+The
+.B .de
+request defines a macro replacing the definition of any existing
+request,
+macro,
+string,
+or diversion of the same name.
+.
+.I \%@g@troff
+stores subsequent lines to an internal buffer in \[lq]copy mode\[rq]
+(see below).
+.
+If the optional second argument is not specified,
+the macro definition ends with the control line
+.RB \[lq] .. \[rq]\&
+(two dots).
+.
+Alternatively,
+a second argument names a macro which,
+upon being subsequently called,
+ends the macro definition in progress.
+.
+Spaces or tabs are permitted after the first dot in the line containing
+the ending token.
+.
+Macro definitions can be nested;
+this requires use of unique end macros for each nested definition or
+escaping of the line with the ending token.
+.
+.
+.P
+Variants of
+.B .de
+that disable compatibility mode and/or indirect the names of the macros
+being defined or ending the definition through a string are available as
+.BR .de1 ,
+.BR .dei ,
+and
+.BR .dei1 .
+.
+Existing macro definitions can be appended to with
+.BR .am ,
+.BR .am1 ,
+.BR .ami ,
+and
+.BR .ami1 .
+.
+The
+.BR .als ,
+.BR .rm ,
+and
+.B .rn
+requests create an alias of,
+remove,
+and rename a macro,
+respectively.
+.
+.B .return
+stops the execution of a macro immediately,
+returning to the enclosing context.
+.
+.
+.\" ====================================================================
+.SS Parameters
+.\" ====================================================================
+.
+Macro calls and string parameters can be accessed using the
+.B \[rs]$
+escapes.
+.
+The
+.B \[rs]n[.$]
+read-only register stores the count of parameters available to a macro
+or string;
+its value can be changed by the
+.B .shift
+request,
+which dequeues parameters from the current list.
+.
+The
+.B \[rs]$0
+escape sequence interpolates the name by which a macro was called.
+.
+Applying string interpolation to a macro does not change this name.
+.
+.
+.\" ====================================================================
+.SS "Copy mode"
 .\" ====================================================================
 .
 When
 .I \%@g@troff
 processes certain requests,
-most importantly those which define or append to a macro,
-string,
-or diversion,
+most importantly those which define or append to a macro or string,
 it does so in
 .IR "copy mode" :
 it copies the characters of the definition into a dedicated storage
 region,
 interpolating the escape sequences
-.esc n ,
-.esc g ,
-.esc $ ,
-.esc * ,
+.BR \[rs] n ,
+.BR \[rs] g ,
+.BR \[rs] $ ,
+.BR \[rs] * ,
 and
-.esc V
+.B \[rs] V
 normally;
 interpreting
-.esc .\&
-and
 .BI \[rs] newline
 immediately;
 discarding comments
-.esc "
+.BR \[rs] "
 and
-.esc # ;
+.BR \[rs] # ;
 interpolating the current leader,
 escape,
 or tab character with
-.esc a ,
-.esc e
-or
-.esc E ,
+.BR \[rs] a ,
+.BR \[rs] e ,
 and
-.esc t ,
+.BR \[rs] t ,
 respectively;
 and storing all other escape sequences in an encoded form.
-.
-See section \[lq]Character Translations\[rq] of the
-.I groff
-Texinfo manual
-for more on the use of
-.esc e
-and
-.esc E ,
-and the distinction between them.
-.
-.
-.P
-Since the escape character escapes itself,
-you can control whether any escape sequence is interpreted at macro
-definition time or when it is later interpolated by preceding it with an
-additional instance of the escape character.
 .
 The complement of copy mode\[em]a
 .I roff
@@ -5366,6 +5434,118 @@ requests invoked,
 and valid escape sequences processed immediately upon recognition,
 can be termed
 .IR "interpretation mode" .
+.
+.
+.P
+The escape character,
+.B \[rs]
+by default,
+escapes itself.
+.
+Thus you can control whether a given
+.BR \[rs] n ,
+.BR \[rs] g ,
+.BR \[rs] $ ,
+.BR \[rs] * ,
+or
+.B \[rs] V
+escape sequence is interpreted at the time the macro containing it is
+defined,
+or later when the macro is called.
+.
+.
+.P
+You can think of
+.B \[rs]\[rs]
+as a \[lq]delayed\[rq] backslash;
+it is the escape character followed by a backslash from which the escape
+character has removed its special meaning.
+.
+Consequently,
+.B \[rs]\[rs]
+is not an escape sequence in the usual sense.
+.
+In any escape sequence
+.BI \[rs] X
+that
+.I \%@g@troff
+does not recognize,
+the escape character is ignored and
+.IR X \~is
+output,
+with two exceptions,
+.B \[rs]\[rs]
+being one.
+.
+The other is
+.BR \[rs]. ,
+which escapes the control character.
+.
+It is used to permit nested macro definitions to end without a named
+macro call to conclude them.
+.
+Without a syntax for escaping the control character,
+this would not be possible.
+.
+.I roff
+documents should not use the
+.B \[rs]\[rs]
+or
+.B \[rs].\&
+tokens outside of copy mode;
+they serve only to obfuscate the input.
+.
+Use
+.B \[rs]e
+to obtain the escape character,
+.B \[rs][rs]
+to obtain a backslash glyph,
+and
+.B \[rs]&
+before
+.RB \[lq] . \[rq]
+and
+.RB \[lq] \[aq] \[rq]
+where
+.I \%@g@troff
+expects them as control characters if you mean to use them literally.
+.
+.
+.P
+Macro definitions can be nested to arbitrary depth.
+.
+Each escape character is interpreted twice\[em]once in copy mode,
+when the macro is defined,
+and once in interpretation mode,
+when it is executed.
+.
+This fact leads to exponential growth in the number of escape characters
+required to delay interpolation of
+.BR \[rs] n ,
+.BR \[rs] g ,
+.BR \[rs] $ ,
+.BR \[rs] * ,
+and
+.B \[rs] V
+at each nesting level.
+.
+An alternative is to use
+.BR \[rs]E ,
+which represents an escape character that is not interpreted in copy
+mode.
+.
+Because
+.B \[rs].\&
+is not a true escape sequence,
+we can't use
+.B \[rs]E
+to keep
+.RB \[lq] ..\& \[rq]
+from ending a macro definition prematurely.
+.
+If the multiplicity of backslashes complicates
+maintenance,
+use end macros.
 .
 .
 .\" ====================================================================
