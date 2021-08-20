@@ -8486,92 +8486,9 @@ The @code{ecr} request restores the escape character saved with
 saved.
 @endDefreq
 
-@DefescList {\\\\, , , }
-@DefescItemx {\\e, , , }
-@DefescListEndx {\\E, , , }
+@Defesc {\\e, , , }
 Print the current escape character (which is the backslash character
 @samp{\} by default).
-
-@code{\\} is a `delayed' backslash; more precisely, it is the default
-escape character followed by a backslash, which no longer has special
-meaning due to the leading escape character.  It is @emph{not} an escape
-sequence in the usual sense!  In any unknown escape sequence
-@code{\@var{X}} the escape character is ignored and @var{X} is printed.
-But if @var{X} is equal to the current escape character, no warning is
-emitted.
-
-@cindex @code{\E}, and copy mode
-@cindex copy mode, and @code{\E}
-@cindex mode, copy, and @code{\E}
-As a consequence, only at the top level or in a diversion is a backslash
-glyph printed; in copy mode, it expands to a single backslash, which
-then combines with the following character to form an escape sequence.
-
-The @code{\E} escape differs from @code{\e} by printing an escape
-character that is not interpreted in copy mode.  Use this to define
-strings with escapes that work when used in copy mode (for example, as a
-macro argument).  The following example defines strings to begin and end
-a superscript:
-
-@Example
-.ds @{ \v'-.3m'\s'\En[.s]*60/100'
-.ds @} \s0\v'.3m'
-@endExample
-
-Another example to demonstrate the differences between the various
-escape sequences, using a strange escape character, @samp{-}.
-
-@Example
-.ec -
-.de xxx
---A'foo'
-..
-.xxx
-    @result{} -A'foo'
-@endExample
-
-@noindent
-The result is surprising for most users, expecting @samp{1} since
-@samp{foo} is a valid identifier.  What has happened?  As mentioned
-above, the leading escape character makes the following character
-ordinary.  Written with the default escape character the sequence
-@samp{--} becomes @samp{\-}---this is the minus sign.
-
-If the escape character followed by itself is a valid escape sequence,
-only @code{\E} yields the expected result:
-
-@Example
-.ec -
-.de xxx
--EA'foo'
-..
-.xxx
-    @result{} 1
-@endExample
-@endDefesc
-
-@Defesc {\\., , , }
-Similar to @code{\\}, the sequence @code{\.} isn't a real escape
-sequence.  As before, a warning message is suppressed if the escape
-character is followed by a dot, and the dot itself is printed.
-
-@Example
-.de foo
-.  nop foo
-.
-.  de bar
-.    nop bar
-\\..
-.
-..
-.foo
-.bar
-    @result{} foo bar
-@endExample
-
-@noindent
-The first backslash is consumed while the macro is read, and the second
-is swallowed while executing macro @code{foo}.
 @endDefesc
 
 A @dfn{translation} is a mapping of an input character to an output
@@ -12483,6 +12400,89 @@ macros are interpolated, requests invoked, and valid escape sequences
 processed immediately upon recognition, can be termed
 @dfn{interpretation mode}.
 
+@DefescList {\\\\, , , }
+@DefescListEndx {\\E, , , }
+@code{\\} is a `delayed' backslash; more precisely, it is the default
+escape character followed by a backslash, which no longer has special
+meaning due to the leading escape character.  It is @emph{not} an escape
+sequence in the usual sense!  In any unknown escape sequence
+@code{\@var{X}} the escape character is ignored and @var{X} is printed.
+But if @var{X} is equal to the current escape character, no warning is
+emitted.
+
+@cindex @code{\E}, and copy mode
+@cindex copy mode, and @code{\E}
+@cindex mode, copy, and @code{\E}
+As a consequence, only at the top level or in a diversion is a backslash
+glyph printed; in copy mode, it expands to a single backslash, which
+then combines with the following character to form an escape sequence.
+
+The @code{\E} escape differs from @code{\e} by printing an escape
+character that is not interpreted in copy mode.  Use this to define
+strings with escapes that work when used in copy mode (for example, as a
+macro argument).  The following example defines strings to begin and end
+a superscript:
+
+@Example
+.ds @{ \v'-.3m'\s'\En[.s]*60/100'
+.ds @} \s0\v'.3m'
+@endExample
+
+Another example to demonstrate the differences between the various
+escape sequences, using a strange escape character, @samp{-}.
+
+@Example
+.ec -
+.de xxx
+--A'foo'
+..
+.xxx
+    @result{} -A'foo'
+@endExample
+
+@noindent
+The result is surprising for most users, expecting @samp{1} since
+@samp{foo} is a valid identifier.  What has happened?  As mentioned
+above, the leading escape character makes the following character
+ordinary.  Written with the default escape character the sequence
+@samp{--} becomes @samp{\-}---this is the minus sign.
+
+If the escape character followed by itself is a valid escape sequence,
+only @code{\E} yields the expected result:
+
+@Example
+.ec -
+.de xxx
+-EA'foo'
+..
+.xxx
+    @result{} 1
+@endExample
+@endDefesc
+
+@Defesc {\\., , , }
+Similar to @code{\\}, the sequence @code{\.} isn't a real escape
+sequence.  As before, a warning message is suppressed if the escape
+character is followed by a dot, and the dot itself is printed.
+
+@Example
+.de foo
+.  nop foo
+.
+.  de bar
+.    nop bar
+\\..
+.
+..
+.foo
+.bar
+    @result{} foo bar
+@endExample
+
+@noindent
+The first backslash is consumed while the macro is read, and the second
+is swallowed while executing macro @code{foo}.
+@endDefesc
 
 @c =====================================================================
 
