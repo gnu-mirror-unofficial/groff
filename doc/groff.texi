@@ -12304,70 +12304,13 @@ macro one level higher.  This is used to define a wrapper macro for
 @endDefreq
 
 @menu
-* Copy Mode::
 * Parameters::
+* Copy Mode::
 @end menu
 
 @c ---------------------------------------------------------------------
 
-@codequotebacktick on
-@codequoteundirected on
-
-@node Copy Mode, Parameters, Writing Macros, Writing Macros
-@subsection Copy Mode
-@cindex copy mode
-@cindex copy mode
-@cindex mode, copy
-@cindex mode, copy
-
-@cindex @code{\n}, when reading text for a macro
-@cindex @code{\$}, when reading text for a macro
-@cindex @code{\*}, when reading text for a macro
-@cindex @code{\\}, when reading text for a macro
-@cindex \@key{RET}, when reading text for a macro
-When GNU @code{troff} processes certain requests, most importantly those
-which define or append to a macro, string, or diversion, it does so in
-@dfn{copy mode}: it copies the characters of the definition into a
-dedicated storage region, interpolating the escape sequences @code{\n},
-@code{\g}, @code{\$}, @code{\*}, and @code{\V} normally; interpreting
-@code{\.} and @code{\@key{RET}} immediately; discarding comments
-@code{\"} and @code{\#}; interpolating the current leader, escape, or
-tab character with @code{\a}, @code{\e} or @code{\E}, and @code{\t},
-respectively; and storing all other escape sequences in an encoded form.
-@xref{Character Translations} for more on the use of @code{\e} and
-@code{\E}, and the distinction between them.
-
-Since the escape character escapes itself, you can control whether any
-escape sequence is interpreted at macro definition time or when it is
-later interpolated by preceding it with an additional instance of the
-escape character.@footnote{Compare this to the @code{\def} and
-@code{\edef} commands in @TeX{}.}
-
-@Example
-.nr x 20
-.de y
-.nr x 10
-\&\nx
-\&\\nx
-..
-.y
-    @result{} 20 10
-@endExample
-
-@cindex interpretation mode
-@cindex mode, interpretation
-The complement of copy mode---a @code{roff} formatter's behavior when
-not defining or appending to a macro, string, or diversion---where all
-macros are interpolated, requests invoked, and valid escape sequences
-processed immediately upon recognition, can be termed
-@dfn{interpretation mode}.
-
-@codequotebacktick off
-@codequoteundirected off
-
-@c ---------------------------------------------------------------------
-
-@node Parameters,  , Copy Mode, Writing Macros
+@node Parameters, Copy Mode, Writing Macros, Writing Macros
 @subsection Parameters
 @cindex parameters
 
@@ -12491,6 +12434,63 @@ If a macro is called as a string (within another macro), the value of
 @endDefesc
 
 @xref{Request and Macro Arguments}.
+
+@c ---------------------------------------------------------------------
+
+@codequotebacktick on
+@codequoteundirected on
+
+@node Copy Mode, , Parameters, Writing Macros
+@subsection Copy Mode
+@cindex copy mode
+@cindex copy mode
+@cindex mode, copy
+@cindex mode, copy
+
+@cindex @code{\n}, when reading text for a macro
+@cindex @code{\$}, when reading text for a macro
+@cindex @code{\*}, when reading text for a macro
+@cindex @code{\\}, when reading text for a macro
+@cindex \@key{RET}, when reading text for a macro
+When GNU @code{troff} processes certain requests, most importantly those
+which define or append to a macro, string, or diversion, it does so in
+@dfn{copy mode}: it copies the characters of the definition into a
+dedicated storage region, interpolating the escape sequences @code{\n},
+@code{\g}, @code{\$}, @code{\*}, and @code{\V} normally; interpreting
+@code{\.} and @code{\@key{RET}} immediately; discarding comments
+@code{\"} and @code{\#}; interpolating the current leader, escape, or
+tab character with @code{\a}, @code{\e} or @code{\E}, and @code{\t},
+respectively; and storing all other escape sequences in an encoded form.
+@xref{Character Translations} for more on the use of @code{\e} and
+@code{\E}, and the distinction between them.
+
+Since the escape character escapes itself, you can control whether any
+escape sequence is interpreted at macro definition time or when it is
+later interpolated by preceding it with an additional instance of the
+escape character.@footnote{Compare this to the @code{\def} and
+@code{\edef} commands in @TeX{}.}
+
+@Example
+.nr x 20
+.de y
+.nr x 10
+\&\nx
+\&\\nx
+..
+.y
+    @result{} 20 10
+@endExample
+
+@cindex interpretation mode
+@cindex mode, interpretation
+The complement of copy mode---a @code{roff} formatter's behavior when
+not defining or appending to a macro, string, or diversion---where all
+macros are interpolated, requests invoked, and valid escape sequences
+processed immediately upon recognition, can be termed
+@dfn{interpretation mode}.
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
