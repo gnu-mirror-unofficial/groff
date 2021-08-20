@@ -1811,37 +1811,27 @@ but compatibility mode is switched off during execution.
 .
 On entry, the current compatibility mode is saved and restored at exit.
 .
-.TP
-.BI .dei\~ xx\~yy
-Define macro indirectly.
-.
-The following example
-.
-.RS
-.IP
-.ne 2v+\n(.Vu
-.EX
-\&.ds xx aa
-\&.ds yy bb
-\&.dei xx yy
-.EE
-.RE
-.
-.IP
-is equivalent to
-.
-.RS
-.IP
-.EX
-\&.de aa bb
-.EE
-.RE
 .
 .TP
-.BI .dei1\~ xx\~yy
-Similar to the
-.B dei
-request but compatibility mode is switched off during execution.
+.BI .dei\~ xx\~\c
+.RI [ yy ]
+Define macro indirectly,
+with the name of the macro to be defined in string
+.I xx
+and the name of the end macro terminating its definition in string
+.IR yy .
+.
+.
+.TP
+.BI .dei1\~ xx\~\c
+.RI [ yy ]
+As
+.BR .dei ,
+but compatibility mode is switched off when the definition of the
+macro named in the string
+.I xx
+is executed.
+.
 .
 .TP
 .BI .device\~ anything
