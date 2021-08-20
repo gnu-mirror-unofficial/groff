@@ -11312,13 +11312,16 @@ Diversions can be also called with string syntax.  It is sometimes
 convenient to copy one-line diversions to a string.
 
 @Example
-.di xxx
-a \fItest\fR
+.di xx
+the
+.ft I
+interpolation system
+.ft
 .br
 .di
-.ds yyy This is \*[xxx]\c
-\*[yyy].
-    @result{} This is a @i{test}.
+.ds yy This is a test of \*(xx\c
+\*(yy.
+    @result{} This is a test of the @i{interpolation system}.
 @endExample
 
 @noindent
