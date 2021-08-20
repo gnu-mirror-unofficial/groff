@@ -1,3 +1,15 @@
+2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Rename font class member variable.
+
+	* src/include/font.h (font class): Rename `unscaled_charwidths`
+	member variable to `use_unscaled_charwidths`: since it is a
+	Boolean, make it read more like a logical predicate.
+
+	* src/libs/libgroff/font.cpp (font::get_width, font::load_desc):
+	* src/libs/libgroff/fontfile.cpp (font class): Update
+	initialization and assignments.
+
 2021-08-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/input.cpp (get_copy): Demote integer arguments

@@ -355,7 +355,7 @@ int font::get_width(glyph *g, int point_size)
   if (idx < nindices && ch_index[idx] >= 0) {
     // Explicitly enumerated glyph
     int i = ch_index[idx];
-    if (real_size == unitwidth || font::unscaled_charwidths)
+    if (real_size == unitwidth || font::use_unscaled_charwidths)
       return ch[i].width;
 
     if (!widths_cache)
@@ -386,7 +386,7 @@ int font::get_width(glyph *g, int point_size)
     int w = wcwidth(get_code(g));
     if (w > 1)
       width *= w;
-    if (real_size == unitwidth || font::unscaled_charwidths)
+    if (real_size == unitwidth || font::use_unscaled_charwidths)
       return width;
     else
       return scale(width, point_size);
@@ -1121,7 +1121,7 @@ int font::load_desc()
       }
     }
     else if (strcmp("unscaled_charwidths", p) == 0)
-      unscaled_charwidths = true;
+      use_unscaled_charwidths = true;
     else if (strcmp("pass_filenames", p) == 0)
       pass_filenames = true;
     else if (strcmp("sizes", p) == 0) {

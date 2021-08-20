@@ -244,7 +244,7 @@ public:
   static int spare2;
   static int sizescale;	// The 'sizescale' attribute given in the DESC file.
   static bool has_tcommand;	// DESC file has 'tcommand' directive.
-  static bool unscaled_charwidths;	// DESC file has
+  static bool use_unscaled_charwidths;	// DESC file has
 			// 'unscaled_charwidths' directive.
   static bool pass_filenames;	// DESC file has 'pass_filenames'
 			// directive.
