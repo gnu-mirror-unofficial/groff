@@ -1,3 +1,12 @@
+2021-08-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/input.cpp (get_copy): Demote integer arguments
+	to Booleans and use Boolean literals for default values.  Rename
+	`defining` to `is_defining`.
+	(get_char_for_escape_name, do_define_macro): Update call sites
+	that use non-default arguments to use Boolean literals and
+	comments to document what's being requested.
+
 2021-08-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am (DOC_GROFF_ONLY): Stop running groff in unsafe

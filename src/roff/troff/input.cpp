@@ -128,7 +128,7 @@ search_path *mac_path = &safer_macro_path;
 // Defaults to the current directory.
 search_path include_search_path(0, 0, 0, 1);
 
-static int get_copy(node**, int = 0, int = 0);
+static int get_copy(node**, bool = false, bool = false);
 static void copy_mode_error(const char *,
 			    const errarg & = empty_errarg,
 			    const errarg & = empty_errarg,
@@ -821,7 +821,7 @@ void shift()
 
 static char get_char_for_escape_name(int allow_space = 0)
 {
-  int c = get_copy(0, 0, 1);
+  int c = get_copy(0, false /* is defining */, true /* handle \E */);
   switch (c) {
   case EOF:
     copy_mode_error("end of input in escape name");
@@ -962,7 +962,7 @@ static symbol read_increment_and_escape_name(int *incp)
   return symbol(buf);
 }
 
-static int get_copy(node **nd, int defining, int handle_escape_E)
+static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
 {
   for (;;) {
     int c = input_stack::get(nd);
@@ -993,7 +993,7 @@ static int get_copy(node **nd, int defining, int handle_escape_E)
     if (c == ESCAPE_E && handle_escape_E)
       c = escape_char;
     if (c == ESCAPE_NEWLINE) {
-      if (defining)
+      if (is_defining)
 	return c;
       do {
 	c = input_stack::get(nd);
@@ -1080,7 +1080,7 @@ static int get_copy(node **nd, int defining, int handle_escape_E)
       }
     case '\n':
       (void)input_stack::get(0);
-      if (defining)
+      if (is_defining)
 	return ESCAPE_NEWLINE;
       break;
     case ' ':
@@ -4495,7 +4495,7 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
 						      &start_lineno);
   node *n;
   // doing this here makes the line numbers come out right
-  int c = get_copy(&n, 1);
+  int c = get_copy(&n, true /* is defining*/);
   macro mac;
   macro *mm = 0;
   if (mode == DEFINE_NORMAL || mode == DEFINE_APPEND) {
@@ -4517,7 +4517,7 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
     while (c == ESCAPE_NEWLINE) {
       if (mode == DEFINE_NORMAL || mode == DEFINE_APPEND)
 	mac.append(c);
-      c = get_copy(&n, 1);
+      c = get_copy(&n, true /* is defining */);
     }
     if (bol && c == '.') {
       const char *s = term.contents();
@@ -4593,7 +4593,7 @@ void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
 	mac.append(c);
     }
     bol = (c == '\n');
-    c = get_copy(&n, 1);
+    c = get_copy(&n, true /* is defining */);
   }
 }
 
