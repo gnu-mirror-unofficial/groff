@@ -3,7 +3,7 @@ pdfmark.ms
 
 This file is part of groff, the GNU roff type-setting system.
 
-Copyright (C) 2004-2020 Free Software Foundation, Inc.
+Copyright (C) 2004-2021 Free Software Foundation, Inc.
 written by Keith Marshall <keith.d.marshall@ntlworld.com>
 
 Permission is granted to copy, distribute and/or modify this document
@@ -92,7 +92,7 @@ Publishing with GNU Troff
 \\$5\fC\\$3\fP\f[CBI]\\$1\fP\fC\\$2\fP\\$4
 ..
 .ds = \f(CB\\$1\f(CR\\$4\f[CBI]\\$2\f(CR\\$3
-.\"
+.
 .NH 1
 .\" When we use numbered section headings, we might like to automatically
 .\" insert a table of contents entry, using the text of the heading itself.
@@ -291,6 +291,7 @@ This list is by no means exhaustive, and should in no way be construed as an
 endorsement of any of these packages, nor to imply that other similar packages,
 which may be available, are in any way inferior to them.
 .bp
+.
 .NH 1
 .\" We may wish a section heading to represent a named destination,
 .\" so that we can create a linked reference to it, from some other 
@@ -337,6 +338,7 @@ macro package;  thus, users are free to use any other macro package,
 of their choice, to format their documents, while also using the
 .CW pdfmark
 macros to add PDF features.
+.
 .NH 2
 .XN -N pdfmark-operator -- The \F[C]pdfmark\F[] Operator
 .LP
@@ -407,6 +409,7 @@ macro may be useful to users wishing to implement more advanced PDF features,
 than those currently supported directly by the
 .CW pdfmark
 macro package.
+.
 .NH 2
 .XN -N docview -- Selecting an Initial Document View
 .LP
@@ -473,7 +476,7 @@ macro,
 .\"     .pdfhref L -D pdfsync -P ( -A ).
 .\"
 .XR pdfsync ). (
-.\"
+.
 .NH 2
 .XN -N docinfo -- Adding Document Identification Meta-Data
 .LP
@@ -528,6 +531,7 @@ by invoking the
 .CW pdfsync
 macro,
 .XR pdfsync ). (
+.
 .NH 2
 .XN -N add-outline -- Creating a Document Outline
 .LP
@@ -551,6 +555,7 @@ for creating and linking to \(lqhypertext\(rq reference marks.
 This macro will be described more comprehensively in a later section,
 .XR pdfhref ); (
 the description here is restricted to its use for defining document outline entries.
+.
 .NH 3
 .XN -N basic-outline -- A Basic Document Outline
 .LP
@@ -620,6 +625,7 @@ macro, as
 .QP
 .CW
 \&.pdfbookmark 3 \*(SN A Basic Document Outline
+.
 .NH 3
 .XN Hierarchical Structure in a Document Outline
 .LP
@@ -727,6 +733,7 @@ to synchronise the output state with the cache state,
 at the end of the
 .CW groff
 formatting run.
+.
 .NH 3
 .XN -N outline-view -- Associating a Document View with an Outline Reference
 .LP
@@ -866,6 +873,7 @@ ensure that these are computed
 invoking the
 .CW pdfhref
 macro.
+.
 .NH 3
 .XN -N outline-folding -- Folding the Outline to Conceal Less Significant Headings
 .LP
@@ -939,6 +947,7 @@ the outline cache should be flushed,
 .EM immediately
 before the change,
 which should immediately preceed a level one heading.
+.
 .NH 3
 .XN -N multipart-outline -- Outlines for Multipart Documents
 .LP
@@ -1019,6 +1028,7 @@ Alternatively, as in the case of the basic outline,
 this may equally well be specified as
 .QP
 .CW ".pdfbookmark -T T 1 \e\e*[TOC]"
+.
 .NH 3
 .XN Delegation of the Outline Definition
 .LP
@@ -1054,6 +1064,7 @@ macro, to create the document outline,
 is delegated to the
 .CW XN
 macro.
+.
 .NH 2
 .XN -N pdfhref -- Adding Reference Marks and Links
 .LP
@@ -1156,6 +1167,7 @@ in order to support mapping of reference \(lqhot\(hyspots\(rq
 which extend through a page transition;
 .XR page-trap ). (
 .QE
+.
 .NH 3
 .XN Optional Features of the \F[C]pdfhref\F[] Macro
 .LP
@@ -1509,6 +1521,7 @@ argument specified with the
 .CWB -F
 option.
 .QE
+.
 .NH 3
 .XN -N mark-dest -- Marking a Reference Destination
 .LP
@@ -1604,6 +1617,7 @@ option, which causes any specified
 to be \(lqechoed\(rq in the document text,
 at the point where the reference mark is placed,
 in addition to its inclusion in the cross reference map.
+.
 .NH 4
 .XN -N export-map -- Mapping a Destination for Cross Referencing
 .LP
@@ -1661,6 +1675,7 @@ operator; this may be redefined by the user,
 to export additional cross reference information,
 or to modify the default format for cross reference links,
 .XR set-format ). (
+.
 .NH 4
 .XN -N pdfhref-view -- Associating a Document View with a Reference Mark
 .LP
@@ -1751,6 +1766,7 @@ all comments in
 .pdfhref F
 relating to its use, and indeed to page position computations in general,
 apply equally to marked reference views and to outline reference views.
+.
 .NH 3
 .XN -N link-named -- Linking to a Marked Reference Destination
 .LP
@@ -1773,6 +1789,7 @@ the same document as the link,
 .XR link-intern ), (
 or is defined as a named destination in a different PDF document,
 .XR link-extern ). (
+.
 .NH 4
 .XN -N link-intern -- References within a Single PDF Document
 .LP
@@ -1912,6 +1929,7 @@ and also by the formatting rules in effect when the link is placed,
 the presentation of a suitable exanple will be deferred,
 until the formatting mechanism has been explained,
 .XR set-format ). (
+.
 .NH 4
 .XN -N link-extern -- References to Destinations in Other PDF Documents
 .LP
@@ -2054,6 +2072,7 @@ the presentation of an example of the placing of
 a reference to an external destination will be deferred,
 until the formatting mechanism has been explained,
 .XR set-format ). (
+.
 .NH 3
 .XN -N add-weblink -- Linking to Internet Resources
 .LP
@@ -2157,6 +2176,7 @@ making it obvious that the appropriate URI is
 \&.pdfhref W -A , \*[GROFF-WEBSITE]
 the requisite mark up might be:\e(en
 .DE
+.
 .NH 3
 .XN -N set-format -- Establishing a Format for References
 .LP
@@ -2179,6 +2199,7 @@ macro \(em
 .XR set-colour
 \(em unless the user specifically chooses to adopt, and implement,
 some alternative strategy.
+.
 .NH 4
 .XN -N set-colour -- Using Colour to Demarcate Link Regions
 .LP
@@ -2188,10 +2209,13 @@ references to other locations, either within the same document,
 or even in other documents, or on the World Wide Web,
 it is usually desirable to make the regions
 where these active links are placed stand out from the surrounding text.
+.
 .NH 4
 .XN -N user-format -- Specifying Reference Text Explicitly
+.
 .NH 4
 .XN -N auto-format -- Using Automatically Formatted Reference Text
+.
 .NH 4
 .XN -N custom-format -- Customising Automatically Formatted Reference Text
 .LP
@@ -2205,6 +2229,7 @@ in which the reference will appear;
 thus, it may be easiest to
 .EM always
 use manual formatting for external references.
+.
 .NH 3
 .XN Problematic Links
 .LP
@@ -2218,6 +2243,7 @@ operator, there may be occasions when the resulting link
 does function as expected.
 A number of scenarios, which are known to be troublesome,
 are described below.
+.
 .NH 4
 .XN -N page-trap -- Links with a Page Transition in the Active Region
 .LP
@@ -2300,8 +2326,10 @@ illustrates how this may be accomplished:\(en
 \&.
 \&.pdfhref I -PT pg@bottom
 .DE
+.
 .NH 2
 .XN -N add-note -- Annotating a PDF Document using Pop-Up Notes
+.
 .NH 2
 .XN -N pdfsync -- Synchronising Output and \F[C]pdfmark\F[] Contexts
 .LP
@@ -2419,6 +2447,7 @@ is terminated,
 .EM before
 it commences the formatting of the table of contents section.
 .bp
+.
 .NH 1
 .XN -N pdf-layout -- PDF Document Layout
 .LP
@@ -2453,6 +2482,7 @@ macro packages,
 as to how the
 .CW pdfmark
 macros may be employed with their chosen primary macro package.
+.
 .NH 2
 .XN -N using-spdf -- Using \F[C]pdfmark\F[] Macros with the \F[C]ms\F[] Macro Package
 .LP
@@ -2503,6 +2533,7 @@ which require special handling when producing PDF documents.
 These additional macros,
 and the issues they are intended to address,
 are described below.
+.
 .NH 3
 .XN \F[C]ms\F[] Section Headings in PDF Documents
 .LP
@@ -2530,14 +2561,19 @@ macro,
 to be used in conjunction with the
 .CW NH
 macro.
+.
 .NH 4
 .XN -N xn-macro -- The \F[C]XN\F[] Macro
+.
 .NH 1
 .XN The PDF Publishing Process
+.
 .NH 2
 .XN -N do-xref -- Resolving Cross References
+.
 .NH 3
 .XN -N create-map -- Creating a Document Reference Map
+.
 .NH 3
 .XN -N import-map -- Deploying a Document Reference Map
 .TC
