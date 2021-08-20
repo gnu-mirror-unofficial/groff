@@ -11471,7 +11471,7 @@ string, and a @dfn{compatibility restore} input token at the end.
 .cp 1
 .
 \*(aa
-    @error{} warning: number register '[' not defined
+    @error{} warning: register '[' not defined
     @result{} The value of xxx is 0xxx].
 \*(bb
     @result{} The value of xxx is 12345.
@@ -12106,9 +12106,6 @@ Finish the current iteration of a @code{while} loop, immediately
 restarting the next iteration.
 @endDefreq
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
@@ -12129,7 +12126,7 @@ simply using an undefined macro will cause it to be defined as empty.
 @DefreqItemx {de1, name [@Var{end}]}
 @DefreqItemx {dei, name [@Var{end}]}
 @DefreqListEndx {dei1, name [@Var{end}]}
-Define a new macro named @var{name}.  @code{gtroff} copies subsequent
+Define a new macro named @var{name}.  GNU @code{troff} copies subsequent
 lines (starting with the next one) into an internal buffer until it
 encounters the line @samp{..} (two dots).  If the optional second
 argument to @code{de} is present it is used as the macro closure
@@ -12146,7 +12143,7 @@ possible to define and call a macro @samp{.} with
 .  tm foo
 ..
 .
-..    \" This calls macro `.'!
+..    \" This calls macro '.'!
 @endExample
 
 @noindent
@@ -12206,7 +12203,7 @@ The value of xxx is \\n[xxx].
 .cp 1
 .
 .aa
-    @error{} warning: number register '[' not defined
+    @error{} warning: register '[' not defined
     @result{} The value of xxx is 0xxx].
 .bb
     @result{} The value of xxx is 12345.
@@ -12235,8 +12232,8 @@ The @code{dei1} request is similar to @code{dei} but with compatibility
 mode switched off during execution of the defined macro.
 
 If compatibility mode is on, @code{de} (and @code{dei}) behave similar
-to @code{de1} (and @code{dei1}): A `compatibility save' token is
-inserted at the beginning, and a `compatibility restore' token at the
+to @code{de1} (and @code{dei1}): A ``compatibility save'' token is
+inserted at the beginning, and a ``compatibility restore'' token at the
 end, with compatibility mode switched on during execution.  @xref{Gtroff
 Internals}, for more information on switching compatibility mode on and
 off in a single document.
@@ -12273,7 +12270,7 @@ appended macro piece.  To be more precise, a @dfn{compatibility save}
 input token is inserted at the beginning of the appended code, and a
 @dfn{compatibility restore} input token at the end.
 
-The @code{ami} request appends indirectly, meaning that @code{gtroff}
+The @code{ami} request appends indirectly, meaning that GNU @code{troff}
 expands strings whose names are @var{name} or @var{end} before
 performing the append.
 
@@ -12372,18 +12369,18 @@ Handle the parameters of a macro as if they were an argument to the
 
 @Example
 .de foo
-.  tm $1=`\\$1'
-.  tm $2=`\\$2'
-.  tm $*=`\\$*'
-.  tm $@@=`\\$@@'
-.  tm $^=`\\$^'
+.  tm $1='\\$1'
+.  tm $2='\\$2'
+.  tm $*='\\$*'
+.  tm $@@='\\$@@'
+.  tm $^='\\$^'
 ..
 .foo " This is a "test"
-    @result{} $1=` This is a '
-    @result{} $2=`test"'
-    @result{} $*=` This is a  test"'
-    @result{} $@@=`" This is a " "test""'
-    @result{} $^=`" This is a "test"'
+    @result{} $1=' This is a '
+    @result{} $2='test"'
+    @result{} $*=' This is a  test"'
+    @result{} $@@='" This is a " "test""'
+    @result{} $^='" This is a "test"'
 @endExample
 
 This escape is useful mainly for macro packages like @file{trace.tmac},
@@ -12437,9 +12434,6 @@ If a macro is called as a string (within another macro), the value of
 
 @c ---------------------------------------------------------------------
 
-@codequotebacktick on
-@codequoteundirected on
-
 @node Copy Mode, , Parameters, Writing Macros
 @subsection Copy Mode
 @cindex copy mode
@@ -12489,14 +12483,8 @@ macros are interpolated, requests invoked, and valid escape sequences
 processed immediately upon recognition, can be termed
 @dfn{interpretation mode}.
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
-
-@codequotebacktick on
-@codequoteundirected on
 
 @node Page Motions, Drawing Requests, Writing Macros, gtroff Reference
 @section Page Motions
