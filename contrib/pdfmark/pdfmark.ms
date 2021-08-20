@@ -1926,7 +1926,7 @@ However, since the appearance of the link will be influenced by
 factors established when the named destination is marked,
 .XR mark-dest ), (
 and also by the formatting rules in effect when the link is placed,
-the presentation of a suitable exanple will be deferred,
+the presentation of a suitable example will be deferred,
 until the formatting mechanism has been explained,
 .XR set-format ). (
 .
