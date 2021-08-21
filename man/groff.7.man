@@ -5320,16 +5320,23 @@ the macro definition ends with the control line
 (two dots).
 .
 Alternatively,
-a second argument names a macro which,
-upon being subsequently called,
-ends the macro definition in progress.
+a second argument names a macro whose call syntax ends the definition;
+this \[lq]end macro\[rq] is then called normally.
 .
-Spaces or tabs are permitted after the first dot in the line containing
-the ending token.
+Spaces or tabs are permitted after the first control character in the
+line containing this ending token.
+.
+A tab immediately after the token prevents is recognition as the end of
+a macro definition.
 .
 Macro definitions can be nested;
 this requires use of unique end macros for each nested definition or
 escaping of the line with the ending token.
+.
+An end macro need not be defined until it is called.
+.
+This fact enables a nested macro definition to begin inside one macro
+and end inside another.
 .
 .
 .P

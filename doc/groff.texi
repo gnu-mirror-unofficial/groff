@@ -12039,27 +12039,25 @@ restarting the next iteration.
 A @dfn{macro} is a stored collection of text and control lines that can
 be used multiple times.  Use macros to define common operations.
 @xref{Strings}, for a (limited) alternative syntax to call macros.
-While requests exist for the purpose of creating macros, simply
-interpolating an undefined macro will cause it to be defined as empty.
-@xref{Identifiers}.
+While requests exist for the purpose of creating macros, simply calling
+an undefined macro, or interpolating it as a string, will cause it to be
+defined as empty.  @xref{Identifiers}.
 
 @Defreq {de, name [@Var{end}]}
 Define a macro @var{name}, replacing the definition of any existing
 request, macro, string, or diversion called @var{name}.  GNU
-@code{troff} stores subsequent lines to an internal buffer in ``copy
-mode'' (see below).  If the optional second argument is not specified,
-the macro definition ends with the control line @samp{..} (two dots).
-Alternatively, @var{end} names a macro which, upon being subsequently
-called, ends the definition of @var{name}.
-
-Spaces or tabs are permitted after the first dot in the line containing
-the ending token (either @samp{.} or macro @samp{@var{end}}).  Don't
-insert a tab character immediately after the @samp{..}, or it will fail
-to be recognized as ending the macro definition.@footnote{While it is
-possible to define and call a macro @samp{.}, you can't use it as the
-end-of-macro macro: during a macro definition, @samp{..} is never
-handled as calling @samp{.}, even if you say @samp{.de @var{name} .}
-explicitly.}
+@code{troff} enters ``copy mode'', storing subsequent input lines in an
+internal buffer.  If the optional second argument is not specified, the
+macro definition ends with the control line @samp{..} (two dots).
+Alternatively, @var{end} identifies a macro whose call syntax ends the
+definition of @var{name}; @var{end} is then called normally.  Spaces or
+tabs are permitted after the control character in the line containing
+this ending token (either @samp{.} or @samp{@var{end}}), but a tab
+immediately after the token prevents its recognition as the end of a
+macro definition.@footnote{While it is possible to define and call a
+macro @samp{.}, you can't use it as an end macro: during a macro
+definition, @samp{..} is never handled as calling @samp{.}, even if
+@samp{.de @var{name} .} explicitly precedes it.}
 @c
 @c @Example
 @c .de .
@@ -12090,27 +12088,42 @@ isn't interpreted as such until the outer macro is later interpolated.
 We can use an end macro instead.  Each level of nesting should use a
 unique end macro.
 
+An end macro need not be defined until it is called.  This fact enables
+a nested macro definition to begin inside one macro and end inside
+another.  Consider the following example.@footnote{The structure of this
+example is adapted from, and structurally isomorphic to, part of a
+solution by Tadziu Hoffman to the problem of reflowing text multiple
+times to find an optimal configuration for it.
+@uref{https://lists.gnu.org/archive/html/groff/2008-12/msg00006.html}}
+
 @Example
-.de en \" a do-nothing macro
+.de m1
+.  de m2 m3
+you
 ..
-.de mo
-.  de mi en
-Hello, Joe.
-What do you know?
-.  en
+.de m3
+Hello,
+Joe.
 ..
-.mo
-.mi
+.de m4
+do
+..
+.m1
+know?
+.  m3
+What
+.m4
+.m2
     @result{} Hello, Joe.  What do you know?
 @endExample
 
 @noindent
 A nested macro definition @emph{can} be terminated with @samp{..},
 and nested macros @emph{can} reuse end macros, but these control lines
-must be escaped twice for each level of nesting.  The necessity of this
-escaping and the utility of nested macro definitions will become clearer
-when we employ macro parameters and consider the behavior of copy mode
-in detail.
+must be escaped multiple times for each level of nesting.  The necessity
+of this escaping and the utility of nested macro definitions will become
+clearer when we employ macro parameters and consider the behavior of
+copy mode in detail.
 @endDefreq
 
 @Defreq {de1, name [@Var{end}]}
@@ -12165,11 +12178,6 @@ token is inserted at the beginning, and a ``compatibility restore''
 token at the end, with compatibility mode switched on during execution.
 @endDefreq
 
-Macro identifiers share their name space with requests, strings, and
-diversions; @ref{Identifiers}.  @xref{als,,the description of the
-@code{als} request}, for possible pitfalls if redefining a macro that
-has been aliased.
-
 @DefreqList {am, name [@Var{end}]}
 @DefreqItemx {am1, name [@Var{end}]}
 @DefreqItemx {ami, name [@Var{end}]}
@@ -12209,11 +12217,14 @@ spots (@pxref{Debugging}).
 create an alias of, remove, and rename a macro, respectively.
 
 @cindex object creation
-The @code{am}, @code{as}, @code{da}, @code{de}, @code{di}, and @code{ds}
-requests (together with their variants) only create a new object if the
-name of the macro, diversion, or string is currently undefined or if it
-is defined as a request; normally, they modify the value of an existing
-object.
+Macro identifiers share their name space with requests, strings, and
+diversions; @ref{Identifiers}.  The @code{am}, @code{as}, @code{da},
+@code{de}, @code{di}, and @code{ds} requests (together with their
+variants) only create a new object if the name of the macro, diversion,
+or string is currently undefined or if it is defined as a request;
+normally, they modify the value of an existing object.  @xref{als,,the
+description of the @code{als} request}, for pitfalls when redefining a
+macro that is aliased.
 
 @Defreq {return, [@Var{anything}]}
 Exit a macro, immediately returning to the caller.  If called with an
@@ -12280,8 +12291,8 @@ parameter interpolations would be similar to command-line
 parameters---fixed for the entire duration of a @code{roff} program's
 run.  The advantage of interpolating @code{\$} escape sequences even in
 copy mode is that they can change from one interpolation to the next,
-like parameters to a function call.  The additional escape character is
-the price of this power.}
+like function parameters.  The additional escape character is the price
+of this power.}
 
 @DefescList {\\$*, , , }
 @DefescItemx {\\$@@, , , }
@@ -12297,11 +12308,15 @@ they were arguments to the @code{ds} request.
 
 @Example
 .de foo
-.  tm $*='\\$*'
-.  tm $@@='\\$@@'
-.  tm $^='\\$^'
+. tm $1='\\$1'
+. tm $2='\\$2'
+. tm $*='\\$*'
+. tm $@@='\\$@@'
+. tm $^='\\$^'
 ..
 .foo " This is a "test"
+    @error{} $1=' This is a '
+    @error{} $2='test"'
     @error{} $*=' This is a  test"'
     @error{} $@@='" This is a " "test""'
     @error{} $^='" This is a "test"'
@@ -12330,8 +12345,6 @@ Applying string interpolation to a macro does not change this name.
 ..
 .als bar foo
 .
-@endExample
-@Example
 .de aaa
 .  foo
 ..
@@ -12345,8 +12358,6 @@ Applying string interpolation to a macro does not change this name.
 \\*[bar]\\
 ..
 .
-@endExample
-@Example
 .aaa
     @error{} foo
 .bbb
@@ -12433,14 +12444,14 @@ bar
 \\..
 .
 ..
-.foo
-.bar
+.m1
+.m2
     @result{} foo bar
 @endExample
 
 @noindent
 The first backslash is consumed while the macro is read, and the second
-is interpreted while executing macro @code{foo}.
+is interpreted while executing macro @code{m1}.
 @endDefesc
 
 @code{roff} documents should not use the @code{\\} or @code{\.}
@@ -12466,9 +12477,9 @@ practice.
 \\..
 .  M2 of
 ..
-This is getting
+This understeer is getting
 .M1 out
-    @result{} This is getting out of hand.
+    @result{} This understeer is getting out of hand.
 @endExample
 
 Each escape character is interpreted twice---once in copy mode, when the
