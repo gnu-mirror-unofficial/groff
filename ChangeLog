@@ -1,5 +1,16 @@
 2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Treat an empty $GROFF_TYPESETTER as unset.
+
+	* src/libs/libgroff/device.cpp (device_init::device_init): Test
+	both returned pointer from `getenv()` and, if that's not null,
+	the first character of the string for nullity before assigning
+	it to `device`.
+
+	Fixes <https://savannah.gnu.org/bugs/?61068>.
+
+2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Update .version file more aggressively.
 
 	* Makefile.am: Regenerate a temporary version string file on
