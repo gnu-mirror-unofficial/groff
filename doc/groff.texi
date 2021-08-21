@@ -12606,8 +12606,6 @@ A simple implementation of a macro to set text in two columns follows.
 .nr column-gap 4m
 .nr bottom-margin 1m
 .
-@endExample
-@Example
 .de 2c
 .  br
 .  mk
@@ -12616,8 +12614,6 @@ A simple implementation of a macro to set text in two columns follows.
 .  nr right-side 0
 ..
 .
-@endExample
-@Example
 .de 2c-trap
 .  ie \\n[right-side] \@{\
 .    nr right-side 0
@@ -12634,6 +12630,9 @@ A simple implementation of a macro to set text in two columns follows.
 ..
 .
 @endExample
+
+Now let us apply our two-column macro.
+
 @Example
 .pl 1.5i
 .ll 4i
@@ -12645,34 +12644,29 @@ Starting here, text is typeset in two columns.
 Note that this implementation isn't robust
 and thus not suited for a real two-column
 macro.
-@endExample
-
-Result:
-
-@Example
-This is a small test that shows how the
-rt request works in combination with mk.
-
-Starting  here,    isn't    robust
-text is typeset    and   thus  not
-in two columns.    suited  for   a
-Note that  this    real two-column
-implementation     macro.
+    @result{} This is a small test that shows how the
+    @result{} rt request works in combination with mk.
+    @result{}
+    @result{} Starting  here,    isn't    robust
+    @result{} text is typeset    and   thus  not
+    @result{} in two columns.    suited  for   a
+    @result{} Note that  this    real two-column
+    @result{} implementation     macro.
 @endExample
 @endDefreq
 
-The following escapes give fine control of movements about the page.
+The following escapes give fine control of movement about the page.
 
-@Defesc {\\v, @code{'}, e, @code{'}}
+@Defesc {\\v, @code{'}, expr, @code{'}}
 @cindex vertical motion (@code{\v})
 @cindex motion, vertical (@code{\v})
 Move vertically; usually from the current location on the page (if no
-absolute position operator @samp{|} is used).  The argument@tie{}@var{e}
-specifies the distance to move; positive is downwards and negative
-upwards.  The default scaling indicator is @samp{v}.  Beware, however,
-that GNU @code{troff} continues text processing at the point where the
-motion ends, so you should always balance motions to avoid interference
-with text processing.
+absolute position operator @samp{|} is used).  The
+argument@tie{}@var{expr} specifies the distance to move; positive is
+downwards and negative upwards.  The default scaling indicator is
+@samp{v}.  Beware, however, that GNU @code{troff} continues text
+processing at the point where the motion ends, so you should always
+balance motions to avoid interference with text processing.
 
 @code{\v} doesn't trigger a trap.  This can be useful; for example,
 consider a page bottom trap macro that prints a marker in the margin to
@@ -12700,20 +12694,28 @@ Move upwards@tie{}.5@dmn{v}.
 Move down@tie{}.5@dmn{v}.
 @endDefesc
 
-@Defesc {\\h, @code{'}, e, @code{'}}
+@Defesc {\\h, @code{'}, expr, @code{'}}
 @cindex inserting horizontal space (@code{\h})
 @cindex horizontal space (@code{\h})
 @cindex space, horizontal (@code{\h})
 @cindex horizontal motion (@code{\h})
 @cindex motion, horizontal (@code{\h})
 Move horizontally; usually from the current location (if no absolute
-position operator @samp{|} is used).  The expression@tie{}@var{e}
+position operator @samp{|} is used).  The expression@tie{}@var{expr}
 indicates how far to move: positive is rightwards and negative
 leftwards.  The default scaling indicator for this escape is @samp{m}.
 
 This horizontal space is not discarded at the end of a line.  To insert
 discardable space of a certain length use the @code{ss} request.
 @endDefesc
+
+The following string definition sets the @TeX{}
+logo.@footnote{@xref{Strings}, for an explanation of the trailing
+@samp{\"}.}
+
+@Example
+.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X\"
+@endExample
 
 There are a number of special-case escapes for horizontal motion.
 
@@ -12732,23 +12734,19 @@ An unbreakable space that is adjustable like a normal inter-word space.
 @cindex thin space
 @cindex space, thin
 @Defesc {\\|, , , }
-A one-sixth @dmn{em} unbreakable (``thin'') space.  Ignored (rounded to
-zero width) on terminal output devices.
-
-However, if there is a glyph defined in the current font with name
-@code{\|} (note the leading backslash), the width of this glyph is used
-instead (even on terminals).
+An unbreakable one-sixth @dmn{em} (``thin'') space.  Ignored (rounded to
+zero width) on terminal output devices.  However, if there is a glyph
+defined in the current font with name @code{\|} (note the leading
+backslash), the width of this glyph is used instead (even on terminals).
 @endDefesc
 
 @cindex hair space
 @cindex space, hair
 @Defesc {\\^, , , }
-A one-twelfth @dmn{em} unbreakable (``hair'') space.  Ignored (rounded
-to zero width) on terminal output devices.
-
-However, if there is a glyph defined in the current font with name
-@code{\^} (note the leading backslash), the width of this glyph is used
-instead (even on terminals).
+An unbreakable one-twelfth @dmn{em} (``hair'') space.  Ignored (rounded
+to zero width) on terminal output devices.  However, if there is a glyph
+defined in the current font with name @code{\^} (note the leading
+backslash), the width of this glyph is used instead (even on terminals).
 @endDefesc
 
 @Defesc {\\0, , , }
@@ -12757,14 +12755,6 @@ instead (even on terminals).
 @cindex numeral-width space (@code{\0})
 An unbreakable space the width of a numeral in the current font.
 @endDefesc
-
-The following string definition sets the @TeX{}
-logo.@footnote{@ref{Strings}, for an explanation of the trailing
-@samp{\"}.}
-
-@Example
-.ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X\"
-@endExample
 
 @DefescList {\\w, @code{'}, text, @code{'}}
 @DefregItemx {st}
@@ -12784,10 +12774,13 @@ The length of the string 'abc' is \w'abc'u.
     @result{} The length of the string 'abc' is 72u.
 @endExample
 
-Font changes may occur in @var{text}, which don't affect current
-settings.
+@cindex dummy environment, used by @code{\w} escape sequence
+@cindex environment, dummy, used by @code{\w} escape sequence
+The @var{text} argument to @code{\w} is processed in a dummy
+environment; font changes may occur within it without any affect on the
+surrounding output.
 
-After use, @code{\w} sets several registers:
+After use, @code{\w} sets several registers.
 
 @table @code
 @item st
