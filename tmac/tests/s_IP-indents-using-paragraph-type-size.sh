@@ -19,6 +19,7 @@
 #
 
 groff="${abs_top_builddir:-.}/test-groff"
+export GROFF_TYPESETTER=
 
 # Regression-test Savannah #59604.
 #

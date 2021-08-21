@@ -20,6 +20,8 @@
 
 # Ensure a predictable character encoding.
 export LC_ALL=C
+export LESSCHARSET=
+export GROFF_TYPESETTER=
 
 set -e
 

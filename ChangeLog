@@ -1,5 +1,18 @@
 2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tests]: Make robust against $GROFF_TYPESETTER settings.
+
+	* src/roff/groff/tests/\
+	use_point_size_escape_with_single_digit_arg.sh:
+	* src/roff/nroff/tests/verbose_option_works.sh:
+	* tmac/tests/s_IP-indents-using-paragraph-type-size.sh: Export
+	an empty $GROFF_TYPESETTER to the environment.
+
+	Fixes <https://savannah.gnu.org/bugs/?61040>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
+2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Treat an empty $GROFF_TYPESETTER as unset.
 
 	* src/libs/libgroff/device.cpp (device_init::device_init): Test
