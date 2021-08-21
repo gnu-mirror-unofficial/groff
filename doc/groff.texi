@@ -1405,7 +1405,9 @@ default directory (on Unix and GNU/Linux systems, this is usually
 
 @item GROFF_TYPESETTER
 @tindex GROFF_TYPESETTER@r{, environment variable}
-The default output device.
+Sets the default output device.  If empty or not set, a build-time
+default (often @code{ps}) is used.  The @option{-T@var{dev}} option
+overrides @env{GROFF_TYPESETTER}.
 
 @item SOURCE_DATE_EPOCH
 @tindex SOURCE_DATE_EPOCH@r{, environment variable}
