@@ -32,7 +32,7 @@ Publishing with GNU Troff
 .\"
 .pdfview /PageMode /UseOutlines
 .\"
-.\" Initialise the outline view to show only three heading levels,
+.\" Initialize the outline view to show only three heading levels,
 .\" with additional subordinate level headings folded.
 .\"
 .nr PDFOUTLINE.FOLDLEVEL 3
@@ -179,7 +179,7 @@ It is this preparation of the
 document source to exploit a number of these features,
 which provides the principal focus of this document.
 .LP
-The markup techniques to be described have been utilised in the production of
+The markup techniques to be described have been utilized in the production of
 the PDF version of this document itself.
 This has been formatted using
 .CW groff 's
@@ -549,7 +549,7 @@ The document outline may be considered as a collection of \(lqhypertext\(rq
 references to \(lqbookmarked\(rq locations within the document.
 The
 .CW pdfmark
-macro package provides a single generalised macro,
+macro package provides a single generalized macro,
 .CW pdfhref ,
 for creating and linking to \(lqhypertext\(rq reference marks.
 This macro will be described more comprehensively in a later section,
@@ -728,7 +728,7 @@ To avoid this problem, the user should follow the guidelines given in
 .pdfhref L -D pdfsync -A ,
 .pdfhref F
 .\"
-to synchronise the output state with the cache state,
+to synchronize the output state with the cache state,
 .XR pdfsync ), (
 at the end of the
 .CW groff
@@ -751,7 +751,7 @@ However, rather than requiring that each individual use of the
 macro, to create an outline entry,
 should include its own view specification,
 the actual specification assigned to each entry is derived from
-a generalised specification defined in the string
+a generalized specification defined in the string
 .CW PDFBOOKMARK.VIEW ,
 together with the setting of the numeric register
 .CW PDFHREF.VIEW.LEADING ,
@@ -901,7 +901,7 @@ For example, the setting used in this document:
 .QS
 .LD
 .fam C
-\&.\e" Initialise the outline view to show only three heading levels,
+\&.\e" Initialize the outline view to show only three heading levels,
 \&.\e" with additional subordinate level headings folded.
 \&.\e"
 \&.nr PDFOUTLINE.FOLDLEVEL 3
@@ -1084,7 +1084,7 @@ which is a contraction of \(lqPDF HyperText Reference\(rq,
 indicates that the general purpose of this macro is to define
 .EM any
 type of dynamic reference mark, within a PDF document.
-Its generalised usage syntax takes the form
+Its generalized usage syntax takes the form
 .QP
 .fam C
 .B .pdfhref
@@ -1156,12 +1156,12 @@ specifications are inserted automatically into the document reference map
 during the PDF document formatting process,
 .XR create-map ). (
 .IP \*[= I]
-Initialise support for
+Initialize support for
 .CW pdfhref
 features.
 The current
 .CW pdfhref
-implementation provides only one such feature which requires initialisation
+implementation provides only one such feature which requires initialization
 \(em a helper macro which must be attached to a user supplied page trap handler,
 in order to support mapping of reference \(lqhot\(hyspots\(rq
 which extend through a page transition;
@@ -1641,7 +1641,7 @@ Again, the details of
 the cross reference map is generated will be discussed in
 .pdfhref F SECREF L -D do-xref -A ;
 .pdfhref F
-however, it is important to recognise that
+however, it is important to recognize that
 .EM what
 content is included in the cross reference map is established
 when the reference destination is defined \(em it is derived
@@ -2217,7 +2217,7 @@ where these active links are placed stand out from the surrounding text.
 .XN -N auto-format -- Using Automatically Formatted Reference Text
 .
 .NH 4
-.XN -N custom-format -- Customising Automatically Formatted Reference Text
+.XN -N custom-format -- Customizing Automatically Formatted Reference Text
 .LP
 It is incumbent on the user,
 if employing automatic formatting of the displayed reference,
@@ -2280,7 +2280,7 @@ Plant a trap to invoke this macro, at the appropriate vertical position
 marking the end of normal running text on each page.
 .KS
 .IP \n+[ITEM].
-Initialise the
+Initialize the
 .CW pdfhref
 hook into this page transition trap, by invoking
 .RS
@@ -2300,16 +2300,16 @@ at the start of each new page.
 .RE
 .QE
 .LP
-It may be observed that this initialisation of the
+It may be observed that this initialization of the
 .CW pdfhref
 page transition hook is, typically, required only once
 .EM before
 document formatting begins.
 Users of document formatting macro packages may reasonably expect that
-this initialisation should be performed by the macro package itself.
+this initialization should be performed by the macro package itself.
 Thus, writers of such macro packages which include
 .CW pdfmark
-bindings, should provide appropriate initialisation,
+bindings, should provide appropriate initialization,
 so relieving the end user of this responsibility.
 The following example, abstracted from the sample
 .CW ms
@@ -2331,7 +2331,7 @@ illustrates how this may be accomplished:\(en
 .XN -N add-note -- Annotating a PDF Document using Pop-Up Notes
 .
 .NH 2
-.XN -N pdfsync -- Synchronising Output and \F[C]pdfmark\F[] Contexts
+.XN -N pdfsync -- Synchronizing Output and \F[C]pdfmark\F[] Contexts
 .LP
 It has been noted previously, that the
 .CW pdfview
@@ -2378,7 +2378,7 @@ data is to be flushed to the output stream, the
 .CW pdfmark
 macro package provides the
 .CW pdfsync
-macro, (to synchronise the cache and output states).
+macro, (to synchronize the cache and output states).
 In its simplest form, it is invoked without arguments, i.e.
 .QP
 .fam C
@@ -2547,7 +2547,7 @@ macros, to specify section headings.
 However,
 there is no standard mechanism for generating a
 table of contents entry based on the text of the section heading;
-neither is there any recognised standard method for establishing a
+neither is there any recognized standard method for establishing a
 cross reference link to the section.
 .LP
 To address this
