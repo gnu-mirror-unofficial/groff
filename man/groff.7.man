@@ -1240,39 +1240,47 @@ and
 .I n
 is a numerical expression that evaluates to an integer value.
 .
+.
 .TPx
 .I N
-is an arbitrary numerical expression, signed or unsigned.
+is an optionally-signed numerical expression.
+.
 .
 .TPx
 .I \[+-]N
-has three meanings depending on its sign, described below.
+has three meanings,
+depending on its sign.
 .
 .RE
 .PD
 .
 .
 .P
-If an expression defined as
+If a numeric expression presented as
 .I \[+-]N
 starts with a
 .squoted_char +
-sign the resulting value of the expression is added to an already
-existing value inherent to the related request, e.g., adding to a
-number register.
+sign,
+an increment in the amount of
+.RI of\~ N
+is applied to the value applicable to the request or escape sequence.
 .
-If the expression starts with a
-.squoted_char -
-the value of the expression is subtracted from the request value.
+If it starts with a
+.squoted_char \-
+sign,
+a decrement of magnitude
+.I N
+is applied instead.
 .
-.
-.P
 Without a sign,
 .I N
-replaces the existing value directly.
+replaces any existing value.
 .
-To assign a negative number either prepend\~0 or enclose the negative
-number in parentheses.
+To assign a negative number,
+either prefix the expression with a zero or enclose it with parentheses.
+.
+If a prior value does not exist,
+an increment or decrement is applied as if to\~0.
 .
 .
 .\" ====================================================================
