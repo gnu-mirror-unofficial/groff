@@ -1282,20 +1282,10 @@ number in parentheses.
 .PD 0
 .
 .TPx
-.REQ .
-Empty line, ignored.
-.
-Useful for structuring documents.
-.
-.TPx
-.REQ .\e\[dq] "anything"
-Complete line is a comment.
-.
-.TPx
 .REQ .ab "string"
-Print
+Write
 .I string
-on standard error, exit program.
+to the standard error stream and exit with failure status.
 .
 .
 .TPx
@@ -1891,7 +1881,8 @@ to the current one.
 .
 .TPx
 .REQ .ex
-Exit from roff processing.
+Exit with successful status.
+.
 .
 .TPx
 .REQ .fam
@@ -2243,16 +2234,17 @@ and store the count
 in the number register
 .IR reg .
 .
+.
 .TPx
 .REQ .linetabs
-Enable line-tabs mode (i.e., calculate tab positions relative to output
-line).
+Enable line-tabs mode
+(calculate tab positions relative to beginning of output line).
+.
 .
 .TPx
 .REQ .linetabs\~0
-If
-.I n
-is zero, disable line-tabs mode, otherwise enable it.
+Disable line-tabs mode.
+.
 .
 .TPx
 .REQ .lf "N"
@@ -3232,7 +3224,6 @@ and the following character is processed normally.
 .\" ====================================================================
 .
 The escape sequences
-.esc . ,
 .esc \[dq] ,
 .esc # ,
 .esc $ ,
@@ -3255,13 +3246,15 @@ are interpreted even in copy mode.
 .
 .TP
 .ESC \[dq]
-Start of a comment.
+Comment.
 .
 Everything up to the end of the line is ignored.
 .
 .
 .TP
 .ESC #
+Comment.
+.
 Everything up to and including the next newline is ignored.
 .
 .
@@ -3269,201 +3262,203 @@ Everything up to and including the next newline is ignored.
 .
 .TP
 .ESC * s
-The string stored in the string variable with one-character name\~\c
-.IR s .
+Interpolate string with one-character
+.RI name\~ s .
+.
 .
 .TP
 .ESC *( st
-The string stored in the string variable with two-character name
-.IR st .
+Interpolate string with two-character
+.RI name\~ st .
+.
 .
 .TP
 .ESC[] * string
-The string stored in the string variable with name
+Interpolate string with name
 .I string
-(with arbitrary length).
+(of arbitrary length).
+.
 .
 .TP
-.ESC[] * "stringvar arg1 arg2 \fR\&.\|.\|.\fP"
-The string stored in the string variable with arbitrarily long name
-.IR stringvar ,
+.ESC[] * "string arg1 arg2 \fR\&.\|.\|.\fP"
+Interpolate string with name
+.I string
+(of arbitrary length),
 taking
 .IR arg1 ,
 .IR arg2 ,
 \&.\|.\|.\&
 as arguments.
 .
+.
 .\" ========= macro arguments =========
 .
 .TP
 .ESC $0
-The name by which the current macro was invoked.
+Interpolate name by which currently-executing macro was invoked.
 .
-The
-.request .als
-request can make a macro have more than one name.
 .
 .TP
-.ESC $ x
-Macro or string argument with one-digit number\~\c
-.I x
-in the range 1 to\~9.
+.ESC $ n
+Interpolate macro or string parameter
+.RI numbered\~ n
+.RI (1\|\[<=]\| n \|\[<=]\|9).
+.
 .
 .TP
-.ESC $( xy
-Macro or string argument with two-digit number
-.I xy
-(larger than zero).
+.ESC $( nn
+Interpolate macro or string parameter
+.RI numbered\~ nn
+.RI (01\|\[<=]\| nn \|\[<=]\|99).
 .
 .TP
-.ESC[] $ nexp
-Macro or string argument with number
-.IR nexp ,
-where
-.I nexp
-is a numerical expression evaluating to an integer \[>=]1.
+.ESC[] $ nnn
+Interpolate macro or string parameter
+.RI numbered\~ nnn
+.RI ( nnn \|\[>=]\|1).
+.
 .
 .TP
 .ESC $*
-In a macro or string, the concatenation of all the arguments separated
-by spaces.
+Interpolate concatenation of all macro or string parameters,
+separated by spaces.
+.
 .
 .TP
 .ESC $@
-In a macro or string, the concatenation of all the arguments with each
-surrounded by double quotes, and separated by spaces.
+Interpolate concatenation of all macro or string parameters,
+with each surrounded by double quotes and separated by spaces.
+.
 .
 .TP
 .ESC $\[ha]
-In a macro, the representation of all parameters as if they were an
-argument to the
+Interpolate concatenation of all macro or string parameters
+as if they were arguments to the
 .request .ds
 request.
 .
+.
 .\" ========= escaped characters =========
 .
-.TP
-.ESC \e
-reduces to a single backslash; useful to delay its interpretation as
-escape character in copy mode.
-.
-For a printable backslash, use
-.esc e ,
-or even better
-.esc [rs] ,
-to be independent from the current escape character.
 .
 .TP
 .ESC \[aq]
-The acute accent \[aa]; same as
-.esc (aa .
+Translates to
+.esc [aa] ,
+the acute accent special character.
+.
 .
 .TP
 .ESC \[ga]
-The grave accent \[ga]; same as
-.esc (ga .
+Translates to
+.esc [ga] ,
+the grave accent special character.
+.
 .
 .TP
 .ESC \-
-The \- (minus) sign in the current font.
+Translates to
+.esc [\-] ,
+the minus sign special character.
+.
 .
 .TP
 .ESC _
-The same as
-.esc (ul ,
-the underline character.
+Translates to
+.esc [ul] ,
+the underline special character.
 .
-.TP
-.ESC .
-The same as a dot (\[oq].\[cq]).
-Necessary in nested macro definitions so that \[oq]\[rs]\[rs]..\[cq]\&
-expands to \[oq]..\[cq].
 .
 .TP
 .ESC %
-Default hyphenation character.
+Control hyphenation.
+.
 .
 .TP
 .ESC !
-Transparent line indicator.
+Transparent line.
+.
+The remainder of the input line is interpreted
+(1) when the current diversion is read;
+or
+(2) if in the top-level diversion,
+by the output driver.
+.
 .
 .TP
 .ESC? anything
-In a diversion, this transparently embeds
-.I anything
-in the diversion.
-.I anything
-is read in copy mode.
-.
-See also the escape sequences
-.esc !
-and
-.esc ? .
+Transparently embed
+.IR anything ,
+read in copy mode,
+in a diversion.
 .
 .
 .\" ========= spacing [sic; \& and \) don't really space] =========
 .
 .TP
 .ESC \& space
-Unpaddable space size space glyph (no line break).
+Unbreakable,
+non-adjustable word space.
+.
+.
+.TP
+.ESC \[ti]
+Unbreakable,
+adjustable space.
+.
 .
 .TP
 .ESC 0
-Digit-width unbreakable space.
+Unbreakable digit-width space.
+.
 .
 .TP
 .ESC |
-1/6\~em unbreakable (\[lq]thin\[rq]) space glyph;
+Unbreakable 1/6\~em (\[lq]thin\[rq]) space glyph;
 zero-width in
 .IR nroff .
 .
+.
 .TP
 .ESC \[ha]
-1/12\~em unbreakable (\[lq]hair\[rq]) space glyph;
+Unbreakable 1/12\~em (\[lq]hair\[rq]) space glyph;
 zero-width in
 .IR nroff .
+.
 .
 .TP
 .ESC &
 Non-printing input break.
 .
+.
 .TP
 .ESC )
-Like
-.esc &
-except that it behaves like a glyph declared with the
-.request .cflags
-request to be transparent for the purposes of end-of-sentence
-recognition.
+Non-printing input break,
+transparent to end-of-sentence recognition.
 .
 .
 .TP
 .ESC /
 Apply italic correction.
 .
-Use between an immediately adjacent italic glyph on the left and a roman
-glyph on the right.
+Use between an immediately adjacent oblique glyph on the left and an
+upright glyph on the right.
 .
 .
 .TP
 .ESC ,
 Apply left italic correction.
 .
-Use between an immediately adjacent roman glyph on the left and an
-italic glyph on the right.
+Use between an immediately adjacent upright glyph on the left and an
+oblique glyph on the right.
 .
-.
-.TP
-.ESC \[ti]
-Unbreakable space that stretches like a normal inter-word space when a
-line is adjusted.
 .
 .TP
 .ESC :
-Insert a non-printing break point
+Non-printing break point
 (similar to
-.esc %
-but without a soft hyphen character).
+.esc % ,
+but never produces a hyphen glyph).
 .
 .
 .TP
@@ -3484,47 +3479,65 @@ End conditional input.
 .\" ========= longer escape names =========
 .
 .TP
-.ESC ( sc
-A glyph with two-character name
-.IR sc ;
-see section \[lq]Special Characters\[rq] below.
+.ESC ( gl
+Interpolate glyph with two-character name
+.IR gl .
+.
 .
 .TP
-.ESC[] "" name
-A glyph with name
-.I name
+.ESC[] "" glyph
+Interpolate glyph with name
+.I glyph
 (of arbitrary length).
 .
+.
 .TP
-.ESC[] "" "comp1 comp2 \fR\&.\|.\|.\&\fP"
-A composite glyph with components
+.ESC[] "" "base-glyph comp1 comp2 \fR\&.\|.\|."
+Interpolate composite glyph constructed from
+.I base-glyph
+and components
 .IR comp1 ,
 .IR comp2 ,
-\&.\|.\|.
+and so on.
+.
 .
 .\" ========= alphabetical escapes =========
 .
 .TP
 .ESC a
-Non-interpreted leader character.
+In copy mode,
+interpolate leader character.
+.
 .
 .TP
 .ESCq A anything
-If
+Interpolate 1 if
 .I anything
-is acceptable as a name of a string, macro, diversion, register,
-environment or font it expands to\~1, and to\~0 otherwise.
+is an acceptable identifier for a string,
+macro,
+diversion,
+register,
+environment,
+or font,
+and\~0 otherwise.
+.
 .
 .TP
 .ESCq b abc\fR\&.\|.\|.\&\fP
-Bracket building function.
+Build bracket:
+stack glyphs
+.IR a ,
+.IR b ,
+.IR c .\|.\|.\&
+vertically.
+.
 .
 .TP
 .ESCq B anything
-If
+Interpolate 1 if
 .I anything
-is acceptable as a valid numeric expression it expands to\~1, and
-to\~0 otherwise.
+is a valid numeric expression,
+and\~0 otherwise.
 .
 .
 .TP
@@ -3534,11 +3547,11 @@ Continue output line at next input line.
 .
 .TP
 .ESCq C glyph
-The glyph called
-.IR glyph ;
-same as
+As
 .esc[] "" glyph ,
-but compatible to other roff versions.
+but compatible with other
+.I troff \" generic
+implementations.
 .
 .
 .TP
@@ -3549,73 +3562,87 @@ Move downward \[12]\~vee
 .
 .
 .TP
-.ESCq D charseq
-Draw a graphical element defined by the characters in
-.IR charseq ;
-see the
-.I groff
-Texinfo manual for details.
+.ESCq D anything
+Send
+.I anything
+to the output device as a drawing command;
+see
+.IR groff_out (@MAN5EXT@).
+.
 .
 .TP
 .ESC e
-Interpolate current escape character.
+Interpolate escape character.
+.
 .
 .TP
 .ESC E
-Equivalent to an escape character, but is not interpreted in copy mode.
+As
+.esc e ,
+but not interpreted in copy mode.
+.
 .
 .TP
 .ESC f F
-Change to font with one-character name or one-digit number\~\c
-.IR F .
+Change to font or style with one-character name or one-digit
+.RI position\~ F .
+.
 .
 .TP
 .ESC fP
-Switch back to previous font.
+Switch to previous font or style.
+.
 .
 .TP
-.ESC f( fo
-Change to font with two-character name or two-digit number
-.IR fo .
+.ESC f( ft
+Change to font with two-character name or two-digit
+.RI position\~ ft .
+.
 .
 .TP
 .ESC[] f font
-Change to font with arbitrarily long name or number expression
+Change to font with arbitrarily long name or position
 .IR font .
+.
 .
 .TP
 .ESC[] f ""
-Switch back to previous font.
+Switch to previous font or style.
+.
 .
 .TP
 .ESC F f
-Change to font family with one-character name\~\c
-.IR f .
+Change to font family with one-character
+.RI name\~ f .
+.
 .
 .TP
 .ESC F( fm
-Change to font family with two-character name
-.IR fm .
+Change to font family with two-character
+.RI name\~ fm .
+.
 .
 .TP
 .ESC[] F fam
 Change to font family with arbitrarily long name
 .IR fam .
 .
+.
 .TP
 .ESC[] F ""
-Switch back to previous font family.
+Switch to previous font family.
 .
 .
 .TP
 .ESC g r
-Interpolate format of register with one-character name\~\c
-.IR r .
+Interpolate format of register with one-character
+.RI name\~ r .
 .
 .
 .TP
 .ESC g( rg
-Interpolate format of register with two-character name
+Interpolate format of register with two-character
+.RI name\~ rg .
 .IR rg .
 .
 .
@@ -3627,110 +3654,125 @@ Interpolate format of register with arbitrarily long name
 .
 .TP
 .ESCq h N
-Local horizontal motion; move right
-.I N
+Horizontally move
+.IR N \~ens
+(or specified units)
+right
 (left if negative).
+.
 .
 .TP
 .ESCq H N
 Set height of current font to
-.IR N .
+.IR N \~scaled points
+(or specified units).
+.
 .
 .TP
 .ESC k r
-Mark horizontal position in one-character
-.RI register\~ r .
+Mark horizontal position in one-character register
+.RI name\~ r .
 .
 .TP
 .ESC k( rg
-Mark horizontal position in two-character
-.RI register\~ rg .
+Mark horizontal position in two-character register
+.RI name\~ rg .
+.
 .
 .TP
 .ESC[] k reg
 Mark horizontal position in register with arbitrarily long
 .RI name\~ reg .
 .
-.TP
-.ESCq l N\f[R][\f[]c\f[R]]
-Horizontal line drawing function (optionally using character
-.IR c ).
 .
 .TP
-.ESCq L N\f[R][\f[]c\f[R]]
-Vertical line drawing function (optionally using character
-.IR c ).
+.ESCq l N\f[R][\f[]g\f[R]]
+Draw horizontal line of length
+.IR N \~ems
+(or specified units),
+optionally using
+.RI glyph\~ g .
+.
+.
+.TP
+.ESCq L N\f[R][\f[]g\f[R]]
+Draw vertical line of length
+.IR N \~vees
+(or specified units),
+optionally using
+.RI glyph\~ g .
+.
 .
 .TP
 .ESC m c
-Change to color with one-character name\~\c
-.IR c .
+Change drawing color to that with one-character
+.RI name\~ c .
+.
 .
 .TP
 .ESC m( cl
-Change to color with two-character name
-.IR cl .
+Change drawing color to that with two-character
+.RI name\~ cl .
+.
 .
 .TP
 .ESC[] m color
-Change to color with arbitrarily long name
-.IR color .
+Change drawing color to that with arbitrarily long
+.RI name\~ color .
+.
 .
 .TP
 .ESC[] m ""
-Switch back to previous color.
+Switch to previous drawing color.
+.
 .
 .TP
 .ESC M c
-Change filling color for closed drawn objects to color with
-one-character name\~\c
-.IR c .
+Change fill color to that with one-character
+.RI name\~ c .
+.
 .
 .TP
 .ESC M( cl
-Change filling color for closed drawn objects to color with
-two-character name
-.IR cl .
+Change fill color to that with two-character
+.RI name\~ cl .
+.
 .
 .TP
 .ESC[] M color
-Change filling color for closed drawn objects to color with
-arbitrarily long name
-.IR color .
+Change fill color to that with arbitrarily long
+.RI name\~ color .
+.
 .
 .TP
 .ESC[] M ""
 Switch to previous fill color.
 .
-.TP
-.ESC n r
-The numerical value stored in the register variable with the
-one-character name\~\c
-.IR r .
 .
 .TP
-.ESC n( re
-The numerical value stored in the register variable with the
-two-character name
-.IR re .
+.ESC n r
+Interpolate value stored in register with one-character
+.RI name\~ r .
+.
+.
+.TP
+.ESC n( rg
+Interpolate value stored in register with two-character
+.RI name\~ rg .
+.
 .
 .TP
 .ESC[] n reg
-The numerical value stored in the register variable with arbitrarily
-long name
-.IR reg .
+Interpolate value stored in register with arbitrarily long
+.RI name\~ reg .
+.
 .
 .TP
 .ESCq N n
-Typeset the glyph with index\~\c
-.I n
+Interpolate glyph with
+.RI index\~ n
 in the current font.
 .
-No special fonts are searched.
-.
-Useful for adding (named) entities to a document using the
-.request .char
-request and friends.
 .
 .TP
 .ESCq o abc\fR\&.\|.\|.\&\fP
@@ -3738,7 +3780,8 @@ Overstrike glyphs
 .IR a ,
 .IR b ,
 .IR c ,
-etc.
+and so on.
+.
 .
 .TP
 .ESC O0
@@ -3766,11 +3809,13 @@ Move \[lq]in reverse\[rq] (upward) 1\~vee
 .
 .
 .TP
-.ESCq R "name\~\[+-]n"
-The same as
-.request .nr
+.ESCq R "name\~\[+-]N"
+Set,
+increment,
+or decrement register
 .I name
-.IR \[+-]n .
+.RI by\~ N .
+.
 .
 .TP
 .ESC s \[+-]N
@@ -3788,9 +3833,10 @@ a non-zero
 must be in the range 4\[en]39.)
 .
 Otherwise,
-same as
+as
 .request .ps
 request.
+.
 .
 .TP
 .ESC s( \[+-]N
@@ -3804,9 +3850,10 @@ scaled points;
 .I N
 is a two-digit number \[>=]1.
 .
-Same as
+As
 .request .ps
 request.
+.
 .
 .TP
 .ESC[] s \[+-]N
@@ -3824,19 +3871,23 @@ Set/increase/decrease the point size to/by
 .I N
 scaled points.
 .
-Same as
+As
 .request .ps
 request.
 .
+.
 .TP
 .ESCq S N
-Slant output by
+Slant output glyphs by
 .I N
-degrees.
+degrees;
+the direction of text flow is positive.
+.
 .
 .TP
 .ESC t
-Non-interpreted horizontal tab.
+In copy mode,
+interpolate tab character.
 .
 .
 .TP
@@ -3848,64 +3899,84 @@ Move upward \[12]\~vee
 .
 .TP
 .ESCq v N
-Local vertical motion; move down
-.I N
+Vertically move
+.IR N \~vees
+(or specified units)
+down
 (up if negative).
+.
 .
 .TP
 .ESC V e
-The contents of the environment variable with one-character
-name\~\c
-.IR e .
+Interpolate contents of environment variable with one-character
+.RI name\~ e .
+.
 .
 .TP
 .ESC V( ev
-The contents of the environment variable with two-character name
-.IR ev .
+Interpolate contents of environment variable with two-character
+.RI name\~ ev .
+.
 .
 .TP
 .ESC[] V env
-The contents of the environment variable with arbitrarily long name
-.IR env .
+Interpolate contents of environment variable with arbitrarily long
+.RI name\~ env .
+.
 .
 .TP
-.ESCq w string
-The width of the glyph sequence
-.IR string .
+.ESCq w anything
+Interpolate width of
+.IR anything ,
+formatted in a dummy environment.
+.
 .
 .TP
 .ESCq x N
-Extra line-space function (negative before, positive after).
+Increase required line space by
+.IR N \~vees
+(or specified units;
+negative before,
+positive after).
+.
 .
 .TP
-.ESCq X string
-Output
-.I string
-as device control function.
+.ESCq X anything
+Send
+.I anything
+to the output device as a control command;
+see
+.IR groff_out (@MAN5EXT@).
+.
 .
 .TP
 .ESC Y n
-Output string variable or macro with one-character name\~\c
-.I n
-uninterpreted as device control function.
+Send interpolation of string or macro with one-character
+.RI name\~ n
+to the output device as a control command.
+.
 .
 .TP
 .ESC Y( nm
-Output string variable or macro with two-character name
-.I nm
-uninterpreted as device control function.
+Send interpolation of string or macro with two-character
+.RI name\~ nm
+to the output device as a control command.
+.
 .
 .TP
 .ESC[] Y name
-Output string variable or macro with arbitrarily long name
-.I name
-uninterpreted as device control function.
+Send interpolation of string or macro with arbitrarily long
+.RI name\~ name
+to the output device as a control command.
+.
 .
 .TP
 .ESC z c
-Print
+Output glyph
 .I c
-with zero width (without spacing).
+without advancing the print position,
+as if it were zero-width.
+.
 .
 .TP
 .ESCq Z anything
@@ -3913,7 +3984,7 @@ Print
 .I anything
 and then restore the horizontal and vertical position;
 .I anything
-may not contain tabs or leaders.
+must not contain tabs or leaders.
 .
 .PD
 .
