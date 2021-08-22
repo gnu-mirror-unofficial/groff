@@ -2101,7 +2101,7 @@ Set automatic hyphenation mode to
 .
 .
 .TPx
-.REQ .hy \fB0\fP
+.REQ .hy\~0
 Disable automatic hyphenation;
 same as
 .BR .nh .
@@ -2249,7 +2249,7 @@ Enable line-tabs mode (i.e., calculate tab positions relative to output
 line).
 .
 .TPx
-.REQ .linetabs "n"
+.REQ .linetabs\~0
 If
 .I n
 is zero, disable line-tabs mode, otherwise enable it.
@@ -2698,7 +2698,8 @@ In a macro, shift the arguments by
 positions.
 .
 .TPx
-.REQ .sizes "s1 s2 \fR\&.\|.\|.\&\fP s\fRn\fP \fR[\fB0\fP\fR]\fP"
+.REQ .sizes "s1 s2 \fR\&.\|.\|.\&\fP s\fRn\~\c
+[\f[CB]0\f[]]
 Set available font sizes similar to the
 .B sizes
 command in a
@@ -2983,7 +2984,10 @@ Set underline font to
 .
 .TPx
 .REQ .ul "N"
-Underline (italicize in troff)
+Underline
+(italicize in
+.I troff
+mode)
 .I N
 input lines.
 .
@@ -3000,7 +3004,7 @@ Enable vertical position traps.
 .
 .
 .TPx
-.B .vpt 0
+.REQ .vpt\~0
 Disable vertical position traps.
 .
 .
@@ -3228,13 +3232,13 @@ and the following character is processed normally.
 .\" ====================================================================
 .
 The escape sequences
-.esc e ,
 .esc . ,
 .esc \[dq] ,
 .esc # ,
 .esc $ ,
 .esc * ,
 .esc a ,
+.esc e ,
 .esc n ,
 .esc t ,
 .esc g ,
@@ -3648,12 +3652,12 @@ Mark horizontal position in register with arbitrarily long
 .RI name\~ reg .
 .
 .TP
-.ESCq l Nc
+.ESCq l N\f[R][\f[]c\f[R]]
 Horizontal line drawing function (optionally using character
 .IR c ).
 .
 .TP
-.ESCq L Nc
+.ESCq L N\f[R][\f[]c\f[R]]
 Vertical line drawing function (optionally using character
 .IR c ).
 .
@@ -5408,27 +5412,27 @@ it does so in
 it copies the characters of the definition into a dedicated storage
 region,
 interpolating the escape sequences
-.BR \[rs] n ,
-.BR \[rs] g ,
-.BR \[rs] $ ,
-.BR \[rs] * ,
+.BR \[rs]n ,
+.BR \[rs]g ,
+.BR \[rs]$ ,
+.BR \[rs]* ,
 and
-.B \[rs] V
+.B \[rs]V
 normally;
 interpreting
 .BI \[rs] newline
 immediately;
 discarding comments
-.BR \[rs] "
+.B \[rs]"
 and
-.BR \[rs] # ;
+.BR \[rs]# ;
 interpolating the current leader,
 escape,
 or tab character with
-.BR \[rs] a ,
-.BR \[rs] e ,
+.BR \[rs]a ,
+.BR \[rs]e ,
 and
-.BR \[rs] t ,
+.BR \[rs]t ,
 respectively;
 and storing all other escape sequences in an encoded form.
 .
@@ -5450,12 +5454,12 @@ by default,
 escapes itself.
 .
 Thus you can control whether a given
-.BR \[rs] n ,
-.BR \[rs] g ,
-.BR \[rs] $ ,
-.BR \[rs] * ,
+.BR \[rs]n ,
+.BR \[rs]g ,
+.BR \[rs]$ ,
+.BR \[rs]* ,
 or
-.B \[rs] V
+.B \[rs]V
 escape sequence is interpreted at the time the macro containing it is
 defined,
 or later when the macro is called.
@@ -5510,7 +5514,7 @@ to obtain a backslash glyph,
 and
 .B \[rs]&
 before
-.RB \[lq] . \[rq]
+.RB \[lq] .\& \[rq]
 and
 .RB \[lq] \[aq] \[rq]
 where
@@ -5528,12 +5532,12 @@ when it is executed.
 .
 This fact leads to exponential growth in the number of escape characters
 required to delay interpolation of
-.BR \[rs] n ,
-.BR \[rs] g ,
-.BR \[rs] $ ,
-.BR \[rs] * ,
+.BR \[rs]n ,
+.BR \[rs]g ,
+.BR \[rs]$ ,
+.BR \[rs]* ,
 and
-.B \[rs] V
+.B \[rs]V
 at each nesting level.
 .
 An alternative is to use
@@ -5550,8 +5554,7 @@ to keep
 .RB \[lq] ..\& \[rq]
 from ending a macro definition prematurely.
 .
-If the multiplicity of backslashes complicates
-maintenance,
+If the multiplicity of backslashes complicates maintenance,
 use end macros.
 .
 .
