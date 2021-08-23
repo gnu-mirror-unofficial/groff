@@ -3520,6 +3520,30 @@ and components
 and so on.
 .
 .
+.TP
+.ESC[] "" "\f[CB]char\f[]nnn"
+Interpolate glyph of eight-bit encoded character
+.IR nnn ,
+where
+.RI 0\|\[<=]\| nnn \|\[<=]\|255.
+.
+.
+.TP
+.ESC[] "" "\f[CB]u\f[]nnnn\f[R][\f[]n\f[R][\f[]n\f[R]]]"
+Interpolate glyph of Unicode character with code point
+.IR nnnn [ n [ n ]]
+in uppercase hexadecimal.
+.
+.
+.TP
+.ESC[] "" "\f[CB]u\f[]base-glyph\f[R][\f[]\f[CB]_\f[]\
+combining-component\f[R]].\|.\|."
+Interpolate composite glyph from Unicode character
+.I base-glyph
+and
+.IR combining-components .
+.
+.
 .\" ========= alphabetical escapes =========
 .
 .TP
@@ -3804,15 +3828,54 @@ and so on.
 .
 .TP
 .ESC O0
-Disable glyph output.
+At the outermost suppression level,
+disable glyph emission to the output driver.
 .
-Mainly for internal use.
 .
 .TP
 .ESC O1
-Enable glyph output.
+At the outermost suppression level,
+enable glyph emission to the output driver.
 .
-Mainly for internal use.
+.
+.TP
+.ESC O2
+At the outermost suppression level,
+enable glyph emission to the output driver and write to the standard
+error stream the page number and four bounding box registers enclosing
+glyphs written since the previous
+.B \[rs]O
+escape sequence.
+.
+.
+.TP
+.ESC O3
+Begin a nested suppression level.
+.
+.
+.TP
+.ESC O4
+End a nested suppression level.
+.
+.
+.TP
+.ESC[] O "\f[CB]5\f[]Pfilename"
+At the outermost suppression level,
+write
+.I filename
+to the standard error stream;
+.IR P \~indicates
+the position of an image and must be one of
+.BR l ,
+.BR r ,
+.BR c ,
+or
+.B i
+(left,
+right,
+centered,
+inline).
+.
 .
 .TP
 .ESC p
