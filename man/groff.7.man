@@ -1181,40 +1181,13 @@ they cause the condition to evaluate false
 .
 .
 .\" ====================================================================
-.SH Requests
+.SH "Syntax reference conventions"
 .\" ====================================================================
 .
-This section provides a short reference for the predefined requests.
+In the following request and escape sequence specifications,
+most argument names were chosen to be descriptive.
 .
-In groff, request, macro, and string names can be arbitrarily long.
-.
-No bracketing or marking of long names is needed.
-.
-.
-.P
-Most requests take one or more arguments.
-.
-The arguments are separated by space characters (no tabs!); there is
-no inherent limit for their length or number.
-.
-.
-.P
-Some requests have optional arguments with a different behaviour.
-.
-Not all of these details are outlined here.
-.
-Refer to the
-.I groff
-Texinfo manual and
-.BR groff_diff (@MAN7EXT@)
-for all details.
-.
-.
-.P
-In the following request specifications, most argument names were
-chosen to be descriptive.
-.
-Only the following denotations need clarification.
+A few denotations may require introduction.
 .
 .
 .P
@@ -1223,28 +1196,32 @@ Only the following denotations need clarification.
 .
 .TPx
 .I c
-denotes a single character.
+denotes a single input character.
 .
 .TPx
 .I font
-a font either specified as a font name or a font number.
+a font either specified as a font name or a numeric mounting position.
 .
 .TPx
 .I anything
-all characters up to the end of the line or within
+all characters up to the end of the line,
+to the ending delimiter for the escape sequence,
+or within
 .esc {
 and
 .esc } .
+.
+Escape sequences may generally be used freely in
+.IR anything ,
+except when it is read in copy mode.
 .
 .TPx
 .I n
 is a numerical expression that evaluates to an integer value.
 .
-.
 .TPx
 .I N
 is an optionally-signed numerical expression.
-.
 .
 .TPx
 .I \[+-]N
@@ -1281,6 +1258,40 @@ either prefix the expression with a zero or enclose it with parentheses.
 .
 If a prior value does not exist,
 an increment or decrement is applied as if to\~0.
+.
+.
+.\" ====================================================================
+.SH Requests
+.\" ====================================================================
+.
+In
+.IR groff ,
+identifier names,
+including those of requests,
+can be arbitrarily long.
+.
+No bracketing or marking of long names is needed in request invocation
+syntax.
+.
+.
+.P
+Most requests take one or more arguments.
+.
+Tabs are permitted after a request name,
+before its first argument
+(if any),
+but arguments themselves must be separated only by space characters.
+.
+There is no inherent limit on argument length or quantity.
+.
+.
+.P
+Not all details of request behavior are outlined here.
+.
+Refer to the
+.I groff
+Texinfo manual or
+.IR groff_diff (@MAN7EXT@).
 .
 .
 .\" ====================================================================
