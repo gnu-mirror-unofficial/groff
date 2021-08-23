@@ -1,3 +1,13 @@
+2021-08-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	groff(7): Fix bug in `\?` escape rendering.
+
+	* man/groff.7.man (ESC?): Fix bug in page-private macro: the
+	question mark that ends this uniquely-syntaxed escape sequence
+	was not shown with the mandatory escape character before it.
+	Problem dates back at least to commit 41b0e794, 19 February
+	2007, but possiby to f790bc7a9, 6 January 2002.
+
 2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[docs]: Elaborate macro definition discussion.

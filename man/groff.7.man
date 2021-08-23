@@ -146,10 +146,10 @@ groff \- GNU roff language reference
 .\" Synopsis for escape sequence with a bracketed long argument
 .\" Args   : 1 obligatory
 .\"   arg  : arbitrary text
-.\" Result : prints '\?arg?', where the '?' are in CB, 'arg' in I
+.\" Result : prints '\?arg\?', where the '\?' are in CB, 'arg' in I
 .\"
 .de ESC?
-.  Text "\f[CB]\e?\,\f[I]\\$1\/\f[CB]?\f[R]"
+.  Text "\f[CB]\e?\,\f[I]\\$1\/\f[CB]\[rs]?\f[R]"
 ..
 .\" ====================================================================
 .\" .esc name [punct]
