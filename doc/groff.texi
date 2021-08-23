@@ -15384,10 +15384,11 @@ This request causes a line break.
 @Defreq {backtrace, }
 @cindex backtrace of input stack (@code{backtrace})
 @cindex input stack, backtrace (@code{backtrace})
-Print a backtrace of the input stack to the standard error stream.
+Write a backtrace of the input stack to the standard error stream.
 
-Consider the following in file @file{test}:
+Consider the following in a file @file{test}.
 
+@codequoteundirected on
 @Example
 .de xxx
 .  backtrace
@@ -15397,22 +15398,15 @@ Consider the following in file @file{test}:
 ..
 .
 .yyy
-@endExample
-
-@noindent
-On execution, @code{gtroff} prints the following:
-
-@codequoteundirected on
-@Example
-gtroff: backtrace: 'test':2: macro 'xxx'
-gtroff: backtrace: 'test':5: macro 'yyy'
-gtroff: backtrace: file 'test':8
+    @error{} troff: backtrace: 'test':2: macro 'xxx'
+    @error{} troff: backtrace: 'test':5: macro 'yyy'
+    @error{} troff: backtrace: file 'test':8
 @endExample
 @codequoteundirected off
 
-The option @option{-b} of @code{gtroff} causes a backtrace to be
-generated on each error and warning.  Warnings have to be enabled;
-@pxref{Warnings}.
+The @option{-b} option of GNU @code{troff} causes a backtrace to be
+generated on each error or warning.  Some warnings have to be enabled;
+@xref{Warnings}.
 @endDefreq
 
 @Defreg {slimit}
