@@ -844,16 +844,18 @@ T}
 tab(@);
 l lx.
 0@T{
-Displays are printed at the end of each section (when section-page
-numbering is active) or at the end of the document.
+Displays are printed at the end of each section
+(when section-page numbering is active)
+or at the end of the document.
 T}
 1@T{
 A new display is printed on the current page if there is enough space,
 otherwise it is printed at the end of the document.
 T}
 2@T{
-One display is printed at the top of each page or column
-(in multi-column mode).
+One display is printed at the top of each page
+(or column,
+in multi-column mode).
 T}
 3@T{
 Print one display if there is enough space for it,
@@ -861,6 +863,7 @@ otherwise it is printed at the top of the next page or column.
 T}
 4@T{
 Print as many displays as possible in a new page or column.
+.
 A page break occurs between each display if
 .B De
 is not zero.
@@ -868,9 +871,10 @@ T}
 5@T{
 Fill the current page with displays and the rest beginning at a new page
 or column.
+.
 (This is the default.)
-A page break occurs between each display
-if \fBDe\fP is not zero.
+.
+A page break occurs between each display if \fBDe\fP is not zero.
 T}
 .TE
 .RE
@@ -2435,38 +2439,30 @@ Use
 .B PGFORM
 without arguments to return to normal.
 .
+.
 .TP
-.BI MULB\  "cw1 space1 \fR[\fPcw2 space2 \fR[\fPcw3 \fR.\|.\|.]]\fP"
-Begin a special multi-column mode.
+.B MULB\~\c
+.IR "cw1 space1\~" [ "cw2 space2" "] .\|.\|.\~" cwn
+Begin alternative multi-column mode.
 .
-All columns widths must be specified.
+All column widths must be specified,
+as must the amount of space between each column pair.
 .
-The space between the columns must be specified also.
+The default unit for the width and space arguments is \[lq]n\[rq].
 .
-The last column does not need any space definition.
+.B .MULB
+uses a diversion and operates in a separate environment.
 .
-.B MULB
-starts a diversion, and
-.B MULE
-ends the diversion and prints the columns.
-.
-The unit for the width and space arguments is \[lq]n\[rq],
-but
-.B MULB
-accepts all normal unit specifications like \[lq]c\[rq] and \[lq]i\[rq].
-.
-.B MULB
-operates in a separate environment.
 .
 .TP
 .B MULN
-Begin the next column.
+Begin next column in alternative column mode.
 .
-This is the only way to switch the column.
 .
 .TP
 .B MULE
-End the multi-column mode and print the columns.
+End alternative multi-column mode and emit the columns.
+.
 .
 .TP
 .BI nP\  \fR[\fPtype\fR]\fP
@@ -4231,11 +4227,13 @@ It is supposed to remove the alias
 .BR let@header ,
 otherwise it is called for all pages.
 .
+.
 .TP
-.BI let@sg_ "type name title n flag \fR[\fParg1 \fR[\fParg2 \fR[.\|.\|.]]]\fP"
+.BI let@sg_ type\~\c
+.IR "name title n is-surname\~" [ SG-arg\~ .\|.\|.]]
 .B .SG
-is calling this macro only for letters;
-memorandums have its own processing.
+calls this macro only for letters;
+memoranda have their own processing.
 .
 .I name
 and
@@ -4244,13 +4242,17 @@ are specified through
 .BR .WA / .WB .
 .
 .IR n \~is
-the counter, 1-max, and
-.I flag
+the index of the
+.IR n th
+author,
+and
+.I is-surname
 is true for the last name.
 .
-Any other argument to
+Further
 .B .SG
-is appended.
+arguments are appended to the signature line.
+.
 .
 .TP
 .BI let@fc_ "type closing"
