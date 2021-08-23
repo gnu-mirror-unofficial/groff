@@ -1860,9 +1860,8 @@ $(grog \-Tutf8 foo.me)
 .
 .
 .P
-Each command-line
-.I option
-to a postprocessor must be specified with any required leading dashes
+Each command-line option to a postprocessor must be specified with any
+required leading dashes
 .RB \[lq] \- \[rq]
 .\" No GNU roff postprocessor uses long options for anything except
 .\" --help or --version.
@@ -1897,16 +1896,16 @@ are equivalent.
 .
 .
 .\" ====================================================================
-.SH Notes
+.SH Limitations
 .\" ====================================================================
 .
 .P
 When paging output for the
-\[lq]ascii\[rq],
-\[lq]cp1047\[rq],
-\[lq]latin1\[rq],
+.RB \[lq] ascii \[rq],
+.RB \[lq] cp1047 \[rq],
+.RB \[lq] latin1 \[rq],
 and
-\[lq]utf8\[rq]
+.RB \[lq] utf8 \[rq]
 devices,
 programs like
 .IR more (1)
@@ -1918,20 +1917,19 @@ see
 .IR \%grotty (@MAN1EXT@).
 .
 .
-.\" ====================================================================
-.SH Bugs
-.\" ====================================================================
-.
-On \f[CR]EBCDIC\f[] hosts (e.g., \f[CR]OS/390 Unix\f[]), output
-devices
-.B ascii
+.P
+On EBCDIC hosts such as OS/390 Unix,
+the output devices
+.RB \[lq] ascii \[rq]
 and
-.B latin1
+.RB \[lq] latin1 \[rq]
 aren't available.
 .
-Similarly, output for \f[CR]EBCDIC\f[] code page
-.B cp1047
-is not available on \f[CR]ASCII\f[] based operating systems.
+Conversely,
+the output device
+.RB \[lq] cp1047 \[rq]
+is not available on systems based on the ISO\~646 or ISO\~8859 character
+encoding standards.
 .
 .
 .\" ====================================================================
