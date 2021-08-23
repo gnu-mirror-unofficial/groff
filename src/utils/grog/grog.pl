@@ -326,7 +326,7 @@ sub do_line {
 		 'ul', 'unformat', 'vpt', 'vs', 'warn', 'warnscale',
 		 'wh', 'while', 'write', 'writec', 'writem');
 
-  # Add user-defined macro names to %user_macros.
+  # Add user-defined macro names to %user_macro.
   #
   # Macros can also be defined with .dei{,1}, ami{,1}, but supporting
   # that would be a heavy lift for the benefit of users that probably
@@ -491,7 +491,7 @@ sub infer_preprocessors {
 } # infer_preprocessors()
 
 
-# Return true (1) if a main/full-service/exclusive package is inferred.
+# Return true (1) if either the man or ms package is inferred.
 sub infer_man_or_ms_package {
   my @macro_ms = ('RP', 'TL', 'AU', 'AI', 'DA', 'ND', 'AB', 'AE',
 		  'QP', 'QS', 'QE', 'XP',
