@@ -518,7 +518,7 @@ a line could not be broken such that its length was less than the output
 line length
 .BR \[rs]n[.l] .
 .
-This is enabled by default.
+This category is enabled by default.
 .
 .
 .TP
@@ -530,7 +530,7 @@ is a misnomer since it reports missing glyphs\[em]there are no
 \[lq]missing\[rq] input characters,
 only invalid ones.)
 .
-This cateogry is enabled by default.
+This category is enabled by default.
 .
 .
 .TP
@@ -571,13 +571,6 @@ request.
 .BR escape "\t32768"
 An unsupported escape sequence was encountered.
 .
-In such a sequence
-.BI \[rs] X\c
-,
-the escape character is ignored and
-.IR X \~is
-output.
-.
 .
 .TP
 .BR file "\t1048576"
@@ -612,11 +605,10 @@ An invalid character occurred on the input stream.
 .BR mac "\t512"
 An undefined string,
 macro,
-diversion,
-or box was used.
+or diversion was used.
 .
 When such an object is dereferenced,
-an empty object of that name is automatically created.
+an empty one of that name and type is automatically created.
 .
 So,
 in most cases,

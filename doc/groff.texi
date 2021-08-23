@@ -15554,8 +15554,8 @@ without an argument when there was no current diversion.
 @cindex @code{da} request, and warnings
 @cindex @code{box}, @code{boxa} requests, and warnings
 @cindex @code{\*}, and warnings
-An undefined string, macro, diversion, or box was used.  When such an
-object is dereferenced, an empty object of that name is automatically
+An undefined string, macro, or diversion was used.  When such an object
+is dereferenced, an empty one of that name and type is automatically
 created.  So, in most cases, at most one warning is given for each name.
 
 This warning is also emitted upon an attempt to move an unplanted trap
@@ -15593,9 +15593,7 @@ An invalid character occurred on the input stream.
 
 @item escape
 @itemx 32768
-An unsupported escape sequence was encountered.  In such a sequence
-@code{\@var{X}}, the escape character is ignored and @var{X}@tie{}is
-output.
+An unsupported escape sequence was encountered.
 
 @item space
 @itemx 65536
