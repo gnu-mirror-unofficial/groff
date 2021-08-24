@@ -377,8 +377,8 @@ is preferable.
 .SS "Document description macros"
 .\" ====================================================================
 .
-Define information describing the document by using the macros below in
-the order shown;
+Define information describing the document by calling the macros below
+in the order shown;
 .B .DA
 or
 .B .ND
@@ -699,7 +699,8 @@ point size as the body text.
 .
 Headings are available with and without automatic numbering.
 .
-Text lines after heading macros are treated as part of the heading,
+Text lines immediately after heading macro calls are treated as part of
+the heading,
 rendered on the same output line in the same style.
 .
 .
@@ -983,7 +984,7 @@ On terminal devices,
 reverse video is used instead.
 .
 If you want the argument to contain space,
-use non-breaking space escapes of appropriate width
+use non-breaking space escape sequences of appropriate width
 .RB ( \[rs]\[ti] ,
 .BR \[rs]\[ha] ,
 .BR \[rs]| ,
@@ -1979,7 +1980,7 @@ register,
 but it is not necessary;
 you can access the page number via the usual
 .B %
-register and use the
+register and invoke the
 .B af
 request to assign a different format to it if desired.
 .
@@ -2086,7 +2087,7 @@ _
 .
 The default for
 .B ABSTRACT
-includes font style escapes to set the word in italics.
+includes font style escape sequences to set the word in italics.
 .
 .
 .\" TODO: Put this in a legacy feature support section, alongside AT&T

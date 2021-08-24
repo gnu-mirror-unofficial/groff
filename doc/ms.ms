@@ -21,8 +21,8 @@
 .ds FR 1
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND July 2021
-.EH '%''July 2021'
+.ND August 2021
+.EH '%''August 2021'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -443,7 +443,7 @@ and,
 at the rarefied heights,
 an abstract of their content.
 .
-Define these data by using the macros below in the order shown;
+Define these data by calling the macros below in the order shown;
 .CW .DA
 or
 .CW .ND
@@ -891,7 +891,8 @@ point size as the body text.
 .
 Headings are available with and without automatic numbering.
 .
-Text lines after heading macros are treated as part of the heading,
+Text lines immediately after heading macro calls are treated as part of
+the heading,
 rendered on the same output line in the same style.
 .
 .
@@ -1311,7 +1312,7 @@ reverse video is used instead
 (see the implementation note below).
 .
 If you want the argument to contain space,
-use non-breaking space escapes of appropriate width
+use non-breaking space escape sequences of appropriate width
 .CW \[rs]\[ti] , (
 .CW \[rs]\[ha] ,
 .CW \[rs]| ,
@@ -1444,11 +1445,11 @@ the
 .CW BX
 macro \[lq]boxes\[rq] its argument by bracketing it with
 .I groff
-extension escapes to set the foreground color to black and the
+extension escape sequences to set the foreground color to black and the
 background to white and then reset them to their previous values;
 the terminal output driver,
 .I grotty (1),
-converts these to ISO\~6429 color escapes,
+converts these to ISO\~6429 color escape sequences,
 which may be ignored or mishandled by some terminals,
 or may be disabled by
 .I grotty 's
@@ -1465,9 +1466,9 @@ Surmounting these challenges would require adding features to
 for instance to provide a mechanism to request ISO\~6429's
 \[lq]standout\[rq] mode \" That's "smso" and "rmso" in terminfo.
 (often supported on monochrome terminals),
-or to replace the presumed support of the terminal for ISO\~6429 escapes
-with the use of a library that can query the capabilities of the
-terminal and adapt the output sent to the device accordingly.
+or to replace the presumed support of the terminal for ISO\~6429 escape
+sequences with the use of a library that can query the capabilities of
+the terminal and adapt the output sent to the device accordingly.
 .
 (Practically,
 this likely means adding a dependency on
@@ -1600,7 +1601,7 @@ you could apply the
 .CW \[rs]p
 escape sequence to force a break.
 .
-The space following the escape is important;
+The space following the escape sequence is important;
 if you omit it,
 .I groff
 prints the first word of the paragraph text on the same line as the term
@@ -1613,7 +1614,7 @@ Finally,
 you may append unbreakable horizontal space to the term or label with
 the
 .CW \[rs]h
-escape;
+escape sequence;
 using the same amount as the indentation will ensure that it's too wide
 for
 .I groff
@@ -2925,7 +2926,7 @@ register,
 but it is not necessary;
 you can access the page number via the usual
 .CW %
-register and use the
+register and invoke the
 .CW af
 request to assign a different format to it if desired.\**
 .FS
@@ -3122,7 +3123,7 @@ _
 .PP
 The default for
 .CW \[rs]*[ABSTRACT]
-includes font style escapes to set the word in italics.
+includes font style escape sequences to set the word in italics.
 .
 .
 .\" ------------------------

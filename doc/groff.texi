@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle July 2021
+@subtitle August 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -2970,7 +2970,7 @@ headers and footers collectively.}  As their level of sophistication (or
 complexity) increases, they tend to acquire dates of revision,
 explicitly identified authors, sponsoring institutions for authors, and,
 at the rarefied heights, an abstract of their content.  Define these
-data by using the macros below in the order shown; @code{DA} or
+data by calling the macros below in the order shown; @code{DA} or
 @code{ND} can be called to set the document date (or other identifier)
 at any time before (a) the abstract, if present, or (b) its information
 is required in a header or footer.  Use of these macros is optional,
@@ -3194,8 +3194,8 @@ Use headings to create a sequential or hierarchical structure for your
 document.  The @file{ms} macros print headings in @strong{bold} using
 the same font family and, by default, point size as the body text.
 Headings are available with and without automatic numbering.  Text lines
-after heading macros are treated as part of the heading, rendered on the
-same output line in the same style.
+immediately after heading macro calls are treated as part of the
+heading, rendered on the same output line in the same style.
 
 @DefmacList {NH, @Var{level}, ms}
 @DefmacListEnd {NH, @t{S} @Var{heading-level-index} @dots{}, ms}
@@ -3376,8 +3376,8 @@ otherwise.  This is a Version@tie{}10 Research Unix extension.
 @Defmac {BX, [@Var{txt}], ms}
 Prints @var{txt} and draws a box around it.  On terminal devices,
 reverse video is used instead.  If you want the argument to contain
-space, use non-breaking space escapes of appropriate width (@code{\~},
-@code{\^}, @code{\|}, @code{\0}) or @code{\h}.
+space, use non-breaking space escape sequences of appropriate width
+(@code{\~}, @code{\^}, @code{\|}, @code{\0}) or @code{\h}.
 @endDefmac
 
 @Defmac {UL, [@Var{txt} [@Var{post}]], ms}
@@ -3536,7 +3536,7 @@ Firearms,
 @endCartoucheExample
 
 Second, you could apply the @code{\p} escape sequence to force a break.
-The space following the escape is important; if you omit it,
+The space following the escape sequence is important; if you omit it,
 @code{groff} prints the first word of the paragraph text on the same
 line as the term or label (if it fits) @emph{then} breaks the line.
 
@@ -3546,7 +3546,7 @@ line as the term or label (if it fits) @emph{then} breaks the line.
 @endCartoucheExample
 
 Finally, you may append unbreakable horizontal space to the term or
-label with the @code{\h} escape; using the same amount as the
+label with the @code{\h} escape sequence; using the same amount as the
 indentation will ensure that it's too wide for @code{groff} to treat it
 as ``fitting'' on the same line as the paragraph text.
 
@@ -4152,8 +4152,8 @@ is @samp{References}.
 
 @Defstr {ABSTRACT, ms}
 Contains the string printed at the beginning of the abstract.  The
-default is @samp{\f[I]ABSTRACT\f[]}; it includes font style escapes to
-set the word in italics.
+default is @samp{\f[I]ABSTRACT\f[]}; it includes font style escape
+sequences to set the word in italics.
 @endDefstr
 
 @Defstr {TOC, ms}
@@ -4383,8 +4383,8 @@ numbering sequence.
 @item
 @code{groff} @file{ms} supports the @code{PN} register, but it is not
 necessary; you can access the page number via the usual @code{%}
-register and use the @code{af} request to assign a different format to
-it if desired.@footnote{If you redefine the @file{ms} @code{PT} macro
+register and invoke the @code{af} request to assign a different format
+to it if desired.@footnote{If you redefine the @file{ms} @code{PT} macro
 @c I wouldn't mention that, but Lesk 1978 encourages doing so.  :-/
 and desire special treatment of certain page numbers (like @samp{1}),
 you may need to handle a non-Arabic page number format, as @code{groff}
