@@ -1,3 +1,13 @@
+2021-08-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Refactor `font::scan_papersize()`.
+
+	* src/libs/libgroff/font.cpp (font::scan_papersize): Ensure
+	successful return value of `fgets()` before attempting to parse
+	string for paper format.  Convert `test_file` to Boolean and
+	rename to `attempt_file_open`.  Quiets GCC `-Wunused-result`
+	warning.
+
 2021-08-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tests]: Apply naming convention.

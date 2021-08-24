@@ -709,7 +709,7 @@ int font::scan_papersize(const char *p,
   double l, w;
   char lu[2], wu[2];
   const char *pp = p;
-  int test_file = 1;
+  bool attempt_file_open = true;
   char line[255];
 again:
   if (csdigit(*pp)) {
@@ -737,17 +737,19 @@ again:
 	  *size = papersizes[i].name;
 	return 1;
       }
-    if (test_file) {
+    if (attempt_file_open) {
       FILE *f = fopen(p, "r");
       if (f) {
-	fgets(line, 254, f);
+	if (fgets(line, 254, f)) {
+	  // Don't recurse on file names.
+	  attempt_file_open = false;
+	  char *linep = strchr(line, '\0');
+	  // skip final newline, if any
+	  if (*(--linep) == '\n')
+	    *linep = '\0';
+	  pp = line;
+	}
 	fclose(f);
-	test_file = 0;
-	char *linep = strchr(line, '\0');
-	// skip final newline, if any
-	if (*(--linep) == '\n')
-	  *linep = '\0';
-	pp = line;
 	goto again;
       }
     }
