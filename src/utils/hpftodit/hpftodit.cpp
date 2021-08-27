@@ -178,7 +178,7 @@ struct name_list {
   char *name;
   name_list *next;
   name_list(const char *s, name_list *p) : name(strsave(s)), next(p) { }
-  ~name_list() { a_delete name; }
+  ~name_list() { delete[] name; }
 };
 
 struct symbol_set {
@@ -1419,7 +1419,7 @@ read_map(const char *file, const int tfm_type)
       charcode_name_table = new name_list *[charcode_name_table_size];
       if (old_table) {
 	memcpy(charcode_name_table, old_table, old_size*sizeof(name_list *));
-	a_delete old_table;
+	delete[] old_table;
       }
       for (size_t i = old_size; i < charcode_name_table_size; i++)
 	charcode_name_table[i] = NULL;

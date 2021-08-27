@@ -89,7 +89,7 @@ text_file::text_file(FILE *p, char *s)
 
 text_file::~text_file()
 {
-  a_delete buf;
+  delete[] buf;
   free(path);
   if (fp)
     fclose(fp);
@@ -116,7 +116,7 @@ int text_file::next()
 	  char *old_buf = buf;
 	  buf = new char[size*2];
 	  memcpy(buf, old_buf, size);
-	  a_delete old_buf;
+	  delete[] old_buf;
 	  size *= 2;
 	}
 	buf[i++] = c;
@@ -206,9 +206,9 @@ font::~font()
 {
   for (int i = 0; i < ch_used; i++)
     if (ch[i].special_device_coding)
-      a_delete ch[i].special_device_coding;
-  a_delete ch;
-  a_delete ch_index;
+      delete[] ch[i].special_device_coding;
+  delete[] ch;
+  delete[] ch_index;
   if (kern_hash_table) {
     for (int i = 0; i < KERN_HASH_TABLE_SIZE; i++) {
       font_kern_list *kerns = kern_hash_table[i];
@@ -218,10 +218,10 @@ font::~font()
 	delete tem;
       }
     }
-    a_delete kern_hash_table;
+    delete[] kern_hash_table;
   }
-  a_delete name;
-  a_delete internalname;
+  delete[] name;
+  delete[] internalname;
   while (widths_cache) {
     font_widths_cache *tem = widths_cache;
     widths_cache = widths_cache->next;
@@ -335,7 +335,7 @@ font_widths_cache::font_widths_cache(int ps, int ch_size,
 
 font_widths_cache::~font_widths_cache()
 {
-  a_delete width;
+  delete[] width;
 }
 
 int font::get_width(glyph *g, int point_size)
@@ -615,7 +615,7 @@ void font::alloc_ch_index(int idx)
     memcpy(ch_index, old_ch_index, sizeof(int)*old_nindices);
     for (int i = old_nindices; i < nindices; i++)
       ch_index[i] = -1;
-    a_delete old_ch_index;
+    delete[] old_ch_index;
   }
 }
 
@@ -629,7 +629,7 @@ void font::extend_ch()
     font_char_metric *old_ch = ch;
     ch = new font_char_metric[ch_size];
     memcpy(ch, old_ch, old_ch_size*sizeof(font_char_metric));
-    a_delete old_ch;
+    delete[] old_ch;
   }
 }
 
@@ -644,14 +644,14 @@ void font::compact()
     int *old_ch_index = ch_index;
     ch_index = new int[i];
     memcpy(ch_index, old_ch_index, i*sizeof(int));
-    a_delete old_ch_index;
+    delete[] old_ch_index;
     nindices = i;
   }
   if (ch_used < ch_size) {
     font_char_metric *old_ch = ch;
     ch = new font_char_metric[ch_used];
     memcpy(ch, old_ch, ch_used*sizeof(font_char_metric));
-    a_delete old_ch;
+    delete[] old_ch;
     ch_size = ch_used;
   }
 }
@@ -1157,7 +1157,7 @@ int font::load_desc()
 	  sizes = new int[n*2];
 	  memcpy(sizes, old_sizes, n*sizeof(int));
 	  n *= 2;
-	  a_delete old_sizes;
+	  delete[] old_sizes;
 	}
 	sizes[i++] = lower;
 	if (lower == 0)
@@ -1189,7 +1189,7 @@ int font::load_desc()
 	    style_table[j] = old_style_table[j];
 	  for (; j < style_table_size; j++)
 	    style_table[j] = 0;
-	  a_delete old_style_table;
+	  delete[] old_style_table;
 	}
 	char *tem = new char[strlen(p) + 1];
 	strcpy(tem, p);

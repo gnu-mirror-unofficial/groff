@@ -463,8 +463,8 @@ justification_spec::justification_spec(vunits h)
 
 justification_spec::~justification_spec()
 {
-  a_delete type;
-  a_delete amount;
+  delete[] type;
+  delete[] amount;
 }
 
 void justification_spec::append(symbol t, vunits v)
@@ -485,12 +485,12 @@ void justification_spec::append(symbol t, vunits v)
     int i;
     for (i = 0; i < n; i++)
       type[i] = old_type[i];
-    a_delete old_type;
+    delete[] old_type;
     vunits *old_amount = amount;
     amount = new vunits[maxn];
     for (i = 0; i < n; i++)
       amount[i] = old_amount[i];
-    a_delete old_amount;
+    delete[] old_amount;
   }
   assert(n < maxn);
   type[n] = t;

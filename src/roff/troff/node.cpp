@@ -1200,7 +1200,7 @@ void troff_output_file::set_font(tfont *tf)
       font_position = new symbol[nfont_positions];
       memcpy(font_position, old_font_position,
 	     old_nfont_positions*sizeof(symbol));
-      a_delete old_font_position;
+      delete[] old_font_position;
     }
     font_position[n] = nm;
   }
@@ -1573,7 +1573,7 @@ void troff_output_file::really_transparent_char(unsigned char c)
 
 troff_output_file::~troff_output_file()
 {
-  a_delete font_position;
+  delete[] font_position;
 }
 
 void troff_output_file::trailer(vunits page_length)
@@ -4533,7 +4533,7 @@ int draw_node::is_tag()
 draw_node::~draw_node()
 {
   if (point)
-    a_delete point;
+    delete[] point;
 }
 
 hunits draw_node::width()
@@ -5914,7 +5914,7 @@ static void grow_font_table(int n)
   if (old_font_table_size)
     memcpy(font_table, old_font_table,
 	   old_font_table_size*sizeof(font_info *));
-  a_delete old_font_table;
+  delete[] old_font_table;
   for (int i = old_font_table_size; i < font_table_size; i++)
     font_table[i] = 0;
 }
@@ -6057,7 +6057,7 @@ font_family::font_family(symbol s)
 
 font_family::~font_family()
 {
-  a_delete map;
+  delete[] map;
 }
 
 int font_family::make_definite(int i)
@@ -6076,7 +6076,7 @@ int font_family::make_definite(int i)
 	    map_size = i + 10;
 	  map = new int[map_size];
 	  memcpy(map, old_map, old_map_size*sizeof(int));
-	  a_delete old_map;
+	  delete[] old_map;
 	  for (int j = old_map_size; j < map_size; j++)
 	    map[j] = -1;
 	}

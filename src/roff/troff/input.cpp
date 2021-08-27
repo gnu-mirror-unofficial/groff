@@ -875,7 +875,7 @@ static symbol read_long_escape_name(read_mode mode)
     c = get_char_for_escape_name(have_char && mode == WITH_ARGS);
     if (c == 0) {
       if (buf != abuf)
-	a_delete buf;
+	delete[] buf;
       return NULL_SYMBOL;
     }
     have_char = 1;
@@ -892,7 +892,7 @@ static symbol read_long_escape_name(read_mode mode)
 	buf = new char[buf_size*2];
 	memcpy(buf, old_buf, buf_size);
 	buf_size *= 2;
-	a_delete old_buf;
+	delete[] old_buf;
       }
     }
     if (c == ']' && input_stack::get_level() == start_level)
@@ -912,7 +912,7 @@ static symbol read_long_escape_name(read_mode mode)
   }
   else {
     symbol s(buf);
-    a_delete buf;
+    delete[] buf;
     return s;
   }
 }
@@ -2281,7 +2281,7 @@ void token::next()
 		strcpy(buf, "u");
 		strcat(buf, gn);
 		nm = symbol(buf);
-		a_delete buf;
+		delete[] buf;
 	      }
 	    }
 	    else
@@ -2542,7 +2542,7 @@ static symbol do_get_long_name(bool required, char end)
 	buf = new char[buf_size*2];
 	memcpy(buf, old_buf, buf_size);
 	buf_size *= 2;
-	a_delete old_buf;
+	delete[] old_buf;
       }
     }
     if ((buf[i] = tok.ch()) == 0 || buf[i] == end)
@@ -2562,7 +2562,7 @@ static symbol do_get_long_name(bool required, char end)
     return symbol(buf);
   else {
     symbol s(buf);
-    a_delete buf;
+    delete[] buf;
     return s;
   }
 }
@@ -3611,7 +3611,7 @@ temp_iterator::temp_iterator(const char *s, int len)
 
 temp_iterator::~temp_iterator()
 {
-  a_delete base;
+  delete[] base;
 }
 
 
@@ -5182,7 +5182,7 @@ static symbol get_delim_name()
 	buf = new char[buf_size*2];
 	memcpy(buf, old_buf, buf_size);
 	buf_size *= 2;
-	a_delete old_buf;
+	delete[] old_buf;
       }
     }
     tok.next();
@@ -5192,7 +5192,7 @@ static symbol get_delim_name()
     if ((buf[i] = tok.ch()) == 0) {
       error("missing delimiter (got %1)", tok.description());
       if (buf != abuf)
-	a_delete buf;
+	delete[] buf;
       return NULL_SYMBOL;
     }
     i++;
@@ -5208,7 +5208,7 @@ static symbol get_delim_name()
   }
   else {
     symbol s(buf);
-    a_delete buf;
+    delete[] buf;
     return s;
   }
 }
@@ -6027,7 +6027,7 @@ void pipe_source()
 	  buf_size *= 2;
 	  buf = new char[buf_size];
 	  memcpy(buf, old_buf, old_buf_size);
-	  a_delete old_buf;
+	  delete[] old_buf;
 	}
 	strcpy(buf + buf_used, s);
 	buf_used += slen;
@@ -6039,7 +6039,7 @@ void pipe_source()
 	input_stack::push(new file_iterator(fp, symbol(buf).contents(), 1));
       else
 	error("can't open pipe to process '%1': %2", buf, strerror(errno));
-      a_delete buf;
+      delete[] buf;
     }
     tok.next();
 #endif /* not POPEN_MISSING */
@@ -7535,7 +7535,7 @@ char *read_string()
 	s = new char[len*2];
 	memcpy(s, tem, len);
 	len *= 2;
-	a_delete tem;
+	delete[] tem;
       }
       s[i++] = c;
     }
@@ -7544,7 +7544,7 @@ char *read_string()
   s[i] = '\0';
   tok.next();
   if (i == 0) {
-    a_delete s;
+    delete[] s;
     return 0;
   }
   return s;
@@ -7574,8 +7574,8 @@ void pipe_output()
 	strcpy(s, pipe_command);
 	strcat(s, "|");
 	strcat(s, pc);
-	a_delete pipe_command;
-	a_delete pc;
+	delete[] pipe_command;
+	delete[] pc;
 	pipe_command = s;
       }
       else
@@ -7599,7 +7599,7 @@ void system_request()
       error("empty command");
     else {
       system_status = system(command);
-      a_delete command;
+      delete[] command;
     }
   }
 }
@@ -7754,7 +7754,7 @@ static FILE *open_mac_file(const char *mac, char **path)
   FILE *fp = mac_path->open_file(s1, path);
   if (!fp && ENOENT != errno)
     error("can't open macro file '%1': %2", s1, strerror(errno));
-  a_delete s1;
+  delete[] s1;
   if (!fp) {
     char *s2 = new char[strlen(mac)+strlen(MACRO_PREFIX)+1];
     strcpy(s2, MACRO_PREFIX);
@@ -7762,7 +7762,7 @@ static FILE *open_mac_file(const char *mac, char **path)
     fp = mac_path->open_file(s2, path);
   if (!fp && ENOENT != errno)
       error("can't open macro file '%1': %2", s2, strerror(errno));
-    a_delete s2;
+    delete[] s2;
   }
   return fp;
 }
@@ -7817,7 +7817,7 @@ void do_macro_source(bool quietly)
 	strcpy(s, fn + sizeof(MACRO_PREFIX) - 1);
 	strcat(s, MACRO_POSTFIX);
 	fp = mac_path->open_file(s, &path);
-	a_delete s;
+	delete[] s;
       }
       if (!fp) {
 	if (strncasecmp(fn + fnlen - sizeof(MACRO_POSTFIX) + 1,
@@ -7826,7 +7826,7 @@ void do_macro_source(bool quietly)
 	  strcpy(s, MACRO_PREFIX);
 	  strncat(s, fn, fnlen - sizeof(MACRO_POSTFIX) + 1);
 	  fp = mac_path->open_file(s, &path);
-	  a_delete s;
+	  delete[] s;
 	}
       }
     }
@@ -7907,7 +7907,7 @@ static void do_register_assignment(const char *s)
     units n;
     if (evaluate_expression(p + 1, &n))
       set_number_reg(buf, n);
-    a_delete buf;
+    delete[] buf;
   }
 }
 
@@ -7934,7 +7934,7 @@ static void do_string_assignment(const char *s)
     memcpy(buf, s, p - s);
     buf[p - s] = 0;
     set_string(buf, p + 1);
-    a_delete buf;
+    delete[] buf;
   }
 }
 
@@ -8511,7 +8511,7 @@ static node *read_draw_node()
 	  for (int j = 0; j < maxpoints; j++)
 	    point[j] = oldpoint[j];
 	  maxpoints *= 2;
-	  a_delete oldpoint;
+	  delete[] oldpoint;
 	}
 	if (!get_hunits(&point[i].h,
 			type == 'f' || type == 't' ? 'u' : 'm')) {
@@ -8578,11 +8578,11 @@ static node *read_draw_node()
 				      curenv->get_font_size(),
 				      curenv->get_glyph_color(),
 				      curenv->get_fill_color());
-	a_delete point;
+	delete[] point;
 	return dn;
       }
       else {
-	a_delete point;
+	delete[] point;
       }
     }
   }
@@ -8700,7 +8700,7 @@ static void copy_mode_error(const char *format,
     strcpy(s, prefix);
     strcat(s, format);
     warning(WARN_IG, s, arg1, arg2, arg3);
-    a_delete s;
+    delete[] s;
   }
   else
     error(format, arg1, arg2, arg3);

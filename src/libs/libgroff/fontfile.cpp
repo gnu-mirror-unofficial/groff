@@ -63,7 +63,7 @@ FILE *font::open_file(const char *nm, char **pathp)
   char *filename = new char[strlen(nm) + strlen(device) + 5];
   sprintf(filename, "dev%s/%s", device, nm);
   FILE *fp = font_path.open_file(filename, pathp);
-  a_delete filename;
+  delete[] filename;
   return fp;
 }
 

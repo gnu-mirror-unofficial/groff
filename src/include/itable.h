@@ -118,8 +118,8 @@ ITABLE(T)::ITABLE(T)()							      \
 ITABLE(T)::~ITABLE(T)()							      \
 {									      \
   for (unsigned i = 0; i < size; i++)					      \
-    a_delete v[i].val;							      \
-  a_delete v;								      \
+    delete[] v[i].val;							      \
+  delete[] v;								      \
 }									      \
 									      \
 void ITABLE(T)::define(int key, T *val)					      \
@@ -131,7 +131,7 @@ void ITABLE(T)::define(int key, T *val)					      \
        v[n].key >= 0;							      \
        n = (n == 0 ? size - 1 : n - 1))					      \
     if (v[n].key == key) {						      \
-      a_delete v[n].val;						      \
+      delete[] v[n].val;						      \
       v[n].val = val;							      \
       return;								      \
     }									      \
@@ -158,7 +158,7 @@ void ITABLE(T)::define(int key, T *val)					      \
 	 v[n].key >= 0;							      \
 	 n = (n == 0 ? size - 1 : n - 1))				      \
       ;									      \
-    a_delete oldv;							      \
+    delete[] oldv;							      \
   }									      \
   v[n].key = key;							      \
   v[n].val = val;							      \

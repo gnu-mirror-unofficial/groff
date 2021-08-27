@@ -1,5 +1,108 @@
 2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Drop `a_delete` preprocessor wrapper for the
+	`delete` operator.  It has been rendered unnecessary by the
+	removal of support for ancient C++ compilers.
+
+	* src/include/lib.h (a_delete): Drop symbol definition.
+
+	* src/devices/grohtml/output.cpp (word::~word):
+	* src/devices/grohtml/post-html.cpp (char_block::char_block,
+	assert_state::~assert_state, assert_state::add,
+	assert_state::close, replace_negate_str):
+	* src/devices/grops/ps.cpp (ps_font::ps_font,
+	subencoding::subencoding, ps_printer::define_encoding,
+	ps_printer::encode_fonts):
+	* src/devices/grops/psrm.cpp (resource_manager::document_setup,
+	resource_manager::supply_resource):
+	* src/devices/grotty/tty.cpp (tty_printer::tty_color,
+	tty_printer::tty_printer, tty_printer::color_to_idx,
+	tty_printer::add_char):
+	* src/include/itable.h (ITABLE(T)::~ITABLE(T),
+	ITABLE(T)::define):
+	* src/include/ptable.h (PTABLE(T)::~PTABLE(T),
+	PTABLE(T)::define):
+	* src/libs/libbib/index.cpp
+	(index_search_item::~index_search_item, make_index_search_item,
+	index_search_item_iterator::index_search_item_iterator,
+	index_search_item::get_tag, index_search_item::munge_filename,
+	index_search_item::search):
+	* src/libs/libbib/linear.cpp (bmpattern::~bmpattern,
+	file_buffer::file_buffer, file_buffer::load,
+	linear_searcher::linear_searcher,
+	linear_searcher::~linear_searcher):
+	* src/libs/libbib/search.cpp
+	(search_list_iterator::search_list_iterator,
+	search_item::search_item):
+	* src/libs/libdriver/input.cpp (IntArray::~IntArray,
+	IntArray::append, StringBuf::~StringBuf, StringBuf::append,
+	get_integer_arg, parse_x_command, do_file):
+	* src/libs/libdriver/printer.cpp (printer::printer,
+	printer::load_font, text_file::~text_file, text_file::next,
+	font::~font, font_widths_cache::~font_widths_cache,
+	font:alloc_ch_index, font::extend_ch, font::compact,
+	font::load_desc):
+	* src/libs/libgroff/fontfile.cpp (font::open_file):
+	* src/libs/libgroff/relocate.cpp (searchpath, searchpathext,
+	set_current_prefix):
+	* src/libs/libgroff/searchpath.cpp (search_path::search_path,
+	search_path::command_line_dir, search_path::open_file,
+	search_path::open_file_cautious):
+	* src/libs/libgroff/string.cpp (sfree, srealloc,
+	string::remove_spaces):
+	* src/libs/libgroff/symbol.cpp (symbol::symbol, concat):
+	* src/libs/libgroff/tmpfile.cpp (temp_init::temp_init,
+	xtmpfile_list_init::~xtmpfile_list_init, xtmpfile):
+	* src/preproc/eqn/box.cpp (set_gfont, set_grfont, set_gbfont,
+	box_list::append, box_list::~box_list):
+	* src/preproc/eqn/delim.cpp (make_delim_box,
+	delim_box::~delim_box):
+	* src/preproc/eqn/eqn.ypp (number):
+	* src/preproc/eqn/lex.ypp (file_input::~file_input,
+	argument_macro_input::~argument_macro_input):
+	* src/preproc/eqn/pile.ypp (matrix_box::~matrix_box,
+	matrix_box::append):
+	* src/preproc/eqn/special.cpp (special_box::~special_box):
+	* src/preproc/eqn/text.ypp (set_char_type):
+	* src/preproc/html/pre-html.cpp (get_line, scanArguments):
+	* src/preproc/pic/object.cpp (output::~output,
+	output::set_args, text_item::~text_item,
+	object_spec::~object_spec, command_object::~command_object,
+	line_object::~line_object):
+	* src/preproc/pic/pic.ypp (placeless_element, reset_variables,
+	print_args, text_expr, object_spec, text, sprintf_args, path):
+	* src/preproc/refer/command.cpp (input_item::~input_item,
+	input_item::peek_char):
+	* src/preproc/refer/label.ypp (lookup_label):
+	* src/preproc/refer/refer.cpp (store_citation, store_reference):
+	* src/preproc/tbl/main.cpp (format::add_rows, format::~format):
+	* src/preproc/tbl/table.cpp (block_entry::~block_entry,
+	table::~table, table::allocate):
+	* src/roff/groff/groff.cpp (possible_command::~possible_command,
+	possible_command::clear_name):
+	* src/roff/troff/column.cpp
+	(justification_spec::~justification_spec,
+	justification_spec::append):
+	* src/roff/troff/dictionary.cpp (dictionary::lookup):
+	* src/roff/troff/env.cpp (override_sizes, tab_stops::to_string,
+	hyphen_word, hyphen_trie::insert_hyphenation):
+	* src/roff/troff/input.cpp (read_long_escape_name, token::next,
+	do_get_long_name, temp_iterator::~temp_iterator, get_delim_name,
+	pipe_source, read_string, pipe_output, system_request,
+	open_mac_file, do_macro_source, do_register_assignment,
+	do_string_assignment, read_draw_node, copy_mode_error):
+	* src/roff/troff/node.cpp (troff_output_file::set_font,
+	troff_output_file::~troff_output_file, draw_node::is_tag,
+	grow_font_table, font_family::~font_family,
+	font_family::make_definite):
+	* src/utils/hpftodit/hpftodit.cpp (name_list::~name_list,
+	read_map):
+	* src/utils/indxbib/indxbib.cpp (main, get_cwd):
+	* src/utils/tfmtodit/tfmtodit.cpp (tfm::~tfm, tfm::load): Port
+	uses of `a_delete(xxx)` to `delete[]`.
+
+2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Drop `ad_delete` preprocessor wrapper for the
 	`delete` operator.  It has been rendered unnecessary by the
 	removal of support for ancient C++ compilers.

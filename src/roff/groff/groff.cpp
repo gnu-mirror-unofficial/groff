@@ -587,7 +587,7 @@ possible_command::possible_command()
 possible_command::~possible_command()
 {
   free(name);
-  a_delete argv;
+  delete[] argv;
 }
 
 void possible_command::set_name(const char *s)
@@ -598,8 +598,8 @@ void possible_command::set_name(const char *s)
 
 void possible_command::clear_name()
 {
-  a_delete name;
-  a_delete argv;
+  delete[] name;
+  delete[] argv;
   name = NULL;
   argv = NULL;
 }

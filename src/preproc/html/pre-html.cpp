@@ -276,7 +276,7 @@ int get_line(FILE *f)
       char *old_linebuf = linebuf;
       linebuf = new char[linebufsize * 2];
       memcpy(linebuf, old_linebuf, linebufsize);
-      a_delete old_linebuf;
+      delete[] old_linebuf;
       linebufsize *= 2;
     }
     linebuf[i++] = c;
@@ -1741,7 +1741,7 @@ static int scanArguments(int argc, char **argv)
       return i;
     i++;
   }
-  a_delete troff_name;
+  delete[] troff_name;
 
   return argc;
 }

@@ -136,9 +136,9 @@ PTABLE(T)::~PTABLE(T)()							      \
     free(v[i].key);							      \
     /* XXX leak, because we don't know whether */			      \
     /* 'free', 'delete', or 'delete[]' should be used */		      \
-    /* a_delete v[i].val; */						      \
+    /* delete[] v[i].val; */						      \
   }									      \
-  a_delete v;								      \
+  delete[] v;								      \
 }									      \
 									      \
 const char *PTABLE(T)::define(const char *key, T *val)			      \
@@ -152,7 +152,7 @@ const char *PTABLE(T)::define(const char *key, T *val)			      \
     if (strcmp(v[n].key, key) == 0) {					      \
       /* XXX leak, because we don't know whether */			      \
       /* 'free', 'delete', or 'delete[]' should be used */		      \
-      /* a_delete v[n].val; */						      \
+      /* delete[] v[n].val; */						      \
       v[n].val = val;							      \
       return v[n].key;							      \
     }									      \
@@ -181,7 +181,7 @@ const char *PTABLE(T)::define(const char *key, T *val)			      \
 	 v[n].key != 0;							      \
 	 n = (n == 0 ? size - 1 : n - 1))				      \
       ;									      \
-    a_delete oldv;							      \
+    delete[] oldv;							      \
   }									      \
   char *temp = (char*)malloc(strlen(key)+1);				      \
   strcpy(temp, key);							      \

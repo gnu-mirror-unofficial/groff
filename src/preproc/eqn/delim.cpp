@@ -176,11 +176,11 @@ public:
 box *make_delim_box(char *l, box *pp, char *r)
 {
   if (l != 0 && *l == '\0') {
-    a_delete l;
+    delete[] l;
     l = 0;
   }
   if (r != 0 && *r == '\0') {
-    a_delete r;
+    delete[] r;
     r = 0;
   }
   return new delim_box(l, pp, r);
@@ -193,8 +193,8 @@ delim_box::delim_box(char *l, box *pp, char *r)
 
 delim_box::~delim_box()
 {
-  a_delete left;
-  a_delete right;
+  delete[] left;
+  delete[] right;
   delete p;
 }
 

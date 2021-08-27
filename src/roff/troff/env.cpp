@@ -1248,7 +1248,7 @@ void override_sizes()
       sizes = new int[n*2];
       memcpy(sizes, old_sizes, n*sizeof(int));
       n *= 2;
-      a_delete old_sizes;
+      delete[] old_sizes;
     }
     sizes[i++] = lower;
     if (lower == 0)
@@ -2624,7 +2624,7 @@ const char *tab_stops::to_string()
   int need = count*12 + 3;
   if (buf == 0 || need > buf_size) {
     if (buf)
-      a_delete buf;
+      delete[] buf;
     buf_size = need;
     buf = new char[buf_size];
   }
@@ -3578,7 +3578,7 @@ static void hyphen_word()
       tem = (unsigned char *)current_language->exceptions.lookup(symbol(buf),
 								 tem);
       if (tem)
-	a_delete tem;
+	delete[] tem;
     }
   }
   skip_line();
@@ -3700,7 +3700,7 @@ void hyphen_trie::insert_hyphenation(dictionary *ex, const char *pat,
     memcpy(tem, pos, npos + 1);
     tem = (unsigned char *)ex->lookup(symbol(buf), tem);
     if (tem)
-      a_delete tem;
+      delete[] tem;
   }
 }
 
