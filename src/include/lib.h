@@ -134,13 +134,5 @@ const double PI = 3.14159265358979323846;
 
 /* ad_delete deletes an array of objects with destructors;
    a_delete deletes an array of objects without destructors */
-
-#ifdef ARRAY_DELETE_NEEDS_SIZE
-/* for 2.0 systems */
-#define ad_delete(size) delete [size]
-#define a_delete delete
-#else /* !ARRAY_DELETE_NEEDS_SIZE */
-/* for ARM systems */
 #define ad_delete(size) delete []
 #define a_delete delete []
-#endif /* !ARRAY_DELETE_NEEDS_SIZE */

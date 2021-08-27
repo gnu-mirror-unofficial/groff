@@ -443,8 +443,6 @@ man7dir=$(manroot)/man$(man7ext)
 #
 # TRADITIONAL_CPP		if your C++ compiler uses a traditional
 #				(Reiser) preprocessor
-# ARRAY_DELETE_NEEDS_SIZE	if your C++ doesn't understand `delete []'
-#
 # PAGE=A4			if the printer's page size is A4
 # GHOSTSCRIPT=gs		the name (and directory if required) of the
 #				ghostscript program

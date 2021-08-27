@@ -1,5 +1,17 @@
 2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Drop support for `ARRAY_DELETE_NEEDS_SIZE`.
+
+	* src/include/lib.h [ARRAY_DELETE_NEEDS_SIZE]: Drop preprocessor
+	conditional branch.  This abandons support for certain pre-ISO
+	C++98 compilers.  (According to a now-removed comment, unsized
+	array deletion was documented in "ARM", meaning _The C++
+	Annotated Reference Manual_, published in 1989.)
+
+	* Makefile.am: Undocument preprocessor symbol.
+
+2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Drop redefinition of `INT_MIN`.
 
 	* src/include/lib.h: Drop redefinition of `INT_MIN`.  It was
