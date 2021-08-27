@@ -121,24 +121,6 @@ extern "C" { int strncasecmp(const char *, const char *, size_t); }
 #define INT_MAX 2147483647
 #endif /* !HAVE_CC_LIMITS_H */
 
-/* It's not safe to rely on people getting INT_MIN right (ie signed). */
-
-#ifdef INT_MIN
-#undef INT_MIN
-#endif
-
-#ifdef CFRONT_ANSI_BUG
-
-/* This works around a bug in cfront 2.0 used with ANSI C compilers. */
-
-#define INT_MIN ((long)(-INT_MAX-1))
-
-#else /* !CFRONT_ANSI_BUG */
-
-#define INT_MIN (-INT_MAX-1)
-
-#endif /* !CFRONT_ANSI_BUG */
-
 /* Maximum number of digits in the decimal representation of an int
    (not including the -). */
 

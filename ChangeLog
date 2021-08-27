@@ -1,5 +1,16 @@
 2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Drop redefinition of `INT_MIN`.
+
+	* src/include/lib.h: Drop redefinition of `INT_MIN`.  It was
+	motivated by a bug in the AT&T C++ compiler (cfront), version
+	2.0, released in June 1989.  Implementations have had 30 years
+	to get this right; assume that they have.
+
+	* PROBLEMS: Drop corresponding item.
+
+2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Drop long-dead `COOKIE_BUG` logic.
 
 	* src/libs/libgroff/new.cpp (operator new, operator delete):
