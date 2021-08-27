@@ -1272,7 +1272,7 @@ table::~table()
     entry_list = entry_list->next;
     delete tem;
   }
-  ad_delete(ncolumns) minimum_width;
+  delete[] minimum_width;
   a_delete column_separation;
   a_delete equal;
   a_delete expand;

@@ -1,3 +1,18 @@
+2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Drop `ad_delete` preprocessor wrapper for the
+	`delete` operator.  It has been rendered unnecessary by the
+	removal of support for ancient C++ compilers.
+
+	* src/include/lib.h (ad_delete): Drop symbol definition.
+
+	* src/preproc/pic/object.cpp (graphic_object::print_text):
+	* src/preproc/refer/ref.cpp (reference::reference,
+	reference::merge, reference::insert_field,
+	reference::delete_field):
+	* src/preproc/tbl/main.cpp (format::add_rows): Port uses of
+	`ad_delete(xxx)` to `delete[]`.
+
 2021-08-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_ARRAY_DELETE): Update `AC_MSG_CHECKING`

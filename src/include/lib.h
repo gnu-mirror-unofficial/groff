@@ -132,7 +132,5 @@ extern "C" { int strncasecmp(const char *, const char *, size_t); }
 
 const double PI = 3.14159265358979323846;
 
-/* ad_delete deletes an array of objects with destructors;
-   a_delete deletes an array of objects without destructors */
-#define ad_delete(size) delete []
+/* a_delete deletes an array of objects without destructors */
 #define a_delete delete []

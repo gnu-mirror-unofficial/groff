@@ -669,7 +669,7 @@ void graphic_object::print_text()
 graphic_object::~graphic_object()
 {
   if (text)
-    ad_delete(ntext) text;
+    delete[] text;
 }
 
 class rectangle_object : public graphic_object {

@@ -683,12 +683,12 @@ void format::add_rows(int n)
 format::~format()
 {
   a_delete separation;
-  ad_delete(ncolumns) width;
+  delete[] width;
   a_delete equal;
   a_delete expand;
   for (int i = 0; i < nrows; i++) {
     a_delete vline[i];
-    ad_delete(ncolumns) entry[i];
+    delete[] entry[i];
   }
   a_delete vline;
   a_delete entry;
