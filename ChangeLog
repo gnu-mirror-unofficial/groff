@@ -1,3 +1,13 @@
+2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Drop long-dead `COOKIE_BUG` logic.
+
+	* src/libs/libgroff/new.cpp (operator new, operator delete):
+	Drop preprocessor conditional branches on the `COOKIE_BUG`
+	symbol.  This was de-documented, and an autoconf check for its
+	necessity removed, way back in groff 1.10 (November 1995).  It
+	was relevant only to GCC from versions 2.0 to 2.2.2 (all 1992).
+
 2021-08-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff]: Refactor `font::scan_papersize()`.
