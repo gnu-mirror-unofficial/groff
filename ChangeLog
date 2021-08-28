@@ -1,3 +1,14 @@
+2021-08-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Drop support for `TRADITIONAL_CPP`.  This means a C
+	preprocessor that does not support the ANSI C89/ISO C90
+	token concatenation operator "##".
+
+	* src/include/itable.h:
+	* src/include/ptable.h: Do it.
+
+	* Makefile.am: Undocument preprocessor symbol.
+
 2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff]: Drop `a_delete` preprocessor wrapper for the

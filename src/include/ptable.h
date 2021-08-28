@@ -21,12 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <string.h>
 
 // name2(a,b) concatenates two C identifiers.
-#ifdef TRADITIONAL_CPP
-# define name2(a,b) a/**/b
-#else /* not TRADITIONAL_CPP */
-# define name2(a,b) name2x(a,b)
-# define name2x(a,b) a ## b
-#endif /* not TRADITIONAL_CPP */
+#define name2(a,b) name2x(a,b)
+#define name2x(a,b) a ## b
 
 // 'class PTABLE(T)' is the type of a hash table mapping a string
 // (const char *) to an object of type T.

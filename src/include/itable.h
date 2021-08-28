@@ -20,12 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <assert.h>
 
 // name2(a,b) concatenates two C identifiers.
-#ifdef TRADITIONAL_CPP
-# define name2(a,b) a/**/b
-#else /* not TRADITIONAL_CPP */
-# define name2(a,b) name2x(a,b)
-# define name2x(a,b) a ## b
-#endif /* not TRADITIONAL_CPP */
+#define name2(a,b) name2x(a,b)
+#define name2x(a,b) a ## b
 
 // 'class ITABLE(T)' is the type of a hash table mapping an integer (int >= 0)
 // to an object of type T.
