@@ -805,7 +805,7 @@ struct exception e;
 
 AC_DEFUN([GROFF_ARRAY_DELETE],
   [AC_LANG_PUSH([C++])
-   AC_MSG_CHECKING([whether ANSI array delete syntax is supported])
+   AC_MSG_CHECKING([whether ISO C++98 array deletion syntax is supported])
    AC_COMPILE_IFELSE([
        AC_LANG_PROGRAM(, [[
 
@@ -816,8 +816,7 @@ delete [] p;
      ],
      [AC_MSG_RESULT([yes])],
      [AC_MSG_RESULT([no])
-      AC_DEFINE([ARRAY_DELETE_NEEDS_SIZE], [1],
-	[Define if your C++ doesn't understand 'delete []'.])])
+      AC_MSG_ERROR([an ISO C++98-conformant compiler is required])])
    AC_LANG_POP([C++])])
 
 AC_DEFUN([GROFF_TRADITIONAL_CPP],
