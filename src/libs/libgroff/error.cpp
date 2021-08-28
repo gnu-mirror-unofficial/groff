@@ -40,10 +40,10 @@ static void do_error_with_file_and_line(const char *filename,
 					const errarg &arg2,
 					const errarg &arg3)
 {
-  int need_space = 0;
+  bool need_space = false;
   if (program_name) {
     fprintf(stderr, "%s:", program_name);
-    need_space = 1;
+    need_space = true;
   }
   if (lineno >= 0 && filename != 0) {
     if (strcmp(filename, "-") == 0)
@@ -52,7 +52,7 @@ static void do_error_with_file_and_line(const char *filename,
       fprintf(stderr, "%s (%s):%d:", filename, source_filename, lineno);
     else
       fprintf(stderr, "%s:%d:", filename, lineno);
-    need_space = 1;
+    need_space = true;
   }
   if (need_space)
     fputc(' ', stderr);
