@@ -821,7 +821,7 @@ delete [] p;
 
 AC_DEFUN([GROFF_TRADITIONAL_CPP],
   [AC_LANG_PUSH([C++])
-   AC_MSG_CHECKING([traditional preprocessor])
+   AC_MSG_CHECKING([whether C preprocessor uses pre-ISO C90 syntax])
    AC_COMPILE_IFELSE([
        AC_LANG_PROGRAM([[
 
@@ -835,8 +835,7 @@ int name2(foo, bar);
        ]])
      ],
      [AC_MSG_RESULT([yes])
-      AC_DEFINE([TRADITIONAL_CPP], [1],
-	[Define if your C++ compiler uses a traditional (Reiser) preprocessor.])],
+      AC_MSG_ERROR([an ISO C90-conformant C preprocessor is required])],
      [AC_MSG_RESULT([no])])
    AC_LANG_POP([C++])])
 

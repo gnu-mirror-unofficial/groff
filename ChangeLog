@@ -1,5 +1,14 @@
 2021-08-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (TRADITIONAL_CPP): Update `AC_MSG_CHECKING`
+	argument to refer to "pre-ISO C90 syntax" instead of a
+	"traditional" preprocessor.  Call `AC_MSG_ERROR` (aborting
+	configuration) if the check (for pre-C90 transformation)
+	succeeds.  We thus withdraw support for such superannuated
+	{"Reiser"} C preprocessors.
+
+2021-08-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Un-indirect token concatenation through macro.
 
 	* src/include/itable.h:
