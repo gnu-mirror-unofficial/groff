@@ -708,7 +708,7 @@ environment::environment(symbol nm)
   prev_family = family = lookup_family(default_family);
   prev_fontno = fontno = 1;
   if (!is_good_fontno(1))
-    fatal("font number 1 not a valid font");
+    fatal("font mounted at position 1 is not valid");
   if (family->make_definite(1) < 0)
     fatal("invalid default family '%1'", default_family.contents());
   prev_fontno = fontno;
