@@ -1030,14 +1030,14 @@ static struct {
   { "sizescale", &font::sizescale },
   };
 
-int font::load_desc()
+bool font::load_desc()
 {
   int nfonts = 0;
   FILE *fp;
   char *path;
   if ((fp = open_file("DESC", &path)) == 0) {
     error("can't find 'DESC' file");
-    return 0;
+    return false;
   }
   text_file t(fp, path);
   t.skip_comments = 1;
@@ -1053,20 +1053,20 @@ int font::load_desc()
       char *q = strtok(0, WS);
       if (!q) {
 	t.error("missing value for command '%1'", p);
-	return 0;
+	return false;
       }
       //int *ptr = &(this->*(table[idx-1].ptr));
       int *ptr = table[idx-1].ptr;
       if (sscanf(q, "%d", ptr) != 1) {
 	t.error("bad number '%1'", q);
-	return 0;
+	return false;
       }
     }
     else if (strcmp("family", p) == 0) {
       p = strtok(0, WS);
       if (!p) {
 	t.error("family command requires an argument");
-	return 0;
+	return false;
       }
       char *tem = new char[strlen(p)+1];
       strcpy(tem, p);
@@ -1076,7 +1076,7 @@ int font::load_desc()
       p = strtok(0, WS);
       if (!p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
 	t.error("bad number of fonts '%1'", p);
-	return 0;
+	return false;
       }
       font_name_table = (const char **)new char *[nfonts+1]; 
       for (int i = 0; i < nfonts; i++) {
@@ -1084,7 +1084,7 @@ int font::load_desc()
 	while (p == 0) {
 	  if (!t.next()) {
 	    t.error("end of file while reading list of fonts");
-	    return 0;
+	    return false;
 	  }
 	  p = strtok(t.buf, WS);
 	}
@@ -1095,7 +1095,7 @@ int font::load_desc()
       p = strtok(0, WS);
       if (p != 0) {
 	t.error("font count does not match number of fonts");
-	return 0;
+	return false;
       }
       font_name_table[nfonts] = 0;
     }
@@ -1103,7 +1103,7 @@ int font::load_desc()
       p = strtok(0, WS);
       if (!p) {
 	t.error("papersize command requires an argument");
-	return 0;
+	return false;
       }
       int found_paper = 0;
       while (p) {
@@ -1119,7 +1119,7 @@ int font::load_desc()
       }
       if (!found_paper) {
 	t.error("bad paper size");
-	return 0;
+	return false;
       }
     }
     else if (strcmp("unscaled_charwidths", p) == 0)
@@ -1135,7 +1135,7 @@ int font::load_desc()
 	while (p == 0) {
 	  if (!t.next()) {
 	    t.error("list of sizes must be terminated by '0'");
-	    return 0;
+	    return false;
 	  }
 	  p = strtok(t.buf, WS);
 	}
@@ -1150,7 +1150,7 @@ int font::load_desc()
 	  // fall through
 	default:
 	  t.error("bad size range '%1'", p);
-	  return 0;
+	  return false;
 	}
 	if (i + 2 > n) {
 	  int *old_sizes = sizes;
@@ -1166,7 +1166,7 @@ int font::load_desc()
       }
       if (i == 1) {
 	t.error("must have some sizes");
-	return 0;
+	return false;
       }
     }
     else if (strcmp("styles", p) == 0) {
@@ -1206,7 +1206,7 @@ int font::load_desc()
       p = strtok(0, WS);
       if (!p) {
 	t.error("image_generator command requires an argument");
-	return 0;
+	return false;
       }
       image_generator = strsave(p);
     }
@@ -1215,39 +1215,40 @@ int font::load_desc()
     else if (unknown_desc_command_handler) {
       char *command = p;
       p = strtok(0, "\n");
-      (*unknown_desc_command_handler)(command, trim_arg(p), t.path, t.lineno);
+      (*unknown_desc_command_handler)(command, trim_arg(p), t.path,
+				      t.lineno);
     }
   }
   if (res == 0) {
     t.error("missing 'res' command");
-    return 0;
+    return false;
   }
   if (unitwidth == 0) {
     t.error("missing 'unitwidth' command");
-    return 0;
+    return false;
   }
   if (font_name_table == 0) {
     t.error("missing 'fonts' command");
-    return 0;
+    return false;
   }
   if (sizes == 0) {
     t.error("missing 'sizes' command");
-    return 0;
+    return false;
   }
   if (sizescale < 1) {
     t.error("bad 'sizescale' value");
-    return 0;
+    return false;
   }
   if (hor < 1) {
     t.error("bad 'hor' value");
-    return 0;
+    return false;
   }
   if (vert < 1) {
     t.error("bad 'vert' value");
-    return 0;
+    return false;
   }
-  return 1;
-}      
+  return true;
+}
 
 void font::handle_unknown_font_command(const char *, const char *,
 				       const char *, int)
