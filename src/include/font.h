@@ -328,16 +328,14 @@ private:
 protected:
   font(const char *);	// Initialize a font with the given name.
 
-  int load(int * = 0, int = 0);	// Load the font description file with the
-			// given name (in member variable NAME) into this
-			// object.  If arg1 points to an integer variable,
-			// set it to 1 if the file is not found, without
-			// emitting an error message.  If arg1 is NULL,
-			// print an error message if the file is not found.
-			// If arg2 is nonzero, only the part of the font
-			// description file before the 'charset' and
-			// 'kernpairs' sections is loaded.  Return NULL in
-			// case of failure.
+  // Load the font description file with the name in member variable
+  // `name` into this object.  If arg1 points to an integer variable,
+  // set it to 1 if the file is not found and do not emit an error
+  // message.  If arg1 is 0, print an error message if the file is not
+  // found.  If arg2 is nonzero, only the part of the font description
+  // file before the 'charset' and 'kernpairs' sections is loaded.
+  // Return success/failure status of load.
+  bool load(int * = 0, int = 0);
 };
 
 // Local Variables:

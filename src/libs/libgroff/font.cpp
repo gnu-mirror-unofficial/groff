@@ -757,17 +757,17 @@ again:
   return 0;
 }
 
-// If the font can't be found, then if not_found is non-NULL, it will be set
-// to 1 otherwise a message will be printed.
+// If the font can't be found, then if not_found is non-NULL, it will be
+// set to 1 otherwise a message will be printed.
 
-int font::load(int *not_found, int head_only)
+bool font::load(int *not_found, int head_only)
 {
   if (strcmp(name, "DESC") == 0) {
     if (not_found)
       *not_found = 1;
     else
       error("'DESC' is not a valid font file name");
-    return 0;
+    return false;
   }
   char *path;
   FILE *fp;
@@ -776,7 +776,7 @@ int font::load(int *not_found, int head_only)
       *not_found = 1;
     else
       error("can't find font file '%1'", name);
-    return 0;
+    return false;
   }
   text_file t(fp, path);
   t.skip_comments = 1;
@@ -795,7 +795,7 @@ int font::load(int *not_found, int head_only)
       int n;
       if (p == 0 || sscanf(p, "%d", &n) != 1 || n <= 0) {
 	t.error("bad argument for 'spacewidth' command");
-	return 0;
+	return false;
       }
       space_width = n;
     }
@@ -804,7 +804,7 @@ int font::load(int *not_found, int head_only)
       double n;
       if (p == 0 || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
 	t.error("bad argument for 'slant' command", p);
-	return 0;
+	return false;
       }
       slant = n;
     }
@@ -825,7 +825,7 @@ int font::load(int *not_found, int head_only)
 	  ligatures |= LIG_ffl;
 	else {
 	  t.error("unrecognised ligature '%1'", p);
-	  return 0;
+	  return false;
 	}
       }
     }
@@ -833,7 +833,7 @@ int font::load(int *not_found, int head_only)
       p = strtok(0, WS);
       if (!p) {
 	t.error("'internalname' command requires argument");
-	return 0;
+	return false;
       }
       internalname = new char[strlen(p) + 1];
       strcpy(internalname, p);
@@ -853,7 +853,7 @@ int font::load(int *not_found, int head_only)
   if (p == 0) {
     if (!is_unicode) {
       t.error("missing charset command");
-      return 0;
+      return false;
     }
   } else {
     char *command = p;
@@ -861,7 +861,7 @@ int font::load(int *not_found, int head_only)
     while (command) {
       if (strcmp(command, "kernpairs") == 0) {
 	if (head_only)
-	  return 1;
+	  return true;
 	for (;;) {
 	  if (!t.next()) {
 	    command = 0;
@@ -878,12 +878,12 @@ int font::load(int *not_found, int head_only)
 	  p = strtok(0, WS);
 	  if (p == 0) {
 	    t.error("missing kern amount");
-	    return 0;
+	    return false;
 	  }
 	  int n;
 	  if (sscanf(p, "%d", &n) != 1) {
 	    t.error("bad kern amount '%1'", p);
-	    return 0;
+	    return false;
 	  }
 	  glyph *g1 = name_to_glyph(c1);
 	  glyph *g2 = name_to_glyph(c2);
@@ -892,7 +892,7 @@ int font::load(int *not_found, int head_only)
       }
       else if (strcmp(command, "charset") == 0) {
 	if (head_only)
-	  return 1;
+	  return true;
 	had_charset = 1;
 	glyph *last_glyph = NULL;
 	for (;;) {
@@ -911,11 +911,11 @@ int font::load(int *not_found, int head_only)
 	  if (p[0] == '"') {
 	    if (last_glyph == NULL) {
 	      t.error("first charset entry is duplicate");
-	      return 0;
+	      return false;
 	    }
 	    if (strcmp(nm, "---") == 0) {
 	      t.error("unnamed character cannot be duplicate");
-	      return 0;
+	      return false;
 	    }
 	    glyph *g = name_to_glyph(nm);
 	    copy_entry(g, last_glyph);
@@ -934,33 +934,33 @@ int font::load(int *not_found, int head_only)
 				&metric.subscript_correction);
 	    if (nparms < 1) {
 	      t.error("bad width for '%1'", nm);
-	      return 0;
+	      return false;
 	    }
 	    p = strtok(0, WS);
 	    if (p == 0) {
 	      t.error("missing character type for '%1'", nm);
-	      return 0;
+	      return false;
 	    }
 	    int type;
 	    if (sscanf(p, "%d", &type) != 1) {
 	      t.error("bad character type for '%1'", nm);
-	      return 0;
+	      return false;
 	    }
 	    if (type < 0 || type > 255) {
 	      t.error("character type '%1' out of range", type);
-	      return 0;
+	      return false;
 	    }
 	    metric.type = type;
 	    p = strtok(0, WS);
 	    if (p == 0) {
 	      t.error("missing code for '%1'", nm);
-	      return 0;
+	      return false;
 	    }
 	    char *ptr;
 	    metric.code = (int)strtol(p, &ptr, 0);
 	    if (metric.code == 0 && ptr == p) {
 	      t.error("bad code '%1' for character '%2'", p, nm);
-	      return 0;
+	      return false;
 	    }
 	    if (is_unicode) {
 	      int w = wcwidth(metric.code);
@@ -989,21 +989,21 @@ int font::load(int *not_found, int head_only)
 	}
 	if (last_glyph == NULL) {
 	  t.error("I didn't seem to find any characters");
-	  return 0;
+	  return false;
 	}
       }
       else {
 	t.error("unrecognised command '%1' "
 		"after 'kernpairs' or 'charset' command",
 		  command);
-	return 0;
+	return false;
       }
     }
     compact();
   }
   if (!is_unicode && !had_charset) {
     t.error("missing 'charset' command");
-    return 0;
+    return false;
   }
   if (space_width == 0) {
     if (zoom)
@@ -1011,7 +1011,7 @@ int font::load(int *not_found, int head_only)
     else
       space_width = scale_round(unitwidth, res, 72 * 3 * sizescale);
   }
-  return 1;
+  return true;
 }
 
 static struct {
