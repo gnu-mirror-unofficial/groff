@@ -19,10 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <assert.h>
 
-// name2(a,b) concatenates two C identifiers.
-#define name2(a,b) name2x(a,b)
-#define name2x(a,b) a ## b
-
 // 'class ITABLE(T)' is the type of a hash table mapping an integer (int >= 0)
 // to an object of type T.
 //
@@ -34,9 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 //
 // Nowadays one would use templates for this; this code predates the addition
 // of templates to C++.
-#define ITABLE(T) name2(T,_itable)
-#define IASSOC(T) name2(T,_iassoc)
-#define ITABLE_ITERATOR(T) name2(T,_itable_iterator)
+#define ITABLE(T) T ## _itable
+#define IASSOC(T) T ## _iassoc
+#define ITABLE_ITERATOR(T) T ## _itable_iterator
 
 // ptable.h declares this too
 #ifndef NEXT_PTABLE_SIZE_DEFINED
