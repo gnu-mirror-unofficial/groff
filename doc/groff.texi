@@ -12257,24 +12257,23 @@ read-only register.  The @code{shift} request can change its value.
 
 Any individual parameter can be accessed by its position in the list of
 arguments to the macro call, numbered from left to right starting at 1,
-with one of the following escapes.
+with one of the following escape sequences.
 
 @DefescList {\\$, , n, }
 @DefescItem {\\$, (, nn, }
 @DefescListEnd {\\$, [, nnn, ]}
-Interpolate the @var{n}@dmn{th}, @var{nn}@dmn{th}, or @var{nnn}@dmn{th}
-parameter.  The first form only accepts a single digit
-(1@leq{}@var{n}@leq{}9)), the second two digits
-(01@leq{}@var{nn}@leq{}99)), and the third any positive integer
-@var{nnn}.  Macros and strings can accept an unlimited number of
-parameters.
+Interpolate the @var{n}th, @var{nn}th, or @var{nnn}th parameter.  The
+first form only accepts a single digit (1@leq{}@var{n}@leq{}9)), the
+second two digits (01@leq{}@var{nn}@leq{}99)), and the third any
+positive integer @var{nnn}.  Macros and strings accept an unlimited
+number of parameters.
 @endDefesc
 
 @Defreq {shift, [@Var{n}]}
 Shift the parameters @var{n} places (1@tie{}by default).  This is a
 ``left shift'': what was parameter@tie{}@var{i} becomes parameter
-@math{@var{i}-@var{n}} and so on.  The parameters formerly in positions
-1 to@tie{}@var{n} are no longer available.  Shifting by a nonpositive
+@math{@var{i}-@var{n}}.  The parameters formerly in positions 1
+to@tie{}@var{n} are no longer available.  Shifting by a nonpositive
 amount performs no operation.  The register @code{.$} is adjusted
 accordingly.
 @endDefreq
@@ -12514,11 +12513,12 @@ use @code{\E} to keep @samp{..} from ending a macro definition
 prematurely.  If the multiplicity of backslashes complicates
 maintenance, use end macros.
 
-@code{\E} is also convenient to define strings that contain escape
+@code{\E} is also convenient to define strings containing escape
 sequences that need to work when used in copy mode (for example, as
-macro arguments) We might define strings to begin and end superscripting
+macro arguments), or which will be interpolated at varying macro nesting
+depths.  We might define strings to begin and end superscripting
 as follows.@footnote{These are lightly adapted from the @code{groff}
-implmentation of the @file{ms} macros.}
+implementation of the @file{ms} macros.}
 
 @Example
 .ds @{ \v'-.9m\s'\En[.s]*7u/10u'+.7m'
@@ -13455,6 +13455,8 @@ baz
 .ch T 6i
 qux
 .sp 11i
+@endExample
+@Example
     @result{} foo
     @result{} Trap sprung at 240u.
     @result{} Trap sprung at 480u.
@@ -13474,7 +13476,7 @@ needed in the last @code{ne} request that caused a trap to be sprung;
 it is useful in conjunction with the @code{.trunc} register.  @xref{Page
 Control}.
 
-Since the @code{.ne} register is set only by traps it doesn't make much
+Since the @code{.ne} register is set only by traps, it doesn't make
 sense to use it outside of trap macros.
 @endDefreg
 
@@ -13489,8 +13491,8 @@ request.  In other words, at the point a trap is sprung, it
 represents the difference of what the vertical position would have
 been but for the trap, and what the vertical position actually is.
 
-Since the @code{.trunc} register is only set by traps it doesn't make
-much sense to use it outside of trap macros.
+Since the @code{.trunc} register is set only by traps, it doesn't make
+sense to use it outside of trap macros.
 @endDefreg
 
 @Defreg {.pe}
@@ -15111,7 +15113,7 @@ the data flow.
 
 Macros, diversions, and strings collect elements in two chained lists: a
 list of input tokens that have been passed unprocessed, and a list of
-output nodes.  Consider the following the diversion.
+output nodes.  Consider the following diversion.
 
 @Example
 .di xxx
@@ -15192,7 +15194,7 @@ maps to the real glyph @samp{foo}.
 @cindex parameters, and compatibility mode
 @cindex macro arguments, and compatibility mode
 @cindex request arguments, and compatibility mode
-Macro and request arguments preserve the compatibility mode:
+Macro and request arguments preserve compatibility mode enablement.
 
 @Example
 .cp 1     \" switch to compatibility mode
@@ -15295,9 +15297,9 @@ newline (as is done in @code{tm} and @code{tm1}).
 
 @Defreq {ab, [@Var{string}]}
 @cindex aborting (@code{ab})
-Write @var{string} to the standard error stream (like @code{tm})and then
-abort GNU @code{troff}; that is, stop processing and terminate with a
-failure status.  With no argument, the message written is @samp{User
+Write @var{string} to the standard error stream (like @code{tm}) and
+then abort GNU @code{troff}; that is, stop processing and terminate with
+a failure status.  With no argument, the message written is @samp{User
 Abort.}.
 @endDefreq
 
