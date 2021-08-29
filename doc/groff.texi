@@ -10691,34 +10691,33 @@ this.
 @Defesc {\\/, , , }
 @cindex italic correction (@code{\/})
 @cindex correction, italic (@code{\/})
-@cindex correction between italic and roman glyph (@code{\/}, @code{\,})
+@cindex correction between oblique and upright glyph (@code{\/}, @code{\,})
 @cindex roman glyph, correction after italic glyph (@code{\/})
-@cindex italic glyph, correction before roman glyph (@code{\/})
-@cindex glyph, italic correction (@code{\/})
-Apply an @dfn{italic correction}: increase the width of the preceding
-glyph so that the spacing between that glyph and the following glyph is
-correct if the following glyph is a roman glyph.  For example, if an
+@cindex upright glyph, correction after oblique glyph (@code{\/})
+Apply an @dfn{italic correction}:@: modify the spacing of the preceding
+glyph so that the distance between it and the following glyph is correct
+if the latter is of upright shape.  For example, if an
 italic@tie{}@samp{f} is immediately followed by a roman right
 parenthesis, then in many fonts the top right portion of
 the@tie{}@samp{f} overlaps the top left of the right parenthesis, which
-is ugly.  Use this escape sequence whenever an italic glyph is
-immediately followed by a roman glyph without any intervening space.
+is ugly.  Use this escape sequence whenever an oblique glyph is
+immediately followed by an upright glyph without any intervening space.
 @endDefesc
 
 @Defesc {\\\,, , , }
 @cindex left italic correction (@code{\,})
 @cindex correction, left italic (@code{\,})
-@cindex glyph, left italic correction (@code{\,})
+@cindex correction between upright and oblique glyph (@code{\/}, @code{\,})
 @cindex roman glyph, correction before italic glyph (@code{\,})
-@cindex italic glyph, correction after roman glyph (@code{\,})
-Apply a @dfn{left italic correction}: modify the spacing of the
-following glyph so that the spacing between that glyph and the preceding
-glyph is correct if the preceding glyph is a roman glyph.  For example,
+@cindex upright glyph, correction before oblique glyph (@code{\,})
+Apply a @dfn{left italic correction}:@: modify the spacing of the
+following glyph so that the distance between it and the preceding
+glyph is correct if the latter is of upright shape.  For example,
 if a roman left parenthesis is immediately followed by an
 italic@tie{}@samp{f}, then in many fonts the bottom left portion of
 the@tie{}@samp{f} overlaps the bottom of the left parenthesis, which is
-ugly.  Use this escape sequence whenever a roman glyph is immediately
-followed by an italic glyph without any intervening space.
+ugly.  Use this escape sequence whenever an upright glyph is followed
+immediately by an oblique glyph without any intervening space.
 @endDefesc
 
 @Defesc {\\&, , , }
