@@ -12045,9 +12045,9 @@ defined as empty.  @xref{Identifiers}.
 @Defreq {de, name [@Var{end}]}
 Define a macro @var{name}, replacing the definition of any existing
 request, macro, string, or diversion called @var{name}.  GNU
-@code{troff} enters ``copy mode'', storing subsequent input lines in an
-internal buffer.  If the optional second argument is not specified, the
-macro definition ends with the control line @samp{..} (two dots).
+@code{troff} enters ``copy mode'', storing subsequent input lines as the
+macro definition.  If the optional second argument is not specified, the
+definition ends with the control line @samp{..} (two dots).
 Alternatively, @var{end} identifies a macro whose call syntax ends the
 definition of @var{name}; @var{end} is then called normally.  Spaces or
 tabs are permitted after the control character in the line containing
@@ -12125,12 +12125,20 @@ clearer when we employ macro parameters and consider the behavior of
 copy mode in detail.
 @endDefreq
 
+@code{de} defines a macro that inherits the compatibility mode
+enablement status of its context (@pxref{Implementation Differences}).
+Often it is desirable to make a macro that uses @code{groff} features
+callable from contexts where compatibility mode is on; for instance,
+when writing extensions to a historical macro package.  To achieve this,
+compatibility mode needs to be switched off while such a macro is
+interpreted---without disturbing that state when it is finished.
+
 @Defreq {de1, name [@Var{end}]}
-The @code{de1} request defines a macro that executes with compatibility
-mode disabled (@pxref{Implementation Differences}).  On entry, the state
-of compatibility mode enablement is saved, and on exit it is restored.
-Observe the extra backlash before the interpolation of register
-@samp{xxx}; we'll explore this subject in @ref{Copy Mode}.
+The @code{de1} request defines a macro to be interpreted with
+compatibility mode disabled.  When @var{name} is called, compatibility
+mode enablement status is saved, and when @var{name} finishes, it is
+restored.  Observe the extra backlash before the interpolation of
+register @samp{xxx}; we'll explore this subject in @ref{Copy Mode}.
 
 @Example
 .nr xxx 12345
@@ -12152,9 +12160,9 @@ The value of xxx is \\n[xxx].
 
 @DefreqList {dei, name [@Var{end}]}
 @DefreqListEndx {dei1, name [@Var{end}]}
-The @code{dei} request defines a macro indirectly.  That is, it
-interpolates strings named @var{name} and @var{end} before performing
-the definition.
+The @code{dei} request defines a macro with its name and end
+macro indirected through strings.  That is, it interpolates strings
+named @var{name} and @var{end} before performing the definition.
 
 The following examples are equivalent.
 
@@ -12168,13 +12176,9 @@ The following examples are equivalent.
 .de aa bb
 @endExample
 
-The @code{dei1} request is similar to @code{dei}, but with compatibility
-mode switched off during execution of the defined macro.
-
-If compatibility mode is on, @code{de} and @code{dei} behave similarly
-to @code{de1} and @code{dei1}, respectively:@: a ``compatibility save''
-token is inserted at the beginning, and a ``compatibility restore''
-token at the end, with compatibility mode switched on during execution.
+The @code{dei1} request bears the same relationship to @code{dei} as
+@code{de1} does to @code{de}; it temporarily turns compatibility mode
+off when @var{name} is called.
 @endDefreq
 
 @DefreqList {am, name [@Var{end}]}
@@ -12196,10 +12200,8 @@ block paragraphs, add the necessary code to the existing macro.
 @endExample
 
 The other requests are analogous to their @samp{de} counterparts.  The
-@code{am1} request turns off compatibility mode while executing the
-appendment:@: a @dfn{compatibility save} input token is inserted before
-the appended input lines, and a @dfn{compatibility restore} input token
-after the end.  The @code{ami} request appends indirectly, meaning that
+@code{am1} request turns off compatibility mode during interpretation of
+the appendment.  The @code{ami} request appends indirectly, meaning that
 strings @var{name} and @var{end} are interpolated with the resulting
 names used before appending.  The @code{ami1} request is similar to
 @code{ami}, disabling compatibility mode during interpretation of the
@@ -12247,7 +12249,7 @@ Macro calls and string interpolations optionally accept a list of
 arguments; recall @ref{Request and Macro Arguments}.  At the time such
 an interpolation takes place, these @dfn{parameters} can be examined
 using a register and a variety of escape sequences starting with
-@code{\$}.
+@samp{\$}.
 
 @Defreg {.$}
 @cindex parameter count register (@code{.$})
@@ -12333,8 +12335,8 @@ which redefines some requests and macros for debugging purposes.
 @Defesc {\\$0, , , }
 @cindex macro name register (@code{\$0})
 @cindex @code{als} request, and @code{\$0}
-Interpolate the name by which the executing macro was called.  The
-@code{als} request can cause a macro to have more than one name.
+Interpolate the name by which the macro being interpreted was called.
+The @code{als} request can cause a macro to have more than one name.
 Applying string interpolation to a macro does not change this name.
 
 @Example
@@ -12399,10 +12401,10 @@ processed immediately upon recognition, can be termed
 @dfn{interpretation mode}.
 
 @Defesc {\\\\, , , }
-The escape character, @code{\} by default, escapes itself.  Thus you can
-control whether a given @code{\n}, @code{\g}, @code{\$}, @code{\*}, or
-@code{\V} escape sequence is interpreted at the time the macro
-containing it is defined, or later when the macro is
+The escape character, @code{\} by default, can escape a backslash.  This
+enables you to control whether a given @code{\n}, @code{\g}, @code{\$},
+@code{\*}, or @code{\V} escape sequence is interpreted at the time the
+macro containing it is defined, or later when the macro is
 called.@footnote{Compare this to the @code{\def} and @code{\edef}
 commands in @TeX{}.}
 
@@ -12449,7 +12451,7 @@ bar
 
 @noindent
 The first backslash is consumed while the macro is read, and the second
-is interpreted while executing macro @code{m1}.
+is interpreted when macro @code{m1} is called.
 @endDefesc
 
 @code{roff} documents should not use the @code{\\} or @code{\.}
@@ -12481,8 +12483,8 @@ This understeer is getting
 @endExample
 
 Each escape character is interpreted twice---once in copy mode, when the
-macro is defined, and once in interpretation mode, when it is executed.
-As seen above, this fact leads to exponential growth in the number of
+macro is defined, and once outside of it, when the macro is called.  As
+seen above, this fact leads to exponential growth in the number of
 escape characters required to delay interpolation of @code{\n},
 @code{\g}, @code{\$}, @code{\*}, and @code{\V} at each nesting level,
 which can be daunting.  GNU @code{troff} offers a solution.
@@ -12544,12 +12546,9 @@ the use of an unusual escape character, @samp{-}.
 This result may surprise you; some people expect @samp{1} to be output
 since register @samp{a} has clearly been defined with that value.  What
 has happened?  The robotic replacement of @samp{\} with @samp{-} has led
-us astray.  As mentioned above, the leading escape character makes
-the following character ordinary.  Written with the default escape
-character, the sequence @samp{--} becomes @samp{\-}, which you may
-recognize as the special character escape sequence for the minus sign
-glyph.  Since the escape character followed by itself is a valid escape
-sequence, only @code{\E} yields the expected result.
+us astray.  You might recognize the sequence @samp{--} more readily with
+the default escape character as @samp{\-}, the special character escape
+sequence for the minus sign glyph.
 
 @Example
 .nr a 1
@@ -13231,7 +13230,7 @@ Setting a trap is also called @dfn{planting}.
 @cindex trap, springing
 @cindex springing a trap
 It is also said that a trap is @dfn{sprung} if the associated macro is
-executed.
+called.
 
 @menu
 * Vertical Position Traps::
@@ -15207,14 +15206,14 @@ Macro and request arguments preserve compatibility mode enablement.
 @endExample
 
 @noindent
-Since compatibility mode is on while @code{de} is called, the macro
-@code{xx} activates compatibility mode while executing.  Argument
+Since compatibility mode is enabled while @code{de} is invoked, the
+macro @code{xx} enables compatibility mode when it is called.  Argument
 @code{$1} can still be handled properly because it inherits the
-compatibility mode status which was active at the point where @code{xx}
-is called.
+compatibility mode enablement status that was active at the point where
+@code{xx} was called.
 
-After expansion of the parameters, the compatibility save and restore
-tokens are removed.
+After interpolation of the parameters, the compatibility save and
+restore tokens are removed.
 
 
 @c =====================================================================
