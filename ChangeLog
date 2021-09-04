@@ -1,3 +1,14 @@
+2021-09-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/env.cpp (do_underline_special): Refactor
+	slightly.
+	  - Rename `underline_spaces` -> `do_underline_spaces`.
+	  - Demote it from an `int` to a `bool`.  Update prototype.
+	  - Use ternary operator and explicit character literals when
+	    writing device control command instead of doing arithmetic
+	    on a character literal.
+	  - Update call sites to use Boolean literals.
+
 2021-09-04  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
 	Add "ms" footnote marker placement hook.

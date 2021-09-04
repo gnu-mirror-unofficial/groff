@@ -488,7 +488,7 @@ void environment::space(hunits space_width, hunits sentence_space_width)
   spread_flag = 0;
 }
 
-node *do_underline_special(int);
+node *do_underline_special(bool);
 
 void environment::set_font(symbol nm)
 {
@@ -515,9 +515,9 @@ void environment::set_font(symbol nm)
   }
   if (underline_spaces && fontno != prev_fontno) {
     if (fontno == get_underline_fontno())
-      add_node(do_underline_special(1));
+      add_node(do_underline_special(true));
     if (prev_fontno == get_underline_fontno())
-      add_node(do_underline_special(0));
+      add_node(do_underline_special(false));
   }
 }
 
@@ -1460,11 +1460,11 @@ void temporary_indent()
   tok.next();
 }
 
-node *do_underline_special(int underline_spaces)
+node *do_underline_special(bool do_underline_spaces)
 {
   macro m;
   m.append_str("x u ");
-  m.append(underline_spaces + '0');
+  m.append(do_underline_spaces ? '1' : '0');
   return new special_node(m, 1);
 }
 
@@ -1479,7 +1479,7 @@ void do_underline(int underline_spaces)
       curenv->fontno = curenv->pre_underline_fontno;
       if (underline_spaces) {
 	curenv->underline_spaces = 0;
-	curenv->add_node(do_underline_special(0));
+	curenv->add_node(do_underline_special(false));
       }
     }
     curenv->underline_lines = 0;
@@ -1490,7 +1490,7 @@ void do_underline(int underline_spaces)
     curenv->fontno = get_underline_fontno();
     if (underline_spaces) {
       curenv->underline_spaces = 1;
-      curenv->add_node(do_underline_special(1));
+      curenv->add_node(do_underline_special(true));
     }
   }
   skip_line();
@@ -1691,7 +1691,7 @@ void environment::newline()
       fontno = pre_underline_fontno;
       if (underline_spaces) {
 	underline_spaces = 0;
-	add_node(do_underline_special(0));
+	add_node(do_underline_special(false));
       }
     }
   }
