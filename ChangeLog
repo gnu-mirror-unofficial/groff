@@ -14,7 +14,7 @@
 	  - Use Boolean literals with them.
 	  - Add assertions to enforce positive values of `nspaces` and
 	    `desired_space`.
-	  - Remove now-rendundant test for `nspaces` being positive.
+	  - Remove now-redundant test for `nspaces` being positive.
 	  - Add explanatory comments.
 	(environment::wrap_up_field): Update call sites of
 	`distribute_space` when non-default value of
@@ -226,7 +226,7 @@
 	read_map):
 	* src/utils/indxbib/indxbib.cpp (main, get_cwd):
 	* src/utils/tfmtodit/tfmtodit.cpp (tfm::~tfm, tfm::load): Port
-	uses of `a_delete(xxx)` to `delete[]`.
+	uses of `a_delete` to `delete[]`.
 
 2021-08-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -241,7 +241,7 @@
 	reference::merge, reference::insert_field,
 	reference::delete_field):
 	* src/preproc/tbl/main.cpp (format::add_rows): Port uses of
-	`ad_delete(xxx)` to `delete[]`.
+	`ad_delete` to `delete[]`.
 
 2021-08-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -4574,7 +4574,7 @@
 
 	* src/roff/troff/input.cpp (do_overstrike, do_bracket,
 	do_name_test, do_expr_test, do_zero_width, do_width, do_special,
-	do_if_request, read_color_draw_note): Improve diagnostic
+	do_if_request, read_color_draw_node): Improve diagnostic
 	messages for missing closing delimiters by describing the
 	incomplete structure and the problem token.
 	(read_rgb, read_cmy, read_cmyk, read_gray): Improve English
