@@ -1,5 +1,20 @@
 2021-09-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/env.cpp (distribute_space): Refactor slightly.
+	  - Rename `force_reverse` to `force_reverse_node_list`.
+	  - Rename `reverse` to `do_reverse`.
+	  - Demote both of the above from `int` to `bool`.
+	  - Use Boolean literals with them.
+	  - Add assertions to enforce positive values of `nspaces` and
+	    `desired_space`.
+	  - Remove now-rendundant test for `nspaces` being positive.
+	  - Add explanatory comments.
+	(environment::wrap_up_field): Update call sites of
+	`distribute_space` when non-default value of
+	`force_reverse_node_list` is supplied.
+
+2021-09-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Don't adjust nonadjustable lines.  This means that the
 	direction from which an output line in adjustment mode "b" (or
 	its "n" synonym) is filled with supplemental space is not

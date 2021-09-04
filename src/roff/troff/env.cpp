@@ -2051,14 +2051,25 @@ static node *node_list_reverse(node *n)
 }
 
 static void distribute_space(node *n, int nspaces, hunits desired_space,
-			     int force_reverse = 0)
+			     bool force_reverse_node_list = false)
 {
   if (desired_space.is_zero() || nspaces == 0)
     return;
-  static int reverse = 0;
-  if (force_reverse || reverse)
+  assert(nspaces > 0);
+  // Negative desired space is conceivable if we implement "squeezing".
+  assert(desired_space > 0);
+  // Space cannot always be distributed evenly among all of the space
+  // nodes in the node list: there are limits to device resolution.  We
+  // add space until we run out, which might happen before the end of
+  // the line.  To achieve uniform typographical grayness and avoid
+  // rivers, we switch the end from which space is initially distributed
+  // with each line requiring it, unless compelled to reverse it.  The
+  // node list's natural ordering is in the direction of text flow, so
+  // we distribute space initially from the left, unlike AT&T troff.
+  static bool do_reverse_node_list = false;
+  if (force_reverse_node_list || do_reverse_node_list)
     n = node_list_reverse(n);
-  if (!force_reverse && nspaces > 0 && spread_limit >= 0
+  if (!force_reverse_node_list && spread_limit >= 0
       && desired_space.to_units() > 0) {
     hunits em = curenv->get_size();
     double Ems = (double)desired_space.to_units() / nspaces
@@ -2068,10 +2079,10 @@ static void distribute_space(node *n, int nspaces, hunits desired_space,
   }
   for (node *tem = n; tem; tem = tem->next)
     tem->spread_space(&nspaces, &desired_space);
-  if (force_reverse || reverse)
+  if (force_reverse_node_list || do_reverse_node_list)
     (void)node_list_reverse(n);
-  if (!force_reverse)
-    reverse = !reverse;
+  if (!force_reverse_node_list)
+    do_reverse_node_list = !do_reverse_node_list;
 }
 
 void environment::possibly_break_line(int start_here, int forced)
@@ -2944,16 +2955,18 @@ void environment::wrap_up_field()
     add_padding();
   hunits padding = field_distance - (get_text_length() - pre_field_width);
   if (current_tab && tab_field_spaces != 0) {
-    hunits tab_padding = scale(padding, 
-			       tab_field_spaces, 
+    hunits tab_padding = scale(padding,
+			       tab_field_spaces,
 			       field_spaces + tab_field_spaces);
     padding -= tab_padding;
-    distribute_space(tab_contents, tab_field_spaces, tab_padding, 1);
+    distribute_space(tab_contents, tab_field_spaces, tab_padding,
+		     true /* force reversal of node list */);
     tab_field_spaces = 0;
     tab_width += tab_padding;
   }
   if (field_spaces != 0) {
-    distribute_space(line, field_spaces, padding, 1);
+    distribute_space(line, field_spaces, padding,
+		     true /* force reversal of node list */);
     width_total += padding;
     if (current_tab) {
       // the start of the tab has been moved to the right by padding, so
