@@ -1,3 +1,13 @@
+2021-09-04  Keith Marshall  <keith.d.marshall@ntlworld.com>
+
+	Reduce potential for user-space exposure of "ms" internals.
+
+	* spdf.tmac (@NH): Append to s.tmac macro; assign...
+	(spdf:nh*hl): ...this new internal register; alias it to...
+	(.NH): ...this new public name, hence making it track...
+	(nh*hl): ...this s.tmac internal numeric register.
+	(XN): Use \n[.NH] instead of \n[nh*hl].
+
 2021-09-03  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
 	Sanitize text for use in PDF document outlines.

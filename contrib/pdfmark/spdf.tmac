@@ -71,6 +71,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" Document Outlines, Section Headings and Table of Contents
 .\" =========================================================
 .\"
+.\" FIXME: within s.tmac, the heading level established by the most
+.\" recent prior invocation of the NH macro is tracked by the "nh*hl"
+.\" private register; perhaps s.tmac could expose this more publicly,
+.\" as by this ostensibly read-only alias, since we need it to keep
+.\" PDF document outlines in synchronization with NH level...
+.\"
+.\" .aln .NH nh*hl
+.\"
+.\" ...but maybe a local "belt and braces" approach is better anyway,
+.\" to insulate "nh*hl" from possible abuse of our ".NH" register, by
+.\" any users who may be determined to shoot themselves in the foot!
+.\"
+.ie r nh*hl .nr spdf:nh*hl \n[nh*hl]
+.el .nr spdf:nh*hl 0
+.am @NH aln
+.   nr spdf:nh*hl \\n[nh*hl]
+.aln .NH spdf:nh*hl
+.
 .de XN
 .\" Use AFTER .NH n, to define the text of the numbered heading,
 .\" automatically generating a matching formatted TOC entry, and
@@ -94,28 +112,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .if dspdf:refname .XM -N \\*[spdf:refname] -- \\$@
 .rm spdf:refname
 .spdf:bm.define spdf:bm.text "\\$*"
-.pdfhref O \\n[nh*hl] "\\*(SN \\*[spdf:bm.text]"
+.pdfhref O \\n[.NH] "\\*(SN \\*[spdf:bm.text]"
 .XS
 .if rtc*hl \{\
 .   if !dXNVS1 .ds XNVS1 1.0v  \" default leading for top level
 .   if !dXNVS2 .ds XNVS2 0.3v  \" default leading at nesting increment
 .   if !dXNVS3 .ds XNVS3 0.6v  \" default leading following nested group
-.   if \\n[nh*hl]==1 \{\
+.   if \\n[.NH]=1 \{\
 .      sp \\*[XNVS1]
 .      nr tc*hl-max 1
 .      \}
-.   ie \\n[nh*hl]<\\n[tc*hl] .if \\n[nh*hl]>1 .sp \\*[XNVS3]
+.   ie \\n[.NH]<\\n[tc*hl] .if \\n[.NH]>1 .sp \\*[XNVS3]
 .   el \{\
-.      ie \\n[nh*hl]>\\n[tc*hl] .sp \\*[XNVS2]
+.      ie \\n[.NH]>\\n[tc*hl] .sp \\*[XNVS2]
 .      el \{\
 .         if !r tc*hl-max .nr tc*hl-max 1
-.         ie \\n[tc*hl-max]>\\n[nh*hl] .sp \\*[XNVS3]
-.         el .nr tc*hl-max \\n[nh*hl]
+.         ie \\n[tc*hl-max]>\\n[.NH] .sp \\*[XNVS3]
+.         el .nr tc*hl-max \\n[.NH]
 .         \}
 .      \}
 .   \}
-.nr tc*hl \\n[nh*hl]
-\h'\\n[nh*hl]-1m'\c
+.nr tc*hl \\n[.NH]
+\h'\\n[.NH]-1m'\c
 \&\\*(SN\h'1n'\\$*
 .\".pdfhref L -D \\*[PDFBOOKMARK.NAME] -- \&\\*(SN\h'1n'\\$*
 .XE
