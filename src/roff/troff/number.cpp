@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "token.h"
 #include "div.h"
 
-vunits V0;
-hunits H0;
+const vunits V0; // zero in vertical units
+const hunits H0; // zero in horizontal units
 
 int hresolution = 1;
 int vresolution = 1;
