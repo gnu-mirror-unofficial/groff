@@ -488,7 +488,13 @@ void environment::space(hunits space_width, hunits sentence_space_width)
   spread_flag = 0;
 }
 
-node *do_underline_special(bool);
+static node *do_underline_special(bool do_underline_spaces)
+{
+  macro m;
+  m.append_str("x u ");
+  m.append(do_underline_spaces ? '1' : '0');
+  return new special_node(m, 1);
+}
 
 void environment::set_font(symbol nm)
 {
@@ -1458,14 +1464,6 @@ void temporary_indent()
     curdiv->modified_tag.incl(MTSM_TI);
   }
   tok.next();
-}
-
-node *do_underline_special(bool do_underline_spaces)
-{
-  macro m;
-  m.append_str("x u ");
-  m.append(do_underline_spaces ? '1' : '0');
-  return new special_node(m, 1);
 }
 
 void do_underline(int underline_spaces)
