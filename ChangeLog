@@ -1,5 +1,38 @@
 2021-09-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Don't adjust nonadjustable lines.  This means that the
+	direction from which an output line in adjustment mode "b" (or
+	its "n" synonym) is filled with supplemental space is not
+	changed if that output line does not require adjustment.  This
+	will result in whitespace changes to documents using that
+	adjustment mode, and these changes will be plainly visible on
+	low-resolution output devices like terminals.
+
+	To illustrate, in the following "A" means an output line
+	requiring adjustment; "F" a line that is "full" and does not;
+	and "L" and "R" indicate distribution of adjustment spaces from
+	the left and right, respectively.
+
+	groff 1.22.4    groff 1.23.0
+	------------    ------------
+	A    L          A    L
+	A    R          A    R
+	F    L          F    R
+	A    R          A    L
+
+	* src/roff/troff/env.cpp (distribute_space): Return early if
+	either the amount of desired space to be distributed or the
+	count of space nodes in the output line to distribute it among
+	is zero.
+
+	* tmac/tests/an_TH-repairs-ad-damage.sh: Update test to expect
+	space to be distributed differently.
+
+	Fixes <https://savannah.gnu.org/bugs/?61089> and
+	<https://savannah.gnu.org/bugs/index.php?60673>.
+
+2021-09-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Skip core-dump-checking test if a core file already exists.
 
 	* src/roff/groff/tests/regression_savannah_59202.sh: Skip test

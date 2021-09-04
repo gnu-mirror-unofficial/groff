@@ -2053,6 +2053,8 @@ static node *node_list_reverse(node *n)
 static void distribute_space(node *n, int nspaces, hunits desired_space,
 			     int force_reverse = 0)
 {
+  if (desired_space.is_zero() || nspaces == 0)
+    return;
   static int reverse = 0;
   if (force_reverse || reverse)
     n = node_list_reverse(n);
@@ -2070,7 +2072,6 @@ static void distribute_space(node *n, int nspaces, hunits desired_space,
     (void)node_list_reverse(n);
   if (!force_reverse)
     reverse = !reverse;
-  assert(desired_space.is_zero() && nspaces == 0);
 }
 
 void environment::possibly_break_line(int start_here, int forced)
