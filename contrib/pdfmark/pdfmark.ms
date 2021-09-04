@@ -349,7 +349,7 @@ of their choice, to format their documents, while also using the
 macros to add PDF features.
 .
 .NH 2
-.XN -N pdfmark-operator -- The \F[C]pdfmark\F[] Operator
+.XN -S -N pdfmark-operator -- The \F[C]pdfmark\F[] Operator
 .LP
 All PDF features are implemented by embedding instances of the
 .B \F[C]pdfmark\F[]
@@ -1178,7 +1178,7 @@ which extend through a page transition;
 .QE
 .
 .NH 3
-.XN Optional Features of the \F[C]pdfhref\F[] Macro
+.XN -S -- Optional Features of the \F[C]pdfhref\F[] Macro
 .LP
 The behaviour of a number of the
 .CW pdfhref
@@ -2340,7 +2340,7 @@ illustrates how this may be accomplished:\(en
 .XN -N add-note -- Annotating a PDF Document using Pop-Up Notes
 .
 .NH 2
-.XN -N pdfsync -- Synchronizing Output and \F[C]pdfmark\F[] Contexts
+.XN -S -N pdfsync -- Synchronizing Output and \F[C]pdfmark\F[] Contexts
 .LP
 It has been noted previously, that the
 .CW pdfview
@@ -2493,7 +2493,7 @@ as to how the
 macros may be employed with their chosen primary macro package.
 .
 .NH 2
-.XN -N using-spdf -- Using \F[C]pdfmark\F[] Macros with the \F[C]ms\F[] Macro Package
+.XN -S -N using-spdf -- Using \F[C]pdfmark\F[] Macros with the \F[C]ms\F[] Macro Package
 .LP
 The use of the binding macro package,
 .CW spdf.tmac ,
@@ -2544,7 +2544,7 @@ and the issues they are intended to address,
 are described below.
 .
 .NH 3
-.XN \F[C]ms\F[] Section Headings in PDF Documents
+.XN -S -- \F[C]ms\F[] Section Headings in PDF Documents
 .LP
 Traditionally,
 .CW ms
@@ -2572,7 +2572,7 @@ to be used in conjunction with the
 macro.
 .
 .NH 4
-.XN -N xn-macro -- The \F[C]XN\F[] Macro
+.XN -S -N xn-macro -- The \F[C]XN\F[] Macro
 .
 .NH 1
 .XN The PDF Publishing Process

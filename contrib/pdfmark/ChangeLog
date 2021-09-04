@@ -1,3 +1,33 @@
+2021-09-03  Keith Marshall  <keith.d.marshall@ntlworld.com>
+
+	Sanitize text for use in PDF document outlines.
+
+	* sanitize.tmac: New file; it implements...
+	(sanitize): ...this new macro; interprets its first argument as a
+	string name, and copies its remaining arguments to the named string,
+	discarding specific embedded troff escape sequences; currently...
+	(\F): ...only this is identified as "specifically discardable".
+
+	* pdfmark.am (TMACFILES): Add sanitize.tmac
+
+	* spdf.tmac (mso): Include sanitize.tmac
+	(xn*ref, xn*argc): Rename all occurrences...
+	(spdf:refname, spdf:argc): ...to these, respectively.
+	(XN): Stop inserting $* directly into PDF outlines; instead, use...
+	(spdf:bm.text): ...this new string; this is locally defined by...
+	(spdf:bm.define): ...this new macro; passed the original $* from
+	XN, this itself, is locally defined as a redirectable alias for...
+	(spdf:bm.basic): ...this new local macro; it simply copies $*,
+	passed from XN, to the string named by its first argument, (which is
+	always spdf:bm.text), so reproducing previous behaviour.
+	(opt*XN-S): New macro; defined for internal use only, it adds a "-S"
+	option to XN, such that, when specified, it temporarily redirects...
+	(spdf:bm.define): ...this macro mapping alias to...
+	(sanitize): ...this.
+
+	* pdfmark.ms (XN): Add "-S" option for all headings which include...
+	(\F[C]...\F[]): ...this escape sequence.
+
 2021-08-21  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
 	Define, and use registered trade mark strings.
