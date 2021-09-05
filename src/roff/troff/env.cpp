@@ -956,7 +956,7 @@ int environment::get_bold()
 hunits environment::get_digit_width()
 {
   return env_digit_width(this);
-} 
+}
 
 int environment::get_adjust_mode()
 {
@@ -1287,7 +1287,7 @@ void space_size()
 
 void fill()
 {
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1297,7 +1297,7 @@ void fill()
 
 void no_fill()
 {
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1313,7 +1313,7 @@ void center()
     n = 1;
   else if (n < 0)
     n = 0;
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1330,7 +1330,7 @@ void right_justify()
     n = 1;
   else if (n < 0)
     n = 0;
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1437,7 +1437,7 @@ void indent()
   }
   else
     temp = curenv->prev_indent;
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1454,7 +1454,7 @@ void temporary_indent()
   hunits temp;
   if (!get_hunits(&temp, 'm', curenv->get_indent()))
     err = 1;
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break();
@@ -1534,7 +1534,7 @@ void no_break_control_char()
 
 void margin_character()
 {
-  while (tok.space())
+  while (tok.is_space())
     tok.next();
   charinfo *ci = tok.get_char();
   if (ci) {
@@ -1581,7 +1581,7 @@ void number_lines()
     curenv->numbering_nodes = nd;
     curenv->line_number_digit_width = env_digit_width(curenv);
     int n;
-    if (!tok.delimiter()) {
+    if (!tok.usable_as_delimiter()) {
       if (get_integer(&n, next_line_number)) {
 	next_line_number = n;
 	if (next_line_number < 0) {
@@ -1591,10 +1591,10 @@ void number_lines()
       }
     }
     else
-      while (!tok.space() && !tok.newline() && !tok.eof())
+      while (!tok.is_space() && !tok.is_newline() && !tok.is_eof())
 	tok.next();
     if (has_arg()) {
-      if (!tok.delimiter()) {
+      if (!tok.usable_as_delimiter()) {
 	if (get_integer(&n)) {
 	  if (n <= 0) {
 	    warning(WARN_RANGE, "negative or zero line number multiple");
@@ -1604,17 +1604,17 @@ void number_lines()
 	}
       }
       else
-	while (!tok.space() && !tok.newline() && !tok.eof())
+	while (!tok.is_space() && !tok.is_newline() && !tok.is_eof())
 	  tok.next();
       if (has_arg()) {
-	if (!tok.delimiter()) {
+	if (!tok.usable_as_delimiter()) {
 	  if (get_integer(&n))
 	    curenv->number_text_separation = n;
 	}
 	else
-	  while (!tok.space() && !tok.newline() && !tok.eof())
+	  while (!tok.is_space() && !tok.is_newline() && !tok.is_eof())
 	    tok.next();
-	if (has_arg() && !tok.delimiter() && get_integer(&n))
+	if (has_arg() && !tok.usable_as_delimiter() && get_integer(&n))
 	  curenv->line_number_indent = n;
       }
     }
@@ -2410,7 +2410,7 @@ int environment::is_empty()
 
 void do_break_request(int spread)
 {
-  while (!tok.newline() && !tok.eof())
+  while (!tok.is_newline() && !tok.is_eof())
     tok.next();
   if (break_flag)
     curenv->do_break(spread);
@@ -2484,7 +2484,7 @@ void title()
 		       curenv->total_post_vertical_spacing(), length_title);
   curenv->hyphen_line_count = 0;
   tok.next();
-}  
+}
 
 void adjust()
 {
@@ -2576,7 +2576,7 @@ tab::tab(hunits x, tab_type t) : next(0), pos(x), type(t)
 {
 }
 
-tab_stops::tab_stops(hunits distance, tab_type type) 
+tab_stops::tab_stops(hunits distance, tab_type type)
 : initial_list(0)
 {
   repeated_list = new tab(distance, type);
@@ -2691,7 +2691,7 @@ tab_stops::tab_stops() : initial_list(0), repeated_list(0)
 {
 }
 
-tab_stops::tab_stops(const tab_stops &ts) 
+tab_stops::tab_stops(const tab_stops &ts)
 : initial_list(0), repeated_list(0)
 {
   tab **p = &initial_list;
@@ -2751,7 +2751,7 @@ void tab_stops::operator=(const tab_stops &ts)
     p = &(*p)->next;
   }
 }
-    
+
 void set_tabs()
 {
   hunits pos;
@@ -3067,7 +3067,7 @@ const char *int_env_reg::get_string()
 {
   return i_to_a((curenv->*func)());
 }
- 
+
 vunits_env_reg::vunits_env_reg(VUNITS_FUNCP f) : func(f)
 {
 }
@@ -3564,11 +3564,12 @@ static void hyphen_word()
   unsigned char pos[WORD_MAX + 2];
   for (;;) {
     tok.skip();
-    if (tok.newline() || tok.eof())
+    if (tok.is_newline() || tok.is_eof())
       break;
     int i = 0;
     int npos = 0;
-    while (i < WORD_MAX && !tok.space() && !tok.newline() && !tok.eof()) {
+    while (i < WORD_MAX && !tok.is_space() && !tok.is_newline()
+	   && !tok.is_eof()) {
       charinfo *ci = tok.get_char(true /* required */);
       if (ci == 0) {
 	skip_line();
@@ -3608,7 +3609,7 @@ struct trie_node {
   trie_node(char, trie_node *);
 };
 
-trie_node::trie_node(char ch, trie_node *p) 
+trie_node::trie_node(char ch, trie_node *p)
 : c(ch), down(0), right(p), val(0)
 {
 }

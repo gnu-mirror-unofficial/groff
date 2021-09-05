@@ -1,5 +1,72 @@
 2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Boolify members of `token` class.
+
+	* src/roff/troff/token.h (class token): Demote return type of
+	several member functions from `int` to `bool` and rename them.
+	  - `backspace` -> `is_backspace`
+	  - `delimiter` -> `usable_as_delimiter`
+	  - `dummy` -> `is_dummy`
+	  - `eof` -> `is_eof`
+	  - `horizontal_space` -> `is_horizontal_space`
+	  - `hyphen_indicator` -> `is_hyphen_indicator`
+	  - `leader` -> `is_leader`
+	  - `left_brace` -> `is_left_brace`
+	  - `newline` -> `is_newline`
+	  - `page_ejector` -> `is_page_ejector`
+	  - `right_brace` -> `is_right_brace`
+	  - `space` -> `is_space`
+	  - `special` -> `is_special`
+	  - `stretchable_space` -> `is_stretchable_space`
+	  - `tab` -> `is_tab`
+	  - `transparent_dummy` -> `is_transparent_dummy`
+	  - `transparent` -> `is_transparent`
+	  - `unstretchable_space` -> `is_unstretchable_space`
+	  - `white_space` -> `is_white_space`
+	  - `zero_width_break` -> `is_zero_width_break`
+	(class token): Drop 1991 comment anticipating that member
+	function `nspaces` could return "2" for a "double space"; this
+	was apparently never implemented.
+	(class token): Drop parameter names from declarations; the
+	prevailing style (familiar from Stroustrup) is not to use them.
+	(token::is_special): Simplify implementation.
+
+	* src/roff/troff/input.cpp (has_arg,
+	token::usable_as_delimiter): Update definitions of above member
+	functions not defined in token.h.
+
+	* src/roff/troff/div.cpp (begin_page, space_request, need_space,
+	output_saved_vertical_space, flush_output):
+	* src/roff/troff/env.cpp (fill, no_fill, center,
+	right_justify, indent, temporary_indent, margin_character,
+	number_lines, do_break_request, hyphen_word):
+	* src/roff/troff/input.cpp (next_file, do_overstrike,
+	do_bracket, do_name_test, do_expr_test, do_zero_width,
+	token::skip, has_arg, skip_line, empty_name_warning,
+	non_empty_name_warning, do_get_long_name, process_input_stack,
+	flush_pending_lines, decode_args, read_request,
+	do_define_string, do_define_character, remove_character,
+	do_define_macro, length_request, get_delim_number, get_line_arg,
+	read_size, get_delim_name, do_register, do_width,
+	read_title_parts, encode_char, do_special, device_request,
+	output_request, skip_alternative, begin_alternative,
+	nop_request, do_if_request, do_source, pipe_source,
+	ps_bbox_request, tag, taga, do_terminal, do_translate,
+	hyphenation_code, hyphenation_patterns_file_code, define_class,
+	get_optional_char, check_missing_character, abort_request,
+	copy_file, transparent_file, do_macro_source,
+	charinfo_to_node_list, read_draw_node, read_color_draw_node):
+	* src/roff/troff/node.cpp (get_fontno,
+	remove_font_special_character, bold_font):
+	* src/roff/troff/number.cpp (start_number, parse_term):
+	* src/roff/troff/reg.cpp (define_number_reg, alter_format):
+	Update call sites to use new names.
+
+	* src/roff/troff/input.cpp (token::usable_as_delimiter,
+	read_draw_node): Return Boolean, not integer, literals.
+
+2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Clamp line and title lengths to device horizontal
 	resolution.
 

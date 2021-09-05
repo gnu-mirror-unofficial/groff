@@ -4426,7 +4426,7 @@ int word_space_node::merge_space(hunits h, hunits sw, hunits ssw)
 {
   n += h;
   assert(orig_width != 0);
-  width_list *w = orig_width; 
+  width_list *w = orig_width;
   for (; w->next; w = w->next)
     ;
   w->next = new width_list(sw, ssw);
@@ -6155,7 +6155,7 @@ static int get_fontno()
 {
   int n;
   tok.skip();
-  if (tok.delimiter()) {
+  if (tok.usable_as_delimiter()) {
     symbol s = get_name(true /* required */);
     if (!s.is_null()) {
       n = symbol_fontno(s);
@@ -6210,8 +6210,8 @@ void remove_font_special_character()
     return;
   }
   symbol f = font_table[n]->get_name();
-  while (!tok.newline() && !tok.eof()) {
-    if (!tok.space() && !tok.tab()) {
+  while (!tok.is_newline() && !tok.is_eof()) {
+    if (!tok.is_space() && !tok.is_tab()) {
       charinfo *s = tok.get_char(true /* required */);
       string gl(f.contents());
       gl += ' ';
@@ -6378,7 +6378,7 @@ void bold_font()
   int n = get_fontno();
   if (n >= 0) {
     if (has_arg()) {
-      if (tok.delimiter()) {
+      if (tok.usable_as_delimiter()) {
 	int f = get_fontno();
 	if (f >= 0) {
 	  units offset;
