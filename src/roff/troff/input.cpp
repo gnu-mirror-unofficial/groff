@@ -2324,7 +2324,7 @@ int token::operator!=(const token &t)
 
 // is token a suitable delimiter (like ')?
 
-bool token::usable_as_delimiter(bool err)
+bool token::usable_as_delimiter(bool report_error)
 {
   switch(type) {
   case TOKEN_CHAR:
@@ -2352,15 +2352,16 @@ bool token::usable_as_delimiter(bool err)
     case '(':
     case ')':
     case '.':
-      if (err)
-        error("cannot use character '%1' as a starting delimiter", char(c));
+      if (report_error)
+        error("cannot use character '%1' as a starting delimiter",
+	      char(c));
       return false;
     default:
       return true;
     }
   case TOKEN_NODE:
     // the user doesn't know what a node is
-    if (err)
+    if (report_error)
       error("missing argument or invalid starting delimiter");
     return false;
   case TOKEN_SPACE:
@@ -2369,7 +2370,7 @@ bool token::usable_as_delimiter(bool err)
   case TOKEN_HORIZONTAL_SPACE:
   case TOKEN_TAB:
   case TOKEN_NEWLINE:
-    if (err)
+    if (report_error)
       error("cannot use %1 as a starting delimiter", description());
     return false;
   default:
