@@ -4052,7 +4052,7 @@ void hyphenate(hyphen_list *h, unsigned flags)
   }
 }
 
-static void do_hyphenation_patterns_file(int append)
+static void do_hyphenation_patterns_file(bool append)
 {
   symbol name = get_long_name(true /* required */);
   if (!name.is_null()) {
@@ -4068,12 +4068,12 @@ static void do_hyphenation_patterns_file(int append)
 
 static void hyphenation_patterns_file()
 {
-  do_hyphenation_patterns_file(0);
+  do_hyphenation_patterns_file(false /* append */);
 }
 
 static void hyphenation_patterns_file_append()
 {
-  do_hyphenation_patterns_file(1);
+  do_hyphenation_patterns_file(true /* append */);
 }
 
 class hyphenation_language_reg : public reg {
