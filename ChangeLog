@@ -1,5 +1,14 @@
 2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Clamp line and title lengths to device horizontal
+	resolution.
+
+	* src/roff/troff/env.cpp (line_length, title_length): Do it.
+
+	Prompted by <https://savannah.gnu.org/bugs/?61089>.
+
+2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/env.cpp (do_hyphenation_patterns_file):
 	Refactor slightly.  Demote `append` from `int` to `bool`.
 	(hyphenation_patterns_file, hyphenation_patterns_file_append):

@@ -1343,10 +1343,12 @@ void right_justify()
 void line_length()
 {
   hunits temp;
+  hunits minimum_length = font::hor;
   if (has_arg() && get_hunits(&temp, 'm', curenv->line_length)) {
-    if (temp < H0) {
-      warning(WARN_RANGE, "bad line length %1u", temp.to_units());
-      temp = H0;
+    if (temp < minimum_length) {
+      warning(WARN_RANGE, "invalid line length %1u rounded to device"
+			  " horizontal resolution", temp.to_units());
+      temp = minimum_length;
     }
   }
   else
@@ -1360,10 +1362,12 @@ void line_length()
 void title_length()
 {
   hunits temp;
+  hunits minimum_length = font::hor;
   if (has_arg() && get_hunits(&temp, 'm', curenv->title_length)) {
-    if (temp < H0) {
-      warning(WARN_RANGE, "bad title length %1u", temp.to_units());
-      temp = H0;
+    if (temp < minimum_length) {
+      warning(WARN_RANGE, "invalid title length %1u rounded to device"
+			  " horizontal resolution", temp.to_units());
+      temp = minimum_length;
     }
   }
   else
