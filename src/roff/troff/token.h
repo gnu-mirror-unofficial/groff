@@ -93,7 +93,6 @@ public:
   unsigned char ch();
   charinfo *get_char(bool = false);
   int add_to_node_list(node **);
-  int title();
   void make_space();
   void make_newline();
   const char *description();
