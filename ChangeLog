@@ -1,5 +1,12 @@
 2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Remove workaround for Cfront 1.2 bug.
+
+	* src/roff/troff/input.cpp (do_define_macro): Move `dot_symbol`
+	from to file to function local scope as originally intended.
+
+2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Rename parameter.
 
 	* src/roff/troff/input.cpp (token::usable_as_delimiter): Rename

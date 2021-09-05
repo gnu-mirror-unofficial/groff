@@ -4456,12 +4456,9 @@ void handle_initial_title()
   handle_initial_request(TITLE_REQUEST);
 }
 
-// this should be local to define_macro, but cfront 1.2 doesn't support that
-static symbol dot_symbol(".");
-
 void do_define_macro(define_mode mode, calling_mode calling, comp_mode comp)
 {
-  symbol nm, term;
+  symbol nm, term, dot_symbol(".");
   if (calling == CALLING_INDIRECT) {
     symbol temp1 = get_name(true /* required */);
     if (temp1.is_null()) {
