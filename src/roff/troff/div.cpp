@@ -577,12 +577,12 @@ int top_level_diversion::begin_page(vunits n)
     if (page_count == last_page_count
 	? curenv->is_empty()
 	: (done_end_macro && (seen_last_page_ejector || began_page_in_end_macro)))
-      cleanup_and_exit(0);
+      cleanup_and_exit(EXIT_SUCCESS);
     if (!done_end_macro)
       began_page_in_end_macro = 1;
   }
   if (last_page_number > 0 && page_number == last_page_number)
-    cleanup_and_exit(0);
+    cleanup_and_exit(EXIT_SUCCESS);
   if (!the_output)
     init_output();
   ++page_count;

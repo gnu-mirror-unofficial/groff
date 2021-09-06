@@ -2598,7 +2598,7 @@ void exit_troff()
   }
   // This will only happen if a trap-called macro starts a diversion,
   // or if vertical position traps have been disabled.
-  cleanup_and_exit(0);
+  cleanup_and_exit(EXIT_SUCCESS);
 }
 
 // This implements .ex.  The input stack must be cleared before calling
@@ -7516,7 +7516,7 @@ void abort_request()
       fputs(asciify(c), stderr);
   }
   fputc('\n', stderr);
-  cleanup_and_exit(1);
+  cleanup_and_exit(EXIT_FAILURE);
 }
 
 char *read_string()
@@ -8758,7 +8758,7 @@ static void do_error(error_type type,
   fputc('\n', stderr);
   fflush(stderr);
   if (type == FATAL)
-    cleanup_and_exit(1);
+    cleanup_and_exit(EXIT_FAILURE);
 }
 
 void debug(const char *format,
@@ -8823,7 +8823,7 @@ void fatal_with_file_and_line(const char *filename, int lineno,
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);
-  cleanup_and_exit(1);
+  cleanup_and_exit(EXIT_FAILURE);
 }
 
 void error_with_file_and_line(const char *filename, int lineno,

@@ -1,3 +1,13 @@
+2021-09-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Update exit status literals.
+
+	* src/roff/troff/div.cpp (top_level_diversion::begin_page):
+	* src/roff/troff/input.cpp (exit_troff, abort_request, do_error,
+	fatal_with_file_and_line): Use standard C library preprocessor
+	symbols `EXIT_SUCCESS` and `EXIT_FAILURE` instead of 0 and 1
+	literals, respectively.
+
 2021-09-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Drop unused member function.
