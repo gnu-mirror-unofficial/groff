@@ -7509,13 +7509,11 @@ void abort_request()
     while ((c = get_copy(0)) == ' ')
       ;
   }
-  if (c == EOF || c == '\n')
-    fputs("User Abort.", stderr);
-  else {
+  if (!(c == EOF || c == '\n')) {
     for (; c != '\n' && c != EOF; c = get_copy(0))
       fputs(asciify(c), stderr);
+    fputc('\n', stderr);
   }
-  fputc('\n', stderr);
   cleanup_and_exit(EXIT_FAILURE);
 }
 

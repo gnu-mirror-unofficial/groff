@@ -1,5 +1,28 @@
 2021-09-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Make `ab` request quiet if given no arguments.  The
+	`tm`, and `tm1` and `tmc` requests provide ample flexibility for
+	constructing diagnostic messages prior to an error exit, and
+	it's convenient to make `ab` itself quiet instead of saying
+	"User Abort." as Unix Version 7 troff did.  Further, there is no
+	standardization across troffs regarding what `ab` should emit if
+	arguments are absent.
+
+	* src/roff/troff/input.cpp (abort_request): Do it.
+
+	* src/roff/groff/tests/ab_works.sh:
+	* src/roff/groff/groff.am (groff_TESTS): Test it.
+
+	* doc/groff.texi (Debugging, Implementation Differences):
+	* man/groff.7.man (Requests/Request short reference):
+	* man/groff_diff.7.man (Implementation differences): Document
+	it.
+
+	Fixes <https://savannah.gnu.org/bugs/?61070>.  Thanks to Dave
+	Kemper for the discussion.
+
+2021-09-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Update exit status literals.
 
 	* src/roff/troff/div.cpp (top_level_diversion::begin_page):

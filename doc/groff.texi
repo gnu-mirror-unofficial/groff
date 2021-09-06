@@ -15298,8 +15298,7 @@ newline (as is done in @code{tm} and @code{tm1}).
 @cindex aborting (@code{ab})
 Write @var{string} to the standard error stream (like @code{tm}) and
 then abort GNU @code{troff}; that is, stop processing and terminate with
-a failure status.  With no argument, the message written is @samp{User
-Abort.}.
+a failure status.
 @endDefreq
 
 @Defreq {ex, }
@@ -15905,6 +15904,12 @@ Fractional point sizes cause one noteworthy incompatibility.  In
 indicators and thus @samp{.ps 10u} sets the point size to
 10@tie{}points, whereas in GNU @code{troff} it sets the point size to
 10@tie{}scaled points.  @xref{Fractional Type Sizes}.
+
+@cindex @code{ab} request, incompatibilities with @acronym{AT&T} @code{troff}
+The @code{ab} request differs from @acronym{AT&T} @code{troff}:
+GNU @code{troff} writes no message to the standard error stream if no
+arguments are given, and it exits with a failure status instead of a
+successful one.
 
 @cindex @code{bp} request, incompatibilities with @acronym{AT&T} @code{troff}
 The @code{bp} request differs from @acronym{AT&T} @code{troff}:
