@@ -1,3 +1,18 @@
+2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Deprecate `OP` macro.
+
+	* tmac/an-ext.tmac (OP): Move implementation from here...
+	* tmac/an.tmac (OP): ...to here.  Throw deprecation warning.
+	Throw style warning if wrong number of arguments given.
+
+	* tmac/groff_man.7.man.in (Description): Drop from introductory
+	macro summary.
+	(Description/Command synopsis macros): Move discussion from
+	here...
+	(Description/Deprecated features): ...to here.  Explain why it's
+	deprecated.
+
 2021-09-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Make `ab` request quiet if given no arguments.  The
