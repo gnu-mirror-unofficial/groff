@@ -2756,13 +2756,13 @@ void set_tabs()
 {
   hunits pos;
   hunits prev_pos = 0;
-  int first = 1;
-  int repeated = 0;
+  bool is_first_stop = true;
+  bool is_repeating_stop = false;
   tab_stops tabs;
   while (has_arg()) {
     if (tok.ch() == TAB_REPEAT_CHAR) {
       tok.next();
-      repeated = 1;
+      is_repeating_stop = true;
       prev_pos = 0;
     }
     if (!get_hunits(&pos, 'm', prev_pos))
@@ -2779,13 +2779,13 @@ void set_tabs()
     else if (tok.ch() == 'L') {
       tok.next();
     }
-    if (pos <= prev_pos && !first)
+    if (pos <= prev_pos && !is_first_stop)
       warning(WARN_RANGE,
 	      "positions of tab stops must be strictly increasing");
     else {
-      tabs.add_tab(pos, type, repeated);
+      tabs.add_tab(pos, type, is_repeating_stop);
       prev_pos = pos;
-      first = 0;
+      is_first_stop = false;
     }
   }
   curenv->tabs = tabs;

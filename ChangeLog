@@ -1,5 +1,15 @@
 2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Boolify `set_tabs` function.
+
+	* src/roff/troff/env.cpp (set_tabs): Demote local variables from
+	`int` to `bool` and give them predicate-like names.
+	  - `first` -> `is_first_stop`
+	  - `repeated` -> `is_repeating_stop`
+	Use Boolean instead of integer literals in assignments to them.
+
+2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Deprecate `OP` macro.
 
 	* tmac/an-ext.tmac (OP): Move implementation from here...
