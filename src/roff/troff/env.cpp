@@ -2594,7 +2594,8 @@ tab_type tab_stops::distance_to_next_tab(hunits curpos, hunits *distance)
   return distance_to_next_tab(curpos, distance, &nextpos);
 }
 
-tab_type tab_stops::distance_to_next_tab(hunits curpos, hunits *distance,
+tab_type tab_stops::distance_to_next_tab(hunits curpos,
+					 hunits *distance,
 					 hunits *nextpos)
 {
   hunits lastpos = 0;
@@ -2610,14 +2611,16 @@ tab_type tab_stops::distance_to_next_tab(hunits curpos, hunits *distance,
     return TAB_NONE;
   hunits base = lastpos;
   for (;;) {
-    for (tem = repeated_list; tem && tem->pos + base <= curpos; tem = tem->next)
+    for (tem = repeated_list; tem && tem->pos + base <= curpos;
+	 tem = tem->next)
       lastpos = tem->pos;
     if (tem) {
       *distance = tem->pos + base - curpos;
       *nextpos  = tem->pos + base;
       return tem->type;
     }
-    assert(lastpos > 0);
+    if (lastpos < 0)
+      lastpos = 0;
     base += lastpos;
   }
   return TAB_NONE;
@@ -2779,7 +2782,7 @@ void set_tabs()
     else if (tok.ch() == 'L') {
       tok.next();
     }
-    if (pos <= prev_pos && !is_first_stop)
+    if (pos <= prev_pos && ((!is_first_stop) || is_repeating_stop))
       warning(WARN_RANGE,
 	      "positions of tab stops must be strictly increasing");
     else {

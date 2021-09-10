@@ -1,5 +1,22 @@
 2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Clamp negative tab stop positions to zero instead of
+	throwing an assertion failure.
+
+	* src/roff/troff/env.cpp (tab_stops::distance_to_next_tab):
+	Replace `assert` with clamping logic, ensuring that `lastpos`
+	can never be negative.  While negative tab stop positions don't
+	make much sense (they result in zero horizontal motion), user
+	input like `.ta T -5` should never provoke an assertion failure.
+
+	(set_tabs): Throw range warning in additional scenario, viz., if
+	a repeating tab offset is negative.
+
+	Fixes <https://bugs.debian.org/990406>.  Thanks to наб for the
+	report.
+
+2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Boolify `set_tabs` function.
 
 	* src/roff/troff/env.cpp (set_tabs): Demote local variables from
