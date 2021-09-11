@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2020 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -46,7 +45,7 @@ const
 #endif
 int minus_one = -1;
 
-int verify_flag = 0;
+bool do_verify = false;
 
 struct word_list;
 
@@ -68,7 +67,7 @@ class index_search_item : public search_item {
   const char *ignore_fields;
   time_t mtime;
 
-  const char *do_verify();
+  const char *get_invalidity_reason();
   const int *search1(const char **pp, const char *end);
   const int *search(const char *ptr, int length, int **temp_listp);
   const char *munge_filename(const char *);
@@ -77,9 +76,9 @@ class index_search_item : public search_item {
 public:
   index_search_item(const char *, int);
   ~index_search_item();
-  int load(int fd);
+  bool load(int fd);
   search_item_iterator *make_search_item_iterator(const char *);
-  int verify();
+  bool is_valid();
   void check_files();
   int next_filename_id() const;
   friend class index_search_item_iterator;
@@ -139,28 +138,28 @@ public:
   file_closer(int &fd) : fdp(&fd) { }
   ~file_closer() { close(*fdp); }
 };
- 
+
 // Tell the compiler that a variable is intentionally unused.
 inline void unused(void *) { }
 
-int index_search_item::load(int fd)
+bool index_search_item::load(int fd)
 {
   file_closer fd_closer(fd);	// close fd on return
   unused(&fd_closer);
   struct stat sb;
   if (fstat(fd, &sb) < 0) {
     error("can't fstat '%1': %2", name, strerror(errno));
-    return 0;
+    return false;
   }
   if (!S_ISREG(sb.st_mode)) {
     error("'%1' is not a regular file", name);
-    return 0;
+    return false;
   }
   mtime = sb.st_mtime;
   int size = int(sb.st_size);
   if (size == 0) {
     error("'%1' is an empty file", name);
-    return 0;
+    return false;
   }
   char *addr;
   map_addr = mapread(fd, size);
@@ -172,7 +171,7 @@ int index_search_item::load(int fd)
     addr = buffer = (char *)malloc(size);
     if (buffer == 0) {
       error("can't allocate buffer for '%1'", name);
-      return 0;
+      return false;
     }
     char *ptr = buffer;
     int bytes_to_read = size;
@@ -180,11 +179,11 @@ int index_search_item::load(int fd)
       int nread = read(fd, ptr, bytes_to_read);
       if (nread == 0) {
 	error("unexpected EOF on '%1'", name);
-	return 0;
+	return false;
       }
       if (nread < 0) {
 	error("read error on '%1': %2", name, strerror(errno));
-	return 0;
+	return false;
       }
       bytes_to_read -= nread;
       ptr += nread;
@@ -193,12 +192,12 @@ int index_search_item::load(int fd)
   header = *(index_header *)addr;
   if (header.magic != INDEX_MAGIC) {
     error("'%1' is not an index file: wrong magic number", name);
-    return 0;
+    return false;
   }
   if (header.version != INDEX_VERSION) {
     error("version number in '%1' is wrong: was %2, should be %3",
 	  name, header.version, INDEX_VERSION);
-    return 0;
+    return false;
   }
   int sz = (header.tags_size * sizeof(tag)
 	    + header.lists_size * sizeof(int)
@@ -208,7 +207,7 @@ int index_search_item::load(int fd)
   if (sz != size) {
     error("size of '%1' is wrong: was %2, should be %3",
 	  name, size, sz);
-    return 0;
+    return false;
   }
   tags = (tag *)(addr + sizeof(header));
   lists = (int *)(tags + header.tags_size);
@@ -217,10 +216,10 @@ int index_search_item::load(int fd)
   ignore_fields = strchr(strchr(pool, '\0') + 1, '\0') + 1;
   key_buffer = new char[header.truncate];
   read_common_words_file();
-  return 1;
+  return true;
 }
 
-const char *index_search_item::do_verify()
+const char *index_search_item::get_invalidity_reason()
 {
   if (tags == 0)
     return "not loaded";
@@ -253,13 +252,13 @@ const char *index_search_item::do_verify()
   return 0;
 }
 
-int index_search_item::verify()
+bool index_search_item::is_valid()
 {
-  const char *reason = do_verify();
+  const char *reason = get_invalidity_reason();
   if (!reason)
-    return 1;
+    return true;
   error("'%1' is bad: %2", name, reason);
-  return 0;
+  return false;
 }
 
 int index_search_item::next_filename_id() const
@@ -288,7 +287,7 @@ search_item *make_index_search_item(const char *filename, int fid)
     delete item;
     return 0;
   }
-  else if (verify_flag && !item->verify()) {
+  else if (do_verify && !item->is_valid()) {
     delete item;
     return 0;
   }
@@ -640,3 +639,9 @@ void index_search_item::check_files()
     }
   }
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

@@ -1,5 +1,25 @@
 2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libbib]: Partially boolify.
+
+	* src/include/search.h:
+	* src/libs/libbib/index.cpp:
+	* src/preproc/refer/refer.cpp:
+	* src/utils/lkbib/lkbib.cpp:
+	* src/utils/lookbib/lookbib.cpp: Demote `verify_flag` from an
+	`int` to a `bool`, rename it to `do_verify`, use Boolean
+	instead of integer literals with it, and update call sites.
+
+	* src/libs/libbib/index.cpp: Rename `do_verify()` member
+	function to `get_invalidity_reason()` (it returns a string).
+	Demote `load()` from `int` to `bool`; do the same for `verify()`
+	and rename it to `is_valid()` as well.  Use Boolean instead of
+	integer literals with them.
+	(index_search_item::is_valid, make_index_search_item): Update
+	call sites of renamed member functions.
+
+2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libbib/map.c (mapread): Compare return value of
 	`mmap()` to `MAP_FAILED` instead of `(char *)-1`.  `MAP_FAILED`
 	is documented in POSIX Issue 5 a.k.a. SUSv2
