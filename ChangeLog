@@ -1,5 +1,18 @@
 2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libbib/index.cpp
+	(index_search_item::get_invalidity_reason): Don't complain about
+	about a last list element being nonnegative if the list size was
+	zero in the first place, as can happen with an empty index.
+	More seriously from a language standpoint, avoid reading through 
+	a negative array index (this can escape a compiler's attention
+	because we're reading from the midst of a heap-allocated or
+	`mmap()`ed region, but it's still a code smell).
+
+	Fixes <https://savannah.gnu.org/bugs/?61144>.
+
+2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libbib/index.cpp (index_search_item::load,
 	index_search_item::get_invalidity_reason,
 	index_search_item::add_out_of_date_file): Clarify diagnostic

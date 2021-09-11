@@ -223,7 +223,7 @@ const char *index_search_item::get_invalidity_reason()
 {
   if (tags == 0)
     return "not loaded";
-  if (lists[header.lists_size - 1] >= 0)
+  if ((header.lists_size > 0) && (lists[header.lists_size - 1] >= 0))
     return "last list element not negative";
   int i;
   for (i = 0; i < header.table_size; i++) {
