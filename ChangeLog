@@ -1,5 +1,32 @@
 2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Since June 1991 if not earlier, groff (technically, the refer,
+	lookbib, and lkbib programs) has trusted the header contents of
+	binary bibliographic index files (canonically generated with
+	indxbib(1)) regarding the sizes of the data structures that
+	follow in the file, a notorious class of security problem.  In
+	July 2013, the Mayhem Team at Carnegie Mellon University
+	reported to the Debian Bug Tracking System a problem with
+	groff's refer(1) implementation dumping core when reading an
+	index file prepared by a fuzzer.
+
+	* src/libs/libbib/index.cpp (index_search_item::check_header):
+	Add new member function to validate the header of an indexed
+	bibliography file, returning a string describing in detail the
+	first validity problem encountered.
+	(index_search_item::load): Perform the foregoing check before
+	using any of the size values taken from the header; they are
+	relied upon for pointer arithmetic.  If in verification mode
+	{using the undocumented `-V` flag to refer(1), lkbib(1), or
+	lookbib(1)}, report the details of the problem encountered.
+	Regardless of that mode, if there is a validity problem, report
+	corruption of the index file and abandon it, forcing fallback to
+	the text version of the corresponding bibliography file.
+
+	Fixes <https://bugs.debian.org/716109>.
+
+2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libbib/index.cpp
 	(index_search_item::get_invalidity_reason): Don't complain about
 	about a last list element being nonnegative if the list size was

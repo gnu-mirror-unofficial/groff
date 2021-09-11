@@ -76,6 +76,7 @@ class index_search_item : public search_item {
 public:
   index_search_item(const char *, int);
   ~index_search_item();
+  const char *check_header(int);
   bool load(int fd);
   search_item_iterator *make_search_item_iterator(const char *);
   bool is_valid();
@@ -142,6 +143,40 @@ public:
 // Tell the compiler that a variable is intentionally unused.
 inline void unused(void *) { }
 
+// Validate the data reported in the header so that we don't overread on
+// the heap in the load() member function.  Return null pointer if no
+// problems are detected.
+const char *index_search_item::check_header(int size_remaining)
+{
+  size_t chunk_size;
+  if (header.tags_size < 0)
+    return "tag list length supposedly negative";
+  chunk_size = header.tags_size * sizeof(tag);
+  if (chunk_size > size_remaining)
+    return "claimed tag list length exceeds file size";
+  size_remaining -= chunk_size;
+  if (header.lists_size < 0)
+    return "reference list length supposedly negative";
+  chunk_size = header.lists_size * sizeof(int);
+  if (chunk_size > size_remaining)
+    return "claimed reference list length exceeds file size";
+  size_remaining -= chunk_size;
+  // The table and string pool sizes will not be zero, even in an empty
+  // index.
+  if (header.table_size < 1)
+    return "table size supposedly nonpositive";
+  chunk_size = header.table_size * sizeof(int);
+  if (chunk_size > size_remaining)
+    return "claimed table size exceeds file size";
+  size_remaining -= chunk_size;
+  if (header.strings_size < 1)
+    return "string pool size supposedly nonpositive";
+  chunk_size = header.strings_size;
+  if (chunk_size > size_remaining)
+    return "claimed string pool size exceeds file size";
+  return 0;
+}
+
 bool index_search_item::load(int fd)
 {
   file_closer fd_closer(fd);	// close fd on return
@@ -207,6 +242,14 @@ bool index_search_item::load(int fd)
   if (sz != size) {
     error("size of '%1' is wrong: was %2, should be %3",
 	  name, size, sz);
+    return false;
+  }
+  const char *problem = check_header(size);
+  if (problem) {
+    if (do_verify)
+      error("corrupt header in index file '%1': %2", name, problem);
+    else
+      error("corrupt header in index file '%1'", name);
     return false;
   }
   tags = (tag *)(addr + sizeof(header));
