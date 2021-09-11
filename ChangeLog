@@ -1,3 +1,11 @@
+2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libbib/map.c (mapread): Compare return value of
+	`mmap()` to `MAP_FAILED` instead of `(char *)-1`.  `MAP_FAILED`
+	is documented in POSIX Issue 5 a.k.a. SUSv2
+	<https://pubs.opengroup.org/onlinepubs/007908799/xsh/mmap.html>
+	{1997} and should be portable enough by now.
+
 2021-09-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Clamp negative tab stop positions to zero instead of
