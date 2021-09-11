@@ -148,17 +148,17 @@ bool index_search_item::load(int fd)
   unused(&fd_closer);
   struct stat sb;
   if (fstat(fd, &sb) < 0) {
-    error("can't fstat '%1': %2", name, strerror(errno));
+    error("can't fstat index '%1': %2", name, strerror(errno));
     return false;
   }
   if (!S_ISREG(sb.st_mode)) {
-    error("'%1' is not a regular file", name);
+    error("index '%1' is not a regular file", name);
     return false;
   }
   mtime = sb.st_mtime;
   int size = int(sb.st_size);
   if (size == 0) {
-    error("'%1' is an empty file", name);
+    error("index '%1' is an empty file", name);
     return false;
   }
   char *addr;
@@ -170,7 +170,7 @@ bool index_search_item::load(int fd)
   else {
     addr = buffer = (char *)malloc(size);
     if (buffer == 0) {
-      error("can't allocate buffer for '%1'", name);
+      error("can't allocate memory to process index '%1'", name);
       return false;
     }
     char *ptr = buffer;
@@ -178,11 +178,11 @@ bool index_search_item::load(int fd)
     while (bytes_to_read > 0) {
       int nread = read(fd, ptr, bytes_to_read);
       if (nread == 0) {
-	error("unexpected EOF on '%1'", name);
+	error("unexpected end-of-file while reading index '%1'", name);
 	return false;
       }
       if (nread < 0) {
-	error("read error on '%1': %2", name, strerror(errno));
+	error("read error on index '%1': %2", name, strerror(errno));
 	return false;
       }
       bytes_to_read -= nread;
@@ -195,7 +195,7 @@ bool index_search_item::load(int fd)
     return false;
   }
   if (header.version != INDEX_VERSION) {
-    error("version number in '%1' is wrong: was %2, should be %3",
+    error("version number in index '%1' is wrong: was %2, should be %3",
 	  name, header.version, INDEX_VERSION);
     return false;
   }
@@ -248,7 +248,7 @@ const char *index_search_item::get_invalidity_reason()
       return "bad start in tags";
   }
   if (pool[header.strings_size - 1] != '\0')
-    return "last character in pool not nul";
+    return "last character in string pool is not null";
   return 0;
 }
 
@@ -617,7 +617,7 @@ void index_search_item::add_out_of_date_file(int fd, const char *filename,
     if ((*pp)->is_named(filename))
       return;
   *pp = make_linear_search_item(fd, filename, fid);
-  warning("'%1' modified since '%2' created", filename, name);
+  warning("'%1' modified since index '%2' created", filename, name);
 }
 
 void index_search_item::check_files()
