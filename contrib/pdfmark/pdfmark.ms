@@ -103,31 +103,87 @@ Publishing with GNU Troff
 .ds = \f(CB\\$1\f(CR\\$4\f[CBI]\\$2\f(CR\\$3
 .
 .NH 1
-.\" When we use numbered section headings, we might like to automatically
-.\" insert a table of contents entry, using the text of the heading itself.
-.\" The "ms" macros don't provide any standard mechanism for doing this,
-.\" but "spdf.tmac" adds the "XN" macro, which will do it for us.
+.\" Conventionally, in "ms", NH precedes text which is to be set as a
+.\" numbered section heading, but it makes no provision for automatic
+.\" reference to that heading in a table of contents, or (in the case
+.\" of PDF document production) in a document outline.  Both of these
+.\" limitations may be mitigated, by using the XN macro, (provided by
+.\" spdf.tmac), which sets its arguments, both as text to be included
+.\" in the section heading,  as printed, and as an assocated document
+.\" outline reference;  it will also make this same text available to
+.\" the user-specified callback macro,  XH-UPDATE-TOC, whereby it may
+.\" be used, e.g. to construct a table of contents entry.
 .\"
-.\" Here's a simple example of how we might use it.  In this case, the word
-.\" "Introduction" will appear both in the body of the document, as the text
-.\" of the heading, and it will be added to the table of contents, which is
-.\" subsequently "printed" using the "TC" macro; in both locations, it will
-.\" be prefixed by the section number.
+.\" Within the table of contents, structural layout will be achieved,
+.\" under the direction of the following spacing control constants:
 .\"
-.\" As an additional side effect, any use of "XN" will cause the table of
-.\" contents entry to be automatically reproduced, with the exception of its
-.\" page number reference, as a PDF document outline entry.  Thus, the use
-.\" of "XN" to specify numbered section headings results in the automatic
-.\" creation of a numbered PDF document outline.  This automatic creation
-.\" of the outline is completely transparent, and will occur regardless
-.\" of whether the "TC" macro is subsequently invoked, or not.
+.ds XNVS1 0.50v  \" leading for top level
+.ds XNVS2 0.15v  \" leading at nesting level increment
+.ds XNVS3 0.30v  \" leading following nested group
 .\"
+.\" Note that one TOC related callback hook is shared by both XH and
+.\" XN; its is called XH-UPDATE-TOC, regardless of whether called by
+.\" XH or by XN; when called by XN, it is invoked with arguments:
+.\"
+.\"  .XH-UPDATE-TOC <outline-level> <section-number> <text> ...
+.\"
+.de XH-UPDATE-TOC
+.\" This implementation of XH-UPDATE-TOC utilizes the rudimentary ms
+.\" mechanism for formatting a table of contents, using XS and XE to
+.\" bracket individual entries.
+.   XS
+.   \" A local register, tc*hl, is used to track the outline level
+.   \" of each TOC entry, as it is added; it is not defined, until
+.   \" the first entry is recorded...
+.   \"
+.      if r tc*hl \{\
+.         \" ...after which, we use it to establish indentation,
+.         \" to reflect changes in outline level.
+.         \"
+.            ie \\$1>1 \{\
+.               \" When at any outline level greater than one,
+.               \" any level increment will be offset by XNVS2
+.               \" units of vertical space...
+.               \"
+.                  ie \\$1>\\n[tc*hl] .sp \\*[XNVS2]
+.
+.               \" ...whereas any decrement will be offset by
+.               \" XNVS3 units.
+.               \"
+.                  el .if \\n[tc*hl]>\\$1 .sp \\*[XNVS3]
+.               \}
+.
+.         \" ...but every top-level entry, after the first, is
+.         \" offset by XNVS1 units.
+.         \"
+.            el .sp \\*[XNVS1]
+.         \}
+.
+.   \" \$1 becomes the effective outline level for the current table
+.   \" of contents entry, but we must ensure that it is one or more.
+.   \"
+.      ie \\$1 .nr tc*hl \\$1
+.      el .nr tc*hl 1
+.
+.   \" The current outline level determines the indentation at which
+.   \" we place the section number reference...
+.   \"
+.      nop \h'\\n[tc*hl]-1m'\\$2\c
+.
+.   \" ...after which we discard \$1 and \$2,  allowing us to append
+.   \" all remaining arguments, ensuring that there is at least 0.5n
+.   \" of following space, before the first leader dot.
+.   \"
+.      shift 2
+.      nop \h'1.5n'\\$*\h'0.5n'
+.   XE
+..
 .XN Introduction
 .\"
-.\" If using an old s.tmac, without the SN-NO-DOT extension,
-.\" make sure we get SOMETHING in section number references.
+.\" If using an old s.tmac, without the SN-NO-DOT extension, ensure
+.\" that we get SOMETHING in section number references.
 .\"
-.if !dSN-NO-DOT .als SN-NO-DOT SN
+.if !d SN-NO-DOT .als SN-NO-DOT SN
 .LP
 It might appear that it is a fairly simple matter to
 produce documents in \*[Adobe]\~\(lqPortable\~Document\~Format\(rq,
