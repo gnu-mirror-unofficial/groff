@@ -216,8 +216,7 @@ but which are of little or no value to a document which is merely printed.
 It
 .EM is
 possible to exploit these PDF features, which are described in the \*[Adobe]
-.\"
-.de pdfmark-manual
+.de pdfmark-manual pdfmark-manual
 .\" This is an example of a resource reference specified by URI ...
 .\" We may need to refer often to the Adobe pdfmark Reference Manual,
 .\" so we create the internet link definition using a macro, to make
@@ -227,9 +226,8 @@ possible to exploit these PDF features, which are described in the \*[Adobe]
 .\" preceding it with "--", to avoid "invalid character in name" type
 .\" error messages from groff (caused by the use of "\~").
 .\"
-.pdfhref W -D http://partners.adobe.com/public/developer/en/acrobat/sdk/pdf/pdf_creation_apis_and_specs/pdfmarkReference.pdf \
+.pdfhref W -D https://www.adobe.com/go/acrobatsdk_pdfmark \
     -P \(lq -A \(rq\\$1 -- pdfmark\~Reference\~Manual
-..
 .pdfmark-manual ,
 with some refinement of the simple PDF production method, provided
 appropriate \(lqfeature implementing\(rq instructions can be embedded into
@@ -345,7 +343,7 @@ or MSYS.\**
 Another free, but minimal suite of common
 Unix\(tm
 tools for 32\(hybit \*[Microsoft] Windows\(tm, available for download from
-.pdfhref W -A ; http://www.mingw.org
+.pdfhref W -A ; https://mingw.osdn.io
 it
 .EM does 
 include those tools listed above,
