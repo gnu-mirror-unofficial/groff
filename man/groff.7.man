@@ -1691,29 +1691,59 @@ Same as
 .request .de
 but with compatibility mode switched off during macro expansion.
 .
+.
 .TPx
-.REQ .defcolor "color scheme component"
-Define or redefine a color with name
-.IR color .
+.REQ .defcolor "ident scheme color-component \f[R].\|.\|."
+Define a color named
+.I ident
+for use with the
+.B fcolor
+and
+.B gcolor
+requests and the
+.B \[rs]m
+and
+.B \[rs]M
+escape sequences.
+.
 .I scheme
-can be
-.BR rgb ,
-.BR cym ,
-.BR cymk ,
-.BR gray ,
+identifies a color space and determines the number of required
+.IR color-component s;
+it must be one of
+.RB \[lq] rgb \[rq]
+(three components),
+.RB \[lq] cmy \[rq]
+(three components),
+.RB \[lq] cmyk \[rq]
+(four components),
 or
-.BR grey .
-.I component
-can be single components specified as fractions in the range 0 to 1
-(default scaling indicator\~\c
-.scaleindicator f ),
-as a string of two-digit hexadecimal color components with a leading
-.BR # ,
-or as a string of four-digit hexadecimal components with two leading
-.BR # .
-The color
-.B default
-can't be redefined.
+.RB \[lq] gray \[rq]
+(one component).
+.
+.RB \[lq] grey \[rq]
+is accepted as a synonym of
+.RB \[lq] gray \[rq].
+.
+The color components can be encoded as a hexadecimal value starting
+with
+.B #
+or
+.BR ## .
+.
+The former indicates that each component is in the range 0\[en]255
+(0\[en]FF),
+the latter the range 0\[en]65535 (0\[en]FFFF).
+.
+Alternatively,
+each color component can be specified as a decimal fraction in the range
+0\[en]1,
+interpreted using a default scaling indicator
+.RB of\~\[lq] f \[rq].
+.
+Each output device has a color named
+.RB \[lq] default \[rq]
+that cannot be redefined.
+.
 .
 .TPx
 .REQ .dei "macro"

@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle August 2021
+@subtitle September 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -14357,41 +14357,40 @@ beginning of your document to control color output.
 Colors can be also turned off with the @option{-c} command-line option.
 @endDefreq
 
-@Defreq {defcolor, ident scheme color_components}
-Define color with name @var{ident}.  @var{scheme} can be one of the
-following values: @code{rgb} (three components), @code{cmy} (three
-components), @code{cmyk} (four components), and @code{gray} or
-@code{grey} (one component).
+@Defreq {defcolor, ident scheme color-component @dots{}}
+Define a color named @var{ident} for use with the @code{fcolor} and
+@code{gcolor} requests and the @code{\m} and @code{\M} escape sequences.
+@var{scheme} identifies a color space and determines the number of
+required @var{color-component}s; it must be one of @samp{rgb} (three
+components), @samp{cmy} (three components), @samp{cmyk} (four
+components), or @samp{gray} (one component). @samp{grey} is accepted as
+a synonym of @samp{gray}.  The color components can be encoded as a
+hexadecimal value starting with @samp{#} or @samp{##}.  The former
+indicates that each component is in the range 0--255 (0--FF), the latter
+the range 0--65535 (0--FFFF).
 
-@cindex default color
-@cindex color, default
-Color components can be given either as a hexadecimal string or as
-positive decimal integers in the range 0--65535.  A hexadecimal string
-contains all color components concatenated.  It must start with either
-@code{#} or @code{##}; the former specifies hex values in the range
-0--255 (which are internally multiplied by@tie{}257), the latter in the
-range 0--65535.  Examples: @code{#FFC0CB} (pink), @code{##ffff0000ffff}
-(magenta).  The default color name @c{default} can't be redefined; its
-value is device-specific (usually black).  It is possible that the
-default color for @code{\m} and @code{\M} is not identical.
+@Example
+.defcolor half gray #7f
+.defcolor pink rgb #FFC0CB
+.defcolor magenta rgb  ##ffff0000ffff
+@endExample
 
 @cindex @code{f} unit, and colors
 @cindex unit, @code{f}, and colors
-A new scaling indicator@tie{}@code{f} has been introduced, which
-multiplies its value by 65536; this makes it convenient to specify color
-components as fractions in the range 0 to@tie{}1 (1f equals 65536u).
-Example:
+Alternatively, each color component can be specified as a decimal
+fraction in the range 0--1, interpreted using a default scaling
+indicator of@tie{}@code{f}, which multiplies its value by 65536.
 
 @Example
+.defcolor gray50 rgb 0.5 0.5 0.5
 .defcolor darkgreen rgb 0.1f 0.5f 0.2f
 @endExample
 
-Note that @code{f} is the default scaling indicator for the
-@code{defcolor} request, thus the above statement is equivalent to
-
-@Example
-.defcolor darkgreen rgb 0.1 0.5 0.2
-@endExample
+@cindex default color
+@cindex color, default
+Each output device has a color named @samp{default} that cannot be
+redefined.  A device's default drawing and fill colors are not
+necessarily the same.
 @endDefreq
 
 @DefreqList {gcolor, [@Var{color}]}

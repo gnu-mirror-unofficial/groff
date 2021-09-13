@@ -1734,75 +1734,65 @@ it.
 In compatibility mode, long names are not recognized, and the
 incompatibilities caused by long names do not arise.
 .
+.
 .TP
-.BI .defcolor\~ xxx\~scheme\~color_components
-Define color
-.IR xxx .
+.B .defcolor\~\c
+.IR "ident scheme color-component\~" .\|.\|.
+Define a color named
+.I ident
+for use with the
+.B fcolor
+and
+.B gcolor
+requests and the
+.B \[rs]m
+and
+.B \[rs]M
+escape sequences.
+.
 .I scheme
-can be one of the following values:
-.B rgb
+identifies a color space and determines the number of required
+.IR color-component s;
+it must be one of
+.RB \[lq] rgb \[rq]
 (three components),
-.B cmy
+.RB \[lq] cmy \[rq]
 (three components),
-.B cmyk
-(four components), and
-.B gray
+.RB \[lq] cmyk \[rq]
+(four components),
 or
-.B grey
+.RB \[lq] gray \[rq]
 (one component).
 .
-Color components can be given either as a hexadecimal string or as
-positive decimal integers in the range 0\[en]65535.
+.RB \[lq] grey \[rq]
+is accepted as a synonym of
+.RB \[lq] gray \[rq].
 .
-A hexadecimal string contains all color components concatenated; it
-must start with either
+The color components can be encoded as a hexadecimal value starting
+with
 .B #
 or
 .BR ## .
-The former specifies hex values in the range 0\[en]255 (which are
-internally multiplied by\~257), the latter in the range 0\[en]65535.
 .
-Examples: #FFC0CB (pink), ##ffff0000ffff (magenta).
+The former indicates that each component is in the range 0\[en]255
+(0\[en]FF),
+the latter the range 0\[en]65535 (0\[en]FFFF).
 .
-A new scaling indicator,
-.RB \[lq] f \[rq]\~has
-has been introduced which multiplies its value by\~65536;
-this makes it convenient to specify color components as fractions in the
-range 0 to\~1.
+Alternatively,
+each color component can be specified as a decimal fraction in the range
+0\[en]1,
+interpreted using a default scaling indicator
+.RB of\~\[lq] f \[rq],
+which multiplies its value by 65536.
 .
-Example:
-.
-.RS
-.IP
-.EX
-\&.defcolor darkgreen rgb 0.1f 0.5f 0.2f
-.EE
-.RE
 .
 .IP
-Note that
-.B f
-is the default scaling indicator for the
-.B defcolor
-request, thus the above statement is equivalent to
+Each output device has a color named
+.RB \[lq] default \[rq]
+that cannot be redefined.
 .
-.RS
-.IP
-.EX
-\&.defcolor darkgreen rgb 0.1 0.5 0.2
-.EE
-.RE
+A device's default drawing and fill colors are not necessarily the same.
 .
-.IP
-The color named
-.B default
-(which is device-specific) can't be redefined.
-.
-It is possible that the default color for
-.B \[rs]M
-and
-.B \[rs]m
-is not the same.
 .
 .TP
 .BI .de1\~ xx\~yy
