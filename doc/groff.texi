@@ -7131,7 +7131,7 @@ default.
 @item c
 @cindex centered text (filled)
 Center filled text.  Contrast with the @code{ce} request, which centers
-text without filling.
+text without filling it.
 
 @item l
 @cindex ragged-right text
@@ -7144,11 +7144,10 @@ Adjust text to the right margin, producing ragged-left text.
 @end table
 
 @var{mode} can also be a value previously stored in the @code{.j}
-register.
-
-Using @code{ad} without an argument is the same as @samp{.ad \n[.j]}.
-In particular, GNU @code{troff} adjusts lines in the same way it did
-before adjustment was disabled (with a call to @code{na}, say).
+register.  Using @code{ad} without an argument is the same as @samp{.ad
+\n[.j]}; unless filling is disabled, GNU @code{troff} resumes adjusting
+lines in the same way it did before adjustment was disabled by
+invocation of the @code{na} request.
 
 @Example
 .ll 48n
