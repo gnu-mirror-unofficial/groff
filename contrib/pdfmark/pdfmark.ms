@@ -86,11 +86,22 @@ Publishing with GNU Troff
 .\"
 .nr GROWPS 4
 .nr PSINCR 1.5p
+.
+.\" Define a local macro to facilitate choice of style for emphasis;
+.\" by default, make it equivalent to the ms standard "I" macro.
 .\"
 .de EM
 .\".I "\s'+0.3'\\$1\s0" "\\$2" "\\$3"
 .I \\$@
 ..
+.\" Also, define variations on the ms standard "CW" macro, to add
+.\" bold, italic, and both styles to constant width text; note that
+.\" each of these accept two additional arguments, in comparison to
+.\" standard "CW", such that \$1 specifies the text which is to be
+.\" styled, \$2 and \$3 specify inner after/before bracketting, to
+.\" set as regular "CW" text,  while \$4 and \$5 become equivalent
+.\" to \$2 and \$3 of standard "CW", acting as outer bracketting.
+.\"
 .de CWB
 \\$5\fC\\$3\fP\f(CB\\$1\fP\fC\\$2\fP\\$4
 ..
@@ -100,6 +111,12 @@ Publishing with GNU Troff
 .de CWBI
 \\$5\fC\\$3\fP\f[CBI]\\$1\fP\fC\\$2\fP\\$4
 ..
+.\" Finally, augment this group with a variant string, which may be
+.\" used to set constant width tags on "IP" paragraphs, with \$1 set
+.\" as if by "CWB", followed by an optional suffix set as if by "CWBI",
+.\" and with the suffix bracketted by \$3 after and \$4 before, each
+.\" set in the regular "CW" style.
+.\"
 .ds = \f(CB\\$1\f(CR\\$4\f[CBI]\\$2\f(CR\\$3
 .
 .NH 1
