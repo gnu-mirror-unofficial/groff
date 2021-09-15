@@ -1,3 +1,14 @@
+2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Throw warning diagnostic if device DESC file attempts
+	to load unavailable fonts.
+
+	* src/roff/troff/input.cpp (main): Take advantage of new Boolean
+	return values of `mount_style()` and `mount_font()` to produce
+	warning diagnostics if mounting a style or font as directed by
+	the DESC file fails.  Explain in a comment why, at present, this
+	style mount warning will never actually trip.
+
 2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Lift font mounting diagnostic messages to be closer to

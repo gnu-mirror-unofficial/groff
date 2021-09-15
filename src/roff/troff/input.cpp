@@ -8140,15 +8140,23 @@ int main(int argc, char **argv)
   font_size::init_size_table(font::sizes);
   int i;
   int j = 1;
-  if (font::style_table) {
+  if (font::style_table)
     for (i = 0; font::style_table[i]; i++)
-      mount_style(j++, symbol(font::style_table[i]));
-  }
+      // Mounting a style can't actually fail due to a bad style name;
+      // that's not determined until the full font name is resolved.
+      // The DESC file also can't provoke a problem by requesting over a
+      // thousand slots in the style table.
+      if (!mount_style(j++, symbol(font::style_table[i])))
+	warning(WARN_FONT, "cannot mount style '%1' directed by 'DESC'"
+		" file for device '%2'", font::style_table[i], device);
   for (i = 0; font::font_name_table[i]; i++, j++)
-    // In the DESC file a font name of 0 (zero) means leave this
-    // position empty.
+    // In the DESC file, a font name of 0 (zero) means "leave this
+    // position empty".
     if (strcmp(font::font_name_table[i], "0") != 0)
-      mount_font(j, symbol(font::font_name_table[i]));
+      if (!mount_font(j, symbol(font::font_name_table[i])))
+	warning(WARN_FONT, "cannot mount font '%1' directed by 'DESC'"
+		" file for device '%2'", font::font_name_table[i],
+		device);
   curdiv = topdiv = new top_level_diversion;
   if (nflag)
     topdiv->set_next_page_number(next_page_number);
