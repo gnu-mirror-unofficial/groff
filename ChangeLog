@@ -1,5 +1,49 @@
 2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Lift font mounting diagnostic messages to be closer to
+	their user-controlled contexts to provide more information.  In
+	many cases no diagnostic was being thrown at all when an
+	unavailable font was requested by name, which is the method most
+	users prefer, and which meant that failures resulting from typos
+	in font names for many requests (`uf`, `fschar`, `rfschar`,
+	`special`, `fspecial`, `fzoom`, `bd`, `tkf`, `cs`) were going
+	unreported.  Also, these font warnings are promoted to errors
+	because the request will utterly fail to do what was requested
+	with no reasonable fallback.  Possibly, they were warnings in
+	the first place because they could also be thrown regarding
+	unavailable fonts encountered in device description files, and
+	while that's bad news, it results in no formatting problems if
+	it doesn't affect fonts that an input document actually uses;
+	thus, a mere warning is appropriate.
+
+	* src/roff/troff/node.cpp (struct font_lookup_info): New struct
+	keeps the font name or position requested, and the position of
+	successful font lookup.
+	(font_lookup_info::font_lookup_info): Add constructor.
+	(font_lookup_error): New function builds error message using a
+	`font_lookup_info` struct and a message argument.
+	(get_fontno): Rename to...
+	(has_font): ...this.  Add argument to take a pointer to a
+	`font_lookup_info` struct.  Return a `bool` indicating whether
+	the lookup succeeded.  Place former `int` return value into the
+	struct instead.  Populate the other struct members with the
+	requested font name or position, as appropriate.
+	(mount_font_no_translate): Stop throwing warning diagnostic here
+	if a font cannot be loaded.  Instead, throw them...
+	(font_position): ...here, and...
+	(underline_font, define_font_special_character,
+	remove_font_special_character, read_special_fonts,
+	font_special_request, font_zoom_request, bold_font, track_kern,
+	constant_space): ...here, using `font_lookup_info` structs and
+	`has_font()`.
+	(remove_font_special_character): Stop returning early if font
+	lookup fails; it's gratuitously inconsistent with other similar
+	functions (save one, which has a reason to be different).
+	(define_font_special_character): Return early if font lookup
+	fails and say why in a comment (we can't `skip_line()`).
+
+2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* [libgroff, troff]: Further boolify.
 
 	* src/include/font.h (load_font, font): Demote parameters from

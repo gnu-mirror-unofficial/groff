@@ -108,6 +108,18 @@ public:
   hunits compute(int point_size);
 };
 
+struct font_lookup_info {
+  int position;
+  int requested_position;
+  char *requested_name;
+  font_lookup_info();
+};
+
+font_lookup_info::font_lookup_info() : position(-1),
+  requested_position(-1), requested_name(0)
+{
+}
+
 // embolden fontno when this is the current font
 
 struct conditional_bold {
@@ -5946,9 +5958,6 @@ static bool mount_font_no_translate(int n, symbol name,
     if (check_only)
       return fm != 0;
     if (!fm) {
-      if (not_found)
-	warning(WARN_FONT, "can't find font '%1'",
-		external_name.contents());
       (void)font_dictionary.lookup(external_name, &a_char);
       return false;
     }
@@ -6045,7 +6054,9 @@ void font_position()
       symbol internal_name = get_name(true /* required */);
       if (!internal_name.is_null()) {
 	symbol external_name = get_long_name();
-	(void) mount_font(n, internal_name, external_name);
+	if (!mount_font(n, internal_name, external_name))
+	  error("cannot load font '%1' for mounting",
+		internal_name.contents());
       }
     }
   }
@@ -6156,38 +6167,54 @@ void style()
   skip_line();
 }
 
-static int get_fontno()
+static void font_lookup_error(font_lookup_info& finfo,
+			      const char *msg)
+{
+  if (finfo.requested_name)
+    error("cannot load font '%1' %2", finfo.requested_name, msg);
+  else
+    error("cannot load font at position %1 %2",
+	  finfo.requested_position, msg);
+}
+
+// Read the next token and look it up as a font name or position number.
+// Return lookup success.  Store, in the supplied struct argument, the
+// requested name or position, and the position actually resolved; -1
+// means not found (see `font_lookup_info` constructor).
+static bool has_font(font_lookup_info *finfo)
 {
   int n;
   tok.skip();
   if (tok.usable_as_delimiter()) {
     symbol s = get_name(true /* required */);
+    finfo->requested_name = (char *)s.contents();
     if (!s.is_null()) {
       n = symbol_fontno(s);
       if (n < 0) {
 	n = next_available_font_position();
-	if (!mount_font(n, s))
-	  return -1;
+	if (mount_font(n, s))
+	  finfo->position = n;
       }
-      return curenv->get_family()->make_definite(n);
+      finfo->position = curenv->get_family()->make_definite(n);
     }
   }
   else if (get_integer(&n)) {
-    if (n < 0 || n >= font_table_size || font_table[n] == 0)
-      error("bad font number");
-    else
-      return curenv->get_family()->make_definite(n);
+    finfo->requested_position = n;
+    if (!(n < 0 || n >= font_table_size || font_table[n] == 0))
+      finfo->position = curenv->get_family()->make_definite(n);
   }
-  return -1;
+  return (finfo->position != -1);
 }
 
 static int underline_fontno = 2;
 
 void underline_font()
 {
-  int n = get_fontno();
-  if (n >= 0)
-    underline_fontno = n;
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "to make it the underline font");
+  else
+    underline_fontno = finfo.position;
   skip_line();
 }
 
@@ -6198,38 +6225,43 @@ int get_underline_fontno()
 
 void define_font_special_character()
 {
-  int n = get_fontno();
-  if (n < 0) {
+  font_lookup_info finfo;
+  if (!has_font(&finfo)) {
+    font_lookup_error(finfo, "to define font-specific fallback glyph");
+    // Normally we skip the remainder of the line unconditionally at the
+    // end of a request-implementing function, but do_define_character()
+    // will eat the rest of it for us.
     skip_line();
-    return;
   }
-  symbol f = font_table[n]->get_name();
-  do_define_character(CHAR_FONT_SPECIAL, f.contents());
+  else {
+    symbol f = font_table[finfo.position]->get_name();
+    do_define_character(CHAR_FONT_SPECIAL, f.contents());
+  }
 }
 
 void remove_font_special_character()
 {
-  int n = get_fontno();
-  if (n < 0) {
-    skip_line();
-    return;
-  }
-  symbol f = font_table[n]->get_name();
-  while (!tok.is_newline() && !tok.is_eof()) {
-    if (!tok.is_space() && !tok.is_tab()) {
-      charinfo *s = tok.get_char(true /* required */);
-      string gl(f.contents());
-      gl += ' ';
-      gl += s->nm.contents();
-      gl += '\0';
-      charinfo *ci = get_charinfo(symbol(gl.contents()));
-      if (!ci)
-	break;
-      macro *m = ci->set_macro(0);
-      if (m)
-	delete m;
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "to remove font-specific fallback glyph");
+  else {
+    symbol f = font_table[finfo.position]->get_name();
+    while (!tok.is_newline() && !tok.is_eof()) {
+      if (!tok.is_space() && !tok.is_tab()) {
+	charinfo *s = tok.get_char(true /* required */);
+	string gl(f.contents());
+	gl += ' ';
+	gl += s->nm.contents();
+	gl += '\0';
+	charinfo *ci = get_charinfo(symbol(gl.contents()));
+	if (!ci)
+	  break;
+	macro *m = ci->set_macro(0);
+	if (m)
+	  delete m;
+      }
+      tok.next();
     }
-    tok.next();
   }
   skip_line();
 }
@@ -6245,10 +6277,12 @@ static void read_special_fonts(special_font_list **sp)
   }
   special_font_list **p = sp;
   while (has_arg()) {
-    int i = get_fontno();
-    if (i >= 0) {
+    font_lookup_info finfo;
+    if (!has_font(&finfo))
+      font_lookup_error(finfo, "to mark it as special");
+    else {
       special_font_list *tem = new special_font_list;
-      tem->n = i;
+      tem->n = finfo.position;
       tem->next = 0;
       *p = tem;
       p = &(tem->next);
@@ -6258,9 +6292,12 @@ static void read_special_fonts(special_font_list **sp)
 
 void font_special_request()
 {
-  int n = get_fontno();
-  if (n >= 0)
-    read_special_fonts(&font_table[n]->sf);
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "to mark other fonts as special"
+			     " contingently upon it"); // a mouthful :-/
+  else
+    read_special_fonts(&font_table[finfo.position]->sf);
   skip_line();
 }
 
@@ -6272,8 +6309,11 @@ void special_request()
 
 void font_zoom_request()
 {
-  int n = get_fontno();
-  if (n >= 0) {
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "to set a zoom factor for it");
+  else {
+    int n = finfo.position;
     if (font_table[n]->is_style())
       warning(WARN_FONT, "can't set zoom factor for a style");
     else {
@@ -6380,12 +6420,23 @@ hunits env_narrow_space_width(environment *env)
 
 void bold_font()
 {
-  int n = get_fontno();
-  if (n >= 0) {
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "for emboldening");
+  else {
+    int n = finfo.position;
     if (has_arg()) {
+      // This is a bit non-orthogonal, but faithful to CSTR #54.  We can
+      // only conditionally embolden a font specified by name, not
+      // position, so ".bd S B 4" works but ".bd 5 3 4" does not.  The
+      // latter bolds the font at position 5 unconditionally, and
+      // ignores the third argument.
       if (tok.usable_as_delimiter()) {
-	int f = get_fontno();
-	if (f >= 0) {
+      font_lookup_info finfo2;
+	if (!has_font(&finfo2))
+	  font_lookup_error(finfo2, "for conditional emboldening");
+	else {
+	  int f = finfo2.position;
 	  units offset;
 	  if (has_arg() && get_number(&offset, 'u') && offset >= 1)
 	    font_table[f]->set_conditional_bold(n, hunits(offset - 1));
@@ -6394,6 +6445,9 @@ void bold_font()
 	}
       }
       else {
+	font_lookup_info finfo2;
+	  if (!has_font(&finfo2))
+	    font_lookup_error(finfo2, "for conditional emboldening");
 	units offset;
 	if (get_number(&offset, 'u') && offset >= 1)
 	  font_table[n]->set_bold(hunits(offset - 1));
@@ -6461,9 +6515,11 @@ hunits track_kerning_function::compute(int size)
 
 void track_kern()
 {
-  int n = get_fontno();
-  if (n >= 0) {
-    int min_s, max_s;
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "for track kerning");
+  else {
+    int n = finfo.position, min_s, max_s;
     hunits min_a, max_a;
     if (has_arg()
 	&& get_number(&min_s, 'z')
@@ -6483,9 +6539,11 @@ void track_kern()
 
 void constant_space()
 {
-  int n = get_fontno();
-  if (n >= 0) {
-    int x, y;
+  font_lookup_info finfo;
+  if (!has_font(&finfo))
+    font_lookup_error(finfo, "for constant spacing");
+  else {
+    int n = finfo.position, x, y;
     if (!has_arg() || !get_integer(&x))
       font_table[n]->set_constant_space(CONSTANT_SPACE_NONE);
     else {
