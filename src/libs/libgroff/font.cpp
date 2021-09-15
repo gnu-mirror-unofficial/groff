@@ -680,7 +680,7 @@ void font::copy_entry(glyph *new_glyph, glyph *old_glyph)
   ch_index[new_index] = ch_index[old_index];
 }
 
-font *font::load_font(const char *s, int *not_found, int head_only)
+font *font::load_font(const char *s, int *not_found, bool head_only)
 {
   font *f = new font(s);
   if (!f->load(not_found, head_only)) {
@@ -760,7 +760,7 @@ again:
 // If the font can't be found, then if not_found is non-NULL, it will be
 // set to 1 otherwise a message will be printed.
 
-bool font::load(int *not_found, int head_only)
+bool font::load(int *not_found, bool head_only)
 {
   if (strcmp(name, "DESC") == 0) {
     if (not_found)

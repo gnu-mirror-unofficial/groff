@@ -1,5 +1,31 @@
 2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* [libgroff, troff]: Further boolify.
+
+	* src/include/font.h (load_font, font): Demote parameters from
+	{pointer to} `int` to `bool` and update default literal from
+	integer to Boolean (except for the pointer).  Update comment.
+	* src/libs/libgroff/font.cpp (load_font, load): Similarly.
+
+	* src/roff/troff/node.h (mount_font):
+	* src/roff/troff/node.cpp (mount_font): Demote return type from
+	`int` to `bool`.
+
+	* src/roff/troff/node.h (mount_style):
+	* src/roff/troff/node.cpp (mount_style): Promote return type
+	from `void` to `bool`.
+
+	* src/roff/troff/node.cpp (mount_font_no_translate): Demote
+	return type and `check_only` parameter from `int` to `bool` and
+	use Boolean rather than integer literals with them.
+	(check_font): Update call site of `mount_font_no_translate` to
+	use Boolean literal.
+	(font_position): Indicate that "error" is ignored by casting
+	return value of `mount_font` to void instead of using a comment.
+	(style): Cast return value of `mount_style` to `void`.
+
+2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* Makefile.am: Add `.DELETE_ON_ERROR` special target; both GNU
 	and FreeBSD make(1)s support it so maybe it will be portable
 	enough.  This avoids, among other problems, a target appearing
