@@ -1,3 +1,11 @@
+2021-09-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* Makefile.am: Add `.DELETE_ON_ERROR` special target; both GNU
+	and FreeBSD make(1)s support it so maybe it will be portable
+	enough.  This avoids, among other problems, a target appearing
+	falsely up-to-date (often as an empty file) when the troff
+	process generating it experiences an assertion failure.
+
 2021-09-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	Since June 1991 if not earlier, groff (technically, the refer,
