@@ -1,5 +1,13 @@
 2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Boolify local variables.
+
+	* src/libs/libgroff/font.cpp (font::load, font::load_desc):
+	Demote local variables used as Booleans from `int` to `bool` and
+	update literals used with them from integer to Boolean.
+
+2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grn, groff, troff]: Communicate better when device DESC file
 	can't be loaded.
 

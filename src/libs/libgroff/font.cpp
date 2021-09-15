@@ -1,5 +1,4 @@
-// -*- C++ -*-
-/* Copyright (C) 1989-2020 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2021 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -849,7 +848,7 @@ bool font::load(int *not_found, bool head_only)
     else
       break;
   }
-  int had_charset = 0;
+  bool had_charset = false;
   if (p == 0) {
     if (!is_unicode) {
       t.error("missing charset command");
@@ -893,7 +892,7 @@ bool font::load(int *not_found, bool head_only)
       else if (strcmp(command, "charset") == 0) {
 	if (head_only)
 	  return true;
-	had_charset = 1;
+	had_charset = true;
 	glyph *last_glyph = NULL;
 	for (;;) {
 	  if (!t.next()) {
@@ -1042,12 +1041,13 @@ bool font::load_desc()
   res = 0;
   while (t.next()) {
     char *p = strtok(t.buf, WS);
-    int found = 0;
+    bool directive_found = false;
     unsigned int idx;
-    for (idx = 0; !found && idx < sizeof(table)/sizeof(table[0]); idx++)
+    for (idx = 0; !directive_found
+		  && idx < sizeof(table) / sizeof(table[0]); idx++)
       if (strcmp(table[idx].command, p) == 0)
-	found = 1;
-    if (found) {
+	directive_found = true;
+    if (directive_found) {
       char *q = strtok(0, WS);
       if (!q) {
 	t.error("missing value for command '%1'", p);
@@ -1103,14 +1103,14 @@ bool font::load_desc()
 	t.error("papersize command requires an argument");
 	return false;
       }
-      int found_paper = 0;
+      bool found_paper = false;
       while (p) {
 	double unscaled_paperwidth, unscaled_paperlength;
 	if (scan_papersize(p, &papersize, &unscaled_paperlength,
 			   &unscaled_paperwidth)) {
 	  paperwidth = int(unscaled_paperwidth * res + 0.5);
 	  paperlength = int(unscaled_paperlength * res + 0.5);
-	  found_paper = 1;
+	  found_paper = true;
 	  break;
 	}
 	p = strtok(0, WS);
