@@ -8127,7 +8127,8 @@ int main(int argc, char **argv)
   init_charset_table();
   init_hpf_code_table();
   if (!font::load_desc())
-    fatal("sorry, I can't continue");
+    fatal("cannot load 'DESC' description file for device '%1'",
+	  device);
   units_per_inch = font::res;
   hresolution = font::hor;
   vresolution = font::vert;

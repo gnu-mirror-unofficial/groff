@@ -345,9 +345,11 @@ int main(int argc, char **argv)
   }
   font::set_unknown_desc_command_handler(handle_unknown_desc_command);
   if (!font::load_desc())
-    fatal("invalid device '%1'", device);
+    fatal("cannot load 'DESC' description file for device '%1'",
+	  device);
   if (!postdriver)
-    fatal("no 'postpro' command in DESC file for device '%1'", device);
+    fatal("no 'postpro' directive in 'DESC' file for device '%1'",
+          device);
   if (predriver && !zflag) {
     commands[TROFF_INDEX].insert_arg(commands[TROFF_INDEX].get_name());
     commands[TROFF_INDEX].set_name(predriver);

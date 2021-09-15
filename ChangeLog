@@ -1,5 +1,23 @@
 2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grn, groff, troff]: Communicate better when device DESC file
+	can't be loaded.
+
+	* src/libs/libgroff/font.cpp (font::load_desc): Stop writing
+	diagnostic to standard error.
+	* src/preproc/grn/main.cpp (getres):
+	* src/roff/troff/troff.cpp (main): Replace "sorry, I can't
+	continue" fatal diagnostic with a more informative message.
+	Instead say which device's DESC file the program was trying to
+	open, which might reveal a user's logic error or typo.
+	* src/roff/groff/groff.cpp (main): Replace "invalid device" text
+	of fatal diagnostic similarly.  I think it is more helpful to
+	indicate the operation that failed rather than saying the device
+	was invalid, particularly since there are other ways for a
+	device to be invalid even if a DESC file is found and loaded.
+
+2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Throw warning diagnostic if device DESC file attempts
 	to load unavailable fonts.
 

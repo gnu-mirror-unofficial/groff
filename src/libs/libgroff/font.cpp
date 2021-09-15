@@ -1035,10 +1035,8 @@ bool font::load_desc()
   int nfonts = 0;
   FILE *fp;
   char *path;
-  if ((fp = open_file("DESC", &path)) == 0) {
-    error("can't find 'DESC' file");
+  if ((fp = open_file("DESC", &path)) == 0)
     return false;
-  }
   text_file t(fp, path);
   t.skip_comments = 1;
   res = 0;
