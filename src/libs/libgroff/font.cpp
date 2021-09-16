@@ -81,8 +81,8 @@ struct text_file {
 	     const errarg &arg3 = empty_errarg);
 };
 
-text_file::text_file(FILE *p, char *s)
-: fp(p), path(s), lineno(1), size(0), skip_comments(1), silent(0), buf(0)
+text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(1),
+  size(0), skip_comments(1), silent(0), buf(0)
 {
 }
 
@@ -770,8 +770,8 @@ bool font::load(int *not_found, bool head_only)
       error("'DESC' is not a valid font file name");
     return false;
   }
-  char *path;
   FILE *fp;
+  char *path;
   if ((fp = open_file(name, &path)) == NULL) {
     if (not_found)
       *not_found = 1;
@@ -782,12 +782,8 @@ bool font::load(int *not_found, bool head_only)
   text_file t(fp, path);
   t.skip_comments = 1;
   t.silent = head_only;
-  char *p;
-  for (;;) {
-    if (!t.next_line()) {
-      p = 0;
-      break;
-    }
+  char *p = 0;
+  while (t.next_line()) {
     p = strtok(t.buf, WS);
     if (strcmp(p, "name") == 0) {
     }
@@ -856,7 +852,8 @@ bool font::load(int *not_found, bool head_only)
       t.error("missing charset command");
       return false;
     }
-  } else {
+  }
+  else {
     char *command = p;
     t.skip_comments = 0;
     while (command) {
