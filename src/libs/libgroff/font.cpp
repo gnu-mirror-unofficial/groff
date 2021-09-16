@@ -82,7 +82,7 @@ struct text_file {
 };
 
 text_file::text_file(FILE *p, char *s)
-: fp(p), path(s), lineno(0), size(0), skip_comments(1), silent(0), buf(0)
+: fp(p), path(s), lineno(1), size(0), skip_comments(1), silent(0), buf(0)
 {
 }
 

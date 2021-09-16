@@ -1,5 +1,15 @@
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Fix off-by-one error in font and device description
+	file reader diagnostics.
+
+	* src/libs/libgroff/font.cpp (text_file::text_file): All text
+	files begin with line 1, not line 0.
+
+	Fixes <https://savannah.gnu.org/bugs/?61173>.
+
+2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Boolify more interfaces.
 
 	* src/include/font.h (font::unit_scale):
