@@ -265,9 +265,11 @@ inline int font::scale(int w, int sz)
     return sz == unitwidth ? w : scale_round(w, sz, unitwidth);
 }
 
-int font::unit_scale(double *value, char unit)
+// Returns whether scaling by arguments was successful.  Used for paper
+// size conversions.
+bool font::unit_scale(double *value, char unit)
 {
-  // we scale everything to inch
+  // Paper sizes are handled in inches.
   double divisor = 0;
   switch (unit) {
   case 'i':
@@ -288,9 +290,9 @@ int font::unit_scale(double *value, char unit)
   }
   if (divisor) {
     *value /= divisor;
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 int font::get_skew(glyph *g, int point_size, int sl)

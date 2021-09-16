@@ -2,6 +2,11 @@
 
 	[libgroff]: Boolify more interfaces.
 
+	* src/include/font.h (font::unit_scale):
+	* src/libs/libgroff/font.cpp (font::unit_scale): Demote return
+	type from `int` to `bool`.  Use Boolean literals instead of
+	integers.
+
 	* src/libs/libgroff/font.cpp (struct text_file): Rename `next`
 	member function to `next_line`.  Demote its return type from
 	`int` to `bool`.  Use Boolean literals instead of integers.

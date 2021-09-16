@@ -316,12 +316,12 @@ private:
 
   /* Returns w * pointsize / unitwidth, rounded to the nearest integer.  */
   int scale(int w, int pointsize);
-  static int unit_scale(double *, char); // Convert value in arg1 from the
-			// given unit (arg2; possible values are 'i', 'c',
-			// 'p', and 'P' as documented in the info file of
-			// groff, section 'Measurements') to inches.  Store
-			// the result in arg1 and return 1.  If the unit is
-			// invalid, return 0.
+  static bool unit_scale(double *, char); // Convert value in arg1 from
+			// the given unit (arg2; possible values are
+			// 'i', 'c', 'p', and 'P' as documented in the
+			// info file of groff, section 'Measurements')
+			// to inches.  Store result in arg1 and return
+			// whether conversion was successful.
   virtual void handle_unknown_font_command(const char *,	// command
 					   const char *,	// arg
 					   const char *,	// file
