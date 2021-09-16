@@ -109,7 +109,7 @@ bool text_file::next_line()
       if (c == EOF)
 	break;
       if (invalid_input_char(c))
-	error("invalid input character code '%1'", int(c));
+	error("invalid input character code %1", int(c));
       else {
 	if (i + 1 >= size) {
 	  char *old_buf = buf;
