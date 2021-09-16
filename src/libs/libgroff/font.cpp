@@ -74,14 +74,14 @@ struct text_file {
   char *buf;
   text_file(FILE *fp, char *p);
   ~text_file();
-  int next();
-  void error(const char *format, 
+  bool next_line();
+  void error(const char *format,
 	     const errarg &arg1 = empty_errarg,
 	     const errarg &arg2 = empty_errarg,
 	     const errarg &arg3 = empty_errarg);
 };
 
-text_file::text_file(FILE *p, char *s) 
+text_file::text_file(FILE *p, char *s)
 : fp(p), path(s), lineno(0), size(0), skip_comments(1), silent(0), buf(0)
 {
 }
@@ -94,10 +94,10 @@ text_file::~text_file()
     fclose(fp);
 }
 
-int text_file::next()
+bool text_file::next_line()
 {
   if (fp == 0)
-    return 0;
+    return false;
   if (buf == 0) {
     buf = new char[128];
     size = 128;
@@ -131,12 +131,12 @@ int text_file::next()
     while (csspace(*ptr))
       ptr++;
     if (*ptr != 0 && (!skip_comments || *ptr != '#'))
-      return 1;
+      return true;
   }
-  return 0;
+  return false;
 }
 
-void text_file::error(const char *format, 
+void text_file::error(const char *format,
 		      const errarg &arg1,
 		      const errarg &arg2,
 		      const errarg &arg3)
@@ -782,7 +782,7 @@ bool font::load(int *not_found, bool head_only)
   t.silent = head_only;
   char *p;
   for (;;) {
-    if (!t.next()) {
+    if (!t.next_line()) {
       p = 0;
       break;
     }
@@ -862,7 +862,7 @@ bool font::load(int *not_found, bool head_only)
 	if (head_only)
 	  return true;
 	for (;;) {
-	  if (!t.next()) {
+	  if (!t.next_line()) {
 	    command = 0;
 	    break;
 	  }
@@ -895,7 +895,7 @@ bool font::load(int *not_found, bool head_only)
 	had_charset = true;
 	glyph *last_glyph = NULL;
 	for (;;) {
-	  if (!t.next()) {
+	  if (!t.next_line()) {
 	    command = 0;
 	    break;
 	  }
@@ -1039,7 +1039,7 @@ bool font::load_desc()
   text_file t(fp, path);
   t.skip_comments = 1;
   res = 0;
-  while (t.next()) {
+  while (t.next_line()) {
     char *p = strtok(t.buf, WS);
     bool directive_found = false;
     unsigned int idx;
@@ -1080,7 +1080,7 @@ bool font::load_desc()
       for (int i = 0; i < nfonts; i++) {
 	p = strtok(0, WS);
 	while (p == 0) {
-	  if (!t.next()) {
+	  if (!t.next_line()) {
 	    t.error("end of file while reading list of fonts");
 	    return false;
 	  }
@@ -1131,7 +1131,7 @@ bool font::load_desc()
       for (;;) {
 	p = strtok(0, WS);
 	while (p == 0) {
-	  if (!t.next()) {
+	  if (!t.next_line()) {
 	    t.error("list of sizes must be terminated by '0'");
 	    return false;
 	  }
