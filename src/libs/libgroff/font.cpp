@@ -758,16 +758,15 @@ again:
   return 0;
 }
 
-// If the font can't be found, then if not_found is non-NULL, it will be
-// set to 1 otherwise a message will be printed.
-
+// If the font can't be found, then if not_found is a valid pointer, its
+// referent will be set to 1, otherwise a message will be printed.
 bool font::load(int *not_found, bool head_only)
 {
   if (strcmp(name, "DESC") == 0) {
     if (not_found)
       *not_found = 1;
     else
-      error("'DESC' is not a valid font file name");
+      error("'DESC' is not a valid font description file name");
     return false;
   }
   FILE *fp;
@@ -776,7 +775,7 @@ bool font::load(int *not_found, bool head_only)
     if (not_found)
       *not_found = 1;
     else
-      error("can't find font file '%1'", name);
+      error("cannot open font description file '%1'", name);
     return false;
   }
   text_file t(fp, path);
@@ -791,7 +790,8 @@ bool font::load(int *not_found, bool head_only)
       p = strtok(0, WS);
       int n;
       if (0 == p || sscanf(p, "%d", &n) != 1 || n <= 0) {
-	t.error("bad argument for 'spacewidth' command");
+	t.error("argument to 'spacewidth' directive is missing or"
+		" invalid");
 	return false;
       }
       space_width = n;
@@ -800,7 +800,7 @@ bool font::load(int *not_found, bool head_only)
       p = strtok(0, WS);
       double n;
       if (0 == p || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
-	t.error("bad argument for 'slant' command", p);
+	t.error("argument to 'slant' directive is missing or invalid");
 	return false;
       }
       slant = n;
@@ -821,7 +821,7 @@ bool font::load(int *not_found, bool head_only)
 	else if (strcmp(p, "ffl") == 0)
 	  ligatures |= LIG_ffl;
 	else {
-	  t.error("unrecognised ligature '%1'", p);
+	  t.error("unrecognized ligature '%1'", p);
 	  return false;
 	}
       }
@@ -829,7 +829,7 @@ bool font::load(int *not_found, bool head_only)
     else if (strcmp(p, "internalname") == 0) {
       p = strtok(0, WS);
       if (0 == p) {
-	t.error("'internalname' command requires argument");
+	t.error("argument to 'internalname' directive is missing");
 	return false;
       }
       internalname = new char[strlen(p) + 1];
@@ -849,7 +849,7 @@ bool font::load(int *not_found, bool head_only)
   bool had_charset = false;
   if (0 == p) {
     if (!is_unicode) {
-      t.error("missing charset command");
+      t.error("'charset' directive is missing");
       return false;
     }
   }
@@ -880,7 +880,7 @@ bool font::load(int *not_found, bool head_only)
 	  }
 	  int n;
 	  if (sscanf(p, "%d", &n) != 1) {
-	    t.error("bad kern amount '%1'", p);
+	    t.error("invalid kern amount '%1'", p);
 	    return false;
 	  }
 	  glyph *g1 = name_to_glyph(c1);
@@ -908,11 +908,11 @@ bool font::load(int *not_found, bool head_only)
 	  }
 	  if (p[0] == '"') {
 	    if (last_glyph == 0) {
-	      t.error("first charset entry is duplicate");
+	      t.error("first entry in 'charset' section is an alias");
 	      return false;
 	    }
 	    if (strcmp(nm, "---") == 0) {
-	      t.error("unnamed character cannot be duplicate");
+	      t.error("an unnamed character cannot be an alias");
 	      return false;
 	    }
 	    glyph *g = name_to_glyph(nm);
@@ -931,7 +931,7 @@ bool font::load(int *not_found, bool head_only)
 				&metric.pre_math_space,
 				&metric.subscript_correction);
 	    if (nparms < 1) {
-	      t.error("bad width for '%1'", nm);
+	      t.error("invalid width for '%1'", nm);
 	      return false;
 	    }
 	    p = strtok(0, WS);
@@ -941,7 +941,7 @@ bool font::load(int *not_found, bool head_only)
 	    }
 	    int type;
 	    if (sscanf(p, "%d", &type) != 1) {
-	      t.error("bad character type for '%1'", nm);
+	      t.error("invalid character type for '%1'", nm);
 	      return false;
 	    }
 	    if (type < 0 || type > 255) {
@@ -957,7 +957,7 @@ bool font::load(int *not_found, bool head_only)
 	    char *ptr;
 	    metric.code = (int)strtol(p, &ptr, 0);
 	    if (metric.code == 0 && ptr == p) {
-	      t.error("bad code '%1' for character '%2'", p, nm);
+	      t.error("invalid code '%1' for character '%2'", p, nm);
 	      return false;
 	    }
 	    if (is_unicode) {
@@ -986,21 +986,20 @@ bool font::load(int *not_found, bool head_only)
 	  }
 	}
 	if (0 == last_glyph) {
-	  t.error("I didn't seem to find any characters");
+	  t.error("no glyphs defined in font description");
 	  return false;
 	}
       }
       else {
-	t.error("unrecognised command '%1' "
-		"after 'kernpairs' or 'charset' command",
-		  command);
+	t.error("unrecognised directive '%1' after 'kernpairs' or"
+		" 'charset' directive", command);
 	return false;
       }
     }
     compact();
   }
   if (!is_unicode && !had_charset) {
-    t.error("missing 'charset' command");
+    t.error("missing 'charset' directive");
     return false;
   }
   if (space_width == 0) {
@@ -1049,20 +1048,20 @@ bool font::load_desc()
     if (directive_found) {
       char *q = strtok(0, WS);
       if (0 == q) {
-	t.error("missing value for command '%1'", p);
+	t.error("missing value for directive '%1'", p);
 	return false;
       }
       //int *ptr = &(this->*(table[idx-1].ptr));
       int *ptr = table[idx-1].ptr;
       if (sscanf(q, "%d", ptr) != 1) {
-	t.error("bad number '%1'", q);
+	t.error("'%1' directive given invalid number '%2'", p, q);
 	return false;
       }
     }
     else if (strcmp("family", p) == 0) {
       p = strtok(0, WS);
       if (0 == p) {
-	t.error("family command requires an argument");
+	t.error("'family' directive requires an argument");
 	return false;
       }
       char *tem = new char[strlen(p)+1];
@@ -1072,7 +1071,7 @@ bool font::load_desc()
     else if (strcmp("fonts", p) == 0) {
       p = strtok(0, WS);
       if (0 == p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
-	t.error("bad number of fonts '%1'", p);
+	t.error("argument to 'fonts' directive missing or invalid");
 	return false;
       }
       font_name_table = (const char **)new char *[nfonts+1];
@@ -1080,7 +1079,7 @@ bool font::load_desc()
 	p = strtok(0, WS);
 	while (0 == p) {
 	  if (!t.next_line()) {
-	    t.error("end of file while reading list of fonts");
+	    t.error("unexpected end of file while reading font list");
 	    return false;
 	  }
 	  p = strtok(t.buf, WS);
@@ -1099,7 +1098,7 @@ bool font::load_desc()
     else if (strcmp("papersize", p) == 0) {
       p = strtok(0, WS);
       if (0 == p) {
-	t.error("papersize command requires an argument");
+	t.error("'papersize' directive requires an argument");
 	return false;
       }
       bool found_paper = false;
@@ -1146,7 +1145,7 @@ bool font::load_desc()
 	    break;
 	  // fall through
 	default:
-	  t.error("bad size range '%1'", p);
+	  t.error("invalid size range '%1'", p);
 	  return false;
 	}
 	if (i + 2 > n) {
@@ -1202,7 +1201,7 @@ bool font::load_desc()
     else if (strcmp("image_generator", p) == 0) {
       p = strtok(0, WS);
       if (0 == p) {
-	t.error("image_generator command requires an argument");
+	t.error("'image_generator' directive requires an argument");
 	return false;
       }
       image_generator = strsave(p);
@@ -1217,31 +1216,31 @@ bool font::load_desc()
     }
   }
   if (res == 0) {
-    t.error("missing 'res' command");
+    t.error("device description file missing 'res' directive");
     return false;
   }
   if (unitwidth == 0) {
-    t.error("missing 'unitwidth' command");
+    t.error("device description file missing 'unitwidth' directive");
     return false;
   }
   if (font_name_table == 0) {
-    t.error("missing 'fonts' command");
+    t.error("device description file missing 'fonts' directive");
     return false;
   }
   if (sizes == 0) {
-    t.error("missing 'sizes' command");
+    t.error("device description file missing 'sizes' directive");
     return false;
   }
   if (sizescale < 1) {
-    t.error("bad 'sizescale' value");
+    t.error("invalid 'sizescale' value");
     return false;
   }
   if (hor < 1) {
-    t.error("bad 'hor' value");
+    t.error("invalid 'hor' value");
     return false;
   }
   if (vert < 1) {
-    t.error("bad 'vert' value");
+    t.error("invalid 'vert' value");
     return false;
   }
   return true;
