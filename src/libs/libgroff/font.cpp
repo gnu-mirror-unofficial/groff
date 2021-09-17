@@ -1061,12 +1061,20 @@ bool font::load_desc()
 	t.error("missing value for directive '%1'", p);
 	return false;
       }
-      //int *ptr = &(this->*(table[idx-1].ptr));
-      int *ptr = table[idx-1].ptr;
-      if (sscanf(q, "%d", ptr) != 1) {
+      int val;
+      if (sscanf(q, "%d", &val) != 1) {
 	t.error("'%1' directive given invalid number '%2'", p, q);
 	return false;
       }
+      if ((strcmp(p, "sizescale") == 0
+	  || strcmp(p, "hor") == 0
+	  || strcmp(p, "vert") == 0)
+	  && val < 1) {
+	t.error("expected argument to '%1' directive to be a"
+		" nonnegative number, got '%2'", p, val);
+	return false;
+      }
+      *(table[idx-1].ptr) = val;
     }
     else if (strcmp("family", p) == 0) {
       p = strtok(0, WS);
@@ -1244,18 +1252,6 @@ bool font::load_desc()
   }
   if (sizes == 0) {
     t.error("device description file missing 'sizes' directive");
-    return false;
-  }
-  if (sizescale < 1) {
-    t.error("invalid 'sizescale' value");
-    return false;
-  }
-  if (hor < 1) {
-    t.error("invalid 'hor' value");
-    return false;
-  }
-  if (vert < 1) {
-    t.error("invalid 'vert' value");
     return false;
   }
   return true;
