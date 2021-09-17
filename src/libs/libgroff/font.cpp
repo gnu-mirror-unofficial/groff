@@ -1001,8 +1001,8 @@ bool font::load(int *not_found, bool head_only)
 	}
       }
       else {
-	t.error("unrecognised directive '%1' after 'kernpairs' or"
-		" 'charset' directive", command);
+	t.error("unrecognized directive '%1' after 'kernpairs' or"
+		" 'charset' directive", directive);
 	return false;
       }
     }
