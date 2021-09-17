@@ -1,5 +1,49 @@
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff, troff]: Slightly refactor device and font description
+	file loading.  Remove dead code.
+
+	* src/include/font.h (font::load_font): Drop second parameter.
+	It was never used for its intended purpose.
+	(load): Drop first parameter; likewise.
+	* src/libs/libgroff/font.cpp (font::load)
+	(load): As above.
+
+	* src/libs/libgroff/font.cpp (struct text_file): Rename
+	`skip_comments` to `recognize_comments`.  Demote that and
+	`silent` from `int` to `bool`.
+	(text_file::text_file): Use Boolean rather than integer literals
+	in constructor.
+	(text_file::next_line, font::load): Apply above renaming.
+
+	* src/libs/libgroff/font.cpp (font::load): Rename parameter from
+	`head_only` to `load_header_only` to be more communicative.
+	Drop test of font description file name being `DESC`; this code
+	was not being reached.  Stop throwing errors from this function
+	on failure to open the file; the caller will handle this when it
+	sees our false return value.  Rename local variable `command` to
+	`directive` for alignment with our documentation.  Replace "I
+	dont think this should happen" test and comment with `assert()`.
+	(struct table): Rename member from `command` to
+	`numeric_directive` to indicate its specificity, tracking only a
+	subset of valid `DESC` file directives.
+
+	* src/libs/libgroff/font.cpp (font::load, font::load_desc):
+	Remove redundant assignments to the member variable formerly
+	known as `skip_comments`.
+
+	* src/libs/libgroff/font.cpp (font::load_desc): Rename local
+	variable `directive_found` to `numeric_directive_found` to
+	clarify logic.
+
+	* src/roff/troff/node.cpp (mount_font_no_translate): Simplify
+	call of `font::load_font`.  The `not_found` in-out parameter
+	which was so agonizingly passed up through layers of library
+	calls was never actually read.  Drop code that has been `#if
+	0`-ed out since 1993.
+
+2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/font.cpp (font::load_desc): Clear line
 	number before emitting whole-file validity diagnostics.
 

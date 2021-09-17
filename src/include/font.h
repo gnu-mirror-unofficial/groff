@@ -200,17 +200,13 @@ public:
 			// arg1).  Return the name of the size (in arg2),
 			// and the length and width (in arg3 and arg4).
 			// Return 1 in case of success, 0 otherwise.
-  static font *load_font(const char *, int * = 0, bool = false); // Load
-			// the font description file with the given name
-			// (arg1) and return it as a 'font' class.  If
-			// arg2 points to an integer variable, set it to
-			// 1 if the file is not found, without emitting
-			// an error message.  If arg2 is NULL, print an
-			// error message if the file is not found.  If
-			// arg3 is true, only the part of the font
+  static font *load_font(const char *, bool = false); // Load the font
+			// description file with the given name (arg1)
+			// and return a pointer to a 'font' object.  If
+			// arg2 is true, only the part of the font
 			// description file before the 'charset' and
-			// 'kernpairs' sections is loaded.  Return NULL
-			// in case of failure.
+			// 'kernpairs' sections is loaded.  Return null
+			// pointer in case of failure.
   static void command_line_font_dir(const char *);	// Prepend given
 			// path (arg1) to the list of directories in which
 			// to look up fonts.
@@ -331,13 +327,10 @@ protected:
   font(const char *);	// Initialize a font with the given name.
 
   // Load the font description file with the name in member variable
-  // `name` into this object.  If arg1 points to an integer variable,
-  // set it to 1 if the file is not found and do not emit an error
-  // message.  If arg1 is 0, print an error message if the file is not
-  // found.  If arg2 is true, only the part of the font description
-  // file before the 'charset' and 'kernpairs' sections is loaded.
-  // Return success/failure status of load.
-  bool load(int * = 0, bool = false);
+  // `name` into this object.  If arg1 is true, only the part of the
+  // font description file before the 'charset' and 'kernpairs' sections
+  // is loaded.  Return success/failure status of load.
+  bool load(bool = false);
 };
 
 // Local Variables:

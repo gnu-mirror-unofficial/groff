@@ -69,8 +69,8 @@ struct text_file {
   char *path;
   int lineno;
   int size;
-  int skip_comments;
-  int silent;
+  bool recognize_comments;
+  bool silent;
   char *buf;
   text_file(FILE *fp, char *p);
   ~text_file();
@@ -82,7 +82,7 @@ struct text_file {
 };
 
 text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(1),
-  size(0), skip_comments(1), silent(0), buf(0)
+  size(0), recognize_comments(true), silent(false), buf(0)
 {
 }
 
@@ -130,7 +130,7 @@ bool text_file::next_line()
     char *ptr = buf;
     while (csspace(*ptr))
       ptr++;
-    if (*ptr != 0 && (!skip_comments || *ptr != '#'))
+    if (*ptr != 0 && (!recognize_comments || *ptr != '#'))
       return true;
   }
   return false;
@@ -681,10 +681,10 @@ void font::copy_entry(glyph *new_glyph, glyph *old_glyph)
   ch_index[new_index] = ch_index[old_index];
 }
 
-font *font::load_font(const char *s, int *not_found, bool head_only)
+font *font::load_font(const char *s, bool load_header_only)
 {
   font *f = new font(s);
-  if (!f->load(not_found, head_only)) {
+  if (!f->load(load_header_only)) {
     delete f;
     return 0;
   }
@@ -758,29 +758,14 @@ again:
   return 0;
 }
 
-// If the font can't be found, then if not_found is a valid pointer, its
-// referent will be set to 1, otherwise a message will be printed.
-bool font::load(int *not_found, bool head_only)
+bool font::load(bool load_header_only)
 {
-  if (strcmp(name, "DESC") == 0) {
-    if (not_found)
-      *not_found = 1;
-    else
-      error("'DESC' is not a valid font description file name");
-    return false;
-  }
   FILE *fp;
   char *path;
-  if ((fp = open_file(name, &path)) == 0) {
-    if (not_found)
-      *not_found = 1;
-    else
-      error("cannot open font description file '%1'", name);
+  if ((fp = open_file(name, &path)) == 0)
     return false;
-  }
   text_file t(fp, path);
-  t.skip_comments = 1;
-  t.silent = head_only;
+  t.silent = load_header_only;
   char *p = 0;
   while (t.next_line()) {
     p = strtok(t.buf, WS);
@@ -849,9 +834,9 @@ bool font::load(int *not_found, bool head_only)
       special = true;
     }
     else if (strcmp(p, "kernpairs") != 0 && strcmp(p, "charset") != 0) {
-      char *command = p;
+      char *directive = p;
       p = strtok(0, "\n");
-      handle_unknown_font_command(command, trim_arg(p), t.path, t.lineno);
+      handle_unknown_font_command(directive, trim_arg(p), t.path, t.lineno);
     }
     else
       break;
@@ -864,15 +849,15 @@ bool font::load(int *not_found, bool head_only)
     }
   }
   else {
-    char *command = p;
-    t.skip_comments = 0;
-    while (command) {
-      if (strcmp(command, "kernpairs") == 0) {
-	if (head_only)
+    char *directive = p;
+    t.recognize_comments = false;
+    while (directive) {
+      if (strcmp(directive, "kernpairs") == 0) {
+	if (load_header_only)
 	  return true;
 	for (;;) {
 	  if (!t.next_line()) {
-	    command = 0;
+	    directive = 0;
 	    break;
 	  }
 	  char *c1 = strtok(t.buf, WS);
@@ -880,7 +865,7 @@ bool font::load(int *not_found, bool head_only)
 	    continue;
 	  char *c2 = strtok(0, WS);
 	  if (0 == c2) {
-	    command = c1;
+	    directive = c1;
 	    break;
 	  }
 	  p = strtok(0, WS);
@@ -898,22 +883,21 @@ bool font::load(int *not_found, bool head_only)
 	  add_kern(g1, g2, n);
 	}
       }
-      else if (strcmp(command, "charset") == 0) {
-	if (head_only)
+      else if (strcmp(directive, "charset") == 0) {
+	if (load_header_only)
 	  return true;
 	had_charset = true;
 	glyph *last_glyph = 0;
 	for (;;) {
 	  if (!t.next_line()) {
-	    command = 0;
+	    directive = 0;
 	    break;
 	  }
 	  char *nm = strtok(t.buf, WS);
-	  if (nm == 0)
-	    continue;			// I dont think this should happen
+	  assert(nm != 0);
 	  p = strtok(0, WS);
 	  if (0 == p) {
-	    command = nm;
+	    directive = nm;
 	    break;
 	  }
 	  if (p[0] == '"') {
@@ -1022,7 +1006,7 @@ bool font::load(int *not_found, bool head_only)
 }
 
 static struct {
-  const char *command;
+  const char *numeric_directive;
   int *ptr;
 } table[] = {
   { "res", &font::res },
@@ -1045,17 +1029,17 @@ bool font::load_desc()
   if ((fp = open_file("DESC", &path)) == 0)
     return false;
   text_file t(fp, path);
-  t.skip_comments = 1;
   res = 0;
   while (t.next_line()) {
     char *p = strtok(t.buf, WS);
-    bool directive_found = false;
+    assert(p != 0);
+    bool numeric_directive_found = false;
     unsigned int idx;
-    for (idx = 0; !directive_found
+    for (idx = 0; !numeric_directive_found
 		  && idx < sizeof(table) / sizeof(table[0]); idx++)
-      if (strcmp(table[idx].command, p) == 0)
-	directive_found = true;
-    if (directive_found) {
+      if (strcmp(table[idx].numeric_directive, p) == 0)
+	numeric_directive_found = true;
+    if (numeric_directive_found) {
       char *q = strtok(0, WS);
       if (0 == q) {
 	t.error("missing value for directive '%1'", p);
@@ -1232,9 +1216,9 @@ bool font::load_desc()
     else if (strcmp("charset", p) == 0)
       break;
     else if (unknown_desc_command_handler) {
-      char *command = p;
+      char *directive = p;
       p = strtok(0, "\n");
-      (*unknown_desc_command_handler)(command, trim_arg(p), t.path,
+      (*unknown_desc_command_handler)(directive, trim_arg(p), t.path,
 				      t.lineno);
     }
   }

@@ -5946,15 +5946,13 @@ static bool mount_font_no_translate(int n, symbol name,
 				    bool check_only = false)
 {
   assert(n >= 0);
-  // We store the address of this char in font_dictionary to indicate
+  // We store the address of this char in `font_dictionary` to indicate
   // that we've previously tried to mount the font and failed.
   static char a_char;
   font *fm = 0;
   void *p = font_dictionary.lookup(external_name);
   if (p == 0) {
-    int not_found;
-    fm = font::load_font(external_name.contents(), &not_found,
-			 check_only);
+    fm = font::load_font(external_name.contents(), check_only);
     if (check_only)
       return fm != 0;
     if (!fm) {
@@ -5964,9 +5962,6 @@ static bool mount_font_no_translate(int n, symbol name,
     (void)font_dictionary.lookup(name, fm);
   }
   else if (p == &a_char) {
-#if 0
-    error("invalid font '%1'", external_name.contents());
-#endif
     return false;
   }
   else
