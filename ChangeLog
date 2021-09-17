@@ -1,5 +1,16 @@
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Tweak code style.
+
+	* src/libs/libgroff/font.cpp (trim_args, font::load,
+	font::load_desc): Compare pointer explicitly to null pointer
+	literal `0` instead of using logical complementation.
+	(font::load, font::load_desc): Swap order of null pointer
+	equality comparisons when a typo or thinko could lead to lvalue
+	assignment.
+
+2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Use idiomatic C++98 null pointer constant.
 
 	* src/libs/libgroff/font.cpp (text_file::error,

@@ -693,7 +693,7 @@ font *font::load_font(const char *s, int *not_found, bool head_only)
 
 static char *trim_arg(char *p)
 {
-  if (!p)
+  if (0 == p)
     return 0;
   while (csspace(*p))
     p++;
@@ -790,7 +790,7 @@ bool font::load(int *not_found, bool head_only)
     else if (strcmp(p, "spacewidth") == 0) {
       p = strtok(0, WS);
       int n;
-      if (p == 0 || sscanf(p, "%d", &n) != 1 || n <= 0) {
+      if (0 == p || sscanf(p, "%d", &n) != 1 || n <= 0) {
 	t.error("bad argument for 'spacewidth' command");
 	return false;
       }
@@ -799,7 +799,7 @@ bool font::load(int *not_found, bool head_only)
     else if (strcmp(p, "slant") == 0) {
       p = strtok(0, WS);
       double n;
-      if (p == 0 || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
+      if (0 == p || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
 	t.error("bad argument for 'slant' command", p);
 	return false;
       }
@@ -808,7 +808,7 @@ bool font::load(int *not_found, bool head_only)
     else if (strcmp(p, "ligatures") == 0) {
       for (;;) {
 	p = strtok(0, WS);
-	if (p == 0 || strcmp(p, "0") == 0)
+	if (0 == p || strcmp(p, "0") == 0)
 	  break;
 	if (strcmp(p, "ff") == 0)
 	  ligatures |= LIG_ff;
@@ -828,7 +828,7 @@ bool font::load(int *not_found, bool head_only)
     }
     else if (strcmp(p, "internalname") == 0) {
       p = strtok(0, WS);
-      if (!p) {
+      if (0 == p) {
 	t.error("'internalname' command requires argument");
 	return false;
       }
@@ -847,7 +847,7 @@ bool font::load(int *not_found, bool head_only)
       break;
   }
   bool had_charset = false;
-  if (p == 0) {
+  if (0 == p) {
     if (!is_unicode) {
       t.error("missing charset command");
       return false;
@@ -866,15 +866,15 @@ bool font::load(int *not_found, bool head_only)
 	    break;
 	  }
 	  char *c1 = strtok(t.buf, WS);
-	  if (c1 == 0)
+	  if (0 == c1)
 	    continue;
 	  char *c2 = strtok(0, WS);
-	  if (c2 == 0) {
+	  if (0 == c2) {
 	    command = c1;
 	    break;
 	  }
 	  p = strtok(0, WS);
-	  if (p == 0) {
+	  if (0 == p) {
 	    t.error("missing kern amount");
 	    return false;
 	  }
@@ -902,7 +902,7 @@ bool font::load(int *not_found, bool head_only)
 	  if (nm == 0)
 	    continue;			// I dont think this should happen
 	  p = strtok(0, WS);
-	  if (p == 0) {
+	  if (0 == p) {
 	    command = nm;
 	    break;
 	  }
@@ -935,7 +935,7 @@ bool font::load(int *not_found, bool head_only)
 	      return false;
 	    }
 	    p = strtok(0, WS);
-	    if (p == 0) {
+	    if (0 == p) {
 	      t.error("missing character type for '%1'", nm);
 	      return false;
 	    }
@@ -950,7 +950,7 @@ bool font::load(int *not_found, bool head_only)
 	    }
 	    metric.type = type;
 	    p = strtok(0, WS);
-	    if (p == 0) {
+	    if (0 == p) {
 	      t.error("missing code for '%1'", nm);
 	      return false;
 	    }
@@ -1048,7 +1048,7 @@ bool font::load_desc()
 	directive_found = true;
     if (directive_found) {
       char *q = strtok(0, WS);
-      if (!q) {
+      if (0 == q) {
 	t.error("missing value for command '%1'", p);
 	return false;
       }
@@ -1061,7 +1061,7 @@ bool font::load_desc()
     }
     else if (strcmp("family", p) == 0) {
       p = strtok(0, WS);
-      if (!p) {
+      if (0 == p) {
 	t.error("family command requires an argument");
 	return false;
       }
@@ -1071,14 +1071,14 @@ bool font::load_desc()
     }
     else if (strcmp("fonts", p) == 0) {
       p = strtok(0, WS);
-      if (!p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
+      if (0 == p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
 	t.error("bad number of fonts '%1'", p);
 	return false;
       }
-      font_name_table = (const char **)new char *[nfonts+1]; 
+      font_name_table = (const char **)new char *[nfonts+1];
       for (int i = 0; i < nfonts; i++) {
 	p = strtok(0, WS);
-	while (p == 0) {
+	while (0 == p) {
 	  if (!t.next_line()) {
 	    t.error("end of file while reading list of fonts");
 	    return false;
@@ -1098,7 +1098,7 @@ bool font::load_desc()
     }
     else if (strcmp("papersize", p) == 0) {
       p = strtok(0, WS);
-      if (!p) {
+      if (0 == p) {
 	t.error("papersize command requires an argument");
 	return false;
       }
@@ -1129,7 +1129,7 @@ bool font::load_desc()
       int i = 0;
       for (;;) {
 	p = strtok(0, WS);
-	while (p == 0) {
+	while (0 == p) {
 	  if (!t.next_line()) {
 	    t.error("list of sizes must be terminated by '0'");
 	    return false;
@@ -1175,7 +1175,7 @@ bool font::load_desc()
       int i = 0;
       for (;;) {
 	p = strtok(0, WS);
-	if (p == 0)
+	if (0 == p)
 	  break;
 	// leave room for terminating 0
 	if (i + 1 >= style_table_size) {
@@ -1201,7 +1201,7 @@ bool font::load_desc()
       is_unicode = true;
     else if (strcmp("image_generator", p) == 0) {
       p = strtok(0, WS);
-      if (!p) {
+      if (0 == p) {
 	t.error("image_generator command requires an argument");
 	return false;
       }
