@@ -1238,6 +1238,7 @@ bool font::load_desc()
 				      t.lineno);
     }
   }
+  t.lineno = 0;
   if (res == 0) {
     t.error("device description file missing 'res' directive");
     return false;
