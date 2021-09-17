@@ -97,10 +97,10 @@ respectively).
 .
 The
 .I DESC
-file can contain the following types of line as shown below.
+file contains a series of directives,
+one per line.
 .
-Except
-for the
+Except for the
 .B charset
 directive,
 which must come last
@@ -110,6 +110,10 @@ the order of the lines is not important.
 Later entries in the file,
 however,
 override previous values.
+.
+Comments start with the
+.RB \[lq] # \[rq]
+character and extend to the end of a line.
 .
 Empty lines are ignored.
 .
@@ -249,7 +253,7 @@ the argument can be a file name
 .IR /etc/papersize );
 if the file can be opened,
 .I \%@g@troff
-reads the first line and attempts to match the above forms.
+reads the first line and attempts to match either of the other forms.
 .
 No comment syntax is supported.
 .
@@ -545,8 +549,8 @@ expressed as integers.)
 A font description file has two sections;
 empty lines are ignored in both.
 .
-The first section is a sequence of lines each containing a sequence of
-space-delimited words;
+The first section is a sequence of lines,
+each containing a sequence of space-delimited words;
 the first word in the line is a key,
 and subsequent words associate a value with that key.
 .
@@ -625,7 +629,7 @@ about the font in the file.
 .P
 The first section can contain comments,
 which start with the
-.B #
+.RB \[lq] # \[rq]
 character and extend to the end of a line.
 .
 .

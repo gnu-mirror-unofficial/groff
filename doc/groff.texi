@@ -17865,10 +17865,15 @@ italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 @cindex format of font description file
 @pindex DESC@r{ file format}
 
-The @file{DESC} file can contain the following types of line.  Except
-for the @code{charset} directive, which must come last (if at all), the
-order of the lines is not important.  Later entries in the file,
-however, override previous values.  Empty lines are ignored.
+The @file{DESC} file contains a series of directives, one per line.
+Except for the @code{charset} directive, which must come last (if at
+all), the order of the lines is not important.  Later entries in the
+file, however, override previous values.
+@cindex comments in device description files
+@cindex device description files, comments
+@kindex #
+Comments start with the @samp{#} character and extend to the end of a
+line.  Empty lines are ignored.
 
 @table @code
 @item family @var{fam}
@@ -17928,7 +17933,8 @@ format.
 
 Finally, the argument can be a file name (e.g., @file{/etc/papersize});
 if the file can be opened, GNU @code{troff} reads the first line and
-attempts to match the above forms.  No comment syntax is supported.
+attempts to match either of the other forms.  No comment syntax is
+supported.
 
 More than one argument can be specified; GNU @code{troff} scans from
 left to right and uses the first valid paper specification.
@@ -18071,7 +18077,7 @@ is not practical for most purposes, but using it enables the quantities
 in the font description files to be expressed as integers.}
 
 A font description file has two sections; empty lines are ignored in
-both.  The first section is a sequence of lines each containing a
+both.  The first section is a sequence of lines, each containing a
 sequence of space-delimited words; the first word in the line is a key,
 and subsequent words associate a value with that key.
 
@@ -18115,8 +18121,8 @@ Other directives are ignored by GNU @code{troff} but may be used by
 postprocessors to store arbitrary information about the font in the
 file.
 
-@cindex comments in font files
-@cindex font files, comments
+@cindex comments in font description files
+@cindex font description files, comments
 @kindex #
 The first section can contain comments, which start with the @samp{#}
 character and extend to the end of a line.
