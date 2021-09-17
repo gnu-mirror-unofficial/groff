@@ -1,5 +1,16 @@
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Increase validation of device and font description
+	files.
+
+	* src/libs/libgroff/font.cpp (font::load): Validate the syntax
+	and value of the `name` directive.
+	(font::load_desc): Issue distinct diagnostics for a `fonts`
+	directive that is missing arguments and for a first argument
+	that can't be interpreted as a valid number.
+
+2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Make error reporting more flexible.
 
 	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):

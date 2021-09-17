@@ -785,6 +785,16 @@ bool font::load(int *not_found, bool head_only)
   while (t.next_line()) {
     p = strtok(t.buf, WS);
     if (strcmp(p, "name") == 0) {
+      p = strtok(0, WS);
+      if (0 == p) {
+	t.error("'name' directive requires an argument");
+	return false;
+      }
+      if (strcmp(p, name) != 0) {
+	t.error("font description file name '%1' does not match 'name'"
+		" argument '%2'", name, p);
+	return false;
+      }
     }
     else if (strcmp(p, "spacewidth") == 0) {
       p = strtok(0, WS);
@@ -1070,8 +1080,13 @@ bool font::load_desc()
     }
     else if (strcmp("fonts", p) == 0) {
       p = strtok(0, WS);
-      if (0 == p || sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
-	t.error("argument to 'fonts' directive missing or invalid");
+      if (0 == p) {
+	t.error("'fonts' directive requires arguments");
+	return false;
+      }
+      if (sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
+	t.error("expected first argument to 'fonts' directive to be a"
+		" nonnegative number, got '%1'", p);
 	return false;
       }
       font_name_table = (const char **)new char *[nfonts+1];
