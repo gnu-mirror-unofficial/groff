@@ -1,5 +1,28 @@
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Use idiomatic C++98 null pointer constant.
+
+	* src/libs/libgroff/font.cpp (text_file::error,
+	glyph_to_unicode, font::get_special_device_encoding,
+	font::load):
+	* src/libs/libgroff/fontfile.cpp (font::image_generator):
+	* src/libs/libgroff/nametoindex.cpp (class charinfo,
+	character_indexer::named_char_glyph,
+	character_indexer::numbered_char_glyph):
+	* src/libs/libgroff/string.cpp (string::clear):
+	* src/libs/libgroff/tmpfile.cpp (temp_init::temp_init):
+	* src/libs/libgroff/tmpname.cpp (gen_tempname): Use `0` literal
+	instead of `NULL` to represent a null pointer; this was
+	idiomatic in C++98 and is mostly the practice elsewhere in
+	groff.  Also swap order of null pointer equality comparisons
+	when a typo or thinko could lead to lvalue assignment.
+
+	* src/roff/troff/input.cpp (input_stack::diversion_state,
+	input_stack::get_diversion_state, charinfo::contains,
+	glyph_to_name): Similar.
+
+2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Slightly refactor.
 
 	* src/libs/libgroff/font.cpp (font::load): Use same loop style

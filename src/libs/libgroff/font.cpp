@@ -148,7 +148,7 @@ void text_file::error(const char *format,
 int glyph_to_unicode(glyph *g)
 {
   const char *nm = glyph_to_name(g);
-  if (nm != NULL) {
+  if (nm != 0) {
     // ASCII character?
     if (nm[0] == 'c' && nm[1] == 'h' && nm[2] == 'a' && nm[3] == 'r'
 	&& (nm[4] >= '0' && nm[4] <= '9')) {
@@ -179,7 +179,7 @@ int glyph_to_unicode(glyph *g)
     }
     // groff glyphs that map to Unicode?
     const char *unicode = glyph_name_to_unicode(nm);
-    if (unicode != NULL && strchr(unicode, '_') == NULL) {
+    if (unicode != 0 && strchr(unicode, '_') == 0) {
       char *ignore;
       return (int)strtol(unicode, &ignore, 16);
     }
@@ -586,7 +586,7 @@ const char *font::get_special_device_encoding(glyph *g)
   }
   if (is_unicode) {
     // Unicode font
-    return NULL;
+    return 0;
   }
   abort();
 }
@@ -772,7 +772,7 @@ bool font::load(int *not_found, bool head_only)
   }
   FILE *fp;
   char *path;
-  if ((fp = open_file(name, &path)) == NULL) {
+  if ((fp = open_file(name, &path)) == 0) {
     if (not_found)
       *not_found = 1;
     else
@@ -892,7 +892,7 @@ bool font::load(int *not_found, bool head_only)
 	if (head_only)
 	  return true;
 	had_charset = true;
-	glyph *last_glyph = NULL;
+	glyph *last_glyph = 0;
 	for (;;) {
 	  if (!t.next_line()) {
 	    command = 0;
@@ -907,7 +907,7 @@ bool font::load(int *not_found, bool head_only)
 	    break;
 	  }
 	  if (p[0] == '"') {
-	    if (last_glyph == NULL) {
+	    if (last_glyph == 0) {
 	      t.error("first charset entry is duplicate");
 	      return false;
 	    }
@@ -966,8 +966,8 @@ bool font::load(int *not_found, bool head_only)
 	        metric.width *= w;
 	    }
 	    p = strtok(0, WS);
-	    if ((p == NULL) || (strcmp(p, "--") == 0)) {
-	      metric.special_device_coding = NULL;
+	    if ((0 == p) || (strcmp(p, "--") == 0)) {
+	      metric.special_device_coding = 0;
 	    }
 	    else {
 	      char *nam = new char[strlen(p) + 1];
@@ -985,7 +985,7 @@ bool font::load(int *not_found, bool head_only)
 	    }
 	  }
 	}
-	if (last_glyph == NULL) {
+	if (0 == last_glyph) {
 	  t.error("I didn't seem to find any characters");
 	  return false;
 	}

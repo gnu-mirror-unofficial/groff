@@ -469,7 +469,7 @@ input_iterator *input_stack::top = &nil_iterator;
 int input_stack::level = 0;
 int input_stack::limit = DEFAULT_INPUT_STACK_LIMIT;
 int input_stack::div_level = 0;
-statem *input_stack::diversion_state = NULL;
+statem *input_stack::diversion_state = 0;
 int suppress_push=0;
 
 
@@ -626,8 +626,8 @@ statem *get_diversion_state()
 
 statem *input_stack::get_diversion_state()
 {
-  if (diversion_state == NULL)
-    return NULL;
+  if (0 == diversion_state)
+    return 0;
   else
     return new statem(diversion_state);
 }
@@ -9032,7 +9032,7 @@ bool charinfo::contains(symbol s, bool already_called)
     return false;
   }
   const char *unicode = glyph_name_to_unicode(s.contents());
-  if (unicode != NULL && strchr(unicode, '_') == NULL) {
+  if (unicode != 0 && strchr(unicode, '_') == 0) {
     char *ignore;
     int c = (int)strtol(unicode, &ignore, 16);
     return contains(c, true);
@@ -9105,7 +9105,7 @@ glyph *number_to_glyph(int n)
 const char *glyph_to_name(glyph *g)
 {
   charinfo *ci = (charinfo *)g; // Every glyph is actually a charinfo.
-  return (ci->nm != UNNAMED_SYMBOL ? ci->nm.contents() : NULL);
+  return (ci->nm != UNNAMED_SYMBOL ? ci->nm.contents() : 0);
 }
 
 // Local Variables:
