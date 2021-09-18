@@ -84,29 +84,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .   if !'\\*[omit@section]'\\$1' .@error \\$2 without \\$1
 .   rm omit@section
 ..
-.\" .XR <dest-name> [<affixed> [<prefix>]]
-.\"
-.\" A convenience shorthand macro, emulating the semantics of the "ms"
-.\" font change macros, when invoked with one, two, or three arguments;
-.\" it expands to the equivalent of:
-.\"
-.\"   .pdfhref L -D <dest-name> [-A <affixed> [-P <prefix>]]
-.\"
-.\" to place a pdfhref reference link, to a named destination, within
-.\" the same document, using the reference text which is predefined in
-.\" the reference dictionary entry associated with the destination.
-.\"
-.de XR \" FIXME: suggest document-local implementation
-.if \\n(.$ \{\
-.   if \\n[OPMODE] \{\
-.         ds xr!argv -D "\\$1"
-.         if \\n(.$>1 .as xr!argv " -A "\\$2"
-.         if \\n(.$>2 .as xr!argv " -P "\\$3"
-.         pdfhref L \\*[xr!argv]
-.         rm xr!argv
-.      \}
-.   \}
-..
 .
 .\" Document Outlines, and Section Headings
 .\" =======================================

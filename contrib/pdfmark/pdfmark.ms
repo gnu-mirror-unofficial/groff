@@ -119,6 +119,32 @@ Publishing with GNU Troff
 .\"
 .ds = \f(CB\\$1\f(CR\\$4\f[CBI]\\$2\f(CR\\$3
 .
+.\" Additionally, add a cross-reference convenience macro, emulating
+.\" the style of the "ms" font change macros...
+.\"
+.\"  .XR <dest-name> [<affixed> [<prefix>]]
+.\"
+.\" ...such that, when invoked with one, two, or three arguments, this
+.\" expands to the equivalent of:
+.\"
+.\"  .pdfhref L -D <dest-name> [-A <affixed> [-P <prefix>]]
+.\"
+.\" to place a pdfhref reference link, to a named destination, within
+.\" the same document, using the reference text which is predefined in
+.\" the reference dictionary entry associated with the destination.
+.\"
+.de XR
+.if \\n(.$ \{\
+.   if \\n[OPMODE] \{\
+.         ds xr!argv -D "\\$1"
+.         if \\n(.$>1 .as xr!argv " -A "\\$2"
+.         if \\n(.$>2 .as xr!argv " -P "\\$3"
+.         pdfhref L \\*[xr!argv]
+.         rm xr!argv
+.      \}
+.   \}
+..
+.
 .NH 1
 .\" Conventionally, in "ms", NH precedes text which is to be set as a
 .\" numbered section heading, but it makes no provision for automatic
