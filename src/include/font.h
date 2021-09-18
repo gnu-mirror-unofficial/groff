@@ -194,12 +194,13 @@ public:
   const char *get_image_generator();	// Return the 'image_generator'
 			// attribute of this font.  Return NULL if it has
 			// none.
-  static int scan_papersize(const char *, const char **,
-			    double *, double *);	// Parse the
-			// 'papersize' attribute in a DESC file (given in
-			// arg1).  Return the name of the size (in arg2),
-			// and the length and width (in arg3 and arg4).
-			// Return 1 in case of success, 0 otherwise.
+  static bool scan_papersize(const char *, const char **,
+			     double *, double *); // Parse the
+			// 'papersize' directive in the DESC file name
+			// given in arg1.  Update arg2 with the name
+			// of the paper format and arg3 and arg4 with
+			// its length and width, respectively.  Return
+			// whether paper size was successfully set.
   static font *load_font(const char *, bool = false); // Load the font
 			// description file with the given name (arg1)
 			// and return a pointer to a 'font' object.  If

@@ -704,8 +704,8 @@ static char *trim_arg(char *p)
   return p;
 }
 
-int font::scan_papersize(const char *p,
-			 const char **size, double *length, double *width)
+bool font::scan_papersize(const char *p, const char **size,
+			  double *length, double *width)
 {
   double l, w;
   char lu[2], wu[2];
@@ -723,7 +723,7 @@ again:
 	*width = w;
       if (size)
 	*size = "custom";
-      return 1;
+      return true;
     }
   }
   else {
@@ -736,12 +736,12 @@ again:
 	  *width = papersizes[i].width;
 	if (size)
 	  *size = papersizes[i].name;
-	return 1;
+	return true;
       }
     if (attempt_file_open) {
-      FILE *f = fopen(p, "r");
-      if (f) {
-	if (fgets(line, 254, f)) {
+      FILE *fp = fopen(p, "r");
+      if (fp != 0) {
+	if (fgets(line, 254, fp)) {
 	  // Don't recurse on file names.
 	  attempt_file_open = false;
 	  char *linep = strchr(line, '\0');
@@ -750,12 +750,12 @@ again:
 	    *linep = '\0';
 	  pp = line;
 	}
-	fclose(f);
+	fclose(fp);
 	goto again;
       }
     }
   }
-  return 0;
+  return false;
 }
 
 bool font::load(bool load_header_only)

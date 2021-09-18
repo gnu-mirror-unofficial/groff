@@ -1,3 +1,14 @@
+2021-09-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Slightly refactor.
+
+	* src/include/font.h (font::scan_papersize): Demote return type
+	from `int` to `bool`.
+	* src/libs/libgroff/font.cpp (font::scan_papersize): As above.
+	Use Boolean instead of integer literals.  Also rename `FILE`
+	stream pointer from `f` to `fp` and perform an explicit
+	comparison against the idiomatic C++98 null pointer constant.
+
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff, troff]: Slightly refactor device and font description
