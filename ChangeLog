@@ -1,5 +1,18 @@
 2021-09-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml]: Fix compiler warning and dead store.
+
+	* src/devices/grohtml/post-html.cpp (html_printer::special):
+	Update call of `font::load_font()` to stop passing obsolete
+	parameter (deleted by me in 2dff87d3, 17 September).  The value
+	stored to the parameter by that function was never read anyway,
+	so also get rid of the variable that contained it.
+
+	Fixes <https://savannah.gnu.org/bugs/?61187>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
+2021-09-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Slightly refactor.
 
 	* src/include/font.h (font::scan_papersize): Demote return type
