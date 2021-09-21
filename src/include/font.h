@@ -24,8 +24,8 @@ typedef void (*FONT_COMMAND_HANDLER)(const char *,	// command
 				     const char *,	// file
 				     int);		// lineno
 
-// A glyph is represented by a font-independent 'glyph *' pointer.
-// The functions name_to_glyph and number_to_glyph return such a pointer.
+// A glyph is represented by a font-independent 'glyph *' pointer.  The
+// functions name_to_glyph and number_to_glyph return such a pointer.
 //
 // There are two types of glyphs:
 //
@@ -38,9 +38,10 @@ typedef void (*FONT_COMMAND_HANDLER)(const char *,	// command
 
 // The statically allocated information about a glyph.
 //
-// This is an abstract class; only its subclass 'charinfo' is instantiated.
-// 'charinfo' exists in two versions: one in roff/troff/input.cpp for troff,
-// and one in libs/libgroff/nametoindex.cpp for the preprocessors and the
+// This is an abstract class; only its subclass 'charinfo' is
+// instantiated.  'charinfo' exists in two versions: one in
+// roff/troff/input.cpp for troff, and one in
+// libs/libgroff/nametoindex.cpp for the preprocessors and the
 // postprocessors.
 struct glyph {
   int index;			// A font-independent integer value.
@@ -48,7 +49,7 @@ struct glyph {
   friend class character_indexer;
 };
 
-#define UNDEFINED_GLYPH ((glyph *) NULL)
+#define UNDEFINED_GLYPH ((glyph *) 0)
 
 // The next three functions exist in two versions: one in
 // roff/troff/input.cpp for troff, and one in
@@ -64,9 +65,9 @@ extern glyph *number_to_glyph(int);	// Convert the font-dependent glyph
 			// object.  This has the same semantics as the groff
 			// escape sequence \N'number'.  If such a 'glyph'
 			// object does not yet exist, a new one is allocated.
-extern const char *glyph_to_name(glyph *);	// Convert the given glyph
-			// back to its name.  Return NULL if the glyph
-			// doesn't have a name.
+extern const char *glyph_to_name(glyph *);	// Convert the given
+			// glyph back to its name.  Return null pointer
+			// if the glyph doesn't have a name.
 inline int glyph_to_number(glyph *);	// Convert the given glyph back to
 			// its number.  Return -1 if it does not designate
 			// a numbered character.
@@ -183,17 +184,17 @@ public:
   int get_zoom();	// Return the font's zoom factor * 1000.
   int get_code(glyph *);	// Return the code point in the physical
 			// font of the given glyph.
-  const char *get_special_device_encoding(glyph *);	// Return special
-			// device dependent information about the given
-			// glyph.  Return NULL if there is no special
-			// information.
+  const char *get_special_device_encoding(glyph *);	// Return
+			// special device-dependent information about
+			// the given glyph.  Return null pointer if
+			// there is no special information.
   const char *get_name();	// Return the name of this font.
   const char *get_internal_name();	// Return the 'internalname'
-			// attribute of this font.  Return NULL if it has
-			// none.
+			// attribute of this font or null pointer if it
+			// has none.
   const char *get_image_generator();	// Return the 'image_generator'
-			// attribute of this font.  Return NULL if it has
-			// none.
+			// attribute of this font or null pointer if it
+			// has none.
   static bool scan_papersize(const char *, const char **,
 			     double *, double *); // Parse the
 			// 'papersize' directive in the DESC file name
@@ -211,13 +212,14 @@ public:
   static void command_line_font_dir(const char *);	// Prepend given
 			// path (arg1) to the list of directories in which
 			// to look up fonts.
-  static FILE *open_file(const char *, char **);	// Open a font file
-			// with the given name (arg1), searching along the
-			// current font path.  If arg2 points to a string
-			// pointer, set it to the found file name (this
-			// depends on the device also).  Return the opened
-			// file.  If not found, arg2 is unchanged, and NULL
-			// is returned.
+  static FILE *open_file(const char *, char **);	// Open
+			// a font file with the given name (arg1),
+			// searching along the current font path.  If
+			// arg2 points to a string pointer, set it to
+			// the found file name (this depends on the
+			// device also).  Return the opened file.  If
+			// not found, arg2 is unchanged, and a null
+			// pointer is returned.
 
   // Open the DESC file (depending on the device) and initialize some
   // static variables with info from there.
@@ -252,12 +254,12 @@ public:
   static bool is_unicode; // DESC file has the 'unicode' directive.
   static const char *image_generator;	// The 'image_generator' attribute
 			// given in the DESC file.
-  static const char **font_name_table;	// The 'fonts' attribute given in
-			// the DESC file, as a NULL-terminated array of
-			// strings.
-  static const char **style_table;	// The 'styles' attribute given in
-			// the DESC file, as a NULL-terminated array of
-			// strings.
+  static const char **font_name_table;	// The 'fonts' attribute given
+			// in the DESC file, as a null
+			// pointer-terminated array of strings.
+  static const char **style_table;	// The 'styles' attribute given
+			// in the DESC file, as a null
+			// pointer-terminated array of strings.
   static const char *family;	// The 'family' attribute given in the DESC
 			// file.
   static int *sizes;	// The 'sizes' attribute given in the DESC file, as
@@ -274,7 +276,7 @@ private:
   bool special;		// See public is_special() above.
   char *name;		// The name of this font.  Used by get_name().
   char *internalname;	// The 'internalname' attribute of this font, or
-			// NULL.  Used by get_internal_name().
+			// a null pointer.  Used by get_internal_name().
   double slant;		// The natural slant angle (in degrees) of this font.
   int zoom;		// The font's magnification, multiplied by 1000.
 			// Used by scale().  A zero value means 'no zoom'.
