@@ -189,16 +189,13 @@ int glyph_to_unicode(glyph *g)
 
 /* font functions */
 
-font::font(const char *s)
-: ligatures(0), kern_hash_table(0), space_width(0), special(false),
-  ch_index(0), nindices(0), ch(0), ch_used(0), ch_size(0), widths_cache(0)
+font::font(const char *s) : ligatures(0), kern_hash_table(0),
+  space_width(0), special(false), internalname(0), slant(0.0), zoom(0),
+  ch_index(0), nindices(0), ch(0), ch_used(0), ch_size(0),
+  widths_cache(0)
 {
   name = new char[strlen(s) + 1];
   strcpy(name, s);
-  internalname = 0;
-  slant = 0.0;
-  zoom = 0;
-  // load();			// for testing
 }
 
 font::~font()
@@ -285,7 +282,7 @@ bool font::unit_scale(double *value, char unit)
     divisor = 2.54;
     break;
   default:
-    assert(0);
+    assert(0 == "unit not in [cipP]");
     break;
   }
   if (divisor) {
@@ -344,7 +341,7 @@ int font::get_width(glyph *g, int point_size)
   int idx = glyph_to_index(g);
   assert(idx >= 0);
   int real_size;
-  if (!zoom)
+  if (zoom == 0) // 0 means "don't zoom"
     real_size = point_size;
   else
   {
@@ -392,7 +389,8 @@ int font::get_width(glyph *g, int point_size)
     else
       return scale(width, point_size);
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_height(glyph *g, int point_size)
@@ -407,7 +405,8 @@ int font::get_height(glyph *g, int point_size)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_depth(glyph *g, int point_size)
@@ -422,7 +421,8 @@ int font::get_depth(glyph *g, int point_size)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_italic_correction(glyph *g, int point_size)
@@ -437,7 +437,8 @@ int font::get_italic_correction(glyph *g, int point_size)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_left_italic_correction(glyph *g, int point_size)
@@ -452,7 +453,8 @@ int font::get_left_italic_correction(glyph *g, int point_size)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_subscript_correction(glyph *g, int point_size)
@@ -467,7 +469,8 @@ int font::get_subscript_correction(glyph *g, int point_size)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 void font::set_zoom(int factor)
@@ -540,7 +543,8 @@ int font::get_character_type(glyph *g)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 int font::get_code(glyph *g)
@@ -563,7 +567,8 @@ int font::get_code(glyph *g)
       return n;
   }
   // The caller must check 'contains(g)' before calling get_code(g).
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 const char *font::get_name()
@@ -588,7 +593,8 @@ const char *font::get_special_device_encoding(glyph *g)
     // Unicode font
     return 0;
   }
-  abort();
+  assert(0 == "glyph is not indexed and device lacks Unicode support");
+  abort(); // -Wreturn-type
 }
 
 const char *font::get_image_generator()
@@ -613,7 +619,7 @@ void font::alloc_ch_index(int idx)
       nindices = idx + 10;
     int *old_ch_index = ch_index;
     ch_index = new int[nindices];
-    memcpy(ch_index, old_ch_index, sizeof(int)*old_nindices);
+    memcpy(ch_index, old_ch_index, sizeof(int) * old_nindices);
     for (int i = old_nindices; i < nindices; i++)
       ch_index[i] = -1;
     delete[] old_ch_index;
@@ -629,7 +635,7 @@ void font::extend_ch()
     ch_size *= 2;
     font_char_metric *old_ch = ch;
     ch = new font_char_metric[ch_size];
-    memcpy(ch, old_ch, old_ch_size*sizeof(font_char_metric));
+    memcpy(ch, old_ch, old_ch_size * sizeof(font_char_metric));
     delete[] old_ch;
   }
 }

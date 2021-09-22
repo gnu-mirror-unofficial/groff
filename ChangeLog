@@ -1,3 +1,22 @@
+2021-09-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Fix code style nits.
+
+	* src/libs/libgroff/font.cpp (font::font): Use initializer list
+	as much as possible in constructor.
+	(font::unit_scale, font::get_width, font::get_height,
+	font::get_depth, font::get_italic_correction,
+	font::get_left_italic_correction,
+	font::get_subscript_correction, font::get_character_type,
+	font::get_code, font::get_special_device_encoding): These member
+	functions rely on the font being either indexed or associated
+	with an output device that uses the `unicode` directive in its
+	`DESC` file.  The compiler doesn't know this, so annotate the
+	`abort()` calls that conclude them.  Add an `assert()` before
+	each one to more usefully describe the violated invariant in the
+	event this unreachable code is somehow reached.
+	(font::get_width): Annotate special meaning of zero zoom factor.
+
 2021-09-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/include/font.h (UNDEFINED_GLYPH): Use idiomatic C++98 null
