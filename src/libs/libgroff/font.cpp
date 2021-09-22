@@ -848,13 +848,7 @@ bool font::load(bool load_header_only)
       break;
   }
   bool had_charset = false;
-  if (0 == p) {
-    if (!is_unicode) {
-      t.error("'charset' directive is missing");
-      return false;
-    }
-  }
-  else {
+  {
     char *directive = p;
     t.recognize_comments = false;
     while (directive) {

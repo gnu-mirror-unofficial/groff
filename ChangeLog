@@ -1,3 +1,11 @@
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Drop redundant diagnostic.
+
+	* src/libs/libgroff/font.cpp (font::load): Drop redundant
+	diagnostic; a missing `charset` directive is already checked for
+	later, circa line 998.
+
 2021-09-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff]: Fix code style nits.
