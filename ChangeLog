@@ -219,7 +219,8 @@
 	of fatal diagnostic similarly.  I think it is more helpful to
 	indicate the operation that failed rather than saying the device
 	was invalid, particularly since there are other ways for a
-	device to be invalid even if a DESC file is found and loaded.
+	device description to be invalid even if a DESC file is found
+	and loaded.
 
 2021-09-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -241,14 +242,14 @@
 	users prefer, and which meant that failures resulting from typos
 	in font names for many requests (`uf`, `fschar`, `rfschar`,
 	`special`, `fspecial`, `fzoom`, `bd`, `tkf`, `cs`) were going
-	unreported.  Also, these font warnings are promoted to errors
+	unreported.  Further, promote these font warnings to errors
 	because the request will utterly fail to do what was requested
-	with no reasonable fallback.  Possibly, they were warnings in
-	the first place because they could also be thrown regarding
-	unavailable fonts encountered in device description files, and
-	while that's bad news, it results in no formatting problems if
-	it doesn't affect fonts that an input document actually uses;
-	thus, a mere warning is appropriate.
+	with no reasonable fallback.  Possibly, they were formerly
+	warnings because at the low level they were being emitted, they
+	could also have originated from unavailable fonts encountered in
+	device description files, and while that's bad news, it results
+	in no formatting problems if it doesn't affect fonts that an
+	input document actually uses.
 
 	* src/roff/troff/node.cpp (struct font_lookup_info): New struct
 	keeps the font name or position requested, and the position of
@@ -3030,7 +3031,7 @@
 	(grog): Remove target's dependency on `$(GROG)`.  Remove sed
 	expression replacing `@grog_dir@` with `$(grog_dir)` in grog.pl.
 	* src/roff/grog/grog.pl: Inline most of subs.pl (except for
-	author/license comment banenr).  Delete sub-hunting logic.
+	author/license comment banner).  Delete sub-hunting logic.
 	* src/roff/grog/subs.pl: Delete.
 
 2021-06-08  G. Branden Robinson <g.branden.robinson@gmail.com>
