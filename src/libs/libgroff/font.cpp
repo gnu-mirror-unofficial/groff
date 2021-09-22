@@ -848,150 +848,149 @@ bool font::load(bool load_header_only)
       break;
   }
   bool had_charset = false;
-  {
-    char *directive = p;
-    t.recognize_comments = false;
-    while (directive) {
-      if (strcmp(directive, "kernpairs") == 0) {
-	if (load_header_only)
-	  return true;
-	for (;;) {
-	  if (!t.next_line()) {
-	    directive = 0;
-	    break;
-	  }
-	  char *c1 = strtok(t.buf, WS);
-	  if (0 == c1)
-	    continue;
-	  char *c2 = strtok(0, WS);
-	  if (0 == c2) {
-	    directive = c1;
-	    break;
-	  }
-	  p = strtok(0, WS);
-	  if (0 == p) {
-	    t.error("missing kern amount");
-	    return false;
-	  }
-	  int n;
-	  if (sscanf(p, "%d", &n) != 1) {
-	    t.error("invalid kern amount '%1'", p);
-	    return false;
-	  }
-	  glyph *g1 = name_to_glyph(c1);
-	  glyph *g2 = name_to_glyph(c2);
-	  add_kern(g1, g2, n);
+  char *directive = p;
+  t.recognize_comments = false;
+  while (directive) {
+    if (strcmp(directive, "kernpairs") == 0) {
+      if (load_header_only)
+	return true;
+      for (;;) {
+	if (!t.next_line()) {
+	  directive = 0;
+	  break;
 	}
-      }
-      else if (strcmp(directive, "charset") == 0) {
-	if (load_header_only)
-	  return true;
-	had_charset = true;
-	glyph *last_glyph = 0;
-	for (;;) {
-	  if (!t.next_line()) {
-	    directive = 0;
-	    break;
-	  }
-	  char *nm = strtok(t.buf, WS);
-	  assert(nm != 0);
-	  p = strtok(0, WS);
-	  if (0 == p) {
-	    directive = nm;
-	    break;
-	  }
-	  if (p[0] == '"') {
-	    if (last_glyph == 0) {
-	      t.error("first entry in 'charset' section is an alias");
-	      return false;
-	    }
-	    if (strcmp(nm, "---") == 0) {
-	      t.error("an unnamed character cannot be an alias");
-	      return false;
-	    }
-	    glyph *g = name_to_glyph(nm);
-	    copy_entry(g, last_glyph);
-	  }
-	  else {
-	    font_char_metric metric;
-	    metric.height = 0;
-	    metric.depth = 0;
-	    metric.pre_math_space = 0;
-	    metric.italic_correction = 0;
-	    metric.subscript_correction = 0;
-	    int nparms = sscanf(p, "%d,%d,%d,%d,%d,%d",
-				&metric.width, &metric.height, &metric.depth,
-				&metric.italic_correction,
-				&metric.pre_math_space,
-				&metric.subscript_correction);
-	    if (nparms < 1) {
-	      t.error("invalid width for '%1'", nm);
-	      return false;
-	    }
-	    p = strtok(0, WS);
-	    if (0 == p) {
-	      t.error("missing character type for '%1'", nm);
-	      return false;
-	    }
-	    int type;
-	    if (sscanf(p, "%d", &type) != 1) {
-	      t.error("invalid character type for '%1'", nm);
-	      return false;
-	    }
-	    if (type < 0 || type > 255) {
-	      t.error("character type '%1' out of range", type);
-	      return false;
-	    }
-	    metric.type = type;
-	    p = strtok(0, WS);
-	    if (0 == p) {
-	      t.error("missing code for '%1'", nm);
-	      return false;
-	    }
-	    char *ptr;
-	    metric.code = (int)strtol(p, &ptr, 0);
-	    if (metric.code == 0 && ptr == p) {
-	      t.error("invalid code '%1' for character '%2'", p, nm);
-	      return false;
-	    }
-	    if (is_unicode) {
-	      int w = wcwidth(metric.code);
-	      if (w > 1)
-	        metric.width *= w;
-	    }
-	    p = strtok(0, WS);
-	    if ((0 == p) || (strcmp(p, "--") == 0)) {
-	      metric.special_device_coding = 0;
-	    }
-	    else {
-	      char *nam = new char[strlen(p) + 1];
-	      strcpy(nam, p);
-	      metric.special_device_coding = nam;
-	    }
-	    if (strcmp(nm, "---") == 0) {
-	      last_glyph = number_to_glyph(metric.code);
-	      add_entry(last_glyph, metric);
-	    }
-	    else {
-	      last_glyph = name_to_glyph(nm);
-	      add_entry(last_glyph, metric);
-	      copy_entry(number_to_glyph(metric.code), last_glyph);
-	    }
-	  }
+	char *c1 = strtok(t.buf, WS);
+	if (0 == c1)
+	  continue;
+	char *c2 = strtok(0, WS);
+	if (0 == c2) {
+	  directive = c1;
+	  break;
 	}
-	if (0 == last_glyph) {
-	  t.error("no glyphs defined in font description");
+	p = strtok(0, WS);
+	if (0 == p) {
+	  t.error("missing kern amount");
 	  return false;
 	}
+	int n;
+	if (sscanf(p, "%d", &n) != 1) {
+	  t.error("invalid kern amount '%1'", p);
+	  return false;
+	}
+	glyph *g1 = name_to_glyph(c1);
+	glyph *g2 = name_to_glyph(c2);
+	add_kern(g1, g2, n);
       }
-      else {
-	t.error("unrecognized directive '%1' after 'kernpairs' or"
-		" 'charset' directive", directive);
+    }
+    else if (strcmp(directive, "charset") == 0) {
+      if (load_header_only)
+	return true;
+      had_charset = true;
+      glyph *last_glyph = 0;
+      for (;;) {
+	if (!t.next_line()) {
+	  directive = 0;
+	  break;
+	}
+	char *nm = strtok(t.buf, WS);
+	assert(nm != 0);
+	p = strtok(0, WS);
+	if (0 == p) {
+	  directive = nm;
+	  break;
+	}
+	if (p[0] == '"') {
+	  if (last_glyph == 0) {
+	    t.error("first entry in 'charset' section is an alias");
+	    return false;
+	  }
+	  if (strcmp(nm, "---") == 0) {
+	    t.error("an unnamed character cannot be an alias");
+	    return false;
+	  }
+	  glyph *g = name_to_glyph(nm);
+	  copy_entry(g, last_glyph);
+	}
+	else {
+	  font_char_metric metric;
+	  metric.height = 0;
+	  metric.depth = 0;
+	  metric.pre_math_space = 0;
+	  metric.italic_correction = 0;
+	  metric.subscript_correction = 0;
+	  int nparms = sscanf(p, "%d,%d,%d,%d,%d,%d",
+			      &metric.width, &metric.height,
+			      &metric.depth,
+			      &metric.italic_correction,
+			      &metric.pre_math_space,
+			      &metric.subscript_correction);
+	  if (nparms < 1) {
+	    t.error("invalid width for '%1'", nm);
+	    return false;
+	  }
+	  p = strtok(0, WS);
+	  if (0 == p) {
+	    t.error("missing character type for '%1'", nm);
+	    return false;
+	  }
+	  int type;
+	  if (sscanf(p, "%d", &type) != 1) {
+	    t.error("invalid character type for '%1'", nm);
+	    return false;
+	  }
+	  if (type < 0 || type > 255) {
+	    t.error("character type '%1' out of range", type);
+	    return false;
+	  }
+	  metric.type = type;
+	  p = strtok(0, WS);
+	  if (0 == p) {
+	    t.error("missing code for '%1'", nm);
+	    return false;
+	  }
+	  char *ptr;
+	  metric.code = (int)strtol(p, &ptr, 0);
+	  if (metric.code == 0 && ptr == p) {
+	    t.error("invalid code '%1' for character '%2'", p, nm);
+	    return false;
+	  }
+	  if (is_unicode) {
+	    int w = wcwidth(metric.code);
+	    if (w > 1)
+	      metric.width *= w;
+	  }
+	  p = strtok(0, WS);
+	  if ((0 == p) || (strcmp(p, "--") == 0)) {
+	    metric.special_device_coding = 0;
+	  }
+	  else {
+	    char *nam = new char[strlen(p) + 1];
+	    strcpy(nam, p);
+	    metric.special_device_coding = nam;
+	  }
+	  if (strcmp(nm, "---") == 0) {
+	    last_glyph = number_to_glyph(metric.code);
+	    add_entry(last_glyph, metric);
+	  }
+	  else {
+	    last_glyph = name_to_glyph(nm);
+	    add_entry(last_glyph, metric);
+	    copy_entry(number_to_glyph(metric.code), last_glyph);
+	  }
+	}
+      }
+      if (0 == last_glyph) {
+	t.error("no glyphs defined in font description");
 	return false;
       }
     }
-    compact();
+    else {
+      t.error("unrecognized directive '%1' after 'kernpairs' or"
+	      " 'charset' directive", directive);
+      return false;
+    }
   }
+  compact();
   if (!is_unicode && !had_charset) {
     t.error("missing 'charset' directive");
     return false;
