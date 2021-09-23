@@ -662,7 +662,8 @@ This has the same effect as
 .BI \[rs]s\[aq] \[+-]n \[aq]
 .TQ
 .BI \[rs]s \[+-] \[aq] n \[aq]
-Set the point size to
+Set the type size to,
+or increment or decrement it by,
 .I n
 scaled points;
 .I n
@@ -801,10 +802,9 @@ For example,
 if an italic\~\[lq]f\[rq] is immediately followed by a roman right
 parenthesis,
 then in many fonts the top right portion of the\~\[lq]f\[rq] overlaps
-the top left of the right parenthesis\c
-.if t \{
-producing \f[I]f\f[R])\c\}
-, which is ugly.
+the top left of the right parenthesis,
+.if t producing \f[I]f\f[R]),
+which is ugly.
 .
 Inserting
 .B \[rs]/
@@ -832,18 +832,17 @@ For example,
 if a roman left parenthesis is immediately followed by an
 italic\~\[lq]f\[rq],
 then in many fonts the bottom left portion of the\~\[lq]f\[rq] overlaps
-the bottom of the left parenthesis\c
-.if t \{
-producing \f[R](\f[I]f\f[R]\c\}
-, which is ugly.
+the bottom of the left parenthesis,
+.if t producing \f[R](\f[I]f\f[R],
+which is ugly.
 .
 Inserting
 .B \[rs],
 between them
 .if t \{\
 .  nop produces
-.  ie \n(.g \f[R](\,\f[I]f\f[R].
-.  el       \f[R](\^\f[I]f\f[R].
+.  ie \n(.g \f[R](\,\f[I]f\f[R]
+.  el       \f[R](\^\f[I]f\f[R]
 .  nop and
 .\}
 avoids this problem.
@@ -2754,21 +2753,28 @@ other environments to the standard error stream.
 .
 .TP
 .B .pnr
-Print the names and contents of all currently defined number registers
-on stderr.
+Write the names and values of all currently defined registers to the
+standard error stream.
+.
 .
 .TP
 .BI .psbb \~filename
 Get the bounding box of a PostScript image
 .IR filename .
 .
-This file must conform to Adobe's Document Structuring
-Conventions; the command looks for a
+This file must conform to Adobe's Document Structuring Conventions;
+the request attempts to extract the bounding box values from a
 .B \%%%BoundingBox
-comment to extract the bounding box values.
+comment.
 .
-After a successful call, the coordinates (in PostScript units) of the
-lower left and upper right corner can be found in the registers
+After invocation,
+the
+.I x
+and
+.I y
+coordinates
+(in PostScript units)
+of the lower left and upper right corners can be found in the registers
 .BR \[rs]n[llx] ,
 .BR \[rs]n[lly] ,
 .BR \[rs]n[urx] ,
@@ -2776,7 +2782,9 @@ and
 .BR \[rs]n[ury] ,
 respectively.
 .
-If some error has occurred, the four registers are set to zero.
+If an error occurs,
+these four registers are set to zero.
+.
 .
 .TP
 .BI .pso \~command
