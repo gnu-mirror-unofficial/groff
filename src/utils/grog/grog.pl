@@ -218,7 +218,7 @@ sub do_line {
 
   # Strip comments.
   $line =~ s/\\".*//;
-  $line =~ s/\\#.*//;
+  $line =~ s/\\#.*// unless $use_compatibility_mode;
 
   return unless ($line =~ /^[.']/);	# Ignore text lines.
 
