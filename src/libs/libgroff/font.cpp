@@ -771,6 +771,7 @@ bool font::load(bool load_header_only)
   text_file t(fp, path);
   t.silent = load_header_only;
   char *p = 0;
+  bool saw_name_directive = false;
   while (t.next_line()) {
     p = strtok(t.buf, WS);
     if (strcmp(p, "name") == 0) {
@@ -784,13 +785,21 @@ bool font::load(bool load_header_only)
 		" argument '%2'", name, p);
 	return false;
       }
+      saw_name_directive = true;
     }
     else if (strcmp(p, "spacewidth") == 0) {
       p = strtok(0, WS);
       int n;
-      if (0 == p || sscanf(p, "%d", &n) != 1 || n <= 0) {
-	t.error("argument to 'spacewidth' directive is missing or"
-		" invalid");
+      if (0 == p) {
+	t.error("missing argument to 'spacewidth' directive");
+	return false;
+      }
+      if (sscanf(p, "%d", &n) != 1) {
+	t.error("invalid argument '%1' to 'spacewidth' directive", p);
+	return false;
+      }
+      if (n <= 0) {
+	t.error("'spacewidth' argument '%1' out of range", n);
 	return false;
       }
       space_width = n;
@@ -798,8 +807,16 @@ bool font::load(bool load_header_only)
     else if (strcmp(p, "slant") == 0) {
       p = strtok(0, WS);
       double n;
-      if (0 == p || sscanf(p, "%lf", &n) != 1 || n >= 90.0 || n <= -90.0) {
-	t.error("argument to 'slant' directive is missing or invalid");
+      if (0 == p) {
+	t.error("missing argument to 'slant' directive");
+	return false;
+      }
+      if (sscanf(p, "%lf", &n) != 1) {
+	t.error("invalid argument '%1' to 'slant' directive", p);
+	return false;
+      }
+      if (n >= 90.0 || n <= -90.0) {
+	t.error("'slant' directive argument '%1' out of range", n);
 	return false;
       }
       slant = n;
@@ -828,7 +845,7 @@ bool font::load(bool load_header_only)
     else if (strcmp(p, "internalname") == 0) {
       p = strtok(0, WS);
       if (0 == p) {
-	t.error("argument to 'internalname' directive is missing");
+	t.error("missing argument to 'internalname' directive");
 	return false;
       }
       internalname = new char[strlen(p) + 1];
@@ -840,12 +857,13 @@ bool font::load(bool load_header_only)
     else if (strcmp(p, "kernpairs") != 0 && strcmp(p, "charset") != 0) {
       char *directive = p;
       p = strtok(0, "\n");
-      handle_unknown_font_command(directive, trim_arg(p), t.path, t.lineno);
+      handle_unknown_font_command(directive, trim_arg(p), t.path,
+				  t.lineno);
     }
     else
       break;
   }
-  bool had_charset = false;
+  bool saw_charset_directive = false;
   char *directive = p;
   t.recognize_comments = false;
   while (directive) {
@@ -883,7 +901,7 @@ bool font::load(bool load_header_only)
     else if (strcmp(directive, "charset") == 0) {
       if (load_header_only)
 	return true;
-      had_charset = true;
+      saw_charset_directive = true;
       glyph *last_glyph = 0;
       for (;;) {
 	if (!t.next_line()) {
@@ -899,7 +917,8 @@ bool font::load(bool load_header_only)
 	}
 	if (p[0] == '"') {
 	  if (last_glyph == 0) {
-	    t.error("first entry in 'charset' section is an alias");
+	    t.error("first entry '%1' in 'charset' subsection is an"
+		    " alias", nm);
 	    return false;
 	  }
 	  if (strcmp(nm, "---") == 0) {
@@ -983,19 +1002,25 @@ bool font::load(bool load_header_only)
       }
     }
     else {
-      t.error("unrecognized directive '%1' after 'kernpairs' or"
-	      " 'charset' directive", directive);
+      t.error("unrecognized font description directive '%1' after"
+	      " 'kernpairs' or 'charset'", directive);
       return false;
     }
   }
   compact();
-  if (!is_unicode && !had_charset) {
-    t.error("missing 'charset' directive");
+  t.lineno = 0;
+  if (!saw_name_directive) {
+    t.error("font description 'name' directive missing");
+    return false;
+  }
+  if (!is_unicode && !saw_charset_directive) {
+    t.error("font description 'charset' subsection missing");
     return false;
   }
   if (space_width == 0) {
     if (zoom)
-      space_width = scale_round(unitwidth, res, 72 * 3 * sizescale, zoom);
+      space_width = scale_round(unitwidth, res, 72 * 3 * sizescale,
+				zoom);
     else
       space_width = scale_round(unitwidth, res, 72 * 3 * sizescale);
   }

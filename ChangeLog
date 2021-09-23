@@ -1,5 +1,19 @@
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Perform more font description file validation.  Our
+	documentation said that the `name` directive was mandatory but
+	we didn't actually enforce this.  Also be more specific in our
+	complaints of ill-formedness.
+
+	* src/libs/libgroff/font.cpp (font::load): Add local Boolean
+	variable `saw_name_directive`.  Rename `had_charset` to
+	`saw_charset_directive` for symmetry.  Emit distinct diagnostics
+	for `spacewidth` and `slant` directives having a missing,
+	non-numeric, or out-of-range argument.  Emit diagnostic if the
+	file lacks a `name` directive.
+
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Slightly refactor.
 
 	* src/libs/libgroff/font.cpp (struct text_file): Rename member
