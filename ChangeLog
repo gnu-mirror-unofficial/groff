@@ -1,5 +1,15 @@
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/groff/groff.cpp (main): If the `-I` option is given,
+	run the grn preprocessor and pass it an `-M` option with `-I`'s
+	argument.
+
+	* NEWS:
+	* src/roff/groff/groff.1.man (Options): Document it.  Also
+	document that `-I` options are passed to the output driver.
+
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl (do_line): Don't strip groff-style
 	comments \# if AT&T compatibility mode is enabled.
 

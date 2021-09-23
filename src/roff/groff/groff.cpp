@@ -152,6 +152,8 @@ int main(int argc, char **argv)
       iflag = 1;
       break;
     case 'I':
+      commands[GRN_INDEX].set_name(command_prefix, "grn");
+      commands[GRN_INDEX].append_arg("-M", optarg);
       commands[SOELIM_INDEX].set_name(command_prefix, "soelim");
       commands[SOELIM_INDEX].append_arg(buf, optarg);
       // .psbb may need to search for files
