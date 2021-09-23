@@ -716,7 +716,8 @@ environment::environment(symbol nm)
   if (!is_good_fontno(1))
     fatal("font mounted at position 1 is not valid");
   if (family->make_definite(1) < 0)
-    fatal("invalid default family '%1'", default_family.contents());
+    fatal("invalid default font family '%1'",
+	  default_family.contents());
   prev_fontno = fontno;
 }
 
