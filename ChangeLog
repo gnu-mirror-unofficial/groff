@@ -1,5 +1,15 @@
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Revisit fix for Savannah #61173.
+
+	* src/libs/libgroff/font.cpp (text_file::text_file): Restore
+	setting of `lineno` member variable to `0` in constructor
+	initializer list, but...
+	(text_file::next_line): ...unconditionally increment it every
+	time through this member function's outer loop.
+
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Align diagnostic message format with libgroff.
 
 	* src/roff/troff/input.cpp (fatal_with_file_and_line): Report

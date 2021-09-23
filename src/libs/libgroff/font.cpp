@@ -81,7 +81,7 @@ struct text_file {
 	     const errarg &arg3 = empty_errarg);
 };
 
-text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(1),
+text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(0),
   size(0), recognize_comments(true), silent(false), buf(0)
 {
 }
@@ -103,6 +103,7 @@ bool text_file::next_line()
     size = 128;
   }
   for (;;) {
+    lineno++;
     int i = 0;
     for (;;) {
       int c = getc(fp);
