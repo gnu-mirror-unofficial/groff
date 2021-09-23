@@ -68,7 +68,7 @@ struct text_file {
   FILE *fp;
   char *path;
   int lineno;
-  int size;
+  int linebufsize;
   bool recognize_comments;
   bool silent;
   char *buf;
@@ -82,7 +82,7 @@ struct text_file {
 };
 
 text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(0),
-  size(0), recognize_comments(true), silent(false), buf(0)
+  linebufsize(128), recognize_comments(true), silent(false), buf(0)
 {
 }
 
@@ -98,13 +98,11 @@ bool text_file::next_line()
 {
   if (fp == 0)
     return false;
-  if (buf == 0) {
-    buf = new char[128];
-    size = 128;
-  }
+  if (buf == 0)
+    buf = new char[linebufsize];
   for (;;) {
     lineno++;
-    int i = 0;
+    int length = 0;
     for (;;) {
       int c = getc(fp);
       if (c == EOF)
@@ -112,22 +110,21 @@ bool text_file::next_line()
       if (invalid_input_char(c))
 	error("invalid input character code %1", int(c));
       else {
-	if (i + 1 >= size) {
+	if (length + 1 >= linebufsize) {
 	  char *old_buf = buf;
-	  buf = new char[size*2];
-	  memcpy(buf, old_buf, size);
+	  buf = new char[linebufsize * 2];
+	  memcpy(buf, old_buf, linebufsize);
 	  delete[] old_buf;
-	  size *= 2;
+	  linebufsize *= 2;
 	}
-	buf[i++] = c;
+	buf[length++] = c;
 	if (c == '\n')
 	  break;
       }
     }
-    if (i == 0)
+    if (length == 0)
       break;
-    buf[i] = '\0';
-    lineno++;
+    buf[length] = '\0';
     char *ptr = buf;
     while (csspace(*ptr))
       ptr++;

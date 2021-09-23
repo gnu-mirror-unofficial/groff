@@ -1,5 +1,19 @@
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Slightly refactor.
+
+	* src/libs/libgroff/font.cpp (struct text_file): Rename member
+	variable `size` to `linebufsize` for clarity (it's certainly not
+	the size of the text file).
+	(text_file::text_file): Initialize `linebufsize` in constructor.
+	(text_file::next_line): Allocate new `buf` using `linebufsize`
+	instead of magic number (which was also stored to `size`, making
+	it only semi-magic, I guess).  Rename local variable `i` to
+	`length` since it is in fact the length (in `char`s) of the
+	string stored in `buf`.
+
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Revisit fix for Savannah #61173.
 
 	* src/libs/libgroff/font.cpp (text_file::text_file): Restore
