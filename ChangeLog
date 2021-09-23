@@ -1,5 +1,16 @@
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Align diagnostic message format with libgroff.
+
+	* src/roff/troff/input.cpp (fatal_with_file_and_line): Report
+	the program name if one is defined.
+	(fatal_with_file_and_line, error_with_file_and_line,
+	debug_with_file_and_line): Report the line number of the input
+	file only if it is positive, so that other values can be used
+	for "whole file" complaints.  See commit cd0457b6, 17 September.
+
+2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Drop redundant diagnostic.
 
 	* src/libs/libgroff/font.cpp (font::load): Drop redundant

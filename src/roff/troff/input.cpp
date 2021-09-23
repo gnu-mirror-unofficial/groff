@@ -8826,7 +8826,12 @@ void fatal_with_file_and_line(const char *filename, int lineno,
 			      const errarg &arg2,
 			      const errarg &arg3)
 {
-  fprintf(stderr, "%s:%d: fatal error: ", filename, lineno);
+  if (program_name)
+    fprintf(stderr, "%s: ", program_name);
+  fprintf(stderr, "%s:", filename);
+  if (lineno > 0)
+    fprintf(stderr, "%d:", lineno);
+  fputs(" fatal error: ", stderr);
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);
@@ -8841,7 +8846,10 @@ void error_with_file_and_line(const char *filename, int lineno,
 {
   if (program_name)
     fprintf(stderr, "%s: ", program_name);
-  fprintf(stderr, "%s:%d: error: ", filename, lineno);
+  fprintf(stderr, "%s:", filename);
+  if (lineno > 0)
+    fprintf(stderr, "%d:", lineno);
+  fputs(" error: ", stderr);
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);
@@ -8856,7 +8864,10 @@ void debug_with_file_and_line(const char *filename,
 {
   if (program_name)
     fprintf(stderr, "%s: ", program_name);
-  fprintf(stderr, "%s:%d: debug: ", filename, lineno);
+  fprintf(stderr, "%s:", filename);
+  if (lineno > 0)
+    fprintf(stderr, "%d:", lineno);
+  fputs(" debug: ", stderr);
   errprint(format, arg1, arg2, arg3);
   fputc('\n', stderr);
   fflush(stderr);
