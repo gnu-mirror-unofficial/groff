@@ -296,11 +296,6 @@ sub do_line {
   $command = '' unless ($command);
   $args = '' unless ($args);
 
-  if ((!$have_seen_first_macro_call) && ($command eq 'TH')) {
-    # .TH as the first macro call in a document screams man(7).
-    $man_score += 100;
-  }
-
   ######################################################################
   # user-defined macros
 
@@ -372,6 +367,12 @@ sub do_line {
 
   # man and ms share too many macro names for the following approch to
   # be fruitful for many documents; see &infer_man_or_ms_package.
+  #
+  # We can put one thumb on the scale, however.
+  if ((!$have_seen_first_macro_call) && ($macro eq 'TH')) {
+    # TH as the first call in a document screams man(7).
+    $man_score += 100;
+  }
 
   ##########
   # mdoc
