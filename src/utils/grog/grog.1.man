@@ -191,9 +191,31 @@ Choices of
 .I groff
 options include
 .B \-C
-to enable compatibility mode and
+to enable AT&T
+.I troff
+compatibility mode and
 .B \-T
-to specify an output device other than the default.
+to select an output device other than the default.
+.
+If the input is not encoded in US-ASCII,
+ISO 8859-1,
+or IBM code page 1047,
+specification of a
+.I groff
+option to run the
+.IR preconv (@MAN1EXT@)
+preprocessor is advised;
+see the
+.BR \-D ,
+.BR \-k ,
+and
+.B \-K
+options of
+.IR groff (@MAN1EXT@).
+.
+For UTF-8 input,
+.B \-k
+is a good choice.
 .
 .
 .P
