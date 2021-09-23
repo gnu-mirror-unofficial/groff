@@ -18009,8 +18009,8 @@ directive.
 
 @item unitwidth @var{n}
 @kindex unitwidth
-Quantities in the font files are given in basic units for fonts whose
-point size is @var{n}@tie{}scaled points.
+Quantities in the font description files are in basic units for fonts
+whose point size is @var{n}@tie{}scaled points.
 
 @item unscaled_charwidths
 @kindex unscaled_charwidths
@@ -18076,10 +18076,13 @@ wide at a notional type size of 800@tie{}points.@footnote{800-point type
 is not practical for most purposes, but using it enables the quantities
 in the font description files to be expressed as integers.}
 
-A font description file has two sections; empty lines are ignored in
-both.  The first section is a sequence of lines, each containing a
-sequence of space-delimited words; the first word in the line is a key,
-and subsequent words associate a value with that key.
+A font description file has two sections.  The first is a sequence of
+directives;
+@cindex comments in font description files
+@cindex font description files, comments
+@kindex #
+it can contain comments, which start with the @samp{#} character and
+extend to the end of a line.  Empty lines are ignored in both sections.
 
 @table @code
 @item name @var{f}
@@ -18095,14 +18098,14 @@ a type size of @var{unit-width} points.
 The @code{name} directive is mandatory, and @code{spacewidth} is
 recommended for any font expected to be current when a space is
 encountered in @code{roff} input.@footnote{Thus, ``symbol'' or
-``dingbats'' fonts might safely omit it.}  Other directives in this
-section are optional.
+``dingbats'' fonts might safely omit it.}  The following directives are
+optional.
 
 @table @code
 @item slant @var{n}
 @kindex slant
-The glyphs of the font have a slant of @var{n}@tie{}degrees, where a
-positive @var{n} slants in the direction of text flow.
+The font's glyphs have a slant of @var{n}@tie{}degrees; a positive
+@var{n} slants in the direction of text flow.
 
 @item ligatures @var{lig1} @r{@dots{}} @var{lign} @r{[}0@r{]}
 @kindex ligatures
@@ -18115,34 +18118,29 @@ must not extend over more than one line.
 @item special
 @cindex special fonts
 @kindex special
-The font is @dfn{special}; this means that when a glyph is requested
-that is not present in the current font, it is searched for in any
-special fonts that are mounted.
+The font is @dfn{special}: when a glyph is requested that is not present
+in the current font, it is sought in any mounted fonts that bear this
+property.
 @end table
 
-Other directives are ignored by GNU @code{troff} but may be used by
-postprocessors to store arbitrary information about the font in the
-file.
+Other directives in this section are ignored by GNU @code{troff}, but
+may be used by postprocessors to store arbitrary information about the
+font in the file.
 
-@cindex comments in font description files
-@cindex font description files, comments
-@kindex #
-The first section can contain comments, which start with the @samp{#}
-character and extend to the end of a line.
-
-The second section contains one or two subsections.  A @code{charset}
+The second section contains one or two subsections. These can appear in
+either order; the first one encountered commences the second section.
+Each starts with a directive on a line by itself.  A @code{charset}
 subsection is mandatory unless the associated @file{DESC} file contains
-the @code{unicode} directive.  It may also contain a @code{kernpairs}
-subsection.  These subsections can appear in either order.  Each
-subsection starts with a directive on a line by itself.
+the @code{unicode} directive.  Another subsection, @code{kernpairs},
+is optional.
 
 @kindex charset
 The directive @code{charset} starts the character set
-subsection.@footnote{This keyword is misnamed since it starts an ordered
-list of glyphs, not characters.}  The @code{charset} line is followed by
-a sequence of lines, each with information about one glyph.  A line
-comprises a number of fields separated by spaces or tabs.  The format is
-as follows.
+subsection.@footnote{For typesetter devices, this keyword is misnamed
+since it starts an ordered list of glyphs, not characters.}  The
+@code{charset} line is followed by a sequence of lines, each with
+information about one glyph.  A line comprises a number of fields
+separated by spaces or tabs.  The format is as follows.
 
 @quotation
 @var{name} @var{metrics} @var{type} @var{code} [@var{entity-name}]
@@ -18252,10 +18250,8 @@ driver could encode its character set.  For example, the glyph
 @samp{\[Po]} is represented by @samp{&pound;} in @acronym{HTML} 4.0.
 For efficiency, these data are now compiled directly into
 @code{grohtml}.  @code{grops} uses the field to build sub-encoding
-arrays for PostScript fonts containing more than 256 glyphs.
-
-Anything on the line after the @var{entity-name} field or @samp{--} is
-ignored.
+arrays for PostScript fonts containing more than 256 glyphs.  Anything
+on the line after the @var{entity-name} field or @samp{--} is ignored.
 
 A line in the @code{charset} section can also have the following format.
 
