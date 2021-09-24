@@ -8,6 +8,15 @@
 	practices for Western alphabetic fonts (see, e.g.,
 	<https://type.today/en/journal/spaces>.
 
+	* font/devdvi/EX:
+	* font/devdvi/MI:
+	* font/devdvi/S:
+	* font/devdvi/SA:
+	* font/devps/EURO: Add `spacewidth` directive to font
+	description files we ship that were missing it.  We use the same
+	values that libgroff would have computed, so there should be no
+	visible difference.
+
 2021-09-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* Makefile.am: Mark `$(TEST_SUITE_LOG)` as `.PRECIOUS`.  This
