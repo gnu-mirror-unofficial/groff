@@ -1018,6 +1018,8 @@ bool font::load(bool load_header_only)
     return false;
   }
   if (space_width == 0) {
+    t.error("font description 'spacewidth' directive missing");
+    // _Don't_ return false; compute a typical one for Western glyphs.
     if (zoom)
       space_width = scale_round(unitwidth, res, 72 * 3 * sizescale,
 				zoom);

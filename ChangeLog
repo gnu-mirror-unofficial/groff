@@ -1,5 +1,15 @@
 2021-09-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libgroff/font.cpp (font::load): Throw error if a font
+	description file is missing a `spacewidth` directive, since it
+	is now re-documented as mandatory.  Atypically, we don't return
+	false in this scenario; instead we proceed with the existing
+	logic to compute a space width for the font based on typical
+	practices for Western alphabetic fonts (see, e.g.,
+	<https://type.today/en/journal/spaces>.
+
+2021-09-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* Makefile.am: Mark `$(TEST_SUITE_LOG)` as `.PRECIOUS`.  This
 	prevents the test suite log from being deleted if there are any
 	failures.
