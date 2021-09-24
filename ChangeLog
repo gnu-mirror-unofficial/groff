@@ -1,3 +1,12 @@
+2021-09-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* Makefile.am: Mark `$(TEST_SUITE_LOG)` as `.PRECIOUS`.  This
+	prevents the test suite log from being deleted if there are any
+	failures.
+
+	Fixes <https://savannah.gnu.org/bugs/?61213>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
 2021-09-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/utils/grog/grog.pl (do_line): Move first-macro-call test
