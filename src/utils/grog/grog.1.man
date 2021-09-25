@@ -354,18 +354,18 @@ is likely necessary.
 .P
 .EX
 $ \c
-.B printf \[dq].TS\[rs]nl.\[rs]nThis is my table.\[rs]n.TE\[rs]n\[dq] >\
- 3.roff
+.B printf \[dq].TS\[rs]nl.\[rs]nI'm a table.\[rs]n.TE\[rs]n\[dq] > \
+3.roff
 $ \c
 .B printf \[dq].so 3.roff\[rs]n\[dq] > 2.roff
 $ \c
-.B printf \[dq].so 2.roff\[rs]n\[dq] > 1.roff
+.B printf \[dq].XP\[rs]n.so 2.roff\[rs]n\[dq] > 1.roff
 $ \c
 .B grog 1.roff
-groff 1.roff
+groff \-ms 1.roff
 $ \c
 .B \%@g@soelim 1.roff | grog
-groff \-t \-
+groff \-t \-ms \-
 .EE
 .RE
 .
@@ -393,7 +393,7 @@ command.
 .EX
 $ \c
 .B grog \-st 1.roff
-groff \-st 1.roff
+groff \-st \-ms 1.roff
 .EE
 .RE
 .
