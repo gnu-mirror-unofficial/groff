@@ -245,8 +245,9 @@
 	[libgroff]: Make error reporting more flexible.
 
 	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
-	Interpret a line number of zero specially: treat the diagnostic
-	as applying to the entire file, and omit the line number.
+	Interpret a nonpositive line number specially: treat the
+	diagnostic as applying to the entire file, and omit the line
+	number.
 
 2021-09-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
