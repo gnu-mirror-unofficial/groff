@@ -17882,7 +17882,7 @@ The default font family is @var{fam}.
 
 @item fonts @var{n} @var{F1} @r{@dots{}} @var{Fn}
 @kindex fonts
-Fonts @var{F1} @dots{} @var{Fn} are mounted in the font positions
+Fonts @var{F1}, @dots{}, @var{Fn} are mounted at font positions
 @var{m}+1, @dots{}, @var{m}+@var{n} where @var{m} is the number of
 @code{styles} (see below).  This directive may extend over more than one
 line.  A font name of@tie{}@code{0} causes no font to be mounted at the
@@ -18134,10 +18134,10 @@ is optional.
 @kindex charset
 The directive @code{charset} starts the character set
 subsection.@footnote{For typesetter devices, this keyword is misnamed
-since it starts an ordered list of glyphs, not characters.}  The
-@code{charset} line is followed by a sequence of lines, each with
-information about one glyph.  A line comprises a number of fields
-separated by spaces or tabs.  The format is as follows.
+since it starts a list of glyphs, not characters.}  It precedes a series
+of glyph descriptions, one per line.  Each such glyph description
+comprises a set of fields separated by spaces or tabs and organized as
+follows.
 
 @quotation
 @var{name} @var{metrics} @var{type} @var{code} [@var{entity-name}]
@@ -18211,14 +18211,13 @@ glyph, that is, the distance below the baseline to which the glyph
 extends (downwards is positive); if a glyph does not extend below the
 baseline, it should be given a zero depth, rather than a negative depth.
 Italic corrections are relevant to glyphs in italic or oblique styles.
-The @var{italic-correction} subfield gives the amount of space that
-should be added after the glyph when it is to be immediately followed by
-a glyph from an upright style.  The @var{left-italic-correction}
-subfield gives the amount of space that should be added before the glyph
-when it is to be immediately preceded by a glyph from an upright style.
-The @var{subscript-correction} gives the amount of space that should be
-added after a glyph before adding a subscript.  This should be less than
-the italic correction.
+The @var{italic-correction} is the amount of space that should be added
+after an oblique glyph to be followed immediately by an upright glyph.
+The @var{left-italic-correction} is the amount of space that should be
+added before an oblique glyph to be preceded immediately by an upright
+glyph.  The @var{subscript-correction} is the amount of space that
+should be added after an oblique glyph to be followed by a subscript; it
+should be less than the italic correction.
 
 The @var{type} field gives a featural description of the glyph.
 
@@ -18230,8 +18229,8 @@ means the glyph has a descender (for example, @samp{p});
 means the glyph has an ascender, (for example, @samp{b}); and
 
 @item 3
-means the glyph has both an ascender and a descender (for example, this
-is true of parentheses in some fonts).
+means the glyph has both an ascender and a descender (for example,
+parentheses in some fonts).
 @end table
 
 The @var{code} field gives a numeric identifier that the postprocessor
