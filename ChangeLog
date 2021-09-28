@@ -1,3 +1,21 @@
+2021-09-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[pic]: Update input file name correctly.
+
+	* src/preproc/pic/troff.cpp (troff_output::set_location): Copy
+	the inbound file name argument with `strdup()` and store pointer
+	to this copy in `last_filename` instead of aliasing argument.
+	(troff_output::~troff_output): `free()` the memory allocated by
+	`strdup()` in destructor.
+
+	Fixes <https://savannah.gnu.org/bugs/?61206>.  Pointer
+	assignment instead of a string copy was being performed, which
+	means that after its initial assignment, `last_filename` always
+	shared its value ultimately with the `current_filename` pointer
+	{a libgroff symbol}, so `strcmp()` was always being performed on
+	identical pointers.  Problem appears to date back 30+ years, to
+	the dawn of our repo history.
+
 2021-09-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* font/devlj4/S: Make font name consistent with file name.
