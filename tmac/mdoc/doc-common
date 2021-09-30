@@ -1034,6 +1034,15 @@
 .    pl +1v
 .    sp 1v
 .    tl \*[doc-caption-font]\*[doc-operating-system]\f[]\*[doc-caption-font2]\*[doc-date-string]\f[]\*[doc-caption-font]\*[doc-operating-system]\f[]
+.    \" If we're processing multiple documents and have started a new
+.    \" one, draw a line between this footer and the next header.
+.    if !'\n[.F]'' \{\
+.      pl +1v
+.      nf
+.      ti 0
+\D'l \n[doc-line-length]u 0'
+.      fi
+.    \}
 .    \" suppress empty lines after the footer
 .    pl \n[nl]u
 .  \}

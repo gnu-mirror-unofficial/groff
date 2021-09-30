@@ -1,3 +1,24 @@
+2021-09-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man, mdoc]: Draw line after each page more consistently in
+	continuous rendering mode.
+
+	* tmac/an.tmac (an-bp): Move responsibility for line-drawing
+	after each document from here...
+	(an-end): ...to here.  Refactor; drop
+	`an-do-draw-line-after-document` register in favor of testing
+	`\n[.F]` for nullity; if it is not null, then another document
+	is due to be processed (in fact, `.F` already contains its file
+	name), and we need to draw a separating line.  If it is null, we
+	have reached the end of input and none is necessary.
+
+	* tmac/mdoc/doc-ditroff.tmac (doc-setup-page-layout):
+	* tmac/mdoc/doc-nroff.tmac (doc-setup-page-layout): Save
+	configured line length in new register `doc-line-length`.
+	* tmac/mdoc/doc-common.tmac (doc-end-macro): Port the above
+	man(7) feature to mdoc(7); draw a line of this length after each
+	document if continuously rendering.
+
 2021-10-01  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
 	[ms]: Update footnote handling documentation.
