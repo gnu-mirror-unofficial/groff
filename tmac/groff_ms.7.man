@@ -1450,6 +1450,36 @@ string is used,
 and if none exists,
 nothing is prefixed.
 .
+.IP
+Immediately,
+on entry to
+.BR FS ,
+a macro named
+.B FS-MARK
+is called,
+passing the same
+.I marker
+argument
+(if any)
+as passed to
+.B FS
+itself.
+By default,
+this macro does nothing;
+however,
+you may define an alternative implementation of
+.BR FS-MARK ,
+if,
+for example,
+you require some additional action
+on placement of the footnote
+.IR marker ,
+or footnote number,
+in the body text,
+beyond that which can be achieved by simple interpolation of the
+.B *
+string.
+.
 .
 .TP
 .B .FE
@@ -1476,26 +1506,45 @@ respectively.
 .
 .
 .P
-The
+Paragraph-level formatting of footnotes is performed by a macro named
+.BR FP ,
+which is called once for each individual footnote.
+A default implementation of
+.B FP
+is provided;
+alternatively,
+you may define your own replacement implementation,
+and so assert your own control over footnote paragraph formatting.
+.
+.P
+When using the default implementation of
+.BR FP ,
+the
 .B FF
 register controls the formatting of automatically numbered footnotes,
 and those for which
 .B .FS
-is given a marker argument,
-at the bottom of a column or page as follows.
-.
+is given a
+.I marker
+argument,
+at the bottom of a column or page as follows:-
 .
 .RS
 .TP
 0
-Set an automatic number as a superscript
+Set an automatically generated number,
+or a specified
+.B FS
+.I marker
+argument,
+as a superscript
 (on typesetter devices)
 or surrounded by square brackets
 (on terminals).
 .
 The footnote paragraph is indented if there is an
 .B .FS
-argument or an automatic number.
+argument or an automatically generated number.
 .
 This is the default.
 .
@@ -1505,7 +1554,7 @@ This is the default.
 Like
 .BR 0 ,
 but set the marker as regular text,
-and follow an automatic number with a period.
+and follow an automatically generated number with a period.
 .
 .
 .TP
@@ -1521,6 +1570,34 @@ Like
 .BR 1 ,
 but set the footnote paragraph with the marker hanging.
 .RE
+.
+.P
+Conversely,
+if you choose to provide your own
+.B FP
+macro implementation,
+.I you
+have control of how footnote paragraphs will be formatted;
+it is your choice as to how the
+.B FF
+register should be interpreted,
+(if at all).
+For each individual footnote,
+your macro will be called with one argument,
+which represents either an automatically generated footnote number,
+or the verbatim
+.I marker
+argument passed in the initiating
+.B FS
+macro call;
+in the latter case,
+an explicit second argument of
+.RB \[lq] no \[rq]
+will also be present,
+indicating that no embellishment of the footnote
+.I marker
+(as may be appropriate for footnote numbers)
+is required.
 .
 .
 .\" ====================================================================
