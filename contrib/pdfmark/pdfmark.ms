@@ -22,11 +22,11 @@ Publishing with GNU Troff
 .AU Keith Marshall
 .AI <keith.d.marshall@ntlworld.com>
 .CE
-.\"
+.
 .\" Specify the Internet address for the groff web site.
 .\"
 .ds GROFF-WEBSITE http://www.gnu.org/software/groff
-.\"
+.
 .\" Set the PDF default document view attribute, to ensure that the document
 .\" outline is visible, each time the document is opened in Acrobat Reader.
 .\"
@@ -36,19 +36,19 @@ Publishing with GNU Troff
 .\" with additional subordinate level headings folded.
 .\"
 .nr PDFOUTLINE.FOLDLEVEL 3
-.\"
+.
 .\" Add document identification meta-data
 .\"
 .pdfinfo /Title     Portable Document Format Publishing with GNU Troff
 .pdfinfo /Author    Keith Marshall
 .pdfinfo /Subject   Tips and Techniques for Exploiting PDF Features with GNU Troff
 .pdfinfo /Keywords  groff troff PDF pdfmark
-.\"
+.
 .\" Set the default cross reference format to indicate section numbers,
 .\" rather than page numbers, when we insert a reference pointer.
 .\"
 .ds PDFHREF.INFO section \\*[SN-NO-DOT] \\$*
-.\"
+.
 .\" Define a macro, to print reference links WITHOUT the usual "see" prefix.
 .\"
 .de XR-NO-PREFIX
@@ -57,21 +57,22 @@ Publishing with GNU Troff
 .XR \\$@
 .rn xx PDFHREF.PREFIX
 ..
-.\"
-.\" Define a string,
-.\" to insert a Registered Trade Mark symbol as a superscript.
+.
+.\" Define a string, to insert a Registered Trade Mark symbol as
+.\" a superscript...
 .\"
 .ds rg \*{\(rg\*}
 .\"
-.\" Define strings, to represent frequently used registered trade marks.
+.\" ...and use it to define strings, representing frequently used
+.\" registered trade marks.
 .\"
 .ds Adobe "Adobe\Z'\\$1'\*(rg\"
 .ds Acrobat "Acrobat\Z'\\$1'\*(rg\"
 .ds Distiller "Distiller\Z'\\$1'\*(rg\"
 .ds PostScript "PostScript\Z'\\$1'\*(rg\"
-.
-.ds Microsoft "Microsoft\Z'\\$1'\*(rg\"
 .\"
+.ds Microsoft "Microsoft\Z'\\$1'\*(rg\"
+.
 .\" Establish the page layout.
 .\"
 .nr PO  2.5c
@@ -80,7 +81,14 @@ Publishing with GNU Troff
 .nr HY  0
 .nr FF  3
 .nr DI  5n
+.
+.\" Within the table of contents, the width of the right-hand margin,
+.\" in which space is reserved for the display of page numbers, and the
+.\" appearance of the leaders which precede it, are controlled by:-
 .\"
+.char \[TC-LEADER] \h'0.8n'.
+.nr TC-MARGIN \w'00000'
+.
 .\" Generate headers in larger point sizes, for NH levels < 4,
 .\" with point size increasing by 1.5p, for each lesser NH level.
 .\"
