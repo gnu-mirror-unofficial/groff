@@ -2,11 +2,12 @@
 
 	[man]: Use OSC 8 hyperlinks.
 
-	* tmac/an.tmac: Add registers `mY` (output driver is "grotty")
-	and `U` (generate hyperlinks).  `U` is intended to apply to
-	hyperlinking support in general, not just grotty's OSC 8
-	feature.  If the output driver is either grohtml or grotty, make
-	`U` true (`man.local` is read subsequently and can override it).
+	* tmac/an-ext.tmac: Add registers `mY` (output driver is
+	"grotty") and `U` (generate hyperlinks).  `U` is intended to
+	apply to hyperlinking support in general, not just grotty's OSC
+	8 feature.  If the output driver is either grohtml or grotty,
+	make `U` true (`man.local` is read subsequently and can override
+	it).
 	(UR, MT): Conditionalize diversion production on hyperlink
 	support, not grohtml use per se.
 	(UE, ME): Generate device control commands for `tty` device to
@@ -91,7 +92,7 @@
 	[ms]: Update footnote handling documentation.
 
 	* tmac/groff_ms.7.man: Make some linguistic style adjustments.
-	(FP): Document it; cf. <https://savannah.gnu.org/bugs/?61022>.
+	(FP): Document it; see <https://savannah.gnu.org/bugs/?61022>.
 	(FS-MARK): Likewise, document this recently added feature.
 
 2021-10-01  Keith Marshall  <keith.d.marshall@ntlworld.com>
@@ -99,10 +100,12 @@
 	[ms]: Support user-defined TOC leader style.
 
 	* tmac/s.tmac (toc*leader-char): Rename it as...
-	(TC-LEADER): ...this; within PX, leave it unchanged, if predefined.
-	(TC-MARGIN): New numeric register; if predefined, leave it unchanged,
-	otherwise define as \w'000'; use it instead of hard-wired definition,
-	within PX; cf. <https://savannah.gnu.org/bugs/?61157>.
+	(TC-LEADER): ...this; within PX, leave it unchanged, if
+	predefined.
+	(TC-MARGIN): New numeric register; if predefined, leave it
+	unchanged, otherwise define as \w'000'; use it instead of
+	hard-wired definition, within PX; see
+	<https://savannah.gnu.org/bugs/?61157>.
 
 	* tmac/groff_ms.7.man (TC_LEADER, TC_MARGIN): Document them.
 
