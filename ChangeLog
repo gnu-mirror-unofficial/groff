@@ -1,3 +1,17 @@
+2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Convert special character glyphs corresponding to
+	Unicode Basic Latin ("ASCII") code points to those code points
+	when they occur in device escapes.  (They should be correct for
+	IBM code page 1047 as well, but this is untested.)  This is
+	necessary for encoding URLs in device control commands.  Special
+	character identifiers are presumed to be the defaults documented
+	in groff_char(7); this is a design gap that we should consider
+	addressing.  (We don't have a way to ask "is this the special
+	character corresponding to Unicode basic Latin code point X?")
+
+	* src/roff/troff/input.cpp (encode_char): Do it.
+
 2021-09-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man, mdoc]: Draw line after each page more consistently in

@@ -5414,6 +5414,25 @@ static void encode_char(macro *mac, char c)
     else if (tok.is_stretchable_space()
 	     || tok.is_unstretchable_space())
       mac->append(' ');
+    else if (tok.is_special()) {
+      const char *sc = tok.get_char()->get_symbol()->contents();
+      if (strcmp("-", sc) == 0)
+	mac->append('-');
+      else if (strcmp("aq", sc) == 0)
+	mac->append('\'');
+      else if (strcmp("dq", sc) == 0)
+	mac->append('"');
+      else if (strcmp("ga", sc) == 0)
+	mac->append('`');
+      else if (strcmp("ha", sc) == 0)
+	mac->append('^');
+      else if (strcmp("rs", sc) == 0)
+	mac->append('\\');
+      else if (strcmp("ti", sc) == 0)
+	mac->append('^');
+      else
+	error("special character '%1' cannot be used within \\X", sc);
+    }
     else if (!(tok.is_hyphen_indicator()
 	       || tok.is_dummy()
 	       || tok.is_transparent_dummy()
