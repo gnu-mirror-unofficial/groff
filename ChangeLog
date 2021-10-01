@@ -1,5 +1,27 @@
 2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Use OSC 8 hyperlinks.
+
+	* tmac/an.tmac: Add registers `mY` (output driver is "grotty")
+	and `U` (generate hyperlinks).  `U` is intended to apply to
+	hyperlinking support in general, not just grotty's OSC 8
+	feature.  If the output driver is either grohtml or grotty, make
+	`U` true (`man.local` is read subsequently and can override it).
+	(UR, MT): Conditionalize diversion production on hyperlink
+	support, not grohtml use per se.
+	(UE, ME): Generate device control commands for `tty` device to
+	emit hyperlinks.
+
+	* tmac/groff_man.7.man.in (Options): Document -U.
+	(Files) [style]: Add example of `U` register enablement.
+
+	* tmac/man.local: Disable `U` register by default, except on the
+	`html` device.
+
+	* NEWS: Add item.
+
+2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grotty]: Add OSC 8 hyperlink support.
 
 	* src/devices/grotty/tty.cpp: Do it.  Define `OSC` (Operating

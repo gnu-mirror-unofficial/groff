@@ -1155,10 +1155,10 @@ argument to
 is placed at the end of the link text without intervening space.
 .
 .I address
-may not be visible in the output text,
-particularly if the man page is being viewed as HTML.
+may not be visible in the rendered document if the output driver
+supports hyperlinks.
 .
-On a device that is not a browser,
+If it does not,
 .I address
 is set in angle brackets after the link text and before
 .IR punctuation .
@@ -1168,7 +1168,7 @@ _ifstyle()dnl
 .IP
 When rendered by
 .I groff
-to a terminal or PostScript device,
+to a PostScript device,
 .RS
 .IP
 .EX
@@ -1216,10 +1216,10 @@ argument to
 is placed at the end of the link text without intervening space.
 .
 .I URL
-may not be visible in the output text,
-particularly if the man page is being viewed as HTML.
+may not be visible in the rendered document if the output driver
+supports hyperlinks.
 .
-On a device that is not a browser,
+If it does not,
 .I URL
 is set in angle brackets after the link text and before
 .IR punctuation .
@@ -1229,7 +1229,7 @@ _ifstyle()dnl
 .IP
 When rendered by
 .I groff
-to a terminal or PostScript device,
+to a PostScript device,
 .RS
 .IP
 .EX
@@ -3149,6 +3149,30 @@ default.
 .
 .
 .TP
+.B \-rU1
+Enable generation of URI hyperlinks in the
+.I grohtml
+and
+.I grotty
+output drivers.
+.
+.I grohtml
+enables them by default;
+.I grotty
+does not,
+pending more widespread pager support for OSC\~8 escape sequences.
+.
+Use
+.B \-rU0
+to disable hyperlinks;
+this will make the arguments to
+.B MT
+and
+.B UR
+calls visible in the document text produced by link-capable drivers.
+.
+.
+.TP
 .BI \-rX p
 After
 .RI page\~ p ,
@@ -3296,6 +3320,8 @@ _ifstyle()dnl
 \&.ss 12 0 \e" See groff(@MAN7EXT@).
 \&.\e" Keep pages narrow even on wide terminals.
 \&.if n .if \(rsn[LL]>78 .nr LL 78n
+\&.\e" Ensure hyperlinks are enabled for terminals.
+\&.nr U 1
 .EE
 .RE
 .RE

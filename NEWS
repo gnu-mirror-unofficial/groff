@@ -122,6 +122,14 @@ o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
   some additions from Vim, which itself uses RFC 1345 for its digraphs).
   It is documented in the groff_rfc1345(7) man page.
 
+o The an (man) macro package can now produce clickable hyperlinks within
+  terminal emulators, using the OSC 8 support added to grotty(1) (see
+  below).  The groff man(7) extension macros "UR" and "MT", present
+  since 2007, expose this feature.  At present the feature is disabled
+  by default in "man.local" pending more widespread recognition of OSC 8
+  sequences in pager programs.  The package now recognizes a "U"
+  register to configure hyperlink support for any output driver.
+
 o Part of the an (man) macro package has been renamed from "an-old.tmac"
   to "an.tmac", replacing a file that sourced the "andoc.tmac" wrapper.
   This means that the "-man" argument to groff (or nroff, or troff) will
