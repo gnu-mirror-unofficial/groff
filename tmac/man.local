@@ -6,4 +6,5 @@
 .\" Change "0" to "1" to enable OSC 8 links on SGR-capable grotty(1)
 .\" output devices.
 .if !'\*[.T]'html' \
-.  nr U 0
+.  if !r U \
+.    nr U 0

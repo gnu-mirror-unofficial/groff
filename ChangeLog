@@ -1,5 +1,26 @@
 2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Fix `U` enablement override so it actually works the way
+	I had in mind.
+	- The package proper enables it by default, but
+	- the sample site configuration file switches it off, on the
+	  assumption that distributors and users will know better than
+	  we do when they get a capable pager in place, and
+	- a register setting at the command line (or otherwise prior to
+	  the loading of the macro package) is dispositive.
+
+	* tmac/an-ext.tmac: Rename URI output device capability register
+	from `U` to `mU`.
+	(UR, UE, MT, ME): Test both `U` and `mU` before handling
+	hyperlinks specially.
+	* tmac/an.tmac: If `man.local` did not initialize `U`, switch it
+	on.  The hope is that we can drop the stuff in `man.local`
+	completely at some point.
+	* tman/man.local: Only initialize `U` if it is not already
+	defined.
+
+2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Use OSC 8 hyperlinks.
 
 	* tmac/an-ext.tmac: Add registers `mY` (output driver is

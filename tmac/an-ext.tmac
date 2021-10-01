@@ -29,13 +29,13 @@
 .\" Check if we're using grohtml or grotty, and therefore support URIs.
 .nr mH 0
 .nr mY 0
-.nr U 0
+.nr mU 0
 .if \n(.g \{\
 .  if '\*(.T'html' \
 .    nr mH 1
 .  if '\*(.T'utf8' \
 .    nr mY 1
-.  nr U \n(mH+\n(mY
+.  nr mU \n(mH+\n(mY
 .\}
 .
 .
@@ -94,7 +94,7 @@
 .\" Start URL.
 .de UR
 .  ds m1 \\$1\"
-.  if \\nU \{\
+.  if \\nU&\\n(mU \{\
 .    \" Start diversion in a new environment.
 .    do ev link-text-env
 .    do di link-text-div
@@ -104,7 +104,7 @@
 .
 .\" End URL.
 .de UE
-.  ie \\nU \{\
+.  ie \\nU&\\n(mU \{\
 .    br
 .    di
 .    ev
@@ -145,7 +145,7 @@
 .\" Start email address.
 .de MT
 .  ds m1 \\$1\"
-.  if \\nU \{\
+.  if \\nU&\\n(mU \{\
 .    \" Start diversion in a new environment.
 .    do ev link-text-env
 .    do di link-text-div
@@ -155,7 +155,7 @@
 .
 .\" End email address.
 .de ME
-.  ie \\nU \{\
+.  ie \\nU&\\n(mU \{\
 .    br
 .    di
 .    ev
@@ -166,7 +166,7 @@
 \X^html:<a href="mailto:\\*(m1">^\c
 .      if \\n(mY \
 \X^tty: link mailto:\\*(m1^\c
-.      \" Yes, strip off final newline of diversion and emit it.
+.      \" Strip off the final newline of the diversion and emit it.
 .      do chop link-text-div
 .      do link-text-div
 \c
