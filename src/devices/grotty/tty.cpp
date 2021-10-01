@@ -1,6 +1,6 @@
-// -*- C++ -*-
-/* Copyright (C) 1989-2020 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2021 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
+     OSC 8 support by G. Branden Robinson
 
 This file is part of groff.
 
@@ -80,8 +80,12 @@ static unsigned char bold_underline_mode;
 
 #ifndef IS_EBCDIC_HOST
 #define CSI "\033["
+#define OSC8 "\033]8"
+#define ST "\033\\"
 #else
 #define CSI "\047["
+#define OSC8 "\047]8"
+#define ST "\047\\"
 #endif
 
 // SGR handling (ISO 6429)
@@ -183,12 +187,14 @@ class tty_printer : public printer {
   schar color_to_idx(color *);
   void add_char(output_character, int, int, int, color *, color *,
 		unsigned char);
+  void simple_add_char(const output_character, const environment *);
   char *make_rgb_string(unsigned int, unsigned int, unsigned int);
   int tty_color(unsigned int, unsigned int, unsigned int, schar *,
 		schar = DEFAULT_COLOR_IDX);
   void line(int, int, int, int, color *, color *);
   void draw_line(int *, int, const environment *);
   void draw_polygon(int *, int, const environment *);
+  void special_link(const char *, const environment *);
 public:
   tty_printer();
   ~tty_printer();
@@ -404,6 +410,12 @@ void tty_printer::add_char(output_character c, int w,
   *pp = g;
 }
 
+void tty_printer::simple_add_char(const output_character c,
+				  const environment *env)
+{
+  add_char(c, 0, env->hpos, env->vpos, env->col, env->fill, 0);
+}
+
 void tty_printer::special(char *arg, const environment *env, char type)
 {
   if (type == 'u') {
@@ -443,6 +455,79 @@ void tty_printer::special(char *arg, const environment *env, char type)
       old_drawing_scheme = 0;
     update_options();
   }
+  else if (strncmp(command, "link", p - command) == 0)
+    special_link(p, env);
+}
+
+// Produce an OSC 8 hyperlink.  Given ditroff input of the form:
+//   x X tty: link [URI[ KEY=VALUE] ...]
+// produce "OSC 8 [;KEY=VALUE:]...;[URI]; ST ".  KEY/VALUE pairs can be
+// repeated arbitrarily and are separated by colons.  Omission of the
+// URI ends the hyperlink that was begun by specifying it.  See
+// <https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda>.
+void tty_printer::special_link(const char *arg, const environment *env)
+{
+  static bool is_link_active = false;
+  if (old_drawing_scheme)
+    return;
+  for (const char *s = OSC8; *s != '\0'; s++)
+    simple_add_char(*s, env);
+  simple_add_char(';', env);
+  char c = *arg;
+  if ('\0' == c || '\n' == c) {
+    simple_add_char(';', env);
+    if (!is_link_active)
+      warning("ending hyperlink when none was started");
+    is_link_active = false;
+  }
+  else {
+    // Our caller ensures that we see white space after 'link'.
+    assert(c == ' ' || c == '\t');
+    if (is_link_active) {
+      warning("new hyperlink started without ending previous one;"
+	      " recovering");
+      simple_add_char(';', env);
+	for (const char *s = ST; *s != '\0'; s++)
+	  simple_add_char(*s, env);
+	for (const char *s = OSC8; *s != '\0'; s++)
+	  simple_add_char(*s, env);
+	simple_add_char(';', env);
+    }
+    is_link_active = true;
+    do
+      c = *arg++;
+    while (c == ' ' || c == '\t');
+    arg--;
+    // The first argument is the URI.
+    char *uri = (char *)arg;
+    while (c != '\0' && c != ' ' && c != '\t')
+      c = *arg++;
+    ptrdiff_t uri_len = arg - uri - 1;
+    arg--;
+    // Any remaining arguments are "key=value" pairs.
+    char *pair = 0;
+    bool done = false;
+    do {
+      if (pair != 0)
+	simple_add_char(':', env);
+      pair = (char *)arg;
+      bool in_pair = true;
+      do {
+	c = *arg++;
+	if ('\0' == c)
+	  done = true;
+	else if (' ' == c || '\t' == c)
+	  in_pair = false;
+	else
+	  simple_add_char(c, env);
+      } while (!done && in_pair);
+    } while (!done);
+    simple_add_char(';', env);
+    for (size_t i = uri_len; i > 0; i--)
+      simple_add_char(*uri++, env);
+  }
+  for (const char *s = ST; *s != '\0'; s++)
+    simple_add_char(*s, env);
 }
 
 void tty_printer::change_color(const environment * const env)
@@ -926,3 +1011,9 @@ static void usage(FILE *stream)
   fprintf(stream, "usage: %s [-bBcdfhioruUv] [-F dir] [files ...]\n",
 	  program_name);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

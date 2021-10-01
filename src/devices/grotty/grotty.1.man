@@ -7,7 +7,7 @@ grotty \- groff output driver for typewriter-like (terminal) devices
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -105,7 +105,7 @@ reads the standard input stream.
 Output is written to the standard output stream.
 .
 .
-.LP
+.P
 By default,
 .I grotty
 emits SGR escape sequences
@@ -118,8 +118,6 @@ Devices supporting the appropriate sequences can view
 .I roff
 documents using eight different background and foreground colors.
 .
-.
-.LP
 Following ISO\~6429,
 the following colors are defined in
 .IR tty.tmac :
@@ -128,8 +126,10 @@ black, white, red, green, blue, yellow, magenta, and cyan.
 Unrecognized colors are mapped to the default color,
 which is dependent on the settings of the terminal.
 .
+OSC\~8 hyperlinks are produced for these devices.
 .
-.LP
+.
+.P
 In keeping with long-standing practice and the rarity of terminals,
 hardware or emulated,
 that support oblique or italic fonts,
@@ -140,18 +140,20 @@ option below.
 .
 .
 .\" ====================================================================
-.SS "SGR support in pagers"
+.SS "SGR and OSC support in pagers"
 .\" ====================================================================
 .
 When paging
 .IR grotty 's
 output with
 .IR less (1),
-the latter program must be instructed to pass SGR sequences through to
-the device;
+the latter program must be instructed to pass SGR and OSC sequences
+through to the device;
 its
 .B \-R
-option is one way to achieve this.
+option is one way to achieve this
+.RI ( less
+version 566 or later is required for OSC\~8 support).
 .
 Consequently,
 programs like
@@ -212,7 +214,7 @@ see subsection \[lq]Device control commands\[rq],
 below.
 .
 .
-.LP
+.P
 The legacy output format can be rendered on a video terminal
 (or emulator)
 by piping
@@ -251,10 +253,38 @@ There is therefore no need to filter its output through
 .\" ====================================================================
 .
 .I grotty
-understands a single device control function produced using the
+understands the following device control functions produced using the
 .I roff
 .B \[rs]X
 escape sequence in a document.
+.
+.
+.TP
+.BR "\[rs]X\[aq]tty: link " [\c
+.IR uri \~[ key\c
+.BI = value\c
+] \|.\|.\|.\|]\c
+.B \[aq]
+.
+Embed a hyperlink using the OSC 8 terminal escape sequence.
+.
+Specifying
+.I uri
+starts hyperlinked text,
+and omitting it ends the hyperlink.
+.
+When
+.I uri
+is is present,
+any number of additional key/value pairs can be specified;
+their interpretation is the responsibility of the terminal emulator.
+.
+Spaces or tabs cannot appear literally in
+.IR uri ,
+.IR key ,
+or
+.IR value ;
+they must be represented in an alternate form.
 .
 .
 .TP
@@ -269,12 +299,17 @@ is non-zero or missing, enable SGR sequences
 otherwise,
 use the legacy output format.
 .
+This device control command,
+like the
+.B \-c
+option,
+also prevents the emission of terminal OSC 8 hyperlink escape sequences.
+.
 .
 .\" ====================================================================
 .SS "Device description files"
 .\" ====================================================================
 .
-.LP
 If
 .I DESC
 file for the character encoding contains the keyword
@@ -290,7 +325,7 @@ See
 for more details.
 .
 .
-.LP
+.P
 A font description file may contain a command
 .RB \[lq] internalname\~\c
 .IR n \[rq]
@@ -353,6 +388,8 @@ Use
 .IR grotty 's
 legacy output format
 (see subsection \[lq]Legacy output format\[rq] above).
+.
+OSC\~8 hyperlink terminal escape sequences are not emitted.
 .
 .
 .TP
@@ -423,7 +460,7 @@ Render italic-styled text
 with the SGR attribute for italic text
 rather than underlined text.
 .
-Note that many terminals don't support this attribute;
+Many terminals don't support this attribute;
 however,
 .IR xterm (1),
 since patch\~#314 (2014-12-28),
@@ -563,7 +600,7 @@ Additional character definitions for use with
 .
 .\" The following no longer seems to be true; an inspection of the
 .\" font/*/dev*.am files suggests no evidence of it, at any rate.
-.\".LP
+.\".P
 .\"Note that on EBCDIC hosts,
 .\"only files for the \[lq]cp1047\[rq] device are installed.
 .
@@ -576,24 +613,24 @@ Additional character definitions for use with
 is intended only for simple documents.
 .
 .
-.LP
+.P
 There is no support for fractional horizontal or vertical motions.
 .
 .
-.LP
+.P
 There is no support for the
 .I roff
 .B \[rs]D
 escape sequence (draw command) other than horizontal and vertical lines.
 .
 .
-.LP
+.P
 Characters above the first line
 (i.e., with a vertical position of\~0)
 cannot be printed.
 .
 .
-.LP
+.P
 Color handling differs from
 .IR grops (@MAN1EXT@).
 .
@@ -625,7 +662,7 @@ not all of which may be supported by a given output device:
 (7)\~horizontal and vertical line-drawing.
 .
 .
-.LP
+.P
 .RS
 .EX
 You might see \ef[B]bold\ef[] and \ef[I]italic\ef[].
@@ -640,11 +677,11 @@ Black on cyan can have a \eM[cyan]\em[black]prominent\em[]\eM[]
 .RE
 .
 .
-.LP
+.P
 Compare and contrast the output of the following:
 .
 .
-.LP
+.P
 .RS
 .EX
 $ \c
@@ -666,7 +703,7 @@ $ \c
 .
 .
 .\" I wish this went without saying...
-.LP
+.P
 Note that the example file above is a \[lq]raw\[rq]
 .I groff
 document,
@@ -705,7 +742,15 @@ ECMA\-ST/\:Ecma\-048\:.pdf
 .UE .
 .
 .
-.LP
+.P
+.UR https://\:gist\:.github\:.com/\:egmontkob/\:\
+eb114294efbcd5adb1944c9f3cb5feda
+\[lq]Hyperlinks in Terminal Emulators\[rq]
+.UE ,
+Egmont Koblinger.
+.
+.
+.P
 .IR groff (@MAN1EXT@),
 .IR \%@g@troff (@MAN1EXT@),
 .IR groff_out (@MAN5EXT@),

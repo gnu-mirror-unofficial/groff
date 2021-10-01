@@ -1,5 +1,36 @@
 2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grotty]: Add OSC 8 hyperlink support.
+
+	* src/devices/grotty/tty.cpp: Do it.  Define `OSC` (Operating
+	System Command) and `ST` (String Terminator) preprocessor
+	symbols for these ECMA-48 (ISO 6429) character sequences.
+	(tty_printer::simple_add_char): Add stripped-down alternative to
+	`add_char()` member function for cases where we want to use many
+	defaults because we're writing a device control command, not
+	rendering a glyph.  (A function like `add_char()` that take 8
+	arguments of varying types is a code smell--phew!)
+	(tty_printer::special): Call `special_link()` member function if
+	the device control command is `link`.
+	(tty_printer::special_link): Add new member function to generate
+	OSC 8 hyperlinks.
+
+	* src/devices/grotty/grotty.1.man: Document it.  Observe in
+	multiple places that disablement of SGR escape sequences
+	disables OSC 8 too.
+
+	* src/devices/grotty/tests/osc8_works.sh: Test it.
+	* src/devices/grotty/grotty.am (TESTS, grotty_TESTS): Run test.
+	(EXTRA_DIST): Ship test.
+
+	* NEWS: Add item.
+
+	Fixes <https://savannah.gnu.org/bugs/?60666>.  Thanks to Steffen
+	Nurpmeso for supplying a proof-of-concept.  (I went with my own
+	implementation, though, so blame me if it breaks.)
+
+2021-10-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Convert special character glyphs corresponding to
 	Unicode Basic Latin ("ASCII") code points to those code points
 	when they occur in device escapes.  (They should be correct for
