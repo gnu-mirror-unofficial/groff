@@ -321,6 +321,10 @@ Other settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[MINGW]	Minimum gutter width	next page	2n
+\[rs]n[TC_MARGIN]	TOC page number margin width	next PX call\
+	\[rs]w'000'
+\[rs][TC_LEADER]	TOC leader character	next PX call\
+	.\[rs]h'1m'
 _
 .TE
 .
@@ -343,6 +347,20 @@ this is the case only for output to terminals and emulators thereof.
 The \[lq]gutter\[rq] affected by
 .B \[rs]n[MINGW]
 is the gap between columns in multiple-column page arrangements.
+.
+The
+.B TC_MARGIN
+register,
+and the
+.B TC_LEADER
+special character,
+take effect when printing any table of contents,
+which has been assembled using the
+.BR XS ,
+.BR XA ,
+and
+.B XE
+macros.
 .
 .
 .\" ====================================================================
@@ -1734,7 +1752,14 @@ Use the
 macro to print the table of contents at the end of the document,
 resetting the page number to\~\c
 .B i
-(Roman numeral\~1).
+(Roman numeral\~1);
+(note that the
+.B TC
+macro ultimately calls the
+.B PX
+macro,
+to print the table of contents,
+after resetting the page number).
 .
 .
 .P
@@ -1764,6 +1789,29 @@ suppresses printing the title
 specified by the
 .B \[rs]*[TOC]
 string.
+.
+.P
+You may control the style of the leaders,
+which extend each table of contents entry to fill the output line,
+to the beginning of the right side page margin field
+in which the page number is printed,
+by defining the
+.B TC_LEADER
+special character,
+(typically a combination of the
+.RB \[lq] . \[rq]
+glyph,
+and a specification for any space which is desired
+between adjacent leader dots).
+.
+.P
+You may adjust the width of the right-aligned page margin field,
+in which the page number is printed,
+(and which effectively increases
+the width of the right side page margin),
+by setting the
+.B TC_MARGIN
+register.
 .
 .
 .\" ====================================================================

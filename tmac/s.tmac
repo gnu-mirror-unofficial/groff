@@ -1751,9 +1751,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .	ps
 .\}
 .nf
-.char \[toc*leader-char] .\h'1m'
-.lc \[toc*leader-char]
-.ta (u;\\n[.l]-\\n[.i]-\w'000') (u;\\n[.l]-\\n[.i])R
+.if !r TC-MARGIN .nr TC-MARGIN \w'000'
+.if !c \[TC-LEADER] .char \[TC-LEADER] .\h'1m'
+.ta (u;\\n[.l]-\\n[.i]-\\n[TC-MARGIN]) (u;\\n[.l]-\\n[.i])R
+.lc \[TC-LEADER]
 .sp 2
 .toc*div
 .par@reset

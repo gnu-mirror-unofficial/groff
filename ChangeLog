@@ -1,3 +1,15 @@
+2021-10-01  Keith Marshall  <keith.d.marshall@ntlworld.com>
+
+	[ms]: Support user-defined TOC leader style.
+
+	* tmac/s.tmac (toc*leader-char): Rename it as...
+	(TC-LEADER): ...this; within PX, leave it unchanged, if predefined.
+	(TC-MARGIN): New numeric register; if predefined, leave it unchanged,
+	otherwise define as \w'000'; use it instead of hard-wired definition,
+	within PX; cf. <https://savannah.gnu.org/bugs/?61157>.
+
+	* tmac/groff_ms.7.man (TC_LEADER, TC_MARGIN): Document them.
+
 2021-09-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[pic]: Update input file name correctly.
