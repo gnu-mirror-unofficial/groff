@@ -1,5 +1,15 @@
 2021-10-02  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
+	Work around misplacement of link "hot-spots" in footnotes.
+
+	* pdfmark.ms (pdfhref-nobreak): New document-local macro; used instead
+	of "pdfhref", this forces paragraph adjustment before placement of any
+	unbreakable link text, for which line-wrap may be required.  Currently
+	observed only within footnotes, without adjustment, the "hot-spot" for
+	the link may be placed 1v above its associated text.
+
+2021-10-02  Keith Marshall  <keith.d.marshall@ntlworld.com>
+
 	Link footnote reference marks to footnote text.
 
 	* pdfmark.ms (FP): Redefine locally; replace s.tmac default.

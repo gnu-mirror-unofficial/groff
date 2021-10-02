@@ -153,6 +153,18 @@ Publishing with GNU Troff
 .nr pdf:fn.tag.width -\\w'\\*[pdf:fn.tag]'u
 .pdfhref L -D pdf:fn\\$1r -A \\h'\\n[pdf:fn.tag.width]u'\c -- \\*[pdf:fn.tag]
 ..
+.de pdfhref-nobreak
+.\" FIXME: I've only noticed this anomaly when planting pdfhref links
+.\" within footnotes; if the start of the link text is placed near the
+.\" line length limit, and all of it is moved to the start of the next
+.\" line, the "hot-spot" region is computed to be one line higher than
+.\" it should be; ending the preceding input line with "\c", and then
+.\" invoking pdfhref via this wrapper, works around this issue.
+.\"
+.ie \\n[.l]-\\n[.i]-\\n[.k]-\\w'\\$\\n[.$]' \&
+.el \p
+.pdfhref \\$*
+..
 .
 .\" Define a local macro to facilitate choice of style for emphasis;
 .\" by default, make it equivalent to the ms standard "I" macro.
@@ -396,8 +408,8 @@ GNU/Linux, and on \*[Microsoft] Windows\(tm2000 operating platforms, using
 .CW 1.19.1 ,\**
 .FS
 Later versions should, and some earlier versions may, be equally suitable.
-See
-.pdfhref W \*[GROFF-WEBSITE]
+See\c
+.pdfhref-nobreak W \*[GROFF-WEBSITE]
 for information and availability of the latest version.
 .FE
 in association with
@@ -406,8 +418,8 @@ in association with
 .CW 8.14 .\**
 .FS
 Again, other versions may be suitable.
-See
-.pdfhref W http://ghostscript.com
+See\c
+.pdfhref-nobreak W http://ghostscript.com
 for information and availability.
 .FE
 \&
@@ -427,8 +439,8 @@ on the \*[Microsoft] Windows\(tm platform,
 but several third party implementations are available.
 Some worth considering include the MKS\*(rg\~Toolkit,\**
 .FS
-A commercial offering; see
-.pdfhref W http://mkssoftware.com/products/tk/default.asp
+A commercial offering; see\c
+.pdfhref-nobreak W http://mkssoftware.com/products/tk/default.asp
 for information.
 .FE
 Cygwin,\**
@@ -441,16 +453,16 @@ POSIX
 .LG
 emulation environment and
 Unix\(tm
-toolkit for 32\(hybit \*[Microsoft] Windows\(tm platforms; see
-.pdfhref W http://cygwin.com
+toolkit for \%32\(hybit \*[Microsoft] Windows\(tm platforms; see\c
+.pdfhref-nobreak W http://cygwin.com
 for information and download.
 .FE
 or MSYS.\**
 .FS
 Another free, but minimal suite of common
 Unix\(tm
-tools for 32\(hybit \*[Microsoft] Windows\(tm, available for download from
-.pdfhref W -A ; https://mingw.osdn.io
+tools for \%32\(hybit \*[Microsoft] Windows\(tm, available for download from\c
+.pdfhref-nobreak W -A ; https://mingw.osdn.io
 it
 .EM does 
 include those tools listed above,
