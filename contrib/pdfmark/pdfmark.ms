@@ -1057,6 +1057,7 @@ It may be used in any redefined specification for
 (or in the analogous definition of
 .CW PDFHREF.VIEW ,
 described in
+'ne 2v
 .XR-NO-PREFIX pdfhref-view ),
 but
 .EM not
