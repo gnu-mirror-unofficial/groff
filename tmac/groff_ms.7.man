@@ -172,7 +172,9 @@ macro at the end of your document.
 The following tables list the document control registers and strings.
 .
 For any parameter whose default is unsatisfactory,
-define its register or string before calling any
+define its register,
+string,
+or special character before calling any
 .I ms
 macro other than
 .BR RP .
@@ -321,10 +323,10 @@ Other settings
 Parameter	Definition	Effective	Default
 _
 \[rs]n[MINGW]	Minimum gutter width	next page	2n
-\[rs]n[TC_MARGIN]	TOC page number margin width	next PX call\
-	\[rs]w'000'
-\[rs][TC_LEADER]	TOC leader character	next PX call\
-	.\[rs]h'1m'
+\[rs]n[TC\-MARGIN]	TOC page number margin width	next PX call\
+	\[rs]w\[aq]000\[aq]
+\[rs][TC\-LEADER]	TOC leader character	next PX call\
+	.\[rs]h\[aq]1m\[aq]
 _
 .TE
 .
@@ -350,12 +352,10 @@ is the gap between columns in multiple-column page arrangements.
 .
 The
 .B TC_MARGIN
-register,
-and the
+register and
 .B TC_LEADER
-special character,
-take effect when printing any table of contents,
-which has been assembled using the
+special character affect the formatting of tables of contents assembled
+by the
 .BR XS ,
 .BR XA ,
 and
@@ -385,7 +385,7 @@ multiplied by\~1000.
 In
 .I ms
 documents that don't need to be portable to other implementations,
-using a scaling indicator,
+use of a scaling indicator,
 as in
 .RB \[lq] ".nr PS 10.5p" \[rq],
 is preferable.
@@ -802,6 +802,12 @@ of
 .B .NH
 following redefinition of the alias for
 .BR \[rs]*[SN\-STYLE] .
+.
+The formatted number of the current section is available in
+.B \[rs]*[SN],
+facilitating its inclusion in
+.BR .XS / .XA / .XE
+table of contents entries.
 .
 .
 .TP
@@ -1818,76 +1824,144 @@ it is a GNU extension.
 .SS "Creating a table of contents"
 .\" ====================================================================
 .
-Wrap text that you want to appear in the table of contents in
+Define an entry to appear in the table of contents by bracketing its
+text between calls to
+the
 .B XS
 and
 .B XE
 macros.
 .
-Use the
-.B TC
-macro to print the table of contents at the end of the document,
-resetting the page number to\~\c
-.B i
-(Roman numeral\~1);
-(note that the
-.B TC
-macro ultimately calls the
-.B PX
+A typical application is to call them immediately after
+.B NH
+or
+.B SH
+and repeat the heading text within them.
+.
+The
+.B XA
 macro,
-to print the table of contents,
-after resetting the page number).
+used within
+.BR .XS / .XE
+pairs,
+supplements an entry\[em]for instance,
+when it requires multiple output lines,
+whether because a heading is too long to fit or because style dictates
+that page numbers not be repeated.
 .
-.
-.P
-You can manually create a table of contents
-by specifying a page number as the first argument to
-.BR XS .
-.
-Add subsequent entries using the
+In a document with a multi-level sectioning structure,
+you may wish to indent the text thus wrapped to correspond to its
+sectioning depth;
+this can be done in the entry text by prefixing it with tabs or
+horizontally spacing escape sequences,
+or by providing a second argument to the
 .B XA
 macro.
 .
-Use the
-.B PX
-macro to print a manually-generated table of contents
-without resetting the page number.
+.B .XS
+and
+.B .XA
+automatically associate the page number where they are called with the
+text following them,
+but they accept arguments to override this behavior.
 .
-.
-.P
-If you give the argument
-.RB \[lq] no \[rq]
-to either
-.B PX
+At the end of the document,
+call
+.B TC
 or
-.BR TC ,
-.I groff
-suppresses printing the title
-specified by the
+.B PX
+to emit the table of contents;
+.B .TC
+resets the page number
+.RB to\~ i
+(Roman numeral one),
+and then calls
+.BR PX .
+.
+.
+.TP
+.B .XS\c
+.RI \~[ page-number ]
+.TQ
+.B .XA\c
+.RI \~[ page-number \~[ indentation ]]
+.TQ
+.B .XE
+Begin,
+supplement,
+and end a table of contents entry.
+.
+Each entry is associated with
+.I page-number
+(otherwise the current page number);
+a
+.I page-number
+of
+.RB \[lq] no \[rq]
+prevents a leader and page number from being emitted for that entry.
+.
+Use of
+.B .XA
+within
+.BR .XS / .XE
+is optional;
+it can be repeated.
+.
+If
+.I indentation
+is present,
+a supplemental entry is indented by that amount;
+ens are assumed if no unit is indicated.
+.
+Text on input lines between
+.B .XS
+and
+.B .XE
+is stored for later recall by
+.BR .PX .
+.
+.
+.TP
+.BR .PX \~[ no ]
+Switch to single-column layout.
+.
+Unless
+.RB \[lq] no \[rq]
+is specified,
+center and interpolate
 .B \[rs]*[TOC]
-string.
+in bold and two points larger than the body text.
+.
+Emit the table of contents entries.
+.
+.
+.TP
+.BR .TC \~[ no ]
+Set the page number to 1,
+the page number format to lowercase Roman numerals,
+and call
+.B PX
+(with a
+.RB \[lq] no \[rq]
+argument,
+if present).
+.
 .
 .P
-You may control the style of the leaders,
-which extend each table of contents entry to fill the output line,
-to the beginning of the right side page margin field
-in which the page number is printed,
-by defining the
-.B TC_LEADER
-special character,
-(typically a combination of the
-.RB \[lq] . \[rq]
-glyph,
-and a specification for any space which is desired
-between adjacent leader dots).
+You can customize the style of the leader that bridges each table of
+contents entry with its page number;
+define the
+.B TC\-LEADER
+special character by using the
+.B char
+request.
 .
-.P
-You may adjust the width of the right-aligned page margin field,
-in which the page number is printed,
-(and which effectively increases
-the width of the right side page margin),
-by setting the
-.B TC_MARGIN
+A typical leader combines the dot glyph
+.RB \[lq] .\& \[rq]
+with a horizontal space escape sequence to spread the dots.
+.
+The width of the page number field is stored in the
+.B TC\-MARGIN
 register.
 .
 .
