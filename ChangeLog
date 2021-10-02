@@ -57,7 +57,7 @@
 	symbols for these ECMA-48 (ISO 6429) character sequences.
 	(tty_printer::simple_add_char): Add stripped-down alternative to
 	`add_char()` member function for cases where we want to use many
-	defaults because we're writing a device control command, not
+	defaults because we're writing a terminal escape sequence, not
 	rendering a glyph.  (A function like `add_char()` that take 8
 	arguments of varying types is a code smell--phew!)
 	(tty_printer::special): Call `special_link()` member function if
