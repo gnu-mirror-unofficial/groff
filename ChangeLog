@@ -3995,7 +3995,12 @@
 	macro instead of RI.  The latter seemed kind of random and TH
 	is even more guaranteed to exist; it is the macro name most
 	characteristic of the man(7) language and the andoc.tmac
-	superstructure relies on it.
+	superstructure relies on it.  (TH may have been avoided because
+	of its use with tbl(1); however, neither man(7) nor mdoc(7)
+	support tbl's TH feature, and GNU tbl does not supply its own
+	empty fallback definition as it does for TS and TE.  If we ever
+	want TH-like functionality in future man pages, I suggest we
+	pick a new, non-colliding name for it.)
 	(initialization): Relocate load of devtag package; we don't
 	need it before entering compatibility mode.  Move assignment of
 	format of an-page-letter register from a "loose declaration"
