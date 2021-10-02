@@ -499,18 +499,57 @@ the appropriate macro calls, as described below, may be placed in the
 .CW groff
 document source, which should then be processed with a
 .CW groff
-command of the form
+command of the form\**
+.FS
+.pdfhref M pdf-features-fn
+.nr pdf-features-fn \n[fn*text-num]
+Note that,
+if any
+.CW -T \^\c
+.CWI dev
+option is specified,
+it should be either
+.CW -T \^\c
+.CW ps ,
+or
+.CW -T \^\c
+.CW pdf ;
+any other explicit choice is unlikely to be compatible with
+.CW -m \|\|\c
+.CW pdfmark ,
+and will have an unpredictable
+(possibly erroneous)
+effect on the ouput.
+If no
+.CW -T \^\c
+.CWI dev
+option is specified,
+(in which case
+.CW -T \^\c
+.CW ps
+is implicitly assumed),
+or if
+.CW -T \^\c
+.CW ps
+is explicitly specified,
+then the output will be produced in \*[PostScript] format,
+and will require conversion to PDF,
+(e.g. by using GhostScript tools);
+explicit specification of
+.CW -T \^\c
+.CW pdf
+will result in direct output in PDF format,
+thus obviating the need for conversion.
+.FE
 .QP
 .fam C
-groff -Tps [-m
-.I name "] -m"
+groff [-Tps\h'0.2p'|\h'0.2p'-Tpdf] [-m\F[]\|\|\FC\c
+.I name ]
+-m\F[]\|\|\FC\c
 .B pdfmark
-.I options \& [-
-.I "file ..." \& "...] "
-.LP
-(Or use the PDF post-processor to avoid using ghostscript,
-.CW -Tpdf\c
-).
+.I options \F[]\|\|\FC\c [-
+.I file \F[]\|\|\FC\c "...] "
+\&...
 .LP
 It may be noted that the
 .CW pdfmark
@@ -2678,17 +2717,41 @@ macros in conjunction with the
 macros,
 simply by issuing a
 .CW groff
-command of the form
+command of the form\**
+.FS
+Once again,
+.pdfhref L -D pdf-features-fn -- as noted in footnote\*{\n[pdf-features-fn]\*}
+to
+.XR-NO-PREFIX pdf-features ,
+do not specify any
+.CW -T \^\c
+.CWI dev
+option,
+other than
+.CW -T \^\c
+.CW ps ,
+or
+.CW -T \^\c
+.CW pdf ;
+specify
+.CW -T \^\c
+.CW pdf ,
+if you wish to avoid the conversion of \*[PostScript] output to PDF,
+which will be required if you specify
+.CW -T \^\c
+.CW ps ,
+or if you omit the
+.CW -T \^\c
+.CWI dev
+option entirely.
+.FE
 .QP
 .fam C
-groff -Tps
-.B -mspdf
-.I "-options ...\&" ] [
-file(s) ...
-.LP
-(Or use the PDF post-processor to avoid using ghostscript,
-.CW -Tpdf\c
-).
+groff [-Tps\h'0.2p'|\h'0.2p'-Tpdf] [-m\F[]\|\|\FC\c
+.B spdf
+.I options \F[]\|\|\FC\c [-
+.I file \F[]\|\|\FC\c "...] "
+\&...
 .LP
 When using the
 .CW spdf.tmac
@@ -2747,6 +2810,7 @@ macro.
 .
 .NH 4
 .XN -S -N xn-macro -- The \F[C]XN\F[] Macro
+.bp
 .
 .NH 1
 .XN The PDF Publishing Process
