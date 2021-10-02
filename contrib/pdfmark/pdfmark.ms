@@ -78,9 +78,8 @@ Publishing with GNU Troff
 .nr PO  2.5c
 .nr LL 17.0c
 .nr LT 17.0c
-.nr HY  0
-.nr FF  3
 .nr DI  5n
+.nr HY  0
 .
 .\" Within the table of contents, the width of the right-hand margin,
 .\" in which space is reserved for the display of page numbers, and the
@@ -94,6 +93,66 @@ Publishing with GNU Troff
 .\"
 .nr GROWPS 4
 .nr PSINCR 1.5p
+.
+.
+.\" Implement an interface with the FS macro (from s.tmac) to facilitate
+.\" placement of footnote reference marks, with each serving as an active
+.\" pdfhref link to the associated footnote itself.
+.\"
+.de pdf:fn.mark nr
+.\" Macro to replace original duty performed by "\**"; must be invoked
+.\" at point of footnote mark placement, e.g. by FS, BEFORE recording of
+.\" the associated text within the footnote diversion is commenced.
+.\"
+.ie \\n[.$] \{\
+.   pdfhref L -D pdf:fn\\$1 -- \\$2
+.   pdfhref M -N pdf:fn\\$1r
+.   \}
+.\"
+.\" s.tmac does not publicly expose its auto-incrementing footnote index;
+.\" to avoid a dependency on an undocumented internal feature, we create
+.\" our own counter, while keeping the internal index synchronized, by
+.\" interpolating a renamed "\**", each time we increment our counter.
+.\"
+.el .\\$0 \\n+[pdf:fn.index.count] \\*[pdf:fn.index]
+.nr pdf:fn.index.count 0 1
+.rn * pdf:fn.index
+.ds * \c
+.
+.\" For versions of s.tmac which support the FS-MARK callback hook, it
+.\" is sufficient for us to answer the callback request.
+.\"
+.\" FIXME: in time, we may be able to unconditionally assume that this
+.\" callback hook will be supported...
+.\"
+.ie d FS-MARK .als FS-MARK pdf:fn.mark
+.el \{\
+.\" ...but in the interim, we may need to redefine s.tmac's FS macro,
+.\" (actually the @FS internal macro, rather than FS itself), to gain
+.\" an effect equivalent to taking control of FS-MARK, to achieve the
+.\" placement of a footnote mark as an active pdfhref link.
+.\"
+.rn @FS pdf:fn.record
+.de @FS
+.pdf:fn.mark
+.pdf:fn.record
+..
+.\}
+.\" Override s.tmac's (undocumented) footnote output hook; this emulates
+.\" the default output style for \n[FF] == 3 footnotes, with the footnote
+.\" number formatted as a pdfhref link back to the position at which the
+.\" footnote marker appears, within the document text.
+.\"
+.de FP
+.LP
+.nr pdf:fn.tag.width (u;2*\\n[FI])
+.ds pdf:fn.tag \s'-1.5p'\\$1.\s'+1.5p'
+.pdfhref M -N pdf:fn\\$1
+.in +\\n[pdf:fn.tag.width]u
+.ti -\\n[pdf:fn.tag.width]u
+.nr pdf:fn.tag.width -\\w'\\*[pdf:fn.tag]'u
+.pdfhref L -D pdf:fn\\$1r -A \\h'\\n[pdf:fn.tag.width]u'\c -- \\*[pdf:fn.tag]
+..
 .
 .\" Define a local macro to facilitate choice of style for emphasis;
 .\" by default, make it equivalent to the ms standard "I" macro.
@@ -334,10 +393,8 @@ All of the techniques described have been tested on
 .EM both
 GNU/Linux, and on \*[Microsoft] Windows\(tm2000 operating platforms, using
 .CW groff
-.CW 1.19.1 ,\c
-.pdfhref L -D footnote1 -- \**
+.CW 1.19.1 ,\**
 .FS
-.pdfhref M footnote1
 Later versions should, and some earlier versions may, be equally suitable.
 See
 .pdfhref W \*[GROFF-WEBSITE]
@@ -346,15 +403,14 @@ for information and availability of the latest version.
 in association with
 .CW AFPL
 .CW GhostScript
-.CW 8.14 .\c
-.pdfhref L -D footnote2 -- \**
+.CW 8.14 .\**
 .FS
-.pdfhref M footnote2
 Again, other versions may be suitable.
 See
 .pdfhref W http://ghostscript.com
 for information and availability.
 .FE
+\&
 Other tools employed, which should be readily available on
 .EM any
 Unix\(tm
@@ -401,6 +457,7 @@ include those tools listed above,
 and is the package which was actually used when performing the Windows\(tm2000
 platform tests referred to in the text.
 .FE
+\&
 This list is by no means exhaustive, and should in no way be construed as an
 endorsement of any of these packages, nor to imply that other similar packages,
 which may be available, are in any way inferior to them.
