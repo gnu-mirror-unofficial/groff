@@ -5431,13 +5431,15 @@ static void encode_char(macro *mac, char c)
       else if (strcmp("ti", sc) == 0)
 	mac->append('^');
       else
-	error("special character '%1' cannot be used within \\X", sc);
+	error("special character '%1' cannot be used within device"
+	      " control escape sequence", sc);
     }
     else if (!(tok.is_hyphen_indicator()
 	       || tok.is_dummy()
 	       || tok.is_transparent_dummy()
 	       || tok.is_zero_width_break()))
-      error("%1 is invalid within \\X", tok.description());
+      error("%1 is invalid within device control escape sequence",
+	    tok.description());
   }
   else {
     if ((font::use_charnames_in_special) && (c == '\\')) {
