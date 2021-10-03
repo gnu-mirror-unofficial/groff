@@ -21,8 +21,8 @@
 .ds FR 1
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND August 2021
-.EH '%''August 2021'
+.ND October 2021
+.EH '%''\*[DY]'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -300,7 +300,9 @@ A list of document control registers and strings follows.
 They are presented in the syntax used to interpolate them.
 .
 For any parameter whose default is unsatisfactory,
-define its register or string before calling any
+define its register,
+string,
+or special character before calling any
 .I ms
 macro other than
 .CW RP .
@@ -358,6 +360,10 @@ Displays	\[rs]n[DD]	Display distance (spacing)	\f[I]special	0.5v \f[R](\f[]1v\f[
 \^	\[rs]n[DI]	Display indentation	\f[I]special	0.5i
 _
 Other	\[rs]n[MINGW]	Minimum gutter width	next page	2n
+\^	\[rs]n[TC\-MARGIN]	TOC page number margin width\
+	next \f[CR]PX\f[] call	\[rs]w\[aq]000\[aq]
+\^	\[rs][TC\-LEADER]	TOC leader character	\
+next \f[CR]PX\f[] call	.\[rs]h\[aq]1m\[aq]
 .TE
 .
 .
@@ -1035,6 +1041,14 @@ of
 .CW .NH
 following redefinition of the alias for
 .CW \[rs]*[SN\-STYLE] .
+.
+The formatted number of the current section is available in
+.CW \[rs]*[SN] ,
+facilitating its inclusion in
+.CW .XS /\c
+.CW .XA /\c
+.CW .XE
+table of contents entries.
 .
 .
 .TS
@@ -2694,40 +2708,196 @@ T}
 .KE
 .
 .
+.\" ------------------------
 .NH 2
 Creating a table of contents
 .XS
 	Creating a table of contents
 .XE
 .LP
-The facilities in the
+Because
+.I roff
+formatters process their input in a single pass,
+material on page 50,
+for example,
+cannot influence what appears on page 1\[em]this poses a challenge for a
+table of contents at its traditional location in front matter,
+if you wish to avoid manually maintaining it.
+.
 .I ms
-macro package for creating a table of contents
-are semi-automated at best.
-Assuming that you want the table of contents to
-consist of the document's headings, you need to
-repeat those headings wrapped in
-.CW .XS
-and
-.CW .XE
-macros.
+enables the collection of material to be presented in the table of
+contents as it appears,
+saving its page number along with it,
+and then emitting the collected contents on demand toward the end of the
+document.
+.
+The table of contents can then be resequenced to its desired location
+as part of post-processing\[em]with a PDF page relocation tool,
+or by physically rearranging the pages of a printed document,
+depending on the output format and cirumstances.
 .
 .
 .PP
-In addition,
+Define an entry to appear in the table of contents by bracketing its
+text between calls to
 the
 .CW XS
-macro does not know to indent a heading based on its level.
+and
+.CW XE
+macros.
 .
-The easiest way to work around this is to add tabs to the table of
-contents string.
+A typical application is to call them immediately after
+.CW NH
+or
+.CW SH
+and repeat the heading text within them.
 .
-The following is an example.
+The
+.CW XA
+macro,
+used within
+.CW .XS /\c
+.CW .XE
+pairs,
+supplements an entry\[em]for instance,
+when it requires multiple output lines,
+whether because a heading is too long to fit or because style dictates
+that page numbers not be repeated.
+.
+In a document with a multi-level sectioning structure,
+you may wish to indent the text thus wrapped to correspond to its
+sectioning depth;
+this can be done in the entry text by prefixing it with tabs or
+horizontally spacing escape sequences,
+or by providing a second argument to the
+.CW XA
+macro.
+.
+.CW .XS
+and
+.CW .XA
+automatically associate the page number where they are called with the
+text following them,
+but they accept arguments to override this behavior.
+.
+At the end of the document,
+call
+.CW TC
+or
+.CW PX
+to emit the table of contents;
+.CW .TC
+resets the page number
+.B i "" to\~
+(Roman numeral one),
+and then calls
+.\" XXX ".BR PX ." here throws diagnostic with WRONG LINE NUMBER
+.CW PX .
 .
 .
 .TS
+box;
+cb cb
+lf(CR) lx .
+Macro	Description
+_
+\&.XS \f[R][\f[I]page-number\f[]]	T{
+Begin,
+supplement,
+and end a table of contents entry.
+.
+Each entry is associated with
+.I page-number
+(otherwise the current page number);
+a
+.I page-number
+of
+.CW no
+prevents a leader and page number from being emitted for that entry.
+.
+Use of
+.CW .XA
+within
+.CW .XS /\c
+.CW .XE
+is optional;
+it can be repeated.
+.
+If
+.I indentation
+is present,
+a supplemental entry is indented by that amount;
+ens are assumed if no unit is indicated.
+.
+Text on input lines between
+.CW .XS
+and
+.CW .XE
+is stored for later recall by
+.CW .PX .
+T}
+\&.XA \f[R][\f[I]page-number\f[] [\f[I]indentation\f[]]]	\^
+\&.XE	\^
+_
+\&.PX \f[R][\f[]no\f[R]]	T{
+Switch to single-column layout.
+.
+Unless
+.CW no
+is specified,
+center and interpolate
+.CW \[rs]*[TOC]
+in bold and two points larger than the body text.
+.
+Emit the table of contents entries.
+T}
+_
+\&.TC \f[R][\f[]no\f[R]]	T{
+Set the page number to 1,
+the page number format to lowercase Roman numerals,
+and call
+.CW PX
+(with a
+.CW no
+argument,
+if present).
+T}
+.TE
+.
+.
+.PP
+You can customize the style of the leader that bridges each table of
+contents entry with its page number;
+define the
+.CW TC\-LEADER
+special character by using the
+.CW char
+request.
+.
+A typical leader combines the dot glyph
+.CW .\& \[rq] \[lq]
+with a horizontal space escape sequence to spread the dots.
+.
+The width of the page number field is stored in the
+.CW TC\-MARGIN
+register.
+.
+.
+.KS
+.PP
+Here's an example of typical
+.I ms
+table of contents preparation and
+(a simulation of)
+its result.
+.
+.ds DOT \h'1m'.\"
+.TS
 box center;
-l .
+cb | cb
+l | c.
+Input	Result
+_
 T{
 .nf
 .CW
@@ -2743,16 +2913,47 @@ Introduction
 Methodology
 \&.XS
 \[->]Methodology
+\&.XA
+\[->]\[->]Fassbinder\[aq]s Approach
+\[->]\[->]Kahiu\[aq]s Approach
 \&.XE
 .R
 \&.\|.\|.
+.CW
+\&.NH 1
+Findings
+\&.XS
+Findings
+\&.XE
+.R
+\&.\|.\|.
+.CW
+\&.TC
 .fi
+T}	T{
+.sp 1v
+.nf
+.LG
+.\" Manual centering--ugh!
+.B "\h'2m'Table of Contents"
+.NL
+.sp 2v
+.\" Use absolute motions to gets the dots aligned.
+Introduction\h'|4.5m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\01
+\h'1m'Methodology\h'|4.5m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\02
+\h'2m'Fassbinder's Approach
+\h'2m'Kahiu's Approach
+\&.\|.\|.
+.\" XXX: Why doesn't \h'|3.5m' achieve alignment?
+Findings\h'|3.2m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\08
 T}
 .TE
+.rm DOT
+.KE
 .
 .
-.LP
-The
+.PP
+Provins's
 .I "Groff and Friends HOWTO"
 includes a
 .I sed
@@ -2761,14 +2962,16 @@ script that automatically inserts
 and
 .CW .XE
 entries after each heading in a document.
-.PP
+.
 Altering the
-.CW .NH
-macro to automatically build the table of contents
-is perhaps initially more difficult, but would save
-a great deal of time in the long run if you use
+.CW NH
+macro to automatically build the table of contents is perhaps initially
+more difficult,
+but could save a great deal of time in the long run if you use
 .I ms
 regularly.
+.
+.
 .\" ------------------------
 .NH 1
 Differences from AT&T
