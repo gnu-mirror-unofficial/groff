@@ -1,3 +1,49 @@
+2021-10-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[andoc,man,mdoc]: Fix Savannah #61266.  Resolve problems in
+	batch rendering of man pages to PDF arising from entanglement
+	of end-of-input traps, page location traps, continuous rendering
+	mode, and andoc's reloading of the (m)an and (m)doc packages.
+
+	* tmac/andoc.tmac (reload-doc, reload-man): Remove end-of-input
+	traps alongside others.
+
+	* tmac/an.tmac (an-end): Only perform flush and "manual" page
+	footer placement if in continuous rendering mode, since this
+	macro is not only called by a trap placed only in continuous
+	rendering mode, but also by andoc when changing macro packages.
+	Unconditionally remove the `an-header` trap since the next
+	document might be using a different macro package.
+
+	* tmac/mdoc/doc-common: In initialization, set flag indicating
+	that manual header placement will be required.
+	(Dt): Call `doc-setup-header` (which sets up several types of
+	trap) unconditionally, and break the page if the vertical
+	drawing position is anywhere but at the top.
+	(Os): If the package has just been initialized, call
+	`doc-header` to force the page header to be written.
+	(doc-end-macro): Remove `doc-header` trap since the next
+	document might be using a different macro package.  Break the
+	page.  Set flag indicating that manual header placement will be
+	required for the next document.
+
+	* tmac/mdoc/doc-ditroff (doc-setup-header): Only set page
+	location traps for the header and footer if not continuously
+	rendering.
+	* tmac/mdoc/doc-nroff (doc-setup-header): Stop calling
+	`doc-header` here if continuously rendering.  Emit an
+	unconditional break.  Except for the location of the footer
+	trap, the `doc-setup-header` implementations are now identical.
+
+	Refactoring is needed: some macros and registers have misleading
+	names, there is some code duplication in mdoc, and some of the
+	trap management problems are solved in slightly different ways
+	in man(7) and mdoc(7), perhaps unnecessarily.  We also need some
+	test scripts to protect us from regressions.  But this fixes the
+	rendering problems.
+
+	Fixes <https://savannah.gnu.org/bugs/?61266>.
+
 2021-10-02  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
 	Correct manpage typo/inconsistency.

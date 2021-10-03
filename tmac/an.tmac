@@ -98,10 +98,12 @@
 .  pl \\n[nl]u
 ..
 .
-.\" We need an end macro for continuous rendering as well, to flush any
-.\" pending output line and write the footer for the final man page
-.\" rendered.
+.\" We need an end macro to flush any pending output line and write the
+.\" footer for the final man page rendered.  We can also be called by
+.\" andoc when switching to an mdoc(7) page, irrespective of continuous
+.\" rendering mode.
 .de1 an-end
+.  if \\n[cR] \{\
 .  fl
 .  pl +1v
 .  sp 1v
@@ -115,6 +117,8 @@
 \D'l \\n[LL]u 0'
 .    fi
 .  \}
+.  \}
+.  ch an-header
 .  bp
 ..
 .
