@@ -951,7 +951,8 @@ Further automatic numbering,
 if used,
 resumes using the specified heading level indices as their predecessors.
 .
-This feature is a GNU extension.
+\" Although undocumented in Tuthill's 4.2BSD ms.diffs paper...
+This feature is a Berkeley extension.
 T}
 .TE
 .
@@ -2981,11 +2982,20 @@ Differences from AT&T
 .I ms
 .XE
 .LP
-This section lists the (minor) differences between the
+The
 .I "groff ms"
-macros and AT&T
-.I ms
-macros.
+macros are a complete re-implementation,
+using no original AT&T code.
+.
+Since they take advantage of the extended features in
+.I groff ,
+they cannot be used with AT&T
+.I troff .
+.
+.I "groff ms"
+supports several features described above as Berkeley and Version 10
+Research Unix extensions,
+and adds several of its own.
 .
 .
 .PP
@@ -3109,16 +3119,6 @@ but it doesn't work\[rq].
 In
 .I "groff ms" ,
 it does.
-.
-.
-.PP
-.I "groff ms"
-handles
-.CW S \[rq] \[lq]
-as the first argument to the
-.CW NH
-macro specially,
-allowing alteration of the automatic heading numbering sequence.
 .
 .
 .PP
