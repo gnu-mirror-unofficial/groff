@@ -169,8 +169,8 @@ _
 \&.TH	Title heading	Document structure macros
 \&.TP	Tagged paragraph	Paragraph macros
 \&.TQ	Supplemental paragraph tag	Paragraph macros
-\&.UE	URL end	Hyperlink macros
-\&.UR	URL start	Hyperlink macros
+\&.UE	URI end	Hyperlink macros
+\&.UR	URI start	Hyperlink macros
 \&.YS	Synopsis end	Command synopsis macros
 .TE
 .
@@ -1120,7 +1120,7 @@ _endif()dnl
 .
 Email addresses are bracketed with
 .BR .MT / .ME
-and URL hyperlinks with
+and other forms of hyperlink with
 .BR .UR / .UE .
 .
 .
@@ -1200,12 +1200,12 @@ endings.
 .
 _endif()dnl
 .TP
-.BI .UR " URL"
+.BI .UR " uri"
 .TQ
 .BR .UE " ["\c
 .IR punctuation ]
 Identify
-.I URL
+.I uri
 as an RFC 3986 URI hyperlink with the text between the two macro calls
 as the link text.
 .
@@ -1215,12 +1215,12 @@ argument to
 .B .UE
 is placed at the end of the link text without intervening space.
 .
-.I URL
+.I uri
 may not be visible in the rendered document if the output driver
 supports hyperlinks.
 .
 If it does not,
-.I URL
+.I uri
 is set in angle brackets after the link text and before
 .IR punctuation .
 .
