@@ -1,5 +1,14 @@
 2021-10-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an.tmac (SH, SS): Invoke `ne` request _before_ performing
+	font remapping: any page-breaking decision will be taken before
+	the remapping happens, and so won't be in effect across a page
+	boundary, undesirably impacting header and footer text.
+
+	Fixes <https://savannah.gnu.org/bugs/?61279>.
+
+2021-10-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Regression-test Savannah #61279.
 
 	* tmac/tests/an_font-remapping-does-not-affect-titles.sh: Do it.
