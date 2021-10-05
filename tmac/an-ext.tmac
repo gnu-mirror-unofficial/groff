@@ -33,6 +33,12 @@
 .if \n(.g \{\
 .  if '\*(.T'html' \
 .    nr mH 1
+.  if '\*(.T'ascii' \
+.    nr mY 1
+.  if '\*(.T'cp1047' \
+.    nr mY 1
+.  if '\*(.T'latin1' \
+.    nr mY 1
 .  if '\*(.T'utf8' \
 .    nr mY 1
 .  nr mU \n(mH+\n(mY

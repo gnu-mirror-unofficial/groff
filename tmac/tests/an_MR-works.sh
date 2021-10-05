@@ -20,36 +20,35 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-# Regression-test Savannah #61279.
-#
-# If a SH or SS (sub)section heading was about to be output at the
-# bottom of a page but wasn't because of the vertical space .ne-eded,
-# we want to ensure that font remapping for the headings doesn't affect
-# page footers and headers.
-
-FAIL=
-
-INPUT='.TH \\fIfoo\\fP 1 2021-10-04 "groff test suite"
+INPUT='.TH foo 1 2021-10-06 "groff test suite"
 .SH Name
 foo \\- a command with a very short name
 .SH Description
 The real work is done by
 .MR bar 1 .'
 
-OUTPUT=$(echo "$INPUT" | "$groff" -Tascii -man -Z)
+OUTPUT=$(echo "$INPUT" | "$groff" -Tascii -rU1 -man -Z | nl)
 
 # Expected:
-#   87  tby
-#   88  wf2
-#   89  h24
-#   90  tbar
-#   91  f1
-#   92  t(1).
-#   93  n40 0
+#   91  x X tty: link man:bar(1)
+#   92  f2
+#   93  tbar
+#   94  f1
+#   95  t(1)
+#   96  V280
+#   97  H912
+#   98  x X tty: link
 
 set -e
-echo "$OUTPUT" | nl | grep -E '88[[:space:]]+wf2'
-echo "$OUTPUT" | nl | grep -E '91[[:space:]]+f1'
-echo "$OUTPUT" | nl | grep -E '92[[:space:]]+t\(1\).'
+echo "checking for opening 'link' device control command" >&2
+echo "$OUTPUT" | grep -Eq '91[[:space:]]+x X tty: link man:bar\(1\)$'
+echo "checking for correct man page title font style" >&2
+echo "$OUTPUT" | grep -Eq '92[[:space:]]+f2'
+echo "$OUTPUT" | grep -Eq '93[[:space:]]+tbar'
+echo "checking for correct man page section font style" >&2
+echo "$OUTPUT" | grep -Eq '94[[:space:]]+f1'
+echo "$OUTPUT" | grep -Eq '95[[:space:]]+t\(1\)'
+echo "checking for closing 'link' device control command" >&2
+echo "$OUTPUT" | grep -Eq '98[[:space:]]+x X tty: link$'
 
 # vim:set ai et sw=4 ts=4 tw=72:

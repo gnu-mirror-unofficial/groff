@@ -1,3 +1,17 @@
+2021-10-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Fix oversight and improve `MR` test.
+
+	* tmac/an-ext.tmac (initialization): Enable `mY` register to
+	indicate use of grotty(1) (and therefore OSC 8 support) if the
+	"ascii", "cp1047", or "latin1" output devices are used, not just
+	"utf8".
+
+	* tmac/tests/an_MR-works.sh: Drop copy-and-paste cruft from a
+	different test.  Update expected output and check for the
+	presence of "link" device control subcommands, not just correct
+	font selections.
+
 2021-10-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Add `MR` macro for man page cross references.
