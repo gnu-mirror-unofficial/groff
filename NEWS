@@ -136,6 +136,35 @@ o The an (man) macro package can now produce clickable hyperlinks within
   "grotty(1)" and no additional garbage characters, then you may wish to
   edit "man.local" to remove the lines that disable this feature.
 
+o The an (man) macro package supports a new macro, "MR", intended for
+  use by man page cross references in preference to the font style
+  alternation macros historically used.  Where before you would write
+    .BR ls (1).
+  or
+    .IR ls (1).
+  you should now write
+    .MR ls 1 .
+  (the third argument, typically used for trailing punctuation, is
+  optional).  Because the macro semantically identifies a man page, it
+  also creates a clickable hyperlink ("man:ls(1)" for the above example)
+  on supporting devices.  A new string, MF, defines the font to be used
+  for setting man page titles (the first argument to .MR and .TH),
+  permitting its configuration by distributions, sites, and users.
+
+  The MR macro is offered for compatibility with Plan 9 troff, which
+  introduced it in August 2020, and to ameliorate several long-standing
+  problems with man page cross references: (1) the package's lack of
+  inherent hyperlink support for them; (2) false-positive identification
+  of strings resembling man page cross references (as can happen with
+  "exit(1)", "while(1)", "sleep(5)", "time(0)" and others) by terminal
+  emulators and other programs; (3) the unwanted intrusion of hyphens in
+  man page names, which frustrates copy-and-paste operations (this
+  problem has always been avoidable through use of the \% escape
+  sequence, but cross references are frequent in man pages and some page
+  authors are inexpert *roff users); and (4) deep divisions in man page
+  maintenance communities over which typeface should be used to set the
+  man page title (italics, roman, or bold).
+
 o Part of the an (man) macro package has been renamed from "an-old.tmac"
   to "an.tmac", replacing a file that sourced the "andoc.tmac" wrapper.
   This means that the "-man" argument to groff (or nroff, or troff) will

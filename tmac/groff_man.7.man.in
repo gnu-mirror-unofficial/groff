@@ -154,6 +154,7 @@ _
 \&.IR	Italic, roman alternating	Font style macros
 \&.LP	(Left) paragraph	Paragraph macros
 \&.ME	Mail-to end	Hyperlink macros
+\&.MR	Man page cross reference	Hyperlink macros
 \&.MT	Mail-to start	Hyperlink macros
 \&.P	Paragraph	Paragraph macros
 \&.PP	Paragraph	Paragraph macros
@@ -1118,14 +1119,46 @@ _endif()dnl
 .SS "Hyperlink macros"
 .\" ====================================================================
 .
+Man page cross references
+_ifstyle()dnl
+like
+.MR ls 1
+_endif()dnl
+are best presented with
+.BR .MR .
+.
 Email addresses are bracketed with
 .BR .MT / .ME
 and other forms of hyperlink with
 .BR .UR / .UE .
 .
+Hyperlinked text is supported on the
+.B html
+and
+.B tty
+output devices;
+terminals and pager programs must support EMCA-48 OSC\~8 escape
+sequences
+(see
+.MR grotty @MAN1EXT@ ).
+.
+When device support is unavailable or disabled with the
+.B U
+register
+(see section \[lq]Options\[rq] below),
+.B .MT
+and
+.B .UR
+URIs are rendered after the linked text.
+.
 .
 .P
-These macros are GNU extensions not defined on systems running
+.BR .MT ,
+.BR .ME ,
+.BR .UR ,
+and
+.B .UE
+are GNU extensions not defined on systems running
 AT&T,
 Plan\~9,
 or
@@ -1134,6 +1167,54 @@ Solaris
 see
 .I an\-ext.tmac
 in section \(lqFiles\(rq below.
+.
+Plan\~9
+.I troff \" Plan 9
+implements
+.BR .MR .
+.
+.
+.TP
+.BI .MR "\~page-title page-section"\c
+.RI \~[ trailing-text ]
+Set a man page cross reference as
+.RI \[lq] page-title ( page-section )\[rq].
+.
+If
+.I trailing-text
+(typically punctuation)
+is specified,
+it follows the closing parenthesis without intervening space.
+.
+Hyphenation is disabled while the cross reference is set.
+.
+.I page-title
+is set in the font specified by the
+.B MF
+string.
+.
+The cross reference hyperlinks to a URI of the form
+.RB \[lq] man:\c
+.IR page-title ( page-section )\[rq].
+.
+.
+_ifstyle()dnl
+.RS
+.IP
+.EX
+The output driver
+\&.MR grops 1
+produces Postscript from
+\&.I troff
+output.
+\&.
+The Ghostscript program (\[rs]c
+\&.MR gs 1)
+interprets Postscript and PDF.
+.EE
+.RE
+_endif()dnl
+.
 .
 .
 .TP
@@ -1316,8 +1397,7 @@ Because font styles are presentational rather than semantic,
 conflicting traditions have arisen regarding which font styles should be
 used to mark file or path names,
 environment variables,
-in-line literals,
-and man page cross-references.
+and inlined literals.
 _endif()dnl
 .
 .
@@ -2919,6 +2999,16 @@ SunOS\~4.0 (1988) may have been the first to support
 .\" time and did not support the macro.  SunOS 4.0.3 (May 1989)
 .\" contained over 2,100 uses of .SB.
 .
+Plan\~9
+.I troff \" Plan 9
+introduced
+.B .MR
+in 2020.
+.\" https://github.com/9fans/plan9port/commit/\
+.\"  977b25a76ae8263e53fb4eb1abfc395769f23e3d
+.\"  d32deab17bfffa5bffc5fab3e6577558e40888c5
+.\"  36cd4c58c1346375b98f517fb8568be5bb47618d
+.
 .
 .\" ====================================================================
 .SH Options
@@ -3121,6 +3211,30 @@ is used for the title length.
 .
 .
 .TP
+.BI \-dMF= man-page-title-font
+Set the font used for man page titles named in
+.B .TH
+and
+.B .MR
+calls;
+the default is
+.RB \(lq I \(rq
+(italic).
+.
+Any valid argument to
+.IR groff 's
+\[lq].ft\[rq] request may be used;
+see
+.MR groff @MAN7EXT@ .
+.
+If the
+.B MF
+string ends in \[lq]I\[rq],
+it is assumed to be an oblique typeface,
+and italic corrections are applied before and after man page titles.
+.
+.
+.TP
 .BI \-rP n
 Start enumeration of pages at
 .I n
@@ -3260,15 +3374,21 @@ The extension macro definitions for
 .BR .UR / .UE ,
 and
 .BR .MT / .ME
-are contained in this file,
-which is written to be compatible with AT&T
-.I troff
+are contained in this file;
+if the formatter is not GNU
+.IR troff , \" GNU
+it also provides an
+.B .MR
+implementation that does not attempt hyperlinking.
+.
+These macros are written to be compatible with AT&T
+.I troff \" AT&T
 and permissively licensed\(emnot copylefted.
 .
 Man page authors concerned about portability to legacy Unix systems are
 encouraged to copy these definitions into their pages,
 and maintainers of
-.I troff
+.I troff \" generic
 implementations or work-alike systems that format man pages are
 encouraged to re-use them.
 .
@@ -3622,10 +3742,13 @@ macro package was written by James Clark and contributors.
 The extension macros were written by
 .MT wl@\:gnu\:.org
 Werner Lemberg
-.ME
-and
+.ME ,
 .MT esr@\:thyrsus\:.com
 Eric S.\& Raymond
+.ME ,
+and
+.MT g.branden\:.robinson@\:gmail\:.com
+G.\& Branden Robinson
 .ME .
 .
 .
@@ -3635,16 +3758,16 @@ This document was originally written for the Debian GNU/Linux system by
 Susan G.\& Kleinmann
 .ME .
 .
-It was corrected and updated by Werner Lemberg and
-.MT g.branden\:.robinson@\:gmail\:.com
-G.\& Branden Robinson
-.ME .
+It was corrected and updated by Lemberg and Robinson.
 .
-The extension macros were documented by Eric S.\& Raymond.
+The extension macros were documented by Raymond and Robinson.
 _ifstyle()dnl
-He also originated the portability section,
-to which Ingo Schwarze contributed most of the material on escape
-sequences.
+Raymond also originated the portability section,
+to which
+.MT schwarze@\:usta\:.de
+Ingo Schwarze
+.ME
+contributed most of the material on escape sequences.
 _endif()dnl
 .
 .

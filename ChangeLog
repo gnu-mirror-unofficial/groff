@@ -1,5 +1,42 @@
 2021-10-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Add `MR` macro for man page cross references.
+
+	* tmac/an.tmac (an-prepare-page-title): After a possibly
+	abbreviated man page title is determined, redefine `an-pageref`
+	to set the title portion in the font stored in the `MF` string
+	and bracket it with italic corrections if that font is thought
+	to be oblique.
+	(MR): Add macro to format the text of a man page cross
+	reference, and hyperlink it on HTML and terminal output devices
+	if permitted by the `U` register.
+	(initialization): Define `MF` string as `I` if not already set.
+	Define `an-lic` and `an-ic` strings as either empty or as
+	containing italic corrections.
+
+	* tmac/an-ext.tmac (MR): If the formatter is not GNU troff,
+	define macro to format the text of a man page cross reference.
+
+	* tmac/groff_man.7.man.in: Document it.
+	(Description): Add macro to summary table.
+	(Description/Hyperlink macros): Document new feature.  Note
+	origin in Plan 9 troff.  [style] Add examples of use.
+	(Description/Font style macros): Drop man page cross references
+	from list of items whose typeface conventions are disputed,
+	since we have a semantic macro now and a configurable means of
+	resolving the problem.
+	(History): Add `MR` item.
+	(Options) <MF>: Document new string.
+	(Files) <an-ext.tmac>: Revise discussion to accommodate `MR`.
+	(Authors): Add myself an author of extension macros.
+
+	* tmac/tests/an_MR-works.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	* NEWS: Add item.
+
+2021-10-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an.tmac (SH, SS): Invoke `ne` request _before_ performing
 	font remapping: any page-breaking decision will be taken before
 	the remapping happens, and so won't be in effect across a page

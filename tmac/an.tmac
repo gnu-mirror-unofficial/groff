@@ -367,6 +367,8 @@
 .    nr an-header-width \
        \\w'\\*[an-pageref]\\*[an-extra3]\\*[an-pageref]'
 .  \}
+.  ds an-pageref \\*[an-lic]\f[\\*[MF]]\\*[an-title-abbv]\\*[an-ic]\
+\f[R](\\*[an-section])\"
 .  rr an-title-length-prev
 .  rr an-mark1
 .  rr an-mark2
@@ -801,6 +803,29 @@
 .    RB "[" "\\$1" "]"
 ..
 .
+.\" Set a man page cross reference.
+.\" .MR page-title page-section [trailing-text]
+.de1 MR
+.  if ((\\n[.$] < 2) : (\\n[.$] > 3)) \
+.    an-style-warn .\\$0 expects 2 or 3 arguments, got \\n[.$]
+.  nh
+.  if (\\n[U] & \\n[mU]) \{\
+.    if \\n(mH \
+\X^html:<a href="man:\\$1(\\$2)">^\c
+.    if \\n(mY \
+\X^tty: link man:\\$1(\\$2)^\c
+.  \}
+\&\\*[an-lic]\f[\\*[MF]]\\$1\\*[an-ic]\f[R](\\$2)\c
+.  if (\\n[U] & \\n[mU]) \{\
+.    if \\n(mH \
+\X^html:</a>^\c
+.    if \\n(mY \
+\X^tty: link^\c
+.  \}
+\&\\$3
+.  hy \\n[HY]
+..
+.
 .\" tbl(1) table support
 .
 .\" Start table.
@@ -1092,6 +1117,22 @@
 .    nr an-remap-I-style-in-headings 1
 .rr an-HF-length
 .rm an-heading-style
+.
+.\" man page title font
+.if !d MF \
+.  ds MF I\"
+.
+.\" Define italic correction strings.  Initially, they are empty.  If MF
+.\" is an oblique style, append the corrections.
+.ds an-lic \" left italic correction
+.ds an-ic \" italic correction
+.ds an-page-title-style \*[MF]\"
+.substring an-page-title-style -1 -1
+.if '\*[an-page-title-style]'I' \{\
+.  as an-lic \,\"
+.  as an-ic \/
+.\}
+.rm an-page-title-style
 .
 .if \n[cR] \
 .  an-set-up-continuous-rendering
