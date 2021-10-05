@@ -130,6 +130,12 @@ o The an (man) macro package can now produce clickable hyperlinks within
   sequences in pager programs.  The package now recognizes a "U"
   register to configure hyperlink support for any output driver.
 
+  Use a command like
+    printf '\033]8;;man:grotty(1)\033\\grotty(1)\033]8;;\033\\\n' | more
+  to check your terminal and pager for OSC 8 support.  If it you see
+  "grotty(1)" and no additional garbage characters, then you may wish to
+  edit "man.local" to remove the lines that disable this feature.
+
 o Part of the an (man) macro package has been renamed from "an-old.tmac"
   to "an.tmac", replacing a file that sourced the "andoc.tmac" wrapper.
   This means that the "-man" argument to groff (or nroff, or troff) will
