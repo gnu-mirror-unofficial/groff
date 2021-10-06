@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle September 2021
+@subtitle October 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -2943,6 +2943,22 @@ Effective: next page.
 Default: 2@dmn{n}.
 @endDefmpreg
 
+@Defmpreg {TC-MARGIN, ms}
+Defines the width of the field in which page numbers are set in a table
+of contents entry; the right margin thus moves inboard by this amount.
+This is a GNU extension.
+
+Effective: next @code{PX} call.
+
+Default: @code{\w'000'}
+@endDefmpreg
+
+@c XXX: Normally we'd have an entry for TC-LEADER here, but it's a
+@c special character and we have no custom Texinfo macros for defining
+@c (and indexing) these.  There would be little point in an index for
+@c one item, and the plan is to drop this entire @section from this
+@c manual once doc/ms.ms is ready.  See Savannah #60061.
+
 @c ---------------------------------------------------------------------
 
 @node Fractional point sizes in ms, ms Document Description Macros, ms Document Control Settings, ms
@@ -3250,7 +3266,8 @@ normally precedes each heading is omitted.
 
 @DefstrList {SN-STYLE, ms}
 @DefstrItemx {SN-DOT, ms}
-@DefstrListEndx {SN-NO-DOT, ms}
+@DefstrItemx {SN-NO-DOT, ms}
+@DefstrListEndx {SN, ms}
 After invocation of @code{NH}, the assigned number is made available in
 the strings @code{SN-DOT} (as it appears in a printed heading with
 default formatting, followed by a terminating period) and
@@ -3270,6 +3287,10 @@ define the alias as follows.
 @noindent
 Any such change in numbering style becomes effective from the next use
 of @code{NH} following redefinition of the alias for @code{SN-STYLE}.
+The formatted number of the current section is available in the
+@code{SN} string (a feature first documented by Berkeley), facilitating
+its inclusion in @code{XS}/@code{XA}/@code{XE} table of contents
+entries.
 @endDefstr
 
 @Defmac {SH, [@Var{match-level}], ms}
@@ -4052,19 +4073,66 @@ gutter width; it is a GNU extension.
 @cindex @code{ms} macros, creating table of contents
 @cindex table of contents, creating [@code{ms}]
 
-The facilities in the @file{ms} macro package for creating a table of
-contents are semi-automated at best.  Assuming that you want the table
-of contents to consist of the document's headings, you need to repeat
-those headings wrapped in @code{XS} and @code{XE} macros.
+Because @code{roff} formatters process their input in a single pass,
+material on page 50, for example, cannot influence what appears on
+page@tie{}1---this poses a challenge for a table of contents at its
+traditional location in front matter, if you wish to avoid manually
+maintaining it.  @code{ms} enables the collection of material to be
+presented in the table of contents as it appears, saving its page number
+along with it, and then emitting the collected contents on demand toward
+the end of the document.  The table of contents can then be resequenced
+to its desired location as part of post-processing---with a PDF page
+relocation tool, or by physically rearranging the pages of a printed
+document, depending on the output format and circumstances.
 
-@DefmacList {XS, [@Var{page}], ms}
-@DefmacItemx {XA, [@Var{page}], ms}
+Define an entry to appear in the table of contents by bracketing its
+text between calls to the @code{XS} and @code{XE} macros.  A typical
+application is to call them immediately after @code{NH} or @code{SH}
+pairs, supplements an entry---for instance, when it requires multiple
+output lines, whether because a heading is too long to fit or because
+style dictates that page numbers not be repeated.  In a document with a
+multi-level sectioning structure, you may wish to indent the text thus
+wrapped to correspond to its sectioning depth; this can be done in the
+entry text by prefixing it with tabs or horizontally spacing escape
+sequences, or by providing a second argument to the @code{XA} macro.
+@code{XS} and @code{XA} automatically associate the page number where
+they are called with the text following them, but they accept arguments
+to override this behavior.  At the end of the document, call @code{TC}
+or @code{PX} to emit the table of contents; @code{TC} resets the page
+number to @samp{i} (Roman numeral one), and then calls @code{PX}.
+
+@DefmacList {XS, [@Var{page-number}, ms}
+@DefmacItemx {XA, [@Var{page-number} [@Var{indentation}, ms}
 @DefmacListEndx {XE, , ms}
-These macros define a table of contents or an individual entry in the
-table of contents, depending on their use.  The macros are very simple;
-they cannot indent a heading based on its level.  The easiest way to
-work around this is to add tabs to the table of contents string.  The
-following is an example:
+Begin, supplement, and end a table of contents entry.  Each entry is
+associated with @var{page-number} (otherwise the current page number); a
+@var{page-number} of @samp{no} prevents a leader and page number from
+being emitted for that entry.  Use of @code{XA} within
+@code{XS}/@code{XE} is optional; it can be repeated.  If
+@var{indentation} is present, a supplemental entry is indented by that
+amount; ens are assumed if no unit is indicated.  Text on input lines
+between @code{XS} and @code{XE} is stored for later recall by @code{PX}.
+@endDefmac
+
+@Defmac {PX, [@code{no}], ms}
+Switch to single-column layout.  Unless @code{no} is specified, center
+and interpolate the @code{TOC} string in bold and two points larger than
+the body text.  Emit the table of contents entries.
+@endDefmac
+
+@Defmac {TC, [@code{no}], ms}
+Set the page number to@tie{}1, the page number format to lowercase Roman
+numerals, and call @code{PX} (with a @code{no} argument, if present).
+@endDefmac
+
+You can customize the style of the leader that bridges each table of
+contents entry with its page number; define the @code{TC-LEADER} special
+character by using the @code{char} request.  A typical leader combines
+the dot glyph @samp{.} with a horizontal space escape sequence to spread
+the dots.  The width of the page number field is stored in the
+@code{TC-MARGIN} register.
+
+Here's an example of typical @code{ms} table of contents preparation.
 
 @CartoucheExample
 .NH 1
@@ -4072,63 +4140,30 @@ Introduction
 .XS
 Introduction
 .XE
-.LP
-...
-.CW
+@r{@dots{}}
 .NH 2
 Methodology
 .XS
 Methodology
+.XA
+@arrow{}@arrow{}Fassbinder's Approach
+@arrow{}@arrow{}Kahiu's Approach
 .XE
-.LP
-...
+@r{@dots{}}
+.NH 1
+Findings
+.XS
+Findings
+.XE
+@r{@dots{}}
+.TC
 @endCartoucheExample
 
-You can manually create a table of contents by beginning with the
-@code{XS} macro for the first entry, specifying the page number for that
-entry as the argument to @code{XS}.  Add subsequent entries using the
-@code{XA} macro, specifying the page number for that entry as the
-argument to @code{XA}.  The following is an example:
-
-@CartoucheExample
-.XS 1
-Introduction
-.XA 2
-A Brief History of the Universe
-.XA 729
-Details of Galactic Formation
-...
-.XE
-@endCartoucheExample
-@endDefmac
-
-@Defmac {TC, [@code{no}], ms}
-Prints the table of contents on a new page, setting the page number
-to@tie{}@strong{i} (Roman lowercase numeral one).  You should usually
-place this macro at the end of the file, since @code{groff} is a
-single-pass formatter and can only print what has been collected up to
-the point that the @code{TC} macro appears.
-
-The optional argument @code{no} suppresses printing the title specified
-by the string @code{TOC}.
-@endDefmac
-
-@Defmac {PX, [@code{no}], ms}
-Prints the table of contents on a new page, using the current page
-numbering sequence.  Use this macro to print a manually generated table
-of contents at the beginning of your document.
-
-The optional argument @code{no} suppresses printing the title specified
-by the string @code{TOC}.
-@endDefmac
-
-The @cite{Groff and Friends HOWTO} includes a @code{sed} script that
-automatically inserts @code{XS} and @code{XE} macro entries after each
-heading in a document.
-
-Altering the @code{NH} macro to automatically build the table of
-contents is perhaps initially more difficult, but would save a great
-deal of time in the long run if you use @file{ms} regularly.
+Provins's ``Groff and Friends HOWTO'' includes a @code{sed} script that
+automatically inserts @code{XS} and @code{XE} entries after each heading
+in a document.  Altering the @code{NH} macro to automatically build the
+table of contents is perhaps initially more difficult, but could save a
+great deal of time in the long run if you use @code{ms} regularly.
 
 @c ---------------------------------------------------------------------
 
