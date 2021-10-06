@@ -461,7 +461,7 @@ void tty_printer::special(char *arg, const environment *env, char type)
 
 // Produce an OSC 8 hyperlink.  Given ditroff input of the form:
 //   x X tty: link [URI[ KEY=VALUE] ...]
-// produce "OSC 8 [;KEY=VALUE];[URI] ST ".  KEY/VALUE pairs can be
+// produce "OSC 8 [;KEY=VALUE];[URI] ST".  KEY/VALUE pairs can be
 // repeated arbitrarily and are separated by colons.  Omission of the
 // URI ends the hyperlink that was begun by specifying it.  See
 // <https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda>.
@@ -498,10 +498,11 @@ void tty_printer::special_link(const char *arg, const environment *env)
     arg--;
     // The first argument is the URI.
     char *uri = (char *)arg;
-    while (c != '\0' && c != ' ' && c != '\t')
+    do
       c = *arg++;
-    ptrdiff_t uri_len = arg - uri - 1;
+    while (c != '\0' && c != ' ' && c != '\t');
     arg--;
+    ptrdiff_t uri_len = arg - uri;
     // Any remaining arguments are "key=value" pairs.
     char *pair = 0;
     bool done = false;
