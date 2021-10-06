@@ -19,10 +19,11 @@
 .nr PS 11
 .nr VS 13
 .ds FR 1
+.nr TC-MARGIN \w'00' \" expect 2-digit page numbers at most
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
 .ND October 2021
-.EH '%''\*[DY]'
+.EH '%''October 2021'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -951,7 +952,7 @@ Further automatic numbering,
 if used,
 resumes using the specified heading level indices as their predecessors.
 .
-\" Although undocumented in Tuthill's 4.2BSD ms.diffs paper...
+.\" Although undocumented in Tuthill's 4.2BSD ms.diffs paper...
 This feature is a Berkeley extension.
 T}
 .TE
@@ -1044,7 +1045,8 @@ following redefinition of the alias for
 .CW \[rs]*[SN\-STYLE] .
 .
 The formatted number of the current section is available in
-.CW \[rs]*[SN] ,
+.CW \[rs]*[SN]
+(a feature first documented by Berkeley),
 facilitating its inclusion in
 .CW .XS /\c
 .CW .XA /\c
@@ -2721,8 +2723,8 @@ Because
 formatters process their input in a single pass,
 material on page 50,
 for example,
-cannot influence what appears on page 1\[em]this poses a challenge for a
-table of contents at its traditional location in front matter,
+cannot influence what appears on page\~1\[em]this poses a challenge for
+a table of contents at its traditional location in front matter,
 if you wish to avoid manually maintaining it.
 .
 .I ms
@@ -2735,13 +2737,12 @@ document.
 The table of contents can then be resequenced to its desired location
 as part of post-processing\[em]with a PDF page relocation tool,
 or by physically rearranging the pages of a printed document,
-depending on the output format and cirumstances.
+depending on the output format and circumstances.
 .
 .
 .PP
 Define an entry to appear in the table of contents by bracketing its
-text between calls to
-the
+text between calls to the
 .CW XS
 and
 .CW XE
@@ -2854,7 +2855,7 @@ Emit the table of contents entries.
 T}
 _
 \&.TC \f[R][\f[]no\f[R]]	T{
-Set the page number to 1,
+Set the page number to\~1,
 the page number format to lowercase Roman numerals,
 and call
 .CW PX
@@ -3352,8 +3353,6 @@ Without these documents close at hand,
 writing this document would have been a
 much more difficult task.
 .\" ------------------------
-.\" Toc here at end...
-.\" We need to fix the headers...
 .TC
 .
 .

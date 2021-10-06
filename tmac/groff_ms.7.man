@@ -805,7 +805,8 @@ following redefinition of the alias for
 .BR \[rs]*[SN\-STYLE] .
 .
 The formatted number of the current section is available in
-.BR \[rs]*[SN] ,
+.B \[rs]*[SN]
+(a feature first documented by Berkeley),
 facilitating its inclusion in
 .BR .XS / .XA / .XE
 table of contents entries.
@@ -1826,8 +1827,7 @@ it is a GNU extension.
 .\" ====================================================================
 .
 Define an entry to appear in the table of contents by bracketing its
-text between calls to
-the
+text between calls to the
 .B XS
 and
 .B XE
@@ -1938,7 +1938,7 @@ Emit the table of contents entries.
 .
 .TP
 .BR .TC \~[ no ]
-Set the page number to 1,
+Set the page number to\~1,
 the page number format to lowercase Roman numerals,
 and call
 .B PX
