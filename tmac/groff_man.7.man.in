@@ -1176,10 +1176,10 @@ implements
 .
 .
 .TP
-.BI .MR "\~page-title page-section"\c
+.BI .MR "\~page-title manual-section"\c
 .RI \~[ trailing-text ]
 Set a man page cross reference as
-.RI \[lq] page-title ( page-section )\[rq].
+.RI \[lq] page-title ( manual-section )\[rq].
 .
 If
 .I trailing-text
@@ -1196,7 +1196,7 @@ string.
 .
 The cross reference hyperlinks to a URI of the form
 .RB \[lq] man:\c
-.IR page-title ( page-section )\[rq].
+.IR page-title ( manual-section )\[rq].
 .
 .
 _ifstyle()dnl
@@ -1204,7 +1204,7 @@ _ifstyle()dnl
 .IP
 .EX
 The output driver
-\&.MR grops 1
+\&.MR grops @MAN1EXT@
 produces Postscript from
 \&.I troff
 output.
@@ -3427,7 +3427,7 @@ This is a wrapper that loads
 .
 .TP
 .I \%@LOCALMACRODIR@/\:\%man\:\%.local
-Put local changes and customizations into this file.
+Put site-local changes and customizations into this file.
 _ifstyle()dnl
 .
 .
@@ -3456,8 +3456,8 @@ or to permit their override with a user-specific
 .I man.local
 file.
 .
-This can be done by placing one or both of following at the end of
-.IR \%@LOCALMACRODIR@/\:\%man\:\%.local .
+This can be achieved by placing one or both of following requests at the
+end of the site-local file.
 .
 .RS
 .RS
