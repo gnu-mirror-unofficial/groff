@@ -15,7 +15,7 @@ _ifstyle()dnl
 the width of a letter \(lqn\(rq in the font current when the macro is
 called
 (see section \(lqNumerical Expressions\(rq in
-.IR groff (@MAN7EXT@))\c
+.MR groff @MAN7EXT@ )\c
 _endif
 \&.
 
@@ -124,7 +124,7 @@ _ifnotstyle()dnl
 Man page authors and maintainers who are not already experienced
 .I groff
 users should consult
-.IR groff_man_style (@MAN7EXT@),
+.MR groff_man_style @MAN7EXT@ ,
 an expanded version of this document,
 for additional explanations and advice.
 .
@@ -310,7 +310,7 @@ group of macros.
 .B .TH
 (title heading) identifies the document as a man page and defines
 information enabling its indexing by
-.IR mandb (8)
+.MR mandb 8
 or a similar tool.
 .
 Section headings
@@ -359,7 +359,7 @@ manuals.
 _endif()dnl
 .
 See
-.IR man (1)
+.MR man 1
 for details on the section numbers and suffixes applicable to your
 system.
 .
@@ -502,10 +502,10 @@ for a man page to be properly indexed.
 .
 See
 _ifnotstyle()dnl
-.IR groff_man_style (@MAN7EXT@)
+.MR groff_man_style @MAN7EXT@
 for suggestions and
 _endif()dnl
-.IR man (7)
+.MR man 7
 for the conventions prevailing on your system.
 .RE \" Move left margin back to standard position.
 .
@@ -913,7 +913,7 @@ Multiple
 blocks can be specified,
 for instance to distinguish differing modes of operation of a complex
 command like
-.IR tar (1);
+.MR tar 1 ;
 each will be vertically separated as paragraphs are.
 .
 .
@@ -1610,7 +1610,7 @@ _endif()dnl
 see subsection \(lqPortability\(rq
 _ifnotstyle()dnl
 in
-.IR groff_man_style (@MAN7EXT@)
+.MR groff_man_style @MAN7EXT@
 for approaches.
 _endif()dnl
 _ifstyle()dnl
@@ -1760,7 +1760,7 @@ that is,
 the width of a letter \(lqn\(rq in the font current when the macro is
 called
 (see section \(lqNumerical Expressions\(rq in
-.IR groff (@MAN7EXT@)).
+.MR groff @MAN7EXT@ ).
 _endif()dnl
 _ifnotstyle()dnl
 package assumes \(lqn\(rq.
@@ -1979,7 +1979,7 @@ check,
 or which is developed in the future.
 .
 The table preprocessor
-.IR \%@g@tbl (@MAN1EXT@)
+.MR @g@tbl @MAN1EXT@
 can likely meet your needs.
 _endif()dnl
 .
@@ -2049,7 +2049,7 @@ The following strings are defined for use in man pages.
 _ifnotstyle()dnl
 None of these is necessary in a contemporary man page;
 see
-.IR groff_man_style (@MAN7EXT@).
+.MR groff_man_style @MAN7EXT@ .
 _endif()dnl
 .
 Others are supported for configuration of rendering parameters;
@@ -2787,7 +2787,7 @@ to express are likely to be lost.
 .
 If you feel tempted to use it,
 you should probably be composing a table using
-.IR \%@g@tbl (@MAN1EXT@)
+.MR @g@tbl @MAN1EXT@
 markup instead.
 .
 .
@@ -3046,7 +3046,7 @@ Any valid argument to
 \[lq].ad\[rq] request may be used.
 .
 See
-.IR groff (@MAN7EXT@)
+.MR groff @MAN7EXT@
 for less-common choices.
 .
 .
@@ -3140,14 +3140,14 @@ Any valid argument to
 \[lq].ft\[rq] request may be used.
 .
 See
-.IR groff (@MAN7EXT@).
+.MR groff @MAN7EXT@ .
 .
 .
 .TP
 .BI \-rHY= hyphenation-mode
 Set hyphenation mode,
 as documented in section \(lqHyphenation\(rq of
-.IR groff (@MAN7EXT@).
+.MR groff @MAN7EXT@ .
 .
 Use
 .B \-rHY=0
@@ -3299,7 +3299,7 @@ and so forth.
 .
 The register tracking the suffixed page letter uses format \(lqa\(rq
 (see the \(lq.af\(rq request in
-.IR groff (@MAN7EXT@)).
+.MR groff @MAN7EXT@ ).
 .
 _ifstyle()dnl
 For example,
@@ -3469,7 +3469,7 @@ end of the site-local file.
 .
 However,
 a security-sandboxed
-.IR man (1) \" such as man-db 2.8.5
+.MR man 1 \" such as man-db 2.8.5
 program may lack permission to open such files.
 .RE
 .
@@ -3776,20 +3776,20 @@ _endif()dnl
 .SH "See also"
 .\" ====================================================================
 .
-.IR \%@g@tbl (@MAN1EXT@),
-.IR \%@g@eqn (@MAN1EXT@),
+.MR @g@tbl @MAN1EXT@ ,
+.MR @g@eqn @MAN1EXT@ ,
 and
-.IR \%@g@refer (@MAN1EXT@)
+.MR @g@refer @MAN1EXT@
 are preprocessors used with man pages.
 .
 .
 .P
-.IR man (1)
+.MR man 1
 describes the man page librarian on your system.
 .
 .
 .P
-.IR groff_mdoc (@MAN7EXT@)
+.MR groff_mdoc @MAN7EXT@
 describes the
 .I groff
 version of the BSD-originated alternative macro package for man pages.
@@ -3797,14 +3797,14 @@ version of the BSD-originated alternative macro package for man pages.
 .
 .P
 _ifstyle()dnl
-.IR groff_man (@MAN7EXT@),
+.MR groff_man @MAN7EXT@ ,
 _endif()dnl
 _ifnotstyle()dnl
-.IR groff_man_style (@MAN7EXT@),
+.MR groff_man_style @MAN7EXT@ ,
 _endif()dnl
-.IR groff (@MAN7EXT@),
-.IR groff_char (@MAN7EXT@),
-.IR man (7)
+.MR groff @MAN7EXT@ ,
+.MR groff_char @MAN7EXT@ ,
+.MR man 7
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).

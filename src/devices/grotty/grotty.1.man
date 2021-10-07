@@ -73,14 +73,14 @@ The GNU
 TTY
 (\[lq]Teletype\[rq])
 output driver translates the output of
-.IR \%@g@troff (@MAN1EXT@)
+.MR @g@troff @MAN1EXT@
 into a form suitable for typewriter-like devices,
 including terminal emulators.
 .
 Normally,
 .I grotty
 is invoked by
-.IR groff (@MAN1EXT@)
+.MR groff @MAN1EXT@
 when the latter is given one of the
 .BR \-Tascii ,
 .BR \-Tlatin1 ,
@@ -146,7 +146,7 @@ option below.
 When paging
 .IR grotty 's
 output with
-.IR less (1),
+.MR less 1 ,
 the latter program must be instructed to pass SGR and OSC sequences
 through to the device;
 its
@@ -157,7 +157,7 @@ version 566 or later is required for OSC\~8 support).
 .
 Consequently,
 programs like
-.IR man (1)
+.MR man 1
 that page
 .I roff
 documents with
@@ -220,7 +220,7 @@ The legacy output format can be rendered on a video terminal
 by piping
 .IR grotty 's
 output through
-.IR ul (1),
+.MR ul 1 ,
 .\" from bsdmainutils 11.1.2+b1 (on Debian Buster)
 which may render bold italics as reverse video.
 .
@@ -228,7 +228,7 @@ which may render bold italics as reverse video.
 .\" double-struck characters as bold nor supports -b, but does render
 .\" SGR sequences (including color) with no flags required.
 Some implementations of
-.IR more (1)
+.MR more 1
 are also able to display these sequences;
 you may wish to experiment with that command's
 .B \-b
@@ -245,7 +245,7 @@ implementations,
 never outputs reverse line feeds.
 .
 There is therefore no need to filter its output through
-.IR col (1).
+.MR col 1 .
 .
 .
 .\" ====================================================================
@@ -322,7 +322,7 @@ Otherwise, it emits characters in a single-byte encoding depending on
 the data in the font description files.
 .
 See
-.IR groff_font (@MAN5EXT@)
+.MR groff_font @MAN5EXT@
 for more details.
 .
 .
@@ -463,7 +463,7 @@ rather than underlined text.
 .
 Many terminals don't support this attribute;
 however,
-.IR xterm (1),
+.MR xterm 1 ,
 since patch\~#314 (2014-12-28),
 does.
 .
@@ -522,9 +522,9 @@ A list of directories in which to seek the selected output device's
 directory of device and font description files.
 .
 See
-.IR \%@g@troff (@MAN1EXT@)
+.MR @g@troff @MAN1EXT@
 and
-.IR \%groff_font (@MAN5EXT@).
+.MR groff_font @MAN5EXT@ .
 .
 .
 .TP
@@ -633,7 +633,7 @@ cannot be printed.
 .
 .P
 Color handling differs from
-.IR grops (@MAN1EXT@).
+.MR grops @MAN1EXT@ .
 .
 The
 .I groff
@@ -714,12 +714,12 @@ not a man page.
 Use of color escapes in man pages is \f[BI]strongly discouraged\f[].
 .
 Some implementations of
-.IR man (1)
+.MR man 1
 .\" ...like man-db 2.8.5-2 on Debian Buster...
 completely disable them.
 .
 See subsection \[lq]Portability\[rq] of
-.IR groff_man_style (@MAN7EXT@)
+.MR groff_man_style @MAN7EXT@
 for guidance on writing man pages that are viewable by as many readers
 as possible.
 .
@@ -752,15 +752,15 @@ Egmont Koblinger.
 .
 .
 .P
-.IR groff (@MAN1EXT@),
-.IR \%@g@troff (@MAN1EXT@),
-.IR groff_out (@MAN5EXT@),
-.IR groff_font (@MAN5EXT@),
-.IR groff_char (@MAN7EXT@),
-.IR ul (1),
-.IR more (1),
-.IR less (1),
-.IR man (1)
+.MR groff @MAN1EXT@ ,
+.MR @g@troff @MAN1EXT@ ,
+.MR groff_out @MAN5EXT@ ,
+.MR groff_font @MAN5EXT@ ,
+.MR groff_char @MAN7EXT@ ,
+.MR ul 1 ,
+.MR more 1 ,
+.MR less 1 ,
+.MR man 1
 .
 .
 .\" Restore compatibility mode (for, e.g., Solaris 10/11).
