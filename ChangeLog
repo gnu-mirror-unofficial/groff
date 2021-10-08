@@ -1,3 +1,33 @@
+2021-10-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[grotty]: Slightly refactor.
+
+	* src/devices/grotty/tty.cpp: Boolify.  Demote numerous
+	variables (and one return type) from `int` to `bool`, use
+	Boolean insted of integer literals with them, and give the
+	variables names resembling logical predicates.
+	 - horizontal_tab_flag -> want_horizontal_tabs
+	 - form_feed_flag -> want_form_feeds
+	 - bold_flag_option -> want_emboldening_by_overstriking
+	 - bold_flag -> do_bold
+	 - underline_flag_option -> want_italics_by_underlining
+	 - underline_flag -> do_underline
+	 - overstrike_flag -> want_glyph_composition_by_overstriking
+	 - draw_flag -> allow_drawing_commands
+	 - italic_flag_option -> want_sgr_italics
+	 - italic_flag -> do_sgr_italics
+	 - reverse_flag_option -> want_reverse_video_for_italics
+	 - reverse_flag -> do_reverse_video
+	 - old_drawing_scheme -> use_overstriking_drawing_scheme
+	(class tty_printer:printer): Similarly.
+	 - is_underline -> is_underlining
+	 - is_bold -> is_boldfacing
+	 - cu_flag -> is_continuously_underlining
+	(tty_printer::tty_color): Demote return type as above.  Invert
+	its sense; rename `unknown_color` to `is_known_color`.
+	(tty_printer::color_to_idx): Invert sense of test at
+	`tty_color()` call site.
+
 2021-10-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grotty]: Slightly refactor.
