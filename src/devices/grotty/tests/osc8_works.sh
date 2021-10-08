@@ -58,6 +58,7 @@ x stop"
 # The remaining input is well-formed.  The URI ending in "1" is
 # effectively hidden because no character cells are drawn while it is
 # active.
+echo "expect two diagnostic messages regarding ill-formed links" >&2
 output=$(echo "$input" | "$grotty" -F font -F build/font | od -t c)
 
 # Expected:
