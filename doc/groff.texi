@@ -2763,8 +2763,7 @@ Default: 0.3@dmn{v} (1@dmn{v} on low-resolution devices).
 
 @Defmpreg {QI, ms}
 Defines the indentation amount used on both sides of a paragraph set
-with the @code{QP} or between the @code{QS} and @code{QE} macros.  This
-is a Berkeley extension.
+with the @code{QP} or between the @code{QS} and @code{QE} macros.
 
 Effective: next paragraph.
 
@@ -3148,7 +3147,7 @@ specified again or a heading or different paragraphing macro is called.
 
 @Defmac {QP, , ms}
 Set a paragraph indented from both left and right margins by the amount
-stored in the @code{QI} register.  This is a Berkeley extension.
+stored in the @code{QI} register.
 @endDefmac
 
 @DefmacList {QS, , ms}
@@ -3156,8 +3155,7 @@ stored in the @code{QI} register.  This is a Berkeley extension.
 Begin (@code{QS}) and end (@code{QE}) a region where each paragraph is
 indented from both margins by the amount stored in the @code{QI}
 register.  The text between @code{QS} and @code{QE} can be structured
-further by use of other paragraphing macros.  These macros are GNU
-extensions.
+further by use of other paragraphing macros.
 @endDefmac
 
 @Defmac {XP, , ms}
@@ -3728,7 +3726,7 @@ begins a kept display of the layout specified in its first argument;
 non-kept displays are begun with dedicated macros corresponding to their
 layout.
 
-@DefmacList {DS, @t{L}, ms}
+@DefmacList {DS, [@t{L}], ms}
 @DefmacListEndx {LD, , ms}
 Begin (@code{DS}:@: kept) left-aligned display.
 @endDefmac
@@ -4101,6 +4099,8 @@ to override this behavior.  At the end of the document, call @code{TC}
 or @code{PX} to emit the table of contents; @code{TC} resets the page
 number to @samp{i} (Roman numeral one), and then calls @code{PX}.
 
+All of these macros are Berkeley extensions.
+
 @DefmacList {XS, [@Var{page-number}, ms}
 @DefmacItemx {XA, [@Var{page-number} [@Var{indentation}, ms}
 @DefmacListEndx {XE, , ms}
@@ -4404,12 +4404,6 @@ Displays are left-aligned by default, not indented.  In @acronym{AT&T}
 @file{ms}, it is synonymous with @samp{.DS L}.
 
 @item
-Block displays were not documented in the @acronym{AT&T} @file{ms}
-manual (Berkeley corrected this oversight), but Version@tie{}7 Unix
-@file{ms} supported them nevertheless, as does @code{groff} @file{ms}
-(this is thus only an @emph{apparent} difference).
-
-@item
 Right-aligned displays are available.  The @acronym{AT&T} @file{ms}
 manual observes that ``it is tempting to assume that @samp{.DS R} will
 right adjust lines, but it doesn't work''.  In @code{groff} @file{ms},
@@ -4436,6 +4430,11 @@ occasion for a default column width register.  Further, the @code{MINGW}
 register and the second argument to @code{MC} specify a @emph{minimum}
 space between columns, not the fixed gutter width of @acronym{AT&T}
 @file{ms}.
+
+@item
+The @acronym{AT&T} @file{ms} manual did not document the @code{QI}
+register, whereas Berkeley did; @code{groff} @file{ms} accordingly
+supports it.
 @end itemize
 
 @Defmpreg {GS, ms}

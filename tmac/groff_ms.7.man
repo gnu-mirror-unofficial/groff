@@ -666,8 +666,6 @@ is called.
 Set a paragraph indented from both left and right margins by
 .BR \[rs]n[QI] .
 .
-This macro and register are Berkeley extensions.
-.
 .
 .TP
 .B .QS
@@ -685,8 +683,6 @@ The text between
 and
 .B .QE
 can be structured further by use of other paragraphing macros.
-.
-These macros are GNU extensions.
 .
 .
 .TP
@@ -1223,7 +1219,7 @@ layout.
 .
 .
 .TP
-.B .DS L
+.BR .DS \~[ L ]
 .TQ
 .B .LD
 Begin
@@ -2136,21 +2132,6 @@ it is synonymous with
 .
 .
 .IP \[bu]
-Block displays were not documented in the AT&T
-.I ms
-manual
-(Berkeley corrected this oversight),
-but Version\~7 Unix
-.I ms
-supported them nevertheless,
-as does
-.I groff ms
-(this is thus only an
-.I apparent
-difference).
-.
-.
-.IP \[bu]
 Right-aligned displays are available.
 .
 The AT&T
@@ -2228,6 +2209,17 @@ specify a
 space between columns,
 not the fixed gutter width of AT&T
 .IR ms .
+.
+.
+.IP \[bu]
+The AT&T
+.I ms
+manual did not document the
+.B QI
+register,
+whereas Berkeley did;
+.I "groff ms"
+accordingly supports it.
 .
 .
 .IP \[bu]

@@ -795,8 +795,6 @@ _
 \&.QP	T{
 Set a paragraph indented from both left and right margins by
 .CW \[rs]n[QI] .
-.
-This macro and register are Berkeley extensions.
 T}
 _
 T{
@@ -816,8 +814,6 @@ The text between
 and
 .CW .QE
 can be structured further by use of other paragraphing macros.
-.
-These macros are GNU extensions.
 T}
 _
 \&.XP	T{
@@ -1930,7 +1926,7 @@ lf(CR) lf(CR) | lx .
 Display macro	Description
 With keep	Without keep
 _
-\&.DS L	\&.LD	Begin left-aligned display.
+\&.DS \f[R][\f[]L\f[R]]	\&.LD	Begin left-aligned display.
 \&.DS I \f[R][\,\f[I]indent\/\f[]]	\
 \&.ID \f[R][\,\f[I]indent\/\f[]]	T{
 Begin display indented by
@@ -2797,6 +2793,9 @@ and then calls
 .CW PX .
 .
 .
+.PP
+All of these macros are Berkeley extensions.
+.
 .TS
 box;
 cb cb
@@ -3093,21 +3092,6 @@ it is synonymous with
 .
 .
 .PP
-Block displays were not documented in the AT&T
-.I ms
-manual
-(Berkeley corrected this oversight),
-but Version\~7 Unix
-.I ms
-supported them nevertheless,
-as does
-.I "groff ms"
-(this is thus only an
-.I apparent
-difference).
-.
-.
-.PP
 Right-aligned displays are available.
 .
 The AT&T
@@ -3187,6 +3171,17 @@ specify a
 space between columns,
 not the fixed gutter width of AT&T
 .I ms .
+.
+.
+.PP
+The AT&T
+.I ms
+manual did not document the
+.CW QI
+register,
+whereas Berkeley did;
+.I "groff ms"
+accordingly supports it.
 .
 .
 .PP
