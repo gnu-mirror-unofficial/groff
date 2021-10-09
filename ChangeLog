@@ -1,3 +1,14 @@
+2021-10-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tests]: Fix portability problems in 2 tests.
+
+	* src/roff/groff/tests/break_zero-length_output_line_sanely.sh:
+	* tmac/tests/s_PN-works.sh: Migrate from `echo` to `printf` for
+	test inputs containing backslashes to be interpreted literally.
+
+	Fixes part of <https://savannah.gnu.org/bugs/?61302>.  Thanks to
+	Deri James for identifying the problem.
+
 2021-10-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grotty]: Slightly refactor.
