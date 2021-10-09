@@ -1,3 +1,39 @@
+2021-10-11  Paul Eggert <eggert@cs.ucla.edu>
+
+	Include <config.h> before any standard headers.
+
+	Gnulib requires that files that might use Gnulib features (which
+	pretty much means every C or C++ source file) must include
+	<config.h> first.  Arrange for that.  This will be needed once
+	Groff updates to the latest Gnulib; see Bjarni Ingi Gislason's
+	problem report in:
+	<https://lists.gnu.org/r/bug-gnulib/2021-10/msg00008.html>
+
+	The only exception I can see is src/utils/addftinfo/guess.cpp,
+	which does not include any standard include file either directly
+	or indirectly, and so need not include <config.h>.
+
+	* src/devices/xditview/Dvi.c:
+	* src/devices/xditview/font.c:
+	* src/devices/xditview/lex.c:
+	* src/devices/xditview/page.c:
+	* src/devices/xditview/parse.c:
+	* src/libs/libbib/map.c:
+	* src/libs/libgroff/change_lf.cpp:
+	* src/libs/libgroff/cmap.cpp:
+	* src/libs/libgroff/cset.cpp:
+	* src/libs/libgroff/fmod.c:
+	* src/libs/libgroff/getcwd.c:
+	* src/libs/libgroff/lf.cpp:
+	* src/libs/libgroff/ptable.cpp:
+	* src/libs/libgroff/quotearg.c:
+	* src/libs/libxutil/DviChar.c:
+	* src/libs/libxutil/XFontName.c:
+	* src/libs/libxutil/xmalloc.c:
+	* src/utils/indxbib/signal.c: Do it.
+
+	[Fixes <https://savannah.gnu.org/bugs/?61315>. --GBR]
+
 2021-10-10  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Handle pdfs > v1.4 loaded by \X'pdf: pdfpic.
