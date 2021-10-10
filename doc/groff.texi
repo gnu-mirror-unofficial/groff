@@ -11067,14 +11067,14 @@ spacing; it is associated with the environment (@pxref{Environments}).
 @cindex @code{\s}, with fractional type sizes
 A @dfn{scaled point} is equal to @math{1/@var{sizescale}} points, where
 @var{sizescale} is specified in the device description file @file{DESC},
-and defaults to 1@tie{}.  A new scaling indicator @samp{z} has has the
-effect of multiplying by @var{sizescale}.  Requests and escape sequences
-in GNU @code{troff} interpret arguments that represent a point size as
-being in units of scaled points; that is, they evaluate each such
-argument using a default scaling indicator of @samp{z}.  Arguments
-treated in this way comprise those to the escapes @code{\H} and
-@code{\s}, to the request @code{ps}, the third argument to the @code{cs}
-request, and the second and fourth arguments to the @code{tkf} request.
+and defaults to@tie{}1.  A new scaling indicator @samp{z} has the effect
+of multiplying by @var{sizescale}.  Requests and escape sequences in GNU
+@code{troff} interpret arguments that represent a point size as being in
+units of scaled points; that is, they evaluate each such argument using
+a default scaling indicator of @samp{z}.  Arguments treated in this way
+comprise those to the escape sequences @code{\H} and @code{\s}, to the
+request @code{ps}, the third argument to the @code{cs} request, and the
+second and fourth arguments to the @code{tkf} request.
 
 For example, if @var{sizescale} is@tie{}1000, then a scaled point
 is one one-thousandth of a point.  The request @samp{.ps 10.25} is
