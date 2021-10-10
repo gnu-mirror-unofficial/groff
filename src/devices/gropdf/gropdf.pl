@@ -121,6 +121,7 @@ my $wt=-1;
 my $thislev=1;
 my $mark=undef;
 my $suspendmark=undef;
+my $boxmax=0;
 
 
 
@@ -137,6 +138,8 @@ my $transition={PAGE => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I
 		BLOCK => {Type => '/Trans', S => '', D => 1, Dm => '/H', M => '/I', Di => 0, SS => 1.0, B => 0}};
 my $firstpause=0;
 my $present=0;
+my @bgstack; 		# Stack of background boxes
+my $bgbox='';		# Draw commands for boxes on this page
 
 $noslide=1 if exists($ENV{GROPDF_NOSLIDE}) and $ENV{GROPDF_NOSLIDE};
 
@@ -364,6 +367,32 @@ if ($cpageno > 0)
 	    @{$cpage->{Annots}}=@PageAnnots;
 	}
 
+	if ($#bgstack > -1 or $bgbox)
+	{
+	    my $box="q 1 0 0 1 0 0 cm ";
+
+	    foreach my $bg (@bgstack)
+	    {
+		# 0=$bgtype # 1=stroke 2=fill. 4=page
+		# 1=$strkcol
+		# 2=$fillcol
+		# 3=(Left,Top,Right,bottom,LineWeight)
+		# 4=Start ypos
+		# 5=Endypos
+		# 6=Line Weight
+
+		my $pg=$bg->[3] || \@mediabox;
+
+		$bg->[5]=$pg->[3];	# box is continueing to next page
+		$box.=DrawBox($bg);
+		$bg->[4]=$pg->[1];	# will continue from page top
+	    }
+
+	    $stream=$box.$bgbox."Q\n".$stream;
+	    $bgbox='';
+	}
+
+    $boxmax=0;
 	PutObj($cpageno);
 	OutStream($cpageno+1);
 }
@@ -1228,6 +1257,74 @@ sub do_x
 
 		$present=1;
 	    }
+	    elsif (lc($xprm[1]) eq 'background')
+	    {
+		splice(@xprm,0,2);
+		my $type=shift(@xprm);
+# 		print STDERR "ypos=$ypos\n";
+
+		if (lc($type) eq 'off')
+		{
+		    my $sptr=$#bgstack;
+		    if ($sptr > -1)
+		    {
+                        if ($sptr == 0 and $bgstack[0]->[0] & 4)
+                        {
+                            pop(@bgstack);
+                        }
+                        else
+                        {
+                            $bgstack[$sptr]->[5]=GraphY($ypos);
+                            $bgbox=DrawBox(pop(@bgstack)).$bgbox;
+                        }
+		    }
+		}
+		elsif (lc($type) eq 'footnote')
+		{
+                    my $t=GetPoints($xprm[0]);
+                    $boxmax=($t<0)?abs($t):GraphY($t);
+                }
+                else
+		{
+		    my $bgtype=0;
+
+		    foreach (@xprm)
+		    {
+			$_=GetPoints($_);
+		    }
+
+		    $bgtype|=2 if $type=~m/box/i;
+		    $bgtype|=1 if $type=~m/fill/i;
+		    $bgtype|=4 if $type=~m/page/i;
+		    $bgtype=5 if $bgtype==4;
+		    my $bgwt=$xprm[4];
+		    $bgwt=$xprm[0] if !defined($bgwt) and $#xprm == 0;
+		    my (@bg)=(@xprm);
+		    my $bg=\@bg;
+
+		    if (!defined($bg[3]) or $bgtype & 4)
+		    {
+			$bg=undef;
+		    }
+		    else
+		    {
+			FixRect($bg);
+		    }
+
+		    if ($bgtype)
+		    {
+                        if ($bgtype & 4)
+                        {
+                            shift(@bgstack) if $#bgstack >= 0 and $bgstack[0]->[0] & 4;
+                            unshift(@bgstack,[$bgtype,$strkcol,$fillcol,$bg,GraphY($ypos),GraphY($bg[3]||0),$bgwt || 0.4]);
+                        }
+                        else
+                        {
+                            push(@bgstack,[$bgtype,$strkcol,$fillcol,$bg,GraphY($ypos),GraphY($bg[3]||0),$bgwt || 0.4]);
+                        }
+		    }
+		}
+	    }
 	}
 	elsif (lc(substr($xprm[0],0,9)) eq 'papersize')
 	{
@@ -1593,7 +1690,7 @@ sub LoadPDF
     foreach my $o (@{$pdf})
     {
 	if (exists($o->{STREAMPOS}))
-	{
+	    {
 	    my $l;
 
 	    $l=$o->{OBJ}->{Length} if exists($o->{OBJ}->{Length});
@@ -2541,6 +2638,32 @@ sub NewPage
 	    @{$cpage->{Annots}}=@PageAnnots;
 	}
 
+	if ($#bgstack > -1 or $bgbox)
+	{
+	    my $box="q 1 0 0 1 0 0 cm ";
+
+	    foreach my $bg (@bgstack)
+	    {
+		# 0=$bgtype # 1=stroke 2=fill. 4=page
+		# 1=$strkcol
+		# 2=$fillcol
+		# 3=(Left,Top,Right,bottom,LineWeight)
+		# 4=Start ypos
+		# 5=Endypos
+		# 6=Line Weight
+
+		my $pg=$bg->[3] || \@defaultmb;
+
+		$bg->[5]=$pg->[3];	# box is continueing to next page
+		$box.=DrawBox($bg);
+		$bg->[4]=$pg->[1];	# will continue from page top
+	    }
+
+	    $stream=$box.$bgbox."Q\n".$stream;
+	    $bgbox='';
+	    $boxmax=0;
+	}
+
 	PutObj($cpageno);
 	OutStream($cpageno+1);
     }
@@ -2568,6 +2691,23 @@ sub NewPage
     $mode='g';
     $curfill='';
 #    @mediabox=@defaultmb;
+}
+
+sub DrawBox
+{
+    my $bg=shift;
+    my $res='';
+    my $pg=$bg->[3] || \@mediabox;
+    $bg->[4]=$pg->[1], $bg->[5]=$pg->[3] if $bg->[0] & 4;
+    my $bot=$bg->[5];
+    $bot=$boxmax if $boxmax > $bot;
+    my $wid=$pg->[2]-$pg->[0];
+    my $dep=$bot-$bg->[4];
+
+    $res="$bg->[1] $bg->[2] $bg->[6] w\n";
+    $res.="$pg->[0] $bg->[4] $wid $dep re f " if $bg->[0] & 1;
+    $res.="$pg->[0] $bg->[4] $wid $dep re s " if $bg->[0] & 2;
+    return("$res\n");
 }
 
 sub MakeXO

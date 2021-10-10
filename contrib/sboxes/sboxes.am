@@ -1,0 +1,39 @@
+sboxes_srcdir = $(top_srcdir)/contrib/sboxes
+SBOXES_FLAGS = -M$(sboxes_srcdir) -ms -msboxes -Tpdf
+# Files installed in $(tmacdir).
+SBOXES_NORMAL_FILES = contrib/sboxes/sboxes.tmac
+sboxestmacdir = $(tmacdir)
+dist_sboxestmac_DATA = $(SBOXES_NORMAL_FILES)
+
+# Files installed in $(examplesdir)/sboxes.  SBOXES_EXAMPLEFILES are located
+# in the source tree, while SBOXESPROCESSEDEXAMPLEFILES are generated in
+# the build tree.
+SBOXES_EXAMPLEFILES= contrib/sboxes/msboxes.ms
+if BUILD_EXAMPLES
+sboxesexampledir = $(exampledir)/sboxes
+dist_sboxesexample_DATA = $(SBOXES_EXAMPLEFILES)
+SBOXES_PROCESSEDEXAMPLEFILES = contrib/sboxes/msboxes.pdf
+sboxesprocessedexampledir = $(exampledir)/sboxes
+nodist_sboxesprocessedexample_DATA = $(SBOXES_PROCESSEDEXAMPLEFILES)
+else
+EXTRA_DIST += $(SBOXES_EXAMPLEFILES)
+endif
+
+$(SBOXES_PROCESSEDEXAMPLEFILES): $(SBOXES_NORMAL_FILES) \
+  groff troff gropdf font/devpdf/build_font_files
+
+contrib/sboxes/msboxes.pdf:
+	mkdir -p $(top_builddir)/contrib/sboxes/
+	$(top_builddir)/test-groff $(SBOXES_FLAGS) $(sboxes_srcdir)/msboxes.ms > $@
+
+uninstall_groffdirs: uninstall_sboxes
+uninstall_sboxes:
+	if test -d $(DESTDIR)$(exampledir)/sboxes; then \
+	  rmdir $(DESTDIR)$(exampledir)/sboxes; \
+	fi
+
+# Local Variables:
+# fill-column: 72
+# mode: makefile-automake
+# End:
+# vim: set autoindent filetype=automake textwidth=72:
