@@ -3446,20 +3446,9 @@ Macro: <b>PAGE_COLOR</b> <kbd class="macro-args"> &lt;color&gt; | OFF | off
 
 <p>
 When you invoke PAGE_COLOR with a <kbd>color</kbd> argument, the
-<i>current</i> and subsequent pages turn the colour you request.  If
+current and subsequent pages turn the colour you request.  If
 more than one instance of PAGE_COLOR appears before a page break,
-only the last applies.
-</p>
-
-<p>
-When you invoke PAGE_COLOR with <kbd>OFF</kbd> or <kbd>off</kbd>,
-the <i>next</i> and subsequent pages are restored to white.  It is
-therefore possible to colour a single page and disable colouring for
-the next page by putting the two PAGE_COLOR invocations on adjacent
-lines:
-<span class="pre-in-pp">
-&nbsp;&nbsp;.PAGE_COLOR antiquewhite
-&nbsp;&nbsp;.PAGE_COLOR OFF
+including <kbd>PAGE_COLOR OFF</kbd>, only the last applies.
 </p>
 
 <div class="box-tip">
@@ -3467,8 +3456,9 @@ lines:
 <span class="note">Note:</span>
 Unlike other
 <a href="definitions.html#toggle">toggle macros</a>,
-PAGE_COLOR requires the use of <kbd>OFF</kbd> or <kbd>off</kbd> to
-terminate it rather than an arbitrary string.
+PAGE_COLOR requires the use of <kbd>OFF</kbd> or <kbd>off</kbd>
+to terminate it rather than an arbitrary string (<kbd>QUIT, X,
+END</kbd>, etc.)
 </p>
 </div>
 
