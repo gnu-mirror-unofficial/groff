@@ -987,7 +987,7 @@ line
 It is frequently desirable for a control structure to govern more than
 one request,
 call more than one macro,
-span more than one input line of text,
+span more than one text line,
 or mix the foregoing.
 .
 The opening and closing brace escapes
@@ -1477,25 +1477,26 @@ Set blank line macro (trap) to
 .
 .TPx
 .REQ .box
-Stop directing output to current box diversion.
+Stop directing output to current diversion;
+any pending output line is discarded.
 .
 .
 .TPx
-.REQ .box "name"
-Divert output to
+.REQ .box name
+Direct output to diversion
 .IR name ,
 omitting a partially collected line.
 .
 .
 .TPx
 .REQ .boxa
-Stop appending output to current box diversion.
+Stop appending output to current diversion;
+any pending output line is discarded.
 .
 .
 .TPx
-.REQ .boxa "name"
-Divert output,
-appending it to
+.REQ .boxa name
+Append output to diversion
 .IR name ,
 omitting a partially collected line.
 .
@@ -1568,14 +1569,14 @@ and so on.
 .
 .
 .TPx
-.REQ .ch "name N"
-Change location of page location trap by moving macro
+.REQ .ch "name \fR[\fPN\fR]"
+Change a planted page location trap
 .I name
-to new location
+by moving its location to
 .IR N ,
 or by unplanting it altogether if
 .I N
-absent.
+is absent.
 .
 .
 .TPx
@@ -1654,14 +1655,17 @@ Continuous underline in nroff, like
 .request .ul
 in troff.
 .
-.TPx
-.REQ .da
-End current diversion.
 .
 .TPx
-.REQ .da "macro"
-Divert and append to
-.IR macro .
+.REQ .da
+Stop appending output to current diversion.
+.
+.
+.TPx
+.REQ .da name
+Append output to diversion
+.IR name .
+.
 .
 .TPx
 .REQ .de "macro"
@@ -1787,17 +1791,17 @@ Write contents of macro or string
 .I name
 uninterpreted to the intermediate output as a device control function.
 .
-.TPx
-.REQ .di
-End current diversion.
 .
 .TPx
-.REQ .di "macro"
-Divert to
-.IR macro .
-See
-.MR groff_tmac @MAN5EXT@
-for more details.
+.REQ .di
+Stop directing output to current diversion.
+.
+.
+.TPx
+.REQ .di name
+Direct output to diversion
+.IR name .
+.
 .
 .TPx
 .REQ .do "name \fR\&.\|.\|.\&\fP"
@@ -1886,7 +1890,7 @@ request was false.
 .
 .TPx
 .REQ .em name
-Invoke macro
+Call macro
 .I name
 after the end of input.
 .
@@ -3147,7 +3151,9 @@ grap^.G1^.G2
 .\" Keep the .IF line below the @g@ideal line.
 @g@ideal^.IS^.IE
 ^^.IF
+.\" Keep the .PF line below the @g@pic line.
 @g@pic^.PS^.PE
+^^.PF
 @g@refer^.R1^.R2
 @g@soelim^\f[I]none^\f[I]none
 @g@tbl^.TS^.TE
@@ -3704,7 +3710,6 @@ Interpolate format of register with one-character
 .ESC g( rg
 Interpolate format of register with two-character
 .RI name\~ rg .
-.IR rg .
 .
 .
 .TP
@@ -3725,7 +3730,8 @@ right
 .TP
 .ESCq H N
 Set height of current font to
-.IR N \~scaled points
+.IR N \~scaled
+points
 (or specified units).
 .
 .
@@ -4163,7 +4169,7 @@ character encodings that use characters from these ranges.
 .
 (Consider what happens when a C1 control
 .BR 0x80 \[en] 0x9F
-is necessary as a continuation byte in a UTF-8 sequence.}
+is necessary as a continuation byte in a UTF-8 sequence.)
 .
 .
 .IP
