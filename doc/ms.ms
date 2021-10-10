@@ -2204,9 +2204,14 @@ _
 \&.FS \f[R][\f[I]marker\f[]]	T{
 Begin a footnote.
 .
-A
+The
+.CW FS\-MARK
+hook
+(see below)
+is called with any supplied
 .I marker
-argument is placed at the beginning of the footnote text.
+argument,
+which is then also placed at the beginning of the footnote text.
 .
 If
 .I marker
@@ -2250,6 +2255,39 @@ and
 to superscript the marker at the anchor point,
 in the footnote text,
 or both.
+.
+.
+.PP
+.I "groff ms"
+provides a hook macro,
+.CW FS\-MARK ,
+for user-determined operations to be performed when the
+.CW FS
+macro is called.
+.
+It is passed the same arguments as
+.CW FS
+itself.
+.
+An application of
+.CW FS\-MARK
+is anchor placement for a hyperlink reference,
+so that a footnote can link back to its referential context.\**
+.
+.FS
+\[lq]Portable Document Format Publishing with GNU Troff\[rq],
+.I pdfmark.ms
+in the
+.I groff
+distribution,
+uses this technique.
+.FE
+.
+By default,
+this macro has an empty definition.
+.
+.CW FS\-MARK
+is a GNU extension.
 .
 .
 .PP

@@ -1440,9 +1440,14 @@ of a text column or page.
 .RI \~[ marker ]
 Begin a footnote.
 .
-A
+The
+.B .FS\-MARK
+hook
+(see below)
+is called with any supplied
 .I marker
-argument is placed at the beginning of the footnote text.
+argument,
+which is then also placed at the beginning of the footnote text.
 .
 If
 .I marker
@@ -1454,40 +1459,29 @@ string is used,
 and if none exists,
 nothing is prefixed.
 .
-.IP
-Immediately,
-on entry to
-.BR FS ,
-a macro named
-.B FS-MARK
-is called,
-passing the same
-.I marker
-argument
-(if any)
-as passed to
-.B FS
-itself.
-By default,
-this macro does nothing;
-however,
-you may define an alternative implementation of
-.BR FS-MARK ,
-if,
-for example,
-you require some additional action
-on placement of the footnote
-.IR marker ,
-or footnote number,
-in the body text,
-beyond that which can be achieved by simple interpolation of the
-.B *
-string.
-.
 .
 .TP
 .B .FE
 End footnote text.
+.
+.
+.P
+.I groff ms
+provides a hook macro,
+.BR FS\-MARK ,
+for user-determined operations to be performed when the
+.B FS
+macro is called.
+.
+It is passed the same arguments as
+.B .FS
+itself.
+.
+By default,
+this macro has an empty definition.
+.
+.B .FS\-MARK
+is a GNU extension.
 .
 .
 .P

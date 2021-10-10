@@ -3874,11 +3874,12 @@ page.
 
 @DefmacList {FS, [@Var{marker}], ms}
 @DefmacListEndx {FE, , ms}
-Begin (@code{FS}) and end (@code{FE}) a footnote.  A @var{marker}
-argument is placed at the beginning of the footnote text.  If
-@var{marker} is omitted, the next pending automatic footnote number
-enqueued by interpolation of the @code{*} string is used, and if none
-exists, nothing is prefixed.
+Begin (@code{FS}) and end (@code{FE}) a footnote.  @code{FS} calls
+@code{FS-MARK} with any supplied @var{marker} argument, which is then
+also placed at the beginning of the footnote text.  If @var{marker} is
+omitted, the next pending automatic footnote number enqueued by
+interpolation of the @code{*} string is used, and if none exists,
+nothing is prefixed.
 @endDefmac
 
 You may not desire automatically numbered footnotes in spite of their
@@ -3890,6 +3891,16 @@ specifying its marker at the appropriate place (for example, by using
 correspondence.  You may wish to use @code{\*@{} and @code{\*@}} to
 superscript the marker at the anchor point, in the footnote text, or
 both.
+
+@code{groff} @file{fs} provides a hook macro, @code{FS-MARK}, for
+user-determined operations to be performed when the @code{FS} macro is
+called.  It is passed the same arguments as @code{FS} itself.  An
+application of @code{FS-MARK} is anchor placement for a hyperlink
+reference, so that a footnote can link back to its referential
+context.@footnote{``Portable Document Format Publishing with GNU
+Troff'', @file{pdfmark.ms} in the @code{groff} distribution, uses this
+technique.}  By default, this macro has an empty definition.
+@code{FS-MARK} is a GNU extension.
 
 @cindex footnotes, and keeps [@code{ms}]
 @cindex keeps, and footnotes [@code{ms}]

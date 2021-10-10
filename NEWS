@@ -246,6 +246,14 @@ o The s (ms) macro package has added strings, \*< and \*>, to perform
   subscripting.  They work analogously to the \*{ and \*} superscripting
   strings that have been present in groff ms since 1991 or earlier.
 
+o The s (ms) macro package has added a hook macro, FS-MARK, which is
+  called automatically by the FS macro (with same arguments given to FS)
+  before any other footnote processing.  It is empty by default but can
+  be defined by the user to, for example, place a hyperlink anchor so
+  that a link within a footnote can return to its referential context.
+  "Portable Document Format Publishing with GNU Troff", distributed with
+  groff as pdfmark.ms, uses this technique.
+
 grotty
 ------
 
