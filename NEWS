@@ -13,34 +13,19 @@ VERSION 1.23.0
 troff
 -----
 
-o English localization has been split into a dedicated macro file,
-  en.tmac, for better parallelism with other localization files and to
-  improve support for multilingual documents.  Those who want a
-  different default input language should edit the troffrc file to
-  source the desired groff locale macro file (cs.tmac, de.tmac,
-  den.tmac, fr.tmac, it.tmac, ja.tmac, sv.tmac, or zh.tmac) instead of
-  en.tmac.
+o The troffrc file now loads an English localization file instead of
+  directly housing configuration parameters appropriate to the English
+  language.  See "Macro Packages" below.
 
-  The default hyphenation mode (as used by the .hy request) for users of
-  English has changed from "1", which was inappropriate for the
-  TeX-based hyphenation patterns groff has used since at least 1991, to
-  "4".  However, invoking .hy without an argument remains synonymous
-  with ".hy 1".
-
-o The hyphenation patterns for English have been updated using the
-  `hyph-en-us.tex` patterns file from the TeX hyph-utf8 project.  The
-  new patterns likely _will_ change the automatic hyphenation break
-  points of your English documents.
-
-o A new read-only register ".cp" is implemented.  Within a .do request,
+o A new read-only register ".cp" is implemented.  Within a 'do' request,
   "\n[.cp]" holds the saved value of compatibility mode.  See
   groff_diff(7) or the groff Texinfo manual for rationale, use case, and
   example.
 
 o A new read-only register ".nm" is implemented.  It reports the
-  enablement status of output line numbering (caused by the .nm
+  enablement status of output line numbering (caused by the 'nm'
   request) irrespective of the temporary suspension of numbering with
-  the .nn request.  This register was introduced because there was no
+  the 'nn' request.  This register was introduced because there was no
   way to introspect its state, tbl(1) needs to be able to do so, and the
   writable line number register \n[ln] is not a reliable proxy for it.
 
@@ -117,6 +102,25 @@ o The -I option now implies "-g" (run the grn(1) preprocessor), and
 Macro Packages
 --------------
 
+o English localization has been split into a dedicated macro file,
+  en.tmac, for better parallelism with other localization files and to
+  improve support for multilingual documents.  Those who want a
+  different default input language should edit the troffrc file to
+  source the desired groff locale macro file (cs.tmac, de.tmac,
+  den.tmac, fr.tmac, it.tmac, ja.tmac, sv.tmac, or zh.tmac) instead of
+  en.tmac.
+
+  The default hyphenation mode (as used by the 'hy' request) for users
+  of English has changed from "1", which was inappropriate for the
+  TeX-based hyphenation patterns groff has used since at least 1991, to
+  "4".  However, invoking .hy without an argument remains synonymous
+  with ".hy 1".
+
+o The hyphenation patterns for English have been updated using the
+  `hyph-en-us.tex` patterns file from the TeX hyph-utf8 project.  The
+  new patterns likely _will_ change the automatic hyphenation break
+  points of your English documents.
+
 o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
   special character glyph names implementing RFC 1345 mnemonics (plus
   some additions from Vim, which itself uses RFC 1345 for its digraphs).
@@ -132,7 +136,7 @@ o The an (man) macro package can now produce clickable hyperlinks within
 
   Use a command like
     printf '\033]8;;man:grotty(1)\033\\grotty(1)\033]8;;\033\\\n' | more
-  to check your terminal and pager for OSC 8 support.  If it you see
+  to check your terminal and pager for OSC 8 support.  If you see
   "grotty(1)" and no additional garbage characters, then you may wish to
   edit "man.local" to remove the lines that disable this feature.
 
@@ -177,8 +181,9 @@ o Part of the an (man) macro package has been renamed from "an-old.tmac"
   "-mandoc" preferentially if available when man-db is configured.
 
 o The an (man) macro package supports a new AD string to put the default
-  adjustment mode under user control.  The default is 'b' (adjust lines
-  to both margins) as has been the Unix man(7) default since 1979.
+  adjustment mode under user control at rendering time.  The default is
+  'b' (adjust lines to both margins) as has been the Unix man(7) default
+  since 1979.
 
 o The an (man) and doc (mdoc) macro packages support new CS and CT
   registers to control rendering of man page section headings and titles
@@ -191,13 +196,13 @@ o The an (man) and doc (mdoc) macro packages support new CS and CT
   maintainers of man(1) implementations) a way to view the rendered page
   elements in full capitals if desired.
 
-o The an (man) macro package no longer honors an .ll request to set the
-  line length in nroff devices prior to processing a man page.  This was
-  deprecated 18 years ago, and all known man program and macro package
-  implementations either have set an LL register since 2002 (man-db
-  man), 2005 (Brouwer/Lucifredi man), or don't let the user vary the
-  line length freely (DWB troff, Solaris troff, Plan 9 troff) or at all
-  (mandoc, Heirloom Doctools troff).
+o The an (man) macro package no longer honors an 'll' request to set the
+  line length on nroff devices prior to processing a man page.  This was
+  deprecated in groff 1.18 (July 2002), and all known man program and
+  macro package implementations either have set an LL register since
+  2002 (man-db man), 2005 (Brouwer/Lucifredi man), or don't let the user
+  vary the line length freely (DWB troff, Solaris troff, Plan 9 troff)
+  or at all (mandoc, Heirloom Doctools troff).
 
 o The groff_man(7) man page documenting the groff implementation of the
   an (man) macro package has been split into two pages.  The original
@@ -208,15 +213,15 @@ o The groff_man(7) man page documenting the groff implementation of the
 
 o The doc (mdoc) macro package now honors the HY register as the an
   (man) package does: to set the default hyphenation mode.  It
-  furthermore recognizes but ignores the AD string (see above) for
-  compatibility with an (man).
+  furthermore recognizes the AD string (see above) for compatibility
+  with an (man), but at present ignores its value.
 
 o The m (mm) macro package now requires a title to be declared when
   memorandum type 5 is used (.MT 5), just as type 4 has since groff 1.10
   (November 1995).
 
 o The m (mm) and s (ms) macro packages no longer manipulate the warning
-  level.  If you want all warnings on, use the ".warn" request with no
+  level.  If you want all warnings on, use the 'warn' request with no
   arguments in your document or pass "-w w" to groff (see troff(1) or
   the groff Texinfo manual for more on warnings).
 
@@ -261,18 +266,19 @@ o A new device control command, "link", generates OSC 8 hyperlinks.
   This means that groff documents can produce clickable links in the
   terminal window for emulators that support such escape sequences.
 
-o On the Latin-1 output device ("groff -T latin1") the output glyph
-  \[oq] (opening quote) is now rendered as code point 0x27 (apostrophe)
-  instead of 0x60 (grave accent).  The ISO 8859/ECMA-94 Latin character
-  sets do not define any glyphs for directional ("typographer's")
-  quotation marks, but the apostrophe is depicted as a neutral
-  (vertical) glyph, whereas the grave accent 0x60 and acute accent 0xB4
-  are mirror-symmetric diacritical marks.
+o On the Latin-1 output device ("groff -T latin1") the special character
+  escape sequence \[oq] (opening quote) is now rendered as code point
+  0x27 (apostrophe) instead of 0x60 (grave accent).  The ISO
+  8859/ECMA-94 Latin character sets do not define any glyphs for
+  directional ("typographer's") quotation marks, but the apostrophe is
+  depicted in the defining standard as a neutral (vertical) glyph,
+  whereas the grave accent 0x60 and acute accent 0xB4 are
+  mirror-symmetric diacritical marks.
 
   This change has no effect on _input_ conventions for roff source
   documents.  You can still get directional single quotes on UTF-8,
   PostScript, PDF, and other output devices supporting them by typing
-  sequences like `this' in the input (character remapping with ".char"
+  sequences like `this' in the input (character remapping with 'char'
   requests and similar notwithstanding).
 
 Miscellaneous
@@ -292,8 +298,9 @@ o The semantics of the environment variable SOURCE_DATE_EPOCH (support
   runs against the grain of user expectations.  Systems programmers like
   time zone-invariant, monotonically increasing clocks; the broader
   user base usually prefers a clock that follows an applicable civil
-  calendar.  Users of SOURCE_DATE_EPOCH may also wish to set the TZ
-  environment variable.
+  calendar.  groff programs now reckon SOURCE_DATE_EPOCH with respect to
+  the local time zone.  Users of SOURCE_DATE_EPOCH may wish to also set
+  the TZ environment variable.
 
 o groffer has been deleted from the distribution.
 
@@ -3203,4 +3210,4 @@ fill-column: 72
 mode: text
 version-control: never
 End:
-# vim: set textwidth=72:
+# vim: set autoindent textwidth=72:
