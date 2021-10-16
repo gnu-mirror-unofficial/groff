@@ -88,7 +88,8 @@ page.
 .IP bottom 7n
 Are the coordinates of the box.
 The "top" and "bottom" coordinates are the minimum and maximum for the
-box, since the actual start of the box is the vertical position of groff
+box, since the actual start of the box is the vertical position of
+.I groff
 when you issue the command and the bottom of the box is the point where
 you turn the box "off".
 The top and bottom coordinates are only used if the box drawing extends
@@ -99,7 +100,8 @@ If "box" is included in the command then this parameter provides the
 line width for the box border.
 .BoxStop
 .QE
-More convenience can be gained by including -msboxes on the groff
+More convenience can be gained by including -msboxes on the
+.I groff
 command line which includes the macros "BoxStart" and "BoxStop".
 .QS
 .BoxStart SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
@@ -144,8 +146,9 @@ position, after adding the Indent spacing.
 .BoxStop
 .QE
 This macro package has one further feature, it attempts to hook into the
-ms package to receive notifications when footnotes are growing, so that
-it can close boxes before the footnotes are printed.
+.I ms
+package to receive notifications when footnotes are growing, so that it
+can close boxes before the footnotes are printed.
 If there are footnotes on a page it will close current boxes 2p above
 the footnote separator, this probably will not match the indent amount
 requested.
