@@ -303,7 +303,7 @@
 	(tty_printer::simple_add_char): Add stripped-down alternative to
 	`add_char()` member function for cases where we want to use many
 	defaults because we're writing a terminal escape sequence, not
-	rendering a glyph.  (A function like `add_char()` that take 8
+	rendering a glyph.  (A function like `add_char()` that takes 8
 	arguments of varying types is a code smell--phew!)
 	(tty_printer::special): Call `special_link()` member function if
 	the device control command is `link`.
@@ -581,8 +581,7 @@
 	* src/include/font.h (font::load_font): Drop second parameter.
 	It was never used for its intended purpose.
 	(load): Drop first parameter; likewise.
-	* src/libs/libgroff/font.cpp (font::load)
-	(load): As above.
+	* src/libs/libgroff/font.cpp (font::load, load): As above.
 
 	* src/libs/libgroff/font.cpp (struct text_file): Rename
 	`skip_comments` to `recognize_comments`.  Demote that and
@@ -870,10 +869,10 @@
 
 	* src/libs/libbib/index.cpp
 	(index_search_item::get_invalidity_reason): Don't complain about
-	about a last list element being nonnegative if the list size was
-	zero in the first place, as can happen with an empty index.
-	More seriously from a language standpoint, avoid reading through 
-	a negative array index (this can escape a compiler's attention
+	a last list element being nonnegative if the list size was zero
+	in the first place, as can happen with an empty index.  More
+	seriously from a language standpoint, avoid reading through a
+	negative array index (this can escape a compiler's attention
 	because we're reading from the midst of a heap-allocated or
 	`mmap()`ed region, but it's still a code smell).
 
