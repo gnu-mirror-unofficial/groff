@@ -57,32 +57,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .    ie 'SHADED'\\$1' \{\
 .       nop \\M[\\$2]\c
 .       nr bx@shad 1
-.		as bx@type "fill\"
+.       as bx@type "fill\"
 .       shift 2
 .    \}
 .    el \{\
-.       ie 'OUTLINED'\\$1' \{\
-.          nop \\m[\\$2]\c
-.          nr bx@outl 1
-.		   as bx@type "box\"
-.          shift 2
-.	\}
-.	el \{\
-.	       ie 'WEIGHT'\\$1' \{\
-.	     	   ds bx@wt \\$2
-.       	   shift 2
-.		\}
-.		el \{\
-.		       ie 'INDENT'\\$1' \{\
-.		     	   nr bx@ind \\$2
-.       		   shift 2
-.			\}
-.			el \{\
-.				tm Unknown Token \\$1
-.				shift
-.			\}
-.		\}
-.	\}
+.     ie 'OUTLINED'\\$1' \{\
+.       nop \\m[\\$2]\c
+.       nr bx@outl 1
+.       as bx@type "box\"
+.       shift 2
+.     \}
+.     el \{\
+.       ie 'WEIGHT'\\$1' \{\
+.         ds bx@wt \\$2
+.         shift 2
+.       \}
+.       el \{\
+.         ie 'INDENT'\\$1' \{\
+.           nr bx@ind \\$2
+.           shift 2
+.         \}
+.         el \{\
+.           tm Unknown Token \\$1
+.           shift
+.         \}
+.       \}
+.     \}
 .    \}
 .  \}
 .
@@ -113,4 +113,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" mode: nroff
 .\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff textwidth=72:
+.\" vim: set expandtab filetype=groff textwidth=72:
