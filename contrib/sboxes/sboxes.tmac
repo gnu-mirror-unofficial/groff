@@ -31,6 +31,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr GSBOX 1
 .nr bx@stack 0
 .
+.de sboxes*error
+.  tm sboxes.tmac:\\n[.F]:\\n[.c]: error: \\$*
+..
+.
 .de pdfbackground
 .device pdf: background \\$*
 ..
@@ -78,7 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .           shift 2
 .         \}
 .         el \{\
-.           tm Unknown Token \\$1
+.           sboxes*error ignoring unrecognized BoxStart parameter '\\$1'
 .           shift
 .         \}
 .       \}
