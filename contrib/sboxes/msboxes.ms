@@ -28,7 +28,7 @@ deri@chuzzlewit.myzen.co.uk
 .\" .AB no
 .LP
 A recent extension to the Groff PDF driver allows coloured rectangles to be
-created beneath any output created by groff. The extension is a new "\eX'pdf:'"
+created beneath any output created by groff. The extension is a new "\eX\[aq]pdf:\[aq]"
 command (with a convenience command
 .B pdfbackground
 with the same parameters):-
@@ -38,9 +38,9 @@ with the same parameters):-
 .pdfbackground pagefill
 \M[]\c
 .B
-\eX'pdf: background
+\eX\[aq]pdf: background
 .BI
-cmd left top right bottom weight'
+cmd left top right bottom weight\[aq]
 .br
 .B .pdfbackground
 .BI
@@ -159,10 +159,10 @@ The above was produced by the following code.
 \&.po 2c
 \&.\" .RP no
 \&.ND March 2021
-\&.EH '%''March 2021'
-\&.EF ''''
-\&.OH 'Using PDF boxes with the \ef[I]ms\ef[] macros''%'
-\&.OF ''''
+\&.EH \[aq]%\[aq]\[aq]March 2021\[aq]
+\&.EF \[aq]\[aq]\[aq]\[aq]
+\&.OH \[aq]Using PDF boxes with the \ef[I]ms\ef[] macros\[aq]\[aq]%\[aq]
+\&.OF \[aq]\[aq]\[aq]\[aq]
 \&.ds FAM H
 \&.TL
 Using PDF boxes with the
@@ -175,7 +175,7 @@ deri@chuzzlewit.myzen.co.uk
 \&.\" .AB no
 \&.LP
 A recent extension to the Groff PDF driver allows coloured rectangles to be
-created beneath any output created by groff. The extension is a new "\eX'pdf:'"
+created beneath any output created by groff. The extension is a new "\eX\[rs][aq]pdf:\[rs][aq]"
 command (with a convenience command
 \&.B pdfbackground
 with the same parameters):-
@@ -185,9 +185,9 @@ with the same parameters):-
 \&.pdfbackground pagefill
 \eM[]\ec
 \&.B
-\eX'pdf: background
+\eX\[rs][aq]pdf: background
 \&.BI
-cmd left top right bottom weight'
+cmd left top right bottom weight\[rs][aq]
 \&.br
 \&.B .pdfbackground
 \&.BI
