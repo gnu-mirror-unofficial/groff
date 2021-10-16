@@ -44,7 +44,7 @@ cmd left top right bottom weight'
 .br
 .B .pdfbackground
 .BI
-cmd left top right bottom weight'
+cmd left top right bottom weight
 .LP
 Where:-
 .IP cmd 7n
@@ -191,7 +191,7 @@ cmd left top right bottom weight'
 \&.br
 \&.B .pdfbackground
 \&.BI
-cmd left top right bottom weight'
+cmd left top right bottom weight
 \&.LP
 Where:-
 \&.IP cmd 7n
