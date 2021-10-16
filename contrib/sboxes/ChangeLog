@@ -1,5 +1,15 @@
 2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* sboxes.tmac: Add more prerequisite checking.  Check `GS`
+	register for groff ms macros specifically.  Check installed
+	version of groff since the gropdf in earlier versions won't
+	implement the underlying feature.  Add new string to introduce
+	diagnostic messages now that we have more than one (that we can
+	emit without limp-along AT&T compatibility mode).
+	(sboxes*error): Use new string in diagnostic message.
+
+2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* sboxes.tmac (sboxes*error): Add new macro to produce
 	diagnostic message in a standard format.
 	(BoxStart): Use it.

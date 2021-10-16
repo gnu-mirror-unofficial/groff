@@ -26,13 +26,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .if \n(.C \
 .  ab groff sboxes macros do not work in compatibility mode; aborting
 .
+.\" Define a string for use in diagnostic messages.
+.ds sboxes*name sboxes.tmac\"
+.
+.if !r GS \
+.  ab \*[sboxes*name]: ms macros must be loaded first; aborting
+.
+.if (\n[.x]\n[.y] < 123) \{\
+.  ds sboxes*msg \*[sboxes*name]: groff 1.23 or later is required,\"
+.  as sboxes*msg " but found groff \n[.x].\n[.y]; aborting\"
+.  ab \*[sboxes*msg]
+.\}
+.
 .\" See if already loaded.
 .if r GSBOX .nx
 .nr GSBOX 1
 .nr bx@stack 0
 .
 .de sboxes*error
-.  tm sboxes.tmac:\\n[.F]:\\n[.c]: error: \\$*
+.  tm \*[sboxes*name]:\\n[.F]:\\n[.c]: error: \\$*
 ..
 .
 .de pdfbackground
