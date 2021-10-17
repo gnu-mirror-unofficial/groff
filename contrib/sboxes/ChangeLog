@@ -1,5 +1,14 @@
 2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* sboxes.tmac: Rename macros to get out of user name space.  Our
+	ms package documentation says that externally visible names will
+	consist only of uppercase letters and digits.
+	(BoxStart): Rename to BOXSTART.
+	(BoxStop): Rename to BOXSTOP.
+	* msboxes.ms.in: Document and use new names.
+
+2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* sboxes.tmac: Add more prerequisite checking.  Check `GS`
 	register for groff ms macros specifically.  Check installed
 	version of groff since the gropdf in earlier versions won't

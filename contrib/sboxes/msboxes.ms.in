@@ -48,7 +48,7 @@ The extension can be accessed via a device control escape sequence
 .Lt pdfbackground
 supporting the same parameters).
 .QS
-.BoxStart SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
+.BOXSTART SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
 \M[floralwhite]\c
 .pdfbackground pagefill
 \M[]\c
@@ -137,7 +137,7 @@ If
 .Qq box
 is included in the command, then this parameter provides the line width
 for the box border.
-.BoxStop
+.BOXSTOP
 .QE
 For a more convenient interface, include
 .Lt \-msboxes
@@ -146,13 +146,13 @@ on the
 command line; the
 .I sboxes
 package defines the macros
-.Lt BoxStart
+.Lt BOXSTART
 and
-.Lt BoxStop .
+.Lt BOXSTOP .
 .QS
-.BoxStart SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
-.BoxStart SHADED cornsilk3 INDENT 2p
-.Lt .BoxStart
+.BOXSTART SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
+.BOXSTART SHADED cornsilk3 INDENT 2p
+.Lt .BOXSTART
 .Lt SHADED
 .I colour
 .Lt OUTLINED
@@ -161,7 +161,7 @@ and
 .I size
 .Lt WEIGHT
 .I size
-.BoxStop
+.BOXSTOP
 .LP
 where the argument after
 .Lt SHADED
@@ -189,37 +189,37 @@ and each
 a valid
 .I groff
 numeric expression.
-.BoxStop
+.BOXSTOP
 .QE
 Boxes can be stacked, so you can start a box within another box; usually
 the later boxes would be smaller than the containing box, but this is
 not enforced.
 When using
-.Lt BoxStart ,
+.Lt BOXSTART ,
 the left position is the current indent minus the
 .Lt INDENT
 in the command,
 and the right position is the left position (calculated above) plus the
 current line length and twice the indent.
 The synopsis of
-.Lt BoxStart
+.Lt BOXSTART
 above itself uses a
-.Lt BoxStart
+.Lt BOXSTART
 call without borders and with a
 .Lt 2p
 (two point) indent.
 .QS
-.BoxStart SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
-.BoxStart SHADED cornsilk3 INDENT 2p
-.Lt .BoxStop
-.BoxStop
+.BOXSTART SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
+.BOXSTART SHADED cornsilk3 INDENT 2p
+.Lt .BOXSTOP
+.BOXSTOP
 .LP
 This macro takes no parameters.
 It closes the most recently started box at the current vertical position
 after adding its
 .Lt INDENT
 spacing.
-.BoxStop
+.BOXSTOP
 .QE
 .I sboxes
 has one further feature: it hooks into the
@@ -240,10 +240,10 @@ This document was produced using the following code.
 .nr PS 11
 .nr VS 13
 .LP
-.BoxStart SHADED white OUTLINED brown INDENT 2n WEIGHT 1p
+.BOXSTART SHADED white OUTLINED brown INDENT 2n WEIGHT 1p
 .nf
 \# REPLACEME
-.BoxStop
+.BOXSTOP
 .\" Local Variables:
 .\" mode: nroff
 .\" fill-column: 72

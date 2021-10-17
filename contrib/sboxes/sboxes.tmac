@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .nr bx@PD \\n[PD]
 ..
 .
-.de BoxStart
+.de BOXSTART
 .  fl
 .  nr bx@stack \\n[bx@stack]+1u
 .  nr bx@shad 0
@@ -94,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .           shift 2
 .         \}
 .         el \{\
-.           sboxes*error ignoring unrecognized BoxStart parameter '\\$1'
+.           sboxes*error ignoring unrecognized BOXSTART parameter '\\$1'
 .           shift
 .         \}
 .       \}
@@ -120,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  sp -(\\n[bx@gap]u)
 .  nr bx@PD 0
 ..
-.de BoxStop
+.de BOXSTOP
 .  sp \\*[bx@ind\\n[bx@stack]]u-\\n[.psr]u
 .  pdfbackground off
 .  nr bx@stack \\n[bx@stack]-1u
