@@ -126,6 +126,12 @@ o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
   some additions from Vim, which itself uses RFC 1345 for its digraphs).
   It is documented in the groff_rfc1345(7) man page.
 
+o The new sboxes macro package, contributed by Deri James, offers a
+  simple interface to the new gropdf(1) "background" feature.  Using it,
+  ms documents can draw colored rectangles beneath any groff output.
+  See "Using PDF boxes with the ms macros", installed as 'msboxes.ms'
+  and 'msboxes.pdf' for instructions and a demonstration.
+
 o The an (man) macro package can now produce clickable hyperlinks within
   terminal emulators, using the OSC 8 support added to grotty(1) (see
   below).  The groff man(7) extension macros "UR" and "MT", present
@@ -258,6 +264,15 @@ o The s (ms) macro package has added a hook macro, FS-MARK, which is
   that a link within a footnote can return to its referential context.
   "Portable Document Format Publishing with GNU Troff", distributed with
   groff as pdfmark.ms, uses this technique.
+
+gropdf
+------
+o A new device control command, "background", enables boxes to be drawn
+  underneath other page content.  The boxes can be shaded with colors,
+  drawn with a colored border of configurable thickness, and interrupted
+  by page breaks with special support for breaking before footnotes and
+  similar material.  For convenience, `pdf.tmac` exposes a new macro,
+  'pdfbackground'.
 
 grotty
 ------
