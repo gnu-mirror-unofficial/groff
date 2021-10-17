@@ -91,7 +91,7 @@ introduces many new requests;
 with three exceptions,\" .cp, .do, .rj
 they all have names longer than two characters.
 .
-The names of number registers,
+The names of registers,
 fonts,
 strings/\:macros/\:diversions,
 environments,
@@ -169,11 +169,11 @@ or 10.25\~points.
 Consequently,
 in
 .IR groff ,
-the number register
+the register
 .B \[rs]n[.s]
 can contain a non-integral point size.
 .
-The new number register
+The new register
 .B \[rs]n[.ps]
 returns the point size in scaled points.
 .
@@ -353,7 +353,7 @@ True if there is a color called
 .
 .TP
 .BI r\~ reg
-True if there is a number register called
+True if there is a register called
 .IR reg .
 .
 .
@@ -415,7 +415,7 @@ or\~\c
 depending on whether
 .I anything
 is or is not acceptable as the name of a string, macro, diversion,
-number register, environment, font, or color.
+register, environment, font, or color.
 .
 It returns\~\c
 .B 0
@@ -540,7 +540,7 @@ switches back to the previous color.
 .
 .TP
 .BI \[rs]n[ xxx ]
-Interpolate number register
+Interpolate register
 .IR xxx .
 .
 .TP
@@ -977,7 +977,7 @@ and
 .BI .aln\~ "new old"
 Create an alias
 .I new
-for an existing number register named
+for an existing register named
 .IR old ,
 causing the names to refer to the same stored object.
 .
@@ -988,13 +988,13 @@ a warning of type
 .RB \[lq] reg \[rq]
 is generated and the request is ignored.
 .
-To remove a number register alias,
+To remove a register alias,
 call
 .B .rr
 on its name.
 .
-A number register's contents do not become inaccessible until it has no
-more names.
+A register's contents do not become inaccessible until it has no more
+names.
 .
 .
 .TP
@@ -2536,7 +2536,7 @@ is non-zero or missing, enable pairwise kerning, otherwise disable it.
 .BI .length\~ "reg anything"
 Compute the number of characters in
 .I anything
-and return the count in the number register
+and return the count in the register
 .IR reg .
 .
 If
@@ -2608,7 +2608,7 @@ a         b                   c
 .
 .IP
 Line-tabs mode is associated with the current environment; the
-read-only number register
+read-only register
 .B \[rs]n[.linetabs]
 is set to\~1 if in line-tabs mode, and 0 otherwise.
 .
@@ -2885,7 +2885,7 @@ request implicitly does
 .
 .TP
 .BI .rnn \~xx\~yy
-Rename number register
+Rename register
 .I xx
 to
 .IR yy .
@@ -3606,7 +3606,7 @@ and so on.
 .
 .
 .\" ====================================================================
-.SS "New number registers"
+.SS "New registers"
 .\" ====================================================================
 .
 The following read-only registers are available:
@@ -4028,7 +4028,7 @@ argument, the center of an accent from a roman font should be placed
 over that glyph.
 .
 .P
-Other available read/write number registers are:
+Other available read/write registers are:
 .
 .TP
 .B \[rs]n[c.]
@@ -4745,7 +4745,7 @@ also interprets
 .B \[rs]*[
 and
 .B \[rs]n[
-as an interpolation of a string or number register,
+as an interpolation of a string or register,
 respectively,
 called
 .RB \[lq] [ \[rq].
@@ -4979,7 +4979,7 @@ does not allow the use of the escape sequences
 in names of strings,
 macros,
 diversions,
-number registers,
+registers,
 fonts, or environments;
 .RI AT&T\~ troff
 does.
