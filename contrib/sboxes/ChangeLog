@@ -1,5 +1,30 @@
 2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Make msboxes.ms quote its own source through a
+	self-interpolation process (with help from sed and the build
+	system), avoiding the need to manually keep the source document
+	and its quoted form in sync.
+
+	* msboxes.ms: Rename to...
+	* msboxes.ms.in: ...this.
+	* notquine.sed: New file; this sed script performs quotation of
+	roff syntax characters (and hyphens), inserts the quoted form of
+	the document's source into itself, and reproduces Deri's
+	Schrödinger's footnote trick.
+	* sboxes.am: Introduce new variables `sboxes_builddir` and
+	`sboxesnotquine` for convenience.  Update value of
+	$(SBOXES_EXAMPLEFILES) to point to the new .in source file.  Add
+	the generated ms document to $(SBOXES_PROCESSEDEXAMPLEFILES) and
+	$(MOSTLYCLEANFILES).  Add the `notquine` sed script to the
+	distribution archive via $(EXTRA_DIST).
+	($(sboxes_builddir)/msboxes.ms): New rule produces the ms
+	document from msboxes.ms.in, constructing it with sed.
+	($(sboxes_builddir)/msboxes.pdf): Update rule to add dependency
+	on source document, use new `sboxes_builddir` variable, and look
+	for source document in the build tree instead of the source.
+
+2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* sboxes.am: Add this ChangeLog to `EXTRA_DIST`.
 
 2021-10-11  G. Branden Robinson <g.branden.robinson@gmail.com>

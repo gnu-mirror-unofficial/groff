@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 sboxes_srcdir = $(top_srcdir)/contrib/sboxes
+sboxes_builddir = $(top_builddir)/contrib/sboxes
+sboxesnotquine = $(sboxes_srcdir)/notquine.sed
 SBOXES_FLAGS = -M$(sboxes_srcdir) -ms -msboxes -Tpdf
 # Files installed in $(tmacdir).
 SBOXES_NORMAL_FILES = contrib/sboxes/sboxes.tmac
@@ -25,32 +27,45 @@ sboxestmacdir = $(tmacdir)
 dist_sboxestmac_DATA = $(SBOXES_NORMAL_FILES)
 
 EXTRA_DIST += \
-    contrib/sboxes/ChangeLog
+    contrib/sboxes/ChangeLog \
+    contrib/sboxes/notquine.sed
 
 # Files installed in $(examplesdir)/sboxes.  SBOXES_EXAMPLEFILES are
 # located in the source tree, while SBOXESPROCESSEDEXAMPLEFILES are
 # generated in the build tree.
-SBOXES_EXAMPLEFILES= contrib/sboxes/msboxes.ms
+SBOXES_EXAMPLEFILES = $(sboxes_srcdir)/msboxes.ms.in
 if BUILD_EXAMPLES
 sboxesexampledir = $(exampledir)/sboxes
 dist_sboxesexample_DATA = $(SBOXES_EXAMPLEFILES)
-SBOXES_PROCESSEDEXAMPLEFILES = contrib/sboxes/msboxes.pdf
+SBOXES_PROCESSEDEXAMPLEFILES = contrib/sboxes/msboxes.ms \
+    contrib/sboxes/msboxes.pdf
 sboxesprocessedexampledir = $(exampledir)/sboxes
 nodist_sboxesprocessedexample_DATA = $(SBOXES_PROCESSEDEXAMPLEFILES)
 else
 EXTRA_DIST += \
-    $(SBOXES_EXAMPLEFILES)
+    contrib/sboxes/msboxes.ms.in
 endif
 
-MOSTLYCLEANFILES += $(SBOXES_PROCESSEDEXAMPLEFILES)
+MOSTLYCLEANFILES += msboxes.ms \
+    $(SBOXES_PROCESSEDEXAMPLEFILES)
 
 $(SBOXES_PROCESSEDEXAMPLEFILES): $(SBOXES_NORMAL_FILES) \
   groff troff gropdf font/devpdf/build_font_files
 
-contrib/sboxes/msboxes.pdf:
-	mkdir -p $(top_builddir)/contrib/sboxes/
+# The ordering of the sed -e expressions is important.
+$(sboxes_builddir)/msboxes.ms: $(SBOXES_EXAMPLEFILES) $(sboxesnotquine)
+	mkdir -p $(sboxes_builddir)
+	$(SED) -n -e '1,/REPLACEME/p' \
+	    $(SBOXES_EXAMPLEFILES) > $@.tmp
+	$(SED) -f $(sboxesnotquine) \
+	    $(SBOXES_EXAMPLEFILES) >> $@.tmp
+	$(SED) -n -e '/REPLACEME/,$$p' \
+	    $(SBOXES_EXAMPLEFILES) >> $@.tmp
+	mv $@.tmp $@
+
+$(sboxes_builddir)/msboxes.pdf: $(sboxes_builddir)/msboxes.ms
 	$(top_builddir)/test-groff $(SBOXES_FLAGS) \
-	  $(sboxes_srcdir)/msboxes.ms > $@
+	  $(sboxes_builddir)/msboxes.ms > $@
 
 uninstall_groffdirs: uninstall_sboxes
 uninstall_sboxes:
