@@ -3366,25 +3366,40 @@ includes font style escape sequences to set the word in italics.
 .\" ------------------------
 .if t .bp
 .NH 1
-Acknowledgements
+Further Reading
 .XS
-Acknowledgements
+Further Reading
 .XE
-.LP
-Two documents provided essential reference material:
-.IP \(bu
-The
-.I "Groff and Friends HOWTO" ,
-.R
-by Dean Allen Provins.
-.IP \(bu
-.I "Using the -ms Macros with Troff and Nroff" ,
-.R
-the original AT&T document by M. E. Lesk.
-.LP
-Without these documents close at hand,
-writing this document would have been a
-much more difficult task.
+.
+.
+.IP \[bu]
+\[lq]Typing Documents on the Unix System:
+Using the \-ms Macros with Troff and Nroff\[rq];
+M.\& E.\& Lesk;
+November 13, 1978.
+.
+This document describes the
+.I ms
+supplied with AT&T Unix Version\~7.
+.
+.
+.IP \[bu]
+\[lq]A Revised Version of \-ms\[rq];
+Bill Tuthill;
+August 1983.
+.
+The 4.2BSD release featured several extensions to
+.I ms ,
+most of which are recreated in
+.I "groff ms" .
+.
+(The exceptions are the
+.CW TM
+and
+.CW CT
+macros for setting a doctoral thesis in the format required by the
+contemporaneous degree-granting authorities of the University of
+California at Berkeley.)
 .\" ------------------------
 .TC
 .
