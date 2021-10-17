@@ -3400,6 +3400,25 @@ and
 macros for setting a doctoral thesis in the format required by the
 contemporaneous degree-granting authorities of the University of
 California at Berkeley.)
+.
+.
+.IP \[bu]
+\[lq]Using PDF boxes with the
+.I ms
+macros\[rq];
+Deri James;
+March 2021.
+.
+.CW BOXSTART
+and
+.CW BOXSTOP
+macros are available via the
+.I sboxes
+extension package,
+enabling colored,
+bordered boxes when the
+.CW pdf
+output device is used.
 .\" ------------------------
 .TC
 .
