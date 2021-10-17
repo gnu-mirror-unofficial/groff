@@ -24,6 +24,9 @@ SBOXES_NORMAL_FILES = contrib/sboxes/sboxes.tmac
 sboxestmacdir = $(tmacdir)
 dist_sboxestmac_DATA = $(SBOXES_NORMAL_FILES)
 
+EXTRA_DIST += \
+    contrib/sboxes/ChangeLog
+
 # Files installed in $(examplesdir)/sboxes.  SBOXES_EXAMPLEFILES are
 # located in the source tree, while SBOXESPROCESSEDEXAMPLEFILES are
 # generated in the build tree.
@@ -35,7 +38,8 @@ SBOXES_PROCESSEDEXAMPLEFILES = contrib/sboxes/msboxes.pdf
 sboxesprocessedexampledir = $(exampledir)/sboxes
 nodist_sboxesprocessedexample_DATA = $(SBOXES_PROCESSEDEXAMPLEFILES)
 else
-EXTRA_DIST += $(SBOXES_EXAMPLEFILES)
+EXTRA_DIST += \
+    $(SBOXES_EXAMPLEFILES)
 endif
 
 MOSTLYCLEANFILES += $(SBOXES_PROCESSEDEXAMPLEFILES)
