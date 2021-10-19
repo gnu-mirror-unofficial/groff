@@ -156,10 +156,10 @@ o The an (man) macro package supports a new macro, "MR", intended for
     .MR ls 1 .
   (the third argument, typically used for trailing punctuation, is
   optional).  Because the macro semantically identifies a man page, it
-  also creates a clickable hyperlink ("man:ls(1)" for the above example)
-  on supporting devices.  A new string, MF, defines the font to be used
-  for setting man page titles (the first argument to .MR and .TH),
-  permitting its configuration by distributions, sites, and users.
+  can create a clickable hyperlink ("man:ls(1)" for the above example)
+  on supporting devices.  Furthermore, a new string, MF, defines the
+  font to be used for setting man page titles (the first argument to .MR
+  and .TH), permitting configuration by distributions, sites, and users.
 
   The MR macro is offered for compatibility with Plan 9 troff, which
   introduced it in August 2020, and to ameliorate several long-standing
@@ -168,7 +168,7 @@ o The an (man) macro package supports a new macro, "MR", intended for
   of strings resembling man page cross references (as can happen with
   "exit(1)", "while(1)", "sleep(5)", "time(0)" and others) by terminal
   emulators and other programs; (3) the unwanted intrusion of hyphens in
-  man page names, which frustrates copy-and-paste operations (this
+  man page titles, which frustrates copy-and-paste operations (this
   problem has always been avoidable through use of the \% escape
   sequence, but cross references are frequent in man pages and some page
   authors are inexpert *roff users); and (4) deep divisions in man page
