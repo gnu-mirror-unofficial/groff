@@ -198,7 +198,7 @@ _ifstyle()dnl
 .\" filling, hyphenation, breaking, adjustment (elsewhere known as
 .\" justification)
 .\" font (family, style [elsewhere known as face])
-.\" point size
+.\" type size
 .\" typesetter (troff device, PostScript, PDF)
 .\" terminal (nroff device, emulator, typewriter, TTY)
 .\"
@@ -460,7 +460,7 @@ in bold
 .BR HF )
 and,
 on typesetter devices,
-slightly larger than the base point size.
+slightly larger than the base type size.
 .
 If the heading font
 .B \[rs]*[HF]
@@ -677,7 +677,7 @@ which can be changed by the deprecated
 macro;
 see subsection \(lqHorizontal and vertical spacing\(rq below.
 .
-They also reset the point size and font style to defaults
+They also reset the type size and font style to defaults
 .RB ( .TQ
 again excepted);
 see subsection \(lqFont style macros\(rq below.
@@ -1134,9 +1134,10 @@ and other forms of hyperlink with
 .BR .UR / .UE .
 .
 Hyperlinked text is supported on the
-.B html
+.BR html ,
+.BR tty ,
 and
-.B tty
+.B xhtml
 output devices;
 terminals and pager programs must support ECMA-48 OSC\~8 escape
 sequences
@@ -1150,7 +1151,7 @@ register
 .B .MT
 and
 .B .UR
-URIs are rendered after the linked text.
+URIs are rendered between angle brackets after the linked text.
 .
 .
 .P
@@ -1164,7 +1165,7 @@ AT&T,
 Plan\~9,
 or
 Solaris
-.IR troff ;
+.IR troff ; \" Solaris
 see
 .I an\-ext.tmac
 in section \(lqFiles\(rq below.
@@ -1197,9 +1198,9 @@ string.
 The cross reference hyperlinks to a URI of the form
 .RB \[lq] man:\c
 .IR page-title ( manual-section )\[rq].
-.
-.
 _ifstyle()dnl
+.
+.
 .RS
 .IP
 .EX
@@ -1210,19 +1211,18 @@ produces Postscript from
 output.
 \&.
 The Ghostscript program (\[rs]c
-\&.MR gs 1)
+\&.MR gs 1 )
 interprets Postscript and PDF.
 .EE
 .RE
 _endif()dnl
 .
 .
-.
 .TP
 .BI .MT " address"
 .TQ
 .BR .ME " ["\c
-.IR punctuation ]
+.IR trailing-text ]
 Identify
 .I address
 as an RFC 6068
@@ -1230,9 +1230,7 @@ as an RFC 6068
 for a \(lqmailto:\(rq URI with the text between the two macro
 calls as the link text.
 .
-A
-.I punctuation
-argument to
+An argument to
 .B .ME
 is placed at the end of the link text without intervening space.
 .
@@ -1243,10 +1241,10 @@ supports hyperlinks.
 If it does not,
 .I address
 is set in angle brackets after the link text and before
-.IR punctuation .
-.
-.
+.IR trailing-text .
 _ifstyle()dnl
+.
+.
 .IP
 When rendered by
 .I groff
@@ -1278,22 +1276,20 @@ We place them
 .I before
 each period so that the reader does not mistake them for sentence
 endings.
-.
-.
 _endif()dnl
+.
+.
 .TP
 .BI .UR " uri"
 .TQ
 .BR .UE " ["\c
-.IR punctuation ]
+.IR trailing-text ]
 Identify
 .I uri
 as an RFC 3986 URI hyperlink with the text between the two macro calls
 as the link text.
 .
-A
-.I punctuation
-argument to
+An argument to
 .B .UE
 is placed at the end of the link text without intervening space.
 .
@@ -1304,10 +1300,10 @@ supports hyperlinks.
 If it does not,
 .I uri
 is set in angle brackets after the link text and before
-.IR punctuation .
-.
-.
+.IR trailing-text .
 _ifstyle()dnl
+.
+.
 .IP
 When rendered by
 .I groff
@@ -1343,9 +1339,9 @@ We place a break point
 .I before
 each period so that the reader does not interpret the period as ending
 a sentence.
-.
-.
 _endif()dnl
+.
+.
 .\" ====================================================================
 .SS "Font style macros"
 .\" ====================================================================
@@ -1367,7 +1363,7 @@ and
 .B .SB
 macros set text in roman or bold,
 respectively,
-at a smaller point size;
+at a smaller type size;
 these differ visually from regular-sized roman or bold text only on
 typesetter devices.
 .
@@ -1403,13 +1399,13 @@ _endif()dnl
 .
 .
 .P
-The default point size and family for typesetter devices is 10-point
+The default type size and family for typesetter devices is 10-point
 Times,
 except on the
 .B \%X75\-12
 and
 .B \%X100\-12
-devices where the point size is 12.
+devices where the type size is 12 points.
 .
 The default style is roman.
 .
@@ -1494,7 +1490,7 @@ _endif()dnl
 .IR text ]
 Set
 .I text
-one point smaller than the default point size on typesetter devices.
+one point smaller than the default type size on typesetter devices.
 .
 If the macro is given no arguments,
 the text of the next input line is set smaller.
@@ -1522,7 +1518,7 @@ Set
 .I text
 in bold and
 (on typesetter devices)
-one point smaller than the default point size.
+one point smaller than the default type size.
 .
 If the macro is given no arguments,
 the text of the next input line is set smaller and in bold.
@@ -2068,7 +2064,7 @@ and \(lq(Reg.)\(rq otherwise.
 .
 .TP
 .B \e*S
-interpolates an escape sequence setting the point size to the document
+interpolates an escape sequence setting the type size to the document
 default.
 .
 .
@@ -2099,7 +2095,7 @@ None of the above is necessary in a contemporary man page.
 .
 .B \e*S
 is superfluous,
-since point size changes are invisible on terminal devices and macros
+since type size changes are invisible on terminal devices and macros
 that change it restore its original value afterward.
 .
 Better alternatives exist for the rest;
@@ -3243,13 +3239,13 @@ rather than\~1.
 .
 .
 .TP
-.BI \-rS point-size
+.BI \-rS type-size
 Use
-.I point-size
-as the base point size;
+.I type-size
+for the document's body text;
 acceptable values are 10,
 11,
-or 12.
+or 12 points.
 .
 See subsection \(lqFont style macros\(rq above for the default.
 .
@@ -3587,7 +3583,7 @@ If your page renders adequately without one,
 use the simpler form.
 .
 If you need to indent multiple (unmarked) paragraphs,
-consider an setting an indented region with
+consider setting an indented region with
 .B .RS
 and
 .B .RE
