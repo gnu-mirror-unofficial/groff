@@ -8749,11 +8749,11 @@ static void do_error(error_type type,
     input_stack::backtrace();
   if (!get_file_line(&filename, &lineno))
     filename = 0;
-  if (filename)
+  if (filename) {
     if (program_name)
-      errprint("%1: %2:%3: ", program_name, filename, lineno);
-    else
-      errprint("%1:%2: ", filename, lineno);
+      errprint("%1:", program_name);
+    errprint("%1:%2: ", filename, lineno);
+  }
   else if (program_name)
     fprintf(stderr, "%s: ", program_name);
   switch (type) {
