@@ -196,8 +196,9 @@ tmac_XFAIL_TESTS = \
 XFAIL_TESTS += $(tmac_XFAIL_TESTS)
 
 tmac/www.tmac: tmac/www.tmac.in
-	$(MKDIR_P) $(top_builddir)/tmac
-	sed -e "s;[@]PNMTOPS_NOSETPAGE[@];$(pnmtops_nosetpage);g" \
+	$(AM_V_at)$(MKDIR_P) $(top_builddir)/tmac
+	$(AM_V_GEN)sed -e \
+	  "s;[@]PNMTOPS_NOSETPAGE[@];$(pnmtops_nosetpage);g" \
 	  $(tmac_srcdir)/www.tmac.in > $(top_builddir)/tmac/www.tmac
 
 
@@ -206,14 +207,17 @@ M4WORDS = define|divert|include|index|shift|undefine|undivert
 M4CHECK = tmac/check-groff_man-stamp
 
 $(M4CHECK): tmac/groff_man.7.man.in
-	! grep -E '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' \
+	$(AM_V_at)! $(EGREP) \
+	  '(^|[[:space:]])($(M4WORDS))($$|[[:space:]])' \
 	  $(tmac_srcdir)/groff_man.7.man.in > $@
 
 tmac/groff_man.7.man: tmac/groff_man.7.man.in $(M4CHECK)
-	m4 -D_groff_man_not_style $(tmac_srcdir)/groff_man.7.man.in > $@
+	$(AM_V_GEN)m4 -D_groff_man_not_style \
+	  $(tmac_srcdir)/groff_man.7.man.in > $@
 
 tmac/groff_man_style.7.man: tmac/groff_man.7.man.in $(M4CHECK)
-	m4 -D_groff_man_style $(tmac_srcdir)/groff_man.7.man.in > $@
+	$(AM_V_GEN)m4 -D_groff_man_style \
+	  $(tmac_srcdir)/groff_man.7.man.in > $@
 
 # The installation of groff compatibility wrappers for vendor-provided
 # non-GNU macro sets is controlled by 'compatibility_wrappers' (see the

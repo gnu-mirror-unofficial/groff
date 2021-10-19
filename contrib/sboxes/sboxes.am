@@ -54,17 +54,17 @@ $(SBOXES_PROCESSEDEXAMPLEFILES): $(SBOXES_NORMAL_FILES) \
 
 # The ordering of the sed -e expressions is important.
 $(sboxes_builddir)/msboxes.ms: $(SBOXES_EXAMPLEFILES) $(sboxesnotquine)
-	mkdir -p $(sboxes_builddir)
-	$(SED) -n -e '1,/REPLACEME/p' \
+	$(AM_V_at)mkdir -p $(sboxes_builddir)
+	$(AM_V_at)$(SED) -n -e '1,/REPLACEME/p' \
 	    $(SBOXES_EXAMPLEFILES) > $@.tmp
-	$(SED) -f $(sboxesnotquine) \
+	$(AM_V_at)$(SED) -f $(sboxesnotquine) \
 	    $(SBOXES_EXAMPLEFILES) >> $@.tmp
-	$(SED) -n -e '/REPLACEME/,$$p' \
+	$(AM_V_at)$(SED) -n -e '/REPLACEME/,$$p' \
 	    $(SBOXES_EXAMPLEFILES) >> $@.tmp
-	mv $@.tmp $@
+	$(AM_V_GEN)mv $@.tmp $@
 
 $(sboxes_builddir)/msboxes.pdf: $(sboxes_builddir)/msboxes.ms
-	$(top_builddir)/test-groff $(SBOXES_FLAGS) \
+	$(AM_V_GEN)$(top_builddir)/test-groff $(SBOXES_FLAGS) \
 	  $(sboxes_builddir)/msboxes.ms > $@
 
 uninstall_groffdirs: uninstall_sboxes
