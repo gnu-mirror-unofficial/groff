@@ -1,3 +1,14 @@
+2021-10-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/env.cpp (distribute_space): Revert an
+	`assert()` I added in commit b93eacd8d7 (5 September); we can
+	indeed reach this code with a negative amount of desired space,
+	and in fact the "show hyphenation points" trick
+	<https://froude.eu/groff/examples/hyphenation-points.html>
+	relies upon it.  Add explanatory comment.
+
+	Fixes <https://savannah.gnu.org/bugs/?61348>.
+
 2021-10-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* test-groff.in: Add support for sboxes.tmac.
