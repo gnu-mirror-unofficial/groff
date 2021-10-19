@@ -1174,6 +1174,44 @@ Plan\~9
 .I troff \" Plan 9
 implements
 .BR .MR .
+_ifstyle()dnl
+.
+.
+.P
+URIs can be lengthy;
+rendering them can result in jarring adjustment or variations in line
+length,
+or
+.I \%@g@troff
+warnings when a hyperlink is longer than an output line.
+.
+The application of non-printing break point escape sequences
+.B \e:
+after each slash
+(or series thereof),
+and before each dot
+(or series thereof)
+is recommended.
+.
+The former practice avoids forcing a trailing slash in a URI onto a
+separate output line,
+and the latter helps the reader to avoid mistakenly interpreting a dot
+at the end of a line as a period
+(or multiple dots as an ellipsis).
+.
+Thus,
+.RS
+.EX
+\&.UR http://\e:example\e:.com/\e:fb8afcfbaebc74e\e:.cc
+.EE
+.RE
+has several potential break points in the URI shown.
+.
+The
+.B \e:
+escape sequences are ignored when supplied to device control commands
+for embedding in hyperlink-aware output drivers.
+_endif()dnl
 .
 .
 .TP
@@ -1264,18 +1302,6 @@ for more information.
 .IP
 displays as \(lqContact Fred Foonly \(lafred\:.foonly@\:fubar\:.net\(ra
 for more information.\(rq.
-.
-.
-.IP
-The use of
-.B \e:
-to insert non-printing break points is a GNU extension and can be
-omitted.
-.
-We place them
-.I before
-each period so that the reader does not mistake them for sentence
-endings.
 _endif()dnl
 .
 .
@@ -1327,18 +1353,6 @@ the
 .I groff
 home page
 \(lahttps://\:www\:.gnu\:.org/\:software/\:groff/\(ra.\(rq.
-.
-.
-.IP
-The use of
-.B \e:
-to insert non-printing break points is a GNU extension and can be
-omitted.
-.
-We place a break point
-.I before
-each period so that the reader does not interpret the period as ending
-a sentence.
 _endif()dnl
 .
 .
@@ -2309,6 +2323,30 @@ it suppresses any automatic hyphenation points within;
 any specified with
 .B \e%
 are still honored.
+.
+.
+.TP
+.B \e:
+.\" Heirloom Doctools troff since release 050915 (2005-09-15)
+.\" mandoc since 2018-12-15 (released in 1.14.5, 2019-03-10)
+.\" neatroff since 399a4936, 2014-02-17
+.\" Plan 9 troff does not appear to support it.
+Insert a non-printing break point.
+.
+A word can break at such a point,
+but a hyphen glyph is not written to the output if it does.
+.
+This escape sequence is an input word boundary,
+so the remainder of the word is subject to hyphenation as normal.
+.
+You can use
+.B \e:
+and
+.B \e%
+in combination to control breaking of a file name or URI or to permit
+hyphenation only after certain explicit hyphens within a word.
+.
+See subsection \[lq]Hyperlink macros\[rq] above for an example.
 .
 .
 .TP
