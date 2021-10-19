@@ -1978,14 +1978,13 @@ Tables, figures, equations, and references
 .LP
 The
 .I ms
-macros support the standard
-.I groff
-preprocessors:
+package is often used with the
 .I tbl ,
 .I pic ,
 .I eqn ,
 and
-.I refer .
+.I refer
+preprocessors.
 .
 The
 .CW \[rs]n[DD]
@@ -2083,14 +2082,20 @@ T}	T{
 Denote a reference to be processed by the
 .I refer
 preprocessor.
-.
-The GNU
-.I refer (1)
-man page provides a comprehensive reference to the preprocessor and the
-format of the bibliographic database.
 T}
 .TE
 .KE
+.
+.
+.PP
+When
+.I refer
+emits collected references
+(as might be done on a \[lq]Works Cited\[rq] page),
+it interpolates the string
+.CW \[rs]*[REFERENCES]
+as an unnumbered section heading
+.CW .SH ). (
 .
 .
 .KS
@@ -2129,7 +2134,6 @@ GH-1978\[->]Fribulating gonkulator
 .fi
 T}
 .TE
-.KE
 .
 .
 .PP
@@ -2139,6 +2143,7 @@ particularly if the
 .I tbl
 .CW allbox
 option is used.
+.KE
 .
 .
 .KS

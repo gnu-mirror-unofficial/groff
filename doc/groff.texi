@@ -3780,8 +3780,8 @@ boundary.
 @cindex equations [@code{ms}]
 @cindex references [@code{ms}]
 
-The @file{ms} macros support the standard @code{groff} preprocessors:
-@code{tbl}, @code{pic}, @code{eqn}, and @code{refer}.
+The @file{ms} package is often used with the @code{tbl}, @code{pic},
+@code{eqn}, and @code{refer} preprocessors.
 @pindex tbl
 @pindex pic
 @pindex eqn
@@ -3820,6 +3820,10 @@ The GNU @cite{refer@r{(1)}} man page provides a comprehensive reference
 to the preprocessor and the format of the bibliographic database.  Type
 @samp{man refer} at the command line to view it.
 @endDefmac
+
+When @code{refer} emits collected references (as might be done on a
+``Works Cited'' page), it interpolates the @code{REFERENCES} string as
+an unnumbered section heading (@code{SH}).
 
 @menu
 * Example multi-page table::

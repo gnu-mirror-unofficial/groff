@@ -1303,14 +1303,13 @@ Changes to either register take effect at the next display boundary.
 .
 The
 .I ms
-macros support the standard
-.I groff
-preprocessors:
+package is often used with the
 .IR \%@g@tbl ,
 .IR \%@g@pic ,
 .IR \%@g@eqn ,
 and
-.IR \%@g@refer .
+.I \%@g@refer
+preprocessors.
 .
 The
 .B \[rs]n[DD]
@@ -1386,12 +1385,16 @@ Denote a reference to be processed by the
 .I refer
 preprocessor.
 .
-The GNU
-.MR @g@refer @MAN1EXT@
-manual page provides a comprehensive reference
-to the preprocessor and the format of the
-bibliographic database.
 .
+.P
+When
+.I \%@g@refer
+emits collected references
+(as might be done on a \[lq]Works Cited\[rq] page),
+it interpolates the string
+.B \[rs]*[REFERENCES]
+as an unnumbered section heading
+.RB ( .SH ).
 .
 .
 .P
