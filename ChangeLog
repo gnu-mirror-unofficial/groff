@@ -1,5 +1,22 @@
 2021-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[nroff]: Support groff's -R flag to run refer(1).
+
+	There's no reason not to support calling `refer` with nroff-mode
+	documents; typographically, it's less demanding than tbl(1).
+	GNU troff(1) supports an incompatible `-R` flag to suppress the
+	reading of troffrc{,-end} files, but this is likely not the `-R`
+	that users will want--it is most useful for troubleshooting
+	troff, and nroff already unconditionally loads a macro file
+	{tty-char.tmac}.
+
+	* src/roff/nroff/nroff.sh: Do it.
+
+	* src/roff/nroff/nroff.1.man:
+	* NEWS: Document it.
+
+2021-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tmac.am (tmac/groff_man.7.man,
 	tmac/groff_man_style.7.man): Be quieter by default; use
 	$(AM_V_GEN) more consistently with the rest of the build.
