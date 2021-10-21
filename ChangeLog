@@ -1,5 +1,15 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/troff.am: Build more robustly.
+	(src/roff/troff/majorminor.cpp): Drop progress-reporting `echo`
+	in favor of prefixing final rule command with `$(AM_V_GEN)`.
+	Prefix earlier rule commands with `$(AM_V_at)`.  Use `printf`
+	instead of `echo` to build the file, and create a temporary file
+	at first so that we don't race with the compiler on parallelized
+	builds.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/eqn/eqn.am (neqn): Simplify: drop removal of
 	target prior to overwriting it; any system we can build groff on
 	should have a shell that implements the clobbering semantics of
