@@ -1,5 +1,15 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* font/devpdf/devpdf.am: Build more quietly.
+	(font/devpdf/enc/text.enc, font/devpdf/map/symbolmap,
+	$(DEVPDFFONTMAP_1)): Prefix all rule commands with
+	`$(AM_V_at)`; since these are all `mkdir`s and `cp`s, I reason
+	that little can go wrong with them that won't be disclosed by
+	these tools' own diagnostic messages, so they are insignificant
+	from a perspective of build progress.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Build more quietly.
 	(doc/examples.stamp): Prefix all rule commands with
 	`$(AM_V_at)`; since this target is a stamp file instead of
