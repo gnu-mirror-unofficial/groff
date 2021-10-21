@@ -27,8 +27,9 @@
 
 	* tmac/tmac.am: Build more quietly.
 	(tmac/stamp-wrap): Prefix all rule commands with `$(AM_V_at)`;
-	since this target is a stamp file instead of useful artifact to
-	be distributed, make its creation completely silent by default.
+	since this target is a stamp file instead of a useful artifact
+	to be distributed, make its creation completely silent by
+	default.
 
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -58,10 +59,9 @@
 	Prefix earlier rule commands with `$(AM_V_at)`.  Use `printf`
 	instead of `echo` to build the file, and create a temporary file
 	at first so that we don't race with the compiler on parallelized
-	builds.  Drop nilpotent sed-transformation of a single closing
-	brace (and newline); this looks like a relic of past times when
-	we'd drop a trailing ".0" from the version number stored in the
-	C symbol `Version_string`.
+	builds.  Drop nilpotent sed transformation; this looks like a
+	relic of past times when we'd drop a trailing ".0" from the
+	version number stored in the C symbol `Version_string`.
 	(charset.alias, ref-del.sed, ref-add.sed): Prefix rule command
 	with `$(AM_V_GEN)`.
 
@@ -86,8 +86,8 @@
 	* doc/doc.am: Build more quietly.
 	(doc/examples.stamp): Prefix all rule commands with
 	`$(AM_V_at)`; since this target is a stamp file instead of
-	useful artifact to be distributed, make its creation completely
-	silent by default.
+	a useful artifact to be distributed, make its creation
+	completely silent by default.
 	(doc/groff.info, .texi.txt): Prefix directory creation with
 	`$(AM_V_at)` and `makeinfo` command with `$(AM_V_GEN)`.
 	(.texi.dvi, .texi.pdf): Prefix directory creation with
@@ -96,7 +96,7 @@
 	unavailable.
 	(.texi.html): Prefix directory creation with
 	`$(AM_V_at)`.  Two HTML versions are produced, in split and
-	unspit versions; prefix one `makeinfo` command with
+	unsplit versions; prefix one `makeinfo` command with
 	`$(AM_V_GEN)` and the other with `$(AM_V_at)` so that only one
 	message is produced.
 	(gnu.eps): Drop useless/noisy `echo` command.  Prefix copy
@@ -451,7 +451,7 @@
 	(UE, ME): Generate device control commands for `tty` device to
 	emit hyperlinks.
 
-	* tmac/groff_man.7.man.in (Options): Document -U.
+	* tmac/groff_man.7.man.in (Options): Document -rU.
 	(Files) [style]: Add example of `U` register enablement.
 
 	* tmac/man.local: Disable `U` register by default, except on the
@@ -2174,9 +2174,9 @@
 2021-07-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grohtml]: Fix Savannah #60981.  Refactor device description
-	file handling, make it more robust, and make this preprocessor's
-	-F option work as documented, and to honor documented device
-	description file semantics.
+	file handling and make it more robust.  Make pre-grohtml's
+	-F option work as documented and honor device description file
+	semantics documented in groff_font(5).
 
 	* src/preproc/html/pre-html.cpp: Store partial filespecs of HTML
 	and PostScript device files in constant strings.
