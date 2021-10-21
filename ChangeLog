@@ -1,5 +1,12 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/tmac.am: Build more quietly.
+	(tmac/stamp-wrap): Prefix all rule commands with `$(AM_V_at)`;
+	since this target is a stamp file instead of useful artifact to
+	be distributed, make its creation completely silent by default.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/troff.am: Build more robustly.
 	(src/roff/troff/majorminor.cpp): Drop progress-reporting `echo`
 	in favor of prefixing final rule command with `$(AM_V_GEN)`.
