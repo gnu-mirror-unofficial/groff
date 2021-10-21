@@ -1,5 +1,14 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/eqn/eqn.am (neqn): Simplify: drop removal of
+	target prior to overwriting it; any system we can build groff on
+	should have a shell that implements the clobbering semantics of
+	the POSIX shell '>' operator.  (If this isn't true, we have
+	_many_ other target rules in our build to which we must add
+	prefatory `$(RM)`s, or I miss my guess.)
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/libgroff.am: Build more quietly and
 	robustly.
 	(src/libs/libgroff/version.cpp): Drop progress-reporting `echo`
