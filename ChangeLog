@@ -1,5 +1,33 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Build more quietly.
+	(doc/examples.stamp): Prefix all rule commands with
+	`$(AM_V_at)`; since this target is a stamp file instead of
+	useful artifact to be distributed, make its creation completely
+	silent by default.
+	(doc/groff.info, .texi.txt): Prefix directory creation with
+	`$(AM_V_at)` and `makeinfo` command with `$(AM_V_GEN)`.
+	(.texi.dvi, .texi.pdf): Prefix directory creation with
+	`$(AM_V_at)` and `makeinfo` command with `$(AM_V_GEN)`.  Send
+	diagnostic message to standard error if `texi2dvi` is
+	unavailable.
+	(.texi.html): Prefix directory creation with
+	`$(AM_V_at)`.  Two HTML versions are produced, in split and
+	unspit versions; prefix one `makeinfo` command with
+	`$(AM_V_GEN)` and the other with `$(AM_V_at)` so that only one
+	message is produced.
+	(gnu.eps): Drop useless/noisy `echo` command.  Prefix copy
+	operation with `$(AM_V_at)`.  Send diagnostic messages to
+	standard error if there are problems with the Netpbm tools.
+
+	(MOSTLYCLEANFILES): The `mostlyclean` target was leaving a file,
+	`groff.info-3`, behind in the build tree.  At some point our
+	Texinfo manual grew beyond earlier expectations.  Use a glob
+	`[0-9]` instead (giving a hostage to fortune that `makeinfo`
+	will never split our manual into more than nine chunks).
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* arch/misc/misc.am:
 	(arch_shdeps_sh): Pull file name into a new variable.
 	(EXTRA_DIST, shdeps.sed): Ue it.
