@@ -1,5 +1,11 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/xditview/xditview.am: Build more quietly.
+	(src/devices/xditview/GXditview-ad.h): Drop progress-reporting
+	`echo` in favor of prefixing rule command with `$(AM_V_GEN)`.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* font/devpdf/devpdf.am: Build more quietly.
 	(font/devpdf/enc/text.enc, font/devpdf/map/symbolmap,
 	$(DEVPDFFONTMAP_1)): Prefix all rule commands with
