@@ -1,5 +1,21 @@
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libgroff/libgroff.am: Build more quietly and
+	robustly.
+	(src/libs/libgroff/version.cpp): Drop progress-reporting `echo`
+	in favor of prefixing final rule command with `$(AM_V_GEN)`.
+	Prefix earlier rule commands with `$(AM_V_at)`.  Use `printf`
+	instead of `echo` to build the file, and create a temporary file
+	at first so that we don't race with the compiler on parallelized
+	builds.  Drop nilpotent sed-transformation of a single closing
+	brace (and newline); this looks like a relic of past times when
+	we'd drop a trailing ".0" from the version number stored in the
+	C symbol `Version_string`.
+	(charset.alias, ref-del.sed, ref-add.sed): Prefix rule command
+	with `$(AM_V_GEN)`.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/xditview/xditview.am: Build more quietly.
 	(src/devices/xditview/GXditview-ad.h): Drop progress-reporting
 	`echo` in favor of prefixing rule command with `$(AM_V_GEN)`.
