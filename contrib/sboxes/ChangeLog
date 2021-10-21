@@ -1,3 +1,14 @@
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* sboxes.am (SBOXES_FLAGS): Drop variable since we only expand
+	it in one place.
+	($(sboxes_builddir)/msboxes.pdf): Be more consistent with the
+	rest of our build, particularly documentation generated in the
+	groff `doc` directory.  Use `GROFF_V` instead of `AM_V_GEN` to
+	control output (since it is in fact groff producing the target).
+	Use `DOC_GROFF` to produce the document rather than
+	`test-groff`.  Use the former `SBOXES_FLAGS` here.
+
 2021-10-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* sboxes.am ($(sboxes_builddir)/msboxes.ms,

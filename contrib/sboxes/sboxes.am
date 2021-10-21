@@ -20,7 +20,6 @@
 sboxes_srcdir = $(top_srcdir)/contrib/sboxes
 sboxes_builddir = $(top_builddir)/contrib/sboxes
 sboxesnotquine = $(sboxes_srcdir)/notquine.sed
-SBOXES_FLAGS = -M$(sboxes_srcdir) -ms -msboxes -Tpdf
 # Files installed in $(tmacdir).
 SBOXES_NORMAL_FILES = contrib/sboxes/sboxes.tmac
 sboxestmacdir = $(tmacdir)
@@ -64,7 +63,7 @@ $(sboxes_builddir)/msboxes.ms: $(SBOXES_EXAMPLEFILES) $(sboxesnotquine)
 	$(AM_V_GEN)mv $@.tmp $@
 
 $(sboxes_builddir)/msboxes.pdf: $(sboxes_builddir)/msboxes.ms
-	$(AM_V_GEN)$(top_builddir)/test-groff $(SBOXES_FLAGS) \
+	$(GROFF_V)$(DOC_GROFF) -M$(sboxes_srcdir) -ms -msboxes -Tpdf \
 	  $(sboxes_builddir)/msboxes.ms > $@
 
 uninstall_groffdirs: uninstall_sboxes
