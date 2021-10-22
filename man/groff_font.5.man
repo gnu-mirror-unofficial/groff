@@ -107,9 +107,9 @@ which must come last
 (if at all),
 the order of the lines is not important.
 .
-Later entries in the file,
+If a directive name is duplicated,
 however,
-override previous values.
+later entries in the file override previous ones.
 .
 Comments start with the
 .RB \[lq] # \[rq]
@@ -425,7 +425,7 @@ output devices use this directive.
 .TP
 .BI unitwidth\~ n
 Quantities in the font description files are in basic units for fonts
-whose point size is
+whose type size is
 .IR n \~scaled
 points.
 .
@@ -551,11 +551,15 @@ expressed as integers.)
 .P
 A font description file has two sections.
 .
-The first is a sequence of directives;
-it can contain comments,
-which start with the
-.RB \[lq] # \[rq]
-character and extend to the end of a line.
+The first is a sequence of directives,
+and is parsed similarly to the
+.I DESC
+file described above.
+.
+Except for the directive names that begin the second section,
+their ordering is immaterial;
+later directives of the same name override earlier ones;
+and the same comment syntax is supported.
 .
 Empty lines are ignored in both sections.
 .
@@ -979,9 +983,9 @@ and device-independent output format.
 .
 .
 .P
-Section \[lq]See also\[rq] of
-.MR groff @MAN1EXT@
-lists utilities available for preparing font files in a variety of
+.MR groff @MAN1EXT@ ,
+subsection \[lq]Utilities\[rq],
+lists programs available for preparing font files in a variety of
 formats for use with
 .I groff
 output drivers.

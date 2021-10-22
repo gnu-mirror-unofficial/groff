@@ -17920,8 +17920,8 @@ italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 
 The @file{DESC} file contains a series of directives, one per line.
 Except for the @code{charset} directive, which must come last (if at
-all), the order of the lines is not important.  Later entries in the
-file, however, override previous values.
+all), the order of the lines is not important.  If a directive name is
+duplicated, however, later entries in the file override previous ones.
 @cindex comments in device description files
 @cindex device description files, comments
 @kindex #
@@ -18063,7 +18063,7 @@ directive.
 @item unitwidth @var{n}
 @kindex unitwidth
 Quantities in the font description files are in basic units for fonts
-whose point size is @var{n}@tie{}scaled points.
+whose type size is @var{n}@tie{}scaled points.
 
 @item unscaled_charwidths
 @kindex unscaled_charwidths
@@ -18130,12 +18130,15 @@ is not practical for most purposes, but using it enables the quantities
 in the font description files to be expressed as integers.}
 
 A font description file has two sections.  The first is a sequence of
-directives;
+directives, and is parsed similarly to the @file{DESC} file described
+above.  Except for the directive names that begin the second section,
+their ordering is immaterial; later directives of the same name override
+earlier ones;
 @cindex comments in font description files
 @cindex font description files, comments
 @kindex #
-it can contain comments, which start with the @samp{#} character and
-extend to the end of a line.  Empty lines are ignored in both sections.
+and the same comment syntax is supported.  Empty lines are ignored in
+both sections.
 
 @table @code
 @item name @var{f}
