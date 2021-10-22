@@ -25,6 +25,12 @@
 
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/grotty/tty.cpp (tty_printer::special_link):
+	Eliminate casts by retyping `uri` and `pair` to pointers to
+	`const char`s.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tmac.am: Build more quietly.
 	(tmac/stamp-wrap): Prefix all rule commands with `$(AM_V_at)`;
 	since this target is a stamp file instead of a useful artifact
