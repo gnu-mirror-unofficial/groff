@@ -746,8 +746,8 @@ It is even.
 .SS "Paper size"
 .\" ====================================================================
 .
-In
-.IR groff ,
+In GNU
+.IR roff ,
 the page dimensions for the formatter
 .I \%@g@troff
 and for output devices are handled separately.
@@ -769,8 +769,7 @@ The
 .I papersize
 macro package,
 automatically loaded by
-.I troffrc
-at start-up,
+.IR @g@troff ,
 provides an interface for configuring page dimensions by convenient
 names,
 like \[lq]letter\[rq] or
@@ -1230,7 +1229,7 @@ typically specified by the
 option to the formatter or a front end.
 .
 If neither this option nor the
-.I GROFF_TYPESETTER
+.I \%GROFF_TYPESETTER
 environment variable is used,
 the default output device is
 .BR @DEVICE@ .
@@ -1273,7 +1272,7 @@ character set and encoding.
 .TP
 .B lbp
 for Canon CaPSL printers
-(\%LBP-4 and \%LBP-8 series laser printers).
+(LBP-4 and LBP-8 series laser printers).
 .
 .
 .TP
@@ -1349,7 +1348,7 @@ postprocessor.
 All of the postprocessors provided by GNU
 .I roff
 are
-.IR "output drivers",
+.IR "output drivers" ,
 which prepare a document for viewing or printing.
 .
 Postprocessors for other purposes,
@@ -1651,10 +1650,6 @@ option.
 option overrides
 .IR \%GROFF_ENCODING .
 .
-See
-.MR preconv @MAN1EXT@
-for details.
-.
 .
 .TP
 .I GROFF_FONT_PATH
@@ -1719,7 +1714,7 @@ is used.
 The
 .B \-T
 option overrides
-.IR GROFF_TYPESETTER .
+.IR \%GROFF_TYPESETTER .
 .
 .
 .TP
