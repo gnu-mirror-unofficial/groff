@@ -566,8 +566,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de 1C
 .MC \\n[LL]u
 ..
-.\" top of page macro
 .de pg@top
+.\" Invoked by '.wh 0' trap at the top of every page.
+.\" At short page length, recursion may occur; ensure
+.\" that page length is sufficient to avoid it.
+.if (u;\\n[HM]+\\n[FM])+\n[.V]>\\n[.p]) \{\
+.      ds pg*pl-abort-msg] "\*[@s]:\"
+.      if !'\\n[.F]'' .as pg*pl-abort-msg "\\n[.F]:\"
+.      if !'\\n[.c]'0' .as pg*pl-abort-msg "\\n[.c]:\"
+.      as pg*pl-abort-msg " abort: insufficient page length specified\"
+.      ab \\*[pg*pl-abort-msg]
+.   \}
 .ch pg*footer -\\n[FM]u/2u
 .nr pg*col-num 0
 .nr pg@fn-bottom-margin 0
