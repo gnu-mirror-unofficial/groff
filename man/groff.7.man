@@ -2591,16 +2591,18 @@ The current page offset is available in register
 Page offset
 .IR N .
 .
+.
 .TPx
 .REQ .ps
-Return to previous point size.
+Return to previous type size.
 .TPx
 .
+.
 .REQ .ps "\[+-]N"
-Set/increase/decrease the point size to/by
+Set/increase/decrease the type size to/by
 .I N
 scaled points
-(a non-positive resulting point size is set to 1\~u);
+(a non-positive resulting type size is set to 1\~u);
 also see
 .esc[] s \[+-]N .
 .
@@ -3259,7 +3261,7 @@ Escape sequences serve a variety of purposes.
 Widespread uses include
 commenting the source document;
 changing the font style;
-setting the point size;
+setting the type size;
 interpolating special characters,
 registers,
 and strings into the text;
@@ -3944,13 +3946,13 @@ or decrement register
 .
 .TP
 .ESC s \[+-]N
-Set/increase/decrease the point size to/by
+Set/increase/decrease the type size to/by
 .I N
 scaled points.
 .
 .I N
 must be a single digit;
-0 restores the previous point size.
+0 restores the previous type size.
 .
 (In compatibility mode only,
 a non-zero
@@ -3969,7 +3971,7 @@ request.
 .fam C
 .BI \es \[+-] ( N
 .fam
-Set/increase/decrease the point size to/by
+Set/increase/decrease the type size to/by
 .I N
 scaled points;
 .I N
@@ -3992,7 +3994,7 @@ request.
 .fam C
 .BI \es \[+-] \[aq] N \[aq]
 .fam
-Set/increase/decrease the point size to/by
+Set/increase/decrease the type size to/by
 .I N
 scaled points.
 .
@@ -4676,11 +4678,13 @@ request, or the number of the current page plus\ 1.
 .
 .TPx
 .REG .ps
-The current point size in scaled points.
+The current type size in scaled points.
+.
 .
 .TPx
 .REG .psr
-The last-requested point size in scaled points.
+The last-requested type size in scaled points.
+.
 .
 .TPx
 .REG .pvs
@@ -4701,17 +4705,20 @@ The count of lines remaining to be right-aligned.
 .
 .TPx
 .REG .s
-Current point size as a decimal fraction.
+Current type size as a decimal fraction.
+.
 .
 .TPx
 .REG .slant
 The slant of the current font as set with
 .esc S .
 .
+.
 .TPx
 .REG .sr
-The last requested point size in points as a decimal fraction
+The last requested type size in points as a decimal fraction
 (string-valued).
+.
 .
 .TPx
 .REG .ss

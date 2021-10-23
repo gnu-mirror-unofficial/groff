@@ -10495,7 +10495,7 @@ a single character as an argument) to change the font on the fly:
 
 In compatibility mode, @code{gtroff} behaves differently: If an
 increment or decrement is used, it is always taken relative to the
-current point size and not relative to the previously selected font
+current type size and not relative to the previously selected font
 height.  Thus,
 
 @Example
@@ -10719,11 +10719,11 @@ the reader notices the effect.
 Enable track kerning for font@tie{}@var{f}.  If the current font
 is@tie{}@var{f} the width of every glyph is increased by an amount
 between @var{n1} and @var{n2} (@var{n1}, @var{n2} can be negative); if
-the current point size is less than or equal to @var{s1} the width is
+the current type size is less than or equal to @var{s1} the width is
 increased by @var{n1}; if it is greater than or equal to @var{s2} the
-width is increased by @var{n2}; if the point size is greater than or
+width is increased by @var{n2}; if the type size is greater than or
 equal to @var{s1} and less than or equal to @var{s2} the increase in
-width is a linear function of the point size.
+width is a linear function of the type size.
 
 The default scaling indicator is @samp{z} for @var{s1} and @var{s2},
 @samp{p} for @var{n1} and @var{n2}.
@@ -10898,7 +10898,7 @@ traditional typesetting.}
 @cindex point sizes, changing (@code{ps}, @code{\s})
 Use the @code{ps} request or the @code{\s} escape to change (increase,
 decrease) the type size (in points).  Specify @var{size} as either an
-absolute point size, or as a relative change from the current size.
+absolute type size, or as a relative change from the current size.
 @code{ps} with no argument restores the previous size.
 
 The default scaling indicator of @code{size} is @samp{z}.  If the
@@ -10906,9 +10906,9 @@ resulting size is non-positive, it is set to 1@dmn{u}.
 
 @cindex type size registers (@code{.s}, @code{.ps})
 @cindex point size registers (@code{.s}, @code{.ps})
-The read-only string-valued register @code{.s} stores the point size in
+The read-only string-valued register @code{.s} stores the type size in
 points as a decimal fraction; it is associated with the environment
-(@pxref{Environments}).  To get the point size in scaled points, use the
+(@pxref{Environments}).  To get the type size in scaled points, use the
 @code{.ps} register instead (@pxref{Fractional Type Sizes}).
 
 @Example
@@ -10926,23 +10926,23 @@ and the text begins.  Any of the following forms is valid:
 
 @table @code
 @item \s@var{n}
-Set the point size to @var{n}@tie{}points.  @var{n}@tie{}must be a
-single digit.  If @var{n}@tie{}is 0, restore the previous size.
+Set the type size to @var{n}@tie{}points.  @var{n}@tie{}must be a single
+digit.  If @var{n}@tie{}is 0, restore the previous size.
 
 @item \s+@var{n}
 @itemx \s-@var{n}
-Increase or decrease the point size by @var{n}@tie{}points.
+Increase or decrease the type size by @var{n}@tie{}points.
 @var{n}@tie{}must be exactly one digit.
 
 @item \s(@var{nn}
-Set the point size to @var{nn}@tie{}points.  @var{nn} must be exactly
-two digits.
+Set the type size to @var{nn}@tie{}points.  @var{nn} must be exactly two
+digits.
 
 @item \s+(@var{nn}
 @itemx \s-(@var{nn}
 @itemx \s(+@var{nn}
 @itemx \s(-@var{nn}
-Increase or decrease the point size by @var{nn}@tie{}points.  @var{nn}
+Increase or decrease the type size by @var{nn}@tie{}points.  @var{nn}
 must be exactly two digits.
 @end table
 
@@ -10969,7 +10969,7 @@ line in the @file{DESC} file for the output device provides the scaling
 factor.  For example, if the scaling factor is 1000, then the value
 12000 is 12@tie{}points.
 
-Each argument can be a single point size (such as @samp{12000}), or a
+Each argument can be a single type size (such as @samp{12000}), or a
 range of sizes (such as @samp{4000-72000}).  You can optionally end the
 list with a zero.
 @endDefreq
@@ -11085,7 +11085,7 @@ A @dfn{scaled point} is equal to @math{1/@var{sizescale}} points, where
 @var{sizescale} is specified in the device description file @file{DESC},
 and defaults to@tie{}1.  A new scaling indicator @samp{z} has the effect
 of multiplying by @var{sizescale}.  Requests and escape sequences in GNU
-@code{troff} interpret arguments that represent a point size as being in
+@code{troff} interpret arguments that represent a type size as being in
 units of scaled points; that is, they evaluate each such argument using
 a default scaling indicator of @samp{z}.  Arguments treated in this way
 comprise those to the escape sequences @code{\H} and @code{\s}, to the
@@ -11094,11 +11094,11 @@ second and fourth arguments to the @code{tkf} request.
 
 For example, if @var{sizescale} is@tie{}1000, then a scaled point
 is one one-thousandth of a point.  The request @samp{.ps 10.25} is
-synonymous with @samp{.ps 10.25z} and sets the point size to
+synonymous with @samp{.ps 10.25z} and sets the type size to
 10250@tie{}scaled points, or 10.25@tie{}points.
 
 Consequently, in GNU @code{troff}, the register @code{.s} can contain a
-non-integral point size.
+non-integral type size.
 
 It makes no sense to use the @samp{z} scaling indicator in a numeric
 expression whose default scaling indicator is neither @samp{u} nor
@@ -11113,25 +11113,27 @@ units in a scaled point.  For instance, @samp{\n[.ps]s} is equal to
 indicators.
 
 @Defreg {.ps}
-A read-only register returning the point size in scaled points; it is
+A read-only register returning the type size in scaled points; it is
 associated with the environment (@pxref{Environments}).
 @endDefreg
 
 @DefregList {.psr}
 @DefregListEndx {.sr}
+@cindex last-requested type size registers (@code{.psr}, @code{.sr})
+@cindex type size registers, last-requested (@code{.psr}, @code{.sr})
 @cindex last-requested point size registers (@code{.psr}, @code{.sr})
 @cindex point size registers, last-requested (@code{.psr}, @code{.sr})
 @cindex @code{.ps} register, in comparison with @code{.psr}
 @cindex @code{.s} register, in comparison with @code{.sr}
-The last-requested point size in scaled points is contained in the
-read-only register @code{.psr}.  The last-requested point size in points
+The last-requested type size in scaled points is contained in the
+read-only register @code{.psr}.  The last-requested type size in points
 as a decimal fraction can be found in the read-only string-valued
 register @code{.sr}.  Both registers are associated with the environment
 (@pxref{Environments}).
 
-The requested point sizes are device-independent, whereas the values
+The requested type sizes are device-independent, whereas the values
 returned by the @code{.ps} and @code{.s} registers are not.  For
-example, if a point size of 11@dmn{pt} is requested, and a @code{sizes}
+example, if a type size of 11@dmn{pt} is requested, and a @code{sizes}
 request (or a @code{sizescale} line in a @file{DESC} file) specifies
 10.95@dmn{pt} instead, this value is actually used.
 
@@ -11143,7 +11145,7 @@ fractional type sizes:
 @table @code
 @item \s[@var{n}]
 @itemx \s'@var{n}'
-Set the point size to @var{n}@tie{}scaled points; @var{n}@tie{}is a
+Set the type size to @var{n}@tie{}scaled points; @var{n}@tie{}is a
 numeric expression with a default scaling indicator of @samp{z}.
 
 @item \s[+@var{n}]
@@ -11154,7 +11156,7 @@ numeric expression with a default scaling indicator of @samp{z}.
 @itemx \s'-@var{n}'
 @itemx \s+'@var{n}'
 @itemx \s-'@var{n}'
-Increase or decrease the point size by @var{n}@tie{}scaled points;
+Increase or decrease the type size by @var{n}@tie{}scaled points;
 @var{n}@tie{}is a numeric expression (which may start with a minus sign)
 with a default scaling indicator of @samp{z}.
 @end table
@@ -11749,7 +11751,7 @@ The resulting motions, glyph sizes, and fonts have to
 match,@footnote{The created output nodes must be identical.
 @xref{Gtroff Internals}.} and not the individual motion, size, and font
 requests.  In the previous example, @samp{|} and @samp{\fR|\fP} both
-result in a roman @samp{|} glyph with the same point size and at the
+result in a roman @samp{|} glyph with the same type size and at the
 same location on the page, so the strings are equal.  If
 @samp{.ft@tie{}I} had been added before the @samp{.ie}, the result would
 be ``false'' because (the first) @samp{|} produces an italic @samp{|}
@@ -13201,7 +13203,7 @@ coordinates.
 @cindex thickness of lines (@samp{\D't @dots{}'})
 Set the current line thickness to @var{n}@tie{}basic units.  A value
 of zero selects the smallest available line thickness.  A negative value
-makes the line thickness proportional to the current point size (this is
+makes the line thickness proportional to the current type size (this is
 the default behaviour of @acronym{AT&T} @code{troff}).
 
 Nonintuitively, the current point is moved horizontally to the
@@ -15936,12 +15938,12 @@ originated in @acronym{AT&T} @code{troff}, like @code{\*}, @code{\$},
 compatibility mode only, a non-zero@tie{}@var{n} must be in the range
 4--39.  Legacy documents relying upon this quirk of parsing@footnote{The
 Graphic Systems C/A/T phototypesetter (the original device target for
-@acronym{AT&T} @code{troff}) supported only a few discrete point sizes
-in the range 6--36, so Ossanna contrived a special case in the parser to
-do what the user must have meant.  Kernighan warned of this in the 1992
-revision of CSTR@tie{}#54 (§2.3), and more recently, McIlroy referred to
-it as a ``living fossil''.} should be migrated to another @code{\s}
-form.
+@acronym{AT&T} @code{troff}) supported only a few discrete type sizes
+in the range 6--36 points, so Ossanna contrived a special case in the
+parser to do what the user must have meant.  Kernighan warned of this in
+the 1992 revision of CSTR@tie{}#54 (§2.3), and more recently, McIlroy
+referred to it as a ``living fossil''.} should be migrated to another
+@code{\s} form.
 
 @cindex fractional point sizes
 @cindex fractional type sizes
@@ -15949,11 +15951,11 @@ form.
 @cindex type sizes, fractional
 @cindex sizes, fractional
 @cindex @code{ps} request, incompatibilities with @acronym{AT&T} @code{troff}
-Fractional point sizes cause one noteworthy incompatibility.  In
+Fractional type sizes cause one noteworthy incompatibility.  In
 @acronym{AT&T} @code{troff} the @code{ps} request ignores scale
-indicators and thus @samp{.ps 10u} sets the point size to
-10@tie{}points, whereas in GNU @code{troff} it sets the point size to
-10@tie{}scaled points.  @xref{Fractional Type Sizes}.
+indicators and thus @samp{.ps 10u} sets the type size to
+10@tie{}points, whereas in GNU @code{troff} it sets the type size to
+10@tie{}@emph{scaled} points.  @xref{Fractional Type Sizes}.
 
 @cindex @code{ab} request, incompatibilities with @acronym{AT&T} @code{troff}
 The @code{ab} request differs from @acronym{AT&T} @code{troff}:
@@ -17302,7 +17304,7 @@ always done relative to a page, so a @samp{p} command must be issued
 before any of these commands.
 
 @item s @var{n}
-Set point size to @var{n}@tie{}scaled points (this is unit @samp{z}).
+Set type size to @var{n}@tie{}scaled points (this is unit @samp{z}).
 @acronym{AT&T} @code{troff} used the unit points (@samp{p}) instead.
 @xref{Output Language Compatibility}.
 
@@ -17315,7 +17317,7 @@ ignored (this allows the formatter to generate an even number of
 arguments).  The first glyph should be printed at the current position,
 the current horizontal position should then be increased by the width of
 the first glyph, and so on for each glyph.  The widths of the glyphs are
-read from the font file, scaled for the current point size, and rounded
+read from the font file, scaled for the current type size, and rounded
 to a multiple of the horizontal resolution.  Special characters cannot
 be printed using this command (use the @samp{C} command for special
 characters).  This command is a @code{gtroff} extension; it is only used
@@ -17517,7 +17519,7 @@ This command is a @code{gtroff} extension.
 Set the current line thickness to@tie{}@var{n} (an integer in basic
 units @samp{u}) if @math{@var{n}>0}; if @math{@var{n}=0} select the
 smallest available line thickness; if @math{@var{n}<0} set the line
-thickness proportional to the point size (this is the default before the
+thickness proportional to the type size (this is the default before the
 first @samp{Dt} command was specified).  For historical reasons, the
 horizontal position is changed by adding the argument to the actual
 horizontal position, while the vertical position is not changed.
@@ -18031,8 +18033,8 @@ extend over more than one line.
 
 @item sizescale @var{n}
 @kindex sizescale
-Set the scale factor for point sizes to one divided by@tie{}@var{n}.
-The default is@tie{}@code{1}.  @xref{Fractional Type Sizes}.
+Set the scale factor for type sizes to one divided by@tie{}@var{n}.  The
+default is@tie{}@code{1}.  @xref{Fractional Type Sizes}.
 
 @item styles @var{S1} @r{@dots{}} @var{Sm}
 @kindex styles
