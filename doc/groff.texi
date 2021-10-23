@@ -11906,27 +11906,28 @@ requests may be interposed between the @code{ie} branch and the
 @cindex conditional block, end (@code{\@}})
 @cindex block, conditional, begin (@code{\@{})
 @cindex block, conditional, end (@code{\@}})
-@cindex brace escapes (@code{\@{}, @code{\@}})
-@cindex escapes, brace (@code{\@{}, @code{\@}})
-@cindex opening brace escape (@code{\@}})
-@cindex closing brace escape (@code{\@})}
-@cindex brace escape, opening (@code{\@})}
-@cindex brace escape, closing (@code{\@})}
+@cindex brace escape sequences (@code{\@{}, @code{\@}})
+@cindex escape sequences, brace (@code{\@{}, @code{\@}})
+@cindex opening brace escape sequence (@code{\@}})
+@cindex closing brace escape sequence (@code{\@})}
+@cindex brace escape sequence, opening (@code{\@})}
+@cindex brace escape sequence, closing (@code{\@})}
 It is frequently desirable for a control structure to govern more than
 one request, call more than one macro, span more than one input line of
-text, or mix the foregoing.  The opening and closing brace escapes
-@code{\@{} and @code{\@}} perform such grouping.  Brace escapes can be
-used outside of control structures, but when they are they have no
-meaning and produce no output.
+text, or mix the foregoing.  The opening and closing brace escape
+sequences @code{\@{} and @code{\@}} perform such grouping.  Brace escape
+sequences outside of control structures have no meaning and produce no
+output.
 
 @code{\@{} should appear (after optional spaces and tabs) immediately
 subsequent to the request's conditional expression.  @code{\@}} should
 appear on a line with other occurrences of itself as necessary to match
-@code{\@{} escapes.  It can be preceded by a control character, spaces,
-and tabs.  Input after a @code{\@}} escape on the same line is processed
-only if all of the preceding conditions to which the escapes correspond
-are true.  Furthermore, a @code{\@}} closing the body of a @code{while}
-request (discussed below) must be the last such escape on an input line.
+@code{\@{} sequences.  It can be preceded by a control character,
+spaces, and tabs.  Input after any quantity of @code{\@}} sequence on
+the same line is processed only if all of the preceding conditions to
+which they correspond are true.  Furthermore, a @code{\@}} closing the
+body of a @code{while} request (discussed below) must be the last such
+escape sequence on an input line.
 
 @Example
 A
