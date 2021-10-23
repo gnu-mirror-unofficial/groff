@@ -4076,15 +4076,20 @@ The return value of the system() function executed by the last
 .B sy
 request.
 .
+.
 .TP
 .B \[rs]n[slimit]
-If greater than\~0, the maximum number of objects on the input stack.
+If greater than\~0,
+sets the maximum quantity of objects on
+.IR \%@g@troff 's
+internal input stack.
 .
-If less than or equal to\~0, there is no limit on the number of
-objects on the input stack.
+If less than or equal to\~0,
+there is no limit:
+recursion can continue until program memory is exhausted.
 .
-With no limit, recursion can continue until virtual memory is
-exhausted.
+The default value is 1000,
+fixed at compile time.
 .
 .
 .TP

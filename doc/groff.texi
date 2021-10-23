@@ -15463,12 +15463,10 @@ generated on each error or warning.  Some warnings have to be enabled;
 
 @Defreg {slimit}
 @cindex input stack, setting limit
-Use the @code{slimit} register to set the maximum number of objects on
-the input stack.  If @code{slimit} is less than or equal to@tie{}0,
-there is no limit set.  With no limit, a buggy recursive macro can
-exhaust virtual memory.
-
-The default value is 1000; this is a compile-time constant.
+If greater than@tie{}0, sets the maximum quantity of objects on GNU
+@code{troff}'s internal input stack.  If less than or equal to@tie{}0,
+there is no limit: recursion can continue until program memory is
+exhausted.  The default value is 1000, fixed at compile time.
 @endDefreg
 
 @Defreq {warnscale, si}

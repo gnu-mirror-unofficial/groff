@@ -4948,12 +4948,21 @@ Right skip width from the center of the last glyph in the
 .esc w
 argument.
 .
+.
 .TPx
 .REG slimit
-If greater than 0, the maximum number of objects on the input stack.
+If >0,
+sets the maximum quantity of objects on
+.IR \%@g@troff 's
+internal input stack.
 .
-If \[<=]0 there is no limit, i.e., recursion can continue until virtual
-memory is exhausted.
+If \[<=]0,
+there is no limit:
+recursion can continue until program memory is exhausted.
+.
+The default is 1000,
+fixed at compile time.
+.
 .
 .TPx
 .REG ssc
