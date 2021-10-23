@@ -6883,7 +6883,7 @@ device.  @xref{Measurements}.
 @cindex number of registers register (@code{.R})
 @cindex registers, number of, register (@code{.R})
 @vindex .R
-Number of registers available.  This is always 10000 in GNU
+The count of available unused registers.  This is always 10000 in GNU
 @code{troff};@footnote{GNU @code{troff} dynamically allocates memory for
 as many registers as required.} it exists for backward compatibility.
 
@@ -7290,7 +7290,7 @@ This is an uninteresting sentence.
 @cindex centering lines (@code{ce})
 @cindex lines, centering (@code{ce})
 Center the next @var{nnn} input text lines without filling them.  A
-pending output line is broken.  The number of lines still to be centered
+pending output line is broken.  The count of lines still to be centered
 is associated with the environment (@pxref{Environments}).
 
 @cindex @code{ce} request, difference from @w{@samp{.ad c}}
@@ -7331,7 +7331,7 @@ for a quantity of lines far in excess of what is required, and off again
 after the text to be centered.  This pattern is useful to avoid counting
 lines for any request that takes a count of input lines as an argument.
 
-The @code{.ce} read-only register contains the number of lines remaining
+The @code{.ce} read-only register contains the count of lines remaining
 to be centered, as set by the @code{ce} request.
 @endDefreq
 
@@ -7341,10 +7341,9 @@ to be centered, as set by the @code{ce} request.
 @cindex text, justifying (@code{rj})
 @cindex right-justifying (@code{rj})
 Align the next @var{nnn} input text lines to the right margin without
-filling them.  A pending output line is broken.  The @code{.rj}
-read-only register is the number of lines to be right-justified as set
-by the @code{rj} request.  The number of lines still to be
-right-justified is associated with the environment
+filling them.  A pending output line is broken.  The count of lines
+remaining to be right-justified is stored in the read-only register
+@code{.rj} and is associated with the environment
 (@pxref{Environments}).
 @endDefreq
 
@@ -7880,7 +7879,7 @@ register @samp{.hla}; it is associated with the environment
 @cindex consecutive hyphenated lines (@code{hlm})
 @cindex lines, consecutive hyphenated (@code{hlm})
 @cindex hyphenated lines, consecutive (@code{hlm})
-Set the maximum number of consecutive hyphenated lines to @var{n}.  If
+Set the maximum quantity of consecutive hyphenated lines to @var{n}.  If
 @var{n} is negative, there is no maximum.  If omitted, @var{n}
 is@tie{}@minus{}1.  This value is associated with the environment
 (@pxref{Environments}).  Only lines output from a given environment
@@ -9698,8 +9697,8 @@ has the concept of font @dfn{positions} at which various fonts are
 @cindex mounting font (@code{fp})
 @cindex font, mounting (@code{fp})
 Mount font @var{font} at position @var{pos} (which must be a
-non-negative integer).  This numeric position can then be referred to
-with font-changing commands.  When GNU @code{troff} starts, it uses font
+non-negative integer).  This numeric index can then be referred to with
+font-changing commands.  When GNU @code{troff} starts, it uses font
 position@tie{}1 (which must exist; position@tie{}0 is unused at
 start-up.@footnote{Usually.})
 
@@ -9717,7 +9716,7 @@ font for later recall.  It is associated with the environment
 @endExample
 
 @cindex next free font position register (@code{.fp})
-The number of the next free font position is available in the read-only
+The index of the next free font position is available in the read-only
 register @samp{.fp}.  This is useful when mounting a new font, like so:
 
 @Example
@@ -10544,7 +10543,7 @@ This escape is incorrectly documented in the @acronym{AT&T}
 The @code{ul} request normally underlines subsequent lines if a TTY
 output device is used.  Otherwise, the lines are printed in italics
 (only the term `underlined' is used in the following).  The single
-argument is the number of input lines to be underlined; with no
+argument is the quantity of input lines to be underlined; with no
 argument, the next line is underlined.  If @var{lines} is zero or
 negative, stop the effects of @code{ul} (if it was active).  Requests
 and empty lines do not count for computing the number of underlined
@@ -11826,7 +11825,7 @@ obvious.
 Evaluate the conditional expression @var{cond-expr}, and if it evaluates
 true (that is, to a positive value), interpret the remainder of the line
 @var{anything} as if it were an input line.  Recall from @ref{Request
-and Macro Arguments} that any number of spaces between arguments to
+and Macro Arguments} that any quantity of spaces between arguments to
 requests serves only to separate them; leading spaces in @var{anything}
 are thus not seen.  @var{anything} effectively @emph{cannot} be omitted;
 if @var{cond-expr} is true and @var{anything} is empty, the newline at
@@ -12537,7 +12536,7 @@ This understeer is getting
 
 Each escape character is interpreted twice---once in copy mode, when the
 macro is defined, and once outside of it, when the macro is called.  As
-seen above, this fact leads to exponential growth in the number of
+seen above, this fact leads to exponential growth in the quantity of
 escape characters required to delay interpolation of @code{\n},
 @code{\g}, @code{\$}, @code{\*}, and @code{\V} at each nesting level,
 which can be daunting.  GNU @code{troff} offers a solution.
@@ -13275,7 +13274,7 @@ when reached or fulfilled, cause a specified macro to be called.  These
 traps can occur at a given location on the page, at a given location in
 the current diversion (together, these are known as @emph{vertical
 position traps}), at a blank line, at a line with leading space
-characters, after a certain number of input lines, or at the end of
+characters, after a given quantity of input lines, or at the end of
 input.  Macros called by traps have no arguments.
 @cindex planting a trap
 @cindex trap, planting
@@ -14413,7 +14412,7 @@ Colors can be also turned off with the @option{-c} command-line option.
 @Defreq {defcolor, ident scheme color-component @dots{}}
 Define a color named @var{ident} for use with the @code{fcolor} and
 @code{gcolor} requests and the @code{\m} and @code{\M} escape sequences.
-@var{scheme} identifies a color space and determines the number of
+@var{scheme} identifies a color space and determines the quantity of
 required @var{color-component}s; it must be one of @samp{rgb} (three
 components), @samp{cmy} (three components), @samp{cmyk} (four
 components), or @samp{gray} (one component). @samp{grey} is accepted as

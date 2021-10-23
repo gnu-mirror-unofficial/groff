@@ -1719,7 +1719,7 @@ and
 escape sequences.
 .
 .I scheme
-identifies a color space and determines the number of required
+identifies a color space and determines the quantity of required
 .IR color-component s;
 it must be one of
 .RB \[lq] rgb \[rq]
@@ -2103,7 +2103,7 @@ Set the hyphenation language to
 .
 .TPx
 .REQ .hlm n
-Set the maximum number of consecutive hyphenated lines to
+Set the maximum quantity of consecutive hyphenated lines to
 .IR n .
 .
 .TPx
@@ -4422,11 +4422,11 @@ The depth of the last glyph added to the current environment.
 .
 It is positive if the glyph extends below the baseline.
 .
+.
 .TPx
 .REG .ce
-The number of lines remaining to be centered, as set by the
-.request .ce
-request.
+The count of lines remaining to be centered.
+.
 .
 .TPx
 .REG .cht
@@ -4465,7 +4465,8 @@ The name or number of the current environment (string-valued).
 .
 .TPx
 .REG .f
-Current font number.
+Mounting position index of the current font.
+.
 .
 .TPx
 .REG .F
@@ -4479,9 +4480,10 @@ The current font family (string-valued).
 .REG .fn
 The current (internal) real font name (string-valued).
 .
+.
 .TPx
 .REG .fp
-The number of the next free font position.
+The next free font mounting position index.
 .
 .
 .TPx
@@ -4516,10 +4518,12 @@ The hyphenation language in the current environment.
 The count of immediately preceding consecutive hyphenated lines in the
 current environment.
 .
+.
 .TPx
 .REG .hlm
-The maximum number of consecutive hyphenated lines allowed in the
+The maximum quantity of consecutive hyphenated lines allowed in the
 current environment.
+.
 .
 .TPx
 .REG .hy
@@ -4670,16 +4674,18 @@ The last-requested point size in scaled points.
 .REG .pvs
 The current post-vertical line spacing.
 .
+.
 .TPx
 .REG .R
-The number of unused registers.
-Always 10000 in GNU troff.
+The count of available unused registers;
+always 10000 in GNU
+.IR troff . \" GNU
+.
 .
 .TPx
 .REG .rj
-The number of lines to be right-justified as set by the
-.request .rj
-request.
+The count of lines remaining to be right-aligned.
+.
 .
 .TPx
 .REG .s
@@ -5451,8 +5457,8 @@ when the macro is defined,
 and once outside of it,
 when the macro is called.
 .
-This fact leads to exponential growth in the number of escape characters
-required to delay interpolation of
+This fact leads to exponential growth in the quantity of escape
+characters required to delay interpolation of
 .BR \[rs]n ,
 .BR \[rs]g ,
 .BR \[rs]$ ,
