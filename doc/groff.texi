@@ -7290,8 +7290,9 @@ This is an uninteresting sentence.
 @cindex centering lines (@code{ce})
 @cindex lines, centering (@code{ce})
 Center the next @var{nnn} input text lines without filling them.  A
-pending output line is broken.  The count of lines still to be centered
-is associated with the environment (@pxref{Environments}).
+pending output line is broken.  The count of lines remaining to be
+centered is stored in the read-only register @code{.ce} and is
+associated with the environment (@pxref{Environments}).
 
 @cindex @code{ce} request, difference from @w{@samp{.ad c}}
 While the @w{@samp{.ad c}} request also centers text, it fills the text
@@ -7330,9 +7331,6 @@ The previous example illustrates a common idiom of turning centering on
 for a quantity of lines far in excess of what is required, and off again
 after the text to be centered.  This pattern is useful to avoid counting
 lines for any request that takes a count of input lines as an argument.
-
-The @code{.ce} read-only register contains the count of lines remaining
-to be centered, as set by the @code{ce} request.
 @endDefreq
 
 @DefreqList {rj, [@Var{nnn}]}
