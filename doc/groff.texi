@@ -15494,22 +15494,23 @@ line.  @xref{Warnings}.
 @endDefreq
 
 @cindex warnings
-@code{gtroff} has command-line options for printing out more warnings
-(@option{-w}) and for printing backtraces (@option{-b}) when a warning
-or an error occurs.  The most verbose level of warnings is @option{-ww}.
+GNU @code{troff} has command-line options for reporting warnings
+(@option{-w}) and backtraces (@option{-b}) when a warning or an error
+occurs.
 
-@DefreqList {warn, [@Var{flags}]}
+@DefreqList {warn, [@Var{n}]}
 @DefregListEndx {.warn}
-@cindex level of warnings (@code{warn})
-@cindex warnings, level (@code{warn})
-Control the level of warnings checked for.  The @var{flags} are the sum
-of the numbers associated with each warning that is to be enabled; all
-other warnings are disabled.  The number associated with each warning is
-listed below.  For example, @samp{.warn 0} disables all warnings, and
-@samp{.warn 1} disables all warnings except that about missing glyphs.
-If no argument is given, all warnings are enabled.
+@cindex warning level (@code{warn})
+Select the categories, or ``types'', of reported warnings.
+@var{n}@tie{}is the sum of the numeric codes associated with each
+warning category that is to be enabled; all other categories are
+disabled.  The categories and their associated codes are listed in
+@ref{Warnings}.  For example, @samp{.warn 0} disables all warnings, and
+@samp{.warn 1} disables all warnings except those about missing glyphs.
+If no argument is given, all warning categories are enabled.
 
-The read-only register @code{.warn} contains the current warning level.
+The read-only register @code{.warn} contains the sum of the numeric
+codes of enabled warning categories.
 @endDefreq
 
 @menu
@@ -15533,6 +15534,8 @@ the @code{warn} request and the @code{.warn} register.
 Warnings of each category are produced under the following
 circumstances.
 
+@cindex categories, warning
+@cindex warning categories
 @table @samp
 @item char
 @itemx 1

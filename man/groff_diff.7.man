@@ -3368,25 +3368,34 @@ enabled is global.
 Initially,
 vertical position traps are enabled.
 .
-.TP
-.BI .warn\~ n
-Control warnings.
-.IR n \~\c
-is the sum of the numbers associated with each warning that is to be
-enabled; all other warnings are disabled.
 .
-The number associated with each warning is listed in
+.TP
+.B .warn\~\c
+.RI [ n ]
+Select the categories,
+or \[lq]types\[rq],
+of reported warnings.
+.
+.IR n \~is
+the sum of the numeric codes associated with each warning category that
+is to be enabled;
+all other categories are disabled.
+.
+The categories and their associated codes are listed in section
+\[lq]Warnings\[rq] of
 .MR @g@troff @MAN1EXT@ .
+.\" TODO: Maybe move that table to groff(7).
 .
 For example,
-.B .warn 0
-disables all warnings, and
-.B .warn 1
-disables all warnings except that about missing glyphs.
+.RB \[lq] ".warn 0" \[rq]
+disables all warnings,
+and
+.RB \[lq] ".warn 1" \[rq]
+disables all warnings except those about missing glyphs.
 .
-If
-.I n
-is not given, all warnings are enabled.
+If no argument is given,
+all warning categories are enabled.
+.
 .
 .TP
 .BI .warnscale\~ si
@@ -3935,6 +3944,7 @@ and 0\~otherwise.
 .B \[rs]n[.vpt]
 1\~if vertical position traps are enabled, 0\~otherwise.
 .
+.
 .TP
 .B \[rs]n[.warn]
 The sum of the numbers associated with each of the currently enabled
@@ -3942,6 +3952,7 @@ warnings.
 .
 The number associated with each warning is listed in
 .MR @g@troff @MAN1EXT@ .
+.\" TODO: Maybe move that table to groff(7).
 .
 .
 .TP

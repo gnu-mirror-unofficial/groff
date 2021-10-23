@@ -3060,14 +3060,25 @@ Set vertical base line spacing to
 (default scaling indicator\~\c
 .scaleindicator p ).
 .
-.TPx
-.REQ .warn
-Enable all warnings.
 .
 .TPx
-.REQ .warn "n"
-Set warnings code to
-.IR n .
+.REQ .warn
+Enable all warning categories.
+.
+.
+.TPx
+.REQ .warn\~0
+Disable all warning categories.
+.
+.
+.TPx
+.REQ .warn n
+Enable warnings in categories whose codes sum
+.RI to\~ n ;
+.\" TODO: Move that table here, perhaps.
+see
+.MR @g@troff @MAN1EXT@ .
+.
 .
 .TPx
 .REQ .warnscale "si"
@@ -4779,9 +4790,10 @@ Number of basic units per vertical unit of output device resolution.
 .REG .w
 Width of previous glyph.
 .
+.
 .TPx
 .REG .warn
-The sum of the number codes of the currently enabled warnings.
+The sum of the numeric codes of currently enabled warning categories.
 .
 .
 .TPx
