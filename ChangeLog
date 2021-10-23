@@ -25,6 +25,16 @@
 
 2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[groff]: Fix code style nits.
+
+	* src/roff/groff/groff.cpp (main, help): Use standard C library
+	preprocessor symbols `EXIT_SUCCESS` and `EXIT_FAILURE` instead
+	of 0 and 1 literals, respectively.  See commit fa4c27e9, 7
+	September.
+	(main): Replace `assert(0)` with a communicative predicate.
+
+2021-10-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grotty/tty.cpp (tty_printer::special_link):
 	Eliminate casts by retyping `uri` and `pair` to pointers to
 	`const char`s.
