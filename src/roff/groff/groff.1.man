@@ -1554,6 +1554,46 @@ the databases.
 .
 .
 .\" ====================================================================
+.SH "Exit status"
+.\" ====================================================================
+.
+.I groff
+exits with a failure status if there was a problem parsing its arguments
+and a successful status if either of the options
+.B \-h
+or
+.B \-\-help
+was specified.
+.
+Otherwise,
+.I groff
+runs a pipeline to process its input;
+if all commands within the pipeline exit successfully,
+.I groff
+does likewise.
+.
+If not,
+.IR groff 's
+exit status encodes a summary of problems encountered,
+setting bit\~0 if a command exited with a failure status,
+bit\~1 if a command was terminated with a signal,
+and bit\~2 if a command could not be executed.
+.
+(Thus,
+if all three misfortunes befell one's pipeline,
+.I groff
+would exit with status 2\[ha]0 + 2\[ha]1 + 2\[ha]2 = 1+2+4 = 7.)
+.
+To troubleshoot pipeline problems,
+you may wish to re-run the
+.I groff
+command with the
+.B \-V
+option and break the reported pipeline down into separate stages,
+inspecting the exit status and any diagnostic messages of each command.
+.
+.
+.\" ====================================================================
 .SH Environment
 .\" ====================================================================
 .
