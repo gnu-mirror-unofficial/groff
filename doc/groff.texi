@@ -6707,7 +6707,6 @@ For example,
 \n+[foo], \n+[foo], \n+[foo], \n+[foo], \n+[foo]
 @endExample
 
-@noindent
 produces
 
 @Example
@@ -6718,8 +6717,9 @@ produces
 
 @cindex increment value without changing the register
 @cindex value, incrementing without changing the register
-To change the increment value without changing the value of a register
-(@var{a} in the example), the following can be used:
+To change the increment value without changing the value of a register,
+assign the register's value to itself by interpolating it, and specify
+the desired increment normally.
 
 @Example
 .nr a \na 10
