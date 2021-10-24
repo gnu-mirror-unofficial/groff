@@ -1,5 +1,7 @@
 2021-10-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/groff.texi (Auto-increment): Fix error; the `\R` escape
+	sequence does _not_ support an auto-incrementation amount.
 	* man/groff_out.5.man (Command reference/Simple commands): Fix
 	erroneous claim: 'N' is not a GNU roff extension; it appears on
 	page 27 of CSTR#54 (1992).
@@ -18,9 +20,9 @@
 
 	[ms]: Fix misleading NH macro indentation.
 
-	* tmac/s.tmac (@NH) [.T is html]: .if statement should exhibit same
-	indentation as preceding .DEVTAG-NH statement, but is overindented;
-	fix it.
+	* tmac/s.tmac (@NH) [.T is html]: .if statement should exhibit
+	same indentation as preceding .DEVTAG-NH statement, but is
+	overindented; fix it.
 
 2021-10-23  Keith Marshall  <keith.d.marshall@ntlworld.com>
 
