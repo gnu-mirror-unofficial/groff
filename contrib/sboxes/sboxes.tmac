@@ -40,7 +40,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .\" See if already loaded.
 .if r GSBOX .nx
-.nr GSBOX 1
+.
+.\" GSBOX is defined if the package is loaded, and true if it will work.
+.nr GSBOX 0
+.if '\*[.T]'pdf' \
+.  nr GSBOX 1
+.
 .nr bx@stack 0
 .
 .de sboxes*error

@@ -224,6 +224,18 @@ after adding its
 spacing.
 .BOXSTOP
 .QE
+Your
+.I groff
+documents can conditionally exercise the
+.I sboxes
+macros.
+The register
+.Lt GSBOX
+is defined if the package is loaded, and interpolates a true value if
+the
+.Lt pdf
+output device is in use.
+.LP
 .I sboxes
 has one further feature: it hooks into the
 .I "groff ms"
