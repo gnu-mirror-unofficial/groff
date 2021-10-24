@@ -52,9 +52,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  tm \*[sboxes*name]:\\n[.F]:\\n[.c]: error: \\$*
 ..
 .
-.de pdfbackground
-.device pdf: background \\$*
-..
+.\" Define dummy macro if we're not formatting for the pdf device.
+.if !\n[GSBOX] \{
+.  de pdfbackground
+.  .
+.\}
+.
 .\" Link into ms macros to trap footnote growth
 .am fn@print-sep
 .nr bx@pb \\n[nl]u-2p
