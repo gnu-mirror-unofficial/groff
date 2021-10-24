@@ -27,15 +27,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  ab groff sboxes macros do not work in compatibility mode; aborting
 .
 .\" Define a string for use in diagnostic messages.
-.ds sboxes*name sboxes.tmac\"
+.ds bx*name sboxes.tmac\"
 .
 .if !r GS \
-.  ab \*[sboxes*name]: ms macros must be loaded first; aborting
+.  ab \*[bx*name]: ms macros must be loaded first; aborting
 .
 .if (\n[.x]\n[.y] < 123) \{\
-.  ds sboxes*msg \*[sboxes*name]: groff 1.23 or later is required,\"
-.  as sboxes*msg " but found groff \n[.x].\n[.y]; aborting\"
-.  ab \*[sboxes*msg]
+.  ds bx*msg \*[bx*name]: groff 1.23 or later is required,\"
+.  as bx*msg " but found groff \n[.x].\n[.y]; aborting\"
+.  ab \*[bx*msg]
 .\}
 .
 .\" See if already loaded.
@@ -48,8 +48,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .
 .nr bx@stack 0
 .
-.de sboxes*error
-.  tm \*[sboxes*name]:\\n[.F]:\\n[.c]: error: \\$*
+.de bx*error
+.  tm \*[bx*name]:\\n[.F]:\\n[.c]: error: \\$*
 ..
 .
 .\" Define dummy macro if we're not formatting for the pdf device.
@@ -102,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .           shift 2
 .         \}
 .         el \{\
-.           sboxes*error ignoring unrecognized BOXSTART parameter '\\$1'
+.           bx*error ignoring unrecognized BOXSTART parameter '\\$1'
 .           shift
 .         \}
 .       \}
