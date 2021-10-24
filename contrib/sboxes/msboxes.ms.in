@@ -1,3 +1,4 @@
+.\" groff -ms -msboxes -Tpdf
 .nr LL 17c
 .nr PO 2c
 .nr PS 11
@@ -43,10 +44,11 @@ document formatting system,
 allows coloured rectangles to be created beneath any output created by
 .I groff .
 The extension can be accessed via a device control escape sequence
-.Lt \[rs]X\[aq]pdf:\[aq]
-(with a convenience command
+.Lt "\[rs]X\[aq]pdf: background" \~.\|.\|.\|\c
+.Lt \[aq]
+or a convenience macro
 .Lt pdfbackground
-supporting the same parameters).
+supporting the same parameters.
 .QS
 .BOXSTART SHADED cornsilk OUTLINED brown INDENT 2n WEIGHT 1p
 \M[floralwhite]\c
@@ -61,8 +63,8 @@ cmd left top right bottom weight\[aq]
 .BI
 cmd left top right bottom weight
 .LP
-where
-.IP \f[I]cmd 7n
+each produce a background rectangle on the page, where
+.IP \f[I]cmd 8n \" indent enough to fit "bottom" tag
 can be any of
 .Qq page|fill|box
 in combination.
@@ -116,7 +118,7 @@ page.
 .IP \f[I]left
 .IP \f[I]top
 .IP \f[I]right
-.IP \f[I]bottom 7n
+.IP \f[I]bottom
 .nr PD \n[oldPD]
 are the coordinates of the box.
 The
@@ -132,7 +134,7 @@ you turn the box
 The top and bottom coordinates are only used if the box drawing extends
 onto the next page, so, ordinarily they would be set to the header and
 footer margins.
-.IP \f[I]weight 7n
+.IP \f[I]weight
 If
 .Qq box
 is included in the command, then this parameter provides the line width
@@ -189,6 +191,7 @@ and each
 a valid
 .I groff
 numeric expression.
+The keyword/value pairs can be specified in any order.
 .BOXSTOP
 .QE
 Boxes can be stacked, so you can start a box within another box; usually
