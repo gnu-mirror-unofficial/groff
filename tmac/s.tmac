@@ -1741,6 +1741,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\}
 .el .@error .XE without .XS
 ..
+.\" Rudimentary integration of TOC generation with SH and NH;
+.\" (called by XH and XN respectively, to capture heading text
+.\" for reuse as TOC entry); may be redefined, to achieve more
+.\" sophisticated TOC layout effects.
+.\"
+.\" No-op initializers are called by XH and XN respectively,
+.\" before XH-UPDATE-TOC is called; if XH-UPDATE-TOC has been
+.\" redefined, then it may also be necessary to redefine either,
+.\" or both of these, to perform any initialization specific
+.\" to use after SH and NH respectively.
+.de XH-INIT de
+.de XN-INIT
+..
+.de XH-UPDATE-TOC
+.\" .XH-UPDATE-TOC <outline-level> [<section-number>] <text>
+.\" (<section-number> present only when called by XN)
+.XS
+.shift\" don't use <outline-level> in rudimentary style
+\&\\$*\" capture <section-number> (if present) and <text>
+.XE
+..
+.\" Rudimentary integration hook, to be called (nominally)
+.\" after SH, but acceptable in any body-text context
+.de XH de
+.\" .XH <outline-level> <text>
+.rn XH-REPLACEMENT XH
+.XH \\$@
+.de XH-REPLACEMENT
+.XH-INIT
+.XH-UPDATE-TOC \\$@
+.shift
+\&\\$*
+..
+.\" Rudimentary integration hook, to be called after NH
+.de XN de
+.\" .XN <text>
+.ie \\n[nh*hl] .toc*xn-init \\$@
+.el \{ .@error .XN is not allowed before .NH
+.      nop \&\\$*
+.   \}
+.de toc*xn-init de
+.rn XN-REPLACEMENT XN
+.XN \\$@
+.rm \\$0
+.de XN-REPLACEMENT
+.XN-INIT
+.XH-UPDATE-TOC \\n[nh*hl] \\*[SN] \\$@
+\&\\$*
+..
 .de toc*end-entry
 \\a\\t\\*[toc*num]
 .br
