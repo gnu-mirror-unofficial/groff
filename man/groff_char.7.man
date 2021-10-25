@@ -107,7 +107,7 @@ arbitrary Unicode code points and construction of composite glyphs.
 .
 The glyphs listed in this document may not be available,
 or may vary in appearance,
-depending on the output driver chosen when the page was rendered
+depending on the output device chosen when the page was rendered
 (with the
 .B \-T
 option to the
@@ -116,7 +116,8 @@ or
 .I roff
 programs).
 .
-The driver used in generation of this page was \[lq]\*[.T]\[rq].
+The device name used in generation of this page was
+.BR \*[.T] .
 .
 .
 .P
@@ -158,7 +159,7 @@ and the Bell Systems logo
 .P
 In
 .IR groff ,
-you can test output driver support for any character
+you can test output device support for any character
 (ordinary or special)
 with the conditional expression operator
 .RB \[lq] c \[rq].
@@ -351,7 +352,7 @@ this will
 .I not
 be the case on more-capable devices.
 .
-Review your document using as many different output drivers as possible.
+Review your document using as many different output devices as possible.
 .
 .\" XXX: move these to tty.tmac instead?
 .fchar \[u02C6] ^
@@ -1230,9 +1231,9 @@ and
 .B \[rs](rf
 which provide the floor operator.
 .
-Some output drivers,
+Some output devices,
 such as
-.MR grodvi @MAN1EXT@ ,
+.BR dvi ,
 don't unify such glyphs.
 .
 For this reason,
