@@ -6558,8 +6558,12 @@ Increment (decrement) register @var{ident} by @var{value}.
 @endExample
 
 @cindex negating register values
-To assign the negated value of a register to another register, some care
-must be taken to get the desired result:
+A leading minus sign in @var{value} is always interpreted as a
+decrementation operator, not an algebraic sign.  To assign a register a
+negative value or the negated value of another register, you can use
+either of two techniques to to force GNU @code{troff} to interpret the
+assigned value as a numeric expression: enclose it in parentheses or
+subtract it from zero.
 
 @Example
 .nr a 7
@@ -6570,23 +6574,13 @@ must be taken to get the desired result:
 .nr a (-\nb)
 \na
     @result{} -3
-@endExample
-
-@noindent
-The surrounding parentheses prevent the interpretation of the minus sign
-as a decrementing operator.  An alternative is to start the assignment
-with a @samp{0}:
-
-@Example
-.nr a 7
-.nr b -3
-.nr a \nb
-\na
-    @result{} 4
-.nr a 0\nb
+.nr a 0-\nb
 \na
     @result{} -3
 @endExample
+
+If a register's prior value does not exist (the register was undefined),
+an increment or decrement is applied as if to@tie{}0.
 @endDefreq
 
 @Defreq {rr, ident}

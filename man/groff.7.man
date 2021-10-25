@@ -1248,10 +1248,17 @@ Without a sign,
 .I N
 replaces any existing value.
 .
-To assign a negative number,
-either prefix the expression with a zero or enclose it with parentheses.
+A leading minus sign
+.RI in\~ N
+is always interpreted as a decrementation operator,
+not an algebraic sign.
 .
-If a prior value does not exist,
+To assign a register a negative value or the negated value of another
+register,
+enclose the assigned expression in parentheses or subtract it from zero.
+.
+If a prior value does not exist
+(the register was undefined),
 an increment or decrement is applied as if to\~0.
 .
 .
