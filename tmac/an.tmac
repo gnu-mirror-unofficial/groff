@@ -98,25 +98,25 @@
 .  pl \\n[nl]u
 ..
 .
-.\" We need an end macro to flush any pending output line and write the
-.\" footer for the final man page rendered.  We can also be called by
-.\" andoc when switching to an mdoc(7) page, irrespective of continuous
-.\" rendering mode.
+.\" We need an end-of-input macro to flush any pending output line and
+.\" write the footer for the final man page rendered.  We can also be
+.\" called by andoc when switching to an mdoc(7) page, irrespective of
+.\" continuous rendering mode.
 .de1 an-end
 .  if \\n[cR] \{\
-.  fl
-.  pl +1v
-.  sp 1v
-.  an-footer
-.  \" If we're processing multiple documents and have started a new one,
-.  \" draw a line between this footer and the next header.
-.  if !'\\n[.F]'' \{\
+.    fl
 .    pl +1v
-.    nf
-.    ti 0
+.    sp 1v
+.    an-footer
+.    \" If we're processing multiple documents and have started a new
+.    \" one, draw a line between this footer and the next header.
+.    if !'\\n[.F]'' \{\
+.      pl +1v
+.      nf
+.      ti 0
 \D'l \\n[LL]u 0'
-.    fi
-.  \}
+.      fi
+.    \}
 .  \}
 .  ch an-header
 .  bp
@@ -927,7 +927,7 @@
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
 .
-.\" continous rendering (one long page)
+.\" continuous rendering (one long page)
 .if !r cR \{\
 .  ie n .nr cR 1
 .  el   .nr cR 0
