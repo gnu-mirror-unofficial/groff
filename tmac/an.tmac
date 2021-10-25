@@ -556,7 +556,10 @@
 .\" Set a tagged paragraph.  The tag must be on the next input line.
 .\" .TP [indent]
 .de1 TP
+.  ps \\n[PS]u
+.  vs \\n[VS]u
 .  sp \\n[PD]u
+.  ft R
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
 .  itc 1 an-input-trap
 .  in 0
