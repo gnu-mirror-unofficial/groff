@@ -553,6 +553,21 @@
 .  if \\n[.$] \&\\$*
 ..
 .
+.\" Set an ordinary paragraph.
+.de1 P
+.  sp \\n[PD]u
+.  ps \\n[PS]u
+.  vs \\n[VS]u
+.  ft R
+.  in \\n[an-margin]u
+.  nr an-prevailing-indent \\n[IN]
+.  ns
+..
+.
+.\" Accommodate ms(7) paragraphing refugees.
+.als LP P
+.als PP P
+.
 .\" Set a tagged paragraph.  The tag must be on the next input line.
 .\" .TP [indent]
 .de1 TP
@@ -569,21 +584,6 @@
 .  \}
 .  nr an-is-in-diversion 1
 ..
-.
-.\" Set an ordinary paragraph.
-.de1 P
-.  sp \\n[PD]u
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  ft R
-.  in \\n[an-margin]u
-.  nr an-prevailing-indent \\n[IN]
-.  ns
-..
-.
-.\" Accommodate ms(7) paragraphing refugees.
-.als LP P
-.als PP P
 .
 .\" Set an indented paragraph.
 .\" .IP [marker[ indentation-amount]]
