@@ -1,5 +1,13 @@
 2021-10-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an.tmac: Refactor to reduce repetition.
+	(an-break-paragraph): New macro handles paragraph-breaking tasks
+	previously duplicated.
+	(SH, SS, P, TP, IP, HP): Call it rather than issuing its
+	constituent requests.
+
+2021-10-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an.tmac (TP): Reset type size, vertical spacing, and font
 	to defaults before setting the new paragraph.
 

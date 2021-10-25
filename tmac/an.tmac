@@ -479,9 +479,18 @@
 .  if \\n[an-is-in-diversion] .an-write-paragraph-tag
 ..
 .
+.\" Break a paragraph.  Restore defaults, except for indentation.
+.de an-break-paragraph
+.  ft R
+.  ps \\n[PS]u
+.  vs \\n[VS]u
+.  sp \\n[PD]u
+.  ns
+..
+.
 .\" Set arguments (or next input line if none) as a section heading.
 .de1 SH
-.  sp \\n[PD]u
+.  an-break-paragraph
 .  an-reset-margin-and-inset-level
 .  fi
 .  in \\n[an-margin]u
@@ -505,7 +514,7 @@
 .
 .\" Set arguments (or next input line if none) as a subsection heading.
 .de1 SS
-.  sp \\n[PD]u
+.  an-break-paragraph
 .  an-reset-margin-and-inset-level
 .  fi
 .  in \\n[IN]u
@@ -555,13 +564,9 @@
 .
 .\" Set an ordinary paragraph.
 .de1 P
-.  sp \\n[PD]u
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  ft R
+.  an-break-paragraph
 .  in \\n[an-margin]u
 .  nr an-prevailing-indent \\n[IN]
-.  ns
 ..
 .
 .\" Accommodate ms(7) paragraphing refugees.
@@ -571,10 +576,7 @@
 .\" Set a tagged paragraph.  The tag must be on the next input line.
 .\" .TP [indent]
 .de1 TP
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  sp \\n[PD]u
-.  ft R
+.  an-break-paragraph
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
 .  itc 1 an-input-trap
 .  in 0
@@ -588,14 +590,10 @@
 .\" Set an indented paragraph.
 .\" .IP [marker[ indentation-amount]]
 .de1 IP
+.  an-break-paragraph
 .  ie !\\n[.$] \{\
-.    ps \\n[PS]u
-.    vs \\n[VS]u
-.    ft R
-.    sp \\n[PD]u
 .    ne (1v + 1u)
 .    in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
-.    ns
 .  \}
 .  el \{\
 .    ie (\\n[.$] > 1) .TP "\\$2"
@@ -607,17 +605,13 @@
 .\" Set a paragraph with a hanging indentation.
 .\" .HP [indent]
 .de1 HP
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  ft R
-.  sp \\n[PD]u
+.  an-break-paragraph
 .  ne (1v + 1u)
 .  if \\n[.$] .nr an-prevailing-indent (n;\\$1)
 .  in (\\n[an-margin]u + \\n[an-prevailing-indent]u)
 .  ti \\n[an-margin]u
 .  DEVTAG-COL 1
 .  nr an-devtag-needs-second-column 1
-.  ns
 ..
 .
 .\" === Define alternating font macros. ===
