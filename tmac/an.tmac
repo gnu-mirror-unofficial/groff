@@ -326,11 +326,11 @@
 .\" Write the page footer; can be redefined by man.local.
 .de1 BT
 .  ie \\n[D] \{\
-.    if o .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-outer-footer-text]'
-.    if e .tl '\\*[an-outer-footer-text]'\\*[an-extra1]'\\*[an-extra2]'
+.    if o .tl '\\*[an-ifoot]'\\*[an-extra1]'\\*[an-outer-footer-text]'
+.    if e .tl '\\*[an-outer-footer-text]'\\*[an-extra1]'\\*[an-ifoot]'
 .  \}
 .  el \
-.    tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-outer-footer-text]'
+.    tl '\\*[an-ifoot]'\\*[an-extra1]'\\*[an-outer-footer-text]'
 ..
 .
 .\" Abbreviate the page title if it's too long for the header.  Leaves
@@ -380,6 +380,65 @@
 .  rm an-ellipsis
 ..
 .
+.\" Abbreviate the `an-extra2` string (set by .TH) if it's too long for
+.\" the footer.  By default, `an-extra2` is placed as the inner footer.
+.\" We call it `an-ifoot` here and leave it defined for .BT use.
+.\"
+.\" The method here differs from an-prepare-header, because the
+.\" (default) header is symmetrical, with `an-pageref` on both sides,
+.\" whereas the (default) footer is not.  Our approach is to chop
+.\" `an-extra1` (the default center footer) in half and ensure that the
+.\" formatted `an-ifoot` plus that is less than half the title length.
+.de an-prepare-inner-footer
+.  ds an-half-cfoot \\*[an-extra1]\"
+.  length an-half-cfoot-length \\*[an-half-cfoot]
+.  nr an-half-cfoot-length (\\n[an-half-cfoot-length] / 2u)
+.  substring an-half-cfoot 0 \\n[an-half-cfoot-length]
+.  rr an-half-cfoot-length
+.  ds an-ifoot \\*[an-extra2]\"
+.  nr an-half-title-width (\\n[.lt] / 2u)
+.  nr an-half-footer-width \\w'\\*[an-ifoot]\\*[an-half-cfoot]'
+.  \" If abbreviation is not necessary, skip the remaining work.
+.  if (\\n[an-half-footer-width] <= \\n[an-half-title-width]) .return
+.  ds an-ellipsis \|.\|.\|.\|\"
+.  \" Now divide the inner footer in half.
+.  length an-ifoot-length \\*[an-ifoot]
+.  nr an-mark1 (\\n[an-ifoot-length] / 2)
+.  nr an-mark2 (\\n[an-ifoot-length] / 2 + 1)
+.  rr an-ifoot-length
+.  ds an-ifoot-half1 \\*[an-ifoot]\"
+.  ds an-ifoot-half2 \\*[an-ifoot]\"
+.  substring an-ifoot-half1 0 \\n[an-mark1]
+.  substring an-ifoot-half2 \\n[an-mark2] -1
+.  \" Reduce the two halves until, when rejoined with each other, the
+.  \" ellipsis, and half of the center footer, they fit the half-title.
+.  nr an-half-footer-width \\w'\\*[an-ifoot-half1]\\*[an-ellipsis]\
+\\*[an-ifoot-half2]\\*[an-half-cfoot]'
+.  while (\\n[an-half-footer-width] > \\n[an-half-title-width]) \{\
+.    length an-half1-length \\*[an-ifoot-half1]
+.    length an-half2-length \\*[an-ifoot-half2]
+.    \" Give up if we'd have to trim ifoot's first or last characters.
+.    if ((\\n[an-half1-length] = 1) : (\\n[an-half2-length] = 1)) \
+.      break
+.    \" Trim a character from half1's end and half2's beginning.
+.    substring an-ifoot-half1 0 (\\n[an-half1-length] - 2)
+.    substring an-ifoot-half2 2 (\\n[an-half2-length] - 1)
+.    nr an-half-footer-width \\w'\\*[an-ifoot-half1]\\*[an-ellipsis]\
+\\*[an-ifoot-half2]\\*[an-half-cfoot]'
+.  \}
+.  ds an-ifoot \\*[an-ifoot-half1]\\*[an-ellipsis]\\*[an-ifoot-half2]\"
+.  rr an-half1-length
+.  rr an-half2-length
+.  rm an-ifoot-half1
+.  rm an-ifoot-half2
+.  rr an-mark1
+.  rr an-mark2
+.  rr an-half-footer-width
+.  rr an-half-title-width
+.  rm an-ellipsis
+.  rm an-half-cfoot
+..
+.
 .\" Prepare the header for a page of the document.
 .de1 an-header
 .  if \\n[an-suppress-header-and-footer] .return
@@ -424,6 +483,7 @@
 .      \}
 .    \}
 .  \}
+.  an-prepare-inner-footer
 .  if \\n[cR] .pl +1v
 .  BT
 .  rm an-outer-footer-text

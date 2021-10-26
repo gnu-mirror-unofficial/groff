@@ -1,5 +1,16 @@
 2021-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Abbreviate the inside footer if necessary.
+
+	* tmac/an.tmac (an-prepare-inner-footer): Prevent the inside
+	footer from overrunning the center footer.
+	(BT): Use new string `an-ifoot` instead of `an-extra2` in page
+	footers.
+
+	Fixes <https://savannah.gnu.org/bugs/?61386>.
+
+2021-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Add regression test for Savannah #61386.
 
 	* tmac/tests/an_inner-footer-abbreviation-works.sh: Do it.
