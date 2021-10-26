@@ -231,7 +231,7 @@
 .  el \{ .ie '\\$2'8'  .ds an-extra3 System Manager's Manual\"
 .  el \{ .ie '\\$2'9'  .ds an-extra3 Kernel Developer's Manual\"
 .  el                  .ds an-extra3 \" empty
-.  \}\}\}\}\}\}\}\}\}\}
+.  \}\}\}\}\}\}\}\}\}
 .
 .  ds an-extra1 "\\$3\"
 .  ie (\\n[.$] > 3)    .ds an-extra2 "\\$4\"
@@ -409,6 +409,8 @@
 .  ds an-ifoot-half2 \\*[an-ifoot]\"
 .  substring an-ifoot-half1 0 \\n[an-mark1]
 .  substring an-ifoot-half2 \\n[an-mark2] -1
+.  rr an-mark1
+.  rr an-mark2
 .  \" Reduce the two halves until, when rejoined with each other, the
 .  \" ellipsis, and half of the center footer, they fit the half-title.
 .  nr an-half-footer-width \\w'\\*[an-ifoot-half1]\\*[an-ellipsis]\
@@ -430,8 +432,6 @@
 .  rr an-half2-length
 .  rm an-ifoot-half1
 .  rm an-ifoot-half2
-.  rr an-mark1
-.  rr an-mark2
 .  rr an-half-footer-width
 .  rr an-half-title-width
 .  rm an-ellipsis
