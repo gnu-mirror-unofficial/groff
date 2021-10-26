@@ -1,5 +1,25 @@
 2021-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an.tmac (TH): Stop populating `an-extra3` (the default
+	center header) if the section argument is "3p".  "3p" does not
+	always mean a Perl-related man page; Debian- and Arch
+	Linux-based systems[1][2] (at least) have long used a "3perl"
+	suffix, while OpenBSD appears to still use "3p" for Perl[3],
+	which is also used by the POSIX man page distribution[4].
+	Fortunately, Perl and POSIX are reliable at providing a fifth
+	argument to `TH` anyway, so our fallback is as unnecessary as it
+	is non-impartial.
+	* tmac/groff_man.7.man.in (Document structure macros) <TH>:
+	De-document the above behavior.
+
+	[1] https://manpages.debian.org/bullseye/perl-doc/\
+	Pod::Man.3perl.en.html
+	[2] https://man.archlinux.org/man/Pod::Man.3perl
+	[3] https://man.openbsd.org/man3p/Pod::Man.3p
+	[4] https://man7.org/linux/man-pages/man3/system.3p.html
+
+2021-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Abbreviate the inside footer if necessary.
 
 	* tmac/an.tmac (an-prepare-inner-footer): Prevent the inside
