@@ -538,8 +538,9 @@ it is more portable,
 both to other
 .I roff
 systems and to UTF-8 environments,
-to use their glyph names,
+to use their special character escape sequences,
 shown below.
+.
 .
 .P
 .TS
@@ -607,14 +608,13 @@ and accessed either by name or numerically by code point.
 .
 Code points and combining properties are determined by character
 encoding standards,
-whereas glyph names originated in AT&T
+whereas glyph names as used here originated in AT&T
 .I troff \" AT&T
 special character escape sequences.
 .
-Glyph names are not limited to alphanumeric characters;
-any character that is valid in a
+Any character valid in a
 .I groff
-identifier may be used.
+identifier may be used in a glyph name.
 .
 Predefined glyph names use only characters in the basic Latin
 repertoire,
@@ -640,7 +640,7 @@ is a special character escape for
 .IR glyph-name ,
 which can be of arbitrary length.
 .
-The foregoing acute accent example could be expressed in
+The foregoing acute accent example can be expressed in
 .I groff
 as
 .BR \[rs][aa] .
@@ -867,7 +867,8 @@ font
 .MR groff_font @MAN5EXT@ ).
 .
 Often,
-such glyphs have metrics which look incongruous in normal text.
+such glyphs lack bold or italic style forms or have metrics that look
+incongruous in ordinary prose.
 .
 A few which are not uncommon in running text have \[lq]text
 variants\[rq],
@@ -999,7 +1000,7 @@ _
 .
 All of these glyphs can be composed using combining glyph names as
 described in subsection \[lq]Special character escape forms\[rq] above;
-the names below can be thought of as convenient short aliases.
+the names below can be thought of as short aliases for convenience.
 .
 .TS
 l l l lx.
@@ -1111,8 +1112,8 @@ _
 .
 The neutral double quote,
 often useful when documenting programming languages,
-is also available as a special character for convenience when including
-it in macro arguments;
+is also available as a special character for convenient embedding in
+macro arguments;
 see subsection \[lq]Fundamental character set\[rq] above.
 .
 .TS
