@@ -101,8 +101,9 @@ request.
 .
 .P
 This document lists all of the glyph names predefined by
-.I groff
-and describes the systematic notation by which it enables access to
+.IR groff 's
+font description files
+and presents the systematic notation by which it enables access to
 arbitrary Unicode code points and construction of composite glyphs.
 .
 The glyphs listed in this document may not be available,
@@ -131,7 +132,7 @@ these exist for syntactical or historical reasons.
 .BR \e\- ,
 and
 .B \e_
-are translated on input to the special characters
+are translated on input to the special character escape sequences
 .BR \e[aq] ,
 .BR \e[ga] ,
 .BR \e[\-] ,
@@ -617,8 +618,7 @@ Any character valid in a
 identifier may be used in a glyph name.
 .
 Predefined glyph names use only characters in the basic Latin
-repertoire,
-however.
+repertoire.
 .
 .
 .TP
@@ -626,7 +626,7 @@ however.
 is a special character escape for the glyph with the two-character name
 .IR gl .
 .
-This is the syntax form supported by AT&T
+This is the original syntax form supported by AT&T
 .IR troff .
 .
 The acute accent,
@@ -635,10 +635,37 @@ is an example.
 .
 .
 .TP
-.BI \[rs][ glyph-name ]
+.BI \[rs]C\[aq] glyph-name \[aq]
 is a special character escape for
 .IR glyph-name ,
 which can be of arbitrary length.
+.
+The delimiter,
+shown here as a neutral apostrophe,
+can be any character not occurring in
+.IR glyph-name .
+.
+This syntax form was introduced in later versions of AT&T
+device-independent
+.IR troff . \" AT&T
+.
+The foregoing acute accent example can be expressed
+as
+.BR \[rs]C\[aq]aa\[aq] .
+.
+.
+.TP
+.BI \[rs][ glyph-name ]
+is a special character escape for
+.IR glyph-name ,
+which can be of arbitrary length but must not contain a closing square
+bracket
+.RB \[lq] ] \[rq].
+.
+(No glyph names predefined by
+.I groff
+employ
+.RB \[lq] ] \[rq].)
 .
 The foregoing acute accent example can be expressed in
 .I groff
@@ -646,29 +673,30 @@ as
 .BR \[rs][aa] .
 .
 .
-.IP
-An ordinary input character
-.RI \[lq] c \[rq]
-is not the same as
-.BI \[rs][ c ]\c
-;
-the latter is internally mapped to glyph name
+.P
+.BI \[rs]C\[aq] c \[aq]
+and
+.BI \[rs][ c ]
+are not synonyms for the ordinary character
+.RI \[lq] c \[rq],
+but request the special character named
 .RB \[lq] \[rs] \c
 .IR c \[rq].
 .
-In other words,
+For example,
 .RB \[lq] \[rs][a] \[rq]
 is not \[lq]a\[rq],
-but rather
+but rather a special character with the internal glyph name
+(used in font description files and diagnostic messages)
 .BR \[rs]a ,
-the uninterpreted leader escape sequence.
+which is typically undefined.
 .
-By default,
+The only such glyph name
 .I groff
-defines a single glyph name of length one,
-namely the minus sign,
-which can be accessed as either
-.B \[rs]\-
+predefines is the minus sign,
+which can be accessed as
+.BR \[rs]\- ,
+.BR \[rs]C\[aq]\-\[aq] ,
 or
 .BR \[rs][\-] .
 .
