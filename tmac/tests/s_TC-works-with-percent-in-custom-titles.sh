@@ -38,19 +38,11 @@ Bar.
 '
 
 OUTPUT=$(echo "$EXAMPLE" | "$groff" -Tascii -P-cbou -ms)
-
-FAIL=
-
 # Strip blank lines from the output first; all we care about for this
 # test is the presence, adjacency, and ordering of non-blank lines.
-
-if [ -z "$(echo "$OUTPUT" \
+FILTERED_OUTPUT=$(echo "$OUTPUT" \
     | sed '/^$/d' \
-    | sed -n '/i/{N;/Table of Contents/{N;/Foo[. ]\+1/p}}')" ]
-then
-    FAIL=yes
-fi
-
-test -z "$FAIL"
+    | sed -n '/i/{N;/Table of Contents/{N;/Foo[. ][. ]*1/p;};}')
+test -n "$FILTERED_OUTPUT"
 
 # vim:set ai et sw=4 ts=4 tw=72:

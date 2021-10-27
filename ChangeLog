@@ -1,3 +1,40 @@
+2021-10-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tests]: Improve portability.
+
+	* src/devices/grotty/tests/osc8_works.sh: Fix typo in test.
+	Multiple regex quantifiers after an atom were not flagged with a
+	diagnostic by GNU grep 3.3, but were by BSD grep 2.5.1-FreeBSD.
+
+	* src/roff/groff/tests/smoke-test_html_device.sh: Stop trying to
+	set $LC_CTYPE to "C.UTF-8"; some systems don't support this
+	expediency.  Skip the test if the tester hasn't configured the
+	environment adequately.
+
+	* tmac/tests/s_TC-works-with-percent-in-custom-titles.sh: Fix
+	portability problems exposed by FreeBSD sed (which version is
+	unclear).  {1} Use POSIX BREs, dropping use of '+' quantifier.
+	{2} Add semicolons to terminate commands before braces on the
+	same line.  Simplify surrounding test structure.
+	* tmac/tests/e_footnotes-work-with-columns.sh: Fix same two sed
+	problems.
+	* tmac/tests/andoc_flush-between-packages.sh:
+	* tmac/tests/doc_accept-mixed-case-section-headings.sh:
+	* tmac/tests/an_TS-do-not-keep-tables-when-cR-set.sh: Fix same
+	sed semicolon problem.
+
+	* src/roff/groff/tests/on_latin1_device_oq_is_0x27.sh: Rewrite
+	test to stop using a here document inside a command
+	substitution, which is broken in GNU Bash 3.2 and some other
+	versions.  Instead construct the input with printf(1).  Also
+	gets rid of a Bashism (process substitution) that Ingo pointed
+	out years ago.
+	* src/utils/grog/tests/recognize-perl-pod.sh: Same problem,
+	different solution.  The Perl POD output is far too large to
+	construct programmatically, so move it into an external file...
+	* src/utils/grog/tests/foo.man: ...here.
+	* src/utils/grog/grog.am (EXTRA_DIST): Ship new test artifact.
+
 2021-10-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Make sed-based insertion of `lf` requests more
