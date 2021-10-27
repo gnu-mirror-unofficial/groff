@@ -1,3 +1,19 @@
+2021-10-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/doc.am: Make sed-based insertion of `lf` requests more
+	portable: a dance is required to embed a literal newline inside
+	a sed expression inside a shell command executed as part of a
+	Make target rule.  We assume that neither the POSIX shell $''
+	operator nor a working printf(1) is available.
+	(DOC_GROFF): Define a shell variable containing a literal
+	newline, evading make(1) and echo(1)'s valiant attempts to
+	consume it.
+	(doc/pic.html, doc/webpage.html): Repeat trick, slightly
+	modified since the dependency needs to be manually identified.
+
+	Solution adapted from the GNU Autoconf manual, "Newlines in Make
+	Rules".
+
 2021-10-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an.tmac (TH): Stop populating `an-extra3` (the default
