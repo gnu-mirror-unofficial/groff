@@ -208,6 +208,10 @@
 .  ll \\n[LL]u
 .  ss 12
 .
+.  \" We've seen no tbl(1) tables yet in this document.
+.  rr TW
+.  nr an-was-tbl-failure-reported 0
+.
 .  an-reset-tab-stops
 .  an-reset-paragraph-spacing
 .  an-reset-margin-and-inset-level
@@ -905,6 +909,14 @@
 .de1 TE
 .  HTML-IMAGE-END
 .  if \\n[an-is-output-html] .ll \\n[an-TS-ll]u
+.  if !r TW .if !\\n[an-was-tbl-failure-reported] \{\
+.    ds an-msg tbl preprocessor failed or was not run;\"
+.    as an-msg " table(s) likely not rendered\"
+.    as an-msg " (TE macro called with TW register undefined)\"
+.    an-warn \\*[an-msg]
+.    rm an-msg
+.    nr an-was-tbl-failure-reported 1
+.  \}
 ..
 .
 .\" eqn(1) equation support

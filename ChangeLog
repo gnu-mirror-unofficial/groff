@@ -1,5 +1,20 @@
 2021-10-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Warn if `TE` table macro but `TW` register (set by
+	tbl(1)) undefined.  Arrange it so that we warn only once per
+	man(7) document, not per table.
+
+	* tmac/an.tmac (TH): Remove `TW` register when processing new
+	document and clear `an-was-tbl-failure-reported` register.
+	(TE): Check `TW` and `an-was-tbl-failure-reported` registers; if
+	the former is undefined and the latter false, emit the message
+	and set `an-was-tbl-failure-reported`.
+
+	Addresses part of <https://savannah.gnu.org/bugs/?61379>.
+	Thanks to Bjarni Ingi Gislason for the suggestion.
+
+2021-10-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tests]: Improve portability.
 
 	* src/devices/grotty/tests/osc8_works.sh: Fix typo in test.
