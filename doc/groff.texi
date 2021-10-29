@@ -5730,7 +5730,7 @@ used as operands to an arithmetic operator; @xref{Assigning Formats}.
 @cindex space characters, in expressions
 @cindex expressions, and space characters
 Due to the way arguments are parsed, spaces are not allowed in
-expressions, unless the entire expression is surrounded by parentheses.
+expressions unless the entire expression is surrounded by parentheses.
 @xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
 
 
@@ -7177,12 +7177,12 @@ text without filling it.
 
 @item l
 @cindex ragged-right text
-Adjust text to the left margin, producing what is sometimes called
+Align text to the left margin, producing what is sometimes called
 ragged-right text.
 
 @item r
 @cindex ragged-left text
-Adjust text to the right margin, producing ragged-left text.
+Align text to the right margin, producing ragged-left text.
 @end table
 
 @var{mode} can also be a value previously stored in the @code{.j}
@@ -7312,7 +7312,7 @@ With no arguments, @code{ce} centers the next line of text.  @var{nnn}
 specifies the number of lines to be centered.  If the argument is zero
 or negative, centering is disabled.
 
-The basic length for centering text is the line length (as set with the
+The basis for centering text is the line length (as set with the
 @code{ll} request) minus the indentation (as set with the @code{in}
 request).  Temporary indentation is ignored.
 
@@ -7546,8 +7546,8 @@ The hyphenation character is associated with the environment
 Set the @dfn{soft hyphen character},@footnote{``Soft hyphen
 @emph{character}'' is a misnomer since it is an output glyph.} inserted
 when a word is hyphenated automatically or at a hyphenation character,
-to@tie{}@var{glyph}.@footnote{It is ``soft'' because it only appears in
-output where hyphenation is actually performed; a ``hard'' hyphen, as in
+to@tie{}@var{glyph}.@footnote{``Soft'' because it appears in output only
+where a hyphenation break is performed; a ``hard'' hyphen, as in
 ``long-term'', always appears.}  If the argument is omitted, the soft
 hyphen glyph is set to the default, @code{\[hy]}.  If the selected glyph
 does not exist in the font in use at a potential hyphenation point, then
@@ -7576,11 +7576,11 @@ with up to a certain amount of additional inter-word space (@code{hys}).
 @DefreqList {hy, [@Var{mode}]}
 @DefregListEndx {.hy}
 Set automatic hyphenation mode to @var{mode}, an integer encoding
-conditions for hyphenation; if omitted, 1 is implied.  The hyphenation
-mode is available in the read-only register @samp{.hy}; it is associated
-with the environment (@pxref{Environments}).  The default hyphenation
-mode depends on the language in use on the system; see the @code{hpf}
-request below.
+conditions for hyphenation; if omitted, @samp{1} is implied.  The
+hyphenation mode is available in the read-only register @samp{.hy}; it
+is associated with the environment (@pxref{Environments}).  The default
+hyphenation mode depends on the localization package loaded when GNU
+@code{troff} starts up; see the @code{hpf} request below.
 
 Typesetting practice generally does not avail itself of every
 opportunity for hyphenation, but the details differ by language and site
@@ -9418,7 +9418,7 @@ With no argument or using @samp{P} as an argument, @code{ft} switches
 to the previous font.  Use @code{\f[]} to do this with the escape.  The
 old syntax forms @code{\fP} or @code{\f[P]} are also supported.
 
-Fonts are generally specified as upper-case strings, which are usually
+Fonts are generally specified as uppercase strings, which are usually
 1@tie{}to 4 characters representing an abbreviation or acronym of the
 font name.  This is no limitation, just a convention.
 
