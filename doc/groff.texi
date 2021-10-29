@@ -6413,36 +6413,31 @@ Test
 @endDefesc
 
 @Defreq {ig, [@Var{end}]}
-Ignore input until GNU @code{troff} encounters a call of the @var{end}
-macro on a control line by itself (or @samp{..} if @var{end} is not
-specified).  This is useful for commenting out large regions of input.
+Ignore input until the macro @var{end} is called on a control line by
+itself (or @samp{..} is encountered if @var{end} is not
+specified).@footnote{Exception: auto-incrementing registers defined
+outside the ignored region @emph{will} be modified if interpolated with
+@code{\n±} inside it.  @xref{Auto-increment}.}  Spaces and tabs are
+allowed between the control character and @samp{.} or @var{end}.
+@code{ig} is useful for commenting out large regions of input.  The
+ignored region does not cause a break.
 
+@c Wrap example at 56 columns.
 @Example
-text text text @r{@dots{}}
-.ig
-This is part of a large block of text that has been
-temporarily(?) commented out.
-
-We can restore it simply by removing the .ig request
-and the ".." at the end of the block.
+hand\c
+.de TX
+fasting
 ..
-More text text text @r{@dots{}}
+.ig TX
+This is part of a large block of input that has been
+temporarily(?) commented out.
+We can restore it simply by removing the .ig request and
+the call of its end macro.
+.TX
 @endExample
 @Example
-  @result{} text text text @dots{} More text text text @dots{}
+  @result{} handfasting
 @endExample
-
-@noindent
-The ignored region does not cause a break.
-
-@cindex @code{ig} request, and copy mode
-@cindex copy mode, and @code{ig} request
-@cindex mode, copy, and @code{ig} request
-@cindex @code{ig} request, and auto-increment
-@cindex auto-increment, and @code{ig} request
-The ignored region is read in copy mode (@pxref{Copy Mode}); as a
-result, auto-incrementing register interpolations @emph{do} take effect
-(@pxref{Auto-increment}).
 @endDefreq
 
 
