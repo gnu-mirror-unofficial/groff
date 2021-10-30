@@ -103,6 +103,7 @@
 .\" called by andoc when switching to an mdoc(7) page, irrespective of
 .\" continuous rendering mode.
 .de1 an-end
+.  if !r an-TH-was-called .return
 .  if \\n[cR] \{\
 .    fl
 .    pl +1v
@@ -118,6 +119,7 @@
 .      fi
 .    \}
 .  \}
+.  rr an-TH-was-called
 .  ch an-header
 .  bp
 ..
@@ -173,6 +175,8 @@
 .    el         .an-start-new-document
 .    nr an-is-first-page-of-document 1
 .  \}
+.
+.  nr an-TH-was-called 1 \" an-end can make certain assumptions.
 .
 .  \" Set up rendering parameters.  We do this in TH instead of only
 .  \" once when initializing the package because when rendering multiple

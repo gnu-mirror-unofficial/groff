@@ -1,3 +1,23 @@
+2021-10-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Handle degenerate input quietly.
+
+	* tmac/an.tmac (TH): Define new register `an-TH-was-called`.
+	(an-end): Return immediately if that register is not defined;
+	to format the default page footer we must have the information
+	declared in a valid `TH` call.  (`TH` also initializes the type
+	size and baseline spacing registers we use to prepare the page
+	footer environment.)  If the register _is_ defined, remove it
+	just prior to the end of this macro definition, in preparation
+	for next page to be rendered.
+
+	* tmac/tests/an_handle-degenerate-input-quietly.sh: Test it.
+
+	Fixes <https://savannah.gnu.org/bugs/61402>, a regression from
+	groff 1.22.4 (problem introduced by me in the course of many
+	changes to trap management and header/footer handling to work
+	nicely in batch rendering with -mandoc and mdoc(7) documents).
+
 2021-10-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Warn if `TE` table macro called but `TW` register (set by
