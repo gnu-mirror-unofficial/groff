@@ -5402,6 +5402,23 @@ later.
 
 
 @c =====================================================================
+@c TODO: Add a section here about interpolations and input processing.
+@c
+@c We need to level up the reader's macro brain from reasoning about
+@c interpolation at the scope of input lines to interpolations _within_
+@c lines.  It is also a good time to introduce the \n and \* escape
+@c sequences to avoid painful, "WTF"-producing forward references later.
+@c Some materal from groff_mm(7) might be adaptable to this purpose.
+@c
+@c Earlier material from @Defesc{\\n}:
+@c "This means that the value of the register is expanded in place while
+@c GNU @code{troff} is parsing the input line.  Nested assignments (also
+@c called indirect assignments) are possible."
+@c
+@c We can probably drop the term "indirect assignments"; there's nothing
+@c special about these--they are a consequence of *roffs' left-to-right
+@c parsing and they apply to escape sequences in general.
+@c =====================================================================
 
 @node Measurements, Expressions, Text, gtroff Reference
 @section Measurements
@@ -6631,10 +6648,8 @@ Numeric registers can be accessed via the @code{\n} escape.
 @cindex indirect assignments
 @cindex assignments, indirect
 Interpolate register with name @var{ident} (one-character
-name@tie{}@var{i}, two-character name @var{id}).  This means that the
-value of the register is expanded in-place while @code{gtroff} is
-parsing the input line.  Nested assignments (also called indirect
-assignments) are possible.
+name@tie{}@var{i}, two-character name @var{id}).  @code{\n} is
+interpreted even in copy mode (@pxref{Copy Mode}).
 
 @Example
 .nr a 5
@@ -6813,7 +6828,8 @@ register.
 Interpolate the format of the register @var{reg} (one-character
 name@tie{}@var{r}, two-character name @var{rg}).  Zeroes represent
 Arabic formats.  If @var{reg} is not defined, @var{reg} is not created
-and nothing is interpolated.
+and nothing is interpolated.  @code{\\g} is interpreted even in copy
+mode (@pxref{Copy Mode}).
 @endDefesc
 
 @cindex register format, in expressions
@@ -11194,7 +11210,8 @@ Define a string variable @var{name} with contents @var{string}.  If
 The syntax form using brackets accepts arguments that are handled as
 macro arguments are; recall @ref{Request and Macro Arguments}.  In
 contrast to macro invocations, however, a closing bracket as a string
-argument must be enclosed in double quotes.
+argument must be enclosed in double quotes.  @code{\\*} is interpreted
+even in copy mode (@pxref{Copy Mode}).
 
 The @code{\*} escape @dfn{interpolates} (expands in place) a previously
 defined string variable @var{name} (one-character name@tie{}@var{n},
@@ -12291,7 +12308,8 @@ Macro calls and string interpolations optionally accept a list of
 arguments; recall @ref{Request and Macro Arguments}.  At the time such
 an interpolation takes place, these @dfn{parameters} can be examined
 using a register and a variety of escape sequences starting with
-@samp{\$}.
+@samp{\$}.  All such escape sequences are interpreted even in copy mode,
+a fact we shall motivate and explain below (@pxref{Copy Mode}).
 
 @Defreg {.$}
 @cindex parameter count register (@code{.$})
@@ -14866,8 +14884,8 @@ Here a simple macro to write an index entry.
 @cindex mode, copy, and @code{\V}
 Interpolate the contents of the specified environment variable @var{env}
 (one-character name@tie{}@var{e}, two-character name @var{ev}) as
-returned by the function @code{getenv}.  @code{\V} is interpreted in
-copy mode.
+returned by the function @code{getenv}.  @code{\V} is interpreted even
+in copy mode (@pxref{Copy Mode}).
 @endDefesc
 
 
