@@ -1,5 +1,38 @@
 2021-10-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Handle special character escape sequences that map to
+	basic Latin glyphs in device control escape sequences
+	consistently among output devices.
+
+	* src/roff/troff/input.cpp (encode_char): Rearrange
+	conditionals.  This is the logic that puts the "whatever" within
+	a \X'whatever' escape sequence into GNU troff's intermediate
+	output.  Handle stretchable and unstretchable space escape
+	sequences ("\ " and \~") first.  Then, if the token is a special
+	character escape sequence, retrieve its "contents" (glyph name).
+	Move the basic Latin mapping for the seven glyph names '-',
+	'aq', 'dq', 'ga', 'ha', 'rs', and 'ti' here, before checking
+	whether the device description issued the
+	'use_charnames_in_special' directive.  This way, the 'html' and
+	'xhtml' output devices can straightforwardly embed these basic
+	Latin characters in device control escapes (notably, "html:",
+	for which the present convention is to follow the this tag
+	immediately with a literal HTML URI, complete with `<a href>`
+	element syntax).  If the special character is none of these and
+	we should 'use_charnames_in_special', proceed as groff 1.22.4
+	and earlier did.  This is a behavior change, as was my addition
+	of this translation mechanism in the first place, so...
+
+	* doc/groff.texi (Postprocessor Access): Document it.
+
+	* src/roff/groff/tests/\
+	device_control_escapes_express_basic_latin.sh: Test it.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?61401>.
+
+2021-10-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Map \[ti] correctly in device control escape sequences.
 
 	* src/roff/troff/input.cpp (encode_char): Fix copy-and-paste
