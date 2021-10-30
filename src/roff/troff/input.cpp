@@ -5429,7 +5429,7 @@ static void encode_char(macro *mac, char c)
       else if (strcmp("rs", sc) == 0)
 	mac->append('\\');
       else if (strcmp("ti", sc) == 0)
-	mac->append('^');
+	mac->append('~');
       else
 	error("special character '%1' cannot be used within device"
 	      " control escape sequence", sc);
