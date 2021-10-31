@@ -157,7 +157,7 @@ Each cell in a column is classified by being
 centered,
 left-aligned,
 numeric
-(aligned to a decimal point),
+(aligned to a decimal separator),
 and so on.
 .
 This specification can have several lines,
@@ -214,7 +214,7 @@ extension).
 .
 .TP
 .BI decimalpoint( c )
-Set the character to be recognized as the decimal point in numeric
+Set the character to be recognized as the decimal separator in numeric
 columns
 (GNU
 .I tbl \" exception
@@ -1141,16 +1141,16 @@ sees the input earlier than
 .IR \%@g@troff .
 .
 For example,
-number formatting with vertically aligned decimal points fails if those
-numbers are passed on as macro parameters because decimal point
-alignment is handled by
+number formatting with vertically aligned decimal separators fails if
+those numbers are passed on as macro parameters
+because decimal separator alignment is handled by
 .I \%@g@tbl
 itself:
 it only sees
 .BR \[rs]$1 ,
 .BR \[rs]$2 ,
 etc.,
-and therefore can't recognize the decimal point.
+and therefore can't recognize the decimal separator.
 .
 .
 .\" ====================================================================
