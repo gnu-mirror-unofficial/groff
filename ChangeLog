@@ -1,5 +1,11 @@
 2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libgroff/new.cpp (delete): Declare `throw()` (no
+	exceptions thrown); quiets "-Wimplicit-exception-spec-mismatch"
+	from Clang 13.
+
+2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* m4/groff.m4: Fix messaging nits.
 	(GROFF_MAKEINFO): Set `missing` to "missing 'makeinfo'" for
 	consistency with other assignments to `missing`.
