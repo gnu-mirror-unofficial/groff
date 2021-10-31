@@ -1,5 +1,13 @@
 2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/mdoc/doc-nroff (doc-setup-page-layout): Set the title
+	length to the configured line length (register `LL`) if register
+	`LT` is not defined.  This keeps the title length from being set
+	to 78n when the line length is not, preventing the output from
+	looking silly.
+
+2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/tbl/main.cpp (main): Emit groff code to define
 	macro `T&` as empty if it is not already defined.  (All of our
 	full-service macro packages [except mdoc(7)] already do this, so
