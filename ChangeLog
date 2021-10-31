@@ -1,5 +1,12 @@
 2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/groff/tests/string_case_xform_requests.sh: Migrate
+	test to POSIX shell, dropping use of process substitution (a
+	Bashism).  Also rewrite to stop using a here document within a
+	command substitution, mainly for paranoia.
+
+2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grops/ps.cpp (encode_subfont): Update assertion to
 	check for `sub` parameter being a null pointer rather than
 	`sub->glyphs`; the latter is a member array of a `subencoding`
@@ -129,11 +136,11 @@
 	sed semicolon problem.
 
 	* src/roff/groff/tests/on_latin1_device_oq_is_0x27.sh: Rewrite
-	test to stop using a here document inside a command
-	substitution, which is broken in GNU Bash 3.2 and some other
-	versions.  Instead construct the input with printf(1).  Also
-	gets rid of a Bashism (process substitution) that Ingo pointed
-	out years ago.
+	test to stop using a here document (containing an unpaired
+	single quote) inside a command substitution, which is broken in
+	GNU Bash 3.2 and some other versions.  Instead construct the
+	input with printf(1).  Also gets rid of a Bashism (process
+	substitution) that Ingo pointed out years ago.
 	* src/utils/grog/tests/recognize-perl-pod.sh: Same problem,
 	different solution.  The Perl POD output is far too large to
 	construct programmatically, so move it into an external file...

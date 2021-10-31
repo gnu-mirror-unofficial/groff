@@ -20,17 +20,13 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 
-expected="Résumé résumé RÉSUMÉ"
-
-actual=$("$groff" -Tutf8 <<EOF
-.pl 1v
+input=".pl 1v
 .ds resume R\\['e]sum\\['e]\\\"
 \\*[resume]
 .stringdown resume
 \\*[resume]
 .stringup resume
-\\*[resume]
-EOF
-)
-
-diff -u <(echo "$expected") <(echo "$actual")
+\\*[resume]"
+expected="Résumé résumé RÉSUMÉ"
+actual=$(echo "$input" | "$groff" -Tutf8)
+test "$actual" = "$expected"
