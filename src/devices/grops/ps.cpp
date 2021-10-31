@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2020 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -851,7 +850,7 @@ void ps_printer::encode_fonts()
 
 void ps_printer::encode_subfont(subencoding *sub)
 {
-  assert(sub->glyphs != 0);
+  assert(sub != 0);
   out.put_literal_symbol(make_subencoding_name(sub->idx))
      .put_delimiter('[');
   for (int i = 0; i < 256; i++)
@@ -1873,3 +1872,9 @@ static void usage(FILE *stream)
 "       [-F dir] [files ...]\n",
     program_name);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

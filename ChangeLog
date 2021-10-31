@@ -1,5 +1,16 @@
 2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/grops/ps.cpp (encode_subfont): Update assertion to
+	check for `sub` parameter being a null pointer rather than
+	`sub->glyphs`; the latter is a member array of a `subencoding`
+	struct so it can't be a null pointer.  (`glyphs` is an array of
+	pointers to `const char`; the _elements_ of the array can [and
+	are initialized to] be null pointers, but the address of the
+	array itself will never be in a C/C++ implementation.)  Detected
+	by Clang 13's "-Wtautological-pointer-compare".
+
+2021-10-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/new.cpp (delete): Declare `throw()` (no
 	exceptions thrown); quiets "-Wimplicit-exception-spec-mismatch"
 	from Clang 13.
