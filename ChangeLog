@@ -1,5 +1,32 @@
 2021-11-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Try to minimize the number of times a URI is broken when
+	it has to be typeset and prevent it from provoking adjustment
+	warnings.
+
+	* tmac/an-ext.tmac (UE, ME): Do it.  New Boolean register `mL`
+	records whether the URI will cause a break.  New string `m2`
+	contains the user-specified URI (`m1`) plus the angle brackets
+	around it and any user-specified trailing punctuation (\$1).
+	New register `mW` stores the formatted width of `m2`.  If the
+	page offset plus the indentation plus the current horizontal
+	position on the output line plus `mW` exceeds the output line
+	length, turn off adjustment and break the line _before_
+	typesetting `m2`.  Then, if we forced a break, restore the
+	previous adjustment mode.  Shift off the first macro parameter
+	and emit the (undocumented) rest as before.
+
+	* tmac/groff_man.7.man.in (Hyperlink macros): Document it.
+
+	* tmac/tests/an-ext_UE-breaks-before-long-URIs.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Prompted by a suggestion from James K. Lowden
+	<https://lists.gnu.org/archive/html/groff/2021-10/msg00048.html>
+	--thanks, James!
+
+2021-11-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grohtml/post-html.cpp
 	(html_printer::do_file_components): Add assertion.
 
