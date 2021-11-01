@@ -17910,16 +17910,16 @@ extensions of those used by @acronym{AT&T} device-independent
 @code{groff} lacks a binary format; all files are text
 files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the binary
 format.}  The device and font description files for a device @var{name}
-are stored in a directory called @file{dev@var{name}}.  The device
+are stored in a @file{dev@var{name}} directory.  The device
 description file is called @file{DESC}, and, for each font@tie{}@var{f}
-supported by the device, a font file called@tie{}@file{@var{f}}, where
-@var{f}@tie{}is usually an abbreviation of a font's name and/or style.
-For example, the @code{ps} (PostScript) device has @code{groff} font
-description files for Times roman (@file{TR}) and Zapf Chancery Medium
-italic (@file{ZCMI}), among many others, while the @code{utf8} device
-(for terminal emulators) has only font descriptions for the roman,
-italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
-@file{BI}, respectively).
+supported by the device, a font description file is
+called@tie{}@file{@var{f}}, where @var{f}@tie{}is usually an
+abbreviation of a font's name and/or style.  For example, the @code{ps}
+(PostScript) device has @code{groff} font description files for Times
+roman (@file{TR}) and Zapf Chancery Medium italic (@file{ZCMI}), among
+many others, while the @code{utf8} device (for terminal emulators) has
+only font descriptions for the roman, italic, bold, and bold-italic
+styles (@file{R}, @file{I}, @file{B}, and @file{BI}, respectively).
 
 @menu
 * DESC File Format::
@@ -17935,9 +17935,9 @@ italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
 @cindex format of font description file
 @pindex DESC@r{ file format}
 
-The @file{DESC} file contains a series of directives, one per line.
-Except for the @code{charset} directive, which must come last (if at
-all), the order of the lines is not important.  If a directive name is
+The @file{DESC} file contains a series of directives; each begins a
+line.  Except for the @code{charset} directive, which must come last (if
+at all), their order is not important.  If a directive name is
 duplicated, however, later entries in the file override previous ones.
 @cindex comments in device description files
 @cindex device description files, comments
@@ -17976,8 +17976,8 @@ this directive.
 
 @item paperlength @var{n}
 @kindex paperlength
-The vertical dimension of the output medium is @var{n}@tie{}basic units.
-Deprecated: use @code{papersize} instead.
+The vertical dimension of the output medium is @var{n}@tie{}basic units
+(deprecated: use @code{papersize} instead).
 
 @item papersize @var{format-or-dimension-pair-or-file-name} @r{@dots{}}
 @kindex papersize
@@ -18012,7 +18012,7 @@ left to right and uses the first valid paper specification.
 @item paperwidth @var{n}
 @kindex paperwidth
 The horizontal dimension of the output medium is @var{n}@tie{}basic
-units.  Deprecated: use @code{papersize} instead.
+units (deprecated: use @code{papersize} instead).
 
 @item pass_filenames
 @kindex pass_filenames
@@ -18089,9 +18089,9 @@ The @code{grohtml} driver uses this directive.
 
 @item use_charnames_in_special
 @kindex use_charnames_in_special
-This directive indicates that GNU @code{troff} should encode special
-characters inside special commands; @xref{Postprocessor Access}.  The
-@code{grohtml} driver uses this directive.
+GNU @code{troff} should encode special characters inside device control
+commands; @xref{Postprocessor Access}.  The @code{grohtml} driver uses
+this directive.
 
 @item vert @var{n}
 @kindex vert
@@ -18116,7 +18116,7 @@ GNU @code{troff} recognizes but ignores the directives @code{spare1},
 
 The @code{res}, @code{unitwidth}, @code{fonts}, and @code{sizes} lines
 are mandatory.  Directives not listed above are ignored by GNU
-@code{troff} but may be used by postprocessors to store arbitrary
+@code{troff} but may be used by postprocessors to obtain arbitrary
 information about a device in the @file{DESC} file.
 
 @c ---------------------------------------------------------------------
@@ -18195,10 +18195,10 @@ property.
 @end table
 
 Other directives in this section are ignored by GNU @code{troff}, but
-may be used by postprocessors to store arbitrary information about the
+may be used by postprocessors to obtain arbitrary information about the
 font in the file.
 
-The second section contains one or two subsections. These can appear in
+The second section contains one or two subsections.  These can appear in
 either order; the first one encountered commences the second section.
 Each starts with a directive on a line by itself.  A @code{charset}
 subsection is mandatory unless the associated @file{DESC} file contains
@@ -18207,7 +18207,7 @@ is optional.
 
 @kindex charset
 The directive @code{charset} starts the character set
-subsection.@footnote{For typesetter devices, this keyword is misnamed
+subsection.@footnote{For typesetter devices, this directive is misnamed
 since it starts a list of glyphs, not characters.}  It precedes a series
 of glyph descriptions, one per line.  Each such glyph description
 comprises a set of fields separated by spaces or tabs and organized as
@@ -18234,13 +18234,27 @@ follows.
 @c glyphs, is not clearly separated in the terminology of @code{groff};
 @c for example, the @code{char} request should be called @code{glyph}
 @c since it defines an output entity.}
-if @var{name} is a single character@tie{}@var{c}, it corresponds to the
-@code{troff} input character@tie{}@var{c}.  Otherwise, it must be of the
-form @samp{\@var{name}} where @var{name} is at least one character; it
-then corresponds to the GNU @code{troff} special character escape
-sequence @samp{\[@var{name}]},
-or the one-sixth and one-twelfth unbreakable space escape sequences,
-@code{\|} and @code{\^} (``thin'' and ``hair'' spaces, respectively).
+if @var{name} is a single printable character@tie{}@var{c}, it
+corresponds to the @code{troff} input character@tie{}@var{c}.  If
+@var{name} is a character sequence not beginning with @code{\}, it
+corresponds to the GNU @code{troff} special character escape sequence
+@samp{\[@var{name}]}.  A name consisting of three minus signs,
+@samp{---}, is special and indicates that the glyph is unnamed: such
+glyphs can only be accessed by means of the @code{\N} escape sequence in
+@code{troff}.  A special character named @samp{---} can still be defined
+using @code{char} and similar requests.  The @var{name} @samp{\-}
+defines the minus sign glyph.  Finally, @var{name} can be the
+unbreakable one-sixth and one-twelfth space escape sequences, @code{\|}
+and @code{\^} (``thin'' and ``hair'' spaces, respectively), in which
+case only the width metric described below is interpreted; a font can
+thus customize the widths of these spaces.
+@c XXX: For exhaustivity purposes...you can define "\whatever", which
+@c has to be accessed with \C'\\whatever' or \[\\whatever], but the
+@c parser matches predefined escape sequences before looking up special
+@c characters.  Most such definitions are inaccessible from the
+@c language, because nearly every '\x', where 'x' is a Unicode basic
+@c Latin character, is a predefined groff escape sequence.
+@c
 @c XXX: Commented out because the charXXX feature is very legacy, and as
 @c noted below, discouraged in font description files.
 @c
@@ -18255,11 +18269,6 @@ or the one-sixth and one-twelfth unbreakable space escape sequences,
 @c related to input, not output.  Otherwise, you get hard-coded
 @c connections between input and output encoding, which prevents use of
 @c different (input) character sets.
-A name consisting of three minus signs, @samp{---}, is special and
-indicates that the glyph is unnamed: such glyphs can only be accessed by
-means of the @code{\N} escape sequence in @code{troff}.  A special
-character named @samp{---} can still be defined using @code{char} and
-similar requests.
 
 The form of the @var{metrics} field is as follows.
 
@@ -18271,27 +18280,27 @@ The form of the @var{metrics} field is as follows.
 @end display
 
 @noindent
-There must not be any spaces between these subfields (it has been split
-here into two lines only for better legibility).  Missing subfields are
-assumed to be@tie{}@code{0}.  The subfields are all decimal integers.
-Since there is no associated binary format, these values are not
-required to fit into the C language data type @samp{char} as they are in
-@acronym{AT&T} device-independent @code{troff}.  The @var{width}
-subfield gives the width of the glyph.  The @var{height} subfield gives
-the height of the glyph (upwards is positive); if a glyph does not
-extend above the baseline, it should be given a zero height, rather than
-a negative height.  The @var{depth} subfield gives the depth of the
-glyph, that is, the distance below the baseline to which the glyph
-extends (downwards is positive); if a glyph does not extend below the
-baseline, it should be given a zero depth, rather than a negative depth.
-Italic corrections are relevant to glyphs in italic or oblique styles.
-The @var{italic-correction} is the amount of space that should be added
-after an oblique glyph to be followed immediately by an upright glyph.
-The @var{left-italic-correction} is the amount of space that should be
-added before an oblique glyph to be preceded immediately by an upright
-glyph.  The @var{subscript-correction} is the amount of space that
-should be added after an oblique glyph to be followed by a subscript; it
-should be less than the italic correction.
+There must not be any spaces, tabs, or newlines between these subfields
+(it has been split here into two lines only for better legibility).
+Missing subfields are assumed to be@tie{}@code{0}.  The subfields are
+all decimal integers.  Since there is no associated binary format, these
+values are not required to fit into the C language data type @samp{char}
+as they are in @acronym{AT&T} device-independent @code{troff}.  The
+@var{width} subfield gives the width of the glyph.  The @var{height}
+subfield gives the height of the glyph (upwards is positive); if a glyph
+does not extend above the baseline, it should be given a zero height,
+rather than a negative height.  The @var{depth} subfield gives the depth
+of the glyph, that is, the distance below the baseline to which the
+glyph extends (downwards is positive); if a glyph does not extend below
+the baseline, it should be given a zero depth, rather than a negative
+depth.  Italic corrections are relevant to glyphs in italic or oblique
+styles.  The @var{italic-correction} is the amount of space that should
+be added after an oblique glyph to be followed immediately by an upright
+glyph.  The @var{left-italic-correction} is the amount of space that
+should be added before an oblique glyph to be preceded immediately by an
+upright glyph.  The @var{subscript-correction} is the amount of space
+that should be added after an oblique glyph to be followed by a
+subscript; it should be less than the italic correction.
 
 The @var{type} field gives a featural description of the glyph.
 
