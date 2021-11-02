@@ -101,16 +101,26 @@ The
 file contains a series of directives;
 each begins a line.
 .
-Except for the
+Their order is not important,
+with two exceptions:
+(1) the
+.B res
+directive must precede any
+.B \%papersize
+directive;
+and
+(2) the
 .B charset
-directive,
-which must come last
-(if at all),
-their order is not important.
+directive must come last
+(if at all).
 .
-If a directive name is duplicated,
-however,
-later entries in the file override previous ones.
+If a directive name is repeated,
+later entries in the file override previous ones
+(except that the paper dimensions are computed based on the
+.B res
+directive last seen when
+.B \%papersize
+is encountered).
 .
 Comments start with the
 .RB \[lq] # \[rq]
@@ -179,7 +189,7 @@ The vertical dimension of the physical output medium is
 units
 (deprecated:
 use
-.B papersize
+.B \%papersize
 instead).
 .
 .
@@ -271,7 +281,7 @@ The horizontal dimension of the physical output medium is
 units
 (deprecated:
 use
-.B papersize
+.B \%papersize
 instead).
 .
 .

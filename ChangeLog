@@ -1,3 +1,45 @@
+2021-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Do more device and font description file validation,
+	resolve an assertion failure arising from a negative declared
+	device resolution, and correct a documentation error.
+
+	* src/libs/libgroff/font.cpp (font::load): Include more
+	information about invalid input in diagnostic messages.
+	  - When a kern pair's amount is missing or invalid, report the
+	    name of the kern pair.
+	  - When someone tries to declare the first entry in the charset
+	    section as an alias, report the glyph name.
+	  - Identify the token for the unnamed character if an attempt
+	    is made to alias it.
+	  - When an out-of-range character type is applied to a glyph,
+	    name the glyph.
+	(font::load_desc): Same.
+	  - Drop redundant zero initialization of `res`.
+	  - Check all directives that take basic units for positive
+	    values, adding `res`, `unitwidth`, `paperwidth`, and
+	    `paperlength`.  Update this diagnostic to demand positive,
+	    not nonnegative, values.
+	  - When the font count is long in a `fonts` directive, report
+	    how many font names were declared (and thus expected).  (If
+	    the count is short, the next line is read for a font name,
+	    like 'tcommand' in our devutf8/DESC.)
+	  - When interpreting a `papersize` directive, throw an error
+	    and return false if `res` has not yet been encountered,
+	    since it is used in subsequent computations.
+	  - When a paper format cannot be determined, report the
+	    original declared value from the DESC file.  Use `strdup()`
+	    to save it since it gets clobbered by the resolving process.
+	    `free()` the saved string when we're done, regardless of
+	    error condition.
+
+	* doc/groff.texi (Device and Font Files):
+	* man/groff_font.5.man (DESC file format): Document additional
+	exception to order-indifference of directives: (at least one)
+	`res` must precede `papersize`.
+
+	Fixes <https://savannah.gnu.org/bugs/?61414>.
+
 2021-11-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Try to minimize the number of times a URI is broken when

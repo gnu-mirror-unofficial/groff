@@ -17936,9 +17936,12 @@ styles (@file{R}, @file{I}, @file{B}, and @file{BI}, respectively).
 @pindex DESC@r{ file format}
 
 The @file{DESC} file contains a series of directives; each begins a
-line.  Except for the @code{charset} directive, which must come last (if
-at all), their order is not important.  If a directive name is
-duplicated, however, later entries in the file override previous ones.
+line.  Their order is not important, with two exceptions: (1) the
+@code{res} directive must precede any @code{papersize} directive; and
+(2) the @code{charset} directive must come last (if at all).  If a
+directive name is repeated, later entries in the file override previous
+ones (except that the paper dimensions are computed based on the
+@code{res} directive last seen when @code{papersize} is encountered).
 @cindex comments in device description files
 @cindex device description files, comments
 @kindex #
