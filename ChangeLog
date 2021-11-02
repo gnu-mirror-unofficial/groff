@@ -1,5 +1,16 @@
 2021-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Fix Savannah #61408.
+
+	* tmac/an.tmac (an-prepare-inner-footer): Don't try to get a
+	substring of an empty string; the man page author might not have
+	specified a third argument to `TH` (or supplied an empty one).
+
+	Fixes <https://savannah.gnu.org/bugs/?61408>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
+2021-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Add regression test for Savannah #61408.
 
 	* tmac/tests/an_inner-footer-abbreviation-works.sh: Do it.
