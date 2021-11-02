@@ -1,5 +1,21 @@
 2021-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Tweak computation in URI breaking.
+
+	* tmac/an-ext.tmac (UE, ME): Stop adding the page offset `.o`
+	when performing the available horizontal space computation for
+	the typeset URI string.  This made no difference on nroff
+	devices (grotty; even with `.po 15n`), but it caused the
+	breaking decision to be too conservative on troff devices
+	{grops}, forcing some URIs that would fit on the current line to
+	the next one.
+
+	* tmac/tests/an-ext_UE-breaks-before-long-URIs.sh: Add test of
+	URI with no link text, which also has break points after every
+	character, so that we detect even slight alterations.
+
+2021-11-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Do more device and font description file validation,
 	resolve an assertion failure arising from a negative declared
 	device resolution, and correct a documentation error.
