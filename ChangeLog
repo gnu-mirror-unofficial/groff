@@ -1,5 +1,20 @@
 2021-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::add_entry): If we see a '\^'
+	entry on the first row of a table, it's invalid, but we need to
+	create an empty entry in its place.  Otherwise, someone can put
+	another '\^' right below the one on the first row, creating a
+	reference to a nonexistent table entry and provoking a SEGV.
+	Issue an error diagnostic (distinct from the one in
+	`do_vspan()`), create the entry, and skip `do_vspan()` (given a
+	'^' in a first-row definition, it issues an error diagnostic and
+	returns early, which suffices).  Problem appears to date back to
+	groff 1.02 (June 1991) at the latest.
+
+	Fixes <https://savannah.gnu.org/bugs/?61417>.
+
+2021-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Regression-test Savannah #61417.
 
 	* src/preproc/tbl/tests/\
