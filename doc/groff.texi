@@ -17942,6 +17942,7 @@ line.  Their order is not important, with two exceptions: (1) the
 directive name is repeated, later entries in the file override previous
 ones (except that the paper dimensions are computed based on the
 @code{res} directive last seen when @code{papersize} is encountered).
+Spaces and/or tabs separate words and are ignored at line boundaries.
 @cindex comments in device description files
 @cindex device description files, comments
 @kindex #
@@ -18073,9 +18074,10 @@ instead of glyphs.
 
 If @code{unicode} is present, no @code{charset} section is required in
 the font description files since the Unicode handling built into
-@code{groff} is used.  However, if there are entries in a @code{charset}
-section, they either override the default mappings for those particular
-characters or add new mappings (normally for composite characters).
+@code{groff} is used.  However, if there are entries in a font
+description file's @code{charset} section, they either override the
+default mappings for those particular characters or add new mappings
+(normally for composite characters).
 
 The @code{utf8}, @code{html}, and @code{xhtml} output devices use this
 directive.
@@ -18152,24 +18154,27 @@ in the font description files to be expressed as integers.}
 A font description file has two sections.  The first is a sequence of
 directives, and is parsed similarly to the @file{DESC} file described
 above.  Except for the directive names that begin the second section,
-their ordering is immaterial; later directives of the same name override
-earlier ones;
+their ordering is immaterial.   Later directives of the same name
+override earlier ones, spaces and tabs are handled in the same way,
 @cindex comments in font description files
 @cindex font description files, comments
 @kindex #
-and the same comment syntax is supported.  Empty lines are ignored in
-both sections.
+and the same comment syntax is supported.  Empty lines are ignored
+throughout.
 
 @table @code
 @item name @var{f}
 @kindex name
-The name of the font is@tie{}@var{f}.  @samp{DESC} and @samp{0} are
-invalid font names.
+The name of the font is@tie{}@var{f}.  @samp{DESC} is an invalid font
+name.  Simple integers are valid, but their use is
+discouraged.@footnote{@code{groff} requests and escape sequences
+interpret non-negative font names as mounting positions instead.
+Further, a font named @samp{0} cannot be automatically mounted by the
+@code{fonts} directive of a @file{DESC} file.}
 
 @item spacewidth @var{n}
 @kindex spacewidth
-The width of a normal, unadjusted space is @var{n}@tie{}basic units at
-a type size of @var{unit-width} points.
+The width of an unadjusted inter-word space is @var{n}@tie{}basic units.
 @end table
 
 The directives above are mandatory in the first section; those below are
@@ -18346,8 +18351,9 @@ This notation indicates that @var{name} is another name for the glyph
 named on the preceding line.  Such aliases can be chained.
 
 @kindex kernpairs
-The word @code{kernpairs} starts a section listing kerning pairs.  It
-contains a sequence of lines formatted as follows.
+The word @code{kernpairs} starts a list of kerning adjustments to be
+made to specific glyph pairs.  It contains a sequence of lines formatted
+as follows.
 
 @Example
 @var{c1} @var{c2} @var{n}
