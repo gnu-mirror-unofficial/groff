@@ -1107,7 +1107,7 @@ bool font::load_desc()
       }
       if (sscanf(p, "%d", &nfonts) != 1 || nfonts <= 0) {
 	t.error("expected first argument to 'fonts' directive to be a"
-		" nonnegative number, got '%1'", p);
+		" non-negative number, got '%1'", p);
 	return false;
       }
       font_name_table = (const char **)new char *[nfonts+1];
