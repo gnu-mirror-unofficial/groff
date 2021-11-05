@@ -1,3 +1,12 @@
+2021-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/s.tmac (DS): Drop a redundant unconditional break; every
+	display macro we call in the event of a valid call already
+	breaks the line, and it's polite to not break if we're given an
+	invalid argument.  Emit a diagnostic error if the argument we're
+	given is invalid, and immediately end the diversion we just
+	opened.
+
 2021-11-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/roff/troff/env.cpp (environment::set_font): Clarify
