@@ -1,3 +1,16 @@
+2021-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Fix paragraph tag regressions.
+
+	* tmac/an-ext.mac (UR, MR): Only create an environment and
+	diversion if we're not already in one of the latter.  If we are
+	{in groff man, this occurs only when collecting a `TP` paragraph
+	tag}, then typeset the URI as part of the indented paragraph.
+	(UE, ME): Pop the diversion and environment stacks only if we
+	pushed them in the first place.  Eliminate spurious space in
+	post-URI arguments by only typesetting excess macro parameters
+	if there were any.
+
 2021-11-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Regression-test Savannah #61425.
