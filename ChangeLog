@@ -1,5 +1,17 @@
 2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libgroff/fontfile.cpp (font::open_file): Don't open
+	user-specified font file names with slashes in them; i.e., don't
+	traverse directories outside the configured font path.  Also
+	refuse to open the file if the `sprintf()` used to construct its
+	file name doesn't write the expected quantity of bytes to the
+	destination buffer.
+
+	Fixes <https://savannah.gnu.org/bugs/?61424>.  Thanks to Ingo
+	Schwarze for feedback.
+
+2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Regression-test Savannah #61424.
 
 	* src/roff/groff/tests/fp_should_not_traverse_directories.sh: Do
