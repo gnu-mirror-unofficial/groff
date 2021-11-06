@@ -1,3 +1,16 @@
+2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libgroff]: Regression-test Savannah #61424.
+
+	* src/roff/groff/tests/fp_should_not_traverse_directories.sh: Do
+	it.
+	* src/roff/groff/tests/artifacts/HONEYPOT: Add test artifact.
+	* src/roff/groff/tests/artifacts/devascii/README: ...and this;
+	we need an empty directory to make the test work but such things
+	tend to look unintentional.
+	* src/roff/groff/groff.am (groff_TESTS): Run test.
+	(EXTRA_DIST): Ship artifacts.
+
 2021-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff]: Fix diagnostic error wording.
