@@ -1,5 +1,13 @@
 2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff,pic]: Use `strsave()`, not `strdup()`.
+
+	* src/libs/libgroff/font.cpp (font::load_desc): Do it.  Also
+	emit shorter diagnostic if `strsave()` returned a null pointer.
+	* src/preproc/pic/troff.cpp (troff_output::set_location): Do it.
+
+2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/fontfile.cpp (font::open_file): Don't open
 	user-specified font file names with slashes in them; i.e., don't
 	traverse directories outside the configured font path.  Also
