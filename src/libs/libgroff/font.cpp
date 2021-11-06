@@ -1004,8 +1004,8 @@ bool font::load(bool load_header_only)
       }
     }
     else {
-      t.error("unrecognized font description directive '%1' after"
-	      " 'kernpairs' or 'charset'", directive);
+      t.error("unrecognized font description directive '%1' (missing"
+	      " 'kernpairs' or 'charset'?)", directive);
       return false;
     }
   }

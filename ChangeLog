@@ -1,5 +1,14 @@
 2021-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Fix diagnostic error wording.
+
+	* src/libs/libgroff/font.cpp (font::load): Fix diagnostic
+	message; this is issued when an unrecognized directive is
+	encountered, so it necessarily occurs _before_ any `charset` or
+	`kernpairs` directive.  Give the user a hint accordingly.
+
+2021-11-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Fix paragraph tag regressions.
 
 	* tmac/an-ext.mac (UR, MR): Only create an environment and
