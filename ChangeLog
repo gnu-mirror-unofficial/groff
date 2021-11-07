@@ -1,3 +1,9 @@
+2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/strsave.cpp (strsave): Call `strcpy()` only
+	if `malloc()` did not return a null pointer.  Problem noted by
+	Ingo Schwarze.
+
 2021-11-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/libs/libgroff/fontfile.cpp (font::open_file): Don't open
