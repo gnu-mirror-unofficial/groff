@@ -5703,14 +5703,6 @@ For many requests that cause a motion on the page, the unary operators
 then indicate a motion relative to the current position (down or up,
 respectively).
 
-@cindex @code{|}, and page motion
-@cindex absolute position operator (@code{|})
-@cindex position, absolute, operator (@code{|})
-Similarly, a leading @samp{|} operator indicates an absolute position.
-For vertical movements, it specifies the distance from the top of the
-page; for horizontal movements, it gives the distance from the beginning
-of the @emph{input} line.
-
 @cindex @code{bp} request, using @code{+} and@tie{}@code{-} with
 @cindex @code{in} request, using @code{+} and@tie{}@code{-} with
 @cindex @code{ll} request, using @code{+} and@tie{}@code{-} with
@@ -5734,6 +5726,49 @@ requests and escapes: @code{bp}, @code{in}, @code{ll}, @code{lt},
 Here, leading plus and minus signs indicate increments and decrements.
 
 @xref{Setting Registers}, for some examples.
+
+@cindex @code{|}, and page motion
+@cindex absolute position operator (@code{|})
+@cindex position, absolute, operator (@code{|})
+Similarly, a leading @samp{|} operator indicates an absolute position.
+For vertical movements, it specifies the distance from the top of the
+page; for horizontal movements, it gives the distance from the beginning
+of the @emph{input} line.
+
+Many escapes use positioning relative to the input line.  For example,
+this
+
+@Example
+This is a \h'|1.2i'test.
+
+This is a
+\h'|1.2i'test.
+@endExample
+
+@noindent
+produces
+
+@Example
+This is a   test.
+
+This is a             test.
+@endExample
+
+The main usage of this feature is to define macros that act exactly at
+the place where called.
+
+@Example
+.\" A simple macro to underline a word
+.de underline
+.  nop \\$1\l'|0\[ul]'
+..
+@endExample
+
+@noindent
+In the above example, @samp{|0} specifies a negative distance from the
+current position (at the end of the just emitted argument @code{\$1})
+back to the beginning of the input line.  Thus, the @samp{\l} escape
+draws a line from right to left.
 
 @Defesc {\\B, @code{'}, anything, @code{'}}
 @cindex numeric expression, valid
@@ -8984,41 +9019,6 @@ collected line still uses the old line length value.
 
 It is important to understand how @code{gtroff} handles input and output
 lines.
-
-Many escapes use positioning relative to the input line.  For example,
-this
-
-@Example
-This is a \h'|1.2i'test.
-
-This is a
-\h'|1.2i'test.
-@endExample
-
-@noindent
-produces
-
-@Example
-This is a   test.
-
-This is a             test.
-@endExample
-
-The main usage of this feature is to define macros that act exactly at
-the place where called.
-
-@Example
-.\" A simple macro to underline a word
-.de underline
-.  nop \\$1\l'|0\[ul]'
-..
-@endExample
-
-@noindent
-In the above example, @samp{|0} specifies a negative distance from the
-current position (at the end of the just emitted argument @code{\$1})
-back to the beginning of the input line.  Thus, the @samp{\l} escape
-draws a line from right to left.
 
 @cindex input line continuation (@code{\@key{RET}})
 @cindex line, input, continuation (@code{\@key{RET}})
