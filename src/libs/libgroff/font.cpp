@@ -1144,7 +1144,7 @@ bool font::load_desc()
 	return false;
       }
       bool found_paper = false;
-      char *savedp = strsave(p);
+      char *savedp = strdup(p);
       while (p) {
 	double unscaled_paperwidth, unscaled_paperlength;
 	if (scan_papersize(p, &papersize, &unscaled_paperlength,
@@ -1157,13 +1157,8 @@ bool font::load_desc()
 	p = strtok(0, WS);
       }
       if (!found_paper) {
-	if (0 == savedp)
-	  t.error("unable to determine a paper format");
-	else {
-	  t.error("unable to determine a paper format from '%1'",
-		  savedp);
-	  free(savedp);
-	}
+	t.error("unable to determine a paper format from '%1'", savedp);
+	free(savedp);
 	return false;
       }
       free(savedp);
