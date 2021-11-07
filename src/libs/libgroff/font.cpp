@@ -79,6 +79,10 @@ struct text_file {
 	     const errarg &arg1 = empty_errarg,
 	     const errarg &arg2 = empty_errarg,
 	     const errarg &arg3 = empty_errarg);
+  void fatal(const char *format,
+	     const errarg &arg1 = empty_errarg,
+	     const errarg &arg2 = empty_errarg,
+	     const errarg &arg3 = empty_errarg);
 };
 
 text_file::text_file(FILE *p, char *s) : fp(p), path(s), lineno(0),
@@ -141,6 +145,15 @@ void text_file::error(const char *format,
 {
   if (!silent)
     error_with_file_and_line(path, lineno, format, arg1, arg2, arg3);
+}
+
+void text_file::fatal(const char *format,
+		      const errarg &arg1,
+		      const errarg &arg2,
+		      const errarg &arg3)
+{
+  if (!silent)
+    fatal_with_file_and_line(path, lineno, format, arg1, arg2, arg3);
 }
 
 int glyph_to_unicode(glyph *g)
@@ -1145,6 +1158,9 @@ bool font::load_desc()
       }
       bool found_paper = false;
       char *savedp = strdup(p);
+      if (0 == savedp)
+	t.fatal("memory allocation failure while processing 'papersize'"
+		" directive");
       while (p) {
 	double unscaled_paperwidth, unscaled_paperlength;
 	if (scan_papersize(p, &papersize, &unscaled_paperlength,
@@ -1156,6 +1172,7 @@ bool font::load_desc()
 	}
 	p = strtok(0, WS);
       }
+      assert(savedp != 0);
       if (!found_paper) {
 	t.error("unable to determine a paper format from '%1'", savedp);
 	free(savedp);

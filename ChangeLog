@@ -1,5 +1,17 @@
 2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff,pic]: Check `strdup()` return value.
+
+	* src/libs/libgroff/font.cpp (struct text_file): Add `fatal()`
+	member function.
+	(text_file::fatal): Implement it.
+
+	* src/libs/libgroff/font.cpp (font::load_desc):
+	* src/preproc/pic/troff.cpp (troff_output::set_location): Die if
+	`strdup()` returned a null pointer.
+
+2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
 	Revise to eliminate `fprintf()` calls, which might perform
 	dynamic memory allocation, rendering this function unsafe to
