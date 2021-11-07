@@ -135,7 +135,8 @@ LIBS="$LIBS $LIBC $LIBM"
 AC_REPLACE_FUNCS([fmod getcwd putenv strcasecmp \
                   strerror strncasecmp strtol])
 LIBS="$saved_libs"
-AC_CHECK_FUNCS([gettimeofday isatty kill rename setlocale strsep])
+AC_CHECK_FUNCS([gettimeofday isatty kill rename setlocale strdup \
+                strsep])
 GROFF_MKSTEMP
 AC_CHECK_DECLS([strsignal, getc_unlocked])
 AC_CHECK_DECLS([sys_siglist, getc_unlocked])

@@ -1,5 +1,13 @@
 2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* configure.ac: Add `strdup` to AC_CHECK_FUNCS since we are
+	using it and the whole point of libgroff's `strsave()` was to
+	get along without it.  But `strdup` has been standardized in
+	POSIX for 20 years (SUSv3, POSIX:2001) and is on its way into
+	ISO standard C (N2354) and C++ (P2391R0) as well.
+
+2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/strsave.cpp (strsave): Call `strcpy()` only
 	if `malloc()` did not return a null pointer.  Problem noted by
 	Ingo Schwarze.
