@@ -1,5 +1,16 @@
 2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):
+	Revise to eliminate `fprintf()` calls, which might perform
+	dynamic memory allocation, rendering this function unsafe to
+	call after memory allocation failures.  Since this function is
+	near the top of our diagnostic output call stack, that would be
+	unfortunate.  `errprint()` does not use dynamic allocation, nor
+	do the `i_to_a()` and `ui_to_a()` functions it calls to format
+	integers.
+
+2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* configure.ac: Add `strdup` to AC_CHECK_FUNCS since we are
 	using it and the whole point of libgroff's `strsave()` was to
 	get along without it.  But `strdup` has been standardized in
