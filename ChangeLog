@@ -1,3 +1,11 @@
+2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/tmac.am (MOSTLYCLEANFILES): Remove `$(TMACMDOCFILES)`.
+	This variable, formerly named `TMACMDOCSTRIPFILES`, should not
+	be used in a clean target because its contents are (no longer)
+	generated files.  Problem introduced by me in commit 24602f42, 4
+	July (only noticeable in within-source-tree builds).
+
 2021-11-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libgroff,pic]: Check `strdup()` return value.
