@@ -863,10 +863,10 @@
 \\*[an-deprecation-warn]\\
 .  if ((\\n[.$] < 1) : (\\n[.$] > 2)) \
 .    an-style-warn .\\$0 expects 1 or 2 arguments, got \\n[.$]
-.  ie \\n[.$]>1 \
-.    RI "[\fB\\$1\fP" "\ \\$2" "]"
+.  ie (\\n[.$] > 1) \
+.    RI [\\f[B]\\$1\f[] \~\\$2 ]
 .  el \
-.    RB "[" "\\$1" "]"
+.    RB [ \\$1 ]
 ..
 .
 .\" Set a man page cross reference.
