@@ -5677,6 +5677,7 @@ The register@tie{}@code{z} now contains@tie{}5.
 @item
 @cindex scaling operator
 @cindex operator, scaling
+@opindex ;
 Scaling: @code{(@var{c};@var{e})}.  Evaluate@tie{}@var{e}
 using@tie{}@var{c} as the default scaling indicator.  If @var{c} is
 missing, ignore scaling indicators in the evaluation of@tie{}@var{e}.
@@ -5698,6 +5699,8 @@ be expected.
 @cindex @code{-}, and page motion
 @cindex motion operators
 @cindex operators, motion
+@opindex + (unary)
+@opindex - (unary)
 For many requests that cause a motion on the page, the unary operators
 @samp{+} and @samp{-} work differently if leading an expression.  They
 then indicate a motion relative to the current position (down or up,
@@ -5727,6 +5730,7 @@ Here, leading plus and minus signs indicate increments and decrements.
 
 @xref{Setting Registers}, for some examples.
 
+@opindex |
 @cindex @code{|}, and page motion
 @cindex absolute position operator (@code{|})
 @cindex position, absolute, operator (@code{|})
