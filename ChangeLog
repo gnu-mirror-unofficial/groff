@@ -1,5 +1,13 @@
 2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_TMAC): Use separate shell variable for
+	`AC_MSG_RESULT()` content since the human-readable string we
+	populate it with in the empty case is not appropriate for later
+	`AC_SUBST()`-itution.  Problem introduced by me in commit
+	19670348, 31 October.
+
+2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tmac.am (MOSTLYCLEANFILES): Remove `$(TMACMDOCFILES)`.
 	This variable, formerly named `TMACMDOCSTRIPFILES`, should not
 	be used in a clean target because its contents are (no longer)

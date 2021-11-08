@@ -1073,8 +1073,9 @@ AC_DEFUN([GROFF_TMAC],
      done
      rm -f conftest.sol
    fi
-   test "x$tmac_wrap" = "x" && tmac_wrap="none found"
-   AC_MSG_RESULT([$tmac_wrap])
+   tmac_wrap_result="none found"
+   test "x$tmac_wrap" = "x" || tmac_wrap_result="$tmac_wrap"
+   AC_MSG_RESULT([$tmac_wrap_result])
    AC_SUBST([tmac_wrap])])
 
 
