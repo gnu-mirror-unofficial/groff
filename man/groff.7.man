@@ -1683,12 +1683,13 @@ Append output to diversion
 .
 .
 .TPx
-.REQ .de "macro"
+.REQ .de macro
 Define or redefine
 .I macro
 until
-.B ..\&
-is encountered.
+.RB \[lq] ..\& \[rq]
+occurs at the start of a control line at the current brace scope.
+.
 .
 .TPx
 .REQ .de "macro end"
@@ -1696,19 +1697,20 @@ Define or redefine
 .I macro
 until
 .BI . end
-is called.
+is called at the start of a control line at the current brace scope.
+.
 .
 .TPx
 .REQ .de1 "macro"
-Same as
-.request .de
-but with compatibility mode switched off during macro expansion.
+As
+.request .de ,
+but disable compatibility mode during macro expansion.
 .
 .TPx
 .REQ .de1 "macro end"
-Same as
-.request .de
-but with compatibility mode switched off during macro expansion.
+As
+.request ".de\~\f[I]macro\~end\f[]" ,
+but disable compatibility mode during macro expansion.
 .
 .
 .TPx
@@ -1766,33 +1768,41 @@ that cannot be redefined.
 .
 .TPx
 .REQ .dei "macro"
-Define or redefine a macro whose name is contained in the string
-register
+Define macro indirectly.
+.
+As
+.request .de ,
+but use interpolation of string
 .I macro
-until
-.B ..\&
-is encountered.
+as the name of the defined macro.
+.
 .
 .TPx
 .REQ .dei "macro end"
-Define or redefine a macro indirectly.
+Define macro indirectly.
+.
+As
+.request .de ,
+but use interpolations of strings
 .I macro
 and
 .I end
-are string registers whose contents are interpolated for the macro name
-and the end macro, respectively.
+as the names of the defined and end macros.
+.
 .
 .TPx
 .REQ .dei1 "macro"
-Same as
-.request .dei
-but with compatibility mode switched off during macro expansion.
+As
+.request .dei ,
+but disable compatibility mode during macro expansion.
+.
 .
 .TPx
 .REQ .dei1 "macro end"
-Same as
-.request .dei
-but with compatibility mode switched off during macro expansion.
+As
+.request ".dei\~\f[I]macro\~end\f[]" ,
+but disable compatibility mode during macro expansion.
+.
 .
 .TPx
 .REQ .device "anything"
@@ -2218,15 +2228,25 @@ as if it were an input line.
 .
 .TPx
 .REQ .ig
-Ignore text until
-.B ..\&
-is encountered.
+Ignore input
+(except for side effects of
+.B \[rs]R
+on auto-incrementing registers)
+until
+.RB \[lq] ..\& \[rq]
+occurs at the start of a control line at the current brace scope.
+.
 .
 .TPx
 .REQ .ig "end"
-Ignore text until
+Ignore input
+(except for side effects of
+.B \[rs]R
+on auto-incrementing registers)
+until
 .BI . end
-is called.
+is called at the start of a control line at the current brace scope.
+.
 .
 .TPx
 .REQ .in

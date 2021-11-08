@@ -6465,14 +6465,13 @@ Test
 @endDefesc
 
 @Defreq {ig, [@Var{end}]}
-Ignore input until the macro @var{end} is called on a control line by
-itself (or @samp{..} is encountered if @var{end} is not
-specified).@footnote{Exception: auto-incrementing registers defined
-outside the ignored region @emph{will} be modified if interpolated with
-@code{\n±} inside it.  @xref{Auto-increment}.}  Spaces and tabs are
-allowed between the control character and @samp{.} or @var{end}.
-@code{ig} is useful for commenting out large regions of input.  The
-ignored region does not cause a break.
+Ignore input until, at the current brace scope, the macro @var{end} is
+called at the start of a control line, or the control line @samp{..} is
+encountered if @var{end} is not specified.  @code{ig} is parsed as if it
+were a macro definition, but its contents are discarded, not
+stored.@footnote{Exception: auto-incrementing registers defined outside
+the ignored region @emph{will} be modified if interpolated with
+@code{\n±} inside it.  @xref{Auto-increment}.}
 
 @c Wrap example at 56 columns.
 @Example
@@ -12107,13 +12106,15 @@ request, macro, string, or diversion called @var{name}.  GNU
 @code{troff} enters ``copy mode'', storing subsequent input lines as the
 macro definition.  If the optional second argument is not specified, the
 definition ends with the control line @samp{..} (two dots).
-Alternatively, @var{end} identifies a macro whose call syntax ends the
-definition of @var{name}; @var{end} is then called normally.  Spaces or
-tabs are permitted after the control character in the line containing
-this ending token (either @samp{.} or @samp{@var{end}}), but a tab
-immediately after the token prevents its recognition as the end of a
-macro definition.@footnote{While it is possible to define and call a
-macro @samp{.}, you can't use it as an end macro: during a macro
+Alternatively, @var{end} identifies a macro that, if called at the start
+of a control line, ends the definition of @var{name}; @var{end} is then
+called normally.  A macro definition must end at the same brace scope at
+which it began.  Spaces or tabs are permitted after the control
+character in the line containing this ending token (either @samp{.} or
+@samp{@var{end}}), but a tab immediately after the token prevents its
+recognition as the end of a macro definition.  The macro @var{end} can
+be called with arguments.@footnote{While it is possible to define and
+call a macro @samp{.}, you can't use it as an end macro: during a macro
 definition, @samp{..} is never handled as calling @samp{.}, even if
 @samp{.de @var{name} .} explicitly precedes it.}
 @c
@@ -12149,9 +12150,9 @@ unique end macro.
 An end macro need not be defined until it is called.  This fact enables
 a nested macro definition to begin inside one macro and end inside
 another.  Consider the following example.@footnote{The structure of this
-example is adapted from, and structurally isomorphic to, part of a
-solution by Tadziu Hoffman to the problem of reflowing text multiple
-times to find an optimal configuration for it.
+example is adapted from, and isomorphic to, part of a solution by Tadziu
+Hoffman to the problem of reflowing text multiple times to find an
+optimal configuration for it.
 @uref{https://lists.gnu.org/archive/html/groff/2008-12/msg00006.html}}
 
 @Example
