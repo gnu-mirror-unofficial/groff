@@ -4699,9 +4699,9 @@ it can---this is known as @dfn{filling}.  To GNU @code{troff}, a
 tabs, or newlines.  Words are separated by spaces, tabs, newlines, or
 file boundaries.@footnote{There are also @emph{escape sequences} which
 can function as word characters, word separators, or neither---the last
-simply have no effect on GNU @code{troff}'s idea of whether its input is
-within a word or not.}  To disable filling, see @ref{Manipulating
-Filling and Adjustment}.
+simply have no effect on GNU @code{troff}'s idea of whether an input
+character is within a word or not.}  To disable filling, see
+@ref{Manipulating Filling and Adjustment}.
 
 @Example
 It is a truth universally acknowledged
@@ -4789,11 +4789,11 @@ T.\& Barnum.
     @result{} P. T. Barnum.
 @endExample
 
-Adding text caused our input to wrap; now, we don't need the escape
-after @samp{T.} but we do after @samp{P.}.  Ensuring that potential
-sentence boundaries are robust to editing activities and reliably
-understood both by GNU @code{troff} and the document author is a goal of
-the advice presented in @ref{Input Conventions}.
+Adding text caused our input to wrap; now, we don't need @code{\&} after
+@samp{T.} but we do after @samp{P.}.  Consistent use of the escape
+sequence ensures that potential sentence boundaries are robust to
+editing activities.  Further advice along these lines will follow in
+@ref{Input Conventions}.
 
 @cindex end-of-sentence transparent characters
 @cindex characters, end-of-sentence transparent
@@ -4852,10 +4852,10 @@ When an output line is nearly full, it is uncommon for the next word
 collected from the input to exactly fill it---typically, there is room
 left over only for part of the next word.  The process of splitting a
 word so that it appears partially on one line (with a hyphen to indicate
-to the reader that the word has been broken) with the remainder of the
-word on the next is @dfn{hyphenation}.  Hyphenation points can be
-manually specified; GNU @code{troff} also uses a hyphenation algorithm
-and language-specific pattern files (based on those used in @TeX{}) to
+to the reader that the word has been broken) with its remainder on the
+next is @dfn{hyphenation}.  Hyphenation points can be manually
+specified; GNU @code{troff} also uses a hyphenation algorithm and
+language-specific pattern files (based on those used in @TeX{}) to
 decide which words can be hyphenated and where.
 
 Hyphenation does not always occur even when the hyphenation rules for a
@@ -5301,8 +5301,9 @@ after colons and semicolons as well, as these typically precede
 independent clauses.  Consider breaking after commas; they often occur
 in lists that become easy to scan when itemized by line, or constitute
 supplements to the sentence that are added, deleted, or updated to
-clarify it.   Parenthetical and quoted phrases are also good candidates
-for placement on input lines by themselves.
+clarify it.  Parenthetical and quoted phrases are also good candidates
+for placement on input lines by themselves.  In filled text, spaces and
+newlines are interchangeable; place breaks where it aids your purpose.
 
 @item
 Set your text editor's line length to 72 characters or
@@ -5331,11 +5332,11 @@ which causes GNU @code{troff} to ignore the remainder of the input line.
 
 @item
 Use the empty request---a control character followed immediately by a
-newline---to visually manage separation of material in input files.  The
-@code{groff} project's own documents use an empty request between
-sentences, after macro definitions, and where a break is expected, and
-two empty requests between paragraphs or other requests or macro calls
-that will introduce vertical space into the document.
+newline---to visually manage separation of material in input files.
+Many of the @code{groff} project's own documents use an empty request
+between sentences, after macro definitions, and where a break is
+expected, and two empty requests between paragraphs or other requests or
+macro calls that will introduce vertical space into the document.
 
 You can combine the empty request with the comment escape to include
 whole-line comments in your document, and even ``comment out'' sections
@@ -5345,29 +5346,27 @@ of it.
 We conclude this section with an example sufficiently long to illustrate
 most of the above suggestions in practice.  For the purpose of fitting
 the example between the margins of this manual with the font used for
-its typeset version, we have shortened the input line length to 58
+its typeset version, we have shortened the input line length to 56
 columns.  As before, an arrow @arrow{} indicates a tab character.
 
+@c Wrap example at 56 columns (not counting @arrow{}).
 @CartoucheExample
-.\" raw roff input example
 .\"   nroff this_file.roff | less
-.\"   groff this_file.roff > this_file.ps
-@arrow{}The theory of relativity is intimately connected with the
-theory of space and time.
+.\"   groff -T ps this_file.roff > this_file.ps
+@arrow{}The theory of relativity is intimately connected with
+the theory of space and time.
 .
-I shall therefore begin with a brief investigation of the
-origin of our ideas of space and time,
+I shall therefore begin with a brief investigation of
+the origin of our ideas of space and time,
 although in doing so I know that I introduce a
-controversial subject.
-.
-.\" remainder of paragraph elided
+controversial subject.  \" remainder of paragraph elided
 .
 .
 
-@arrow{}The experiences of an individual appear to us arranged in
-a series of events;
-in this series the single events which we remember appear
-to be ordered according to the criterion of
+@arrow{}The experiences of an individual appear to us arranged
+in a series of events;
+in this series the single events which we remember
+appear to be ordered according to the criterion of
 \[lq]earlier\[rq] and \[lq]later\[rq], \" punct swapped
 which cannot be analysed further.
 .
@@ -5384,14 +5383,15 @@ indeed,
 associate numbers with the events,
 in such a way that the greater number is associated with
 the later event than with an earlier one;
-but the nature of this association may be quite arbitrary.
+but the nature of this association may be quite
+arbitrary.
 .
 This association I can define by means of a clock by
-comparing the order of events furnished by the clock with
-the order of a given series of events.
+comparing the order of events furnished by the clock
+with the order of a given series of events.
 .
-We understand by a clock something which provides a series
-of events which can be counted,
+We understand by a clock something which provides a
+series of events which can be counted,
 and which has other properties of which we shall speak
 later.
 .\" Albert Einstein, _The Meaning of Relativity_, 1922
