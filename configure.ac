@@ -152,6 +152,9 @@ GROFF_WCOREFLAG
 # URW fonts extra dir
 GROFF_URW_FONTS_PATH
 
+# use groff's own malloc-based allocator for C++ new/delete operators
+GROFF_USE_GROFF_ALLOCATOR
+
 # other random stuff
 GROFF_BROKEN_SPOOLER_FLAGS
 GROFF_PAGE
@@ -199,6 +202,7 @@ AM_CONDITIONAL([BUILD_PDFDOC], [test -n "$make_pdfdoc"])
 AM_CONDITIONAL([BUILD_PDFEXAMPLES], [test -n "$make_pdfexamples"])
 AM_CONDITIONAL([BUILD_OTHERDOC], [test -n "$make_otherdoc"])
 AM_CONDITIONAL([BUILD_EXAMPLES], [test -n "$make_examples"])
+AM_CONDITIONAL([USE_GROFF_ALLOCATOR], [test "x$use_groff_allocator" = "xyes"])
 AM_CONDITIONAL([INSTALL_SHIPPED_HTML], [test -n "$make_install_shipped_htmldoc"])
 AM_CONDITIONAL([HAVE_PDFTOOLS], [test "x$groff_have_pdftools" = "xyes" ])
 AM_CONDITIONAL([HAVE_TEXI2DVI], [test "x$groff_have_texi2dvi" = "xyes" ])
@@ -212,6 +216,13 @@ ${PACKAGE_NAME} version ${PACKAGE_VERSION}
 ----------------------------------------------------------------------
  Prefix                          : ${prefix}
  Compiler                        : ${CC} ${CFLAGS} ${CPPFLAGS}"
+if test "x$use_groff_allocator" = "xyes"; then
+echo "\
+ Use groff allocator             : yes"
+else
+echo "\
+ Use groff allocator             : no"
+fi
 if test "x$groff_no_x" = "xyes"; then
 echo "\
  X11 support                     : no"
