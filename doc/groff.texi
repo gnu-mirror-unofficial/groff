@@ -4615,7 +4615,7 @@ not interested in details.
 * Character Translations::
 * @code{troff} and @code{nroff} Modes::
 * Line Layout::
-* Line Control::
+* Line Continuation::
 * Page Layout::
 * Page Control::
 * Fonts and Symbols::
@@ -5010,7 +5010,7 @@ An input line beginning with a control character is called a
 @cindex text line
 Every line of input that is not a control line is a @dfn{text
 line}.@footnote{The @key{\RET} escape sequence can alter how an input
-line is classified; see @ref{Line Control}.}
+line is classified; see @ref{Line Continuation}.}
 
 @cindex argument
 Requests often take @dfn{arguments}, words (separated from the request
@@ -7210,7 +7210,7 @@ the @code{fi} request.
 Enable filling of output lines; a pending output line is broken.  The
 read-only register @code{.u} is set to@tie{}1.  The filling enablement
 status, sometimes called @dfn{fill mode}, is associated with the
-environment (@pxref{Environments}).  See @ref{Line Control}, for
+environment (@pxref{Environments}).  See @ref{Line Continuation}, for
 interaction with the @code{\c} escape.
 @endDefreq
 
@@ -7226,7 +7226,7 @@ Layout}) is ignored and output lines are broken where the input lines
 are.  A pending output line is broken and adjustment is suppressed.  The
 read-only register @code{.u} is set to@tie{}0.  The filling enablement
 status is associated with the environment (@pxref{Environments}).  See
-@ref{Line Control}, for interaction with the @code{\c} escape.
+@ref{Line Continuation}, for interaction with the @code{\c} escape.
 @endDefreq
 
 @DefreqList {ad, [@Var{mode}]}
@@ -8832,7 +8832,7 @@ file @file{tty.tmac}, which is loaded by the start-up file
 
 @c =====================================================================
 
-@node Line Layout, Line Control, @code{troff} and @code{nroff} Modes, gtroff Reference
+@node Line Layout, Line Continuation, @code{troff} and @code{nroff} Modes, gtroff Reference
 @section Line Layout
 @cindex line layout
 @cindex layout, line
@@ -9031,48 +9031,65 @@ collected line still uses the old line length value.
 
 @c =====================================================================
 
-@node Line Control, Page Layout, Line Layout, gtroff Reference
-@section Line Control
+@node Line Continuation, Page Layout, Line Layout, gtroff Reference
+@section Line Continuation
 @cindex line control
 @cindex control, line
 
-It is important to understand how @code{gtroff} handles input and output
-lines.
+GNU @code{troff} distinguishes input and output line continuation.
 
+@Defesc {\\@key{RET}, , ,}
 @cindex input line continuation (@code{\@key{RET}})
 @cindex line, input, continuation (@code{\@key{RET}})
 @cindex continuation, input line (@code{\@key{RET}})
+@code{\@key{RET}} (a backslash immediately followed by a newline)
+suppresses the effects of that newline in the input.  The next input
+line thus retains the classification of its predecessor as a control or
+text line.  @code{\@key{RET}} is useful for managing line lengths in the
+input during document maintenance; you can break an input line in the
+middle of a request invocation, macro call, or escape sequence.  Input
+line continuation is invisible to the formatter, with two exceptions:
+the @code{|} operator recognizes the new input line
+(@pxref{Expressions}), and the input line counter register @code{.c} is
+incremented.
+
+@c Wrap example at 56 columns (on the _output_).  We use 50n in the
+@c groff input to avoid line adjustment.
+@Example
+.ll 50n
+.de I
+.  ft I
+.  nop \\$*
+.  ft
+..
+Our film class watched
+.I The Effect of Gamma Rays on Man-in-the-Moon
+Marigolds. \" whoops, the input line wrapped
+.br
+.I My own opus begins on line \n[.c] \
+and ends on line \n[.c].
+@endExample
+@Example
+    @result{} Our film class watched @i{The Effect of Gamma Rays on}
+    @result{} @i{Man-in-the-Moon} Marigolds.
+    @result{} @i{My own opus begins on line 11 and ends on line 12.}
+@endExample
+@endDefesc
+
+@DefescList {\\c, , ,}
+@DefregListEndx {.int}
 @cindex output line, continuation (@code{\c})
 @cindex line, output, continuation (@code{\c})
 @cindex continuation, output line (@code{\c})
 @cindex interrupted line
 @cindex line, interrupted
-@code{gtroff} makes a difference between input and output line
-continuation; the latter is also called @dfn{interrupting} a line.
-
-@DefescList {\\@key{RET}, , ,}
-@DefescItemx {\\c, , ,}
-@DefregListEndx {.int}
-Continue an input line.  @code{\@key{RET}} (this is a backslash at the
-end of a line immediately followed by a newline) suppresses the effects
-of the following newline in the input.
-
-@Example
-This is a \
-.test
-    @result{} This is a .test
-@endExample
-
-The @samp{|} operator is also affected.
-
 @cindex @code{\R}, after @code{\c}
-Continue an output line.  Anything on the input line after @code{\c} is
-ignored except @code{\R}, which works as usual.  In contrast to
+@code{\c} continues an output line.  Anything on the input line after it
+is ignored except @code{\R}, which works as usual.  In contrast to
 @code{\@key{RET}}, a line after @code{\c} is treated as a new input
-line, so a control character is recognized at its beginning.
-
-The visual results depend on whether filling is enabled;
-@xref{Manipulating Filling and Adjustment}.
+line, so a control character is recognized at its beginning.  The visual
+results depend on whether filling is enabled; see @ref{Manipulating
+Filling and Adjustment}.
 
 @itemize @bullet
 @item
@@ -9124,7 +9141,7 @@ request invocation or macro call.}
 @codequotebacktick on
 @codequoteundirected on
 
-@node Page Layout, Page Control, Line Control, gtroff Reference
+@node Page Layout, Page Control, Line Continuation, gtroff Reference
 @section Page Layout
 @cindex page layout
 @cindex layout, page
@@ -11364,9 +11381,9 @@ Truly.
 
 @noindent
 By ending each text line of the macros with an escaped
-@samp{\@key{RET}}, we get the desired effect (@pxref{Line Control}).
-What would have happened if we had used only one backslash at a time
-instead?
+@samp{\@key{RET}}, we get the desired effect (@pxref{Line
+Continuation}).  What would have happened if we had used only one
+backslash at a time instead?
 
 Interpolating a string does not hide existing macro arguments.  Thus in
 a macro, a more efficient way of doing
@@ -11405,7 +11422,7 @@ interpolation system
 @noindent
 As the previous example shows, it is possible to store formatted output
 in strings.  The @code{\c} escape prevents the subsequent newline from
-being interpreted as a break (again, @pxref{Line Control}).
+being interpreted as a break (again, @pxref{Line Continuation}).
 
 Copying diversions longer than a single output line produces unexpected
 results.
@@ -13694,7 +13711,7 @@ operand\c
 In the above, the Courier font family is used to render input on the
 next four text lines because all but the last are interrupted with
 @code{\c}, while the style macros apply only to the next input line.
-@xref{Line Control}.
+@xref{Line Continuation}.
 @endDefreq
 
 Input traps are associated with the environment (@pxref{Environments});

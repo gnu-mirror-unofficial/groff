@@ -708,17 +708,46 @@ There is a sophisticated interface for handling tab positions.
 .SH "Line continuation"
 .\" ====================================================================
 .
+.I groff
+distinguishes input and output line continuation.
+.
+.
+.P
 A backslash
 .B \[rs]
-at the end of a line immediately followed by a newline suppresses the
-effects of that newline on the input.
+immediately followed by a newline,
+sometimes discussed as
+.BI \[rs] newline\c
+,
+suppresses the effects of that newline
+on the input.
 .
 The next input line thus retains the classification of its predecessor
 as a control or text line.
 .
+.BI \[rs] newline
+is useful for managing line lengths in the input during document
+maintenance;
+you can break an input line in the middle of a request invocation,
+macro call,
+or escape sequence.
+.
+Input line continuation is invisible to the formatter,
+with two exceptions:
+the
+.B |
+operator recognizes the new input line,
+and the input line counter register
+.B .c
+is incremented.
+.
+.
+.P
 The
 .esc c
-escape sequence continues an output line.
+escape sequence continues an
+.I output
+line.
 .
 Anything on the input line after
 .esc c
@@ -5945,6 +5974,10 @@ to the standard error stream.
 This document was written by
 .MT groff\-bernd\:.warken\-72@\:web\:.de
 Bernd Warken
+.ME
+and revised by
+.MT g.branden\:.robinson@\:gmail\:.com
+G.\& Branden Robinson
 .ME .
 .
 .
