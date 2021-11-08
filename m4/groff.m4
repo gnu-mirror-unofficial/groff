@@ -1028,7 +1028,10 @@ AC_DEFUN([GROFF_TMAC],
        done
      done
    done
-   AC_MSG_RESULT([$sys_tmac_prefix])
+   sys_tmac_prefix_result=none
+   test "x$sys_tmac_prefix" = "x" \
+	|| sys_tmac_prefix_result="$sys_tmac_prefix"
+   AC_MSG_RESULT([$sys_tmac_prefix_result])
    AC_SUBST([sys_tmac_prefix])
 
    AC_MSG_CHECKING([which system macro packages should be made available])
