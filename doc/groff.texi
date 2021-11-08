@@ -5730,49 +5730,65 @@ Here, leading plus and minus signs indicate increments and decrements.
 
 @xref{Setting Registers}, for some examples.
 
+@codequotebacktick on
+@codequoteundirected on
+
 @opindex |
 @cindex @code{|}, and page motion
-@cindex absolute position operator (@code{|})
-@cindex position, absolute, operator (@code{|})
-Similarly, a leading @samp{|} operator indicates an absolute position.
-For vertical movements, it specifies the distance from the top of the
-page; for horizontal movements, it gives the distance from the beginning
-of the @emph{input} line.
-
-Many escapes use positioning relative to the input line.  For example,
-this
+@cindex ``absolute'' position operator (@code{|})
+@cindex position, ``absolute'', operator (@code{|})
+@cindex boundary-relative motion operator (@code{|})
+@c "motion" and "operators" already indexed above
+Similarly, a leading @samp{|} operator indicates a motion relative not
+to the current position but to a boundary.  For vertical movements, it
+specifies a distance from the top of the page (or diversion); for
+horizontal ones, from the beginning of the @emph{input} line.  Some
+escape sequences
+@c XXX: which ones?
+reckon motions relative to the beginning of the input line.@footnote{As
+do tab stops, by default (@pxref{Tabs and Fields}).}  Most do not;
+@samp{|} tells them to do so.
 
 @Example
-This is a \h'|1.2i'test.
-
-This is a
-\h'|1.2i'test.
+Mind the \h'1.2i'gap.
+.br
+Mind the \h'|1.2i'gap.
+.br
+Mind the
+\h'|1.2i'gap.
+@c 13 spaces, 4 spaces, 13 spaces
+    @result{} Mind the             gap.
+    @result{} Mind the    gap.
+    @result{} Mind the             gap.
 @endExample
 
-@noindent
-produces
+The main use of this feature is to define macros whose scope is limited
+to the output they format.
 
 @Example
-This is a   test.
-
-This is a             test.
-@endExample
-
-The main usage of this feature is to define macros that act exactly at
-the place where called.
-
-@Example
-.\" A simple macro to underline a word
-.de underline
-.  nop \\$1\l'|0\[ul]'
+.\" underline word $1 with trailing punctuation $2
+.de Underline
+.  nop \\$1\l'|0\[ul]'\\$2
 ..
+Typographical emphasis is best used
+.Underline sparingly .
 @endExample
 
 @noindent
-In the above example, @samp{|0} specifies a negative distance from the
-current position (at the end of the just emitted argument @code{\$1})
-back to the beginning of the input line.  Thus, the @samp{\l} escape
-draws a line from right to left.
+In the above example, @samp{|0} specifies a negative motion from the
+current position (at the end of the argument just emitted, @code{\$1})
+to the beginning of the input line.  Thus, the @samp{\l} escape sequence
+in this case draws a line from right to left.  A macro call occurs at
+the beginning of an input line;@footnote{Control structure syntax
+creates an exception to this rule, but is designed to remain useful:
+recalling our example, @samp{.if 1 .Underline this} would underline only
+``this'', precisely.  @xref{Conditionals and Loops}.} if the @code{|}
+operator were omitted, then the underline would be drawn to the
+beginning of the @emph{output} line, where many words might precede the
+macro argument.
+
+@codequotebacktick off
+@codequoteundirected off
 
 @Defesc {\\B, @code{'}, anything, @code{'}}
 @cindex numeric expression, valid

@@ -828,8 +828,22 @@ Scale by 65536.
 .
 .P
 .B Numerical expressions
-are combinations of the numerical values defined above with the
-following arithmetical operators already defined in classical troff.
+are combinations of operators with the numerical values discussed above.
+.
+Arithmetic operators are parsed strictly from left to right;
+traditional algebraic precedence is not observed.
+.
+Use
+.B (
+and
+.B )
+to specify operator precedence.
+.
+Parentheses also permit the use of spaces between operators and their
+arguments.
+.
+Several operators were defined by AT&T
+.IR troff . \" AT&T
 .
 .
 .P
@@ -894,20 +908,50 @@ Logical not
 .
 .TPx
 .B (
-Grouping of expressions
+Begin expression group of higher precedence
 .
 .TPx
 .B )
-Close current grouping
+End expression group of higher precedence
 .
 .RE
 .PD
 .
 .
 .P
-Moreover,
+In many contexts,
+unary prefix operators are also available in contexts where they make
+sense.
+.
+.
+.RS
+.TP
+.B +
+.TQ
+.B \-
+Increment or decrement the argument implied by the request or escape
+sequence by the following expression.
+.
+.
+.TP
+.B |
+Interpret the following expression as a motion relative not to the
+current position but to a boundary.
+.
+For vertical movements,
+it specifies a distance from the top of the page
+(or diversion);
+for horizontal ones,
+from the beginning of the
+.I input
+line.
+.RE
+.
+.
+.P
+Furthermore,
 .I groff
-provides the following additional operators for numerical expressions.
+provides some additional arithmetic operators.
 .
 .
 .P
@@ -938,12 +982,6 @@ as the default scaling indicator.
 .
 .RE
 .PD
-.
-.
-.P
-For details see the
-.I groff
-Texinfo manual.
 .
 .
 .\" ====================================================================
