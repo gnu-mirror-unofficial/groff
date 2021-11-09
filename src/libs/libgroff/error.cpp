@@ -42,6 +42,7 @@ static void do_error_with_file_and_line(const char *filename,
   bool need_space = false;
   if (program_name) {
     fputs(program_name, stderr);
+    fputc(':', stderr);
     need_space = true;
   }
   if (filename != 0) {
