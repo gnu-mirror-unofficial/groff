@@ -16,8 +16,7 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#define INT_DIGITS 19		/* enough for 64 bit integer */
-#define UINT_DIGITS 20
+#include "lib.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,3 +63,9 @@ char *ui_to_a(unsigned int i)
 #ifdef __cplusplus
 }
 #endif
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

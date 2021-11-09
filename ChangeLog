@@ -1,5 +1,20 @@
 2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff]: Centralize definitions of {U,}INT_DIGITS.
+
+	* src/libs/libgroff/iftoa.c:
+	* src/libs/libgroff/itoa.c: Move definitions of `INT_DIGITS` and
+	`UINT_DIGITS` from here...
+	* src/include/lib.h: ...to here.
+
+	* src/libs/libgroff/iftoa.c:
+	* src/libs/libgroff/itoa.c: Preprocessor-include "lib.h".  This
+	revealed missing guards around `extern "C"` declarations, so...
+
+	* src/include/lib.h: Add them where necessary.
+
+2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an.tmac (OP): Fix code style nits.  Don't quote macro
 	arguments unnecessarily.  Use consistent backslashing.  Use
 	groff font escape sequence syntax.  Use adjustable non-breaking
