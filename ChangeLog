@@ -1,5 +1,23 @@
 2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libgroff,grops]: Slightly refactor.
+
+	* src/devices/grops/ps.cpp: Explicitly preprocessor-include
+	"lib.h" since we use the `PI` symbol it defines.
+
+	* src/include/lib.h: Add inclusion guard.  Wrap only `extern "C"
+	and its braces in preprocessor conditionals, so that prototypes
+	are present in the header even for C language code that
+	#includes this header.  Add `static` storage class to `PI`
+	symbol to avoid redefinition errors from the linker.
+
+	* src/libs/libgroff/iftoa.c (if_to_a):
+	* src/libs/libgroff/itoa.c (i_to_a, ui_to_a): Add `const` type
+	qualifier to function definitions for agreement with prototypes
+	in "lib.h".  Drop local copies of prototypes.
+
+2021-11-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Centralize definitions of {U,}INT_DIGITS.
 
 	* src/libs/libgroff/iftoa.c:

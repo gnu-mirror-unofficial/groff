@@ -22,11 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 extern "C" {
 #endif
 
-/* Prototypes */
-char *i_to_a(int);
-char *ui_to_a(unsigned int);
-
-char *i_to_a(int i)
+const char *i_to_a(int i)
 {
   /* Room for INT_DIGITS digits, - and '\0' */
   static char buf[INT_DIGITS + 2];
@@ -48,7 +44,7 @@ char *i_to_a(int i)
   return p;
 }
 
-char *ui_to_a(unsigned int i)
+const char *ui_to_a(unsigned int i)
 {
   /* Room for UINT_DIGITS digits and '\0' */
   static char buf[UINT_DIGITS + 1];

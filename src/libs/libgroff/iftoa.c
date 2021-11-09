@@ -16,16 +16,13 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#include "lib.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "lib.h"
-
-/* Prototype */
-char *if_to_a(int, int);
-
-char *if_to_a(int i, int decimal_point)
+const char *if_to_a(int i, int decimal_point)
 {
   static char buf[INT_DIGITS + 3]; // INT_DIGITS + '-', '.', '\0'
   char *p = buf + INT_DIGITS + 2;

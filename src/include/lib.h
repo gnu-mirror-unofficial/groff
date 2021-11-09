@@ -16,6 +16,9 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#ifndef GROFF_LIB_H
+#define GROFF_LIB_H
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -26,14 +29,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #ifdef __cplusplus
 extern "C" {
+#endif
 #ifndef HAVE_STRERROR
   char *strerror(int);
 #endif
   const char *i_to_a(int);
   const char *ui_to_a(unsigned int);
   const char *if_to_a(int, int);
+#ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif
 
 #define __GETOPT_PREFIX groff_
 #include <getopt.h>
@@ -60,12 +65,14 @@ double groff_hypot(double, double);
 
 #include <stdarg.h>
 
-/* LynxOS 4.0.0 doesn't declare vfprintf() */
 #ifdef __cplusplus
-#ifdef NEED_DECLARATION_VFPRINTF
-extern "C" { int vfprintf(FILE *, const char *, va_list); }
+extern "C" {
 #endif
-#endif /* __cplusplus */
+
+/* LynxOS 4.0.0 doesn't declare vfprintf() */
+#ifdef NEED_DECLARATION_VFPRINTF
+  int vfprintf(FILE *, const char *, va_list);
+#endif
 
 #ifndef HAVE_MKSTEMP
 /* since mkstemp() is defined as a real C++ function if taken from
@@ -76,58 +83,55 @@ int mkstemp(char *tmpl);
 int mksdir(char *tmpl);
 
 #ifdef __cplusplus
-FILE *xtmpfile(char **namep = 0,
-	       const char *postfix_long = 0,
-	       const char *postfix_short = 0,
-	       int do_unlink = 1);
-char *xtmptemplate(const char *postfix_long, const char *postfix_short);
+  FILE *xtmpfile(char **namep = 0,
+		 const char *postfix_long = 0,
+		 const char *postfix_short = 0,
+		 int do_unlink = 1);
+  char *xtmptemplate(const char *postfix_long,
+		     const char *postfix_short);
 #endif
 
-#ifdef __cplusplus
 #ifdef NEED_DECLARATION_POPEN
-extern "C" { FILE *popen(const char *, const char *); }
+  FILE *popen(const char *, const char *);
 #endif /* NEED_DECLARATION_POPEN */
-#endif /* __cplusplus */
 
-#ifdef __cplusplus
 #ifdef NEED_DECLARATION_PCLOSE
-extern "C" { int pclose (FILE *); }
+  int pclose (FILE *);
 #endif /* NEED_DECLARATION_PCLOSE */
-#endif /* __cplusplus */
 
-size_t file_name_max(const char *fname);
-size_t path_name_max();
+  size_t file_name_max(const char *fname);
+  size_t path_name_max(void);
 
-extern char invalid_char_table[];
+  extern char invalid_char_table[];
 
-inline int invalid_input_char(int c)
-{
-  return c >= 0 && invalid_char_table[c];
-}
+  inline int invalid_input_char(int c)
+  {
+    return c >= 0 && invalid_char_table[c];
+  }
 
-#ifdef __cplusplus
 #ifdef HAVE_STRCASECMP
 #ifdef NEED_DECLARATION_STRCASECMP
 // Ultrix4.3's string.h fails to declare this.
-extern "C" { int strcasecmp(const char *, const char *); }
+  int strcasecmp(const char *, const char *); }
 #endif /* NEED_DECLARATION_STRCASECMP */
 #else /* !HAVE_STRCASECMP */
-extern "C" { int strcasecmp(const char *, const char *); }
+  int strcasecmp(const char *, const char *);
 #endif /* HAVE_STRCASECMP */
-#endif /* __cplusplus */
 
-#ifdef __cplusplus
 #if !defined(_AIX) && !defined(sinix) && !defined(__sinix__)
 #ifdef HAVE_STRNCASECMP
 #ifdef NEED_DECLARATION_STRNCASECMP
 // SunOS's string.h fails to declare this.
-extern "C" { int strncasecmp(const char *, const char *, int); }
+  int strncasecmp(const char *, const char *, int);
 #endif /* NEED_DECLARATION_STRNCASECMP */
 #else /* !HAVE_STRNCASECMP */
-extern "C" { int strncasecmp(const char *, const char *, size_t); }
+  int strncasecmp(const char *, const char *, size_t);
 #endif /* HAVE_STRNCASECMP */
 #endif /* !_AIX && !sinix && !__sinix__ */
-#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef HAVE_CC_LIMITS_H
 #include <limits.h>
@@ -144,9 +148,9 @@ extern "C" { int strncasecmp(const char *, const char *, size_t); }
 #undef PI
 #endif
 
-#ifdef __cplusplus
-const double PI = 3.14159265358979323846;
-#endif
+static const double PI = 3.14159265358979323846;
+
+#endif /* GROFF_LIB_H */
 
 // Local Variables:
 // fill-column: 72
