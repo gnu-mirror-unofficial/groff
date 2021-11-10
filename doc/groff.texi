@@ -6726,24 +6726,33 @@ interpreted even in copy mode (@pxref{Copy Mode}).
 
 @c ---------------------------------------------------------------------
 
+@codequotebacktick on
+@codequoteundirected on
+
 @node Auto-increment, Assigning Register Formats, Interpolating Registers, Registers
 @subsection Auto-increment
-@cindex auto-increment
-@cindex increment, automatic
+@cindex auto-incrementation of a register
+@cindex incrementation, automatic, of a register
+@cindex decrementation, automatic, of a register
 
-Number registers can also be auto-incremented and auto-decremented.  The
-increment or decrement value can be specified with a third argument to
-the @code{nr} request.
+Registers can also be incremented or decremented by a configured amount
+at the time they are interpolated.  The value of the increment is
+specified with a third argument to the @code{nr} request, and a special
+interpolation syntax is used to alter and then retrieve the register's
+value.  Together, these features are called
+@dfn{auto-increment}.@footnote{A negative auto-increment can be
+considered an ``auto-decrement''.}
 
 @Defreq {nr, ident value incr}
 @cindex @code{\R}, difference to @code{nr}
-Set register @var{ident} to @var{value}; the increment for
-auto-incrementing is set to @var{incr}.  The @code{\R} escape doesn't
-support this notation.
+Set register @var{ident} to @var{value} and its auto-incrementation
+amount to to @var{incr}.  The @code{\R} escape doesn't support this
+notation.
 @endDefreq
 
-To activate auto-incrementing, the escape @code{\n} has a special syntax
-form.
+Auto-incrementation is not @emph{completely} automatic; the @code{\n}
+escape sequence never alters the value of a register.  To apply
+auto-incrementation to a register, use interpolate it with @samp{\n±}.
 
 @DefescList {\\n, +, i, }
 @DefescItem {\\n, -, i, }
@@ -6751,11 +6760,11 @@ form.
 @DefescItem {\\n, -(, id, }
 @DefescItem {\\n, +[, ident, ]}
 @DefescListEnd {\\n, -[, ident, ]}
-Before interpolating, increment or decrement @var{ident} (one-character
-name@tie{}@var{i}, two-character name @var{id}) by the auto-increment
-value as specified with the @code{nr} request (or the @code{\R} escape).
-If no auto-increment value has been specified, these syntax forms are
-identical to @code{\n}.
+Increment or decrement @var{ident} (one-character
+name@tie{}@var{i}, two-character name @var{id}) by the register's
+auto-incrementation value and then interpolate the new register value.
+If @var{ident} has no auto-incrementation value, interpolate as with
+@code{\n}.
 @endDefesc
 
 For example,
@@ -6783,14 +6792,12 @@ produces
 @cindex value, incrementing without changing the register
 To change the increment value without changing the value of a register,
 assign the register's value to itself by interpolating it, and specify
-the desired increment normally.
+the desired increment normally.  Apply an increment of @samp{0} to
+disable auto-incrementation of the register.
 
 @Example
 .nr a \na 10
 @endExample
-
-@codequotebacktick on
-@codequoteundirected on
 
 @c ---------------------------------------------------------------------
 

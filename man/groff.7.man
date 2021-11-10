@@ -4429,39 +4429,66 @@ and aliasing
 .SH Registers
 .\" ====================================================================
 .
-Registers are variables that store a value.
-.
-In groff,
-most registers store numerical values
+Most registers store numerical values
 (see section \[lq]Numerical Expressions\[rq] above),
-but some can also hold a string value.
+but some
+(predefined,
+read-only ones)
+interpolate text.
 .
+Each register has a name.
 .
-.P
-Each register is given a name.
-Arbitrary registers can be defined and set with the
+A register is defined and assigned with the
 .request .nr
-request.
+request or the
+.esc R
+escape sequence;
+its value is interpolated with the
+.esc n
+escape sequence.
 .
 .
 .P
-The value stored in a register can be retrieved by the escape sequences
-introduced by
-.esc n .
+Registers can also be incremented or decremented by a configured amount
+at the time they are interpolated.
+.
+The value of the increment is specified with a third argument to the
+.request .nr
+request,
+and a special interpolation syntax,
+.BI \[rs]n \[+-]
+is used to alter and then retrieve
+the register's value.
+.
+Together,
+these features are called
+.IR auto-increment .
+.
+(A negative auto-increment can be
+considered an \[lq]auto-decrement\[rq].)
 .
 .
 .P
-Most useful are predefined registers.
+Many predefined registers are available.
 .
-In the following the notation
+In the following presentation,
+the register interpolation syntax
+.BI \[rs]n[ name ]
+is used to refer to a register
 .I name
-is used to refer to
-.register name
-to make clear that we speak about registers.
+to clearly distinguish it from a string or request
+.IR name .
 .
-Please keep in mind that the
-.esc[] n ""
-decoration is not part of the register name.
+The register name space is separate from that used for requests,
+macros,
+strings,
+and diversions.
+.
+Bear in mind that the symbols
+.B \[rs]n[]
+are
+.I not
+part of the register name.
 .
 .
 .\" ====================================================================
