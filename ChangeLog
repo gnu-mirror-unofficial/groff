@@ -1,5 +1,16 @@
 2021-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Update diagnostic messages.
+
+	* src/preproc/tbl/main.cpp (process_options, process_format):
+	* src/preproc/tbl/table.cpp (table::add_entry): Align diagnostic
+	text with terminology now used in tbl(1) man page.
+	  - "global option" -> "region option"
+	  - "specifier" -> "column modifier"
+	  - "format" -> "column classifier"
+
+2021-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libgroff]: Fix missing colon in diagnostic messages.
 
 	* src/libs/libgroff/error.cpp (do_error_with_file_and_line):

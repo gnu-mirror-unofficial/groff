@@ -1625,15 +1625,15 @@ void table::add_entry(int r, int c, const string &str,
     case FORMAT_HLINE:
       if (str.length() != 0)
 	error_with_file_and_line(fn, ln,
-				 "non-empty data entry for '_' format"
-				 " ignored");
+				 "ignoring non-empty data entry using"
+				 " '_' column classifier");
       e = new single_line_entry(this, f);
       break;
     case FORMAT_DOUBLE_HLINE:
       if (str.length() != 0)
 	error_with_file_and_line(fn, ln,
-				 "non-empty data entry for '=' format"
-				 " ignored");
+				 "ignoring non-empty data entry using"
+				 " '=' column classifier");
       e = new double_line_entry(this, f);
       break;
     default:
