@@ -329,6 +329,8 @@ endif
 # to configure.
 
 all: build_infodoc
+
+# Rules to generate various doc files from .texi files.
 if BUILD_INFODOC
 build_infodoc: doc/groff.info
 groffinfodir = $(infodir)
@@ -345,19 +347,32 @@ build_infodoc:
 endif
 EXTRA_DIST += doc/groff.texi doc/fdl.texi
 
-# GNU Make has a built-in variable TEXI2DVI but it is not the case of
-# all 'make' implementation.  As it default to 'texi2dvi' we simply
-# redefine it here.
-
-TEXI2DVI = texi2dvi
-texi2dvi_missing = no
-# Rules to generate various doc files from .texi files.
 .texi.txt:
 	$(AM_V_at)$(MKDIR_P) $(doc_builddir)
 	$(AM_V_GEN)LANG=C \
 	LC_ALL=C \
 	$(MAKEINFO) --enable-encoding -I$(doc_srcdir) --plaintext \
 	  -o $@ $<
+
+# This will generate both html split into several files and html doc
+# in a single file.
+.texi.html:
+	$(AM_V_at)$(MKDIR_P) $(doc_builddir)/
+	$(AM_V_GEN)LANG=C \
+	LC_ALL=C \
+	$(MAKEINFO) --html -I $(doc_srcdir) \
+	  -o doc/`basename $@`.node $<
+	$(AM_V_at)LANG=C \
+	LC_ALL=C \
+	$(MAKEINFO) --html -I $(doc_srcdir) --no-split \
+	  -o $@ $<
+
+# GNU Make has a built-in variable TEXI2DVI but it is not the case of
+# all 'make' implementation.  As it default to 'texi2dvi' we simply
+# redefine it here.
+
+TEXI2DVI = texi2dvi
+texi2dvi_missing = no
 
 .texi.dvi:
 if HAVE_TEXI2DVI
@@ -387,19 +402,6 @@ else
 	@echo "program texi2dvi is missing; cannot generate $@" >&2; \
 	exit 1
 endif
-
-# This will generate both html split into several files and html doc
-# in a single file.
-.texi.html:
-	$(AM_V_at)$(MKDIR_P) $(doc_builddir)/
-	$(AM_V_GEN)LANG=C \
-	LC_ALL=C \
-	$(MAKEINFO) --html -I $(doc_srcdir) \
-	  -o doc/`basename $@`.node $<
-	$(AM_V_at)LANG=C \
-	LC_ALL=C \
-	$(MAKEINFO) --html -I $(doc_srcdir) --no-split \
-	  -o $@ $<
 
 # Targets to make all the doc in all formats. These doc are not built
 # by default. pdf, dvi, ps, html and their install equivalent
