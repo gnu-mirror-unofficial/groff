@@ -1,5 +1,15 @@
 2021-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Accept `\&` as an empty table entry.
+
+	* src/preproc/tbl/table.cpp (table::add_entry): Suppress
+	diagnostic about non-empty table entries classified as `_` or
+	`=` if the entry consists of exactly `\&`.
+
+	* src/preproc/tbl/tbl.1.man (Table data): Document this idiom.
+
+2021-11-10  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Update diagnostic messages.
 
 	* src/preproc/tbl/main.cpp (process_options, process_format):

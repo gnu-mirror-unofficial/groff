@@ -1623,14 +1623,14 @@ void table::add_entry(int r, int c, const string &str,
       do_vspan(r, c);
       break;
     case FORMAT_HLINE:
-      if (str.length() != 0)
+      if ((str.length() != 0) && (str != "\\&"))
 	error_with_file_and_line(fn, ln,
 				 "ignoring non-empty data entry using"
 				 " '_' column classifier");
       e = new single_line_entry(this, f);
       break;
     case FORMAT_DOUBLE_HLINE:
-      if (str.length() != 0)
+      if ((str.length() != 0) && (str != "\\&"))
 	error_with_file_and_line(fn, ln,
 				 "ignoring non-empty data entry using"
 				 " '=' column classifier");
