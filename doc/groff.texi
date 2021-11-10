@@ -5798,7 +5798,7 @@ if @var{anything} is empty or not a valid numeric expression.
 @endDefesc
 
 A register interpolation used as an operand in an expression must have
-an Arabic format; @xref{Assigning Register Formats}.
+an Arabic format; see @ref{Assigning Register Formats}.
 @cindex space characters, in expressions
 @cindex expressions, and space characters
 Due to the way arguments are parsed, spaces are not allowed in
@@ -5973,7 +5973,7 @@ emitted!  The contents of the first macro definition are lost.
 
 To support the needs of documents that require more than filling,
 automatic line breaking and hyphenation, and adjustment, GNU
-@code{troff} allows commands to be embedded into the text.   This is
+@code{troff} allows commands to be embedded into the text.  This is
 done in two ways.
 
 One is a @dfn{request} that takes up an entire line, and often performs
@@ -6889,8 +6889,8 @@ register.
 Interpolate the format of the register @var{reg} (one-character
 name@tie{}@var{r}, two-character name @var{rg}).  Zeroes represent
 Arabic formats.  If @var{reg} is not defined, @var{reg} is not created
-and nothing is interpolated.  @code{\\g} is interpreted even in copy
-mode (@pxref{Copy Mode}).
+and nothing is interpolated.  @code{\g} is interpreted even in copy mode
+(@pxref{Copy Mode}).
 @endDefesc
 
 @cindex register format, in expressions
@@ -7239,7 +7239,7 @@ status is associated with the environment (@pxref{Environments}).  See
 @DefreqList {ad, [@Var{mode}]}
 @DefregListEndx {.j}
 Enable output line adjustment in @var{mode}, taking effect when the
-pending (or next) output line is broken.   Adjustment is suppressed when
+pending (or next) output line is broken.  Adjustment is suppressed when
 filling is.  @var{mode} can have one of the following values.
 
 @table @code
@@ -15408,7 +15408,7 @@ newline (as is done in @code{tm} and @code{tm1}).
 
 @Defreq {ab, [@Var{string}]}
 @cindex aborting (@code{ab})
-Write @var{string} to the standard error stream (like @code{tm}) and
+Write any @var{string} to the standard error stream (like @code{tm}) and
 then abort GNU @code{troff}; that is, stop processing and terminate with
 a failure status.
 @endDefreq
@@ -15418,10 +15418,10 @@ a failure status.
 @cindex exiting (@code{ex})
 Exit GNU @code{troff}; that is, stop processing and terminate with a
 successful status.  To stop processing only the current file, use the
-@code{nx} request; @xref{I/O}.
+@code{nx} request; see @ref{I/O}.
 @endDefreq
 
-When doing something involved it is useful to leave the debugging
+When doing something involved, it is useful to leave the debugging
 statements in the code and have them turned on by a command-line flag.
 
 @Example
@@ -16683,8 +16683,8 @@ The postprocessor @command{grodvi} translates the output from GNU
 @code{troff} into the DVI format produced by the @TeX{} document
 preparation system.  This enables the use of programs that process the
 DVI format, like @command{dvips} and @command{dvipdf}, with GNU
-@code{troff} output.   @command{grodvi} is fully documented in its
-man page, @cite{grodvi@r{(1)}}.
+@code{troff} output.  @command{grodvi} is fully documented in its man
+page, @cite{grodvi@r{(1)}}.
 
 @menu
 * Invoking grodvi::
@@ -18140,8 +18140,8 @@ The @code{grohtml} driver uses this directive.
 @item use_charnames_in_special
 @kindex use_charnames_in_special
 GNU @code{troff} should encode special characters inside device control
-commands; @xref{Postprocessor Access}.  The @code{grohtml} driver uses
-this directive.
+commands; see @ref{Postprocessor Access}.  The @code{grohtml} driver
+uses this directive.
 
 @item vert @var{n}
 @kindex vert
@@ -18199,7 +18199,7 @@ in the font description files to be expressed as integers.}
 A font description file has two sections.  The first is a sequence of
 directives, and is parsed similarly to the @file{DESC} file described
 above.  Except for the directive names that begin the second section,
-their ordering is immaterial.   Later directives of the same name
+their ordering is immaterial.  Later directives of the same name
 override earlier ones, spaces and tabs are handled in the same way,
 @cindex comments in font description files
 @cindex font description files, comments
