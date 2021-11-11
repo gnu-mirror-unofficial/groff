@@ -424,7 +424,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle October 2021
+@subtitle November 2021
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -2924,7 +2924,8 @@ Default: 0.5@dmn{v} (1@dmn{v} on low-resolution devices).
 
 @Defmpreg {DI, ms}
 Sets the default amount by which to indent a display started with
-@samp{.DS I} or @code{ID}.  This is a GNU extension.
+@code{DS}, @samp{.DS@tie{}I}, or @code{ID}; or an equation set with
+@samp{.EQ@tie{}I}.  This is a GNU extension.
 
 Effective: next indented display.
 
@@ -3726,12 +3727,12 @@ begins a kept display of the layout specified in its first argument;
 non-kept displays are begun with dedicated macros corresponding to their
 layout.
 
-@DefmacList {DS, [@t{L}], ms}
+@DefmacList {DS, @t{L}, ms}
 @DefmacListEndx {LD, , ms}
 Begin (@code{DS}:@: kept) left-aligned display.
 @endDefmac
 
-@DefmacList {DS, @t{I} [@Var{indent}], ms}
+@DefmacList {DS, [@t{I} [@Var{indent}]], ms}
 @DefmacListEndx {ID, [@Var{indent}], ms}
 Begin (@code{DS}:@: kept) display indented by @var{indent} if specified,
 and by the amount of the @code{DI} register otherwise.
@@ -3756,7 +3757,7 @@ Begin a (@code{DS}:@: kept) right-aligned display.  This is a GNU
 extension.
 @endDefmac
 
-@Defmac {ED, , ms}
+@Defmac {DE, , ms}
 End any display.
 @endDefmac
 
@@ -4416,11 +4417,6 @@ specifies the left margin), the @code{PO} register must stay undefined
 until the first @file{ms} macro is called.  This implies that the
 @code{PO} register should not be used early in the document unless it is
 changed also: accessing an undefined register automatically defines it.
-
-@item
-Displays are left-aligned by default, not indented.  In @acronym{AT&T}
-@file{ms}, @samp{.DS} is synonymous with @samp{.DS I}; in @code{groff}
-@file{ms}, it is synonymous with @samp{.DS L}.
 
 @item
 Right-aligned displays are available.  The @acronym{AT&T} @file{ms}
