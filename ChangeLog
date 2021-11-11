@@ -1,5 +1,42 @@
 2021-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Revamp Texinfo manual handling, 1/n.  Drop `BUILD_INFODOC`
+	symbol.  Ship manual in GNU Info, text, and HTML forms in
+	distribution archive.
+
+	* Makefile.am (MAINTAINERCLEANFILES): Initialize.
+	(MOSTLYCLEANADD): Drop unused variable.
+	* configure.ac: Drop `AM_CONDITIONAL([BUILD_INFODOC]...`.
+	* doc/doc.am (EXTRA_DIST): Rearrange shipment of our Texinfo
+	manual source files to precede all of the generated forms, for
+	clarity.  Drop all `BUILD_INFODOC` conditionals.  Make
+	`build_infodoc` phony target depend on plain text, GNU Info, and
+	HTML forms of Texinfo manual unconditionally.  Also drop unused
+	variables `groffinfodir`, `groffpdfdir`, and `texi2dvi_missing`.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add Info form of manual.
+	Drop glob pattern attempting to match the segments that
+	`makeinfo` breaks it into.  It isn't necessary for
+	MAINTAINERCLEANFILES.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add text form of manual.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add HTML form of manual.
+	(dist-hook): Depend on new (phony) target `dist-info-bits`.
+	(dist-info-bits): Look for the info document in the build
+	directory, then the source directory.  (It could be in either
+	place depending on whether the build from a Git working tree is
+	being done in or out of a separate build directory.) When found,
+	copy the segments to the assembly area for the distribution
+	archive.
+	(install_infodoc): Refactor.  Remove any groff info files from
+	the destination info directory using a shell glob directly
+	instead of a partly redundant ls(1) command substitution.
+	Similarly, use a shell glob to cp(1) the info files (including
+	any matched segments) to the destination info directory before
+	running `install-info`.  (In this process I learned that
+	`install-info` doesn't "install" anything; instead, it
+	{de-}registers info files with their top-level catalog.)
+
+2021-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (.texi.txt, .texi.html): Reorder pattern rules to
 	make it clearer which formats require only `makeinfo` and which
 	require `texi2dvi`.  The latter imposes more build dependencies,
