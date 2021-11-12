@@ -1,3 +1,29 @@
+2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[m4]: Clean up test(1) usage.
+
+	Get rid of string (non-)nullity tests and comparisons involving
+	concatenation with garbage (usually "x").  Even the GNU Autoconf
+	manual's shell portability material doesn't recommend this.  It
+	must be either a bodge cooked up by shell programmers who
+	couldn't remember to quote variable expansions, or a workaround
+	for shells of such poor quality that they defied the odds and
+	decayed out of usage or got fixed.
+
+	Instead, use double quotes (only where necessary).  Test for
+	non-empty strings with "test -n" and empty strings with "test
+	-z".  Stop quoting literal comparands that obviously have no
+	shell metacharacters in them.
+
+	* m4/groff.m4 (GROFF_PRINT, GROFF_PROG_YACC, GROFF_PERL,
+	GROFF_DOC_CHECK, GROFF_MAKEINFO, GROFF_TEXI2DVI,
+	GROFF_HTML_PROGRAMS, GROFF_PDFDOC_PROGRAMS, GROFF_PAGE,
+	GROFF_TMAC, GROFF_WITH_COMPATIBILITY_WRAPPERS, GROFF_X11,
+	GROFF_APPRESDIR_DEFAULT, GROFF_APPRESDIR_CHECK,
+	GROFF_HAVE_TEST_EF_OPTION, GROFF_BASH, GROFF_UCHARDET,
+	GROFF_UCHARDET_CHECK, GROFF_PDFTOOLS,
+	GROFF_USE_GROFF_ALLOCATOR): Do it.
+
 2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* m4/groff.m4 (GROFF_TEXI2DVI): Add dependency on
