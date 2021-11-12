@@ -452,7 +452,7 @@ developing GNU and promoting software freedom.''
 * Installation::
 * Copying This Manual::
 * Request Index::
-* Escape Index::
+* Escape Sequence Index::
 * Operator Index::
 * Register Index::
 * Macro Index::
@@ -5695,8 +5695,8 @@ be expected.
 @cindex @code{-}, and page motion
 @cindex motion operators
 @cindex operators, motion
-@opindex + (unary)
-@opindex - (unary)
+@opindex + @r{(unary)}
+@opindex - @r{(unary)}
 For many requests that cause a motion on the page, the unary operators
 @samp{+} and @samp{-} work differently if leading an expression.  They
 then indicate a motion relative to the current position (down or up,
@@ -7207,7 +7207,7 @@ the @code{fi} request.
 Enable filling of output lines; a pending output line is broken.  The
 read-only register @code{.u} is set to@tie{}1.  The filling enablement
 status, sometimes called @dfn{fill mode}, is associated with the
-environment (@pxref{Environments}).  See @ref{Line Continuation}, for
+environment (@pxref{Environments}).  @xref{Line Continuation}, for
 interaction with the @code{\c} escape.
 @endDefreq
 
@@ -18430,7 +18430,7 @@ for@tie{}@var{n}.
 @codequotebacktick on
 @codequoteundirected on
 
-@node Request Index, Escape Index, Copying This Manual, Top
+@node Request Index, Escape Sequence Index, Copying This Manual, Top
 @appendix Request Index
 
 Requests appear without the leading control character (normally either
@@ -18443,11 +18443,11 @@ Requests appear without the leading control character (normally either
 @c =====================================================================
 @c =====================================================================
 
-@node Escape Index, Operator Index, Request Index, Top
-@appendix Escape Index
+@node Escape Sequence Index, Operator Index, Request Index, Top
+@appendix Escape Sequence Index
 
-Any escape sequence @code{\@var{X}} with @var{X} not in the list below
-emits a warning, printing glyph @var{X}.
+Any token @code{\@var{X}} with @var{X} not in the list below emits a
+warning and interpolates glyph @var{X}.
 
 @printindex es
 
@@ -18456,7 +18456,7 @@ emits a warning, printing glyph @var{X}.
 @c =====================================================================
 @c =====================================================================
 
-@node Operator Index, Register Index, Escape Index, Top
+@node Operator Index, Register Index, Escape Sequence Index, Top
 @appendix Operator Index
 
 @printindex op
