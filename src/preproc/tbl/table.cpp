@@ -1424,21 +1424,23 @@ void table::do_hspan(int r, int c)
 void table::do_vspan(int r, int c)
 {
   assert(r >= 0 && c >= 0 && r < nrows && c < ncolumns);
-  if (r == 0) {
+  if (0 == r) {
     error("first row cannot be vertically spanned");
     return;
   }
   table_entry *e = entry[r][c];
   if (e) {
-    assert(e->start_row <= r && r <= e->end_row
-	   && e->start_col <= c && c <= e->end_col
-	   && e->end_row - e->start_row > 0
-	   && e->end_col - e->start_col > 0);
+    assert(e->start_row <= r);
+    assert(r <= e->end_row);
+    assert(e->start_col <= c);
+    assert(c <= e->end_col);
+    assert((e->end_row - e->start_row) > 0);
+    assert((e->end_col - e->start_col) > 0);
     return;
   }
   e = entry[r-1][c];
-  // e can be 0 if we had an empty entry or an error
-  if (e == 0)
+  // e can be a null pointer if we had an empty entry or an error
+  if (0 == e)
     return;
   if (e->start_col != c) {
     /* l s

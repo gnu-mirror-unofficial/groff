@@ -1,5 +1,15 @@
 2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/tbl/table.cpp (table::do_vspan): Fix code style
+	nits.  Swap order of null pointer and zero equality comparisons
+	when a typo or thinko could lead to lvalue assignment.  Break a
+	series of 6 and-ed assertion predicates into separate `assert()`
+	calls--sure to be less maddening for anyone who has to debug
+	such a contingency.  Clarify comment since C++98 didn't yet have
+	`nullptr`.
+
+2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[m4]: Clean up shell variable quoting and bracing.
 
 	* m4/groff.m4 (GROFF_PROG_YACC, GROFF_MAKEINFO,
