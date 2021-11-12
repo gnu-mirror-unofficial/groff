@@ -4780,11 +4780,11 @@ Welcome to groff.
 @cindex space between sentences
 @cindex French spacing
 GNU @code{troff} does this by flagging certain characters (normally
-@samp{!}, @samp{?}, and @samp{.}) as @dfn{end-of-sentence} characters;
-when GNU @code{troff} encounters one of these characters at the end of a
-line, or one of them is followed by two spaces on the same input line,
-it appends an inter-word space followed by an inter-sentence space in
-the formatted output.
+@samp{!}, @samp{?}, and @samp{.}) as potentially ending a sentence.
+When GNU @code{troff} encounters one of these @dfn{end-of-sentence
+characters} at the end of a line, or one of them is followed by two
+spaces on the same input line, it appends an inter-word space followed
+by an inter-sentence space in the formatted output.
 
 @Example
 R. Harper subscribes to a maxim of P. T. Barnum.
