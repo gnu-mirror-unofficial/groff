@@ -1,5 +1,14 @@
 2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_MAKEINFO): Stop throwing a warning if the
+	installed `makeinfo` is old but the distributed Info manual is
+	up to date.  This is not a configure-time problem; the user will
+	be notified when they run 'make doc'.  Empty the `MAKEINFO`
+	variable immediately if a too-old version is detected.  Drop
+	needless `AC_SUBST`itution of the detected `makeinfo` version.
+
+2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* m4/groff.m4 (GROFF_HTML_PROGRAMS): Clarify message; it is only
 	groff-generated HTML that is disabled by the absence of the
 	programs checked for.  (`makeinfo` can still generate our

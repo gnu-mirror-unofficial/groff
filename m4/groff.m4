@@ -178,6 +178,7 @@ AC_DEFUN([GROFF_MAKEINFO],
          expr ${makeinfo_version_major}000 \+ ${makeinfo_version_minor}`
        if test $makeinfo_version_numeric -lt 5000; then
          missing="'makeinfo' is too old."
+         MAKEINFO=
        fi
      fi
 
@@ -188,10 +189,6 @@ AC_DEFUN([GROFF_MAKEINFO],
 	|| test ${srcdir}/doc/groff.texi -nt ${infofile}; then
 	 AC_MSG_ERROR($missing
 [Get the 'texinfo' package version 5.0 or newer.])
-       else
-	 AC_MSG_WARN($missing
-[Get the 'texinfo' package version 5.0 or newer if you want to convert
-'groff.texi' into a PDF or HTML document.])
        fi
      fi
 
@@ -202,13 +199,11 @@ AC_DEFUN([GROFF_MAKEINFO],
      make_infodoc=
      make_install_infodoc=
      make_uninstall_infodoc=
-     MAKEINFO=
    fi
    AC_SUBST([MAKEINFO])
    AC_SUBST([make_infodoc])
    AC_SUBST([make_install_infodoc])
-   AC_SUBST([make_uninstall_infodoc])
-   AC_SUBST([makeinfo_version_numeric])])
+   AC_SUBST([make_uninstall_infodoc])])
 
 AC_DEFUN([GROFF_TEXI2DVI],
   [AC_CHECK_PROG([PROG_TEXI2DVI], [texi2dvi], [found], [missing])
