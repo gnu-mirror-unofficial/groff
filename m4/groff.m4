@@ -268,8 +268,8 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
 
      docnote=.
      test $docadd_html = yes && docnote=';
-  therefore, it will neither be possible to prepare, nor to install,
-  documentation in HTML format.'
+  therefore, it will be possible neither to prepare, nor to install,
+  groff-generated documentation in HTML format.'
 
      AC_MSG_WARN([missing program$plural:
 
