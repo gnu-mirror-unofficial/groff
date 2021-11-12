@@ -409,7 +409,8 @@ if HAVE_TEXI2DVI
 	$(TEXI2DVI) -e --batch --build-dir=doc/`basename $@`.t2d \
 	  -o $@ $<
 else
-	@echo "program texi2dvi is missing; cannot generate $@" >&2; \
+	@echo "program texi2dvi is missing or too old;" \
+	  "cannot generate $@" >&2; \
 	exit 1
 endif
 
@@ -423,7 +424,8 @@ if HAVE_TEXI2DVI
 	$(TEXI2DVI) -e --batch --pdf --build-dir=doc/`basename $@`.t2p \
 	  -o $@ $<
 else
-	@echo "program texi2dvi is missing; cannot generate $@" >&2; \
+	@echo "program texi2dvi is missing or too old;" \
+	  "cannot generate $@" >&2; \
 	exit 1
 endif
 

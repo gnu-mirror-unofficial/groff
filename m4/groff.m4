@@ -205,14 +205,16 @@ AC_DEFUN([GROFF_MAKEINFO],
    AC_SUBST([make_install_infodoc])
    AC_SUBST([make_uninstall_infodoc])])
 
+# 'makeinfo' and 'texi2dvi' are distributed together, so if the former
+# is too old, the latter is too.
 AC_DEFUN([GROFF_TEXI2DVI],
-  [AC_CHECK_PROG([PROG_TEXI2DVI], [texi2dvi], [found], [missing])
-   if test "x$PROG_TEXI2DVI" = "xfound"; then
-      groff_have_texi2dvi=yes;
-   else
-      groff_have_texi2dvi=no;
-   fi
-   ])
+  [AC_REQUIRE([GROFF_MAKEINFO])
+   AC_CHECK_PROG([PROG_TEXI2DVI], [texi2dvi], [found], [missing])
+   groff_have_texi2dvi=no
+   if test "x$PROG_TEXI2DVI" = "xfound" && test "x$MAKEINFO" != "x"
+   then
+      groff_have_texi2dvi=yes
+   fi])
 
 # The following programs are needed for grohtml.
 

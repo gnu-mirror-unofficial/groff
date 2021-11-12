@@ -1,5 +1,18 @@
 2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_TEXI2DVI): Add dependency on
+	`GROFF_MAKEINFO` macro.  Rewrite to also test `MAKEINFO`
+	variable, which is empty if the `makeinfo` command is not
+	installed or too old.  Consequently ignore `texi2dvi` if is too
+	old without having to do a version check (since it and
+	`makeinfo` are distributed together, both being part of GNU
+	Texinfo).
+
+	* doc/doc.am (.texi.dvi, .texi.pdf): Update error message to
+	indicate that `texi2dvi` is _either_ missing or too old.
+
+2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* m4/groff.m4 (GROFF_MAKEINFO): Stop throwing a warning if the
 	installed `makeinfo` is old but the distributed Info manual is
 	up to date.  This is not a configure-time problem; the user will
