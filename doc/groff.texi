@@ -161,7 +161,7 @@ developing GNU and promoting software freedom.''
 @end macro
 
 
-@c definition of escapes
+@c definition of escape sequences
 
 @macro Defesc{name, delimI, arg, delimII}
 @deffn Escape @t{\name\\delimI\}@Var{\arg\}@t{\delimII\}
@@ -205,7 +205,7 @@ developing GNU and promoting software freedom.''
 @end macro
 
 
-@c definition of registers
+@c definition of registers (built in to GNU troff)
 
 @macro Defreg{name}
 @deffn Register @t{\\n[\name\]}
@@ -245,6 +245,50 @@ developing GNU and promoting software freedom.''
 @end macro
 
 @macro endDefreg
+@end deffn
+@end macro
+
+
+@c string definitions (built in to GNU troff)
+
+@macro Defstr{name}
+@deffn String @t{\\*[\name\]}
+@stindex \name\
+@c
+@end macro
+
+@macro DefstrList{name}
+@deffn String @t{\\*[\name\]}
+@defdummy
+@stindex \name\
+@c
+@end macro
+
+@macro DefstrItem{name}
+@deffnx String @t{\\*[\name\]}
+@defdummy
+@c
+@end macro
+
+@macro DefstrItemx{name}
+@deffnx String @t{\\*[\name\]}
+@defdummy
+@stindex \name\
+@c
+@end macro
+
+@macro DefstrListEnd{name}
+@deffnx String @t{\\*[\name\]}
+@c
+@end macro
+
+@macro DefstrListEndx{name}
+@deffnx String @t{\\*[\name\]}
+@stindex \name\
+@c
+@end macro
+
+@macro endDefstr
 @end deffn
 @end macro
 
@@ -11206,7 +11250,7 @@ with a default scaling indicator of @samp{z}.
 GNU @code{troff} has string variables primarily for user convenience.
 Only one string is predefined by the language.
 
-@Defmpstr {.T,}
+@Defstr {.T}
 @stindex .T
 @cindex output device name string (@code{.T})
 Contains the name of the output device (for example, @samp{utf8} or
