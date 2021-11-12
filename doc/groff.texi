@@ -249,7 +249,7 @@ developing GNU and promoting software freedom.''
 @end macro
 
 
-@c definition of registers specific to macro packages, preprocessors, etc.
+@c register definitions specific to macro packages, preprocessors, ...
 
 @macro Defmpreg{name, package}
 @deffn Register @t{\\n[\name\]}
@@ -337,46 +337,46 @@ developing GNU and promoting software freedom.''
 @end macro
 
 
-@c definition of strings
+@c string definitions specific to macro packages, preprocessors, ...
 
-@macro Defstr{name, package}
+@macro Defmpstr{name, package}
 @deffn String @t{\\*[\name\]}
 @stindex \name\ @r{[}\package\@r{]}
 @c
 @end macro
 
-@macro DefstrList{name, package}
+@macro DefmpstrList{name, package}
 @deffn String @t{\\*[\name\]}
 @defdummy
 @stindex \name\ @r{[}\package\@r{]}
 @c
 @end macro
 
-@macro DefstrItem{name, package}
+@macro DefmpstrItem{name, package}
 @deffnx String @t{\\*[\name\]}
 @defdummy
 @c
 @end macro
 
-@macro DefstrItemx{name, package}
+@macro DefmpstrItemx{name, package}
 @deffnx String @t{\\*[\name\]}
 @defdummy
 @stindex \name\ @r{[}\package\@r{]}
 @c
 @end macro
 
-@macro DefstrListEnd{name, package}
+@macro DefmpstrListEnd{name, package}
 @deffnx String @t{\\*[\name\]}
 @c
 @end macro
 
-@macro DefstrListEndx{name, package}
+@macro DefmpstrListEndx{name, package}
 @deffnx String @t{\\*[\name\]}
 @stindex \name\ @r{[}\package\@r{]}
 @c
 @end macro
 
-@macro endDefstr
+@macro endDefmpstr
 @end deffn
 @end macro
 
@@ -2644,53 +2644,53 @@ Default: 1@dmn{i}.
 
 @unnumberedsubsubsec Titles (headers, footers)
 
-@Defstr {LH, ms}
+@Defmpstr {LH, ms}
 Defines the text displayed in the left header position.
 
 Effective: next header.
 
 Default: empty.
-@endDefstr
+@endDefmpstr
 
-@Defstr {CH, ms}
+@Defmpstr {CH, ms}
 Defines the text displayed in the center header position.
 
 Effective: next header.
 
 Default: @samp{-\n[%]-}.
-@endDefstr
+@endDefmpstr
 
-@Defstr {RH, ms}
+@Defmpstr {RH, ms}
 Defines the text displayed in the right header position.
 
 Effective: next header.
 
 Default: empty.
-@endDefstr
+@endDefmpstr
 
-@Defstr {LF, ms}
+@Defmpstr {LF, ms}
 Defines the text displayed in the left footer position.
 
 Effective: next footer.
 
 Default: empty.
-@endDefstr
+@endDefmpstr
 
-@Defstr {CF, ms}
+@Defmpstr {CF, ms}
 Defines the text displayed in the center footer position.
 
 Effective: next footer.
 
 Default: empty.
-@endDefstr
+@endDefmpstr
 
-@Defstr {RF, ms}
+@Defmpstr {RF, ms}
 Defines the text displayed in the right footer position.
 
 Effective: next footer.
 
 Default: empty.
-@endDefstr
+@endDefmpstr
 
 @unnumberedsubsubsec Text Settings
 
@@ -2731,14 +2731,14 @@ Effective: next paragraph.
 Default: 6.
 @endDefmpreg
 
-@Defstr {FAM, ms}
+@Defmpstr {FAM, ms}
 Defines the font family used to typeset the document.  This is a GNU
 extension.
 
 Effective: next paragraph.
 
 Default: as defined in the output device.
-@endDefstr
+@endDefmpstr
 
 @unnumberedsubsubsec Paragraph Settings
 
@@ -2824,14 +2824,14 @@ Effective: next paragraph.
 Default: 1.
 @endDefmpreg
 
-@Defstr {SN-STYLE, ms}
+@Defmpstr {SN-STYLE, ms}
 Defines the style used to print numbered headings.  @xref{Headings in
 ms}.  This is a GNU extension.
 
 Effective: next heading.
 
 Default: alias of @code{SN-DOT}
-@endDefstr
+@endDefmpstr
 
 @unnumberedsubsubsec Footnote Settings
 
@@ -2900,7 +2900,7 @@ Effective: next footnote.
 Default: @math{@code{@\n[PD]} / 2}.
 @endDefmpreg
 
-@Defstr {FR, ms}
+@Defmpstr {FR, ms}
 Defines the ratio of the footnote line length to the current line
 length.  This is a GNU extension.
 
@@ -2908,7 +2908,7 @@ Effective: next footnote in single-column arrangements, next page
 otherwise.
 
 Default: @math{11/12}.
-@endDefstr
+@endDefmpstr
 
 @unnumberedsubsubsec Display Settings
 
@@ -3263,10 +3263,10 @@ normally precedes each heading is omitted.
 7.  Plantae
 @endExample
 
-@DefstrList {SN-STYLE, ms}
-@DefstrItemx {SN-DOT, ms}
-@DefstrItemx {SN-NO-DOT, ms}
-@DefstrListEndx {SN, ms}
+@DefmpstrList {SN-STYLE, ms}
+@DefmpstrItemx {SN-DOT, ms}
+@DefmpstrItemx {SN-NO-DOT, ms}
+@DefmpstrListEndx {SN, ms}
 After invocation of @code{NH}, the assigned number is made available in
 the strings @code{SN-DOT} (as it appears in a printed heading with
 default formatting, followed by a terminating period) and
@@ -3290,7 +3290,7 @@ The formatted number of the current section is available in the
 @code{SN} string (a feature first documented by Berkeley), facilitating
 its inclusion in @code{XS}/@code{XA}/@code{XE} table of contents
 entries.
-@endDefstr
+@endDefmpstr
 
 @Defmac {SH, [@Var{match-level}], ms}
 Unnumbered heading.
@@ -3429,15 +3429,15 @@ of the @code{PS} register).
 @code{groff} @file{ms} also supports strings to begin and end super- and
 subscripting.  These are all GNU extensions.
 
-@DefstrList {@lbracechar{}, ms}
-@DefstrListEndx {@rbracechar{}, ms}
+@DefmpstrList {@lbracechar{}, ms}
+@DefmpstrListEndx {@rbracechar{}, ms}
 Begin and end superscripting, respectively.
-@endDefstr
+@endDefmpstr
 
-@DefstrList {<, ms}
-@DefstrListEndx {>, ms}
+@DefmpstrList {<, ms}
+@DefmpstrListEndx {>, ms}
 Begin and end subscripting, respectively.
-@endDefstr
+@endDefmpstr
 
 Rather than calling the @code{CW} macro, in @code{groff} @file{ms} you
 might prefer to change the font family to Courier---a monospaced
@@ -3871,7 +3871,7 @@ A footnote is typically anchored to a place in the text with a
 @dfn{marker}, which is a small integer, a symbol such as a dagger, or
 arbitrary user-specified text.
 
-@Defstr {*, ms}
+@Defmpstr {*, ms}
 Place an automatically numbered footnote marker in the text.  Each time
 this string is interpolated, the number it produces increments by one.
 Automatic footnote numbers start at 1.  This is a Berkeley extension.
@@ -4199,53 +4199,53 @@ great deal of time in the long run if you use @code{ms} regularly.
 Redefine the following strings to adapt the @code{groff} @file{ms} macro
 package to languages other than English.
 
-@Defstr {REFERENCES, ms}
+@Defmpstr {REFERENCES, ms}
 Contains the string printed at the beginning of a references
 (bibliography) page produced with GNU @cite{refer@r{(1)}}.  The default
 is @samp{References}.
 @c XXX: Use of refer(1) with ms is insufficiently documented.
-@endDefstr
+@endDefmpstr
 
-@Defstr {ABSTRACT, ms}
+@Defmpstr {ABSTRACT, ms}
 Contains the string printed at the beginning of the abstract.  The
 default is @samp{\f[I]ABSTRACT\f[]}; it includes font style escape
 sequences to set the word in italics.
-@endDefstr
+@endDefmpstr
 
-@Defstr {TOC, ms}
+@Defmpstr {TOC, ms}
 Contains the string printed at the beginning of the table of contents.
 The default is @samp{Table of Contents}.
-@endDefstr
+@endDefmpstr
 
-@DefstrList {MONTH1, ms}
-@DefstrItemx {MONTH2, ms}
-@DefstrItemx {MONTH3, ms}
-@DefstrItemx {MONTH4, ms}
-@DefstrItemx {MONTH5, ms}
-@DefstrItemx {MONTH6, ms}
-@DefstrItemx {MONTH7, ms}
-@DefstrItemx {MONTH8, ms}
-@DefstrItemx {MONTH9, ms}
-@DefstrItemx {MONTH10, ms}
-@DefstrItemx {MONTH11, ms}
-@DefstrListEndx {MONTH12, ms}
+@DefmpstrList {MONTH1, ms}
+@DefmpstrItemx {MONTH2, ms}
+@DefmpstrItemx {MONTH3, ms}
+@DefmpstrItemx {MONTH4, ms}
+@DefmpstrItemx {MONTH5, ms}
+@DefmpstrItemx {MONTH6, ms}
+@DefmpstrItemx {MONTH7, ms}
+@DefmpstrItemx {MONTH8, ms}
+@DefmpstrItemx {MONTH9, ms}
+@DefmpstrItemx {MONTH10, ms}
+@DefmpstrItemx {MONTH11, ms}
+@DefmpstrListEndx {MONTH12, ms}
 Contain the full names of the calendar months.  The defaults are in
 English: @samp{January}, @samp{February}, and so on.
-@endDefstr
+@endDefmpstr
 
 The following special characters are available.@footnote{For an
 explanation of what special characters are @ref{Special Characters}.}
 
-@Defstr {-, ms}
+@Defmpstr {-, ms}
 Prints an em dash.
-@endDefstr
+@endDefmpstr
 
-@DefstrList {Q, ms}
-@DefstrListEndx {U, ms}
+@DefmpstrList {Q, ms}
+@DefmpstrListEndx {U, ms}
 Prints typographer's quotes where available, and neutral quotes
 otherwise.  @code{\*Q} is the left quote and @code{\*U} is the right
 quote.
-@endDefstr
+@endDefmpstr
 
 Improved accent marks are available in the @file{ms} macros.
 
@@ -4263,25 +4263,25 @@ following definitions.
 The following accent marks are available after invoking the @code{AM}
 macro:
 
-@Defstr {@code{'}, ms}
+@Defmpstr {@code{'}, ms}
 Acute accent.
-@endDefstr
+@endDefmpstr
 
-@Defstr {@code{`}, ms}
+@Defmpstr {@code{`}, ms}
 Grave accent.
-@endDefstr
+@endDefmpstr
 
-@Defstr {^, ms}
+@Defmpstr {^, ms}
 Circumflex.
-@endDefstr
+@endDefmpstr
 
-@Defstr {\,, ms}
+@Defmpstr {\,, ms}
 Cedilla.
-@endDefstr
+@endDefmpstr
 
-@Defstr {~, ms}
+@Defmpstr {~, ms}
 Tilde.
-@endDefstr
+@endDefmpstr
 
 @deffn String @t{\*[:]}
 @ifnotinfo
@@ -4293,68 +4293,68 @@ Tilde.
 Umlaut.
 @end deffn
 
-@Defstr {v, ms}
+@Defmpstr {v, ms}
 Hacek.
-@endDefstr
+@endDefmpstr
 
-@Defstr {_, ms}
+@Defmpstr {_, ms}
 Macron (overbar).
-@endDefstr
+@endDefmpstr
 
-@Defstr {., ms}
+@Defmpstr {., ms}
 Underdot.
-@endDefstr
+@endDefmpstr
 
-@Defstr {o, ms}
+@Defmpstr {o, ms}
 Ring above.
-@endDefstr
+@endDefmpstr
 
 The following are standalone characters available after invoking the
 @code{AM} macro:
 
-@Defstr {?, ms}
+@Defmpstr {?, ms}
 Upside-down question mark.
-@endDefstr
+@endDefmpstr
 
-@Defstr {!, ms}
+@Defmpstr {!, ms}
 Upside-down exclamation point.
-@endDefstr
+@endDefmpstr
 
-@Defstr {8, ms}
+@Defmpstr {8, ms}
 German ß ligature.
-@endDefstr
+@endDefmpstr
 
-@Defstr {3, ms}
+@Defmpstr {3, ms}
 Yogh.
-@endDefstr
+@endDefmpstr
 
-@Defstr {Th, ms}
+@Defmpstr {Th, ms}
 Uppercase thorn.
-@endDefstr
+@endDefmpstr
 
-@Defstr {th, ms}
+@Defmpstr {th, ms}
 Lowercase thorn.
-@endDefstr
+@endDefmpstr
 
-@Defstr {D-, ms}
+@Defmpstr {D-, ms}
 Uppercase eth.
-@endDefstr
+@endDefmpstr
 
-@Defstr {d-, ms}
+@Defmpstr {d-, ms}
 Lowercase eth.
-@endDefstr
+@endDefmpstr
 
-@Defstr {q, ms}
+@Defmpstr {q, ms}
 Hooked o.
-@endDefstr
+@endDefmpstr
 
-@Defstr {ae, ms}
+@Defmpstr {ae, ms}
 Lowercase æ ligature.
-@endDefstr
+@endDefmpstr
 
-@Defstr {Ae, ms}
+@Defmpstr {Ae, ms}
 Uppercase Æ ligature.
-@endDefstr
+@endDefmpstr
 
 @c ---------------------------------------------------------------------
 
@@ -11206,12 +11206,12 @@ with a default scaling indicator of @samp{z}.
 GNU @code{troff} has string variables primarily for user convenience.
 Only one string is predefined by the language.
 
-@Defstr {.T,}
+@Defmpstr {.T,}
 @stindex .T
 @cindex output device name string (@code{.T})
 Contains the name of the output device (for example, @samp{utf8} or
 @samp{pdf}).
-@endDefstr
+@endDefmpstr
 
 The @code{ds} (or @code{ds1}) request creates a string with a specified
 name and contents and the @code{\*} escape dereferences its name,
@@ -16954,7 +16954,7 @@ Generate a signature of @code{groff} after the validator button, if any.
 @cindex @code{grohtml}, registers and strings
 
 @DefmpregList {ps4html, grohtml}
-@DefstrListEndx {www-image-template, grohtml}
+@DefmpstrListEndx {www-image-template, grohtml}
 The registers @code{ps4html} and @code{www-image-template} are defined
 by the @code{pre-grohtml} preprocessor.  @code{pre-grohtml} reads in the
 @code{troff} input, marks up the inline equations and passes the result
