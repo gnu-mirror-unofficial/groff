@@ -6481,8 +6481,9 @@ Test
 @endDefesc
 
 @Defreq {ig, [@Var{end}]}
-Ignore input until, at the current brace scope, the macro @var{end} is
-called at the start of a control line, or the control line @samp{..} is
+Ignore input until, in the current conditional block (if
+any),@footnote{@xref{Conditional Blocks}} the macro @var{end} is called
+at the start of a control line, or the control line @samp{..} is
 encountered if @var{end} is not specified.  @code{ig} is parsed as if it
 were a macro definition, but its contents are discarded, not
 stored.@footnote{Exception: auto-incrementing registers defined outside
@@ -11960,9 +11961,9 @@ requests may be interposed between the @code{ie} branch and the
 It is frequently desirable for a control structure to govern more than
 one request, call more than one macro, span more than one input line of
 text, or mix the foregoing.  The opening and closing brace escape
-sequences @code{\@{} and @code{\@}} perform such grouping.  Brace escape
-sequences outside of control structures have no meaning and produce no
-output.
+sequences @code{\@{} and @code{\@}} perform such grouping; such
+@dfn{conditional blocks} can be nested.  Brace escape sequences outside
+of control structures have no meaning and produce no output.
 
 @code{\@{} should appear (after optional spaces and tabs) immediately
 subsequent to the request's conditional expression.  @code{\@}} should
@@ -12148,15 +12149,16 @@ macro definition.  If the optional second argument is not specified, the
 definition ends with the control line @samp{..} (two dots).
 Alternatively, @var{end} identifies a macro that, if called at the start
 of a control line, ends the definition of @var{name}; @var{end} is then
-called normally.  A macro definition must end at the same brace scope at
-which it began.  Spaces or tabs are permitted after the control
-character in the line containing this ending token (either @samp{.} or
-@samp{@var{end}}), but a tab immediately after the token prevents its
-recognition as the end of a macro definition.  The macro @var{end} can
-be called with arguments.@footnote{While it is possible to define and
-call a macro @samp{.}, you can't use it as an end macro: during a macro
-definition, @samp{..} is never handled as calling @samp{.}, even if
-@samp{.de @var{name} .} explicitly precedes it.}
+called normally.  A macro definition must end in the same conditional
+block (if any) in which it began.@footnote{@xref{Conditional Blocks}}
+Spaces or tabs are permitted after the control character in the line
+containing this ending token (either @samp{.} or @samp{@var{end}}), but
+a tab immediately after the token prevents its recognition as the end of
+a macro definition.  The macro @var{end} can be called with
+arguments.@footnote{While it is possible to define and call a macro
+@samp{.}, you can't use it as an end macro: during a macro definition,
+@samp{..} is never handled as calling @samp{.}, even if @samp{.de
+@var{name} .} explicitly precedes it.}
 @c
 @c @Example
 @c .de .
