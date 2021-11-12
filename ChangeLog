@@ -1,8 +1,7 @@
 2021-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Revamp Texinfo manual handling, 1/n.  Drop `BUILD_INFODOC`
-	symbol.  Ship manual in GNU Info, text, and HTML forms in
-	distribution archive.
+	[build]: Drop `BUILD_INFODOC` symbol.  Ship manual in GNU Info,
+	text, and HTML forms in distribution archive.
 
 	* Makefile.am (MAINTAINERCLEANFILES): Initialize.
 	(MOSTLYCLEANADD): Drop unused variable.
@@ -223,8 +222,8 @@
 	it.
 	* src/roff/groff/tests/artifacts/HONEYPOT: Add test artifact.
 	* src/roff/groff/tests/artifacts/devascii/README: ...and this;
-	we need an empty directory to make the test work but such things
-	tend to look unintentional.
+	we need a directory to make the test work but empty ones tend to
+	look unintentional.
 	* src/roff/groff/groff.am (groff_TESTS): Run test.
 	(EXTRA_DIST): Ship artifacts.
 
@@ -442,8 +441,8 @@
 	* src/roff/troff/input.cpp (encode_char): Rearrange
 	conditionals.  This is the logic that puts the "whatever" within
 	a \X'whatever' escape sequence into GNU troff's intermediate
-	output.  Handle stretchable and unstretchable space escape
-	sequences ("\ " and \~") first.  Then, if the token is a special
+	output.  Handle adjustable and nonadjustable space escape
+	sequences ("\~" and \ ") first.  Then, if the token is a special
 	character escape sequence, retrieve its "contents" (glyph name).
 	Move the basic Latin mapping for the seven glyph names '-',
 	'aq', 'dq', 'ga', 'ha', 'rs', and 'ti' here, before checking
@@ -501,7 +500,7 @@
 
 	[man]: Warn if `TE` table macro called but `TW` register (set by
 	tbl(1)) undefined.  Arrange it so that we warn only once per
-	man(7) document, not per table.
+	man(7) document, not per table region.
 
 	* tmac/an.tmac (TH): Remove `TW` register when processing new
 	document and clear `an-was-tbl-failure-reported` register.
