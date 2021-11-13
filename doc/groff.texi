@@ -6526,7 +6526,7 @@ Test
 
 @Defreq {ig, [@Var{end}]}
 Ignore input until, in the current conditional block (if
-any),@footnote{@xref{Conditional Blocks}} the macro @var{end} is called
+any),@footnote{@xref{Conditional Blocks}.} the macro @var{end} is called
 at the start of a control line, or the control line @samp{..} is
 encountered if @var{end} is not specified.  @code{ig} is parsed as if it
 were a macro definition, but its contents are discarded, not
@@ -6559,11 +6559,11 @@ the call of its end macro.
 @section Registers
 @cindex registers
 
-Numeric variables in GNU @code{troff} are called @dfn{registers}.  There
-are a number of built-in registers, supplying anything from the date to
-details of formatting parameters.
-
-@xref{Identifiers}, for details on register identifiers.
+Numeric variables in GNU @code{troff} are called @dfn{registers}.  Many
+built-in registers exist, supplying anything from the date to details of
+formatting parameters.  You can also define your own.
+@xref{Identifiers}, for information on constructing a valid name for a
+register.
 
 @menu
 * Setting Registers::
@@ -6580,28 +6580,18 @@ details of formatting parameters.
 @cindex setting registers (@code{nr}, @code{\R})
 @cindex registers, setting (@code{nr}, @code{\R})
 
-Define or set registers using the @code{nr} request or the @code{\R}
-escape.
-
-Although the following requests and escapes can be used to create
-registers, simply using an undefined register will cause it to be set to
-zero.
+Define registers and update their values with the @code{nr} request or
+the @code{\R} escape sequence.
 
 @DefreqList {nr, ident value}
 @DefescListEndx {\\R, @code{'}, ident value, @code{'}}
 Set register @var{ident} to @var{value}.  If @var{ident} doesn't exist,
 GNU @code{troff} creates it.
 
-The argument to @code{\R} usually has to be enclosed in quotes.
-@xref{Escapes}, for details on parameter delimiting characters.
-
-(Later, we will discuss additional forms of @code{nr} and @code{\R} that
-can change a register's value after it is dereferenced.
-@ref{Auto-increment}.)
-
-The @code{\R} escape doesn't produce an input token in GNU @code{troff};
-in other words, it vanishes completely after GNU @code{troff} has
-processed it.
+The argument to @code{\R} must be enclosed within delimiters; see
+@ref{Escapes}, for a list of valid delimiter characters.  The @code{\R}
+escape doesn't produce an input token in GNU @code{troff}; in other
+words, it vanishes completely after GNU @code{troff} has processed it.
 
 For example, the following two lines are equivalent:
 
@@ -6610,6 +6600,10 @@ For example, the following two lines are equivalent:
 \R'a (((17 + (3 * 4))) % 4)'
     @result{} 1
 @endExample
+
+(Later, we will discuss additional forms of @code{nr} and @code{\R} that
+can change a register's value after it is dereferenced but before it is
+interpolated.  @xref{Auto-increment}.)
 
 The complete transparency of @code{\R} can cause surprising effects if
 you use registers like @code{.k}, which get evaluated at the time they
@@ -6648,7 +6642,7 @@ length, which in turn causes the start of a new output line.  Now
 @code{.k} returns the expected value.
 @endDefreq
 
-Both @code{nr} and @code{\R} have two additional special forms to
+@code{nr} and @code{\R} each have two additional special forms to
 increment or decrement a register.
 
 @DefreqList {nr, ident @t{+}@Var{value}}
@@ -6740,7 +6734,10 @@ Register contents are interpolated with the @code{\n} escape sequence.
 @cindex assignments, indirect
 Interpolate register with name @var{ident} (one-character
 name@tie{}@var{i}, two-character name @var{id}).  @code{\n} is
-interpreted even in copy mode (@pxref{Copy Mode}).
+interpreted even in copy mode (@pxref{Copy Mode}).  If the register is
+undefined, it is created, assigned a value of@tie{}@samp{0}, and a
+warning of type @samp{reg} is produced.  @xref{Debugging}, for
+information about the enablement and suppression of warnings.
 
 @Example
 .nr a 5
@@ -6785,8 +6782,9 @@ notation.
 @endDefreq
 
 Auto-incrementation is not @emph{completely} automatic; the @code{\n}
-escape sequence never alters the value of a register.  To apply
-auto-incrementation to a register, use interpolate it with @samp{\n±}.
+escape sequence in its basic form never alters the value of a register.
+To apply auto-incrementation to a register, interpolate it with
+@samp{\n±}.
 
 @DefescList {\\n, +, i, }
 @DefescItem {\\n, -, i, }
