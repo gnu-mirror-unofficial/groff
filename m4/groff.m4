@@ -57,7 +57,7 @@ AC_DEFUN([GROFF_PRINT],
 
 AC_DEFUN([GROFF_PROG_YACC],
   [AC_CHECK_PROGS([YACC], [byacc 'bison -y' yacc], [missing])
-  if test "$YACC" = missing -a -d ${srcdir}/.git; then
+  if test "$YACC" = missing -a -d "$srcdir"/.git; then
     AC_MSG_ERROR([Could not find 'yacc' or 'bison'], 1)
   fi
   ])
@@ -167,15 +167,16 @@ AC_DEFUN([GROFF_MAKEINFO],
        missing="missing 'makeinfo'"
      else
        AC_MSG_CHECKING([for makeinfo version])
-       # We need an additional level of quoting to make sed's regexps work.
+       # We need an additional level of quoting to make sed's regexps
+       # work.
        [makeinfo_version=`$MAKEINFO --version 2>&1 \
         | sed -e 's/^.* \([^ ][^ ]*\)$/\1/' -e '1q'`]
        AC_MSG_RESULT([$makeinfo_version])
        # Consider only the first two numbers in version number string.
-       makeinfo_version_major=`IFS=.; set x $makeinfo_version; echo 0${2}`
-       makeinfo_version_minor=`IFS=.; set x $makeinfo_version; echo 0${3}`
+       makeinfo_version_major=`IFS=.; set x $makeinfo_version; echo ${2}`
+       makeinfo_version_minor=`IFS=.; set x $makeinfo_version; echo ${3}`
        makeinfo_version_numeric=`
-         expr ${makeinfo_version_major}000 \+ ${makeinfo_version_minor}`
+         expr ${makeinfo_version_major}000 + $makeinfo_version_minor`
        if test $makeinfo_version_numeric -lt 5000; then
          missing="'makeinfo' is too old."
          MAKEINFO=
@@ -184,9 +185,9 @@ AC_DEFUN([GROFF_MAKEINFO],
 
      if test -n "$missing"; then
        infofile=doc/groff.info
-       test -f ${infofile} || infofile=${srcdir}/${infofile}
-       if test ! -f ${infofile} \
-	|| test "${srcdir}"/doc/groff.texi -nt ${infofile}; then
+       test -f $infofile || infofile="$srcdir"/$infofile
+       if test ! -f $infofile \
+	|| test "$srcdir"/doc/groff.texi -nt $infofile; then
 	 AC_MSG_ERROR($missing
 [Get the 'texinfo' package version 5.0 or newer.])
        fi
@@ -871,7 +872,7 @@ main()
 
 AC_DEFUN([GROFF_BROKEN_SPOOLER_FLAGS],
   [AC_MSG_CHECKING([default value for grops -b option])
-   test -n "${BROKEN_SPOOLER_FLAGS}" || BROKEN_SPOOLER_FLAGS=0
+   test -n "$BROKEN_SPOOLER_FLAGS" || BROKEN_SPOOLER_FLAGS=0
    AC_MSG_RESULT([$BROKEN_SPOOLER_FLAGS])
    AC_SUBST([BROKEN_SPOOLER_FLAGS])])
 
@@ -1489,11 +1490,11 @@ AC_DEFUN([GROFF_UINTMAX_T],
 # MS-DOS/Win32=';').
 #
 # The logic to resolve this test is already encapsulated in
-# '${srcdir}/src/include/nonposix.h'.
+# '$srcdir/src/include/nonposix.h'.
 
 AC_DEFUN([GROFF_TARGET_PATH_SEPARATOR],
   [AC_MSG_CHECKING([separator character to use in groff search paths])
-   cp ${srcdir}/src/include/nonposix.h conftest.h
+   cp "$srcdir"/src/include/nonposix.h conftest.h
    AC_COMPILE_IFELSE([
        AC_LANG_PROGRAM([[
 	

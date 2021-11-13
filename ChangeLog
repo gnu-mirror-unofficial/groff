@@ -1,5 +1,19 @@
 2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[m4]: Clean up shell variable quoting and bracing.
+
+	* m4/groff.m4 (GROFF_PROG_YACC, GROFF_MAKEINFO,
+	GROFF_BROKEN_SPOOLER_FLAGS, GROFF_TARGET_PATH_SEPARATOR): Stop
+	bracing shell variable expansions that don't require it; the
+	shell is not make(1).
+	(GROFF_PROG_YACC, GROFF_MAKEINFO): Double-quote shell variable
+	expansions that might produce whitespace.
+	(GROFF_MAKEINFO): Drop unnecessary leading zeroes from version
+	number component construction.  Drop unnecessary escaping of
+	plus sign in expr(1) input.
+
+2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[m4]: Clean up test(1) usage.
 
 	Get rid of string (non-)nullity tests and comparisons involving
