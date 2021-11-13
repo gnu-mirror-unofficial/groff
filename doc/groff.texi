@@ -6676,11 +6676,7 @@ ignored.  @xref{Debugging}, for information about warnings.
 @cindex register, removing alias for (@code{aln})
 To remove a register alias, call @code{rr} on its name.  A register's
 contents do not become inaccessible until it has no more names.
-
 @endDefreq
-
-@codequotebacktick off
-@codequoteundirected off
 
 @c ---------------------------------------------------------------------
 
@@ -6689,7 +6685,7 @@ contents do not become inaccessible until it has no more names.
 @cindex interpolating registers (@code{\n})
 @cindex registers, interpolating (@code{\n})
 
-Numeric registers can be accessed via the @code{\n} escape.
+Register contents are interpolated with the @code{\n} escape sequence.
 
 @DefescList {\\n, , i, }
 @DefescItem {\\n, (, id, }
@@ -6722,9 +6718,6 @@ interpreted even in copy mode (@pxref{Copy Mode}).
 @endDefesc
 
 @c ---------------------------------------------------------------------
-
-@codequotebacktick on
-@codequoteundirected on
 
 @node Auto-increment, Assigning Register Formats, Interpolating Registers, Registers
 @subsection Auto-increment
