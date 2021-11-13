@@ -6041,13 +6041,13 @@ superscripting or interpolating a symbol.
 @cindex no-break control character (@code{'})
 @cindex character, no-break control (@code{'})
 @cindex control character, no-break (@code{'})
-A request line begins with a control character, which is either a single
-quote (@samp{'}, the @dfn{no-break control character}) or a period
-(@samp{.}, the normal @dfn{control character}).  These can be changed;
-see @ref{Character Translations}, for details.  After this there may be
-optional tabs or spaces followed by an identifier, which is the name of
-the request.  This may be followed by any number of space-separated
-arguments (@emph{no} tabs here).
+A request invocation begins with a control character, which is either a
+single quote (@samp{'}, the @dfn{no-break control character}) or a
+period (@samp{.}, the normal @dfn{control character}).  These can be
+changed; see @ref{Character Translations}, for details.  After this
+there may be optional tabs or spaces followed by an identifier, which is
+the name of the request.  This may be followed by any number of
+space-separated arguments (@emph{no} tabs here).
 
 @cindex structuring source code of documents or macro packages
 @cindex documents, structuring the source of
@@ -6132,6 +6132,14 @@ zero in such cases).
 If a macro is interpolated as a string (that is, using @code{\*}), the
 value of the @code{.br} register is inherited from the caller.
 @endDefreg
+
+There is no way to invoke an undefined request; such syntax is
+interpreted as a macro call instead.  If a macro of the desired name
+does not exist, it is created, assigned an empty definition, and a
+warning of type @samp{mac} is produced.  @xref{Debugging}, for
+information about the enablement and suppression of warnings.  A call of
+an undefined macro @emph{does} end a macro definition naming it as its
+end macro (@pxref{Writing Macros}).
 
 @menu
 * Request and Macro Arguments::
@@ -6706,8 +6714,9 @@ exist, the request is ignored.
 @cindex register, creating alias for (@code{aln})
 Create an alias @var{new} for an existing register @var{old}, causing
 the names to refer to the same stored object.  If @var{old} is
-undefined, a warning of type @samp{reg} is generated and the request is
-ignored.  @xref{Debugging}, for information about warnings.
+undefined, a warning of type @samp{reg} is produced and the request is
+ignored.  @xref{Debugging}, for information about the enablement and
+suppression of warnings.
 
 @cindex alias, register, removing (@code{aln})
 @cindex removing alias for register (@code{aln})
@@ -10055,9 +10064,9 @@ input character with character code @var{XXX}.  For example,
 @code{\[char97]} is identical to the letter @code{a} if @acronym{ASCII}
 encoding is active.}
 
-If @var{name} is undefined, a warning of type @samp{char} is generated,
-and the escape is ignored.  @xref{Debugging}, for information about
-warnings.
+If @var{name} is undefined, a warning of type @samp{char} is produced
+and the escape is ignored.  @xref{Debugging}, for information about the
+enablement and suppression of warnings.
 
 groff resolves @code{\[...]} with more than a single component as
 follows:
@@ -11299,8 +11308,9 @@ I see a \*[b].
 @endExample
 
 If the string named by the @code{\*} escape does not exist, it is
-defined as empty, and a warning of type @samp{mac} is emitted
-(@pxref{Debugging}).
+defined as empty, and a warning of type @samp{mac} is produced.
+@xref{Debugging}, for information about the enablement and suppression
+of warnings.
 
 If @code{ds} is called with only one argument, @var{name} is defined as
 an empty string.
@@ -11376,7 +11386,7 @@ effect, use the @code{\*} escape to interpolate a macro instead.
 
 Strings, macros, and diversions share a name space; @ref{Identifiers}.
 Internally, the same mechanism is used to store them.  It is thus
-possible to invoke a macro with string interpolation syntax and vice
+possible to call a macro with string interpolation syntax and vice
 versa.
 
 @Example
@@ -11668,7 +11678,8 @@ been defined.
 Create an alias @var{new} for the existing request, string, macro, or
 diversion object named @var{old}, causing the names to refer to the same
 stored object.  If @var{old} is undefined, a warning of type @samp{mac}
-is generated and the request is ignored.
+is produced, and the request is ignored.  @xref{Debugging}, for
+information about the enablement and suppression of warnings.
 
 To understand how the @code{als} request works, consider two different
 storage pools:@: one for objects (macros, strings, etc.), and another
@@ -13659,7 +13670,7 @@ Another line.
 @cindex diversions, and traps
 @cindex traps, and diversions
 An important fact to consider while designing macros is that diversions
-and traps do not interact normally.  For example, if a trap invokes a
+and traps do not interact normally.  For example, if a trap calls a
 header macro (while outputting a diversion) that tries to change the
 font on the current page, the effect is not visible before the diversion
 has completely been printed (except for input protected with @code{\!}
@@ -13969,14 +13980,19 @@ requests are used to create and alter diversions.
 @cindex diversion, ending (@code{di})
 @cindex appending to a diversion (@code{da})
 @cindex diversion, appending (@code{da})
-Begin a diversion called @var{name}.  The @code{da} request appends to
-the existing diversion called @var{name}, creating it if necessary.
-@code{di} or @code{da} without an argument stops diverting output to the
-diversion named by the most recent corresponding request.
+Start collecting formatted output in a diversion called @var{name}.  The
+@code{da} request appends to the existing diversion called @var{name},
+creating it if necessary.  The pending output line is diverted as well.
+Switching to another (empty) environment (with the @code{ev} request)
+avoids the inclusion of the current partially collected line;
+@ref{Environments}.
 
-The pending output line is diverted as well.  Switching to another
-(empty) environment (with the @code{ev} request) avoids the inclusion of
-the current partially collected line; @ref{Environments}.
+Invoking @code{di} or @code{da} without an argument stops diverting
+output to the diversion named by the most recent corresponding request.
+If @code{di} or @code{da} is called without an argument when there is no
+current diversion, a warning of type @samp{di} is produced.
+@xref{Debugging}, for information about the enablement and suppression
+of warnings.
 
 @Example
 Before the diversion.
@@ -14612,9 +14628,9 @@ environment (@pxref{Environments}).
 Replace the @code{so} request's control line with the contents of the
 file named by the argument, ``sourcing'' it.  @var{file} is sought in
 the directories specified by @option{-I} command-line option.  If
-@var{file} does not exist, a warning of type @samp{file} is emitted and
+@var{file} does not exist, a warning of type @samp{file} is produced and
 the request has no further effect.  @xref{Debugging}, for information
-about warnings.
+about the enablement and suppression of warnings.
 
 @code{so} can be useful for large documents; e.g., allowing each chapter
 of a book to be kept in a separate file.  However, files interpolated
