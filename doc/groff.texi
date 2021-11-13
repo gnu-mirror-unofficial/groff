@@ -8008,17 +8008,16 @@ The hyphenation space adjustment threshold is available in the
 @cindex spacing, manipulating
 
 @Defreq {sp, [@Var{distance}]}
-Space downwards @var{distance}.  With no argument it advances
-1@tie{}line.  A negative argument causes @code{gtroff} to move up the
-page the specified distance.  If the argument is preceded by a @samp{|}
-then @code{gtroff} moves that distance from the top of the page.  This
-request causes a line break, and that adds the current line spacing to
-the space you have just specified.  The default scaling indicator is
-@samp{v}.
+Space downwards by @var{distance}.  With no argument, the drawing
+position is advanced downward by one vee.  Inside a diversion, any
+@var{distance} argument is ignored.  Otherwise, a negative argument
+moves the drawing position up the page.   If the argument is preceded by
+the @samp{|} operator, GNU @code{troff} moves that distance from the top
+of the page, plus the current line spacing.  The default scaling
+indicator is @samp{v}.  This request causes a break.
 
-For convenience you may wish to use the following macros to set the
-height of the next line at a given distance from the top or the bottom
-of the page:
+You may wish to use the following macros to set the baseline of the next
+output text at a given distance from the top or the bottom of the page.
 
 @Example
 .de y-from-top-down
@@ -8031,11 +8030,15 @@ of the page:
 @endExample
 
 @noindent
-A call to @samp{.y-from-bot-up 10c} means that the bottom of the next
-line will be at 10@tie{}cm from the paper edge at the bottom.
+A call to @samp{.y-from-bot-up 10c} means that the next text baseline
+will be at 10@tie{}cm from the bottom edge of the paper.
 
-If a vertical trap is sprung during execution of @code{sp}, the amount
-of vertical space after the trap is discarded.  For example, this
+@cindex @code{sp} request, and traps
+@cindex discarded space in traps
+@cindex space, discarded, in traps
+@cindex traps, and discarded space
+If a vertical position trap is sprung during execution of @code{sp}, the
+amount of vertical space after the trap is discarded.
 
 @Example
 .de xxx
@@ -8049,28 +8052,19 @@ foo
 bar
 .sp 50
 baz
+    @result{} foo
+    @result{}
+    @result{}
+    @result{} bar
+    @result{}
+    @result{} baz
 @endExample
 
-@noindent
-results in
-
-@Example
-foo
-
-
-bar
-
-baz
-@endExample
-
-@cindex @code{sp} request, and traps
-@cindex discarded space in traps
-@cindex space, discarded, in traps
-@cindex traps, and discarded space
 The amount of discarded space is available in the register
 @code{.trunc}.
 
-To protect @code{sp} against vertical traps, use the @code{vpt} request:
+To protect @code{sp} against vertical position traps, use the @code{vpt}
+request to disable them.
 
 @Example
 .vpt 0

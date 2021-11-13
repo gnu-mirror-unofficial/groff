@@ -2977,16 +2977,34 @@ does not exist.
 .
 .TPx
 .REQ .sp
-Skip one line vertically.
+Move the drawing position down one vee.
+.
 .
 .TPx
-.REQ .sp "N"
-Space vertical distance
-.I N
-up or down according to sign of
+.REQ .sp N
+Move the drawing position vertically by
 .I N
 (default scaling indicator\~\c
 .scaleindicator v ).
+.
+Positive values are downwards.
+.
+Prefixing
+.I N
+with the
+.B |
+operator moves to a position relative to the page top for positive
+.IR N ,
+and the bottom if
+.I N
+is negative;
+in all cases,
+one line height (vee) is added
+.RI to\~ N .
+.
+.I N
+is ignored inside a diversion.
+.
 .
 .TPx
 .REQ .special
