@@ -5823,9 +5823,9 @@ the beginning of an input line;@footnote{Control structure syntax
 creates an exception to this rule, but is designed to remain useful:
 recalling our example, @samp{.if 1 .Underline this} would underline only
 ``this'', precisely.  @xref{Conditionals and Loops}.} if the @code{|}
-operator were omitted, then the underline would be drawn to the
-beginning of the @emph{output} line, where many words might precede the
-macro argument.
+operator were omitted, then the underline would be drawn a zero distance
+from the current position, producing device-dependent, and likely
+undesirable, results.
 
 @codequotebacktick off
 @codequoteundirected off
