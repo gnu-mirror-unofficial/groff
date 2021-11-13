@@ -11004,10 +11004,10 @@ a single character as an argument) to change the font on the fly:
 .mc \s[20]x\s[0]
 @endExample
 
-@Defreq {sizes, s1 s2 @dots{} sn [0]}
-Some devices may only have certain permissible sizes, in which case
-@code{gtroff} rounds to the nearest permissible size.  The @file{DESC}
-file specifies which sizes are permissible for the device.
+@Defreq {sizes, s1 s2 @dots{} sn [@t{0}]}
+Some devices may permit only certain type sizes, in which case GNU
+@code{troff} rounds to the nearest permissible size.  The @file{DESC}
+file normally specifies which type sizes are allowed by the device.
 
 Use the @code{sizes} request to change the permissible sizes for the
 output device.  Arguments are in scaled points; the @code{sizescale}
