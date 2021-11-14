@@ -18319,12 +18319,14 @@ The form of the @var{metrics} field is as follows.
 
 @noindent
 There must not be any spaces, tabs, or newlines between these subfields
-(it has been split here into two lines only for better legibility).
-Missing subfields are assumed to be@tie{}@code{0}.  The subfields are
-all decimal integers.  Since there is no associated binary format, these
-values are not required to fit into the C language data type @samp{char}
-as they are in @acronym{AT&T} device-independent @code{troff}.  The
-@var{width} subfield gives the width of the glyph.  The @var{height}
+(it has been split here into two lines only for better legibility).  The
+subfields are in basic units expressed as decimal integers.  Missing
+subfields are assumed to be@tie{}@code{0}.  Since there is no associated
+binary format, these values are not required to fit into the C language
+data type @samp{char} as they are in @acronym{AT&T} device-independent
+@code{troff}.
+
+The @var{width} subfield gives the width of the glyph.  The @var{height}
 subfield gives the height of the glyph (upwards is positive); if a glyph
 does not extend above the baseline, it should be given a zero height,
 rather than a negative height.  The @var{depth} subfield gives the depth
