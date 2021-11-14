@@ -12175,11 +12175,12 @@ restarting the next iteration.
 @cindex macros, writing
 
 A @dfn{macro} is a stored collection of text and control lines that can
-be used multiple times.  Use macros to define common operations.
-@xref{Strings}, for a (limited) alternative syntax to call macros.
-While requests exist for the purpose of creating macros, simply calling
-an undefined macro, or interpolating it as a string, will cause it to be
-defined as empty.  @xref{Identifiers}.
+be used multiple times.  Use macros to define common operations.  Macros
+are called in the same way that requests are invoked.  @xref{Strings},
+for a (limited) alternative syntax to call macros.  While requests exist
+for the purpose of creating macros, simply calling an undefined macro,
+or interpolating it as a string, will cause it to be defined as empty.
+@xref{Identifiers}.
 
 @Defreq {de, name [@Var{end}]}
 Define a macro @var{name}, replacing the definition of any existing
@@ -12187,14 +12188,14 @@ request, macro, string, or diversion called @var{name}.  GNU
 @code{troff} enters ``copy mode'', storing subsequent input lines as the
 macro definition.  If the optional second argument is not specified, the
 definition ends with the control line @samp{..} (two dots).
-Alternatively, @var{end} identifies a macro that, if called at the start
-of a control line, ends the definition of @var{name}; @var{end} is then
-called normally.  A macro definition must end in the same conditional
-block (if any) in which it began.@footnote{@xref{Conditional Blocks}}
-Spaces or tabs are permitted after the control character in the line
-containing this ending token (either @samp{.} or @samp{@var{end}}), but
-a tab immediately after the token prevents its recognition as the end of
-a macro definition.  The macro @var{end} can be called with
+Alternatively, @var{end} identifies a macro whose call syntax at the
+start of a control line ends the definition of @var{name}; @var{end} is
+then called normally.  A macro definition must end in the same
+conditional block (if any) in which it began.@footnote{@xref{Conditional
+Blocks}} Spaces or tabs are permitted after the control character in the
+line containing this ending token (either @samp{.} or @samp{@var{end}}),
+but a tab immediately after the token prevents its recognition as the
+end of a macro definition.  The macro @var{end} can be called with
 arguments.@footnote{While it is possible to define and call a macro
 @samp{.}, you can't use it as an end macro: during a macro definition,
 @samp{..} is never handled as calling @samp{.}, even if @samp{.de
@@ -12363,7 +12364,7 @@ create an alias of, remove, and rename a macro, respectively.
 Macro identifiers share their name space with requests, strings, and
 diversions; @ref{Identifiers}.  The @code{am}, @code{as}, @code{da},
 @code{de}, @code{di}, and @code{ds} requests (together with their
-variants) only create a new object if the name of the macro, diversion,
+variants) create a new object only if the name of the macro, diversion,
 or string is currently undefined or if it is defined as a request;
 normally, they modify the value of an existing object.  @xref{als,,the
 description of the @code{als} request}, for pitfalls when redefining a
@@ -12408,7 +12409,7 @@ with one of the following escape sequences.
 @DefescItem {\\$, (, nn, }
 @DefescListEnd {\\$, [, nnn, ]}
 Interpolate the @var{n}th, @var{nn}th, or @var{nnn}th parameter.  The
-first form only accepts a single digit (1@leq{}@var{n}@leq{}9)), the
+first form expects only a single digit (1@leq{}@var{n}@leq{}9)), the
 second two digits (01@leq{}@var{nn}@leq{}99)), and the third any
 positive integer @var{nnn}.  Macros and strings accept an unlimited
 number of parameters.
