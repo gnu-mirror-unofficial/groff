@@ -1058,9 +1058,7 @@ End expression group of higher precedence
 .
 .
 .P
-In many contexts,
-unary prefix operators are also available in contexts where they make
-sense.
+Unary prefix operators are available in contexts where they make sense.
 .
 .
 .RS
@@ -1218,14 +1216,14 @@ request must be the last such escape sequence on an input line.
 .SS "Conditional expressions"
 .\" ====================================================================
 .
-In
+The
 .request .if ,
 .request .ie ,
 and
 .request .while
-requests,
-in addition to the numeric expressions described above,
-several Boolean operators are available;
+requests can test the truth values of numerical expressions.
+.
+They also support several additional Boolean operators;
 the members of this expanded class are termed
 .IR "conditional expressions" .
 .
@@ -1405,7 +1403,7 @@ depending on its sign.
 .
 .
 .P
-If a numeric expression presented as
+If a numerical expression presented as
 .I \[+-]N
 starts with a
 .squoted_char +
@@ -3828,7 +3826,7 @@ vertically.
 .ESCq B anything
 Interpolate 1 if
 .I anything
-is a valid numeric expression,
+is a valid numerical expression,
 and\~0 otherwise.
 .
 .
