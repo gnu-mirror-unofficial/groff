@@ -3,6 +3,26 @@
 	* src/devices/gropdf/gropdf.pl: Fixes to importing pdf versions
 	> 1.4.
 
+2021-11-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tbl]: If "nowarn", suppress table row warning.
+
+	* src/preproc/tbl/table.cpp (table::init_output): Bracket the
+	generated groff code that emits a warning if a table row
+	overruns a page location trap (usually, is too long to
+	vertically fit on the page) in a test for whether the "nowarn"
+	region option was given, so that this warning is suppressed as
+	well when that option is used.
+	* src/preproc/tbl/tbl.1.man (Region options): Document new
+	"nowarn" behavior.
+
+	{"nokeep" also suppresses this warning, for a different reason;
+	no diversion is created to hold the table row, so its vertical
+	size does not exist to be compared to the distance to the next
+	page trap.}
+
+	Fixes <https://savannah.gnu.org/bugs/?61477>.
+
 2021-11-13  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/tbl/table.cpp (table::do_vspan): Fix code style

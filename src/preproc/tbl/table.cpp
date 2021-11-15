@@ -1846,7 +1846,7 @@ void table::init_output()
 	 ".\\}\n"
 	 ".\\}\n"
 	 "..\n");
-  if (!(flags & NOKEEP))
+  if (!(flags & NOKEEP)) {
     prints(".de " KEEP_MACRO_NAME "\n"
 	   ".if '\\n[.z]'' \\{.ds " QUOTE_STRING_NAME " \\\\\n"
 	   ".ds " TRANSPARENT_STRING_NAME " \\!\n"
@@ -1876,15 +1876,16 @@ void table::init_output()
 	   ".sp \\n[.t]u\n"
 	   ".nr " SUPPRESS_BOTTOM_REG " 0\n"
 	   ".mk #T\n"
-	   ".\\}\n"
-	   ".if \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
-	   /* Since we turn off traps, it won't get into an infinite
-	      loop when we try and print it; it will just go off the
-	      bottom of the page. */
-	   ".  tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	   ".  tm1 \" table row will not fit on page \\n%\n"
-	   ".\\}\n"
-	   ".nf\n"
+	   ".\\}\n");
+    if (!(flags & NOWARN))
+      prints(".if \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
+	     /* Since we turn off traps, it won't get into an infinite
+		loop when we try and print it; it will just go off the
+		bottom of the page. */
+	     ".  tmc \\n[.F]: around line \\n[.c]: warning:\n"
+	     ".  tm1 \" table row will not fit on page \\n%\n"
+	     ".\\}\n");
+    prints(".nf\n"
 	   ".if \\n[.nm] .if \\n[ln] .nm \\n[ln]\n"
 	   ".nr " ROW_MAX_LINE_REG " \\n[ln]\n"
 	   ".ls 1\n"
@@ -1929,6 +1930,7 @@ void table::init_output()
 	   ".nr ln \\n[" ROW_MAX_LINE_REG "]\n"
 	   ".\\}\n"
 	   "..\n");
+  }
   prints(".ec\n"
 	 ".ce 0\n"
 	 ".nf\n");
