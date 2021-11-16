@@ -183,27 +183,21 @@ These entries comprise the
 .SS "Region options"
 .\" ====================================================================
 .
-The lines immediately following the
+The line immediately following the
 .B .TS
-token may specify region options,
-keywords that influence the rendering of the tables in that region as a
-whole or all of their entries indiscriminately.
+token may specify region options:
+keywords that influence the interpretation or rendering of the region as
+a whole or all table entries within it indiscriminately.
 .
-Some of these keywords require a parenthesized argument.
+Some of these options require a parenthesized argument.
 .
-The option keywords can be specified in any lettercase and must be
-separated by commas,
+They can be specified in any lettercase and must be separated by commas,
 spaces,
-tabs,
-or newlines.
+or tabs.
 .
 (AT&T
 .I tbl \" AT&T
-accepted only options with all characters in the same lettercase,
-separated by
-spaces,
-tabs,
-or commas.)
+accepted only options with all characters in the same lettercase.)
 .
 Spaces and tabs are permitted between an option's name and its
 parenthesized argument.
@@ -244,7 +238,7 @@ is also recognized.
 .
 .TP
 .B center
-Center the table with respect to the current indentation and line
+Center the table region with respect to the current indentation and line
 length;
 the default is to left-align it.
 .
@@ -268,14 +262,15 @@ This is a GNU extension.
 .
 .TP
 .BI delim( xy )
-Use characters
+Recognize characters
 .I x
 .RI and\~ y
-as the start and end delimiters,
+as start and end delimiters,
 respectively,
 for
 .MR @g@eqn @MAN1EXT@
-input.
+input,
+and ignore input between them.
 .
 .
 .TP
@@ -331,8 +326,7 @@ Don't use diversions to prevent page breaks.
 .
 Normally,
 .I \%@g@tbl
-attempts to prevent undesirable breaks in boxed tables by using
-diversions.
+attempts to prevent undesirable breaks in tables by using diversions.
 .
 This can sometimes interact badly with macro packages' own use of
 diversions\[em]when footnotes,
@@ -369,7 +363,7 @@ instead of a tab to separate entries in a row of table data.
 .SS "Table format specification"
 .\" ====================================================================
 .
-The table format specification is mandatory;
+The table format specification is mandatory:
 it determines the number of columns in the table and directs how the
 entries within it are to be typeset.
 .
@@ -400,8 +394,10 @@ only some modifiers,
 described below,
 make separation necessary.
 .
-Most column classifiers and modifiers are letters;
-they are recognized case-insensitively.
+Column classifiers are letters or punctuation symbols,
+whereas modifiers consist of or begin with letters or numerals.
+.
+Both are recognized case-insensitively.
 .
 .
 .P
@@ -491,23 +487,20 @@ classifiers are the easiest to understand and use.
 .BR A ,\~ a
 Center longest entry in this column;
 left-align remaining entries in the column with respect to the centered
-entry and indent them by one en.
+entry,
+then indent them all by one en.
 .
-The idea is to use such alphabetic sub-columns
+Such \[lq]alphabetic\[rq] entries
 (hence the name of the classifier)
-in combination
-.RB with\~ L
-such that
-.B A
-and
-.B L
-classifications share a column,
+can be used in the same column as
+.BR L -classified
+entries,
 as in
 .RB \[lq] LL,AR.\& \[rq].
 .
 The
 .B A
-entries are termed sub-columns due to their indentation.
+entries are often termed \[lq]sub-columns\[rq] due to their indentation.
 .
 .
 .TP
@@ -534,10 +527,10 @@ use the rightmost digit for vertical alignment;
 otherwise,
 center the entry within the column.
 .
-Alignment can be forced to a certain position using
-.BR \[rs]& ;
-if multiple instances of this non-printing token are present in the
-data,
+The non-printing input token
+.B \[rs]&
+forces alignment to its position;
+if multiple instances of it occur in the data,
 use the leftmost one for alignment.
 .
 .
@@ -568,7 +561,7 @@ Using equations
 .IR \%@g@eqn )
 within
 .BR N -classified
-columms
+columns
 is often troublesome due to the foregoing algorithm for finding the
 vertical alignment.
 .
@@ -652,14 +645,14 @@ increase relative to the previous table format;
 in that case,
 you must end the table region and start another.
 .
-If that will not serve because the region uses box options or the column
-widths are incompatible,
-you must design the initial table format specification to designate the
+If that will not serve because the region uses box options or the
+columns align in an undesirable manner,
+you must design the initial table format specification to include the
 maximum quantity of columns required,
 and use the
 .B S
-horizontal spanning classifier to achieve the desired columnar
-alignment.
+horizontal spanning classifier where necessary to achieve the desired
+columnar alignment.
 .
 .
 .\" ====================================================================
@@ -778,10 +771,12 @@ like adjustment or hyphenation.
 .
 The macro is called
 .I after
-other column modifiers like
+other the column modifiers
 .BR b ,
 .BR f ,
-or
+.BR i ,
+.BR p ,
+and
 .B v
 take effect.
 .
@@ -1279,7 +1274,7 @@ contingent upon an
 .BR el ,
 or
 .B while
-requests)
+request)
 can result in misleading line numbers in subsequent diagnostics.
 .
 .I \%@g@tbl
@@ -1330,9 +1325,10 @@ will recognize them.
 .\" ====================================================================
 .
 .ne 3v
+In addition to extensions noted above,
 GNU
 .I tbl \" GNU
-removes many constraints endured by users of AT&T
+removes constraints endured by users of AT&T
 .IR tbl .\" AT&T
 .
 .
