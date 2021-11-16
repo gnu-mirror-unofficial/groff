@@ -1855,7 +1855,7 @@ void table::init_output()
 	   ".in 0\n"
 	   ".\\}\n"
 	   "..\n"
-	   // protect # in macro name against eqn
+	   // Protect '#' in macro name from being interpreted by eqn.
 	   ".ig\n"
 	   ".EQ\n"
 	   "delim off\n"
@@ -2170,7 +2170,8 @@ void table::compute_expand_width()
   prints(".if \\n[" EXPAND_REG "]<0 \\{\\\n");
   entry_list->set_location();
   if (!(flags & NOWARN)) {
-    // protect ` and ' in warning message against eqn
+    // Protect characters in diagnostic message (especially :, [, ])
+    // from being interpreted by eqn.
     prints(".ig\n"
 	   ".EQ\n"
 	   "delim off\n"
@@ -2222,7 +2223,8 @@ void table::compute_separation_factor()
   prints(".ie \\n[" SEPARATION_FACTOR_REG "]<=0 \\{\\\n");
   entry_list->set_location();
   if (!(flags & NOWARN)) {
-    // protect ` and ' in warning message against eqn
+    // Protect characters in diagnostic message (especially :, [, ])
+    // from being interpreted by eqn.
     prints(".ig\n"
 	   ".EQ\n"
 	   "delim off\n"
