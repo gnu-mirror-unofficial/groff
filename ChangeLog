@@ -106,9 +106,9 @@
 	(dist-info-bits): Look for the info document in the build
 	directory, then the source directory.  (It could be in either
 	place depending on whether the build from a Git working tree is
-	being done in or out of a separate build directory.) When found,
-	copy the segments to the assembly area for the distribution
-	archive.
+	being done in or out of a separate build directory.)  When
+	found, copy the segments to the assembly area for the
+	distribution archive.
 	(install_infodoc): Refactor.  Remove any groff info files from
 	the destination info directory using a shell glob directly
 	instead of a partly redundant ls(1) command substitution.
@@ -223,7 +223,7 @@
 	* m4/groff.m4 (GROFF_USE_GROFF_ALLOCATOR): Define new macro to
 	collect user preference.  The default is off.
 	* src/libs/libgroff/libgroff.am (libgroff_a_SOURCES): Build and
-	link new.cpp only if `USE_GROFF_ALLOCATOR`.
+	link new.cpp only if we are to `USE_GROFF_ALLOCATOR`.
 
 	* NEWS: Add item.
 
