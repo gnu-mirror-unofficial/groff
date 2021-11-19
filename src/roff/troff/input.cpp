@@ -5088,8 +5088,8 @@ static bool read_size(int *x)
 	contains_invalid_digit = true;
       else {
 	val = val*10 + (c - '0');
-	error("ambiguous point-size escape; rewrite to use '\\s(%1'"
-	      " or similar", val);
+	error("ambiguous type size in escape sequence; rewrite to use"
+	      " '\\s(%1' or similar", val);
       }
     }
     val *= sizescale;
@@ -5108,18 +5108,18 @@ static bool read_size(int *x)
       return false;
     if (!(start.ch() == '[' && tok.ch() == ']') && start != tok) {
       if (start.ch() == '[')
-	error("missing ']' in point-size escape");
+	error("missing ']' in type size escape sequence");
       else
-	error("missing closing delimiter in point-size escape");
+	error("missing closing delimiter in type size escape sequence");
       return false;
     }
   }
   if (contains_invalid_digit) {
     if (c)
-      error("bad digit in point-size escape: %1",
+      error("invalid digit in type size escape sequence: %1",
 	    input_char_description(c));
     else
-      error("bad digit in point-size escape");
+      error("invalid digit in type size escape sequence");
     return false;
   }
   else {
@@ -5143,8 +5143,8 @@ static bool read_size(int *x)
     }
     if (*x <= 0) {
       warning(WARN_RANGE,
-	      "point-size escape results in non-positive size %1u;"
-	      " set to 1u", *x);
+	      "type size escape sequence results in non-positive size"
+	      " %1u; setting it to 1u", *x);
       *x = 1;
     }
     return true;
