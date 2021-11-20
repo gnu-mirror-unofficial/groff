@@ -112,7 +112,13 @@ emits SGR escape sequences
 (from ISO\~6429,
 popularly called \[lq]ANSI escapes\[rq])
 to change text attributes
-(bold, italic, underline, reverse-video, and colors).
+(bold,
+italic,
+underline,
+reverse video
+.\" ECMA-48, 2nd edition (1979) calls it "negative image".
+[\[lq]negative image\[rq]]
+and colors).
 .
 Devices supporting the appropriate sequences can view
 .I roff
@@ -121,7 +127,14 @@ documents using eight different background and foreground colors.
 Following ISO\~6429,
 the following colors are defined in
 .IR tty.tmac :
-black, white, red, green, blue, yellow, magenta, and cyan.
+black,
+white,
+red,
+green,
+blue,
+yellow,
+magenta,
+and cyan.
 .
 Unrecognized colors are mapped to the default color,
 which is dependent on the settings of the terminal.
@@ -193,7 +206,7 @@ representing a bold character
 with the sequence
 .RI \[lq] c\~\c
 BACKSPACE\~\c
-.IR c \[rq]
+.IR c \[rq],
 an italic character
 .I c
 with the sequence
@@ -292,7 +305,8 @@ they must be represented in an alternate form.
 .
 If
 .I n
-is non-zero or missing, enable SGR sequences
+is non-zero or missing,
+enable SGR sequences
 (this is the default);
 otherwise,
 use the legacy output format.
@@ -316,8 +330,9 @@ directive,
 .I grotty
 emits Unicode characters in UTF-8 encoding.
 .
-Otherwise, it emits characters in a single-byte encoding depending on
-the data in the font description files.
+Otherwise,
+it emits characters in a single-byte encoding depending on the data in
+the font description files.
 .
 See
 .MR groff_font @MAN5EXT@
@@ -389,19 +404,14 @@ all exit afterward.
 .
 .TP
 .B \-b
-Suppress the use of overstriking for bold characters.
-.
-Ignored if
-.B \-c
-isn't used.
+Suppress the use of overstriking for bold characters in legacy output
+format.
 .
 .
 .TP
 .B \-B
-Use only overstriking for bold-italic characters.
-Ignored if
-.B \-c
-isn't used.
+Use only overstriking for bold-italic characters in legacy output
+format.
 .
 .
 .TP
@@ -506,8 +516,7 @@ Render oblique-styled fonts
 .RB ( I
 and
 .BR BI )
-with the SGR attribute for reverse-video text
-.\" ECMA-48, 2nd edition (1979) calls it "negative image".
+with the SGR attribute for reverse video text
 rather than underlined text.
 .
 Ignored if
@@ -519,20 +528,13 @@ is also specified.
 .
 .TP
 .B \-u
-Suppress the use of underlining for italic characters.
-.
-Ignored if
-.B \-c
-isn't used.
+Suppress the use of underlining for italic characters in legacy output
+format.
 .
 .
 .TP
 .B \-U
-Use only underlining for bold-italic characters.
-.
-Ignored if
-.B \-c
-isn't used.
+Use only underlining for bold-italic characters in legacy output format.
 .
 .
 .\" ====================================================================
@@ -701,7 +703,8 @@ varies:
 (3)\~bold-italic style;
 (4)\~character composition by overstriking (\[lq]co\[:o]perate\[rq]);
 (5)\~foreground color;
-(6)\~background color; and
+(6)\~background color;
+and
 (7)\~horizontal and vertical line-drawing.
 .
 .
@@ -763,7 +766,7 @@ ECMA\-ST/\:Ecma\-048\:.pdf
 .
 .P
 .UR https://\:gist\:.github\:.com/\:egmontkob/\:\
-eb114294efbcd5adb1944c9f3cb5feda
+eb114294efbcd5ad\:b1944c9f3cb5feda
 \[lq]Hyperlinks in Terminal Emulators\[rq]
 .UE ,
 Egmont Koblinger.
