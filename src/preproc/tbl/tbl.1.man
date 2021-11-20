@@ -189,8 +189,6 @@ token may specify region options:
 keywords that influence the interpretation or rendering of the region as
 a whole or all table entries within it indiscriminately.
 .
-Some of these options require a parenthesized argument.
-.
 They can be specified in any lettercase and must be separated by commas,
 spaces,
 or tabs.
@@ -199,8 +197,9 @@ or tabs.
 .I tbl \" AT&T
 accepted only options with all characters in the same lettercase.)
 .
-Spaces and tabs are permitted between an option's name and its
-parenthesized argument.
+Some of these options require a parenthesized argument;
+those that do permit spaces and tabs between the option's name and the
+opening parenthesis.
 .
 If present,
 the set of region options must be terminated with a semicolon
@@ -1848,9 +1847,7 @@ man page.
 .\"
 .\"
 .P
-We can define a macro
-.I outside
-of a
+We can define a macro outside of a
 .I tbl \" generic
 region that we can call from within it to cause a page break inside a
 multi-page boxed table.
