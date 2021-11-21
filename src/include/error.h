@@ -16,49 +16,45 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-void fatal_with_file_and_line(const char *filename, int lineno,
-			      const char *format,
-			      const errarg &arg1 = empty_errarg,
-			      const errarg &arg2 = empty_errarg,
-			      const errarg &arg3 = empty_errarg);
+void fatal_with_file_and_line(const char *, int, const char *,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg);
 
-void error_with_file_and_line(const char *filename, int lineno,
-			      const char *format,
-			      const errarg &arg1 = empty_errarg,
-			      const errarg &arg2 = empty_errarg,
-			      const errarg &arg3 = empty_errarg);
+void error_with_file_and_line(const char *, int, const char *,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg);
 
-void warning_with_file_and_line(const char *filename, int lineno,
-				const char *format,
-				const errarg &arg1 = empty_errarg,
-				const errarg &arg2 = empty_errarg,
-				const errarg &arg3 = empty_errarg);
+void warning_with_file_and_line(const char *, int, const char *,
+				const errarg & = empty_errarg,
+				const errarg & = empty_errarg,
+				const errarg & = empty_errarg);
 
-void debug_with_file_and_line(const char *filename, int lineno,
-			      const char *format,
-			      const errarg &arg1 = empty_errarg,
-			      const errarg &arg2 = empty_errarg,
-			      const errarg &arg3 = empty_errarg);
+void debug_with_file_and_line(const char *, int, const char *,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg,
+			      const errarg & = empty_errarg);
 
 void fatal(const char *,
-	   const errarg &arg1 = empty_errarg,
-	   const errarg &arg2 = empty_errarg,
-	   const errarg &arg3 = empty_errarg);
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg);
 
 void error(const char *,
-	   const errarg &arg1 = empty_errarg,
-	   const errarg &arg2 = empty_errarg,
-	   const errarg &arg3 = empty_errarg);
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg);
 
 void warning(const char *,
-	     const errarg &arg1 = empty_errarg,
-	     const errarg &arg2 = empty_errarg,
-	     const errarg &arg3 = empty_errarg);
+	     const errarg & = empty_errarg,
+	     const errarg & = empty_errarg,
+	     const errarg & = empty_errarg);
 
 void debug(const char *,
-	   const errarg &arg1 = empty_errarg,
-	   const errarg &arg2 = empty_errarg,
-	   const errarg &arg3 = empty_errarg);
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg,
+	   const errarg & = empty_errarg);
 
 
 extern "C" const char *program_name;
