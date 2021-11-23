@@ -5500,7 +5500,7 @@ register @code{.V} specifies this value vertically.
 @cindex @code{i} unit
 @cindex unit, @code{i}
 Inches.  An antiquated measurement unit still in use in certain
-backwards countries with incredibly low-cost computer equipment.  One
+backward countries with incredibly low-cost computer equipment.  One
 inch is defined to be 2.54@tie{}cm (worldwide since 1964).
 
 @item c
@@ -7868,7 +7868,7 @@ exceptions.
 @code{\endinput} is recognized also.
 
 @item
-For backwards compatibility, if @code{\patterns} is missing, the whole
+For backward compatibility, if @code{\patterns} is missing, the whole
 file is treated as a list of hyphenation patterns (except that the
 @code{%} character is recognized as the start of a comment).
 @end itemize
@@ -7987,7 +7987,7 @@ Set the maximum quantity of consecutive hyphenated lines to @var{n}.  If
 @var{n} is negative, there is no maximum.  If omitted, @var{n}
 is@tie{}@minus{}1.  This value is associated with the environment
 (@pxref{Environments}).  Only lines output from a given environment
-count towards the maximum associated with that environment.  Hyphens
+count toward the maximum associated with that environment.  Hyphens
 resulting from @code{\%} are counted; explicit hyphens are not.
 
 @cindex hyphenation consecutive line limit register (@code{.hlm})
@@ -8050,7 +8050,7 @@ The hyphenation space adjustment threshold is available in the
 @cindex spacing, manipulating
 
 @Defreq {sp, [@Var{distance}]}
-Space downwards by @var{distance}.  With no argument, the drawing
+Space downward by @var{distance}.  With no argument, the drawing
 position is advanced downward by one vee.  Inside a diversion, any
 @var{distance} argument is ignored.  Otherwise, a negative argument
 moves the drawing position up the page.   If the argument is preceded by
@@ -11592,7 +11592,7 @@ Replace the string named @var{str} with its substring bounded by the
 indices @var{start} and @var{end}, inclusive.  The first character in
 the string has index@tie{}0.  If @var{end} is omitted, it is implicitly
 set to the largest valid value (the string length minus one).  Negative
-indices count backwards from the end of the string:@: the last character
+indices count backward from the end of the string:@: the last character
 has index@tie{}@minus{}1, the character before the last has
 index@tie{}@minus{}2, and so on.
 
@@ -12730,7 +12730,7 @@ current page location.  If given no argument, it stores the location in
 an internal register.  This location can be used later by the @code{rt}
 or the @code{sp} requests (or the @code{\v} escape).
 
-The @code{rt} request returns @emph{upwards} to the location marked with
+The @code{rt} request returns @emph{upward} to the location marked with
 the last @code{mk} request.  If used with an argument, it returns to a
 vertical position@tie{}@var{dist} from the top of the page (no previous
 call to @code{mk} is necessary in this case).  The default scaling
@@ -12803,7 +12803,7 @@ The following escapes give fine control of movement about the page.
 Move vertically; usually from the current location on the page (if no
 absolute position operator @samp{|} is used).  The
 argument@tie{}@var{expr} specifies the distance to move; positive is
-downwards and negative upwards.  The default scaling indicator is
+downward and negative upward.  The default scaling indicator is
 @samp{v}.  Beware, however, that GNU @code{troff} continues text
 processing at the point where the motion ends, so you should always
 balance motions to avoid interference with text processing.
@@ -12821,12 +12821,12 @@ rather than @samp{v}.
 
 @cindex CSTR@tie{}#54 erratum, @code{\r} escape
 @Defesc {\\r, , , }
-Move upwards@tie{}1@dmn{v}.
+Move upward@tie{}1@dmn{v}.
 @endDefesc
 
 @cindex CSTR@tie{}#54 erratum, @code{\u} escape
 @Defesc {\\u, , , }
-Move upwards@tie{}.5@dmn{v}.
+Move upward@tie{}.5@dmn{v}.
 @endDefesc
 
 @cindex CSTR@tie{}#54 erratum, @code{\d} escape
@@ -12842,8 +12842,8 @@ Move down@tie{}.5@dmn{v}.
 @cindex motion, horizontal (@code{\h})
 Move horizontally; usually from the current location (if no absolute
 position operator @samp{|} is used).  The expression@tie{}@var{expr}
-indicates how far to move: positive is rightwards and negative
-leftwards.  The default scaling indicator for this escape is @samp{m}.
+indicates how far to move: positive is rightward and negative leftward.
+The default scaling indicator for this escape is @samp{m}.
 
 This horizontal space is not discarded at the end of a line.  To insert
 discardable space of a certain length use the @code{ss} request.
@@ -13103,7 +13103,7 @@ is negative, not moving the current point.
 @cindex glyph, box rule (@code{\[br]})
 Draw vertical lines.  Its parameters are similar to the @code{\l}
 escape, except that the default scaling indicator is @samp{v}.  The
-movement is downwards for positive values, and upwards for negative
+movement is downward for positive values, and upward for negative
 values.  The default glyph is the box rule glyph, @code{\[br]}.  As with
 the vertical motion escapes, text processing blindly continues where the
 line ends.
@@ -16101,7 +16101,7 @@ to the current output line.  Macros, diversions, and strings are all, in
 fact, the same type of object; they contain lists of input characters
 and glyph nodes in any combination.  Special characters can be both:
 before being added to the output, they act as input entities;
-afterwards, they denote glyphs.  A glyph node does not behave like an
+afterward, they denote glyphs.  A glyph node does not behave like an
 input character for the purposes of macro processing; it does not
 inherit any of the special properties that the input character from
 which it was constructed might have had.  Consider the following
@@ -18384,11 +18384,11 @@ data type @samp{char} as they are in @acronym{AT&T} device-independent
 @code{troff}.
 
 The @var{width} subfield gives the width of the glyph.  The @var{height}
-subfield gives the height of the glyph (upwards is positive); if a glyph
+subfield gives the height of the glyph (upward is positive); if a glyph
 does not extend above the baseline, it should be given a zero height,
 rather than a negative height.  The @var{depth} subfield gives the depth
 of the glyph, that is, the distance below the baseline to which the
-glyph extends (downwards is positive); if a glyph does not extend below
+glyph extends (downward is positive); if a glyph does not extend below
 the baseline, it should be given a zero depth, rather than a negative
 depth.  Italic corrections are relevant to glyphs in italic or oblique
 styles.  The @var{italic-correction} is the amount of space that should
