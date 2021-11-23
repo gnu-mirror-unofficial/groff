@@ -5915,11 +5915,9 @@ for glyph @samp{foo]}.
 @cindex @code{[}, macro names starting with, and @code{refer}
 @cindex @code{]}, macro names starting with, and @code{refer}
 @cindex macro names, starting with @code{[} or @code{]}, and @code{refer}
-To avoid problems with the @code{refer} preprocessor, macro names should
-not start with @samp{[} or @samp{]}.  Due to backwards compatibility,
-everything after @samp{.[} and @samp{.]} is handled as a special
-argument to @code{refer}.  For example, @samp{.[foo} makes @code{refer}
-to start a reference, using @samp{foo} as a parameter.
+If you name macros beginning with the characters @samp{[} or @samp{]},
+you foreclose use of the @code{refer} preprocessor, which recognizes
+@samp{.[} and @samp{.]} as bilbilographic reference delimiters.
 
 @Defesc {\\A, @code{'}, ident, @code{'}}
 Test whether an identifier @var{ident} is valid in @code{gtroff}.  It
