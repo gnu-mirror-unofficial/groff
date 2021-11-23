@@ -1,5 +1,19 @@
 2021-11-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grog]: Fix Savannah #61520.
+
+	* src/utils/grog/grog.pl: Move hash `preprocessor_for_macro` to
+	global scope since it is now mutable across `do_line` subroutine
+	calls.
+	(do_line): Adjust regex matching an end macro to work better.
+	Check names of macros being defined by the document; if they
+	start with '[' or ']', stop attempting to detect refer(1) usage,
+	by deleting its key from the `preprocessor_for_macro` hash.
+
+	Fixes <https://savannah.gnu.org/bugs/?61520>.
+
+2021-11-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grog]: Add regression test for Savannah #61520.
 
 	* src/utils/grog/tests/avoid-refer-fakeout.sh: Do it.
