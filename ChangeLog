@@ -1,3 +1,9 @@
+2021-11-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/groff.texi (Page Motions): Fix error: the `\r`, `\u`, and
+	`\d` escape sequences move in ems, not vees, despite being
+	vertical motions.  Add discussion and example.
+
 2021-11-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/include/error.h: Drop `extern` storage class from
@@ -4854,14 +4860,6 @@
 	type that is disabled by default.
 	(Escape Sequences/Escape short reference): Fix omissions; \# and
 	\V are interpreted even in copy mode.
-
-2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* man/groff.7.man (Escape Sequences/Escape short reference): Fix
-	errors in descriptions of \d, \r, \u escapes; they move in vees,
-	not ems.
-
-	Fixes <https://savannah.gnu.org/bugs/?60602>.
 
 2021-05-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 

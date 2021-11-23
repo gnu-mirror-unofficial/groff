@@ -12712,7 +12712,8 @@ sequence for the minus sign glyph.
 @cindex motions, page
 
 @xref{Manipulating Spacing}, for a discussion of the most commonly used
-request for vertical motion, @code{sp}, which spaces down by one line.
+request for vertical motion, @code{sp}, which spaces downward by one
+vee.
 
 @DefreqList {mk, [@Var{reg}]}
 @DefreqListEndx {rt, [@Var{dist}]}
@@ -12768,7 +12769,6 @@ A simple implementation of a macro to set text in two columns follows.
 .    rt
 .  \@}
 ..
-.
 @endExample
 
 Now let us apply our two-column macro.
@@ -12795,7 +12795,7 @@ macro.
 @endExample
 @endDefreq
 
-The following escapes give fine control of movement about the page.
+Several escape sequences enable fine control of movement about the page.
 
 @Defesc {\\v, @code{'}, expr, @code{'}}
 @cindex vertical motion (@code{\v})
@@ -12813,26 +12813,41 @@ consider a page bottom trap macro that prints a marker in the margin to
 indicate continuation of a footnote or something similar.
 @endDefesc
 
-@cindex CSTR@tie{}#54 errata
-There are some special-case escapes for vertical motion by lines or
-half-lines.  They were incorrectly documented in the @acronym{AT&T}
-@code{troff} manual as causing vertical motions in @samp{m} units,
-rather than @samp{v}.
+A few escape sequences that produce vertical motion are unusual.  They
+are thought to originate early in AT&T @code{nroff} history to achieve
+super- and sub-scripting by half-line motions on line printers and
+teletypewriters before the phototypesetter made more precise positioning
+available.  They are reckoned in ems---not vees---to maintain continuity
+with their original purpose of moving relative to the size of the type
+rather than the distance between text baselines (vees).@footnote{At the
+@code{grops} defaults of 10-point type on 12-point vertical spacing, the
+difference between half a vee and half an em can be subtle: large
+spacings like @samp{.vs 3v} make it obvious.}
 
-@cindex CSTR@tie{}#54 erratum, @code{\r} escape
-@Defesc {\\r, , , }
-Move upward@tie{}1@dmn{v}.
+@DefescList {\\r, , , }
+@DefescItemx {\\u, , , }
+@DefescListEndx {\\d, , , }
+Move upward@tie{}1@dmn{m}, upward@tie{}.5@dmn{m}, and
+downward@tie{}.5@dmn{m}, respectively.
 @endDefesc
 
-@cindex CSTR@tie{}#54 erratum, @code{\u} escape
-@Defesc {\\u, , , }
-Move upward@tie{}.5@dmn{v}.
-@endDefesc
+@noindent
+Let us see these escape sequences in use.
 
-@cindex CSTR@tie{}#54 erratum, @code{\d} escape
-@Defesc {\\d, , , }
-Move down@tie{}.5@dmn{v}.
-@endDefesc
+@Example
+Obtain 100 cm\u3\d of \ka\d\092\h'|\nau'\r233\dU.
+@endExample
+
+In the foregoing we have paired @code{\u} and @code{\d} to place a
+subscript, then used a full em negative (``reverse'') motion to place a
+superscript above a subscript.  A digit-width unbreakable escape
+sequence aligns the proton and nucleon numbers, while @code{\k} marks a
+horizontal position to which @code{\h} returns so that we could stack
+them.  (We shall discuss these horizontal motion escape sequences
+presently.)  In serious applications, we often want to alter the type
+size of the -scripts and to fine-tune the vertical motions, as the
+@code{groff} @file{ms} package does with its super- and subscripting
+string definitions.
 
 @Defesc {\\h, @code{'}, expr, @code{'}}
 @cindex inserting horizontal space (@code{\h})
