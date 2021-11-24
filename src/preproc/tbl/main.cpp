@@ -1558,7 +1558,9 @@ void process_table(table_input &in)
 
 static void usage(FILE *stream)
 {
-  fprintf(stream, "usage: %s [ -vC ] [ files... ]\n", program_name);
+  fprintf(stream,
+"usage: %s [-C] [file] ...\n"
+"usage: %s {-v | --version}\n", program_name, program_name);
 }
 
 int main(int argc, char **argv)
