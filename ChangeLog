@@ -1,3 +1,26 @@
+2021-11-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tbl]: Fix code style nits.
+
+	* src/preproc/tbl/main.cpp (process_input_file,
+	entry_format::debug_print, process_data, main): Replace
+	`assert(0)` calls with communicative predicates.
+	(struct input_entry_format, input_entry_foramt::debug_print,
+	process_format): Boolify.  Demote and rename `int`s
+	`last_column` and `equal` to `bool`s named `is_last_column` and
+	`is_equal_width`.  Assign them Boolean literals.
+	(process_format): Boolify.  Demote `have_expand`, `got_format`,
+	and `got_period` from `int` to `bool`.  Use Boolean literals in
+	assignments thereto.
+	(process_options): Swap order of null pointer comparison when a
+	typo or thinko could lead to lvalue assignment.
+	(process_data): Boolify.  Demote `give_up` from `int` to `bool`.
+	Demote and rename `int` `row_comment` to `bool`
+	`seen_row_comment`.  Use Boolean literals in assignments
+	thereto.
+	(main): Use standard C library symbols `EXIT_SUCCESS` and
+	`EXIT_FAILURE` with `exit()` calls instead of `0` and `1`.
+
 2021-11-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[grog]: Fix Savannah #61520.

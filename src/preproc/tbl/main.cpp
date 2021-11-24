@@ -312,7 +312,7 @@ void process_input_file(FILE *fp)
       }
       break;
     default:
-      assert(0);
+      assert(0 == "invalid `state` in switch");
     }
   switch(state) {
   case START:
@@ -366,8 +366,8 @@ int strieq(const char *p, const char *q)
   return 0;
 }
 
-// return 0 if we should give up in this table
-
+// Handle region options.  Return a null pointer if we should give up on
+// this table.
 options *process_options(table_input &in)
 {
   options *opt = new options;
@@ -392,7 +392,7 @@ options *process_options(table_input &in)
       level++;
     else if (c == ')')
       level--;
-    else if (c == ';' && level == 0) {
+    else if (c == ';' && 0 == level) {
       line += '\0';
       break;
     }
@@ -573,7 +573,7 @@ void entry_format::debug_print() const
     putc('=', stderr);
     break;
   default:
-    assert(0);
+    assert(0 == "invalid column classifier in switch");
     break;
   }
   if (point_size.val != 0) {
@@ -700,8 +700,8 @@ struct input_entry_format : public entry_format {
   int separation;
   int vline;
   int pre_vline;
-  int last_column;
-  int equal;
+  bool is_last_column;
+  bool is_equal_width;
   int expand;
   input_entry_format(format_type, input_entry_format * = 0);
   ~input_entry_format();
@@ -712,10 +712,10 @@ input_entry_format::input_entry_format(format_type t, input_entry_format *p)
 : entry_format(t), next(p)
 {
   separation = -1;
-  last_column = 0;
+  is_last_column = false;
   vline = 0;
   pre_vline = 0;
-  equal = 0;
+  is_equal_width = false;
   expand = 0;
 }
 
@@ -744,7 +744,7 @@ void input_entry_format::debug_print()
     put_string(width, stderr);
     putc(')', stderr);
   }
-  if (equal)
+  if (is_equal_width)
     putc('e', stderr);
   if (expand)
     putc('x', stderr);
@@ -752,24 +752,24 @@ void input_entry_format::debug_print()
     fprintf(stderr, "%d", separation); 
   for (i = 0; i < vline; i++)
     putc('|', stderr);
-  if (last_column)
+  if (is_last_column)
     putc(',', stderr);
 }
 
-// Return zero if we should give up on this table.
-// If this is a continuation format line, current_format will be the current
-// format line.
-
+// Interpret a table format specification, like "CC,LR.".  Return null
+// pointer if we should give up on this table.  If this is a
+// continuation format line, `current_format` will be the current format
+// line.
 format *process_format(table_input &in, options *opt,
 		       format *current_format = 0)
 {
   input_entry_format *list = 0;
-  int have_expand = 0;
+  bool have_expand = false;
   int c = in.get();
   for (;;) {
     int pre_vline = 0;
-    int got_format = 0;
-    int got_period = 0;
+    bool got_format = false;
+    bool got_period = false;
     format_type t = FORMAT_LEFT;
     for (;;) {
       if (c == EOF) {
@@ -781,48 +781,48 @@ format *process_format(table_input &in, options *opt,
       case 'n':
       case 'N':
 	t = FORMAT_NUMERIC;
-	got_format = 1;
+	got_format = true;
 	break;
       case 'a':
       case 'A':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_ALPHABETIC;
 	break;
       case 'c':
       case 'C':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_CENTER;
 	break;
       case 'l':
       case 'L':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_LEFT;
 	break;
       case 'r':
       case 'R':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_RIGHT;
 	break;
       case 's':
       case 'S':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_SPAN;
 	break;
       case '^':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_VSPAN;
 	break;
       case '_':
       case '-':			// tbl also accepts this
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_HLINE;
 	break;
       case '=':
-	got_format = 1;
+	got_format = true;
 	t = FORMAT_DOUBLE_HLINE;
 	break;
       case '.':
-	got_period = 1;
+	got_period = true;
 	break;
       case '|':
 	pre_vline++;
@@ -884,7 +884,7 @@ format *process_format(table_input &in, options *opt,
       case 'e':
       case 'E':
 	c = in.get();
-	list->equal = 1;
+	list->is_equal_width = true;
 	// 'e' and 'x' are mutually exclusive
 	list->expand = 0;
 	break;
@@ -1068,7 +1068,7 @@ format *process_format(table_input &in, options *opt,
 	c = in.get();
 	list->expand = 1;
 	// 'x' and 'e' are mutually exclusive
-	list->equal = 0;
+	list->is_equal_width = false;
 	// 'x' and 'w' are mutually exclusive
 	list->width = "";
 	break;
@@ -1099,7 +1099,7 @@ format *process_format(table_input &in, options *opt,
     }
     if (c == '\n' || c == ',') {
       c = in.get();
-      list->last_column = 1;
+      list->is_last_column = true;
     }
   }
   if (c == '.') {
@@ -1117,7 +1117,7 @@ format *process_format(table_input &in, options *opt,
     free_input_entry_format_list(list);
     return 0;
   }
-  list->last_column = 1;
+  list->is_last_column = true;
   // now reverse the list so that the first row is at the beginning
   input_entry_format *rev = 0;
   while (list != 0) {
@@ -1139,7 +1139,7 @@ format *process_format(table_input &in, options *opt,
   int nrows = 0;
   int col = 0;
   for (tem = list; tem; tem = tem->next) {
-    if (tem->last_column) {
+    if (tem->is_last_column) {
       if (col >= ncolumns)
 	ncolumns = col + 1;
       col = 0;
@@ -1178,7 +1178,7 @@ format *process_format(table_input &in, options *opt,
     }
     else if (tem->separation >= 0)
       error("column separation specified for last column");
-    if (tem->equal && !f->equal[col]) {
+    if (tem->is_equal_width && !f->equal[col]) {
       if (current_format)
 	error("cannot change which columns are equal in continued format");
       else
@@ -1189,7 +1189,7 @@ format *process_format(table_input &in, options *opt,
 	error("cannot change which columns are expanded in continued format");
       else {
 	f->expand[col] = 1;
-	have_expand = 1;
+	have_expand = true;
       }
     }
     if (!tem->width.empty()) {
@@ -1203,7 +1203,7 @@ format *process_format(table_input &in, options *opt,
       f->vline[row][col] = tem->pre_vline;
     }
     f->vline[row][col + 1] = tem->vline;
-    if (tem->last_column) {
+    if (tem->is_last_column) {
       row++;
       col = 0;
     }
@@ -1237,7 +1237,7 @@ table *process_data(table_input &in, format *f, options *opt)
   int ncolumns = f->ncolumns;
   int current_row = 0;
   int format_index = 0;
-  int give_up = 0;
+  bool give_up = false;
   enum { DATA_INPUT_LINE, TROFF_INPUT_LINE, SINGLE_HLINE, DOUBLE_HLINE } type;
   table *tbl = new table(ncolumns, opt->flags, opt->linesize,
 			 opt->decimal_point_char);
@@ -1305,7 +1305,7 @@ table *process_data(table_input &in, format *f, options *opt)
 	}
 	entry_format *line_format = f->entry[format_index];
 	int col = 0;
-	int row_comment = 0;
+	bool seen_row_comment = false;
 	for (;;) {
 	  if (c == tab_char || c == '\n') {
 	    int ln = current_lineno;
@@ -1416,12 +1416,12 @@ table *process_data(table_input &in, format *f, options *opt)
 		  break;
 		case END:
 		default:
-		  assert(0);
+		  assert(0 == "invalid `state` in switch");
 		}
 	      }
 	      if (c == EOF) {
 		error("end of data in middle of text block");
-		give_up = 1;
+		give_up = true;
 		break;
 	      }
 	    }
@@ -1430,8 +1430,8 @@ table *process_data(table_input &in, format *f, options *opt)
 		if (input_entry.length() >= 2
 		    && input_entry[0] == '\\'
 		    && input_entry[1] == '"')
-		  row_comment = 1;
-		else if (!row_comment) {
+		  seen_row_comment = true;
+		else if (!seen_row_comment) {
 		  if (c == '\n')
 		    in.unget(c);
 		  input_entry += '\0';
@@ -1485,7 +1485,7 @@ table *process_data(table_input &in, format *f, options *opt)
 	    && line[0] == '.' && line[1] == 'T' && line[2] == '&') {
 	  format *newf = process_format(in, opt, f);
 	  if (newf == 0)
-	    give_up = 1;
+	    give_up = true;
 	  else
 	    f = newf;
 	}
@@ -1503,14 +1503,14 @@ table *process_data(table_input &in, format *f, options *opt)
       tbl->add_double_hline(current_row);
       break;
     default:
-      assert(0);
+      assert(0 == "invalid `type` in switch");
     }
     if (give_up)
       break;
   }
   if (!give_up && current_row == 0) {
     error("no real data");
-    give_up = 1;
+    give_up = true;
   }
   if (give_up) {
     delete tbl;
@@ -1580,19 +1580,19 @@ int main(int argc, char **argv)
     case 'v':
       {
 	printf("GNU tbl (groff) version %s\n", Version_string);
-	exit(0);
+	exit(EXIT_SUCCESS);
 	break;
       }
     case CHAR_MAX + 1: // --help
       usage(stdout);
-      exit(0);
+      exit(EXIT_SUCCESS);
       break;
     case '?':
       usage(stderr);
-      exit(1);
+      exit(EXIT_FAILURE);
       break;
     default:
-      assert(0);
+      assert(0 == "unhandled getopt_long return value");
     }
   printf(".if !\\n(.g .ab GNU tbl requires groff extensions; aborting\n"
 	 ".do if !dTS .ds TS\n"
