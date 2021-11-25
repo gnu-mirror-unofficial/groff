@@ -971,34 +971,34 @@ format *process_format(table_input &in, options *opt,
       case 'p':
       case 'P':
 	{
-	inc_number &ps = list->point_size;
-	ps.val = 0;
-	ps.inc = 0;
-	c = in.get();
-	if (c == '+' || c == '-') {
-	  ps.inc = (c == '+' ? 1 : -1);
-	  c = in.get();
-	}
-	if (c == EOF || !csdigit(c)) {
-	  warning("'p' column modifier must be followed by (optionally"
-		" signed) integer; ignoring");
-	  ps.inc = 0;
-	}
-	else {
-	  do {
-	    ps.val *= 10;
-	    ps.val += c - '0';
-	    c = in.get();
-	  } while (c != EOF && csdigit(c));
-	}
-	if (ps.val > MAX_POINT_SIZE || ps.val < -MAX_POINT_SIZE) {
-	  warning("'p' column modifier argument magnitude of %1"
-		  " points out of range (> %2); ignoring", ps.val,
-		  MAX_POINT_SIZE);
+	  inc_number &ps = list->point_size;
 	  ps.val = 0;
 	  ps.inc = 0;
-	}
-	break;
+	  c = in.get();
+	  if (c == '+' || c == '-') {
+	    ps.inc = (c == '+' ? 1 : -1);
+	    c = in.get();
+	  }
+	  if (c == EOF || !csdigit(c)) {
+	    warning("'p' column modifier must be followed by"
+		    " (optionally signed) integer; ignoring");
+	    ps.inc = 0;
+	  }
+	  else {
+	    do {
+	      ps.val *= 10;
+	      ps.val += c - '0';
+	      c = in.get();
+	    } while (c != EOF && csdigit(c));
+	  }
+	  if (ps.val > MAX_POINT_SIZE || ps.val < -MAX_POINT_SIZE) {
+	    warning("'p' column modifier argument magnitude of %1"
+		    " points out of range (> %2); ignoring", ps.val,
+		    MAX_POINT_SIZE);
+	    ps.val = 0;
+	    ps.inc = 0;
+	  }
+	  break;
 	}
       case 't':
       case 'T':
@@ -1013,35 +1013,35 @@ format *process_format(table_input &in, options *opt,
       case 'v':
       case 'V':
 	{
-	inc_number &vs = list->vertical_spacing;
-	vs.val = 0;
-	vs.inc = 0;
-	c = in.get();
-	if (c == '+' || c == '-') {
-	  vs.inc = (c == '+' ? 1 : -1);
-	  c = in.get();
-	}
-	if (c == EOF || !csdigit(c)) {
-	  warning("'v' column modifier must be followed by (optionally"
-		" signed) integer; ignoring");
-	  vs.inc = 0;
-	}
-	else {
-	  do {
-	    vs.val *= 10;
-	    vs.val += c - '0';
-	    c = in.get();
-	  } while (c != EOF && csdigit(c));
-	}
-	if (vs.val > MAX_VERTICAL_SPACING
-	    || vs.val < -MAX_VERTICAL_SPACING) {
-	  warning("'v' column modifier argument magnitude of %1"
-		  " points out of range (> %2); ignoring", vs.val,
-		  MAX_VERTICAL_SPACING);
+	  inc_number &vs = list->vertical_spacing;
 	  vs.val = 0;
 	  vs.inc = 0;
-	}
-	break;
+	  c = in.get();
+	  if (c == '+' || c == '-') {
+	    vs.inc = (c == '+' ? 1 : -1);
+	    c = in.get();
+	  }
+	  if (c == EOF || !csdigit(c)) {
+	    warning("'v' column modifier must be followed by"
+		    " (optionally signed) integer; ignoring");
+	    vs.inc = 0;
+	  }
+	  else {
+	    do {
+	      vs.val *= 10;
+	      vs.val += c - '0';
+	      c = in.get();
+	    } while (c != EOF && csdigit(c));
+	  }
+	  if (vs.val > MAX_VERTICAL_SPACING
+	      || vs.val < -MAX_VERTICAL_SPACING) {
+	    warning("'v' column modifier argument magnitude of %1"
+		    " points out of range (> %2); ignoring", vs.val,
+		    MAX_VERTICAL_SPACING);
+	    vs.val = 0;
+	    vs.inc = 0;
+	  }
+	  break;
 	}
       case 'w':
       case 'W':
