@@ -21,9 +21,12 @@
 
 2021-11-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* doc/groff.texi (Page Motions): Fix error: the `\r`, `\u`, and
-	`\d` escape sequences move in ems, not vees, despite being
-	vertical motions.  Add discussion and example.
+	* doc/groff.texi (Page Motions):
+	* man/groff.7.man (Escape short reference): Fix error: the `\r`,
+	`\u`, and `\d` escape sequences move in ems, not vees, despite
+	being vertical motions.  Add discussion and example.  Thanks to
+	Bjarni Ingi Gislason for pointing out the problem in groff(7)
+	and Tadziu Hoffman for his lucid explanation.
 
 2021-11-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -147,9 +150,11 @@
 	* m4/groff.m4 (GROFF_MAKEINFO): Stop throwing a warning if the
 	installed `makeinfo` is old but the distributed Info manual is
 	up to date.  This is not a configure-time problem; the user will
-	be notified when they run 'make doc'.  Empty the `MAKEINFO`
-	variable immediately if a too-old version is detected.  Drop
-	needless `AC_SUBST`itution of the detected `makeinfo` version.
+	be notified when they run 'make' if they modify doc/groff.texi,
+	or if they run 'make doc' (which has required a TeX installation
+	for years).  Empty the `MAKEINFO` variable immediately if a
+	too-old version is detected.  Drop needless `AC_SUBST`itution of
+	the detected `makeinfo` version.
 
 2021-11-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
