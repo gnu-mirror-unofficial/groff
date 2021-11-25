@@ -1,5 +1,34 @@
 2021-11-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Improve diagnostic messages.
+
+	Revise diagnostic messages generally to use terminology
+	consistent with the recent rewrite of tbl(1), identify a
+	contextual token when possible, and communicate more helpfully.
+
+	* src/preproc/tbl/main.cpp (process_options): Tell the user
+	which region option is missing a closing parenthesis or cannot
+	accept an empty argument.  Refer to region options as such, not
+	simply "options" (so they can't be confused with command-line
+	options).  Say that input is "invalid" instead of "bad".
+	(process_format): Say "table format specification" instead of
+	just "format".  Say "column classifier" instead of "format".
+	When a column modifier is missing an argument or a closing
+	parenthesis, identify it and refer to it as a "column modifier"
+	instead of omitting context.  Inform user that arguments to `p`
+	and `v` column modifiers must be "(optionally signed) integer"s,
+	not "numbers", lower these diagnostics' levels from error to
+	warning, and indicate that the modifier is ignored.  Clarify
+	diagnostic when extra characters trail `.` at the end of a table
+	format line.
+	(process_data): Say "table entry" instead of "data entry" when
+	discarding an excess one.
+	(process_table): Say we're giving up on "this table region", not
+	this "table", particularly since any table continuations (.T&)
+	are ignored.
+
+2021-11-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Fix call to `getopt_long()`.
 
 	* src/preproc/tbl/main.cpp (main): Stop telling `getopt_long()`
