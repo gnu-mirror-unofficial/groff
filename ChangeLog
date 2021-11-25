@@ -1,3 +1,15 @@
+2021-11-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tbl]: Slightly refactor table format column modifier `p` and
+	`v` validation.
+
+	* src/preproc/tbl/main.cpp (process_format): Make code terser by
+	introducing references to `list->point_size` and
+	`list->vertical_spacing`.  Doing this requires a new scope
+	{because a switch case isn't one} so add it, without updating
+	indentation for this commit.  When complaining of out-of-range
+	type size or vertical spacing, report the limit.
+
 2021-11-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tbl]: Improve diagnostic messages.

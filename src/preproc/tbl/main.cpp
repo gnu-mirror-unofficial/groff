@@ -970,34 +970,36 @@ format *process_format(table_input &in, options *opt,
 	break;
       case 'p':
       case 'P':
+	{
+	inc_number &ps = list->point_size;
+	ps.val = 0;
+	ps.inc = 0;
 	c = in.get();
-	list->point_size.val = 0;
-	list->point_size.inc = 0;
 	if (c == '+' || c == '-') {
-	  list->point_size.inc = (c == '+' ? 1 : -1);
+	  ps.inc = (c == '+' ? 1 : -1);
 	  c = in.get();
 	}
 	if (c == EOF || !csdigit(c)) {
 	  warning("'p' column modifier must be followed by (optionally"
 		" signed) integer; ignoring");
-	  list->point_size.inc = 0;
+	  ps.inc = 0;
 	}
 	else {
 	  do {
-	    list->point_size.val *= 10;
-	    list->point_size.val += c - '0';
+	    ps.val *= 10;
+	    ps.val += c - '0';
 	    c = in.get();
 	  } while (c != EOF && csdigit(c));
 	}
-	if (list->point_size.val > MAX_POINT_SIZE
-	    || list->point_size.val < -MAX_POINT_SIZE) {
+	if (ps.val > MAX_POINT_SIZE || ps.val < -MAX_POINT_SIZE) {
 	  warning("'p' column modifier argument magnitude of %1"
-		  " points out of range (> %2); ignoring",
-		  list->point_size.val, MAX_POINT_SIZE);
-	  list->point_size.val = 0;
-	  list->point_size.inc = 0;
+		  " points out of range (> %2); ignoring", ps.val,
+		  MAX_POINT_SIZE);
+	  ps.val = 0;
+	  ps.inc = 0;
 	}
 	break;
+	}
       case 't':
       case 'T':
 	c = in.get();
@@ -1010,34 +1012,37 @@ format *process_format(table_input &in, options *opt,
 	break;
       case 'v':
       case 'V':
+	{
+	inc_number &vs = list->vertical_spacing;
+	vs.val = 0;
+	vs.inc = 0;
 	c = in.get();
-	list->vertical_spacing.val = 0;
-	list->vertical_spacing.inc = 0;
 	if (c == '+' || c == '-') {
-	  list->vertical_spacing.inc = (c == '+' ? 1 : -1);
+	  vs.inc = (c == '+' ? 1 : -1);
 	  c = in.get();
 	}
 	if (c == EOF || !csdigit(c)) {
 	  warning("'v' column modifier must be followed by (optionally"
 		" signed) integer; ignoring");
-	  list->vertical_spacing.inc = 0;
+	  vs.inc = 0;
 	}
 	else {
 	  do {
-	    list->vertical_spacing.val *= 10;
-	    list->vertical_spacing.val += c - '0';
+	    vs.val *= 10;
+	    vs.val += c - '0';
 	    c = in.get();
 	  } while (c != EOF && csdigit(c));
 	}
-	if (list->vertical_spacing.val > MAX_VERTICAL_SPACING
-	    || list->vertical_spacing.val < -MAX_VERTICAL_SPACING) {
+	if (vs.val > MAX_VERTICAL_SPACING
+	    || vs.val < -MAX_VERTICAL_SPACING) {
 	  warning("'v' column modifier argument magnitude of %1"
 		  " points out of range (> %2); ignoring", vs.val,
 		  MAX_VERTICAL_SPACING);
-	  list->vertical_spacing.val = 0;
-	  list->vertical_spacing.inc = 0;
+	  vs.val = 0;
+	  vs.inc = 0;
 	}
 	break;
+	}
       case 'w':
       case 'W':
 	c = in.get();
