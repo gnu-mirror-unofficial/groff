@@ -201,6 +201,10 @@ Some of these options require a parenthesized argument;
 those that do permit spaces and tabs between the option's name and the
 opening parenthesis.
 .
+Options accumulate and cannot be unset within a region once declared;
+if an option that takes a parameter is repeated,
+the last occurrence controls.
+.
 If present,
 the set of region options must be terminated with a semicolon
 .RB ( ; ).
@@ -415,7 +419,9 @@ and so on.
 Others perform special operations like drawing lines or spanning entries
 from adjacent cells in the table.
 .
-The classifier can be followed by one or more
+Except for
+.RB \[lq] | \[rq],
+any classifier can be followed by one or more
 .I modifiers;
 some of these accept an argument,
 which in GNU
@@ -427,12 +433,12 @@ can be parenthesized.
 Modifiers select fonts,
 set the type size,
 define the column width,
-adjust inter-column spacing,
+.\"adjust inter-column spacing, \" slack text for window/orphan control
 and perform other tasks described below.
 .
 .
 .P
-The format specification can span multiple lines,
+The format specification can occupy multiple input lines,
 but must conclude with a dot
 .RB \[lq] .\& \[rq]
 at the end of its final column descriptor.
@@ -448,17 +454,18 @@ For clarity in this document's examples,
 we shall write classifiers in uppercase and modifiers in lowercase.
 .
 Thus,
-.RB \[lq] CC,LR.\& \[rq]
+.RB \[lq] CbCb,LR.\& \[rq]
 defines two rows of two columns.
 .
-The first row's entries are both centered,
-and the second row's first and second columns are left- and
+The first row's entries are centered and boldfaced;
+the second and any further rows' first and second columns are left- and
 right-aligned,
 respectively.
 .
-If more rows of entries are added to the table data,
-they reuse the row definition
-.RB \[lq] LR \[rq].
+.\" slack text for window/orphan control
+.\"If more rows of entries are added to the table data,
+.\"they reuse the row definition
+.\".RB \[lq] LR \[rq].
 .
 .
 .P
@@ -528,47 +535,46 @@ center the entry within the column.
 .
 The non-printing input token
 .B \[rs]&
-forces alignment to its position;
-if multiple instances of it occur in the data,
+in an entry treats the glyph preceding it
+(if any)
+as the units place;
+if multiple instances occur in the data,
 use the leftmost one for alignment.
 .
 .
 .IP
 If
 .BR N -classified
-table entries share a column with
+entries share a column with
 .B L
 or
 .BR R \~entries,
 center the widest
 .BR N \~entry
-relative to the widest
+with respect to the widest
 .B L
 or
 .BR R \~entry,
-preserving the alignment of all numeric entries relative to each other.
-.
-In contrast to
-.BR A -classified
-entries,
-there is no extra indentation.
+preserving the alignment of all
+.BR N \~entries
+with respect to each other.
 .
 .
 .IP
-Using equations
-(to be processed with
-.IR \%@g@eqn )
+The appearance of
+.I \%@g@eqn
+equations
 within
 .BR N -classified
 columns
-is often troublesome due to the foregoing algorithm for finding the
-vertical alignment.
+can be troublesome due to the foregoing textual scan for a decimal
+separator.
 .
-The region option
+Use the
 .B \%delim
-enables
+region option to make
 .I \%@g@tbl
-to ignore the data within
+ignore the data within
 .I eqn
 delimiters for that purpose.
 .
@@ -580,15 +586,12 @@ Right-align entry within the column.
 .
 .TP
 .BR S ,\~ s
-Span previous entry on the left into this column
-(not allowed in the first column descriptor in a row definition).
+Span previous entry on the left into this column.
 .
 .
 .TP
 .B ^
-Span down entry from previous row in this column
-(not allowed in the first row definition of a table format
-specification).
+Span entry in the same column from the previous row into this row.
 .
 .
 .TP
@@ -618,7 +621,7 @@ Place a vertical rule on the corresponding row of the table
 a double vertical rule).
 .
 This classifier does not contribute to the column count and no table
-data corresponds to it.
+entries correspond to it.
 .
 A
 .B |
@@ -654,19 +657,26 @@ horizontal spanning classifier where necessary to achieve the desired
 columnar alignment.
 .
 .
+.P
+Attempting to horizontally span in the first column or vertically span
+on the first row is an error.
+.
+Non-rectangular span areas are also not supported.
+.
+.
 .\" ====================================================================
 .SS "Column modifiers"
 .\" ====================================================================
 .
 Any number of modifiers can follow a column classifier.
 .
-If the same modifier is applied to a column specifier more than once,
-or if conflicting modifiers are applied,
-only the last occurrence has effect.
-.
 Arguments to modifiers,
 where accepted,
 are case-sensitive.
+.
+If the same modifier is applied to a column specifier more than once,
+or if conflicting modifiers are applied,
+only the last occurrence has effect.
 .
 .
 .P
@@ -716,6 +726,8 @@ Equalize the widths of columns with this modifier.
 .
 The column with the largest width controls.
 .
+This modifier sets the default line length used in a text block.
+.
 .
 .TP
 .BR f ,\~ F
@@ -734,8 +746,8 @@ The last form is a GNU extension.
 .B ft
 request.)
 .
-A one-character font name not in parentheses must be separated by one or
-more spaces or tabs from whatever follows.
+A one-character font name or mounting position not in parentheses must
+be separated by one or more spaces or tabs from whatever follows.
 .
 .
 .TP
@@ -830,8 +842,8 @@ This is a GNU extension.
 .
 .TP
 .BR v ,\~ V
-Set the vertical spacing to be used in a multi-line table entry
-containing a text block.
+Set the vertical spacing to be used in a table entry containing a text
+block.
 .
 (This parameter corresponds to that set by the
 .I troff \" generic
@@ -880,26 +892,23 @@ follow the width with one or more spaces or tabs).
 If no unit is specified,
 ens are assumed.
 .
-This amount is also used as the default line length for text blocks
-occurring in this column.
+This modifier sets the default line length used in a text block.
 .
 .
 .TP
 .BR x ,\~ X
 Expand the column.
 .
-After computing all column widths lacking an
+After computing the widths of all columns lacking an
 .BR x \~modifier,
-distribute the remaining line length over any columns bearing this
-modifier.
+distribute any remaining line length over all columns bearing it.
 .
-The application of the
+Applying the
 .BR x \~modifier
 to more than one column is a GNU extension.
 .\" 'x' wasn't documented at all in Lesk 1979.
 .
-This feature has the same effect as specifying a minimum column width;
-text blocks are affected accordingly.
+This modifier sets the default line length used in a text block.
 .
 .
 .TP
@@ -976,7 +985,8 @@ a table entry is typeset rigidly.
 It is not filled,
 broken,
 hyphenated,
-or adjusted.
+adjusted,
+or populated with inter-sentence space.
 .
 Except in columns using the
 .B w
@@ -1066,7 +1076,7 @@ albeit without joining its neighbors.
 On any row but the first,
 a table entry of
 .B \[rs]\[ha]
-causes the entry immediately above to span down into the current one.
+causes the entry above it to span down into the current one.
 .
 .
 .P
@@ -1081,8 +1091,7 @@ literally and alone in an entry,
 prefix or suffix it with the token
 .BR \[rs]& .
 .
-Similarly,
-to express
+To express
 .BR \[rs]_ ,
 .BR \[rs]= ,
 or
@@ -1123,8 +1132,7 @@ precede it with the token
 .SS "Text blocks"
 .\" ====================================================================
 .
-Because an ordinary table entry is never broken across lines,
-its contents can make a column,
+An ordinary table entry's contents can make a column,
 and therefore the table,
 excessively wide;
 the table then exceeds the line length of the page,
@@ -1170,6 +1178,7 @@ the classifiers
 .BR C ,
 .BR L ,
 .BR N ,
+.BR R ,
 and
 .B S
 determine a text block's
@@ -1202,12 +1211,13 @@ or
 .B x
 modifiers are not specified for
 .I all
-columns of a text block span,
+columns of a text block's span,
 the default length of the text block
 (more precisely,
 the line length used to process the text block diversion)
 is computed as
 .IR L \[tmu] C /( N +1),
+.\" ...and rounded to the horizontal resolution of the output device
 where
 .I L
 is the current line length,
@@ -1221,8 +1231,7 @@ If necessary,
 you can also control a text block's width by including an
 .B ll
 (line length)
-request in it,
-prior to any text to be formatted.
+request in it prior to any text to be formatted.
 .
 Because a diversion is used to format the text block,
 its width is subsequently available in the register
@@ -1235,9 +1244,9 @@ its width is subsequently available in the register
 .
 The register
 .B TW
-stores the table width in basic units;
-it can't be used within the table itself,
-but it is defined before the
+stores width of the table region in basic units;
+it can't be used within the region itself,
+but is defined before the
 .B .TE
 token is output so that a defined
 .I groff
