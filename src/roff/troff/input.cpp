@@ -16,8 +16,6 @@ for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#define DEBUGGING
-
 #include "troff.h"
 #include "dictionary.h"
 #include "hvunits.h"
@@ -8030,6 +8028,8 @@ int main(int argc, char **argv)
   };
 #if defined(DEBUGGING)
 #define DEBUG_OPTION "D"
+#else
+#define DEBUG_OPTION ""
 #endif
   while ((c = getopt_long(argc, argv,
 			  "abciI:vw:W:zCEf:m:n:o:r:d:F:M:T:tqs:RU"

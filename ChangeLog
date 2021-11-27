@@ -1,3 +1,18 @@
+2021-11-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Remove `DEBUGGING` preprocessor cruft.
+
+	* src/roff/troff/input.cpp:
+	* src/roff/troff/mtsm.cpp: Stop defining `DEBUGGING`
+	preprocessor macro (as empty).
+
+	* src/roff/troff/input.cpp: Give `DEBUG_OPTION` an empty string
+	value if the former is undefined, so the `getopt_long()` call
+	will compile.
+
+	Fixes <https://savannah.gnu.org/bugs/?61436>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
 2021-11-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tbl]: Slightly refactor table format column modifier `p` and
