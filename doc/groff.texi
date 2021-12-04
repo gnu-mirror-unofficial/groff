@@ -12172,12 +12172,12 @@ restarting the next iteration.
 @cindex macros, writing
 
 A @dfn{macro} is a stored collection of text and control lines that can
-be used multiple times.  Use macros to define common operations.  Macros
-are called in the same way that requests are invoked.  @xref{Strings},
-for a (limited) alternative syntax to call macros.  While requests exist
-for the purpose of creating macros, simply calling an undefined macro,
-or interpolating it as a string, will cause it to be defined as empty.
-@xref{Identifiers}.
+be interpolated multiple times.  Use macros to define common operations.
+Macros are called in the same way that requests are invoked.
+@xref{Strings}, for a (limited) alternative syntax to call macros.
+While requests exist for the purpose of creating macros, simply calling
+an undefined macro, or interpolating it as a string, will cause it to be
+defined as empty.  @xref{Identifiers}.
 
 @Defreq {de, name [@Var{end}]}
 Define a macro @var{name}, replacing the definition of any existing
@@ -12257,10 +12257,10 @@ What
 @endExample
 
 @noindent
-A nested macro definition @emph{can} be terminated with @samp{..},
-and nested macros @emph{can} reuse end macros, but these control lines
-must be escaped multiple times for each level of nesting.  The necessity
-of this escaping and the utility of nested macro definitions will become
+A nested macro definition @emph{can} be terminated with @samp{..} and
+nested macros @emph{can} reuse end macros, but these control lines must
+be escaped multiple times for each level of nesting.  The necessity of
+this escaping and the utility of nested macro definitions will become
 clearer when we employ macro parameters and consider the behavior of
 copy mode in detail.
 @endDefreq
@@ -12359,7 +12359,7 @@ create an alias of, remove, and rename a macro, respectively.
 
 @cindex object creation
 Macro identifiers share their name space with requests, strings, and
-diversions; @ref{Identifiers}.  The @code{am}, @code{as}, @code{da},
+diversions; see @ref{Identifiers}.  The @code{am}, @code{as}, @code{da},
 @code{de}, @code{di}, and @code{ds} requests (together with their
 variants) create a new object only if the name of the macro, diversion,
 or string is currently undefined or if it is defined as a request;
@@ -12441,7 +12441,7 @@ of this power.}
 In some cases it is convenient to interpolate all of the parameters at
 once (to pass them to a request, for instance).  The @code{\$*} escape
 concatenates the parameters, separating them with spaces.  @code{\$@@}
-is similar, concatenating the parameters, surrounding each by double
+is similar, concatenating the parameters, surrounding each with double
 quotes and separating them with spaces.  If not in compatibility mode,
 the interpolation depth of double quotes is preserved (@pxref{Request
 and Macro Arguments}).  @code{\$^} interpolates all parameters as if
@@ -12839,7 +12839,7 @@ Obtain 100 cm\u3\d of \ka\d\092\h'|\nau'\r233\dU.
 
 In the foregoing we have paired @code{\u} and @code{\d} to place a
 subscript, then used a full em negative (``reverse'') motion to place a
-superscript above a subscript.  A digit-width unbreakable escape
+superscript above a subscript.  An unbreakable digit-width space escape
 sequence aligns the proton and nucleon numbers, while @code{\k} marks a
 horizontal position to which @code{\h} returns so that we could stack
 them.  (We shall discuss these horizontal motion escape sequences
