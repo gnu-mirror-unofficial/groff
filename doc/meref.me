@@ -1248,9 +1248,9 @@ Quote
 .i W ,
 surrounding it with
 with
-.b \*(lq
+.b \(lq
 and
-.b \*(rq .
+.b \(rq .
 .TL
 .b .sm
 .i W
@@ -1901,38 +1901,75 @@ and
 (year of the century).
 Assign the registers to set the date;
 the default is the date of formatting by \*T.
+.sh 1 "Special Characters"
+.pp
+For modern documents,
+see the
+.i groff_char (7)
+man page.
+.pp
+For rendering of legacy
+.i me
+documents,
+the macro package defines several strings that construct accent marks
+and two symbols from mathematical set theory.
+These strings are limited in multiple respects:
+they can have a crude appearance,
+they are unrecognizable on video terminals because they rely on
+overstriking,
+and they cannot in general be \(lqstacked\(rq,
+as is required to correctly render words in
+(for example)
+Vietnamese.
+Preferable \*G alternatives
+are presented alongside them in the following table.
+.sp
+.ta 5n +\w'There exists'u+3n +\w'Usage'u+3n +\w'Example'u+3n \
++\w'Output'u+3n +\w'groff'u+3n +\w'Output'u+3n
+.nf
+.b "	Name	Usage	Example	Output	\f(BIgroff\fP	Output"
+	Acute	\e*\(aq	a\e*\(aq	a\*'	\e[a aa]	\[a aa]
+	Grave	\e*\(ga	e\e*\(ga	e\*`	\e[e ga]	\[e ga]
+	Umlaut	\e*:	u\e*:	u\*:	\e[u ad]	\[u ad]
+	Tilde	\e*\(ti	n\e*\(ti	n\*~	\e[n a\(ti]	\[n a~]
+	Caret	\e*\(ha	e\e*\(ha	e\*^	\e[e a\(ha]	\[e a^]
+	Cedilla	\e*,	c\e*,	c\*,	\e[c ac]	\[c ac]
+	Caron	\e*v	s\e*v	s\*v	\e[s ah]	\[s ah]
+	Ring	\e*o	A\e*o	A\*o	\e[A ao]	\[A ao]
+	There exists	\e*(qe		\*(qe	\e[te]	\[te]
+	For all	\e*(qa		\*(qa	\e[fa]	\[fa]
+.fi
+.pp
+Three further string definitions cause no particular problems but have
+no advantage over \*G special character escape sequences
+apart from portability to BSD Unix systems.
+(The last lacks even that virtue,
+since
+Unix Version\~7 \*T
+supported the
+.b \e(em
+special character.)
 .TL
 .ST (lq
 .DE
-Left quote marks.
+Left double quotation mark.
+Use
+.b \e(lq
+instead.
 .TL
 .ST (rq
 .DE
-Right quote.
+Right double quotation mark.
+Use
+.b \e(rq
+instead.
 .TL
 .ST \-
 .DE
 Em dash.
-.sh 1 "Special Characters and Marks"
-.pp
-There are a number of special characters
-and diacritical marks
-(such as accents)
-available through \*(ME.
-.ta 15 +5 +6
-.nf
-Name	Usage	Example
-Acute accent	\e*\(aa	a\e*\(aa	a\*'
-Grave accent	\e*\(ga	e\e*\(ga	e\*`
-Umlaut	\e*:	u\e*:	u\*:
-Tilde	\e*~	n\e*~	n\*~
-Caret	\e*^	e\e*^	e\*^
-Cedilla	\e*,	c\e*,	c\*,
-Caron	\e*v	e\e*v	e\*v
-Ring	\e*o	A\e*o	A\*o
-There exists	\e*(qe		\*(qe
-For all	\e*(qa		\*(qa
-.fi
+Use
+.b \e(em
+instead.
 .sp 1i
 .b Acknowledgments
 .pp
@@ -1956,8 +1993,15 @@ and have given support for the project.
 .bp
 .b Summary
 .pp
-This alphabetical list summarizes all macros, strings, and number registers
-available in the \*(ME macros.
+This alphabetical list summarizes almost all macros,
+strings,
+and registers
+available in the
+.i me
+package;
+the legacy strings from section
+.q "Special Characters"
+are omitted.
 Selected
 \*T
 requests, registers, and functions are included as well;
@@ -2074,13 +2118,11 @@ NAME	TYPE	DESCRIPTION
 \e**	S	optional footnote tag string
 \&.++	M	set document segment type
 \&.+c	M	begin chapter
-\e*,	S	cedilla
 \e\-	F\(sc	minus sign
 \e*\-	S	em dash
 \e0	F\(sc	unpaddable digit-width space
 \&.1c	M	revert to single-column output
 \&.2c	M	begin two-column output
-\e*:	S	umlaut
 \e*<	S	begin subscript
 \e*>	S	end subscript
 \&.EN	M	end equation
@@ -2103,13 +2145,10 @@ NAME	TYPE	DESCRIPTION
 \en(\&.i	R\(sc	current indent
 \en(\&.l	R\(sc	current line length
 \en(\&.s	R\(sc	current type size in points
-\e*(\&\'	S	acute accent
-\e*(\&\`	S	grave accent
 \e(\'	F\(sc	acute accent
 \e(\`	F\(sc	grave accent
 \e*}	S	end superscript
 \e^	F\(sc	1/12 em unbreakable hair space
-\e*^	S	caret
 \&.ad	M\(sc	set text adjustment
 \&.af	M\(sc	assign format to register
 \&.am	M\(sc	append to macro
@@ -2171,7 +2210,7 @@ NAME	TYPE	DESCRIPTION
 \&.lc	M\(sc	set leader repetition character
 \&.ll	M	set line length
 \&.lp	M	begin left justified paragraph
-\e*(lq	S	left quote marks
+\e*(lq	S	left double quotation mark
 \&.ls	M\(sc	set multi-line spacing
 \&.m1	M	set space from top of page to header
 \&.m2	M	set space from header to text
@@ -2192,7 +2231,6 @@ NAME	TYPE	DESCRIPTION
 \&.np	M	begin numbered paragraph
 \&.nr	M\(sc	set register
 \&.ns	M\(sc	no space mode
-\e*o	S	ring (e.g., for Norse A\*o)
 \&.of	M	set footer (odd-numbered pages only)
 \&.oh	M	set header (odd-numbered pages only)
 \&.pa	M	begin page
@@ -2207,8 +2245,6 @@ NAME	TYPE	DESCRIPTION
 \en(pp	R	paragraph type size in points
 \en(ps	R	paragraph prespace
 \&.q	M	quoted
-\e*(qa	S	for all
-\e*(qe	S	there exists
 \en(qi	R	long quotation left/right indentation
 \en(qp	R	long quotation type size in points
 \en(qs	R	long quotation pre/post space
@@ -2218,7 +2254,7 @@ NAME	TYPE	DESCRIPTION
 \&.rm	M\(sc	remove macro or string
 \&.rn	M\(sc	rename macro or string
 \&.ro	M	set page numbers in roman
-\e*(rq	S	right quote marks
+\e*(rq	S	right double quotation mark
 \&.rr	M\(sc	remove register
 \&.rs	M\(sc	restore spacing
 \&.rt	M\(sc	return to vertical position
@@ -2249,7 +2285,6 @@ NAME	TYPE	DESCRIPTION
 \&.uh	M	unnumbered section
 \&.ul	M\(sc	underline next line
 \ev\'\fI\&d\fP\'	F\(sc	local vertical motion for distance \fI\&d\fP
-\e*v	S	raised `v' for caron ``e\*v''
 \ew\'\fI\&S\fP\'	F\(sc	return width of string \fI\&S\fP
 \&.xl	M	set line length (local)
 \&.xp	M	print index
@@ -2262,7 +2297,6 @@ NAME	TYPE	DESCRIPTION
 \e{	F\(sc	begin conditional group
 \e|	F\(sc	1/6 em unbreakable thin space
 \e}	F\(sc	end conditional group
-\e*~	S	tilde
 .)l
 .rm $H
 .\" Local Variables:
