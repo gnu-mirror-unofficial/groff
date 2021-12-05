@@ -49,17 +49,17 @@ echo "testing tbl(1)-using mdoc(7) page $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -t -mdoc '"$doc"
 
-doc=$src/doc/meintro.me
+doc=$src/doc/meintro.me.in
 echo "testing me(7) document $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -me '"$doc"
 
-doc=$src/doc/meintro_fr.me
+doc=$src/doc/meintro_fr.me.in
 echo "testing tbl(1)-using me(7) document $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -t -me '"$doc"
 
-doc=$src/doc/meref.me
+doc=$src/doc/meref.me.in
 echo "testing me(7) document $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -me '"$doc"

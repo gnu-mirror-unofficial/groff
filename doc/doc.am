@@ -51,11 +51,16 @@ if BUILD_OTHERDOC
 # Files located in the source tree
 DOCFILES= \
   doc/me-revisions \
-  doc/meintro.me \
-  doc/meintro_fr.me \
-  doc/meref.me \
+  doc/meintro.me.in \
+  doc/meintro_fr.me.in \
+  doc/meref.me.in \
   doc/ms.ms \
   doc/pic.ms
+# Files that undergo a transformation prior to groff processing
+GENERATEDDOCFILES = \
+  doc/meintro.me \
+  doc/meintro_fr.me \
+  doc/meref.me
 # Files generated in the build tree
 PROCESSEDDOCFILES = \
   doc/meref.ps \
@@ -65,11 +70,11 @@ PROCESSEDDOCFILES = \
   doc/pic.ps
 
 otherdocdir = $(docdir)
-dist_otherdoc_DATA = $(DOCFILES)
+dist_otherdoc_DATA = $(DOCFILES) $(GENERATEDDOCFILES)
 nodist_otherdoc_DATA = $(PROCESSEDDOCFILES)
 MOSTLYCLEANFILES += $(PROCESSEDDOCFILES)
 else
-EXTRA_DIST += $(DOCFILES)
+EXTRA_DIST += $(DOCFILES) $(GENERATEDDOCFILES)
 endif
 
 # pdf doc, written in mom and therefore using contrib/mom/mom.am
@@ -136,6 +141,18 @@ MOSTLYCLEANFILES += doc/examples.stamp
 EXTRA_DIST += \
   doc/gnu.xpm \
   doc/txi-en.tex
+
+doc/meintro.me: $(doc_srcdir)/meintro.me.in
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_SED) $< >$@
+
+doc/meintro_fr.me: $(doc_srcdir)/meintro_fr.me.in
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_SED) $< >$@
+
+doc/meref.me: $(doc_srcdir)/meref.me.in
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_SED) $< >$@
 
 # The me(7) intro French translation gets its own target rule because it
 # needs the "-mfr" option.

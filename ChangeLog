@@ -85,6 +85,30 @@
 
 2021-12-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Generate me(7) manual sources as part of the build.  We had been
+	shipping 'me' sources with the string '@VERSION@' in them and
+	only sed-replacing that to produce generated PostScript, but
+	this replacement was not occurring for users who processed the
+	documents themselves.
+
+	* doc/meintro.me:
+	* doc/meintro_fr.me:
+	* doc/meref.me: Rename these to...
+	* doc/meintro.me.in:
+	* doc/meintro_fr.me.in:
+	* doc/meref.me.in: ...these.
+
+	* doc/doc.am (DOCFILES): Add the new *.in files.  Move the *.me
+	files from here...
+	(GENERATEDDOCFILES): ...to this new variable.
+	(dist_otherdoc_DATA, EXTRA_DIST): Add `$(GENERATEDDOCFILES)`.
+	(doc/me{intro{,_fr},ref}.me): Add new target rules.
+
+	* src/utils/grog/tests/smoke-test.sh: Update test to look for
+	the above source tree documents under their new names.
+
+2021-12-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (.me.txt, .ms.txt): Drop unused suffix rules.
 
 2021-12-06  G. Branden Robinson <g.branden.robinson@gmail.com>
