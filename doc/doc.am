@@ -135,6 +135,12 @@ EXTRA_DIST += \
   doc/gnu.xpm \
   doc/txi-en.tex
 
+# The me(7) intro French translation gets its own target rule because it
+# needs the "-mfr" option.
+doc/meintro_fr.ps: doc/meintro_fr.me
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -k -Tps -me -mfr >$@
+
 SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 
 # For simplicity, we always call preconv, grn, and eqn.
