@@ -71,6 +71,20 @@
 
 2021-12-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/e.tmac: Add nroff mode string definitions for 4.4BSD
+	compatibility.
+	  - Define '{' and '}' (superscripting) strings as '[' and ']'.
+	  - Define '<' and '>' (subscripting) strings as '\(la and
+	    '\(ra' if available on the device, otherwise '<' and '>'.
+
+	* tmac/tests/e_footnote-marks-work.sh: Update expected output.
+
+	* doc/meref.me: Document it.
+
+	Fixes <https://savannah.gnu.org/bugs/index.php?61619>.
+
+2021-12-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (doc/meintro_fr.ps): Add target rule (overriding
 	suffix rule) to generate this file using `-mfr` (load the French
 	localization macro file).

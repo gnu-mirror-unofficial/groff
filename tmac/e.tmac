@@ -1988,14 +1988,43 @@
 .\" GNU pic sets this register to 1 to indicate that \x should not be
 .\" used.
 .@R 0x
+.\" Define strings for super- and subscripting.  groff me does not
+.\" bother with half-line motions in nroff mode, since we have no output
+.\" driver (for that mode) that supports them; consequently we don't
+.\" emit \x escape sequences in that case either.  If someone implements
+.\" a Model 37 or line printer emulator we can target, this decision
+.\" could be revisited.
+.ie t \
+\{\
 .ds { \v'-0.4m'\x'\\n(0x=0*-0.2m'\s-3
 .ds } \s+3\v'0.4m'
+.\}
+.el \
+\{\
+.ds { [\"
+.ds } ]\"
+.\}
 .\" for compatibility with traditional -me
 .\" (the first will work only in compatibility mode)
 .ds [ \*{
 .ds ] \*}
+.ds @< <\"
+.ds @> >\"
+.if \n(.g \
+\{\
+.do if c \(la .ds @< \(la\"
+.do if c \(ra .ds @> \(ra\"
+.\}
+.ie t \
+\{\
 .ds < \v'0.4m'\x'\\n(0x=0*0.2m'\s-3
 .ds > \s+3\v'-0.4m'
+.\}
+.el \
+\{\
+.ds < \*(@<
+.ds > \*(@>
+.\}
 .ds - \(em
 .\" Avoid warnings from groff -ww.
 .@S |0

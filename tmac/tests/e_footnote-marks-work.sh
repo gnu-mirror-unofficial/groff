@@ -45,18 +45,18 @@ of quartz.\**
 output=$(echo "$input" | "$groff" -Tascii -P-cbou -me)
 
 echo "$output" \
-    | grep -F 'Jackdaws* love my big1 sphinx** of quartz.2'
+    | grep -F 'Jackdaws* love my big[1] sphinx** of quartz.[2]'
 
 echo "$output" \
     | grep -F '* foo'
 
 echo "$output" \
-    | grep -F '1 bar'
+    | grep -F '[1] bar'
 
 echo "$output" \
     | grep -F '** baz'
 
 echo "$output" \
-    | grep -F '2 qux'
+    | grep -F '[2] qux'
 
 # vim:set ai et sw=4 ts=4 tw=72:

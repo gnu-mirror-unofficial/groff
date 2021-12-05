@@ -1850,12 +1850,16 @@ This string gives upward movement
 and a change to a smaller point size.
 Extra space is left above the line
 to allow room for the superscript.
+In \*N mode,
+it produces a left square bracket.
 .TL
 .ST }
 .DE
 Unsuperscript.
 Inverse to
 .ST { .
+In \*N mode,
+it produces a right square bracket.
 For example,
 to produce a superscript
 you might type
@@ -1863,19 +1867,26 @@ you might type
 .ST { \c
 .b 2 \c
 .ST } ,
-which will produce
-.b x\*{2\*} .
+which will render as
+.b x\*{2\*}
+on typesetters and as
+.b x[2]
+on terminals.
 .TL
 .ST <
 .DE
 Subscript.
 Extra space is left below the line
 to allow for the subscript.
+In \*N mode,
+it produces a left angle bracket.
 .TL
 .ST >
 .DE
 Inverse to
 .ST < .
+In \*N mode,
+it produces a right angle bracket.
 .TL
 .ST (dw
 .DE
