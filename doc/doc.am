@@ -21,7 +21,9 @@
 doc_srcdir = $(abs_top_srcdir)/doc
 doc_builddir = $(abs_top_builddir)/doc
 
-DOC_SED = $(SED) -e "s;[@]VERSION[@];$(VERSION);"
+DOC_SED = $(SED) \
+  -e "s;[@]VERSION[@];$(VERSION);" \
+  -e "s;[@]g[@];$(g);g;"
 
 DOC_GROFF_ONLY=\
   GROFF_COMMAND_PREFIX= \
