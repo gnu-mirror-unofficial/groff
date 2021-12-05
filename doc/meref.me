@@ -113,7 +113,7 @@ the reader should understand
 breaks,
 fonts,
 point sizes,
-the use and definition of number registers
+the use and definition of registers
 and strings,
 how to define macros,
 and scaling factors for ens, points,
@@ -185,7 +185,7 @@ before changing it.
 .pp
 All names in \-me
 follow a rigid naming convention.
-The user may define number registers,
+The user may define registers,
 strings,
 and macros,
 provided that s/he
@@ -366,7 +366,7 @@ If
 is missing
 the current depth
 (maintained in
-the number register
+the register
 .NR ($0 )
 is used.
 The values of
@@ -569,7 +569,7 @@ or more than eight blanks total.
 .pp
 The spacing
 of headers and footers
-is controlled by four number registers.
+is controlled by four registers.
 .NR (hm
 [4v]
 is the distance from the top of the page
@@ -951,7 +951,7 @@ similar to footnotes.
 .i n
 .DE
 End delayed text.
-The delayed text number register
+The delayed text register
 .NR ($d
 and the associated string
 .ST #
@@ -1004,7 +1004,7 @@ to the next page.
 .i n
 .DE
 End footnote.
-The number register
+The register
 .NR ($f
 and the associated string
 .ST *
@@ -1991,7 +1991,7 @@ for a string
 or
 .b \e*( ),
 .b R
-for a number register
+for a register
 (invoked with
 .b \en
 or
@@ -2190,8 +2190,8 @@ NAME	TYPE	DESCRIPTION
 \&.mk	M\(sc	mark vertical position
 \en(mo	R\(sc	month of year
 \e*(mo	S	current month
-\en\fI\&x\fP	F\(sc	interpolate number register \fI\&x\fP
-\en(\fI\&xx\fP	F\(sc	interpolate number register \fI\&xx\fP
+\en\fI\&x\fP	F\(sc	interpolate register \fI\&x\fP
+\en(\fI\&xx\fP	F\(sc	interpolate register \fI\&xx\fP
 \&.n1	M	number lines in margin
 \&.n2	M	number lines in margin
 \&.na	M\(sc	turn off text adjustment
@@ -2199,7 +2199,7 @@ NAME	TYPE	DESCRIPTION
 \&.nf	M\(sc	don't fill output lines
 \&.nh	M\(sc	turn off hyphenation
 \&.np	M	begin numbered paragraph
-\&.nr	M\(sc	set number register
+\&.nr	M\(sc	set register
 \&.ns	M\(sc	no space mode
 \e*o	S	ring (e.g., for Norse A\*o)
 \&.of	M	set footer (odd-numbered pages only)
