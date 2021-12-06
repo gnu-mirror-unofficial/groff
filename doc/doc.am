@@ -146,9 +146,6 @@ doc/meintro_fr.ps: doc/meintro_fr.me
 SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 
 # For simplicity, we always call preconv, grn, and eqn.
-.me.txt:
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -k -Tutf8 -ge -me >$@
 .me.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -k -Tps -ge -me >$@
@@ -157,9 +154,6 @@ SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -P-p -P-b -P-I`basename $< \
 	  | sed -e 's|.ms$$||'` -P-D$(imagedir) -Thtml -ms >$@
-.ms.txt:
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -Tascii -ms -mwww >$@
 .ms.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -Tps -ms -mwww >$@
