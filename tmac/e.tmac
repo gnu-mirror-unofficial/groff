@@ -380,7 +380,6 @@
 .if \n@>2 .nr __ \\n(.pu-\\n(nlu
 .if \n@>2 .tm @f bm=\\n(bm _B=\\n(_B _b=\\n(_b .p-nl=\\n(__
 .if \n@>2 .rr __
-.ec
 .if \\n(?T \
 \{\
 .	nr T. 1		\" for tbl commands (to output bottom line)
@@ -1024,7 +1023,6 @@
 .if \n@>4 .tm -- )z >> \\*(|x
 \!.if \\\\n(nl>(\\\\n(tm+2v) .ne \\n(dnu-\\n(zsu
 .|k\"				\" and the body
-.ec
 .if \n@>4 .tm -- )z << \\*(|x, .z=\\n(.z
 .nr ?k 0
 .rm |k\"			\" remove the temp macro
@@ -1048,7 +1046,6 @@
 .\\$1
 .if \\n(?n \
 .	nm
-.ec
 .br
 .rm \\$1
 .ev
@@ -1141,7 +1138,6 @@
 .	nm \\n(ln
 .nf
 .|c
-.ec
 .in
 .ls
 .if \\n(?n \
@@ -1207,7 +1203,6 @@
 .de EQ			\" *** equation start
 .do if \\n[devtag-needs-end-of-heading] .do DEVTAG-EO-H
 .do nr devtag-needs-end-of-heading 0
-.ec
 .if "\*(.T"html" \
 \{\
 .	do nr e-EQ-ll \\n(.l
@@ -1567,7 +1562,6 @@
 .
 .
 .de (f			\" *** begin footnote
-.ec
 .if "\\n(.z"|f" .do @err footnotes cannot be nested
 .ie "\\n(.z"" \
 \{\
@@ -1971,7 +1965,6 @@
 .\"		*** PARAMETRIC INITIALIZATIONS ***
 .
 .
-.rr x
 .nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
 .nr $V \n($v			\" same for displays & footnotes
 .nr hm 4v			\" header margin
