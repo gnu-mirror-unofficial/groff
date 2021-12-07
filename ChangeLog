@@ -11,6 +11,21 @@
 
 2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Revise diagnostic messages to follow GNU Coding Standards,
+	identifying what is emitting them.
+
+	* tmac/e.tmac (_e): New string holds "e.tmac".
+	(@err): New macro constructs and issues diagnostics.  Add file
+	name to messages when available.  Suppress line number when
+	unavailable.
+	(check_page_length, @z, @h, n2, sk, @p, @(, @), (c, )c, EQ, (f,
+	++, @U): Call `@err` instead of invoking `tm` request.  Revise
+	wording of messages in an attempt at clarity.
+
+	Continues the long process of fixing Savannah #52463.
+
+2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/e.tmac: Slightly refactor footnote numbering.
 	()f): Tighten code style and end string definition with comment.
 	(+c, initialization): Drop unused auto-incrementation of

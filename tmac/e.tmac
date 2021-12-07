@@ -68,9 +68,22 @@
 .do if !r\\$1 .nr \\$1 0
 ..
 .
+.ds _e e.tmac\" name of macro package, for diagnostic messages
+.
+.\" emit error diagnostic
+.do de1 @err
+.ds @file \" empty
+.ds @line \" empty
+.if !'\\n[.F]'' .ds @file \\n[.F]:\"
+.if !'\\n[.c]'0' .ds @line \\n[.c]:\"
+.tm \\*(_e:\\*[@file]\\*[@line] \\$*
+.rm @file
+.rm @line
+..
+.
 .\" --- sanity check the page dimensions
 .do de check_page_length
-.if (\\n(.pu<14v) .ab e.tmac: cannot format short page length \\n(.pu
+.if (\\n(.pu<14v) .ab \\*(_e: cannot format short page length \\n(.pu
 ..
 .
 .\" --- check whether grohtml needs end of title/heading
@@ -178,7 +191,7 @@
 .if \n@>1 .tm >> @z, .z=\\n(.z ?a=\\n(?a
 .if !"\\n(.z"" \
 \{\
-.	tm Line \\n(c. -- Unclosed block, footnote, or other diversion (\\n(.z)
+.	do @err unclosed block, footnote, or other diversion (\\n(.z)
 .	di
 .	ex
 .\}
@@ -267,7 +280,7 @@
 .de @h			\" --- header
 .if \n@>1 .tm >> @h %=\\n% ?a=\\n(?a ?b=\\n(?b ?w=\\n(?w
 .if (\\n(.i+\\n(.o)>=\\n(.l \
-.	tm Line \\n(c. -- Offset + indent exceeds line length
+.	@err page offset plus indentation exceeds line length
 .\" initialize a pile of junk
 .nr ?h \\n(?H			\" transfer "next page" to "this page"
 .nr ?H 0
@@ -614,7 +627,7 @@
 .		rr |l
 .\}
 .	el \
-.		tm Line \\n(.c -- Bad .n2 value
+.		@err invalid numeric argument to 'n2': '\\$1'
 .\}
 .el \
 \{\
@@ -662,7 +675,7 @@
 .
 .de sk			\" *** leave a blank page (next page)
 .if \\n(.$>0 \
-.	tm Line \\n(c. -- I cannot skip multiple pages
+.	@err ignoring argument(s) to 'sk'
 .nr ?s 1
 ..
 .
@@ -779,7 +792,7 @@
 .de @p			\" --- initialize for paragraph
 .do check_page_length
 .do check_need_title
-.if "\\n(.z"|e" .tm Line \\n(c. -- Unmatched continued equation
+.if "\\n(.z"|e" .do @err eqn equation continuation unfulfilled
 .in \\n($iu+\\n(pou
 .if \\n(.$ \
 .	in +\\$1n
@@ -1068,7 +1081,7 @@
 ..
 .
 .de @(			\" --- begin keep
-.if !"\\n(.z"" .tm Line \\n(c. -- Invalid nested keep \\n(.z
+.if !"\\n(.z"" .do @err invalid nested keep (\\n(.z)
 .@M
 .di |k
 \!'rs
@@ -1096,7 +1109,7 @@
 .
 .de @)			\" --- end keep
 .br
-.if !"\\n(.z"|k" .tm Line \\n(c. -- Close of a keep which has never been opened
+.if !"\\n(.z"|k" .do @err attempted close of never-opened keep
 .nr ?k 0
 .di
 .in 0
@@ -1105,7 +1118,7 @@
 .
 .de (c			\" *** begin block centered text
 .br
-.if "\\n(.z"|c" .tm Line \\n(c. -- Nested .(c requests
+.if "\\n(.z"|c" .do @err block centering calls cannot be nested
 .if \\n(?n .nm
 .if ``\\n(.z` \
 \{\
@@ -1116,7 +1129,7 @@
 ..
 .
 .de )c			\" *** end block centered text
-.if !"\\n(.z"|c" .tm Line \\n(c. -- Unmatched .)c
+.if !"\\n(.z"|c" .do @err unmatched block centering call
 .br				\" force out final line
 .di
 .if \n@>4 .tm >> .)c .l=\\n(.l .i=\\n(.i $i=\\n($i dl=\\n(dl
@@ -1175,6 +1188,7 @@
 ..
 .
 .de )l			\" *** end list
+.\" XXX: Check for keep underflow here.
 .br
 .ev
 .if \\n(?n \
@@ -1202,7 +1216,7 @@
 .do HTML-IMAGE
 .if !\\n(?e \
 \{\
-.	if "\\n(.z"|e" .tm Line \\n(c. -- Nested .EQ request
+.	if "\\n(.z"|e" .do @err nested eqn equation start
 .	@D 1 "\\$1" "\\$2"
 .	@C 2
 .	di |e
@@ -1554,7 +1568,7 @@
 .
 .de (f			\" *** begin footnote
 .ec
-.if "\\n(.z"|f" .tm Line \\n(c. -- Invalid footnote nesting
+.if "\\n(.z"|f" .do @err footnotes cannot be nested
 .ie "\\n(.z"" \
 \{\
 .	nr _D \\n(dn
@@ -1864,7 +1878,7 @@
 .if "\\$1"AB" \
 .	nr _0 5			\" abstract
 .if \\n(_0=0 \
-.	tm Line \\n(c. -- Bad mode to .++
+.	@err invalid section type to '++': '\\$1'
 .nr ?R 0
 .if \\n(_0>10 \
 \{\
@@ -2130,7 +2144,7 @@
 .lt 6.0i
 .
 .de @U
-.tm The \\$1 macro has been removed from this version of the -me macros.
+.do @err the '\\$1' macro is not supported by this version of 'me'
 ..
 .
 .de lo
