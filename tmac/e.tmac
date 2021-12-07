@@ -364,8 +364,9 @@
 .
 .de @f			\" --- footer
 .if \n@>1 .tm >> @f %=\\n% nl=\\n(nl ?a=\\n(?a ?b=\\n(?b ?f=\\n(?f
-.if \n@>2 .nr VL \\n(.pu-\\n(nlu
-.if \n@>2 .tm @f bm=\\n(bm _B=\\n(_B _b=\\n(_b .p-nl=\\n(VL
+.if \n@>2 .nr __ \\n(.pu-\\n(nlu
+.if \n@>2 .tm @f bm=\\n(bm _B=\\n(_B _b=\\n(_b .p-nl=\\n(__
+.if \n@>2 .rr __
 .ec
 .if \\n(?T \
 \{\
