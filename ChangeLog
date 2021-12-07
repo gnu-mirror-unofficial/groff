@@ -1,3 +1,21 @@
+2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac: Fix automatic numbering of delayed text.
+	(initialization): Add `_#` string for use in multiple
+	assignments of `#` string.
+	(initialization, pd): Remove unused auto-incrementation from
+	`$d` delayed text number register.
+	()d): Increment `$d` register unconditionally, no longer
+	conditionally on whether the delayed text marker string `#` has
+	been interpolated.
+	()d, pd): Update `#` string using new `_#` string.  Stop
+	initializing the string with `\k` mark-setting escape sequence.
+
+	* doc/meref.me (Annotations) <)d>: Document now-unconditional
+	incrementation of `$d` register.
+
+	Fixes <https://savannah.gnu.org/bugs/?61632>.
+
 2021-12-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/tests/e_delayed-text-marks-work.sh: Add test.

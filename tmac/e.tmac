@@ -1663,17 +1663,15 @@
 ..
 .
 .de )d			\" *** end delayed text
-.if \\n# \
-.	nr $d +1
-.ds # [\\n($d]\k#
-.rr #
+.nr $d +1
+.ds # \\*(_#
 ..
 .
 .de pd			\" *** print delayed text
 .|d
 .rm |d
-.nr $d 1 1
-.ds # [1]\k#
+.nr $d 1
+.ds # \\*(_#
 ..
 .
 .
@@ -2059,8 +2057,9 @@
 .nr $c 1			\" current column number
 .nr $f 1 1			\" footnote number
 .ds * \*{1\*}\k*\"		\" footnote "name"
-.nr $d 1 1			\" delayed text number
-.ds # [1]\k#\"			\" delayed text "name"
+.nr $d 1			\" delayed text number
+.ds _# [\\n($d]\"
+.ds # \*(_#\"			\" delayed text "name"
 .nr _M 1			\" chapter mode is chapter
 .ds lq \(lq\"			\" left quote
 .ds rq \(rq\"			\" right quote
