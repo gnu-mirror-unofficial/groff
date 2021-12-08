@@ -587,7 +587,7 @@
 .		po -\w'0000'u
 .	el \
 .		ll -\w'0000'u
-.	ie \\B`\\$1` \
+.	do ie \\B`\\$1` \
 \{\
 .		ds |i \\$1
 .		ds |j \\$1
@@ -595,14 +595,17 @@
 .		\" Pick off leading char and rest to check.
 .		do substring |i 0 0  \"
 .		do length |l \\$1
-.		if \\n(|l>1 .do substring |j 1	\" for +N / -N
+.		if \\n(|l>1 .do substring |j 1\"	\" for +N / -N
 .		ie `\\*(|i`+` \
 .			do nr ln (\\n[_ln])+\\*(|j
+.\" This file's brace style doesn't permit indentation of \{. --GBR
 .		el \
+\{\
 .			ie `\\*(|i`-` \
 .				do nr ln (\\n[_ln])-\\*(|j
 .			el \
-.				nr ln \\$1  \" unsigned N
+.				nr ln \\$1	\" unsigned N
+.		\}
 .		do nr _#p \\n(.s
 .		do nr _#f \\n(.f
 .		nm \\n(ln
@@ -1106,7 +1109,7 @@
 .if \\n(?n .nm
 .if ``\\n(.z` \
 \{\
-.	@C 1		\" Ensure env. set up for centering in open text
+.	@C 1\"		\" Ensure env. set up for centering in open text
 .	ev
 .\}
 .di |c

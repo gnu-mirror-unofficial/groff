@@ -1,3 +1,14 @@
+2021-12-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac: Fix groff warnings and correctness issue.
+	(n2): Prefix `ie` request with `do` because it uses the groff
+	`\B` escape sequence.  Use braces to group multiple requests
+	after an `el` request: `ie` and `el` count as two requests, not
+	one.  Add comment regarding the unfortunate choice of brace
+	style given *roff's syntactical constraints.
+	(n2, (c): Conceal bare tab in request argument list (exposed by
+	no longer stripping the macro file).
+
 2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac: Slightly refactor footnote numbering.
