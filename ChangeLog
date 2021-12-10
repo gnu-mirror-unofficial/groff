@@ -1,5 +1,14 @@
 2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/e.tmac: Slightly refactor footnote numbering.
+	()f): Tighten code style and end string definition with comment.
+	(+c, initialization): Drop unused auto-incrementation of
+	footnote number register `$f`.  Add new string `_*` to use when
+	{re-}initializing `*` outside of a footnote diversion, and
+	interpolate the footnote number register instead of a literal.
+
+2021-12-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tests/e_footnote-marks-work.sh: Add unit test.
 	* tmac/tmac.am (tmac_TESTS): Run test.
 

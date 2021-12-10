@@ -1618,9 +1618,8 @@
 .de )f			\" *** end footnote
 .ie "\\n(.z"|f" \
 \{\
-.	if \\n* \
-.		nr $f +1
-.	ds * \\*{\\n($f\\*}\k*
+.	if \\n* .nr $f +1
+.	ds * \\*{\\n($f\\*}\k*\"
 .	nr * 0
 .	in 0
 .	da
@@ -1832,8 +1831,8 @@
 .	ep
 .\}
 .nr ?C 1
-.nr $f 1 1
-.ds * \\*{1\\*}\k*
+.nr $f 1
+.ds * \\*(_*\"
 .if \\n(?R \
 .	pn 1
 .bp
@@ -2055,8 +2054,9 @@
 .nr $l \n(.lu			\" line length
 .nr _L \n(.lu			\" line length of page
 .nr $c 1			\" current column number
-.nr $f 1 1			\" footnote number
-.ds * \*{1\*}\k*\"		\" footnote "name"
+.nr $f 1			\" footnote number
+.ds _* \\*{\\n($f\\*}\k*\"
+.ds * \*(_*\"			\" footnote "name"
 .nr $d 1			\" delayed text number
 .ds _# [\\n($d]\"
 .ds # \*(_#\"			\" delayed text "name"
