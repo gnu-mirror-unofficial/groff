@@ -1394,7 +1394,9 @@ none will be output.)
 .i m
 .i T
 .DE
-Begin equation.
+Begin
+.i \%@g@eqn (1)
+equation.
 The equation is centered
 if
 .i m
@@ -1408,36 +1410,38 @@ if
 .i m
 is
 .b I ,
-and left justified if
+and left-aligned if
 .i m
 is
 .b L .
 .i T
-is a title printed on the right margin
+is a title aligned to the right margin
 next to the equation.
 See
-.i "Typesetting Mathematics \- User's Guide"
+.q "Typesetting Mathematics \- User's Guide"
 by Brian W. Kernighan
 and Lorinda L. Cherry.
 .TL
 .b .EN
 .i c
 .DE
-End equation.
+End
+.i \%@g@eqn
+equation.
 If
 .i c
 is
 .b C
 the equation must be continued
-by immediately following
+by immediately following it
 with another
 .b .EQ ,
 the text of which
 can be centered
 along with this one.
 Otherwise,
-the equation is printed,
-always on one page,
+the equation is typeset
+on a single page
 with
 .NR (es
 [0.5v]
@@ -1495,77 +1499,84 @@ table.
 .i w
 .DE
 Begin
-.i pic
+.i \%@g@pic (1)
 picture.
-.i H
+.i h
 is the height and
 .i w
-is the width,
-both in basic units.
+is the width.
 .TL
 .b .PE
 .DE
 End
-.i pic
+.i \%@g@pic
 picture,
-leaving the current position at the bottom of the picture.
+leaving the drawing position at the bottom of the picture.
 .TL
 .b .PF
 .DE
 End
-.i pic
+.i \%@g@pic
 picture,
-leaving the current position at the top of the picture.
+leaving the drawing position at the top of the picture.
 .TL
 .b .IS
 .DE
 Begin
-.i ideal
+.i ideal (1)\**
 picture.
+.(f
+\**
+.i groff
+does not provide an implementation of the
+.i ideal
+preprocessor.
+.)f
 .TL
 .b .IE
 .DE
 End
 .i ideal
 picture,
-leaving the current position at the bottom of the picture.
+leaving the drawing position at the bottom of the picture.
 .TL
 .b .IF
 .DE
 End
 .i ideal
 picture,
-leaving the current position at the top of the picture.
+leaving the drawing position at the top of the picture.
 .TL
 .b .GS
 .i x
 .DE
 Begin
-.i grn
+.i \%@g@grn (1)
 picture.
-.i X
-can be either
+.i x
+[\c
+.b C ]
+can be
 .b C ,
 .b L ,
 or
 .b R
-to center, left, or right justify the
-whole picture.
-Default is centering the image.
+to center, left-, or right-align
+the picture.
 .TL
 .b .GE
 .DE
 End
-.i grn
+.i \%@g@grn
 picture,
-leaving the current position at the bottom of the picture.
+leaving the drawing position at the bottom of the picture.
 .TL
 .b .GF
 .DE
 End
-.i grn
+.i \%@g@grn
 picture,
-leaving the current position at the top of the picture.
+leaving the drawing position at the top of the picture.
 .sh 1 "Miscellaneous"
 .TL
 .b .re
