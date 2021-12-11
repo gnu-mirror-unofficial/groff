@@ -31,10 +31,13 @@
 .\"
 .\"	@(#)ref.me	8.2 (Berkeley) 06/01/94
 .\"
-.\" Modified by jjc@jclark.com for groff.
+.\" Modified by jjc@jclark.com and g.branden.robinson@gmail.com for
+.\" groff.
 .\"UC 7
 .ll 6.5i
 .lt 6.5i
+.nr pp 10
+.nr fi 1n
 .\"pn 0
 .ds MO @VERSION@
 .de TL			\" *** title line
@@ -59,11 +62,17 @@
 .XX
 .rm XX
 ..
-.ds G \s-1GROFF\s0
-.ds N \s-1NROFF\s0
-.ds T \s-1TROFF\s0
-.nr DI 1.5i
-.he '\-ME REFERENCE MANUAL''%'
+.ds UG groff\" upright "groff" for use outside of running text
+.ds UM me\" upright "me"
+.ds G \fI\*(UG\fP\"
+.ds N \fInroff\fP\"
+.ds T \fItroff\fP\"
+.ds ME \fI\*(UM\fP\"
+.ds MR \f(BI\*(UM\fP Reference Manual\"
+.\" Compute an indentation for the macro and string synopses based on
+.\" the length of the longest entry.
+.nr DI \w'.sh \(+-N T a b c d e f'+2n
+.he '\*(MR''%'
 .de NR
 .b "\en\\$1" "\\$2"
 ..
@@ -76,10 +85,10 @@
 .+c
 .ce 20
 .sz 14
-.b "\-ME REFERENCE MANUAL"
+.b "\*(MR"
 .sz
 .sp
-.i "\*G Version \*(MO*"
+.i "for \fR\*(UG \*(UM\fP version \*(MO*"
 .(f
 * based on \fIe.tmac\fP 8.1 from 4.4BSD
 .)f
@@ -92,16 +101,14 @@ Electronics Research Laboratory
 University of California, Berkeley
 Berkeley, California  94720
 .sp 2
-.i "Modified for \*G by James Clark"
+.i "Adapted for \fR\*(UG\fP by James Clark and G.\& Branden Robinson"
 .ce 0
 .sp 4
 .pp
 This document describes
 in extremely terse form
 the features
-of the
-.b \-me
-macro package
+of the \*(ME macro package
 for \*G.
 Some familiarity is assumed
 with
@@ -124,7 +131,7 @@ to text processing
 using \*G,
 refer to the document
 .ul
-Writing Papers with \*G using \-me.
+Writing Papers with \*G using \-\*(ME.
 .pp
 There are a number of macro parameters
 that may be adjusted.
@@ -181,7 +188,7 @@ This may be a sensitive operation;
 look at the body of the original macro
 before changing it.
 .pp
-All names in \-me
+Objects in \*(ME
 follow a rigid naming convention.
 The user may define registers,
 strings,
@@ -1616,18 +1623,14 @@ because it only affects the current environment.
 .b .ll
 .i +N
 .DE
-Set line length in all environments used by
-.i me
+Set line length in all environments used by \*(ME
 to
 .i N
 [6.0i].\**
 .(f
 \**
-.i me
-uses only the three environments of AT&T
-.i troff ,
-but in GNU
-.i troff ,
+\*(ME uses only the three environments of AT&T \*T,
+but in GNU \*T,
 the user can create additional ones.
 .
 .b .ll
@@ -1928,7 +1931,7 @@ Em dash.
 There are a number of special characters
 and diacritical marks
 (such as accents)
-available through \-me.
+available through \*(ME.
 .ta 15 +5 +6
 .nf
 Name	Usage	Example
@@ -1951,7 +1954,7 @@ Bob Epstein,
 Bill Joy,
 and Larry Rowe
 for having the courage
-to use the \-me macros
+to use the \*(ME macros
 to produce non-trivial papers
 during the development stages;
 Ricki Blau,
@@ -1967,9 +1970,9 @@ and have given support for the project.
 .b Summary
 .pp
 This alphabetical list summarizes all macros, strings, and number registers
-available in the \-me macros.
+available in the \*(ME macros.
 Selected
-.i troff
+\*T
 requests, registers, and functions are included as well;
 those listed can generally be used with impunity.
 .pp
@@ -2000,12 +2003,12 @@ or
 and
 .b F
 for a
-.i troff
+\*T
 builtin function
 (invoked by preceding it with a single backslash).
 .pp
 Lines marked with \(sc are
-.i troff
+\*T
 internal codes.
 Lines marked with \(dg or \(dd
 may be defined by the user to get special functions;
@@ -2015,7 +2018,7 @@ Lines marked with \(de
 are specific to
 .i ditroff
 (device-independent
-.i troff ).
+\*T).
 .de $H
 .ev 1
 .ta \w'\e(space)\(sc\ 'u +\w'TYPE  'u
