@@ -2062,51 +2062,55 @@ device-independent \*T,
 and a square \(sq marks \*G extensions.
 .de $H
 .ev 1
-.ta \w'\e(space)\(sc\ 'u +\w'TYPE  'u
-NAME	TYPE	DESCRIPTION
+.ta \w'\enewline\(sc'u +\w'TYPE'u+2n
+.b "Name	Type	Description"
 .ev
 ..
-.(l
+.sp
+.if t .2c
+.(l L
 .$H
-\e(space)	F\(sc	unpaddable space
-\e"	F\(sc	comment (to end of line)
-\e*#	S	optional delayed text tag string
-\e$\fI\&N\fP	F\(sc	interpolate argument \fI\&N\fP
+.\"\e\fI\,space\fP	F\(sc	unbreakable, unadjustable space
+\e\fI\,newline\fP	F\(sc	continue input line
+\e"	F\(sc	comment (to end of input line)
+\e*#	S	delayed text marker
+\e$\fI\,N\fP	F\(sc	interpolate macro argument \fIN\fP
 \en($0	R	section depth
-\&.$0	M\(dg	invoked after section title printed
-\en($1	R	first section number
-\&.$1	M\(dg	invoked before printing depth 1 section
-\en($2	R	second section number
-\&.$2	M\(dg	invoked before printing depth 2 section
-\en($3	R	third section number
-\&.$3	M\(dg	invoked before printing depth 3 section
-\en($4	R	fourth section number
-\&.$4	M\(dg	invoked before printing depth 4 section
-\en($5	R	fifth section number
-\&.$5	M\(dg	invoked before printing depth 5 section
-\en($6	R	sixth section number
-\&.$6	M\(dg	invoked before printing depth 6 section
-\&.$C	M\(dg	called at beginning of chapter
-\&.$H	M\(dg	text header
-\en($V	R\(dd	relative vertical spacing in displays
+\&.$0	M\(dg	post-section heading hook
+\en($1	R	first section number component
+\&.$1	M\(dg	pre-section depth 1 hook
+\en($2	R	second section number component
+\&.$2	M\(dg	pre-section depth 2 hook
+\en($3	R	third section number component
+\&.$3	M\(dg	pre-section depth 3 hook
+\en($4	R	fourth section number component
+\&.$4	M\(dg	pre-section depth 4 hook
+\en($5	R	fifth section number component
+\&.$5	M\(dg	pre-section depth 5 hook
+\en($6	R	sixth section number component
+\&.$6	M\(dg	pre-section depth 6 hook
+\&.$C	M\(dg	post-chapter title hook
+\&.$H	M\(dg	page/column heading hook
+\en($V	R\(dd	vertical spacing of displayed text (%)
 \en($c	R	current column number
-\&.$c	M\(dd	print chapter title
+\&.$c	M\(dd	output chapter number and title
 \en($d	R	delayed text number
 \en($f	R	footnote number
-\&.$f	M\(dd	print footer
-\&.$h	M\(dd	print header
-\en($i	R	paragraph base indent
+\&.$f	M\(dd	output footer
+\&.$h	M\(dd	output header
+\en($i	R	paragraph base indentation
 \en($l	R	column width
-\en($m	R	number of columns in effect
-\e*($n	S	section name
+\en($m	R	number of available columns
+\e*($n	S	concatenated section number
 \en($p	R	numbered paragraph number
-\&.$p	M\(dd	print section heading (internal macro)
-\en($s	R	column indent
-\&.$s	M\(dd	footnote separator (from text)
-\en($v	R\(dd	relative vertical spacing in text
+\&.$p	M\(dd	output section heading
+\en($s	R	column spacing (indentation)
+\&.$s	M\(dd	output footnote area separator
+\en($v	R\(dd	vertical spacing of text (%)
+\e%	F\(sc	control hyphenation
 \en%	R\(sc	current page number
-\e&	F\(sc	zero width character, useful for hiding controls
-\e(\fI\&xx\fP	F\(sc	interpolate special character \fI\&xx\fP
+\e&	F\(sc	non-printing input break
+\e(\fI\,xx\fP	F\(sc	interpolate special character \fIxx\fP
 \&.(b	M	begin block
 \&.(c	M	begin centered block
 \&.(d	M	begin delayed text
@@ -2115,6 +2119,7 @@ NAME	TYPE	DESCRIPTION
 \&.(q	M	begin long quotation
 \&.(x	M	begin index entry
 \&.(z	M	begin floating keep
+\e\(aq	F\(sc	acute accent
 \&.)b	M	end block
 \&.)c	M	end centered block
 \&.)d	M	end delayed text
@@ -2123,160 +2128,161 @@ NAME	TYPE	DESCRIPTION
 \&.)q	M	end long quotation
 \&.)x	M	end index entry
 \&.)z	M	end floating keep
-\e*\fI\&x\fP	F\(sc	interpolate string \fI\&x\fP
-\e*(\fI\&xx\fP	F\(sc	interpolate string \fI\&xx\fP
-\e**	S	optional footnote tag string
+\e*\fI\,x\fP	F\(sc	interpolate string \fIx\fP
+\e*(\fI\,xx\fP	F\(sc	interpolate string \fIxx\fP
+\e**	S	footnote marker
 \&.++	M	set document segment type
 \&.+c	M	begin chapter
 \e\-	F\(sc	minus sign
 \e*\-	S	em dash
-\e0	F\(sc	unpaddable digit-width space
-\&.1c	M	revert to single-column output
-\&.2c	M	begin two-column output
-\e*<	S	begin subscript
-\e*>	S	end subscript
-\&.EN	M	end equation
-\&.EQ	M	begin equation
-\eL\'\fI\&d\fP\'	F\(sc	vertical line drawing function for distance \fI\&d\fP
-\&.GE	M\(de	end \fIgrn\fP picture with position at bottom
-\&.GF	M\(de	end \fIgrn\fP picture with position at top
-\&.GS	M\(de	start \fIgrn\fP picture
+\en(.$	R\(sc	macro parameter count
+\en(.i	R\(sc	current indentation
+\en(.l	R\(sc	current line length
+\en(.s	R\(sc	current type size in points
+\e0	F\(sc	unadjustable digit-width space
+\&.1c	M	end multi-column layout
+\&.2c	M	begin multi-column layout
+\e*<	S	begin subscripting
+\e*>	S	end subscripting
+\&.EN	M	end \fI@g@eqn\fP equation
+\&.EQ	M	begin \fI@g@eqn\fP equation
+\&.GE	M\(de	end \fI@g@grn\fP picture with position at bottom
+\&.GF	M\(de	end \fI@g@grn\fP picture with position at top
+\&.GS	M\(de	start \fI@g@grn\fP picture
 \&.IE	M\(de	end \fIideal\fP picture with position at bottom
 \&.IF	M\(de	end \fIideal\fP picture with position at top
 \&.IS	M\(de	start \fIideal\fP picture
-\&.PE	M\(de	end \fIpic\fP picture with position at bottom
-\&.PF	M\(de	end \fIpic\fP picture with position at top
-\&.PS	M\(de	start \fIpic\fP picture
-\&.TE	M	end table
-\&.TH	M	end header of table
-\&.TS	M	begin table
-\e*{	S	begin superscript
-\en(\&.$	R\(sc	number of arguments to macro
-\en(\&.i	R\(sc	current indent
-\en(\&.l	R\(sc	current line length
-\en(\&.s	R\(sc	current type size in points
-\e(\'	F\(sc	acute accent
-\e(\`	F\(sc	grave accent
-\e*}	S	end superscript
+\eL\(aq\fI\,d\/\fP\(aq	F\(sc	draw vertical line of length \fId\fP
+\&.PE	M\(de	end \fI@g@pic\fP picture with position at bottom
+\&.PF	M\(de	end \fI@g@pic\fP picture with position at top
+\&.PS	M\(de	start \fI@g@pic\fP picture
+\&.TE	M	end \fI@g@tbl\fP table
+\&.TH	M	end heading for multi-page \fI@g@tbl\fP table
+\&.TS	M	begin \fI@g@tbl\fP table
 \e^	F\(sc	1/12 em unbreakable hair space
-\&.ad	M\(sc	set text adjustment
-\&.af	M\(sc	assign format to register
+\e_	F\(sc	underscore
+\e\(ga	F\(sc	grave accent
+\&.ad	M\(sc	set text adjustment mode
+\&.af	M\(sc	assign register format
 \&.am	M\(sc	append to macro
-\&.ar	M	set page numbers in Arabic
+\&.ar	M	use Arabic numerals for page numbers
 \&.as	M\(sc	append to string
-\&.b	M	bold font
-\&.ba	M	set base indent
+\&.b	M	embolden argument
+\&.ba	M	set base indentation
 \&.bc	M	begin new column
-\&.bi	M	bold italic
-\en(bi	R	display (block) indent
-\&.bl	M	blank lines (even at top of page, in contrast to .sp)
-\en(bm	R	bottom title margin
-\&.bp	M\(sc	begin page
-\&.br	M\(sc	break (start new line)
+\&.bi	M	embolden and italicize argument
+\en(bi	R	display (block) indentation
+\&.bl	M	insert space (even at page top; cf. \fB.sp\fP)
+\en(bm	R	distance from text area to page bottom
+\&.bp	M\(sc	begin new page
+\&.br	M\(sc	break output line
 \en(bs	R	display (block) pre/post spacing
 \en(bt	R	block threshold for keeps
-\&.bx	M	boxed
-\ec	F\(sc	continue input
-\&.ce	M\(sc	center lines
+\&.bx	M	box argument
+\ec	F\(sc	continue output line
+\&.ce	M\(sc	center output lines
 \en(ch	R	current chapter number
+\&.cp	M\(sc\(sq	enable AT&T \*T compatibility mode
 \&.de	M\(sc	define macro
 \en(df	R	display font
+\&.do	M\(sc\(sq	operate with compatibility mode off
 \&.ds	M\(sc	define string
-\en(dw	R\(sc	current day of week
-\e*(dw	S	current day of week
-\en(dy	R\(sc	day of month
-\ee	F\(sc	printable version of \e
-\&.ef	M	set footer (even-numbered pages only)
-\&.eh	M	set header (even-numbered pages only)
-\&.el	M\(sc	else part of conditional
+\en(dw	R\(sc	day of the week
+\e*(dw	S	weekday name
+\en(dy	R\(sc	day of the month
+\ee	F\(sc	printable version of escape character \fB\e\fP
+\&.ef	M	set even-numbered page footer
+\&.eh	M	set even-numbered page header
+\&.el	M\(sc	else part of \fB.ie\fP conditional
 \&.ep	M	end page
 \en(es	R	equation pre/post space
-\ef\fI\&f\fP	F\(sc	inline font change to font \fI\&f\fP
-\ef(\fI\&ff\fP	F\(sc	inline font change to font \fI\&ff\fP
+\ef\fI\,f\fP	F\(sc	inline font change to font \fIf\fP
+\ef(\fI\,ff\fP	F\(sc	inline font change to font \fIff\fP
 \&.fc	M\(sc	set field characters
 \en(ff	R	footnote font
-\&.fi	M\(sc	fill output lines
-\en(fi	R	footnote indent (first line only)
+\&.fi	M\(sc	enable filling
+\en(fi	R	footnote indentation (first line only)
 \en(fm	R	footer margin
 \&.fo	M	set footer
 \en(fp	R	footnote type size in points
 \en(fs	R	footnote prespace
-\en(fu	R	footnote undent (from right margin)
-\eh\'\fI\&d\fP\'	F\(sc	local horizontal motion for distance \fI\&d\fP
+\en(fu	R	footnote undent (right indentation)
+\eh\(aq\fI\,d\/\fP\(aq	F\(sc	move distance \fId\fP horizontally
 \&.hc	M\(sc	set hyphenation character
 \&.he	M	set header
 \&.hl	M	draw horizontal line
 \en(hm	R	header margin
-\&.hx	M	suppress headers and footers on next page
-\&.hy	M\(sc	set hyphenation mode
-\&.i	M	italic font
-\&.ie	M\(sc	conditional with else
+\&.hx	M	suppress next page's headers/footers
+\&.hy	M\(sc	set automatic hyphenation mode
+\&.i	M	italicize argument
+\&.ie	M\(sc	conditional with \fB.el\fP
 \&.if	M\(sc	conditional
-\en(ii	R	indented paragraph indent
-\&.in	M\(sc	indent (transient, use .ba for pervasive)
+\en(ii	R	indented paragraph indentation
+\&.in	M\(sc	set indentation (transient; cf.\& \fB.ba\fP)
 \&.ip	M	begin indented paragraph
-\&.ix	M	indent, no break
-\el\'\fI\&d\fP\'	F\(sc	horizontal line drawing function for distance \fI\&d\fP
+\&.ix	M	set indentation without break
+\el\(aq\fI\,d\/\fP\(aq	F\(sc	draw horizontal line of length \fId\fP
 \&.lc	M\(sc	set leader repetition character
 \&.ll	M	set line length
-\&.lp	M	begin left justified paragraph
+\&.lp	M	begin left-aligned paragraph
 \e*(lq	S	left double quotation mark
 \&.ls	M\(sc	set multi-line spacing
-\&.m1	M	set space from top of page to header
-\&.m2	M	set space from header to text
-\&.m3	M	set space from text to footer
-\&.m4	M	set space from footer to bottom of page
-\&.mc	M\(sc	insert margin character
-\&.mk	M\(sc	mark vertical position
-\en(mo	R\(sc	month of year
-\e*(mo	S	current month
-\en\fI\&x\fP	F\(sc	interpolate register \fI\&x\fP
-\en(\fI\&xx\fP	F\(sc	interpolate register \fI\&xx\fP
-\&.n1	M	number lines in margin
-\&.n2	M	number lines in margin
-\&.na	M\(sc	turn off text adjustment
+\&.m1	M	set page top to header distance
+\&.m2	M	set header to text distance
+\&.m3	M	set text to footer distance
+\&.m4	M	set footer to page bottom distance
+\&.mc	M\(sc	set margin character
+\&.mk	M\(sc	mark vertical position (see \fB.rt\fP)
+\en(mo	R\(sc	month of the year
+\e*(mo	S	month name
+\en\fI\,x\fP	F\(sc	interpolate register \fIx\fP
+\en(\fI\,xx\fP	F\(sc	interpolate register \fIxx\fP
+\&.n1	M	begin output line numbering
+\&.n2	M	end or alter output line numbering
+\&.na	M\(sc	disable adjustment
 \&.ne	M\(sc	need vertical space
-\&.nf	M\(sc	don't fill output lines
-\&.nh	M\(sc	turn off hyphenation
+\&.nf	M\(sc	disable filling
+\&.nh	M\(sc	disable automatic hyphenation
 \&.np	M	begin numbered paragraph
 \&.nr	M\(sc	set register
-\&.ns	M\(sc	no space mode
-\&.of	M	set footer (odd-numbered pages only)
-\&.oh	M	set header (odd-numbered pages only)
+\&.ns	M\(sc	begin no-space mode
+\&.of	M	set odd-numbered page footer
+\&.oh	M	set odd-numbered page header
 \&.pa	M	begin page
-\&.pd	M	print delayed text
+\&.pd	M	output delayed text
 \en(pf	R	paragraph font
-\en(pi	R	paragraph indent
+\en(pi	R	paragraph indentation
 \&.pl	M\(sc	set page length
 \&.pn	M\(sc	set next page number
-\&.po	M\(sc	page offset
-\en(po	R	simulated page offset
+\&.po	M\(sc	set page offset
+\en(po	R	page offset
 \&.pp	M	begin paragraph
 \en(pp	R	paragraph type size in points
 \en(ps	R	paragraph prespace
-\&.q	M	quoted
+\&.q	M	quote argument
 \en(qi	R	long quotation left/right indentation
 \en(qp	R	long quotation type size in points
 \en(qs	R	long quotation pre/post space
-\&.r	M	roman font
-\&.rb	M	real bold font
-\&.re	M	reset tabs
-\&.rm	M\(sc	remove macro or string
-\&.rn	M\(sc	rename macro or string
-\&.ro	M	set page numbers in roman
+\&.r	M	set argument in roman
+\&.re	M	reset tab stops
+\&.rj	M\(sq	right-align output lines
+\&.rm	M\(sc	remove macro, string, or request
+\&.rn	M\(sc	rename macro, string, or request
+\&.ro	M	use Roman numerals for page numbers
 \e*(rq	S	right double quotation mark
 \&.rr	M\(sc	remove register
-\&.rs	M\(sc	restore spacing
-\&.rt	M\(sc	return to vertical position
-\es\fI\&S\fP	F\(sc	inline size change to size \fI\&S\fP
+\&.rs	M\(sc	restore spacing (end no-space mode)
+\&.rt	M\(sc	return to vertical position set by \fB.mk\fP
+\es\(aq\fI\,\(+-S\/\fP\(aq	F\(sc\(de	inline type size change\
+ to/by \fIS\fP points
 \en(sf	R	section title font
 \&.sh	M	begin numbered section
-\en(si	R	relative base indent per section depth
+\en(si	R	section indentation per level of depth
 \&.sk	M	skip next page
-\&.sm	M	set argument in a smaller type size
-\&.so	M\(sc	source input file
+\&.sm	M	set argument at smaller type size
+\&.so	M\(sc	source (interpolate) input file
 \en(so	R	additional section title offset
-\&.sp	M\(sc	vertical space (except at top of page, in contrast to .bl)
+\&.sp	M\(sc	insert space (except at page top; cf.\& \fB.bl\fP)
 \en(sp	R	section title type size in points
 \en(ss	R	section prespace
 \&.sx	M	change section depth
@@ -2285,30 +2291,34 @@ NAME	TYPE	DESCRIPTION
 \&.tc	M\(sc	set tab repetition character
 \e*(td	S	today's date
 \en(tf	R	title font
-\&.ti	M\(sc	temporary indent (next line only)
-\&.tl	M\(sc	three part title
-\en(tm	R	top title margin
+\&.ti	M\(sc	temporary indentation (next line only)
+\&.tl	M\(sc	output three-part title
+\en(tm	R	distance from page top to text area
 \&.tp	M	begin title page
 \en(tp	R	title type size in points
-\&.tr	M\(sc	translate
-\&.u	M	underlined
-\&.uh	M	unnumbered section
-\&.ul	M\(sc	underline next line
-\ev\'\fI\&d\fP\'	F\(sc	local vertical motion for distance \fI\&d\fP
-\ew\'\fI\&S\fP\'	F\(sc	return width of string \fI\&S\fP
+\&.tr	M\(sc	translate characters
+\&.u	M	underline argument
+\&.uh	M	begin unnumbered section
+\&.ul	M\(sc	underline output lines
+\ev\(aq\fI\,d\/\fP\(aq	F\(sc	move distance \fId\fP vertically
+\ew\(aq\fI\,S\/\fP\(aq	F\(sc	interpolate formatted width of \fIS\fP
 \&.xl	M	set line length (local)
-\&.xp	M	print index
+\&.xp	M	output index
 \en(xs	R	index entry prespace
-\en(xu	R	index undent (from right margin)
-\en(y2	R	year (last two digits only)
-\en(y4	R	year (all digits)
+\en(xu	R	index undent (right indentation)
+\en(y2	R\(sq	year of the century
+\en(y4	R\(sq	year
 \en(yr	R\(sc	year minus 1900
 \en(zs	R	floating keep pre/post space
 \e{	F\(sc	begin conditional group
+\e*{	S	begin superscripting
 \e|	F\(sc	1/6 em unbreakable thin space
 \e}	F\(sc	end conditional group
+\e*}	S	end superscripting
+\e\(ti	F\(sc\(sq	unbreakable word space
 .)l
 .rm $H
+.if t .1c
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
