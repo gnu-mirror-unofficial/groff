@@ -1817,9 +1817,10 @@ is its title.
 .TL
 .ST *
 .DE
-Footnote number, actually
+Footnote number bracketed by superscripting strings:
 .ST { \c
-.NR ($f \c
+.\" \^ avoids 'f\' bad kerning in Times bold; wrong font metrics?
+.NR ($f \^\c
 .ST } .
 .TL
 .ST #
@@ -1831,21 +1832,20 @@ Delayed text number surrounded by square brackets:
 .TL
 .ST {
 .DE
-Superscript.
-This string gives upward movement
-and a change to a smaller type size.
+Begin superscripting:
+move upward and reduce the type size.
 Extra space is left above the line
 to allow room for the superscript.
 In \*N mode,
-it produces a left square bracket.
+output a left square bracket.
 .TL
 .ST }
 .DE
-Unsuperscript.
-Inverse to
+End superscripting:
+reverse the motion and type size change of
 .ST { .
 In \*N mode,
-it produces a right square bracket.
+output a right square bracket.
 For example,
 to produce a superscript
 you might type
@@ -1861,51 +1861,46 @@ on terminals.
 .TL
 .ST <
 .DE
-Subscript.
+Begin subscripting:
+move downward and reduce the type size.
 Extra space is left below the line
 to allow for the subscript.
 In \*N mode,
-it produces a left angle bracket.
+output a left angle bracket.
 .TL
 .ST >
 .DE
-Inverse to
+End subscripting:
+reverse the motion and type size change of
 .ST < .
 In \*N mode,
-it produces a right angle bracket.
+output a right angle bracket.
 .TL
 .ST (dw
 .DE
-The day of the week,
-as a word.
+Weekday name.
 .TL
 .ST (mo
 .DE
-The month,
-as a word.
+Month name.
 .TL
 .ST (td
 .DE
-Today's date,
-directly printable.
-The date is of the form February 15, 2003.
-Other forms of the date can be used
-by using
+The date in a form suitable for correspondence.
+Construct other date formats with
+.ST (dw ,
 .NR (dy
-(the day of the month;
-for example, 15),
-.ST (mo
-(as noted above)
-or
+(day of the month),
+.ST (mo ,
 .NR (mo
-(the same,
-but as an ordinal number;
-for example, February is 2),
+(month of the year),
 .NR (y4
-(the current year),
+(year),
 and
 .NR (y2
-(the last two digits of the current year).
+(year of the century).
+Assign the registers to set the date;
+the default is the date of formatting by \*T.
 .TL
 .ST (lq
 .DE
