@@ -1652,16 +1652,18 @@ at the beginning and/or end
 of a floating keep
 to differentiate
 the text from a figure.
-.sh 1 "Standard Papers"
+.sh 1 "Formal Documents"
 .TL
 .b .tp
 .DE
 Begin title page.
-Spacing at the top of the page
-can occur,
-and headers and footers are suppressed.
-Also,
-the page number
+Unusually,
+.b .sp
+calls at the top of the page
+.i are
+honored.
+Headers and footers are suppressed.
+The page number
 is not incremented
 for this page.
 .TL
@@ -1669,45 +1671,53 @@ for this page.
 .i m
 .i H
 .DE
-This macro defines the section of the paper
-which we are entering.
-The section type is defined by
-.i m .
+Begin a
+.i segment
+of an organized document,
+affecting the values and formatting
+of chapter and page numbers.
+The mandatory segment type argument
+.i m
+must be one of
 .b C
-means that we are entering the chapter portion
-of the paper,
+for chapters
+(of the main matter;
+Arabic page numbers),
 .b A
-means that we are entering the appendix portion
-of the paper,
+for appendices
+(uppercase alphabetical chapter numbers
+and
+Arabic page numbers),
 .b P
-means that the material following
-should be the preliminary portion
-(abstract, table of contents, etc.)
-portion of the paper,
+for preliminary (\(lqfront\(rq) matter
+(such as a foreword;
+lowercase Roman page numbers),
 .b AB
-means that we are entering the abstract
-(numbered independently from 1
-in Arabic numerals),
-and
+for an abstract
+(page numbering restarted at 1;
+Arabic page numbers),
+or
 .b B
-means that we are entering the bibliographic
-portion at the end of the paper.
-Also, the variants
-.b RC
-and
-.b RA
-are allowed,
-which specify renumbering of pages
-from one at the beginning of each
-chapter or appendix,
-respectively.
+for \(lqback\(rq matter,
+such as a bibliography.
+.b C
+or
+.b A
+may be prefixed with
+.b R ,
+which specifies a restart of page numbering
+when
+.b .+c
+is called within the applicable segment.
+The chapter number is reset to 0.
 The
 .i H
 parameter defines the new header,
 which must be delimited as a three-part title\(em\c
 if it contains spaces,
 it must furthermore be quoted.
-To include the chapter number,
+To include the chapter number in
+.i H,
 use the input sequence
 .b "\eEn(ch" .\**
 .(f
@@ -1727,96 +1737,82 @@ numbers appendices as
 .b A. \c
 .bi n
 in the right-hand header.
-Each section
-(chapter, appendix, etc.)
-should be preceded by the
+Each subdivision of a segment
+(each chapter,
+appendix,
+etc.\&)
+should be preceded by a
 .b .+c
-macro.
+call.
 It is easier when using
 \*T to put the front material
 at the end of the paper,
 so that the table of contents
 can be collected and put out;
 this material can then be physically
-moved to the beginning of the paper.
+moved to the beginning of the printed document.
 .TL
 .b .+c
 .i T
 .DE
-Begin chapter with title
-.i T .
-The chapter number
-is maintained in
-.NR (ch .
-This register is incremented
-every time
-.b .+c
-is called with a parameter.
-The title and chapter number
-are printed by
-.b .$c .
-The header is moved to the footer
+Begin chapter
+(or appendix).
+Reset the footnote number
+in
+.NR ($f
+to 1.
+If the segment type is
+.b RA
+or
+.b RC ,
+reset the page number
+in
+.NR %
+to 1.
+If a header is defined,
+replace the footer with it
 on the first page
 of each chapter.
-If
+If a title
 .i T
-is omitted,
-.b .$c
-is not called;
-this is useful for doing your own
-.q "title page"
-at the beginning of papers
-without a title page proper.
-.b .$c
-calls
-.b .$C
-as a hook so that chapter titles can be inserted
-into a table of contents automatically.
-The footnote numbering is reset to one.
+is supplied,
+call
+.b .$c .
 .TL
 .b .$c
 .i T
 .DE
-Print chapter number
-(from
+Increment \" ...except for abstract and bibliography segments
+and output the chapter number
+(in
 .NR (ch )
-and
-.i T .
-This macro can be redefined to your liking.
-It is defined by default
-to be acceptable
-for a PhD thesis
-at Berkeley.
-This macro calls
-.b $C ,
-which can be defined to make index entries,
-or whatever.
+and any title
+.i T,
+then call
+.b $C .
 .TL
 .b .$C
 .i K
 .i N
 .i T
 .DE
-This macro is called by
+This hook macro is called by
 .b .$c .
-It is normally undefined,
-but can be used to automatically insert
-index entries,
-or whatever.
+It can be used to insert chapter titles
+into a table of contents.
 .i K
 is a keyword,
 either
 .q Chapter
 or
 .q Appendix
-(depending on the
-.b .++
-mode);
+(depending on the section type set by
+.b .++ );
 .i N
 is the chapter or appendix number,
 and
 .i T
-is the chapter or appendix title.
+is its title.
 .sh 1 "Predefined Strings"
 .TL
 .ST *
@@ -1825,16 +1821,13 @@ Footnote number, actually
 .ST { \c
 .NR ($f \c
 .ST } .
-The number in this string is incremented
-after each call to
-.b .)f .
 .TL
 .ST #
 .DE
-Delayed text number.
-Actually
-[\c
-.NR ($d ].
+Delayed text number surrounded by square brackets:
+.b [ \c
+.NR ($d \c
+.b ] .
 .TL
 .ST {
 .DE
@@ -2084,7 +2077,7 @@ NAME	TYPE	DESCRIPTION
 \e*\fI\&x\fP	F\(sc	interpolate string \fI\&x\fP
 \e*(\fI\&xx\fP	F\(sc	interpolate string \fI\&xx\fP
 \e**	S	optional footnote tag string
-\&.++	M	set paper section type
+\&.++	M	set document segment type
 \&.+c	M	begin chapter
 \e*,	S	cedilla
 \e\-	F\(sc	minus sign
