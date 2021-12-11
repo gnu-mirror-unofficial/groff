@@ -1141,16 +1141,16 @@ Like
 but begin a column
 on a new page
 only if necessary.
-.sh 1 "Fonts and Sizes"
+.sh 1 "Type Size and Font Styles"
 .TL
 .b .sz
-.i +P
+.i \(+-P
 .DE
-The type size is set to
-.i P
+Set the type size to
+.i \(+-P
 [10p],
-and the line spacing is set proportionally.
-The line spacing as a percentage of the type size
+and the vertical spacing proportionally.
+The vertical spacing as a percentage of the type size
 is stored in
 .NR ($v
 [120].
@@ -1169,12 +1169,12 @@ in particular,
 (paragraph point size)
 modifies the type size every time a new paragraph is begun
 using the
-.b \&.pp ,
-.b \&.lp ,
-.b \&.ip ,
-.b \&.np ,
+.b .pp ,
+.b .lp ,
+.b .ip ,
+.b .np ,
 or
-.b \&.bu
+.b .bu
 macros.
 Also,
 .NR (fp
@@ -1187,6 +1187,18 @@ and
 .NR (tp
 (title point size)
 may modify the type size.
+.lp
+The following macros
+style or decorate an argument
+.i W
+and accept an optional second argument
+.i X,
+set in the previous style without intervening space.
+To concatenate several font styles within a word,
+populate or suffix
+.i X
+with
+.b \ec .
 .TL
 .b .r
 .i W
@@ -1194,17 +1206,9 @@ may modify the type size.
 .DE
 Set
 .i W
-in roman font,
-appending
-.i X
-in the previous font.
-To append different font requests,
-use
-.i X
-=
-.b \ec .
+in the roman style.
 If no parameters,
-change to roman font.
+change to the roman style.
 .TL
 .b .i
 .i W
@@ -1212,12 +1216,9 @@ change to roman font.
 .DE
 Set
 .i W
-in italics,
-appending
-.i X
-in the previous font.
+in italics.
 If no parameters,
-change to italic font.
+change to the italic style.
 .TL
 .b .b
 .i W
@@ -1225,50 +1226,9 @@ change to italic font.
 .DE
 Set
 .i W
-in bold font
-and append
-.i X
-in the previous font.
+in boldface.
 If no parameters,
-switch to bold font.
-.TL
-.b .u
-.i W
-.i X
-.DE
-Underline
-.i W
-and append
-.i X .
-This is a true underlining,
-as opposed to the
-.b .ul
-request,
-which changes to
-.q "underline font"
-(usually italics in \*G).
-It won't work right
-if
-.i W
-is spread or broken (including hyphenated).
-In other words,
-it is safe only when filling is disabled.
-.TL
-.b .q
-.i W
-.i X
-.DE
-Quote
-.i W
-and append
-.i X .
-In \*G
-this surrounds
-.i W
-with
-.b \*(lq ,
-and
-.b \*(rq .
+switch to the bold style.
 .TL
 .b .bi
 .i W
@@ -1276,38 +1236,77 @@ and
 .DE
 Set
 .i W
-in bold italics
-and append
-.i X .
+in bold italics.
+If no parameters,
+switch to the bold-italic style.
 .TL
-.b .bx
+.b .q
 .i W
 .i X
 .DE
-Sets
-.i W
-in a box,
+Quote
+.i W ,
+surrounding it with
 with
-.i X
-appended.
-It won't work right
-if
-.i W
-is spread or broken (including hyphenated).
-In other words,
-it is safe only when filling is disabled.
+.b \*(lq
+and
+.b \*(rq .
 .TL
 .b .sm
 .i W
 .i X
 .DE
-Sets
+Set
 .i W
-at a smaller type size,
-with
+one point smaller than the surrounding type.
+It has no effect in \*N mode.
+.TL
+.b .u
+.i W
 .i X
-appended.
-.sh 1 "Roff Support"
+.DE
+Underline
+.i W.
+This is true underlining,
+in contrast to the
+.b .ul
+request,
+which changes to the
+.q "underline font"
+(usually italics in \*G).
+It won't work right
+if
+.i W
+is adjusted or broken (including hyphenation breaks);
+it is reliable only when filling is disabled.
+.TL
+.b .bx
+.i W
+.i X
+.DE
+Set
+.i W
+in a box.
+It won't work right
+if
+.i W
+is adjusted or broken (including hyphenation breaks);
+it is reliable only when filling is disabled.
+It works poorly in \*N mode.
+.sh 1 "\f(BIroff\fP Support"
+.pp
+The following facilities are provided to aid migration of
+\(lqold
+.i roff \(rq
+documents.\**
+.(f
+\**
+See
+.i roff (7)
+for a history of
+.i roff -related
+typesetting systems.
+.)f
 .TL
 .b .ix
 .i +N
