@@ -732,23 +732,37 @@ pending floating keeps are emitted)
 and of each column when in multi-column mode.
 It can be used for column headings
 and the like.
+.br
+.ne 9v
 .sh 1 "Displays"
 .pp
+Display macros enclose material;
+their names are of the form
+.b .( \c
+.bi x
+and
+.b .) \c
+.bi x ,
+and must be paired.
+Not all display types can nest
+with themselves or each other.
 All displays except centered blocks
-and block quotes
+and long quotations
 are preceded and followed
 by an extra
 .NR (bs
 [same as
 .NR (ps ]
-space.
-Quote spacing is stored in a separate register;
-centered blocks have no default initial or trailing space.
-The vertical spacing of all displays except quotes
-and centered blocks
-is stored in register
-.NR ($V
-instead of
+of vertical space
+and use a
+vertical spacing
+(distance between text baselines)
+of
+.NR ($V .
+Long quotation spacing is stored in a dedicated register;
+centered blocks have no pre- or post-spacing.
+They use the vertical spacing register for
+non-displayed text,
 .NR ($v .
 .TL
 .b .(l
@@ -756,60 +770,59 @@ instead of
 .i f
 .DE
 Begin list.
-Lists are single spaced,
-unfilled text.
-If
-.i f
-is
-.b F ,
-the list will be filled.
+Text until
+.b .)l
+is set in font
+.NR (df
+[0]
+and single-spaced
+with filling disabled.
 If
 .i m
 [\c
 .b I ]
 is
-.b I
+.b I ,
 the list is indented by
 .NR (bi
 [4m];
 if
-.b M
-the list is indented to the left margin;
+.b M ,
+it is set at the left margin;
 if
-.b L
-the list is left justified with respect to the text
-(different from
+.b L ,
+it is left-aligned with respect to the text
+(distinguishable from
 .b M
-only if the base indent
-(stored in
+only if the base indentation\(em\c
+stored in
 .NR ($i
 and set with
-.b .ba )
+.b .ba \(em\c
 is not zero);
 and if
-.b C
+.b C ,
 the list is centered on a line-by-line basis.
-The list is set in font
-.NR (df
-[0].
-Must be matched by a
-.b .)l .
-This macro is almost like
-.b .(b
-except that no attempt is made
-to keep the display on one page.
+If
+.i f
+is
+.b F ,
+filling is enabled.
 .TL
 .b .)l
 .DE
 End list.
+.br
+.ne 4v
 .TL
 .b .(q
 .DE
-Begin major quote.
-These are single spaced,
+Begin long quotation.
+Text until
+.b .)q
+is single-spaced,
 filled,
-moved in from the text
-on both sides
+indented on the left and right
 by
 .NR (qi
 [4n],
@@ -819,13 +832,13 @@ by
 [same as
 .NR (bs ]
 space,
-and are set at type size
+and set at type size
 .NR (qp
 [one point smaller than surrounding text].
 .TL
 .b .)q
 .DE
-End major quote.
+End long quotation.
 .TL
 .b .(b
 .i m
@@ -833,61 +846,34 @@ End major quote.
 .DE
 Begin block.
 Blocks are a form of
-.i keep ,
-where the text of a keep
-is kept together on one page
-if possible
-(keeps are useful
-for tables and figures
-which should not be broken
-over a page).
+.i keep,
+where material
+is kept together on a page
+if possible.
+Keeps are useful
+for figures
+and some tables.
 If the block will not fit
-on the current page
-a new page is begun,
-.i unless
-that would leave more than
+on the current page,
+a new one is begun,
+unless that would leave more than
 .NR (bt
 [0]
-white space
-at the bottom of the text.
+vees of blank space
+at the bottom of the page;
+this is the
+.i "block threshold."
 If
 .NR (bt
-is zero, the threshold feature
+is zero,
+the threshold feature
 is turned off.
-Blocks are not filled
-unless
+The font and handling of
+.i m
+and
 .i f
-is
-.b F ,
-when they are filled.
-The block will be left-justified
-if
-.i m
-is
-.b L ,
-indented by
-.NR (bi
-[4m]
-if
-.i m
-is
-.b I
-or absent,
-centered
-(line-for-line)
-if
-.i m
-is
-.b C ,
-and left justified to the margin
-(not to the base indent)
-if
-.i m
-is
-.b M .
-The block is set in font
-.NR (df
-[0].
+are as in
+.b .(l .
 .TL
 .b .)b
 .DE
@@ -899,21 +885,24 @@ End block.
 .DE
 Begin floating keep.
 Like
-.b .(b
-except that the keep is
-.i floated
+.b .(b ,
+except that
+.i m
+defaults to
+.b M
+and the keep
+.i floats
 to the bottom of the page
-or the top of the next page.
+if it fits,
+or the top of the next otherwise.
 Therefore,
-its position relative to the text changes.
-The floating keep is preceded and followed
-by
+its position relative to adjacent formatted text
+is flexible.
 .NR (zs
 [1v]
-space.
-Also,
-it defaults to mode
-.b M .
+space
+precedes and follows
+a floating keep.
 .TL
 .b .)z
 .DE
@@ -925,10 +914,8 @@ Begin centered block.
 The next keep
 is centered as a block,
 rather than on a line-by-line basis
-as with
-.b ".(b C" .
-This call may be nested
-inside keeps.
+as with \(lq\c
+.b ".(b C" \(rq.
 .TL
 .b .)c
 .DE
@@ -1164,7 +1151,7 @@ Also,
 .NR (fp
 (footnote point size),
 .NR (qp
-(quote point size),
+(long quotation point size),
 .NR (sp
 (section header point size),
 and
@@ -2063,7 +2050,7 @@ NAME	TYPE	DESCRIPTION
 \&.(d	M	begin delayed text
 \&.(f	M	begin footnote
 \&.(l	M	begin list
-\&.(q	M	begin quote
+\&.(q	M	begin long quotation
 \&.(x	M	begin index entry
 \&.(z	M	begin floating keep
 \&.)b	M	end block
@@ -2071,7 +2058,7 @@ NAME	TYPE	DESCRIPTION
 \&.)d	M	end delayed text
 \&.)f	M	end footnote
 \&.)l	M	end list
-\&.)q	M	end quote
+\&.)q	M	end long quotation
 \&.)x	M	end index entry
 \&.)z	M	end floating keep
 \e*\fI\&x\fP	F\(sc	interpolate string \fI\&x\fP
@@ -2130,7 +2117,7 @@ NAME	TYPE	DESCRIPTION
 \&.bp	M\(sc	begin page
 \&.br	M\(sc	break (start new line)
 \en(bs	R	display (block) pre/post spacing
-\en(bt	R	block keep threshold
+\en(bt	R	block threshold for keeps
 \&.bx	M	boxed
 \ec	F\(sc	continue input
 \&.ce	M\(sc	center lines
@@ -2214,9 +2201,9 @@ NAME	TYPE	DESCRIPTION
 \&.q	M	quoted
 \e*(qa	S	for all
 \e*(qe	S	there exists
-\en(qi	R	quote indent (also shortens line)
-\en(qp	R	quote type size in points
-\en(qs	R	quote pre/post space
+\en(qi	R	long quotation left/right indentation
+\en(qp	R	long quotation type size in points
+\en(qs	R	long quotation pre/post space
 \&.r	M	roman font
 \&.rb	M	real bold font
 \&.re	M	reset tabs
