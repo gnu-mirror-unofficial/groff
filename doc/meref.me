@@ -1291,8 +1291,8 @@ It won't work right
 if
 .i W
 is adjusted or broken (including hyphenation breaks);
-it is reliable only when filling is disabled.
-It works poorly in \*N mode.
+it is reliable only when filling is disabled,
+and works poorly in \*N mode.
 .sh 1 "\f(BIroff\fP Support"
 .pp
 The following facilities are provided to aid migration of
@@ -1309,102 +1309,85 @@ typesetting systems.
 .)f
 .TL
 .b .ix
-.i +N
+.i \(+-N
 .DE
-Indent,
-no break.
-Equivalent to
-.b \(aqin
-.i N .
+Equivalent to \(lq\|\fB\[aq]in \fI\(+-N\/\fR\(rq.
 .TL
 .b .bl
 .i N
 .DE
-Leave
-.i N
-contiguous white space,
-on the next page if not enough room
-on this page.
-Equivalent to putting a
-.b .sp
-.i N
-inside a block.
+Equivalent to \(lq\fB.sp \fIN\/\fR\(rq
+inside a
+.b .(b
+block.
 .TL
 .b .pa
-.i +N
+.i \(+-N
 .DE
-Equivalent to
-.b .bp .
+Equivalent to \(lq\fB.bp \fI\(+-N\/\fR\(rq.
 .TL
 .b .ro
 .DE
-Set page number
-in roman numerals.
-Equivalent to
-.b ".af % i" .
+Equivalent to \(lq\fB.af % i\fP\(rq.
 .TL
 .b .ar
 .DE
-Set page number in Arabic.
-Equivalent to
-.b ".af % 1" .
+Equivalent to \(lq\fB.af % 1\fP\(rq.
 .TL
 .b .n1
 .DE
-Number lines from one,
-in margin,
-on each page.
+Number output lines starting from one.
+The line length is reduced by the width of four numerals
+and indented by the same amount
+to accommodate the number.
 .TL
 .b .n2
-.i N
+.i \(+-N
 .i c
 .DE
-Number lines from
-.i N .
-.
 Stop numbering if
 .i N
 missing;
 resume where stopped if
 .i N
 unsigned,
-or resume with number incremented by
+or resume with number modified by
 \(+-\c
-.i N .
+.i N.
 .
 If
 .i c
-is c,
-maintain compatibility with original
+is
+.b c,
+maintain compatibility with
+.i roff (1)
 .b .n2
-by narrowing line width to accommodate numbers.
+by narrowing the line width to accommodate numbers.
 .TL
 .b .sk
 .DE
-Leave the next output page blank,
+Leave the next output page blank
 except for headers and footers.
-This is used to leave space
+This can reserve space
 for a full-page diagram
-which is produced externally
-and pasted in later.
-To get a partial-page paste-in display,
-say
-.b .sv \ \c
-.i N ,
+produced externally
+and composited in later.
+(To reserve only a partial page,
+use \[lq]\c
+.b .sv \~\c
+.i N \[rq],
 where
 .i N
-is the amount of space
-to leave;
-this space will be output immediately
+is the amount of space required.
+This space will be output immediately
 if there is room,
-and will otherwise be output
+and otherwise
 at the top of the next page.
-However, be warned:
-if
+If
 .i N
-is greater than the amount of available space
+is greater than the space available
 on an empty page,
-no space will ever be output.
+none will be output.)
 .sh 1 "Preprocessor Support"
 .TL
 .b .EQ
