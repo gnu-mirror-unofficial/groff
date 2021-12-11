@@ -539,27 +539,40 @@ of depth
 They could be used
 to obtain section depth-dependent spacing.
 .sh 1 "Headers and Footers"
-.ds TP \fI\(aql\|\(aqm\^\(aqr\^\(aq\fP
+.ds TP \(aq\,\fIl\/\fP\(aq\,\fIm\/\fP\(aq\,\fIr\/\fP\(aq
 .pp
 Headers and footers
-are put at the top and bottom
-of every page
-automatically.
-They are set in font
+are known as
+.i "three-part titles"
+for their left,
+middle,
+and right-hand components
+.i l,
+.i m,
+and
+.i r.
+The components are separated
+by a
+.i delimiter,
+shown here as a neutral apostrophe,
+but which can be any character
+that does not occur in any of the components.
+Any defined title is
+placed on the page automatically,
+set in font
 .NR (tf
 [3]
-and size
+at size
 .NR (tp
 [10p].
-Each of the definitions
-apply as of the
+Each title definition
+applies starting with the
 .i next
 page.
-Three-part titles
+A title
 must be quoted
-if there are two blanks adjacent
-anywhere in the title
-or more than eight blanks total.
+if it contains more than two adjacent spaces
+or more than eight spaces total.
 .pp
 The spacing
 of headers and footers
@@ -588,50 +601,51 @@ The macros
 .b .m3 ,
 and
 .b .m4
-are also supplied for compatibility
-with
-\s-1ROFF\s0 documents.
+are supplied for compatibility
+with old
+.i roff (1)
+documents.
 .TL
 .b .he
 \*(TP
 .DE
-Define three-part header,
-to be printed on the top
+Define header
+to be placed at the top
 of every page.
 .TL
 .b .fo
 \*(TP
 .DE
-Define footer,
-to be printed at the bottom
+Define footer
+to be placed at the bottom
 of every page.
 .TL
 .b .eh
 \*(TP
 .DE
-Define header,
-to be printed at the top of every
-even-numbered page.
+Define header
+to be placed at the top
+of every even-numbered page.
 .TL
 .b .oh
 \*(TP
 .DE
-Define header,
-to be printed at the top of every
-odd-numbered page.
+Define header
+to be placed at the top
+of every odd-numbered page.
 .TL
 .b .ef
 \*(TP
 .DE
-Define footer,
-to be printed at the bottom
+Define footer
+to be placed at the bottom
 of every even-numbered page.
 .TL
 .b .of
 \*(TP
 .DE
-Define footer,
-to be printed at the bottom
+Define footer
+to be placed at the bottom
 of every odd-numbered page.
 .TL
 .b .hx
@@ -640,33 +654,37 @@ Suppress headers and footers
 on the next page.
 .TL
 .b .m1
-.i +N
+.i \(+-N
 .DE
-Set the space between the top of the page
-and the header
+Set/adjust the space between the top of the page
+and the header to/by
+.i \(+-N
 [4v].
 .TL
 .b .m2
-.i +N
+.i \(+-N
 .DE
-Set the space between the header
-and the first line of text
+Set/adjust the space between the header
+and the first line of text to/by
+.i \(+-N
 [2v].
 .TL
 .b .m3
-.i +N
+.i \(+-N
 .DE
-Set the space
+Set/adjust the space
 between the bottom of the text
-and the footer
+and the footer to/by
+.i \(+-N
 [2v].
 .TL
 .b .m4
-.i +N
+.i \(+-N
 .DE
-Set the space
+Set/adjust the space
 between the footer
-and the bottom of the page
+and the bottom of the page to/by
+.i \(+-N
 [4v].
 .TL
 .b .ep
@@ -682,15 +700,10 @@ or the end of input.
 .TL
 .b .$h
 .DE
-Called at every page
-to print the header.
-May be redefined
-to provide fancy
-(e.g.,
-multi-line)
-headers,
-but doing so
-loses the function of the
+Output the page header.
+Care should be taken when redefining this macro.
+Doing so
+can disable the
 .b .he ,
 .b .fo ,
 .b .eh ,
@@ -705,25 +718,18 @@ of
 .TL
 .b .$f
 .DE
-Print footer;
-same comments apply
-as in
+Output the page footer;
+the same comments apply
+as to
 .b .$h .
 .TL
 .b .$H
 .DE
-A normally undefined macro
-which is called
+This hook macro is called
 at the top of each page
-(after putting out
-the header,
-initial saved floating keeps,
-etc.),
-or of each column when in two-column mode;
-in other words,
-this macro is called immediately before
-printing text
-on a page or in a column.
+(after the header and any
+pending floating keeps are emitted)
+and of each column when in multi-column mode.
 It can be used for column headings
 and the like.
 .sh 1 "Displays"
