@@ -1706,18 +1706,30 @@ chapter or appendix,
 respectively.
 The
 .i H
-parameter defines the new header.
-If there are any spaces in it,
-the entire header must be quoted.
-If you want the header to have the chapter number
-in it,
-use the string
-.b "\e\e\e\en(ch" .
-For example, to number appendixes
-.b A.1
-etc.,
-type
-.b ".++ RA \(aq\(aq\(aq\e\e\e\en(ch.%\(aq" .
+parameter defines the new header,
+which must be delimited as a three-part title\(em\c
+if it contains spaces,
+it must furthermore be quoted.
+To include the chapter number,
+use the input sequence
+.b "\eEn(ch" .\**
+.(f
+\**
+If you wish to avoid use of the \*G
+.b \eE
+extension,
+fully
+.i eight
+backslashes must precede
+.q n(ch .
+.)f
+For example,
+\[lq]\c
+.b ".++ RA |||\eEn(ch.%|" \[rq]
+numbers appendices as
+.b A. \c
+.bi n
+in the right-hand header.
 Each section
 (chapter, appendix, etc.)
 should be preceded by the
