@@ -110,7 +110,7 @@ Specifically,
 the reader should understand
 breaks,
 fonts,
-point sizes,
+type sizes,
 the use and definition of registers
 and strings,
 how to define macros,
@@ -820,7 +820,7 @@ by
 [same as
 .NR (bs ]
 space,
-and are set in point size
+and are set at type size
 .NR (qp
 [one point smaller than surrounding text].
 .TL
@@ -1131,11 +1131,11 @@ on the current page.
 .b .sz
 .i +P
 .DE
-The point size is set to
+The type size is set to
 .i P
 [10p],
 and the line spacing is set proportionally.
-The line spacing as a percentage of the point size
+The line spacing as a percentage of the type size
 is stored in
 .NR ($v
 [120].
@@ -1152,7 +1152,7 @@ sticky beyond many macros:
 in particular,
 .NR (pp
 (paragraph point size)
-modifies the point size every time a new paragraph is begun
+modifies the type size every time a new paragraph is begun
 using the
 .b \&.pp ,
 .b \&.lp ,
@@ -1171,7 +1171,7 @@ Also,
 and
 .NR (tp
 (title point size)
-may modify the point size.
+may modify the type size.
 .TL
 .b .r
 .i W
@@ -1288,7 +1288,7 @@ it is safe only when filling is disabled.
 .DE
 Sets
 .i W
-in a smaller point size,
+at a smaller type size,
 with
 .i X
 appended.
@@ -1838,7 +1838,7 @@ Actually
 .DE
 Superscript.
 This string gives upward movement
-and a change to a smaller point size.
+and a change to a smaller type size.
 Extra space is left above the line
 to allow room for the superscript.
 In \*N mode,
@@ -2112,7 +2112,7 @@ NAME	TYPE	DESCRIPTION
 \en(\&.$	R\(sc	number of arguments to macro
 \en(\&.i	R\(sc	current indent
 \en(\&.l	R\(sc	current line length
-\en(\&.s	R\(sc	current point size
+\en(\&.s	R\(sc	current type size in points
 \e*(\&\'	S	acute accent
 \e*(\&\`	S	grave accent
 \e(\'	F\(sc	acute accent
@@ -2160,7 +2160,7 @@ NAME	TYPE	DESCRIPTION
 \en(fi	R	footnote indent (first line only)
 \en(fm	R	footer margin
 \&.fo	M	set footer
-\en(fp	R	footnote point size
+\en(fp	R	footnote type size in points
 \en(fs	R	footnote prespace
 \en(fu	R	footnote undent (from right margin)
 \eh\'\fI\&d\fP\'	F\(sc	local horizontal motion for distance \fI\&d\fP
@@ -2214,13 +2214,13 @@ NAME	TYPE	DESCRIPTION
 \&.po	M\(sc	page offset
 \en(po	R	simulated page offset
 \&.pp	M	begin paragraph
-\en(pp	R	paragraph point size
+\en(pp	R	paragraph type size in points
 \en(ps	R	paragraph prespace
 \&.q	M	quoted
 \e*(qa	S	for all
 \e*(qe	S	there exists
 \en(qi	R	quote indent (also shortens line)
-\en(qp	R	quote point size
+\en(qp	R	quote type size in points
 \en(qs	R	quote pre/post space
 \&.r	M	roman font
 \&.rb	M	real bold font
@@ -2237,14 +2237,14 @@ NAME	TYPE	DESCRIPTION
 \&.sh	M	begin numbered section
 \en(si	R	relative base indent per section depth
 \&.sk	M	skip next page
-\&.sm	M	set argument in a smaller point size
+\&.sm	M	set argument in a smaller type size
 \&.so	M\(sc	source input file
 \en(so	R	additional section title offset
 \&.sp	M\(sc	vertical space (except at top of page, in contrast to .bl)
-\en(sp	R	section title point size
+\en(sp	R	section title type size in points
 \en(ss	R	section prespace
 \&.sx	M	change section depth
-\&.sz	M	set point size and vertical spacing
+\&.sz	M	set type size and vertical spacing
 \&.ta	M\(sc	set tab stops
 \&.tc	M\(sc	set tab repetition character
 \e*(td	S	today's date
@@ -2253,7 +2253,7 @@ NAME	TYPE	DESCRIPTION
 \&.tl	M\(sc	three part title
 \en(tm	R	top title margin
 \&.tp	M	begin title page
-\en(tp	R	title point size
+\en(tp	R	title type size in points
 \&.tr	M\(sc	translate
 \&.u	M	underlined
 \&.uh	M	unnumbered section
