@@ -1992,63 +1992,74 @@ and have given support for the project.
 .bp
 .uh Summary
 .pp
-This alphabetical list summarizes almost all macros,
+Almost all macros,
 strings,
 and registers
-available in the
-.i me
-package;
+available in the \*(ME package
+are summarized below;
 the legacy strings from section
 .q "Special Characters"
 are omitted.
-Selected
-\*T
-requests, registers, and functions are included as well;
+Selected \*T
+requests,
+registers,
+and escape sequences are included as well;
 those listed can generally be used with impunity.
+The list is sorted by Unicode code point
+(basic Latin subset)
+keyed on the identifer:
+escape and control characters are disregarded,
+as are the escape function selectors for register and string
+interpolation,
+.b n
+and
+.b * .
 .pp
-The columns are the name of the
-requests, macro, register, or string;
-the type of the object,
-and the description.
-Types are
+Each row contains the name of the
+macro (or request),
+register,
+string,
+or escape function;
+a code for the name's type
+(one of the foregoing);
+and its description.
+The type codes are
 .b M
-for macro or builtin request
-(invoked with
-.b \&.
-or
-.b \&\(aq
-in the first input column),
+for a macro or \*T
+request
+(shown prefixed with the control character
+.b . ,
+but the no-break control character
+.b \(aq
+can also be used),
 .b S
 for a string
-(invoked with
+(shown using its interpolation syntax,
 .b \e*
 or
 .b \e*( ),
 .b R
 for a register
-(invoked with
+(shown using its interpolation syntax,
 .b \en
 or
 .b \en( ),
 and
 .b F
-for a
-\*T
-builtin function
-(invoked by preceding it with a single backslash).
+for a \*T built-in function
+(shown prefixed with the escape character
+.b \e ).
 .pp
-Lines marked with \(sc are
-\*T
-internal codes.
-Lines marked with \(dg or \(dd
-may be defined by the user to get special functions;
-\(dd indicates that these are defined by default
-and changing them may have unexpected side effects.
-Lines marked with \(de
-are specific to
-.i ditroff
-(device-independent
-\*T).
+The type code can carry a variety of annotations.
+A section sign \(sc indicates features interpreted by \*T
+rather than the \*(ME package.
+The dagger \(dg and double dagger \(dd identify user-definable objects.
+Those marked with
+\(dd have default definitions;
+changing them may have unexpected side effects.
+The degree sign \(de notes a feature introduced in AT&T
+device-independent \*T,
+and a square \(sq marks \*G extensions.
 .de $H
 .ev 1
 .ta \w'\e(space)\(sc\ 'u +\w'TYPE  'u
