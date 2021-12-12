@@ -920,49 +920,63 @@ as with \(lq\c
 .b .)c
 .DE
 End centered block.
-.sp .5
 .sh 1 Annotations
-.sp .5
+.pp
+Some annotation macros are also mandatorily paired enclosures,
+as display macros are.
 .TL
 .b .(d
 .DE
 Begin delayed text.
-Everything in the next keep
-is saved for output
-later with
-.b .pd ,
-in a manner
-similar to footnotes.
+Input until
+.b .)d
+is saved for later output by
+.b .pd .
+Delayed text regions are automatically numbered
+starting at 1;
+the number is kept in
+.NR ($d
+and in the associated string
+.ST # .
+Endnotes are one application.
 .TL
 .b .)d
 .i n
 .DE
 End delayed text.
-The delayed text register
 .NR ($d
-and the associated string
-.ST #
-are incremented.
+is incremented.
 .TL
 .b .pd
 .DE
-Print delayed text.
-Everything diverted via
+Emit delayed text:
+output everything accumulated with
 .b .(d
-is printed and truncated.
+since the last call to
+.b .pd .
 This might be used
 at the end of each chapter.
 .TL
 .b .(f
 .DE
 Begin footnote.
+Input until
+.b .)f
+is saved for output
+when the foot of the page is reached.
+Footnotes are automatically numbered
+starting at 1;
+the number is kept in
+.NR ($f
+and in the associated string
+.ST * .
 The text of the footnote
 is floated to the bottom
 of the page
 and set in font
 .NR (ff
 [1]
-and size
+at size
 .NR (fp
 [8p].
 Each entry
@@ -970,103 +984,115 @@ is preceded by
 .NR (fs
 [0.2v]
 space,
-is indented
+indented
 .NR (fi
 [3n]
-on the first line,
-and is indented
+on its first line,
+and
+.q undented
+(indented from the right margin)
+by
 .NR (fu
-[0]
-from the right margin.
+[0].
 Footnotes line up underneath
-two-column output.
+columns in the page layout.
 If the text of the footnote
-will not all fit on one page
-it will be carried over
-to the next page.
+does not fit on the page,
+it is carried over
+to the next.
 .TL
 .b .)f
 .i n
 .DE
 End footnote.
-The register
 .NR ($f
 and the associated string
 .ST *
 are incremented
-if they have been referenced.
+if the latter has been interpolated
+outside a footnote.
 .TL
 .b .$s
 .DE
-Draw a 2i horizontal line.
+Output footnote separator:
+draw a 2i horizontal line.
 This macro is called by
 .b .(f
-to output the footnote separator,
-and may be redefined to produce another separator
-(no more than one vee in height).
+to output the footnote separator.
+Any redefinition should be
+no more than one vee in height.
 .TL
 .b .(x
 .i x
 .DE
 Begin index entry.
-Index entries are saved in the index
+Input until
+.b .)x
+is saved in an index named
 .i x
 [\c
 .b x ]
 until called up with
 .b .xp.
 Each entry is preceded
-by a
+by
 .NR (xs
 [0.2v]
-space.
-Each entry is
-.q undented
-by
+of vertical space
+and undented by
 .NR (xu
 [0.5i];
-this register tells how far the page number
-extends into the right margin.
+that amount of space is reserved
+on the right end of the line
+for the
+(possibly affixed)
+page number.
 .TL
 .b .)x
 .i P
 .i A
 .DE
 End index entry.
-The index entry
-is finished with a row of dots
-with
+The entry
+is rendered with a
+.i leader
+(row of dots)
+up to an affix
+(such as a volume number and
+separating punctuation)
 .i A
-[null]
-right justified on the last line
-(such as for an author's name),
-followed by P
+[empty]
+followed by
+.i P
 [\c
-.NR % ].
+.NR % ]
+right-aligned on the last line of the entry.
 If
 .i A
 is specified,
 .i P
-must be specified;
-.NR %
-can be used to print the current page number.
+must be as well.
 If
 .i P
 is an underscore,
-no page number
-and no row of dots
-are printed.
+the leader,
+.i P,
+and any
+.i A
+are suppressed.
 .TL
 .b .xp
 .i x
 .DE
-Print index
+Emit index
 .i x
 [\c
 .b x ].
 The index is formatted in the font, size, and so forth
-in effect at the time it is printed,
-rather than at the time it is collected.
+in effect at the time
+.b .xp
+is called,
+not those of the entries when they were collected.
 .sh 1 "Columned Output"
 .TL
 .b .2c
