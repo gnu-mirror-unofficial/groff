@@ -106,113 +106,125 @@ Berkeley, California  94720
 .sp 4
 .pp
 This document describes
-in extremely terse form
+in terse form
 the features
 of the \*(ME macro package
 for \*G.
-Some familiarity is assumed
-with
-\*G.
+Some familiarity with the latter is assumed.
 Specifically,
 the reader should understand
-breaks,
-fonts,
-type sizes,
-the use and definition of registers
-and strings,
-how to define macros,
-and scaling factors for ens, points,
-.b v 's
-(vertical line spaces),
-etc.
-.pp
+breaks;
+filling;
+adjustment;
+fonts;
+type sizes;
+the use and definition of
+registers,
+strings,
+and macros;
+and typographical units of measurement:
+points, ems, ens, and vees.
 For a more casual introduction
-to text processing
-using \*G,
+to text processing,
 refer to the document
-.ul
-Writing Papers with \*G using \-\*(ME.
+.q "Writing Papers with \*G using \-\*(ME" .
 .pp
-There are a number of macro parameters
-that may be adjusted.
-Fonts may be set to a font number only.
-Font 0 is no font change;
-the font of the surrounding text
+Many of the package's rendering parameters
+can be adjusted through
+registers,
+strings,
+and sometimes macro calls.
+Default parameter values are shown in square brackets
+in this document.
+The notation
+.i \(+-N
+indicates a numerical value with an optional leading sign.
+Without the sign,
+it assigns a value
+.i N.
+With it,
+it expresses alteration of an existing value by the amount
+.i N.
+\*(ME's font registers may be set only to mounting positions.
+Position zero tells \*(ME to perform no font change;
+the font of the preceding text
 is used instead.
-Notice that font 0 is a
+Position zero is a
 .q pseudo-font ;
 that is,
-it is simulated by the macros.
-This means that although it is valid to set a font register
-to zero,
-it is not valid to use the escape character form,
-such as:
-.(b
-\ef0
-.)b
+it is interpreted and handled by the macros.
+In contrast,
+using position zero
+may produce unexpected results
+in a font selection escape sequence such as
+.b \ef0 ,
+because those are interpeted directly by \*T.
+\*(ME's type size registers support only integral values in points.
 .pp
-All distances
-are in basic units,
+Changes to parameters
+that affect the layout of the page
+(notably page length and header and footer margins)
+should be done before calling
+any paragraphing or sectioning macros.
+After that,
+such changes
+are not well defined
+and should be avoided.
+.pp
+\*G measures distances
+in device-specific basic units,
 so it is nearly always necessary
-to use a scaling factor.
+to specify a scaling unit.
 For example,
-the request
-to set the paragraph indent
-to eight one-en spaces is:
-.(b
-\&.nr pi 8n
-.)b
-and not
-.(b
-\&.nr pi 8
-.)b
-which would set the paragraph indent to eight basic units,
-or about 0.02 inch.
-Default parameter values are given in brackets
-in the remainder of this document.
+to set the paragraph indentation
+to eight ens,
+input
+.q ".nr pi 8n" ,
+not
+.q ".nr pi 8" ;
+the latter
+would make the paragraph indent eight basic units,
+or 8/72,000 inches on
+.i grops,
+\*G's PostScript output driver.
 .pp
 Registers and strings
-of the form
+with names of the form
 .b $ \c
-.i x
-may be used in expressions
+.bi x
+may be used in expressions and text
 but should not be changed.
-Macros of the form
+Macros with names of the form
 .b $ \c
-.i x
-perform some function
-(as described)
-and may be redefined
-to change this function.
+.bi x
+can be redefined
+to alter their function.
 This may be a sensitive operation;
-look at the body of the original macro
-before changing it.
+look at the macro definition in the
+.i e.tmac
+file before changing it.
 .pp
 Objects in \*(ME
 follow a rigid naming convention.
-The user may define registers,
-strings,
-and macros,
-provided that s/he
-uses single character upper case names
-or double character names
-consisting of letters and digits,
-with at least one upper case letter.
-In no case should special characters
-be used in user-defined names.
-Locally defined macros
-should all be of the form
-.b .* \c
-.i X ,
-where
-.i X
-is any letter
-(upper or lower case)
-or digit.
-.pp
-This documentation applies to \*G version
-\*(MO
-of the \-me macros.
+To avoid conflict,
+any user-defined register,
+string,
+or macro
+names should be single numerals or uppercase letters,
+or any longer sequence of letters and numerals
+with at least one uppercase letter.\**
+.(f
+\**
+For portability betwen BSD and \*G \*(ME,
+limit names to
+two characters,
+and avoid the name
+.b [
+(left square bracket).
+.)f
+The names employed
+by any preprocessors in use
+should also not be repurposed.
 .sh 1 "Paragraphing"
 .pp
 These macros are used
