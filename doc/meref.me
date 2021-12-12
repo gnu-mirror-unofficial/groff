@@ -333,167 +333,160 @@ except that the paragraph tag is a bullet (\(bu).
 No vertical space is inserted
 between adjacent bulleted paragraphs,
 enabling the construction of compact itemized lists.
-.sh 1 "Section Headings"
+.sh 1 "Sectioning"
 .pp
 Numbered sections
 are similar to paragraphs
 except that a
-section number
+section number of the form
+.q 1.2.3
 is automatically
-generated for each one.
-The section numbers are of the form
-.b 1.2.3 .
-The
+generated for each.
+\*(ME supports up to six levels of sectioning;
+any given section has a
 .i depth
-of the section
-is the count of numbers
-(separated by decimal points)
-in the section number.
-.pp
+that determines
+the quantity of components
+(separated by dots)
+shown in its section number.
 Unnumbered section headings are similar,
-except that no number is attached
-to the heading.
+except that no number is prefixed
+to the section title.
 .TL
 .b .sh
-.i +N
+.i \(+-N
 .i T
 .i "a b c d e f"
 .DE
-Begin numbered section
+Begin section with numbered heading
 of depth
-.i N .
+.i \(+-N
+and optional title
+.i T.
+Vertical space of
+.NR (ss
+[1v]
+precedes the heading.
 If
-.i N
-is missing
-the current depth
-(maintained in
+.i \(+-N
+is unspecified
+or empty
+(\c
+.b \(dq\(dq ),
+the current depth,
+stored in
 the register
-.NR ($0 )
+.NR ($0
+[0],
 is used.
-The values of
-the individual parts of the section number
+The components
+of the section number
 are maintained in
 .NR ($1
 through
-.NR ($6 .
-There is a
-.NR (ss
-[1v]
-space before the section.
-.i T
-is printed
-as a section title
-in font
+.NR ($6 ;
+combined,
+they are available in
+.ST ($n .
+The section number is followed by a period.
+If all components are zero,
+no number is output.
+The heading is set in font
 .NR (sf
 [8]
-and size
+at size
 .NR (sp
 [10p].
-The
-.q name
-of the section may be accessed via
-.ST ($n .
 If
 .NR (si
 is non-zero,
-the base indent
+the base indentation
 is set to
 .NR (si
 times the section depth,
-and the section title
-is exdented.
-(See
-.b .ba .)
-Also,
-an additional indent of
+and the section heading
+is exdented
+(see
+.b .ba ).
+A further indentation of
 .NR (so
 [0]
-is added to the section title
-(but not to the body of the section).
+is applied only to the heading.
 The font is then set
-to the paragraph font,
-so that more information may occur
-on the line
-with the section number
-and title.
+to the paragraph font
+.NR (pf
+so that more information may follow
+the section number
+and title
+on the output line;
+any such material is considered
+part of the heading
+for indentation purposes.
 .b .sh
-insures that there is enough room
-to print the section head
-plus the beginning of a paragraph
+ensures that there is enough room
+to format the section heading
+with the beginning of a paragraph on the same page
 (about 3 lines total).
-If
-.i a
-through
-.i f
-are specified,
-the section number is set to that number
-rather than incremented automatically.
 If any of
 .i a
 through
 .i f
-are a hyphen
-that number is not reset.
+is specified,
+each component of the section number
+is assigned the corresponding argument
+instead of being automatically adjusted.
+A hyphen
+(\c
+.q \- )
+for a component argument
+prevents its alteration.
 If
 .i T
-is a single underscore
+is an underscore
 (\c
-.q _ )
-then the section depth and numbering is reset,
-but the base indent is not reset
-and nothing is printed out.
-This is useful to automatically
+.q _ ),
+the section depth and numbering are reset,
+but the base indentation is not,
+and nothing is output\(em\c
+this is useful to automatically
 coordinate section numbers with
 chapter numbers.
 .TL
 .b .sx
-.i +N
+.i \(+-N
 .DE
 Go to section depth
-.i N
-[\c
-.b \-1 ],
-but do not print the number
-and title,
+.i \(+-N
+[\-1],
+but emit no section heading
 and do not increment the section number
-at level
-.i N .
-This has the effect
-of starting a new paragraph
-at level
-.i N .
+at the new level.
+This has the effect of an
+.b .lp
+call
+at the new level.
 .TL
 .b .uh
 .i T
 .DE
-Unnumbered section heading.
-The title
-.i T
-is printed
-with the same rules for spacing,
-font, etc.,
-as for
-.b .sh .
+Begin unnumbered section.
+Like
+.b .sh ,
+without the section numbering features.
 .TL
 .b .$p
 .i T
 .i B
 .i N
 .DE
-Print section heading.
-May be redefined
-to get fancier headings.
+Output section heading.
 .i T
-is the title passed on the
-.b .sh
-or
-.b .uh
-line;
+is the title,
 .i B
-is the section number for this section,
+is the number,
 and
 .i N
-is the depth of this section.
+is the depth.
 These parameters are not always present;
 in particular,
 .b .sh
@@ -502,49 +495,49 @@ passes all three,
 passes only the first,
 and
 .b .sx
-passes three,
+all three,
 but the first two
-are null strings.
-Care should be taken if this macro
-is redefined;
-it is quite complex and subtle.
+are empty strings.
+Care should be taken when redefining this macro.
 .TL
 .b .$0
 .i T
 .i B
 .i N
 .DE
-This macro is called automatically
-after every call to
-.b .$p .
-It is normally undefined,
-but may be used
-to automatically put
-every section title
-into the table of contents
-or for some similar function.
-.i T
-is the section title
-for the section title which was just printed,
-.i B
-is the section number,
+This
+.i hook
+macro,
+normally undefined,
+is called automatically
+by
+.b .sh
 and
-.i N
-is the section depth.
-.TL
-.b .$1
-\-
-.b .$6
-.DE
-Traps called just before printing that depth section.
-May be defined to
-(for example)
-give variable spacing
-before sections.
-These macros are called from
+.b .uh
+after they call
 .b .$p ,
-so if you redefine that macro
-you may lose this feature.
+and is passed the same arguments.
+You can define it to,
+for instance,
+automatically put
+each section title
+into the table of contents.
+.TL
+.b .$ \c
+.bi n
+.DE
+These hook macros
+(where
+.i n
+is an integer 1\(en6)
+are called by
+.b .$p
+just before it outputs
+a section heading
+of depth
+.i n.
+They could be used
+to obtain section depth-dependent spacing.
 .sh 1 "Headers and Footers"
 .ds TP \fI\(aql\|\(aqm\^\(aqr\^\(aq\fP
 .pp
