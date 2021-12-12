@@ -226,46 +226,25 @@ The names employed
 by any preprocessors in use
 should also not be repurposed.
 .sh 1 "Paragraphing"
-.pp
-These macros are used
-to begin paragraphs.
-The standard paragraph macro
-is
-.b .pp ;
-the others are all variants
-to be used for special purposes.
-.pp
-After the first call to one of the paragraphing macros
-defined in this section
-or the
-.b .sh
-macro
-(defined in the next section),
-the effects of changing parameters
-which will have a global effect
-on the format of the page
-(notably page length and header and footer margins)
-are not well defined
-and should be avoided.
 .TL
 .b .lp
 .DE
-Begin left-justified paragraph.
-Centering and underlining
-are turned off if they were on,
+Begin left-aligned paragraph.
+Any centering and underlining
+are turned off,
 the font is set to
 .NR (pf
-[1]
+[1],
 the type size
-is set to
+to
 .NR (pp
 [10p],
-and a
+and vertical space of
 .NR (ps
-space is inserted
+is inserted
 before the paragraph
-[0.35v]
-The indent is reset
+[0.35v].
+The indentation is reset
 to
 .NR ($i
 [0]
@@ -273,7 +252,7 @@ plus
 .NR (po
 [0]
 unless the paragraph
-is inside a display.
+is inside a display
 (see
 .b .ba ).
 At least
@@ -286,72 +265,74 @@ on a page.
 .DE
 Like
 .b .lp ,
-except that it puts
+but apply an indentation of
 .NR (pi
 [5n]
-units of indent.
-This is the standard paragraph macro.
+to the first line only.
 .TL
 .b .ip
 .i T
 .i I
 .DE
-Indented paragraph
-with hanging tag.
-The body of the following paragraph
-is indented
+Begin indented paragraph
+with hanging tag
+.i T.
+The paragraph text
+is indented by
 .i I
-spaces
-(or
+(if not specified,
+then by
 .NR (ii
-[5n]
-spaces
-if
-.i I
-is not specified)
-more than a non-indented paragraph
-(such as with
-.b .pp )
-is.
-The title
+[5n])
+more than an
+.b .lp
+paragraph.
+The tag
 .i T
-is exdented (opposite of indented).
-The result is a paragraph
-with an even left edge
-and
-.i T
-printed in the margin.
+is
+.q exdented
+(the opposite of
+.i in \c
+dented).
 Any spaces in
 .i T
-must be unpaddable.
+must be unbreakable.
 If
 .i T
-will not fit in the space provided,
+will not fit in the space
+.i I,
 .b .ip
-will start a new line.
+will start the paragraph text on a new line.
 .TL
 .b .np
 .DE
-A variant of .ip which numbers paragraphs.
-Numbering is reset
-after an
+Like
+.b .ip ,
+but automatically number the paragraph,
+starting at 1,
+using that number in parentheses
+as the tag.
+Each subsequent
+.b .np
+call increments it.
+The paragraph number is stored in
+.NR ($p
+and reset to 1 by
 .b .lp ,
 .b .pp ,
 .b .bu ,
 .b .sh ,
-or
-.b .sx
-call.
-The current paragraph number
-is in
-.NR ($p .
+and
+.b .sx .
 .TL
 .b .bu
 .DE
 Like
-.b .np
-except that paragraphs are marked with bullets (\(bu).
-Leading space is eliminated to create compact lists.
+.b .ip ,
+except that the paragraph tag is a bullet (\(bu).
+No vertical space is inserted
+between adjacent bulleted paragraphs,
+enabling the construction of compact itemized lists.
 .sh 1 "Section Headings"
 .pp
 Numbered sections
