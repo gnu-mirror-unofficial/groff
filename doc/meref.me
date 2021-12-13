@@ -1450,53 +1450,48 @@ above and below it.
 .b .TS
 .i h
 .DE
-Table start.
-Tables are single spaced
-and kept on one page
-if possible.
+Begin (start)
+.i \%@g@tbl (1)
+table.
+Tables are single-spaced
+and preceded and followed by
+.NR (bs
+of space.
 If you have a large table
-which will not fit on one page,
-use
-.i h
-=
+that will not fit on one page
+and want to repeat a table heading
+on each subsequent page,
+specify
 .b H
-and follow the header part
-(to be printed on every page of the table)
-with a
-.b .TH .
-See
-.i "Tbl \- A Program to Format Tables"
-by M. E. Lesk.
-.TL
+for
+.i h
+and call
 .b .TH
-.DE
-With
-.b ".TS H" ,
-ends the header portion of the table.
-.TL
-.b .TE
-.DE
-Table end.
-This table does not float;
-in fact,
-it is not even guaranteed to stay on one page
-if you use requests such as
-.b .sp
-intermixed with the text
-of the table.
-If you want it to float
-(or if you use requests
-inside the table),
-surround the entire table
-(including the
+within the table data after the heading rows.
+If you want a table to float,
+surround the
 .b .TS
 and
 .b .TE
-macros)
-with the macros
+calls with
 .b .(z
 and
-.b .)z .
+.b .)z
+calls.
+.TL
+.b .TH
+.DE
+With \(lq\c
+.b ".TS H" \(rq,
+end the
+.i \%@g@tbl
+table header.
+.TL
+.b .TE
+.DE
+End
+.i \%@g@tbl
+table.
 .TL
 .b .PS
 .i h
