@@ -1375,7 +1375,7 @@ and composited in later.
 (To reserve only a partial page,
 use \[lq]\c
 .b .sv \~\c
-.i N \[rq],
+.bi N \[rq],
 where
 .i N
 is the amount of space required.
@@ -1581,53 +1581,50 @@ leaving the drawing position at the top of the picture.
 .TL
 .b .re
 .DE
-Reset tabs every 0.5i.
+Reset tab stops to every 0.5i.
 .TL
 .b .ba
-.i +N
+.i \(+-N
 .DE
-Set the base indent
+Set the base indentation
 to
-.i +N
-[0]
-(saved in
-.NR ($i ).
-All paragraphs,
+.i \(+-N
+[0].
+Paragraphs,
 sections,
 and displays
-come out indented by this amount.
+are indented by at least this amount,
+stored in
+.NR ($i .
 Titles and footnotes
 are unaffected.
-The
 .b .sh
-macro performs a
+calls
 .b .ba
 if
 .NR (si
-[0] is not zero,
-and sets the base indent to
+[0] is not zero
+to set the base indentation to
 .NR (si \c
 .b * \c
 .NR ($0 .
 .TL
 .b .xl
-.i +N
+.i \(+-N
 .DE
-Set the line length to
+Set line length to
 .i N
-[6.0i].
-This differs
-from
-.b .ll
-because it only affects the current environment.
+[6.0i]
+only in the current environment.
 .TL
 .b .ll
-.i +N
+.i \(+-N
 .DE
-Set line length in all environments used by \*(ME
+Set line length to
 to
 .i N
-[6.0i].\**
+[6.0i]
+in all environments used by \*(ME.\**
 .(f
 \**
 \*(ME uses only the three environments of AT&T \*T,
@@ -1639,21 +1636,22 @@ works like
 .b .xl
 for the latter.
 .)f
-This should not be used
+This macro should not be used
 after output has begun,
-and particularly not in two-column output.
+and particularly not in multi-column layouts.
 The current line length is stored in
 .NR ($l .
 .TL
 .b .hl
 .DE
-Draws a horizontal line
-the length of the page.
-This is useful
-inside floating keeps
+Break and draw a horizontal line
+of the current line length.
+You might call
+.b .hl
+at the beginning and/or end
+of a floating keep
 to differentiate
-between the text
-and the figure.
+the text from a figure.
 .sh 1 "Standard Papers"
 .TL
 .b .tp
