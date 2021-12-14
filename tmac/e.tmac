@@ -1661,7 +1661,10 @@
 .	nr fp 8			\" footnote pointsize
 .
 .de $s			\" $$$ footnote separator
-\l'2i'
+.nr __ 2i
+.if \\n($lu<\\n(__u .nr __ \\n($lu
+\l'\\n(__u'
+.rr __
 ..
 .
 .
