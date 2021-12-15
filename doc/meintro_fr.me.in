@@ -41,17 +41,18 @@
 .lt 6.5i
 .ds MO @VERSION@
 .nr si 3n
-.he 'GROFF EN OPTION \-ME''%'
+.he '\f(BIgroff\fP en option \f(BI\-me\fP''%'
 .\"eh 'USD:19-%''Writing Papers with NROFF using \-me'
 .\"oh 'Writing Papers with NROFF using \-me''USD:19-%'
-.ds U \s-1UNIX\s0
-.ds N \s-1NROFF\s0
-.ds T \s-1TROFF\s0
-.ds G \s-1GROFF\s0
+.ds U Unix
+.ds N \fInroff\fP
+.ds T \fItroff\fP
+.ds G \fIgroff\fP
+.ds UG groff\" upright "groff" for use in slanted contexts
 .+c
 .(l C
 .sz 14
-.b "Rédiger des documents avec GROFF \-me"
+.b "Rédiger des documents avec \f(BIgroff \-me\fP"
 .sz
 .sp 2
 .ul
@@ -62,17 +63,27 @@ Electronics Research Laboratory
 University of California, Berkeley
 Berkeley, California 94720
 .sp 2
-.i "Modifié pour \*G by James Clark"
+.i "Modifié pour \fR\*(UG\fP par James Clark*"
+.(f
+* Ce document a été
+.i \*(UG\fRé \" defeat italic correction
+le 27 octobre 2001 et s'applique à la version des macros \-me
+inclus dans la version \*(MO de \*G.
+.)f
 .sp 2
-.i "Adapté au français par Grégoire Babey"
+.i "Adapté au français par Grégoire Babey\(dg"
+.(f
+\(dg La traduction française a été
+.i \*(UG\fRée \" defeat italic correction
+le 20 octobre 2013,
+toutes les commandes ont été testées sur la version 1.21 de \*G.
+.)f
 .)l
 .sp 2
 .pp
 Ce document décrit les outils de traitement de texte
-sur un système \*U\(lz
-.(f
-\(lz\*U est une marque déposée de AT&T Bell Laboratories
-.)f
+sur un système \*U
+et autres systèmes d'exploitation
 fournis par \*G
 et le
 paquet de macros
@@ -81,8 +92,7 @@ Il présuppose que le lecteur
 est déjà familiarisé avec les systèmes \*U
 et un éditeur de texte
 (tel que par exemple
-.b ex
-).
+.i vi ).
 Son intention est d'être une introduction
 simple et concrète, et par conséquent,
 il ne traitera pas toute la matière disponible.
@@ -245,7 +255,7 @@ le placement des notes en bas de page au bon endroit,
 et ainsi de suite.
 .pp
 Je peux vous donner quelques conseils
-comment préparer votre texte d'entrée pour  \*G.
+comment préparer votre texte d'entrée pour \*G.
 Premièrement,
 écrivez des lignes d'entrée courtes.
 Des lignes d'entrée courtes seront plus faciles à modifier,
@@ -257,8 +267,7 @@ chaque virgule ou point,
 puisque habituellement les corrections consistent à
 modifier ou supprimer des propositions ou des phrases.
 Deuxièmement,
-n'ajoutez pas d'espacements à la fin des lignes,
-ceci pourrait en certains cas induire en erreur le processeur \*N.
+n'ajoutez pas d'espacements à la fin des lignes.
 Troisièmement,
 ne séparez pas vous-même les mots en fin de ligne
 avec des traits d'union
@@ -597,7 +606,7 @@ sont précédés et suivis en sortie d'un seul espacement vertical.
 .sh 2 "Citations longues"
 .pp
 Les citations longues
-sont des citations  qui s'étalent sur plusieurs lignes,
+sont des citations qui s'étalent sur plusieurs lignes,
 elles sont donc sorties du corps de texte
 et ne sont pas entourées de guillemets.
 Cela peut être réalisé
@@ -609,7 +618,7 @@ entourant la citation.
 Par exemple,
 l'entrée:
 .(b
-Comme l'indique  Weizenbaum:
+Comme l'indique Weizenbaum:
 \&.(q
 On dit qu'expliquer, c'est expliquer en s'éloignant.
 Cette maxime ne s'accomplit nulle part aussi bien
@@ -618,7 +627,7 @@ que dans le domaine de la programmation informatique,...
 .)b
 génère comme sortie:
 .lp
-Comme l'indique  Weizenbaum:
+Comme l'indique Weizenbaum:
 .(q
 On dit qu'expliquer, c'est expliquer en s'éloignant.
 Cette maxime ne s'accomplit nulle part aussi bien
@@ -1058,7 +1067,7 @@ Cependant,
 chaque élément de l'index
 a un numéro de page
 (ou un autre signe distinctif)
-à la fin de  la dernière ligne le décrivant,
+à la fin de la dernière ligne le décrivant,
 à la suite d'une rangée de points (voir ci-dessous).
 .pp
 Les entrées pour l'index
@@ -1215,7 +1224,7 @@ ligne s'aligne
 sur les autres lignes du paragraphe.
 \&.ip deux
 Et ici nous sommes déjà au second paragraphe.
-Vous noterez que l'argument de  \c
+Vous noterez que l'argument de \c
 .b .ip
 apparaît dans la marge.
 \&.lp
@@ -1530,7 +1539,7 @@ en ayant recours à la requête
 \&.nr si 3n
 .)b
 au début du fichier d'entrée,
-ce qui donne  trois espacements d'indentation
+ce qui donne trois espacements d'indentation
 par niveau de profondeur du chapitre.
 .pp
 Des numéros de chapitre
@@ -2085,7 +2094,7 @@ la requête de police:
 .)b
 génère
 .q hardi
-en  caractères gras,
+en caractères gras,
 mais mettra
 .q petit
 dans la police du texte environnant,
@@ -2232,7 +2241,7 @@ En typographie,
 pour créer des guillemets,
 il est habituel
 d'utiliser deux accents graves et deux accents aigus,
-plutôt  que les guillemets
+plutôt que les guillemets
 (`\|"\|').
 C'est parce que
 deux accents graves et deux accents aigus
@@ -2267,9 +2276,8 @@ générera
 Notez que vous devez entourer
 le texte concerné de guillemets
 s'il est formé de plusieurs mots.
-.sh 0
-.sp 1i
-.b Remerciements
+.sx 0
+.uh Remerciements
 .pp
 J'aimerais remercier
 Bob Epstein,
@@ -2291,16 +2299,6 @@ le plus souvent accompagnés de propositions de solutions
 (qui m'ont donc forcé à réparer plusieurs petits bogues);
 et la foule de gens qui ont contribué à ce projet
 par leurs idées ou leur soutien.
-.sp 1i
-Ce document a été
-.sm GROFF é
-le 27 octobre 2001 et s'applique à la version des macros \-me
-inclus dans la version 1.17.2 de \*G.
-.sp 1i
-La traduction française a été
-.sm GROFF ée
-le 20 octobre 2013,
-toutes les commandes ont été testées sur la version 1.21 de \*G.
 .(b
 .uh "Annexe: petit lexique des noms de requêtes"
 Par ordre d'apparition dans le texte

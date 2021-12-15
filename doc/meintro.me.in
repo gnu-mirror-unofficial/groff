@@ -1,3 +1,5 @@
+.\" groff -me
+.\"
 .\" Copyright (c) 1986, 1993
 .\"   The Regents of the University of California.  All rights reserved.
 .\"
@@ -37,17 +39,18 @@
 .lt 6.5i
 .ds MO @VERSION@
 .nr si 3n
-.he 'USING GROFF AND \-ME''%'
+.he 'Using \f(BIgroff\fP and \f(BI\-me\fP''%'
 .\"eh 'USD:19-%''Writing Papers with NROFF using \-me'
 .\"oh 'Writing Papers with NROFF using \-me''USD:19-%'
-.ds U \s-1UNIX\s0
-.ds N \s-1NROFF\s0
-.ds T \s-1TROFF\s0
-.ds G \s-1GROFF\s0
+.ds U Unix
+.ds N \fInroff\fP
+.ds T \fItroff\fP
+.ds G \fIgroff\fP
+.ds UG groff\" upright "groff" for use in slanted contexts
 .+c
 .(l C
 .sz 14
-.b "Writing Papers with GROFF using \-me"
+.b "Writing Papers with \f(BIgroff\fP using \f(BI\-me\fP"
 .sz
 .sp 2
 .ul
@@ -58,18 +61,19 @@ Electronics Research Laboratory
 University of California, Berkeley
 Berkeley, California  94720
 .sp 2
-.i "Modified for \*G by James Clark"
+.i "Modified for \fR\*(UG\fP by James Clark*"
+.(f
+* This document applies to the version of the \-me macros
+included with \*G version \*(MO.
+.)f
 .)l
 .sp 4
 .pp
 This document describes
 the text processing facilities
-available on the \*U*
-.(f
-*\*U is a trademark
-of AT&T Bell Laboratories
-.)f
-operating system
+available on \*U
+and other
+operating systems
 via \*G and the
 \-me
 macro package.
@@ -79,7 +83,7 @@ already is generally familiar
 with the \*U operating system
 and a text editor
 such as
-.b ex .
+.i vi .
 This is intended to be a casual introduction,
 and
 as such not all material is covered.
@@ -146,7 +150,7 @@ describes the type of
 output device you are using.
 A complete description of options
 to the \*G command can be found in
-.b groff (1).
+.i groff (1).
 .pp
 The word
 .i argument
@@ -268,9 +272,7 @@ since common corrections
 are to add or delete sentences
 or phrases.
 Second,
-do not put spaces at the end of lines,
-since this can sometimes confuse the \*N
-processor.
+do not put spaces at the end of lines.
 Third,
 do not hyphenate words at the end of lines
 (except words that should have hyphens in them,
@@ -2235,9 +2237,8 @@ Notice that you must surround
 the material to be quoted
 with double quote marks
 if it is more than one word.
-.sh 0
-.sp 1i
-.b Acknowledgments
+.sx 0
+.uh Acknowledgments
 .pp
 I would like to thank
 Bob Epstein,
@@ -2259,9 +2260,6 @@ most accompanied by fixes
 (hence forcing me to fix several small bugs);
 and the plethora of people who have contributed ideas
 and have given support for the project.
-.sp 1i
-This document applies to the version of the \-me macros
-included with \*G version \*(MO.
 .\" Local Variables:
 .\" mode: nroff
 .\" End:
