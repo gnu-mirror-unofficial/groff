@@ -136,6 +136,10 @@ strings,
 and sometimes macro calls.
 Default parameter values are shown in square brackets
 in this document.
+.\" XXX GBR CONVERT THE MANUAL TO USE THIS CONVENTION
+.\" Numeric arguments to macros are denoted with lowercase letters and
+.\" string arguments with uppercase.
+.\" XXX GBR CONVERT THE MANUAL TO USE THE ABOVE CONVENTION
 The notation
 .i \(+-N
 indicates a numerical value with an optional leading sign.
@@ -2070,7 +2074,6 @@ and a square \(sq marks \*G extensions.
 .if n .(c
 .(l L
 .$H
-.\"\e\fI\,space\fP	F\(sc	unbreakable, unadjustable space
 \e\fI\,newline\fP	F\(sc	continue input line
 \e"	F\(sc	comment (to end of input line)
 \e*#	S	delayed text marker
@@ -2172,11 +2175,11 @@ and a square \(sq marks \*G extensions.
 \&.bc	M	begin new column
 \&.bi	M	embolden and italicize argument
 \en(bi	R	display (block) indentation
-\&.bl	M	insert space (even at page top; cf. \fB.sp\fP)
+\&.bl	M	insert space (even at page top; cf.\& \fB.sp\fP)
 \en(bm	R	distance from text area to page bottom
 \&.bp	M\(sc	begin new page
 \&.br	M\(sc	break output line
-\en(bs	R	display (block) pre/post spacing
+\en(bs	R	display (block) pre/post space
 \en(bt	R	block threshold for keeps
 \&.bx	M	box argument
 \ec	F\(sc	continue output line
@@ -2224,7 +2227,7 @@ and a square \(sq marks \*G extensions.
 \el\(aq\fI\,d\/\fP\(aq	F\(sc	draw horizontal line of length \fId\fP
 \&.lc	M\(sc	set leader repetition character
 \&.ll	M	set line length
-\&.lp	M	begin left-aligned paragraph
+\&.lp	M	begin fully left-aligned paragraph
 \e*(lq	S	left double quotation mark
 \&.ls	M\(sc	set multi-line spacing
 \&.m1	M	set page top to header distance
@@ -2256,7 +2259,7 @@ and a square \(sq marks \*G extensions.
 \&.pn	M\(sc	set next page number
 \&.po	M\(sc	set page offset
 \en(po	R	page offset
-\&.pp	M	begin paragraph
+\&.pp	M	begin first-line indented paragraph
 \en(pp	R	paragraph type size in points
 \en(ps	R	paragraph prespace
 \&.q	M	quote argument
