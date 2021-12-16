@@ -1,3 +1,23 @@
+2021-12-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Parameterize line height adjustment when super/subscripting.
+
+	* tmac/e.tmac (initialization): Assign 0.2m to register `$x`.2m.
+	({, <}: Apply adjustment, multiplied by -1 for superscripts.
+
+	* doc/meref.me.in:
+	* tmac/groff_me.7.man: Document it.
+
+	* NEWS: Add item.
+
+	* doc/meintro.me.in:
+	* doc/meintro_fr.me.in:
+	* doc/meref.me.in: Forego extra line height for more attractive
+	typesetting.
+
+	Fixes <https://savannah.gnu.org/bugs/?61025>.  Thanks to Robert
+	Goulding for the suggestion.
+
 2021-12-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac ($c): Draw the footnote separator no wider than

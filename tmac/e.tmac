@@ -1971,6 +1971,7 @@
 .
 .nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
 .nr $V \n($v			\" same for displays & footnotes
+.nr $x 0.2m			\" super/subscript line height increase
 .nr hm 4v			\" header margin
 .nr tm 7v			\" top margin
 .nr bm 6v			\" bottom margin
@@ -1992,22 +1993,22 @@
 .nr ss 12p			\" section prespacing
 .nr si 0			\" section indent
 .
+.@R 0x\" set by GNU pic to _disable_ \x in super/scripting
 .
 .\"		*** OTHER INITIALIZATION ***
 .
-.
-.\" GNU pic sets this register to 1 to indicate that \x should not be
-.\" used.
-.@R 0x
 .\" Define strings for super- and subscripting.  groff me does not
 .\" bother with half-line motions in nroff mode, since we have no output
 .\" driver (for that mode) that supports them; consequently we don't
 .\" emit \x escape sequences in that case either.  If someone implements
 .\" a Model 37 or line printer emulator we can target, this decision
 .\" could be revisited.
+.\"
+.\" Adjust the line height with \x if the `0x` register is zero (a
+.\" pic(1) convention) by the amount in `$x` (a groff 1.23 extension).
 .ie t \
 \{\
-.ds { \v'-0.4m'\x'\\n(0x=0*-0.2m'\s-3
+.ds { \v'-0.4m'\x'\\n(0x=0*-1*\\n($xu'\s-3
 .ds } \s+3\v'0.4m'
 .\}
 .el \
@@ -2028,7 +2029,7 @@
 .\}
 .ie t \
 \{\
-.ds < \v'0.4m'\x'\\n(0x=0*0.2m'\s-3
+.ds < \v'0.4m'\x'\\n(0x=0*\\n($xu'\s-3
 .ds > \s+3\v'-0.4m'
 .\}
 .el \

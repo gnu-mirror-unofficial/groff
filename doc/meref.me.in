@@ -38,6 +38,7 @@
 .lt 6.5i
 .nr pp 10
 .nr fi 1n
+.nr $x 0
 .\"pn 0
 .ds MO @VERSION@
 .de TL			\" *** title line
@@ -1837,8 +1838,10 @@ Delayed text number surrounded by square brackets:
 .DE
 Begin superscripting:
 move upward and reduce the type size.
-Extra space is left above the line
-to allow room for the superscript.
+The line height is increased above by
+.NR ($x
+[0.2m]
+to accommodate the superscript.
 In \*N mode,
 output a left square bracket.
 .TL
@@ -1866,8 +1869,9 @@ on terminals.
 .DE
 Begin subscripting:
 move downward and reduce the type size.
-Extra space is left below the line
-to allow for the subscript.
+The line height is increased below by
+.NR ($x
+to accommodate the subscript.
 In \*N mode,
 output a left angle bracket.
 .TL
@@ -2110,6 +2114,7 @@ and a square \(sq marks \*G extensions.
 \en($s	R	column spacing (indentation)
 \&.$s	M\(dd	output footnote area separator
 \en($v	R\(dd	vertical spacing of text (%)
+\en($x	R\(dd	super/subscript line height increase
 \e%	F\(sc	control hyphenation
 \en%	R\(sc	current page number
 \e&	F\(sc	non-printing input break

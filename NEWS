@@ -224,6 +224,12 @@ o The doc (mdoc) macro package now honors the HY register as the an
   furthermore recognizes the `AD` string (see above) for compatibility
   with an (man), but at present ignores its value.
 
+o The e (me) macro package now has a register `$x` that eases the
+  configuration of space added to the line height above/below when
+  super/subscripting is used.  It defaults to 0.2m, the value used
+  literally in past definitions of the super/subscripting strings.
+  groff's own 'me' documents redefine it to zero.
+
 o The m (mm) macro package now requires a title to be declared when
   memorandum type 5 is used (".MT 5"), just as type 4 has since groff
   1.10 (November 1995).
