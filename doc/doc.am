@@ -189,7 +189,7 @@ doc/pic.html: $(doc_srcdir)/pic.ms $(devhtmlfont_DATA)
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/pic.ms$$nl" \
 	  $(doc_srcdir)/pic.ms \
-	   | $(DOC_GROFF_ONLY) -P-p -P-Ipic -P-D$(imagedir) -P-jpic \
+	   | $(DOC_GROFF_ONLY) -P-Ipic -P-D$(imagedir) -P-jpic \
 	                       -Thtml -ms > pic.html
 
 doc/examples.stamp: doc/groff.css
@@ -210,7 +210,7 @@ doc/webpage.html: \
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
 	  $(doc_srcdir)/webpage.ms \
-	   | $(DOC_GROFF_ONLY) -P-jwebpage -P-nrpb -P-Iwebpage \
+	   | $(DOC_GROFF_ONLY) -P-jwebpage -P-nrb -P-Iwebpage \
 	                       -P-D$(imagedir) -Thtml -ms > webpage.html
 
 doc/grnexmpl.ps: doc/grnexmpl.me doc/grnexmpl.g
