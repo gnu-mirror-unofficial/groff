@@ -167,10 +167,6 @@ SUFFIXES += .me .ms .ps .html .txt .texi .dvi .pdf .xhtml
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -k -Tps -ge -me >$@
 
-.ms.html:
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -P-p -P-b -P-I`basename $< \
-	  | sed -e 's|.ms$$||'` -P-D$(imagedir) -Thtml -ms >$@
 .ms.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -Tps -ms -mwww >$@
