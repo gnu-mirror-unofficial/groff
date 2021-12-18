@@ -404,26 +404,27 @@ at size
 [10p].
 If
 .NR (si
-is non-zero,
-the base indentation
-is set to
-.NR (si
-times the section depth,
-and the section heading
-is exdented
-(see
-.b .ba ).
-A further indentation of
+[0] is not zero,
+.b .sh
+calls
+.b .ba
+to set the section indentation to
+.NR (si \c
+.b * \c
+.NR ($0 .
+The section heading
+is set at the indentation of the parent depth;
+a further indentation of
 .NR (so
 [0]
-is applied only to the heading.
+is applied only to its output line.
 The font is then set
 to the paragraph font
 .NR (pf
 so that more information may follow
 the section number
 and title
-on the output line;
+on the same output line;
 any such material is considered
 part of the heading
 for indentation purposes.
@@ -451,7 +452,7 @@ is an underscore
 (\c
 .q _ ),
 the section depth and numbering are reset,
-but the base indentation is not,
+the base indentation is not,
 and nothing is output\(em\c
 this is useful to automatically
 coordinate section numbers with
@@ -1602,16 +1603,6 @@ stored in
 .NR ($i .
 Titles and footnotes
 are unaffected.
-.b .sh
-calls
-.b .ba
-if
-.NR (si
-[0] is not zero
-to set the base indentation to
-.NR (si \c
-.b * \c
-.NR ($0 .
 .TL
 .b .xl
 .i \(+-N
