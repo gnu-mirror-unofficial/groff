@@ -2325,8 +2325,12 @@ and a square \(sq marks \*G extensions.
 \e*}	S	end superscripting
 \e\(ti	F\(sc\(sq	unbreakable word space
 .)l
-.if t .1c
 .if n .)c
+.\" If we add material after this point, leave multi-column mode.  But
+.\" don't do so if there is no further content, because if one column is
+.\" already full, `1c` will produce an unnecessary empty page with the
+.\" `$H` table header.
+.\"if t .1c
 .rm $H
 .\" Local Variables:
 .\" mode: nroff
