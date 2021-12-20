@@ -1,3 +1,13 @@
+2021-12-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac (bc): To get to the next column, space by the page
+	length `.p`, not by the distance to the next trap (or 24 inches,
+	as hard-coded in me(7) traditionally).  It is up to any sprung
+	traps to issue further space requests or otherwise ensure a
+	transition to the next column.
+
+	See <https://savannah.gnu.org/bugs/?55081> for discussion.
+
 2021-12-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac ({): Fix missing scaling unit in arithmetic
