@@ -147,15 +147,14 @@ nh	\&	disable automatic hyphenation
 nr	r n i	assign register \fIr\fP value \fIn\fP with \
 auto-increment \fIi
 ns	\&	begin no-space mode
-.\" XXX: some punity with .pl; #55081
 pl	v	set page length to \fIv
 pn	n	set next page number to \fIn
 po	h	set page offset to \fIh
 rj	n	right-align next \fIn\fP output lines\fB*
 rm	m	remove macro, string, or request \fIm
 rn	m n	rename macro, string, or request \fIm\fP to \fIn
-rr	r	remove register
-rs	\&	restore spacing (end no-space mode)
+rr	r	remove register \fIr
+rs	\&	resume spacing (end no-space mode)
 rt	v	return to vertical position set by \fBmk\fP, or \fIv
 so	f	source (interpolate) input file \fIf
 sp	n	insert \fIn\fP lines of vertical space
@@ -325,7 +324,7 @@ $3	third section number component
 $4	fourth section number component
 $5	fifth section number component
 $6	sixth section number component
-$V	vertical spacing of displayed text (as percentage)
+$V	vertical spacing of displayed text (as percentage)\fB*
 $c	current column number
 $d	delayed text number
 $f	footnote number
@@ -334,8 +333,8 @@ $l	column width
 $m	number of available columns
 $p	numbered paragraph number
 $s	column spacing (indentation)
-$v	vertical spacing of text (as percentage)
-$x	super/subscript line height increase
+$v	vertical spacing of text (as percentage)\fB*
+$x	super/subscript line height increase\fB*
 bi	display (block) indentation
 bm	distance from text area to page bottom
 bs	display (block) pre/post space
