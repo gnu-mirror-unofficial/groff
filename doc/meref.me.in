@@ -742,14 +742,10 @@ if
 it is set at the left margin;
 if
 .b L ,
-it is left-aligned with respect to the text
-(distinguishable from
+it is left-aligned
+(distinguishably from
 .b M
-only if the base indentation\(em\c
-stored in
-.NR ($i
-and set with
-.b .ba \(em\c
+only if the base indentation
 is not zero);
 and if
 .b C ,
@@ -801,19 +797,17 @@ Blocks are a form of
 where material
 is kept together on a page
 if possible.
-Keeps are useful
-for figures
-and some tables.
-If the block will not fit
-on the current page,
-a new one is begun,
-unless that would leave more than
+If the block will not fit entirely
+on the remainder of the page,
+a page break is issued before it.
+The
+.i "block threshold"
+permits a page break within the block anyway
+if more than
 .NR (bt
 [0]
-vees of blank space
-at the bottom of the page;
-this is the
-.i "block threshold."
+vees of blank space would be left
+at the bottom of the page.
 If
 .NR (bt
 is zero,
