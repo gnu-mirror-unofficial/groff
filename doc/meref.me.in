@@ -601,16 +601,6 @@ and
 is the distance from the bottom of the page
 to the bottom of the text
 (nominal).
-The macros
-.b .m1 ,
-.b .m2 ,
-.b .m3 ,
-and
-.b .m4
-are supplied for compatibility
-with old
-.i roff (1)
-documents.
 .TL
 .b .he
 \*(TP
@@ -658,51 +648,6 @@ of every odd-numbered page.
 .DE
 Suppress headers and footers
 on the next page.
-.TL
-.b .m1
-.i \(+-N
-.DE
-Set/adjust the space between the top of the page
-and the header to/by
-.i \(+-N
-[4v].
-.TL
-.b .m2
-.i \(+-N
-.DE
-Set/adjust the space between the header
-and the first line of text to/by
-.i \(+-N
-[2v].
-.TL
-.b .m3
-.i \(+-N
-.DE
-Set/adjust the space
-between the bottom of the text
-and the footer to/by
-.i \(+-N
-[2v].
-.TL
-.b .m4
-.i \(+-N
-.DE
-Set/adjust the space
-between the footer
-and the bottom of the page to/by
-.i \(+-N
-[4v].
-.TL
-.b .ep
-.DE
-End this page,
-but do not begin the next page.
-Useful for forcing out footnotes,
-but other than
-that hardly ever used.
-Must be followed by a
-.b .bp
-or the end of input.
 .TL
 .b .$h
 .DE
@@ -1326,6 +1271,40 @@ inside a
 .b .(b
 block.
 .TL
+.b .m1
+.i \(+-N
+.DE
+Set/adjust the space between the top of the page
+and the header to/by
+.i \(+-N
+[4v].
+.TL
+.b .m2
+.i \(+-N
+.DE
+Set/adjust the space between the header
+and the first line of text to/by
+.i \(+-N
+[2v].
+.TL
+.b .m3
+.i \(+-N
+.DE
+Set/adjust the space
+between the bottom of the text
+and the footer to/by
+.i \(+-N
+[2v].
+.TL
+.b .m4
+.i \(+-N
+.DE
+Set/adjust the space
+between the footer
+and the bottom of the page to/by
+.i \(+-N
+[4v].
+.TL
 .b .pa
 .i \(+-N
 .DE
@@ -1647,6 +1626,17 @@ at the beginning and/or end
 of a floating keep
 to differentiate
 the text from a figure.
+.TL
+.b .ep
+.DE
+End this page,
+but do not begin the next page.
+Useful for forcing out footnotes,
+but other than
+that hardly ever used.
+Must be followed by a
+.b .bp
+or the end of input.
 .sh 1 "Formal Documents"
 .TL
 .b .tp
