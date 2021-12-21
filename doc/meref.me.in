@@ -117,7 +117,7 @@ the reader should understand
 breaks;
 filling;
 adjustment;
-fonts;
+font selection;
 type sizes;
 the use and definition of
 registers,
@@ -127,7 +127,8 @@ and typographical units of measurement:
 points, ems, ens, and vees.
 For a more casual introduction
 to text processing,
-refer to the document
+refer to
+.\" the document \" slack phrasing for widow/orphan control
 .q "Writing Papers with \*G using \-\*(ME" .
 .pp
 Many of the package's rendering parameters
@@ -168,7 +169,7 @@ because those are interpeted directly by \*T.
 .pp
 Changes to parameters
 that affect the layout of the page
-(notably page length and header and footer margins)
+(notably page length and vertical margins)
 should be done before calling
 any paragraphing or sectioning macros.
 After that,
@@ -188,7 +189,7 @@ input
 not
 .q ".nr pi 8" ;
 the latter
-would make the paragraph indent eight basic units,
+would make the paragraph indentation eight basic units,
 or 8/72,000 inches on
 .i grops,
 \*G's PostScript output driver.
@@ -202,7 +203,8 @@ but should not be changed.
 Macros with names of the form
 .b $ \c
 .bi x
-can be redefined
+are called internally by \*(ME
+and can be redefined
 to alter their function.
 This may be a sensitive operation;
 look at the macro definition in the
@@ -246,9 +248,9 @@ to
 [10p],
 and vertical space of
 .NR (ps
+[0.35v]
 is inserted
-before the paragraph
-[0.35v].
+before the paragraph.
 The indentation is reset
 to
 .NR ($i
@@ -261,7 +263,7 @@ is inside a display
 (see
 .b .ba ).
 At least
-the first two lines
+the first two output lines
 of the paragraph
 are kept together
 on a page.
@@ -270,35 +272,32 @@ on a page.
 .DE
 Like
 .b .lp ,
-but apply an indentation of
+but apply a (further) indentation of
 .NR (pi
 [5n]
-to the first line only.
+to the first output line.
 .TL
 .b .ip
 .i T
 .i I
 .DE
-Begin indented paragraph
-with hanging tag
-.i T.
-The paragraph text
-is indented by
+Like
+.b .lp ,
+but set the paragraph
+with a hanging tag
+.i T
+[empty]
+and the remainder indented by
 .i I
-(if not specified,
-then by
+[\c
 .NR (ii
-[5n])
-more than an
-.b .lp
-paragraph.
+[5n]].
 The tag
 .i T
 is
 .q exdented
 (the opposite of
-.i in \c
-dented).
+.i in dented).
 Any spaces in
 .i T
 must be unbreakable.
@@ -307,16 +306,14 @@ If
 will not fit in the space
 .i I,
 .b .ip
-will start the paragraph text on a new line.
+puts the text after the tag on a new line.
 .TL
 .b .np
 .DE
 Like
 .b .ip ,
-but automatically number the paragraph,
-starting at 1,
-using that number in parentheses
-as the tag.
+but tag the paragraph with a number in parentheses,
+starting at 1.
 Each subsequent
 .b .np
 call increments it.
@@ -334,7 +331,7 @@ and
 .DE
 Like
 .b .ip ,
-except that the paragraph tag is a bullet (\(bu).
+except that the tag is a bullet (\(bu).
 No vertical space is inserted
 between adjacent bulleted paragraphs,
 enabling the construction of compact itemized lists.
@@ -366,18 +363,17 @@ to the section title.
 Begin section with numbered heading
 of depth
 .i \(+-N
+[empty]
 and optional title
-.i T.
+.i T
+[empty].
 Vertical space of
 .NR (ss
 [1v]
 precedes the heading.
 If
 .i \(+-N
-is unspecified
-or empty
-(\c
-.b \(dq\(dq ),
+is empty,
 the current depth,
 stored in
 the register
@@ -437,6 +433,7 @@ If any of
 .i a
 through
 .i f
+[all empty]
 is specified,
 each component of the section number
 is assigned the corresponding argument
@@ -489,7 +486,7 @@ Output section heading.
 .i T
 is the title,
 .i B
-is the number,
+is the concatenated number,
 and
 .i N
 is the depth.
@@ -504,7 +501,6 @@ and
 all three,
 but the first two
 are empty strings.
-Care should be taken when redefining this macro.
 .TL
 .b .$0
 .i T
@@ -527,7 +523,11 @@ You can define it to,
 for instance,
 automatically put
 each section title
-into the table of contents.
+into a table of contents
+using
+.b .(x
+and
+.b .)x .
 .TL
 .b .$ \c
 .bi n
@@ -582,25 +582,27 @@ or more than eight spaces total.
 .pp
 The spacing
 of headers and footers
-is controlled by four registers.
+is controlled by four registers,
+computing distances based on the output device's default font,
+type size,
+and vertical spacing.
 .NR (hm
 [4v]
 is the distance from the top of the page
 to the top of the header,
 .NR (fm
 [3v]
-is the distance from the bottom of the page
+that from the bottom of the page
 to the bottom of the footer,
 .NR (tm
 [7v]
-is the distance from the top of the page
+that from the top of the page
 to the top of the text,
 and
 .NR (bm
 [6v]
-is the distance from the bottom of the page
-to the bottom of the text
-(nominal).
+that from the bottom of the page
+to the (nominal) bottom of the text.
 .TL
 .b .he
 \*(TP
@@ -683,8 +685,6 @@ pending floating keeps are emitted)
 and of each column when in multi-column mode.
 It can be used for column headings
 and the like.
-.br
-.ne 9v
 .sh 1 "Displays"
 .pp
 Display macros enclose material;
@@ -710,9 +710,9 @@ vertical spacing
 (distance between text baselines)
 of
 .NR ($V .
-Long quotation spacing is stored in a dedicated register;
-centered blocks have no pre- or post-spacing.
-They use the vertical spacing register for
+Long quotation pre- and post-space is stored in a dedicated register,
+centered blocks have none,
+and both use the vertical spacing register for
 non-displayed text,
 .NR ($v .
 .TL
@@ -759,8 +759,6 @@ filling is enabled.
 .b .)l
 .DE
 End list.
-.br
-.ne 4v
 .TL
 .b .(q
 .DE
@@ -781,7 +779,7 @@ by
 space,
 and set at type size
 .NR (qp
-[one point smaller than surrounding text].
+[\-1p].
 .TL
 .b .)q
 .DE
@@ -791,19 +789,18 @@ End long quotation.
 .i m
 .i f
 .DE
-Begin block.
-Blocks are a form of
-.i keep,
-where material
-is kept together on a page
-if possible.
-If the block will not fit entirely
-on the remainder of the page,
-a page break is issued before it.
-The
-.i "block threshold"
-permits a page break within the block anyway
-if more than
+Begin a block,
+a form of
+.i keep:
+\*(ME tries to avoid breaking a page
+(or column)
+between
+.b .(b
+and
+.b .)b .
+A page break is allowed anyway
+if respecting the keep
+would leave more than
 .NR (bt
 [0]
 vees of blank space would be left
@@ -812,7 +809,8 @@ If
 .NR (bt
 is zero,
 the threshold feature
-is turned off.
+is turned off,
+and a page break will not occur within the keep.
 The font and handling of
 .i m
 and
@@ -856,7 +854,8 @@ End floating keep.
 .b .(c
 .DE
 Begin centered block.
-The next keep
+Input until
+.b .)c
 is centered as a block,
 rather than on a line-by-line basis
 as with \(lq\c
@@ -886,7 +885,6 @@ and in the associated string
 Endnotes are one application.
 .TL
 .b .)d
-.i n
 .DE
 End delayed text.
 .NR ($d
@@ -899,6 +897,7 @@ output everything accumulated with
 .b .(d
 since the last call to
 .b .pd .
+The delayed text number is reset to 1.
 This might be used
 at the end of each chapter.
 .TL
@@ -947,7 +946,6 @@ it is carried over
 to the next.
 .TL
 .b .)f
-.i n
 .DE
 End footnote.
 .NR ($f
@@ -963,7 +961,7 @@ Output footnote separator:
 draw a horizontal line up to 2 inches wide.
 Called by
 .b .(f .
-Any redefinition should be
+Any redefinition should produce output
 no more than one vee in height.
 .TL
 .b .(x
@@ -1033,6 +1031,7 @@ Emit index
 [\c
 .b x ].
 The index is formatted in the font, size, and so forth
+.\" but not the vertical spacing--$V is used
 in effect at the time
 .b .xp
 is called,
@@ -1107,30 +1106,29 @@ is stored in
 .b .sz ).
 This size is
 .i not
-sticky beyond many macros:
-in particular,
-.NR (pp
-(paragraph point size)
-modifies the type size every time a new paragraph is begun
-using the
+persistent beyond most \*(ME macro calls:
+when a new paragraph is begun
+using
 .b .pp ,
 .b .lp ,
 .b .ip ,
 .b .np ,
 or
-.b .bu
-macros.
-Also,
+.b .bu,
+the type size is set to that stored in
+.NR (pp
+(paragraph point size).
+Similarly,
 .NR (fp
 (footnote point size),
 .NR (qp
 (long quotation point size),
 .NR (sp
-(section header point size),
+(section heading point size),
 and
 .NR (tp
 (title point size)
-may modify the type size.
+define the type size set in their corresponding contexts.
 .lp
 The following macros
 style or decorate an argument
@@ -1237,20 +1235,20 @@ if
 is adjusted or broken (including hyphenation breaks);
 it is reliable only when filling is disabled,
 and works poorly in \*N mode.
-.sh 1 "\f(BIroff\fP Support"
-.pp
-The following facilities are provided to aid migration of
-\(lqold
-.i roff \(rq
-documents.\**
+.sh 1 "\f(BIroff\fP Support\fR\**"
 .(f
 \**
+These facilities are provided to aid migration of
+\(lqold
+.i roff \(rq
+documents.
 See
 .i roff (7)
 for a history of
 .i roff -related
 typesetting systems.
 .)f
+.pp
 .TL
 .b .ix
 .i \(+-N
@@ -1314,10 +1312,10 @@ Equivalent to \(lq\fB.af % 1\fP\(rq.
 .TL
 .b .n1
 .DE
-Number output lines starting from one.
+Number output lines starting from 1.
 The line length is reduced by the width of four numerals
 and indented by the same amount
-to accommodate the number.
+to accommodate the line number.
 .TL
 .b .n2
 .i \(+-N
@@ -1329,18 +1327,17 @@ missing;
 resume where stopped if
 .i N
 unsigned,
-or resume with number modified by
+or with number modified by
 \(+-\c
 .i N.
-.
 If
 .i c
 is
 .b c,
-maintain compatibility with
+shorten the line length to accommodate numbers,
+as
 .i roff (1)
-.b .n2
-by narrowing the line width to accommodate numbers.
+did.
 .TL
 .b .sk
 .DE
@@ -1375,23 +1372,21 @@ none will be output.)
 Begin
 .i \%@g@eqn (1)
 equation.
-The equation is centered
-if
+If
 .i m
+[\c
+.b C ]
 is
-.b C
-or omitted,
-indented
-.NR (bi
-[4m]
+.b C ,
+the equation is centered;
 if
-.i m
-is
 .b I ,
-and left-aligned if
-.i m
-is
-.b L .
+indented by
+.NR (bi
+[4m];
+and if
+.b L ,
+left-aligned.
 .i T
 is a title aligned to the right margin
 next to the equation.
@@ -1631,6 +1626,8 @@ that hardly ever used.
 Must be followed by a
 .b .bp
 or the end of input.
+.br
+.ne 6v
 .sh 1 "Formal Documents"
 .TL
 .b .tp
@@ -1647,7 +1644,7 @@ is not incremented
 for this page.
 .TL
 .b .++
-.i m
+.i M
 .i H
 .DE
 Begin a
@@ -1655,26 +1652,25 @@ Begin a
 of an organized document,
 affecting the values and formatting
 of chapter and page numbers.
+A segment uses Arabic numerals
+for chapter and page numbers
+except where noted.
 The mandatory segment type argument
-.i m
+.i M
 must be one of
 .b C
 for chapters
-(of the main matter;
-Arabic page numbers),
+(of the main matter),
 .b A
 for appendices
-(uppercase alphabetical chapter numbers
-and
-Arabic page numbers),
+(uppercase alphabetical chapter numbers)
 .b P
 for preliminary (\(lqfront\(rq) matter
 (such as a foreword;
 lowercase Roman page numbers),
 .b AB
 for an abstract
-(page numbering restarted at 1;
-Arabic page numbers),
+(page numbering restarts at 1),
 or
 .b B
 for \(lqback\(rq matter,
@@ -1689,8 +1685,10 @@ when
 .b .+c
 is called within the applicable segment.
 The chapter number is reset to 0.
-The
+If present,
+the
 .i H
+[empty]
 parameter defines the new header,
 which must be delimited as a three-part title\(em\c
 if it contains spaces,
