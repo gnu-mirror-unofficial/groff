@@ -2568,7 +2568,7 @@ static symbol do_get_long_name(bool required, char end)
 
 void exit_troff()
 {
-  exit_started = 1;
+  is_exit_underway = true;
   topdiv->set_last_page();
   if (!end_macro_name.is_null()) {
     spring_trap(end_macro_name);
@@ -2580,7 +2580,7 @@ void exit_troff()
   process_input_stack();
   end_diversions();
   if (topdiv->get_page_length() > 0) {
-    done_end_macro = 1;
+    is_end_macro_finished = true;
     topdiv->set_ejecting();
     static unsigned char buf[2] = { LAST_PAGE_EJECTOR, '\0' };
     input_stack::push(make_temp_iterator((char *)buf));
@@ -2605,7 +2605,7 @@ void exit_troff()
 void exit_request()
 {
   input_stack::clear();
-  if (exit_started)
+  if (is_exit_underway)
     tok.next();
   else
     exit_troff();

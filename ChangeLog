@@ -1,3 +1,19 @@
+2021-12-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Slightly refactor (boolify).
+
+	* src/roff/troff/div.cpp:
+	* src/roff/troff/env.cpp:
+	* src/roff/troff/input.cpp: Rename variables and demote from
+	  `int` to `bool`.  Initialize and assign them using Boolean
+	  literals.  The new names try harder to express a logical
+	  predicate, and start with verbs to resist interpretation as
+	  noun phrases.
+	  - exit_started -> is_exit_underway
+	  - done_end_macro -> is_end_macro_finished
+	  - seen_last_page_ejector (demoted but not renamed)
+	  - began_page_in_end_macro (demoted but not renamed)
+
 2021-12-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac: Explain presence of undocumented `$r` and `$R`
