@@ -1133,7 +1133,10 @@
 .if \n@>4 .tm >> .)c .l=\\n(.l .i=\\n(.i $i=\\n($i dl=\\n(dl
 .ev 1
 .ls 1
-.in (\\n(.lu-\\n(.iu-\\n(dlu)/2u
+.nr __ (\\n(.lu-\\n(.iu-\\n(dlu)/2u
+.if \\n(__u<0 .nr __ 0
+.in \\n(__u
+.rr __
 .if \n@>4 .tm -- .)c << .in .l=\\n(.l .i=\\n(.i dl=\\n(dl
 .if \\n(?n \
 .	nm \\n(ln
