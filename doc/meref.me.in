@@ -1553,6 +1553,24 @@ picture,
 leaving the drawing position at the top of the picture.
 .sh 1 "Miscellaneous"
 .TL
+.b .ld
+.DE
+Update the
+.NR (y2
+and
+.NR (y4
+registers based on the current value of
+.NR (yr ,
+reinitialize the localized strings
+.ST (dw ,
+.ST (mo ,
+.ST (wa ,
+and
+.ST (wc ,
+and reset
+.ST (td
+based on the foregoing.
+.TL
 .b .re
 .DE
 Reset tab stops to every 0.5i.
@@ -1879,6 +1897,27 @@ reverse the motion and type size change of
 .ST < .
 In \*N mode,
 output a right angle bracket.
+.pp
+\*G \*(ME provides localized strings
+to support documents in several input languages;
+see the
+.i groff_tmac (5)
+man page.
+The date-related strings are initialized
+based on the current date
+when the formatter runs.
+To encode a different date in your document,
+change the \*T date registers as desired
+and then call
+.b .ld
+to update the strings.
+The day of the week is
+.i not
+recomputed from a new calendar date;
+.NR (dw
+must be modified manually.
+The strings can also be defined directly.
+.(b L F
 .TL
 .ST (dw
 .DE
@@ -1903,8 +1942,6 @@ Construct other date formats with
 and
 .NR (y2
 (year of the century).
-Assign the registers to set the date;
-the default is the date of formatting by \*T.
 .TL
 .ST (wa
 .DE
@@ -1919,6 +1956,7 @@ The term the
 .b .$c
 macro uses for
 .q chapter .
+.)b
 .sh 1 "Special Characters"
 .pp
 For modern documents,
@@ -2242,6 +2280,7 @@ and a square \(sq marks \*G extensions.
 \&.ix	M	set indentation without break
 \el\(aq\fI\,d\/\fP\(aq	F\(sc	draw horizontal line of length \fId\fP
 \&.lc	M\(sc	set leader repetition character
+\&.ld	M\(sq	reset localization and date info
 \&.ll	M	set line length in \fIme\fP environments
 \&.lp	M	begin fully left-aligned paragraph
 \e*(lq	S	left double quotation mark

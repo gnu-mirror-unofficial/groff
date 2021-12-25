@@ -1944,34 +1944,41 @@
 .pn \\n%
 ..
 .
-.\" Work around troff `yr` register's y2k problem.
-.nr y2 \n(yr%100
-.af y2 00
-.nr y4 \n(yr+1900
+.\"		*** DATE AND LOCALIZATION ***
 .
-.\"		*** LOCALIZATION ***
+.de ld			\" *** (re-)initialize date and localization
 .ds wa Appendix\"
 .ds wc Chapter\"
-.if \n(mo=1 .ds mo January
-.if \n(mo=2 .ds mo February
-.if \n(mo=3 .ds mo March
-.if \n(mo=4 .ds mo April
-.if \n(mo=5 .ds mo May
-.if \n(mo=6 .ds mo June
-.if \n(mo=7 .ds mo July
-.if \n(mo=8 .ds mo August
-.if \n(mo=9 .ds mo September
-.if \n(mo=10 .ds mo October
-.if \n(mo=11 .ds mo November
-.if \n(mo=12 .ds mo December
-.if \n(dw=1 .ds dw Sunday
-.if \n(dw=2 .ds dw Monday
-.if \n(dw=3 .ds dw Tuesday
-.if \n(dw=4 .ds dw Wednesday
-.if \n(dw=5 .ds dw Thursday
-.if \n(dw=6 .ds dw Friday
-.if \n(dw=7 .ds dw Saturday
-.ds td \*(mo \n(dy, \n(y4
+.
+.\" Work around troff `yr` register's y2k problem.
+.nr y2 \\n(yr%100
+.af y2 00
+.nr y4 \\n(yr+1900
+.
+.if \\n(mo=1 .ds mo January\"
+.if \\n(mo=2 .ds mo February\"
+.if \\n(mo=3 .ds mo March\"
+.if \\n(mo=4 .ds mo April\"
+.if \\n(mo=5 .ds mo May\"
+.if \\n(mo=6 .ds mo June\"
+.if \\n(mo=7 .ds mo July\"
+.if \\n(mo=8 .ds mo August\"
+.if \\n(mo=9 .ds mo September\"
+.if \\n(mo=10 .ds mo October\"
+.if \\n(mo=11 .ds mo November\"
+.if \\n(mo=12 .ds mo December\"
+.if \\n(dw=1 .ds dw Sunday\"
+.if \\n(dw=2 .ds dw Monday\"
+.if \\n(dw=3 .ds dw Tuesday\"
+.if \\n(dw=4 .ds dw Wednesday\"
+.if \\n(dw=5 .ds dw Thursday\"
+.if \\n(dw=6 .ds dw Friday\"
+.if \\n(dw=7 .ds dw Saturday\"
+.
+.ds td \\*(mo \\n(dy, \\n(y4\"
+..
+.
+.ld
 .
 .
 .\"		*** PARAMETRIC INITIALIZATIONS ***

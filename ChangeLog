@@ -1,5 +1,20 @@
 2021-12-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Add `ld` macro to re-init date/l10n stuff.
+
+	* tmac/e.tmac (ld): New macro updates `y2` and `y4` registers
+	and `wa`, `wc`, `mo`, `dw`, and `td` strings.
+
+	* doc/meref.me.in (Miscellaneous, Predefined Strings):
+	* tmac/groff_me.7.man (Macros): Document it.
+
+	* tmac/tests/e_ld-works.sh: Add unit test.
+	* tmac/tmac.am (tmac_TESTS): Run test.
+
+	Fixes <https://savannah.gnu.org/bugs/?61670>.
+
+2021-12-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tests/e_chapter-titles-work.sh: Add unit test for chapter
 	heading feature.
 	* tmac/tmac.am (tmac_TESTS): Run test.
