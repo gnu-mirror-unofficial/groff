@@ -1762,14 +1762,18 @@ call
 .DE
 Format a chapter heading
 centered in boldface.
-Output
-.q \fBCHAPTER\fP
+Output the text in
+.ST (wc
+[\c
+.b Chapter ]
 if the segment type is
 .b C
 or
 .b RC,
-or
-.q \fBAPPENDIX\fP
+or the text in
+.ST (wa
+[\c
+.b Appendix ]
 if the segment type is
 .b A
 or
@@ -1790,12 +1794,7 @@ If the segment type is any of
 or
 .b RA ,
 call
-.b $C
-(with the word
-.q Chapter
-or
-.q Appendix
-in mixed case).
+.b $C .
 .TL
 .b .$C
 .i K
@@ -1906,6 +1905,20 @@ and
 (year of the century).
 Assign the registers to set the date;
 the default is the date of formatting by \*T.
+.TL
+.ST (wa
+.DE
+The term the
+.b .$c
+macro uses for
+.q appendix .
+.TL
+.ST (wc
+.DE
+The term the
+.b .$c
+macro uses for
+.q chapter .
 .sh 1 "Special Characters"
 .pp
 For modern documents,
@@ -2308,6 +2321,8 @@ and a square \(sq marks \*G extensions.
 \&.ul	M\(sc	underline output lines
 \ev\(aq\fI\,d\/\fP\(aq	F\(sc	move distance \fId\fP vertically
 \ew\(aq\fI\,S\/\fP\(aq	F\(sc	interpolate formatted width of \fIS\fP
+\e*(wa	S\(sq	term for \(lqappendix\(rq used by \fB.$c\fP
+\e*(wc	S\(sq	term for \(lqchapter\(rq used by \fB.$c\fP
 \&.xl	M	set line length (current environment)
 \&.xp	M	output index
 \en(xs	R	index entry prespace

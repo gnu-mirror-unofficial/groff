@@ -1,3 +1,27 @@
+2021-12-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac: Ease localization and customization by exposing
+	strings for "Chapter" and "Appendix" instead of hard-coding
+	these words into the `$c` macro.
+	(initialization): Define new `wa` and `wc` strings.  Separate
+	these and existing localization strings from `y2` and `y4`
+	initialization since the latter don't involve natural languages.
+	($c): Interpolate these strings in chapter and appendix headings
+	and in calls to `$C` hook macro.  Set "Chapter" and "Appendix"
+	in mixed case instead of full capitals, and set one
+	adjustable nonbreaking word space `\~` between them and the
+	chapter number instead of two unadjustable nonbreaking spaces.
+	{These changes do slightly alter the default output of the
+	package when the `+c` macro is used.}
+
+	* doc/meref.me.in (Predefined Strings):
+	* tmac/groff_me.7.man (Strings): Document new strings.
+
+	* doc/meintro.me.in (Parts of the Basic Paper): Update example
+	to reflect mixed-case default string.
+
+	Fixes <https://savannah.gnu.org/bugs/?61661>.
+
 2021-12-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/e.tmac (@p): Deactivate right alignment (the effect of
