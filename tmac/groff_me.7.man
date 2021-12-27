@@ -292,12 +292,10 @@ PS	start \fI@g@pic\fP picture
 TE	end \fI@g@tbl\fP table
 TH	end heading for multi-page \fI@g@tbl\fP table
 TS	begin \fI@g@tbl\fP table
-ar	use Arabic numerals for page numbers
 b	embolden argument
 ba	set base indentation
 bc	begin new column
 bi	embolden and italicize argument
-bl	insert space (even at page top; cf.\& \fBsp\fP)
 bx	box argument
 ef	set even-numbered page footer
 eh	set even-numbered page header
@@ -308,28 +306,18 @@ hl	draw horizontal line
 hx	suppress next page's headers/footers
 i	italicize argument
 ip	begin indented paragraph
-ix	set indentation without break
 ld	reset localization and date info
 ll	set line length
 lp	begin fully left-aligned paragraph
-m1	set page top to header distance
-m2	set header to text distance
-m3	set text to footer distance
-m4	set footer to page bottom distance
-n1	begin output line numbering
-n2	end or alter output line numbering
 np	begin numbered paragraph
 of	set odd-numbered page footer
 oh	set odd-numbered page header
-pa	begin page
 pd	output delayed text
 pp	begin first-line indented paragraph
 q	quote argument
 r	set argument in roman
 re	reset tab stops
-ro	use Roman numerals for page numbers
 sh	begin numbered section
-sk	skip next page
 sm	set argument at smaller type size
 sx	change section depth
 sz	set type size and vertical spacing
@@ -338,6 +326,36 @@ u	underline argument
 uh	begin unnumbered section
 xl	set line length (local)
 xp	output index
+.TE
+.
+.
+.P
+Some macros are provided for \(lqold\(rq
+.MR roff 1
+compatibility.
+.
+The
+.RI \(lq me
+Reference Manual\(rq
+describes alternatives for modern documents.
+.
+.
+.P
+.ne 2v \" Keep at least the first entry together with the heading.
+.TS
+Lb L.
+ar	use Arabic numerals for page numbers
+bl	insert space (even at page top; cf.\& \fBsp\fP)
+ix	set indentation without break
+m1	set page top to header distance
+m2	set header to text distance
+m3	set text to footer distance
+m4	set footer to page bottom distance
+n1	begin output line numbering
+n2	end or alter output line numbering
+pa	begin page
+ro	use Roman numerals for page numbers
+sk	skip next page
 .TE
 .
 .
