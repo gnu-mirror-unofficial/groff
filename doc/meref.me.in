@@ -1760,32 +1760,54 @@ call
 .b .$c
 .i T
 .DE
+Format a chapter heading
+centered in boldface.
+Output
+.q \fBCHAPTER\fP
+if the segment type is
+.b C
+or
+.b RC,
+or
+.q \fBAPPENDIX\fP
+if the segment type is
+.b A
+or
+.b RA.
 Increment \" ...except for abstract and bibliography segments
 and output the chapter number
 (in
-.NR (ch )
-and any title
-.i T,
-then call
-.b $C .
+.NR (ch ).
+If a chapter title
+.i T
+is present,
+format it,
+preceded by vertical space.
+If the segment type is any of
+.b C ,
+.b RC ,
+.b A ,
+or
+.b RA ,
+call
+.b $C
+(with the word
+.q Chapter
+or
+.q Appendix
+in mixed case).
 .TL
 .b .$C
 .i K
 .i N
 .i T
 .DE
-This hook macro is called by
-.b .$c .
-It can be used to insert chapter titles
+This hook macro
+can be used to insert chapter titles
 into a table of contents.
 .i K
-is a keyword,
-either
-.q Chapter
-or
-.q Appendix
-(depending on the section type set by
-.b .++ );
+is the chapter or appendix term supplied by
+.b $c ,
 .i N
 is the chapter or appendix number,
 and
