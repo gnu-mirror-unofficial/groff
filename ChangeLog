@@ -1,3 +1,16 @@
+2021-12-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[me]: Internationalize strings.
+
+	* tmac/e.tmac (initialization): Introduce internal
+	`_mo1`..`_mo12`, `_dw1`..`_dw7`, and `_td_format` strings (with
+	English defaults).  Define them outside of the new `ld` macro so
+	that they can be overriden by localization packages.
+	(ld) <dw, mo, td>: Populate via the above new strings.
+	* tmac/trans.tmac: Stop defining `mo` and `dw`.  Instead, make
+	them aliases of the new strings above.   Handle `wa` and `wc`
+	similarly.
+
 2021-12-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[me]: Add `ld` macro to re-init date/l10n stuff.
