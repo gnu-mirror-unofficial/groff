@@ -34,9 +34,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "nonposix.h"
 
 bool is_exit_underway = false;
-bool is_end_macro_finished = false;
+bool is_eoi_macro_finished = false;
 bool seen_last_page_ejector = false;
-static bool began_page_in_end_macro = false;
+static bool began_page_in_eoi_macro = false;
 int last_page_number = 0;	// if > 0, the number of the last page
 				// specified with -o
 
@@ -576,11 +576,11 @@ int top_level_diversion::begin_page(vunits n)
   if (is_exit_underway) {
     if (page_count == last_page_count
 	? curenv->is_empty()
-	: (is_end_macro_finished && (seen_last_page_ejector
-				      || began_page_in_end_macro)))
+	: (is_eoi_macro_finished && (seen_last_page_ejector
+				      || began_page_in_eoi_macro)))
       cleanup_and_exit(EXIT_SUCCESS);
-    if (!is_end_macro_finished)
-      began_page_in_end_macro = true;
+    if (!is_eoi_macro_finished)
+      began_page_in_eoi_macro = true;
   }
   if (last_page_number > 0 && page_number == last_page_number)
     cleanup_and_exit(EXIT_SUCCESS);

@@ -96,7 +96,7 @@ static void enable_warning(const char *);
 static void disable_warning(const char *);
 
 static int escape_char = '\\';
-static symbol end_macro_name;
+static symbol eoi_macro_name;
 static symbol blank_line_macro_name;
 static symbol leading_spaces_macro_name;
 static int compatible_flag = 0;
@@ -2570,8 +2570,8 @@ void exit_troff()
 {
   is_exit_underway = true;
   topdiv->set_last_page();
-  if (!end_macro_name.is_null()) {
-    spring_trap(end_macro_name);
+  if (!eoi_macro_name.is_null()) {
+    spring_trap(eoi_macro_name);
     tok.next();
     process_input_stack();
   }
@@ -2580,7 +2580,7 @@ void exit_troff()
   process_input_stack();
   end_diversions();
   if (topdiv->get_page_length() > 0) {
-    is_end_macro_finished = true;
+    is_eoi_macro_finished = true;
     topdiv->set_ejecting();
     static unsigned char buf[2] = { LAST_PAGE_EJECTOR, '\0' };
     input_stack::push(make_temp_iterator((char *)buf));
@@ -2619,9 +2619,9 @@ void return_macro_request()
   tok.next();
 }
 
-void end_macro()
+void eoi_macro()
 {
-  end_macro_name = get_name();
+  eoi_macro_name = get_name();
   skip_line();
 }
 
@@ -8344,7 +8344,7 @@ void init_input_requests()
   init_request("ecr", restore_escape_char);
   init_request("ecs", save_escape_char);
   init_request("el", else_request);
-  init_request("em", end_macro);
+  init_request("em", eoi_macro);
   init_request("eo", escape_off);
   init_request("ex", exit_request);
   init_request("fchar", define_fallback_character);

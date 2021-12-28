@@ -151,7 +151,7 @@ extern top_level_diversion *topdiv;
 extern diversion *curdiv;
 
 extern bool is_exit_underway;
-extern bool is_end_macro_finished;
+extern bool is_eoi_macro_finished;
 extern bool seen_last_page_ejector;
 extern int last_page_number;
 
