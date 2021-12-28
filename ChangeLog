@@ -1,3 +1,15 @@
+2021-12-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac: Fix code style nits.
+	  - Use new terminology in diagnostic.  See commit 66ac1a8db9,
+	    11 December.
+	  - Drop unused '&&&' annotation for macro definitions.  This
+	    was a BSD me(7) implementation detail wherein parts of the
+	    package were broken out into module files, loaded if/when
+	    their macros were called.  groff me(7) is monolithic, except
+	    for devtag and refer(1) support.
+	  - Remove '&&' end macro when we're done using it.
+
 2021-12-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[me]: (Re-)localize strings.

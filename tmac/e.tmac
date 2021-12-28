@@ -48,13 +48,11 @@
 .\"*								*
 .\"**************************************************************
 .\"
-.\"	Code on .de commands:
-.\"		***	a user interface macro.
-.\"		&&&	a user interface macro which is redefined
-.\"			when used to be the real thing.
-.\"		$$$	a macro which may be redefined by the user
-.\"			to provide variant functions.
-.\"		---	an internal macro.
+.\"	Macro definitions are annotated with a code:
+.\"		***	user interface macro
+.\"		$$$	macro which may be redefined by the user
+.\"			to provide variant functions
+.\"		---	internal macro; not to be called by user
 .\"
 .
 .do nr devtag-needs-end-of-heading 0
@@ -170,8 +168,8 @@
 .
 ..
 .
-.rn nm @#		\" --- rename to original command
-.de nm			\" --- turn on number mode preserving font info
+.rn nm @#		\" --- save troff request
+.de nm			\" --- turn on number mode, preserving font info
 .ie \\n(.$ \
 \{\
 .	nr _S \\n(.s
@@ -535,7 +533,7 @@
 .	nr _L \\n(.l
 ..
 .
-.rn pl xP		\" *** save page length request
+.rn pl xP		\" --- save troff page length request
 .
 .de pl			\" *** set page length
 .xP \\$1
@@ -549,7 +547,7 @@
 .nr _o \\n(.o
 ..
 .
-.\" Redefine the fam request to set the family in
+.\" Redefine the groff fam request to set the family in
 .\" environment 2 as well as the current environment.
 .if !\n(.g .ig
 .do rn fam @fam		\" --- set family in current environment
@@ -1411,6 +1409,8 @@
 .\}
 ..
 .
+.rm &&
+.
 .de PF			\" *** end picture; "fly back" to top
 .if \\n(?n .do PS_nm_check resume
 .ls
@@ -1880,7 +1880,7 @@
 .if "\\$1"AB" \
 .	nr _0 5			\" abstract
 .if \\n(_0=0 \
-.	@err invalid section type to '++': '\\$1'
+.	@err invalid segment type to '++': '\\$1'
 .nr ?R 0
 .if \\n(_0>10 \
 \{\
