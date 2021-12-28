@@ -1,5 +1,25 @@
 2021-12-28  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Rename new `$x` register to `sx`.  Since we expect the
+	user to set this register directly, it should not be named with
+	a leading '$' per the "me Reference Manual".
+
+	* tmac/e.tmac (initialization, {, }): Do it.
+
+	* tmac/groff_me.7.man:
+	* doc/meref.me.in:
+	* NEWS: Update documentation.
+
+	* doc/meintro.me.in:
+	* doc/meintro_fr.me.in:
+	* doc/meref.me.in: Sync with new register name.
+
+	See <https://savannah.gnu.org/bugs/?61025>.  Thanks to Dave
+	Kemper for the discussion in
+	<https://savannah.gnu.org/bugs/?61710>.
+
+2021-12-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Slightly refactor.
 
 	* src/roff/troff/div.cpp:

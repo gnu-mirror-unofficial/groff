@@ -38,7 +38,7 @@
 .if t .lt 6.5i
 .nr pp 10
 .nr fi 1n
-.nr $x 0
+.nr sx 0
 .\"pn 0
 .ds MO @VERSION@
 .de TL			\" *** title line
@@ -1852,7 +1852,7 @@ Delayed text number surrounded by square brackets:
 Begin superscripting:
 move upward and reduce the type size.
 The line height is increased above by
-.NR ($x
+.NR (sx
 [0.2m]
 to accommodate the superscript.
 In \*N mode,
@@ -1885,7 +1885,7 @@ output a right square bracket.
 Begin subscripting:
 move downward and reduce the type size.
 The line height is increased below by
-.NR ($x
+.NR (sx
 to accommodate the subscript.
 In \*N mode,
 output a left angle bracket.
@@ -2163,7 +2163,6 @@ and a square \(sq marks \*G extensions.
 \en($s	R	column spacing (indentation)
 \&.$s	M\(dd	output footnote area separator
 \en($v	R\(dd	vertical spacing of text (%)
-\en($x	R\(dd	super/subscript line height increase
 \e%	F\(sc	control hyphenation
 \en%	R\(sc	current page number
 \e&	F\(sc	non-printing input break
@@ -2344,6 +2343,7 @@ and a square \(sq marks \*G extensions.
 \en(sp	R	section title type size in points
 \en(ss	R	section prespace
 \&.sx	M	change section depth
+\en(sx	R\(sq	super/subscript line height increase
 \&.sz	M	set type size and vertical spacing
 \&.ta	M\(sc	set tab stops
 \&.tc	M\(sc	set tab repetition character

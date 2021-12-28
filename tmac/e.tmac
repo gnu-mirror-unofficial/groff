@@ -1987,7 +1987,6 @@
 .
 .nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
 .nr $V \n($v			\" same for displays & footnotes
-.nr $x 0.2m			\" super/subscript line height increase
 .nr hm 4v			\" header margin
 .nr tm 7v			\" top margin
 .nr bm 6v			\" bottom margin
@@ -2008,6 +2007,7 @@
 .nr sp 10			\" section title pointsize
 .nr ss 12p			\" section prespacing
 .nr si 0			\" section indent
+.nr sx 0.2m			\" super/subscript x-height adjustment
 .
 .@R 0x\" set by GNU pic to _disable_ \x in super/scripting
 .
@@ -2021,10 +2021,10 @@
 .\" could be revisited.
 .\"
 .\" Adjust the line height with \x if the `0x` register is zero (a
-.\" pic(1) convention) by the amount in `$x` (a groff 1.23 extension).
+.\" pic(1) convention) by the amount in `sx` (a groff 1.23 extension).
 .ie t \
 \{\
-.ds { \v'-0.4m'\x'\\n(0x=0*-1u*\\n($xu'\s-3
+.ds { \v'-0.4m'\x'\\n(0x=0*-1u*\\n(sxu'\s-3
 .ds } \s+3\v'0.4m'
 .\}
 .el \
@@ -2045,7 +2045,7 @@
 .\}
 .ie t \
 \{\
-.ds < \v'0.4m'\x'\\n(0x=0*\\n($xu'\s-3
+.ds < \v'0.4m'\x'\\n(0x=0*\\n(sxu'\s-3
 .ds > \s+3\v'-0.4m'
 .\}
 .el \
