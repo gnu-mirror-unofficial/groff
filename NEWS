@@ -224,6 +224,20 @@ o The doc (mdoc) macro package now honors the HY register as the an
   furthermore recognizes the `AD` string (see above) for compatibility
   with an (man), but at present ignores its value.
 
+o The e (me) macro package now uses strings `wa` and `wc` to store the
+  terms the package produces in chapter headings created by the `$c`
+  macro.  The strings, which default to "Appendix" and "Chapter",
+  respectively, ease localization of the package and replacement of the
+  terms used without requiring the `$c` macro to be redefined.
+
+o The e (me) macro package has a new macro, `ld`, which "re-localizes
+  the date"; after updating troff registers `dw`, `mo`, and `yr` are
+  modified (to record a document's date of composition, for instance),
+  `ld` updates the packages `y2` and `y4` registers and the localized
+  strings `dw` and `mo` for the names of the weekday and month.  `ld` is
+  also used internally to simplify the use of the package with languages
+  other than English; it thus updates the `wa` and `wc` strings as well.
+
 o The e (me) macro package now has a register `$x` that eases the
   configuration of space added to the line height above/below when
   super/subscripting is used.  It defaults to 0.2m, the value used
