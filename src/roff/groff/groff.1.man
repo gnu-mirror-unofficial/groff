@@ -234,12 +234,10 @@ implies
 .TP
 .B \-k
 Run
-.MR preconv @MAN1EXT@ ,
-which is run before any other preprocessor.
+.MR preconv @MAN1EXT@
+preprocessor.
 .
-Please refer to
-.IR preconv 's
-manual page for its behavior if neither of
+Refer to its manual page for its behavior if neither of
 .IR groff 's
 .B \-K
 or
@@ -302,13 +300,12 @@ before passing it to the spooler program.
 .
 .TP
 .B \-N
-Don't allow newlines within
+Prohibit newlines within
 .I eqn \" language
-delimiters.
-.
-This is the same as the
+delimiters:
+pass
 .B \-N
-option in
+to
 .MR @g@eqn @MAN1EXT@ .
 .
 .
@@ -352,9 +349,7 @@ No mechanism is provided for passing arguments to
 because most
 .I \%@g@refer
 options have equivalent language elements that can be specified within
-the document;
-see
-.MR @g@refer @MAN1EXT@ .
+the document.
 .
 .
 .TP
@@ -399,16 +394,16 @@ see subsection \[lq]Output devices\[rq] below.
 .
 .TP
 .B \-U
-Operate in unsafe mode;
-see
-.BR \-S .
-.
-Pass the
+Operate in unsafe mode:
+pass the
 .B \-U
 option to
 .I \%@g@pic
 and
 .IR \%@g@troff .
+.
+See
+.BR \-S .
 .
 .
 .TP
@@ -1011,14 +1006,11 @@ The GNU
 system implements most well-known macro packages for AT&T
 .I troff \" AT&T
 .\" exceptions: mpm, mv
-in a compatible way,
-extends them,
-and adds some packages of its own.
+in a compatible way and extends them.
 .
-Several of them have one- or two-letter names arising from intense
-practices of naming economy in early Unix culture.
-.
-This laconic approach led to many of the packages being identified in
+These have one- or two-letter names arising from intense practices of
+naming economy in early Unix culture,
+a laconic approach that led to many of the packages being identified in
 general usage with the
 .I nroff
 and
@@ -1044,10 +1036,6 @@ Some are \[lq]full-service\[rq] packages,
 adopting responsibility for page layout among other fundamental tasks,
 and defining their own lexicon of macros for document composition;
 each such package stands alone and a given document can use at most one.
-.
-GNU
-.I roff
-provides the following such packages.
 .
 .
 .TP
@@ -1191,7 +1179,7 @@ switches
 into
 .IR "compatibility mode" ,
 which tries to emulate AT&T
-.I roff
+.I troff \" AT&T
 as closely as is practical to enable the formatting of documents written
 for the older system.
 .
@@ -1468,7 +1456,8 @@ device.
 adds information to AT&T
 .I troff \" AT&T
 font description files to enable their use with
-.IR @g@troff .
+GNU
+.IR troff .\" GNU
 .
 .
 .TP
@@ -1494,7 +1483,7 @@ printers.
 .
 .TP
 .MR tfmtodit @MAN1EXT@
-creates font description files for TeX DVI device.
+creates font description files for the TeX DVI device.
 .
 .
 .TP
@@ -1590,7 +1579,8 @@ you may wish to re-run the
 command with the
 .B \-V
 option and break the reported pipeline down into separate stages,
-inspecting the exit status and any diagnostic messages of each command.
+inspecting the exit status of and diagnostic messages emitted by each
+command.
 .
 .
 .\" ====================================================================
