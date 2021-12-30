@@ -1,3 +1,16 @@
+2021-12-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/devices/grohtml/html.h (INT_HEXDIGITS): Add new constant
+	to store the maximum possible quantity of digits in the
+	hexadecimal representation of an `int`.
+
+	* src/devices/grohtml/html-text.cpp (html_text::issue_tag):
+	* src/devices/grohtml/post-html.cpp (html_printer::do_body):
+	Guard against format string overflow by large integers in RGB
+	color channel specifications; in a *printf format string, the
+	precision (like the field width) is a _minimum_.  Quietens
+	`-Wformat-overflow` warnings from GCC 8.3.
+
 2021-12-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/html/pre-html.cpp (get_image_generator): Clarify

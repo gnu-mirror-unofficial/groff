@@ -4879,8 +4879,8 @@ void html_printer::do_body (void)
   if (background == NULL)
     fputs("<body>\n\n", stdout);
   else {
+    char buf[(INT_HEXDIGITS * 3) + 1];
     unsigned int r, g, b;
-    char buf[6+1];
 
     background->get_rgb(&r, &g, &b);
     // we have to scale 0..0xFFFF to 0..0xFF
