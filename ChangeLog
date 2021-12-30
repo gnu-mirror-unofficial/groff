@@ -1,5 +1,12 @@
 2021-12-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/grohtml/post-html.cpp
+	(html_printer::do_file_components): Emit fatal diagnostic if
+	we're unable to `freopen()` standard output.  Quietens
+	`-Wunused-result` warning from GCC 8.3.
+
+2021-12-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grohtml/html.h (INT_HEXDIGITS): Add new constant
 	to store the maximum possible quantity of digits in the
 	hexadecimal representation of an `int`.

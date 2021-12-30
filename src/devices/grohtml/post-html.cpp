@@ -5005,7 +5005,10 @@ void html_printer::do_file_components (void)
       string split_file = file_list.file_name();
       split_file += '\0';
       fflush(stdout);
-      freopen(split_file.contents(), "w", stdout);
+      if (!freopen(split_file.contents(), "w", stdout)) {
+	fatal("unable to reopen standard output stream: %1",
+	      strerror(errno));
+      }
       fragment_no++;
       if (dialect == xhtml)
 	writeHeadMetaStyle();
