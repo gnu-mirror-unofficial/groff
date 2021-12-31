@@ -720,7 +720,7 @@ input
 .
 If
 .I name
-is a character sequence not beginning with
+is a multi-character sequence not beginning with
 .BR \[rs] ,
 it corresponds to the GNU
 .I troff \" GNU
@@ -843,31 +843,57 @@ it should be less than the italic correction.
 .
 .
 .P
-The
+For fonts used with typesetting devices,
+the
 .I type
-field gives a featural description of the glyph.
+field gives a featural description of the glyph:
+it is a bit mask recording whether the glyph is an ascender,
+descender,
+both,
+or neither.
+.
+When a
+.B \[rs]w
+escape sequence is interpolated,
+these values are bitwise and-ed together
+and stored in the
+.B ct
+register.
+.
+In fonts for
+.IR nroff -mode \" generic
+output devices,
+all glyphs might have a type of zero.
+.
+.
+.TP
+0
+means the glyph lies entirely between the baseline and
+a horizontal line at the \[lq]x-height\[rq] of the font;
+typical examples are \[lq]a\[rq],
+\[lq]c\[rq],
+and
+\[lq]x\[rq];
 .
 .
 .TP
 1
-means the glyph has a descender
-(for example,
-\[lq]p\[rq]);
+means the glyph descends below the baseline,
+like \[lq]p\[rq];
 .
 .
 .TP
 2
-means the glyph has an ascender
-(for example,
+means the glyph ascends above the font's x-height,
+like \[lq]A\[rq] or
 \[lq]b\[rq]);
 and
 .
 .
 .TP
 3
-means the glyph has both an ascender and a descender
-(for example,
-parentheses in some fonts).
+means the glyph is both an ascender and a descender\[em]this is true of
+parentheses in some fonts.
 .
 .
 .P
@@ -968,6 +994,8 @@ Most kerning pairs should have a negative value
 .\" END Keep parallel with groff.texi node "Device and Font Files".
 .
 .
+.br
+.ne 4v
 .\" ====================================================================
 .SH Files
 .\" ====================================================================

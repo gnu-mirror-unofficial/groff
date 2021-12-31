@@ -18345,7 +18345,7 @@ follows.
 @c since it defines an output entity.}
 if @var{name} is a single printable character@tie{}@var{c}, it
 corresponds to the @code{troff} input character@tie{}@var{c}.  If
-@var{name} is a character sequence not beginning with @code{\}, it
+@var{name} is a multi-character sequence not beginning with @code{\}, it
 corresponds to the GNU @code{troff} special character escape sequence
 @samp{\[@var{name}]}.  A name consisting of three minus signs,
 @samp{---}, is special and indicates that the glyph is unnamed: such
@@ -18413,18 +18413,29 @@ upright glyph.  The @var{subscript-correction} is the amount of space
 that should be added after an oblique glyph to be followed by a
 subscript; it should be less than the italic correction.
 
-The @var{type} field gives a featural description of the glyph.
+For fonts used with typesetting devices, the @var{type} field gives a
+featural description of the glyph: it is a bit mask recording whether
+the glyph is an ascender, descender, both, or neither.  When a @code{\w}
+escape sequence is interpolated, these values are bitwise and-ed
+together and stored in the @code{nr} register.  In fonts for
+@code{nroff}-mode output devices, all glyphs might have a type of zero.
 
 @table @code
+@item 0
+means the glyph lies entirely between the baseline and a horizontal line
+at the ``x-height'' of the font;
+typical examples are @samp{a}, @samp{c}, and @samp{x};
+
 @item 1
-means the glyph has a descender (for example, @samp{p});
+means the glyph descends below the baseline, like @samp{p};
 
 @item 2
-means the glyph has an ascender, (for example, @samp{b}); and
+means the glyph ascends above the font's x-height, like @samp{A} or
+@samp{b}; and
 
 @item 3
-means the glyph has both an ascender and a descender (for example,
-parentheses in some fonts).
+means the glyph is both an ascender and a descender---this is true of
+parentheses in some fonts.
 @end table
 
 The @var{code} field gives a numeric identifier that the postprocessor
