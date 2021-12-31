@@ -324,7 +324,7 @@ struct style {
 };
 
 style::style()
-  : f(NULL)
+  : f(NULL), point_size(-1)
 {
 }
 

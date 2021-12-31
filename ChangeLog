@@ -1,5 +1,13 @@
 2021-12-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/grohtml/post-html.cpp (style::style): Add
+	initializer to argumentless constructor to avoid later read from
+	unitialized memory in `html_printer::do_font`.
+
+	Fixes <https://savannah.gnu.org/bugs/?61748>.
+
+2021-12-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[groff]: Add regression test for Savannah #61748.
 
 	* src/roff/groff/tests/html_works_with_grn_and_eqn.sh: Do it.
