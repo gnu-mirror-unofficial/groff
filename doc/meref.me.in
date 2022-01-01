@@ -135,22 +135,21 @@ Many of the package's rendering parameters
 can be adjusted through
 registers,
 strings,
-and sometimes macro calls.
-Default parameter values are shown in square brackets
-in this document.
-.\" XXX GBR CONVERT THE MANUAL TO USE THIS CONVENTION
-.\" Numeric arguments to macros are denoted with lowercase letters and
-.\" string arguments with uppercase.
-.\" XXX GBR CONVERT THE MANUAL TO USE THE ABOVE CONVENTION
+and macro calls.
+Macro arguments are denoted with lowercase letters for
+numeric values
+(suffixed with a scaling unit if appropriate)
+and with uppercase for text arguments.
+Default parameter values are shown in square brackets.
 The notation
-.i \(+-N
+.i \(+-n
 indicates a numerical value with an optional leading sign.
 Without the sign,
 it assigns a value
-.i N.
+.i n.
 With it,
 it expresses alteration of an existing value by the amount
-.i N.
+.i n.
 \*(ME's font registers may be set only to mounting positions.
 Position zero tells \*(ME to perform no font change;
 the font of the preceding text
@@ -166,30 +165,23 @@ in a font selection escape sequence such as
 .b \ef0 ,
 because those are interpeted directly by \*T.
 \*(ME's type size registers support only integral values in points.
-.pp
 Changes to parameters
 that affect the layout of the page
 (notably page length and vertical margins)
 should be done before calling
 any paragraphing or sectioning macros.
-After that,
-such changes
-are not well defined
-and should be avoided.
 .pp
 \*G measures distances
 in device-specific basic units,
-so it is nearly always necessary
-to specify a scaling unit.
-For example,
+so it is often necessary
+to specify measurements with a scaling unit.
+For instance,
 to set the paragraph indentation
 to eight ens,
 input
-.q ".nr pi 8n" ,
-not
-.q ".nr pi 8" ;
-the latter
-would make the paragraph indentation eight basic units,
+.q ".nr pi 8n" .
+.q ".nr pi 8"
+makes the paragraph indentation eight basic units,
 or 8/72,000 inches on
 .i grops,
 \*G's PostScript output driver.
@@ -357,13 +349,13 @@ except that no number is prefixed
 to the section title.
 .TL
 .b .sh
-.i \(+-N
+.i \(+-n
 .i T
 .i "a b c d e f"
 .DE
 Begin section with numbered heading
 of depth
-.i \(+-N
+.i \(+-n
 [+0]
 and optional title
 .i T
@@ -439,10 +431,10 @@ If all components are zero,
 no number is output.
 .TL
 .b .sx
-.i \(+-N
+.i \(+-n
 .DE
 Go to section depth
-.i \(+-N
+.i \(+-n
 [\-1],
 but emit no section heading
 and do not increment the section number
@@ -463,7 +455,7 @@ without the section numbering features.
 .b .$p
 .i T
 .i B
-.i N
+.i n
 .DE
 Output section heading.
 .i T
@@ -471,7 +463,7 @@ is the title,
 .i B
 is the concatenated number,
 and
-.i N
+.i n
 is the depth.
 These parameters are not always present;
 in particular,
@@ -485,7 +477,7 @@ all three,
 but the first two
 are empty strings.
 If
-.i N
+.i n
 is present,
 the section indentation is set to
 .NR (si \c
@@ -495,7 +487,7 @@ the section indentation is set to
 .b .$0
 .i T
 .i B
-.i N
+.i n
 .DE
 This
 .i hook
@@ -535,7 +527,7 @@ of depth
 They could be used
 to obtain section depth-dependent spacing.
 .sh 1 "Headers and Footers"
-.ds TP \(aq\,\fIl\/\fP\(aq\,\fIm\/\fP\(aq\,\fIr\/\fP\(aq
+.ds TP \(aq\,\fIL\/\fP\(aq\,\fIM\/\fP\(aq\,\fIR\/\fP\(aq
 .pp
 Headers and footers
 are known as
@@ -543,10 +535,10 @@ are known as
 for their left,
 middle,
 and right-hand components
-.i l,
-.i m,
+.i L,
+.i M,
 and
-.i r.
+.i R.
 The components are separated
 by a
 .i delimiter,
@@ -707,8 +699,8 @@ non-displayed text,
 .NR ($v .
 .TL
 .b .(l
-.i m
-.i f
+.i M
+.i F
 .DE
 Begin list.
 Text until
@@ -719,7 +711,7 @@ is set in font
 and single-spaced
 with filling disabled.
 If
-.i m
+.i M
 [\c
 .b I ]
 is
@@ -741,7 +733,7 @@ and if
 .b C ,
 the list is centered on a line-by-line basis.
 If
-.i f
+.i F
 is
 .b F ,
 filling is enabled.
@@ -776,8 +768,8 @@ and set at type size
 End long quotation.
 .TL
 .b .(b
-.i m
-.i f
+.i M
+.i F
 .DE
 Begin a block,
 a form of
@@ -802,9 +794,9 @@ the threshold feature
 is turned off,
 and a page break will not occur within the keep.
 The font and handling of
-.i m
+.i M
 and
-.i f
+.i F
 are as in
 .b .(l .
 .TL
@@ -813,14 +805,14 @@ are as in
 End block.
 .TL
 .b .(z
-.i m
-.i f
+.i M
+.i F
 .DE
 Begin floating keep.
 Like
 .b .(b ,
 except that
-.i m
+.i M
 defaults to
 .b M
 and the keep
@@ -955,13 +947,13 @@ Any redefinition should produce output
 no more than one vee in height.
 .TL
 .b .(x
-.i x
+.i X
 .DE
 Begin index entry.
 Input until
 .b .)x
 is saved in an index named
-.i x
+.i X
 [\c
 .b x ]
 until called up with
@@ -1014,10 +1006,10 @@ and any
 are suppressed.
 .TL
 .b .xp
-.i x
+.i X
 .DE
 Emit index
-.i x
+.i X
 [\c
 .b x ].
 The index is formatted in the font, size, and so forth
@@ -1029,27 +1021,27 @@ not those of the entries when they were collected.
 .sh 1 "Columnated Output"
 .TL
 .b .2c
-.i \(+-S
-.i N
+.i \(+-s
+.i n
 .DE
 Enter multi-column mode,
 formatting text in
-.i N
+.i n
 [2]
 columns of equal width.
 The column separation
 (\c
 .q gutter )
 is set to
-.i \(+-S
+.i \(+-s
 [4n]
 and saved
 in
 .NR ($s .
 The
-.i N
+.i n
 columns with
-.i N \-1
+.i n \-1
 gutters
 fill the single-column line length;
 each column's line length
@@ -1077,10 +1069,10 @@ only if necessary.
 .sh 1 "Type Size and Font Styles"
 .TL
 .b .sz
-.i \(+-P
+.i \(+-p
 .DE
 Set the type size to
-.i \(+-P
+.i \(+-p
 [10p],
 and the vertical spacing proportionally.
 The vertical spacing as a percentage of the type size
@@ -1241,12 +1233,12 @@ typesetting systems.
 .pp
 .TL
 .b .ix
-.i \(+-N
+.i \(+-n
 .DE
-Equivalent to \(lq\|\fB\[aq]in \fI\(+-N\/\fR\(rq.
+Equivalent to \(lq\|\fB\[aq]in \fI\(+-n\/\fR\(rq.
 .TL
 .b .bl
-.i N
+.i n
 .DE
 Equivalent to \(lq\fB.sp \fIN\/\fR\(rq
 inside a
@@ -1254,43 +1246,43 @@ inside a
 block.
 .TL
 .b .m1
-.i \(+-N
+.i \(+-n
 .DE
 Set/adjust the space between the top of the page
 and the header to/by
-.i \(+-N
+.i \(+-n
 [4v].
 .TL
 .b .m2
-.i \(+-N
+.i \(+-n
 .DE
 Set/adjust the space between the header
 and the first line of text to/by
-.i \(+-N
+.i \(+-n
 [2v].
 .TL
 .b .m3
-.i \(+-N
+.i \(+-n
 .DE
 Set/adjust the space
 between the bottom of the text
 and the footer to/by
-.i \(+-N
+.i \(+-n
 [2v].
 .TL
 .b .m4
-.i \(+-N
+.i \(+-n
 .DE
 Set/adjust the space
 between the footer
 and the bottom of the page to/by
-.i \(+-N
+.i \(+-n
 [4v].
 .TL
 .b .pa
-.i \(+-N
+.i \(+-n
 .DE
-Equivalent to \(lq\fB.bp \fI\(+-N\/\fR\(rq.
+Equivalent to \(lq\fB.bp \fI\(+-n\/\fR\(rq.
 .TL
 .b .ro
 .DE
@@ -1308,20 +1300,20 @@ and indented by the same amount
 to accommodate the line number.
 .TL
 .b .n2
-.i \(+-N
-.i c
+.i \(+-n
+.i C
 .DE
 Stop numbering if
-.i N
+.i n
 missing;
 resume where stopped if
-.i N
+.i n
 unsigned,
 or with number modified by
 \(+-\c
-.i N.
+.i n.
 If
-.i c
+.i C
 is
 .b c,
 shorten the line length to accommodate numbers,
@@ -1340,30 +1332,30 @@ and composited in later.
 (To reserve only a partial page,
 use \[lq]\c
 .b .sv \~\c
-.bi N \[rq],
+.bi n \[rq],
 where
-.i N
+.i n
 is the amount of space required.
 This space will be output immediately
 if there is room,
 and otherwise
 at the top of the next page.
 If
-.i N
+.i n
 is greater than the space available
 on an empty page,
 none will be output.)
 .sh 1 "Preprocessor Support"
 .TL
 .b .EQ
-.i m
+.i A
 .i T
 .DE
 Begin
 .i \%@g@eqn (1)
 equation.
 If
-.i m
+.i A
 [\c
 .b C ]
 is
@@ -1386,15 +1378,15 @@ by Brian W. Kernighan
 and Lorinda L. Cherry.
 .TL
 .b .EN
-.i c
+.i C
 .DE
 End
 .i \%@g@eqn
 equation.
 If
-.i c
+.i C
 is
-.b C
+.b C ,
 the equation must be continued
 by immediately following it
 with another
@@ -1412,7 +1404,7 @@ space
 above and below it.
 .TL
 .b .TS
-.i h
+.i H
 .DE
 Begin (start)
 .i \%@g@tbl (1)
@@ -1428,7 +1420,7 @@ on each subsequent page,
 specify
 .b H
 for
-.i h
+.i H
 and call
 .b .TH
 within the table data after the heading rows.
@@ -1511,12 +1503,12 @@ picture,
 leaving the drawing position at the top of the picture.
 .TL
 .b .GS
-.i x
+.i A
 .DE
 Begin
 .i \%@g@grn (1)
 picture.
-.i x
+.i A
 [\c
 .b C ]
 can be
@@ -1565,11 +1557,11 @@ based on the foregoing.
 Reset tab stops to every 0.5i.
 .TL
 .b .ba
-.i \(+-N
+.i \(+-n
 .DE
 Set the base indentation
 to
-.i \(+-N
+.i \(+-n
 [0].
 Paragraphs,
 sections,
@@ -1581,19 +1573,19 @@ Titles and footnotes
 are unaffected.
 .TL
 .b .xl
-.i \(+-N
+.i \(+-n
 .DE
 Set line length to
-.i N
+.i n
 [6.0i]
 only in the current environment.
 .TL
 .b .ll
-.i \(+-N
+.i \(+-n
 .DE
 Set line length to
 to
-.i N
+.i n
 [6.0i]
 in all environments used by \*(ME.\**
 .(f
@@ -1760,6 +1752,7 @@ on the first page
 of each chapter.
 If a title
 .i T
+[empty]
 is supplied,
 call
 .b .$c .
