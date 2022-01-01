@@ -364,7 +364,7 @@ to the section title.
 Begin section with numbered heading
 of depth
 .i \(+-N
-[empty]
+[+0]
 and optional title
 .i T
 [empty].
@@ -372,15 +372,6 @@ Vertical space of
 .NR (ss
 [1v]
 precedes the heading.
-If
-.i \(+-N
-is empty,
-the current depth,
-stored in
-the register
-.NR ($0
-[0],
-is used.
 The components
 of the section number
 are maintained in
@@ -390,25 +381,14 @@ through
 combined,
 they are available in
 .ST ($n .
+Automatic section numbering at all depths begins at 1.
 The section number is followed by a period.
-If all components are zero,
-no number is output.
 The heading is set in font
 .NR (sf
 [8]
 at size
 .NR (sp
 [10p].
-If
-.NR (si
-[0] is not zero,
-.b .sh
-calls
-.b .ba
-to set the section indentation to
-.NR (si \c
-.b * \c
-.NR ($0 .
 The section heading
 is set at the indentation of the parent depth;
 a further indentation of
@@ -455,6 +435,8 @@ and nothing is output\(em\c
 this is useful to automatically
 coordinate section numbers with
 chapter numbers.
+If all components are zero,
+no number is output.
 .TL
 .b .sx
 .i \(+-N
@@ -502,6 +484,13 @@ and
 all three,
 but the first two
 are empty strings.
+If
+.i N
+is present,
+the section indentation is set to
+.NR (si \c
+.b * \c
+.i n .
 .TL
 .b .$0
 .i T
