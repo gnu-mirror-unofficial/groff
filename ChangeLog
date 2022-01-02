@@ -1,5 +1,26 @@
 2022-01-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Drop unnecessary code.  Apart from being superfluous, it
+	prevented a user-defined value of the `sx` register from being
+	applied to the first footnote marker interpolated, a subtlety
+	that escaped my notice because the first footnotes in our
+	"meref" and "meintro" documents are not numeric, but symbolic,
+	and their markers occurred on lines with vertical space above
+	and below.  (The bug was further masked by an otherwise
+	redundant redefinition of the `*` string inside the `)f` macro.)
+
+	* tmac/e.tmac ()f, +c): Stop redefining footnote marker string
+	`*` after updating the automatic footnote number; its
+	interpolation is already backslash-protected.
+	()d, pd): Stop redefining delayed text marker string `#` for an
+	analogous reason.
+	(initialization): Drop unneeded `_*` and `_#` strings.
+
+	Thanks to Robert Goulding for his feedback and patience.  See
+	<https://savannah.gnu.org/bugs/?61025>.
+
+2022-01-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tests/e_footnote-marks-work.sh: Enhance test.  Confirm
 	that the automatic footnote number is reset to 1 by starting a
 	new chapter with the `+c` macro.

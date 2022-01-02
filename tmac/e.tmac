@@ -1661,7 +1661,6 @@
 .ie "\\n(.z"|f" \
 \{\
 .	if \\n* .nr $f +1
-.	ds * \\*{\\n($f\\*}\k*\"
 .	nr * 0
 .	in 0
 .	da
@@ -1708,14 +1707,12 @@
 .
 .de )d			\" *** end delayed text
 .nr $d +1
-.ds # \\*(_#
 ..
 .
 .de pd			\" *** print delayed text
 .|d
 .rm |d
 .nr $d 1
-.ds # \\*(_#
 ..
 .
 .
@@ -1877,7 +1874,6 @@
 .\}
 .nr ?C 1
 .nr $f 1
-.ds * \\*(_*\"
 .if \\n(?R \
 .	pn 1
 .bp
@@ -2145,11 +2141,9 @@
 .nr _L \n(.lu			\" line length of page
 .nr $c 1			\" current column number
 .nr $f 1			\" footnote number
-.ds _* \\*{\\n($f\\*}\k*\"
-.ds * \*(_*\"			\" footnote mark
+.ds * \\*{\\n($f\\*}\k*\"	\" footnote mark
 .nr $d 1			\" delayed text number
-.ds _# [\\n($d]\"
-.ds # \*(_#\"			\" delayed text mark
+.ds # [\\n($d]\"		\" delayed text mark
 .nr _M 1			\" encoded document segment type
 .ds lq \(lq\"			\" left quote
 .ds rq \(rq\"			\" right quote
