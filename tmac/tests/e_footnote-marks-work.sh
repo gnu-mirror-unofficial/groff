@@ -40,6 +40,12 @@ sphinx**
 of quartz.\**
 .(f
 \** qux
+.)f
+.+c
+.pp
+Pack my box with five dozen liquor jugs.\**
+.(f
+\** ogg
 .)f'
 
 output=$(echo "$input" | "$groff" -Tascii -P-cbou -me)
@@ -58,5 +64,11 @@ echo "$output" \
 
 echo "$output" \
     | grep -F '[2] qux'
+
+echo "$output" \
+    | grep -F 'Pack my box with five dozen liquor jugs.[1]'
+
+echo "$output" \
+    | grep -F '[1] ogg'
 
 # vim:set ai et sw=4 ts=4 tw=72:
