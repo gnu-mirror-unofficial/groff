@@ -224,6 +224,15 @@ o The doc (mdoc) macro package now honors the HY register as the an
   furthermore recognizes the `AD` string (see above) for compatibility
   with an (man), but at present ignores its value.
 
+o The e (me) macro package has changed its support for output line
+  numbering with the `n1` and `n2` macros to resolve several bugs in the
+  previous implementation.  The `n1` macro now accepts an optional `C`
+  argument to set the line number at the existing page offset instead of
+  reducing the page offset to make the line number appear in the left
+  margin.  A second argument to the `n2` macro is no longer supported.
+  A new register `no` makes configurable the amount of horizontal space
+  to be used for the line number (the default is unchanged).
+
 o The e (me) macro package now uses strings `wa` and `wc` to store the
   terms the package produces in chapter headings created by the `$c`
   macro.  The strings, which default to "Appendix" and "Chapter",

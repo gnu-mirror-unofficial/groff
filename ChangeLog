@@ -1,5 +1,51 @@
 2022-01-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Revise `n1` and `n2` interface and behavior.
+
+	There were several bugs in the previous implementation.
+
+	* tmac/e.tmac (po): Issue diagnostic if an attempt is made to
+	set the page offset to a negative value.
+
+	(n1): Accept new optional "C" argument to behave more (but not
+	exactly) like roff(1), as the formerly-recognized "c" argument
+	to `n2` did.  If present, the line length is reduced by the same
+	amount (in new interface register `no`) as the line number field
+	to preserve the overall line length.  Save the previous line
+	length in the register in `_l` and set a flag, stored in `?N`,
+	indicating this reduction.  Otherwise, the macro expects to be
+	able to reduce the page offset to accommodate the line number.
+	If it cannot (for example, with the zero page offset default
+	used by nroff output devices), see above re: the `po` macro.
+
+	(n2): Cache the last line number that may have been output,
+	instead of the current one, so that we can operate it on it
+	consistently with user expectations.  Do this earlier, and
+	rename this macro-local variable from `_ln` to `_n` so that we
+	don't need groff's `do` request to operate on it.  Drop
+	recognition of "c" as an optional second argument.  If turning
+	off line numbering: if the line length was shortened (`?N`)
+	restore the saved value and delete `_l` register; otherwise,
+	reverse the change to the page offset.  Delete `_n` register.
+
+	(initialization): Assign `\w'0000'u` to `no` register; this was
+	previously hard-coded in `n1` and `n2`.  Initialize `?N` with 0.
+
+	* doc/meref.me.in (roff Support): Update to reflect interface
+	changes and describe behavior more accurately.
+
+	* doc/meref.me.in (Summary):
+	* tmac/groff_me.7.in (Registers): Document new `no` register and
+	mark it as a groff extension.
+
+	* NEWS: Add item documenting interface changes.
+
+	Fixes <https://savannah.gnu.org/bugs/?61646>.  See the comments
+	in the report for a lengthy enumeration of rendering problems
+	exhibited by the previous implementation.
+
+2022-01-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[me]: Add unit test for line numbering feature.
 
 	* tmac/tests/e_line-numbering-works.sh: Do it.

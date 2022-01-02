@@ -32,6 +32,8 @@
 .\"	@(#)e.tmac	8.1 (Berkeley) 06/05/93
 .\"
 .\"	Modified by James Clark for use with groff.
+.\"	Further modifications by Werner Lemberg, George Helffrich, and
+.\"	G. Branden Robinson.
 .\"
 .\"**************************************************************
 .\"*								*
@@ -544,6 +546,8 @@
 .
 .de po			\" *** page offset
 .@O \\$1
+.if \\n(.o<0 \
+.	do @err page offset is negative (\\n(.ou)
 .nr _o \\n(.o
 ..
 .
@@ -582,8 +586,27 @@
 .if !'\\n(.z'' \!.@s \\$1
 ..
 .
+.\" Even with the following facilities, this package's simulation of
+.\" roff(1) line numbering features does not exhibit complete fidelity
+.\" to that program's Unix V7 behavior.  roff(1) always increased the
+.\" page offset by 5n and set a three-digit line number, leaving _two_
+.\" spaces between the number and the start of unindented text.  This
+.\" package indents by \n(no instead.  Further, roff(1) did _not_ reduce
+.\" the line length to compensate for the increase in page offset.  GBR
+.\" presumes that the document author was expected to use an `ll`
+.\" request to perform that action if desired, but has no corpus of
+.\" idiomatic, line-numbered roff(1) documents to examine.
+.\"
 .de n1			\" *** line numbering 1
-.ll -\w'0000'u
+.ie \\n(.$ \
+.	if '\\$1'C' \
+\{\
+.		nr ?N 1
+.		nr _l \\n(.l
+.		ll -\\n(nou
+.\}
+.if !\\n(?N \
+.	po -\\n(nou
 .nr ?n 1
 .do nr _#p \\n(.s
 .do nr _#f \\n(.f
@@ -591,12 +614,9 @@
 ..
 .
 .de n2			\" *** line numbering 2
+.nr _n \\n(ln-1\"	save last line number that may have been output
 .ie \\n(.$ \
 \{\
-.	ie !`\\$2`c` \
-.		po -\w'0000'u
-.	el \
-.		ll -\w'0000'u
 .	do ie \\B`\\$1` \
 \{\
 .		ds |i \\$1
@@ -607,12 +627,12 @@
 .		do length |l \\$1
 .		if \\n(|l>1 .do substring |j 1\"	\" for +N / -N
 .		ie `\\*(|i`+` \
-.			do nr ln (\\n[_ln])+\\*(|j
+.			nr ln (\\n(_n)+\\*(|j
 .\" This file's brace style doesn't permit indentation of \{. --GBR
 .		el \
 \{\
 .			ie `\\*(|i`-` \
-.				do nr ln (\\n[_ln])-\\*(|j
+.				nr ln (\\n(_n)-\\*(|j
 .			el \
 .				nr ln \\$1	\" unsigned N
 .		\}
@@ -629,12 +649,18 @@
 .el \
 \{\
 .	nm
-.	do nr _ln \\n(ln
-.	po +\w'0000'u
-.	ll \\n($lu
+.	ie \\n(?N \
+\{\
+.		ll \\n(_lu
+.		rr _l
+.		nr ?N 0
+.\}
+.	el \
+.		po +\\n(nou
 .	nr ?n 0
 .	nr ln 0
 .\}
+.rr _n
 ..
 .
 .de pa			\" *** new page
@@ -2008,6 +2034,7 @@
 .nr ss 12p			\" section prespacing
 .nr si 0			\" section indent
 .nr sx 0.2m			\" super/subscript x-height adjustment
+.nr no \w'0000'u		\" offset for line numbers
 .
 .@R 0x\" set by GNU pic to _disable_ \x in super/scripting
 .
@@ -2091,6 +2118,7 @@
 .@R ?e\"		\" in equation?
 .@R ?H\"		\" suppress headers and footers next page?
 .@R ?I\"		\" has the header trap been sprung?
+.@R ?N\"		\" numbering with shorter line length?
 .@R ?n\"		\" n1 mode?
 .@R ?o\"		\" footnote overflow?
 .@R ?R\"		\" renumbered chapter?

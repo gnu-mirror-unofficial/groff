@@ -1293,33 +1293,33 @@ Equivalent to \(lq\fB.af % i\fP\(rq.
 Equivalent to \(lq\fB.af % 1\fP\(rq.
 .TL
 .b .n1
-.DE
-Number output lines starting from 1.
-The line length is reduced by the width of four numerals
-and indented by the same amount
-to accommodate the line number.
-.TL
-.b .n2
-.i \(+-n
 .i C
 .DE
-Stop numbering if
-.i n
-missing;
-resume where stopped if
-.i n
-unsigned,
-or with number modified by
-\(+-\c
-.i n.
+Number output lines starting from 1.
 If
 .i C
 is
-.b c,
-shorten the line length to accommodate numbers,
-as
-.i roff (1)
-did.
+.b C ,
+the line length is reduced
+and correspondingly indented;
+otherwise,
+the page offset is reduced
+to accommodate the line number.
+The amount in all cases is
+.NR (no
+[\ew\(aq0000\(aqu
+(the width of four numerals
+in the current font)].
+.TL
+.b .n2
+.i \(+-n
+.DE
+Stop numbering output lines if
+.i n
+missing,
+otherwise continue with the number modified by
+\(+-\c
+.i n.
 .TL
 .b .sk
 .DE
@@ -2282,6 +2282,7 @@ and a square \(sq marks \*G extensions.
 \&.ne	M\(sc	need vertical space
 \&.nf	M\(sc	disable filling
 \&.nh	M\(sc	disable automatic hyphenation
+\en(no	R\(sq	line numbering offset
 \&.np	M	begin numbered paragraph
 \&.nr	M\(sc	set register
 \&.ns	M\(sc	begin no-space mode
