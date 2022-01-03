@@ -141,4 +141,13 @@ echo "testing ms(7) document $doc" >&2
 "$grog" "$doc" | \
     grep -Fqx 'groff -ms '"$doc"
 
+# Test manual specification of auxiliary macro packages.
+echo "testing ms(7) document $doc with '-m www' option" >&2
+"$grog" "$doc" -m www | \
+    grep -Fqx 'groff -ms -mwww '"$doc"
+
+echo "testing ms(7) document $doc with '-mwww' option" >&2
+"$grog" "$doc" -mwww | \
+    grep -Fqx 'groff -ms -mwww '"$doc"
+
 # vim:set ai et sw=4 ts=4 tw=72:
