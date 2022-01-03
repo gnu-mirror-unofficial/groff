@@ -210,7 +210,6 @@
 .  ad \\*[AD]
 .  hy \\n[HY]
 .  ll \\n[LL]u
-.  ss 12
 .
 .  \" We've seen no tbl(1) tables yet in this document.
 .  rr TW
@@ -229,15 +228,15 @@
 .  if \\n[CT] .stringup an-title
 .  ds an-section "\\$2\"
 .  ie (\\n[.$] > 4)    .ds an-extra3 "\\$5\"
-.  el \{ .ie '\\$2'1'  .ds an-extra3 General Commands Manual\"
-.  el \{ .ie '\\$2'2'  .ds an-extra3 System Calls Manual\"
-.  el \{ .ie '\\$2'3'  .ds an-extra3 Library Functions Manual\"
-.  el \{ .ie '\\$2'4'  .ds an-extra3 Kernel Interfaces Manual\"
-.  el \{ .ie '\\$2'5'  .ds an-extra3 File Formats Manual\"
-.  el \{ .ie '\\$2'6'  .ds an-extra3 Games Manual\"
-.  el \{ .ie '\\$2'7'  .ds an-extra3 Miscellaneous Information Manual\"
-.  el \{ .ie '\\$2'8'  .ds an-extra3 System Manager's Manual\"
-.  el \{ .ie '\\$2'9'  .ds an-extra3 Kernel Developer's Manual\"
+.  el \{ .ie '\\$2'1'  .ds an-extra3 \\*[an*section1]\"
+.  el \{ .ie '\\$2'2'  .ds an-extra3 \\*[an*section2]\"
+.  el \{ .ie '\\$2'3'  .ds an-extra3 \\*[an*section3]\"
+.  el \{ .ie '\\$2'4'  .ds an-extra3 \\*[an*section4]\"
+.  el \{ .ie '\\$2'5'  .ds an-extra3 \\*[an*section5]\"
+.  el \{ .ie '\\$2'6'  .ds an-extra3 \\*[an*section6]\"
+.  el \{ .ie '\\$2'7'  .ds an-extra3 \\*[an*section7]\"
+.  el \{ .ie '\\$2'8'  .ds an-extra3 \\*[an*section8]\"
+.  el \{ .ie '\\$2'9'  .ds an-extra3 \\*[an*section9]\"
 .  el                  .ds an-extra3 \" empty
 .  \}\}\}\}\}\}\}\}\}
 .
@@ -982,6 +981,16 @@
 .\}
 .
 .\" === Initialize. ===
+.
+.ds an*section1 General Commands Manual\"
+.ds an*section2 System Calls Manual\"
+.ds an*section3 Library Functions Manual\"
+.ds an*section4 Kernel Interfaces Manual\"
+.ds an*section5 File Formats Manual\"
+.ds an*section6 Games Manual\"
+.ds an*section7 Miscellaneous Information Manual\"
+.ds an*section8 System Manager's Manual\"
+.ds an*section9 Kernel Developer's Manual\"
 .
 .mso devtag.tmac
 .nr an-devtag-needs-end-of-heading 0

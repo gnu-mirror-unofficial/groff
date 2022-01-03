@@ -1,5 +1,31 @@
 2022-01-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Internationalize and localize.
+
+	* tmac/an.tmac (TH): Indirect predefined manual section titles
+	through new strings `an*section[1-9]` so that they can be
+	localized.
+	(initialization): Give these strings English defaults.
+	(TH): Move `ss` request from here...
+
+	* tmac/en.tmac: ...to here.  It's not the man(7) package's
+	business what the inter-word and inter-sentence spacing values
+	are.  Also, having the correct[disputed] inter-sentence spacing
+	value for English in its localization file restores it for the
+	benefit of multi-lingual documents (mainly roff applications
+	other than man(7)).
+
+	* tmac/{cs,de,fr,it,sv}.tmac: Supply translations for the manual
+	section titles; these were done by a monoglot American employing
+	Google Translate, so those scandalized or running into howlingly
+	wrong locutions are warmly invited to submit corrections.
+
+	* tmac/trans.tmac: Load localized strings.
+
+	Fixes <https://savannah.gnu.org/bugs/?61734>.
+
+2022-01-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/grog.pl: Handle auxiliary macro package
 	arguments correctly.
 	(process_arguments): Don't append the argument to the '-m'
