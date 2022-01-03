@@ -1,5 +1,25 @@
 2022-01-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/utils/grog/grog.pl: Handle auxiliary macro package
+	arguments correctly.
+	(process_arguments): Don't append the argument to the '-m'
+	option to the command line; requested macro packages have
+	dedicated logic.
+	(construct_command): When iterating through requested package
+	list, assume each element is an auxiliary package unless it
+	matches an element in the list of main packages.  If the
+	assumption holds, append the package name to a new list,
+	`auxiliary_package_argument` (prefixed with '-m').  Push this
+	list onto the command line after any main package.
+
+	Also rename `$selected_main_package` to `$main_package` for
+	brevity, and drop unused global lists `m` and
+	`supplemental_package`.
+
+	Fixes <https://savannah.gnu.org/bugs/?61758>.
+
+2022-01-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/grog/tests/smoke-test.sh: Add test cases for user
 	specification of auxiliary macro packages.
 
