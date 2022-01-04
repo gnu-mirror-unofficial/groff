@@ -1,3 +1,25 @@
+2022-01-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[libbib, libgroff, indxbib]: Slightly refactor.
+
+	Also, it's silly to test even numbers > 2 for primality.  Stop.
+
+	* src/include/lib.h: Include `stdbool.h` since this header file
+	is used for both C and C++ code.
+
+	* src/include/lib.h (is_prime):
+	* src/libs/libgroff/prime.cpp (is_prime): Boolify.  Return
+	Boolean instead of integer literals and demote return type to
+	`bool`.  Include `assert.h` and add assertion to reject
+	mathematically offensive input.
+
+	* src/libs/libbib/index.cpp
+	(index_search_item::read_common_words_file): Test only odd
+	numbers for primality.
+	* src/utils/indxbib/indxbib.cpp (main): Same.  Since the number
+	comes from user input, make it (a potential hash table size) odd
+	first.
+
 2022-01-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Internationalize and localize.
