@@ -1,5 +1,34 @@
 2022-01-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libbib]: Refactor index header checking.
+
+	* src/libs/libbib/index.cpp: Move more header validity checks...
+	(index_search_item::load): ...from here...
+
+	(index_search_item::check_header): ...to here.  Test all size
+	values in header for negative values (never valid) before
+	proceeding.  (These data could be changed to unsigned integer
+	types in the file format, but that would require bumping the
+	file version.  That in turn would make indexes generated with
+	groff 1.23 unusable on systems running older groffs and, perhaps
+	worse, would make groff 1.23 reject index files produced by
+	older groffs.  On the other hand, the regeneration of index
+	files should be, for those who use them, a common activity, and
+	as long as the original database files are kept intact, it seems
+	likely that most people, given modern machines, won't even
+	notice a slowdown in document generation when refer(1) and
+	friends fail to open the indices and fall back to full-text
+	searches of the originals.  So we could still consider revising
+	the file format before the groff 1.23 release.)
+
+	* src/libs/libbib/index.cpp (index_search_item::load):
+	Explicitly perform widening conversion from signed `off_t` value
+	{from a stat(2) buffer} to an unsigned integer; quietens
+	compiler warning about comparison between integers differing in
+	signedness.
+
+2022-01-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* configure.ac (AC_CHECK_HEADERS): Expect stdbool.h, since we
 	now use it in src/include/lib.h.
 
