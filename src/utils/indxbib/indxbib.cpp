@@ -327,9 +327,11 @@ int main(int argc, char **argv)
 static void usage(FILE *stream)
 {
   fprintf(stream,
-"usage: %s [-vw] [-c file] [-d dir] [-f file] [-h n] [-i XYZ] [-k n]\n"
-"       [-l n] [-n n] [-o base] [-t n] [files...]\n",
-	  program_name);
+"usage: %s [-w] [-c common-words-file] [-d dir] [-f list-file]"
+" [-h min-hash-table-size] [-i excluded-fields]"
+" [-k max-keys-per-record] [-l min-key-length]"
+" [-n threshold] [-o file] [-t max-key-length] [file] ...\n"
+"usage: %s { -v | --version }\n", program_name, program_name);
 }
 
 static void check_integer_arg(char opt, const char *arg, int min, int *res)

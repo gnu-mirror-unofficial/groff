@@ -1,5 +1,16 @@
 2022-01-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[indxbib]: Document --version in usage message.
+
+	* src/utils/indxbib/indxbib.cpp (usage): Document --version
+	option.  Use more informative metasyntactic variable names.
+	Organize usage message consistently with our others, and stop
+	wrapping the output lines: we know neither the width of the
+	terminal nor the length of the `program_name` string we're
+	interpolating.  See commit b4de44f0, 19 July 2021.
+
+2022-01-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[libbib]: Refactor index header checking.
 
 	* src/libs/libbib/index.cpp: Move more header validity checks...
