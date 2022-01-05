@@ -468,7 +468,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle November 2021
+@subtitle January 2022
 @author by Trent A.@tie{}Fisher
 @author and Werner Lemberg
 
@@ -15929,17 +15929,17 @@ When writing macro packages or documents that use GNU @code{troff}
 features and which may be mixed with other packages or documents that do
 not---common scenarios include serial processing of man pages or use of
 the @code{so} or @code{mso} requests---you may desire correct operation
-regardless of compatibility mode in the surrounding context.  It may
-occur to you to save the existing value of @samp{\n(.C} into a register,
-say, @samp{_C}, at the beginning of your file, turn compatibility mode
-off with @samp{.cp 0}, then restore it from that register at the end
-with @samp{.cp \n(_C}.  At the same time, a modular design of a document
-or macro package may lead you to multiple layers of inclusion.  You
-cannot use the same register name everywhere or you risk ``clobbering''
-the value from a preceding or enclosing context.  The two-character
-register name space of @acronym{AT&T} @code{troff} is confining and
-mnemonically challenging; you may wish to use the more capacious
-name space of GNU @code{troff}.  However, attempting @samp{.nr
+regardless of compatibility mode enablement in the surrounding context.
+It may occur to you to save the existing value of @samp{\n(.C} into a
+register, say, @samp{_C}, at the beginning of your file, turn
+compatibility mode off with @samp{.cp 0}, then restore it from that
+register at the end with @samp{.cp \n(_C}.  At the same time, a modular
+design of a document or macro package may lead you to multiple layers of
+inclusion.  You cannot use the same register name everywhere or you risk
+``clobbering'' the value from a preceding or enclosing context.  The
+two-character register name space of @acronym{AT&T} @code{troff} is
+confining and mnemonically challenging; you may wish to use the more
+capacious name space of GNU @code{troff}.  However, attempting @samp{.nr
 _my_saved_C \n(.C} will not work in compatibility mode; the register
 name is too long.  ``This is exactly what @code{do} is for,'' you think,
 @samp{.do nr _my_saved_C \n(.C}.  The foregoing will always save zero to
