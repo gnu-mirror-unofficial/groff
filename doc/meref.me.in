@@ -374,29 +374,25 @@ combined,
 they are available in
 .ST ($n .
 Automatic section numbering at all depths begins at 1.
-The section number is followed by a period.
 The heading is set in font
 .NR (sf
 [8]
 at size
 .NR (sp
-[10p].
-The section heading
-is set at the indentation of the parent depth;
+[10p]
+and uses the indentation of its parent depth;
 a further indentation of
 .NR (so
 [0]
 is applied only to its output line.
-The font is then set
+The section number is followed by a period,
+after which the typeface is set
 to the paragraph font
 .NR (pf
-so that more information may follow
-the section number
-and title
-on the same output line;
-any such material is considered
-part of the heading
-for indentation purposes.
+at size
+.NR (pp
+so that content may follow immediately
+on the same output line.
 .b .sh
 ensures that there is enough room
 to format the section heading
@@ -1663,7 +1659,7 @@ for chapters
 (of the main matter),
 .b A
 for appendices
-(uppercase alphabetical chapter numbers)
+(uppercase alphabetical chapter numbers),
 .b P
 for preliminary (\(lqfront\(rq) matter
 (such as a foreword;
@@ -1785,7 +1781,7 @@ and output the chapter number
 If a chapter title
 .i T
 is present,
-format it,
+format it the same way,
 preceded by vertical space.
 If the segment type is any of
 .b C ,
@@ -2091,7 +2087,7 @@ for a \*T built-in function
 The type code can carry a variety of annotations.
 A section sign \(sc indicates features interpreted by \*T
 rather than the \*(ME package.
-The dagger \(dg and double dagger \(dd identify user-definable objects.
+The dagger \(dg and double dagger \(dd identify user-definable macros.
 Those marked with
 \(dd have default definitions;
 changing them may have unexpected side effects.
@@ -2112,7 +2108,7 @@ and a square \(sq marks \*G extensions.
 \e\fI\,newline\fP	F\(sc	continue input line
 \e"	F\(sc	comment (to end of input line)
 \e*#	S	delayed text marker
-\e$\fI\,N\fP	F\(sc	interpolate macro argument \fIN\fP
+\e$\fI\,n\fP	F\(sc	interpolate \fIn\/\fPth macro argument
 \en($0	R	section depth
 \&.$0	M\(dg	post-section heading hook
 \en($1	R	first section number component
@@ -2129,7 +2125,7 @@ and a square \(sq marks \*G extensions.
 \&.$6	M\(dg	pre-section depth 6 hook
 \&.$C	M\(dg	post-chapter title hook
 \&.$H	M\(dg	page/column heading hook
-\en($V	R\(dd	vertical spacing of displayed text (%)
+\en($V	R\(sq	vertical spacing of displayed text (%)
 \en($c	R	current column number
 \&.$c	M\(dd	output chapter number and title
 \en($d	R	delayed text number
@@ -2144,7 +2140,7 @@ and a square \(sq marks \*G extensions.
 \&.$p	M\(dd	output section heading
 \en($s	R	column spacing (indentation)
 \&.$s	M\(dd	output footnote area separator
-\en($v	R\(dd	vertical spacing of text (%)
+\en($v	R\(sq	vertical spacing of text (%)
 \e%	F\(sc	control hyphenation
 \en%	R\(sc	current page number
 \e&	F\(sc	non-printing input break
