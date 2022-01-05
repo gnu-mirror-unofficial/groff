@@ -69,12 +69,12 @@ diagrams,
 and standardized bibliographic citations.
 .
 This implementation is mostly compatible with the documented interface
-and behavior of AT&T Version\~7 Unix
+and behavior of AT&T Unix Version\~7
 .I ms .
 .
 Several extensions from 4.2BSD (Berkeley)
 .\" Few changes were made in 4.3, Tahoe, Reno, or 4.4.
-and Version\~10 Research Unix have been recreated.
+and Tenth Edition Research Unix have been recreated.
 .AE
 .
 .
@@ -1296,8 +1296,8 @@ It operates similarly to the
 .CW .B
 macro otherwise.
 .
-This is a Version\~10 Research Unix extension.
-.\" possibly V9, but definitely not Berkeley
+This is a Tenth Edition Research Unix extension.
+.\" possibly 9th, but definitely not Berkeley
 T}
 _
 \&.CW [txt [post [pre]]]	T{
@@ -1309,8 +1309,8 @@ It operates similarly to the
 .CW .B
 macro otherwise.
 .
-This is a Version\~10 Research Unix extension.
-.\" possibly V9, but definitely not Berkeley
+This is a Tenth Edition Research Unix extension.
+.\" possibly 9th, but definitely not Berkeley
 T}
 _
 \&.BX [txt]	T{
@@ -2425,7 +2425,8 @@ to align with contemporary typesetting practices.
 .
 In the past,\**
 .FS
-Version\~7 Unix
+Unix
+Version\~7
 .I ms ,
 its descendants,
 and GNU
@@ -3270,8 +3271,7 @@ A cover sheet macro
 .
 .
 .LP
-Version\~10
-.\" possibly V9
+Tenth Edition \" possibly 9th
 Research Unix supported a pair of
 .CW P1
 and
