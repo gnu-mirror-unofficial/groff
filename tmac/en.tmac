@@ -28,13 +28,16 @@
 .
 .ss 12
 .
-.\" Set the minimum hyphenation mode that works with the patterns.
-.hy 4
+.\" English hyphenation (\lefthyphenmin=2, \righthyphenmin=3)
+.\"
+.\" Hyphenation value 2 (bit 1) may already have been set by troffrc or
+.\" a macro package; preserve it.
+.ie (\n[.hy]%2=0 & (\n[.hy]%4)) \
+.	hy 6
+.el \
+.	hy 4
 .
-.\" Set the hyphenation language to English.
 .hla en
-.
-.\" Load hyphenation patterns and exceptions.
 .hpf hyphen.en
 .hpfa hyphenex.en
 .

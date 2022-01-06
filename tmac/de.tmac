@@ -114,12 +114,19 @@
 .mso trans.tmac
 .
 .
+.\" man package
+.if d an \{\
+.	ie \n[cR] .nr HY 1
+.	el        .nr HY 2
+.\}
+.
+.
 .\" ms package
 .if r GS \{\
 .	\" update the date
 .	ds DY \n[dy].\~\*[MO] \n[year]
 .	\" set hyphenation flags
-.	nr HY 3 \" 1+2
+.	nr HY 2
 .\}
 .
 .
@@ -157,7 +164,13 @@
 .ss 12 0
 .
 .\" German hyphenation (\lefthyphenmin=2, \righthyphenmin=2)
-.hy 1
+.\"
+.\" Hyphenation value 2 (bit 1) may already have been set by troffrc or
+.\" a macro package; preserve it.
+.ie (\n[.hy]%2=0 & (\n[.hy]%4)) \
+.	hy 2
+.el \
+.	hy 1
 .
 .hcode ä ä  â â  à à  á á  ã ã  å å  æ æ
 .hcode ç ç
@@ -183,9 +196,6 @@
 .el \
 .  hpf hyphen.det
 .
-.
-.\" man, mdoc and mdoc-old are intentionally left untouched: usually
-.\" these packages are translated in the sources of the documents.
 .
 .cp \n[*groff_de_tmac_C]
 .do rr *groff_de_tmac_C

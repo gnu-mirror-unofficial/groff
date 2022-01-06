@@ -119,7 +119,7 @@
 .	\" update the date
 .	ds DY \n[dy] \*[MO] \n[year]
 .	\" set hyphenation flags
-.	nr HY 6 \" 4+2
+.	nr HY 6
 .\}
 .
 .
@@ -157,7 +157,14 @@
 .ss 12 0
 .
 .\" French hyphenation (\lefthyphenmin=2, \righthyphenmin=3)
-.hy 4
+.\"
+.\" Hyphenation value 2 (bit 1) may already have been set by troffrc or
+.\" a macro package; preserve it.
+.ie (\n[.hy]%2=0 & (\n[.hy]%4)) \
+.	hy 6
+.el \
+.	hy 4
+.
 .hcode à à  À à
 .hcode â â  Â â
 .hcode ç ç  Ç ç
@@ -177,9 +184,6 @@
 .hla fr
 .hpf hyphen.fr
 .
-.
-.\" man, mdoc and mdoc-old are intentionally left untouched: usually
-.\" these packages are translated in the sources of the documents.
 .
 .cp \n[*groff_fr_tmac_C]
 .do rr *groff_fr_tmac_C

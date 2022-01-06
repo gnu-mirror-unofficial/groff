@@ -1,5 +1,28 @@
 2022-01-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tmac]: Manage hyphenation mode more carefully in localization
+	packages.
+
+	* tmac/{cs,de,it,sv}.tmac: Localize the man(7) package's HY
+	register.
+
+	* tmac/{cs,de,fr,it,sv}.tmac: When localizing the ms(7) package,
+	use mode "2" instead of "3": the 'hy' request complains of
+	contradictory hyphenation modes if "3" is used (the semantics of
+	the hyphenation mode are complex and non-orthogonal; see
+	groff(7) or our Texinfo manual).
+
+	* tmac/{cs,de,en,fr,it,sv}.tmac: If the one language-independent
+	hyphenation bit (don't hyphenate just prior to a page location
+	trap) is set, preserve it; this way a system's troffrc or a
+	macro package can set it and it will not get turned off by the
+	localization package, which for best results should be loaded
+	after any full-service package (and any auxiliary package
+	requiring localized strings, though none are yet distributed
+	with groff).
+
+2022-01-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tmac]: Add unit test for localization macro files.  Right now
 	this just covers the hyphenation mode.
 
