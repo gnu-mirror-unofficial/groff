@@ -95,7 +95,7 @@ but recognizes and retains compatibility with the historical names.
 .I groff
 expands the lexicon of glyphs available by name and permits users to
 define their own special character escape sequences with the
-.B .char
+.B char
 request.
 .
 .
@@ -106,19 +106,15 @@ font description files and presents the systematic notation by which it
 enables access to arbitrary Unicode code points and construction of
 composite glyphs.
 .
-The glyphs listed in this document may not be available,
+Glyphs listed may be unavailable,
 or may vary in appearance,
-depending on the output device chosen when the page was rendered
-(with the
-.B \-T
-option to the
-.MR man 1
-or
-.I roff
-programs).
+depending on the output device and font chosen when the page was
+formatted.
 .
-The device name used in generation of this page was
-.BR \*[.T] .
+This page was rendered for device
+.B \*[.T]
+using font
+.BR \n[.fn] .
 .
 .
 .P
@@ -282,15 +278,12 @@ ISO character encodings.
 The developers of AT&T
 .I troff
 chose mappings for them that would be useful for typesetting technical
-literature in a broad range of scientific disciplines;
-the preparation of AT&T's patent filings with the U.S.\& government
-was the application of the system that \[lq]paid the bills\[rq] at the
-Bell Labs site where
-.I troff
-and Unix were first developed.
+literature in a broad range of scientific disciplines:
+Bell Labs used the system for preparation of AT&T's patent filings with
+the U.S.\& government.
 .
-It is also worth noting that the prevailing character encoding standard
-in the 1970s,
+Further,
+the prevailing character encoding standard in the 1970s,
 USAS X3.4-1968 (\[lq]ASCII\[rq])
 deliberately supported semantic ambiguity at some code points,
 and outright substitution at several others,
@@ -341,10 +334,8 @@ are portable to all known
 .B \[rs]e
 means \[lq]the glyph of the current escape character\[rq];
 it therefore can produce unexpected output if the
-.B .ec
-or
-.B .eo
-requests are used.
+.B ec
+request is used.
 .
 On devices with a limited glyph repertoire,
 glyphs in the \[lq]keycap\[rq] and \[lq]appearance\[rq] columns on the
@@ -380,7 +371,7 @@ _
 The hyphen-minus is a particularly unfortunate case of overloading.
 .
 Its awkward name in ISO 8859 and later standards reflects the many
-conflicting purposes to which it had already been put in the 1980s,
+conflicting purposes to which it had already been put by the 1980s,
 including
 a hyphen,
 a minus sign,
@@ -508,7 +499,7 @@ input.
 .
 .
 .P
-Two characters in the Latin-1 supplement are handled specially.
+Two characters in the Latin-1 supplement are handled specially on input.
 .
 .I \%@g@troff
 never produces them as output.
@@ -516,18 +507,16 @@ never produces them as output.
 .
 .TP
 NBSP
-encodes the no-break space.
-.
-On input it is mapped to
+encodes a no-break space;
+it is mapped to
 .BR \[rs]\[ti] ,
 the adjustable non-breaking space escape sequence.
 .
 .
 .TP
 SHY
-encodes the soft hyphen character.
-.
-On input it is mapped to
+encodes a soft hyphen;
+it is mapped to
 .BR \[rs]% ,
 the hyphenation control escape sequence.
 .
@@ -728,7 +717,7 @@ access to any of them.
 .
 Frequently used glyphs or glyph combinations can be stored in strings,
 and new glyph names can be created with the
-.B .char
+.B char
 request,
 enabling the user to devise
 .I ad hoc
@@ -815,7 +804,7 @@ without leading zeroes.
 .
 This legacy numeric special character escape is used to map characters
 onto glyphs via the
-.B .trin
+.B trin
 request in macro files loaded by
 .MR grotty @MAN1EXT@ .
 .
@@ -1112,7 +1101,7 @@ _
 .\" ====================================================================
 .
 The
-.B .composite
+.B composite
 request is used to map the accents to code points with non-spacing
 semantics;
 the values given in parentheses are their spacing counterparts.
