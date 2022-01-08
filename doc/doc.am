@@ -525,7 +525,7 @@ gnu.eps:
 	    echo "program pnmtops is missing; can't generate $@" >&2;\
 	    exit 1; \
 	  fi; \
-	  if test "$(pnmtops_nosetpage)" != "pnmtops -nosetpage"; then \
+	  if ! echo "$(pnmtops_nosetpage)" | grep -q nosetpage; then \
 	    echo "program pnmtops can't handle -nosetpage option;" \
 	      "can't generate $@" >&2;\
 	    exit 1; \

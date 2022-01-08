@@ -1,3 +1,17 @@
+2022-01-08  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[build]: Use pnmtops(1)'s -quiet option if possible, to quieten
+	build.
+
+	* m4/groff.m4 (GROFF_PNMTOOLS_CAN_BE_QUIET): Add new macro to
+	test pnmtops for support for (undocumented) '-quiet' option.
+
+	* configure.ac: Perform the check.
+
+	* doc/doc.am: Alter check of shell variable `pnmtops_nosetpage`
+	{processed by AC_SUBST} to correctly match even if pnmtops
+	accepts the '-quiet' option.
+
 2022-01-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tmac]: Manage hyphenation mode more carefully in localization
