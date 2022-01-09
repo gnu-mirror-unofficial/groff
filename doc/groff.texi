@@ -11829,12 +11829,12 @@ early-vintage @acronym{AT&T} @code{troff} to a form suitable for
 Versatec and Benson-Varian plotters.}
 
 @item @code{'}@var{xxx}@code{'}@var{yyy}@code{'}
-True if the output produced by @var{xxx} is equal to the output produced
-by @var{yyy}.  Other characters can be used in place of the single
-quotes; the same set of delimiters as for the @code{\D} escape is used
-(@pxref{Escape Sequences}).  GNU @code{troff} formats @var{xxx} and
-@var{yyy} in separate environments; after the comparison the resulting
-data are discarded.
+True if formatting the comparands @var{xxx} and @var{yyy} produces the
+same motions, glyphs, and output commands.  Other characters can be
+used in place of the single quotes; the same set of delimiters as for
+the @code{\D} escape is used (@pxref{Escape Sequences}).  GNU
+@code{troff} formats @var{xxx} and @var{yyy} in separate environments;
+after the comparison the resulting data are discarded.
 
 @Example
 .ie "|"\fR|\fP" \
@@ -11845,19 +11845,26 @@ false
 @endExample
 
 @noindent
-The resulting motions, glyph sizes, and fonts have to
-match,@footnote{The created output nodes must be identical.
-@xref{Gtroff Internals}.} and not the individual motion, size, and font
-requests.  In the previous example, @samp{|} and @samp{\fR|\fP} both
-result in a roman @samp{|} glyph with the same type size and at the
-same location on the page, so the strings are equal.  If
-@samp{.ft@tie{}I} had been added before the @samp{.ie}, the result would
-be ``false'' because (the first) @samp{|} produces an italic @samp{|}
-rather than a roman one.
+The resulting glyph properties, including font family, style, size, and
+slant, must match, but not necessarily the requests and/or escape
+sequences used to obtain them.  In the previous example, @samp{|} and
+@samp{\fR|\fP} result in @samp{|} glyphs in the same typefaces at the
+same positions, so the comparands are equal.  If @samp{.ft@tie{}I} had
+been added before the @samp{.ie}, they would differ: the first @samp{|}
+would produce an italic @samp{|}, not a roman one.  By contrast, motions
+must @emph{exactly} match.  @samp{.if "\u\d""} is false even though both
+comparands result in zero net motion, because motions are not
+interpreted or optimized but sent as-is to the output.@footnote{Because
+formatting of the comparands takes place in a dummy environment,
+vertical motions within them cannot spring traps.} On the other hand,
+@samp{.if "\d"\v'0.5m'"} is true, because @code{\d} is defined as a
+downward motion of one-half em.@footnote{All of this is to say that the
+lists of output nodes created by formatting @var{xxx} and @var{yyy} must
+be identical.  @xref{Gtroff Internals}.}
 
 @cindex string comparison
 @cindex comparison of strings
-To compare strings without processing, surround the data with @code{\?}.
+Surround the comparands with @code{\?} to avoid formatting them.
 
 @Example
 .ie "\?|\?"\?\fR|\fP\?" \
@@ -11871,8 +11878,8 @@ false
 @cindex copy mode, and @code{\?}
 @cindex mode, copy, and @code{\?}
 @noindent
-Since data protected with @code{\?} is read in copy mode it is even
-possible to use incomplete input without causing an error.
+Since comparands protected with @code{\?} are read in copy mode, it is
+not erroneous to use syntactically invalid input.
 
 @Example
 .ds a \[
@@ -11885,9 +11892,9 @@ false
 @endExample
 @end table
 
-These operators can't be combined with others like @samp{:} or @samp{&};
-only a leading @samp{!} (without spaces or tabs between the exclamation
-mark and the operator) can be used to negate the result.
+The above operators can't be combined with others like @samp{:} or
+@samp{&}; only a leading @samp{!} (without spaces or tabs between the
+exclamation mark and the operator) can be used to negate the result.
 
 @Example
 .nr x 1
