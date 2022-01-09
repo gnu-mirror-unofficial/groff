@@ -76,8 +76,8 @@ features are also noted.
 features identifiers of arbitrary length,
 supports non-integral type sizes,
 adds new escape sequences and requests,
-provides new conditional tests,
-recognizes additional scaling indicators and numerical operators,
+provides new conditional expression operators,
+recognizes additional scaling units and numerical operators,
 and extends the function of some escape sequences and requests already
 present in
 .RI AT&T\~ troff .
@@ -110,7 +110,7 @@ within can be of arbitrary length.
 .
 .
 .\" ====================================================================
-.SS "Fractional type sizes and new scaling indicators"
+.SS "Fractional type sizes and new scaling units"
 .\" ====================================================================
 .
 A
@@ -124,8 +124,8 @@ is a parameter specified in the device description file,
 .IR DESC ,
 and defaults to\~1.
 .
-A new scale
-.RB indicator\~\[lq] z \[rq]
+A new scaling
+.RB unit\~\[lq] z \[rq]
 has the effect of multiplying by
 .IR sizescale .
 .
@@ -134,7 +134,7 @@ Requests and escape sequences in
 interpret arguments that represent a type size as being in units of
 scaled points;
 that is,
-they evaluate such arguments using an implied default scaling indicator
+they evaluate such arguments using an implied default scaling unit
 .RB of\~\[lq] z \[rq].
 .
 Arguments treated in this way comprise those to the escape sequences
@@ -181,9 +181,8 @@ returns the type size in scaled points.
 .
 .P
 It makes no sense to use the
-.RB \[lq] z \[rq]\~scale
-indicator in a numeric expression whose default scaling indicator is
-neither
+.RB \[lq] z \[rq]\~scaling
+unit in a numeric expression whose default scaling unit is neither
 .RB \[lq] u \[rq]
 .RB nor\~\[lq] z \[rq],
 so
@@ -191,10 +190,10 @@ so
 disallows this.
 .
 Similarly,
-it is nonsensical to use a scaling indicator other
+it is nonsensical to use a scaling unit other
 .RB than\~\[lq] z \[rq]
 .RB or\~\[lq] u \[rq]
-in a numeric expression whose default scaling indicator
+in a numeric expression whose default scaling unit
 .RB is\~\[lq] z \[rq],
 so
 .I groff
@@ -202,7 +201,7 @@ disallows this as well.
 .
 .
 .P
-Another new scaling indicator,
+Another new scaling unit,
 .RB \[lq] s \[rq],
 multiplies by the number of basic units in a scaled point.
 .
@@ -216,7 +215,7 @@ Do not confuse the
 .RB \[lq] s \[rq]
 and
 .RB \[lq] z \[rq]
-scaling indicators.
+scaling units.
 .
 .
 .P
@@ -267,12 +266,12 @@ Evaluate
 .I e
 using
 .I c
-as the default scaling indicator.
+as the default scaling unit.
 .
 If
 .I c
 is missing,
-ignore scaling indicators in the evaluation
+ignore scaling units in the evaluation
 .RI of\~ e .
 .
 .
@@ -667,7 +666,7 @@ or increment or decrement it by,
 .I n
 scaled points;
 .I n
-is a numeric expression with a default scaling indicator
+is a numeric expression with a default scaling unit
 .RB of\~\[lq] z \[rq].
 .
 .
@@ -1780,7 +1779,7 @@ the latter the range 0\[en]65535 (0\[en]FFFF).
 Alternatively,
 each color component can be specified as a decimal fraction in the range
 0\[en]1,
-interpreted using a default scaling indicator
+interpreted using a default scaling unit
 .RB of\~\[lq] f \[rq],
 which multiplies its value by 65536.
 .
@@ -2082,21 +2081,24 @@ request.
 Without argument,
 reset the list of global special fonts to be empty.
 .
+.
 .TP
 .BI .ftr\~ f\~g
-Translate font\~\c
-.I f
-to\~\c
-.IR g .
-Whenever a font named\~\c
-.I f
+Translate
+.RI font\~ f
+.RI to\~ g .
+.
+Whenever a font
+.RI named\~ f
 is referred to in an
 .B \[rs]f
-escape sequence, in the
+escape sequence,
+in the
 .B F
 and
 .B S
-conditional operators, or in the
+conditional expression operators,
+or in the
 .BR ft ,
 .BR ul ,
 .BR bd ,
@@ -2107,16 +2109,17 @@ conditional operators, or in the
 .BR fp ,
 or
 .B sty
-requests, font\~\c
-.I g
+requests,
+.RI font\~ g
 is used.
 If
 .I g
-is missing, or equal to\~\c
-.I f
-then font\~\c
-.I f
+is missing or equal
+.RI to\~ f ,
+then
+.RI font\~ f
 is not translated.
+.
 .
 .TP
 .BI .fzoom\~ f\~zoom
@@ -2479,7 +2482,7 @@ Without an argument,
 the default hyphenation margin is reset to its default value,
 0.
 .
-The default scaling indicator
+The default scaling unit
 .RB is\~\[lq] m \[rq].
 .
 The hyphenation margin is associated with the environment.
@@ -2505,7 +2508,7 @@ Without an argument,
 the hyphenation space adjustment threshold is set to its default value,
 0.
 .
-The default scaling indicator
+The default scaling unit
 .RB is\~\[lq] m \[rq].
 .
 The hyphenation space adjustment threshold is associated with the
@@ -2805,7 +2808,7 @@ can affect the priority of subsequently planted traps.
 .BI .pvs \~\[+-]n
 Set the post-vertical line space to\~\c
 .IR n ;
-default scaling indicator
+default scaling unit
 .RB is\~\[lq] p \[rq].
 .
 This value is added to each line after it has been output.
@@ -3017,7 +3020,7 @@ A negative value is treated as zero;
 an absent argument toggles the warning on and off without changing
 .IR limit .
 .
-The default scaling indicator is
+The default scaling unit is
 .BR m .
 .
 At startup,
@@ -3396,7 +3399,7 @@ all warning categories are enabled.
 .
 .TP
 .BI .warnscale\~ si
-Set the scaling indicator used in warnings to
+Set the scaling unit used in warnings to
 .IR si .
 .
 Valid values for
@@ -5055,7 +5058,7 @@ In
 .RI AT&T\~ troff
 the
 .B .ps
-request ignores scaling indicators and thus
+request ignores scaling units and thus
 .RB \[lq] .ps\~10u \[rq]
 sets the type size to 10\~points,
 whereas in
@@ -5063,7 +5066,7 @@ whereas in
 it sets the type size to 10\~scaled points.
 .
 See subsection \[lq]Fractional type sizes and new scaling
-indicators\[rq] above.
+units\[rq] above.
 .
 .
 .P
@@ -5085,7 +5088,7 @@ request differs from AT&T
 .IR troff : \" AT&T
 GNU
 .I troff \" GNU
-does not accept a scaling indicator on the argument,
+does not accept a scaling unit on the argument,
 a page number;
 the former
 (somewhat uselessly)
