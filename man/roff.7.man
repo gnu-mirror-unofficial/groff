@@ -250,16 +250,21 @@ to enable filling of output lines got the name it retains to this day.
 .SS "Unix and \f[I]roff\f[]"
 .\" ====================================================================
 .
-By 1971,
+.I roff
+was one of the first Unix programs.
+.
 McIlroy's
 .I runoff
-had been rewritten in DEC PDP-11 assembly language
-by Dennis Ritchie
-for the fledgling Unix operating system
-and seen its name shortened to
+was,
+in Dennis Ritchie's term,
+\[lq]transliterated\[rq] from BCPL to DEC PDP-7 assembly language
+.\" see "The Evolution of the Unix Time-Sharing System", Ritchie, 1984
+for the fledgling Unix operating system.
+.
+It saw its name shortened to
 .I roff
 (perhaps under the influence of Ken Thompson),
-but had added support for automatic hyphenation with
+while adding support for automatic hyphenation with
 .B .hc
 and
 .B .hy
@@ -278,7 +283,7 @@ indirectly funded operating systems research at Murray Hill,
 for it was used to prepare patent applications for AT&T to the U.S.\&
 government.
 .
-This arrangement enabled the group to acquire the aforementioned PDP-11;
+This arrangement enabled the group to acquire a PDP-11;
 .I roff
 promptly proved equal to the task of typesetting the first edition of
 the manual for what would later become known as \[lq]Unix
@@ -313,6 +318,8 @@ Joe Ossanna's
 literally a \[lq]new roff\[rq],
 was the outlet for this pressure.
 .
+.\" nroff is listed in the table of contents of the Version 2 manual,
+.\" but no man page is present.
 By the time of Unix Version\~3
 (February 1973)\[em]and still in PDP-11 assembly language\[em]it sported
 a swath of features now considered essential to
@@ -405,11 +412,6 @@ Third Edition Unix also brought the
 system call,
 the explosive growth of a componentized system based around it,
 and a \[lq]filter model\[rq] that remains perceptible today.
-.
-Around this time, \" judging by "CSTR #17"
-Michael Lesk developed the
-.I tbl \" AT&T
-preprocessor for formatting tables.
 .
 Equally importantly,
 the Bell Labs site in Murray Hill acquired a Graphic Systems C/A/T
@@ -511,6 +513,11 @@ and basic
 usage,
 updating it as the package accrued features.
 .
+Sixth Edition additionally saw the debut of the
+.I tbl \" AT&T
+preprocessor for formatting tables,
+also by Lesk.
+.
 .
 .P
 For Unix Version\~7
@@ -534,7 +541,8 @@ edited by Kernighan.
 .P
 Ossanna had passed away unexpectedly in 1977,
 and after the release of Version 7,
-with the C/A/T typesetter becoming supplanted by alternative devices,
+with the C/A/T typesetter becoming supplanted by alternative devices
+such as the Mergenthaler Linotron 202,
 Kernighan undertook a revision and rewrite of
 .I troff
 to generalize its design.
@@ -543,14 +551,16 @@ To implement this revised architecture,
 he developed the font and device description file formats and the
 device-independent output format that remain in use today.
 .
-He described these novelties in the article \[lq]A
-Typesetter-independent TROFF\[rq],
+He described these novelties in the article
+\[lq]A Typesetter-independent TROFF\[rq],
 last revised in 1982,
 and like the
 .I troff
 manual itself,
 it is widely known by a shorthand,
 \[lq]CSTR #97\[rq].
+.\" Further entertaining reading can be found at:
+.\" <https://www.cs.princeton.edu/~bwk/202/summer.reconstructed.pdf>.
 .
 .
 .P
