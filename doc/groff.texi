@@ -1789,10 +1789,10 @@ how to use a macro package.@footnote{This section is derived from
 @cite{Writing Papers with nroff using -me} by Eric P.@tie{}Allman.}
 References are made throughout to more detailed information, if desired.
 
-@code{gtroff} reads an input file prepared by the user and outputs a
+GNU @code{troff} reads an input file prepared by the user and outputs a
 formatted document suitable for publication or framing.  The input
 consists of text, or words to be printed, and embedded commands
-(@dfn{requests} and @dfn{escape sequences}), which tell @code{gtroff}
+(@dfn{requests} and @dfn{escape sequences}), which tell GNU @code{troff}
 how to format the output.  For more detail on this, see @ref{Embedded
 Commands}.
 
@@ -6271,11 +6271,11 @@ Double quotes in the @code{ds} request are handled differently.
 @subsection Escape Sequences
 @cindex escape sequences
 
-Escape sequences may occur anywhere in the input to @code{gtroff}.
-They usually
-begin with a backslash and are followed by a single character, which
-indicates the function to be performed.  The escape character can be
-changed; see @ref{Character Translations}.
+Escape sequences may occur anywhere in the input to GNU @code{troff}.
+They always begin with the @dfn{escape character}, a backslash by
+default, and are followed by a character that indicates the function to
+be performed.  To change or disable the escape character, see
+@ref{Character Translations}.
 
 Escape sequences that require a parameter accept three possible syntax
 forms.
@@ -10081,8 +10081,8 @@ If @var{name} is undefined, a warning of type @samp{char} is produced
 and the escape is ignored.  @xref{Debugging}, for information about the
 enablement and suppression of warnings.
 
-groff resolves @code{\[...]} with more than a single component as
-follows:
+GNU @code{troff} resolves @code{\[@r{@dots{}}]} with more than a single
+component as follows:
 
 @itemize @bullet
 @item
@@ -11017,9 +11017,7 @@ wink, wink, \s+2nudge, nudge,\s+8 say no more!
 .ps 10
 @endExample
 
-The @code{\s} escape sequence may be called in a variety of ways.  Much like
-other escapes there must be a way to determine where the argument ends
-and the text begins.  Any of the following forms is valid:
+The @code{\s} escape sequence supports a variety of syntax forms.
 
 @table @code
 @item \s@var{n}
@@ -11834,9 +11832,9 @@ Versatec and Benson-Varian plotters.}
 True if the output produced by @var{xxx} is equal to the output produced
 by @var{yyy}.  Other characters can be used in place of the single
 quotes; the same set of delimiters as for the @code{\D} escape is used
-(@pxref{Escape Sequences}).  @code{gtroff} formats @var{xxx} and @var{yyy} in
-separate environments; after the comparison the resulting data are
-discarded.
+(@pxref{Escape Sequences}).  GNU @code{troff} formats @var{xxx} and
+@var{yyy} in separate environments; after the comparison the resulting
+data are discarded.
 
 @Example
 .ie "|"\fR|\fP" \
@@ -14176,9 +14174,9 @@ respectively---lines that have been already stored in the diversion
 preventing requests, macro calls, and escape sequences from being
 interpreted when read into a diversion.  This is useful for preventing
 them from taking effect until the diverted text is actually output.  The
-@code{\!} escape sequence transparently embeds text up to and including
+@code{\!} escape sequence transparently embeds input up to and including
 the end of the line.  The @code{\?} escape sequence transparently embeds
-text until the next occurrence of the @code{\?} escape sequence.
+input until its own next occurrence.
 
 @cindex @code{\?}, and copy mode
 @cindex copy mode, and @code{\?}
