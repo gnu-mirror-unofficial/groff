@@ -378,16 +378,15 @@ to the search path for macro files
 .B .so
 requests).
 .
-The search path is initialized with the current directory.
-.
 This option may be specified more than once;
-the directories are then searched in the order specified
-(but before the current directory).
+the directories are searched in the order specified.
 .
-If you want to search the current directory before other directories,
+If you want to search the current directory before others,
 add
-.RB \[lq] \-I\~.\& \[rq]
+.RB \[lq] "\-I .\&" \[rq]
 at the appropriate place.
+.
+The current working directory is otherwise searched last.
 .
 .
 .TP

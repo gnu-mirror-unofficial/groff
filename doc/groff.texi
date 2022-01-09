@@ -1114,27 +1114,34 @@ Read the standard input after all the named input files have been
 processed.
 
 @item -I@var{dir}
-This option may be used to specify a directory to search for files.
-It is passed to the following programs:
+Search @var{dir} for files named in several contexts; implies
+@option{-g} and @option{-s}.  Files are sought for several purposes.
 
 @itemize
 @item
-@code{gsoelim} (@pxref{gsoelim} for more details);
-it also implies @code{groff}'s @option{-s} option.
+@code{gsoelim} replaces @code{so} requests with the contents of their
+file name arguments (@pxref{gsoelim} for more details).
 
 @item
-@code{gtroff}; it is used to search files named in the @code{psbb} and
-@code{so} requests.
+@code{gtroff} searches for files named as operands in its command line
+and as arguments to @code{psbb}, @code{so}, and @code{soquiet} requests.
 
 @item
-@code{grops}; it is used to search files named in the
-@samp{\X'ps: import @r{@dots{}}'} and @samp{\X'ps: file @r{@dots{}}'}
-escape sequences.
+Output drivers may search for files; for instance, @code{grops} looks
+for files named in @samp{\X'ps: import @r{@dots{}}'} and @samp{\X'ps:
+file @r{@dots{}}'} escape sequences.
 @end itemize
 
-The current directory is always searched first.  This option may be
-specified more than once; the directories are searched in the order
-specified.
+This option may be specified more than once; the directories are
+searched in the order specified.  If you want to search the current
+directory before others, add @samp{-I .} at the appropriate place.  The
+current working directory is otherwise searched last.  @option{-I} works
+similarly to, and is named for, the ``include'' option of Unix C
+compilers.
+
+@option{-I} options are passed to @code{gsoelim}, @code{gtroff}, and
+output drivers; with the flag letter changed to @option{-M}, they are
+also passed to @code{ggrn}.
 
 @item -j
 Preprocess with @code{gchem}.  Implies @option{-p}.
