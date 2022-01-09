@@ -47,7 +47,7 @@ developing GNU and promoting software freedom.''
 @c
 @c   cindex: concepts
 @c   rqindex: requests
-@c   esindex: escapes
+@c   esindex: escape sequences
 @c   vindex: registers
 @c   kindex: commands in font files
 @c   pindex: programs and files
@@ -1131,7 +1131,7 @@ it also implies @code{groff}'s @option{-s} option.
 
 @item
 @code{grops}; it is used to search files named in the
-@samp{\X'ps: import} and @samp{\X'ps: file} escapes.
+@samp{\X'ps: import} and @samp{\X'ps: file} escape sequences.
 @end itemize
 
 The current directory is always searched first.  This option may be
@@ -1784,8 +1784,8 @@ References are made throughout to more detailed information, if desired.
 @code{gtroff} reads an input file prepared by the user and outputs a
 formatted document suitable for publication or framing.  The input
 consists of text, or words to be printed, and embedded commands
-(@dfn{requests} and @dfn{escapes}), which tell @code{gtroff} how to
-format the output.  For more detail on this, see @ref{Embedded
+(@dfn{requests} and @dfn{escape sequences}), which tell @code{gtroff}
+how to format the output.  For more detail on this, see @ref{Embedded
 Commands}.
 
 The word @dfn{argument} is used in this chapter to mean a word or number
@@ -5376,9 +5376,9 @@ between sentences, after macro definitions, and where a break is
 expected, and two empty requests between paragraphs or other requests or
 macro calls that will introduce vertical space into the document.
 
-You can combine the empty request with the comment escape to include
-whole-line comments in your document, and even ``comment out'' sections
-of it.
+You can combine the empty request with the comment escape sequence to
+include whole-line comments in your document, and even ``comment out''
+sections of it.
 @end itemize
 
 We conclude this section with an example sufficiently long to illustrate
@@ -5761,10 +5761,11 @@ respectively).
 @cindex @code{\R}, using @code{+} and@tie{}@code{-} with
 @cindex @code{\s}, using @code{+} and@tie{}@code{-} with
 @samp{+} and @samp{-} are also treated differently by the following
-requests and escapes: @code{bp}, @code{in}, @code{ll}, @code{lt},
-@code{nm}, @code{nr}, @code{pl}, @code{pn}, @code{po}, @code{ps},
-@code{pvs}, @code{rt}, @code{ti}, @code{\H}, @code{\R}, and @code{\s}.
-Here, leading plus and minus signs indicate increments and decrements.
+requests and escape sequences: @code{bp}, @code{in}, @code{ll},
+@code{lt}, @code{nm}, @code{nr}, @code{pl}, @code{pn}, @code{po},
+@code{ps}, @code{pvs}, @code{rt}, @code{ti}, @code{\H}, @code{\R}, and
+@code{\s}.  Here, leading plus and minus signs indicate increments and
+decrements.
 
 @xref{Setting Registers}, for some examples.
 
@@ -5931,7 +5932,7 @@ user input in some sort of associative table.
 @endExample
 @endDefesc
 
-@xref{Escapes}, for details on parameter delimiting characters.
+@xref{Escape Sequences}, for details on parameter delimiting characters.
 
 Identifiers in @code{gtroff} can be any length, but, in some contexts,
 @code{gtroff} needs to be told where identifiers end and text begins
@@ -6016,19 +6017,19 @@ One is a @dfn{request} that takes up an entire line, and often performs
 some large-scale operation such as breaking a lines or starting a new
 page.
 
-The other is an @dfn{escape} that can usually be embedded anywhere in
-the text; most requests can accept an escape even as an argument.
-Escapes typically implement relatively minor operations like sub- and
-superscripting or interpolating a symbol.
+The other is an @dfn{escape sequence} that can usually be embedded
+anywhere in the text; most requests can accept an escape even as an
+argument.  Escape sequences typically implement relatively minor
+operations like sub- and superscripting or interpolating a symbol.
 
 @menu
 * Requests::
-* Escapes::
+* Escape Sequences::
 @end menu
 
 @c ---------------------------------------------------------------------
 
-@node Requests, Escapes, Embedded Commands, Embedded Commands
+@node Requests, Escape Sequences, Embedded Commands, Embedded Commands
 @subsection Requests
 @cindex requests
 
@@ -6258,17 +6259,18 @@ Double quotes in the @code{ds} request are handled differently.
 
 @c ---------------------------------------------------------------------
 
-@node Escapes,  , Requests, Embedded Commands
-@subsection Escapes
-@cindex escapes
+@node Escape Sequences,  , Requests, Embedded Commands
+@subsection Escape Sequences
+@cindex escape sequences
 
-Escapes may occur anywhere in the input to @code{gtroff}.  They usually
+Escape sequences may occur anywhere in the input to @code{gtroff}.
+They usually
 begin with a backslash and are followed by a single character, which
 indicates the function to be performed.  The escape character can be
 changed; see @ref{Character Translations}.
 
-Escape sequences that require an identifier as a parameter accept three
-possible syntax forms.
+Escape sequences that require a parameter accept three possible syntax
+forms.
 
 @itemize @bullet
 @item
@@ -6300,11 +6302,11 @@ Examples:
 @cindex argument delimiting characters
 @cindex characters, argument delimiting
 @cindex delimiting characters for arguments
-Other escapes may require several arguments and/or some special format.
-In such cases the argument is traditionally enclosed in single quotes
-(and quotes are always used in this manual for the definitions of escape
-sequences).  The enclosed text is then processed according to what that
-escape expects.  Example:
+Other escape sequences may require several arguments and/or some special
+format.  In such cases the argument is traditionally enclosed in single
+quotes (and quotes are always used in this manual for the definitions of
+escape sequences).  The enclosed text is then processed according to
+what that escape expects.  Example:
 
 @Example
 \l'1.5i\(bu'
@@ -6315,7 +6317,7 @@ escape expects.  Example:
 @cindex @code{\X}, possible quote characters
 The quote character can be replaced with any other character
 that does not occur in the argument (even a newline or a space
-character) in the following escapes: @code{\o}, @code{\b}, and
+character) in the following escape sequences: @code{\o}, @code{\b}, and
 @code{\X}.  This makes e.g.
 
 @Example
@@ -6374,7 +6376,8 @@ use these if possible.
 @cindex @code{\C}, allowed delimiters
 @cindex @code{\w}, allowed delimiters
 No newline characters as delimiters are allowed in the following
-escapes: @code{\A}, @code{\B}, @code{\Z}, @code{\C}, and @code{\w}.
+escape sequences: @code{\A}, @code{\B}, @code{\Z}, @code{\C}, and
+@code{\w}.
 
 @cindex @code{\D}, allowed delimiters
 @cindex @code{\h}, allowed delimiters
@@ -6387,9 +6390,10 @@ escapes: @code{\A}, @code{\B}, @code{\Z}, @code{\C}, and @code{\w}.
 @cindex @code{\S}, allowed delimiters
 @cindex @code{\v}, allowed delimiters
 @cindex @code{\x}, allowed delimiters
-Finally, the escapes @code{\D}, @code{\h}, @code{\H}, @code{\l},
-@code{\L}, @code{\N}, @code{\R}, @code{\s}, @code{\S}, @code{\v}, and
-@code{\x} can't use the following characters as delimiters:
+Finally, the escape sequences @code{\D}, @code{\h}, @code{\H},
+@code{\l}, @code{\L}, @code{\N}, @code{\R}, @code{\s}, @code{\S},
+@code{\v}, and @code{\x} can't use the following characters as
+delimiters:
 
 @itemize @bullet
 @item
@@ -6450,10 +6454,10 @@ All escape sequences except @code{\%}, @code{\:}, @code{\@{},
 @cindex printing backslash (@code{\\}, @code{\e}, @code{\E}, @code{\[rs]})
 @cindex backslash, printing (@code{\\}, @code{\e}, @code{\E}, @code{\[rs]})
 To have a backslash (actually, the current escape character) appear in
-the output several escapes are defined: @code{\\}, @code{\e} or
+the output several escape sequences are defined: @code{\\}, @code{\e} or
 @code{\E}.  These are very similar, and only differ with respect to
 being used in macros or diversions.  @xref{Character Translations}, for
-an exact description of those escapes.
+an exact description of those escape sequences.
 
 @xref{Implementation Differences}, @ref{Copy Mode}, @ref{Diversions},
 and @ref{Identifiers}.
@@ -6465,7 +6469,7 @@ and @ref{Identifiers}.
 @codequotebacktick on
 @codequoteundirected on
 
-@node Comments,  , Escapes, Escapes
+@node Comments,  , Escape Sequences, Escape Sequences
 @subsubsection Comments
 @cindex comments
 
@@ -6593,9 +6597,10 @@ Set register @var{ident} to @var{value}.  If @var{ident} doesn't exist,
 GNU @code{troff} creates it.
 
 The argument to @code{\R} must be enclosed within delimiters; see
-@ref{Escapes}, for a list of valid delimiter characters.  The @code{\R}
-escape doesn't produce an input token in GNU @code{troff}; in other
-words, it vanishes completely after GNU @code{troff} has processed it.
+@ref{Escape Sequences}, for a list of valid delimiter characters.  The
+@code{\R} escape doesn't produce an input token in GNU @code{troff}; in
+other words, it vanishes completely after GNU @code{troff} has processed
+it.
 
 For example, the following two lines are equivalent:
 
@@ -7153,7 +7158,7 @@ to produce a plain text approximation of the output, and zero otherwise.
 
 @item \n[.O]
 @vindex .O
-The suppression nesting level applied by @code{\O} escapes.
+The suppression nesting level applied by @code{\O} escape sequences.
 @xref{Suppressing output}.
 
 @item \n[.P]
@@ -7255,7 +7260,7 @@ Enable filling of output lines; a pending output line is broken.  The
 read-only register @code{.u} is set to@tie{}1.  The filling enablement
 status, sometimes called @dfn{fill mode}, is associated with the
 environment (@pxref{Environments}).  @xref{Line Continuation}, for
-interaction with the @code{\c} escape.
+interaction with the @code{\c} escape sequence.
 @endDefreq
 
 @Defreq {nf, }
@@ -7270,7 +7275,8 @@ Layout}) is ignored and output lines are broken where the input lines
 are.  A pending output line is broken and adjustment is suppressed.  The
 read-only register @code{.u} is set to@tie{}0.  The filling enablement
 status is associated with the environment (@pxref{Environments}).  See
-@ref{Line Continuation}, for interaction with the @code{\c} escape.
+@ref{Line Continuation}, for interaction with the @code{\c} escape
+sequence.
 @endDefreq
 
 @DefreqList {ad, [@Var{mode}]}
@@ -7519,7 +7525,8 @@ Reprints no longer available through FCS.
 @endExample
 
 @noindent
-If @emph{undiscardable} space is required, use the @code{\h} escape.
+If @emph{undiscardable} space is required, use the @code{\h} escape
+sequence.
 @endDefreq
 
 
@@ -7609,8 +7616,8 @@ word for the remainder of input processing, use the @code{hw} request.
 @cindex @code{\X}, followed by @code{\%}
 @cindex @code{\Y}, followed by @code{\%}
 @cindex @code{\%}, following @code{\X} or @code{\Y}
-GNU @code{troff} regards the escapes @code{\X} and @code{\Y} as starting
-a word; that is, the @code{\%} escape in, say,
+GNU @code{troff} regards the escape sequences @code{\X} and @code{\Y} as
+starting a word; that is, the @code{\%} escape sequence in, say,
 @w{@samp{\X'...'\%foobar}} or @w{@samp{\Y'...'\%foobar}} no longer
 prevents hyphenation of @samp{foobar} but inserts a hyphenation point
 just prior to it; most likely this isn't what you want.
@@ -8146,7 +8153,7 @@ inserted below the current line.  A negative number adds space above.
 If this escape is used multiple times on the same line, the maximum of
 the values is used.
 
-@xref{Escapes}, for details on parameter delimiting characters.
+@xref{Escape Sequences}, for details on parameter delimiting characters.
 
 @cindex extra post-vertical line space register (@code{.a})
 The @code{.a} read-only register contains the most recent (non-negative)
@@ -8156,28 +8163,28 @@ Using @code{\x} can be necessary in combination with the @code{\b}
 escape, as the following example shows.
 
 @Example
-This is a test with the \[rs]b escape.
+This is a test of \[rs]b.
 .br
-This is a test with the \[rs]b escape.
+This is a test of \[rs]b.
 .br
-This is a test with \b'xyz'\x'-1m'\x'1m'.
+This is a test of \b'xyz'\x'-1m'\x'1m'.
 .br
-This is a test with the \[rs]b escape.
+This is a test of \[rs]b.
 .br
-This is a test with the \[rs]b escape.
+This is a test of \[rs]b.
 @endExample
 
 @noindent
 produces
 
 @Example
-This is a test with the \b escape.
-This is a test with the \b escape.
-                    x
-This is a test with y.
-                    z
-This is a test with the \b escape.
-This is a test with the \b escape.
+This is a test of \b.
+This is a test of \b.
+                  x
+This is a test of y.
+                  z
+This is a test of \b.
+This is a test of \b.
 @endExample
 @endDefesc
 
@@ -8686,8 +8693,9 @@ The @code{\e} escape can be translated also.
 @item
 @cindex @code{\%}, and translations
 @cindex @code{\~}, and translations
-Characters can be mapped onto the @code{\%} and @code{\~} escapes (but
-@code{\%} and @code{\~} can't be mapped onto another glyph).
+Characters can be mapped onto the @code{\%} and @code{\~} escape
+sequences (but @code{\%} and @code{\~} can't be mapped onto another
+glyph).
 
 @item
 @cindex backspace character, and translations
@@ -9258,7 +9266,7 @@ right-justified parts are empty.
 
 @item
 @code{tl} accepts the same parameter delimiting characters as the
-@code{\A} escape; see @ref{Escapes}.
+@code{\A} escape sequence; see @ref{Escape Sequences}.
 @end itemize
 @endDefreq
 
@@ -9506,8 +9514,9 @@ recommended).
 @cindex previous font (@code{ft}, @code{\f[]}, @code{\fP})
 @cindex font, previous (@code{ft}, @code{\f[]}, @code{\fP})
 With no argument or using @samp{P} as an argument, @code{ft} switches
-to the previous font.  Use @code{\f[]} to do this with the escape.  The
-old syntax forms @code{\fP} or @code{\f[P]} are also supported.
+to the previous font.  Use @code{\f[]} to do this with an escape
+sequence.  The old syntax forms @code{\fP} or @code{\f[P]} are also
+supported.
 
 Fonts are generally specified as uppercase strings, which are usually
 1@tie{}to 4 characters representing an abbreviation or acronym of the
@@ -10050,15 +10059,15 @@ example, @code{^E_u0301} is invalid.
 Insert a symbol @var{name} (two-character name @var{nm}) or a composite
 glyph with component glyphs @var{component1}, @var{component2},
 @enddots{}  There is no special syntax for one-character names---the
-natural form @samp{\@var{n}} would collide with escapes.@footnote{A
-one-character symbol is not the same as an input character, i.e., the
-character @code{a} is not the same as @code{\[a]}.  By default,
-@code{groff} defines only a single one-character symbol, @code{\[-]}; it
-is usually accessed as @code{\-}.  On the other hand, GNU @code{troff}
-has the special feature that @code{\[char@var{XXX}]} is the same as the
-input character with character code @var{XXX}.  For example,
-@code{\[char97]} is identical to the letter @code{a} if @acronym{ASCII}
-encoding is active.}
+natural form @samp{\@var{n}} would collide with other escape
+sequences.@footnote{A one-character symbol is not the same as an input
+character, i.e., the character @code{a} is not the same as @code{\[a]}.
+By default, @code{groff} defines only a single one-character symbol,
+@code{\[-]}; it is usually accessed as @code{\-}.  On the other hand,
+GNU @code{troff} has the special feature that @code{\[char@var{XXX}]} is
+the same as the input character with character code @var{XXX}.  For
+example, @code{\[char97]} is identical to the letter @code{a} if
+@acronym{ASCII} encoding is active.}
 
 If @var{name} is undefined, a warning of type @samp{char} is produced
 and the escape is ignored.  @xref{Debugging}, for information about the
@@ -10542,11 +10551,11 @@ are loaded.
 @cindex artificial fonts
 @cindex fonts, artificial
 
-There are a number of requests and escapes for artificially creating
-fonts.  These are largely vestiges of the days when output devices did
-not have a wide variety of fonts, and when @code{nroff} and @code{troff}
-were separate programs.  Most of them are no longer necessary in GNU
-@code{troff}.  Nevertheless, they are supported.
+There are a number of requests and escape sequences for artificially
+creating fonts.  These are largely vestiges of the days when output
+devices did not have a wide variety of fonts, and when @code{nroff} and
+@code{troff} were separate programs.  Most of them are no longer
+necessary in GNU @code{troff}.  Nevertheless, they are supported.
 
 @DefescList {\\H, @code{'}, height, @code{'}}
 @DefescItem {\\H, @code{'}, @t{+}height, @code{'}}
@@ -10814,8 +10823,8 @@ the same amount to compensate.
 @endDefreq
 
 Sometimes, when typesetting letters of different fonts, more or less
-space at such boundaries is needed.  There are two escapes to help with
-this.
+space at such boundaries is needed.  There are two escape sequences to
+help with this.
 
 @Defesc {\\/, , , }
 @cindex italic correction (@code{\/})
@@ -11000,7 +11009,7 @@ wink, wink, \s+2nudge, nudge,\s+8 say no more!
 .ps 10
 @endExample
 
-The @code{\s} escape may be called in a variety of ways.  Much like
+The @code{\s} escape sequence may be called in a variety of ways.  Much like
 other escapes there must be a way to determine where the argument ends
 and the text begins.  Any of the following forms is valid:
 
@@ -11089,8 +11098,8 @@ Breaking a line causes the following actions (in the given order).
 @cindex extra pre-vertical line space (@code{\x})
 @cindex line space, extra pre-vertical (@code{\x})
 Move the current point vertically by the @dfn{extra pre-vertical line
-space}.  This is the minimum value of all @code{\x} escapes with a
-negative argument in the current output line.
+space}.  This is the minimum value of all @code{\x} escape sequences
+with a negative argument in the current output line.
 
 @item
 Move the current point vertically by the vertical line spacing as set
@@ -11103,8 +11112,8 @@ Output the current line.
 @cindex extra post-vertical line space (@code{\x})
 @cindex line space, extra post-vertical (@code{\x})
 Move the current point vertically by the @dfn{extra post-vertical line
-space}.  This is the maximum value of all @code{\x} escapes with a
-positive argument in the line that has just been output.
+space}.  This is the maximum value of all @code{\x} escape sequences
+with a positive argument in the line that has just been output.
 
 @item
 @cindex post-vertical line spacing
@@ -11617,7 +11626,7 @@ its lowercase (@code{stringdown}) or uppercase (@code{stringup}) version
 (if one exists).  GNU @code{troff} special characters (see the
 @cite{groff_char@r{(7)}} man page) can be used and the output will
 usually transform in the expected way due to the regular naming
-convention of the special character escapes.
+convention of the special character escape sequences.
 
 @Example
 .ds resume R\['e]sum\['e]
@@ -11817,7 +11826,7 @@ Versatec and Benson-Varian plotters.}
 True if the output produced by @var{xxx} is equal to the output produced
 by @var{yyy}.  Other characters can be used in place of the single
 quotes; the same set of delimiters as for the @code{\D} escape is used
-(@pxref{Escapes}).  @code{gtroff} formats @var{xxx} and @var{yyy} in
+(@pxref{Escape Sequences}).  @code{gtroff} formats @var{xxx} and @var{yyy} in
 separate environments; after the comparison the resulting data are
 discarded.
 
@@ -12870,14 +12879,15 @@ logo.@footnote{@xref{Strings}, for an explanation of the trailing
 .ds TeX T\h'-.1667m'\v'.224m'E\v'-.224m'\h'-.125m'X\"
 @endExample
 
-There are a number of special-case escapes for horizontal motion.
+There are a number of special-case escape sequences for horizontal
+motion.
 
 @Defesc {\\@key{SP}, , , }
 @cindex space, unbreakable
 @cindex unbreakable space
 An unbreakable, non-adjustable space.  (This is a backslash followed by
-a space.)  Usually you want one of the following escapes instead, often
-@code{\~}.
+a space.)  Usually you want one of the following escape sequences
+instead, often @code{\~}.
 @endDefesc
 
 @Defesc {\\~, , , }
@@ -13059,7 +13069,7 @@ However, for complex drawings these operations can be quite cumbersome,
 and it may be wise to use graphic preprocessors like @code{gpic} or
 @code{ggrn}.  @xref{gpic}, and @ref{ggrn}.
 
-All drawing is done via escapes.
+All drawing is done via escape sequences.
 
 @DefescList {\\l, @code{'}, l, @code{'}}
 @DefescListEnd {\\l, @code{'}, lg, @code{'}}
@@ -13100,7 +13110,7 @@ represented by a single character) use @code{\&}.
 @noindent
 The above works by outputting a box rule (a vertical line), then the
 text given as an argument and then another box rule.  Finally, the
-line-drawing escapes both draw from the current location to the
+line-drawing escape sequences both draw from the current location to the
 beginning of the @emph{input} line---this works because the line length
 is negative, not moving the current point.
 @endDefesc
@@ -13118,8 +13128,8 @@ Draw vertical lines.  Its parameters are similar to the @code{\l}
 escape, except that the default scaling indicator is @samp{v}.  The
 movement is downward for positive values, and upward for negative
 values.  The default glyph is the box rule glyph, @code{\[br]}.  As with
-the vertical motion escapes, text processing blindly continues where the
-line ends.
+the vertical motion escape sequences, text processing blindly continues
+where the line ends.
 
 @Example
 This is a \L'3v'test.
@@ -13359,7 +13369,7 @@ This rather inflexible positioning algorithm doesn't work with
 Instead, use the @code{eqn} preprocessor.
 
 @xref{Manipulating Spacing}, how to adjust the vertical spacing with the
-@code{\x} escape.
+@code{\x} escape sequence.
 @endDefesc
 
 
@@ -13821,8 +13831,8 @@ and no motion is produced before calling @var{name}.
 @c processed normally after the designated macro is interpolated. XXX
 @c
 @c The first thing a leading space macro sees is a token.  However, some
-@c escapes, like @code{\f} and @code{\m}, are handled on the fly
-@c (@pxref{Gtroff Internals} for a complete list) without creating a
+@c escape sequences, like @code{\f} and @code{\m}, are handled on the
+@c fly (@pxref{Gtroff Internals} for a complete list) without creating a
 @c token at all.  Consider a line that starts with two spaces followed
 @c by @samp{\fIfoo}.  After skipping the spaces, @samp{\fI} is handled
 @c as well such that @code{groff}'s current font is set to @code{I}, but
@@ -14116,7 +14126,7 @@ respectively---lines that have been already stored in the diversion
 .\" Center text both horizontally and vertically.
 .
 .\" Disable the escape character with .eo so that we
-.\" don't have to double backslashes on the \n escapes.
+.\" don't have to double backslashes on the "\n"s.
 .eo
 .\" Macro .(c starts centering mode.
 .de (c
@@ -14155,12 +14165,12 @@ respectively---lines that have been already stored in the diversion
 @cindex transparent output (@code{\!}, @code{\?})
 @cindex output, transparent (@code{\!}, @code{\?})
 @dfn{Transparently} embed @var{anything} into the current diversion,
-preventing requests, macro calls, and escapes from being interpreted
-when read into a diversion.  This is useful for preventing them from
-taking effect until the diverted text is actually output.  The @code{\!}
-escape transparently embeds text up to and including the end of the
-line.  The @code{\?} escape transparently embeds text until the next
-occurrence of the @code{\?} escape.
+preventing requests, macro calls, and escape sequences from being
+interpreted when read into a diversion.  This is useful for preventing
+them from taking effect until the diverted text is actually output.  The
+@code{\!} escape sequence transparently embeds text up to and including
+the end of the line.  The @code{\?} escape sequence transparently embeds
+text until the next occurrence of the @code{\?} escape sequence.
 
 @cindex @code{\?}, and copy mode
 @cindex copy mode, and @code{\?}
@@ -14193,7 +14203,7 @@ prints@tie{}4.
 .f
 @endExample
 
-Both escapes read the data in copy mode.
+Both escape sequences read the data in copy mode.
 
 @cindex @code{\!}, in top-level diversion
 @cindex top-level diversion, and @code{\!}
@@ -14996,7 +15006,7 @@ in copy mode (@pxref{Copy Mode}).
 @cindex postprocessor access
 @cindex access of postprocessor
 
-There are two escapes that give information directly to the
+There are two escape sequences that give information directly to the
 postprocessor.  This is particularly useful for embedding PostScript
 into the final document.
 
@@ -15254,7 +15264,7 @@ The search path for @var{filename} can be controlled with the
 @cindex node, output
 @code{gtroff} processes input in three steps.  One or more input
 characters are converted to an @dfn{input token}.@footnote{Except the
-escapes @code{\f}, @code{\F}, @code{\H}, @code{\m}, @code{\M},
+escape sequences @code{\f}, @code{\F}, @code{\H}, @code{\m}, @code{\M},
 @code{\R}, @code{\s}, and @code{\S}, which are processed immediately if
 not in copy mode.}  Then, one or more input tokens are converted to
 an @dfn{output node}.  Finally, output nodes are converted to the
@@ -16009,11 +16019,11 @@ delimited arguments, but not in compatibility mode.
 @cindex @code{\H}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\s}, incompatibilities with @acronym{AT&T} @code{troff}
 @cindex @code{\S}, incompatibilities with @acronym{AT&T} @code{troff}
-Furthermore, the escapes @code{\f}, @code{\H}, @code{\m}, @code{\M},
-@code{\R}, @code{\s}, and @code{\S} are transparent for the purpose of
-recognizing a control character at the beginning of a line only in
-compatibility mode.  For example, this code produces bold output in both
-cases, but the text differs.
+Furthermore, the escape sequences @code{\f}, @code{\H}, @code{\m},
+@code{\M}, @code{\R}, @code{\s}, and @code{\S} are transparent for the
+purpose of recognizing a control character at the beginning of a line
+only in compatibility mode.  For example, this code produces bold output
+in both cases, but the text differs.
 
 @Example
 .de xx
@@ -16465,7 +16475,7 @@ Use overprint and disable colours for printing on legacy Teletype
 printers (see below).
 
 @item -d
-Do not render lines (that is, ignore all @code{\D} escapes).
+Do not render lines (that is, ignore all @code{\D} escape sequences).
 
 @item -f
 Use form feed control characters in the output.

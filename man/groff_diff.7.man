@@ -75,10 +75,11 @@ features are also noted.
 .I groff
 features identifiers of arbitrary length,
 supports non-integral type sizes,
-adds new escapes and requests,
+adds new escape sequences and requests,
 provides new conditional tests,
 recognizes additional scaling indicators and numerical operators,
-and extends the function of some escapes and requests already present in
+and extends the function of some escape sequences and requests already
+present in
 .RI AT&T\~ troff .
 .
 .
@@ -128,7 +129,7 @@ A new scale
 has the effect of multiplying by
 .IR sizescale .
 .
-Requests and escapes in
+Requests and escape sequences in
 .I groff
 interpret arguments that represent a type size as being in units of
 scaled points;
@@ -136,7 +137,7 @@ that is,
 they evaluate such arguments using an implied default scaling indicator
 .RB of\~\[lq] z \[rq].
 .
-Arguments treated in this way comprise those to the escapes
+Arguments treated in this way comprise those to the escape sequences
 .B \eH
 and
 .BR \es ,
@@ -389,7 +390,7 @@ to a form suitable for Versatec and Benson-Varian plotters.)
 introduces several new escape sequences
 and extends the syntax of a few
 .RI AT&T\~ troff
-escapes
+escape sequences
 (namely,
 .BR \[rs]D ,
 .BR \[rs]f ,
@@ -400,10 +401,10 @@ and
 .BR \[rs]* ).
 .
 In the following list,
-escapes are collated alphabetically at first,
+escape sequences are collated alphabetically at first,
 and then by symbol roughly in Unicode code point order.
-.\" Exceptions are made to group closely-related escapes in an order
-.\" more agreeable to the development of a topic.
+.\" Exceptions are made to group closely-related escape sequences in an
+.\" order more agreeable to the development of a topic.
 .
 .
 .TP
@@ -549,7 +550,7 @@ Interpolate register
 .BI \[rs]O[ n ]
 Suppress troff output.
 .
-The escapes
+The escape sequences
 .BR \[rs]O2 ,
 .BR \[rs]O3 ,
 .BR \[rs]O4 ,
@@ -1826,7 +1827,7 @@ is executed.
 .BI .device\~ anything
 This is (almost) the same as the
 .B \[rs]X
-escape.
+escape sequence.
 .I anything
 is read in copy mode; a leading\~\c
 .B \[dq]
@@ -3066,7 +3067,8 @@ special characters
 (see
 .MR groff_char @MAN7EXT@ )
 can be used and the output will usually transform in the expected way
-due to the regular naming convention of the special character escapes.
+due to the regular naming convention of the special character escape
+sequences.
 .
 .IP
 .RS
@@ -4946,7 +4948,7 @@ but \[lq]72def\[aq]\[rq] in compatibility mode.
 .
 .P
 Furthermore,
-the escapes
+the escape sequences
 .BR \[rs]f ,
 .BR \[rs]H ,
 .BR \[rs]m ,
