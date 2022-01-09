@@ -917,9 +917,6 @@ and Eric Allman's papers on the @file{me} macro package.
 
 Larry Kollar contributed the section on the @file{ms} macro package.
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 @c =====================================================================
@@ -1131,7 +1128,8 @@ it also implies @code{groff}'s @option{-s} option.
 
 @item
 @code{grops}; it is used to search files named in the
-@samp{\X'ps: import} and @samp{\X'ps: file} escape sequences.
+@samp{\X'ps: import @r{@dots{}}'} and @samp{\X'ps: file @r{@dots{}}'}
+escape sequences.
 @end itemize
 
 The current directory is always searched first.  This option may be
@@ -1374,6 +1372,9 @@ Suppress output from @code{gtroff}.  Only error messages are printed.
 Do not postprocess the output of @code{gtroff}.  Normally @code{groff}
 automatically runs the appropriate postprocessor.
 @end table
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
