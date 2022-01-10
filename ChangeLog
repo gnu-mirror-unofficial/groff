@@ -39,14 +39,14 @@
 	to `n2` did.  If present, the line length is reduced by the same
 	amount (in new interface register `no`) as the line number field
 	to preserve the overall line length.  Save the previous line
-	length in the register in `_l` and set a flag, stored in `?N`,
+	length in internal register `_l` and set a flag, stored in `?N`,
 	indicating this reduction.  Otherwise, the macro expects to be
 	able to reduce the page offset to accommodate the line number.
 	If it cannot (for example, with the zero page offset default
 	used by nroff output devices), see above re: the `po` macro.
 
 	(n2): Cache the last line number that may have been output,
-	instead of the current one, so that we can operate it on it
+	instead of the current one, so that we can operate on it
 	consistently with user expectations.  Do this earlier, and
 	rename this macro-local variable from `_ln` to `_n` so that we
 	don't need groff's `do` request to operate on it.  Drop
@@ -82,7 +82,7 @@
 
 	* src/devices/grohtml/post-html.cpp (style::style): Add
 	initializer to argumentless constructor to avoid later read from
-	unitialized memory in `html_printer::do_font`.
+	uninitialized memory in `html_printer::do_font`.
 
 	Fixes <https://savannah.gnu.org/bugs/?61748>.
 
@@ -3654,8 +3654,8 @@
 	(suppress_node::tprint): Set up the buffer for image file name
 	to be written using a constant rather than an embedded literal.
 	Unconditionally initialize the buffer with a string terminator,
-	so there is no chance of a read from unitialized storage.  Drop
-	unused code involving `tem`.  Drop stale comments.  Clarify
+	so there is no chance of a read from uninitialized storage.
+	Drop unused code involving `tem`.  Drop stale comments.  Clarify
 	comment: an `image_filename` doesn't _always_ contain a format
 	string, only sometimes.  Replace use of `sprintf` with manual
 	construction of a new image filename string.  There are two
