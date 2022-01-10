@@ -462,7 +462,6 @@ and
 .i n
 is the depth.
 These parameters are not always present;
-in particular,
 .b .sh
 passes all three,
 .b .uh
@@ -695,7 +694,7 @@ non-displayed text,
 .NR ($v .
 .TL
 .b .(l
-.i M
+.i A
 .i F
 .DE
 Begin list.
@@ -707,7 +706,7 @@ is set in font
 and single-spaced
 with filling disabled.
 If
-.i M
+.i A
 [\c
 .b I ]
 is
@@ -764,7 +763,7 @@ and set at type size
 End long quotation.
 .TL
 .b .(b
-.i M
+.i A
 .i F
 .DE
 Begin a block,
@@ -790,7 +789,7 @@ the threshold feature
 is turned off,
 and a page break will not occur within the keep.
 The font and handling of
-.i M
+.i A
 and
 .i F
 are as in
@@ -801,14 +800,14 @@ are as in
 End block.
 .TL
 .b .(z
-.i M
+.i A
 .i F
 .DE
 Begin floating keep.
 Like
 .b .(b ,
 except that
-.i M
+.i A
 defaults to
 .b M
 and the keep
@@ -1640,7 +1639,7 @@ is not incremented
 for this page.
 .TL
 .b .++
-.i M
+.i S
 .i H
 .DE
 Begin a
@@ -1652,7 +1651,7 @@ A segment uses Arabic numerals
 for chapter and page numbers
 except where noted.
 The mandatory segment type argument
-.i M
+.i S
 must be one of
 .b C
 for chapters
@@ -1695,7 +1694,7 @@ use the input sequence
 .b "\eEn(ch" .\**
 .(f
 \**
-If you wish to avoid use of the \*G
+If you wish to avoid use of the \*G\|\" prevent italic f \ ugliness
 .b \eE
 extension,
 fully
@@ -1742,6 +1741,12 @@ reset the page number
 in
 .NR %
 to 1.
+If
+.b .++
+has not been called,
+a segment type of
+.b C
+is assumed.
 If a header is defined,
 replace the footer with it
 on the first page
@@ -1876,6 +1881,7 @@ reverse the motion and type size change of
 In \*N mode,
 output a right angle bracket.
 .pp
+.ne 5v
 \*G \*(ME provides localized strings
 to support documents in several input languages;
 see the
@@ -1949,7 +1955,7 @@ the macro package defines several strings that construct accent marks
 and two symbols from mathematical set theory.
 These strings are limited in multiple respects:
 they can have a crude appearance,
-they are unrecognizable on video terminals because they rely on
+they are unrecognizable on character-cell terminals because they rely on
 overstriking,
 and they cannot in general be \(lqstacked\(rq,
 as is required to correctly render words in
@@ -2041,7 +2047,7 @@ and escape sequences are included as well;
 those listed can generally be used with impunity.
 The list is sorted by Unicode code point
 (basic Latin subset)
-keyed on the identifer:
+keyed on the identifier:
 escape and control characters are disregarded,
 as are the escape function selectors for register and string
 interpolation,
@@ -2112,18 +2118,18 @@ and a square \(sq marks \*G extensions.
 \en($0	R	section depth
 \&.$0	M\(dg	post-section heading hook
 \en($1	R	first section number component
-\&.$1	M\(dg	pre-section depth 1 hook
+\&.$1	M\(dg	pre-section heading depth 1 hook
 \en($2	R	second section number component
-\&.$2	M\(dg	pre-section depth 2 hook
+\&.$2	M\(dg	pre-section heading depth 2 hook
 \en($3	R	third section number component
-\&.$3	M\(dg	pre-section depth 3 hook
+\&.$3	M\(dg	pre-section heading depth 3 hook
 \en($4	R	fourth section number component
-\&.$4	M\(dg	pre-section depth 4 hook
+\&.$4	M\(dg	pre-section heading depth 4 hook
 \en($5	R	fifth section number component
-\&.$5	M\(dg	pre-section depth 5 hook
+\&.$5	M\(dg	pre-section heading depth 5 hook
 \en($6	R	sixth section number component
-\&.$6	M\(dg	pre-section depth 6 hook
-\&.$C	M\(dg	post-chapter title hook
+\&.$6	M\(dg	pre-section heading depth 6 hook
+\&.$C	M\(dg	post-chapter title heading hook
 \&.$H	M\(dg	page/column heading hook
 \en($V	R\(sq	vertical spacing of displayed text (%)
 \en($c	R	current column number
@@ -2166,7 +2172,7 @@ and a square \(sq marks \*G extensions.
 \e*(\fI\,xx\fP	F\(sc	interpolate string \fIxx\fP
 \e**	S	footnote marker
 \&.++	M	set document segment type
-\&.+c	M	begin chapter
+\&.+c	M	begin chapter or appendix
 \e\-	F\(sc	minus sign
 \e*\-	S	em dash
 \en(.$	R\(sc	macro parameter count
@@ -2216,7 +2222,7 @@ and a square \(sq marks \*G extensions.
 \ec	F\(sc	continue output line
 \&.ce	M\(sc	center output lines
 \en(ch	R	current chapter number
-\&.cp	M\(sc\(sq	enable AT&T \*T compatibility mode
+\&.cp	M\(sc\(sq	toggle AT&T \*T compatibility mode
 \&.de	M\(sc	define macro
 \en(df	R	display font
 \&.do	M\(sc\(sq	operate with compatibility mode off
