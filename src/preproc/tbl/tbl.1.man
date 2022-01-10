@@ -275,6 +275,10 @@ for
 input,
 and ignore input between them.
 .
+.I x
+.RI and\~ y
+need not be distinct.
+.
 .
 .TP
 .B doublebox
@@ -314,13 +318,16 @@ overrides this option.
 .
 .TP
 .BI linesize( n )
-Set lines or rules
+Draw lines or rules
 (e.g.,
 from
 .BR box )
-in
-.IR n -point
-type.
+with a thickness of
+.IR n \~points.
+.
+The default is the current type size when the region begins.
+.
+This option is ignored on terminal devices.
 .
 .
 .TP
@@ -432,7 +439,7 @@ can be parenthesized.
 .
 Modifiers select fonts,
 set the type size,
-define the column width,
+.\"define the column width,
 .\"adjust inter-column spacing, \" slack text for window/orphan control
 and perform other tasks described below.
 .
