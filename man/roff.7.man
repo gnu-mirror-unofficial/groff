@@ -1296,76 +1296,205 @@ See
 for more on file name extensions.
 .
 .
+.\" BEGIN Keep parallel with groff.texi node "Input Conventions".
 .\" ====================================================================
-.SH "Editing \f[I]roff\f[]"
+.SH "Input Conventions"
 .\" ====================================================================
 .
-All
+Since
+.I \%@g@troff
+fills text automatically,
+it is common practice in
 .I roff
-formatters provide automated line breaks and horizontal and vertical
-spacing.
+languages to not attempt careful visual composition of text in input
+files:
+it is the esthetic appeal of the formatted output that matters.
 .
-In order to not disturb this, the following tips can be helpful.
-.
-.IP \(bu
-Never include empty or blank lines in a
+Therefore,
 .I roff
-document.
-.
-Instead, use the empty request (a line consisting of a dot only) or a
-line comment
-.B .\[rs]"\""
-if a structuring element is needed.
-.
-.IP \(bu
-Never start a line with whitespace because this can lead to unexpected
-behavior.
-.
-Indented paragraphs can be constructed in a controlled way by
+input should be arranged such that it is easy for authors and
+maintainers to compose and develop the document,
+understand the syntax of
 .I roff
-requests.
+requests,
+macro calls,
+and preprocessor languages used,
+and predict the behavior of the
+formatter.
 .
-.IP \(bu
-Start each sentence on a line of its own, for the spacing after a dot
-is handled differently depending on whether it terminates an
-abbreviation or a sentence.
+Several traditions have accrued in service of these goals.
 .
-To distinguish both cases, do a line break after each sentence.
 .
-.IP \(bu
-To additionally use the auto-fill mode in Emacs, it is best to insert
-an empty
-.I roff
-request (a line consisting of a dot only) after each sentence.
+.IP \[bu]
+Break input lines after sentence-ending punctuation to ease their
+recognition.
+.\" Texinfo: (@pxref{Sentences}).
+It is frequently convenient to break after colons and semicolons as
+well,
+as these typically precede independent clauses.
+.
+Consider breaking after commas;
+they often occur in lists that become easy to scan when itemized by
+line,
+or constitute supplements to the sentence that are added,
+deleted,
+or updated to clarify it.
+.
+Parenthetical and quoted phrases are also good candidates for placement
+on input lines by themselves.
+.
+In filled text,
+spaces and newlines are interchangeable;
+place breaks where it aids your purpose.
+.
+.
+.IP \[bu]
+Set your text editor's line length to 72 characters or fewer;
+see the subsections below.
+.\" Texinfo:
+.\" @footnote{Emacs: @code{fill-column: 72}; Vim: @code{textwidth=72}}
+.
+This limit,
+combined with the previous advice regarding breaking around punctuation,
+makes it less common that an input line will wrap in your text editor,
+and thus will help you perceive excessively long constructions in your
+text.
+.
+Recall that natural languages originate in speech,
+not writing,
+and that punctuation is correlated with pauses for breathing and changes
+in prosody.
+.
+.
+.IP \[bu]
+Use
+.B \[rs]&
+after
+.RB \[lq] !\& \[rq],
+.RB \[lq] ?\& \[rq],
+and
+.RB \[lq] .\& \[rq]
+if they are followed by space,
+tab,
+or newline characters and don't end a sentence.
+.
+.
+.IP \[bu]
+In filled text lines,
+use
+.B \[rs]&
+before
+.RB \[lq] .\& \[rq]
+and
+.RB \[lq] \[aq] \[rq]
+if they are preceded by space,
+so that reflowing the input doesn't turn them into control lines.
+.
+.
+.IP \[bu]
+Do not attempt to format the input in a WYSIWYG manner
+(i.e.,
+don't try using spaces to get proper indentation or align columns of a
+table).
+.
+.
+.IP \[bu]
+Comment your document.
+.
+It is never too soon to apply comments to record information of use to
+future document maintainers
+(including your future self).
+.\" Texinfo: We thus introduce another escape sequence, @code{\"}, which
+The
+.B \[rs]\[dq]
+escape sequence
+causes
+.I \%@g@troff
+to ignore the remainder of the input line.
+.
+.
+.IP \[bu]
+Use the empty request\[em]a control character followed immediately by a
+newline\[em]to visually manage separation of material in input files.
+.
+Many of the
+.I groff
+project's own documents use an empty request between sentences,
+after macro definitions,
+and where a break is expected,
+and two empty requests between paragraphs or other requests or macro
+calls that will introduce vertical space into the document.
+.
+You can combine the empty request with the comment escape sequence to
+include whole-line comments in your document,
+and even \[lq]comment out\[rq] sections of it.
 .
 .
 .P
-The following example shows judicious line breaking in a
-.I roff
-input file.
+.\" Texinfo: We conclude this section with an example
+An example sufficiently long to illustrate most of the above suggestions
+in practice follows.
 .
+.\" Texinfo: For the purpose of fitting the example between the margins
+.\" of this manual with the font used for its typeset version,
+.\" we have shortened the input line length to 56
+.\" columns.
+.\" Texinfo: As before,
+.
+An arrow \[->] indicates a tab character.
+.
+.
+.P
 .RS
-.P
 .EX
-.\" Keep the text width to 65 columns or fewer in this example so that
-.\" it doesn't overrun the right margin when set in Courier (-Tps,
-.\" -Tpdf).
-This is an example of a
-\&.I roff
-document that you can type into your text editor.
+\&.\[rs]"   nroff this_file.roff | less
+\&.\[rs]"   groff -T ps this_file.roff > this_file.ps
+\[->]The theory of relativity is intimately connected with
+the theory of space and time.
 \&.
-.
-This is the next sentence in the same paragraph.
+I shall therefore begin with a brief investigation of
+the origin of our ideas of space and time,
+although in doing so I know that I introduce a
+controversial subject.  \[rs]" remainder of paragraph elided
 \&.
-.
-This is a longer sentence stretching over several input lines;
-abbreviations like cf.\& are easily identified because the dot is
-not followed by a line break.
 \&.
-.
-In the output, this sentence continues the same paragraph.
+\&
+\[->]The experiences of an individual appear to us arranged
+in a series of events;
+in this series the single events which we remember
+appear to be ordered according to the criterion of
+\[rs][lq]earlier\[rs][rq] and \[rs][lq]later\[rs][rq], \[rs]" punct \
+swapped
+which cannot be analysed further.
+\&.
+There exists,
+therefore,
+for the individual,
+an I-time,
+or subjective time.
+\&.
+This itself is not measurable.
+\&.
+I can,
+indeed,
+associate numbers with the events,
+in such a way that the greater number is associated with
+the later event than with an earlier one;
+but the nature of this association may be quite
+arbitrary.
+\&.
+This association I can define by means of a clock by
+comparing the order of events furnished by the clock
+with the order of a given series of events.
+\&.
+We understand by a clock something which provides a
+series of events which can be counted,
+and which has other properties of which we shall speak
+later.
+\&.\[rs]" Albert Einstein, _The Meaning of Relativity_, 1922
 .EE
 .RE
+.\" END Keep parallel with groff.texi node "Device and Font Files".
 .
 .
 .\" ====================================================================
@@ -1524,7 +1653,8 @@ This document was written by
 .MT groff\-bernd\:.warken\-72@\:web\:.de
 Bernd Warken
 .ME ,
-with the section \[lq]History\[rq] revised by
+with the sections \[lq]History\[rq] and \[lq]Input Conventions\[rq]
+mostly written by
 .MT g.branden\:.robinson@\:gmail\:.com
 G.\& Branden Robinson
 .ME .
