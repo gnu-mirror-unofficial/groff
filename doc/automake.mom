@@ -245,7 +245,7 @@ to declare a program that should be built, and then list the
 sources of this program in a variable that starts with the name of
 your program and ends with \*[CODE]_SOURCES\*[CODE OFF]\&.  In the
 groff project we have only 1 top-level Makefile.am that includes
-several .am files.
+several \&.am files.
 .PP
 Take for example the build of grolbp, in src/devices/grolbp/grolbp.am. 
 The file starts with:
@@ -301,7 +301,7 @@ The path to the files are relative to the top-level directory.
 .ITEM
 The binaries are generated in the top-level build directory.
 .ITEM
-The .o files are generated in the directory where the source files
+The \&.o files are generated in the directory where the source files
 are located, or, in the case of an out-of-source build tree, in a
 directory that is the replication of the source tree directory.
 For example if you built groff in a `build' directory, lbp.o
@@ -357,9 +357,10 @@ gxditview_CPPFLAGS = $(AM_CPPFLAGS) $(X_CFLAGS) -Dlint \\
 .ILQ
 .PP
 The use of specific CPPFLAGS changes the name of the generated objects:
-the .o object files are prefixed with the name of the program.
-For example, the .o file corresponding to src/devices/xditview/device.c
-will be src/devices/xditview/gxditview-device.o.
+the \&.o object files are prefixed with the name of the program.
+For example, the \&.o file corresponding to
+src/devices/xditview/device.c will be
+src/devices/xditview/gxditview-device.o.
 .
 .HEADING 2 "Cleaning"
 .
@@ -514,7 +515,7 @@ based on the following paper from Peter Miller:
 .PP
 The idea is to have a single Makefile that contains all the rules.
 That is why we have only a single Makefile.am in the top-level
-directory which includes all the .am files that define rules
+directory which includes all the \&.am files that define rules
 to build the various programs.  The inclusion is done with the
 \*[CODE]include\*[CODE OFF] directive, not \*[CODE]SUBDIRS\*[CODE OFF]\&.
 Using 'include' is like copying the contents of the included
@@ -527,11 +528,11 @@ We first say in this top-level Makefile.am:
 bin_PROGAMS = 
 .CODE OFF
 .QUOTE OFF
-and then all the .am files that define a program to be built (e.g.
+and then all the \&.am files that define a program to be built (e.g.
 src/devices/grolbp/grolbp.am, src/roff/troff/troff.am, and so on)
 overload this variable, so that at the end, all the programs that
 should be built are listed in this \*[CODE]bin_PROGRAMS\*[CODE OFF]
-variable.  This is the reason why all the paths in the various .am
+variable.  This is the reason why all the paths in the various \&.am
 files are relative to the top-level directory: at the end we will
 have only one Makefile in the top-level directory of the build tree.
 .PP
@@ -717,7 +718,7 @@ There are no garantees on the order of execution of these local
 rules.  An example of local rule is the installation of GXditview.ad
 and GXditview-color.ad files in src/devices/xditview/xditview.am: if
 theses files are already installed, the old files are first saved.
-Also, the final file that is installed is stripped from its .ad
+Also, the final file that is installed is stripped from its \&.ad
 suffix.  Thus the usage of a custom rule rather than the definition
 of a \*[CODE]xxx_DATA\*[CODE OFF] variable:
 .FLEX

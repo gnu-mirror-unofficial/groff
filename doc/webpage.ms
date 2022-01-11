@@ -342,10 +342,10 @@ option by default, unless a request similar to:
 .fi
 .in
 
-is invoked during input file processing; (`.if !\en[PHASE] ...\&' ensures
-that the effect of the `.tm' request is restricted to the document setup
-phase of processing, as pdfroff sets it to 1 or\~2 in the output phase,
-but leaves it unset in the setup phase).
+is invoked during input file processing; (`.if !\en[PHASE] \&...\&'
+ensures that the effect of the `.tm' request is restricted to the
+document setup phase of processing, as pdfroff sets it to 1 or\~2 in the
+output phase, but leaves it unset in the setup phase).
 
 The bundled `spdf.tmac' macro package, which implicitly activates
 `\-mpdfmark' for `ms' macro users, ensures that TOC relocation is
@@ -552,7 +552,7 @@ macro packages
 .ULS
 .LI
 A new macro `%U' has been added to the mdoc package to indicate a URL
-reference within an .Rs/.Re environment.
+reference within an \&.Rs/.Re environment.
 
 .LI
 Rudimentary support for the Japanese script has been added, most
@@ -609,7 +609,7 @@ equivalents to the \eX and \eY escapes, respectively.
 
 .LI
 A new read-only number register `.br' is available which is set to\~1
-if a macro is called as .foo and to\~0 if called as 'foo.
+if a macro is called as \&.foo and to\~0 if called as \&'foo.
 This allows reliable modification of requests.
 
 .in 2m
@@ -945,7 +945,7 @@ to handle normal groff number operations without risking overflow errors).
 .LI
 For \-ms, Eric S.\& Raymond contributed support for ancient Bell Labs
 localisms `.SC', `.UC', `.P1', and `.P2'.
-The latter three are enabled only after .SC is called.
+The latter three are enabled only after \&.SC is called.
 
 .LI
 A new string, `SN-STYLE', has been added to the ms macros, controlling
@@ -965,7 +965,7 @@ troff
 
 .ULS
 .LI
-Analogously to the .ft and \ef pair, two new requests `gcolor' and
+Analogously to the \&.ft and \ef pair, two new requests `gcolor' and
 `fcolor' (which pair with \em and \eM, respectively) have been added to
 set the glyph and background colours.
 
@@ -1574,13 +1574,13 @@ available:
 
 .in 2m
 .ft C
-\eD\[aq]Fr ...\&\[aq] \f[R](rgb)\f[]
+\eD\[aq]Fr \&...\&\[aq] \f[R](rgb)\f[]
 .br
-\eD\[aq]Fc ...\&\[aq] \f[R](cmy)\f[]
+\eD\[aq]Fc \&...\&\[aq] \f[R](cmy)\f[]
 .br
-\eD\[aq]Fg ...\&\[aq] \f[R](gray)\f[]
+\eD\[aq]Fg \&...\&\[aq] \f[R](gray)\f[]
 .br
-\eD\[aq]Fk ...\&\[aq] \f[R](cmyk)\f[]
+\eD\[aq]Fk \&...\&\[aq] \f[R](cmyk)\f[]
 .br
 \eD\[aq]Fd\[aq] \f[R](default color)\f[]
 .ft R
@@ -1968,7 +1968,7 @@ environment variable also.
 
 For defining color components as fractions between 0 and\~1, a new scaling
 indicator `f' has been defined: 1f\~=\~65536u.
-For testing whether a color is defined (with .if and .ie), a new
+For testing whether a color is defined (with \&.if and \&.ie), a new
 conditional operator `m' is available.
 
 More details can be found in the groff_diff.7 manual page and in

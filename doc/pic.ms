@@ -1004,7 +1004,8 @@ The second arrow in Figure \*[SN]2 dropped downwards from the circle's
 attachment point for an
 object to be joined to the right.
 .PP
-The meaning of the command \fBmove to last circle .s\fP should be obvious.
+The meaning of the command \fBmove to last circle \&.s\fP should be
+obvious.
 In order to see how it generalizes, we'll need to go into detail on two
 important topics; locations and object names.
 .
@@ -1193,7 +1194,7 @@ compass(ellipse wid 1.5 ht 1);
 .LP
 these are the locations where eight compass rays from the geometric center
 would intersect the figure.
-So when we say \fBlast circle .s\fP we are referring to the south
+So when we say \fBlast circle \&.s\fP we are referring to the south
 compass point of the last circle drawn.
 The explanation of Figure 8-3's program is now complete.
 .PP
@@ -1257,7 +1258,7 @@ Positions may be added or subtracted to yield a new position (to be
 more precise, you can only add a position and an expression pair; the
 latter must be on the right side of the addition or subtraction sign).
 The result is the conventional vector sum or difference of coordinates.
-For example, \fBlast box .ne + (0.1, 0)\fP is a valid position.
+For example, \fBlast box \&.ne + (0.1, 0)\fP is a valid position.
 This example illustrates a common use, to define a position slightly
 offset from a named one (say, for captioning purposes).
 .NH 3
@@ -1436,9 +1437,9 @@ By default, the \fBchop\fR modifier shortens both ends of the line by
 \fBcirclerad\fR.
 By suffixing it with a number you can change the amount of chopping.
 .PP
-If you say \fBline .\|.\|.\& chop \fIr1\fP chop \fIr2\fP\fR with \fIr1\fP
-and \fIr2\fP both numbers, you can vary the amount of chopping at both
-ends.
+If you say \fBline \&.\|.\|.\& chop \fIr1\fP chop \fIr2\fP\fR with
+\fIr1\fP and \fIr2\fP both numbers, you can vary the amount of chopping
+at both ends.
 You can use this in combination with trigonometric functions to write
 code that deals with more complex intersections.
 .
@@ -1503,9 +1504,9 @@ compass([junction()]);
 .CE "1: A sample composite object"
 .LP
 To refer to one of the composite's attachment points, you can say
-(for example) \fBA .s\fP.
+(for example) \fBA \&.s\fP.
 For purposes of object naming, composites are a class.
-You could write \fBlast [] .s\fP as an equivalent reference, usable
+You could write \fBlast [] \&.s\fP as an equivalent reference, usable
 anywhere a location is needed.
 This construction is very important for putting together large,
 multi-part diagrams.
@@ -1926,7 +1927,7 @@ source up to the next \fB.PE\fP.
 In either of the last two \fBcopy\fP commands, GNU \fBgpic\fP permits a
 trailing `\fBuntil\fP \fIword\/\fP' clause to be added which terminates
 the copy when the first word matches the argument (the default
-behavior is therefore equivalent to \fBuntil .PE\fP).
+behavior is therefore equivalent to \fBuntil \&.PE\fP).
 .PP
 Accordingly, the command
 .RS
@@ -3218,7 +3219,7 @@ The macro may be called as
 .R
 .DE
 .LP
-The arguments (if any) are substituted for tokens $1, $2 .\|.\|.\& $n
+The arguments (if any) are substituted for tokens $1, $2 \&.\|.\|.\& $n
 appearing in the replacement text.
 To undefine a macro, say \fBundef\fP \fIname\fR, specifying the name to
 be undefined.
