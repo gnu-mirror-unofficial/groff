@@ -448,6 +448,29 @@ it is correctly detected and mapped.
 .
 .
 .\" ====================================================================
+.SS Limitations
+.\" ====================================================================
+.
+.I preconv
+cannot perform any transformation on input that it cannot see.
+.
+Examples include files that are interpolated by preprocessors that run
+subsequently,
+including
+.MR @g@soelim @MAN1EXT@ ,
+files included by
+.I \%@g@troff
+itself through
+.RB \[lq] so \[rq]
+and similar requests,
+and string definitions passed to
+.I \%@g@troff
+through its
+.B \-d
+command-line option.
+.
+.
+.\" ====================================================================
 .SH Options
 .\" ====================================================================
 .
