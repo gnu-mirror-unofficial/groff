@@ -2162,7 +2162,8 @@ Please see groff_diff.man and groff.texinfo for more details.
 .LI
 The escapes `\e%', `\e&', `\e)', and `\e:' no longer cause an error in \eX;
 they are ignored now.
-Additionally `\e\ ' (space) and `\e\[ti]' are converted to single space characters.
+Additionally `\e\~' (space) and `\e\[ti]' are converted to single space
+characters.
 
 .LI
 The default tab distance in nroff mode is now 0.8i\~(inches) to be compatible
