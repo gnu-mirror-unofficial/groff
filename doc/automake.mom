@@ -108,8 +108,8 @@ This will:
 .SHIFT_LIST 1m
 .ITEM
 .SP 3p
-Clone the gnulib repository as a git submodule in 'gnulib',
-add the needed gnulib sources files in `lib', 
+Clone the gnulib repository as a git submodule in `gnulib',
+add the needed gnulib sources files in `lib',
 add the needed gnulib m4 macros in `gnulib_m4'.
 .SP 3p
 .ITEM
@@ -225,7 +225,7 @@ and then in the final Makefile.
 Previously, when groff used `autoconf' only and not `automake',
 you had to invoke manually the autotools, depending on what you
 modified.  For example, to change the file `aclocal.m4', you had
-to run the shell command 'aclocal -I m4'; to recreate the files
+to run the shell command `aclocal -I m4'; to recreate the files
 `configure' and `Makefile', you had to use the command 'autoreconf
 - I m4'.
 .PP
@@ -415,8 +415,8 @@ Apart from \*[CODE]bin_PROGRAMS\*[CODE OFF], there is another
 similar special variable for scripts:  \*[CODE]bin_SCRIPTS\*[CODE OFF]\&.
 The scripts listed in this variable will automatically be
 built (of course you have to provide your custom rule to build the
-script), installed and uninstalled when invoking 'make', 'make
-install' and 'make uninstall'.  The main difference is that unlike
+script), installed and uninstalled when invoking `make', `make
+install' and `make uninstall'.  The main difference is that unlike
 the programs listed in \*[CODE]bin_PROGRAMS\*[CODE OFF], the scripts
 will not be cleaned by default.  They are not distributed by default
 either.  In the groff project, \*[CODE]bin_SCRIPTS\*[CODE OFF] are
@@ -452,7 +452,7 @@ pdfmom: $(gropdf_dir)/pdfmom.pl $(SH_DEPS_SED_SCRIPT)
 .QUOTE OFF
 .QUOTE_INDENT 2m
 .CODE_SIZE 100
-Note that in this example the '@' symbol is protected by square
+Note that in this example the `@' symbol is protected by square
 brackets to prevent the substitution of the variable by `automake'.
 .
 .HEADING 1 "Non-recursive make schema"
@@ -518,7 +518,7 @@ That is why we have only a single Makefile.am in the top-level
 directory which includes all the \&.am files that define rules
 to build the various programs.  The inclusion is done with the
 \*[CODE]include\*[CODE OFF] directive, not \*[CODE]SUBDIRS\*[CODE OFF]\&.
-Using 'include' is like copying the contents of the included
+Using `include' is like copying the contents of the included
 file into the top-level Makefile.am, and will not generate other
 Makefile.
 .PP
