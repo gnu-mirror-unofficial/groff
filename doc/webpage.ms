@@ -342,7 +342,7 @@ option by default, unless a request similar to:
 .fi
 .in
 
-is invoked during input file processing; (`.if !\en[PHASE] \&...\&'
+is invoked during input file processing; (`.if !\en[PHASE] \&.\|.\|.\&'
 ensures that the effect of the `.tm' request is restricted to the
 document setup phase of processing, as pdfroff sets it to 1 or\~2 in the
 output phase, but leaves it unset in the setup phase).
@@ -783,8 +783,8 @@ grotty
 
 .ULS
 .LI
-\eD'p...\&' is now supported if the polygon consists entirely of horizontal
-and vertical lines.
+\eD'p.\|.\|.\&' is now supported if the polygon consists entirely of
+horizontal and vertical lines.
 .ULE
 .
 .
@@ -1234,7 +1234,7 @@ www.tmac
 The `HR' macro no longer causes an empty line for non-HTML devices.
 
 A new macro `HEAD' has been added to directly add data to the
-<head>...</head> block.
+<head>.\|.\|.</head> block.
 
 New macros `OLS' and `OLE' to start and end an ordered list.
 
@@ -1500,8 +1500,8 @@ is used to construct glyph names based on Unicode character codes.
 The existing groff glyph names are frozen; no glyph names which can't be
 constructed algorithmically will be added in the future.
 
-The \e[...\&] escape sequence has been extended to specify multiple glyph
-components.
+The \e[.\|.\|.\&] escape sequence has been extended to specify multiple
+glyph components.
 Example:
 
 .in 2m
@@ -1557,16 +1557,16 @@ They are searched after the list of fonts declared with the
 `special' request but before the already mounted special fonts.
 
 .LI
-In groff versions 1.18 and 1.18.1, \eD'f\~...\&' didn't move the current
-point horizontally.
+In groff versions 1.18 and 1.18.1, \eD'f\~.\|.\|.\&' didn't move the
+current point horizontally.
 Despite of being silly, this change has been reverted for backwards
 compatibility.
 Consequently, the intermediate output command `Df' also moves the
 position horizontally again.
 
-\eD'f\~...\&' is deprecated since it depends on the horizontal resolution
+\eD'f\~.\|.\|.\&' is deprecated since it depends on the horizontal resolution
 of the output device (given with the `hor' parameter in the DESC file).
-Use the new \eD'Fg\~...\&' escape instead.
+Use the new \eD'Fg\~.\|.\|.\&' escape instead.
 
 .LI
 For orthogonality, new \eD subcommands to change the fill color are
@@ -1574,13 +1574,13 @@ available:
 
 .in 2m
 .ft C
-\eD\[aq]Fr \&...\&\[aq] \f[R](rgb)\f[]
+\eD\[aq]Fr \&.\|.\|.\&\[aq] \f[R](rgb)\f[]
 .br
-\eD\[aq]Fc \&...\&\[aq] \f[R](cmy)\f[]
+\eD\[aq]Fc \&.\|.\|.\&\[aq] \f[R](cmy)\f[]
 .br
-\eD\[aq]Fg \&...\&\[aq] \f[R](gray)\f[]
+\eD\[aq]Fg \&.\|.\|.\&\[aq] \f[R](gray)\f[]
 .br
-\eD\[aq]Fk \&...\&\[aq] \f[R](cmyk)\f[]
+\eD\[aq]Fk \&.\|.\|.\&\[aq] \f[R](cmyk)\f[]
 .br
 \eD\[aq]Fd\[aq] \f[R](default color)\f[]
 .ft R
