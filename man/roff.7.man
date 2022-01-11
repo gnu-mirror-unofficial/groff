@@ -1388,59 +1388,69 @@ This mode can be activated by the following methods.
 .
 .P
 When editing a file within Emacs the mode can be changed by typing
-.RI \[oq] "M-x nroff\-mode" \[cq],
+.RI \[lq] M-x
+.BR nroff\-mode \[rq],
 where
-.B M-x
-means to hold down the
-.B Meta
-key (or
-.BR Alt )
-and press the
-.BR x\~ key
-at the same time.
+.I M-x
+means to hold down the meta key
+(often labelled \[lq]Alt\[rq])
+while pressing and releasing the \[lq]x\[rq] key.
+.\" Why is this sort of thing not in intro(1)?
 .
 .
 .P
-But it is also possible to have the mode automatically selected when
-the file is loaded into the editor.
+It is also possible to have the mode automatically selected when a
+.I roff
+file is loaded into the editor.
+.
 .
 .IP \(bu
-The most general method is to include the following 3 comment lines at
-the end of the file.
+The most general method is to include file-local variables at the end of
+the file;
+we can also configure the fill column this way.
+.
 .
 .RS
 .IP
 .EX
 \&.\[rs]" Local Variables:
+\&.\[rs]" fill-column: 72
 \&.\[rs]" mode: nroff
 \&.\[rs]" End:
 .EE
 .RE
 .
 .IP \(bu
-There is a set of file name extensions, e.g., the man pages that
+Certain file name extensions,
+such as those commonly used by man pages,
 trigger the automatic activation of the
 .I nroff
 mode.
 .
+.
 .IP \(bu
-Theoretically, it is possible to write the sequence
+Technically,
+having the sequence
+.
 .
 .RS
 .IP
 .EX
-\&.\[rs]" \%\-*\-\ nroff\ \-*\-\""
+\&.\[rs]" \%\-*\- nroff \-*\-
 .EE
 .RE
 .
-.IP
-as the first line of a file to have it started in
-.I nroff
-mode when loaded.
 .
-Unfortunately, some applications such as the
-.B man
-program are confused by this; so this is deprecated.
+.IP
+in the first line of a file will cause Emacs to enter the
+.I nroff
+major mode when it is loaded into the buffer.
+.
+Unfortunately,
+some implementations of the
+.MR man 1
+program are confused by this practice,
+so we discourage it.
 .
 .
 .\" ====================================================================
@@ -1449,11 +1459,10 @@ program are confused by this; so this is deprecated.
 .
 .\" TODO: elvis, vile.  Nvi does not support highlighting at all, and
 .\" gedit does but has no rules for roff yet.  Other editors TBD.
-Besides Emacs,
-some other editors provide
-.I nroff
-style files too,
-e.g.,
+Other editors provide support for
+.IR roff -style
+files too,
+such as
 .MR vim 1 ,
 an extension of the
 .MR vi 1
@@ -1491,7 +1500,7 @@ after any Emacs configuration:
 .RS
 .IP
 .EX
-\&.\[rs]" vim: set filetype=groff:
+\&.\[rs]" vim: set filetype=groff textwidth=72:
 .EE
 .RE
 .
