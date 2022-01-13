@@ -96,7 +96,7 @@ static void enable_warning(const char *);
 static void disable_warning(const char *);
 
 static int escape_char = '\\';
-static symbol eoi_macro_name;
+static symbol end_of_input_macro_name;
 static symbol blank_line_macro_name;
 static symbol leading_spaces_macro_name;
 static int compatible_flag = 0;
@@ -2570,8 +2570,8 @@ void exit_troff()
 {
   is_exit_underway = true;
   topdiv->set_last_page();
-  if (!eoi_macro_name.is_null()) {
-    spring_trap(eoi_macro_name);
+  if (!end_of_input_macro_name.is_null()) {
+    spring_trap(end_of_input_macro_name);
     tok.next();
     process_input_stack();
   }
@@ -2621,7 +2621,7 @@ void return_macro_request()
 
 void eoi_macro()
 {
-  eoi_macro_name = get_name();
+  end_of_input_macro_name = get_name();
   skip_line();
 }
 

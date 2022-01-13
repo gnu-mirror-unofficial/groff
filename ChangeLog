@@ -1,3 +1,11 @@
+2022-01-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/input.cpp: Rename `eoi_macro_name` to
+	`end_of_input_macro_name`.  It's long, yes, but better parallels
+	`blank_line_macro_name` and `leading_spaces_macro_name`.  It is
+	not used in lengthy expressions and furthermore clarifies the
+	meaning of the nearby function name `eoi_macro` in one use.
+
 2022-01-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/preconv/preconv.1.man (Limitations): Add
