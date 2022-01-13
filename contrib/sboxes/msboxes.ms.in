@@ -43,7 +43,7 @@ An extension in version 1.23.0 of
 the PDF output driver for the
 .I groff
 document formatting system,
-allows coloured rectangles to be created beneath any output created by
+allows coloured rectangles to be placed beneath any output created by
 .I groff .
 The extension can be accessed via a device control escape sequence
 .Lt "\[rs]X\[aq]pdf: background" \~.\|.\|.\|\c
@@ -67,7 +67,7 @@ cmd left top right bottom weight
 .LP
 each produce a background rectangle on the page, where
 .IP \f[I]cmd 8n \" indent enough to fit "bottom" tag
-can be any of
+is the command, which can be any of
 .Qq page|fill|box
 in combination.
 So
@@ -137,13 +137,12 @@ The top and bottom coordinates are only used if the box drawing extends
 onto the next page, so, ordinarily they would be set to the header and
 footer margins.
 .IP \f[I]weight
-If
+provides the line width for the border if
 .Qq box
-is included in the command, then this parameter provides the line width
-for the box border.
+is included in the command.
 .BOXSTOP
 .QE
-For a more convenient interface, include
+For an even more convenient interface, include
 .Lt \-msboxes
 on the
 .I groff
