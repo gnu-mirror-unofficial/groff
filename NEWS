@@ -240,12 +240,14 @@ o The e (me) macro package now uses strings `wa` and `wc` to store the
   terms used without requiring the `$c` macro to be redefined.
 
 o The e (me) macro package has a new macro, `ld`, which "re-localizes
-  the date"; after updating troff registers `dw`, `mo`, and `yr` are
-  modified (to record a document's date of composition, for instance),
-  `ld` updates the packages `y2` and `y4` registers and the localized
-  strings `dw` and `mo` for the names of the weekday and month.  `ld` is
-  also used internally to simplify the use of the package with languages
-  other than English; it thus updates the `wa` and `wc` strings as well.
+  the date"; if you modify troff registers `dw`, `mo`, and `yr` (to
+  record a document's date of composition, for instance), call `ld`
+  afterward to update the packages `y2` and `y4` registers and the
+  localized strings `dw` and `mo` for the names of the weekday and
+  month.  `ld` is also used internally to simplify the use of the
+  package with languages other than English; it thus updates the `wa`
+  and `wc` strings as well.  If you want to customize these strings,
+  do so after any `ld` call you make.
 
 o The e (me) macro package now has a register `sx` that eases the
   configuration of space added to the line height above/below when
@@ -267,11 +269,11 @@ o The m (mm) and s (ms) macro packages' 'R' macros now work analogously
 
 o The s (ms) macro package supports a new string, `FR`, which defines
   the ratio of the footnote line length to the current line length.  The
-  default expression is "11/12", 11/12ths of the normal line length,
-  adopted for better compatibility with ms documents prepared with AT&T
-  ms or its descendant implementations in Heirloom Doctools and
-  neatroff.  This is a change from previous groff releases, which used a
-  ratio of 5/6ths.
+  default expression is "11/12", eleven twelfths of the normal line
+  length, adopted for better compatibility with ms documents prepared
+  with AT&T ms or its descendant implementations in Heirloom Doctools
+  and neatroff.  This is a change from previous groff releases, which
+  used a ratio of five sixths.
 
   You may wish to set the `FR` string to "1" to align with contemporary
   typesetting practices.  In Unix Version 7 ms, its descendants, and
