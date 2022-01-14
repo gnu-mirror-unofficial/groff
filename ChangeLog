@@ -1,5 +1,15 @@
 2022-01-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Separate concerns better; stop re-generating plain
+	text and HTML documents when the 'doc' target is updated; these
+	are already handled by the 'build_infodoc' target.
+	(build_infodoc): Use existing phony targets for plain text and
+	HTML output files instead of repeating filename literals.
+	(doc_all): Remove those same two phony targets from this one's
+	dependencies.
+
+2022-01-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp: Rename `eoi_macro_name` to
 	`end_of_input_macro_name`.  It's long, yes, but better parallels
 	`blank_line_macro_name` and `leading_spaces_macro_name`.  It is

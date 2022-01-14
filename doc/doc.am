@@ -355,7 +355,7 @@ all: build_infodoc
 EXTRA_DIST += doc/groff.texi doc/fdl.texi
 
 # Define targets to generate GNU Info, plain text, and HTML from .texi.
-build_infodoc: doc/groff.info doc/groff.txt doc/groff.html
+build_infodoc: doc/groff.info doc_txt doc_html
 
 EXTRA_DIST += doc/groff.info
 MAINTAINERCLEANFILES += doc/groff.info
@@ -445,7 +445,7 @@ else
 endif
 
 doc: doc_all
-doc_all: doc_txt dvi pdf html
+doc_all: dvi pdf
 doc_txt: doc/groff.txt
 dvi: doc_dvi
 doc_dvi: doc/groff.dvi
