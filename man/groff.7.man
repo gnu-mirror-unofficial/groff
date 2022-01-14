@@ -1242,6 +1242,8 @@ The truth values of other conditional expression operators are as shown
 below.
 .
 .
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Operators in
+.\" Conditionals".
 .P
 .ne 14v
 .TS
@@ -1326,12 +1328,74 @@ T}
 .
 .
 .P
-These operators can't be combined with others like
-.RB \[lq] : \[rq]
-or
-.RB \[lq] & \[rq];
-only a leading
-.RB \[lq] ! \[rq]\&
+The first of the above,
+the
+.I "output comparison operator,"
+interpolates a true value if formatting its comparands
+.I s1
+and
+.I s2
+produces the same output commands.
+.
+Other delimiters can be used in place of the neutral apostrophes.
+.
+.I \%@g@troff
+formats
+.I s1
+and
+.I s2
+in separate environments;
+after the comparison,
+the resulting data are discarded.
+.
+The resulting glyph properties,
+including font family,
+style,
+size,
+and
+slant,
+must match,
+but not necessarily the requests and/or escape sequences used to obtain
+them.
+.
+Motions must match in orientation and magnitude to within the applicable
+horizontal or vertical resolution of the device,
+after rounding.
+.
+.\" TODO: Uncomment and add forward reference when we add a "GNU troff
+.\" internals" subsection to this page.
+.\"(All of this is to say that the lists of output nodes created by
+.\"formatting
+.\".I s1
+.\"and
+.\".I s2
+.\"must be identical.)
+.
+.
+.P
+Surround the comparands with
+.B \[rs]?\&
+to avoid formatting them;
+this causes them to be compared character by character,
+as with string comparisons in other programming languages.
+.
+Since comparands protected with
+.B \[rs]?\&
+are read in copy mode,
+they need not even be valid
+.I groff
+syntax.
+.
+The escape character is still lexically recognized,
+however,
+and consumes the next character.
+.
+.
+.P
+The above operators can't be combined with most others,
+but a leading
+.RB \[lq] !\& \[rq]
+(without spaces or tabs between the exclamation mark and the operator)
 can be used to complement the result.
 .
 Spaces and tabs are optional immediately after the
@@ -1343,11 +1407,14 @@ Spaces and tabs are optional immediately after the
 and
 .RB \[lq] S \[rq]
 operators,
-but immediately after
+but right after
 .RB \[lq] ! \[rq],
-they cause the condition to evaluate false
-(this bizarre behavior maintains compatibility with AT&T
-.IR troff ).
+they end the predicate and the conditional evaluates true.
+.
+(This bizarre behavior maintains compatibility with AT&T
+.IR troff .)
+.\" END Keep (roughly) parallel with groff.texi node "Operators in
+.\" Conditionals".
 .
 .
 .\" ====================================================================

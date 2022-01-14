@@ -11833,13 +11833,13 @@ certain other @code{troff} implementations.@footnote{This refers to
 early-vintage @acronym{AT&T} @code{troff} to a form suitable for
 Versatec and Benson-Varian plotters.}
 
+@cindex output comparison operator
 @item @code{'}@var{xxx}@code{'}@var{yyy}@code{'}
 True if formatting the comparands @var{xxx} and @var{yyy} produces the
-same motions, glyphs, and output commands.  Other characters can be
-used in place of the single quotes; the same set of delimiters as for
-the @code{\D} escape is used (@pxref{Escape Sequences}).  GNU
-@code{troff} formats @var{xxx} and @var{yyy} in separate environments;
-after the comparison the resulting data are discarded.
+same output commands.  Other delimiters can be used in place of the
+neutral apostrophes (@pxref{Escape Sequences}).  This @dfn{output
+comparison operator} formats @var{xxx} and @var{yyy} in separate
+environments; after the comparison, the resulting data are discarded.
 
 @Example
 .ie "|"\fR|\fP" \
@@ -11856,20 +11856,23 @@ sequences used to obtain them.  In the previous example, @samp{|} and
 @samp{\fR|\fP} result in @samp{|} glyphs in the same typefaces at the
 same positions, so the comparands are equal.  If @samp{.ft@tie{}I} had
 been added before the @samp{.ie}, they would differ: the first @samp{|}
-would produce an italic @samp{|}, not a roman one.  By contrast, motions
-must @emph{exactly} match.  @samp{.if "\u\d""} is false even though both
-comparands result in zero net motion, because motions are not
-interpreted or optimized but sent as-is to the output.@footnote{Because
-formatting of the comparands takes place in a dummy environment,
-vertical motions within them cannot spring traps.} On the other hand,
-@samp{.if "\d"\v'0.5m'"} is true, because @code{\d} is defined as a
-downward motion of one-half em.@footnote{All of this is to say that the
-lists of output nodes created by formatting @var{xxx} and @var{yyy} must
-be identical.  @xref{Gtroff Internals}.}
+would produce an italic @samp{|}, not a roman one.  Motions must match
+in orientation and magnitude to within the applicable horizontal or
+vertical resolution of the device, after rounding.  @samp{.if
+"\u\d"\v'0'"} is false even though both comparands result in zero net
+motion, because motions are not interpreted or optimized but sent as-is
+to the output.@footnote{Because formatting of the comparands takes place
+in a dummy environment, vertical motions within them cannot spring
+traps.}  On the other hand, @samp{.if "\d"\v'0.5m'"} is true, because
+@code{\d} is defined as a downward motion of one-half em.@footnote{All
+of this is to say that the lists of output nodes created by formatting
+@var{xxx} and @var{yyy} must be identical.  @xref{Gtroff Internals}.}
 
 @cindex string comparison
 @cindex comparison of strings
-Surround the comparands with @code{\?} to avoid formatting them.
+Surround the comparands with @code{\?} to avoid formatting them; this
+causes them to be compared character by character, as with string
+comparisons in other programming languages.
 
 @Example
 .ie "\?|\?"\?\fR|\fP\?" \
@@ -11883,23 +11886,25 @@ false
 @cindex copy mode, and @code{\?}
 @cindex mode, copy, and @code{\?}
 @noindent
-Since comparands protected with @code{\?} are read in copy mode, it is
-not erroneous to use syntactically invalid input.
+Since comparands protected with @code{\?} are read in copy mode, they
+need not even be valid @code{groff} syntax.  The escape character is
+still lexically recognized, however, and consumes the next character.
 
 @Example
 .ds a \[
 .ds b \[
-.ie '\?\*a\?'\?\*b\?' \
-true
-.el \
-false
-    @result{} true
+.if '\?\*a\?'\?\*b\?' a and b true
+.if '\?\\?'\?\\?' backslash true \" doesn't work
+    @result{} a and b true
+@c slack lines for pagination control
+@c    @error{} warning: missing closing delimiter in
+@c    @error{} conditional expression (got newline)
 @endExample
 @end table
 
-The above operators can't be combined with others like @samp{:} or
-@samp{&}; only a leading @samp{!} (without spaces or tabs between the
-exclamation mark and the operator) can be used to negate the result.
+The above operators can't be combined with most others, but a leading
+@samp{!} (without spaces or tabs between the exclamation mark and the
+operator) can be used to complement the result.
 
 @Example
 .nr x 1
@@ -11909,9 +11914,10 @@ exclamation mark and the operator) can be used to negate the result.
 @endExample
 
 Spaces and tabs are optional immediately after the @samp{c}, @samp{d},
-@samp{F}, @samp{m}, @samp{r}, and @samp{S} operators, but immediately
-after @samp{!}, they cause the condition to evaluate false (this bizarre
-behavior maintains compatibility with @acronym{AT&T} @code{troff}).
+@samp{F}, @samp{m}, @samp{r}, and @samp{S} operators, but right after
+@samp{!}, they end the predicate and the conditional evaluates
+true.@footnote{This bizarre behavior maintains compatibility with
+@acronym{AT&T} @code{troff}.}
 
 @Example
 .nr x 1
