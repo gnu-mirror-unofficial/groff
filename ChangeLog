@@ -1,3 +1,9 @@
+2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/tty-char.tmac: Drop redundant logic.  We don't need to
+	source the `cp1047` or `latin1` files here; `troffrc` will
+	already have loaded `tty` for us, which already does so.
+
 2022-01-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Separate concerns better; stop re-generating plain
