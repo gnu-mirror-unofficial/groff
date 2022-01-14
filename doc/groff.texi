@@ -7452,8 +7452,9 @@ request).  Temporary indentation is ignored.
 
 The previous example illustrates a common idiom of turning centering on
 for a quantity of lines far in excess of what is required, and off again
-after the text to be centered.  This pattern is useful to avoid counting
-lines for any request that takes a count of input lines as an argument.
+after the text to be centered.  This technique relieves humans of
+counting lines for requests that take a count of input lines as an
+argument.
 @endDefreq
 
 @DefreqList {rj, [@Var{nnn}]}
@@ -7489,8 +7490,8 @@ if there are no arguments.
 @cindex inter-word spacing, minimal
 @cindex minimal inter-word spacing
 @cindex space, between words
-The first argument, the inter-word space size, is a minimum; if
-automatically adjusted, it may increase.
+The first argument, the inter-word space size, is a minimum; if an
+output line undergoes adjustment, such spaces may increase in width.
 
 @cindex inter-sentence spacing, additional
 @cindex additional inter-sentence spacing
@@ -12629,8 +12630,8 @@ is interpreted when macro @code{m1} is called.
 
 @code{roff} documents should not use the @code{\\} or @code{\.}
 tokens outside of copy mode; they serve only to obfuscate the input.
-Use @code{\e} to obtain the escape character, @code{\[rs]} to obtain a
-backslash glyph, and @code{\&} before @code{.} and @code{'} where GNU
+Use @code{\e} to represent the escape character, @code{\[rs]} to obtain
+a backslash glyph, and @code{\&} before @samp{.} and @samp{'} where GNU
 @code{troff} expects them as control characters if you mean to use them
 literally (recall @ref{Requests and Macros}).
 
@@ -14754,10 +14755,10 @@ file@tie{}@file{f}, use
 The calls to @code{ev} prevent the partially collected output line
 from becoming part of the diversion (@pxref{Diversions}).
 
-Both @code{trf} and @code{cf}, when used in a diversion, embeds an
-object in the diversion which, when reread, causes the contents of
-@var{file} to be transparently copied through to the output.  In
-@acronym{AT&T} @code{troff}, the contents of @var{file} is immediately
+Both @code{trf} and @code{cf}, when used in a diversion, embed a node
+(@pxref{Gtroff Internals}) in it that, when reread, causes the contents
+of @var{file} to be transparently copied to the output.  In
+@acronym{AT&T} @code{troff}, the contents of @var{file} are immediately
 copied through to the output regardless of whether there is a current
 diversion; this behaviour is so anomalous that it must be considered a
 bug.
@@ -15842,7 +15843,7 @@ descendants, which have less fastidious diagnostics than GNU
 @code{troff}.
 
 @item w
-All warning categoriess.  Authors of documents and macro packages
+All warning categories.  Authors of documents and macro packages
 targeting @code{groff} are encouraged to use this setting.
 @end table
 @c END Keep parallel with section "Warnings" of troff(1).
