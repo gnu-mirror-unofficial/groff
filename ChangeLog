@@ -1,5 +1,41 @@
 2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[font,tmac]: Simplify Unicode character mapping process.
+
+	* tmac/unicode.tmac: Drop.  It was originally added in 2005 to
+	suppress horizontal spacing of glyphs in the range U+0483..9.
+	Its purpose has wandered over the years; most recently to map
+	the Basic Latin ("ASCII") hyphen-minus, apostrophe, and grave
+	accent to special characters (and thus ultimately to the General
+	Punctuation block).  But this is unnecessary since the font
+	descriptions for devices with the `unicode` property can provide
+	this information, and anyone who wants to alter the mappings can
+	change either font description files, output device macro files,
+	or troffrc; or add `char` requests to their macro packages or
+	documents (in decreasing magnitude of ambition).
+
+	* tmac/html.tmac:
+	* tmac/tty.tmac: Stop sourcing unicode.tmac.
+
+	* tmac/tmac.am (TMACNORMALFILES): Stop shipping it.
+
+	* font/devutf8/NOTES: Drop remarks about mapping of \[a~],
+	\[a^], and Basic Latin circumflex accent and tilde.  Not only do
+	I disagree with the reasoning (whether these glyphs are "too
+	small" depends on the font used by the terminal emulator, over
+	which we have no control), but this mapping happens in a
+	completely different part of the source tree,
+	src/libs/libgroff/glyphuni.cpp.
+
+	* font/devhtml/R.proto:
+	* font/devutf8/R.proto: Add mappings for the five Basic Latin
+	characters that map surprisingly (see groff_char(7)) and are not
+	syntactically significant to troff.  Three of these are ported
+	from unicode.tmac.
+	(html): Don't migrate the hyphen-minus--yet.
+
+2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tty-char.tmac: Drop redundant logic.  We don't need to
 	source the `cp1047` or `latin1` files here; `troffrc` will
 	already have loaded `tty` for us, which already does so.
