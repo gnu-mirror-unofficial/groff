@@ -1,5 +1,25 @@
 2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[libdriver]: Update diagnostic messages.
+
+	* src/libs/libdriver/printer.cpp (printer::find_font): Describe
+	the problem encountered instead of saying lamely "sorry, I can't
+	continue".
+	(printer::set_char_and_width, printer::set_numbered_char):
+	Characterize input as "invalid", not "bad"; see commit bb7512b5,
+	17 September.  When referring to font mounting position, say so.
+	(printer::set_char_and_width): Describe required input character
+	as "ordinary", not "ascii".  Apart from the incorrect casing,
+	doing so better aligns with our terminology in groff_char(7),
+	groff_out(5), our Texinfo manual, and other diagnostic messages;
+	moreover, the use of "ascii" is potentially confusing to those
+	whose environments use another encoding, like UTF-8 or IBM code
+	page 1047.
+
+	Fixes <https://savannah.gnu.org/bugs/?61829>.
+
+2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grotty]: Check basic Latin ("ASCII") glyph mappings.
 
 	* src/devices/grotty/tests/basic_latin_glyphs_map_correctly.sh:
