@@ -1,5 +1,15 @@
 2022-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[font]: For 'ascii' and 'latin1' devices, consistently define
+	glyphs for ordinary characters before their special character
+	aliases.  This parallels existing usage for the 'cp1047' device,
+	and, I think, makes the file contents slightly more accessible.
+
+	* font/devascii/R.proto:
+	* font/devlatin1/R.proto: Do it.
+
+2022-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Update diagnostic messages.
 
 	* src/devices/grohtml/post-html.cpp (assert_state::add,
