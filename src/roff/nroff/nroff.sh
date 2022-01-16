@@ -70,7 +70,7 @@ do
       cat <<EOF
 usage: $prog [-bcCEhikpRStUVz] [-dCS] [-dNAME=STRING] [-Karg] [-mNAME]\
  [-Mdir] [-nNUM] [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tdev] [-wNAME]\
- [-Wname] [FILE ...]
+ [-Wname] [file] ...
 usage: $prog {--help | -v | --version}
 EOF
       exit 0 ;;

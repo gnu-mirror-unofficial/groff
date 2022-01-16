@@ -1,3 +1,19 @@
+2022-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[grohtml,groff,nroff,troff]: Tweak usage message.
+
+	* src/devices/grohtml/post-html.cpp (usage):
+	* src/roff/groff/groff.cpp (synopsis):
+	* src/roff/nroff/nroff.sh:
+	* src/roff/troff/input.cpp (usage): Stop putting an ellipsis
+	inside a bracket expression (for file arguments); that suggests
+	misleading complexity.
+
+	* src/devices/grohtml/post-html.cpp (usage): Also don't set
+	metasyntactic variable names in screaming capitals when they are
+	separated from option letters by space and thus can't be
+	confused with them.
+
 2022-01-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[libdriver]: Update diagnostic messages.

@@ -7987,7 +7987,7 @@ void usage(FILE *stream, const char *prog)
   fprintf(stream,
 "usage: %s [-abcCEiRUz] [-dCS] [-dNAME=STRING] [-fFAM] [-Fdir]"
 " [-Idir] [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-rCN] [-rREG=EXPR]"
-" [-Tdev] [-wNAME] [-Wname] [FILE ...]\n"
+" [-Tdev] [-wNAME] [-Wname] [file] ...\n"
 "usage: %s {-h | --help | -v | --version}\n",
 	  prog, prog);
 }

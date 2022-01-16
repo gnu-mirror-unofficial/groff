@@ -5670,11 +5670,12 @@ int main(int argc, char **argv)
 
 static void usage(FILE *stream)
 {
-  fprintf(stream, "usage: %s [-bCGhlnrVy] [-F FONT-DIRECTORY]"
-	  " [-j OUTPUT-STEM] [-s BASE-POINT-SIZE] [-S HEADING-LEVEL]"
-	  " [-x HTML-DIALECT] [FILE ...]\n",
+  fprintf(stream, "usage: %s [-bCGhlnrVy] [-F font-directory]"
+	  " [-j output-stem] [-s base-point-size] [-S heading-level]"
+	  " [-x html-dialect] [file] ...\n",
 	  program_name);
-  fprintf(stream, "usage: %s -v\n", program_name);
+  fprintf(stream, "usage: %s {--help | -v | --version}\n",
+	  program_name);
 }
 
 // Local Variables:
