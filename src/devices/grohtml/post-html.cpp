@@ -1776,8 +1776,8 @@ void assert_state::add (assert_pos **h,
 	l = strsave("<none>");
       if (0 /* nullptr */ == v)
 	v = "no value at all";
-      fprintf(stderr, "%s:%s:%s:error in assert format of id=%s;"
-	      " expecting value to be prefixed with an '=', got %s\n",
+      fprintf(stderr, "%s:%s:%s: error in assertion format of id=%s;"
+	      " expected value prefixed with an '=', got %s\n",
 	      program_name, f, l, i, v);
     }
     t->id = i;
@@ -1815,8 +1815,8 @@ void assert_state::compare(assert_pos *t,
       f = "stdin";
     if (0 /* nullptr */ == l)
       l = "<none>";
-    fprintf(stderr, "%s:%s: grohtml assertion failed at id%s "
-		    "expecting %s and was given %s\n", f, l, t->id, s, v);
+    fprintf(stderr, "%s:%s: grohtml assertion failed at id%s: "
+		    "expected %s, got %s\n", f, l, t->id, s, v);
   }
 }
 
@@ -1846,7 +1846,7 @@ const char *replace_negate_str (const char *before, char *after)
     int d = atoi(after);
 
     if (d < 0 || d > 1) {
-      fprintf(stderr, "expecting nf/fi value to be 0 or 1 not %d\n", d);
+      fprintf(stderr, "expected nf/fi value of 0 or 1, got %d\n", d);
       d = 0;
     }
     if (d == 0)
@@ -1925,9 +1925,8 @@ int assert_state::check_value_error (int c, int v, const char *s,
       f = "stdin";
     if (0 /* nullptr */ == l)
       l = "<none>";
-    fprintf(stderr, "%s:%s:grohtml (troff state) assertion failed, "
-	    "expected %s to be %s but found it to contain %d\n", f, l,
-	    name, s, v);
+    fprintf(stderr, "%s:%s:grohtml (troff state) assertion failed; "
+	    "expected %s to be %s, got %d\n", f, l, name, s, v);
     return 0;
   }
   return flag;
@@ -4790,7 +4789,7 @@ void html_printer::set_char(glyph *g, font *f, const environment *env,
 	    *env->col);
   if (sty.slant != 0) {
     if (sty.slant > 80 || sty.slant < -80) {
-      error("silly slant '%1' degrees", sty.slant);
+      error("slant of %1 degrees out of range", sty.slant);
       sty.slant = 0;
     }
   }
@@ -4830,12 +4829,12 @@ void html_printer::set_numbered_char(int num, const environment *env,
   glyph *g = number_to_glyph(num);
   int fn = env->fontno;
   if (fn < 0 || fn >= nfonts) {
-    error("bad font position '%1'", fn);
+    error("invalid font position '%1'", fn);
     return;
   }
   font *f = font_table[fn];
   if (f == 0) {
-    error("no font mounted at '%1'", fn);
+    error("no font mounted at position %1", fn);
     return;
   }
   if (!f->contains(g)) {
@@ -4862,17 +4861,17 @@ glyph *html_printer::set_char_and_width(const char *nm,
   glyph *g = name_to_glyph(nm);
   int fn = env->fontno;
   if (fn < 0 || fn >= nfonts) {
-    error("bad font position '%1'", fn);
+    error("invalid font position '%1'", fn);
     return UNDEFINED_GLYPH;
   }
   *f = font_table[fn];
   if (*f == 0) {
-    error("no font mounted at '%1'", fn);
+    error("no font mounted at position %1", fn);
     return UNDEFINED_GLYPH;
   }
   if (!(*f)->contains(g)) {
     if (nm[0] != '\0' && nm[1] == '\0')
-      error("font '%1' does not contain ascii character '%2'",
+      error("font '%1' does not contain ordinary character '%2'",
 	    (*f)->get_name(), nm[0]);
     else
       error("font '%1' does not contain special character '%2'",
@@ -5329,8 +5328,8 @@ char *make_val (char *s, int v, char *id, char *f, char *l)
 	f = (char *)"stdin";
       if (0 /* nullptr */ == l)
 	l = (char *)"<none>";
-      fprintf(stderr, "%s:%s: grohtml assertion failed at id%s "
-	      "expecting %d and was given %s\n", f, l, id, v, s);
+      fprintf(stderr, "%s:%s: grohtml assertion failed at id%s; "
+	      "expected %d, got %s\n", f, l, id, v, s);
     }
     return s;
   }
@@ -5657,7 +5656,7 @@ int main(int argc, char **argv)
       exit(1);
       break;
     default:
-      assert(0);
+      assert(0 == "unhandled getopt_long return value");
     }
   if (optind >= argc) {
     do_file("-");
