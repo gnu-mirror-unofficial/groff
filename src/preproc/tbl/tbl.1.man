@@ -305,10 +305,12 @@ its entries and its column separations
 When
 .B expand
 applies to a table that exceeds the available horizontal space,
-.I tbl
-issues a diagnostic,
-and column separation is automatically reduced as far as
-necessary\[em]even to zero.
+column separation is reduced as far as necessary\[em]even to zero.
+.
+.I \%@g@tbl
+produces
+.I groff
+input that issues a diagnostic if this occurs.
 .
 The column modifier
 .B x
@@ -407,7 +409,7 @@ make separation necessary.
 Column classifiers are letters or punctuation symbols,
 whereas modifiers consist of or begin with letters or numerals.
 .
-Both are recognized case-insensitively.
+Letters are recognized case-insensitively.
 .
 .
 .P
@@ -498,10 +500,10 @@ classifiers are the easiest to understand and use.
 .
 .TP
 .BR A ,\~ a
-Center longest entry in this column;
+Center longest entry in this column,
 left-align remaining entries in the column with respect to the centered
 entry,
-then indent them all by one en.
+then indent all entries by one en.
 .
 Such \[lq]alphabetic\[rq] entries
 (hence the name of the classifier)
@@ -597,7 +599,7 @@ Span previous entry on the left into this column.
 .
 .
 .TP
-.B ^
+.B \[ha]
 Span entry in the same column from the previous row into this row.
 .
 .
@@ -685,8 +687,6 @@ If the same modifier is applied to a column specifier more than once,
 or if conflicting modifiers are applied,
 only the last occurrence has effect.
 .
-.
-.P
 The
 .RB modifier\~ x
 is mutually exclusive with
@@ -695,10 +695,8 @@ is mutually exclusive with
 but
 .B e
 is not mutually exclusive
-.RB with\~ w .
-.
-If these are repeated or used in combination,
-the last of them controls:
+.RB with\~ w ;
+if these are used in combination,
 .BR x \~unsets
 both
 .B e
@@ -710,6 +708,8 @@ or
 .RB overrides\~ x .
 .
 .
+.br
+.ne 4v \" Keep next two tagged paragraphs together.
 .TP
 .BR b ,\~ B
 Typeset entry in bold;
@@ -741,14 +741,14 @@ This modifier sets the default line length used in a text block.
 Select the font used for the table entry.
 .
 This modifier must be followed by a font name
-(either one or two characters),
+(one or two characters not starting with a digit),
 font mounting position
 (a single digit),
 or a name or mounting position of any length in parentheses.
 .
 The last form is a GNU extension.
 .
-(The parameter corresponds to that set by the
+(The parameter corresponds to that accepted by the
 .I troff \" generic
 .B ft
 request.)
@@ -789,16 +789,15 @@ like adjustment or hyphenation.
 .
 The macro is called
 .I after
-other the column modifiers
+the column modifiers
 .BR b ,
 .BR f ,
 .BR i ,
 .BR p ,
 and
 .B v
-take effect.
-.
-The macro can thus override other column modifiers.
+take effect;
+it can thus override other column modifiers.
 .
 .
 .TP
@@ -809,7 +808,7 @@ This modifier must be followed by an
 .RI integer\~ n
 with an optional leading sign.
 .
-(The parameter corresponds to that set by the
+(The parameter corresponds to that accepted by the
 .I troff \" generic
 .B ps
 request.)
@@ -852,11 +851,10 @@ This is a GNU extension.
 Set the vertical spacing to be used in a table entry containing a text
 block.
 .
-(This parameter corresponds to that set by the
+(This parameter corresponds to that accepted by the
 .I troff \" generic
 .B vs
-request;
-it is the distance between adjacent text baselines.)
+request.)
 .
 This modifier must be followed by an
 .RI integer\~ n
@@ -906,9 +904,9 @@ This modifier sets the default line length used in a text block.
 .BR x ,\~ X
 Expand the column.
 .
-After computing the widths of all columns lacking an
-.BR x \~modifier,
-distribute any remaining line length over all columns bearing it.
+After computing the column widths,
+distribute any remaining line length evenly over all columns bearing
+this modifier.
 .
 Applying the
 .BR x \~modifier
@@ -955,8 +953,12 @@ provokes a diagnostic from
 The table data come after the format specification.
 .
 Each input line corresponds to a table row,
-but a backslash immediately preceding a newline continues a table row
-onto the next input line.
+except that a backslash at the end of a line of table data continues its
+row onto the next input line.
+.
+(Text blocks,
+discussed below,
+also spread table entries across multiple input lines.)
 .
 Table entries within a row are separated in the input by a tab character
 by default;
@@ -995,31 +997,30 @@ hyphenated,
 adjusted,
 or populated with inter-sentence space.
 .
-Except in columns using the
+.I \%@g@tbl
+measures each table entry as it occurs in the input,
+updating the width required by its corresponding column.
+.
+The
+.B x
+modifier makes this width a minimum,
+and the modifiers
 .B w
 or
 .B z
-modifiers,
-.I \%@g@tbl
-measures the width of each table entry as it occurs in the input;
-if it is wider than the widest entry yet seen in that column,
-the entry's width determines that of the column.
+override it entirely.
 .
-Once the table region ends,
-the column widths are known.
-.
-In contrast to typical
+In contrast to conventional
 .I roff
-documents
+input
 (within a paragraph,
 say),
 changes to text formatting,
-such as font or vertical spacing,
+such as font selection or vertical spacing,
 do not persist between entries.
 .
 .
 .P
-.ne 3v
 Several forms of table entry are interpreted specially.
 .
 .
@@ -1169,6 +1170,9 @@ Text block tokens can share an input line with other table data
 and following
 .BR T} ).
 .
+Input lines between these tokens are formatted in a diversion by
+.IR troff . \" generic
+.
 Text blocks cannot be nested.
 .
 Multiple text blocks can occur in a table row.
@@ -1205,9 +1209,8 @@ As with other table entries,
 when a text block ends,
 any alterations to its formatting are discarded.
 .
-They do not
-affect subsequent table entries,
-including text blocks.
+They do not affect subsequent table entries,
+not even other text blocks.
 .
 .
 .P
@@ -1251,13 +1254,15 @@ its width is subsequently available in the register
 .
 The register
 .B TW
-stores width of the table region in basic units;
+stores the width of the table region in basic units;
 it can't be used within the region itself,
 but is defined before the
 .B .TE
-token is output so that a defined
+token is output so that a
 .I groff
-macro of that name can make use of it.
+macro named
+.B TE
+can make use of it.
 .
 .
 .P
@@ -1299,7 +1304,7 @@ and if it is not,
 the
 .B lf
 requests that
-.I tbl
+.I \%@g@tbl
 injects to restore the source line number cannot take effect.
 .
 Consider copying the input line counter register
@@ -1499,7 +1504,7 @@ within the table data,
 call the
 .B TH
 macro;
-this informs the macro package where the row(s) of table headings end.
+this informs the macro package where the headings end.
 .
 If your table has no such heading rows,
 or you do not desire their repetition,
@@ -1742,7 +1747,7 @@ vertical alignment,
 and zero-width column modifiers from the
 .I mandoc
 reference for its
-.I tbl
+.I tbl \" generic
 interpreter.
 .
 It rewards close study.
