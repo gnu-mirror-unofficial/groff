@@ -11780,29 +11780,27 @@ operators are available; the members of this expanded class are termed
 
 @table @code
 @item c @var{glyph}
-True if a @var{glyph} is available, where @var{glyph} is a Unicode basic
-Latin character, a GNU @code{troff} special character @samp{\(@var{xx}}
-or @samp{\[@var{xxx}]}, @samp{\N'@var{xxx}'}, or has been defined by any
-of the @code{char}, @code{fchar}, @code{fschar}, or @code{schar}
-requests.
+True if @var{glyph} is available, where @var{glyph} is
+@c TODO: "an ordinary character", after we update the section "Fonts and
+@c Symbols" to better parallelize it with groff_char(7).
+a Unicode basic Latin character, a GNU @code{troff} special character
+@samp{\(@var{xx}} or @samp{\[@var{xxx}]}, @samp{\N'@var{xxx}'}, or has
+been defined by any of the @code{char}, @code{fchar}, @code{fschar}, or
+@code{schar} requests.
 
 @item d @var{name}
-True if there is a string, macro, diversion, or request called
-@var{name}.
+True if a string, macro, diversion, or request called @var{name} exists.
 
 @item e
 True if the current page is even-numbered.
 
 @item F @var{font}
-True if a font called @var{font} exists.  @var{font} is handled as if it
-were opened with the @code{ft} request (that is, font translation and
-styles are applied), without actually mounting it.
-
-This test doesn't load the complete font, but only its header to verify
-its validity.
+True if @var{font} exists.  @var{font} is handled as if it were opened
+with the @code{ft} request (that is, font translation and styles are
+applied), without actually mounting it.
 
 @item m @var{color}
-True if there is a color called @var{color}.
+True if @var{color} is defined.
 
 @item n
 @cindex conditional output for terminal (TTY)
@@ -11816,10 +11814,10 @@ True if the document is being processed in @code{nroff} mode (i.e., the
 True if the current page is odd-numbered.
 
 @item r @var{reg}
-True if there is a register called @var{reg}.
+True if register @var{reg} exists.
 
 @item S @var{style}
-True if a style called @var{style} has been registered.  Font
+True if @var{style} is available for the current font family.  Font
 translation is applied.
 
 @item t
@@ -11904,8 +11902,8 @@ still lexically recognized, however, and consumes the next character.
 @end table
 
 The above operators can't be combined with most others, but a leading
-@samp{!} (without spaces or tabs between the exclamation mark and the
-operator) can be used to complement the result.
+@samp{!}, not followed immediately by spaces or tabs, complements an
+expression.
 
 @Example
 .nr x 1
