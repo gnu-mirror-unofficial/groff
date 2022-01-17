@@ -11806,24 +11806,22 @@ True if @var{color} is defined.
 @cindex conditional output for terminal (TTY)
 @cindex TTY, conditional output for
 @cindex terminal, conditional output for
-True if the document is being processed in @code{nroff} mode (i.e., the
-@code{nroff} request has been issued).  @xref{@code{troff} and
-@code{nroff} Modes}.
+True if the document is being processed in @code{nroff} mode.
+@xref{@code{troff} and @code{nroff} Modes}.
 
 @item o
 True if the current page is odd-numbered.
 
-@item r @var{reg}
-True if register @var{reg} exists.
+@item r @var{register}
+True if @var{register} exists.
 
 @item S @var{style}
 True if @var{style} is available for the current font family.  Font
 translation is applied.
 
 @item t
-True if the document is being processed in @code{troff} mode (i.e., the
-@code{troff} request has been issued).  @xref{@code{troff} and
-@code{nroff} Modes}.
+True if the document is being processed in @code{troff} mode.
+@xref{@code{troff} and @code{nroff} Modes}.
 
 @item v
 Always false.  This condition is recognized only for compatibility with
@@ -11938,7 +11936,7 @@ obvious.
 
 @Defreq {if, cond-expr anything}
 Evaluate the conditional expression @var{cond-expr}, and if it evaluates
-true (that is, to a positive value), interpret the remainder of the line
+true (or to a positive value), interpret the remainder of the line
 @var{anything} as if it were an input line.  Recall from @ref{Request
 and Macro Arguments} that any quantity of spaces between arguments to
 requests serves only to separate them; leading spaces in @var{anything}
@@ -15430,9 +15428,9 @@ front of it until it works and if you still have problems add a \c.}
 @end flushright
 
 GNU @code{troff} is not the easiest language to debug, in part thanks to
-its design features of recursive interpolation and multi-stage pipeline
-processing.  Nevertheless there exist several features useful for
-troubleshooting.
+its design features of recursive interpolation and the use of multi-stage
+pipeline processing in the surrounding system.  Nevertheless there exist
+several features useful for troubleshooting.
 
 Preprocessors use the @code{lf} request to preserve the identity of the
 line numbers and names of input files.  GNU @code{troff} emits a variety
