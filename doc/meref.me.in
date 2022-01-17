@@ -1705,10 +1705,16 @@ backslashes must precede
 For example,
 \[lq]\c
 .b ".++ RA |||\eEn(ch.%|" \[rq]
-numbers appendices as
-.b A. \c
+numbers appendices and pages as
+.bi A .\c
 .bi n
-in the right-hand header.
+in the right-hand header,
+where
+.i A
+is the appendix letter
+and
+.i n
+is the page number.
 Each subdivision of a segment
 (each chapter,
 appendix,
@@ -1721,8 +1727,10 @@ It is easier when using
 at the end of the paper,
 so that the table of contents
 can be collected and put out;
-this material can then be physically
-moved to the beginning of the printed document.
+this material can then be resequenced
+by a tool that processes the output format,
+or physically moved
+to the beginning of the printed document.
 .TL
 .b .+c
 .i T
@@ -2199,7 +2207,7 @@ and a square \(sq marks \*G extensions.
 \&.TE	M	end \fI@g@tbl\fP table
 \&.TH	M	end heading for multi-page \fI@g@tbl\fP table
 \&.TS	M	begin \fI@g@tbl\fP table
-\e^	F\(sc	1/12 em unbreakable hair space
+\e\(ha	F\(sc	1/12 em unbreakable hair space
 \e_	F\(sc	underscore
 \e\(ga	F\(sc	grave accent
 \&.ad	M\(sc	set text adjustment mode
