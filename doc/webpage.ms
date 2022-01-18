@@ -1030,7 +1030,7 @@ The following macros aren't new but haven't been documented previously:
 \&\.\.\.,
 .B OMEGA )
 .br
-\fBldots\fP (three dots on the base line)
+\fBldots\fP (three dots on the baseline)
 .br
 \fBdollar\fP (a dollar glyph)
 .in
