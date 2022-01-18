@@ -3147,10 +3147,10 @@ The @code{FAM} string sets the font family for body text.  If this
 string is undefined at initialization, it is set to @samp{T} (Times).
 Setting the @code{FAM} string before the first call of a sectioning,
 paragraphing, or (non-date) document description macro also applies it
-to headers, footers, and footnotes (as well as the body text).
+to headers, footers, and footnotes.
 
-The hyphenation flags (as used by the @code{hy} request) are set using
-the @code{HY} register.
+The hyphenation mode (as used by the @code{hy} request) is set from the
+@code{HY} register.
 
 @menu
 * Paragraphs in ms::
@@ -3494,10 +3494,10 @@ Rather than calling the @code{CW} macro, in @code{groff} @file{ms} you
 might prefer to change the font family to Courier---a monospaced
 typeface---by setting the @code{FAM} string to @samp{C}.  You can then
 use all four style macros above, returning to the default family (Times)
-with @samp{.ds FAM T}.  Because @code{FAM} takes effect at the next
-paragraph, @code{CW} remains useful to ``inline'' a change to the font
-family, similarly to the practice of this document in noting syntactical
-elements of @file{ms} and @code{groff}.
+with @samp{.ds FAM T}.  Because changes to @code{FAM} take effect only
+at the next paragraph, @code{CW} remains useful to ``inline'' a change
+to the font family, similarly to the practice of this document in noting
+syntactical elements of @file{ms} and @code{groff}.
 
 @c ---------------------------------------------------------------------
 

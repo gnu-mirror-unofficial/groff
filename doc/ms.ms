@@ -694,16 +694,15 @@ before the first call of a sectioning,
 paragraphing,
 or (non-date) document description macro also applies it to headers,
 footers,
-and footnotes
-(as well as the body text).
+and footnotes.
 .
 .
 .PP
-The hyphenation flags
+The hyphenation mode
 (as used by the
 .CW hy
 request)
-are set using the
+is set from the
 .CW HY
 register.
 .KE
@@ -1412,9 +1411,9 @@ You can then use all four style macros above,
 returning to the default family (Times) with
 .CW ".ds FAM T" \[rq]. \[lq]
 .
-Because
+Because changes to
 .CW \[rs]*[FAM]
-takes effect at the next paragraph,
+take effect only at the next paragraph,
 this document uses
 .CW .CW
 to \[lq]inline\[rq] a change to the font family,
