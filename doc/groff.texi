@@ -2837,12 +2837,12 @@ Default: 1.
 @unnumberedsubsubsec Heading Settings
 
 @Defmpreg {PSINCR, ms}
-Defines an increment in point size to be applied to a headings at a
-level more significant (numerically less) than the value specified in
-@code{GROWPS}.  The value of @code{PSINCR} should be specified in points
-with the @dmn{p} scaling indicator and may include a fractional
-component; for example, @w{@samp{.nr PSINCR 1.5p}} sets a point size
-increment of 1.5@dmn{p}.  This is a GNU extension.
+Defines an increment in type size to be applied to a heading at a
+lesser depth than that specified in @code{GROWPS}.  The value of
+@code{PSINCR} should be specified in points with the @dmn{p} scaling
+indicator and may include a fractional component; for example,
+@w{@samp{.nr PSINCR 1.5p}} sets a type size increment of 1.5@dmn{p}.
+This is a GNU extension.
 
 Effective: next heading.
 
@@ -2850,11 +2850,11 @@ Default: 1@dmn{p}.
 @endDefmpreg
 
 @Defmpreg {GROWPS, ms}
-Defines the heading level at which the point size increment set by
-@code{PSINCR} becomes effective.  For each level below the value of
-@code{GROWPS}, the point size is increased by @code{PSINCR}.  Setting
-@code{GROWPS} to any value less than@tie{}2 disables the incremental
-heading size feature.  This is a GNU extension.
+Defines the heading depth at which the type size increment set by
+@code{PSINCR} becomes effective.  For each heading depth less than the
+value of @code{GROWPS}, the type size is increased by @code{PSINCR}.
+Setting @code{GROWPS} to any value less than@tie{}2 disables the
+incremental heading size feature.  This is a GNU extension.
 
 Effective: next heading.
 
@@ -3145,7 +3145,7 @@ footnotes, and inclusions of material such as tables and figures.
 
 The @code{FAM} string sets the font family for body text.  If this
 string is undefined at initialization, it is set to @samp{T} (Times).
-Setting the @code{FAM} string before the first call of a sectioning,
+Setting the @code{FAM} string before the first call of a heading,
 paragraphing, or (non-date) document description macro also applies it
 to headers, footers, and footnotes.
 
@@ -3258,29 +3258,30 @@ software.
 
 Use headings to create a sequential or hierarchical structure for your
 document.  The @file{ms} macros print headings in @strong{bold} using
-the same font family and, by default, point size as the body text.
+the same font family and, by default, type size as the body text.
 Headings are available with and without automatic numbering.  Text lines
 immediately after heading macro calls are treated as part of the
 heading, rendered on the same output line in the same style.
 
-@DefmacList {NH, @Var{level}, ms}
-@DefmacListEnd {NH, @t{S} @Var{heading-level-index} @dots{}, ms}
-Automatically numbered heading.
+@DefmacList {NH, @Var{depth}, ms}
+@DefmacListEnd {NH, @t{S} @Var{heading-depth-index} @dots{}, ms}
+Set an automatically numbered heading.
 
-The @var{level} argument instructs @file{ms} to number headings in the
+The @var{depth} argument instructs @file{ms} to number headings in the
 form @var{a.b.c@dots{}}, to any depth desired, with the numbering of
-each level increasing automatically and being reset to zero when a more
+each depth increasing automatically and being reset to zero when a more
 significant level is increased.  ``1''@tie{}is the most significant or
 coarsest division of the document.  Only nonzero values are output.
 
-If you specify heading levels with a gap in an ascending sequence, such
-as by calling @samp{.NH 1} and then @samp{.NH 1} as the next such call,
-@code{groff} @file{ms} emits a warning on the standard error stream.
+If you specify @var{depth} such that an ascending gap occurs relative to
+the previous @code{NH} call---that is, you ``skip a depth'', as by
+@samp{.NH 1} and then @samp{.NH 3}---@code{groff} @file{ms} emits a
+warning on the standard error stream.
 
-Alternatively, a first argument of@tie{}@code{S} can be given, followed
-by integral arguments to number the levels of the heading explicitly.
-Further automatic numbering, if used, resumes using the specified
-heading level indices as their predecessors.
+Alternatively, you can give @code{NH} a first argument of@tie{}@code{S},
+followed by integers arguments to number the the heading depths
+explicitly.  Further automatic numbering, if used, resumes using the
+specified indices as their predecessors.
 @c Although undocumented in Tuthill's 4.2BSD ms.diffs paper...
 This feature is a Berkeley extension.
 @endDefmac
@@ -3343,15 +3344,14 @@ its inclusion in @code{XS}/@code{XA}/@code{XE} table of contents
 entries.
 @endDefmpstr
 
-@Defmac {SH, [@Var{match-level}], ms}
-Unnumbered heading.
+@Defmac {SH, [@Var{depth}], ms}
+Set an unnumbered heading.
 
-The optional @var{match-level} argument is a GNU extension.  It is a
-number indicating the level of the heading corresponding to the
-@var{level} argument to @code{NH}.  Its purpose is to match the point
-size at which the heading is printed to the size of a numbered heading
-at the same level when the @code{GROWPS} and @code{PSINCR} heading size
-adjustment mechanism is in effect.
+The optional @var{depth} argument is a GNU extension indicating the
+heading depth corresponding to the @var{depth} argument of @code{NH}.
+It matches the type size at which the heading is set to that of a
+numbered heading at the same depth when the @code{GROWPS} and
+@code{PSINCR} heading size adjustment mechanism is in effect.
 @endDefmac
 
 If the @code{GROWPS} register is set to a value greater than the
@@ -4065,7 +4065,7 @@ By default, @file{ms} prints no header on any page numbered ``1''
 Print the header on page@tie{}1.  To be effective, this macro must be
 called before the header trap is sprung on any page numbered ``1''; in
 practice, unless your page numbering is unusual, this means that you
-should call it early, before @code{TL} or any sectioning or paragraphing
+should call it early, before @code{TL} or any heading or paragraphing
 macro.  This is a Berkeley extension.
 @endDefmac
 
@@ -4156,14 +4156,16 @@ document, depending on the output format and circumstances.
 
 Define an entry to appear in the table of contents by bracketing its
 text between calls to the @code{XS} and @code{XE} macros.  A typical
-application is to call them immediately after @code{NH} or @code{SH}
-pairs, supplements an entry---for instance, when it requires multiple
-output lines, whether because a heading is too long to fit or because
-style dictates that page numbers not be repeated.  In a document with a
-multi-level sectioning structure, you may wish to indent the text thus
-wrapped to correspond to its sectioning depth; this can be done in the
-entry text by prefixing it with tabs or horizontally spacing escape
-sequences, or by providing a second argument to the @code{XA} macro.
+application is to call them immediately after @code{NH} or @code{SH} and
+repeat the heading text within them.  The @code{XA} macro, used within
+@samp{.XS}/@samp{.XE} pairs, supplements an entry---for instance, when
+it requires multiple output lines, whether because a heading is too long
+to fit or because style dictates that page numbers not be repeated.  You
+may wish to indent the text thus wrapped to correspond to its heading
+depth; this can be done in the entry text by prefixing it with tabs or
+horizontally spacing escape sequences, or by providing a second argument
+to the @code{XA} macro.
+
 @code{XS} and @code{XA} automatically associate the page number where
 they are called with the text following them, but they accept arguments
 to override this behavior.  At the end of the document, call @code{TC}

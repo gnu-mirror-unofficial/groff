@@ -4,7 +4,7 @@
 .  ftr CB B
 .  ftr CI I
 .  ftr CBI BI
-.  \" Redefine CW so to use bold instead for a visible font change.
+.  \" Redefine CW to use bold instead for a visible font change.
 .  als CW B
 .\}
 .\" This document doesn't require the minus sign but we do want a copy-
@@ -22,8 +22,8 @@
 .nr TC-MARGIN \w'00' \" expect 2-digit page numbers at most
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND October 2021
-.EH '%''October 2021'
+.ND January 2022
+.EH '%''January 2022'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -346,7 +346,7 @@ Paragraphs	\[rs]n[PI]	Indentation	next paragraph	5n
 \^	\[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
 _
 Headings	\[rs]n[PSINCR]	Point size increment	next heading	1p
-\^	\[rs]n[GROWPS]	Size increase level limit	next heading	0
+\^	\[rs]n[GROWPS]	Size increase depth limit	next heading	0
 \^	\[rs]n[HORPHANS]	# of following lines kept	next heading	1
 \^	\[rs]*[SN\-STYLE]	Numbering style (alias)	next heading	\[rs]*[SN\-DOT]
 _
@@ -690,7 +690,7 @@ it is set to
 .
 Setting
 .CW \[rs]*[FAM]
-before the first call of a sectioning,
+before the first call of a heading,
 paragraphing,
 or (non-date) document description macro also applies it to headers,
 footers,
@@ -873,6 +873,7 @@ T}
 .KE
 .
 .
+.KS
 .NH 2
 Headings
 .XS
@@ -889,7 +890,7 @@ macros print headings in
 .B bold
 using the same font family and,
 by default,
-point size as the body text.
+type size as the body text.
 .
 Headings are available with and without automatic numbering.
 .
@@ -904,11 +905,11 @@ cb cb
 lf(CR) lx .
 Macro	Description
 _
-\&.NH \f[I]level\f[]	T{
-Automatically numbered heading.
+\&.NH \f[I]depth\f[]	T{
+Set an automatically numbered heading.
 .
 The
-.I level
+.I depth
 argument instructs
 .I ms
 to number headings in the form
@@ -917,40 +918,45 @@ to number headings in the form
 .I b .\c
 .R
 .I c .\|.\|.,
-to any depth desired,
-with the numbering of each level increasing automatically and being
-reset to zero when a more significant level is increased.
+to any level desired,
+with the numbering of each depth increasing automatically and being
+reset to zero when a more significant depth increases.
 .
 \[lq]1\[rq]\~is the most significant or coarsest division of the
 document.
 .
 Only nonzero values are output.
 .
-If you specify heading levels with a gap in an ascending sequence,
-such as by
+If you specify
+.I depth
+such that an ascending gap occurs relative to the previous
+.CW NH
+call\[em]that is,
+you \[lq]skip a depth\[rq],
+as by
 .CW ".NH\~1" \[rq] \[lq]
 and then
-.CW ".NH\~3" \[rq] \[lq]
-as the next such call,
-.I "groff ms"
+.CW ".NH\~3" \[rq]\c \[lq]
+.I "groff ms" "" \[em]
 emits a warning on the standard error stream.
 T}
-\&.NH S \f[I]heading-level-index\f[]\f[R] .\|.\|.\f[]	T{
+\&.NH S \f[I]heading-depth-index\f[]\f[R] .\|.\|.\f[]	T{
 Alternatively,
+you can give
+.CW NH
 a first argument
-.CW S "" of\~
-can be given,
-followed by integral arguments to number the levels of the heading
-explicitly.
+.CW S , of\~
+followed by integers to number the heading depths explicitly.
 .
 Further automatic numbering,
 if used,
-resumes using the specified heading level indices as their predecessors.
+resumes using the specified indices as their predecessors.
 .
 .\" Although undocumented in Tuthill's 4.2BSD ms.diffs paper...
 This feature is a Berkeley extension.
 T}
 .TE
+.KE
 .
 .
 .PP
@@ -1055,19 +1061,19 @@ cb cb
 lf(CR) lx .
 Macro	Description
 _
-\&.SH [\f[I]level\f[]]	T{
-Unnumbered heading.
+\&.SH [\f[I]depth\f[]]	T{
+Set an unnumbered heading.
 .
 The optional
-.I level
-argument is a GNU extension indicating the heading level corresponding
+.I depth
+argument is a GNU extension indicating the heading depth corresponding
 to the
-.I level
+.I depth
 argument of
 .CW .NH .
 .
-It matches the point size at which the heading is printed to that of a
-numbered heading at the same level when the
+It matches the type size at which the heading is set to that of a
+numbered heading at the same depth when the
 .CW \[rs]n[GROWPS]
 and
 .CW \[rs]n[PSINCR]
@@ -1079,12 +1085,8 @@ T}
 .PP
 The
 .CW PSINCR
-register defines an increment in point size to be applied to a heading
-at a
-.I level
-more significant
-(numerically less)
-than the value specified in
+register defines an increment in type size to be applied to a heading at
+a lesser depth than that specified in
 .CW \[rs]n[GROWPS] .
 .
 The value of
@@ -1103,22 +1105,20 @@ lf(CR).
 .
 .
 .LP
-sets a point size increment of 1.5 points.
+sets a type size increment of 1.5 points.
 .
 .
 .PP
 The
 .CW GROWPS
-register defines the heading level at which the point size increment set
-by
+register defines the heading depth above which the type size increment
+set by
 .CW \[rs]n[PSINCR]
 becomes effective.
 .
-For each heading
-.I level
-below the value of
+For each heading depth less than the value of
 .CW \[rs]n[GROWPS] ,
-the point size is increased by
+the type size is increased by
 .CW \[rs]n[PSINCR] .
 .
 Setting
@@ -1128,23 +1128,23 @@ to a value less than\~2 disables the incremental heading size feature.
 .
 .PP
 In other words,
-if the
+if the value of
 .CW GROWPS
 register is greater than the
-.I level
+.I depth
 argument to a
 .CW .NH
 or
 .CW .SH
 call,
-the point size of a heading produced by these macros increases by
+the type size of a heading produced by these macros increases by
 .CW \[rs]n[PSINCR]
 units over
 .CW \[rs]n[PS]
 multiplied by the difference of
 .CW \[rs]n[GROWPS]
 and
-.I level .
+.I depth .
 .
 .
 For example,
@@ -1170,13 +1170,13 @@ Machairodontinae
 .LP
 will cause \[lq]1. Carnivora\[rq] to be printed in 13-point text,
 followed by \[lq]1.1. Felinae\[rq] in 11.5-point text,
-while \[lq]1.1.1. Felis catus\[rq] and all more deeply nested
-heading levels will remain in the 10-point text specified by the
+while \[lq]1.1.1. Felis catus\[rq] and all more deeply nested headings
+will remain in the 10-point text specified by the
 .CW PS
 register.
 .
 \[lq]Machairodontinae\[rq] is printed at 11.5 points,
-since it corresponds to heading level\~2.
+since it corresponds to heading depth\~2.
 .
 .
 .PP
@@ -2097,7 +2097,7 @@ emits collected references
 (as might be done on a \[lq]Works Cited\[rq] page),
 it interpolates the string
 .CW \[rs]*[REFERENCES]
-as an unnumbered section heading
+as an unnumbered heading
 .CW .SH ). (
 .
 .
@@ -2589,7 +2589,7 @@ unless your page numbering is unusual,
 this means that you should call it early,
 before
 .CW .TL
-or any sectioning or paragraphing macro.
+or any heading or paragraphing macro.
 .
 This is a Berkeley extension.
 T}
@@ -2809,9 +2809,8 @@ when it requires multiple output lines,
 whether because a heading is too long to fit or because style dictates
 that page numbers not be repeated.
 .
-In a document with a multi-level sectioning structure,
-you may wish to indent the text thus wrapped to correspond to its
-sectioning depth;
+You may wish to indent the text thus wrapped to correspond to its
+heading depth;
 this can be done in the entry text by prefixing it with tabs or
 horizontally spacing escape sequences,
 or by providing a second argument to the
