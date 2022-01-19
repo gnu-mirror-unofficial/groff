@@ -2566,13 +2566,21 @@ lf(CR) lx.
 Macro	Description
 _
 \&.OH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
-	Set the left, center, and right headers on odd-numbered pages.
+	T{
+Set the left, center, and right headers on odd-numbered pages.
+T}
 \&.OF \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
-	Set the left, center, and right footers on odd-numbered pages.
+	T{
+Set the left, center, and right footers on odd-numbered pages.
+T}
 \&.EH \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
-	Set the left, center, and right headers on even-numbered pages.
+	T{
+Set the left, center, and right headers on even-numbered pages.
+T}
 \&.EF \[aq]\f[I]left\f[]\[aq]\f[I]center\f[]\[aq]\f[I]right\f[]\[aq]\
-	Set the left, center, and right footers on even-numbered pages.
+	T{
+Set the left, center, and right footers on even-numbered pages.
+T}
 .TE
 .
 .
@@ -2739,9 +2747,13 @@ cb cb
 lf(CR) lx .
 Macro	Description
 _
-\&.1C	Arrange page text in a single column (the default).
+\&.1C	T{
+Arrange page text in a single column (the default).
+T}
 _
-\&.2C	Arrange page text in two columns.
+\&.2C	T{
+Arrange page text in two columns.
+T}
 _
 \&.MC \f[R][\f[I]column-width\f[] [\f[I]gutter-width\f[]]]	T{
 Arrange page text in multiple columns.
