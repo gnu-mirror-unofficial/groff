@@ -14,7 +14,7 @@
 .fchar \[dg] *
 .\".RP
 .ie t .nr LL 6.5i
-.el   .nr LL 91n
+.el   .nr LL 84n
 .nr LT \n[LL]
 .nr PS 11
 .nr VS 13
@@ -305,11 +305,10 @@ Document control settings
 .
 .
 .LP
-A list of document control registers and strings follows.
+The following list of document parameters is presented in the syntax
+used to interpolate them.
 .
-They are presented in the syntax used to interpolate them.
-.
-For any parameter whose default is unsatisfactory,
+For any unsatisfactory default,
 define its register,
 string,
 or special character before calling any
@@ -317,19 +316,26 @@ or special character before calling any
 macro other than
 .CW RP .
 .
+The \[lq]Next\[rq] heading indicates that changes to the parameter are
+effective as of the the next listed element encountered.
+.
+For entries marked
+.I special ,
+see the discussion in the applicable section below.
+.
 .
 .TS H
 box;
 cb | cb cb cb cb
 l | lf(CR) lx l lf(CR).
-Type	Parameter	Definition	Effective	Default
+Type	Parameter	Definition	Next	Default
 _
 .TH
-Margins	\[rs]n[PO]	Page offset (left margin)	next page	1i
-\^	\[rs]n[LL]	Line length	next paragraph	6i
-\^	\[rs]n[LT]	Title line length	next paragraph	6i
-\^	\[rs]n[HM]	Top (header) margin	next page	1i
-\^	\[rs]n[FM]	Bottom (footer) margin	next page	1i
+Margins	\[rs]n[PO]	Page offset (left margin)	page	1i
+\^	\[rs]n[LL]	Line length	paragraph	6i
+\^	\[rs]n[LT]	Title line length	paragraph	6i
+\^	\[rs]n[HM]	Top (header) margin	page	1i
+\^	\[rs]n[FM]	Bottom (footer) margin	page	1i
 _
 T{
 Titles
@@ -337,52 +343,55 @@ Titles
 (headers,
 .br
 footers)
-T}	\[rs]*[LH]	Left header text	next header	\f[I]empty
-\^	\[rs]*[CH]	Center header text	next header	\-\[rs]n[%]\-
-\^	\[rs]*[RH]	Right header text	next header	\f[I]empty
-\^	\[rs]*[LF]	Left footer text	next footer	\f[I]empty
-\^	\[rs]*[CF]	Center footer text	next footer	\f[I]empty
-\^	\[rs]*[RF]	Right footer text	next footer	\f[I]empty
+T}	\[rs]*[LH]	Left header text	header	\f[I]empty
+\^	\[rs]*[CH]	Center header text	header	\-\[rs]n[%]\-
+\^	\[rs]*[RH]	Right header text	header	\f[I]empty
+\^	\[rs]*[LF]	Left footer text	footer	\f[I]empty
+\^	\[rs]*[CF]	Center footer text	footer	\f[I]empty
+\^	\[rs]*[RF]	Right footer text	footer	\f[I]empty
 _
-Text	\[rs]n[PS]	Point size	next paragraph	10p
-\^	\[rs]n[VS]	Vertical spacing (leading)	next paragraph	12p
-\^	\[rs]n[HY]	Hyphenation mode	next paragraph	6
-\^	\[rs]*[FAM]	Font family	next paragraph	T
+Text	\[rs]n[PS]	Point size	paragraph	10p
+\^	\[rs]n[VS]	Vertical spacing (leading)	paragraph\
+	12p
+\^	\[rs]n[HY]	Hyphenation mode	paragraph	6
+\^	\[rs]*[FAM]	Font family	paragraph	T
 _
-Paragraphs	\[rs]n[PI]	Indentation	next paragraph	5n
-\^	\[rs]n[PD]	Paragraph distance (spacing)	next paragraph	0.3v \f[R](\f[]1v\f[R])
-\^	\[rs]n[QI]	Quotation indentation	next paragraph	5n
-\^	\[rs]n[PORPHANS]	# of initial lines kept	next paragraph	1
+Paragraphs	\[rs]n[PI]	Indentation	paragraph	5n
+\^	\[rs]n[PD]	Paragraph distance (spacing)	paragraph\
+	0.3v \f[R](\f[]1v\f[R])
+\^	\[rs]n[QI]	Quotation indentation	paragraph	5n
+\^	\[rs]n[PORPHANS]	# of initial lines kept	paragraph\
+	1
 _
-Headings	\[rs]n[PSINCR]	Point size increment	next heading	1p
-\^	\[rs]n[GROWPS]	Size increase depth limit	next heading	0
-\^	\[rs]n[HORPHANS]	# of following lines kept	next heading	1
-\^	\[rs]*[SN\-STYLE]	Numbering style (alias)	next heading	\[rs]*[SN\-DOT]
+Headings	\[rs]n[PSINCR]	Point size increment	heading	1p
+\^	\[rs]n[GROWPS]	Size increase depth limit	heading	0
+\^	\[rs]n[HORPHANS]	# of following lines kept\
+	heading	1
+\^	\[rs]*[SN\-STYLE]	Numbering style (alias)	heading\
+	\[rs]*[SN\-DOT]
 _
-Footnotes	\[rs]n[FI]	Indentation	next footnote	2n
-\^	\[rs]n[FF]	Format	next footnote	0
-\^	\[rs]n[FPS]	Point size	next footnote	\[rs]n[PS]\-2p
-\^	\[rs]n[FVS]	Vertical spacing (leading)	next footnote	\[rs]n[FPS]+2p
-\^	\[rs]n[FPD]	Paragraph distance (spacing)	next footnote	\[rs]n[PD]/2
+Footnotes	\[rs]n[FI]	Indentation	footnote	2n
+\^	\[rs]n[FF]	Format	footnote	0
+\^	\[rs]n[FPS]	Point size	footnote	\[rs]n[PS]\-2p
+\^	\[rs]n[FVS]	Vertical spacing (leading)	footnote\
+	\[rs]n[FPS]+2p
+\^	\[rs]n[FPD]	Paragraph distance (spacing)	footnote\
+	\[rs]n[PD]/2
 \^	\[rs]*[FR]	Line length ratio	\f[I]special	11/12
 _
-Displays	\[rs]n[DD]	Display distance (spacing)	\f[I]special	0.5v \f[R](\f[]1v\f[R])
+Displays	\[rs]n[DD]	Display distance (spacing)\
+	\f[I]special	0.5v \f[R](\f[]1v\f[R])
 \^	\[rs]n[DI]	Display indentation	\f[I]special	0.5i
 _
-Other	\[rs]n[MINGW]	Minimum gutter width	next page	2n
+Other	\[rs]n[MINGW]	Minimum gutter width	page	2n
 \^	\[rs]n[TC\-MARGIN]	TOC page number margin width\
-	next \f[CR]PX\f[] call	\[rs]w\[aq]000\[aq]
-\^	\[rs][TC\-LEADER]	TOC leader character	\
-next \f[CR]PX\f[] call	.\[rs]h\[aq]1m\[aq]
+	\f[CR]PX\f[] call	\[rs]w\[aq]000\[aq]
+\^	\[rs][TC\-LEADER]	TOC leader character\
+	\f[CR]PX\f[] call	.\[rs]h\[aq]1m\[aq]
 .TE
 .
 .
 .LP
-For entries marked
-.I special
-in the \[lq]Effective\[rq] column,
-see the discussion in the applicable section below.
-.
 The
 .CW PD
 and
