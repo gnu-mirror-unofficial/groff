@@ -190,46 +190,47 @@ document
 .LP
 The
 .I ms
-macro package expects a certain amount of structure,
-but not as much as packages such as
-.I man
-or
-.I mdoc .
+macro package expects a certain amount of structure:
+a well-formed document contains at least one paragraphing or sectioning
+macro call.
 .
-.
-.PP
-The simplest documents can begin with a paragraph macro
-(such as
+To compose a document from scratch,
+begin it by calling
 .CW .LP
 or
-.CW .PP ),
-and consist of text separated by paragraph macros
-or even blank lines.
+.CW .PP .
 .
 Longer documents have a structure as follows.
 .
 .
 .IP "\fBDocument type\fP"
-If you call the
+Calling the
 .CW .RP
-macro at the beginning of your document,
+macro at the beginning of your document puts the document description
+(see below)
+on a cover page.
+.
+Otherwise,
 .I ms
-prints the document description on its own page;
-otherwise it prints the information
+places this information
 (if any)
-on the first page with your document text immediately following.
+on the first page,
+followed immediately by the body text.
 .
 Some document types found in other
 .I ms
 implementations are specific to AT&T or Berkeley,
-and are not supported in
+and are not supported by
 .I "groff ms" .
 .
 .
 .IP "\fBFormat and layout\fP"
-By setting registers,
-you can change your document's type (font and size),
-margins, spacing, headers and footers, and footnotes.
+By setting registers and strings,
+you can change your document's typeface,
+margins,
+spacing,
+headers and footers,
+and footnote arrangement.
 .
 See section \[lq]Document control settings\[rq] below.
 .
@@ -238,52 +239,60 @@ See section \[lq]Document control settings\[rq] below.
 A document description consists of any of:
 a title,
 one or more authors' names and affiliated institutions,
-an abstract, and a date or other identifier.
+an abstract,
+and a date or other identifier.
 .
 See section \[lq]Document description macros\[rq] below.
 .
 .
-.IP "\fBBody\fP"
+.IP "\fBBody text\fP"
 The main matter of your document follows its description
 (if any).
 .
-You can use the
 .I ms
-macros to write reports, letters, books, and so forth.
-The package is designed for structured documents,
-consisting of paragraphs interspersed with headings
-and augmented by lists, footnotes, tables, and other
-common constructs.
+supports highly structured text consisting of paragraphs interspersed
+with multi-level headings
+(chapters,
+sections,
+subsections,
+and so forth)
+and augmented by lists,
+footnotes,
+tables,
+diagrams,
+and similar material.
 .
 See section \[lq]Body text\[rq] below.
 .
 .
-.IP "\fBTable of contents\fP"
-Longer documents include a table of contents,
-which you can invoke by placing the
-.CW .TC
-macro at the end of your document.\**
-.FS
-The
-.I ms
-macros have minimal indexing facilities, consisting of the
-.CW .IX
-macro, which prints an entry on standard error.
-.FE
+.IP "\fBTables of contents and indexes\fP"
+Macros enable the collection of entries for a table of contents
+(or index)
+as the material they discuss appears in the document.
 .
-Printing the table of contents at the end is necessary since
+You then call a macro to emit the table of contents at the end of
+your document.
+.
+The table of contents must necessarily follow the rest of the text since
 GNU
 .I troff
-is a single-pass text formatter;
+is a single-pass formatter;
 it thus cannot determine the page number of a division of the text until
 it has been set and output.
 .
 Since
 .I ms
-output was intended for hardcopy,
-the standard procedure was to manually relocate the pages containing
-the table of contents between the cover page and the
-body text.
+output was designed for the production of hard copy,
+the traditional procedure was to manually relocate the pages containing
+the table of contents between the cover page and the body text.
+.
+Today,
+page resequencing can be done in the digital domain with tools like
+.I pdfjam (1).
+.
+An index works similarly,
+but because it typically needs to be sorted after collection,
+its preparation requires separate processing.
 .
 .
 .\" ------------------------

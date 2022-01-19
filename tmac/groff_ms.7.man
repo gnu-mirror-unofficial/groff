@@ -104,24 +104,32 @@ and Tenth Edition Research Unix have been recreated.
 .
 The
 .I ms
-macro package expects files to have a certain amount of structure.
+macro package expects a certain amount of structure:
+a well-formed document contains at least one paragraphing or sectioning
+macro call.
 .
-The simplest documents can begin with a paragraph macro and consist of
-text separated by paragraph macros or even blank lines.
+To compose a document from scratch,
+begin it by calling
+.B .LP
+or
+.BR .PP .
 .
 Longer documents have a structure as follows.
 .
 .
 .TP
 .B Document type
-If you call the
+Calling the
 .B RP
-macro at the beginning of the document,
-.I groff
-prints the document description on its own page;
-otherwise it prints the information
-(if any)
-on the first page with your document text immediately following.
+macro at the beginning of your document puts the document description
+(see below)
+on a cover page.
+.
+Otherwise,
+.I ms
+places this information
+on the first page,
+followed immediately by the body text.
 .
 Some document types found in other
 .I ms
@@ -133,9 +141,11 @@ and are not supported in
 .TP
 .B "Format and layout"
 By setting registers and strings,
-you can change your document's
-margins, spacing, headers and footers, footnotes,
-and the base point size for the text.
+you can change your document's typeface,
+margins,
+spacing,
+headers and footers,
+and footnotes arrangement.
 .
 See subsection \[lq]Document control settings\[rq] below.
 .
@@ -145,24 +155,62 @@ See subsection \[lq]Document control settings\[rq] below.
 A document description consists of any of:
 a title,
 one or more authors' names and affiliated institutions,
-an abstract, and a date or other identifier.
+an abstract,
+and a date or other identifier.
 .
 See subsection \[lq]Document description macros\[rq] below.
 .
 .
 .TP
-.B "Body"
+.B Body text
 The main matter of your document follows its description
 (if any).
 .
-It consists of paragraphs, headings, and lists.
+.I ms
+supports highly structured text consisting of paragraphs interspersed
+with multi-level headings
+(chapters,
+sections,
+subsections,
+and so forth)
+and augmented by lists,
+footnotes,
+tables,
+diagrams,
+and similar material.
+.
+The preponderance of subsections below covers these matters.
+.
 .
 .TP
 .B "Table of contents"
-Longer documents usually include a table of contents,
-which you can add by placing the
-.B TC
-macro at the end of your document.
+Macros enable the collection of entries for a table of contents
+(or index)
+as the material they discuss appears in the document.
+.
+You then call a macro to emit the table of contents at the end of
+your document.
+.
+The table of contents must necessarily follow the rest of the text since
+GNU
+.I troff \" GNU
+is a single-pass formatter;
+it thus cannot determine the page number of a division of the text until
+it has been set and output.
+.
+Since
+.I ms
+output was designed for the production of hard copy,
+the traditional procedure was to manually relocate the pages containing
+the table of contents between the cover page and the body text.
+.
+Today,
+page resequencing can be done in the digital domain with tools like
+.MR pdfjam 1 .
+.
+An index works similarly,
+but because it typically needs to be sorted after collection,
+its preparation requires separate processing.
 .
 .
 .\" ====================================================================

@@ -2575,25 +2575,24 @@ We have used an arrow @arrow{} in the above to indicate a tab character.
 @subsection General structure of an @file{ms} document
 @cindex @code{ms} macros, general structure
 
-The @file{ms} macro package expects a certain amount of structure, but
-not as much as packages such as @file{man} or @file{mdoc}.  The simplest
-documents can begin with a paragraph macro (such as @code{LP} or
-@code{PP}), and consist of text separated by paragraph macros or even
-blank lines.  Longer documents have a structure as follows.
+The @file{ms} macro package expects a certain amount of structure:
+a well-formed document contains at least one paragraphing or sectioning
+macro call.  To compose a document from scratch, begin it by calling
+@code{LP} or @code{PP}.  Longer documents have a structure as follows.
 
 @table @strong
 @item Document type
-If you call the @code{RP} macro at the beginning of your document,
-@file{ms} prints the document description on its own page; otherwise it
-prints the information (if any) on the first page with your document
-text immediately following.  Some document types found in other
-@file{ms} implementations are specific to @acronym{AT&T} or Berkeley,
-and are not supported in @code{groff} @file{ms}.
+Calling the @code{RP} macro at the beginning of your document puts the
+document description (see below) on a cover page.  Otherwise, @file{ms}
+places the information (if any) on the first page, followed immediately
+by the body text.  Some document types found in other @file{ms}
+implementations are specific to @acronym{AT&T} or Berkeley, and are not
+supported by @code{groff} @file{ms}.
 
 @item Format and layout
-By setting registers and strings, you can change your document's type
-(font and point size), margins, spacing, headers and footers, and
-footnote arrangment.  @xref{ms Document Control Settings}.
+By setting registers and strings, you can change your document's
+typeface, margins, spacing, headers and footers, and footnote
+arrangment.  @xref{ms Document Control Settings}.
 
 @item Document description
 A document description consists of any of: a title, one or more authors'
@@ -2605,21 +2604,22 @@ The main matter of your document follows its description (if any).
 @file{ms} supports highly structured text consisting of paragraphs
 interspersed with multi-level headings (chapters, sections, subsections,
 and so forth) and augmented by lists, footnotes, tables, diagrams, and
-similar.  @xref{ms Body Text}.
+similar material.  @xref{ms Body Text}.
 
-@item Table of contents
-Longer documents usually include a table of contents, which you can
-produce by placing the @code{TC} macro at the end of your document.
-Printing the table of contents at the end is necessary since
-GNU @code{troff}, like its @acronym{AT&T} ancestor, is a single-pass
-text formatter; it thus cannot determine the page number of a division
-of the text until it has been set and output.  Since @file{ms} output is
-designed for hard copy, you can manually relocate the pages containing
-the table of contents between the cover page and the body text after
-printing.@footnote{This limitation could also be overcome by using
-PostScript or PDF file manipulation utilities to resequence pages in the
-document, facilitated by specially-formatted comments (``device tags'')
-placed in the output by @file{ms}.}
+@item Tables of contents and indexes
+Macros enable the collection of entries for a table of contents (or
+index) as the material they discuss appears in the document.  You then
+call a macro to emit the table of contents at the end of your document.
+The table of contents must necessarily follow the rest of the text since
+GNU @code{troff} is a single-pass formatter; it thus cannot determine
+the page number of a division of the text until it has been set and
+output.  Since @file{ms} was designed for the production of hard copy,
+the traditional procedure was to manually relocate the pages containing
+the table of contents between the cover page and the body text.  Today,
+page resequencing can be done in the digital domain with tools like
+@cite{pdfjam@r{(1)}}.  An index works similarly, but because it
+typically needs to be sorted after collection, its preparation requires
+separate processing.
 @end table
 
 @c ---------------------------------------------------------------------
