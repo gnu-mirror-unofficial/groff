@@ -350,7 +350,7 @@ T}	\[rs]*[LH]	Left header text	header	\f[I]empty
 \^	\[rs]*[CF]	Center footer text	footer	\f[I]empty
 \^	\[rs]*[RF]	Right footer text	footer	\f[I]empty
 _
-Text	\[rs]n[PS]	Point size	paragraph	10p
+Text	\[rs]n[PS]	Type (point) size	paragraph	10p
 \^	\[rs]n[VS]	Vertical spacing (leading)	paragraph\
 	12p
 \^	\[rs]n[HY]	Hyphenation mode	paragraph	6
@@ -363,7 +363,8 @@ Paragraphs	\[rs]n[PI]	Indentation	paragraph	5n
 \^	\[rs]n[PORPHANS]	# of initial lines kept	paragraph\
 	1
 _
-Headings	\[rs]n[PSINCR]	Point size increment	heading	1p
+Headings	\[rs]n[PSINCR]	Type (point) size increment\
+	heading	1p
 \^	\[rs]n[GROWPS]	Size increase depth limit	heading	0
 \^	\[rs]n[HORPHANS]	# of following lines kept\
 	heading	1
@@ -372,7 +373,8 @@ Headings	\[rs]n[PSINCR]	Point size increment	heading	1p
 _
 Footnotes	\[rs]n[FI]	Indentation	footnote	2n
 \^	\[rs]n[FF]	Format	footnote	0
-\^	\[rs]n[FPS]	Point size	footnote	\[rs]n[PS]\-2p
+\^	\[rs]n[FPS]	Type (point) size	footnote\
+	\[rs]n[PS]\-2p
 \^	\[rs]n[FVS]	Vertical spacing (leading)	footnote\
 	\[rs]n[FPS]+2p
 \^	\[rs]n[FPD]	Paragraph distance (spacing)	footnote\
@@ -404,9 +406,9 @@ this is the case only for output to terminals and emulators thereof.
 .
 .\" ------------------------
 .NH 2
-Fractional point sizes
+Fractional type sizes
 .XS
-	Fractional point sizes
+	Fractional type sizes
 .XE
 .
 .
@@ -1366,7 +1368,7 @@ Prints all text following in
 .LG
 larger type
 .NL
-(2 points larger than the current point size)
+(2 points larger than the current size)
 until
 the next font size,
 highlighting,
@@ -1379,7 +1381,7 @@ specify this macro
 .LG
 multiple times
 .NL
-to enlarge the point size as needed.
+to enlarge the type size as needed.
 T}
 _
 \&.SM	T{
@@ -1387,7 +1389,7 @@ Prints all text following in
 .SM
 smaller type
 .NL
-(2 points smaller than the current point size)
+(2 points smaller than the current size)
 until
 the next type size,
 highlighting,
@@ -1400,11 +1402,11 @@ specify this macro
 .SM
 multiple times
 .NL
-to reduce the point size as needed.
+to reduce the type size as needed.
 T}
 _
 \&.NL	T{
-Prints all text following in the normal point size
+Prints all text following in the normal type size
 (that is,
 the value of the
 .CW PS
