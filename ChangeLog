@@ -1,5 +1,17 @@
 2022-01-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[ms]: Don't add leaders that don't lead anywhere.
+
+	* tmac/s.tmac (toc*end-entry): If no page number string
+	`toc*num` is defined, don't interpolate its emptiness prefixed
+	with a leader (and tab).  This makes "no" as the first argument
+	to `XS` and `XA` work as documented, suppressing not only the
+	page number but the leader after the entry.
+
+	Fixes <https://savannah.gnu.org/bugs/?61853>.
+
+2022-01-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[ms]: Add regression test for Savannah #61853.
 
 	* tmac/tests/s_XA-literal-no-argument-supresses-leader.sh: Do
