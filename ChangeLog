@@ -1,3 +1,14 @@
+2022-01-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[me]: Fix bad unit test.
+
+	* tmac/tests/e_chapter-titles-work.sh: Fix missing shell test at
+	end of script, which caused it to exit successfully regardless
+	of any test failures.  Irritating.  This is among the fruits of
+	the "never, ever use 'set -e'" tree.  (This religion has a thick
+	bible: https://mywiki.wooledge.org/BashFAQ/105>.)  Fortunately,
+	all the tests pass legitimately.
+
 2022-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[font]: For 'ascii' and 'latin1' devices, consistently define

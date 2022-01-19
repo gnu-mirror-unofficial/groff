@@ -63,4 +63,6 @@ echo "$output" | grep -Fq "Chapter 2" || wail
 echo "checking formatted appendix heading output" >&2
 echo "$output" | grep -Fq "Appendix A" || wail
 
+test -z "$fail"
+
 # vim:set ai et sw=4 ts=4 tw=72:
