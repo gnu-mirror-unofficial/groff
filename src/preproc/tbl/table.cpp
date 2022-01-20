@@ -2160,10 +2160,11 @@ void table::compute_expand_width()
 {
   int i;
   int colcount = count_expand_columns();
+  // First, compute the unexpanded table width, measuring every column
+  // (including those eligible for expansion) and warn if it's too wide.
   prints(".nr " EXPAND_REG " \\n[.l]-\\n[.i]");
   for (i = 0; i < ncolumns; i++)
-    if (!expand[i])
-      printfs("-\\n[%1]", span_width_reg(i, i));
+    printfs("-\\n[%1]", span_width_reg(i, i));
   if (total_separation)
     printfs("-%1n", as_string(total_separation));
   prints("\n");
@@ -2187,6 +2188,15 @@ void table::compute_expand_width()
     prints(".nr " EXPAND_REG " 0\n");
   }
   prints(".\\}\n");
+  // Now, iterate through the columns again, spreading any excess line
+  // width among the expanded columns.
+  prints(".nr " EXPAND_REG " \\n[.l]-\\n[.i]");
+  for (i = 0; i < ncolumns; i++)
+    if (!expand[i])
+      printfs("-\\n[%1]", span_width_reg(i, i));
+  if (total_separation)
+    printfs("-%1n", as_string(total_separation));
+  prints("\n");
   if (colcount > 1)
     printfs(".nr " EXPAND_REG " \\n[" EXPAND_REG "]/%1\n",
 	    as_string(colcount));

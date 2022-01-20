@@ -1,3 +1,21 @@
+2022-01-20  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tbl]: Fix Savannah #61854.
+
+	* src/preproc/tbl/table.cpp (compute_expand_width): To properly
+	warn if a table is too wide to fit between the indentation and
+	the right margin, we need to compute its column widths including
+	those eligible for expansion via the 'x' column modifier; we
+	cannot use the same expression that we do to determine how the
+	amount of space we have to distribute among the expanded
+	columns.  Iterate through columns again (the function was
+	already doing so twice), once to potentially produce the
+	warning, and then as before to distribute any available width.
+	In other words, warnings were only being emitted for too-wide
+	tables where one or more columns used the 'x' modifier.
+
+	Fixes <https://savannah.gnu.org/bugs/?61854>.
+
 2022-01-19  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[ms]: Don't add leaders that don't lead anywhere.
