@@ -1,5 +1,19 @@
 2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Add unit test for format-time diagnostics.
+
+	Ensure that the various format-time diagnostics that a
+	tbl-preprocessed document can generate (1) occur when they are
+	supposed to and (2) are appropriately suppressed by the
+	"nowarn" and/or "nokeep" region options.  One of them is an
+	error, not a warning, and cannot be suppressed the former, but
+	_can_ be by "nokeep", which is arguably a bug (Savannah #61878).
+
+	* src/preproc/tbl/tests/format-time-diagnostics-work.sh: Do it.
+	* src/preproc/tbl/tbl.am (tbl_TEST): Run test.
+
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Trivially refactor.
 
 	* src/preproc/tbl/table.cpp (table::compute_expand_width):
