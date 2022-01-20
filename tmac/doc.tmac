@@ -1071,7 +1071,7 @@
 .
 .    \" default value
 .    if !\n[.$] \
-.      nop \*[doc-Pa-font]~\f[]\s[0]
+.      nop \*[doc-Pa-font]\[ti]\f[]\s[0]
 .  \}
 .
 .  if !\n[doc-arg-limit] \
@@ -1086,7 +1086,7 @@
 .    if !(\n[doc-type\n[doc-arg-ptr]] == 2) \{\
 .      \" replace previous argument (Pa) with default value
 .      nr doc-arg-ptr -1
-.      ds doc-arg\n[doc-arg-ptr] ~
+.      ds doc-arg\n[doc-arg-ptr] \[ti]
 .      nr doc-type\n[doc-arg-ptr] 2
 .      ds doc-space\n[doc-arg-ptr] "\*[doc-space]
 .
@@ -1098,7 +1098,7 @@
 .    doc-print-recursive
 .  \}
 .  el \{\
-.    nop \*[doc-Pa-font]~\f[]\s[0]\c
+.    nop \*[doc-Pa-font]\[ti]\f[]\s[0]\c
 .    doc-print-and-reset
 .  \}
 ..
