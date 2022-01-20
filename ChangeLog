@@ -1,3 +1,12 @@
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[tbl]: Trivially refactor.
+
+	* src/preproc/tbl/table.cpp (table::compute_expand_width):
+	Declare and initialize variables closer to use.  Also, the width
+	computed is compared to the line length and indentation, so use
+	these well-established *roff terms in the diagnostic message.
+
 2022-01-20  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tbl]: Fix Savannah #61854.
