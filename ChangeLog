@@ -1,5 +1,37 @@
 2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Fix incorrect line numbers in diagnostics.  Line numbers
+	for multiple format-time diagnostics emitted by tbl(1)-generated
+	groff input were off by +5 lines.
+
+	* src/preproc/tbl/table.cpp: Fix it.
+	(NOP_NAME): Add new preprocessor symbol to construct name of
+	"nop" macro to be used as end macros for `ig` requests inside
+	macro definitions.
+	(table::init_output, table::compute_expand_list,
+	table::compute_separation_factor):
+	- Move `entry_list->set_location()` calls to more auspicious
+	  locations.
+	- Replace "around line X" language in diagnostic messages with a
+	  more idiomatic, and less embarrassing, simple report of an
+	  integer.
+	(table::init_output):
+	- Add `entry_list->set_location()` call right before emitting
+	  diagnostic about a table row not fitting on a page.
+	- Turn off eqn(1) delimiters when emitting diagnostic about a
+	  boxed table not fitting on a page (necessitating `.TS H`
+	  support), using new NOP_NAME-based end macro to achieve this
+	  inside a macro definition.
+	(table::compute_expand_list): Suppress issue of too-wide table
+	diagnostic when the `EXPAND` table flag is set (corresponding to
+	the `expand` region option), because other code already emits
+	diagnostics in this case.
+
+	Fixes <https://savannah.gnu.org/bugs/?60598>.  Problem appears
+	to date back to commit 3bc4a53a45, 2013-01-07.
+
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Add unit test for format-time diagnostics.
 
 	Ensure that the various format-time diagnostics that a

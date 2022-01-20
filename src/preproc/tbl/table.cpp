@@ -72,6 +72,9 @@ const int DEFAULT_COLUMN_SEPARATION = 3;
 // this must be one character
 #define COMPATIBLE_REG PREFIX "c"
 
+// for use with `ig` requests embedded inside macro definitions
+#define NOP_NAME PREFIX "nop"
+
 #define EXPAND_REG PREFIX "expand"
 
 #define LEADER_REG PREFIX LEADER
@@ -1877,14 +1880,17 @@ void table::init_output()
 	   ".nr " SUPPRESS_BOTTOM_REG " 0\n"
 	   ".mk #T\n"
 	   ".\\}\n");
-    if (!(flags & NOWARN))
-      prints(".if \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
-	     /* Since we turn off traps, it won't get into an infinite
-		loop when we try and print it; it will just go off the
-		bottom of the page. */
-	     ".  tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	     ".  tm1 \" table row will not fit on page \\n%\n"
-	     ".\\}\n");
+    if (!(flags & NOWARN)) {
+      prints(".if \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n");
+      // eqn(1) delimiters have already been switched off.
+      entry_list->set_location();
+      // Since we turn off traps, troff won't go into an infinite loop
+      // when we output the table row; it will just flow off the bottom
+      // of the page.
+      prints(".  tmc \\n[.F]:\\n[.c]: warning:\n"
+	     ".  tm1 \" table row will not fit on page \\n%\n");
+      prints(".\\}\n");
+    }
     prints(".nf\n"
 	   ".if \\n[.nm] .if \\n[ln] .nm \\n[ln]\n"
 	   ".nr " ROW_MAX_LINE_REG " \\n[ln]\n"
@@ -1912,11 +1918,25 @@ void table::init_output()
 	   ".di\n"
 	   ".nr " SAVED_DN_REG " \\n[dn]\n"
 	   ".ne \\n[dn]u+\\n[.V]u\n"
-	   ".ie \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n"
-	   ".  tmc \\n[.F]: around line \\n[.c]: error:\n"
-	   ".  tmc \" table will not fit on page \\n%;\n"
-	   ".  tm1 \" use .TS H/.TH with a supporting macro package\n"
-	   ".\\}\n"
+	   ".ie \\n[.t]<=\\n[" SAVED_DN_REG "] \\{\\\n");
+    // Protect characters in diagnostic message (especially :, [, ])
+    // from being interpreted by eqn.
+    prints(".  ds " NOP_NAME " \\\" empty\n");
+    prints(".  ig " NOP_NAME "\n"
+	   ".  EQ\n"
+	   "   delim off\n"
+	   ".  EN\n"
+	   ".  " NOP_NAME "\n");
+    entry_list->set_location();
+    prints(".  tmc \\n[.F]:\\n[.c]: error:\n"
+	   ".  tmc \" boxed table will not fit on page \\n%;\n"
+	   ".  tm1 \" use .TS H/.TH with a supporting macro package\n");
+    prints(".  ig " NOP_NAME "\n"
+	   ".  EQ\n"
+	   "   delim on\n"
+	   ".  EN\n"
+	   ".  " NOP_NAME "\n");
+    prints(".\\}\n"
 	   ".el \\{"
 	   ".in 0\n"
 	   ".ls 1\n"
@@ -2159,7 +2179,7 @@ void table::build_span_list()
 void table::compute_expand_width()
 {
   // First, compute the unexpanded table width, measuring every column
-  // (including those eligible for expansion) and warn if it's too wide.
+  // (including those eligible for expansion).
   prints(".nr " EXPAND_REG " \\n[.l]-\\n[.i]");
   for (int i = 0; i < ncolumns; i++)
     printfs("-\\n[%1]", span_width_reg(i, i));
@@ -2167,8 +2187,9 @@ void table::compute_expand_width()
     printfs("-%1n", as_string(total_separation));
   prints("\n");
   prints(".if \\n[" EXPAND_REG "]<0 \\{\\\n");
-  entry_list->set_location();
-  if (!(flags & NOWARN)) {
+  // If the "expand" region option was given, a different warning will
+  // be issued later (if "nowarn" was not also specified).
+  if ((!(flags & NOWARN)) && (!(flags & EXPAND))) {
     // Protect characters in diagnostic message (especially :, [, ])
     // from being interpreted by eqn.
     prints(".ig\n"
@@ -2176,7 +2197,8 @@ void table::compute_expand_width()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
+    entry_list->set_location();
+    prints(".tmc \\n[.F]:\\n[.c]: warning:\n"
 	   ".tm1 \" table wider than line length minus indentation\n");
     prints(".ig\n"
 	   ".EQ\n"
@@ -2231,7 +2253,6 @@ void table::compute_separation_factor()
     printfs("-\\n[%1]", span_width_reg(i, i));
   printfs("/%1\n", as_string(total_separation));
   prints(".ie \\n[" SEPARATION_FACTOR_REG "]<=0 \\{\\\n");
-  entry_list->set_location();
   if (!(flags & NOWARN)) {
     // Protect characters in diagnostic message (especially :, [, ])
     // from being interpreted by eqn.
@@ -2240,16 +2261,18 @@ void table::compute_separation_factor()
 	   "delim off\n"
 	   ".EN\n"
 	   "..\n");
-    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	   ".tm1 \" table column separation set to zero\n"
+    entry_list->set_location();
+    prints(".tmc \\n[.F]:\\n[.c]: warning:\n"
+	   ".tm1 \" table column separation reduced to zero\n"
 	   ".nr " SEPARATION_FACTOR_REG " 0\n");
   }
   prints(".\\}\n"
 	 ".el .if \\n[" SEPARATION_FACTOR_REG "]<1n \\{\\\n");
-  entry_list->set_location();
   if (!(flags & NOWARN)) {
-    prints(".tmc \\n[.F]: around line \\n[.c]: warning:\n"
-	   ".tm1 \" table squeezed horizontally to fit line length\n");
+    entry_list->set_location();
+    prints(".tmc \\n[.F]:\\n[.c]: warning:\n"
+	   ".tm1 \" table column separation reduced to fit line"
+	   " length\n");
     prints(".ig\n"
 	   ".EQ\n"
 	   "delim on\n"
