@@ -629,13 +629,14 @@ information.
 .
 Those who prefer to learn by experimenting or are desirous of rapid
 feedback from the system may wish to start with a \[lq]Hello,
-world!\[rq]\& document.
+world!\&\[rq] document.
 .
 .
 .P
 .EX
 $ \c
-.B echo \[dq]Hello, world!\[dq] | groff \-Tascii | sed \[aq]/^$/d\[aq]
+.B echo \[dq]Hello, world!\[dq] | groff \-Tascii \
+| sed \[aq]/\[ha]$/d\[aq]
 Hello, world!
 .EE
 .
@@ -658,7 +659,8 @@ Today's users may prefer output to a UTF-8-capable terminal.
 .P
 .EX
 $ \c
-.B echo \[dq]Hello, world!\[dq] | groff \-Tutf8 | sed \[aq]/^$/d\[aq]
+.B echo \[dq]Hello, world!\[dq] | groff \-Tutf8 \
+| sed \[aq]/\[ha]$/d\[aq]
 .EE
 .
 .
