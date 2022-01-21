@@ -21,6 +21,20 @@
 .  tm pdfpic.tmac:\\n[.F]:\\n[.c]: error: \\$*
 ..
 .
+.de pdfpic@cleanup
+.  rm pdfpic*pspic-args
+.  rm pdfpic*file-extension
+.  rm pdfpic*file-name
+.  rr pdfpic*do-conversion
+.  rr pdfpic*offset-mode
+.  rr pdfpic*indentation
+.  rr pdfpic*width
+.  rr pdfpic*height
+.  rr pdfpic*did-pdfinfo-work
+.  rr pdfpic*desired-width
+.  rr pdfpic*desired-height
+..
+.
 .de PDFPIC
 .  if !\\n[.U] \{\
 .    pdfpic@error use of \\$0 requires GNU troff's unsafe mode \
@@ -28,48 +42,53 @@
 .    return
 .  \}
 .
-.  nr convert-pdf 0
-.  if !'\\*[.T]'pdf' .nr convert-pdf 1
+.  \" Dispose of junk from any previous early return.
+.  pdfpic@cleanup
 .
-.  nr pdf-offset-mode 0
+.  nr pdfpic*do-conversion 0
+.  if !'\\*[.T]'pdf' .nr pdfpic*do-conversion 1
+.
+.  nr pdfpic*offset-mode 0
+.
+.  \" Preserve the trailing space in definitions of pdfpic*pspic-args.
 .
 .  \" left-aligned?
 .  ie '\\$1'-L' \{\
-.    nr pdf-offset-mode 1
-.    if \\n[convert-pdf] .ds pspic-args \\$1 \"
+.    nr pdfpic*offset-mode 1
+.    if \\n[pdfpic*do-conversion] .ds pdfpic*pspic-args \\$1 \"
 .    shift
 .  \}
 .  el \{\
 .    \" right-aligned?
 .    ie '\\$1'-R' \{\
-.      nr pdf-offset-mode 2
-.      if \\n[convert-pdf] .ds pspic-args \\$1 \"
+.      nr pdfpic*offset-mode 2
+.      if \\n[pdfpic*do-conversion] .ds pdfpic*pspic-args \\$1 \"
 .      shift
 .    \}
 .    el \{\
 .      \" indented?
 .      ie '\\$1'-I' \{\
-.        nr pdf-offset-mode 3
-.        nr pdf-offset (m;\\$2)
-.        if \\n[convert-pdf] .ds pspic-args \\$1 \\$2 \"
+.        nr pdfpic*offset-mode 3
+.        nr pdfpic*indentation (m;\\$2)
+.        if \\n[pdfpic*do-conversion] .ds pdfpic*pspic-args \\$1 \\$2 \"
 .        shift 2
 .      \}
 .      el \{\
 .        \" centered is the default
 .        ie '\\$1'-C' \{\
-.          if \\n[convert-pdf] .ds pspic-args \\$1 \"
+.          if \\n[pdfpic*do-conversion] .ds pdfpic*pspic-args \\$1 \"
 .          shift
 .        \}
-.        el .nr pdf-offset-mode 0
+.        el .nr pdfpic*offset-mode 0
 .      \}
 .    \}
 .  \}
 .  br
 .
-.  ds is-pdf \\$1
-.  substring is-pdf -3
-.  stringdown is-pdf
-.  if !'\\*[is-pdf]'pdf' \{\
+.  ds pdfpic*file-extension \\$1\"
+.  substring pdfpic*file-extension -3
+.  stringdown pdfpic*file-extension
+.  if !'\\*[pdfpic*file-extension]'pdf' \{\
 .    pdfpic@error '\\$1' lacks a '.pdf' extension; skipping
 .    return
 .  \}
@@ -86,14 +105,14 @@
 .  \}
 .
 .  \" if driver is not gropdf, convert image to .eps
-.  if \\n[convert-pdf] \{\
-.    ds img-file \\$1
-.    substring img-file 0 -5
+.  if \\n[pdfpic*do-conversion] \{\
+.    ds pdfpic*file-name \\$1
+.    substring pdfpic*file-name 0 -5
 .
 .    sy pdftops -eps \\$1
 .    shift
 .
-.    as pspic-args \\*[img-file].eps \\$*
+.    as pdfpic*pspic-args \\*[pdfpic*file-name].eps \\$*
 .
 .    PSPIC \\*[pspic-args]
 .    return
@@ -104,8 +123,8 @@
 .  sy pdfinfo @$1 | \
 grep "Page *size" | \
 sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
-.nr pdf-wid (p;\\1)\\n\
-.nr pdf-ht  (p;\\2)/' \
+.nr pdfpic*width (p;\\1)\\n\
+.nr pdfpic*height  (p;\\2)/' \
 > /tmp/pdfpic\n[$$]
 .  ec
 .  if \\n[systat] \{\
@@ -117,8 +136,8 @@ exit status \\n[systat]; skipping
 .  sy rm /tmp/pdfpic\\n[$$]
 .
 .  nr pdfpic*did-pdfinfo-work 1
-.  if !r pdf-wid .nr pdfpic*did-pdfinfo-work 0
-.  if !r pdf-ht .nr pdfpic*did-pdfinfo-work 0
+.  if !r pdfpic*width .nr pdfpic*did-pdfinfo-work 0
+.  if !r pdfpic*height .nr pdfpic*did-pdfinfo-work 0
 .  if !\\n[pdfpic*did-pdfinfo-work] \{\
 .    pdfpic@error retrieval of '\\$1' image dimensions failed; skipping
 .    return
@@ -126,12 +145,14 @@ exit status \\n[systat]; skipping
 .  rr pdfpic*did-pdfinfo-work
 .
 .  \" reject nonsense dimensions <= 0 (and avoid zero divide later)
-.  if !\\n[pdf-wid] \{\
-.    pdfpic@error '\\$1' reports image width of \\n[pdf-wid]u; skipping
+.  if !\\n[pdfpic*width] \{\
+.    pdfpic@error '\\$1' reports image width of \\n[pdfpic*width]u; \
+skipping
 .    return
 .  \}
-.  if !\\n[pdf-ht] \{\
-.    pdfpic@error '\\$1' reports image height of \\n[pdf-ht]u; skipping
+.  if !\\n[pdfpic*height] \{\
+.    pdfpic@error '\\$1' reports image height of \\n[pdfpic*height]u; \
+skipping
 .    return
 .  \}
 .
@@ -139,57 +160,63 @@ exit status \\n[systat]; skipping
 .  \" image width; otherwise we use the image's natural width
 .  \" or the current line length, whatever is smaller
 .  ie (\\n[.$] >= 2) \{\
-.    nr pdf-deswid (i;\\$2)
-.    if !\\n[pdf-deswid] \{\
-.      pdfpic@error rejecting desired image width of \\n[pdf-deswid]u; \
-skipping '\\$1'
+.    nr pdfpic*desired-width (i;\\$2)
+.    if !\\n[pdfpic*desired-width] \{\
+.      pdfpic@error rejecting desired image width of \
+\\n[pdfpic*desired-width]u; skipping '\\$1'
 .      return
 .    \}
 .  \}
 .  el \
-.    nr pdf-deswid ((\\n[.l] - \\n[.i]) <? \\n[pdf-wid])
+.    nr pdfpic*desired-width ((\\n[.l] - \\n[.i]) <? \\n[pdfpic*width])
 .
 .  if (\\n[.$] >= 3) \{\
-.    nr pdf-desht (i;\\$3)
-.    if !\\n[pdf-desht] \{\
-.      pdfpic@error rejecting desired image height of \\n[pdf-desht]u; \
-skipping '\\$1'
+.    nr pdfpic*desired-height (i;\\$3)
+.    if !\\n[pdfpic*desired-height] \{\
+.      pdfpic@error rejecting desired image height of \
+\\n[pdfpic*desired-height]u; skipping '\\$1'
 .      return
 .    \}
 .  \}
-.  \" We have no else clause; pdf-desht will get clobbered anyway.
+.  \" We have no else clause; pdfpic*desired-height will get clobbered
+.  \" anyway.
 .
 .  \" compute the final image height (with proper rounding),
-.  \" based on the image's aspect
-.  nr pdf-desht (\\n[pdf-deswid] * 1000 + (\\n[pdf-wid] / 2) \
-                / \\n[pdf-wid] * \\n[pdf-ht] \
-                + 500 / 1000)
+.  \" based on the image's aspect ratio
+.  nr pdfpic*desired-height (\\n[pdfpic*desired-width] * 1000 \
+                             + (\\n[pdfpic*width] / 2) \
+                             / \\n[pdfpic*width] * \\n[pdfpic*height] \
+                             + 500 / 1000)
 .
 .  \" if we have a <height> parameter, use it as the final
 .  \" image height in case it is smaller than the height
 .  \" value we have just computed
-.  if ((\\n[.$] >= 3) & (\\n[pdf-desht] > (i;0\\$3))) \{\
-.    nr pdf-desht (i;\\$3)
+.  if ((\\n[.$] >= 3) & (\\n[pdfpic*desired-height] > (i;0\\$3))) \{\
+.    nr pdfpic*desired-height (i;\\$3)
 .    \" recompute the final image width since we always
 .    \" keep the correct image aspect
-.    nr pdf-deswid (\\n[pdf-desht] * 1000 + (\\n[pdf-ht] / 2) \
-                   / \\n[pdf-ht] * \\n[pdf-wid] \
-                   + 500 / 1000)
+.    nr pdfpic*desired-width (\\n[pdfpic*desired-height] * 1000 \
+                              + (\\n[pdfpic*height] / 2) \
+                              / \\n[pdfpic*height] * \\n[pdfpic*width] \
+                              + 500 / 1000)
 .  \}
 .
 .  \" reserve vertical space for image
-.  ne (\\n[pdf-desht]u + 1v)
+.  ne (\\n[pdfpic*desired-height]u + 1v)
 .
 .  \" compute image offset w.r.t. the current left margin
-.  if (\\n[pdf-offset-mode] == 0) \
-.    nr pdf-offset (\\n[.l] - \\n[.i] - \\n[pdf-deswid] / 2)
-.  if (\\n[pdf-offset-mode] == 1) \
-.    nr pdf-offset 0
-.  if (\\n[pdf-offset-mode] == 2) \
-.    nr pdf-offset (\\n[.l] - \\n[.i] - \\n[pdf-deswid])
+.  if (\\n[pdfpic*offset-mode] == 0) \
+.    nr pdfpic*indentation \
+       (\\n[.l] - \\n[.i] - \\n[pdfpic*desired-width] / 2)
+.  if (\\n[pdfpic*offset-mode] == 1) \
+.    nr pdfpic*indentation 0
+.  if (\\n[pdfpic*offset-mode] == 2) \
+.    nr pdfpic*indentation \
+       (\\n[.l] - \\n[.i] - \\n[pdfpic*desired-width])
 .
-\h'\\n[pdf-offset]u'\
-\X'pdf: pdfpic \\$1 -L \\n[pdf-deswid]z \\n[pdf-desht]z'
+\h'\\n[pdfpic*indentation]u'\
+\X'pdf: pdfpic \\$1 -L \\n[pdfpic*desired-width]z \
+\\n[pdfpic*desired-height]z'
 .  if !r PDFPIC_NOSPACE \{\
 .    sy echo ".nr PDFPIC_NOSPACE 0$GROFF_PDFPIC_NOSPACE" > /tmp/x\n[$$]
 .    so /tmp/x\n[$$]
@@ -197,8 +224,10 @@ skipping '\\$1'
 .  \}
 .  if \\n[PDFPIC_NOSPACE]==0 \{\
 .    br
-.    sp \\n[pdf-desht]u
+.    sp \\n[pdfpic*desired-height]u
 .  \}
+.
+.  pdfpic@cleanup
 ..
 .
 .cp \n[*groff_pdfpic_tmac_C]

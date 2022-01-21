@@ -1,5 +1,35 @@
 2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[pdfpic]: Refactor.
+
+	Now that the package does not abort upon the first whiff of any
+	trouble, avoid littering groff's name spaces.  Take this
+	opportunity to rename registers and strings to have obvious
+	meaning to even the casual reader.
+
+	* tmac/pdfpic.tmac: Do it.
+	(pdfpic@cleanup): New macro removes temporary strings and
+	registers.
+	(PDFPIC): Call the cleanup macro upon entry; this way, if we
+	errored out from a previous call, we avoid confusion.  (We don't
+	clean up upon an error return because the leftover objects might
+	be useful for troubleshooting.)  Rename registers and strings,
+	to get them under name space discipline and also to better
+	suggest their purpose.
+	- convert-pdf     -> pdfpic*do-conversion
+	- pdf-offset-mode -> pdfpic*offset-mode
+	- pspic-args      -> pdfpic*pspic-args
+	- pdf-offset      -> pdfpic*indentation
+	- is-pdf          -> pdfpic*file-extension
+	- img-file        -> pdfpic*file-name
+	- pdf-wid         -> pdfpic*width
+	- pdf-ht          -> pdfpic*height
+	- pdf-deswid      -> pdfpic*desired-width
+	- pdf-desht       -> pdfpic*desired-height
+	Call cleanup macro before returning upon successful operation.
+
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[pdfpic]: Improve robustness.
 
 	* tmac/pdfpic.tmac (@abort): Rename to `pdfpic@error`.  This is
