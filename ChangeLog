@@ -71,7 +71,7 @@
 	the former name (or worse, we break it if we're loaded later).
 	(pdfpic@error): Stop aborting; simply report an error.  It's up
 	to the user how serious `PDFPIC` macro problems are.  As noted
-	in a comment, the user can easile `am PDFPIC` to tack an `ab`
+	in a comment, the user can easily `am PDFPIC` to tack an `ab`
 	request onto the end of its definition.  Always report input
 	file name and line number.  Replace "[PDFPIC]" prefix with the
 	name of the macro file complaining, to make it easier for groff
@@ -106,7 +106,7 @@
 
 	* src/preproc/tbl/table.cpp: Fix it.
 	(NOP_NAME): Add new preprocessor symbol to construct name of
-	"nop" macro to be used as end macros for `ig` requests inside
+	"nop" macro to be used as end macro for `ig` requests inside
 	macro definitions.
 	(table::init_output, table::compute_expand_list,
 	table::compute_separation_factor):
@@ -138,8 +138,8 @@
 	tbl-preprocessed document can generate (1) occur when they are
 	supposed to and (2) are appropriately suppressed by the
 	"nowarn" and/or "nokeep" region options.  One of them is an
-	error, not a warning, and cannot be suppressed the former, but
-	_can_ be by "nokeep", which is arguably a bug (Savannah #61878).
+	error and cannot be suppressed by the former, but _can_ be by
+	"nokeep", which is arguably a bug (Savannah #61878).
 
 	* src/preproc/tbl/tests/format-time-diagnostics-work.sh: Do it.
 	* src/preproc/tbl/tbl.am (tbl_TEST): Run test.
@@ -319,7 +319,7 @@
 
 	* tmac/tty-char.tmac: Drop redundant logic.  We don't need to
 	source the `cp1047` or `latin1` files here; `troffrc` will
-	already have loaded `tty` for us, which already does so.
+	already have loaded `tty` for us, which loads whichever applies.
 
 2022-01-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -6210,9 +6210,10 @@
 	compatibility mode.
 	(RI, IR, IB, BI): Defer interpolation of the first argument to
 	the while loop if there are at least two (like the existing RB,
-	BR).  This way the the font escape style names in the appendment
-	to `an-result` match the order of the letters in the macro name
-	{useful to make sense of diffs}.
+	BR).  This way the style name arguments to the font selection
+	escape sequences in the appendment to `an-result` match the
+	order of the letters in the macro name (useful to make sense of
+	diffs).
 	(RI, IR, IB, BI, RB, BR): Always remove the `an-result` string
 	after interpolating it.
 	(RB, BR): Only do work if there are any arguments.
