@@ -1,5 +1,15 @@
 2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[pdfpic]: Fix Savannah #58206.
+
+	* tmac/pdfpic.tmac (PDFPIC): Scrub null bytes out of pdfinfo(1)
+	output.  Thanks to an anonymous contributor for the patch (the
+	commentary about it is mine, if someone wants an argument).
+
+	Fixes <https://savannah.gnu.org/bugs/?58206>.
+
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[pdfpic]: Regression-test Savannah #58206.
 
 	* tmac/tests/pdfpic_does-not-choke-on-bad-pdfinfo-output.sh: Do

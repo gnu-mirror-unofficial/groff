@@ -118,9 +118,12 @@
 .    return
 .  \}
 .
-.  \" get image dimensions
+.  \" Get image dimensions.  The `tr` command to strip null bytes is
+.  \" distasteful, but its necessity is imposed on us.  See
+.  \" <https://gitlab.freedesktop.org/poppler/poppler/-/issues/776>.
 .  ec @
 .  sy pdfinfo @$1 | \
+tr -d '\000' | \
 grep "Page *size" | \
 sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .nr pdfpic*width (p;\\1)\\n\
