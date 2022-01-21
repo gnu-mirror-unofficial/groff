@@ -16,6 +16,16 @@
 
 2022-01-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tmac]: Fix style nits in test.
+
+	* tmac/tests/pdfpic_does-not-choke-on-bad-pdfinfo-output.sh:
+	- Emit complaints about test environment to standard error.
+	- Replace lingering literal file name with variable expansion.
+	- Skip test if gs(1) fails, instead of reporting failure.
+	- Begin continued lines with operators, for visibility.
+
+2022-01-22  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml]: Fix misspelled member variable.
 
 	* src/devices/grohtml/post-html.cpp (class html_printer):

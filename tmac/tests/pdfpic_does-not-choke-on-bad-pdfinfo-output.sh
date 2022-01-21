@@ -26,13 +26,13 @@ gnu_pdf="${abs_top_builddir:-.}/gnu.pdf"
 
 if ! command -v gs >/dev/null
 then
-    echo "cannot locate 'gs' command"
+    echo "cannot locate 'gs' command" >&2
     exit 77 # skip
 fi
 
 if [ -e "$gnu_pdf" ]
 then
-    echo "temporary output file gnu.pdf already exists"
+    echo "temporary output file '$gnu_pdf' already exists" >&2
     exit 77 # skip
 fi
 
@@ -51,11 +51,11 @@ if ! gs -o - -sDEVICE=pdfwrite -f "$gnu_eps" \
     > "$gnu_pdf"
 then
     echo "gs command failed" >&2
-    fail=YES
+    exit 77 # skip
 fi
 
-test -z $fail && \
-    printf '%s\n' "$input" | "$groff" -Tpdf -U -z || fail=YES
+test -z $fail \
+    && printf '%s\n' "$input" | "$groff" -Tpdf -U -z || fail=YES
 
 rm -f "$gnu_pdf"
 test -z $fail
