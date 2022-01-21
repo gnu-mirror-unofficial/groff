@@ -22,7 +22,7 @@ groff="${abs_top_builddir:-.}/test-groff"
 
 # Regression-test Savannah #61853.
 #
-# The word "no" as the first argument to the `XA` macro should supresss
+# The word "no" as the first argument to the `XA` macro should suppresss
 # not just the page number, but the leader before it as well.
 
 input='.PP
