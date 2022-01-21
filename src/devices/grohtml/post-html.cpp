@@ -2007,7 +2007,7 @@ class html_printer : public printer {
   title_desc           title;
   header_desc          header;
   int                  header_indent;
-  int                  supress_sub_sup;
+  int                  suppress_sub_sup;
   int                  cutoff_heading;
   page                *page_contents;
   html_text           *current_paragraph;
@@ -2305,7 +2305,7 @@ void html_printer::emit_raw (text_glob *g)
     current_paragraph->do_emittext(g->text_string, g->text_length);
     current_paragraph->done_para();
     next_tag        = INLINE;
-    supress_sub_sup = TRUE;
+    suppress_sub_sup = TRUE;
     seen_space      = FALSE;
     restore_troff_indent();
   }
@@ -2557,7 +2557,7 @@ void html_printer::write_header (void)
 
     // firstly we must terminate any font and type faces
     current_paragraph->done_para();
-    supress_sub_sup = TRUE;
+    suppress_sub_sup = TRUE;
 
     if (cutoff_heading+2 > header.header_level) {
       // now we save the header so we can issue a list of links
@@ -2915,7 +2915,7 @@ void html_printer::do_fill (char *arg)
   int on = atoi(arg);
 
   output_hpos = get_troff_indent()+pageoffset;
-  supress_sub_sup = TRUE;
+  suppress_sub_sup = TRUE;
 
   if (fill_on != on) {
     if (on)
@@ -2953,7 +2953,7 @@ void html_printer::do_check_center(void)
 	int space = current_paragraph->retrieve_para_space()
 		    || seen_space;
 	current_paragraph->done_para();
-	supress_sub_sup = TRUE;
+	suppress_sub_sup = TRUE;
 	if (dialect == html4)
 	  current_paragraph->do_para("align=\"center\"", space);
 	else
@@ -2970,7 +2970,7 @@ void html_printer::do_check_center(void)
 	  int space = current_paragraph->retrieve_para_space()
 		      || seen_space;
 	  current_paragraph->done_para();
-	  supress_sub_sup = TRUE;
+	  suppress_sub_sup = TRUE;
 	  if (dialect == html4)
 	    current_paragraph->do_para("align=\"center\"", space);
 	  else
@@ -2987,7 +2987,7 @@ void html_printer::do_check_center(void)
 	seen_space = seen_space
 		     || current_paragraph->retrieve_para_space();
 	current_paragraph->done_para();
-	supress_sub_sup = TRUE;
+	suppress_sub_sup = TRUE;
 	current_paragraph->do_para("", seen_space);
       }
     end_center = next_center;
@@ -3008,7 +3008,7 @@ void html_printer::do_eol_ce (void)
     end_center--;
     if (end_center == 0) {
       current_paragraph->done_para();
-      supress_sub_sup = TRUE;
+      suppress_sub_sup = TRUE;
     }
   }
 }
@@ -3118,7 +3118,7 @@ void html_printer::do_break (void)
   seen_pageoffset = FALSE;
   do_check_center();
   output_hpos     = get_troff_indent()+pageoffset;
-  supress_sub_sup = TRUE;
+  suppress_sub_sup = TRUE;
 }
 
 void html_printer::do_space (char *arg)
@@ -3136,7 +3136,7 @@ void html_printer::do_space (char *arg)
     current_paragraph->do_space();
     n--;
   }
-  supress_sub_sup = TRUE;
+  suppress_sub_sup = TRUE;
 }
 
 /*
@@ -3282,14 +3282,14 @@ void html_printer::troff_tag (text_glob *g)
     do_auto_image(g, a);
   } else if (strncmp(t, ".ce", 3) == 0) {
     char *a = (char *)t+3;
-    supress_sub_sup = TRUE;
+    suppress_sub_sup = TRUE;
     do_center(a);
   } else if (g->is_tl()) {
-    supress_sub_sup = TRUE;
+    suppress_sub_sup = TRUE;
     title.with_h1 = TRUE;
     do_title();
   } else if (strncmp(t, ".html-tl", 8) == 0) {
-    supress_sub_sup = TRUE;
+    suppress_sub_sup = TRUE;
     title.with_h1 = FALSE;
     do_title();
   } else if (strncmp(t, ".fi", 3) == 0) {
@@ -3889,7 +3889,7 @@ void html_printer::lookahead_for_tables (void)
 
 void html_printer::flush_page (void)
 {
-  supress_sub_sup = TRUE;
+  suppress_sub_sup = TRUE;
   flush_sbuf();
   page_contents->dump_page();
   lookahead_for_tables();
@@ -4183,7 +4183,7 @@ int html_printer::end_superscript (text_glob *g)
 
 void html_printer::do_sup_or_sub (text_glob *g)
 {
-  if (! supress_sub_sup) {
+  if (! suppress_sub_sup) {
     if (start_subscript(g)) {
       current_paragraph->do_sub();
     } else if (start_superscript(g)) {
@@ -4210,7 +4210,7 @@ void html_printer::do_end_para (text_glob *g)
   output_vpos     = g->minv;
   output_hpos     = g->maxh;
   output_vpos_max = g->maxv;
-  supress_sub_sup = FALSE;
+  suppress_sub_sup = FALSE;
 }
 
 /*
@@ -4225,7 +4225,7 @@ void html_printer::emit_html (text_glob *g)
   output_vpos     = g->minv;
   output_hpos     = g->maxh;
   output_vpos_max = g->maxv;
-  supress_sub_sup = FALSE;
+  suppress_sub_sup = FALSE;
 }
 
 /*
@@ -4338,7 +4338,7 @@ html_printer::html_printer()
   inside_font_style(0),
   page_number(0),
   header_indent(-1),
-  supress_sub_sup(TRUE),
+  suppress_sub_sup(TRUE),
   cutoff_heading(100),
   indent(0),
   table(0),
