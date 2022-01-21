@@ -1,5 +1,34 @@
 2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[pdfpic]: Improve robustness.
+
+	* tmac/pdfpic.tmac (@abort): Rename to `pdfpic@error`.  This is
+	an auxiliary package, and something else could very well step on
+	the former name (or worse, we break it if we're loaded later).
+	(pdfpic@error): Stop aborting; simply report an error.  It's up
+	to the user how serious `PDFPIC` macro problems are.  As noted
+	in a comment, the user can easile `am PDFPIC` to tack an `ab`
+	request onto the end of its definition.  Always report input
+	file name and line number.  Replace "[PDFPIC]" prefix with the
+	name of the macro file complaining, to make it easier for groff
+	non-experts to find.
+	(PDFPIC): Return upon errors.  Recast diagnostic messages.  Stop
+	implying that we perform any sort of probing test of file type
+	{there's no telling what pdfinfo(1) will say}.  Apply new
+	'stringdown' request so that we accept '.pdf' file name
+	extension in any lettercase.  Test file argument for existence
+	before proceeding (acknowledge TOCTTOU exposure); see Savannah
+	#61892.  Skip file if pipeline returned a non-zero exit status
+	or the registers into which we extract the height and width are
+	undefined (indicating failure of a temporary file to be created
+	or read).  Reject files with non-positive image width or height
+	reported by `pdfinfo`.  Validate `width` and `height` arguments,
+	if given, rejecting non-positive values.
+
+	Fixes <https://savannah.gnu.org/bugs/?61892>.
+
+2022-01-21  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[mdoc]: Make `Pa` macro interpolate basic Latin tilde on all
 	output devices.
 

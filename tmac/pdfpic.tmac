@@ -1,13 +1,11 @@
-.\" pdfpic.tmac
-.\"
 .\" Define the PDFPIC macro.
 .\"
-.\" When used other than with gropdf, the image is converted to .eps
-.\" and processing passed over to PSPIC.
+.\" When used with output devices other than pdf, converted image to
+.\" encapsulated PostScript and process it with PSPIC.
 .\"
 .\" Usage:
 .\"
-.\"   .PDFPIC [-L|-R|-C|-I <indent>] <file> [<width> [<height>]]
+.\"   .PDFPIC [-L|-R|-C|-I <indentation>] <file> [<width> [<height>]]
 .\"
 .\" Requires the poppler-utils package (for pdfinfo and pdftops).
 .\" Requires running groff in unsafe mode.
@@ -17,12 +15,18 @@
 .do nr *groff_pdfpic_tmac_C \n[.cp]
 .cp 0
 .
-.de @abort
-.  ab [PDFPIC]: \\$* Aborting.
+.\" A user may wish to append an 'ab' to this macro using 'am'.  That
+.\" is why we don't 'return X' from here to return from two scopes.
+.de pdfpic@error
+.  tm pdfpic.tmac:\\n[.F]:\\n[.c]: error: \\$*
 ..
+.
 .de PDFPIC
-.  if !\\n[.U] \
-.    @abort Use of \\$0 requires giving groff the -U option.
+.  if !\\n[.U] \{\
+.    pdfpic@error use of \\$0 requires GNU troff's unsafe mode \
+(-U option)
+.    return
+.  \}
 .
 .  nr convert-pdf 0
 .  if !'\\*[.T]'pdf' .nr convert-pdf 1
@@ -64,10 +68,24 @@
 .
 .  ds is-pdf \\$1
 .  substring is-pdf -3
-.  if !'\\*[is-pdf]'pdf' \
-.    @abort \\$1 at line \\n[.c] is not a PDF file, or lacks a .pdf extension.
+.  stringdown is-pdf
+.  if !'\\*[is-pdf]'pdf' \{\
+.    pdfpic@error '\\$1' lacks a '.pdf' extension; skipping
+.    return
+.  \}
 .
-.\" if driver is not gropdf, convert image to .eps
+.  \" Ensure the file exists and is readable.
+.  \"
+.  \" This test is subject to a time-of-check-to-time-of-use (TOCTTOU)
+.  \" attack (or a simple race with a concurrent `rm` command, for
+.  \" instance).
+.  sy test -r \\$1
+.  if \\n[systat] \{\
+.    pdfpic@error '\\$1' does not exist or is not readable; skipping
+.    return
+.  \}
+.
+.  \" if driver is not gropdf, convert image to .eps
 .  if \\n[convert-pdf] \{\
 .    ds img-file \\$1
 .    substring img-file 0 -5
@@ -81,7 +99,7 @@
 .    return
 .  \}
 .
-.\" get image dimensions
+.  \" get image dimensions
 .  ec @
 .  sy pdfinfo @$1 | \
 grep "Page *size" | \
@@ -89,17 +107,57 @@ sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .nr pdf-wid (p;\\1)\\n\
 .nr pdf-ht  (p;\\2)/' \
 > /tmp/pdfpic\n[$$]
-.  so /tmp/pdfpic\n[$$]
-.  sy rm /tmp/pdfpic\n[$$]
 .  ec
+.  if \\n[systat] \{\
+.    pdfpic@error retrieval of '\\$1' image dimensions failed with \
+exit status \\n[systat]; skipping
+.    return
+.  \}
+.  so /tmp/pdfpic\\n[$$]
+.  sy rm /tmp/pdfpic\\n[$$]
+.
+.  nr pdfpic*did-pdfinfo-work 1
+.  if !r pdf-wid .nr pdfpic*did-pdfinfo-work 0
+.  if !r pdf-ht .nr pdfpic*did-pdfinfo-work 0
+.  if !\\n[pdfpic*did-pdfinfo-work] \{\
+.    pdfpic@error retrieval of '\\$1' image dimensions failed; skipping
+.    return
+.  \}
+.  rr pdfpic*did-pdfinfo-work
+.
+.  \" reject nonsense dimensions <= 0 (and avoid zero divide later)
+.  if !\\n[pdf-wid] \{\
+.    pdfpic@error '\\$1' reports image width of \\n[pdf-wid]u; skipping
+.    return
+.  \}
+.  if !\\n[pdf-ht] \{\
+.    pdfpic@error '\\$1' reports image height of \\n[pdf-ht]u; skipping
+.    return
+.  \}
 .
 .  \" if we have a <width> parameter, use it as the final
 .  \" image width; otherwise we use the image's natural width
 .  \" or the current line length, whatever is smaller
-.  ie (\\n[.$] >= 2) \
+.  ie (\\n[.$] >= 2) \{\
 .    nr pdf-deswid (i;\\$2)
+.    if !\\n[pdf-deswid] \{\
+.      pdfpic@error rejecting desired image width of \\n[pdf-deswid]u; \
+skipping '\\$1'
+.      return
+.    \}
+.  \}
 .  el \
 .    nr pdf-deswid ((\\n[.l] - \\n[.i]) <? \\n[pdf-wid])
+.
+.  if (\\n[.$] >= 3) \{\
+.    nr pdf-desht (i;\\$3)
+.    if !\\n[pdf-desht] \{\
+.      pdfpic@error rejecting desired image height of \\n[pdf-desht]u; \
+skipping '\\$1'
+.      return
+.    \}
+.  \}
+.  \" We have no else clause; pdf-desht will get clobbered anyway.
 .
 .  \" compute the final image height (with proper rounding),
 .  \" based on the image's aspect
@@ -150,4 +208,4 @@ sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .\" mode: nroff
 .\" fill-column: 72
 .\" End:
-.\" vim: set filetype=groff textwidth=72:
+.\" vim: set expandtab filetype=groff tabstop=2 textwidth=72:
