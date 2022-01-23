@@ -14,6 +14,18 @@
 	* src/devices/gropdf/gropdf.pl: A fix to importing pdf
 	versions > 1.4.
 
+2022-01-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[grotty]: Skip part of test if locale doesn't support UTF-8.
+
+	* src/devices/grotty/tests/basic_latin_glyphs_map_correctly.sh:
+	Skip test of 'utf8' output device if locale lacks UTF-8 support.
+	But if the 'ascii' or 'latin1' test cases have already failed,
+	report that instead.
+
+	Fixes <https://savannah.gnu.org/bugs/?61891>.  Thanks to Bjarni
+	Ingi Gislason for the report.
+
 2022-01-23 Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
 
 	[man pages]: Fix typos.

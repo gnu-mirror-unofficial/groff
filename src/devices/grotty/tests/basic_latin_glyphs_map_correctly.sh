@@ -118,6 +118,21 @@ x stop'
 
 for D in ascii latin1 utf8
 do
+    if [ "$D" = "utf8" ]
+    then
+        # We can't test UTF-8 if the environment doesn't support it.
+        if [ "$(locale charmap)" != UTF-8 ]
+        then
+            # If we've already seen a failure case, report it.
+            if [ -n "$fail" ]
+            then
+                exit 1 # fail
+            else
+                exit 77 # skip
+            fi
+        fi
+    fi
+
     printf 'checking "%s" output device...' $D >&2
     output=$(echo "$input" | sed s/@DEVICE@/$D/ \
         | "$grotty" -F font -F build/font)
