@@ -71,6 +71,9 @@ o New requests 'stringdown' and 'stringup' are available.  These change
   regular naming convention of the special character escapes sequences
   for accented letters.
 
+o The `ab` request no longer writes "User Abort." to the standard error
+  stream if given no arguments.
+
 nroff
 -----
 
@@ -121,6 +124,18 @@ o The hyphenation patterns for English have been updated using the
   `hyph-en-us.tex` patterns file from the TeX hyph-utf8 project.  The
   new patterns likely _will_ change the automatic hyphenation break
   points of your English documents.
+
+o The pdfpic macro package, which provides the `PDFPIC` macro, no longer
+  aborts upon encountering trouble.  Instead, it reports an error and
+  abandons processing of its argument(s).  It is also more sensitive to
+  other kinds of problems and handles them the same way, by issuing a
+  diagnostic and returning.  If you wish `PDFPIC` to abort document
+  processing immediately upon error, you can append an `ab` request to
+  the package's error-handling macro.
+
+    .am pdfpic@error
+    .  ab
+    ..
 
 o The new rfc1345 macro package, contributed by Dorai Sitaram, defines
   special character glyph names implementing RFC 1345 mnemonics (plus
