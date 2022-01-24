@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2020 Free Software Foundation, Inc.
+# Copyright (C) 2002-2022 Free Software Foundation, Inc.
 # Original Makefile.sub written by Werner Lemberg <wl@gnu.org>.
 # Adapted to Automake by Bertrand Garrigues
 #   (bertrand.garrigues@laposte.net).
@@ -63,6 +63,8 @@ GENERATEDDOCFILES = \
   doc/meref.me
 # Files generated in the build tree
 PROCESSEDDOCFILES = \
+  doc/groff-man-pages.pdf \
+  doc/groff-man-pages.utf8.txt \
   doc/meref.ps \
   doc/meintro.ps \
   doc/meintro_fr.ps \
@@ -141,6 +143,96 @@ MOSTLYCLEANFILES += doc/examples.stamp
 EXTRA_DIST += \
   doc/gnu.xpm \
   doc/txi-en.tex
+
+# Introduce variables to house the groff man pages.  We break the list
+# of page sources into multiple chunks because we have to load Swedish
+# localization before formatting groff_mmse.7 and then reload English
+# localization afterward.  This also serves as a test of groff locale
+# switching; being lazy and shunting groff_mmse.7 off to the end of the
+# document would not achieve this goal (and not loading Swedish
+# localization at all to format it would be gauche).
+GROFF_MAN_PAGES1 = \
+  src/utils/addftinfo/addftinfo.1 \
+  src/utils/afmtodit/afmtodit.1 \
+  contrib/chem/chem.1 \
+  src/preproc/eqn/eqn.1 \
+  contrib/eqn2graph/eqn2graph.1 \
+  contrib/gdiffmk/gdiffmk.1 \
+  contrib/glilypond/glilypond.1 \
+  contrib/gperl/gperl.1 \
+  contrib/gpinyin/gpinyin.1 \
+  contrib/grap2graph/grap2graph.1 \
+  src/preproc/grn/grn.1 \
+  src/devices/grodvi/grodvi.1 \
+  src/roff/groff/groff.1 \
+  src/utils/grog/grog.1 \
+  src/devices/grohtml/grohtml.1 \
+  src/devices/grolbp/grolbp.1 \
+  src/devices/grolj4/grolj4.1 \
+  src/devices/gropdf/gropdf.1 \
+  src/devices/grops/grops.1 \
+  src/devices/grotty/grotty.1 \
+  src/devices/xditview/gxditview.1 \
+  src/utils/hpftodit/hpftodit.1 \
+  src/utils/indxbib/indxbib.1 \
+  src/utils/lkbib/lkbib.1 \
+  src/utils/lookbib/lookbib.1 \
+  contrib/mm/mmroff.1 \
+  src/preproc/eqn/neqn.1 \
+  src/roff/nroff/nroff.1 \
+  src/devices/gropdf/pdfmom.1 \
+  contrib/pdfmark/pdfroff.1 \
+  src/utils/pfbtops/pfbtops.1 \
+  src/preproc/pic/pic.1 \
+  contrib/pic2graph/pic2graph.1 \
+  src/preproc/preconv/preconv.1 \
+  src/preproc/refer/refer.1 \
+  src/preproc/soelim/soelim.1 \
+  src/preproc/tbl/tbl.1 \
+  src/utils/tfmtodit/tfmtodit.1 \
+  src/roff/troff/troff.1 \
+  src/utils/xtotroff/xtotroff.1 \
+  contrib/groff_filenames/groff_filenames.5 \
+  man/groff_font.5 \
+  man/groff_out.5 \
+  man/groff_tmac.5 \
+  src/devices/grolj4/lj4_font.5 \
+  man/ditroff.7 \
+  man/groff.7 \
+  man/groff_char.7 \
+  man/groff_diff.7 \
+  contrib/hdtbl/groff_hdtbl.7 \
+  tmac/groff_man.7 \
+  tmac/groff_man_style.7 \
+  tmac/groff_mdoc.7 \
+  tmac/groff_me.7 \
+  contrib/mm/groff_mm.7
+
+GROFF_MAN_PAGES2 = \
+  contrib/mm/groff_mmse.7
+
+GROFF_MAN_PAGES3 = \
+  contrib/mom/groff_mom.7 \
+  tmac/groff_ms.7 \
+  contrib/rfc1345/groff_rfc1345.7 \
+  tmac/groff_trace.7 \
+  tmac/groff_www.7 \
+  man/roff.7
+
+GROFF_MAN_PAGES_ALL = $(GROFF_MAN_PAGES1) $(GROFF_MAN_PAGES2) \
+  $(GROFF_MAN_PAGES3)
+
+doc/groff-man-pages.pdf: $(GROFF_MAN_PAGES_ALL)
+	$(GROFF_V)$(DOC_GROFF) -Tpdf -P-e -mandoc -rU0 \
+	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
+	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
+	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
+
+doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL)
+	$(GROFF_V)$(DOC_GROFF) -Tutf8 -mandoc -rC1 -rU1 \
+	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
+	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
+	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
 
 doc/meintro.me: $(doc_srcdir)/meintro.me.in
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \

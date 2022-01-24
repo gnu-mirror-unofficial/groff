@@ -1,5 +1,43 @@
 2022-01-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man pages]: Ship compilations in UTF-8 text and PDF.
+
+	Localization support and the resolution of Savannah #61266 have
+	made it practical to batch-render all of groff's man pages as a
+	single giant document.  Provide PDF and UTF-8 text (with ECMA-48
+	escape sequences, but not the italic attribute or OSC 8
+	sequences).
+
+	Reasons for this addition include: {1} it is now possible,
+	whereas I don't believe it was in any previous groff release;
+	{2} many people still don't realize how much more pleasant
+	reading typeset man pages can be (while a subjective assessment,
+	I'm not alone[1]); {3} providing these forms permits full-text
+	searching of groff's entire man page corpus via the PDF viewer
+	or a pager like "less -R", the latter without sacrificing the
+	style variations of the text that aid the reader to comprehend
+	the material; {4} sentimentally, it honors the 50th anniversary
+	of the first Unix manual (dated 3 November 1971)
+	<https://www.bell-labs.com/usr/dmr/www/1stEdman.html>.
+
+	* doc/doc.am (PROCESSEDDOCFILES): Add
+	'doc/groff-man-pages.{pdf,utf8.txt}'.
+	(GROFF_MAN_PAGES{1,2,3}): Add new macro storing names of all man
+	pages generated in the build tree.  Motivate the reason for 3
+	variables in a comment (it's due to groff locale switching).
+	(GROFF_MAN_PAGES_ALL): Add convenience macro for use in
+	dependency lists required by...
+	('doc/groff-man-pages.{pdf,utf8.txt}'): ...these targets.
+	Generate pages with the lint dial turned all the way up.
+
+	Fixes <https://savannah.gnu.org/bugs/?61900>.
+
+	[1] "The manual was intended to be typeset; some detail is
+	sacrificed on terminals." (man(1), _Unix Time-Sharing System
+	Programmer's Manual_, Eighth Edition, Volume 1, February 1985)
+
+2022-01-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Commit c64fd60dff was not quite cooked.  The localized
 	strings (in English) for the manual section titles need to be
 	set at every document load (i.e., when `TH` is called), but only
