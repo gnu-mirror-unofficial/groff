@@ -1692,7 +1692,7 @@ sub LoadPDF
                 $pdf->[$curobj]=undef;
             }
 
-            $root=$curobj if ref($o->{OBJ}) eq 'HASH' and exists($o->{OBJ}->{Type}) and $o->{OBJ}->{Type} eq '/XRef';
+            $root=$curobj if ref($pdf->[$curobj]->{OBJ}) eq 'HASH' and exists($pdf->[$curobj]->{OBJ}->{Type}) and $pdf->[$curobj]->{OBJ}->{Type} eq '/XRef';
 	}
 	elsif ($wd eq 'trailer' and !exists($pdf->[0]->{OBJ}))
 	{
