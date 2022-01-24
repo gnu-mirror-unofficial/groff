@@ -797,7 +797,12 @@ sub do_x
 		IsGraphic();
 		my ($curangle,$hyp)=RtoP($xpos,GraphY($ypos));
 		my ($x,$y)=PtoR($theta+$curangle,$hyp);
-		$stream.="q\n".sprintf("%.3f %.3f %.3f %.3f %.3f %.3f cm",cos($theta),sin($theta),-sin($theta),cos($theta),$xpos-$x,GraphY($ypos)-$y)."\n";
+ 		my ($tx, $ty) = ($xpos - $x, GraphY($ypos) - $y);
+ 		if ($frot) {
+ 		  ($tx, $ty) = ($tx *  sin($theta) + $ty * -cos($theta),
+ 				$tx * -cos($theta) + $ty * -sin($theta));
+ 		}
+ 		$stream.="q\n".sprintf("%.3f %.3f %.3f %.3f %.3f %.3f cm",cos($theta),sin($theta),-sin($theta),cos($theta),$tx,$ty)."\n";
 		$InPicRotate=1;
 	    }
 	    elsif ($par=~m/exec grestore/ and $InPicRotate)
