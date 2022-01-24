@@ -7,7 +7,7 @@ gropdf \- groff output driver for Portable Document Format
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2011-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 2011-2022 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -1149,27 +1149,85 @@ not all PDF Readers support any or all these transitions.
 .
 .
 .TP
-.BI "\eX'pdf: background " "cmd left top right bottom weight" \[aq]
-Where:-
+.BI "\eX\[aq]pdf: background\~" "cmd left top right bottom weight" \[aq]
+.TQ
+.B "\eX\[aq]pdf: background off\[aq]"
+.TQ
+.BI "\eX\[aq]pdf: background footnote\~" bottom \[aq]
+produces a background rectangle on the page,
+where
 .RS
 .TP
 .I cmd
-Can be any of "page|fill|box" in combination. So "pagefill" would draw a
-rectangle which covers whole current page size (in which case the rest of the
-parameters can be omitted because the box dimensions are taken from the
-current media size). "boxfill", on the other hand, requires the given
-dimensions to place the box. Including "fill" in the command will make the
-rectangle filled with the current background colour "\eM[colour]" and including
-"box" will give the rectangle a border in the current stroke colour
-"\em[colour]".
-.sp .5v
-The "cmd" may also be "off", on its own, which will terminate drawing the
-current box.
-.sp .5v
-Finally the command may be "footnote" followed by a new value for "bottom"
-which will be used for all current boxes, just for the current page. This is
-to allow room for footnotes which grow during the page.
-.LP
+is the command,
+which can be any of
+.RB \[lq] page | fill | box \[rq]
+in combination.
+.
+Thus,
+.RB \[lq] pagefill \[rq]
+would draw a rectangle which covers the whole current page size
+(in which case the rest of the parameters can be omitted because the box
+dimensions are taken from the current media size).
+.
+.RB \[lq] boxfill \[rq],
+on the other hand,
+requires the given dimensions to place the box.
+.
+Including
+.RB \[lq] fill \[rq]
+in the command will paint the rectangle with the current fill colour
+(as with
+.BR \[rs]M[] )
+and including
+.RB \[lq] box \[rq]
+will give the rectangle a border in the current stroke colour
+(as with
+.BR \[rs]m[] ).
+.
+.
+.IP
+.I cmd
+may also be
+.RB \[lq] off \[rq]
+on its own,
+which will terminate drawing the current box.
+.
+If you have specified a page colour with
+.RB \[lq] pagefill \[rq],
+it is always the first box in the stack,
+and if you specify it again,
+it will replace the first entry.
+.
+Be aware that the
+.RB \[lq]  pagefill \[rq]
+box renders the page opaque,
+so tools that \[lq]watermark\[rq] PDF pages are unlikely to be
+successful.
+.
+To return the background to transparent,
+issue an
+.RB \[lq] off \[rq]
+command with no other boxes open.
+.
+.
+.IP
+Finally,
+.I cmd
+may be
+.RB \[lq] footnote \[rq]
+followed by a new value for
+.IR bottom ,
+which will be used for all open boxes on the current page.
+This is to allow room for footnote areas that grow while a page is
+processed
+(to accommodate multiple footnotes,
+for instance).
+.
+(If the value is negative,
+it is used as an offset from the bottom of the page.)
+.
+.
 .TP
 .I left
 .TQ
@@ -1178,24 +1236,43 @@ to allow room for footnotes which grow during the page.
 .I right
 .TQ
 .I bottom
-Are the coordinates of the box. The "top" and "bottom" coordinates are
-the minimum and maximum for the box, since the actual start of the
-box is the vertical position of groff when you issue the command and the bottom of
-the box is the point where you turn the box "off". The top and bottom
-coordinates are only used if the box drawing extends onto the next page, so,
-ordinarily they would be set to the header and footer margins.
+are the coordinates of the box.
+.
+The
+.I top
+and
+.I bottom
+coordinates are the minimum and maximum for the box,
+since the actual start of the box is
+.IR groff 's
+drawing position when you issue the command,
+and the bottom of the box is the point where you turn the box
+.RB \[lq] off \[rq].
+.
+The top and bottom coordinates are used only if the box drawing extends
+onto the next page;
+ordinarily,
+they would be set to the header and footer margins.
+.
+.
 .TP
 .I weight
-If "box" is included in the command then this parameter provides the line width
-for the box border.
-.RE
-The convenience macro for this escape is
+provides the line width for the border if
+.RB \[lq] box \[rq]
+is included in the command.
+.
+.
+.P
+The convenience macro for this escape sequence is
 .BR .pdfbackground .
-.LP
-There is also a macro file which can be included if you are using the ms macro
-package which can be incorporated by placing -msboxes on the
-.B groff
-command line.
+.
+An
+.I sboxes
+macro file is also available;
+see
+.MR groff_tmac @MAN5EXT@.
+.RE
+.
 .
 .\" ====================================================================
 .SS "Importing graphics"
@@ -1466,6 +1543,18 @@ automatically loaded by
 .\" ====================================================================
 .SH "See also"
 .\" ====================================================================
+.
+.TP
+.I \%@DOCDIR@/\:sboxes/\:msboxes\:.ms
+.TQ
+.I \%@DOCDIR@/\:sboxes/\:msboxes\:.pdf
+\[lq]Using PDF boxes with
+.I groff
+and the
+.I ms
+macros\[rq],
+by Deri James.
+.
 .
 .MR afmtodit @MAN1EXT@ ,
 .MR groff @MAN1EXT@ ,

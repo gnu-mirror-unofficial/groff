@@ -7,7 +7,7 @@ groff_tmac \- macro files in the GNU roff typesetting system
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2000-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 2000-2022 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff typesetting system.
 .\"
@@ -716,6 +716,116 @@ documents can draw colored rectangles beneath any output;
 it further includes special support for
 .IR "groff ms" .
 .
+.RS
+.TP
+.B .BOXSTART \c
+.B SHADED \c
+.I colour \c
+.B OUTLINED \c
+.I colour \c
+.B INDENT \c
+.I size \c
+.B WEIGHT \c
+.I size
+begins a box,
+where the argument after
+.B SHADED
+gives the fill colour and that after
+.B OUTLINED
+the border colour.
+.
+Omit the former to get a borderless filled box and the latter for a
+border with no fill.
+.
+The specified
+.B WEIGHT
+is used if the box is
+.BR OUTLINED .
+.
+.
+.IP
+.B INDENT
+precedes a value which leaves a gap between the border and the contents
+inside the box.
+.
+.
+.IP
+Each
+.I colour
+must be a defined
+.I groff
+colour name,
+and each
+.I size
+a valid
+.I groff
+numeric expression.
+.
+The keyword/value pairs can be specified in any order.
+.RE
+.
+.
+.IP
+Boxes can be stacked,
+so you can start a box within another box;
+usually the later boxes would be smaller than the containing box,
+but this is not enforced.
+.
+When using
+.BR BOXSTART ,
+the left position is the current indent minus the
+.B INDENT
+in the command,
+and the right position is the left position
+(calculated above)
+plus the current line length and twice the indent.
+.
+.
+.RS
+.TP
+.B .BOXSTOP
+takes no parameters.
+.
+It closes the most recently started box at the current vertical position
+after adding its
+.B INDENT
+spacing.
+.RE
+.
+.
+.IP
+Your
+.I groff
+documents can conditionally exercise the
+.I sboxes
+.
+macros.
+The register
+.B GSBOX
+is defined if the package is loaded,
+and interpolates a true value if the
+.B pdf
+output device is in use.
+.
+.
+.IP
+.I sboxes
+has one further feature:
+it hooks into the
+.MR groff_ms @MAN7EXT@
+package to receive notifications when footnotes are growing,
+so that it can close boxes on a page before footnotes are printed.
+.
+When that condition obtains,
+.I sboxes
+will close open boxes two points
+above the footnote separator and re-open them on the next page.
+.
+(This amount probably will not match the box's
+.BR INDENT .)
+.
+.
+.IP
 See
 .UR file://\%@DOCDIR@/\:msboxes\:.pdf
 \[lq]Using PDF boxes with
@@ -724,7 +834,7 @@ and the
 .I ms
 macros\[rq]
 .UE
-for instructions and a demonstration.
+for a demonstration.
 .
 .
 .TP
