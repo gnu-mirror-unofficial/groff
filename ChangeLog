@@ -1,3 +1,18 @@
+2022-01-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man]: Commit c64fd60dff was not quite cooked.  The localized
+	strings (in English) for the manual section titles need to be
+	set at every document load (i.e., when `TH` is called), but only
+	if the groff locale is "english".  When switching locales, these
+	strings were getting "stuck" in their non-English translations
+	even when returning to an English page.
+
+	* tmac/an.tmac (an*localize): New macro initializes strings.
+	(TH): Call `an*localize` if the locale is "english".
+	(initialization): Drop initialization of section title strings.
+
+	Continues fixing <https://savannah.gnu.org/bugs/?61734>.
+
 2022-01-24  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	[gropdf]: Fix Savannah #61908

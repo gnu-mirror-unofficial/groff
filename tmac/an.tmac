@@ -1,6 +1,6 @@
 .\" an.tmac
 .\"
-.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2022 Free Software Foundation, Inc.
 .\"      Written by James Clark (jjc@jclark.com)
 .\"
 .\" This file is part of groff.
@@ -159,6 +159,21 @@
 .  el        .bp 1
 ..
 .
+.
+.\" Localize manual section titles for English.
+.de an*localize
+.  ds an*section1 General Commands Manual\"
+.  ds an*section2 System Calls Manual\"
+.  ds an*section3 Library Functions Manual\"
+.  ds an*section4 Kernel Interfaces Manual\"
+.  ds an*section5 File Formats Manual\"
+.  ds an*section6 Games Manual\"
+.  ds an*section7 Miscellaneous Information Manual\"
+.  ds an*section8 System Manager's Manual\"
+.  ds an*section9 Kernel Developer's Manual\"
+..
+.
+.
 .\" Begin man page.
 .\" .TH title section[ extra1[ extra2[ extra3]]]
 .de1 TH
@@ -223,6 +238,8 @@
 .  nr an-need-no-space-mode 0
 .  nr an-need-break 0
 .  nr an-is-in-diversion 0
+.
+.  if '\\*[locale]'english' .an*localize
 .
 .  ds an-title "\\$1\"
 .  if \\n[CT] .stringup an-title
@@ -981,16 +998,6 @@
 .\}
 .
 .\" === Initialize. ===
-.
-.ds an*section1 General Commands Manual\"
-.ds an*section2 System Calls Manual\"
-.ds an*section3 Library Functions Manual\"
-.ds an*section4 Kernel Interfaces Manual\"
-.ds an*section5 File Formats Manual\"
-.ds an*section6 Games Manual\"
-.ds an*section7 Miscellaneous Information Manual\"
-.ds an*section8 System Manager's Manual\"
-.ds an*section9 Kernel Developer's Manual\"
 .
 .mso devtag.tmac
 .nr an-devtag-needs-end-of-heading 0
