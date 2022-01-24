@@ -81,13 +81,13 @@
 	{there's no telling what pdfinfo(1) will say}.  Apply new
 	'stringdown' request so that we accept '.pdf' file name
 	extension in any lettercase.  Test file argument for existence
-	before proceeding (acknowledge TOCTTOU exposure); see Savannah
-	#61892.  Skip file if pipeline returned a non-zero exit status
-	or the registers into which we extract the height and width are
-	undefined (indicating failure of a temporary file to be created
-	or read).  Reject files with non-positive image width or height
-	reported by `pdfinfo`.  Validate `width` and `height` arguments,
-	if given, rejecting non-positive values.
+	before proceeding (acknowledge TOCTTOU exposure).  Skip file if
+	pipeline returned a non-zero exit status or the registers into
+	which we extract the height and width are undefined (indicating
+	failure of a temporary file to be created or read).  Reject
+	files with non-positive image width or height reported by
+	pdfinfo.  Validate `width` and `height` arguments, if given,
+	rejecting non-positive values.
 
 	Fixes <https://savannah.gnu.org/bugs/?61892>.
 
