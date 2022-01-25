@@ -31,7 +31,14 @@
 .\" trans.tmac should stay locale-independent.
 .
 .\" man package
-.if d an \{\
+.\"
+.\" Either an.tmac or andoc.tmac may already be loaded.
+.nr trans*is-man 0
+.
+.if d an         .nr trans*is-man 1
+.if d reload-man .nr trans*is-man 1
+.
+.if \n[trans*is-man] \{\
 .	als an*section1 \*[locale]-man-section1
 .	als an*section2 \*[locale]-man-section2
 .	als an*section3 \*[locale]-man-section3
@@ -42,6 +49,8 @@
 .	als an*section8 \*[locale]-man-section8
 .	als an*section9 \*[locale]-man-section9
 .\}
+.
+.rr trans*is-man
 .
 .\" ms package
 .if r GS \{\
