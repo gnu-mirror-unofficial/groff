@@ -166,11 +166,11 @@
 	the former name (or worse, we break it if we're loaded later).
 	(pdfpic@error): Stop aborting; simply report an error.  It's up
 	to the user how serious `PDFPIC` macro problems are.  As noted
-	in a comment, the user can easily `am PDFPIC` to tack an `ab`
-	request onto the end of its definition.  Always report input
-	file name and line number.  Replace "[PDFPIC]" prefix with the
-	name of the macro file complaining, to make it easier for groff
-	non-experts to find.
+	in a comment, the user can easily `am pdfpic@error` to tack an
+	`ab` request onto the end of its definition.  Always report
+	input file name and line number.  Replace "[PDFPIC]" prefix with
+	the name of the macro file complaining, to make it easier for
+	groff non-experts to find.
 	(PDFPIC): Return upon errors.  Recast diagnostic messages.  Stop
 	implying that we perform any sort of probing test of file type
 	{there's no telling what pdfinfo(1) will say}.  Apply new
