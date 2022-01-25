@@ -5,6 +5,22 @@
 	* src/devices/gropdf/gropdf.pl: Use either '\\\\\\\\n' or
 	'\[u000a]' as line separators in the string.
 
+2022-01-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man pages]: Fix options used to generate compilations.
+
+	* doc/doc.am (doc/groff-man-pages.pdf): Drop `-rU0` option (it's
+	unnecessary since we don't yet have PDF hyperlink support in
+	this document).  Add `-rC1` option to enable continuous page
+	numbering.
+	(doc/groff-man-pages.utf8.txt): Drop `-rC1 -rU1`.  Continuous
+	page numbering is superfluous since page numbers are not shown
+	in continuous rendering mode.  Stop turning on OSC 8 defaults;
+	we don't know if the document will be viewed with a supporting
+	pager+terminal combination, and further we don't yet have a
+	mechanism for making `MR` man page cross references internal to
+	the document when they indicate groff man pages.
+
 2022-01-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man pages]: Ship compilations in UTF-8 text and PDF.
