@@ -9895,6 +9895,8 @@ this is font 1 again
 
 @cindex glyph
 @cindex character
+@cindex glyph, distinguished from character
+@cindex character, distinguished from glyph
 @cindex ligature
 A @dfn{glyph} is a graphical representation of a @dfn{character}.  While
 a character is an abstract entity containing semantic information, a
@@ -12002,6 +12004,26 @@ requests may be interposed between the @code{ie} branch and the
 .el a was not positive but is now \na.
     @result{} a was not positive but is now 1.
 @endExample
+
+Another way in which @code{el} is an ordinary request is that it does
+not lexically ``bind'' more tightly to its @code{ie} counterpart than it
+does to any other request.  This fact can surprise C programmers.
+
+@Example
+.nr a 1
+.nr z 0
+.ie \nz \
+.  ie \na a is true
+.  el     a is false
+.el z is false
+    @error{} warning: unbalanced 'el' request
+    @result{} a is false
+@endExample
+
+@c Turn the following into a proper @{x,}ref if the conditional blocks
+@c node is relocated elsewhere--but consider if it is wise to do so.
+To conveniently nest conditionals, keep reading.
+
 @endDefreq
 
 @c ---------------------------------------------------------------------
@@ -12103,12 +12125,15 @@ condition was false) the remainder of the input line is interpreted
 @subsection while
 @cindex while
 
-@code{groff} provides a looping construct using the @code{while}
-request, which is used much like the @code{if} request.
+@code{groff} provides a looping construct:@: the @code{while} request.
+Its syntax matches the @code{if} request.
 
+@cindex body, of a while request
 @Defreq {while, cond-expr anything}
 Evaluate the conditional expression @var{cond-expr}, and repeatedly
 execute @var{anything} unless and until @var{cond-expr} evaluates false.
+@var{anything}, which is often a conditional block, is referred to as
+the @code{while} request's @dfn{body}.
 
 @Example
 .nr a 0 1
@@ -12119,17 +12144,14 @@ execute @var{anything} unless and until @var{cond-expr} evaluates false.
     @result{} 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 @endExample
 
-Some remarks.
-
 @cindex @code{de} request, and @code{while}
-@itemize @bullet
-@item
-The body of a @code{while} request is treated like the body of a
-@code{de} request:@: GNU @code{troff} temporarily stores it in a macro
-that is deleted after the loop exits.  It can considerably slow down a
-macro if the body of the @code{while} request (within the macro) is
+GNU @code{troff} treats the body of a @code{while} request similarly to
+that of a @code{de} request (albeit one not read in copy
+mode@footnote{@xref{Copy Mode}.}), but stores it under an internal name
+and deletes it when it exits.  The operation of a macro containing a
+@code{while} request can slow significantly if the @code{while} body is
 large.  Each time the macro is executed, the @code{while} body is parsed
-and stored again as a temporary macro.
+and stored again.
 
 @Example
 .de xxx
@@ -12144,9 +12166,10 @@ and stored again as a temporary macro.
 @cindex recursive macros
 @cindex macros, recursive
 @noindent
-The traditional and often better solution (@acronym{AT&T} @code{troff}
-lacked the @code{while} request) is to use a recursive macro instead
-that is parsed only once during its definition.
+An often better solution---and one that is more portable, since
+@acronym{AT&T} @code{troff} lacked the @code{while} request---is to
+instead write a recursive macro.  It will only be parsed
+once.@footnote{unless you redefine it}
 
 @Example
 .de yyy
@@ -12164,12 +12187,14 @@ that is parsed only once during its definition.
 @endExample
 
 @noindent
-The number of available recursion levels is set to@tie{}1000
-(this is a compile-time constant value of GNU @code{troff}).
+To prevent infinite loops, the default number of available recursion
+levels is 1,000 or somewhat less.@footnote{``somewhat less'' because
+things other than macro calls can be on the input stack}  You can
+disable this protective measure, or raise the limit, by setting the
+@code{slimit} register.  @xref{Debugging}.
 
-@item
-As noted above, the closing brace of a @code{while} body must end an
-input line.
+As noted above, if a @code{while} body begins with a conditional block,
+its closing brace must end an input line.
 
 @Example
 .if 1 \@{\
@@ -12179,20 +12204,19 @@ input line.
 .\@}\@}
     @error{} unbalanced brace escape sequences
 @endExample
-@end itemize
 @endDefreq
 
 @Defreq {break, }
 @cindex @code{while} request, confusing with @code{br}
 @cindex @code{break} request, in a @code{while} loop
 @cindex @code{continue} request, in a @code{while} loop
-Break out of a @code{while} loop.  Be sure not to confuse this with the
-@code{br} request (causing a line break).
+Exit a @code{while} loop.  Do not confuse this request with a
+typographical break or the @code{br} request.
 @endDefreq
 
 @Defreq {continue, }
-Finish the current iteration of a @code{while} loop, immediately
-restarting the next iteration.
+Skip the remainder of a @code{while} loop's body, immediately starting
+the next iteration.
 @endDefreq
 
 

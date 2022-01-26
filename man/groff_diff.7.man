@@ -1217,17 +1217,16 @@ discarding any partially collected line in the diversion.
 .
 .TP
 .B .break
-Break out of a while loop.
-.
-See also the
+Exit a
 .B while
-and
-.B continue
-requests.
-.
-Be sure not to confuse this with the
+loop.
+Do not confuse this request with a typographical break or the
 .B br
 request.
+.
+See
+.BR .continue .
+.
 .
 .TP
 .B .brp
@@ -1705,15 +1704,17 @@ if it is used in
 .BR \[rs][ .\|.\|.\& ]
 with more than one component.
 .
+.
 .TP
 .B .continue
-Finish the current iteration of a while loop.
-.
-See also the
+Skip the remainder of a
 .B while
-and
-.B break
-requests.
+loop's body,
+immediately starting the next iteration.
+.
+See
+.BR .break .
+.
 .
 .TP
 .BI .color\~ n
@@ -3426,53 +3427,72 @@ unless and until
 .I cond-expr
 evaluates false.
 .
-See also the
-.B break
-and
-.B continue
-requests.
+.I anything,
+which is often a conditional block,
+is referred to as the
+.B while
+request's
+.I body.
 .
 .
 .IP
-The body of a
-.B while
-request is treated like the body of a
-.B de
-request:
 .I \%@g@troff
-temporarily stores it in a macro that is deleted after the loop exits.
-.
-It can considerably slow down a macro if the body of the
+treats the body of a
 .B while
+request similarly to that of a
+.B de
 request
-(within the macro)
-is large.
+(albeit one not read in copy mode),
+but stores it under an internal name and deletes it when it exits.
+.
+The operation of a macro containing a
+.B while
+request can slow significantly if the
+.B while
+body is large.
 .
 Each time the macro is executed,
 the
 .B while
-body is parsed and stored again as a temporary macro.
+body is parsed and stored again.
 .
-.
-.IP
-The traditional and often better solution
-(AT&T
+An often better solution\[em]and one that is more portable,
+since AT&T
 .I troff \" AT&T
 lacked the
 .B while
-request)
-is to use a recursive macro instead that is parsed only once during its
-definition.
+request\[em]is to instead write a recursive macro.
 .
-The number of available recursion levels is set to\~1000
-(this is a compile-time constant value of
-.IR \%@g@troff ).
+It will only be parsed once (unless you redefine it).
+.
+To prevent infinite loops,
+the default number of available recursion levels is 1,000 or somewhat
+less (because things other than macro calls can be on the input stack).
+.
+You can disable this protective measure,
+or raise the limit,
+by setting the
+.B slimit
+register.
+.
+See section \[lq]Debugging\[rq] below.
 .
 .
 .IP
-The closing brace of a
+If a
 .B while
-body must end a line.
+body begins with a conditional block,
+its closing brace must end an input line.
+.
+.
+.IP
+The
+.B break
+and
+.B continue
+requests alter a
+.B while
+loop's flow of control.
 .
 .
 .TP
