@@ -18406,7 +18406,7 @@ corresponds to the @code{troff} input character@tie{}@var{c}.  If
 corresponds to the GNU @code{troff} special character escape sequence
 @samp{\[@var{name}]}.  A name consisting of three minus signs,
 @samp{---}, is special and indicates that the glyph is unnamed: such
-glyphs can only be accessed by means of the @code{\N} escape sequence in
+glyphs can only be accessed by the @code{\N} escape sequence in
 @code{troff}.  A special character named @samp{---} can still be defined
 using @code{char} and similar requests.  The @var{name} @samp{\-}
 defines the minus sign glyph.  Finally, @var{name} can be the
@@ -18440,8 +18440,8 @@ The form of the @var{metrics} field is as follows.
 
 @display
 @group
-@var{width}[@code{,}@var{height}[@code{,}@var{depth}[@code{,}@var{italic-correction}
-  [@code{,}@var{left-italic-correction}[@code{,}@var{subscript-correction}]]]]]
+@var{width}[@code{,}[@var{height}[@code{,}[@var{depth}[@code{,}[@var{italic-correction}
+  [@code{,}[@var{left-italic-correction}[@code{,}[@var{subscript-correction}]]]]]]]]]]
 @end group
 @end display
 
@@ -18474,8 +18474,9 @@ For fonts used with typesetting devices, the @var{type} field gives a
 featural description of the glyph: it is a bit mask recording whether
 the glyph is an ascender, descender, both, or neither.  When a @code{\w}
 escape sequence is interpolated, these values are bitwise and-ed
-together and stored in the @code{nr} register.  In fonts for
-@code{nroff}-mode output devices, all glyphs might have a type of zero.
+together for each glyph and stored in the @code{nr} register.  In fonts
+for @code{nroff}-mode output devices, all glyphs might have a type of
+zero.
 
 @table @code
 @item 0
@@ -18527,12 +18528,12 @@ made to adjacent glyph pairs from this font.  It contains a sequence of
 lines formatted as follows.
 
 @Example
-@var{c1} @var{c2} @var{n}
+@var{g1} @var{g2} @var{n}
 @endExample
 
 @noindent
-The foregoing means that when glyph @var{c1} is typeset immediately
-before @var{c2}, the space between them should be increased
+The foregoing means that when glyph @var{g1} is typeset immediately
+before @var{g2}, the space between them should be increased
 by@tie{}@var{n}.  Most kerning pairs should have a negative value
 for@tie{}@var{n}.
 @c END Keep parallel with groff_font(5).

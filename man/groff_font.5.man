@@ -732,7 +732,7 @@ special character escape sequence
 A name consisting of three minus signs,
 .RB \[lq] \-\-\- \[rq],
 indicates that the glyph is unnamed:
-such glyphs can only be accessed by means of the
+such glyphs can only be accessed by the
 .B \[rs]N
 escape sequence in
 .IR troff . \" generic; \N is portable
@@ -775,11 +775,11 @@ it may be broken here for readability).
 .
 .IP
 .I width\/\c
-.RI [\fB, \:height\/\c
-.RI [\fB, \:depth\/\c
-.RI [\fB, \:\%italic-correction\/\c
-.RI [\fB, \:\%left-italic-correction\/\c
-.RI [\fB, \:\%subscript-correction ]]]]]
+.RI [\fB,\fP[ \:height\/\c
+.RI [\fB,\fP[ \:depth\/\c
+.RI [\fB,\fP[ \:\%italic-correction\/\c
+.RI [\fB,\fP[ \:\%left-italic-correction\/\c
+.RI [\fB,\fP[ \:\%subscript-correction ]]]]]]]]]]
 .
 .
 .P
@@ -856,6 +856,7 @@ When a
 .B \[rs]w
 escape sequence is interpolated,
 these values are bitwise and-ed together
+for each glyph
 and stored in the
 .B ct
 register.
@@ -979,14 +980,14 @@ It contains a sequence of lines formatted as follows.
 .
 .
 .IP
-.I c1 c2 n
+.I g1 g2 n
 .
 .
 .P
 The foregoing means that when glyph
-.I c1
+.I g1
 is typeset immediately before
-.IR c2 ,
+.IR g2 ,
 the space between them should be increased
 .RI by\~ n .
 .
@@ -1059,10 +1060,10 @@ and device-independent output format.
 .P
 .MR groff @MAN1EXT@ ,
 subsection \[lq]Utilities\[rq],
-lists programs available for preparing font files in a variety of
-formats for use with
+lists programs available for describing fonts in a variety of formats
+such that
 .I groff
-output drivers.
+output drivers can use them.
 .
 .
 .P
