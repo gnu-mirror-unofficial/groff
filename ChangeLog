@@ -1,3 +1,40 @@
+2022-01-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Implement PDF bookmark support for man pages.  Limitation: A
+	{sub}section can only be bookmarked if it is specified in the
+	arguments to the `SH` or `SS` requests, not on the next line in
+	an input trap.  Thanks to Deri James for providing the
+	fundamentals (blame me for any weird bits).
+
+	* tmac/an.tmac (an-prepare-page-title): Define a new string,
+	`an*page-ref-string`, which is the man page's own reference
+	{such as "groff(1)"} without any abbreviation, ellipsis, or font
+	selection or italic correction escape sequences.
+	(SS): Define a new string, `an*subsection-heading`, storing the
+	macro arguments (if any).  These could contain font selection
+	escape sequences, for instance, a fact that becomes important
+	later.
+	(initialization):
+	- Recognize `BM` register to enable PDF bookmarks (only on the
+	  'pdf' output device); defaults on.  Recognize `BN` register to
+	  set a base level/depth for the bookmarks; this is to ease
+	  embedding of man pages in other PDF documents that already use
+	  bookmarks.  The default is 0.  The registers are not yet
+	  documented.
+	- If the output device is 'pdf' and bookmarks are enabled, set
+	  `PDFOUTLINE.FOLDLEVEL` and `PDFHREF.VIEW.LEADING` registers
+	  {recognized by 'pdf.tmac'}.  Append to `TH`, `SH`, `SS` to get
+	  the `an*page-ref-string`, `an-section-heading`, and
+	  `an*subsection-heading` bookmarks in the document at the
+	  applicable levels.
+
+	* tmac/mdoc/doc-common: Add straw-man implementation--it doesn't
+	support the `BM` and `BN` configuration parameters yet.  (This
+	is enough to get the groff_mdoc(7) page to correctly appear in
+	the new 'groff-man-pages.pdf' document.)
+	(Dt, Sh, Ss): If the output device is 'pdf', place bookmarks in
+	the document at levels 1, 2, and 3.
+
 2022-01-26  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	[gropdf]: Allow multiline text in .pdfinfo

@@ -360,9 +360,12 @@
 .\" string an-pageref defined for use in .PT and .an-footer.  Also
 .\" leaves an-title-abbv for possible use by .PT and .BT re-definers.
 .de an-prepare-page-title
-.  ds an-title-abbv \\*[an-title]\"
+.  ds an-title-abbv \\*[an-title]\" might not get abbreviated at all
 .  ds an-title-string \\*[an-title]\"
 .  ds an-ellipsis \|.\|.\|.\|\"
+.  \" an*page-ref-string is left unmodified for internal use, such as
+.  \" PDF bookmarks.
+.  ds an*page-ref-string \\*[an-title](\\*[an-section])\"
 .  ds an-pageref \\*[an-title-abbv](\\*[an-section])\"
 .  nr an-header-width \\w'\\*[an-pageref]\\*[an-extra3]\\*[an-pageref]'
 .  while (\\n[an-header-width] >= \\n[.lt]) \{\
@@ -613,7 +616,10 @@
 .  ne (2v + 1u)
 .  ft \\*[HF]
 .  if \\n[an-remap-I-style-in-headings] .ftr I \\*[an-heading-family]BI
-.  if \\n[.$] \&\\$*
+.  if \\n[.$] \{\
+.    nop \&\\$*
+.    ds an*subsection-heading \\$*\"
+.  \}
 .  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
 .
@@ -1016,6 +1022,39 @@
 .
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
+.
+.\" Enable within-page navigation via bookmarks--only operational with
+.\" output device 'pdf', but could be extended to others contingent on
+.\" their supporting features.
+.if !r BM .nr BM 1
+.
+.\" base depth for bookmarks (for embedding man pages in other docs)
+.if !r BN .nr BN 0
+.
+.\" Make man pages navigable in PDF output.  Thanks to Deri James.
+.if '\*[.T]'pdf' \{\
+.  if \n[BM] \{\
+.    nr PDFOUTLINE.FOLDLEVEL 1
+.    nr PDFHREF.VIEW.LEADING 10p
+.    am1 TH
+.      nr an*bookmark-depth \n[BN]+1
+.      pdfbookmark \\n[an*bookmark-depth] \\*[an*page-ref-string]
+.      rr an*bookmark-depth
+.    .
+.
+.    am1 SH
+.      nr an*bookmark-depth \n[BN]+2
+.      pdfbookmark \\n[an*bookmark-depth] \\*[an-section-heading]
+.      rr an*bookmark-depth
+.    .
+.
+.    am1 SS
+.      nr an*bookmark-depth \n[BN]+3
+.      pdfbookmark \\n[an*bookmark-depth] \\*[an*subsection-heading]
+.      rr an*bookmark-depth
+.    .
+.  \}
+.\}
 .
 .\" continuous rendering (one long page)
 .if !r cR \{\

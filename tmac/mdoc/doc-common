@@ -392,6 +392,9 @@
 .
 .  if \n[nl] \
 .    bp
+.
+.  if '\*[.T]'pdf' \
+.    pdfbookmark 1 "\*[doc-document-title](\*[doc-section])"
 ..
 .ec
 .
@@ -1331,6 +1334,9 @@
 .      ne 3
 .    fi
 .
+.  if '\*[.T]'pdf' \
+.    pdfbookmark 2 "\*[doc-sec-head]"
+.
 .    if t \{\
 .      nr doc-reg-Sh \n[.ss]
 .      nr doc-reg-Sh1 \n[.sss]
@@ -1360,6 +1366,9 @@
 .
 .\" NS Ss user macro (not callable)
 .\" NS   subsection
+.\" NS
+.\" NS modifies:
+.\" NS   doc-subsection-heading
 .\" NS
 .\" NS local variable:
 .\" NS   doc-reg-Ss
@@ -1397,10 +1406,15 @@
 .    ds doc-macro-name Ss
 .    doc-parse-args \$@
 .
+.    ds doc-subsection-heading \$*
+.
 .    sp
 .    if !\n[cR] \
 .      ne 3
 .    ti -.25i
+.
+.    if '\*[.T]'pdf' \
+.      pdfbookmark 3 "\*[doc-subsection-heading]"
 .
 .    nr doc-reg-Ss \n[.ss]
 .    nr doc-reg-Ss1 \n[.sss]
