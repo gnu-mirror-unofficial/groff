@@ -283,6 +283,9 @@
 .    rm an-msg
 .  \}
 .
+.  \" We now have what we need to typeset the (default) page header.
+.
+.  \" HTML gets the title without any abbreviation, since it's metadata.
 .  if \\n[an-is-output-html] \{\
 .    DEVTAG-TL
 .    nop \\*[an-title]
@@ -292,9 +295,9 @@
 .  an-header
 .
 .  if !\\n[cR] \{\
+.    wh 0 an-header
 .    ie r FT .nr an-footer-location \\n[FT]
 .    el      .nr an-footer-location (-.5i)
-.    wh 0 an-header
 .    wh (2u * \\n[an-footer-location]u) an-break-body-text
 .    wh \\n[an-footer-location]u an-footer
 .    \}
