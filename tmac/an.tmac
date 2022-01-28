@@ -359,7 +359,8 @@
 .\" Abbreviate the page title if it's too long for the header.  Leaves
 .\" string an-pageref defined for use in .PT and .an-footer.  Also
 .\" leaves an-title-abbv for possible use by .PT and .BT re-definers.
-.de an-prepare-page-title
+.\" Call this only from within the header/footer environment.
+.de an*prepare-page-title
 .  ds an-title-abbv \\*[an-title]\" might not get abbreviated at all
 .  ds an-title-string \\*[an-title]\"
 .  ds an-ellipsis \|.\|.\|.\|\"
@@ -382,7 +383,7 @@
 .    \" characters of the title remain intact (in cases of pathological
 .    \" shortening).
 .    substring an-prefix 0 (\\n[an-mark1] >? 1)
-.    substring an-suffix (\\n[an-mark2] <? (\\n[an-title-length] - 1) -1
+.    substring an-suffix (\\n[an-mark2] <? \\n[an-title-length] - 1) -1
 .    ds an-title-string \\*[an-prefix]\\*[an-suffix]\"
 .    ds an-title-abbv \\*[an-prefix]\\*[an-ellipsis]\\*[an-suffix]\"
 .    \" Measure the string again and give up if we made no progress.
@@ -474,7 +475,7 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
-.  an-prepare-page-title
+.  an*prepare-page-title
 .  ie \\n[cR] .pl +1v
 .  el         .sp .5i
 .  PT
