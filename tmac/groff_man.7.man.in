@@ -2759,8 +2759,14 @@ Because these macros are hooks for
 internals,
 man pages have no reason to call them.
 .
-A macro definition for these hooks typically consists of a \[lq].tl\[rq]
-request.
+Such hook definitions will likely consist of \[lq].sp\[rq] and
+\[lq].tl\[rq] requests.
+.
+They must also increase the page length with \[lq].pl\[rq] requests in
+continuous rendering mode;
+consult the existing implementations in
+.I an.tmac
+when drafting your replacement.
 .
 .
 .TP

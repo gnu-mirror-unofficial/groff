@@ -345,12 +345,26 @@
 ..
 .
 .\" Write the page header; can be redefined by man.local.
+.\"
+.\" In continuous rendering mode, we need to extend the page length to
+.\" accommodate the vertical size of our header (plus any spacing).
 .de1 PT
+.  ie \\n[cR] .pl +1v
+.  el         .sp .5i
 .  tl '\\*[an-pageref]'\\*[an-extra3]'\\*[an-pageref]'
+.  ie \\n[cR] \{\
+.    pl +1v
+.    sp 1v
+.  \}
+.  el .sp |1i
 ..
 .
 .\" Write the page footer; can be redefined by man.local.
+.\"
+.\" In continuous rendering mode, we need to extend the page length to
+.\" accommodate the vertical size of our footer (plus any spacing).
 .de1 BT
+.  if \\n[cR] .pl +1v
 .  ie \\n[D] \{\
 .    if o .tl '\\*[an-ifoot]'\\*[an-extra1]'\\*[an-outer-footer-text]'
 .    if e .tl '\\*[an-outer-footer-text]'\\*[an-extra1]'\\*[an-ifoot]'
@@ -479,14 +493,7 @@
 .  vs \\n[VS]u
 .  lt \\n[LT]u
 .  an*prepare-page-title
-.  ie \\n[cR] .pl +1v
-.  el         .sp .5i
 .  PT
-.  ie \\n[cR] \{\
-.    pl +1v
-.    sp 1v
-.  \}
-.  el .sp |1i
 .  ev
 .  ns
 ..
@@ -516,7 +523,6 @@
 .    \}
 .  \}
 .  an-prepare-inner-footer
-.  if \\n[cR] .pl +1v
 .  BT
 .  rm an-outer-footer-text
 .  ev
