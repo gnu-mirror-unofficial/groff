@@ -357,7 +357,7 @@ Keycap	Appearance and meaning	Special character and meaning
 _
 "	" neutral double quote	\f[B]\[rs][dq]\f[] neutral double quote
 \[aq]	\[cq] closing single quote	\f[B]\[rs][aq]\f[] neutral apostrophe
-\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] minus sign
+\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] minus sign/Unix dash
 \[rs]	(escape character)	\f[B]\[rs]e\f[] or \f[B]\[rs][rs]\f[] reverse solidus
 \[ha]	\[u02C6] modifier circumflex	\f[B]\[rs](ha\f[] circumflex/caret/\[lq]hat\[rq]
 \[ga]	\[oq] opening single quote	\f[B]\[rs](ga\f[] grave accent
@@ -380,10 +380,11 @@ and
 dashes of varying widths.
 .
 For best results in
-.IR groff ,
+.I roff
+systems,
 use the
 .RB \[lq] \- \[rq]
-character in input without an escape
+character in input outside an escape sequence
 .I only
 to mean a hyphen,
 as in the phrase \[lq]long-term\[rq].
@@ -743,10 +744,14 @@ accesses the (spacing) ring accent,
 producing \[lq]\[u02DA]\[rq].
 .
 .
+.\" Use "GNU troff" in this paragraph because the contrast with AT&T
+.\" troff, which antedated Unicode, is important, and that contrast is
+.\" obscured with the default empty command prefix on "troff".
 .P
 Unicode code points can be composed as well;
 when they are,
-.I \%@g@troff
+GNU
+.I troff \" GNU
 requires NFD
 (Normalization Form D),
 where all Unicode glyphs are maximally decomposed.
@@ -756,12 +761,14 @@ precomposed characters in the Latin-1 supplement described above are
 also accepted.
 .
 Do not count on this exception remaining in a future
-.I \%@g@troff
+GNU
+.I troff \" GNU
 that accepts UTF-8 input directly.)
 .
 .
 Thus,
-.I \%@g@troff
+GNU
+.I troff \" GNU
 accepts
 .RB \[lq]caf \[rs][\[aq]e] \[rq],
 .RB \[lq]caf \[rs][e\~aa] \[rq],
@@ -790,8 +797,8 @@ with an underscore
 separating each component.
 .
 Thus,
-.B \[rs][u0065_0301]
-produces \[lq]\[u0065_0301]\[rq].
+.B \[rs][u006E_0303]
+produces \[lq]\[u006E_0303]\[rq].
 .
 .
 .TP
@@ -895,8 +902,8 @@ variants\[rq],
 which should work better in that context.
 .
 Conversely,
-a handful of glyphs that are normally drawn from a regular font are
-required in mathematical text.
+a handful of glyphs that are normally drawn from a regular (text) font
+may be required in mathematical equations.
 .
 Both sets of exceptions are noted in the tables where they appear
 (\[lq]Logical symbols\[rq] and \[lq]Mathematical symbols\[rq]).
