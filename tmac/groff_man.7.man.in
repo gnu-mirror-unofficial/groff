@@ -150,14 +150,14 @@ _
 \&.EX	Example begin	Document structure macros
 \&.I	Italic	Font style macros
 \&.IB	Italic, bold alternating	Font style macros
-\&.IP	Indented paragraph	Paragraph macros
+\&.IP	Indented paragraph	Paragraphing macros
 \&.IR	Italic, roman alternating	Font style macros
-\&.LP	(Left) paragraph	Paragraph macros
+\&.LP	(Left) paragraph	Paragraphing macros
 \&.ME	Mail-to end	Hyperlink macros
 \&.MR	Man page cross reference	Hyperlink macros
 \&.MT	Mail-to start	Hyperlink macros
-\&.P	Paragraph	Paragraph macros
-\&.PP	Paragraph	Paragraph macros
+\&.P	Paragraphing	Paragraphing macros
+\&.PP	Paragraphing	Paragraphing macros
 \&.RB	Roman, bold alternating	Font style macros
 \&.RE	Relative inset end	Document structure macros
 \&.RI	Roman, italic alternating	Font style macros
@@ -168,8 +168,8 @@ _
 \&.SS	Subsection heading	Document structure macros
 \&.SY	Synopsis start	Command synopsis macros
 \&.TH	Title heading	Document structure macros
-\&.TP	Tagged paragraph	Paragraph macros
-\&.TQ	Supplemental paragraph tag	Paragraph macros
+\&.TP	Tagged paragraph	Paragraphing macros
+\&.TQ	Supplemental paragraph tag	Paragraphing macros
 \&.UE	URI end	Hyperlink macros
 \&.UR	URI start	Hyperlink macros
 \&.YS	Synopsis end	Command synopsis macros
@@ -611,10 +611,10 @@ installation.
 .
 .TP
 .BR .RS " ["\c
-.IR indent ]
+.IR indentation ]
 Start a new relative inset level,
 moving the left margin right by
-.IR indent ,
+.IR indentation ,
 if specified,
 and by a default amount otherwise;
 see subsection \(lqHorizontal and vertical spacing\(rq below.
@@ -642,7 +642,7 @@ move the left margin one level back.
 .
 .
 .\" ====================================================================
-.SS "Paragraph macros"
+.SS "Paragraphing macros"
 .\" ====================================================================
 .
 An ordinary paragraph
@@ -711,7 +711,7 @@ is not.
 .
 .TP
 .BR .TP " ["\c
-.IR indent ]
+.IR indentation ]
 Set a paragraph with a leading tag,
 and the remainder of the paragraph indented.
 .
@@ -721,7 +721,7 @@ known as the
 is printed at the current left margin.
 .
 Subsequent text is indented by
-.IR indent ,
+.IR indentation ,
 if specified,
 and by a default amount otherwise;
 see subsection \(lqHorizontal and vertical spacing\(rq below.
@@ -794,13 +794,13 @@ _endif()dnl
 .TP
 .BR .IP " ["\c
 .IR tag "] "\c
-.RI [ indent ]
+.RI [ indentation ]
 Set an indented paragraph with an optional tag.
 .
 The
 .I tag
 and
-.I indent
+.I indentation
 arguments,
 if present,
 are handled as with
@@ -829,7 +829,7 @@ or
 .B .TP
 paragraph,
 if no
-.I indent
+.I indentation
 argument is given;
 and
 .
@@ -1781,7 +1781,7 @@ _endif()dnl
 .\" ====================================================================
 .
 The
-.I indent
+.I indentation
 argument accepted by
 .BR .RS ,
 .BR .IP ,
@@ -1812,7 +1812,7 @@ or the deprecated
 .B .HP
 persists until
 (1) another of these macros is called with an explicit
-.I indent
+.I indentation
 argument,
 or
 (2)
@@ -2631,7 +2631,7 @@ Alternatively,
 and perhaps with better portability,
 the
 .B \ef
-font style escape sequence can be used;
+font selection escape sequence can be used;
 see below.
 .
 Using
@@ -2864,11 +2864,11 @@ markup instead.
 .
 .TP
 .BR .HP " ["\c
-.IR indent ]
+.IR indentation ]
 Set up a paragraph with a hanging left indentation.
 .
 The
-.I indent
+.I indentation
 argument,
 if present,
 is handled as with
@@ -2919,7 +2919,8 @@ It cannot easily be used to annotate options that take optional
 arguments or options whose arguments have internal structure
 (such as a mixture of literal and variable components).
 .
-One could work around these limitations with font escape sequences,
+One could work around these limitations with font selection escape
+sequences,
 but it is preferable to use font style alternation macros,
 which afford greater flexibility.
 .
@@ -3234,7 +3235,7 @@ Any valid argument to
 .
 .
 .TP
-.BI \-rIN= standard-indent
+.BI \-rIN= standard-indentation
 Set the amount of indentation used for ordinary paragraphs
 .RB ( .P
 and its synonyms)
@@ -3251,7 +3252,7 @@ default.
 .
 For
 terminal devices,
-.I standard-indent
+.I standard-indentation
 should always be an integer multiple of unit \(lqn\(rq to get consistent
 indentation.
 .
@@ -3325,9 +3326,9 @@ See subsection \(lqFont style macros\(rq above for the default.
 .
 .
 .TP
-.BI \-rSN= subsection-indent
+.BI \-rSN= subsection-indentation
 Set indentation of subsection headings to
-.IR subsection-indent .
+.I subsection-indentation.
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
 default.
