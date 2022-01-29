@@ -15732,9 +15732,9 @@ by default.
 @itemx 4
 @cindex filling, and @code{break} warnings
 @cindex mode, fill, and @code{break} warnings
-A line could not be broken such that its length was less than the output
-line length, @samp{\n[.l]}; this can occur only when filling is enabled.
-This category is enabled by default.
+A filled output line could not be broken such that its length was less
+than the output line length @samp{\n[.l]}.  This category is enabled by
+default.
 
 @item delim
 @itemx 8
@@ -15749,7 +15749,7 @@ The @code{el} request was encountered with no prior corresponding
 
 @item scale
 @itemx 32
-An inappropriate scaling indicator was used in a numeric expression.
+An inappropriate scaling unit was used in a numeric expression.
 
 @item range
 @itemx 64
@@ -15787,8 +15787,8 @@ is dereferenced, an empty one of that name and type is automatically
 created.  So, in most cases, at most one warning is given for each name.
 
 This warning is also emitted upon an attempt to move an unplanted trap
-(@pxref{Page Location Traps}).  In such cases, the unplanted macro is
-@emph{not} dereferenced, so it is not created if it does not exist.
+macro (@pxref{Page Location Traps}).  In such cases, the unplanted macro
+is @emph{not} dereferenced, so it is not created if it does not exist.
 
 @item reg
 @itemx 1024
@@ -15835,8 +15835,7 @@ occurs in compatibility mode.
 
 @item font
 @itemx 131072
-A non-existent font was dereferenced.  This category is enabled by
-default.
+A non-existent font was selected.  This category is enabled by default.
 
 @item ig
 @itemx 262144
@@ -15846,10 +15845,10 @@ when it occurs in non-ignored input.
 
 @item color
 @itemx 524288
-An undefined color was dereferenced, an attempt was made to define a
-color using an unrecognized color space, an invalid component in a color
-definition was encountered, or an attempt was made to redefine the
-default color.
+An undefined color was selected, an attempt was made to define a color
+using an unrecognized color space, an invalid component in a color
+definition was encountered, or an attempt was made to redefine a default
+color.
 
 @item file
 @itemx 1048576
