@@ -1555,48 +1555,86 @@ see
 .\" ====================================================================
 .
 .TP
-.I @FONTDIR@/devps/DESC
-Device description file.
+.I \%@FONTDIR@/\:\%devps/\:DESC
+describes the
+.B ps
+output device.
+.
 .
 .TP
-.IR @FONTDIR@/devps/ F
-Font description file for font
-.IR F .
+.IR \%@FONTDIR@/\:\%devps/ F
+describes the font known
+.RI as\~ F
+on device
+.BR ps .
+.
 .
 .TP
-.I @FONTDIR@/devps/download
-List of downloadable fonts.
+.I \%@FONTDIR@/\:\%devps/\:\%download
+lists fonts available for embedding within the PostScript document
+(or download to the device).
+.
 .
 .TP
-.I @FONTDIR@/devps/text.enc
-Encoding used for text fonts.
+.I \%@FONTDIR@/\:\%devps/\:text.enc
+describes the encoding scheme used by most PostScript Type\~1 fonts;
+the
+.B \%encoding
+directive of
+font description files for the
+.B ps
+device refers to it.
+.
 .
 .TP
-.I @MACRODIR@/ps.tmac
-Macros for use with
-.BR grops ;
-automatically loaded by
-.B troffrc
+.I \%@FONTDIR@/\:\%devps/\:\%generate/\:textmap
+maps names in the Adobe Glyph List to
+.I groff
+special character identifiers.
+.
 .
 .TP
-.I @MACRODIR@/pspic.tmac
-Definition of
+.I \%@MACRODIR@/\:ps.tmac
+defines macros for use with the
+.B ps
+output device.
+.
+It is automatically loaded by
+.I troffrc
+when the
+.B ps
+output device is selected.
+.
+.
+.TP
+.I \%@MACRODIR@/\:pspic.tmac
+defines the
 .B PSPIC
-macro,
-automatically loaded by
-.IR ps.tmac .
+macro for embedding images in a document;
+see
+.MR groff_tmac @MAN5EXT@ .
+.
+It is automatically loaded by
+.I troffrc .
+.
 .
 .TP
-.I @MACRODIR@/psold.tmac
-Macros to disable use of characters not present in older
-PostScript printers (e.g., \[oq]eth\[cq] or \[oq]thorn\[cq]).
+.I \%@MACRODIR@/psold.tmac
+provides replacement glyphs for text fonts that lack complete coverage
+of the ISO Latin-1 character set;
+using it,
+.I groff
+can produce glyphs like eth (\[Sd]) and thorn (\[Tp]) that older
+PostScript printers do not natively support.
 .
-.TP
-.IR /tmp/grops XXXXXX
-Temporary file.
-See
+.
+.P
+.I grops
+creates temporary files using the template
+.RI \[lq] grops XXXXXX\[rq];
+see
 .MR groff @MAN1EXT@
-for details on the location of temporary files.
+for details on their storage location.
 .
 .
 .\" ====================================================================

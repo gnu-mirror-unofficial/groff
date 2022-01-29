@@ -1495,41 +1495,83 @@ see
 .\" ====================================================================
 .
 .TP
-.I @FONTDIR@/devpdf/DESC
-Device description file.
+.I \%@FONTDIR@/\:\%devpdf/\:DESC
+describes the
+.B pdf
+output device.
+.
 .
 .TP
-.IR @FONTDIR@/devpdf/ F
-Font description file for font\~\c
-.IR F .
+.IR \%@FONTDIR@/\:\%devpdf/ F
+describes the font known
+.RI as\~ F
+on device
+.BR pdf .
+.
 .
 .TP
-.IR @FONTDIR@/devpdf/ U\-F
-Font description file for font\~\c
-.I F
-(using foundry\~\c
-.I U
-rather than the default foundry).
+.IR \%@FONTDIR@/\:\%devpdf/ U\-F
+describes the font
+from the URW foundry
+(rather than the Adobe default)
+known
+.RI as\~ F
+on device
+.BR pdf .
+.
 .
 .TP
-.I @FONTDIR@/devpdf/download
-List of downloadable fonts.
+.I \%@FONTDIR@/\:\%devpdf/\%download
+lists fonts available for embedding within the PDF document
+(by analogy to the
+.B ps
+device's downloadable font support).
+.
+.
+.\" XXX: Why are we shipping this but not BuildFoundries.pl?
+.TP
+.I \%@FONTDIR@/\:\%devpdf/\%Foundry
+is a data file used by the
+.I groff
+build system to locate PostScript Type\~1 fonts.
+.
 .
 .TP
-.I @FONTDIR@/devpdf/Foundry
-A Perl script used during install to locate suitable fonts.
+.I \%@FONTDIR@/\:\%devpdf/\:enc/\:\%text\:.enc
+describes the encoding scheme used by most PostScript Type\~1 fonts;
+the
+.B \%encoding
+directive of
+font description files for the
+.B pdf
+device refers to it.
+.
 .
 .TP
-.I @FONTDIR@/devpdf/enc/text.enc
-Encoding used for text fonts.
+.I \%@MACRODIR@/\:pdf\:.tmac
+defines macros for use with the
+.B pdf
+output device.
+.
+It is automatically loaded by
+.I troffrc
+when the
+.B pdf
+output device is selected.
+.
 .
 .TP
-.I @MACRODIR@/pdf.tmac
-Macros for use with
-.BR gropdf ;
-automatically loaded by
-.BR troffrc .
+.I \%@MACRODIR@/\:pdfpic\:.tmac
+defines the
+.B PDFPIC
+macro for embedding images in a document;
+see
+.MR groff_tmac @MAN5EXT@ .
 .
+It is automatically loaded by
+.I troffrc .
+.\"
+.\"
 .\" .TP
 .\" .B @MACRODIR@/pspic.tmac
 .\" Definition of

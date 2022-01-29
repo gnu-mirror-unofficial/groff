@@ -435,28 +435,41 @@ Don't use the built-in Adobe Glyph List.
 .
 .TP
 .I \%@FONTDIR@/\:\%devps/\:DESC
-Device description file.
+describes the
+.B ps
+output device.
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%devps/\: F
-Font description file for font
-.IR F .
+.IR \%@FONTDIR@/\:\%devps/ F
+describes the font known
+.RI as\~ F
+on device
+.BR ps .
 .
 .
 .TP
 .I \%@FONTDIR@/\:\%devps/\:\%download
-List of downloadable fonts.
+lists fonts available for embedding within the PostScript document
+(or download to the device).
 .
 .
 .TP
 .I \%@FONTDIR@/\:\%devps/\:text.enc
-Encoding used for text fonts.
+describes the encoding scheme used by most PostScript Type\~1 fonts;
+the
+.B \%encoding
+directive of
+font description files for the
+.B ps
+device refers to it.
 .
 .
 .TP
 .I \%@FONTDIR@/\:\%devps/\:\%generate/\:textmap
-Standard mapping.
+maps names in the Adobe Glyph List to
+.I groff
+special character identifiers.
 .
 .
 .\" ====================================================================

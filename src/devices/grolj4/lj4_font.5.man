@@ -234,19 +234,53 @@ and one for more recent TFM files.
 .
 .TP
 .I \%@FONTDIR@/\:devlj4/\:DESC
-device description file
+describes the
+.B lj4
+output device.
 .
 .
 .TP
 .IR \%@FONTDIR@/\:devlj4/\: F
-font description file for font
-.I F
+describes the font known
+.RI as\~ F
+on device
+.BR lj4 .
 .
 .
 .TP
-.I \%@FONTDIR@/\:devlj4/\:generate
-corrects Intellifont-based height metrics for several glyphs in the
-special font for TrueType CG Times (LaserJet\~4000 and later).
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:\%Makefile
+is a
+.MR make 1
+script that uses
+.MR hpftodit @MAN1EXT@
+to prepare the foregoing font description files from HP TFM data;
+in can be used to regenerate the
+.I groff
+font descriptions in the event the TFM files are updated.
+.
+.
+.TP
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:\%special\:.awk
+is an
+.MR awk 1
+script that corrects the Intellifont-based height metrics for several
+glyphs in the
+.B S
+(special) font for TrueType CG Times used in the HP LaserJet\~4000 and
+later.
+.
+.
+.TP
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:\%special\:.map
+.TQ
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:\%symbol\:.map
+.TQ
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:text\:.map
+.TQ
+.I \%@FONTDIR@/\:\%devlj4/\:\%generate/\:\%wingdings.map
+map MSL indices and HP Unicode Private Use Area assignments to
+.I groff
+special character identifiers.
 .
 .
 .\" ====================================================================

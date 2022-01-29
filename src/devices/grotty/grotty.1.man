@@ -567,85 +567,92 @@ see subsection \[lq]Legacy output format\[rq] above.
 .\" ====================================================================
 .SH Files
 .\" ====================================================================
-.\"ne 3v \" Keep section heading and paragraph tag together.
 .
 .TP
-.I @FONTDIR@/devascii/DESC
-Device description file for the
+.I \%@FONTDIR@/\:\%devascii/\:DESC
+describes the
 .B ascii
-device.
+output device.
 .
 .
 .TP
-.IR @FONTDIR@/devascii/ F
-Font description file for font
-.I F
-of the
-.B ascii
-device.
+.IR \%@FONTDIR@/\:\%devascii/ F
+describes the font known
+.RI as\~ F
+on device
+.BR ascii .
 .
 .
 .TP
-.I @FONTDIR@/devcp1047/DESC
-Device description file for the
+.I \%@FONTDIR@/\:\%devcp1047/\:DESC
+describes the
 .B cp1047
-device.
+output device.
 .
 .
 .TP
-.IR @FONTDIR@/devcp1047/ F
-Font description file for font
-.I F
-of the
-.B cp1047
-device.
+.IR \%@FONTDIR@/\:\%devcp1047/ F
+describes the font known
+.RI as\~ F
+on device
+.BR cp1047 .
 .
 .
 .TP
-.I @FONTDIR@/devlatin1/DESC
-Device description file for the
+.I \%@FONTDIR@/\:\%devlatin1/\:DESC
+describes the
 .B latin1
-device.
+output device.
 .
 .
 .TP
-.IR @FONTDIR@/devlatin1/ F
-Font description file for font
-.I F
-of the
-.B latin1
-device.
+.IR \%@FONTDIR@/\:\%devlatin1/ F
+describes the font known
+.RI as\~ F
+on device
+.BR latin1 .
 .
 .
 .TP
-.I @FONTDIR@/devutf8/DESC
-Device description file for the
+.I \%@FONTDIR@/\:\%devutf8/\:DESC
+describes the
 .B utf8
-device.
+output device.
 .
 .
 .TP
-.IR @FONTDIR@/devutf8/ F
-Font description file for font
-.I F
-of the
+.IR \%@FONTDIR@/\:\%devutf8/ F
+describes the font known
+.RI as\~ F
+on device
+.BR utf8 .
+.
+.
+.TP
+.I \%@MACRODIR@/\:tty\:.tmac
+defines macros for use with the
+.BR ascii ,
+.BR cp1047 ,
+.BR latin1 ,
+and
 .B utf8
-device.
+output devices.
+.
+It is automatically loaded by
+.I troffrc
+when any of those output devices is selected.
 .
 .
 .TP
-.I @MACRODIR@/tty.tmac
-Macros for use with
-.IR grotty .
+.I \%@MACRODIR@/\:tty\-char\:.tmac
+defines fallback characters for use with
+.I grotty.
+.
+.MR nroff @MAN1EXT@
+loads it automatically.
 .
 .
-.TP
-.I @MACRODIR@/tty\-char.tmac
-Additional character definitions for use with
-.IR grotty .
-.
-.
-.\" The following no longer seems to be true; an inspection of the
+.\" XXX: The following no longer seems to be true; an inspection of the
 .\" font/*/dev*.am files suggests no evidence of it, at any rate.
 .\".P
 .\"Note that on EBCDIC hosts,
