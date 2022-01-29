@@ -1128,13 +1128,14 @@ and as arguments to @code{psbb}, @code{so}, and @code{soquiet} requests.
 
 @item
 Output drivers may search for files; for instance, @code{grops} looks
-for files named in @samp{\X'ps: import @r{@dots{}}'} and @samp{\X'ps:
-file @r{@dots{}}'} escape sequences.
+for files named in @samp{\X'ps: import @r{@dots{}}'}, @samp{\X'ps: file
+@r{@dots{}}'}, and @samp{\X'pdf: pdfpic @r{@dots{}}'} device control
+escape sequences.
 @end itemize
 
 This option may be specified more than once; the directories are
 searched in the order specified.  If you want to search the current
-directory before others, add @samp{-I .} at the appropriate place.  The
+directory before others, add @samp{-I .} at the desired place.  The
 current working directory is otherwise searched last.  @option{-I} works
 similarly to, and is named for, the ``include'' option of Unix C
 compilers.
