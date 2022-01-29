@@ -26,6 +26,7 @@ groff_tmac \- macro files in the GNU roff typesetting system
 .cp 0
 .
 .
+.\" TODO: Consider parallelizing with our Texinfo node "Macro Packages".
 .\" ====================================================================
 .SH Description
 .\" ====================================================================
@@ -47,24 +48,19 @@ There is no syntactical difference between a macro file and any other
 document;
 only its purpose distinguishes it.
 .
-When a macro file is installed at a standard location and suitable for
-use by a general audience,
-it is often termed a
+When a macro file is installed at a standard location,
+named according to a certain convention,
+and suitable for use by a general audience,
+it is termed a
 .IR "macro package" .
 .
 Macro packages can be loaded by supplying the
 .B \-m
 option to
-.MR groff @MAN1EXT@
-or
-.MR @g@troff @MAN1EXT@ .
-.
-Alternatively,
-a
+.MR @g@troff @MAN1EXT@
+or a
 .I groff
-document wishing to use a macro package can load it with the
-.B mso
-(\[lq]macro source\[rq]) request.
+front end.
 .
 .
 .P
@@ -92,13 +88,34 @@ Section \[lq]Environment\[rq] of
 .MR @g@troff @MAN1EXT@
 lists these directories.
 .
+Alternatively,
+a
+.I groff
+document wishing to use a macro file can load it with the
+.B mso
+(\[lq]macro source\[rq]) request.
+.
+.
+.P
 Like any other
 .I roff
 document,
-a macro package can use the
+a macro file can use the
 .RB \[lq] so \[rq]
 request (\[lq]source\[rq]) to load further files relative to its own
 location.
+.
+.
+.P
+Macro files are named for their most noteworthy application,
+but a macro file need not define any macros.
+.
+It can restrict itself to defining registers and strings or invoking
+other
+.I groff
+requests.
+.
+It can even be empty.
 .
 .
 .\" ====================================================================
@@ -263,6 +280,9 @@ alter the input encoding
 (see the next section);
 and change the amount of inter-sentence space.
 .
+For Eastern languages,
+the localization file defines character classes and sets flags on them.
+.
 By default,
 .I troffrc
 loads the localization file for English.
@@ -279,6 +299,7 @@ the following localization files exist.
 .I cs
 Czech;
 localizes
+.IR man ,
 .IR me ,
 .IR mm ,
 .IR mom ,
@@ -295,6 +316,7 @@ Sets the input encoding to Latin-2 by loading
 .I den
 German;
 localizes
+.IR man ,
 .IR me ,
 .IR mm ,
 .IR mom ,
@@ -323,6 +345,7 @@ English.
 .I fr
 French;
 localizes
+.IR man ,
 .IR me ,
 .IR mm ,
 .IR mom ,
@@ -337,6 +360,7 @@ Sets the input encoding to Latin-9 by loading
 .I it
 Italian;
 localizes
+.IR man ,
 .IR me ,
 .IR mm ,
 .IR mom ,
@@ -353,6 +377,7 @@ Japanese.
 .I sv
 Swedish;
 localizes
+.IR man ,
 .IR me ,
 .IR mm ,
 .IR mom ,
