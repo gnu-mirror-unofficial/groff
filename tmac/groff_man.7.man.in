@@ -2565,25 +2565,25 @@ End a text line without inserting space or attempting a break.
 .\" TODO: When we explain what a "sentence" is, move this parenthetical
 .\" there.
 Normally,
+if filling is enabled,
 the end of a text line is treated like a space;
 .\" end-of-sentence detection is performed, and...
 an output line
 .I may
-be broken there if filling is enabled
+be broken there
 (if not,
-an adjustable space is inserted),
-and
+an adjustable space is inserted);
+if filling is disabled,
+the line
 .I will
-be broken there when filling is disabled,
+be broken there,
 as in
 .BR .EX / .EE
 examples.
 .
-Anything after
+Nothing after
 .B \ec
-on the input line
-.\" ...except for \R, which shouldn't appear in man pages...
-is ignored.
+on the input line is formatted.
 .
 The next line is interpreted as usual and can `include' a macro call
 (contrast with
