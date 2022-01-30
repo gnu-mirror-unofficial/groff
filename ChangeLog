@@ -1,5 +1,18 @@
 2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[grohtml,groff,nroff,troff]: Tweak usage message.
+
+	* src/devices/grohtml/post-html.cpp (usage):
+	* src/roff/groff/groff.cpp (synopsis):
+	* src/roff/nroff/nroff.sh:
+	* src/roff/troff/input.cpp (usage): Partly revert commit
+	06ae7b0b8, 16 January.  Move an ellipsis back inside a bracketed
+	operand (that is, an optional one).  On reflection, I think this
+	notation makes it clearer that the command can be meaningfully
+	run without operands.
+
+2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/papersize.tmac: Slightly refactor.  Use new `stringdown`
 	request instead of a combination of `tr`, `di`, `asciify`, and
 	`chop`.

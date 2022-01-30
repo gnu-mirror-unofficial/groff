@@ -5671,7 +5671,7 @@ static void usage(FILE *stream)
 {
   fprintf(stream, "usage: %s [-bCGhlnrVy] [-F font-directory]"
 	  " [-j output-stem] [-s base-point-size] [-S heading-level]"
-	  " [-x html-dialect] [file] ...\n",
+	  " [-x html-dialect] [file ...]\n",
 	  program_name);
   fprintf(stream, "usage: %s {--help | -v | --version}\n",
 	  program_name);

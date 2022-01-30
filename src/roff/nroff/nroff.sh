@@ -30,7 +30,7 @@ is_option_argument_pending=
 
 usage="usage: $prog [-bcCEhikpRStUVz] [-dCS] [-dNAME=STRING] [-Karg]\
  [-mNAME] [-Mdir] [-nNUM] [-oLIST] [-Parg] [-rCN] [-rREG=EXPR] [-Tdev]\
- [-wNAME] [-Wname] [file] ...
+ [-wNAME] [-Wname] [file ...]
 usage: $prog {--help | -v | --version}"
 
 for arg
