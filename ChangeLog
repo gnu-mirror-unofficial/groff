@@ -30,8 +30,8 @@
 
 	* tmac/mdoc/doc-common: Add straw-man implementation--it doesn't
 	support the `BM` and `BN` configuration parameters yet.  (This
-	is enough to get the groff_mdoc(7) page to correctly appear in
-	the new 'groff-man-pages.pdf' document.)
+	is enough to get bookmarks for the groff_mdoc(7) page to
+	correctly appear in the new 'groff-man-pages.pdf' document.)
 	(Dt, Sh, Ss): If the output device is 'pdf', place bookmarks in
 	the document at levels 1, 2, and 3.
 
@@ -9073,13 +9073,13 @@
 2020-08-11  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/groff_man.7.man: Add material on hooks and encoding.
-	(Description, ./Deprecated features): Stop identifying .BT and
-	.DT as "deprecated"; they shouldn't ever be called in man pages,
+	(Description, ./Deprecated features): Stop identifying .PT and
+	.BT as "deprecated"; they shouldn't ever be called in man pages,
 	but that has never been their intention.
 	(Description): Identify character encoding and line-ending
 	requirements (tutorial/style-guide material).
 	(Description/Hooks): Add new subsection to house descriptions of
-	.BT and .DT.  Add mnemonic expansions for both.
+	.PT and .BT.  Add mnemonic expansions for both.
 
 2020-07-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
