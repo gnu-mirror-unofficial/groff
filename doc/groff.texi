@@ -1158,8 +1158,8 @@ Set input encoding used by preconv to @var{arg}.  Implies @option{-k}.
 @item -l
 Send the output to a spooler for printing.  The command used for this is
 specified by the @code{print} command in the device description file
-(@pxref{Device and Font Files}).  If not present, @option{-l} is
-ignored.
+(@pxref{Device and Font Description Files}).  If not present,
+@option{-l} is ignored.
 
 @item -L@var{arg}
 Pass @var{arg} to the spooler.  Each argument should be passed with a
@@ -1338,7 +1338,8 @@ call GNU @code{troff}).  @xref{Built-in Registers}.
 
 The postprocessor to be used for a device is specified by the
 @code{postpro} command in the device description file.  (@xref{Device
-and Font Files}.)  This can be overridden with the @option{-X} option.
+and Font Description Files}.)  This can be overridden with the
+@option{-X} option.
 
 @item -U
 @cindex mode, unsafe
@@ -4737,8 +4738,8 @@ inter-sentence space.
 
 When GNU @code{troff} starts up, it obtains information about the device
 for which it is preparing output.@footnote{@xref{Device and Font
-Files}.}  A crucial example is the length of the output line, such as
-``6.5 inches''.
+Description Files}.}  A crucial example is the length of the output
+line, such as ``6.5 inches''.
 
 @cindex word, definition of
 @cindex filling
@@ -9991,7 +9992,8 @@ increasing font positions.  Consequently, it finds @code{BAZ} before
 @code{FOO} even for @code{XXX}, which is not the intended behaviour.
 @end itemize
 
-@xref{Device and Font Files}, and @ref{Special Fonts}, for more details.
+@xref{Device and Font Description Files}, and @ref{Special Fonts}, for
+more details.
 
 @cindex list of available glyphs (@cite{groff_char@r{(7)}} man page)
 @cindex available glyphs, list (@cite{groff_char@r{(7)}} man page)
@@ -11268,7 +11270,7 @@ Increase or decrease the type size by @var{n}@tie{}scaled points;
 with a default scaling indicator of @samp{z}.
 @end table
 
-@xref{Device and Font Files}.
+@xref{Device and Font Description Files}.
 
 
 @c =====================================================================
@@ -16483,7 +16485,7 @@ is available as an extra package from the following address:
 
 @c XXX
 
-@xref{Device and Font Files}.
+@xref{Device and Font Description Files}.
 
 
 @c =====================================================================
@@ -17155,14 +17157,14 @@ following two sections describe their format.
 
 @menu
 * gtroff Output::
-* Device and Font Files::
+* Device and Font Description Files::
 @end menu
 
 
 @c =====================================================================
 
 @c BEGIN TODO: Make parallel with groff_out(5).
-@node gtroff Output, Device and Font Files, File formats, File formats
+@node gtroff Output, Device and Font Description Files, File formats, File formats
 @section @code{gtroff} Output
 @cindex @code{gtroff}, output
 @cindex output, @code{gtroff}
@@ -18057,8 +18059,8 @@ follow quite naturally.
 @codequoteundirected on
 
 @c BEGIN Keep parallel with groff_font(5).
-@node Device and Font Files,  , gtroff Output, File formats
-@section Device and Font Files
+@node Device and Font Description Files,  , gtroff Output, File formats
+@section Device and Font Description Files
 @cindex font files
 @cindex files, font
 
@@ -18079,6 +18081,11 @@ many others, while the @code{utf8} device (for terminal emulators) has
 only font descriptions for the roman, italic, bold, and bold-italic
 styles (@file{R}, @file{I}, @file{B}, and @file{BI}, respectively).
 
+Device and font description files are read both by the formatter, GNU
+@code{troff}, and by output drivers.  The programs delegate these files'
+interpretation to an internal library, @file{libdriver}, ensuring their
+consistent interpretation.
+
 @menu
 * DESC File Format::
 * Font Description File Format::
@@ -18086,7 +18093,7 @@ styles (@file{R}, @file{I}, @file{B}, and @file{BI}, respectively).
 
 @c ---------------------------------------------------------------------
 
-@node DESC File Format, Font Description File Format, Device and Font Files, Device and Font Files
+@node DESC File Format, Font Description File Format, Device and Font Description Files, Device and Font Description Files
 @subsection @file{DESC} File Format
 @cindex @file{DESC} file, format
 @cindex font description file, format
@@ -18152,8 +18159,7 @@ Recognized paper formats are the ISO and DIN formats
 @code{D0}--@code{D7}; the U.S.@: paper types @code{letter},
 @code{legal}, @code{tabloid}, @code{ledger}, @code{statement}, and
 @code{executive}; and the envelope formats @code{com10}, @code{monarch},
-and @code{DL}.  Case is not significant for the argument if it holds
-predefined paper types.
+and @code{DL}.  Matching is performed without regard for lettercase.
 
 Alternatively, the argument can be a custom paper size in the format
 @code{@var{length},@var{width}} (with no spaces before or after the
@@ -18164,12 +18170,11 @@ argument that starts with a digit is always treated as a custom paper
 format.
 
 Finally, the argument can be a file name (e.g., @file{/etc/papersize});
-if the file can be opened, GNU @code{troff} reads the first line and
-attempts to match either of the other forms.  No comment syntax is
-supported.
+if the file can be opened, the first line is read and a match attempted
+against each of the other forms.  No comment syntax is supported.
 
-More than one argument can be specified; GNU @code{troff} scans each in
-turn and uses the first valid paper specification.
+More than one argument can be specified;
+each is scanned in turn and the first valid paper specification used.
 
 @item paperwidth @var{n}
 @kindex paperwidth
@@ -18180,7 +18185,7 @@ units (deprecated: use @code{papersize} instead).
 @kindex pass_filenames
 Direct GNU @code{troff} to emit the name of the source file being
 processed.  This is achieved with the intermediate output command
-@samp{x F}.  The @code{grohtml} driver uses this directive.
+@samp{x F}, which @code{grohtml} interprets.
 
 @item postpro @var{program}
 @kindex postpro
@@ -18216,8 +18221,8 @@ default is@tie{}@code{1}.  @xref{Fractional Type Sizes}.
 
 @item styles @var{S1} @r{@dots{}} @var{Sm}
 @kindex styles
-The first @var{m}@tie{}font positions are associated with styles
-@var{S1}, @dots{}, @var{Sm}.
+The first@tie{}@var{m} font mounting positions are associated with
+styles @var{S1}, @dots{}, @var{Sm}.
 
 @item tcommand
 @kindex tcommand
@@ -18284,7 +18289,7 @@ information about a device in the @file{DESC} file.
 
 @c ---------------------------------------------------------------------
 
-@node Font Description File Format,  , DESC File Format, Device and Font Files
+@node Font Description File Format,  , DESC File Format, Device and Font Description Files
 @subsection Font Description File Format
 @cindex font file, format
 @cindex font description file, format
@@ -18335,7 +18340,7 @@ Further, a font named @samp{0} cannot be automatically mounted by the
 The width of an unadjusted inter-word space is @var{n}@tie{}basic units.
 @end table
 
-The directives above are mandatory in the first section; those below are
+The directives above must appear in the first section; those below are
 optional.
 
 @table @code
@@ -18473,16 +18478,16 @@ subscript; it should be less than the italic correction.
 For fonts used with typesetting devices, the @var{type} field gives a
 featural description of the glyph: it is a bit mask recording whether
 the glyph is an ascender, descender, both, or neither.  When a @code{\w}
-escape sequence is interpolated, these values are bitwise and-ed
-together for each glyph and stored in the @code{nr} register.  In fonts
-for @code{nroff}-mode output devices, all glyphs might have a type of
-zero.
+escape sequence is interpolated, these values are bitwise or-ed
+together for each glyph and stored in the @code{nr} register.  In font
+descriptions for @code{nroff}-mode output devices (terminals), all
+glyphs might have a type of zero.
 
 @table @code
 @item 0
 means the glyph lies entirely between the baseline and a horizontal line
-at the ``x-height'' of the font;
-typical examples are @samp{a}, @samp{c}, and @samp{x};
+at the ``x-height'' of the font; typical examples are @samp{a},
+@samp{c}, and @samp{x};
 
 @item 1
 means the glyph descends below the baseline, like @samp{p};

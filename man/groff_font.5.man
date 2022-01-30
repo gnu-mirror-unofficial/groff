@@ -92,6 +92,17 @@ and
 respectively).
 .
 .
+.P
+Device and font description files are read both by the formatter,
+.IR \%@g@troff ,
+and by output drivers.
+.
+The programs delegate these files' interpretation to an internal
+library,
+.IR libdriver ,
+ensuring their consistent interpretation.
+.
+.
 .\" ====================================================================
 .SH "\f[I]DESC\f[] file format"
 .\" ====================================================================
@@ -226,8 +237,7 @@ and the envelope formats
 and
 .BR DL .
 .
-Case is not significant for the argument if it holds predefined paper
-types.
+Matching is performed without regard for lettercase.
 .
 .
 .IP
@@ -265,16 +275,15 @@ the argument can be a file name
 (e.g.,
 .IR /etc/papersize );
 if the file can be opened,
-.I \%@g@troff
-reads the first line and attempts to match either of the other forms.
+the first line is read and a match attempted against each of the other
+forms.
 .
 No comment syntax is supported.
 .
 .
 .IP
 More than one argument can be specified;
-.I \%@g@troff
-scans each in turn and uses the first valid paper specification.
+each is scanned in turn and the first valid paper specification used.
 .
 .
 .TP
@@ -295,11 +304,10 @@ Direct
 to emit the name of the source file being processed.
 .
 This is achieved with the intermediate output command
-.RB \[lq] "x F" \[rq].
-.
-The
+.RB \[lq] "x F" \[rq],
+which
 .I \%grohtml
-driver uses this directive.
+interprets.
 .
 .
 .TP
@@ -379,9 +387,9 @@ The default
 .TP
 .BI styles\~ S1\~\c
 .RI .\|.\|.\&\~ Sm
-The first
-.I m
-font positions are associated with styles
+The
+.RI first\~ m
+font mounting positions are associated with styles
 .IR S1 ,
 \&.\|.\|.,
 .IR Sm .
@@ -608,7 +616,7 @@ units.
 .
 .
 .P
-The directives above are mandatory in the first section;
+The directives above must appear in the first section;
 those below are optional.
 .
 .
@@ -855,15 +863,15 @@ or neither.
 When a
 .B \[rs]w
 escape sequence is interpolated,
-these values are bitwise and-ed together
+these values are bitwise or-ed together
 for each glyph
 and stored in the
 .B ct
 register.
 .
-In fonts for
+In font descriptions for
 .IR nroff -mode \" generic
-output devices,
+output devices (terminals),
 all glyphs might have a type of zero.
 .
 .
