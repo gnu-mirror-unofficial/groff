@@ -1,5 +1,19 @@
 2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Trivially refactor an-ext.tmac.
+
+	* tmac/an-ext.tmac (EX, EE): Do a better job of keeping the
+	name space promise made in comments at the top of the file.
+	Rename `sP` register to `mP`.  Problem introduced by me in
+	commit 69895ec20, 15 January 2020.  Also rename `la` and `ra`
+	strings to `mL` and `mR`, respectively.  These (undocumented)
+	string names date back to commit 259929625, 15 January 2007.
+
+	* tmac/groff_man.7.man.in (Files) <an-ext.tmac>: Document the
+	aforementioned promise.
+
+2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Refactor PDF bookmark support.
 
 	* tmac/an.tmac (an*bookmark): New internal macro calls
