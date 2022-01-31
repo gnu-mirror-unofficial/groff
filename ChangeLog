@@ -1,5 +1,13 @@
 2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[build]: Expand '@PAGE@' when generating man pages.
+
+	* Makefile.am (.man): Substitute the './configure'd paper format
+	for @PAGE@.
+	* src/roff/groff/groff.1.man: Use it.
+
+2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Trivially refactor an-ext.tmac.
 
 	* tmac/an-ext.tmac (EX, EE): Do a better job of keeping the
