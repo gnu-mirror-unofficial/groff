@@ -82,16 +82,27 @@ Normally,
 is invoked by
 .MR groff @MAN1EXT@
 when the latter is given one of the
-.BR \-Tascii ,
+.RB \[lq] \-T\~ascii \[rq],
+.RB \[lq] \-T\~latin1 \[rq],
 .BR \-Tlatin1 ,
 or
-.B \-Tutf8
+.RB \[lq] \-T\~utf8 \[rq]
 options on systems using ISO character encoding standards,
 or with
-.B \-Tcp1047
+.RB \[lq] \-T\~cp1047 \[rq]
 or
-.B \-Tutf8
+.RB \[lq] \-T\~utf8 \[rq]
 on EBCDIC-based hosts.
+.
+(In this installation,
+.B @DEVICE@
+is the default output device.)
+.
+Use
+.IR groff 's
+.B \-P
+option to pass any options shown above to
+.IR grotty .
 .
 If no
 .I file

@@ -67,15 +67,46 @@ grolj4 \- groff output driver for HP LaserJet 4 family printers
 .SH Description
 .\" ====================================================================
 .
-.B grolj4
-is a driver for
-.B groff
-that produces output in PCL5 format suitable for an HP LaserJet 4
-printer.
+The GNU
+.I roff
+LJ4 output driver translates the output of
+.MR @g@troff @MAN1EXT@
+into a PCL5 format suitable for an HP LaserJet 4 printer.
+.
+Normally,
+.I grolj4
+is invoked by
+.MR groff @MAN1EXT@
+when the latter is given the
+.RB \[lq] \-T\~lj4 \[rq]
+option.
+.
+(In this installation,
+.B @DEVICE@
+is the default output device.)
+.
+Use
+.IR groff 's
+.B \-P
+option to pass any options shown above to
+.IR grolj4 .
+.
+If no
+.I file
+arguments are given,
+or if
+.I file
+is \[lq]\-\[rq],
+.I grolj4
+reads the standard input stream.
+.
+Output is written to the standard output stream.
 .
 .
-.LP
-There is an additional drawing command available:
+.P
+An additional drawing command is available beyond those documented in
+.MR groff @MAN7EXT@ .
+.
 .
 .TP
 .BI \[rs]D\[aq]R\~ "dh dv" \[aq]

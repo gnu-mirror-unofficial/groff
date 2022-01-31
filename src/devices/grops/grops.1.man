@@ -80,56 +80,59 @@ grops \- groff output driver for PostScript
 .SH Description
 .\" ====================================================================
 .
-.B grops
-translates the output of GNU
-.B troff
-to PostScript.
+The GNU
+.I roff
+PostScript output driver translates the output of
+.MR @g@troff @MAN1EXT@
+into PostScript.
 .
-Normally
-.B grops
-should be invoked by using the groff command with a
-.B \-Tps
+Normally,
+.I grops
+is invoked by
+.MR groff @MAN1EXT@
+when the latter is given the
+.RB \[lq] \-T\~ps \[rq]
 option.
 .
-.if '@DEVICE@'ps' (Actually, this is the default for groff.)
+(In this installation,
+.B @DEVICE@
+is the default output device.)
 .
-If no files are given,
-.B grops
-reads the standard input.
-.
-A filename of
-.B \-
-also causes
-.B grops
-to read the standard input.
-.
-PostScript output is written to the standard output.
-.
-When
-.B grops
-is run by
-.B groff
-options can be passed to
-.B grops
-using
-.BR groff 's
+Use
+.IR groff 's
 .B \-P
-option.
+option to pass any options shown above to
+.IR grops .
+.
+If no
+.I file
+arguments are given,
+or if
+.I file
+is \[lq]\-\[rq],
+.I grotty
+reads the standard input stream.
+.
+Output is written to the standard output stream.
 .
 .
-.LP
-Note that
-.B grops
-doesn't produce a valid document structure (conforming to the
-Document Structuring Convention) if called with multiple file
-arguments.
+.P
+When called with multiple
+.I file
+arguments,
+.I grops
+doesn't produce a valid document structure
+(one conforming to the Document Structuring Convention).
 .
-To print such concatenated output it is necessary to deactivate DSC
-handling in the printing program or previewer.
+To print such concatenated output,
+it is necessary to deactivate DSC handling in the printing program or
+previewer.
 .
-See section \[lq]Font Installation\[rq] below for a guide how to install
+.
+.P
+See section \[lq]Font Installation\[rq] below for a guide to installing
 fonts for
-.BR grops .
+.IR grops .
 .
 .
 .\" ====================================================================

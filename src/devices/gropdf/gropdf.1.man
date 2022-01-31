@@ -73,46 +73,46 @@ gropdf \- groff output driver for Portable Document Format
 .SH Description
 .\" ====================================================================
 .
-.B gropdf
-translates the output of GNU
-.B troff
-to PDF.
+The GNU
+.I roff
+PDF output driver translates the output of
+.MR @g@troff @MAN1EXT@
+into Portable Document Format.
 .
-Normally
-.B gropdf
-should be invoked by using the groff command
-with a
-.B \-Tpdf
+Normally,
+.I gropdf
+is invoked by
+.MR groff @MAN1EXT@
+when the latter is given the
+.RB \[lq] \-T\~pdf \[rq]
 option.
 .
-If no files are given,
-.B gropdf
-reads the standard input.
+(In this installation,
+.B @DEVICE@
+is the default output device.)
 .
-A filename of
-.B \-
-also causes
-.B gropdf
-to read the standard input.
-.
-PDF output is written to the standard output.
-.
-When
-.B gropdf
-is run by
-.B groff
-options can be passed to
-.B gropdf
-using
-.BR groff 's
+Use
+.IR groff 's
 .B \-P
-option.
+option to pass any options shown above to
+.IR gropdf .
+.
+If no
+.I file
+arguments are given,
+or if
+.I file
+is \[lq]\-\[rq],
+.I gropdf
+reads the standard input stream.
+.
+Output is written to the standard output stream.
 .
 .
-.LP
-See section \[lq]Font Installation\[rq] below for a guide how to install
+.P
+See section \[lq]Font Installation\[rq] below for a guide to installing
 fonts for
-.BR gropdf .
+.IR gropdf .
 .
 .
 .\" ====================================================================
@@ -1270,7 +1270,7 @@ An
 .I sboxes
 macro file is also available;
 see
-.MR groff_tmac @MAN5EXT@.
+.MR groff_tmac @MAN5EXT@ .
 .RE
 .
 .
