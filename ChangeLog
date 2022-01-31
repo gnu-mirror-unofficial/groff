@@ -1,5 +1,35 @@
 2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Refactor PDF bookmark support.
+
+	* tmac/an.tmac (an*bookmark): New internal macro calls
+	`pdfbookmark` (only if the output device is 'pdf' and the `BM`
+	register is true).
+	(initialization): Migrate macro appendments to appropriate
+	definitions.  Two cases...
+	(SH, SS): ...were straightforward.
+	(initialization): Another (for the man page title) was poorly
+	placed when appended to the `TH` macro, skipping over the page
+	header.  Move it instead...
+	(PT): ...here.  But to keep this bookmark from being generated
+	on every page of a document, we need a new variable
+	`an*was-TH-bookmark-emitted` which is tested here and assigned
+	once one bookmark corresponding to a `TH` call has been written.
+	(TH): Initialize `an*was-TH-bookmark-emitted` to zero.
+	(SS): Write the bookmark _before_ the subsection heading text.
+	(initialization): Drop short-lived `BM` register.  It seems
+	harmless to unconditionally include bookmarks in PDF output.  A
+	PDF tool can strip them out if they're not desired, and viewers
+	seem capable of minimizing or reducing the navigation pane (if
+	they even offer one in the first place).
+
+	* tmac/an.tmac (initialization): Rename new `BN` register to
+	`BD`...
+	* tmac/groff_man.7.man.in (Options) <BD>: ...and document it.
+	Also document `PT`'s new bookmarking responsibility.
+
+2022-01-31  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[grohtml,groff,nroff,troff]: Tweak usage message.
 
 	* src/devices/grohtml/post-html.cpp (usage):

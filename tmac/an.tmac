@@ -159,7 +159,6 @@
 .  el        .bp 1
 ..
 .
-.
 .\" Localize manual section titles for English.
 .de an*localize
 .  ds an*section1 General Commands Manual\"
@@ -173,6 +172,14 @@
 .  ds an*section9 Kernel Developer's Manual\"
 ..
 .
+.\" Write a bookmark/anchor/link target $2 at hierarchical depth $1.
+.de an*bookmark
+.  if '\\*[.T]'pdf' \{\
+.    nr an*bookmark-depth \\n[BD]+\\$1
+.    pdfbookmark \\n[an*bookmark-depth] \\$2
+.    rr an*bookmark-depth
+.  \}
+..
 .
 .\" Begin man page.
 .\" .TH title section[ extra1[ extra2[ extra3]]]
@@ -292,6 +299,9 @@
 .    DEVTAG-EO-TL
 .  \}
 .
+.  \" A bookmark is attached to the page header, but only on the first
+.  \" page of the document.
+.  nr an*was-TH-bookmark-emitted 0
 .  an-header
 .
 .  if !\\n[cR] \{\
@@ -351,6 +361,10 @@
 .de1 PT
 .  ie \\n[cR] .pl +1v
 .  el         .sp .5i
+.  if !\\n[an*was-TH-bookmark-emitted] \{\
+.    an*bookmark 1 \E*[an*page-ref-string]
+.    nr an*was-TH-bookmark-emitted 1
+.  \}
 .  tl '\\*[an-pageref]'\\*[an-extra3]'\\*[an-pageref]'
 .  ie \\n[cR] \{\
 .    pl +1v
@@ -605,6 +619,7 @@
 .  if \\n[.$] \{\
 .    ds an-section-heading \\$*\"
 .    if \\n[CS] .stringup an-section-heading
+.    an*bookmark 2 \E*[an-section-heading]
 \&\\*[an-section-heading]
 .  \}
 .  if \\n[an-remap-I-style-in-headings] .ftr I I
@@ -627,8 +642,9 @@
 .  ft \\*[HF]
 .  if \\n[an-remap-I-style-in-headings] .ftr I \\*[an-heading-family]BI
 .  if \\n[.$] \{\
-.    nop \&\\$*
 .    ds an*subsection-heading \\$*\"
+.    an*bookmark 3 \E*[an*subsection-heading]
+.    nop \&\\$*
 .  \}
 .  if \\n[an-remap-I-style-in-headings] .ftr I I
 ..
@@ -1033,37 +1049,13 @@
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
 .
-.\" Enable within-page navigation via bookmarks--only operational with
-.\" output device 'pdf', but could be extended to others contingent on
-.\" their supporting features.
-.if !r BM .nr BM 1
-.
 .\" base depth for bookmarks (for embedding man pages in other docs)
-.if !r BN .nr BN 0
+.if !r BD .nr BD 0
 .
-.\" Make man pages navigable in PDF output.  Thanks to Deri James.
 .if '\*[.T]'pdf' \{\
-.  if \n[BM] \{\
-.    nr PDFOUTLINE.FOLDLEVEL 1
-.    nr PDFHREF.VIEW.LEADING 10p
-.    am1 TH
-.      nr an*bookmark-depth \n[BN]+1
-.      pdfbookmark \\n[an*bookmark-depth] \\*[an*page-ref-string]
-.      rr an*bookmark-depth
-.    .
-.
-.    am1 SH
-.      nr an*bookmark-depth \n[BN]+2
-.      pdfbookmark \\n[an*bookmark-depth] \\*[an-section-heading]
-.      rr an*bookmark-depth
-.    .
-.
-.    am1 SS
-.      nr an*bookmark-depth \n[BN]+3
-.      pdfbookmark \\n[an*bookmark-depth] \\*[an*subsection-heading]
-.      rr an*bookmark-depth
-.    .
-.  \}
+.  \" FIXME: The following registers are documented only in pdf.tmac.
+.  if !r PDFOUTLINE.FOLDLEVEL .nr PDFOUTLINE.FOLDLEVEL 1
+.  if !r PDFHREF.VIEW.LEADING .nr PDFHREF.VIEW.LEADING 10p
 .\}
 .
 .\" continuous rendering (one long page)

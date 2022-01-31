@@ -2764,9 +2764,13 @@ Such hook definitions will likely consist of \[lq].sp\[rq] and
 .
 They must also increase the page length with \[lq].pl\[rq] requests in
 continuous rendering mode;
-consult the existing implementations in
+.B .PT
+furthermore has the responsibility of emitting a PDF bookmark after
+writing the first page header in a document.
+.
+Consult the existing implementations in
 .I an.tmac
-when drafting your replacement.
+when drafting replacements.
 .
 .
 .TP
@@ -3120,6 +3124,19 @@ Any valid argument to
 See
 .MR groff @MAN7EXT@
 for less-common choices.
+.
+.
+.TP
+.BI \-rBD= base-bookmark-depth
+Set the depth below which all man pages' PDF bookmarks will be arranged.
+.
+The default is 0;
+changing it may be useful if a man page is to be embedded in a larger
+PDF document.
+.
+This option is only meaningful when producing output for the
+.B pdf
+device.
 .
 .
 .TP
