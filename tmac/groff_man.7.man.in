@@ -3829,19 +3829,80 @@ a compilation of all man pages supplied by the system.
 .P
 The GNU version of the
 .I man
-macro package was written by James Clark and contributors.
+macro package was written by James Clark;
+he added the
+.BR C ,
+.BR D ,
+.BR P ,
+and
+.B X
+registers. \" sometime before 1.02
 .
-The extension macros were written by
 .MT wl@\:gnu\:.org
 Werner Lemberg
-.ME ,
+.ME
+supplied the
+.B S \" 1.16
+and
+.B cR \" 1.17
+registers,
+and exposed the
+.B LL
+register \" 1.18
+(internal to Seventh Edition Unix
+.IR man )
+to the user interface.
+.
+.MT kollar@\:alltel\:.net
+Larry Kollar
+.ME
+added the
+.BR FT ,
+.BR HY ,
+and
+.B SN
+registers;
+the
+.B HF
+string;
+the
+.B PT
+and
+.B BT
+macros;
+and exposed the
+.B IN
+register
+(internal to Seventh Edition Unix
+.IR man )
+to the user interface. \" all 1.19
+.
+.MT g.branden\:.robinson@\:gmail\:.com
+G.\& Branden Robinson
+.ME
+implemented the
+.B AD
+and
+.B MF
+strings;
+.BR BD ,
+.BR CS ,
+.BR CT ,
+and
+.B U
+registers;
+and the
+.B MR
+macro. \" all 1.23
+.
+.
+The extension macros were written by
+Lemberg,
 .MT esr@\:thyrsus\:.com
 Eric S.\& Raymond
 .ME ,
 and
-.MT g.branden\:.robinson@\:gmail\:.com
-G.\& Branden Robinson
-.ME .
+Robinson. \" 1.23: the MR for non-groffs
 .
 .
 .P
