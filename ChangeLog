@@ -4123,19 +4123,6 @@
 	* tmac/tests/e_columns-work-on-long-pages.sh: Test it.
 	* tmac/tmac.am (tmac_TESTS): Run test.
 
-2021-08-13  G. Branden Robinson <g.branden.robinson@gmail.com>
-
-	* tmac/e.tmac: Validate page length to prevent too-short paper
-	formats from causing traps to call each other until the input
-	stack overflows.  The minimum is 14v.
-	(check_page_length): Define new macro to perform the check.
-	(bp, @p, sh, 2c, 1c): Call it from likely candidates (@p is
-	internal and called by paragraphing macros).
-	(pl): Intercept and wrap the `pl` request itself; check its
-	setting immediately.
-
-	Fixes <https://savannah.gnu.org/bugs/?61034>.
-
 2021-08-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* man/groff.7.man (Localization): Add section.

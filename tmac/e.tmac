@@ -81,11 +81,6 @@
 .rm @line
 ..
 .
-.\" --- sanity check the page dimensions
-.do de check_page_length
-.if (\\n(.pu<14v) .ab \\*(_e: cannot format short page length \\n(.pu
-..
-.
 .\" --- check whether grohtml needs end of title/heading
 .do de1 @html_check_need_title
 .if \\n[devtag-needs-end-of-title] \
@@ -511,7 +506,6 @@
 .if !'\*(.T'html' .rn bp @b	\" --- begin page
 .
 .de bp			\" *** begin new page (overrides columns)
-.do check_page_length
 .nr $c \\n($m			\" force new page, not new column
 .ie \\n(nl>0 \
 .	@b \\$1
@@ -533,13 +527,6 @@
 .nr $l \\n(.l		\" *** line length (copied among ev 0, 1, and 2)
 .if (\\n($m<=1):(\\n($l>\\n(_L) \
 .	nr _L \\n(.l
-..
-.
-.rn pl xP		\" --- save troff page length request
-.
-.de pl			\" *** set page length
-.xP \\$1
-.do check_page_length
 ..
 .
 .rn po @O		\" --- local page offset
@@ -813,7 +800,6 @@
 ..
 .
 .de @p			\" --- initialize for paragraph
-.do check_page_length
 .do check_need_title
 .if "\\n(.z"|e" .do @err eqn equation continuation unfulfilled
 .in \\n($iu+\\n(pou
@@ -834,7 +820,6 @@
 .
 .
 .de sh			\" *** section heading
-.do check_page_length
 .fi
 .do check_need_title
 .if (\\n(si>0)&(\\n(si<1n) \
@@ -973,7 +958,6 @@
 .
 .
 .de 2c			\" *** double columned output
-.do check_page_length
 .br
 .if \\n($m>1 \
 .	1c\"				\" revert to 1c if already 2c
@@ -991,7 +975,6 @@
 ..
 .
 .de 1c			\" *** single columned output
-.do check_page_length
 .br
 .nr $c 1
 .nr $m 1
