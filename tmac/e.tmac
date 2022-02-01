@@ -274,6 +274,11 @@
 .
 .de @h			\" --- header
 .if \n@>1 .tm >> @h %=\\n% ?a=\\n(?a ?b=\\n(?b ?w=\\n(?w
+.do if (u;\\n(tm+\\n(bm+\\n(.V>\\n(.p) \{\
+.	do @err insufficient page length; aborting
+.	pl \\n(nlu
+.	ab
+.\}
 .do if (u;\\n(.i+\\n(.o>=\\n(.l) \
 .	do @err page offset plus indentation exceeds line length
 .\" initialize a pile of junk
