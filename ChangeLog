@@ -1,3 +1,17 @@
+2022-02-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[ms]: Refactor insufficient page length check.
+
+	* tmac/s.tmac (pg@top): Drop extraneous closing parenthesis from
+	numeric expression.  Change operator from '>' to '>='; a page
+	length right at the boundary causes a spurious extra page break
+	when a paragraphing macro is used to initialize the document.
+	Condense diagnostic emission using the @error macro instead of
+	duplicating it.  Change indentation to fit the style of the rest
+	of the file (use hard tabs).  If aborting, truncate the page
+	length to the current vertical position so that we don't
+	uselessly output further vertical space.
+
 2022-02-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[ms]: Add test for insufficient page length error.
