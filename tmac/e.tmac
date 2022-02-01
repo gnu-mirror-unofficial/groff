@@ -274,8 +274,8 @@
 .
 .de @h			\" --- header
 .if \n@>1 .tm >> @h %=\\n% ?a=\\n(?a ?b=\\n(?b ?w=\\n(?w
-.if (\\n(.i+\\n(.o)>=\\n(.l \
-.	@err page offset plus indentation exceeds line length
+.do if (u;\\n(.i+\\n(.o>=\\n(.l) \
+.	do @err page offset plus indentation exceeds line length
 .\" initialize a pile of junk
 .nr ?h \\n(?H			\" transfer "next page" to "this page"
 .nr ?H 0
