@@ -433,12 +433,11 @@ Go to section depth
 .i \(+-n
 [\-1],
 but emit no section heading
-and do not increment the section number
-at the new level.
+and do not increment the section number.
 This has the effect of an
 .b .lp
 call
-at the new level.
+at the new depth.
 .TL
 .b .uh
 .i T
@@ -475,8 +474,8 @@ If
 .i n
 is present,
 the section indentation is set to
-.NR (si \c
-.b * \c
+.NR (si
+times\~\c
 .i n .
 .TL
 .b .$0
@@ -1647,6 +1646,9 @@ Begin a
 of an organized document,
 affecting the values and formatting
 of chapter and page numbers.
+Reset the chapter number in
+.NR (ch
+to\~0.
 A segment uses Arabic numerals
 for chapter and page numbers
 except where noted.
@@ -1679,7 +1681,6 @@ which specifies a restart of page numbering
 when
 .b .+c
 is called within the applicable segment.
-The chapter number is reset to 0.
 If present,
 the
 .i H
@@ -1788,9 +1789,7 @@ if the segment type is
 or
 .b RA.
 Increment \" ...except for abstract and bibliography segments
-and output the chapter number
-(in
-.NR (ch ).
+and output the chapter number.
 If a chapter title
 .i T
 is present,
