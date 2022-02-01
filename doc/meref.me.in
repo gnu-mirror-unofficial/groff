@@ -1211,134 +1211,6 @@ if
 is adjusted or broken (including hyphenation breaks);
 it is reliable only when filling is disabled,
 and works poorly in \*N mode.
-.sh 1 "\f(BIroff\fP Support\fR\**"
-.(f
-\**
-These facilities are provided to aid migration of
-\(lqold
-.i roff \(rq
-documents.
-See
-.i roff (7)
-for a history of
-.i roff -related
-typesetting systems.
-.)f
-.pp
-.TL
-.b .ix
-.i \(+-n
-.DE
-Equivalent to \(lq\|\fB\[aq]in \fI\(+-n\/\fR\(rq.
-.TL
-.b .bl
-.i n
-.DE
-Equivalent to \(lq\fB.sp \fIN\/\fR\(rq
-inside a
-.b .(b
-block.
-.TL
-.b .m1
-.i \(+-n
-.DE
-Set/adjust the space between the top of the page
-and the header to/by
-.i \(+-n
-[4v].
-.TL
-.b .m2
-.i \(+-n
-.DE
-Set/adjust the space between the header
-and the first line of text to/by
-.i \(+-n
-[2v].
-.TL
-.b .m3
-.i \(+-n
-.DE
-Set/adjust the space
-between the bottom of the text
-and the footer to/by
-.i \(+-n
-[2v].
-.TL
-.b .m4
-.i \(+-n
-.DE
-Set/adjust the space
-between the footer
-and the bottom of the page to/by
-.i \(+-n
-[4v].
-.TL
-.b .pa
-.i \(+-n
-.DE
-Equivalent to \(lq\fB.bp \fI\(+-n\/\fR\(rq.
-.TL
-.b .ro
-.DE
-Equivalent to \(lq\fB.af % i\fP\(rq.
-.TL
-.b .ar
-.DE
-Equivalent to \(lq\fB.af % 1\fP\(rq.
-.TL
-.b .n1
-.i C
-.DE
-Number output lines starting from 1.
-If
-.i C
-is
-.b C ,
-the line length is reduced
-and correspondingly indented;
-otherwise,
-the page offset is reduced
-to accommodate the line number.
-The amount in all cases is
-.NR (no
-[\ew\(aq0000\(aqu
-(the width of four numerals
-in the current font)].
-.TL
-.b .n2
-.i \(+-n
-.DE
-Stop numbering output lines if
-.i n
-missing,
-otherwise continue with the number modified by
-\(+-\c
-.i n.
-.TL
-.b .sk
-.DE
-Leave the next output page blank
-except for headers and footers.
-This can reserve space
-for a full-page diagram
-produced externally
-and composited in later.
-(To reserve only a partial page,
-use \[lq]\c
-.b .sv \~\c
-.bi n \[rq],
-where
-.i n
-is the amount of space required.
-This space will be output immediately
-if there is room,
-and otherwise
-at the top of the next page.
-If
-.i n
-is greater than the space available
-on an empty page,
-none will be output.)
 .sh 1 "Preprocessor Support"
 .TL
 .b .EQ
@@ -1526,102 +1398,6 @@ End
 .i \%@g@grn
 picture,
 leaving the drawing position at the top of the picture.
-.sh 1 "Miscellaneous"
-.TL
-.b .ld
-.DE
-Update the
-.NR (y2
-and
-.NR (y4
-registers based on the current value of
-.NR (yr ,
-reinitialize the localized strings
-.ST (dw ,
-.ST (mo ,
-.ST (wa ,
-and
-.ST (wc ,
-and reset
-.ST (td
-based on the foregoing.
-.TL
-.b .re
-.DE
-Reset tab stops to every 0.5i.
-.TL
-.b .ba
-.i \(+-n
-.DE
-Set the base indentation
-to
-.i \(+-n
-[0].
-Paragraphs,
-sections,
-and displays
-are indented by at least this amount,
-stored in
-.NR ($i .
-Titles and footnotes
-are unaffected.
-.TL
-.b .xl
-.i \(+-n
-.DE
-Set line length to
-.i n
-[6.0i]
-only in the current environment.
-.TL
-.b .ll
-.i \(+-n
-.DE
-Set line length to
-to
-.i n
-[6.0i]
-in all environments used by \*(ME.\**
-.(f
-\**
-\*(ME uses only the three environments of AT&T \*T,
-but in GNU \*T,
-the user can create additional ones.
-.
-.b .ll
-works like
-.b .xl
-for the latter.
-.)f
-This macro should not be used
-after output has begun,
-and particularly not in multi-column layouts.
-The current line length is stored in
-.NR ($l .
-.TL
-.b .hl
-.DE
-Break and draw a horizontal line
-of the current line length.
-You might call
-.b .hl
-at the beginning and/or end
-of a floating keep
-to differentiate
-the text from a figure.
-.TL
-.b .ep
-.DE
-End this page,
-but do not begin the next page.
-Useful for forcing out footnotes,
-but other than
-that hardly ever used.
-Must be followed by a
-.b .bp
-or the end of input.
-.br
-.ne 6v
 .sh 1 "Formal Documents"
 .TL
 .b .tp
@@ -1820,6 +1596,230 @@ is the chapter or appendix number,
 and
 .i T
 is its title.
+.sh 1 "Miscellaneous"
+.TL
+.b .ld
+.DE
+Update the
+.NR (y2
+and
+.NR (y4
+registers based on the current value of
+.NR (yr ,
+reinitialize the localized strings
+.ST (dw ,
+.ST (mo ,
+.ST (wa ,
+and
+.ST (wc ,
+and reset
+.ST (td
+based on the foregoing.
+.TL
+.b .re
+.DE
+Reset tab stops to every 0.5i.
+.TL
+.b .ba
+.i \(+-n
+.DE
+Set the base indentation
+to
+.i \(+-n
+[0].
+Paragraphs,
+sections,
+and displays
+are indented by at least this amount,
+stored in
+.NR ($i .
+Titles and footnotes
+are unaffected.
+.TL
+.b .xl
+.i \(+-n
+.DE
+Set line length to
+.i n
+[6.0i]
+only in the current environment.
+.TL
+.b .ll
+.i \(+-n
+.DE
+Set line length to
+to
+.i n
+[6.0i]
+in all environments used by \*(ME.\**
+.(f
+\**
+\*(ME uses only the three environments of AT&T \*T,
+but in GNU \*T,
+the user can create additional ones.
+.
+.b .ll
+works like
+.b .xl
+for the latter.
+.)f
+This macro should not be used
+after output has begun,
+and particularly not in multi-column layouts.
+The current line length is stored in
+.NR ($l .
+.TL
+.b .hl
+.DE
+Break and draw a horizontal line
+of the current line length.
+You might call
+.b .hl
+at the beginning and/or end
+of a floating keep
+to differentiate
+the text from a figure.
+.TL
+.b .ep
+.DE
+End this page,
+but do not begin the next page.
+Useful for forcing out footnotes,
+but other than
+that hardly ever used.
+Must be followed by a
+.b .bp
+or the end of input.
+.br
+.ne 6v
+.sh 1 "\f(BIroff\fP Support\fR\**"
+.(f
+\**
+These facilities are provided to aid migration of
+\(lqold
+.i roff \(rq
+documents.
+See
+.i roff (7)
+for a history of
+.i roff -related
+typesetting systems.
+.)f
+.pp
+.TL
+.b .ix
+.i \(+-n
+.DE
+Equivalent to \(lq\|\fB\[aq]in \fI\(+-n\/\fR\(rq.
+.TL
+.b .bl
+.i n
+.DE
+Equivalent to \(lq\fB.sp \fIN\/\fR\(rq
+inside a
+.b .(b
+block.
+.TL
+.b .m1
+.i \(+-n
+.DE
+Set/adjust the space between the top of the page
+and the header to/by
+.i \(+-n
+[4v].
+.TL
+.b .m2
+.i \(+-n
+.DE
+Set/adjust the space between the header
+and the first line of text to/by
+.i \(+-n
+[2v].
+.TL
+.b .m3
+.i \(+-n
+.DE
+Set/adjust the space
+between the bottom of the text
+and the footer to/by
+.i \(+-n
+[2v].
+.TL
+.b .m4
+.i \(+-n
+.DE
+Set/adjust the space
+between the footer
+and the bottom of the page to/by
+.i \(+-n
+[4v].
+.TL
+.b .pa
+.i \(+-n
+.DE
+Equivalent to \(lq\fB.bp \fI\(+-n\/\fR\(rq.
+.TL
+.b .ro
+.DE
+Equivalent to \(lq\fB.af % i\fP\(rq.
+.TL
+.b .ar
+.DE
+Equivalent to \(lq\fB.af % 1\fP\(rq.
+.TL
+.b .n1
+.i C
+.DE
+Number output lines starting from 1.
+If
+.i C
+is
+.b C ,
+the line length is reduced
+and correspondingly indented;
+otherwise,
+the page offset is reduced
+to accommodate the line number.
+The amount in all cases is
+.NR (no
+[\ew\(aq0000\(aqu
+(the width of four numerals
+in the current font)].
+.TL
+.b .n2
+.i \(+-n
+.DE
+Stop numbering output lines if
+.i n
+missing,
+otherwise continue with the number modified by
+\(+-\c
+.i n.
+.TL
+.b .sk
+.DE
+Leave the next output page blank
+except for headers and footers.
+This can reserve space
+for a full-page diagram
+produced externally
+and composited in later.
+(To reserve only a partial page,
+use \[lq]\c
+.b .sv \~\c
+.bi n \[rq],
+where
+.i n
+is the amount of space required.
+This space will be output immediately
+if there is room,
+and otherwise
+at the top of the next page.
+If
+.i n
+is greater than the space available
+on an empty page,
+none will be output.)
 .sh 1 "Predefined Strings"
 .TL
 .ST *
