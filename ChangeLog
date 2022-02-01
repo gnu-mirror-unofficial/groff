@@ -25,8 +25,7 @@
 	[man]: Refactor PDF bookmark support.
 
 	* tmac/an.tmac (an*bookmark): New internal macro calls
-	`pdfbookmark` (only if the output device is 'pdf' and the `BM`
-	register is true).
+	`pdfbookmark` (only if the output device is 'pdf').
 	(initialization): Migrate macro appendments to appropriate
 	definitions.  Two cases...
 	(SH, SS): ...were straightforward.
@@ -136,6 +135,8 @@
 	correctly appear in the new 'groff-man-pages.pdf' document.)
 	(Dt, Sh, Ss): If the output device is 'pdf', place bookmarks in
 	the document at levels 1, 2, and 3.
+
+	Fixes <https://savannah.gnu.org/bugs/?58950>.
 
 2022-01-26  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
@@ -455,7 +456,7 @@
 	end of script, which caused it to exit successfully regardless
 	of any test failures.  Irritating.  This is among the fruits of
 	the "never, ever use 'set -e'" tree.  (This religion has a thick
-	bible: https://mywiki.wooledge.org/BashFAQ/105>.)  Fortunately,
+	bible: <https://mywiki.wooledge.org/BashFAQ/105>.)  Fortunately,
 	all the tests pass legitimately.
 
 2022-01-16  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -2052,6 +2053,7 @@
 	for next page to be rendered.
 
 	* tmac/tests/an_handle-degenerate-input-quietly.sh: Test it.
+	* tmac/tmac.am (tmac_TESTS): Run test.
 
 	Fixes <https://savannah.gnu.org/bugs/61402>, a regression from
 	groff 1.22.4 (problem introduced by me in the course of many
