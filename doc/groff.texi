@@ -26,7 +26,7 @@
 @copying
 This manual documents GNU @code{troff} version 1.23.0.
 
-Copyright @copyright{} 1994--2021 Free Software Foundation, Inc.
+Copyright @copyright{} 1994--2022 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -468,9 +468,10 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle January 2022
-@author by Trent A.@tie{}Fisher
-@author and Werner Lemberg
+@subtitle February 2022
+@author Trent A.@tie{}Fisher
+@author Werner Lemberg
+@author G.@tie{}Branden Robinson
 
 @page
 @vskip 0pt plus 1filll
@@ -4654,6 +4655,7 @@ not interested in details.
 
 @menu
 * Text::
+* Page Geometry::
 * Measurements::
 * Expressions::
 * Identifiers::
@@ -5454,6 +5456,90 @@ later.
 .\" Albert Einstein, _The Meaning of Relativity_, 1922
 @endCartoucheExample
 
+@node Page Geometry, Measurements, Text, gtroff Reference
+@section Page Geometry
+@cindex page, geometry of
+@cindex geometry, page
+
+@code{roff} systems format text under certain assumptions about the size
+of the output medium, or page.  For the formatter to correctly break a
+line it is filling, it must know the line length, which it derives from
+the page width (@pxref{Line Layout}).  For it to decide whether to write
+an output line to current page or wait until the next one, it must know
+the page length (@pxref{Page Layout}).
+
+@cindex device resolution
+@cindex resolution, device
+@cindex basic units
+@cindex units, basic
+A device's @dfn{resolution} enables conversion of practical units like
+inches or centimeters to @dfn{basic units}, a convenient length measure
+for the output device or file format.  The formatter and output driver
+use basic units to reckon page measurements.  The device description
+file defines its resolution and page dimensions (@pxref{DESC File
+Format}).  A page is a two-dimensional structure upon which a
+@code{roff} system imposes a coordinate system in basic units with its
+upper left corner as the origin.  Useful coordinate values are therefore
+always positive and within the range of the page boundaries.
+
+@cindex drawing position
+@cindex position, drawing
+While the formatter (and, later, output driver) is processing a page, it
+keeps track of its @dfn{drawing position}, which is the location at
+which the next glyph will be written, from which the next motion will be
+measured, or where a geometric primitive will commence rendering.
+@cindex text baseline
+@cindex baseline, text
+By convention, glyphs are drawn from a text baseline upward and
+to the right.@footnote{@code{groff} does not yet support right-to-left
+scripts.}  The @dfn{text baseline} is a (usually invisible) line
+upon which the glyphs of a typeface ``sit''.  A glyph therefore
+``starts'' at its bottom-left corner.  If drawn at the origin, a typical
+letter glyph would lie partially or wholly off the page, depending on
+whether, like ``g'', it features a decender below the baseline.
+
+@cindex page offset
+@cindex offset, page
+Such a situation is nearly always undesirable.  It is furthermore
+conventional not to write or draw at the extreme edges of the page.
+Therefore the initial drawing position of a @code{roff} formatter is not
+at the origin, but down and to the right of it.  This rightward shift
+from the left edge is known as the @dfn{page
+offset}.@footnote{@code{groff}'s terminal output devices have page
+offsets of zero.}  The downward shift leaves room for a text output
+line.
+
+Text is arranged on a one-dimensional lattice of text baselines from the
+top to the bottom of the page.
+@cindex vertical spacing
+@cindex spacing, vertical
+@cindex vee
+@dfn{Vertical spacing} is the distance between adjacent text baselines.
+In ordinary circumstances, this quantity is tightly coupled to the type
+size.  The initial drawing position is one unit of vertical spacing
+below the page top.  Typographers have a name for this unit:@: ``vee''.
+
+@cindex page break
+@cindex break, page
+Vertical spacing has an impact on page-breaking decisions.  Generally,
+when a break occurs, the formatter moves the drawing position to the
+next text baseline automatically.  If the formatter was already writing
+to the last line that would fit on the page, advancing by one vee would
+place the next text baseline off the page.  Rather than let that happen,
+@code{roff} formatters instruct the output driver to eject the page,
+start a new one, and reset the drawing position to one vee above the
+page top again; this is called a @dfn{page break}.
+
+When the last line of input text is also the last output line that can
+fit on the page, the break caused by the last newline of the input file
+@c (or end-of-file status)
+will also cause a page break, causing a useless blank page to be output.
+Macro packages keep users from having to confront this difficulty by
+programming ``traps'' (@pxref{Traps}); moreover, all but the simplest
+page layouts tend to have headers and footers or at least bear vertical
+margins larger than one vee.
+
+
 @codequotebacktick off
 @codequoteundirected off
 
@@ -5579,8 +5665,7 @@ Ens.  In @code{groff}, this is half of an em.
 @cindex space, vertical, unit (@code{v})
 @cindex @code{v} unit
 @cindex unit, @code{v}
-Vertical space.  This is equivalent to the current line spacing.
-@xref{Sizes}.
+Vees.  @xref{Page Geometry}.
 
 @item M
 @cindex @code{M} unit

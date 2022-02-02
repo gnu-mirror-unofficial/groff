@@ -11,7 +11,7 @@ roff \- concepts and history of roff typesetting
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2000-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 2000-2022 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -90,11 +90,155 @@ and recommends materials for further reading.
 .
 .
 .\" ====================================================================
-.\"SH Concepts
+.SH Concepts
 .\" ====================================================================
-.\"
-.\" (text) baseline
-.\" vertical spacing
+.
+.\" TODO: Break this into subsections when we get more material.
+.\" BEGIN Keep parallel with groff.texi node "Page Geometry".
+.I roff
+systems format text under certain assumptions about the size of the
+output medium,
+or page.
+.
+For the formatter to correctly break a line it is filling,
+it must know the line length,
+which it derives from the page width.
+.\" (@pxref{Line Layout}).
+.
+For it to decide whether to write an output line to the current page or
+wait until the next one,
+it must know the page length.
+.\" (@pxref{Page Layout}).
+.
+.
+A device's
+.I resolution
+enables conversion of practical units like inches or centimeters to
+.I basic units,
+a convenient length measure for the output device or file format.
+.
+The formatter and output driver use basic units to reckon page measurements.
+.
+The device description file defines its resolution and page dimensions
+(see
+.MR groff_font @MAN5EXT@ )
+.\" (@pxref{DESC File Format}).
+.
+A page is a two-dimensional structure upon which a
+.I roff
+system imposes a coordinate system in basic units with its upper left
+corner as the origin.
+.
+Useful coordinate values are therefore always positive and within the
+range of the page boundaries.
+.
+.
+.P
+While the formatter
+(and,
+later,
+output driver)
+is processing a page,
+it keeps track of its
+.I drawing position,
+which is the location at which the next glyph will be written,
+from which the next motion will be measured,
+or where a geometric primitive will commence rendering.
+.
+By convention,
+glyphs are drawn from a text baseline upward and to the right.
+.RI ( groff
+does not yet support right-to-left scripts.)
+.
+The
+.I text baseline
+is a
+(usually invisible)
+line upon which the glyphs of a typeface \[lq]sit\[rq].
+.
+A glyph therefore \[lq]starts\[rq] at its bottom-left corner.
+.
+If drawn at the origin,
+a typical letter glyph would lie partially or wholly off the page,
+depending on whether,
+like \[lq]g\[rq],
+it features a decender below the baseline.
+.
+.
+.P
+Such a situation is nearly always undesirable.
+.
+It is furthermore conventional not to write or draw at the extreme edges
+of the page.
+.
+Therefore the initial drawing position of a
+.I roff
+formatter is not at the origin,
+but down and to the right of it.
+.
+This rightward shift
+from the left edge is known as the
+.I page offset.
+.
+.RI ( groff 's
+terminal output devices have page offsets of zero.)
+.
+The downward shift leaves room for a text output line.
+.
+.
+.P
+Text is arranged on a one-dimensional lattice of text baselines from
+the top to the bottom of the page.
+.
+.I Vertical spacing
+is the distance between adjacent text baselines.
+.
+In ordinary circumstances,
+this quantity is tightly coupled to the type size.
+.
+The initial vertical drawing position is one unit of vertical spacing
+below the page top.
+.
+Typographers have a name for this unit:
+\[lq]vee\[rq].
+.
+.
+.P
+Vertical spacing has an impact on page-breaking decisions.
+.
+Generally,
+when a break occurs,
+the formatter moves the drawing position to the next text baseline
+automatically.
+.
+If the formatter was already writing to the last line that would fit on
+the page,
+advancing by one vee would place the next text baseline off the page.
+.
+Rather than let that happen,
+.I roff
+formatters instruct the output driver to eject the page,
+start a new one,
+and reset the drawing position to one vee above the page top again;
+this is called a
+.I page break.
+.
+.
+.P
+When the last line of input text is also the last output line that can
+fit on the page,
+the break caused by the last newline of the input file
+.\" (or end-of-file status)
+will also cause a page break,
+causing a useless blank page to be output.
+.
+Macro packages keep users from having
+to confront this difficulty by programming \[lq]traps\[rq];
+.\" (@pxref{Traps});
+moreover,
+all but the simplest page layouts tend to have headers and footers or at
+least bear vertical margins larger than one vee.
+.\" END Keep parallel with groff.texi node "Page Geometry".
 .
 .
 .\" ====================================================================
@@ -1645,7 +1789,9 @@ This document was written by
 .MT groff\-bernd\:.warken\-72@\:web\:.de
 Bernd Warken
 .ME ,
-with the sections \[lq]History\[rq] and \[lq]Input Conventions\[rq]
+with the sections \[lq]Concepts\[rq],
+\[lq]History\[rq],
+and \[lq]Input Conventions\[rq]
 mostly written by
 .MT g.branden\:.robinson@\:gmail\:.com
 G.\& Branden Robinson
