@@ -4671,6 +4671,7 @@ not interested in details.
 * Page Control::
 * Fonts and Symbols::
 * Sizes::
+* Colors::
 * Strings::
 * Conditionals and Loops::
 * Writing Macros::
@@ -4680,7 +4681,6 @@ not interested in details.
 * Diversions::
 * Environments::
 * Suppressing output::
-* Colors::
 * I/O::
 * Postprocessor Access::
 * Miscellaneous::
@@ -10959,7 +10959,7 @@ This is a test.
 
 @c =====================================================================
 
-@node Sizes, Strings, Fonts and Symbols, gtroff Reference
+@node Sizes, Colors, Fonts and Symbols, gtroff Reference
 @section Sizes
 @cindex sizes
 
@@ -11275,7 +11275,134 @@ with a default scaling indicator of @samp{z}.
 
 @c =====================================================================
 
-@node Strings, Conditionals and Loops, Sizes, gtroff Reference
+@node Colors, Strings, Sizes, gtroff Reference
+@c @node Colors, I/O, Suppressing output, gtroff Reference
+@section Colors
+@cindex colors
+
+@DefreqList {color, [@Var{n}]}
+@DefregListEndx {.color}
+If @var{n} is missing or non-zero, activate colors (this is the
+default); otherwise, turn it off.
+
+The read-only register @code{.color} is@tie{}1 if colors are active,
+0@tie{}otherwise.
+
+Internally, @code{color} sets a global flag; it does not produce a
+token.  Similar to the @code{cp} request, you should use it at the
+beginning of your document to control color output.
+
+Colors can be also turned off with the @option{-c} command-line option.
+@endDefreq
+
+@Defreq {defcolor, ident scheme color-component @dots{}}
+Define a color named @var{ident} for use with the @code{fcolor} and
+@code{gcolor} requests and the @code{\m} and @code{\M} escape sequences.
+@var{scheme} identifies a color space and determines the quantity of
+required @var{color-component}s; it must be one of @samp{rgb} (three
+components), @samp{cmy} (three components), @samp{cmyk} (four
+components), or @samp{gray} (one component). @samp{grey} is accepted as
+a synonym of @samp{gray}.  The color components can be encoded as a
+hexadecimal value starting with @samp{#} or @samp{##}.  The former
+indicates that each component is in the range 0--255 (0--FF), the latter
+the range 0--65535 (0--FFFF).
+
+@Example
+.defcolor half gray #7f
+.defcolor pink rgb #FFC0CB
+.defcolor magenta rgb  ##ffff0000ffff
+@endExample
+
+@cindex @code{f} unit, and colors
+@cindex unit, @code{f}, and colors
+Alternatively, each color component can be specified as a decimal
+fraction in the range 0--1, interpreted using a default scaling
+indicator of@tie{}@code{f}, which multiplies its value by 65536.
+
+@Example
+.defcolor gray50 rgb 0.5 0.5 0.5
+.defcolor darkgreen rgb 0.1f 0.5f 0.2f
+@endExample
+
+@cindex default color
+@cindex color, default
+Each output device has a color named @samp{default} that cannot be
+redefined.  A device's default drawing and fill colors are not
+necessarily the same.
+@endDefreq
+
+@DefreqList {gcolor, [@Var{color}]}
+@DefescItemx {\\m, , c, }
+@DefescItem {\\m, (, co, }
+@DefescItem {\\m, [, color, ]}
+@DefregListEndx {.m}
+Set (glyph) drawing color.  The following examples show how to turn the
+next four words red.
+
+@Example
+.gcolor red
+these are in red
+.gcolor
+and these words are in black.
+@endExample
+
+@Example
+\m[red]these are in red\m[] and these words are in black.
+@endExample
+
+The escape @code{\m[]} returns to the previous color, as does a call to
+@code{gcolor} without an argument.
+
+@cindex drawing color name register (@code{.m})
+@cindex name, drawing color, register (@code{.m})
+@cindex color name, drawing, register (@code{.m})
+The name of the current drawing color is available in the read-only
+string-valued register @samp{.m}; it is associated with the environment
+(@pxref{Environments}).
+
+@code{\m} doesn't produce an input token in GNU @code{troff}.  As a
+consequence, it can be used in requests like @code{mc} (which expects
+a single character as an argument) to change the color on the fly:
+
+@Example
+.mc \m[red]x\m[]
+@endExample
+@endDefesc
+
+@DefreqList {fcolor, [@Var{color}]}
+@DefescItemx {\\M, , c, }
+@DefescItem {\\M, (, co, }
+@DefescItem {\\M, [, color, ]}
+@DefregListEndx {.M}
+Set fill (background) color for filled objects drawn with the
+@code{\D'@dots{}'} commands.
+
+A red ellipse can be created with the following code:
+
+@Example
+\M[red]\h'0.5i'\D'E 2i 1i'\M[]
+@endExample
+
+The escape @code{\M[]} returns to the previous fill color, as does a
+call to @code{fcolor} without an argument.
+
+@cindex background color name register (@code{.M})
+@cindex name, background color, register (@code{.M})
+@cindex color name, background, register (@code{.M})
+@cindex fill color name register (@code{.M})
+@cindex name, fill color, register (@code{.M})
+@cindex color name, fill, register (@code{.M})
+The name of the current fill (background) color is available in the
+read-only string-valued register @samp{.M}; it is associated with the
+environment (@pxref{Environments}).
+
+@code{\M} doesn't produce an input token in GNU @code{troff}.
+@endDefesc
+
+
+@c =====================================================================
+
+@node Strings, Conditionals and Loops, Colors, gtroff Reference
 @section Strings
 @cindex strings
 
@@ -14559,133 +14686,7 @@ production of the next inline image.
 
 @c =====================================================================
 
-@node Colors, I/O, Suppressing output, gtroff Reference
-@section Colors
-@cindex colors
-
-@DefreqList {color, [@Var{n}]}
-@DefregListEndx {.color}
-If @var{n} is missing or non-zero, activate colors (this is the
-default); otherwise, turn it off.
-
-The read-only register @code{.color} is@tie{}1 if colors are active,
-0@tie{}otherwise.
-
-Internally, @code{color} sets a global flag; it does not produce a
-token.  Similar to the @code{cp} request, you should use it at the
-beginning of your document to control color output.
-
-Colors can be also turned off with the @option{-c} command-line option.
-@endDefreq
-
-@Defreq {defcolor, ident scheme color-component @dots{}}
-Define a color named @var{ident} for use with the @code{fcolor} and
-@code{gcolor} requests and the @code{\m} and @code{\M} escape sequences.
-@var{scheme} identifies a color space and determines the quantity of
-required @var{color-component}s; it must be one of @samp{rgb} (three
-components), @samp{cmy} (three components), @samp{cmyk} (four
-components), or @samp{gray} (one component). @samp{grey} is accepted as
-a synonym of @samp{gray}.  The color components can be encoded as a
-hexadecimal value starting with @samp{#} or @samp{##}.  The former
-indicates that each component is in the range 0--255 (0--FF), the latter
-the range 0--65535 (0--FFFF).
-
-@Example
-.defcolor half gray #7f
-.defcolor pink rgb #FFC0CB
-.defcolor magenta rgb  ##ffff0000ffff
-@endExample
-
-@cindex @code{f} unit, and colors
-@cindex unit, @code{f}, and colors
-Alternatively, each color component can be specified as a decimal
-fraction in the range 0--1, interpreted using a default scaling
-indicator of@tie{}@code{f}, which multiplies its value by 65536.
-
-@Example
-.defcolor gray50 rgb 0.5 0.5 0.5
-.defcolor darkgreen rgb 0.1f 0.5f 0.2f
-@endExample
-
-@cindex default color
-@cindex color, default
-Each output device has a color named @samp{default} that cannot be
-redefined.  A device's default drawing and fill colors are not
-necessarily the same.
-@endDefreq
-
-@DefreqList {gcolor, [@Var{color}]}
-@DefescItemx {\\m, , c, }
-@DefescItem {\\m, (, co, }
-@DefescItem {\\m, [, color, ]}
-@DefregListEndx {.m}
-Set (glyph) drawing color.  The following examples show how to turn the
-next four words red.
-
-@Example
-.gcolor red
-these are in red
-.gcolor
-and these words are in black.
-@endExample
-
-@Example
-\m[red]these are in red\m[] and these words are in black.
-@endExample
-
-The escape @code{\m[]} returns to the previous color, as does a call to
-@code{gcolor} without an argument.
-
-@cindex drawing color name register (@code{.m})
-@cindex name, drawing color, register (@code{.m})
-@cindex color name, drawing, register (@code{.m})
-The name of the current drawing color is available in the read-only
-string-valued register @samp{.m}; it is associated with the environment
-(@pxref{Environments}).
-
-@code{\m} doesn't produce an input token in GNU @code{troff}.  As a
-consequence, it can be used in requests like @code{mc} (which expects
-a single character as an argument) to change the color on the fly:
-
-@Example
-.mc \m[red]x\m[]
-@endExample
-@endDefesc
-
-@DefreqList {fcolor, [@Var{color}]}
-@DefescItemx {\\M, , c, }
-@DefescItem {\\M, (, co, }
-@DefescItem {\\M, [, color, ]}
-@DefregListEndx {.M}
-Set fill (background) color for filled objects drawn with the
-@code{\D'@dots{}'} commands.
-
-A red ellipse can be created with the following code:
-
-@Example
-\M[red]\h'0.5i'\D'E 2i 1i'\M[]
-@endExample
-
-The escape @code{\M[]} returns to the previous fill color, as does a
-call to @code{fcolor} without an argument.
-
-@cindex background color name register (@code{.M})
-@cindex name, background color, register (@code{.M})
-@cindex color name, background, register (@code{.M})
-@cindex fill color name register (@code{.M})
-@cindex name, fill color, register (@code{.M})
-@cindex color name, fill, register (@code{.M})
-The name of the current fill (background) color is available in the
-read-only string-valued register @samp{.M}; it is associated with the
-environment (@pxref{Environments}).
-
-@code{\M} doesn't produce an input token in GNU @code{troff}.
-@endDefesc
-
-
-@c =====================================================================
-
-@node I/O, Postprocessor Access, Colors, gtroff Reference
+@node I/O, Postprocessor Access, Suppressing output, gtroff Reference
 @section I/O
 @cindex i/o
 @cindex input and output requests
