@@ -36,73 +36,57 @@ roff \- concepts and history of roff typesetting
 .
 The term
 .I roff
-describes a family of document formatting systems known by names like
+denotes a family of document formatting systems known by names like
 .IR troff ,
 .IR nroff ,
-.IR ditroff ,
 and
-.IR groff .
+.IR ditroff .
 .
 A
 .I roff
-system consists of an extensible text formatting language and a set of
-programs for printing and converting to other text formats.
+system consists of an interpreter for an extensible text formatting
+language and a set of programs for preparing output for various devices
+and file formats.
 .
 Unix-like operating systems often distribute a
 .I roff
-system as a core package.
+system.
+.
+The manual pages on Unix systems
+(\[lq]man\~pages\[rq])
+and bestselling books on software engineering,
+including Kernighan and Ritchie's
+.I The C Programming Language
+and W.\& Richard Stevens's
+.I Advvanced Programming in the Unix Environment
+are written using a
+.I roff
+system.
+.
+GNU
+.IR roff \[em] groff \[em]is
+arguably the most widespread
+.I roff
+implementation.
 .
 .
 .P
-The most common
-.I roff
-system today is GNU
-.IR roff ,
-.MR groff @MAN1EXT@ .
-.
-.I groff
-retains the input conventions and functionality of its ancestors,
-with many extensions.
-.
-The ancestry of
-.I roff
-is described in section \[lq]History\[rq] below.
-.
-In this document,
-the term
-.I roff
-generally refers to this class of programs,
-with the exception of a
-.MR roff 1
-command provided in early Unix systems.
-.
-In spite of its age,
-.I roff
-remains in wide use today;
-for example,
-the manual pages on Unix systems
-(\[lq]man\~pages\[rq]),
-books about software and programming,
-and technical memoranda are written in
-.IR roff .
-.
-.
-.P
-This document describes the history of the development of the \[lq]roff
-system\[rq],
-typographical concepts that form the common background of all
+This document
+presents typographical concepts that form the common background of all
 .I roff
 implementations,
-details on the
+describes some of the development history of
 .I roff
-pipeline
-which is usually hidden behind front ends like
+systems,
+offers details of the
+.I roff
+pipeline which are usually managed by front ends like
 .MR groff @MAN1EXT@ ,
-a general overview of the formatting language,
-some tips for editing
+surveys the formatting language,
+suggests some tips for editing
 .I roff
-files,
-and many suggestions for further reading.
+input files,
+and recommends materials for further reading.
 .
 .
 .\" ====================================================================
