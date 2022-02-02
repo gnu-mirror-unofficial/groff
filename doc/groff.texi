@@ -10228,8 +10228,8 @@ Input characters, including special characters introduced by an escape,
 have certain properties associated with them.@footnote{Output glyphs
 don't have such properties.  For GNU @code{troff}, a glyph is a
 box numbered with an index into a font, a given height above and depth
-below the baseline, and a width---nothing more.} These properties can be
-modified with this request.  The first argument is the sum of the
+below the baseline, and a width---nothing more.}  These properties can
+be modified with this request.  The first argument is the sum of the
 desired flags and the remaining arguments are the characters to be
 assigned those properties.  Spaces between the @var{cn} arguments are
 optional.  Any argument @var{cn} can be a character class defined with
@@ -12375,14 +12375,14 @@ Alternatively, @var{end} identifies a macro whose call syntax at the
 start of a control line ends the definition of @var{name}; @var{end} is
 then called normally.  A macro definition must end in the same
 conditional block (if any) in which it began.@footnote{@xref{Conditional
-Blocks}} Spaces or tabs are permitted after the control character in the
-line containing this ending token (either @samp{.} or @samp{@var{end}}),
-but a tab immediately after the token prevents its recognition as the
-end of a macro definition.  The macro @var{end} can be called with
-arguments.@footnote{While it is possible to define and call a macro
-@samp{.}, you can't use it as an end macro: during a macro definition,
-@samp{..} is never handled as calling @samp{.}, even if @samp{.de
-@var{name} .} explicitly precedes it.}
+Blocks}}  Spaces or tabs are permitted after the control character in
+the line containing this ending token (either @samp{.} or
+@samp{@var{end}}), but a tab immediately after the token prevents its
+recognition as the end of a macro definition.  The macro @var{end} can
+be called with arguments.@footnote{While it is possible to define and
+call a macro @samp{.}, you can't use it as an end macro: during a macro
+definition, @samp{..} is never handled as calling @samp{.}, even if
+@samp{.de @var{name} .} explicitly precedes it.}
 @c
 @c @Example
 @c .de .
