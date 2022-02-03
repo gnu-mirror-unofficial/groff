@@ -3818,10 +3818,11 @@ End any display.
 
 The distance stored in the @code{DD} register is inserted before and
 after each pair of display macros; this is a Berkeley extension.  The
-identation amount stored in the @code{DI} register is applied only to
-displays created with @samp{.DS I} and @code{ID}; this is a GNU
-extension.  Changes to either register take effect at the next display
-boundary.
+@code{DI} register is a GNU extension; its value is an indentation
+applied to displays created with @samp{.DS} and @samp{.ID} without
+arguments, to @samp{.DS I} without an indentation argument, and to
+indented equations set with @samp{.EQ}.  Changes to either register take
+effect at the next display boundary.
 
 @c ---------------------------------------------------------------------
 

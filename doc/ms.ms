@@ -1982,15 +1982,17 @@ is inserted before and after each pair of display macros;
 this is a Berkeley extension.
 .
 The
-.CW \[rs]n[DI]
+.CW DI
 register is a GNU extension;
 its value is an indentation applied to displays created with
 .CW .DS
-(with no argument),
-.CW ".DS\~I" \[rq], \[lq]
 and
-.CW .ID ;
-and indented equations set with
+.CW .ID
+without arguments,
+to
+.CW ".DS\~I" \[rq], \[lq]
+without an indentation argument,
+and to indented equations set with
 .CW .EQ .
 .
 Changes to either register take effect at the next display boundary.
