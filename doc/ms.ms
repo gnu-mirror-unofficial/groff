@@ -1728,11 +1728,16 @@ T}
 .
 .
 .PP
-You can use indented regions to line up text under hanging and indented
-paragraphs.
+Indented regions can be nested;
+you can change
+.CW \[rs]n[PI]
+before each call to vary the amount of inset.
+.
+This feature enables you to easily line up text under hanging and
+indented paragraphs.
 .
 For example,
-you may wish to nest lists.
+you may wish to structure lists hierarchically.
 .
 .
 .TS
