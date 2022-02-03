@@ -2760,15 +2760,8 @@ The
 macros can set text in as many columns as will reasonably fit on the
 page.
 .
-The following macros are available.
-.
-All of them force a page break if a multi-column mode is already set.
-.
-However,
-if the current mode is single-column,
-starting a multi-column mode does
-.I not
-force a page break.
+The following macros force a page break if a multi-column layout is
+active when they are called.
 .
 .
 .TS
