@@ -3843,39 +3843,44 @@ The @file{ms} package is often used with the @code{tbl}, @code{pic},
 @pindex pic
 @pindex eqn
 @pindex refer
-Mark text meant for preprocessors by enclosing it in pairs of tags
-as follows, with no space between the dot and the macro name.
+Mark text meant for preprocessors by enclosing it in pairs of tokens
+as follows, with nothing between the dot and the macro name.  The
+preprocessors match these tokens only at the start of an input line.
 
 @DefmacList {TS, [@code{H}], ms}
 @DefmacListEndx {TE, , ms}
-Denote a table to be processed by the @code{tbl} preprocessor.  The
+Demarcate a table to be processed by the @code{tbl} preprocessor.  The
 optional argument@tie{}@code{H} to @code{TS} instructs @code{groff} to
 repeat table rows (often column headings) at the top of each new page
 the table spans, if applicable; calling the @code{TH} macro marks the
-end of such rows.
+end of such rows.  The GNU @cite{tbl@r{(1)}} man page provides a
+comprehensive reference to the preprocessor and offers examples of its
+use.
 @endDefmac
 
 @DefmacList {PS, , ms}
 @DefmacListEndx {PE, , ms}
-Denote a graphic to be processed by the @code{pic} preprocessor.  You
+Demarcate a diagram to be processed by the @code{pic} preprocessor.  You
 can create @code{pic} input manually or by using a program such as
 @code{xfig}.
 @endDefmac
 
 @DefmacList {EQ, [@Var{align}], ms}
 @DefmacListEndx {EN, , ms}
-Denote an equation to be processed by the @code{eqn} preprocessor.  The
-equation is center-aligned by default; the optional @var{align} argument
-can be @samp{C}, @samp{L}, or @samp{I} to center, left-align, or indent
-it by the amount stored in the @code{DI} register, respectively.
+Demarcate an equation to be processed by the @code{eqn} preprocessor.
+The equation is center-aligned by default; the optional @var{align}
+argument can be @samp{C}, @samp{L}, or @samp{I} to center, left-align,
+or indent it by the amount stored in the @code{DI} register,
+respectively.
 @endDefmac
 
 @DefmacList {[, , ms}
 @DefmacListEndx {], , ms}
-Denote a reference to be processed by the @code{refer} preprocessor.
-The GNU @cite{refer@r{(1)}} man page provides a comprehensive reference
-to the preprocessor and the format of the bibliographic database.  Type
-@samp{man refer} at the command line to view it.
+Demarcate a bibliographic citation to be processed by the @code{refer}
+preprocessor.  The GNU @cite{refer@r{(1)}} man page provides a
+comprehensive reference to the preprocessor and the format of its
+bibliographic database.  Type @samp{man refer} at the command line to
+view it.
 @endDefmac
 
 When @code{refer} emits collected references (as might be done on a

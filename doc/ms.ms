@@ -2024,9 +2024,11 @@ distance is also applied to regions of the document preprocessed with
 and
 .I eqn .
 .
-Mark text meant for preprocessors by enclosing it in pairs of tags as
+Mark text meant for preprocessors by enclosing it in pairs of tokens as
 follows,
-with no space between the dot and the macro name.
+with nothing between the dot and the macro name.
+.
+The preprocessors match these tokens only at the start of an input line.
 .
 .
 .TS
@@ -2043,7 +2045,7 @@ T{
 .br
 \&.TE
 T}	T{
-Denote a table to be processed by the
+Demarcate a table to be processed by the
 .I tbl
 preprocessor.
 .
@@ -2060,6 +2062,11 @@ if applicable;
 calling the
 .CW TH
 macro marks the end of such rows.
+.
+The GNU
+.I tbl (1)
+man page provides a comprehensive reference to the preprocessor and
+offers examples of its use.
 T}
 _
 T{
@@ -2067,7 +2074,7 @@ T{
 .br
 \&.PE
 T}	T{
-Denote a graphic to be processed by the
+Demarcate a diagram to be processed by the
 .I pic
 preprocessor.
 .
@@ -2085,7 +2092,7 @@ T{
 .br
 \&.EN
 T}	T{
-Denote an equation to be processed by the
+Demarcate an equation to be processed by the
 .I eqn
 preprocessor.
 .
@@ -2109,9 +2116,14 @@ T{
 .br
 \&.]
 T}	T{
-Denote a reference to be processed by the
+Demarcate a bibliographic citation to be processed by the
 .I refer
 preprocessor.
+.
+The GNU
+.I refer (1)
+man page provides a comprehensive reference to the preprocessor and the
+format of its bibliographic database.
 T}
 .TE
 .KE

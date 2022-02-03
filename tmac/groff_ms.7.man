@@ -1371,16 +1371,18 @@ distance is also applied to regions of the document preprocessed with
 and
 .IR \%@g@tbl .
 .
-Mark text meant for preprocessors by enclosing it in pairs of tags as
+Mark text meant for preprocessors by enclosing it in pairs of tokens as
 follows,
-with no space between the dot and the macro name.
+with nothing between the dot and the macro name.
+.
+The preprocessors match these tokens only at the start of an input line.
 .
 .
 .TP
 .BR .TS " [" H "]
 .TQ
 .B .TE
-Denote a table to be processed by the
+Demarcate a table to be processed by the
 .I tbl
 preprocessor.
 .
@@ -1396,12 +1398,16 @@ calling the
 .B TH
 macro marks the end of such rows.
 .
+.MR @g@tbl @MAN1EXT@
+provides a comprehensive reference to the preprocessor and offers
+examples of its use.
+.
 .
 .TP
 .B .PS
 .TQ
 .B .PE
-Denote a graphic to be processed by the
+Demarcate a diagram to be processed by the
 .I pic
 preprocessor.
 .
@@ -1411,7 +1417,7 @@ preprocessor.
 .RI " [" align ]
 .TQ
 .B .EN
-Denote an equation to be processed by the
+Demarcate an equation to be processed by the
 .I eqn
 preprocessor.
 .
@@ -1433,9 +1439,13 @@ respectively.
 .B .[
 .TQ
 .B .]
-Denote a reference to be processed by the
+Demarcate a bibliographic citation to be processed by the
 .I refer
 preprocessor.
+.
+.MR @g@refer @MAN1EXT@
+provides a comprehensive reference to the preprocessor and the format of
+its bibliographic database.
 .
 .
 .P
