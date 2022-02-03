@@ -3398,7 +3398,7 @@ _
 .PP
 The default for
 .CW \[rs]*[ABSTRACT]
-includes font style escape sequences to set the word in italics.
+includes font selection escape sequences to set the word in italics.
 .
 .
 .\" ------------------------
