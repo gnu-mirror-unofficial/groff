@@ -242,6 +242,289 @@ least bear vertical margins larger than one vee.
 .
 .
 .\" ====================================================================
+.SH "\f[I]groff\f[] elements"
+.\" ====================================================================
+.
+Lines of input to any
+.I roff
+formatter can be classified as one of two types:
+control lines and text lines.
+.
+.
+.P
+A
+.I control line
+starts with the
+.I control character,
+a dot
+.RB (\[lq] .\& \[rq])
+or the
+.I no-break control character,
+a neutral apostrophe
+.RB (\[lq] \[aq] \[rq]).
+.
+Either control character is followed by zero or more spaces or tabs
+and then an optional
+.I request,
+an instruction built in to the formatter.
+.
+Some requests take one or more
+.I arguments,
+which follow on the same line,
+separated from the request name and each other only by spaces.
+.
+.
+.P
+Any input line that is not a control line is a
+.I text line.
+.
+See section \[lq]Line continuation\[rq] below for an exception to this
+rule.
+.
+Text lines generally become formatted output.
+.
+To start a text line with the control or no-break control character,
+prefix the character with the
+.B \[rs]&
+escape sequence.
+.
+.
+.P
+.I Escape sequences
+start with the
+.I escape character,
+a backslash
+.BR \[rs] ,
+and are followed by at least one additional character.
+.
+They can appear anywhere in the input.
+.
+.
+.P
+With requests,
+the escape and control characters can be changed and,
+in
+.I groff,
+the escape mechanism can be turned off and back on.
+.
+.
+.P
+.I Macros
+permit the extension or replacement of the request repertoire.
+.
+Requests like
+.request .de
+(shown here with a leading control character to clarify its identity)
+can be invoked to define a macro,
+a user-directed abbreviation for a collection of input lines.
+.
+Macros are called on control lines much as requests are invoked,
+albeit with occasional differences in argument handling.
+.
+When a macro is called,
+its definition
+(or \[lq]body\[rq])
+is
+.I interpolated,
+as if typed at its call site.
+.
+Its contents are then parsed normally.
+.
+.
+.P
+.I Strings
+store character sequences.
+.
+They are defined with the
+.request .ds
+request and interpolated with the
+.esc *
+escape sequence.
+.
+Strings can be parameterized as macros can.
+.
+.
+.P
+.I Registers
+store numerical values.
+.
+They are set with the
+.request .nr
+request or
+.esc R
+escape sequence and interpolated with the
+.esc n
+escape sequence.
+.
+Some read-only predefined registers interpolate text.
+.
+.
+.P
+.I Fonts
+are identified either by a name or by a mounting position
+(a non-negative number).
+.
+A font is selected for glyph rendering by the
+.request .ft
+request or by the
+.esc f
+escape sequence.
+.
+Four font styles are available on all devices.
+.
+.B R
+is \[lq]Roman\[rq]:
+normal,
+upright text.
+.
+.B B
+is
+.BR bold ,
+an upright typeface with a heavier weight.
+.
+.B I
+is
+.IR italic ,
+a face that is oblique on typesetter output devices and usually
+underlined instead on terminal devices.
+.
+.B BI
+is \f[BI]bold-italic\f[]\/, \" indulging a bit of man(7) evil here
+combining both of the foregoing style variations.
+.
+Typesetter devices typically offer one or more
+.I special
+fonts as well;
+they provide glyphs that are not available in the multiple styles of
+text fonts.
+.
+.
+.P
+.I groff
+supports named
+.I colors
+for glyph rendering and drawing of geometric primitives.
+.
+Stroke and fill colors are distinct;
+the stroke color is used for glyphs.
+.
+Colors are defined with the
+.request .defcolor
+request,
+and selected with the
+.request .gcolor
+and
+.request .fcolor
+requests or
+.esc m
+and
+.esc M
+escape sequences.
+.
+.
+.P
+.I Glyphs
+are visual representation forms of
+.I characters.
+.
+In
+.I groff,
+the distinction between those two elements is not always obvious
+(and a full discussion is beyond our scope).
+.
+To roughly characterize,
+\[lq]A\[rq] is a character when we consider it in the abstract:
+to make it a glyph,
+we must select a typeface with which to render it,
+and determine its type size and color.
+.
+The formatting process turns input characters into output glyphs.
+.
+A few characters commonly seen on keyboards are treated
+specially by
+.I roff
+languages and may not look correct in output if used unthinkingly;
+they are
+the (double) quotation mark
+.RB ( \[dq] ),
+the neutral apostrophe
+.RB ( \[aq] ),
+the minus sign
+.RB ( \- ),
+the backslash
+.RB ( \[rs] ),
+the caret or circumflex accent
+.RB ( \[ha] ),
+the grave accent
+.RB ( \[ga] ),
+and the tilde
+.RB ( \[ti] ).
+.
+All are available via
+.I special character
+escape sequences,
+along with numerous other symbols;
+see
+.MR groff_char @MAN7EXT@ .
+.
+.
+.P
+A further few language elements arise as page layouts become more
+sophisticated and demanding.
+.
+.
+.I Environments
+collect formatting parameters like line length and typeface.
+.
+A
+.I diversion
+stores formatted output for later use.
+.
+A
+.I trap
+is a condition on the input or output,
+tested automatically by the formatter,
+that is associated with a macro,
+causing it to be called when that condition is fulfilled.
+.
+.
+.\" TODO: Move this paragraph to our Texinfo manual and roff(7).
+.P
+Footnote support often exercises all three of the foregoing features.
+.
+A simple implementation might work as follows.
+.
+A pair of macros is defined:
+one starts a footnote and the other ends it.
+.
+The author calls the first macro where a footnote marker is desired.
+.
+The macro establishes a diversion so that the footnote text is collected
+at the place in the body text where its corresponding marker appears.
+.
+An environment is created for the footnote so that it is set at a
+smaller typeface.
+.
+The footnote text is formatted in the diversion using that environment,
+but it does not yet appear in the output.
+.
+The document author calls the footnote end macro,
+which returns to the previous environment and ends the diversion.
+.
+Later,
+after much more body text in the document,
+a trap,
+set a small distance above the page bottom,
+is sprung.
+.
+The macro called by the trap draws a line across the page and emits the
+stored diversion.
+.
+Thus,
+the footnote is rendered.
+.
+.
+.\" ====================================================================
 .SH History
 .\" ====================================================================
 .
