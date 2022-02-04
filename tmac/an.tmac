@@ -165,7 +165,7 @@
 ..
 .
 .\" Localize manual section titles for English.
-.de an*localize
+.de an*localize-strings
 .  ds an*section1 General Commands Manual\"
 .  ds an*section2 System Calls Manual\"
 .  ds an*section3 Library Functions Manual\"
@@ -232,6 +232,10 @@
 .    \}
 .  \}
 .
+.  \" The previous document rendered in a batch may have been in a
+.  \" different language.  If this one is in English, (re-)init strings.
+.  if '\\*[locale]'english' .an*localize-strings
+.
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  ad \\*[AD]
@@ -250,8 +254,6 @@
 .  nr an-need-no-space-mode 0
 .  nr an-need-break 0
 .  nr an-is-in-diversion 0
-.
-.  if '\\*[locale]'english' .an*localize
 .
 .  ds an-title "\\$1\"
 .  if \\n[CT] .stringup an-title
