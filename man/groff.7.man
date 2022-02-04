@@ -8,7 +8,7 @@ groff \- GNU roff language reference
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2000-2018, 2020-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 2000-2018, 2020-2022 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -337,68 +337,83 @@ input is organized into lines separated by the Unix newline character
 .
 .
 .\" ====================================================================
-.SH "Control characters"
+.SH "Syntax characters"
 .\" ====================================================================
 .
-There is a small set of characters that have a special controlling
-task in certain conditions.
+Several input characters are syntactically significant to
+.IR groff .
 .
-.TP
-\&\f[CB].\f[]
-A dot is only special at the beginning of a line or after the
-condition in the requests
+.
+.IP . 4n
+A dot at the beginning of an input line marks it as a
+.I control line.
+.
+It can also follow the
+.request .el
+and
+.request .nop
+requests,
+and the condition in
 .request .if ,
 .request .ie ,
-.request .el ,
 and
-.request .while .
+.request .while
+requests.
 .
-There it is the control character that introduces a request (or macro).
+The control character invokes requests and calls macros by the name that
+follows it.
 .
-By using the
+The
 .request .cc
-request, the control character can be set to a different character,
-making the dot
-.squoted_char .\&
-a non-special character.
+can change the control character;
+if thus used,
+.RB \[lq] . \[rq]
+loses its special properties.
 .
-.IP
-In all other positions, it just means a dot character.
 .
-In text paragraphs, it is advantageous to start each sentence at a
-line of its own.
+.IP \[aq]
+The neutral apostrophe is recognized where the control character is;
+it is the
+.I no-break control character.
 .
-.TP
-\&\f[CB]\[aq]\f[]
-The apostrophe has two controlling tasks.
+It works as the control character does,
+but suppresses the break implied by the
+.request .bp ,
+.request .cf ,
+.request .fi ,
+.request .fl ,
+.request .in ,
+.request .nf ,
+.request .rj ,
+.request .sp ,
+.request .ti ,
+.request .trf ,
+requests;
+if the no-break control character is used with any of these requests,
+.I \%@g@troff
+suppresses the break;
+instead the requested operation takes effect at the next break.
 .
-At the beginning of a line and in the conditional requests it is the
-no-break control character.
-.
-That means that it introduces a request like the dot, but with the
-additional property that this request doesn't cause a linebreak.
+It makes
+.request .br
+nilpotent.
 .
 The no-break control character can be changed with the
 .request .c2
 request.
 .
-.IP
-As a second task, it is the most commonly used argument separator in
-some functional escape sequences (but any pair of characters not part
-of the argument do work).
+When formatted,
+.RB \[lq] \[aq] \[rq]
+may be typeset as a typographical quotation mark;
+use the
+.esc [aq]
+special character escape sequence to format a neutral apostrophe glyph.
 .
-In all other positions, it denotes a single quote or apostrophe
-character, depending on the output device's glyph repertoire.
 .
-.I groff
-provides a printable representation with the
-.esc (aq
-escape sequence.
-.
-.TP
-\&\f[CB]\[dq]\f[]
-The double quote can be used to enclose arguments to macros and strings,
-but not requests.
+.IP \[dq]
+The neutral double quote can be used to enclose arguments to macros and
+strings,
+and is required if those arguments contain ordinary inter-word spaces.
 .
 In the
 .request .ds ,
@@ -411,54 +426,62 @@ a leading double quote in the second argument is stripped off,
 enabling the inclusion of leading space characters in the string
 definition or appendment.
 .
-The escaped double quote
-.esc \[dq]
-introduces a comment.
+To include a double quote inside a quoted argument,
+use the
+.esc [dq]
+special character escape sequence
+(which also serves to typeset the glyph in text).
 .
-Otherwise, it is not special.
+.
+.IP \[rs]
+A backslash introduces an escape sequence.
+.
+The escape character can be changed with the
+.request .ec
+request;
+.request .eo
+disables escape sequence recognition.
+.
+Use the
+.esc [rs]
+special character escape sequence to format a backslash glyph,
+and
+.esc e
+to typeset the glyph of the current escape character.
+.
+.
+.IP (
+An opening parenthesis is special only in certain escape sequences;
+when recognized,
+it introduces an argument of exactly two characters.
 .
 .I groff
-provides a printable representation with the
-.esc [dq]
-escape sequence.
-.
-.TP
-\&\f[CB]\e\f[]
-The backslash usually introduces an escape sequence (this can be
-changed with the
-.request .ec
-request).
-.
-A printed version of the escape character is the
-.esc e
-escape; a backslash glyph can be obtained by
-.esc (rs .
-.
-.TP
-\&\f[CB](\f[]
-The open parenthesis is only special in escape sequences when
-introducing an escape name or argument consisting of exactly two
-characters.
-.
-In groff, this behaviour can be replaced by the \f[CB][]\f[] construct.
-.
-.TP
-\&\f[CB][\f[]
-The opening bracket is only special in groff escape sequences; there
-it is used to introduce a long escape name or long escape argument.
-.
-Otherwise, it is non-special, e.g., in macro calls.
-.
-.TP
-\&\f[CB]]\f[]
-The closing bracket is only special in groff escape sequences; there
-it terminates a long escape name or long escape argument.
-.
-Otherwise, it is non-special.
+offers the more flexible square bracket syntax.
 .
 .
-.TP
-\f[CI]space\f[]
+.IP [
+An opening bracket is special only in certain escape sequences;
+when recognized,
+it introduces an argument (list) of any length,
+not including a closing bracket.
+.
+.
+.IP ]
+A closing bracket is special only when an escape sequence using an
+opening bracket as an argument delimiter is being interpreted.
+.
+It ends the argument (list).
+.
+.
+.P
+Horizontal white space characters are significant to
+.I groff,
+but trailing spaces on text lines are ignored.
+.\" slack text for widow/orphan control: trailing tabs are not
+.
+.
+.TP 8n
+.I space
 Space characters separate arguments in request invocations,
 macro calls,
 and string interpolations.
@@ -483,10 +506,13 @@ When adjustment is enabled and set to both margins
 (the default),
 inter-word spaces may be expanded to justify the line.
 .
-To get a space of definite width,
-use the escape sequences
-.squoted_char "\[rs]\ "
-(this is the escape character followed by a space),
+An adjustable but non-breaking space is available with
+.esc \[ti] .
+.
+To get a space of fixed width,
+use one of the escape sequences
+.squoted_char "\[rs]\~"
+(the escape character followed by a space),
 .esc 0 ,
 .esc | ,
 .esc \[ha] ,
@@ -494,22 +520,21 @@ or
 .esc h ;
 see section \[lq]Escape sequences\[rq] below.
 .
-An adjustable but non-breaking space is available with
-.esc \[ti] .
 .
-.
-.IP \f[CI]newline\f[]
+.TP
+.I newline
 In text,
-a newline puts an inter-word space onto the output and triggers
-end-of-sentence recognition on the preceding text.
+a newline puts an inter-word space onto the output and,
+if filling is enabled,
+triggers end-of-sentence recognition on the preceding text.
 .
 See section \[lq]Line continuation\[rq] below.
 .
-.IP \f[CI]tab\f[]
-If a tab character occurs during text the interpreter makes a
-horizontal jump to the next pre-defined tab position.
 .
-There is a sophisticated interface for handling tab positions.
+.TP
+.I tab
+A tab character in text causes the drawing position to advance to the
+next defined tab stop.
 .
 .
 .\" ====================================================================
