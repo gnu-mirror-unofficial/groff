@@ -242,7 +242,7 @@ least bear vertical margins larger than one vee.
 .
 .
 .\" ====================================================================
-.SH "\f[I]groff\f[] elements"
+.SS "Language elements"
 .\" ====================================================================
 .
 Lines of input to any
@@ -257,11 +257,11 @@ A
 starts with the
 .I control character,
 a dot
-.RB (\[lq] .\& \[rq])
+.RB ( .\& )
 or the
 .I no-break control character,
 a neutral apostrophe
-.RB (\[lq] \[aq] \[rq]).
+.RB ( \[aq] ).
 .
 Either control character is followed by zero or more spaces or tabs
 and then an optional
@@ -278,8 +278,9 @@ separated from the request name and each other only by spaces.
 Any input line that is not a control line is a
 .I text line.
 .
-See section \[lq]Line continuation\[rq] below for an exception to this
-rule.
+See section \[lq]Line continuation\[rq] in
+.MR groff @MAN7EXT@
+for an exception to this rule.
 .
 Text lines generally become formatted output.
 .
@@ -302,20 +303,16 @@ They can appear anywhere in the input.
 .
 .P
 With requests,
-the escape and control characters can be changed and,
-in
-.I groff,
-the escape mechanism can be turned off and back on.
+the escape and control characters can be changed;
+further,
+escape sequence recognition can be turned off and back on.
 .
 .
 .P
 .I Macros
 permit the extension or replacement of the request repertoire.
 .
-Requests like
-.request .de
-(shown here with a leading control character to clarify its identity)
-can be invoked to define a macro,
+Certain requests can be invoked to define a macro,
 a user-directed abbreviation for a collection of input lines.
 .
 Macros are called on control lines much as requests are invoked,
@@ -335,26 +332,20 @@ Its contents are then parsed normally.
 .I Strings
 store character sequences.
 .
-They are defined with the
-.request .ds
-request and interpolated with the
-.esc *
-escape sequence.
-.
-Strings can be parameterized as macros can.
+In
+.IR groff ,
+they can be parameterized as macros can.
 .
 .
 .P
 .I Registers
-store numerical values.
+store numerical values,
+including measurements.
 .
-They are set with the
-.request .nr
-request or
-.esc R
-escape sequence and interpolated with the
-.esc n
-escape sequence.
+The latter are generally in basic units;
+.I scaling units
+can be appended to numeric expressions to clarify their meaning when
+stored or interpolated.
 .
 Some read-only predefined registers interpolate text.
 .
@@ -364,16 +355,10 @@ Some read-only predefined registers interpolate text.
 are identified either by a name or by a mounting position
 (a non-negative number).
 .
-A font is selected for glyph rendering by the
-.request .ft
-request or by the
-.esc f
-escape sequence.
-.
 Four font styles are available on all devices.
 .
 .B R
-is \[lq]Roman\[rq]:
+is \[lq]roman\[rq]:
 normal,
 upright text.
 .
@@ -407,19 +392,6 @@ for glyph rendering and drawing of geometric primitives.
 .
 Stroke and fill colors are distinct;
 the stroke color is used for glyphs.
-.
-Colors are defined with the
-.request .defcolor
-request,
-and selected with the
-.request .gcolor
-and
-.request .fcolor
-requests or
-.esc m
-and
-.esc M
-escape sequences.
 .
 .
 .P
@@ -472,7 +444,6 @@ see
 A further few language elements arise as page layouts become more
 sophisticated and demanding.
 .
-.
 .I Environments
 collect formatting parameters like line length and typeface.
 .
@@ -488,7 +459,7 @@ that is associated with a macro,
 causing it to be called when that condition is fulfilled.
 .
 .
-.\" TODO: Move this paragraph to our Texinfo manual and roff(7).
+.\" TODO: Copy this paragraph to our Texinfo manual.
 .P
 Footnote support often exercises all three of the foregoing features.
 .
