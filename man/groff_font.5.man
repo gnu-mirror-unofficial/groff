@@ -56,11 +56,9 @@ directory.
 The device description file is called
 .IR DESC ,
 and,
-for each
-.RI font\~ f
-supported by the device,
+for each font supported by the device,
 a font description file is
-.RI called\~\[lq] f \[rq],
+.RI called\~ f,
 where
 .IR f \~is
 usually an abbreviation of a font's name and/or style.
@@ -97,9 +95,9 @@ Device and font description files are read both by the formatter,
 .IR \%@g@troff ,
 and by output drivers.
 .
-The programs delegate these files' interpretation to an internal
+The programs delegate these files' processing to an internal
 library,
-.IR libdriver ,
+.IR libgroff ,
 ensuring their consistent interpretation.
 .
 .
@@ -174,7 +172,8 @@ The horizontal resolution is
 .IR n \~basic
 units.
 .
-All horizontal quantities are rounded to multiples of this value.
+All horizontal quantities are rounded to multiples
+.RI of\~ n.
 .
 .
 .TP
@@ -473,12 +472,13 @@ The vertical resolution is
 .IR n \~basic
 units.
 .
-All vertical quantities are rounded to multiples of this value.
+All vertical quantities are rounded to multiples
+.RI of\~ n.
 .
 .
 .TP
 .B charset
-This line and everything following it in the file are ignored.
+This directive and the rest of the file are ignored.
 .
 It is recognized for compatibility with other
 .I troff \" generic
@@ -509,10 +509,8 @@ lines are mandatory.
 .
 Directives not listed above are ignored by
 .I \%@g@troff
-but may be used by postprocessors to obtain arbitrary information about
-the device described in the
-.I DESC
-file.
+but may be used by postprocessors to obtain further information about
+the device.
 .
 .
 .\" ====================================================================
@@ -666,8 +664,8 @@ it is sought in any mounted fonts that bear this property.
 .P
 Other directives in this section are ignored by
 .IR \%@g@troff ,
-but may be used by postprocessors to obtain arbitrary information about
-the font described in the file.
+but may be used by postprocessors to obtain further information about
+the font.
 .
 .
 .P
@@ -773,6 +771,8 @@ a font can thus customize the widths of these spaces.
 .\" Latin character, is a predefined groff escape sequence.
 .
 .
+.br
+.ne 4v \" Keep next paragraph together with (possibly 2-line) synopsis.
 .P
 The form of the
 .I metrics

@@ -18161,20 +18161,20 @@ extensions of those used by @acronym{AT&T} device-independent
 @code{groff} lacks a binary format; all files are text
 files.@footnote{Plan@tie{}9 @code{troff} has also abandoned the binary
 format.}  The device and font description files for a device @var{name}
-are stored in a @file{dev@var{name}} directory.  The device
-description file is called @file{DESC}, and, for each font@tie{}@var{f}
-supported by the device, a font description file is
-called@tie{}@file{@var{f}}, where @var{f}@tie{}is usually an
-abbreviation of a font's name and/or style.  For example, the @code{ps}
-(PostScript) device has @code{groff} font description files for Times
-roman (@file{TR}) and Zapf Chancery Medium italic (@file{ZCMI}), among
-many others, while the @code{utf8} device (for terminal emulators) has
-only font descriptions for the roman, italic, bold, and bold-italic
-styles (@file{R}, @file{I}, @file{B}, and @file{BI}, respectively).
+are stored in a @file{dev@var{name}} directory.  The device description
+file is called @file{DESC}, and, for each font supported by the device,
+a font description file is called@tie{}@file{@var{f}}, where
+@var{f}@tie{}is usually an abbreviation of a font's name and/or style.
+For example, the @code{ps} (PostScript) device has @code{groff} font
+description files for Times roman (@file{TR}) and Zapf Chancery Medium
+italic (@file{ZCMI}), among many others, while the @code{utf8} device
+(for terminal emulators) has only font descriptions for the roman,
+italic, bold, and bold-italic styles (@file{R}, @file{I}, @file{B}, and
+@file{BI}, respectively).
 
 Device and font description files are read both by the formatter, GNU
 @code{troff}, and by output drivers.  The programs delegate these files'
-interpretation to an internal library, @file{libdriver}, ensuring their
+processing to an internal library, @file{libgroff}, ensuring their
 consistent interpretation.
 
 @menu
@@ -18223,7 +18223,7 @@ corresponding position.
 @cindex horizontal resolution
 @cindex resolution, horizontal
 The horizontal resolution is @var{n}@tie{}basic units.  All horizontal
-quantities are rounded to multiples of this value.
+quantities are rounded to multiples of@tie{}@var{n}.
 
 @item image_generator @var{program}
 @kindex image_generator
@@ -18357,7 +18357,7 @@ uses this directive.
 @cindex vertical resolution
 @cindex resolution, vertical
 The vertical resolution is @var{n}@tie{}basic units.  All vertical
-quantities are rounded to multiples of this value.
+quantities are rounded to multiples of@tie{}@var{n}.
 
 @item charset
 @kindex charset
@@ -18375,8 +18375,8 @@ GNU @code{troff} recognizes but ignores the directives @code{spare1},
 
 The @code{res}, @code{unitwidth}, @code{fonts}, and @code{sizes} lines
 are mandatory.  Directives not listed above are ignored by GNU
-@code{troff} but may be used by postprocessors to obtain arbitrary
-information about a device in the @file{DESC} file.
+@code{troff} but may be used by postprocessors to obtain further
+information about the device.
 
 @c ---------------------------------------------------------------------
 
@@ -18457,8 +18457,8 @@ property.
 @end table
 
 Other directives in this section are ignored by GNU @code{troff}, but
-may be used by postprocessors to obtain arbitrary information about the
-font in the file.
+may be used by postprocessors to obtain further information about the
+font.
 
 The second section contains one or two subsections.  These can appear in
 either order; the first one encountered commences the second section.
