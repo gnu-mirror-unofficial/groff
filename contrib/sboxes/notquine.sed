@@ -6,6 +6,7 @@ s/\\" FOOTNOTE/@FOOTNOTE@/
 s/\\/\\[rs]/g
 s/-/\\&/g
 s/'/\\[aq]/g
+s/~/\\[ti]/g
 s/^\./\\\&&/
 /@FOOTNOTE@/a\
 .FS\
