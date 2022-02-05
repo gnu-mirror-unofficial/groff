@@ -1,5 +1,11 @@
 2021-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* sboxes.tmac: Skip macro package instead of aborting if there
+	are prerequisite problems.  This is an auxiliary package; it is
+	not necessarily fatal to the user's purposes if it doesn't load.
+
+2021-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* sboxes.tmac: Stop requiring ms package.  As the documentation
 	says, it's not necessary; sboxes will simply take advantage of
 	it if it is.  Problem introduced by me in commit f1f047013, 17
