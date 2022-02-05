@@ -1,5 +1,14 @@
 2021-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* sboxes.tmac: Stop requiring ms package.  As the documentation
+	says, it's not necessary; sboxes will simply take advantage of
+	it if it is.  Problem introduced by me in commit f1f047013, 17
+	October.  Append to ms's `fn@print-sep` and `par*start` macros
+	only if the `GS` register exists, so that warnings aren't thrown
+	when ms is not loaded.
+
+2021-02-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* notquine.sed: Convert tilde to special character when inlining
 	document source (\~ is used).
 
