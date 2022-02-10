@@ -4684,6 +4684,7 @@ not interested in details.
 * Writing Macros::
 * Page Motions::
 * Drawing Requests::
+* Deferring Output::
 * Traps::
 * Diversions::
 * Environments::
@@ -13645,7 +13646,63 @@ Instead, use the @code{eqn} preprocessor.
 @codequotebacktick on
 @codequoteundirected on
 
-@node Traps, Diversions, Drawing Requests, gtroff Reference
+@node Deferring Output, Traps, Drawing Requests, gtroff Reference
+@section Deferring Output
+@cindex deferred output
+
+@cindex environment
+@cindex diversion
+@cindex trap
+A few @code{roff} language elements are generally not used in simple
+documents, but arise as page layouts become more sophisticated and
+demanding.  @dfn{Environments} collect formatting parameters like line
+length and typeface.  A @dfn{diversion} stores formatted output for
+later use.  A @dfn{trap} is a condition on the input or output, tested
+automatically by the formatter, that is associated with a macro, causing
+it to be called when that condition is fulfilled.
+
+Footnote support often exercises all three of the foregoing features.  A
+simple implementation might work as follows.  A pair of macros is
+defined: one starts a footnote and the other ends it.  The author calls
+the first macro where a footnote marker is desired.  The macro
+establishes a diversion so that the footnote text is collected at the
+place in the body text where its corresponding marker appears.  An
+environment is created for the footnote so that it is set at a smaller
+typeface.  The footnote text is formatted in the diversion using that
+environment, but it does not yet appear in the output.  The document
+author calls the footnote end macro, which returns to the previous
+environment and ends the diversion.  Later, after much more body text in
+the document, a trap, set a small distance above the page bottom, is
+sprung.  The macro called by the trap draws a line across the page and
+emits the stored diversion.  Thus, the footnote is rendered.
+
+Diversions and traps make the text formatting process non-linear.  Let
+us imagine a set of text lines or paragraphs labelled @samp{A},
+@samp{B}, and so on.  If we set up a trap that produces text @samp{T}
+(as a page footer, say), and we also use a diversion to store the
+formatted text @samp{D}, then a document with input text in the order
+@samp{A B C D E F} might render as @samp{A B C E T F}.  The diversion
+@samp{D} will never be output if we do not call for it.
+
+Environments of themselves are not a source of non-linearity in document
+formatting:@: environment switches have immediate effect.  One could
+always write a macro to change as many formatting parameters as desired
+with a single convenient call.  But because diversions can be nested and
+macros called by traps that are sprung by other trap-called macros, they
+may be called upon in varying contexts.  For example, consider a page
+header that is always to be set in Helvetica.  A document that uses
+Times for most of its body text, but Courier for displayed code
+examples, poses a challenge if a page break occurs in the middle of a
+code display; if the header trap assumes that the ``previous font'' is
+always Times, the rest of the example will be formatted in the wrong
+typeface.  One could carefully save all formatting parameters upon
+entering the trap and restore them upon leaving it, but this is verbose,
+error-prone, and not future-proof as the @code{groff} language develops.
+Environments save us considerable effort.
+
+@c =====================================================================
+
+@node Traps, Diversions, Deferring Output, gtroff Reference
 @section Traps
 @cindex traps
 
