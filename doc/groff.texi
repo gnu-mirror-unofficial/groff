@@ -13682,23 +13682,13 @@ called.
 
 @dfn{Vertical position traps} perform an action when GNU @code{troff}
 reaches or passes a certain vertical location on the output page or in a
-diversion.  They have a variety of purposes.
-
-@itemize
-@item
-setting headers and footers
-
-@item
-setting body text in multiple columns
-
-@item
-setting footnotes
-@end itemize
+diversion.  Their applications include setting page headers and footers,
+body text in multiple columns, and footnotes.
 
 @noindent
 The location parameter used in vertical position traps has a default
-scaling indicator of @samp{v}, and its value is rounded to be multiples
-of the vertical resolution (as given in register @code{.V}).
+scaling unit of @samp{v}, and its value is rounded to a multiple of the
+vertical resolution (found in the register @code{.V}).
 
 @DefreqList {vpt, [@Var{flag}]}
 @DefregListEndx {.vpt}
