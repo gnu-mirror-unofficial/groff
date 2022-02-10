@@ -14595,9 +14595,6 @@ of lines are not preserved, but glyph information (font, type size,
 space width, and so on) is retained.
 @endDefreq
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
@@ -14605,21 +14602,29 @@ space width, and so on) is retained.
 @section Environments
 @cindex environments
 
-It happens frequently that some text should be printed in a certain
-format regardless of what may be in effect at the time.  For example,
-headers and footers are typically rendered by macros called by traps,
-and their text should be set in a consistent style and size regardless
-of how the body text is being rendered at that time.  To address this
-need, @code{roff} systems process text in an @dfn{environment} which
-stores most of the parameters that control text processing.  It is
-possible to create new environments and switch among them; the default
-is named @samp{0} (zero).  The following is the information kept in an
-environment.
+As discussed in @ref{Deferring Output}, environments store most of the
+parameters that control text processing.  A default environment named
+@samp{0} exists when GNU @code{troff} starts up; it is modified by
+formatting-related requests and escape sequences.
+
+@cindex stack
+You can create new environments and switch among them.  Only one is
+active at any given time.  Environments are managed using a @dfn{stack},
+a data structure supporting ``push'' and ``pop''
+operations.  The current environment is at the top of the
+stack.@footnote{In a stack as strictly defined, only the ``top''
+item---the one most recently pushed---is accessible.  In @code{roff}
+systems, switching to an environment with an existing name moves it from
+its place in the stack to the top.  Further, when environments are
+popped, they are not lost; in fact, there is no mechanism for deleting
+environments.}
+
+Environments store the following information.
 
 @itemize @bullet
 @item
-font parameters (size, family, style, glyph height and slant, space and
-inter-sentence space size)
+font parameters (size, family, style, glyph height and slant, inter-word
+and and inter-sentence space sizes)
 
 @item
 page parameters (line length, title length, vertical spacing, line
@@ -14640,7 +14645,7 @@ partially collected lines
 input traps
 
 @item
-drawing and fill colours
+stroke and fill colors
 @end itemize
 
 @DefreqList {ev, [@Var{ident}]}
@@ -14649,18 +14654,16 @@ drawing and fill colours
 @cindex environment, switching (@code{ev})
 @cindex environment number/name register (@code{.ev})
 Enter the environment @var{ident}, which is created if it does not
-already exist.  With no argument, GNU @code{troff} switches back to the
-previous environment.  The read-only string-valued register @code{.ev}
-contains the name of the current environment.
+already exist.  With no argument, GNU @code{troff} switches to the
+previous environment.
 
-A call to @code{ev} (with argument) pushes the previously active
-environment onto a stack.  If, say, environments @samp{foo},
-@samp{bar}, and @samp{zap} are entered (in that order), the first
-@code{ev} request without parameter switches back to environment
-@samp{bar} (which is popped off the stack), and a second call switches
-back to environment @samp{foo}.
-
-Here is an example:
+Invoking @code{ev} with an argument puts environment @var{ident} onto
+the top of the environment stack.  (If it isn't already present in the
+stack, this is a proper push.)  Without an argument, @code{ev} pops the
+environment stack, making the previous environment current.  It is an
+error to pop the environment stack with no previous environment
+available.  The read-only string-valued register @code{.ev} contains the
+name of the current environment---the one at the top of the stack.
 
 @Example
 .ev footnote-env
@@ -14676,6 +14679,37 @@ Here is an example:
 \[dg] Note the large, friendly letters.
 .ev
 @endExample
+
+We can familiarize ourselves with stack behavior by wrapping the
+@code{ev} request with a macro that reports the contents of the
+@code{.ev} register to the standard error stream.
+
+@Example
+.de EV
+.  ev \\$1
+.  tm environment is now \\n[.ev]
+..
+.
+.EV foo
+.EV bar
+.EV
+.EV baz
+.EV
+.EV
+.EV
+@endExample
+
+@Example
+    @error{} environment is now foo
+    @error{} environment is now bar
+    @error{} environment is now foo
+    @error{} environment is now baz
+    @error{} environment is now foo
+    @error{} environment is now 0
+    @error{} error: environment stack underflow
+    @error{} environment is now 0
+@endExample
+
 @endDefreq
 
 @Defreq {evc, environment}
@@ -14683,7 +14717,7 @@ Here is an example:
 @cindex environment, copying (@code{evc})
 Copy the contents of @var{environment} to the current environment.
 
-The following environment data are not copied:
+The following environment data are not copied.
 
 @itemize @bullet
 @item
@@ -14695,8 +14729,8 @@ the interruption status of the previous input line (due to use of the
 
 @item
 the count of remaining lines to center, to right-justify, or to
-underline (with or without underlined spaces; these counts are set to
-zero);
+underline (with or without underlined spaces); these counts are set to
+zero;
 
 @item
 the activation status of temporary indentation;
@@ -14724,19 +14758,19 @@ the count of consecutive hyphenated lines (set to zero).
 @cindex skew, of last glyph (@code{.csk})
 @cindex last glyph, dimensions (@code{.w}, @code{.cht}, @code{.cdp}, @code{.csk})
 @cindex glyph, last, dimensions (@code{.w}, @code{.cht}, @code{.cdp}, @code{.csk})
-The @code{\n[.w]} register contains the width of the last glyph added to
-the environment.
+The @code{\n[.w]} register contains the width of the last glyph
+formatted in the environment.
 
-The @code{\n[.cht]} register contains the height of the last glyph added
-to the environment.
+The @code{\n[.cht]} register contains the height of the last glyph
+formatted in the environment.
 
-The @code{\n[.cdp]} register contains the depth of the last glyph added
-to the environment.  It is positive for glyphs extending below the
-baseline.
+The @code{\n[.cdp]} register contains the depth of the last glyph
+formatted in the environment.  It is positive for glyphs extending below
+the baseline.
 
 The @code{\n[.csk]} register contains the @dfn{skew} (how far to the
-right of the glyph's center that @code{gtroff} should place an accent)
-of the last glyph added to the environment.
+right of the glyph's center that GNU @code{troff} should place an
+accent) of the last glyph formatted in the environment.
 @endDefreg
 
 @Defreg {.n}
@@ -14745,8 +14779,11 @@ of the last glyph added to the environment.
 @cindex length of previous line (@code{.n})
 @cindex previous line length (@code{.n})
 The @code{\n[.n]} register contains the length of the previous output
-line in the environment.
+line emitted in the environment.
 @endDefreg
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
