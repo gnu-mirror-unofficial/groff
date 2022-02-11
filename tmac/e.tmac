@@ -327,15 +327,15 @@
 .if (\\n(_w<=\\n($l)&(\\n(?W=0) \
 \{\
 .	\" Compute fudge factor (must be < 1P).
-.	nr _b (\\n(ppp*\\n($vu)/200u
-.	if \\n(_bu>((\\n(bmu-\\n(fmu-((\\n(tpp*\\n($vu)/100u))/2u) \
-.		nr _b (\\n(ppp*\\n($vu)/100u-\n(.Vu
+.	nr _b (\\n(ppp*\\n(tvu)/200u
+.	if \\n(_bu>((\\n(bmu-\\n(fmu-((\\n(tpp*\\n(tvu)/100u))/2u) \
+.		nr _b (\\n(ppp*\\n(tvu)/100u-\n(.Vu
 .	nr _b +\\n(bmu
 .\}
 .nr _B \\n(_bu
 .ch @f
 .wh -\\n(_bu @f
-.nr _b +(\\n(ppp*\\n($vu)/100u \" add 1 paragraph v in case sweep past
+.nr _b +(\\n(ppp*\\n(tvu)/100u \" add 1 paragraph v in case sweep past
 .if \n@>2 .tm @n .p=\\n(.p bm=\\n(bm _b=\\n(_b _B=\\n(_B
 .nr ?f 0			\" reset footnote flag
 .if \\n(?o \
@@ -445,7 +445,7 @@
 .@O \\n(_ou
 .rs
 .\" Move to footer position.
-.sp |\\n(.pu-\\n(fmu-((\\n(tpp*\\n($vu)/100u)
+.sp |\\n(.pu-\\n(fmu-((\\n(tpp*\\n(tvu)/100u)
 .@t $f\"			\" output footer title
 .nr ?h 0
 .bp
@@ -939,7 +939,7 @@
 .ie !"\\$1\\$2"" \
 \{\
 .	sp \\n(ssu 		\" one of them is non-null
-.	ne \\n(.Lv+\\n(.Vu+\\n(psu+((\\n(spp*\\n($vu*\\n(.Lu)/100u)
+.	ne \\n(.Lv+\\n(.Vu+\\n(psu+((\\n(spp*\\n(tvu*\\n(.Lu)/100u)
 .	\" exdent if \\$3 > 0
 .	ie 0\\$3 \
 .		ti -(\\n(siu-\\n(sou)
@@ -1009,7 +1009,7 @@
 .if \n@>4 .tm -- )z << @), .z=\n(.z
 .rr _0
 .if !\\n(?b \
-.	nr dn +(\\n(ppp*\\n($vu)/200u+\\n(zsu
+.	nr dn +(\\n(ppp*\\n(tvu)/200u+\\n(zsu
 .nr dl -\n(.H		\" fudge factor necessary to make it work
 .ie ((\\n(dn+\n(.V)>=\\n(.t):(\\n(?a):((\\n(dl>\\n($l)&(\\n($c>1)) \
 \{\
@@ -1103,7 +1103,7 @@
 .@C 1
 .@F \\n(df
 .if \\n($R .@V
-.vs \\n(.sp*\\n($Vu/100u
+.vs \\n(.sp*\\n(dvu/100u
 .nf
 .if "\\*(|p"F" \
 .	fi			\" set fill mode if "F" parameter
@@ -1483,15 +1483,15 @@
 .de sz			\" *** set point size and vertical spacing
 .ps \\$1
 .if \\n($r .@v
-.vs \\n(.sp*\\n($vu/100u	\" default vs at pointsize + 20%
+.vs \\n(.sp*\\n(tvu/100u	\" default vs at pointsize + 20%
 ..
 .
-.de @v			\" --- possibly set $v from $r
-.if (1i>=240u)&(1p<=\\n($r)&(\\n($r<=4p) .nr $v \\n($r00/1p
+.de @v			\" --- possibly set tv from $r
+.if (1i>=240u)&(1p<=\\n($r)&(\\n($r<=4p) .nr tv \\n($r00/1p
 ..
 .
-.de @V			\" --- possibly set $V from $R
-.if (1i>=240u)&(1p<=\\n($R)&(\\n($R<=4p) .nr $V \\n($R00/1p
+.de @V			\" --- possibly set dv from $R
+.if (1i>=240u)&(1p<=\\n($R)&(\\n($R<=4p) .nr dv \\n($R00/1p
 ..
 .
 .de @E		\" --- store in _F argument to \f for restoring font
@@ -1593,7 +1593,7 @@
 .	xl \\n($lu-\\n(fuu
 .	@F \\n(ff
 .	sz \\n(fp
-.	vs \\n(.sp*\\n($Vu/100u
+.	vs \\n(.sp*\\n(dvu/100u
 .	if !\\n(?f \
 \{\
 .		nr _b +1v	\" allow space for $s
@@ -1612,7 +1612,7 @@
 .		xl \\n($lu-\\n(fuu
 .		@F \\n(ff
 .		sz \\n(fp
-.		vs \\n(.sp*\\n($Vu/100u
+.		vs \\n(.sp*\\n(dvu/100u
 .		if !\\n(?f \
 .			$s
 .		br
@@ -1633,7 +1633,7 @@
 .	xl \\n($lu-\\n(fuu
 .	@F \\n(ff
 .	sz \\n(fp
-.	vs \\n(.sp*\\n($Vu/100u
+.	vs \\n(.sp*\\n(dvu/100u
 .	fi
 \!.(f \\$1
 \!.@N
@@ -1691,11 +1691,11 @@
 .de (d			\" *** begin delayed text
 .am |d )d
 .sp \\n(bsu
-.vs \\n(.sp*\\n($Vu/100u
+.vs \\n(.sp*\\n(dvu/100u
 ..
 .
 .de )d			\" *** end delayed text
-.vs \\n(.sp*\\n($vu/100u
+.vs \\n(.sp*\\n(tvu/100u
 .nr $d +1
 ..
 .
@@ -1766,7 +1766,7 @@
 .br
 .@C 2
 .ls 1
-.vs \\n(.sp*\\n($Vu/100u
+.vs \\n(.sp*\\n(dvu/100u
 .fi
 .in +\\n(piu
 .ds |X x
@@ -1997,8 +1997,14 @@
 .\"		*** PARAMETRIC INITIALIZATIONS ***
 .
 .
-.nr $v \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
-.nr $V \n($v			\" same for displays & footnotes
+.\" In groff 1.23, we keep $v and $V to maintain 30 years of continuity,
+.\" but expose new names `tv` and `dv`, respectively, making it more
+.\" obvious that user alteration of these register values is supported.
+.\" See discussion of `$R` and `$r` below.
+.nr tv \n(.v00+\n(.sp-1/\n(.sp	\" vs as % of ps for .sz request
+.nr dv \n(tv			\" same for displays & footnotes
+.do aln $v tv
+.do aln $V dv
 .nr hm 4v			\" header margin
 .nr tm 7v			\" top margin
 .nr bm 6v			\" bottom margin
@@ -2089,9 +2095,21 @@
 .@R $0\"		\" section depth
 .@R $i\"		\" paragraph base indent
 .@R $p\"		\" numbered paragraph number
-.\" $r and $R are legacy BSD document support, undocumented in groff.
-.@R $r\"		\" ratio of vs to ps (may override $v)
-.@R $R\"		\" same for displays (may override $V)
+.\" [Before groff 1.06] the groff -me macros treated the $r and $R
+.\" number registers in a way that was incompatible with the BSD -me
+.\" macros.  The reason for this was that the approach used by the BSD
+.\" -me macros does not work with low resolution devices such as -TX75
+.\" and -TX100.  However, this caused problems with existing -me
+.\" documents.  In [groff 1.06], the vertical spacing is controlled by
+.\" the $v and $V registers which have the same meaning as $r and $R in
+.\" earlier groff releases.  In addition, if the $r or $R register is
+.\" set to a value that would be correct for the BSD -me macros and a
+.\" low resolution device is not being used, then an appropriate value
+.\" for the $v or $V register is derived from the $r or $R register.
+.\"
+.\" Thirty years later, we rename `$v` to `tv` and `$V` to `dv`.
+.@R $r\"		\" ratio of vs to ps (may override tv)
+.@R $R\"		\" same for displays (may override dv)
 .@R df\"		\" display font: same as surrounding text
 .@R so\"		\" additional section title offset
 .@R fu\"		\" footnote undent

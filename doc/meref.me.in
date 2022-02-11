@@ -684,13 +684,16 @@ of vertical space
 and use a
 vertical spacing
 (distance between text baselines)
+as a percentage of the type size
 of
-.NR ($V .
+.NR (dv
+[120].
 Long quotation pre- and post-space is stored in a dedicated register,
-centered blocks have none,
-and both use the vertical spacing register for
-non-displayed text,
-.NR ($v .
+while centered blocks have none;
+both use the vertical spacing register for
+normal text,
+.NR (tv
+[120].
 .TL
 .b .(l
 .i A
@@ -1005,13 +1008,11 @@ are suppressed.
 Emit index
 .i X
 [\c
-.b x ].
-The index is formatted in the font, size, and so forth
-.\" but not the vertical spacing--$V is used
-in effect at the time
-.b .xp
-is called,
-not those of the entries when they were collected.
+.b x ]
+using the current font style and type size
+with display vertical spacing
+(\c
+.NR (dv ).
 .sh 1 "Columnated Output"
 .TL
 .b .2c
@@ -1068,18 +1069,8 @@ only if necessary.
 Set the type size to
 .i \(+-p
 [10p],
-and the vertical spacing proportionally.
-The vertical spacing as a percentage of the type size
-is stored in
-.NR ($v
-[120].
-The percentage used internally
-by displays and annotations
-is stored in
-.NR ($V
-[120]
-(although this is not used by
-.b .sz ).
+and the vertical spacing proportionally
+(see section \[lq]Displays\[rq] above).
 This size is
 .i not
 persistent beyond most \*(ME macro calls:
@@ -2138,7 +2129,6 @@ and a square \(sq marks \*G extensions.
 \&.$6	M\(dg	pre-section heading depth 6 hook
 \&.$C	M\(dg	post-chapter title heading hook
 \&.$H	M\(dg	page/column heading hook
-\en($V	R\(sq	vertical spacing of displayed text (%)
 \en($c	R	current column number
 \&.$c	M\(dd	output chapter number and title
 \en($d	R	delayed text number
@@ -2153,7 +2143,6 @@ and a square \(sq marks \*G extensions.
 \&.$p	M\(dd	output section heading
 \en($s	R	column spacing (indentation)
 \&.$s	M\(dd	output footnote area separator
-\en($v	R\(sq	vertical spacing of text (%)
 \e%	F\(sc	control hyphenation
 \en%	R\(sc	current page number
 \e&	F\(sc	non-printing input break
@@ -2234,6 +2223,7 @@ and a square \(sq marks \*G extensions.
 \en(df	R	display font
 \&.do	M\(sc\(sq	operate with compatibility mode off
 \&.ds	M\(sc	define string
+\en(dv	R\(sq	vertical spacing of displayed text (%)
 \en(dw	R\(sc	day of the week
 \e*(dw	S	weekday name
 \en(dy	R\(sc	day of the month
@@ -2347,6 +2337,7 @@ and a square \(sq marks \*G extensions.
 \&.tp	M	begin title page
 \en(tp	R	title type size in points
 \&.tr	M\(sc	translate characters
+\en(tv	R\(sq	vertical spacing of text (%)
 \&.u	M	underline argument
 \&.uh	M	begin unnumbered section
 \&.ul	M\(sc	underline output lines

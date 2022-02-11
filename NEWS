@@ -1,4 +1,4 @@
-    Copyright (C) 1992-2021 Free Software Foundation, Inc.
+    Copyright (C) 1992-2022 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
@@ -269,6 +269,13 @@ o The e (me) macro package now has a register `sx` that eases the
   super/subscripting is used.  It defaults to 0.2m, the value used
   literally in past definitions of the super/subscripting strings.
   groff's own 'me' documents redefine it to zero.
+
+o The e (me) macro package's `$v` and `$V` registers have been renamed
+  to `tv` and `dv`--they control the vertical spacing used
+  for text and displays/annotations, respectively.  The old names are
+  still supported as aliases.  The new names reflect the fact that users
+  are expected to set them if desired, unlike other registers and
+  strings beginning with "$".
 
 o The m (mm) macro package now requires a title to be declared when
   memorandum type 5 is used (".MT 5"), just as type 4 has since groff
