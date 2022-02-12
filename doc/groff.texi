@@ -8546,9 +8546,9 @@ in line-tabs mode, the same code outputs
 a         b                   c
 @endExample
 
-Line-tabs mode is associated with the environment.  The read-only
-register @code{.linetabs} is set to@tie{}1 if in line-tabs mode, and 0
-in normal mode.
+Line-tabs mode is associated with the environment
+(@pxref{Environments}).  The read-only register @code{.linetabs} is
+set to@tie{}1 if in line-tabs mode, and 0 in normal mode.
 @endDefreq
 
 @menu
@@ -14654,7 +14654,8 @@ stroke and fill colors
 @cindex environment, switching (@code{ev})
 @cindex environment number/name register (@code{.ev})
 Enter the environment @var{ident}, which is created if it does not
-already exist.  With no argument, GNU @code{troff} switches to the
+already exist, using the same parameters as for the default environment
+used at start-up.  With no argument, GNU @code{troff} switches to the
 previous environment.
 
 Invoking @code{ev} with an argument puts environment @var{ident} onto
