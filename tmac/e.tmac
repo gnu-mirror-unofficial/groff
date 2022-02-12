@@ -1547,13 +1547,21 @@
 ..
 .
 .de u			\" *** enter underlined word
-\&\\$1\l'|0\(ul'\\$2
+.\" If the first argument would break, then (in troff mode), this
+.\" underlines only the words appearing only the last output line, with
+.\" the underline extending all the way into the left margin.
+.ie t \\$1\l'|0\(ul'\\$2
+.el \(ul\\$1\(ul\\$2
 ..
 .
-.\" a better version of u
+.\" This alternative version of the `u` macro uses the groff \Z
+.\" extension to get the underlining to accurately fit under the words
+.\" at the expense of no longer adjusting them.  If the first argument
+.\" would break, the output line is overset.
 .if !\n(.g .ig
 .de u
-\Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
+.ie t .do nop \Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
+.el \(ul\\$1\(ul\\$2
 ..
 .
 .de q			\" *** enter quoted word

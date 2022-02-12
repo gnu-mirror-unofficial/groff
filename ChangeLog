@@ -1,5 +1,21 @@
 2022-02-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Add nroff mode fallback for `u` macro.
+
+	* tmac/e.tmac (u): On nroff devices, bracket the first argument
+	with \(ul (underline rule) special character escape sequences.
+	{In plain language, '.u "like this"' renders "_like this_".}
+
+	I regard this as a cosmetic and semantic improvement; since the
+	quarter-em vertical motions used in troff mode were ignored in
+	nroff mode, the effect was not underlining but a sort of
+	strike-through, visible only at spaces in the argument.  The use
+	of this macro was thus invisible in nroff output if no spaces
+	were present in the argument.  This is probably the best we can
+	do without a fatter interface to terminal device capabilities.
+
+2022-02-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[me]: Simulate boxed text support on nroff devices with ISO 6429
 	color escape sequences.
 
