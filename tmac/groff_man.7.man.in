@@ -6,7 +6,7 @@ GBR's opinion this maxim has limits.
 
 Consider this ghastly example:
 
-If no scaling indicator is given,
+If no scaling unit is given,
 the
 .I man
 package assumes \(lqn\(rq\c
@@ -16,7 +16,7 @@ the width of a letter \(lqn\(rq in the font current when the macro is
 called
 (see section \(lqNumerical Expressions\(rq in
 .MR groff @MAN7EXT@ )\c
-_endif
+_endif()dnl
 \&.
 
 These man pages serve multiple goals, one of which is to serve as a
@@ -1788,9 +1788,9 @@ argument accepted by
 .BR .TP ,
 and the deprecated
 .B .HP
-is a number plus an optional scaling indicator.
+is a number plus an optional scaling unit.
 .
-If no scaling indicator is given,
+If no scaling unit is given,
 the
 .I man
 _ifstyle()dnl
@@ -1868,8 +1868,7 @@ are indented 3n
 .B \-rSN
 option).
 .
-However,
-the HTML output device ignores indentation completely.
+The HTML output device ignores indentation completely.
 _ifstyle()dnl
 .
 .
@@ -2046,16 +2045,16 @@ _ifnotstyle()dnl
 and 0.4v for typesetter devices.
 _endif()dnl
 .
+(The deprecated macro
+.B .PD
+can change this vertical spacing,
+but its use is discouraged.)
+.
 In
 .BR .EX / .EE
 sections,
 the inter-paragraph spacing is 1v regardless of output
 device.
-.
-(The deprecated macro
-.B .PD
-can change this vertical spacing,
-but its use is discouraged.)
 .
 The macros
 .BR .RS ,
@@ -2125,7 +2124,7 @@ respectively.
 .
 .TP
 .B \e*(Tm
-interpolate special character escape sequences for the \(lqtrade mark
+interpolates a special character escape sequence for the \(lqtrade mark
 sign\(rq glyph,
 .BR \e(tm ,
 if available,
@@ -2228,6 +2227,24 @@ _ifstyle()dnl
 .SS Portability
 .\" ====================================================================
 .
+It is wise to quote multi-word section and subsection titles;
+the
+.B .SH
+and
+.B .SS
+macros of
+.MR man 7
+implementations descended from Seventh Edition Unix supported six
+arguments at most.
+.
+A similar restriction applied to the
+.BR .B ,
+.BR .I ,
+.BR .SM ,
+and font style alternation macros.
+.
+.
+.P
 The two major syntactical categories of
 .I roff
 languages are requests and escape sequences.
@@ -2267,7 +2284,7 @@ or presented incomprehensibly.
 .
 .P
 For portability to modern viewers,
-it is best to write your page entirely with the macros described in this
+it is best to write your page solely with the macros described in this
 page
 (except for the ones identified as deprecated,
 which should be avoided).
@@ -2636,10 +2653,9 @@ see below.
 .
 Using
 .B \ec
-to `include' the output from more than one input line into the next-line
-argument of a
+to continue a
 .B .TP
-macro will render incorrectly with
+paragraph tag across multiple input lines will render incorrectly with
 .I groff
 1.22.3,
 .I mandoc
@@ -2802,8 +2818,7 @@ overriding any definition of the
 argument to
 .BR .TH .
 .
-This macro exists only for compatibility,
-to render man pages from historical systems.
+This macro exists only to render man pages from historical systems.
 .
 .
 .IP
@@ -2841,12 +2856,13 @@ such as in \(lqSystem\~V Release\~3\(rq.
 .
 .TP
 .B .DT
-Set tab stops every 0.5i (inches).
-.
-Since this macro is called by
-.BR .TH ,
-it would make sense to call it only if a man page changes the tab stops.
-.
+Reset tab stops to the default
+_ifnotstyle()dnl
+(every 0.5i).
+_endif()dnl
+_ifstyle()dnl
+(every 0.5i [inches]).
+_endif()dnl
 .
 .IP
 Use of this presentation-level macro is deprecated.
@@ -2856,14 +2872,14 @@ under which exact space control and tabulation are not readily
 available.
 .
 Thus,
-information or distinctions that you use
-.B .DT
-to express are likely to be lost.
+information or distinctions that you use tab stops to express are likely
+to be lost.
 .
-If you feel tempted to use it,
+If you feel tempted to change the tab stops such that calling this macro
+becomes desirable,
 you should probably be composing a table using
 .MR @g@tbl @MAN1EXT@
-markup instead.
+instead.
 .
 .
 .TP
@@ -2937,7 +2953,7 @@ Define the vertical space between paragraphs or (sub)sections.
 The optional argument
 .I vertical-space
 specifies the amount;
-the default scaling indicator is \(lqv\(rq.
+the default scaling unit is \(lqv\(rq.
 .
 Without an argument,
 the spacing is reset to its default value;
@@ -2966,8 +2982,7 @@ overriding any definition of the
 argument to
 .BR .TH .
 .
-This macro exists only for compatibility,
-to render man pages from historical systems.
+This macro exists only to render man pages from historical systems.
 .
 .
 .IP
@@ -3103,6 +3118,10 @@ recognized and used by the
 .I man
 macro package.
 .
+To ensure rendering consistent with output device capabilities and
+reader preferences,
+man pages should never manipulate them.
+.
 .
 .TP
 .BI \-dAD= adjustment-mode
@@ -3143,10 +3162,11 @@ device.
 .B \-rcR=1
 Enable continuous rendering.
 .
-Do not paginate the output;
-produce one
+Output is not paginated;
+instead,
+one
 (potentially very long)
-output page.
+page is produced.
 .
 This is the default for terminal and HTML devices.
 .
@@ -3166,9 +3186,8 @@ document.
 .
 .TP
 .B \-rCS=1
-Capitalize section headings.
-.
-Set section headings
+Capitalize section headings,
+setting section headings
 (the argument(s) to
 .BR .SH )
 in full capitals.
@@ -3179,9 +3198,8 @@ distinction information.
 .
 .TP
 .B \-rCT=1
-Capitalize titles.
-.
-Set the man page title
+Capitalize titles,
+setting the man page title
 (the first argument to
 .BR .TH )
 in full capitals in headers and footers.
@@ -3192,9 +3210,8 @@ distinction information.
 .
 .TP
 .B \-rD1
-Enable double-sided layout.
-.
-Format footers for even and odd pages differently;
+Enable double-sided layout,
+formatting footers for even and odd pages differently;
 see the description of
 .B .TH
 in subsection \(lqDocument structure macros\(rq above.
@@ -3216,10 +3233,10 @@ The default is \-0.5i.
 .
 .TP
 .BI \-dHF= heading-font
-See the font used for section and subsection headings;
+Set the font used for section and subsection headings;
 the default is
 .RB \(lq B \(rq
-(bold).
+(bold style of the default family).
 .
 Any valid argument to
 .IR groff 's
@@ -3306,7 +3323,7 @@ and
 calls;
 the default is
 .RB \(lq I \(rq
-(italic).
+(italic style of the default family).
 .
 Any valid argument to
 .IR groff 's
@@ -3737,7 +3754,7 @@ values.
 .TP
 .RB \(bu " .RE" " doesn't move the inset back to the expected level."
 .TQ
-\(bu warning: scaling indicator invalid in context
+\(bu warning: scaling unit invalid in context
 .TQ
 \(bu warning: register \(aqan\-saved\-margin\c
 .IR n "\(aq not defined"
