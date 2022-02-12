@@ -784,7 +784,7 @@
 ..
 .
 .de np			\" *** numbered paragraph
-.\" use string comparison in case user has changed format of $p
+.\" use output comparison in case user has changed format of $p
 .if '\\n($p'-1' \
 .	nr $p 0			\" reset number after .bu
 .nr $p +1			\" increment paragraph number
@@ -795,7 +795,7 @@
 .
 .de bu			\" *** bulleted paragraph
 .br
-.\" use string comparison in case user has changed format of $p
+.\" use output comparison in case user has changed format of $p
 .if '\\n($p'-1' \
 .	ns			\" don't space between .bu paragraphs
 .nr $p 0-1			\" mark "bulleted paragraph" mode
