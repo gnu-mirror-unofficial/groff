@@ -460,7 +460,7 @@ static int parse_term(units *v, int scaling_indicator,
 	scaling_indicator = c;
       }
       else {
-	error("expected ';' after scaling indicator (got %1)",
+	error("expected ';' after scaling unit (got %1)",
 	      tok.description());
 	return 0;
       }
@@ -553,11 +553,11 @@ static int parse_term(units *v, int scaling_indicator,
   if ((c = tok.ch()) != 0 && strchr(SCALE_INDICATOR_CHARS, c) != 0) {
     switch (scaling_indicator) {
     case 0:
-      warning(WARN_SCALE, "scaling indicator invalid in context");
+      warning(WARN_SCALE, "scaling unit invalid in context");
       break;
     case 'z':
       if (c != 'u' && c != 'z') {
-	warning(WARN_SCALE, "'%1' scaling indicator invalid in context;"
+	warning(WARN_SCALE, "'%1' scaling unit invalid in context;"
 		" convert to 'z' or 'u'", c);
 	break;
       }
@@ -568,7 +568,7 @@ static int parse_term(units *v, int scaling_indicator,
       break;
     default:
       if (c == 'z') {
-	warning(WARN_SCALE, "'z' scaling indicator invalid in context");
+	warning(WARN_SCALE, "'z' scaling unit invalid in context");
 	break;
       }
       si = c;

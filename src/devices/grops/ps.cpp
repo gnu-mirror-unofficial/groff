@@ -1693,7 +1693,7 @@ void ps_printer::do_import(char *arg, const environment *env)
     p = end;
   }
   if (csalpha(*p) && (p[1] == '\0' || p[1] == ' ' || p[1] == '\n')) {
-    error("scaling indicators not allowed in arguments for X import command");
+    error("scaling units not allowed in arguments for X import command");
     return;
   }
   while (*p == ' ' || *p == '\n')

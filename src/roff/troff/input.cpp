@@ -6893,7 +6893,7 @@ void warnscale_request()
       warn_scale = (double)units_per_inch / 6.0;
     else {
       warning(WARN_SCALE,
-	      "invalid scaling indicator '%1', using 'i' instead", c);
+	      "scaling unit '%1' invalid; using 'i' instead", c);
       c = 'i';
     }
     warn_scaling_indicator = c;
