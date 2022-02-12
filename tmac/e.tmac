@@ -1561,8 +1561,17 @@
 ..
 .
 .de bx			\" *** enter boxed word
-.ie '\*(.T'html' \\$1\\$2
-.el \k~\(br\|\\$1\|\(br\l'|\\n~u\(rn'\l'|\\n~u\(ul'\^\\$2
+.ie t \
+\{\
+.	ie '\\*(.T'html' \\$1\\$2
+.	el \k~\(br\|\\$1\|\(br\l'|\\n~u\(rn'\l'|\\n~u\(ul'\^\\$2
+.\}
+.el \
+\{\
+.	ie \\n(.g .do nop \m[black]\M[white]\Z'\\$1'\h'\w'\\$1'u'\
+\m[]\M[]\\$2
+.	el |\\$1|\\$2
+.\}
 ..
 .
 .de sm			\" *** print in smaller font

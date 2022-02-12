@@ -1,5 +1,17 @@
 2022-02-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[me]: Simulate boxed text support on nroff devices with ISO 6429
+	color escape sequences.
+
+	* tmac/e.tmac (bx): Do it.  Add further fallback for non-groff
+	formatters in nroff mode, bracketing the boxed argument with '|'
+	glyphs.
+	* doc/meref.me.in: Document it.
+
+	Fixes <https://savannah.gnu.org/bugs/?62038>.
+
+2022-02-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[me]: Rename registers `$v` -> `tv`, `$V` -> `dv`.
 
 	* tmac/e.tmac: Do it.  Also include much commentary (including
