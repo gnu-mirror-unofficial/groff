@@ -1,3 +1,15 @@
+2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/pdfpic.tmac (PDFPIC): Refactor PDFPIC_NOSPACE handling.
+	Stop shelling out to create, and then sourcing, a temporary file
+	just to obtain the value of an environment variable.  groff
+	already has the `\V` escape sequence for that purpose (it's even
+	safe!).  Check that the value of $GROFF_PDFPIC_NOSPACE is a
+	valid numeric expression before assigning it to a register.
+	Trivially, use '=' instead of '==' as an equality operator.
+	*roff languages do not use '=' as an assignment operator, and I
+	believe the '==' synonym to be a sop to C programmers.
+
 2022-02-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Stop attempting to adjust pargraph tag lines.

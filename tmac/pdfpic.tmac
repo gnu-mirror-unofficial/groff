@@ -221,11 +221,11 @@ skipping
 \X'pdf: pdfpic \\$1 -L \\n[pdfpic*desired-width]z \
 \\n[pdfpic*desired-height]z'
 .  if !r PDFPIC_NOSPACE \{\
-.    sy echo ".nr PDFPIC_NOSPACE 0$GROFF_PDFPIC_NOSPACE" > /tmp/x\n[$$]
-.    so /tmp/x\n[$$]
-.    sy rm /tmp/x\n[$$]
+.    nr PDFPIC_NOSPACE 0
+.    if \B'\\V[GROFF_PDFPIC_NOSPACE]' \
+.      nr PDFPIC_NOSPACE \\V[GROFF_PDFPIC_NOSPACE]
 .  \}
-.  if \\n[PDFPIC_NOSPACE]==0 \{\
+.  if \\n[PDFPIC_NOSPACE]=0 \{\
 .    br
 .    sp \\n[pdfpic*desired-height]u
 .  \}
