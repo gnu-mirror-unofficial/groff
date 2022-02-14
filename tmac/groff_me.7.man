@@ -454,11 +454,23 @@ wc	term for \(lqchapter\(rq used by \fB.$c*
 .SH Files
 .\" ====================================================================
 .
-.I @MACRODIR@/me.tmac
-(a wrapper for
-.IR e.tmac )
-.br
+.TP
 .I @MACRODIR@/e.tmac
+implements the package.
+.
+.
+.TP
+.I @MACRODIR@/refer\-me.tmac
+implements
+.MR @g@refer @MAN1EXT@
+support for
+.IR me .
+.
+.
+.TP
+.I @MACRODIR@/me.tmac
+is a wrapper enabling the package to be loaded with
+.RB \[lq] "groff \-m me" \[rq].
 .
 .
 .\" ====================================================================

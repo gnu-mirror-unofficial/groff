@@ -832,19 +832,22 @@ is a PostScript LanguageLevel\~2 command and thus not available on some
 older printers.
 .
 .
-.LP
-.B grops
-understands various X\~commands produced using the
+.P
+.I grops
+recognizes
+.BR X \~commands
+produced by the
 .B \[rs]X
-escape sequence;
-.B grops
-only interprets commands that begin with a
+escape sequence,
+but interprets only those that begin with a
 .B ps:
 tag.
 .
+.
 .TP
 .BI "\[rs]X\[aq]ps: exec\~" code \[aq]
-This executes the arbitrary PostScript commands in
+.RS
+Execute the arbitrary PostScript commands
 .IR code .
 .
 The PostScript currentpoint is set to the position of the
@@ -869,14 +872,12 @@ basic units to the coordinate system in effect
 For example,
 .
 .RS
-.IP
 .EX
 \&.nr x 1i
 \[rs]X\[aq]ps: exec \[rs]nx u 0 rlineto stroke\[aq]
 .EE
 .RE
 .
-.IP
 draws a horizontal line one inch long.
 .
 .I code
@@ -887,13 +888,13 @@ A dictionary containing the definitions specified by the
 .B def
 and
 .B mdef
-is on top of the dictionary stack.
+commands is on top of the dictionary stack.
 .
 If your code adds definitions to this dictionary,
 you should allocate space for them using
-.BI "\[rs]X\[aq]ps mdef\~" n \[aq]\c
-\&.
-.
+.RB \[lq] "\[rs]X\[aq]ps: mdef\~"
+.IB n \[aq]\c
+\[rq].
 .
 Any definitions persist only until the end of the page.
 .
@@ -905,9 +906,7 @@ can extend over multiple lines.
 .
 For example,
 .
-.
 .RS
-.IP
 .EX
 \&.nr x 1i
 \&.de y
@@ -917,9 +916,8 @@ For example,
 \&..
 \&\[rs]Yy
 .EE
+.RE
 .
-.
-.LP
 is another way to draw a horizontal line one inch long.
 .
 The single backslash before
@@ -935,19 +933,22 @@ basic units which are in turn converted to PostScript units with the
 procedure.
 .
 .
-.LP
-.B grops
-wraps user-specified PostScript code into a dictionary, nothing more.
+.P
+.I grops
+wraps user-specified PostScript code into a dictionary,
+nothing more.
 .
-In particular, it doesn't start and end the inserted code with
+In particular,
+it doesn't start and end the inserted code with
 .B save
 and
 .BR restore ,
 respectively.
 .
-This must be supplied by the user, if necessary.
-.
+This must be supplied by the user,
+if necessary.
 .RE
+.
 .
 .TP
 .BI "\[rs]X\[aq]ps: file\~" name \[aq]
@@ -1483,24 +1484,42 @@ these old font descriptions are also installed in the
 directory.
 .
 .
-.LP
+.P
 To use them,
 make sure that
 .I grops
-finds the fonts before the default system fonts (with the same names):
-Either add command-line option
-.B \-F
-to
+finds the fonts before the default system fonts
+(with the same names):
+either give
 .I grops
+the
+.B \-F
+command-line option,
 .
-.IP
-.B groff \-Tps \-P\-F \-P@OLDFONTDIR@ .\|.\|.
+.RS
+.EX
+$ \c
+.B groff \-Tps \-P\-F \-P@OLDFONTDIR@ \c
+\&.\|.\|.
+.EE
+.RE
 .
-.LP
-or add the directory to groff's font path environment variable
+or add the directory to
+.IR groff 's
+font and device description search path environment variable,
 .
-.IP
-.B GROFF_FONT_PATH=@OLDFONTDIR@
+.RS
+.EX
+$ \c
+.B GROFF_FONT_PATH=\:@OLDFONTDIR@ \[rs]
+.RS
+.B groff \-Tps \c
+\&.\|.\|.
+.RE
+.EE
+.RE
+.
+when the command runs.
 .
 .
 .\" ====================================================================
