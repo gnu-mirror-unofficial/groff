@@ -1,5 +1,22 @@
 2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/pdfpic.tmac: Search for temporary directories as groff(1)
+	does, instead of going straight to /tmp.
+	(pdfpic@get-temporary-directory): New function checks each of
+	its arguments for validity as a temporary directory; if one is
+	found, its name is left in `pdfpic*temporary-directory`.
+	(pdfpic@cleanup): Remove strings `pdfpic*temporary-directory`
+	and `pdfpic*temporary-file`.
+	(PDFPIC): Call `pdfpic@get-temporary-directory`, using the
+	contents of the environment variables $GROFF_TMPDIR and $TMPDIR,
+	and then /tmp, in that order.  Store the temporary file name in
+	string `pdfpic*temporary-file`.  Use this string in subsequent
+	`sy` and `so` requests.
+
+	Fixes <https://savannah.gnu.org/bugs/?62055> for Unix systems.
+
+2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tests]: Add test for PDFPIC fallback to PSPIC.
 
 	* tmac/tests/pdfpic_falls_back_to_PSPIC.sh: Do it.

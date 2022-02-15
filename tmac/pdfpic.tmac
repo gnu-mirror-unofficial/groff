@@ -15,6 +15,21 @@
 .do nr *groff_pdfpic_tmac_C \n[.cp]
 .cp 0
 .
+.\" Locate a directory to house temporary files.  Check each argument
+.\" in turn, confirming its existence, writability, and searchability.
+.\"
+.\" `pdfpic*temporary-directory` contains its name if one is found, and
+.\" is empty otherwise.
+.de pdfpic@get-temporary-directory
+.  ds pdfpic*temporary-directory \" empty
+.  while !'\\$1'' \{\
+.    sy test -d \\$1 && test -w \\$1 && test -x \\$1
+.    if \\n[systat]=0 .ds pdfpic*temporary-directory \\$1
+.    ie '\\*[pdfpic*temporary-directory]'' .shift
+.    el                                    .break
+.  \}
+..
+.
 .\" A user may wish to append an 'ab' to this macro using 'am'.  That
 .\" is why we don't 'return X' from here to return from two scopes.
 .de pdfpic@error
@@ -25,6 +40,8 @@
 .  rm pdfpic*pspic-args
 .  rm pdfpic*file-extension
 .  rm pdfpic*file-name-base
+.  rm pdfpic*temporary-directory
+.  rm pdfpic*temporary-file
 .  rr pdfpic*do-conversion
 .  rr pdfpic*offset-mode
 .  rr pdfpic*indentation
@@ -118,6 +135,14 @@
 .    return
 .  \}
 .
+.  pdfpic@get-temporary-directory \\V[GROFF_TMPDIR] \\V[TMPDIR] /tmp
+.  if 'pdfpic*temporary-directory'' \{\
+.    pdfpic@error cannot locate a usable temporary directory; \
+skipping '\\$1'
+.    return
+.  \}
+.  ds pdfpic*temporary-file \\*[pdfpic*temporary-directory]/pdfpic\n[$$]
+.
 .  \" Get image dimensions.  The `tr` command to strip null bytes is
 .  \" distasteful, but its necessity is imposed on us.  See
 .  \" <https://gitlab.freedesktop.org/poppler/poppler/-/issues/776>.
@@ -128,15 +153,15 @@ grep "Page *size" | \
 sed -e 's/Page *size: *\\([[:digit:].]*\\) *x *\\([[:digit:].]*\\).*$/\
 .nr pdfpic*width (p;\\1)\\n\
 .nr pdfpic*height  (p;\\2)/' \
-> /tmp/pdfpic\n[$$]
+> @*[pdfpic*temporary-file]
 .  ec
 .  if \\n[systat] \{\
 .    pdfpic@error retrieval of '\\$1' image dimensions failed with \
 exit status \\n[systat]; skipping
 .    return
 .  \}
-.  so /tmp/pdfpic\\n[$$]
-.  sy rm /tmp/pdfpic\\n[$$]
+.  so \\*[pdfpic*temporary-file]
+.  sy rm \\*[pdfpic*temporary-file]
 .
 .  nr pdfpic*did-pdfinfo-work 1
 .  if !r pdfpic*width .nr pdfpic*did-pdfinfo-work 0
