@@ -1,5 +1,17 @@
 2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/pdfpic.tmac: Slightly refactor.
+	(pdfpic@cleanup, PDFPIC): Rename `pdfpic*file-name` to
+	`pdfpic*file-name-base` since it is not used as a complete file
+	name (but rather a basis for an ".eps" extension).
+	(PDFPIC): When testing PDF file extension, include the "."; a
+	file name like "mxyzptlkpdf" is too dubious to accept.  Also
+	explicitly compare `systat` register as equal or not equal to
+	zero, since its truth value is inverted from the expectations of
+	*roff expressions.
+
+2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/pdfpic.tmac (PDFPIC): Refactor PDFPIC_NOSPACE handling.
 	Stop shelling out to create, and then sourcing, a temporary file
 	just to obtain the value of an environment variable.  groff

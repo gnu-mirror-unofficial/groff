@@ -24,7 +24,7 @@
 .de pdfpic@cleanup
 .  rm pdfpic*pspic-args
 .  rm pdfpic*file-extension
-.  rm pdfpic*file-name
+.  rm pdfpic*file-name-base
 .  rr pdfpic*do-conversion
 .  rr pdfpic*offset-mode
 .  rr pdfpic*indentation
@@ -86,9 +86,9 @@
 .  br
 .
 .  ds pdfpic*file-extension \\$1\"
-.  substring pdfpic*file-extension -3
+.  substring pdfpic*file-extension -4
 .  stringdown pdfpic*file-extension
-.  if !'\\*[pdfpic*file-extension]'pdf' \{\
+.  if !'\\*[pdfpic*file-extension]'.pdf' \{\
 .    pdfpic@error '\\$1' lacks a '.pdf' extension; skipping
 .    return
 .  \}
@@ -99,15 +99,15 @@
 .  \" attack (or a simple race with a concurrent `rm` command, for
 .  \" instance).
 .  sy test -r \\$1
-.  if \\n[systat] \{\
+.  if \\n[systat]!=0 \{\
 .    pdfpic@error '\\$1' does not exist or is not readable; skipping
 .    return
 .  \}
 .
 .  \" if driver is not gropdf, convert image to .eps
 .  if \\n[pdfpic*do-conversion] \{\
-.    ds pdfpic*file-name \\$1
-.    substring pdfpic*file-name 0 -5
+.    ds pdfpic*file-name-base \\$1
+.    substring pdfpic*file-name-base 0 -5
 .
 .    sy pdftops -eps \\$1
 .    shift
