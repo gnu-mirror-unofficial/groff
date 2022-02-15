@@ -135,7 +135,25 @@
 .    return
 .  \}
 .
-.  pdfpic@get-temporary-directory \\V[GROFF_TMPDIR] \\V[TMPDIR] /tmp
+.  pdfpic@get-temporary-directory \\V[GROFF_TMPDIR] \\V[TMPDIR]
+.
+.  if 'pdfpic*temporary-directory'' \{\
+.    \" Figure out if we're on a Windows system (with a Unix shell).
+.    nr pdfpic*is-on-windows 0
+.
+.    sy expr $(uname -s) : "CYGWIN.*" > /dev/null
+.    if \\n[systat]=0 .nr pdfpic*is-on-windows 1
+.    sy expr $(uname -s) : "MINGW.*" > /dev/null
+.    if \\n[systat]=0 .nr pdfpic*is-on-windows 1
+.
+.    if \\n[pdfpic*is-on-windows] \
+.      pdfpic@get-temporary-directory \\V[TEMP] \\V[TMP]
+.
+.    rr pdfpic*is-on-windows
+.  \}
+.
+.  if 'pdfpic*temporary-directory'' .pdfpic@get-temporary-directory /tmp
+.
 .  if 'pdfpic*temporary-directory'' \{\
 .    pdfpic@error cannot locate a usable temporary directory; \
 skipping '\\$1'
