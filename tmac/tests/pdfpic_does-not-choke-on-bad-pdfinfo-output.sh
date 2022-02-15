@@ -38,15 +38,13 @@ fi
 
 fail=
 
-input='
-.am pdfpic@error
+input='.am pdfpic@error
 .  ab
 ..
 Here is a picture of a wildebeest.
-.PDFPIC '"$gnu_pdf"'
-'
+.PDFPIC '"$gnu_pdf"
 
-if ! gs -o - -sDEVICE=pdfwrite -f "$gnu_eps" \
+if ! gs -q -o - -sDEVICE=pdfwrite -f "$gnu_eps" \
     -c "[ /Title (\000B\000U\000S\000T\000E\000D) /DOCINFO pdfmark" \
     > "$gnu_pdf"
 then

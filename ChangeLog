@@ -1,5 +1,14 @@
 2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tests]: Tweak PDFPIC test input.
+
+	* tmac/tests/pdfpic_does-not-choke-on-bad-pdfinfo-output.sh:
+	Eliminate unnecessary blank lines from input.  Also call gs(1)
+	with '-q' in addition to '-o'.  (Why does the latter not imply
+	the former?!)  Thanks to Deri James for the advice.
+
+2022-02-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/pdfpic.tmac: Slightly refactor.
 	(pdfpic@cleanup, PDFPIC): Rename `pdfpic*file-name` to
 	`pdfpic*file-name-base` since it is not used as a complete file
