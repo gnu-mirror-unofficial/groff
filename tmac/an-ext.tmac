@@ -212,16 +212,15 @@
 .
 .\" Set a man page cross reference.
 .\" .MR page-title page-section [trailing-text]
-.if !\n(.g \{\
-.  de MR
-.    nh
-.    ie \\n(.$=1 \
-.      I \\$1
-.    el \
-.      IR \\$1 (\\$2)\\$3
-.    hy \\n(HY
+.if \n(.g .ig
+.de MR
+.  nh
+.  ie \\n(.$=1 \
+.    I \\$1
+.  el \
+.    IR \\$1 (\\$2)\\$3
+.  hy \\n(HY
 ..
-.\}
 .
 .
 .\" Continuation line for .TP header.
