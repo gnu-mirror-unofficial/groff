@@ -447,6 +447,8 @@ void tty_printer::special(char *arg, const environment *env, char type)
   }
   if (strncmp(command, "link", p - command) == 0)
     special_link(p, env);
+  else
+    warning("unrecognized X command '%1' ignored", command);
 }
 
 // Produce an OSC 8 hyperlink.  Given ditroff input of the form:
