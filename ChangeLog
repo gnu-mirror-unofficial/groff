@@ -1,5 +1,15 @@
 2022-02-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an-ext.tmac: Slightly refactor.  Stop using groff's `HY`
+	register to restore the hyphenation mode, since I plan to change
+	its semantics to a Boolean value (see Savannah #61734).
+	Introduce new register `mJ` to store "1" (if not groff) and the
+	current hyphenation mode otherwise.  Explain why in a comment.
+	(YS, UE, ME, MR): Restore hyphenation mode using `mJ` insted of
+	`HY`.
+
+2022-02-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-ext.tmac: Trivially refactor.  Use a better idiom
 	{seen in James Clark's changes to BSD me(7)} for conditionally
 	defining a (simple) macro.

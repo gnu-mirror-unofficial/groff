@@ -27,6 +27,14 @@
 .if \n(mX>1 \
 .  nx
 .
+.\" In AT&T troff, there was no register exposing the hyphenation mode,
+.\" and no way to save and restore it.  Set this to a reasonable value
+.\" for your implementation and preference.
+.ie !\n(.g \
+.  nr mJ 1
+.el \
+.  do nr mJ \n[.hy]
+.
 .\" Check if we're using grohtml or grotty, and therefore support URIs.
 .nr mH 0
 .nr mY 0
@@ -62,8 +70,6 @@
 .el \{\
 .  ds mL <\"
 .  ds mR >\"
-.  \" groff's man macros control hyphenation with this register.
-.  nr HY 1
 .\}
 .
 .nr mS 0
@@ -93,7 +99,7 @@
 .de YS
 .  in \\n(mIu
 .  ad \\n(mA
-.  hy \\n(HY
+.  hy \\n(mJ
 .  nr mS 0
 ..
 .
@@ -148,7 +154,7 @@
 .    do shift
 .    ie \n(.g .if \n(.$ \&\\$*\"
 .    el .if \n(.$>1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
-.    hy \\n(HY
+.    hy \\n(mJ
 .  \}
 . rr mD
 ..
@@ -204,7 +210,7 @@
 .    do shift
 .    ie \n(.g .if \n(.$ \&\\$*\"
 .    el .if \n(.$>1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9\"
-.    hy \\n(HY
+.    hy \\n(mJ
 .  \}
 . rr mD
 ..
@@ -219,7 +225,7 @@
 .    I \\$1
 .  el \
 .    IR \\$1 (\\$2)\\$3
-.  hy \\n(HY
+.  hy \\n(mJ
 ..
 .
 .
