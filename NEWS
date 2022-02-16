@@ -354,6 +354,12 @@ o On the Latin-1 output device ("groff -T latin1") the special character
   sequences like `this' in the input (character remapping with 'char'
   requests and similar notwithstanding).
 
+o The "sgr" device control command, which dynamically configured support
+  for ISO 6429/EMA-48 SGR escape sequences (and restored traditional
+  overstriking behavior if disabled), has been removed.  It took effect
+  only at page boundaries.  grotty's "-c" command-line option and the
+  GROFF_NO_SGR environment variable remain supported.
+
 Miscellaneous
 -------------
 
