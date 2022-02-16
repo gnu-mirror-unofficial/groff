@@ -926,6 +926,44 @@
 .    RB [ \\$1 ]
 ..
 .
+.\" Begin an example (typically of source code or shell input).
+.de1 EX
+.  ds an*saved-family \\n[.fam]
+.  nr an*saved-font \\n[.f]
+.  nr an*saved-paragraph-distance \\n[PD]
+.  nr PD 1v
+.  nf
+.  \" If using the DVI output device, we have no constant-width fonts of
+.  \" bold weight and, relatedly, no constant-width family (because that
+.  \" requires all four styles).  Remap the bold styles to normal ones.
+.  ie '\*[.T]'dvi' \{\
+.    ftr R CW
+.    ftr B CW
+.    ftr I CWI
+.    ftr BI CWI
+.  \}
+.  el .fam C
+.  ft R
+..
+.
+.\" End example.
+.de EE
+.  \" Undo the remappings from `EX`.
+.  ie '\*[.T]'dvi' \{\
+.    ftr R
+.    ftr B
+.    ftr I
+.    ftr BI
+.  \}
+.  fam \\*[an*saved-family]
+.  ft \\n[an*saved-font]
+.  nr PD \\n[an*saved-paragraph-distance]
+.  fi
+.  rr an*saved-paragraph-distance
+.  rr an*saved-font
+.  rm an*saved-family
+..
+.
 .\" Set a man page cross reference.
 .\" .MR page-title page-section [trailing-text]
 .de1 MR
@@ -1048,6 +1086,14 @@
 .
 .nr an-is-output-html 0
 .if '\*[.T]'html' .nr an-is-output-html 1
+.
+.\" Map monospaced fonts to standard styles for groff's nroff devices.
+.if n \{\
+.  ftr CR R
+.  ftr CI I
+.  ftr CB B
+.  ftr CBI BI
+.\}
 .
 .\" Load man macro extensions.
 .mso an-ext.tmac

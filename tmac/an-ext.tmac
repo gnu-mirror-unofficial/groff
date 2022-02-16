@@ -27,6 +27,9 @@
 .if \n(mX>1 \
 .  nx
 .
+.\" Define this to your implementation's constant-width typeface.
+.ds mC CW
+.
 .\" In AT&T troff, there was no register exposing the hyphenation mode,
 .\" and no way to save and restore it.  Set this to a reasonable value
 .\" for your implementation and preference.
@@ -53,14 +56,6 @@
 .  nr mU \n(mH+\n(mY
 .\}
 .
-.
-.\" Map mono-width fonts to standard fonts for groff's TTY device.
-.if n \{\
-.  do ftr CR R
-.  do ftr CI I
-.  do ftr CB B
-.  do ftr CBI BI
-.\}
 .
 .\" groff has glyph entities for angle brackets.
 .ie \n(.g \{\
@@ -238,27 +233,21 @@
 .
 .
 .\" Start example.
+.if \n(.g .ig
 .de EX
-.  do ds mF \\n[.fam]
 .  nr mE \\n(.f
-.  nr mP \\n(PD \" Save paragraph distance.
+.  nr mP \\n(PD
 .  nr PD 1v
 .  nf
-.  \" Work around Savannah #59522.
-.  ie !'\\*[.T]'dvi' \{\
-.    do fam C
-.    ft R
-.  \}
-.  el \
-.    ft CW
+.  ft \\*(mC
 ..
 .
 .
 .\" End example.
+.if \n(.g .ig
 .de EE
-.  do fam \\*(mF
 .  ft \\n(mE
-.  nr PD \\n(mP \" Restore paragraph distance.
+.  nr PD \\n(mP
 .  fi
 ..
 .

@@ -1,5 +1,29 @@
 2022-02-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Refactor `EX` and `EE` macros.
+
+	* tmac/an-ext.tmac: Add new `mC` string to store the font name
+	to be used for example regions.  In AT&T device-independent
+	troff, "CW" was a common name, so use that.  It is however a
+	terrible fit for groff's font family and style-combination
+	functionality, and is inflexible in the face of font selection
+	requests and escape sequences within the example region.  (One
+	either needs to know the names of the fonts available on the
+	output device, or suffer the indignity of mixed constant-width
+	and proportional typefaces.)  Relatedly, drop groff-specific
+	font remapping requests.
+	(EX, EE): Ignore definition if GNU troff is the formatter.  Drop
+	font family manipulation.  Drop specialized logic for groff's
+	DVI output device.
+
+	* tmac/an.tmac (initialization): Resurrect font remapping
+	requests here.
+	(EX, EE): Add new definitions, saving and restoring more state
+	and remapping DVI output device fonts to reflect the absence of
+	CWB and CWBI faces.
+
+2022-02-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/an-ext.tmac: Slightly refactor.  Stop using groff's `HY`
 	register to restore the hyphenation mode, since I plan to change
 	its semantics to a Boolean value (see Savannah #61734).
