@@ -5643,7 +5643,7 @@ Pica.  Another typesetting measurement.  6@tie{}picas to an inch (and
 @item f
 @cindex @code{f} unit
 @cindex unit, @code{f}
-Fractions.  Value is 65536.
+Multiply by 65,535.
 @xref{Colors}, for usage.
 @end table
 
@@ -11370,6 +11370,18 @@ with a default scaling indicator of @samp{z}.
 @section Colors
 @cindex colors
 
+@cindex stroke color
+@cindex color, stroke
+@cindex fill color
+@cindex color, fill
+GNU @code{troff} supports color output with a variety of color spaces
+and up to 16 bits per channel.  Some devices, particularly terminals,
+may be more limited.  When color support is enabled, two colors are
+current at any given time: the @dfn{stroke color}, with which glyphs,
+rules (lines), and geometric objects like circles and polygons are
+drawn, and the @dfn{fill color}, which can be used to paint the interior
+of closed geometric figures.
+
 @DefreqList {color, [@Var{n}]}
 @DefregListEndx {.color}
 If @var{n} is missing or non-zero, activate colors (this is the
@@ -11386,16 +11398,14 @@ Colors can be also turned off with the @option{-c} command-line option.
 @endDefreq
 
 @Defreq {defcolor, ident scheme color-component @dots{}}
-Define a color named @var{ident} for use with the @code{fcolor} and
-@code{gcolor} requests and the @code{\m} and @code{\M} escape sequences.
-@var{scheme} identifies a color space and determines the quantity of
-required @var{color-component}s; it must be one of @samp{rgb} (three
-components), @samp{cmy} (three components), @samp{cmyk} (four
-components), or @samp{gray} (one component). @samp{grey} is accepted as
-a synonym of @samp{gray}.  The color components can be encoded as a
-hexadecimal value starting with @samp{#} or @samp{##}.  The former
-indicates that each component is in the range 0--255 (0--FF), the latter
-the range 0--65535 (0--FFFF).
+Define a color named @var{ident}.  @var{scheme} identifies a color space
+and determines the quantity of required @var{color-component}s; it must
+be one of @samp{rgb} (three components), @samp{cmy} (three components),
+@samp{cmyk} (four components), or @samp{gray} (one component).
+@samp{grey} is accepted as a synonym of @samp{gray}.  The color
+components can be encoded as a hexadecimal value starting with @samp{#}
+or @samp{##}.  The former indicates that each component is in the range
+0--255 (0--FF), the latter the range 0--65535 (0--FFFF).
 
 @Example
 .defcolor half gray #7f
@@ -11407,7 +11417,8 @@ the range 0--65535 (0--FFFF).
 @cindex unit, @code{f}, and colors
 Alternatively, each color component can be specified as a decimal
 fraction in the range 0--1, interpreted using a default scaling
-indicator of@tie{}@code{f}, which multiplies its value by 65536.
+indicator of@tie{}@code{f}, which multiplies its value by 65,536 (but
+clamps it at 65,535).
 
 @Example
 .defcolor gray50 rgb 0.5 0.5 0.5
@@ -11416,8 +11427,8 @@ indicator of@tie{}@code{f}, which multiplies its value by 65536.
 
 @cindex default color
 @cindex color, default
-Each output device has a color named @samp{default} that cannot be
-redefined.  A device's default drawing and fill colors are not
+Each output device has a color named @samp{default}, which cannot be
+redefined.  A device's default stroke and fill colors are not
 necessarily the same.
 @endDefreq
 
@@ -11426,27 +11437,24 @@ necessarily the same.
 @DefescItem {\\m, (, co, }
 @DefescItem {\\m, [, color, ]}
 @DefregListEndx {.m}
-Set (glyph) drawing color.  The following examples show how to turn the
-next four words red.
+Set the stroke color to @var{color}.  The following examples show how to
+turn the next four words red.
 
 @Example
 .gcolor red
-these are in red
+These words
 .gcolor
+\m[red]are in red\m[[]
 and these words are in black.
 @endExample
 
-@Example
-\m[red]these are in red\m[] and these words are in black.
-@endExample
+The escape sequence @code{\m[]} restores the previous stroke color, as
+does a @code{gcolor} request without an argument.
 
-The escape @code{\m[]} returns to the previous color, as does a call to
-@code{gcolor} without an argument.
-
-@cindex drawing color name register (@code{.m})
-@cindex name, drawing color, register (@code{.m})
-@cindex color name, drawing, register (@code{.m})
-The name of the current drawing color is available in the read-only
+@cindex stroke color name register (@code{.m})
+@cindex name, stroke color, register (@code{.m})
+@cindex color name, stroke, register (@code{.m})
+The name of the current stroke color is available in the read-only
 string-valued register @samp{.m}; it is associated with the environment
 (@pxref{Environments}).
 
@@ -11464,17 +11472,17 @@ a single character as an argument) to change the color on the fly:
 @DefescItem {\\M, (, co, }
 @DefescItem {\\M, [, color, ]}
 @DefregListEndx {.M}
-Set fill (background) color for filled objects drawn with the
-@code{\D'@dots{}'} commands.
+Set fill color for objects drawn with @code{\D'@dots{}'} escape
+sequences.
 
-A red ellipse can be created with the following code:
+Create an ellipse with a red interior as follows.
 
 @Example
 \M[red]\h'0.5i'\D'E 2i 1i'\M[]
 @endExample
 
-The escape @code{\M[]} returns to the previous fill color, as does a
-call to @code{fcolor} without an argument.
+The escape sequence @code{\M[]} restores the previous fill color, as
+does a @code{fcolor} request without an argument.
 
 @cindex background color name register (@code{.M})
 @cindex name, background color, register (@code{.M})
@@ -11482,9 +11490,9 @@ call to @code{fcolor} without an argument.
 @cindex fill color name register (@code{.M})
 @cindex name, fill color, register (@code{.M})
 @cindex color name, fill, register (@code{.M})
-The name of the current fill (background) color is available in the
-read-only string-valued register @samp{.M}; it is associated with the
-environment (@pxref{Environments}).
+The name of the current fill color is available in the read-only
+string-valued register @samp{.M}; it is associated with the environment
+(@pxref{Environments}).
 
 @code{\M} doesn't produce an input token in GNU @code{troff}.
 @endDefesc
@@ -17606,7 +17614,7 @@ values for @var{n} also, but GNU @code{troff} doesn't use them.
 Set the color for text (glyphs), line drawing, and the outline of
 graphic objects using different color schemes; the analogous command
 for the filling color of graphic objects is @samp{DF}.  The color
-components are specified as integer arguments between 0 and 65536.  The
+components are specified as integer arguments between 0 and 65535.  The
 number of color components and their meaning vary for the different
 color schemes.  These commands are generated by @code{gtroff}'s escape
 sequence @code{\m}.  No position changing.  These commands are a
@@ -17623,7 +17631,7 @@ component arguments.
 
 @item mg @var{gray}
 Set color to the shade of gray given by the argument, an integer between
-0 (black) and 65536 (white).
+0 (black) and 65535 (white).
 
 @item mk @var{cyan} @var{magenta} @var{yellow} @var{black}
 Set color using the CMYK color scheme, having the 4@tie{}color
@@ -17778,7 +17786,7 @@ rightmost point of the ellipse.
 Set fill color for solid drawing objects using different color schemes;
 the analogous command for setting the color of text, line graphics, and
 the outline of graphic objects is @samp{m}.  The color components are
-specified as integer arguments between 0 and 65536.  The number of color
+specified as integer arguments between 0 and 65535.  The number of color
 components and their meaning vary for the different color schemes.
 These commands are generated by @code{gtroff}'s escape sequences
 @samp{\D'F @dots{}'} and @code{\M} (with no other corresponding
@@ -17797,7 +17805,7 @@ Set fill color for solid drawing objects to the default fill color value
 
 @item DFg @var{gray}@angles{line break}
 Set fill color for solid drawing objects to the shade of gray given by
-the argument, an integer between 0 (black) and 65536 (white).
+the argument, an integer between 0 (black) and 65535 (white).
 
 @item DFk @var{cyan} @var{magenta} @var{yellow} @var{black}@angles{line break}
 Set fill color for solid drawing objects using the CMYK color scheme,
@@ -17827,7 +17835,7 @@ text and the outline, see command @samp{m}.  For example, the command
 sequence
 
 @Example
-mg 0 0 65536
+mg 0 0 65535
 Df -1
 @endExample
 
