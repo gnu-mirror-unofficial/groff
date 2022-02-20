@@ -1022,6 +1022,36 @@ _
 .
 .
 .\" ====================================================================
+.SS Accents
+.\" ====================================================================
+.
+The
+.B composite
+request is used to map the accents to code points with non-spacing
+semantics;
+the values given in parentheses are their spacing counterparts.
+.
+.TS
+l l l lx.
+Output	Input	Unicode	Notes
+_
+\[a"]	\e[a"]	u030B (u02DD)	double acute accent
+\[a-]	\e[a\-]	u0304 (u00AF)	macron accent
+\[a.]	\e[a.]	u0307 (u02D9)	dot accent
+\[a^]	\e[a\[ha]]	u0302 (u005E)	circumflex accent
+\[aa]	\e[aa]	u0301 (u00B4)	acute accent +
+\[ga]	\e[ga]	u0300 (u0060)	grave accent +
+\[ab]	\e[ab]	u0306 (u02D8)	breve accent
+\[ac]	\e[ac]	u0327 (u00B8)	cedilla accent
+\[ad]	\e[ad]	u0308 (u00A8)	dieresis accent
+\[ah]	\e[ah]	u030C (u02C7)	caron accent
+\[ao]	\e[ao]	u030A (u02DA)	ring accent
+\[a~]	\e[a\[ti]]	u0303 (u007E)	tilde accent
+\[ho]	\e[ho]	u0328 (u02DB)	hook accent
+.TE
+.
+.
+.\" ====================================================================
 .SS "Accented characters"
 .\" ====================================================================
 .
@@ -1100,36 +1130,6 @@ _
 
 \[oA]	\e[oA]	u0041_030A	A ring
 \[oa]	\e[oa]	u0061_030A	a ring
-.TE
-.
-.
-.\" ====================================================================
-.SS Accents
-.\" ====================================================================
-.
-The
-.B composite
-request is used to map the accents to code points with non-spacing
-semantics;
-the values given in parentheses are their spacing counterparts.
-.
-.TS
-l l l lx.
-Output	Input	Unicode	Notes
-_
-\[a"]	\e[a"]	u030B (u02DD)	double acute accent
-\[a-]	\e[a\-]	u0304 (u00AF)	macron accent
-\[a.]	\e[a.]	u0307 (u02D9)	dot accent
-\[a^]	\e[a\[ha]]	u0302 (u005E)	circumflex accent
-\[aa]	\e[aa]	u0301 (u00B4)	acute accent +
-\[ga]	\e[ga]	u0300 (u0060)	grave accent +
-\[ab]	\e[ab]	u0306 (u02D8)	breve accent
-\[ac]	\e[ac]	u0327 (u00B8)	cedilla accent
-\[ad]	\e[ad]	u0308 (u00A8)	dieresis accent
-\[ah]	\e[ah]	u030C (u02C7)	caron accent
-\[ao]	\e[ao]	u030A (u02DA)	ring accent
-\[a~]	\e[a\[ti]]	u0303 (u007E)	tilde accent
-\[ho]	\e[ho]	u0328 (u02DB)	hook accent
 .TE
 .
 .
