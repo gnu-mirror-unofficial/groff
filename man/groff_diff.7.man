@@ -8,7 +8,7 @@ groff_diff \- differences between GNU roff and AT&T troff
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2018, 2020-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2018, 2020-2022 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff, the GNU roff type-setting system.
 .\"
@@ -107,6 +107,48 @@ to introduce a two-character argument,
 .I groff
 supports a square-bracketed form \[lq][]\[rq] where the argument
 within can be of arbitrary length.
+.
+.
+.\" ====================================================================
+.SS Colors
+.\" ====================================================================
+.
+.I groff
+supports color output with a variety of color spaces and up to 16 bits
+per channel.
+.
+Some devices,
+particularly terminals,
+may be more limited.
+.
+When color support is enabled,
+two colors are current at any given time:
+the
+.I stroke color,
+with which glyphs,
+rules (lines),
+and geometric objects like circles and polygons are drawn,
+and the
+.I fill color,
+which can be used to paint the interior of closed geometric figures.
+.
+The
+.BR color ,
+.BR defcolor ,
+.BR gcolor ,
+and
+.B fcolor
+requests;
+.B \[rs]m
+and
+.B \[rs]M
+escape sequences;
+and
+.BR .color ,
+.BR .m ,
+and
+.B .M
+registers exercise color support.
 .
 .
 .\" ====================================================================
@@ -226,7 +268,7 @@ are
 which indicates hundredths of an em,
 and
 .RB \[lq] f \[rq],
-which is defined as 65536 basic units.
+which multiplies by 65,536.
 .
 The latter provides convenient fractions for color definitions with the
 .B .defcolor
@@ -516,15 +558,18 @@ Mark horizontal position in register with two-character
 or arbitrarily long
 .RI name\~ reg .
 .
+.
 .TP
 .BI \[rs]m x
 .TQ
 .BI \[rs]m( xx
 .TQ
 .BI \[rs]m[ xxx ]
-Set drawing color.
+Set the stroke color.
+.
 .B \[rs]m[]
-switches back to the previous color.
+restores the previous stroke color.
+.
 .
 .TP
 .BI \[rs]M x
@@ -532,11 +577,11 @@ switches back to the previous color.
 .BI \[rs]M( xx
 .TQ
 .BI \[rs]M[ xxx ]
-Set background color for filled objects drawn with the
-.BR \[rs]D\[aq] .\|.\|.\& \[aq]
-commands.
+Set the fill color.
+.
 .B \[rs]M[]
-switches back to the previous color.
+restores the previous fill color.
+.
 .
 .TP
 .BI \[rs]n[ xxx ]
@@ -1738,16 +1783,7 @@ incompatibilities caused by long names do not arise.
 .B .defcolor\~\c
 .IR "ident scheme color-component\~" .\|.\|.
 Define a color named
-.I ident
-for use with the
-.B fcolor
-and
-.B gcolor
-requests and the
-.B \[rs]m
-and
-.B \[rs]M
-escape sequences.
+.I ident.
 .
 .I scheme
 identifies a color space and determines the number of required
@@ -1782,15 +1818,16 @@ each color component can be specified as a decimal fraction in the range
 0\[en]1,
 interpreted using a default scaling unit
 .RB of\~\[lq] f \[rq],
-which multiplies its value by 65536.
+which multiplies its value by 65,536
+(but clamps it at 65,535).
 .
 .
 .IP
 Each output device has a color named
-.RB \[lq] default \[rq]
-that cannot be redefined.
+.RB \[lq] default \[rq],
+which cannot be redefined.
 .
-A device's default drawing and fill colors are not necessarily the same.
+A device's default stroke and fill colors are not necessarily the same.
 .
 .
 .TP
@@ -2032,14 +2069,15 @@ font.
 .
 This test happens before checking special fonts.
 .
+.
 .TP
-.BI .fcolor\~ c
-Set the fill color to\~\c
-.IR c .
-If
-.I c
-is missing,
-switch to the previous fill color.
+.BI .fcolor\~ color
+Set the fill color to
+.IR color .
+.
+Without an argument,
+restore the previous fill color.
+.
 .
 .TP
 .BI .fschar\~ f\~c\~string
@@ -2135,14 +2173,14 @@ no magnification.
 .IR f \~\c
 must be a real font name, not a style.
 .
+.
 .TP
-.BI .gcolor\~ c
-Set the glyph color to\~\c
-.IR c .
-If
-.I c
-is missing,
-switch to the previous glyph color.
+.BI .gcolor\~ color
+Set the stroke color to
+.IR color .
+.
+Without an argument,
+restore the previous stroke color.
 .
 .
 .TP
@@ -3819,17 +3857,20 @@ The title length as set by the
 .B lt
 request.
 .
+.
 .TP
 .B \[rs]n[.m]
-The name of the current drawing color.
+The name of the current stroke color.
 .
 This is a string-valued register.
+.
 .
 .TP
 .B \[rs]n[.M]
-The name of the current background color.
+The name of the current fill color.
 .
 This is a string-valued register.
+.
 .
 .TP
 .B \[rs]n[.ne]
@@ -4398,7 +4439,8 @@ Unlike device-independent troff, it is not necessary for drivers to
 search special fonts to find a glyph.
 .
 .P
-For color support, some new commands have been added:
+New commands implement color support.
+.
 .
 .TP
 \f[B]mc \f[I]cyan magenta yellow\f[R]
@@ -4410,13 +4452,14 @@ For color support, some new commands have been added:
 \f[B]mk \f[I]cyan magenta yellow black\f[R]
 .TQ
 \f[B]mr \f[I]red green blue\f[R]
-Set the color components of the current drawing color, using various
-color schemes.
+Set the components of the stroke color with respect to various color
+spaces.
 .
 .B md
-resets the drawing color to the default value.
+resets the stroke color to the default value.
 .
-The arguments are integers in the range 0 to 65536.
+The arguments are integers in the range 0 to 65535.
+.
 .
 .P
 The
@@ -4602,8 +4645,10 @@ $( sum from i=1 to n x sub i , sum from i=1 to n y sub i )$.
 delim off
 .EN
 .
+.
 .P
-Another set of extensions is
+Fill colors are implmenented with another set of extensions.
+.
 .
 .TP
 \f[B]DFc \f[I]cyan magenta yellow\f[R]\*[ic]\[rs]n
@@ -4615,14 +4660,15 @@ Another set of extensions is
 \f[B]DFk \f[I]cyan magenta yellow black\f[R]\*[ic]\[rs]n
 .TQ
 \f[B]DFr \f[I]red green blue\f[R]\*[ic]\[rs]n
-Set the color components of the filling color similar to the
-.BR m \~\c
-commands above.
+Set the components of the fill color similarly to the
+.BR m \~commands
+above.
 .
-.P
-The current position isn't changed by those colour commands
-(contrary to
-.BR Df ).
+.
+.IP
+The drawing position isn't changed by these color commands,
+in contrast to
+.BR Df .
 .
 .
 .\" ====================================================================

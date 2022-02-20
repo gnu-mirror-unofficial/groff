@@ -607,6 +607,48 @@ environment.
 .
 .
 .\" ====================================================================
+.SH Colors
+.\" ====================================================================
+.
+.I groff
+supports color output with a variety of color spaces and up to 16 bits
+per channel.
+.
+Some devices,
+particularly terminals,
+may be more limited.
+.
+When color support is enabled,
+two colors are current at any given time:
+the
+.I stroke color,
+with which glyphs,
+rules (lines),
+and geometric objects like circles and polygons are drawn,
+and the
+.I fill color,
+which can be used to paint the interior of closed geometric figures.
+.
+The
+.BR color ,
+.BR defcolor ,
+.BR gcolor ,
+and
+.B fcolor
+requests;
+.B \[rs]m
+and
+.B \[rs]M
+escape sequences;
+and
+.BR .color ,
+.BR .m ,
+and
+.B .M
+registers exercise color support.
+.
+.
+.\" ====================================================================
 .SH "Numerical expressions"
 .\" ====================================================================
 .
@@ -679,7 +721,8 @@ font \f[I]DESC\f[] file)
 .
 .TPx
 .B f
-Scale by 65536.
+multiply by 65,536
+(used with color components)
 .RE
 .PD
 .
@@ -1590,15 +1633,21 @@ and so on.
 Close the
 .IR stream .
 .
+.
 .TPx
 .REQ .color
 Enable colors.
+.
 .
 .TPx
 .REQ .color "N"
 If
 .I N
-is zero disable colors, otherwise enable them.
+is zero,
+disable colors;
+otherwise,
+enable them.
+.
 .
 .TPx
 .REQ .composite "from to"
@@ -1684,19 +1733,10 @@ but disable compatibility mode during macro expansion.
 .TPx
 .REQ .defcolor "ident scheme color-component \f[R].\|.\|."
 Define a color named
-.I ident
-for use with the
-.B fcolor
-and
-.B gcolor
-requests and the
-.B \[rs]m
-and
-.B \[rs]M
-escape sequences.
+.I ident.
 .
 .I scheme
-identifies a color space and determines the quantity of required
+identifies a color space and determines the number of required
 .IR color-component s;
 it must be one of
 .RB \[lq] rgb \[rq]
@@ -1726,12 +1766,18 @@ the latter the range 0\[en]65535 (0\[en]FFFF).
 Alternatively,
 each color component can be specified as a decimal fraction in the range
 0\[en]1,
-interpreted using a default scaling indicator
-.RB of\~\[lq] f \[rq].
+interpreted using a default scaling unit
+.RB of\~\[lq] f \[rq],
+which multiplies its value by 65,536
+(but clamps it at 65,535).
 .
+.
+.IP
 Each output device has a color named
-.RB \[lq] default \[rq]
-that cannot be redefined.
+.RB \[lq] default \[rq],
+which cannot be redefined.
+.
+A device's default stroke and fill colors are not necessarily the same.
 .
 .
 .TPx
@@ -1951,9 +1997,11 @@ Define fallback character (or glyph)
 as string
 .IR anything .
 .
+.
 .TPx
 .REQ .fcolor
-Set fill color to previous fill color.
+Restore previous fill color.
+.
 .
 .TPx
 .REQ .fcolor "c"
@@ -2049,14 +2097,17 @@ Set zoom factor for
 .I font
 (in multiples of 1/1000th).
 .
+.
 .TPx
 .REQ .gcolor
-Set glyph color to previous glyph color.
+Restore previous stroke color.
+.
 .
 .TPx
 .REQ .gcolor "c"
-Set glyph color to
+Set stroke color to
 .IR c .
+.
 .
 .TPx
 .REQ .hc
@@ -3814,48 +3865,48 @@ optionally using
 .
 .TP
 .ESC m c
-Change drawing color to that with one-character
+Set stroke color to that with one-character
 .RI name\~ c .
 .
 .
 .TP
 .ESC m( cl
-Change drawing color to that with two-character
+Set stroke color to that with two-character
 .RI name\~ cl .
 .
 .
 .TP
 .ESC[] m color
-Change drawing color to that with arbitrarily long
+Set stroke color to that with arbitrarily long
 .RI name\~ color .
 .
 .
 .TP
 .ESC[] m ""
-Switch to previous drawing color.
+Restore previous stroke color.
 .
 .
 .TP
 .ESC M c
-Change fill color to that with one-character
+Set fill color to that with one-character
 .RI name\~ c .
 .
 .
 .TP
 .ESC M( cl
-Change fill color to that with two-character
+Set fill color to that with two-character
 .RI name\~ cl .
 .
 .
 .TP
 .ESC[] M color
-Change fill color to that with arbitrarily long
+Set fill color to that with arbitrarily long
 .RI name\~ color .
 .
 .
 .TP
 .ESC[] M ""
-Switch to previous fill color.
+Restore previous fill color.
 .
 .
 .TP
@@ -4496,9 +4547,12 @@ The height of the last glyph added to the current environment.
 .
 It is positive if the glyph extends above the baseline.
 .
+.
 .TPx
 .REG .color
-1\~if colors are enabled, 0\~otherwise.
+1\~if colors are enabled,
+0\~otherwise.
+.
 .
 .TPx
 .REG .cp
@@ -4662,13 +4716,16 @@ The title length (as set by the
 .request .lt
 request).
 .
+.
 .TPx
 .REG .m
-The current drawing color (string-valued).
+Stroke color (string-valued).
+.
 .
 .TPx
 .REG .M
-The current background color (string-valued).
+Fill color (string-valued).
+.
 .
 .TPx
 .REG .n
