@@ -222,6 +222,13 @@ GROFF_MAN_PAGES3 = \
 GROFF_MAN_PAGES_ALL = $(GROFF_MAN_PAGES1) $(GROFF_MAN_PAGES2) \
   $(GROFF_MAN_PAGES3)
 
+# This is a convenience target for (re-)generating all the man pages.
+man-all: $(GROFF_MAN_PAGES_ALL)
+
+# ...and for clearning them.
+man-clean:
+	$(RM) $(GROFF_MAN_PAGES_ALL)
+
 doc/groff-man-pages.pdf: $(GROFF_MAN_PAGES_ALL)
 	$(GROFF_V)$(DOC_GROFF) -Tpdf -P-e -mandoc -rC1 \
 	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
