@@ -2193,7 +2193,7 @@ Unix systems
 (or Solaris
 .IR troff ,
 though even it supports
-.BR \(rsrg ),
+.BR \(rs(rg ),
 the above strings should be avoided.
 _endif()dnl
 .
@@ -3767,12 +3767,15 @@ paragraph
 and its synonyms)
 will be set.
 .
-.BR .RS ,
 .BR .IP ,
 .BR .TP ,
 and the deprecated
 .B .HP
 all use the same default indentation.
+.
+If not given an argument,
+.B .RS
+moves the left margin by this same amount.
 .
 To create an inset relative to an indented paragraph,
 call
@@ -3861,10 +3864,10 @@ is used again.
 .
 .
 .TP
-\(bu Do I need to keep typing the indent in a series of \c
+\(bu Do I need to keep typing the indentation in a series of \c
 .BR .IP " calls?"
 .
-You don't need to if you don't want to change the indentation.
+Not if you don't want to change it.
 .
 Review subsection \(lqHorizontal and vertical spacing\(rq above.
 .
