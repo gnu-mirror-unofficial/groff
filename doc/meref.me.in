@@ -170,6 +170,10 @@ that affect the layout of the page
 (notably page length and vertical margins)
 should be done before calling
 any paragraphing or sectioning macros.
+Normally,
+vertical spacing is suppressed at the top of a page
+if no text has yet appeared
+(page headings notwithstanding).
 .pp
 \*G measures distances
 in device-specific basic units,
@@ -705,7 +709,6 @@ Text until
 is set in font
 .NR (df
 [0]
-and single-spaced
 with filling disabled.
 If
 .i A
@@ -744,8 +747,7 @@ End list.
 Begin long quotation.
 Text until
 .b .)q
-is single-spaced,
-filled,
+is filled,
 indented on the left and right
 by
 .NR (qi
@@ -800,6 +802,8 @@ are as in
 .b .)b
 .DE
 End block.
+.br
+.ne 3v
 .TL
 .b .(z
 .i A
@@ -1268,8 +1272,7 @@ above and below it.
 Begin (start)
 .i \%@g@tbl (1)
 table.
-Tables are single-spaced
-and preceded and followed by
+Tables are preceded and followed by
 .NR (bs
 of space.
 If you have a large table
