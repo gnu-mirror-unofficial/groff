@@ -1025,11 +1025,28 @@ _
 .SS Accents
 .\" ====================================================================
 .
-The
+Normally,
+the formatting of a special character advances the drawing position as
+an ordinary character does.
+.
+.IR groff 's
 .B composite
-request is used to map the accents to code points with non-spacing
-semantics;
-the values given in parentheses are their spacing counterparts.
+request designates a special character as combining.
+.
+The
+.I composite.tmac
+macro file,
+loaded automatically by default,
+maps the following special characters to the combining characters shown
+below.
+.
+The non-combining code point in parentheses is used when the special
+character occurs in isolation
+(compare
+.RB \[lq] "caf\[rs][e aa]" \[rq]
+and
+.RB \[lq] "caf\[rs][aa]e" \[rq]).
+.
 .
 .TS
 l l l lx.
@@ -1057,7 +1074,7 @@ _
 .
 All of these glyphs can be composed using combining glyph names as
 described in subsection \[lq]Special character escape forms\[rq] above;
-the names below can be thought of as short aliases for convenience.
+the names below are short aliases for convenience.
 .
 .TS
 l l l lx.
@@ -1751,6 +1768,15 @@ _
 \[HE]	\e[HE]	u2665	solid heart suit
 \[DI]	\e[DI]	u2666	solid diamond suit
 .TE
+.
+.
+.\" ====================================================================
+.SH Files
+.\" ====================================================================
+.
+.TP
+.I @MACRODIR@/\:\%composite\:.tmac
+See subsection \[lq]Accents\[rq] above.
 .
 .
 .\" ====================================================================
