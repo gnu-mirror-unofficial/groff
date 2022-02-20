@@ -578,6 +578,38 @@ Example regions are useful for formatting code,
 shell sessions,
 and text file contents.
 .
+An example region is not
+a \(lqliteral mode\(rq
+of any sort:
+special character escape sequences must still be used to produce correct
+glyphs for
+.BR \(aq ,
+.BR \- ,
+.BR \(rs ,
+.BR \(ha ,
+.BR \(ga ,
+and
+.BR \(ti ,
+and sentence endings are still detected and inter-sentence spacing
+applied.
+.
+If a user
+(or one of
+.IR groff 's
+localization support macro files)
+has changed the inter-sentence spacing amount,
+the latter process can change the rendering of,
+for instance,
+regular expressions using
+.B .\&
+or
+.B ?\&
+followed by multiple spaces.
+.
+Use the non-printing input break escape sequence
+.B \(rs&
+before the spaces.
+.
 .
 _endif()dnl
 .IP
@@ -3755,6 +3787,24 @@ paragraph.
 .
 See subsection \(lqHorizontal and vertical spacing\(rq above for the
 values.
+.
+.
+.IP
+Another approach you can use with tagged paragraphs is to place an
+.B .RS
+call immediately after the paragraph tag;
+this will also force a break regardless of the width of the tag,
+which some authors prefer.
+.
+Follow-up paragraphs under the tag can then be set with
+.B .P
+instead of
+.BR .IP .
+.
+Remember to use
+.B .RE
+to end the indented region before starting the next tagged paragraph
+(at the appropriate nesting level).
 .
 .
 .TP
