@@ -7740,11 +7740,10 @@ just prior to it; most likely this isn't what you want.
 @cindex breaking file names (@code{\:})
 @cindex URLs, breaking (@code{\:})
 @cindex breaking URLs (@code{\:})
-The @code{\:} escape inserts a non-printing break point; that is, the
-word can break there, but the soft hyphen glyph (see below) is not
-written to the output if it does.  This escape is an input word
-boundary, so the remainder of the word is subject to hyphenation as
-normal.
+@code{\:} inserts a non-printing break point; that is, a word can break
+there, but the soft hyphen glyph (see below) is not written to the
+output if it does.  This escape sequence is an input word boundary, so
+the remainder of the word is subject to hyphenation as normal.
 
 You can use @code{\:} and @code{\%} in combination to control breaking
 of a file name or URL or to permit hyphenation only after certain
@@ -10948,7 +10947,7 @@ help with this.
 Apply an @dfn{italic correction}:@: modify the spacing of the preceding
 glyph so that the distance between it and the following glyph is correct
 if the latter is of upright shape.  For example, if an
-italic@tie{}@samp{f} is immediately followed by a roman right
+italic@tie{}@samp{f} is followed immediately by a roman right
 parenthesis, then in many fonts the top right portion of
 the@tie{}@samp{f} overlaps the top left of the right parenthesis, which
 is ugly.  Use this escape sequence whenever an oblique glyph is
@@ -11972,8 +11971,8 @@ an error.  @xref{Writing Macros}.
 @cindex string, removing alias for (@code{rm})
 @cindex macro, removing alias for (@code{rm})
 @cindex diversion, removing alias for (@code{rm})
-To remove an alias, simply call @code{rm} on its name.  The object
-itself is not destroyed until it has no more names.
+To remove an alias, call @code{rm} on its name.  The object itself is
+not destroyed until it has no more names.
 @endDefreq
 
 

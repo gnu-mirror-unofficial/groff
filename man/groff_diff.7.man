@@ -843,7 +843,7 @@ modify the spacing of the preceding glyph so that the distance between
 it and the following glyph is correct if the latter is of upright shape.
 .
 For example,
-if an italic\~\[lq]f\[rq] is immediately followed by a roman right
+if an italic\~\[lq]f\[rq] is followed immediately by a roman right
 parenthesis,
 then in many fonts the top right portion of the\~\[lq]f\[rq] overlaps
 the top left of the right parenthesis,
@@ -900,12 +900,12 @@ immediately by an oblique glyph without any intervening space.
 Insert a non-printing break point.
 .
 That is,
-the word can break there,
+a word can break there,
 but the soft hyphen glyph is not written to the output if it does
 (in contrast to
 .RB \[lq] \[rs]% \[rq]).
 .
-This escape is an input word boundary,
+This escape sequence is an input word boundary,
 so the remainder of the word is subject to hyphenation as normal.
 .
 .
@@ -1057,7 +1057,8 @@ If
 is undefined,
 a warning of type
 .RB \[lq] mac \[rq]
-is generated and the request is ignored.
+is produced,
+and the request is ignored.
 .
 The
 .BR .am ,
@@ -1069,7 +1070,7 @@ and
 .B .ds
 requests
 (together with their variants)
-only create a new object if the name of the macro,
+create a new object only if the name of the macro,
 diversion,
 or string is currently undefined
 or if it is defined as a request;
@@ -1077,7 +1078,7 @@ normally,
 they modify the value of an existing object.
 .
 To remove an alias,
-simply call
+call
 .B .rm
 on its name.
 .
