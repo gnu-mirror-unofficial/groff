@@ -1184,12 +1184,20 @@ _
 .SS Punctuation
 .\" ====================================================================
 .
+The Unicode name for U+00B7 is \[lq]middle dot\[rq],
+which is unfortunately confusable with the
+.I groff
+mnemonic for the visually similar but semantically distinct
+multiplication dot;
+see subsection \[lq]Mathematical symbols\[rq] below.
+.
 .TS
 l l l lx.
 Output	Input	Unicode	Notes
 _
 \[r!]	\e[r!]	u00A1	inverted exclamation mark
 \[r?]	\e[r?]	u00BF	inverted question mark
+\[pc]	\e[pc]	u00B7	centered period
 \[em]	\e[em]	u2014	em-dash +
 \[en]	\e[en]	u2013	en-dash
 \[hy]	\e[hy]	u2010	hyphen +
@@ -1612,7 +1620,6 @@ _
 \[-+]	\e[\-+]	u2213	minus-plus
 \[+-]	\e[+\-]	u00B1	plus-minus + ***
 \[t+-]	\e[t+\-]	u00B1	text variant of \f[B]\e[+\-]\f[]
-\[pc]	\e[pc]	u00B7	centered period
 \[md]	\e[md]	u22C5	multiplication dot
 \[mu]	\e[mu]	u00D7	multiplication sign + ***
 \[tmu]	\e[tmu]	u00D7	text variant of \f[B]\e[mu]\f[]
