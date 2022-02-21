@@ -8,7 +8,7 @@ groff_char \- GNU roff special character and glyph repertoire
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 1989-2021 Free Software Foundation, Inc.
+.\" Copyright (C) 1989-2022 Free Software Foundation, Inc.
 .\"
 .\" This file is part of groff (GNU roff), which is a free software
 .\" project.
@@ -1788,6 +1788,141 @@ _
 .
 .
 .\" ====================================================================
+.SH History
+.\" ====================================================================
+.
+A consideration of the typefaces originally available to AT&T
+.I nroff \" AT&T
+and
+.I troff \" AT&T
+illuminates many conventions that one might regard as idiosyncratic
+fifty years afterward.
+.
+(See section \[lq]History\[rq] of
+.MR roff @MAN7EXT@
+for more context.)
+.
+The face used by the Teletype Model\~37 terminals of the Murray Hill
+Unix Room was based on ASCII,
+but assigned multiple meanings to several code points,
+as suggested by that standard.
+.
+Decimal 34
+.RB ( \[dq] )
+served as a dieresis accent and neutral double quotation mark;
+decimal 39
+.RB ( \[aq] )
+as an acute accent,
+apostrophe,
+and closing (right) single quotation mark;
+decimal 45
+.RB ( \[-] )
+as a hyphen and a minus sign;
+decimal 96
+.RB ( \[ga] )
+as a grave accent and opening (left) single quotation mark;
+decimal 94
+.RB ( \[ha] )
+as a circumflex accent and caret;
+and decimal 126
+.RB ( \[ti] )
+as a tilde accent and swung dash.
+.
+The Model\~37 optionally featured an extended character set offering
+upright Greek letters and several mathematical symbols;
+these were documented as early as the
+.IR kbd (VII)
+man page of the
+(First Edition)
+.I Unix Programmer's Manual.
+.
+.
+.P
+At the time Graphic Systems delivered the C/A/T phototypesetter to AT&T,
+the ASCII character set was not considered a standard basis for a font
+repertoire by traditional typographers.
+.
+In the stock Times roman,
+italic,
+and bold styles available,
+several ASCII characters were not present at all,
+nor was most of the extended character set.
+.
+AT&T commissioned a \[lq]special\[rq] font to ensure no loss of
+repertoire.
+.
+.
+.br
+.ne 2v
+.P
+A representation of the coverage of the C/A/T's text fonts follows.
+.
+The glyph resembling an underscore is a baseline rule,
+and that resembling a vertical line is a box rule.
+.
+In bold,
+the square became filled.
+.
+In italics,
+the box rule was not slanted.
+.
+We also observe that the hyphen and minus sign were already
+\[lq]de-unified\[rq] by the fonts provided;
+a decision whence to map an input \[lq]\-\[rq] therefore had to be
+taken.
+.
+(The Model\~37 printed ASCII decimal 124 as a broken bar,
+like Unicode U+00A6,
+but the C/A/T did not.)
+.
+.TS
+center box;
+Lf(R).
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+0 1 2 3 4 5 6 7 8 9 \[fi] \[fl] \[Fi] \[Fl]
+! $ % & ( ) \[oq] \[cq] * + \- . , / : ; = ? [ ] \[br]
+\[bu] \[sq] \[em] \[hy] \[ru] \[14] \[12] \[34] \
+\[de] \[dg] \[fm] \[ct] \[rg] \[co]
+.TE
+.
+.
+.P
+The special font supplied the missing ASCII and Teletype extended
+glyphs,
+among several others.
+.
+We observe that AT&T took the opportunity to de-unify the apostrophe
+and acute accent
+(a choice ISO later duplicated in its 8859 series of standards).
+.
+A slash intended to be mirror-symmetric with the backslash was also
+included,
+as was the Bell Systems logo;
+we do not attempt to depict the latter.
+.
+.TS
+center box;
+Lf(I),Lf(R).
+\[*a] \[*b] \[*g] \[*d] \[*e] \[*z] \[*y] \[*h] \[*i] \[*k] \[*l] \
+\[*m] \[*n] \[*c] \[*o] \[*p] \[*r] \[*s] \[ts] \[*t] \[*u] \[*f] \
+\[*x] \[*q] \[*w]
+\[*G] \[*D] \[*H] \[*L] \[*C] \[*P] \[*S] \[*U] \[*F] \[*Q] \[*W]
+\[dq] \[aa] \[rs] \[ha] \[ul] \[ga] \[ti] \[sl] < > { } # @ \
+\[pl] \[mi] \[eq] \[**]
+.\" We use \[radicalex] instead of \[rn] for more reliable simulation of
+.\" the typeface shown in Table I of CSTR #54 (1976); see subsection
+.\" "Mathematical symbols" above.
+\[sr] \[radicalex] \[>=] \[<=] \[==] \[~=] \[ap] \[!=] \
+\[ua] \[da] \[<-] \[->] \[mu] \[di] \[+-] \
+\[if] \[pd] \[gr] \[no] \[is] \[pt] \
+\[cu] \[ca] \[sb] \[sp] \[ib] \[ip] \[es] \[mo]
+\[sc] \[dd] \[lh] \[rh] \[or] \[ci] \
+\[lt] \[lb] \[rt] \[rb] \[lk] \[rk] \[bv] \[lf] \[rf] \[lc] \[rc]
+.TE
+.
+.
+.\" ====================================================================
 .SH Files
 .\" ====================================================================
 .
@@ -1866,6 +2001,30 @@ The Unicode Standard
 by Tuomas Salste documents the inherent ambiguity and configurability
 (in terms of variable code points)
 of the ASCII encoding standard.
+.
+.
+.P
+\[lq]Nroff/Troff User's Manual\[rq]
+by Joseph F.\& Ossanna,
+1976,
+AT&T Bell Laboratories Computing Science Technical Report No.\& 54,
+features two tables that throw light on the glyph repertoire available
+to \[lq]typesetter
+.IR roff \[rq]
+when it was first written.
+.
+Be careful of re-typeset versions of this document that can be found on
+the Internet.
+.
+Some do not accurately represent the original document:
+several glyphs are obviously missing.
+.
+More subtly,
+lowercase Greek letters are rendered upright,
+not slanted as they appeared in the C/A/T's special font and as expected
+by
+.I troff \" AT&T
+users.
 .
 .
 .P
