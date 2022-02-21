@@ -261,7 +261,7 @@ HTML,
 DVI,
 and PDF,
 may be available in
-.IR \%@DOCDIR@ .
+.IR @DOCDIR@ .
 .
 .
 .P
@@ -309,7 +309,7 @@ or terminal output.
 .\" ====================================================================
 .
 Input to
-.I \%@g@troff
+.I @g@troff
 must be in one of two character encodings it can recognize:
 IBM code page 1047 on EBCDIC systems,
 and ISO\~Latin-1 (8859-1) otherwise.
@@ -326,7 +326,7 @@ and the
 preprocessor can transform other encodings,
 including UTF-8,
 to satisfy
-.IR \%@g@troff 's
+.IR @g@troff 's
 requirements.
 .
 .
@@ -390,7 +390,7 @@ but suppresses the break implied by the
 .request .trf ,
 requests;
 if the no-break control character is used with any of these requests,
-.I \%@g@troff
+.I @g@troff
 suppresses the break;
 instead the requested operation takes effect at the next break.
 .
@@ -1103,7 +1103,7 @@ produces the same output commands.
 .
 Other delimiters can be used in place of the neutral apostrophes.
 .
-.I \%@g@troff
+.I @g@troff
 formats
 .I s1
 and
@@ -4217,7 +4217,7 @@ these are certain control characters
 Unicode describes them).
 .
 When
-.I \%@g@troff
+.I @g@troff
 encounters one in an identifier,
 it produces a warning diagnostic of type
 .RB \[lq] input \[rq]
@@ -4253,7 +4253,7 @@ and
 .
 .IP
 Some of these code points are used by
-.I \%@g@troff
+.I @g@troff
 internally,
 making it non-trivial to extend the program to cover Unicode or other
 character encodings that use characters from these ranges.
@@ -4911,21 +4911,21 @@ The sum of the numeric codes of currently enabled warning categories.
 .TPx
 .REG .x
 The major version number of the running
-.I \%@g@troff
+.I @g@troff
 formatter.
 .
 .
 .TPx
 .REG .y
 The minor version number of the running
-.I \%@g@troff
+.I @g@troff
 formatter.
 .
 .
 .TPx
 .REG .Y
 The revision number of the running
-.I \%@g@troff
+.I @g@troff
 formatter.
 .
 .
@@ -5084,7 +5084,7 @@ argument.
 .REG slimit
 If >0,
 sets the maximum quantity of objects on
-.IR \%@g@troff 's
+.IR @g@troff 's
 internal input stack.
 .
 If \[<=]0,
@@ -5364,7 +5364,7 @@ macro,
 string,
 or diversion of the same name.
 .
-.I \%@g@troff
+.I @g@troff
 enters \[lq]copy mode\[rq]
 (see below),
 storing subsequent input lines as the definition.
@@ -5454,7 +5454,7 @@ Applying string interpolation to a macro does not change this name.
 .\" ====================================================================
 .
 When
-.I \%@g@troff
+.I @g@troff
 processes certain requests,
 most importantly those which define or append to a macro or string,
 it does so in
@@ -5529,7 +5529,7 @@ is not an escape sequence in the usual sense.
 In any escape sequence
 .BI \[rs] X
 that
-.I \%@g@troff
+.I @g@troff
 does not recognize,
 the escape character is ignored and
 .IR X \~is
@@ -5568,7 +5568,7 @@ before
 and
 .RB \[lq] \[aq] \[rq]
 where
-.I \%@g@troff
+.I @g@troff
 expects them as control characters if you mean to use them literally.
 .
 .
@@ -6041,7 +6041,7 @@ system;
 it manages the pipeline that carries a source document through
 preprocessors,
 the
-.I \%@g@troff
+.I @g@troff
 formatter,
 and an output driver to viewable or printable form.
 .

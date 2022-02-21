@@ -1495,14 +1495,14 @@ see
 .\" ====================================================================
 .
 .TP
-.I \%@FONTDIR@/\:\%devpdf/\:DESC
+.I @FONTDIR@/\:\%devpdf/\:DESC
 describes the
 .B pdf
 output device.
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%devpdf/ F
+.IR @FONTDIR@/\:\%devpdf/ F
 describes the font known
 .RI as\~ F
 on device
@@ -1510,7 +1510,7 @@ on device
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%devpdf/ U\-F
+.IR @FONTDIR@/\:\%devpdf/ U\-F
 describes the font
 from the URW foundry
 (rather than the Adobe default)
@@ -1521,7 +1521,7 @@ on device
 .
 .
 .TP
-.I \%@FONTDIR@/\:\%devpdf/\%download
+.I @FONTDIR@/\:\%devpdf/\%download
 lists fonts available for embedding within the PDF document
 (by analogy to the
 .B ps
@@ -1530,14 +1530,14 @@ device's downloadable font support).
 .
 .\" XXX: Why are we shipping this but not BuildFoundries.pl?
 .TP
-.I \%@FONTDIR@/\:\%devpdf/\%Foundry
+.I @FONTDIR@/\:\%devpdf/\%Foundry
 is a data file used by the
 .I groff
 build system to locate PostScript Type\~1 fonts.
 .
 .
 .TP
-.I \%@FONTDIR@/\:\%devpdf/\:enc/\:\%text\:.enc
+.I @FONTDIR@/\:\%devpdf/\:enc/\:\%text\:.enc
 describes the encoding scheme used by most PostScript Type\~1 fonts;
 the
 .B \%encoding
@@ -1548,7 +1548,7 @@ device refers to it.
 .
 .
 .TP
-.I \%@MACRODIR@/\:pdf\:.tmac
+.I @MACRODIR@/\:pdf\:.tmac
 defines macros for use with the
 .B pdf
 output device.
@@ -1561,7 +1561,7 @@ output device is selected.
 .
 .
 .TP
-.I \%@MACRODIR@/\:\%pdfpic\:.tmac
+.I @MACRODIR@/\:\%pdfpic\:.tmac
 defines the
 .B PDFPIC
 macro for embedding images in a document;
@@ -1587,9 +1587,9 @@ It is automatically loaded by
 .\" ====================================================================
 .
 .TP
-.I \%@DOCDIR@/\:\%sboxes/\:\%msboxes\:.ms
+.I @DOCDIR@/\:\%sboxes/\:\%msboxes\:.ms
 .TQ
-.I \%@DOCDIR@/\:\%sboxes/\:\%msboxes\:.pdf
+.I @DOCDIR@/\:\%sboxes/\:\%msboxes\:.pdf
 \[lq]Using PDF boxes with
 .I groff
 and the

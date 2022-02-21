@@ -90,7 +90,7 @@ transforms
 .MR groff @MAN7EXT@
 language input into the device-independent output format described in
 .MR groff_out @MAN5EXT@ ;
-.I \%@g@troff
+.I @g@troff
 is thus the heart of the GNU
 .I roff
 document formatting system.
@@ -166,12 +166,12 @@ output are subject to change.
 .TP
 .B \-b
 Write a backtrace reporting the state of
-.IR \%@g@troff 's
+.IR @g@troff 's
 input parser to the standard error stream with each diagnostic message.
 .
 The line numbers given in the backtrace might not always be correct,
 because
-.IR \%@g@troff 's
+.IR @g@troff 's
 idea of line numbers can be confused by requests that append to strings
 or macros.
 .
@@ -220,7 +220,7 @@ identifier.
 .TP
 .B \-E
 Inhibit
-.I \%@g@troff
+.I @g@troff
 error messages;
 implies
 .BR \-Ww .
@@ -356,7 +356,7 @@ and
 means print every page from
 .IR n \~on.
 .
-.I \%@g@troff
+.I @g@troff
 stops processing and exits after formatting the last page enumerated in
 .IR list .
 .
@@ -459,7 +459,7 @@ Suppress formatted output.
 .\" BEGIN Keep parallel with groff.texi node "Warnings".
 .\" Caveat: the Texinfo manual sorts them by number, not name.
 Warning diagnostics emitted by
-.I \%@g@troff
+.I @g@troff
 are divided into named,
 numbered categories.
 .
@@ -749,7 +749,7 @@ it is a semicolon (;).
 A list of directories in which to seek the selected output device's
 directory of device and font description files.
 .
-.I \%@g@troff
+.I @g@troff
 will scan directories given as arguments to any specified
 .B \-F
 options before these,
@@ -766,7 +766,7 @@ after them.
 .I GROFF_TMAC_PATH
 A list of directories in which to search for macro files.
 .
-.I \%@g@troff
+.I @g@troff
 will scan directories given as arguments to any specified
 .B \-M
 options before these,
@@ -823,7 +823,7 @@ see
 .\" ====================================================================
 .
 .TP
-.I \%@MACRODIR@/\:\%troffrc
+.I @MACRODIR@/\:\%troffrc
 is an initialization macro file loaded before any macro packages
 specified with
 .B \-m
@@ -831,7 +831,7 @@ options.
 .
 .
 .TP
-.I \%@MACRODIR@/\:\%troffrc\-end
+.I @MACRODIR@/\:\%troffrc\-end
 is an initialization macro file loaded after all macro packages
 specified with
 .B \-m
@@ -839,19 +839,19 @@ options.
 .
 .
 .TP
-.IR \%@MACRODIR@/\: name \:.tmac
+.IR @MACRODIR@/\: name \:.tmac
 are macro files distributed with
 .IR groff .
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%dev name /\:DESC
+.IR @FONTDIR@/\:\%dev name /\:DESC
 describes the output device
 .IR name .
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%dev name / F
+.IR @FONTDIR@/\:\%dev name / F
 describes the font
 .I F
 of device
@@ -955,7 +955,7 @@ device and font description files.
 .TP
 .MR groff_out @MAN5EXT@
 describes the format of
-.IR \%@g@troff 's
+.IR @g@troff 's
 output.
 .
 .

@@ -92,7 +92,7 @@ respectively).
 .
 .P
 Device and font description files are read both by the formatter,
-.IR \%@g@troff ,
+.IR @g@troff ,
 and by output drivers.
 .
 The programs delegate these files' processing to an internal
@@ -299,7 +299,7 @@ instead).
 .TP
 .B pass_filenames
 Direct
-.I \%@g@troff
+.I @g@troff
 to emit the name of the source file being processed.
 .
 This is achieved with the intermediate output command
@@ -458,7 +458,7 @@ driver uses this directive.
 .
 .TP
 .B use_charnames_in_special
-.I \%@g@troff
+.I @g@troff
 should encode named glyphs inside device control commands.
 .
 The
@@ -490,7 +490,7 @@ character set repertoire is described on a per-font basis.
 .
 .
 .P
-.I \%@g@troff
+.I @g@troff
 recognizes but ignores the directives
 .BR spare1 ,
 .BR spare2 ,
@@ -508,7 +508,7 @@ and
 lines are mandatory.
 .
 Directives not listed above are ignored by
-.I \%@g@troff
+.I @g@troff
 but may be used by postprocessors to obtain further information about
 the device.
 .
@@ -663,7 +663,7 @@ it is sought in any mounted fonts that bear this property.
 .
 .P
 Other directives in this section are ignored by
-.IR \%@g@troff ,
+.IR @g@troff ,
 but may be used by postprocessors to obtain further information about
 the font.
 .
@@ -929,7 +929,7 @@ The
 .I entity-name
 field defines an identifier for the glyph that the postprocessor
 uses to print the
-.I \%@g@troff
+.I @g@troff
 glyph
 .IR name .
 .
@@ -1011,13 +1011,13 @@ Most kerning pairs should have a negative value
 .\" ====================================================================
 .
 .TP
-.IR \%@FONTDIR@/\:\%dev name /\:DESC
+.IR @FONTDIR@/\:\%dev name /\:DESC
 describes the output device
 .IR name .
 .
 .
 .TP
-.IR \%@FONTDIR@/\:\%dev name / F
+.IR @FONTDIR@/\:\%dev name / F
 describes the font known
 .RI as\~ F
 on device

@@ -1356,20 +1356,20 @@ Changes to either register take effect at the next display boundary.
 The
 .I ms
 package is often used with the
-.IR \%@g@tbl ,
-.IR \%@g@pic ,
-.IR \%@g@eqn ,
+.IR @g@tbl ,
+.IR @g@pic ,
+.IR @g@eqn ,
 and
-.I \%@g@refer
+.I @g@refer
 preprocessors.
 .
 The
 .B \[rs]n[DD]
 distance is also applied to regions of the document preprocessed with
-.IR \%@g@eqn ,
-.IR \%@g@pic ,
+.IR @g@eqn ,
+.IR @g@pic ,
 and
-.IR \%@g@tbl .
+.IR @g@tbl .
 .
 Mark text meant for preprocessors by enclosing it in pairs of tokens as
 follows,
@@ -1450,7 +1450,7 @@ its bibliographic database.
 .
 .P
 When
-.I \%@g@refer
+.I @g@refer
 emits collected references
 (as might be done on a \[lq]Works Cited\[rq] page),
 it interpolates the string
@@ -2562,7 +2562,7 @@ Names containing only uppercase letters and digits.
 .\" ====================================================================
 .
 .TP
-.I \%@MACRODIR@/\:@TMAC_S_PREFIX@s\:.tmac
+.I @MACRODIR@/\:@TMAC_S_PREFIX@s\:.tmac
 implements the package.
 .
 .
@@ -2575,7 +2575,7 @@ support for
 .
 .
 .TP
-.I \%@MACRODIR@/\:ms\:.tmac
+.I @MACRODIR@/\:ms\:.tmac
 is a wrapper enabling the package to be loaded with
 .RB \[lq] "groff \-m ms" \[rq].
 .
@@ -2606,9 +2606,9 @@ it may be compressed and/or available in additional formats.
 .
 .
 .TP
-.I \%@DOCDIR@/\:ms\:.ms
+.I @DOCDIR@/\:ms\:.ms
 .TQ
-.I \%@DOCDIR@/\:ms\:.ps
+.I @DOCDIR@/\:ms\:.ps
 \[lq]Using
 .I groff
 with the
@@ -2618,9 +2618,9 @@ Larry Kollar.
 .
 .
 .TP
-.I \%@DOCDIR@/\:\%msboxes\:.ms
+.I @DOCDIR@/\:\%msboxes\:.ms
 .TQ
-.I \%@DOCDIR@/\:\%msboxes\:.pdf
+.I @DOCDIR@/\:\%msboxes\:.pdf
 \[lq]Using PDF boxes with
 .I groff
 and the

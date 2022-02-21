@@ -143,7 +143,7 @@ the two programs share a set of options.
 However,
 .I groff
 has some options that
-.I \%@g@troff
+.I @g@troff
 does not share,
 and others which
 .I groff
@@ -151,7 +151,7 @@ interprets differently.
 .
 At the same time,
 not all valid
-.I \%@g@troff
+.I @g@troff
 options can be given to
 .IR groff .
 .
@@ -161,7 +161,7 @@ options can be given to
 .\" ====================================================================
 .
 The following options either do not exist for
-.I \%@g@troff
+.I @g@troff
 or are interpreted differently by
 .IR groff .
 .
@@ -202,7 +202,7 @@ implies
 .TP
 .BI \-I\~ dir
 Works as
-.IR \%@g@troff 's
+.IR @g@troff 's
 option
 (see below),
 but also implies
@@ -214,7 +214,7 @@ It is passed to
 .MR @g@soelim @MAN1EXT@
 and the output driver,
 and
-.I \%@g@grn
+.I @g@grn
 is passed an
 .B \-M
 option with
@@ -345,9 +345,9 @@ Run
 preprocessor.
 .
 No mechanism is provided for passing arguments to
-.I \%@g@refer
+.I @g@refer
 because most
-.I \%@g@refer
+.I @g@refer
 options have equivalent language elements that can be specified within
 the document.
 .
@@ -380,13 +380,13 @@ preprocessor.
 .TP
 .BI \-T\~ dev
 Direct
-.I \%@g@troff
+.I @g@troff
 to format the input for the output device
 .IR dev .
 .
 .I groff
 then calls an output driver to convert
-.IR \%@g@troff 's
+.IR @g@troff 's
 output to a form appropriate for
 .IR dev ;
 see subsection \[lq]Output devices\[rq] below.
@@ -398,9 +398,9 @@ Operate in unsafe mode:
 pass the
 .B \-U
 option to
-.I \%@g@pic
+.I @g@pic
 and
-.IR \%@g@troff .
+.IR @g@troff .
 .
 See
 .BR \-S .
@@ -444,7 +444,7 @@ display.
 .B \-Z
 Disable postprocessing.
 .
-.I \%@g@troff
+.I @g@troff
 output will appear on the standard output stream
 (unless suppressed with
 .BR \-z );
@@ -496,7 +496,7 @@ Define string.
 .TP
 .B \-E
 Inhibit
-.I \%@g@troff
+.I @g@troff
 error messages;
 implies
 .BR \-Ww .
@@ -575,7 +575,7 @@ emission of warnings in category
 .TP
 .B \-z
 Suppress formatted device-independent output of
-.IR \%@g@troff .
+.IR @g@troff .
 .
 .
 .\" ====================================================================
@@ -594,7 +594,7 @@ output drivers
 (or \[lq]postprocessors\[rq]),
 a suite of utilities,
 and the formatter
-.I \%@g@troff
+.I @g@troff
 at its heart.
 .
 See
@@ -746,7 +746,7 @@ It is even.
 In GNU
 .IR roff ,
 the page dimensions for the formatter
-.I \%@g@troff
+.I @g@troff
 and for output devices are handled separately.
 .
 In the formatter,
@@ -1095,7 +1095,7 @@ is a modern package written by Peter Schaffter specifically for GNU
 .IR roff .
 .
 Consult the
-.UR file://\:\%@HTMLDOCDIR@/\:mom/\:toc\:.html
+.UR file://\:@HTMLDOCDIR@/\:mom/\:toc\:.html
 .I mom
 HTML manual
 .UE
@@ -1178,7 +1178,7 @@ programs as well as many extensions.
 The command-line option
 .B \-C
 switches
-.I \%@g@troff
+.I @g@troff
 into
 .IR "compatibility mode" ,
 which tries to emulate AT&T
@@ -1212,7 +1212,7 @@ in a page description language whose syntax is detailed in
 .SS "Output devices"
 .\" ====================================================================
 .
-.I \%@g@troff
+.I @g@troff
 output is formatted for a particular
 .IR "output device" ,
 typically specified by the
@@ -1331,7 +1331,7 @@ and a
 .\" ====================================================================
 .
 Any program that interprets the output of
-.I \%@g@troff
+.I @g@troff
 is a GNU
 .I roff
 postprocessor.

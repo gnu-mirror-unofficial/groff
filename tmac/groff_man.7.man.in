@@ -1236,7 +1236,7 @@ URIs can be lengthy;
 rendering them can result in jarring adjustment or variations in line
 length,
 or
-.I \%@g@troff
+.I @g@troff
 warnings when a hyperlink is longer than an output line.
 .
 The application of non-printing break point escape sequences
@@ -2203,9 +2203,9 @@ _endif()dnl
 .\" ====================================================================
 .
 When a preprocessor like
-.I \%@g@tbl
+.I @g@tbl
 or
-.I \%@g@eqn
+.I @g@eqn
 is needed,
 a hint can be given to the man page librarian by making the first line
 of a man page look like this:
@@ -2228,12 +2228,12 @@ The
 .I word
 consists of one letter for each needed preprocessor:
 \(lqe\(rq for
-.IR \%@g@eqn ,
+.IR @g@eqn ,
 \(lqr\(rq for
-.IR \%@g@refer ,
+.IR @g@refer ,
 and
 \(lqt\(rq for
-.IR \%@g@tbl .
+.IR @g@tbl .
 .
 Modern implementations of the
 .I man
@@ -3462,7 +3462,7 @@ _endif()dnl
 .\" ====================================================================
 .
 .TP
-.I \%@MACRODIR@/\:an\:.tmac
+.I @MACRODIR@/\:an\:.tmac
 Most
 .I man
 macros are contained in this file.
@@ -3473,7 +3473,7 @@ It also loads the extensions from
 .
 .
 .TP
-.I \%@MACRODIR@/\:\%andoc\:.tmac
+.I @MACRODIR@/\:\%andoc\:.tmac
 This brief
 .I groff
 program detects whether the
@@ -3506,7 +3506,7 @@ reloads each macro package as necessary.
 .
 .
 .TP
-.I \%@MACRODIR@/\:\%an\-ext\:.tmac
+.I @MACRODIR@/\:\%an\-ext\:.tmac
 Definitions of macros described above as extensions
 .RB ( .SY ,
 .BR .YS ,
@@ -3559,19 +3559,19 @@ implementations that may give up their scan for indexing material early.
 .
 .
 .TP
-.I \%@MACRODIR@/\:man\:.tmac
+.I @MACRODIR@/\:man\:.tmac
 This is a wrapper that loads
 .IR an.tmac .
 .
 .
 .TP
-.I \%@MACRODIR@/\:\%mandoc\:.tmac
+.I @MACRODIR@/\:\%mandoc\:.tmac
 This is a wrapper that loads
 .IR \%andoc.tmac .
 .
 .
 .TP
-.I \%@LOCALMACRODIR@/\:\%man\:\%.local
+.I @LOCALMACRODIR@/\:\%man\:\%.local
 Put site-local changes and customizations into this file.
 _ifstyle()dnl
 .
