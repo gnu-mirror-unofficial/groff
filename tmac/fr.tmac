@@ -1,6 +1,6 @@
 .\" French localization for groff
 .\"
-.\" Copyright (C) 2006-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 2006-2022 Free Software Foundation, Inc.
 .\"   Written by Fabrice Ménard (menard.fabrice@wanadoo.fr)
 .\"
 .\" This file is part of groff.
@@ -23,6 +23,14 @@
 .
 .do nr *groff_fr_tmac_C \n[.cp]
 .cp 0
+.
+.
+.\" If changing from an existing locale, we need to preserve the state
+.\" of the "suppress hyphenation before a page location trap" bit.
+.nr locale*use-trap-hyphenation-mode 0
+.if d locale \
+.  if \n[.hy]=\n[\*[locale]*hyphenation-mode-trap] \
+.    nr locale*use-trap-hyphenation-mode 1
 .
 .
 .ds locale french\"
@@ -144,26 +152,23 @@
 .\}
 .
 .
-.\" me package
-.if d @R \{\
-.	ds _td_format \En(dy \E*(mo \En(y4
-.	ld
-.\}
-.
-.
 .\" Default encoding
 .mso latin9.tmac
 .
 .ss 12 0
 .
+.\" Set up hyphenation.
+.
 .\" French hyphenation (\lefthyphenmin=2, \righthyphenmin=3)
-.\"
-.\" Hyphenation value 2 (bit 1) may already have been set by troffrc or
-.\" a macro package; preserve it.
-.ie (\n[.hy]%2=0 & (\n[.hy]%4)) \
-.	hy 6
+.nr \*[locale]*hyphenation-mode-base 4
+.nr \*[locale]*hyphenation-mode-trap 6
+.
+.ie \n[locale*use-trap-hyphenation-mode] \
+.  hy \n[\*[locale]*hyphenation-mode-trap]
 .el \
-.	hy 4
+.  hy \n[\*[locale]*hyphenation-mode-base]
+.
+.rr locale*use-trap-hyphenation-mode
 .
 .hcode à à  À à
 .hcode â â  Â â
@@ -183,6 +188,18 @@
 .
 .hla fr
 .hpf hyphen.fr
+.
+.
+.\" man package
+.if d an \
+.	an*reset-hyphenation-mode
+.
+.
+.\" me package
+.if d @R \{\
+.	ds _td_format \En(dy \E*(mo \En(y4
+.	ld
+.\}
 .
 .
 .cp \n[*groff_fr_tmac_C]

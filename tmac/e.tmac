@@ -2006,10 +2006,14 @@
 .do ds dw \\*[_dw\\n(dw]
 .do ds mo \\*[_mo\\n(mo]
 .do ds td \\*[_td_format]
+.
+.\" Set package default hyphenation mode, but override it with groff's
+.\" localized value if available.
+.hy 6
+.do hy \\n[\\*[locale]*hyphenation-mode-trap]
 ..
 .
 .ld
-.hy 6
 .
 .\"		*** PARAMETRIC INITIALIZATIONS ***
 .

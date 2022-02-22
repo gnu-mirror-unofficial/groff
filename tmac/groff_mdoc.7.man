@@ -4786,10 +4786,16 @@ both registers default to 78n for terminal devices and 6.5i otherwise.
 .
 .
 .Pp
-Hyphenation can be disabled with the
+Normally,
+automatic hyphenation is enabled using a mode appropriate to the
+.Nm groff
+locale;
+see section \[lq]Localization\[lq] of
+.Xr groff @MAN7EXT@ .
+.
+It can be disabled by setting the
 .Ql HY
-register
-(though any permissible hyphenation mode may be used).
+register to zero.
 .
 .
 .Pp

@@ -1,3 +1,51 @@
+2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[man,mdoc,me]: Revise hyphenation localization.
+
+	* tmac/an.tmac (an*reset-hyphenation-mode): New macro sets the
+	hyphenation mode appropriate to the locale depending on the
+	values of `cR` (continuous rendering mode) and `HY` (hyphenation
+	enablement); the latter is now interpreted as a Boolean.  Define
+	new register `an*hyphenation-mode` reflecting these conditions.
+	(TH): Call the foregoing instead of invoking `hy` request.
+	(MR): Restore hyphenation mode to `an*hyphenation-mode`.
+	(initializtion): Simplify; if not defined, set `HY` to 1.
+
+	* tmac/e.tmac (ld): Set the hyphenation mode here instead of in
+	initialization (which already calls this macro).  Set the mode
+	to 6 for the benefit of anyone borrowing our me(7) changes, but
+	then immediately change to the mode determinated by the
+	localization file.
+
+	* tmac/mdoc/doc-common (doc-hyphen-flags): Set an hyphenation
+	mode appropriate to the locale depending on the values of `cR`
+	and `HY`.
+	* tmac/mdoc/doc-ditroff:
+	* tmac/mdoc/doc-nroff: Simplify initialization; if not defined,
+	set `HY` to 1.
+
+	* tmac/cs.tmac:
+	* tmac/de.tmac:
+	* tmac/en.tmac:
+	* tmac/fr.tmac:
+	* tmac/it.tmac:
+	* tmac/sv.tmac: Before switching locales, set a flag if
+	troublesome bit 2 of the hyphenation mode is set so that we can
+	preserve it.  Shift man(7) and me(7) logic to follow setup of
+	the new hyphenation mode; for the former, call the new
+	`an*reset-hyphenation-mode`.
+
+	* tmac/groff_man.7.man.in:
+	* tmac/groff_mdoc.7.man: Document updated meaning of `HY`
+	register.
+
+	* NEWS: Add item noting change of man(7) `HY`'s meaning.  Update
+	existing item regarding mdoc(7)'s support for it (groff 1.22.4
+	mdoc(7) didn't recognize the register at all).
+
+	Fixes <https://savannah.gnu.org/bugs/?61734> (for real this
+	time?).
+
 2022-02-22  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Regression-test Savannah #61734.

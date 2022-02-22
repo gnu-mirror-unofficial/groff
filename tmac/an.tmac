@@ -138,6 +138,19 @@
 .  em an-end
 ..
 .
+.de an*reset-hyphenation-mode
+.  ie \\n[HY] \{\
+.    \" No page breaks occur in continuous rendering.
+.    ie \\n[cR] \
+.      nr an*hyphenation-mode \\n[\\*[locale]*hyphenation-mode-base]
+.    el \
+.      nr an*hyphenation-mode \\n[\\*[locale]*hyphenation-mode-trap]
+.  \}
+.  el \
+.    nr an*hyphenation-mode 0
+.  hy \\n[an*hyphenation-mode]
+..
+.
 .de an-reset-tab-stops
 .  ta T .5i
 ..
@@ -239,13 +252,13 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  ad \\*[AD]
-.  hy \\n[HY]
 .  ll \\n[LL]u
 .
 .  \" We've seen no tbl(1) tables yet in this document.
 .  rr TW
 .  nr an-was-tbl-failure-reported 0
 .
+.  an*reset-hyphenation-mode
 .  an-reset-tab-stops
 .  an-reset-paragraph-spacing
 .  an-reset-margin-and-inset-level
@@ -984,7 +997,7 @@
 \X^tty: link^\c
 .  \}
 \&\\$3
-.  hy \\n[HY]
+.  hy \\n[an*hyphenation-mode]
 ..
 .
 .\" tbl(1) table support
@@ -1194,12 +1207,9 @@
 .  \}
 .\}
 .
-.\" hyphenation mode
-.if !r HY \{\
-.  \" No page breaks occur in continuous rendering.
-.  ie \n[cR] .nr HY 4
-.  el        .nr HY 6
-.\}
+.\" hyphenation enablement
+.if !r HY \
+.  nr HY 1
 .
 .\" standard indentation
 .if !r IN \{\

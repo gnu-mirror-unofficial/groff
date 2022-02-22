@@ -922,10 +922,11 @@
 .
 .\" NS doc-hyphen-flags global register
 .\" NS   the parameter for the '.hy' request
-.\" NS
-.\" NS override this in 'mdoc.local', if necessary.
-.
-.nr doc-hyphen-flags \n[HY]
+.ie \n[HY] \{\
+.  ie \n[cR] .nr doc-hyphen-flags \n[\*[locale]*hyphenation-mode-base]
+.  el        .nr doc-hyphen-flags \n[\*[locale]*hyphenation-mode-trap]
+.\}
+.el .nr doc-hyphen-flags 0
 .
 .
 .\" NS doc-header macro

@@ -227,6 +227,11 @@ o The an (man) macro package no longer honors an `ll` request to set the
   vary the line length freely (DWB troff, Solaris troff, Plan 9 troff)
   or at all (mandoc, Heirloom Doctools troff).
 
+o The an (man) macro package now interprets the value of the `HY`
+  register as a Boolean; using it to set specific hyphenation mode
+  is no longer supported.  The groff command-line option `-rHY=0`
+  continues to disable automatic hyphenation of man page text as before.
+
 o The groff_man(7) man page documenting the groff implementation of the
   an (man) macro package has been split into two pages.  The original
   page remains as a terser reference for experienced users.  A new page,
@@ -235,9 +240,9 @@ o The groff_man(7) man page documenting the groff implementation of the
   reader who is not an expert in *roff systems or in writing man pages.
 
 o The doc (mdoc) macro package now honors the HY register as the an
-  (man) package does: to set the default hyphenation mode.  It
-  furthermore recognizes the `AD` string (see above) for compatibility
-  with an (man), but at present ignores its value.
+  (man) package does.  It furthermore recognizes the `AD` string (see
+  above) for compatibility with an (man), but at present ignores its
+  value.
 
 o The e (me) macro package has changed its support for output line
   numbering with the `n1` and `n2` macros to resolve several bugs in the
