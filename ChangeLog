@@ -1,5 +1,17 @@
 2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Revert addition of man(7) `BD` register.  This feature, which I
+	introduced in commit ea3b27102f (31 January) doesn't work
+	because pdf.tmac normalizes the bookmark depth.  Embedding a man
+	page in a larger PDF document with appropriately nested
+	bookmarks is a project that will have to await another day (or
+	perhaps already has tools to implement it).
+
+	* tmac/an.tmac: Do it.
+	* tmac/groff_man.7.man.in: De-document it.
+
+2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/pdf.tmac: Add string containing the name of the macro
 	package for use in diagnostic messages.
 	(pdf:warn, pdf:error): Use it.

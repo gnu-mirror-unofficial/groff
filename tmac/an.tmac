@@ -193,7 +193,7 @@
 .\" Write a bookmark/anchor/link target $2 at hierarchical depth $1.
 .de an*bookmark
 .  if '\\*[.T]'pdf' \{\
-.    nr an*bookmark-depth \\n[BD]+\\$1
+.    nr an*bookmark-depth \\$1
 .    pdfbookmark \\n[an*bookmark-depth] \\$2
 .    rr an*bookmark-depth
 .  \}
@@ -1116,9 +1116,6 @@
 .
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
-.
-.\" base depth for bookmarks (for embedding man pages in other docs)
-.if !r BD .nr BD 0
 .
 .if '\*[.T]'pdf' \{\
 .  \" FIXME: The following registers are documented only in pdf.tmac.
