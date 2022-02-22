@@ -69,11 +69,14 @@ am solely responsible for any bugs I may have introduced into this file.
 .de pdfmark
 . nop \!x X ps:exec [\\$* pdfmark
 ..
+.
+.ds pdf pdf.tmac\" for use in diagnostic messages
+.
 .de pdf:warn
-. tm \\n(.F:\\n(.c: macro warning: \\$*
+. tm \\*[pdf]:\\n[.F]:\\n[.c]: warning: \\$*
 ..
 .de pdf:error
-. tm \\n(.F:\\n(.c: macro error: \\$*
+. tm \\*[pdf]:\\n[.F]:\\n[.c]: error: \\$*
 ..
 .de pdfinfo
 .\" -------------------------------------------------------------------
