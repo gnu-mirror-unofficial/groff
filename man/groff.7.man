@@ -31,6 +31,8 @@ groff \- GNU roff language reference
 .\" Setup
 .\" ====================================================================
 .
+.\" Man pages should not define page-local macros.  Most of these were
+.\" written long ago; someday we'll revise the page without them.
 .
 .\" ====================================================================
 .\" start a macro, escape sequence, or register definition
@@ -219,6 +221,18 @@ groff \- GNU roff language reference
 .  el \
 .    BR \\$*
 ..
+.
+.\" begin list [piloting a possible extension to man(7)]
+.de BL
+.  nr saved-PD \\n[PD]
+.  nr PD 0
+..
+.
+.\" end list [piloting a possible extension to man(7)]
+.de EL
+.  nr PD \\n[saved-PD]
+..
+.
 .
 .\" end of macro definitions
 .
@@ -671,7 +685,7 @@ language defines the following scaling units.
 .
 .
 .P
-.PD 0
+.BL
 .RS
 .
 .TPx
@@ -721,7 +735,7 @@ font \f[I]DESC\f[] file)
 multiply by 65,536
 (used with color components)
 .RE
-.PD
+.EL
 .
 .
 .P
@@ -750,7 +764,7 @@ operators.
 .
 .
 .P
-.PD 0
+.BL
 .RS
 .
 .TPx
@@ -818,7 +832,7 @@ Begin expression group of higher precedence
 End expression group of higher precedence
 .
 .RE
-.PD
+.EL
 .
 .
 .P
@@ -856,7 +870,7 @@ provides some additional arithmetic operators.
 .
 .
 .P
-.PD 0
+.BL
 .RS
 .
 .TPx
@@ -882,7 +896,7 @@ using
 as the default scaling indicator.
 .
 .RE
-.PD
+.EL
 .
 .
 .\" ====================================================================
@@ -1192,7 +1206,7 @@ A few denotations may require introduction.
 .
 .
 .P
-.PD 0
+.BL
 .RS
 .
 .TPx
@@ -1230,7 +1244,7 @@ has three meanings,
 depending on its sign.
 .
 .RE
-.PD
+.EL
 .
 .
 .P
@@ -1306,7 +1320,7 @@ Texinfo manual or
 .SS "Request short reference"
 .\" ====================================================================
 .
-.PD 0
+.BL
 .
 .TPx
 .REQ .ab "\f[R][\f[]message\f[R]]"
@@ -3210,7 +3224,7 @@ Write contents of macro or string
 to the stream named
 .IR stream .
 .
-.PD
+.EL
 .
 .
 .P
@@ -3371,7 +3385,7 @@ are interpreted even in copy mode.
 .
 .
 .P
-.PD 0
+.BL
 .
 .\" ========= comments =========
 .
@@ -4183,7 +4197,7 @@ and then restore the horizontal and vertical position;
 .I anything
 must not contain tabs or leaders.
 .
-.PD
+.EL
 .
 .
 .\" ====================================================================
@@ -4475,7 +4489,7 @@ results from request calls.
 .
 .
 .P
-.PD 0
+.BL
 .
 .TPx
 .REG $$
@@ -4937,7 +4951,7 @@ Name of current diversion.
 .REG .zoom
 Zoom factor for current font (in multiples of 1/1000th; zero if no
 magnification).
-.PD
+.EL
 .
 .
 .\" ====================================================================
@@ -4950,7 +4964,7 @@ customizing a document.
 .
 .
 .P
-.PD 0
+.BL
 .TPx
 .REG %
 Current page number.
@@ -5135,7 +5149,7 @@ The current year.
 .REG yr
 The current year minus 1900.
 .
-.PD
+.EL
 .
 .
 .\" ====================================================================
