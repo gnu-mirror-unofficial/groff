@@ -1,5 +1,23 @@
 2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/doc.tmac (initialization): Drop definition of
+	`doc-curr-size` register.  It is no longer needed since nothing
+	internal to the package now changes the type size.
+
+	* tmac/doc.tmac (Fl, doc-print-recursive, doc-print-prefixes,
+	doc-generic-macro, Ar, Cd, doc-do-func-decl, Fd, In, Nm, Pa, Tn,
+	doc-enclose-string, Ef, Bd, doc-save-global-vars,
+	doc-restore-global-vars, doc-diag-list, Xr, Dl, Vt, Ft, Fa,
+	doc-do-func, Fn, doc-do-func-args, Fo, Fc, %A, %B, %C, %D, %I,
+	%J, %N, %O, %P, %Q, %R, %T, %U, %V, doc-do-reference, Hf, An,
+	Lk):
+	* tmac/mdoc/doc-common (Sh, Ss, Rd):
+	* tmac/mdoc/doc-syms (Ux, Bx, At, Dx, Fx, Nx, Ox, Bsx, St, Lb):
+	Drop interpolations of the string and comments documenting that
+	each macro has a side effect on the type size.
+
+2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/doc.tmac (Tn):
 	* tmac/mdoc/doc-syms (Ux, Bx): Stop interpolating string
 	`doc-Tn-font-size` to set macro arguments at a smaller type
