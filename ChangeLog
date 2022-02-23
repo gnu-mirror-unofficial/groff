@@ -1,3 +1,11 @@
+2022-02-24  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[pic]: Fix "unused result" compiler warning.
+
+	* src/preproc/pic/pic.ypp (placeless_element) <SH>: Check return
+	value of `system()` to quieten `-Wunused-result` warning; if it
+	is less than zero, report it to the standard error stream.
+
 2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/safer.tmac: Drop file from distribution.  It contained
