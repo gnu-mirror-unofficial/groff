@@ -1,5 +1,20 @@
 2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/doc.tmac (Tn):
+	* tmac/mdoc/doc-syms (Ux, Bx): Stop interpolating string
+	`doc-Tn-font-size` to set macro arguments at a smaller type
+	size.  This leaves the string without a purpose, so...
+
+	* tmac/mdoc/doc-ditroff:
+	* tmac/mdoc/doc-nroff: Drop definitions of `doc-Tn-font-size`.
+
+	* tmac/mdoc/doc-syms: Drop interpolations of that string from
+	numerous other string definitions.
+
+	Fixes <https://savannah.gnu.org/bugs/?60616>.
+
+2022-02-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Revert addition of man(7) `BD` register.  This feature, which I
 	introduced in commit ea3b27102f (31 January) doesn't work
 	because pdf.tmac normalizes the bookmark depth.  Embedding a man
