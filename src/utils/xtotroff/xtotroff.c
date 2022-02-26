@@ -29,8 +29,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define __GETOPT_PREFIX groff_
 
 #include <X11/Xlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,14 +62,14 @@ Display *dpy;
 unsigned resolution = 75;
 unsigned point_size = 10;
 
-static int charExists(XFontStruct * fi, int c)
+static bool charExists(XFontStruct * fi, int c)
 {
   XCharStruct *p;
 
   /* 'c' is always >= 0 */
   if ((unsigned int) c < fi->min_char_or_byte2
       || (unsigned int) c > fi->max_char_or_byte2)
-    return 0;
+    return false;
   p = fi->per_char + (c - fi->min_char_or_byte2);
   return p->lbearing != 0 || p->rbearing != 0 || p->width != 0
 	 || p->ascent != 0 || p->descent != 0 || p->attributes != 0;
@@ -75,7 +77,7 @@ static int charExists(XFontStruct * fi, int c)
 
 /* Canonicalize the font name by replacing scalable parts by *s. */
 
-static int CanonicalizeFontName(char *font_name, char *canon_font_name)
+static bool CanonicalizeFontName(char *font_name, char *canon_font_name)
 {
   unsigned int attributes;
   XFontName parsed;
@@ -83,43 +85,43 @@ static int CanonicalizeFontName(char *font_name, char *canon_font_name)
   if (!XParseFontName(font_name, &parsed, &attributes)) {
     fprintf(stderr, "%s: not a standard font name: \"%s\"\n",
 	    program_name, font_name);
-    return 0;
+    return false;
   }
 
   attributes &= ~(FontNamePixelSize | FontNameAverageWidth
 		  | FontNamePointSize
 		  | FontNameResolutionX | FontNameResolutionY);
   XFormatFontName(&parsed, attributes, canon_font_name);
-  return 1;
+  return true;
 }
 
-static int
+static bool
 FontNamesAmbiguous(const char *font_name, char **names, int count)
 {
   char name1[2048], name2[2048];
   int i;
 
-  if (count == 1)
-    return 0;
+  if (1 == count)
+    return false;
 
   for (i = 0; i < count; i++) {
-    if (!CanonicalizeFontName(names[i], i == 0 ? name1 : name2)) {
-      fprintf(stderr, "%s: bad font name: \"%s\"\n", program_name,
+    if (!CanonicalizeFontName(names[i], 0 == i ? name1 : name2)) {
+      fprintf(stderr, "%s: invalid font name: \"%s\"\n", program_name,
 	      names[i]);
-      return 1;
+      return true;
     }
     if (i > 0 && strcmp(name1, name2) != 0) {
       fprintf(stderr, "%s: ambiguous font name: \"%s\"", program_name,
 	      font_name);
       fprintf(stderr, " matches \"%s\"", names[0]);
       fprintf(stderr, " and \"%s\"", names[i]);
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
-static int MapFont(char *font_name, const char *troff_name)
+static bool MapFont(char *font_name, const char *troff_name)
 {
   XFontStruct *fi;
   int count;
@@ -140,7 +142,7 @@ static int MapFont(char *font_name, const char *troff_name)
   if (!XParseFontName(font_name, &parsed, &attributes)) {
     fprintf(stderr, "%s: not a standard font name: \"%s\"\n",
 	    program_name, font_name);
-    return 0;
+    return false;
   }
 
   attributes &= ~(FontNamePixelSize | FontNameAverageWidth);
@@ -154,13 +156,13 @@ static int MapFont(char *font_name, const char *troff_name)
 
   names = XListFonts(dpy, name_string, 100000, &count);
   if (count < 1) {
-    fprintf(stderr, "%s: bad font name: \"%s\"\n", program_name,
+    fprintf(stderr, "%s: invalid font name: \"%s\"\n", program_name,
 	    font_name);
-    return 0;
+    return false;
   }
 
   if (FontNamesAmbiguous(font_name, names, count))
-    return 0;
+    return false;
 
   XParseFontName(names[0], &parsed, &attributes);
   size_t sz = sizeof encoding;
@@ -173,14 +175,14 @@ static int MapFont(char *font_name, const char *troff_name)
   if (!char_map) {
     fprintf(stderr, "%s: not a standard encoding: \"%s\"\n",
 	    program_name, encoding);
-    return 0;
+    return false;
   }
 
   fi = XLoadQueryFont(dpy, names[0]);
   if (!fi) {
     fprintf(stderr, "%s: font does not exist: \"%s\"\n", program_name,
 	    names[0]);
-    return 0;
+    return false;
   }
 
   printf("%s -> %s\n", names[0], troff_name);
@@ -192,9 +194,10 @@ static int MapFont(char *font_name, const char *troff_name)
     out = fdopen(fd, "w");
   }
 
-  if (!out) {
-    perror(troff_name);
-    return 0;
+  if (NULL == out) {
+    fprintf(stderr, "%s: unable to create '%s': %s\n", program_name,
+	    troff_name, strerror(errno));
+    return false;
   }
   fprintf(out, "name %s\n", troff_name);
   if (!strcmp(char_map->encoding, "adobe-fontspecific"))
@@ -237,13 +240,13 @@ static int MapFont(char *font_name, const char *troff_name)
   }
   XUnloadFont(dpy, fi->fid);
   fclose(out);
-  return 1;
+  return true;
 }
 
 static void usage(FILE *stream)
 {
   fprintf(stream,
-	  "usage: %s [-r resolution] [-s point-size] FontMap\n"
+	  "usage: %s [-r resolution] [-s type-size] font-map\n"
 	  "       %s -v\n",
 	  program_name, program_name);
 }
@@ -278,54 +281,55 @@ int main(int argc, char **argv)
       break;
     case 'v':
       printf("xtotroff (groff) version %s\n", Version_string);
-      exit(0);
+      exit(EXIT_SUCCESS);
       break;
     case CHAR_MAX + 1: /* --help */
       usage(stdout);
-      exit(0);
+      exit(EXIT_SUCCESS);
       break;
     case '?':
       usage(stderr);
-      exit(1);
+      exit(EXIT_FAILURE);
       break;
     }
   }
   if (argc - optind != 1) {
     usage(stderr);
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   dpy = XOpenDisplay(0);
   if (!dpy) {
-    fprintf(stderr, "%s: can't connect to the X server; make sure the"
-	    " DISPLAY environment variable is set correctly\n",
-	    program_name);
-    exit(1);
+    fprintf(stderr, "%s: fatal error: can't connect to the X server;"
+	    " make sure the DISPLAY environment variable is set"
+	    " correctly\n", program_name);
+    exit(EXIT_FAILURE);
   }
 
   map = fopen(argv[optind], "r");
-  if (map == NULL) {
-    perror(argv[optind]);
-    exit(1);
+  if (NULL == map) {
+    fprintf(stderr, "%s: fatal error: unable to open map file '%s':"
+	    " %s\n", program_name, argv[optind], strerror(errno));
+    exit(EXIT_FAILURE);
   }
 
   while (fgets(line, sizeof(line), map)) {
     for (a = line, b = troff_name; *a; a++, b++) {
       c = (*b = *a);
-      if (c == ' ' || c == '\t')
+      if (' ' == c || '\t' == c)
 	break;
     }
     *b = '\0';
-    while (*a && (*a == ' ' || *a == '\t'))
+    while (*a && (' ' == *a || '\t' == *a))
       ++a;
     for (b = font_name; *a; a++, b++)
       if ((*b = *a) == '\n')
 	break;
     *b = '\0';
     if (!MapFont(font_name, troff_name))
-      exit(1);
+      exit(EXIT_FAILURE);
   }
-  exit(0);
+  exit(EXIT_SUCCESS);
 }
 
 // Local Variables:

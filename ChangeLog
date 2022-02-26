@@ -1,3 +1,24 @@
+2022-02-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[xtotroff]: Trivially refactor.
+
+	* src/utils/xtotroff/xtotroff.c: Boolify.  Include `stdbool.h`
+	and `errno.h` headers.
+	(charExists, CanonicalizeFontName, FontNamesAmbiguous, MapFont):
+	Boolify.  Demote return type from `int` to `bool` and return
+	Boolean instead of integer literals.
+	(FontNamesAmbiguous, main): Reorder equality comparisons with
+	simple left-hand sides to avoid inadvertent lvalue assignments.
+	(FontNamesAmbiguous, MapFont): Refer to font name as "invalid",
+	not "bad", in diagnostic messages.
+	(MapFont, main): Use `strerror()` instead of `perror()` so that
+	diagnostics include the program name and an indication of
+	problem severity.
+	(MapFont): Compare `FILE` stream pointer to `NULL` instead of
+	treating it as a Boolean.
+	(main): Use `EXIT_SUCCESS` and `EXIT_FAILURE` constants from C
+	library instead of integer literals for exit status.
+
 2022-02-24  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[pic]: Fix "unused result" compiler warning.
