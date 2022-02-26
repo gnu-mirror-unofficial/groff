@@ -1,5 +1,26 @@
 2022-02-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[xtotroff]: Add `-d` option to produce font description files in
+	specified directory.
+
+	* src/utils/xtotroff/xtotroff.c: Do it.  Add global `destdir`
+	pointer.
+	(xtotroff_exit): Add new function to clean up storage allocated
+	by `strdup()` (below) for destination directory.
+	(MapFont): Introduce new variable `file_name`, into which we
+	assemble a destination file name from `destdir` (if not null)
+	and the troff font name.  Handle memory allocation failure (by
+	carefully dying).  Free allocated storage on success and failure
+	paths out of the function.
+	(usage): Document new `-d` option.
+	(main): Instruct `getopt_long` to expect a `-d` flag with an
+	argument.  Use `strdup()` to make a copy of any such option
+	argument.  Call `xtotroff_exit()` instead of `exit()`.
+
+	* src/utils/xtotroff/xtotroff.1.man: Document new `-d` option.
+
+2022-02-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[xtotroff]: Trivially refactor.
 
 	* src/utils/xtotroff/xtotroff.c: Boolify.  Include `stdbool.h`

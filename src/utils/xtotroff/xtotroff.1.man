@@ -7,7 +7,7 @@ xtotroff \- convert X font metrics into groff font metrics
 .\" Legal Terms
 .\" ====================================================================
 .\"
-.\" Copyright (C) 2004-2020 Free Software Foundation, Inc.
+.\" Copyright (C) 2004-2022 Free Software Foundation, Inc.
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
 .\" manual provided the copyright notice and this permission notice are
@@ -35,6 +35,8 @@ xtotroff \- convert X font metrics into groff font metrics
 .\" ====================================================================
 .
 .SY xtotroff
+.RB [ \-d\~\c
+.IR destination-directory ]
 .RB [ \-r\~\c
 .IR resolution ]
 .RB [ \-s\~\c
@@ -114,7 +116,11 @@ For each successful mapping,
 .I xtotroff
 creates a
 .I groff
-font description file in the current working directory named for each
+font description file in the the current working directory
+(or that specified by the
+.B -d
+option)
+named for each
 .I groff
 font,
 and reports the mapping to the standard output stream.

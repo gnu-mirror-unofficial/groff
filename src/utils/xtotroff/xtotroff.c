@@ -1,4 +1,4 @@
-/* Copyright (C) 1992-2020 Free Software Foundation, Inc.
+/* Copyright (C) 1992-2022 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -61,6 +61,7 @@ static char *program_name;
 Display *dpy;
 unsigned resolution = 75;
 unsigned point_size = 10;
+char *destdir = NULL;
 
 static bool charExists(XFontStruct * fi, int c)
 {
@@ -119,6 +120,12 @@ FontNamesAmbiguous(const char *font_name, char **names, int count)
     }
   }
   return false;
+}
+
+static void xtotroff_exit(int status)
+{
+  free(destdir);
+  exit(status);
 }
 
 static bool MapFont(char *font_name, const char *troff_name)
@@ -186,17 +193,33 @@ static bool MapFont(char *font_name, const char *troff_name)
   }
 
   printf("%s -> %s\n", names[0], troff_name);
+  char *file_name = (char *)troff_name;
+  size_t dirlen = strlen(destdir);
+
+  if (dirlen > 0) {
+    size_t baselen = strlen(troff_name);
+    file_name = malloc(dirlen + baselen + 2 /* '/' and '\0' */);
+    if (NULL == file_name) {
+      fprintf(stderr, "%s: fatal error: unable to allocate memory\n",
+	      program_name);
+      xtotroff_exit(EXIT_FAILURE);
+    }
+    (void) strcpy(file_name, destdir);
+    file_name[dirlen] = '/';
+    (void) strcpy((file_name + dirlen + 1), troff_name);
+  }
 
   {				/* Avoid race while opening file */
     int fd;
-    (void) unlink(troff_name);
-    fd = open(troff_name, O_WRONLY | O_CREAT | O_EXCL, 0600);
+    (void) unlink(file_name);
+    fd = open(file_name, O_WRONLY | O_CREAT | O_EXCL, 0600);
     out = fdopen(fd, "w");
   }
 
   if (NULL == out) {
     fprintf(stderr, "%s: unable to create '%s': %s\n", program_name,
-	    troff_name, strerror(errno));
+	    file_name, strerror(errno));
+    free(file_name);
     return false;
   }
   fprintf(out, "name %s\n", troff_name);
@@ -240,13 +263,15 @@ static bool MapFont(char *font_name, const char *troff_name)
   }
   XUnloadFont(dpy, fi->fid);
   fclose(out);
+  free(file_name);
   return true;
 }
 
 static void usage(FILE *stream)
 {
   fprintf(stream,
-	  "usage: %s [-r resolution] [-s type-size] font-map\n"
+	  "usage: %s [-d directory] [-r resolution] [-s type-size]"
+	  " font-map\n"
 	  "       %s -v\n",
 	  program_name, program_name);
 }
@@ -267,9 +292,12 @@ int main(int argc, char **argv)
 
   program_name = argv[0];
 
-  while ((opt = getopt_long(argc, argv, "gr:s:v", long_options,
+  while ((opt = getopt_long(argc, argv, "d:gr:s:v", long_options,
 			    NULL)) != EOF) {
     switch (opt) {
+    case 'd':
+      destdir = strdup(optarg);
+      break;
     case 'g':
       /* unused; just for compatibility */
       break;
@@ -281,21 +309,21 @@ int main(int argc, char **argv)
       break;
     case 'v':
       printf("xtotroff (groff) version %s\n", Version_string);
-      exit(EXIT_SUCCESS);
+      xtotroff_exit(EXIT_SUCCESS);
       break;
     case CHAR_MAX + 1: /* --help */
       usage(stdout);
-      exit(EXIT_SUCCESS);
+      xtotroff_exit(EXIT_SUCCESS);
       break;
     case '?':
       usage(stderr);
-      exit(EXIT_FAILURE);
+      xtotroff_exit(EXIT_FAILURE);
       break;
     }
   }
   if (argc - optind != 1) {
     usage(stderr);
-    exit(EXIT_FAILURE);
+    xtotroff_exit(EXIT_FAILURE);
   }
 
   dpy = XOpenDisplay(0);
@@ -303,14 +331,14 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: fatal error: can't connect to the X server;"
 	    " make sure the DISPLAY environment variable is set"
 	    " correctly\n", program_name);
-    exit(EXIT_FAILURE);
+    xtotroff_exit(EXIT_FAILURE);
   }
 
   map = fopen(argv[optind], "r");
   if (NULL == map) {
     fprintf(stderr, "%s: fatal error: unable to open map file '%s':"
 	    " %s\n", program_name, argv[optind], strerror(errno));
-    exit(EXIT_FAILURE);
+    xtotroff_exit(EXIT_FAILURE);
   }
 
   while (fgets(line, sizeof(line), map)) {
@@ -327,9 +355,9 @@ int main(int argc, char **argv)
 	break;
     *b = '\0';
     if (!MapFont(font_name, troff_name))
-      exit(EXIT_FAILURE);
+      xtotroff_exit(EXIT_FAILURE);
   }
-  exit(EXIT_SUCCESS);
+  xtotroff_exit(EXIT_SUCCESS);
 }
 
 // Local Variables:
