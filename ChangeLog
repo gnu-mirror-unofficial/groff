@@ -1,3 +1,24 @@
+2022-02-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Rename and ship "FontMap-X11".  xtotroff(1) is not very useful
+	without a font name mapping file to read.  To date it has been
+	available only in the source distribution.  Remedy that.  The
+	file is placed directly in the groff font directory alongside
+	the device directories because it applies to four different
+	devices, and four copies of this data are not required.
+
+	* src/devices/xditview/FontMap: Rename to...
+	* src/devices/xditview/FontMap-X11: ...this.
+
+	* LICENSES:
+	* src/devices/xditview/xditview.am (EXTRA_DIST): Reflect rename.
+
+	* src/devices/xditview/xditview.am (install_xditview
+	  [!WITHOUT_X11], uninstall_xtdiview): (Un)-install it.
+
+	* src/utils/xtotroff/xtotroff.1.man (Files): Add section
+	documenting the presence and purpose of this file.
+
 2022-02-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[xtotroff]: Add `-d` option to produce font description files in
