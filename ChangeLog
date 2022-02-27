@@ -1,5 +1,39 @@
 2022-02-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	Refactor X11 font description generation.  Integrate it with our
+	"new" (post-2014) Automake-based build system.
+
+	* src/utils/xtotroff/Makefile.in: Delete relic of old build
+	system.  Also, it had a bug: it generated X11 output device
+	'DESC' files with a "unitwidth 10" directive even for the "-12"
+	devices, which is not correct (the in-tree DESC files we've been
+	shipping for years were nevertheless correct, apparently fixed
+	by hand by James Clark in groff 1.07 [March 1993]).
+
+	* src/utils/xtotroff/xtotroff.am: Define `xtotroff` variable for
+	use by X11 font description generation targets below.
+
+	* font/devX100-12/devX100-12.am:
+	* font/devX100/devX100.am:
+	* font/devX75-12/devX75-12.am:
+	* font/devX75/devX75.am: Add new (phony) targets, variously
+	named "devX{100,100_12,75,75_12}", to generate the corresponding
+	output device's DESC file and run xtotroff(1) to generate its
+	font description files.  Be sure to set the correct "unitwidth"
+	for the "-12" devices.  Add new dependency-only rule
+	"maintainer-font-descriptions" depending on these new targets
+	for convenience (and future expansion to devps and devlj4).
+
+	* FOR-RELEASE: Document existence of
+	"maintainer-font-descriptions" Make target and when to run it.
+
+	Running this target with the aforementioned bug fix, overwriting
+	the in-tree DESC and font description files using data gathered
+	from a running X server, results in no changes whatsoever.  Say
+	what you will about X11 core font technology--it's stable.
+
+2022-02-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	Rename and ship "FontMap-X11".  xtotroff(1) is not very useful
 	without a font name mapping file to read.  To date it has been
 	available only in the source distribution.  Remedy that.  The
