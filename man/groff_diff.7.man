@@ -517,16 +517,22 @@ ensures that these definitions work even if
 gets interpreted in copy mode (for example, by being used in a macro
 argument).
 .
+.
 .TP
 .BI \[rs]f[ xxx ]
-Set font
-.IR xxx .
+Select font
+.IR xxx ,
+which may be a font name,
+mounting position,
+or registered style that is then combined with the current font family
+to select the typeface.
 .
-Additionally,
 .B \[rs]f[]
-is a new syntax form equal to
-.BR \[rs]fP ,
-i.e., to return to the previous font.
+is a synonym of
+.BR \[rs]fP ;
+i.e.,
+it selects the previous font.
+.
 .
 .TP
 .BI \[rs]F f
@@ -534,18 +540,18 @@ i.e., to return to the previous font.
 .BI \[rs]F( fm
 .TQ
 .BI \[rs]F[ fam ]
-Change font family.
+Select font family.
 .
 See the
 .B .fam
 request below.
 .
 .B \[rs]F[]
-switches to the previous font family,
-or to the default family if there is none.
+selects the previous font family,
+or the default family if there is none.
 .
 .B \[rs]FP
-won't do this;
+does not;
 it selects font family \[lq]P\[rq] instead.
 .
 .
