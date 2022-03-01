@@ -901,7 +901,8 @@ format *process_format(table_input &in, options *opt,
 	  c = in.get();
 	} while (c == ' ' || c == '\t');
 	if (c == EOF) {
-	  error("'f' column modifier missing font name");
+	  error("'f' column modifier missing font name or mounting"
+		" position");
 	  break;
 	}
 	if (c == '(') {
