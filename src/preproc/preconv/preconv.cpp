@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 2005-2020 Free Software Foundation, Inc.
      Written by Werner Lemberg (wl@gnu.org)
 
@@ -1070,7 +1069,8 @@ end:
 }
 
 // ---------------------------------------------------------
-// Handle an input file.  If filename is '-' handle stdin.
+// Handle an input file.  If `filename` is "-", read the
+// standard input stream.
 //
 // Return 1 on success, 0 otherwise.
 // ---------------------------------------------------------
@@ -1079,21 +1079,34 @@ do_file(const char *filename)
 {
   FILE *fp;
   string BOM, data;
+  bool is_seekable = false;
+  string reported_filename;
 
-  if (strcmp(filename, "-")) {
-    if (debug_flag)
-      fprintf(stderr, "file '%s':\n", filename);
-    fp = fopen(filename, FOPEN_RB);
-    if (!fp) {
-      error("can't open '%1': %2", filename, strerror(errno));
-      return 0;
-    }
+  // TODO: Consider moving some of this into a `quoted_file_name`
+  // function in libgroff.
+  if (strcmp(filename, "-") == 0) {
+    fp = stdin;
+    reported_filename = string("<standard input>");
   }
   else {
+    fp = fopen(filename, FOPEN_RB);
+    reported_filename = "'" + string(filename) + "'";
+  }
+  if (!fp) {
+    error("can't open %1: %2", reported_filename.contents(),
+	  strerror(errno));
+    return 0;
+  }
+  if (debug_flag)
+    fprintf(stderr, "processing %s\n", reported_filename.contents());
+  if (fseek(fp, 0L, SEEK_SET) == 0) {
+    is_seekable = true;
+  }
+  else {
+    SET_BINARY(fileno(fp));
     if (debug_flag)
-      fprintf(stderr, "standard input:\n");
-    SET_BINARY(fileno(stdin));
-    fp = stdin;
+      fprintf(stderr, "  stream is not seekable: %s\n",
+	      strerror(errno));
   }
   const char *BOM_encoding = get_BOM(fp, BOM, data);
   // Determine the encoding.
@@ -1121,7 +1134,7 @@ do_file(const char *filename)
     if (!file_encoding) {
       if (debug_flag)
 	fprintf(stderr, "  no coding tag\n");
-      if (strcmp(filename, "-"))
+      if (is_seekable)
          file_encoding = detect_file_encoding(fp);
       if (!file_encoding) {
         if (debug_flag)
@@ -1286,4 +1299,8 @@ main(int argc, char **argv)
   return nbad != 0;
 }
 
-/* end of preconv.cpp */
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

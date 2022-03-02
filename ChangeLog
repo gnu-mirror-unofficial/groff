@@ -1,5 +1,21 @@
 2022-03-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[preconv]: Stop assuming that the default input stream, or an
+	explicit '-' operand, is the only unseekable stream.  Check
+	instead.
+
+	* src/preproc/preconv/preconv.cpp (do_file): Add new Boolean
+	`is_seekable`.  Test the input stream with `fseek()` per a
+	suggestion from Ingo Schwarze.  Report unseekability in debug
+	output and skip coding tag and uchardet tests altogether
+	{precisely paralleling our description in the preconv(1) man
+	page}.  Also update debugging output to say "<standard input>"
+	instead of "-".
+
+	Fixes <https://savannah.gnu.org/bugs/?62131>.
+
+2022-03-04  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[preconv]: Regression-test Savannah #62131.
 
 	* src/preproc/preconv/tests/do-not-seek-the-unseekable.sh: Do
