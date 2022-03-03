@@ -1438,7 +1438,7 @@ _
 \[br]	\e[br]	u2502	box rule +
 \&_	\&_	u005F	underscore, low line +
 \[ul]	\e[ul]	---	underrule +
-\[rn]	\e[rn]	u203E	radical extension, overline +
+\[rn]	\e[rn]	u203E	overline +
 \[ru]	\e[ru]	---	baseline rule +
 \[bb]	\e[bb]	u00A6	broken bar
 \[sl]	/	u002F	slash, solidus +
@@ -1536,6 +1536,16 @@ _
 The variants of the not sign may differ in appearance or spacing
 depending on the device and font selected.
 .
+Unicode does not encode a discrete \[lq]bitwise or\[rq] sign:
+on typesetter devices,
+it is drawn shorter than the bar,
+about the same height as a capital letter.
+.
+Terminal devices unify
+.B \[rs][ba]
+and
+.BR \[rs][or] .
+.
 .TS
 l l l lx.
 Output	Input	Unicode	Notes
@@ -1549,7 +1559,7 @@ _
 \[st]	\e[st]	u220B	such that
 \[3d]	\e[3d]	u2234	therefore
 \[tf]	\e[tf]	u2234	therefore
-\[or]	|	u007C	bitwise or +
+\[or]	|	u007C	bar
 \[or]	\e[or]	u007C	bitwise or +
 .TE
 .
@@ -1586,19 +1596,22 @@ device and font selected.
 In AT&T
 .IR troff ,
 .B \[rs](rn
+(\[lq]root en extender\[rq])
 served as the horizontal extension of the radical
 (square root)
 sign,
-.BR \[rs](sr .
+.BR \[rs](sr ,
+and was drawn at the maximum height of the typeface's bounding box;
+this enabled the special character to double as an overline
+(see subsection \[lq]Rules and lines\[rq] above).
 .
-However,
-a contemporary font's radical sign may not ascend to a maximal drawing
-position.
+A contemporary font's radical sign might not ascend to such an extreme.
 .
+In
 .IR groff ,
 you can instead use
 .B \[rs][radicalex]
-to continue of the radical sign
+to continue the radical sign
 .BR \[rs][sr] ;
 these special characters are intended for use with regular text fonts.
 .
@@ -1677,7 +1690,7 @@ _
 \[coproduct]	\e[coproduct]	u2210	coproduct ***
 \[gr]	\e[gr]	u2207	gradient +
 \[sr]	\e[sr]	u221A	radical sign, square root +
-\[rn]	\e[rn]	u203E	radical extension, overline +
+\[rn]	\e[rn]	u203E	overline +
 \[radicalex]	\e[radicalex]	---	radical extension
 \[sqrt]	\e[sqrt]	u221A	radical sign, square root ***
 \[sqrtex]	\e[sqrtex]	---	radical extension ***
@@ -1839,7 +1852,7 @@ man page of the
 .
 .P
 At the time Graphic Systems delivered the C/A/T phototypesetter to AT&T,
-the ASCII character set was not considered a standard basis for a font
+the ASCII character set was not considered a standard basis for a glyph
 repertoire by traditional typographers.
 .
 In the stock Times roman,
@@ -1871,10 +1884,6 @@ We also observe that the hyphen and minus sign were already
 a decision whence to map an input \[lq]\-\[rq] therefore had to be
 taken.
 .
-(The Model\~37 printed ASCII decimal 124 as a broken bar,
-like Unicode U+00A6,
-but the C/A/T did not.)
-.
 .TS
 center box;
 Lf(R).
@@ -1892,7 +1901,7 @@ The special font supplied the missing ASCII and Teletype extended
 glyphs,
 among several others.
 .
-We observe that AT&T took the opportunity to de-unify the apostrophe
+We note that AT&T took the opportunity to de-unify the apostrophe
 and acute accent
 (a choice ISO later duplicated in its 8859 series of standards).
 .
@@ -1920,6 +1929,23 @@ Lf(I),Lf(R).
 \[sc] \[dd] \[lh] \[rh] \[or] \[ci] \
 \[lt] \[lb] \[rt] \[rb] \[lk] \[rk] \[bv] \[lf] \[rf] \[lc] \[rc]
 .TE
+.
+.
+.P
+One ASCII character as rendered by the Model 37 was apparently
+abandoned.
+.
+That device printed decimal 124 (|) as a broken vertical line,
+like Unicode U+00A6.
+.
+No equivalent was available on the C/A/T;
+the box rule
+.BR \[rs][br] ,
+brace vertical extension
+.BR \[rs][bv] ,
+and \[lq]or\[rq] operator
+.BR \[rs][or] ,
+were used as appropriate to the context.
 .
 .
 .\" ====================================================================
