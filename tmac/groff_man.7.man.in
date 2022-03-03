@@ -12,8 +12,8 @@ the
 package assumes \(lqn\(rq\c
 _ifstyle()dnl
 ; that is,
-the width of a letter \(lqn\(rq in the font current when the macro is
-called
+approximately the width of the letter \(lqn\(rq in the font current when
+the macro is called
 (see section \(lqNumerical Expressions\(rq in
 .MR groff @MAN7EXT@ )\c
 _endif()dnl
@@ -269,7 +269,7 @@ Optional macro arguments are indicated by surrounding them with square
 brackets.
 .
 If a macro accepts multiple arguments,
-those containing space \" or horizontal tab (in Plan 9 troff [only?])
+those containing space \" or tab (in Plan 9 troff [only?])
 characters must be double-quoted to be interpreted correctly.
 .
 _endif()dnl
@@ -1090,14 +1090,14 @@ Several features of the above example are of note.
 .IP \(bu
 The empty request (.),
 which does nothing,
-is used for vertical spacing in the input file for readability by the
+is used to vertically space the input file for readability by the
 document maintainer.
 .
 Do not put blank (empty) lines in a man page source document.
 .
 .
 .IP \(bu
-The command and option names are presented in
+Command and option names are presented in
 .B bold
 to cue the user that they should be input literally.
 .
@@ -1334,10 +1334,10 @@ An argument to
 is placed at the end of the link text without intervening space.
 .
 .I address
-may not be visible in the rendered document if the output driver
-supports hyperlinks.
+may not be visible in the rendered document if hyperlinks are enabled
+and supported by the output driver.
 .
-If it does not,
+If they are not,
 .I address
 is set in angle brackets after the link text and before
 .I trailing-text.
@@ -1381,10 +1381,10 @@ An argument to
 is placed at the end of the link text without intervening space.
 .
 .I uri
-may not be visible in the rendered document if the output driver
-supports hyperlinks.
+may not be visible in the rendered document if hyperlinks are enabled
+and supported by the output driver.
 .
-If it does not,
+If they are not,
 .I uri
 is set in angle brackets after the link text and before
 .I trailing-text.
@@ -2043,7 +2043,7 @@ paragraph.
 .
 .P
 Resist the temptation to mock up tabular or multi-column output with
-horizontal tab characters or the indentation arguments to
+tab characters or the indentation arguments to
 .BR .IP ,
 .BR .TP ,
 .BR .RS ,
@@ -2060,7 +2060,7 @@ _endif()dnl
 .
 .
 .P
-The following macros break the output line and insert vertical space:
+Several macros break the output line and insert vertical space:
 .BR .SH ,
 .BR .SS ,
 .BR .TP ,
@@ -3444,9 +3444,9 @@ _endif()dnl
 .I @MACRODIR@/\:an\:.tmac
 Most
 .I man
-macros are contained in this file.
+macros are defined in this file.
 .
-It also loads the extensions from
+It also loads extensions from
 .I \%an\-ext.tmac
 (see below).
 .
@@ -3618,6 +3618,8 @@ When documenting GNU/Linux command or C language syntax,
 however,
 this translation is sometimes not desirable.
 .
+.br
+.ne 3v
 .TS
 c c
 rfCB lfCB.
@@ -3662,6 +3664,8 @@ Probably not.
 When this seems necessary,
 often a shorter or clearer alternative is available.
 .
+.br
+.ne 3v
 .TS
 c c
 lfCB lfCB.
@@ -3850,6 +3854,8 @@ Not if you don't want to change it.
 .
 Review subsection \(lqHorizontal and vertical spacing\(rq above.
 .
+.br
+.ne 4v
 .TS
 c c
 lfCB lfCB.
