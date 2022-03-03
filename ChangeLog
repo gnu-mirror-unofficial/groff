@@ -206,16 +206,16 @@
 	new register `an*hyphenation-mode` reflecting these conditions.
 	(TH): Call the foregoing instead of invoking `hy` request.
 	(MR): Restore hyphenation mode to `an*hyphenation-mode`.
-	(initializtion): Simplify; if not defined, set `HY` to 1.
+	(initialization): Simplify; if not defined, set `HY` to 1.
 
 	* tmac/e.tmac (ld): Set the hyphenation mode here instead of in
 	initialization (which already calls this macro).  Set the mode
 	to 6 for the benefit of anyone borrowing our me(7) changes, but
-	then immediately change to the mode determinated by the
+	then immediately change to the mode determined by the
 	localization file.
 
-	* tmac/mdoc/doc-common (doc-hyphen-flags): Set an hyphenation
-	mode appropriate to the locale depending on the values of `cR`
+	* tmac/mdoc/doc-common (doc-hyphen-flags): Set a hyphenation
+	mode appropriate to the locale, depending on the values of `cR`
 	and `HY`.
 	* tmac/mdoc/doc-ditroff:
 	* tmac/mdoc/doc-nroff: Simplify initialization; if not defined,
