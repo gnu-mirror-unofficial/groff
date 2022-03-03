@@ -5159,8 +5159,8 @@ When filling,
 hyphenates words as needed at user-specified and automatically
 determined hyphenation points.
 .
-Explicitly hyphenated words such as \[lq]mother-in-law\[rq] are eligible
-for breaking after each of their hyphens.
+Explicitly hyphenated words such as \[lq]mother-in-law\[rq] are always
+eligible for breaking after each of their hyphens.
 .
 The hyphenation
 .RB character\~ \[rs]%
@@ -5228,9 +5228,8 @@ and then apply or lift restrictions relative to that basis.
 .B 2
 disables hyphenation of the last word on a page.
 .
-(Technically,
-hyphenation is prevented if the next page location trap is closer than
-the next line of text would be.
+(Hyphenation is prevented if the next page location trap is closer to
+the vertical drawing position than the next text baseline would be.
 .
 .I groff
 automatically inserts an implicit page location trap at the end of each

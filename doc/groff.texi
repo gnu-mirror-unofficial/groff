@@ -7661,9 +7661,9 @@ hyphenation points can be set manually.
 @cindex explicit hyphenation
 @cindex hyphenation, manual
 @cindex manual hyphenation
-Explicitly hyphenated words such as ``mother-in-law'' are eligible for
-breaking after each of their hyphens.  Relatively few words in a
-language offer such obvious break points, however, and automatic
+Explicitly hyphenated words such as ``mother-in-law'' are always
+eligible for breaking after each of their hyphens.  Relatively few words
+in a language offer such obvious break points, however, and automatic
 hyphenation is not perfect, particularly for unusual words found in
 technical literature.  We may wish to instruct GNU @code{troff} how to
 hyphenate specific words if the need arises.
@@ -7847,13 +7847,14 @@ restrictions relative to that basis.
 @table @code
 @item 2
 disables hyphenation of the last word on a page,@footnote{Hyphenation is
-prevented if the next page location trap is closer than the next text
-baseline would be.  GNU @code{troff} automatically inserts an implicit
-vertical position trap at the end of each page to cause a page
-transition.  Users or macro packages can set such traps explicitly to
-prevent hyphenation of the last word in a column in multi-column page
-layouts or before floating figures or tables.  @xref{Page Location
-Traps}.} even for manually hyphenated words.
+prevented if the next page location trap is closer to the vertical
+drawing position than the next text baseline would be.  GNU @code{troff}
+automatically inserts an implicit vertical position trap at the end of
+each page to cause a page transition.  Users or macro packages can set
+such traps explicitly to prevent hyphenation of the last word in a
+column in multi-column page layouts or before floating figures or
+tables.  @xref{Page Location Traps}.} even for manually hyphenated
+words.
 
 @item 4
 disables hyphenation before the last two characters of a word.
