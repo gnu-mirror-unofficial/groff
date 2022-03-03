@@ -11383,14 +11383,14 @@ of closed geometric figures.
 
 @DefreqList {color, [@Var{n}]}
 @DefregListEndx {.color}
-If @var{n} is missing or non-zero, activate colors (this is the
-default); otherwise, turn it off.
+If @var{n} is missing or non-zero, enable the output of color-related
+device commands (this is the default); otherwise, disable them.
 
-The read-only register @code{.color} is@tie{}1 if colors are active,
+The read-only register @code{.color} is@tie{}1 if colors are enabled,
 0@tie{}otherwise.
 
 Internally, @code{color} sets a global flag; it does not produce a
-token.  Similar to the @code{cp} request, you should use it at the
+token.  As with the @code{cp} request, you should use it at the
 beginning of your document to control color output.
 
 Colors can be also turned off with the @option{-c} command-line option.
