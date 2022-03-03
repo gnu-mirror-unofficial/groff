@@ -10287,23 +10287,26 @@ No kerning is applied to glyphs accessed with @code{\N}.
 Some escape sequences directly map onto special glyphs.
 
 @Defesc {\@code{'}, , , }
-This is a backslash followed by the apostrophe character,
+A backslash followed by the apostrophe character,
 @acronym{ASCII} character @code{0x27} (@acronym{EBCDIC} character
-@code{0x7D}).  The same as @code{\[aa]}, the acute accent.
+@code{0x7D}), is a synonym for @code{\[aa]}, the acute accent.
 @endDefesc
 
 @Defesc {\@code{`}, , , }
-This is a backslash followed by @acronym{ASCII} character @code{0x60}
-(@acronym{EBCDIC} character @code{0x79} usually).  The same as
+A backslash followed by @acronym{ASCII} character @code{0x60}
+(@acronym{EBCDIC} character @code{0x79} [usually]), is a synonym for
 @code{\[ga]}, the grave accent.
 @endDefesc
 
 @Defesc {\\-, , , }
-This is the same as @code{\[-]}, the minus sign in the current font.
+A backslash followed by a dash is a synonym for @code{\[-]}, the minus
+sign.
 @endDefesc
 
 @Defesc {\\_, , , }
-This is the same as @code{\[ul]}, the underline character.
+A backslash followed by an underscore is a synonym for @code{\[ul]}, the
+underrule.  On @code{troff}-mode (typesetter) devices it may be
+font-invariant and drawn lower than the underscore glyph @samp{_}.
 @endDefesc
 
 @Defreq {cflags, n c1 c2 @dots{}}
