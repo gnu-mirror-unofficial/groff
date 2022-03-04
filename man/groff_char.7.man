@@ -1952,9 +1952,22 @@ were used as appropriate to the context.
 .SH Files
 .\" ====================================================================
 .
+The files below are loaded automatically by the default
+.IR troffrc .
+.
+.
 .TP
 .I @MACRODIR@/\:\%composite\:.tmac
+assigns mappings for glyphs after the first in a composite special
+character.
+.
 See subsection \[lq]Accents\[rq] above.
+.
+.
+.TP
+.I @MACRODIR@/\:\%fallbacks\:.tmac
+defines fallback mappings for Unicode code points such as the increment
+sign (U+2206) and upper- and lowercase Roman numerals.
 .
 .
 .\" ====================================================================
