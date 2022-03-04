@@ -84,7 +84,7 @@ is part of the
 .MR groff @MAN1EXT@
 document formatting system.
 .
-.I \%@g@refer
+.I @g@refer
 is a
 .MR @g@troff @MAN1EXT@
 preprocessor that prepares bibilographic citations by looking up
@@ -112,7 +112,7 @@ and
 as instructions regarding how citations are to be processed.
 .
 Normally,
-.I \%@g@refer
+.I @g@refer
 is not executed directly by the user,
 but invoked by specifying the
 .B \-R
@@ -144,7 +144,7 @@ A combination of these alternatives is also possible.
 .
 .LP
 For each citation,
-.I \%@g@refer
+.I @g@refer
 can produce a mark in the text.
 .
 This mark consists of some label which can be separated from the text
@@ -156,7 +156,7 @@ language commands that can be used by a macro package to produce a
 formatted reference for each citation.
 .
 The output of
-.I \%@g@refer
+.I @g@refer
 must therefore be processed using a suitable macro package,
 such as
 .\" .IR man ,
@@ -214,12 +214,12 @@ It is usually more convenient to use commands.
 .
 .
 .LP
-.I \%@g@refer
+.I @g@refer
 generates
 .B .lf
 requests so that file names and line numbers in messages produced by
 commands that read
-.I \%@g@refer
+.I @g@refer
 output will be correct;
 it also interprets lines beginning with
 .B .lf
@@ -1141,7 +1141,7 @@ The default database should be searched.
 This is the default behavior,
 so the negative version of this command is more useful.
 .
-.I \%@g@refer
+.I @g@refer
 determines whether the default database should be searched
 on the first occasion that it needs to do a search.
 .
@@ -1850,7 +1850,7 @@ that wish to support
 .
 .
 .LP
-.I \%@g@refer
+.I @g@refer
 uses temporary files.
 .
 See the
@@ -1874,7 +1874,7 @@ expressions.
 .\" ====================================================================
 .
 We can illustrate the operation of
-.I \%@g@refer
+.I @g@refer
 with a sample bibliographic database containing one entry and a simple
 .I roff
 document to cite that entry.
@@ -1919,7 +1919,7 @@ on your summer vacation.
 .
 .P
 The foregoing shows us that
-.I \%@g@refer
+.I @g@refer
 (a) produces a label \[lq]1\[rq];
 (b) brackets that label with interpolations of the
 .RB \[lq] [. \[rq]
@@ -1967,7 +1967,7 @@ $ \c
 .LP
 .IR ms 's
 automatic footnote numbering mechanism is not aware of
-.IR \%@g@refer 's
+.IR @g@refer 's
 label numbering,
 so we have manually specified a (superscripted) symbolic footnote for
 our non-bibliographic aside.

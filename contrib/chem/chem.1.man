@@ -61,13 +61,13 @@ produces chemical structure diagrams.
 Today's version is best suited for organic chemistry (bonds, rings).
 .
 The
-.I \%@g@chem
+.I @g@chem
 program is a
 .I groff
 preprocessor like
-.IR \%@g@eqn ,
-.IR \%@g@pic ,
-.IR \%@g@tbl ,
+.IR @g@eqn ,
+.IR @g@pic ,
+.IR @g@tbl ,
 etc.
 .
 It generates
@@ -85,7 +85,7 @@ or if
 .I file
 is
 .RB \[lq] \- \[rq],
-.I \%@g@chem
+.I @g@chem
 reads the standard input stream.
 .
 .B \-h
@@ -102,12 +102,12 @@ all exit.
 .
 .P
 The program
-.I \%@g@chem
+.I @g@chem
 originates from the Perl source file
 .IR chem.pl .
 .
 It tells
-.I \%@g@pic
+.I @g@pic
 to include a copy of the macro file
 .IR chem.pic .
 .
@@ -148,7 +148,7 @@ Lines containing the keywords
 and
 .B .cend
 start and end the input for
-.IR \%@g@chem ,
+.IR @g@chem ,
 respectively.
 .
 In
@@ -194,15 +194,15 @@ groups with a bond between them.
 If you want to create just
 .I groff
 output, you must run
-.I \%@g@chem
+.I @g@chem
 followed by
 .I groff
 with the option
 .B \-p
 for the activation of
-.IR \%@g@pic :
+.IR @g@pic :
 .IP
-.I \%@g@chem
+.I @g@chem
 .RI [ file\~ .\|.\|.\&]
 .BR "| groff \-p\~" .\|.\|.
 .
@@ -699,9 +699,9 @@ code, which is copied through with a label.
 .
 .P
 Since
-.I \%@g@chem
+.I @g@chem
 is a
-.I \%@g@pic
+.I @g@pic
 preprocessor, it is possible to include
 .I pic
 statements in the middle of a diagram to draw things not provided for
@@ -829,7 +829,7 @@ A squiggle bond is needed.
 A collection of
 .I pic
 macros needed by
-.IR \%@g@chem .
+.IR @g@chem .
 .
 .TP
 .I @MACRODIR@/\:pic\:.tmac

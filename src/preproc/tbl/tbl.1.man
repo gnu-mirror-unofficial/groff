@@ -64,14 +64,14 @@ is part of the
 .MR groff @MAN1EXT@
 document formatting system.
 .
-.I \%@g@tbl
+.I @g@tbl
 is a
 .MR @g@troff @MAN1EXT@
 preprocessor that translates descriptions of tables embedded in its
 input into the language,
 .MR groff @MAN7EXT@ ,
 understood by
-.IR \%@g@troff .
+.IR @g@troff .
 .
 It copies the contents of each
 .I file
@@ -98,7 +98,7 @@ implementing any GNU extensions employed)
 must be used.
 .
 Normally,
-.I \%@g@tbl
+.I @g@tbl
 is not executed directly by the user,
 but invoked by specifying the
 .B \-t
@@ -119,7 +119,7 @@ the standard input stream is read.
 .SS Overview
 .\" ====================================================================
 .
-.I \%@g@tbl
+.I @g@tbl
 expects to find table descriptions between input lines that begin with
 .B .TS
 (table start)
@@ -137,7 +137,7 @@ another description can be preceded with an input line beginning with
 (Experienced
 .I roff
 users should observe that
-.I \%@g@tbl
+.I @g@tbl
 is not a
 .I roff
 language interpreter:
@@ -146,7 +146,7 @@ and no spaces or tabs are permitted between the control character and
 the macro name.
 .
 These
-.I \%@g@tbl
+.I @g@tbl
 input tokens remain as-is in the output,
 where they become ordinary macro calls.
 .
@@ -157,7 +157,7 @@ and
 .B TE
 macros to handle issues of table placement on the page.
 .
-.I \%@g@tbl
+.I @g@tbl
 produces
 .I groff
 code to define these macros as empty if their definitions do not exist
@@ -307,7 +307,7 @@ When
 applies to a table that exceeds the available horizontal space,
 column separation is reduced as far as necessary\[em]even to zero.
 .
-.I \%@g@tbl
+.I @g@tbl
 produces
 .I groff
 input that issues a diagnostic if this occurs.
@@ -337,7 +337,7 @@ This option is ignored on terminal devices.
 Don't use diversions to prevent page breaks.
 .
 Normally,
-.I \%@g@tbl
+.I @g@tbl
 attempts to prevent undesirable breaks in tables by using diversions.
 .
 This can sometimes interact badly with macro packages' own use of
@@ -571,7 +571,7 @@ with respect to each other.
 .
 .IP
 The appearance of
-.I \%@g@eqn
+.I @g@eqn
 equations
 within
 .BR N -classified
@@ -582,7 +582,7 @@ separator.
 Use the
 .B \%delim
 region option to make
-.I \%@g@tbl
+.I @g@tbl
 ignore the data within
 .I eqn
 delimiters for that purpose.
@@ -609,7 +609,7 @@ Replace table entry with a horizontal rule.
 .
 An empty table entry is expected to correspond to this classifier;
 if data are found there,
-.I \%@g@tbl
+.I @g@tbl
 issues a diagnostic message.
 .
 .
@@ -619,7 +619,7 @@ Replace table entry with a double horizontal rule.
 .
 An empty table entry is expected to correspond to this classifier;
 if data are found there,
-.I \%@g@tbl
+.I @g@tbl
 issues a diagnostic message.
 .
 .
@@ -640,7 +640,7 @@ one produces a line at the edge of the table.
 .
 .P
 To change the table format within a
-.I \%@g@tbl
+.I @g@tbl
 region,
 use the
 .B .T&
@@ -943,7 +943,7 @@ A negative separation cannot be specified.
 .
 A separation amount after the last column in a row is nonsensical and
 provokes a diagnostic from
-.IR \%@g@tbl .
+.IR @g@tbl .
 .
 .
 .\" ====================================================================
@@ -997,7 +997,7 @@ hyphenated,
 adjusted,
 or populated with inter-sentence space.
 .
-.I \%@g@tbl
+.I @g@tbl
 measures each table entry as it occurs in the input,
 updating the width required by its corresponding column.
 .
@@ -1154,7 +1154,7 @@ it can be placed within a
 .
 .
 .P
-.I \%@g@tbl
+.I @g@tbl
 interprets a table entry of
 .RB \[lq] T{ \[rq]
 at the end of an input line not as table data,
@@ -1266,13 +1266,13 @@ can make use of it.
 .
 .
 .P
-.I \%@g@tbl
+.I @g@tbl
 also defines a macro
 .B T#
 to produce the bottom and side lines of a boxed table.
 .
 While
-.I \%@g@tbl
+.I @g@tbl
 itself arranges for the output to include a call of this macro at the
 end of such a table,
 it can also be used by macro packages to create boxes for multi-page
@@ -1285,7 +1285,7 @@ See section \[lq]Limitations\[rq] below for more on multi-page tables.
 .\" XXX: The following is a general caveat about preprocessors; move it.
 .P
 Using
-.I \%@g@tbl
+.I @g@tbl
 macros within conditional input
 (that is,
 contingent upon an
@@ -1297,14 +1297,14 @@ or
 request)
 can result in misleading line numbers in subsequent diagnostics.
 .
-.I \%@g@tbl
+.I @g@tbl
 unconditionally injects its output into the source document,
 but the conditional branch containing it may not be taken,
 and if it is not,
 the
 .B lf
 requests that
-.I \%@g@tbl
+.I @g@tbl
 injects to restore the source line number cannot take effect.
 .
 Consider copying the input line counter register
@@ -1314,10 +1314,10 @@ arithmetic.
 .
 .
 .\" ====================================================================
-.SS "Interaction with \f[I]\%@g@eqn\f[]"
+.SS "Interaction with \f[I]@g@eqn\f[]"
 .\" ====================================================================
 .
-.I \%@g@tbl
+.I @g@tbl
 should always be called before
 .MR @g@eqn @MAN1EXT@ .
 .
@@ -1336,7 +1336,7 @@ set up delimiters in your
 input and use the
 .B \%delim
 region option so that
-.I \%@g@tbl
+.I @g@tbl
 will recognize them.
 .
 .
@@ -1404,7 +1404,7 @@ You can embed a table region inside a macro definition.
 .
 However,
 since
-.I \%@g@tbl
+.I @g@tbl
 writes its own macro definitions at the beginning of each table region,
 it is necessary to call end macros instead of ending macro definitions
 with
@@ -1418,21 +1418,21 @@ the escape character must be disabled. \" XXX: Why?
 .
 .P
 Not all
-.I \%@g@tbl
+.I @g@tbl
 features can be exercised from such macros because
-.I \%@g@tbl
+.I @g@tbl
 is a
 .I roff
 preprocessor:
 it sees the input earlier than
-.I \%@g@troff
+.I @g@troff
 does.
 .
 For example,
 vertically aligning decimal separators fails if the numbers containing
 them occur as macro or string parameters;
 the alignment is performed by
-.I \%@g@tbl
+.I @g@tbl
 itself,
 which sees only
 .BR \[rs]$1 ,
@@ -1440,7 +1440,7 @@ which sees only
 and so on,
 and therefore can't recognize a decimal separator that only appears
 later when
-.I \%@g@troff
+.I @g@troff
 interpolates a macro or string definition.
 .
 .
@@ -1825,7 +1825,7 @@ n|n\f[B]\[tmu]\f[]n|difference
 .
 .P
 Some
-.I \%@g@tbl
+.I @g@tbl
 features cannot be illustrated in the limited environment of a portable
 man page.
 .
@@ -1837,7 +1837,7 @@ man page.
 .\".I groff
 .\"macro definition.
 .\".
-.\".IR \%@g@tbl ,
+.\".IR @g@tbl ,
 .\"however,
 .\"cannot know what will result from any macro argument interpolations,
 .\"so we might confine such interpolations to one column of the table and
