@@ -925,127 +925,91 @@ See
 .SH Naming
 .\" ====================================================================
 .
-Classical roff systems were designed before the conventions of the
-modern C
-.MR getopt 3
-call evolved, and used a naming scheme for macro packages that looks
-odd to modern eyes.
-.
-Macro packages were always included with the option
-.BR \-m ;
-when this option was directly followed by its argument without an
-intervening space, this looked like a long option preceded by a single
-minus \[em] a sensation in the computer stone age.
-.
-To make this invocation form work, classical troff
-macro packages used names that started with the letter \[oq]m\[cq],
-which was omitted in the naming of the macro file.
-.
-.
-.P
-For example, the macro package for the man pages was called
-.IR man ,
-while its macro file
-.IR tmac.an .
-So it could be activated by the argument
-.I an
-to option
-.BR \-m ,
-or
-.B \-man
-for short.
-.
-.
-.P
-For similar reasons, macro packages that did not start with an
-\[oq]m\[cq] had a leading \[oq]m\[cq] added in the documentation and
-in speech; for example, the package corresponding to
-.I tmac.doc
-was called
-.I mdoc
-in the documentation, although a more suitable name would be
-.IR doc .
-For, when omitting the space between the option and its argument, the
-command-line option for activating this package reads
-.BR \-mdoc .
-.
-.
-.P
-To cope with all situations, actual versions of
-.MR groff @MAN1EXT@
-are smart about both naming schemes by providing two macro files
-for the inflicted macro packages; one with a leading \[oq]m\[cq]
-the other one without it.
-.
-So in
-.IR groff ,
-the
-.I man
-macro package may be specified as one of the following four methods:
-.
-.IP
-.EX
-\fIsh#\fP groff\ \-m\ man
-\fIsh#\fP groff\ \-man
-\fIsh#\fP groff\ \-mman
-\fIsh#\fP groff\ \-m\ an
-.EE
-.
-.
-.P
-Recent packages that do not start with \[oq]m\[cq] do not use an
-additional \[oq]m\[cq] in the documentation.
-.
-For example, the
-.I www
-macro package may be specified only as one of the two methods:
-.
-.IP
-.EX
-\fIsh#\fP groff\ \-m\ www
-\fIsh#\fP groff\ \-mwww
-.EE
-.
-.
-.P
-Obviously, variants like
-.I \-mmwww
-would not make much sense.
-.
-.
-.P
-A second strange feature of classical troff was to name macro files
-in the form
-.IR tmac. name.
-In modern operating systems, the type of a file is specified as a
-postfix, the file name extension.
-.
-Again,
-.I groff
-copes with this situation by searching for both
-.IB anything .tmac
+AT&T
+.I nroff \" AT&T
 and
-.BI tmac. anything
-if only
-.I anything
-is specified.
+.I troff \" AT&T
+were implemented before the conventions of the modern C
+.MR getopt 3
+call evolved,
+and used a naming scheme for macro packages that looks odd to modern
+eyes.
+.
+Macro packages were typically loaded using the
+.B \-m
+option to the formatter;
+when directly followed by its argument without an intervening space,
+this looked like a long option preceded by a single minus\[em]a
+sensation in the computer stone age.
+.
+Macro packages therefore came to be known by names
+names that started with the letter \[lq]m\[rq],
+which was omitted from the name of the macro file as stored on disk.
+.
+For example,
+the manuscript macro package was stored as
+.I tmac.s
+and loaded with the option
+.BR \-ms .
 .
 .
 .P
-The easiest way to find out which macro packages are available on a
-system is to check the man\~page
-.MR groff @MAN1EXT@ ,
-or the contents of the
-.I tmac
-directories.
+.I groff
+commands permit space between an option and its argument.
+.
+The syntax
+.RB \[lq] "groff \-m s" \[rq]
+makes the macro file name more clear but may be jarring to users
+familiar with the original convention,
+unaware that the package's \[lq]real\[rq] name was \[lq]s\[rq] all
+along.
+.
+For such packages of long pedigree,
+.I groff
+accommodates different users' expectations by supplying wrapper macro
+files that load the desired file with
+.B mso
+requests.
+.
+Thus,
+all of
+.RB \[lq] "groff \-m s" \[rq],
+.RB \[lq] "groff \-m ms" \[rq],
+.RB \[lq] "groff \-ms" \[rq],
+.RB \[lq] "groff \-mms" \[rq]
+serve to load the manuscript macros.
 .
 .
 .P
-In
-.IR groff ,
-most macro packages are described in\~man pages called
-.IR groff_ name(@MAN7EXT@),
-with a leading \[oq]m\[cq] for the classical packages.
+Wrappers are not provided for packages of more recent vintage.
+.
+For example,
+the
+.I www
+package may be requested at the command line only with
+.RB \[lq] "groff \-m www" \[rq]
+or
+.RB \[lq] "groff \-mwww" \[rq].
+.
+.
+.P
+As noted in passing above,
+AT&T
+.I troff \" AT&T
+named macro files in the form
+.IR tmac. name.
+.
+It has since become conventional in operating systems to use a suffixed
+file name extension to suggest a file type or format.
+.
+.IR @g@troff 's
+.B \-m
+option
+and
+.B mso
+request attempt to load a macro package using either naming convention;
+if one fails,
+the other is tried.
 .
 .
 .\" ====================================================================
@@ -1421,10 +1385,13 @@ the diversion and can be manipulated from within the macros.
 This document was written by
 .MT groff\-bernd\:.warken\-72@\:web\:.de
 Bernd Warken
-.ME
-and
+.ME ,
 .MT wl@\:gnu\:.org
 Werner Lemberg
+.ME ,
+and
+.MT g.branden\:.robinson@\:gmail\:.com
+G.\& Branden Robinson
 .ME .
 .
 .
