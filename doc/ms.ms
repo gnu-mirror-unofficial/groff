@@ -1990,10 +1990,10 @@ and
 .CW .ID
 without arguments,
 to
-.CW ".DS\~I" \[rq], \[lq]
+.CW .DS\~I \[rq] \[lq]
 without an indentation argument,
-and to indented equations set with
-.CW .EQ .
+and to equations set with
+.CW .EQ\~I \[rq]. \[lq]
 .
 Changes to either register take effect at the next display boundary.
 .
