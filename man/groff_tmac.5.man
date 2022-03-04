@@ -467,30 +467,38 @@ but can add functionality to any other macro package or to plain
 documents.
 .
 .
-.TP
+.TP 9n
 .I 62bit
-Provides macros for addition, multiplication, and division of 62-bit
-integers (allowing safe multiplication of 31-bit integers, for example).
+provides macros for addition,
+multiplication,
+and division of 62-bit integers
+(allowing safe multiplication of 31-bit integers,
+for example).
 .
 .
 .TP
 .I ec
-Switch to the EC and TC font families.
-.
-To be used with
+switches the
 .MR grodvi @MAN1EXT@
-\[em] this man page also gives more details of how to use it.
+output driver from the CM
+(Computer Modern)
+to the EC and TC font families.
+.
+The
+.I \%grodvi
+man page has further details.
 .
 .
 .TP
 .I hdtbl
-The Heidelberger table macros, contributed by Joachim Walsdorff, allow
-the generation of tables through a syntax similar to the HTML table
-model.
+The Heidelberger table macros,
+contributed by Joachim Walsdorff,
+allow the generation of tables through a syntax similar to the HTML
+table model.
 .
-Note that
 .I hdtbl
-is a macro package, not a preprocessor like
+is a macro package,
+not a preprocessor like
 .MR tbl @MAN1EXT@ .
 .
 .I hdtbl
@@ -498,7 +506,7 @@ works only with the
 .B ps
 and
 .B pdf
-output drivers.
+output devices.
 .
 See
 .MR groff_hdtbl @MAN7EXT@ .
@@ -506,15 +514,12 @@ See
 .
 .TP
 .I papersize
-This macro file is normally loaded at startup by the
-.I troffrc
-file.
-.
-It provides an interface to set the paper size on the command line with
-the option
+provides an interface to set the paper size on the command line by
+giving
+.I \%@g@troff
+the
 .BI "\-d \%paper=" size
-or
-.IR @g@troff .
+option.
 .
 Possible values for
 .I size
@@ -560,34 +565,25 @@ see subsection \[lq]Paper sizes\[rq]
 of
 .MR groff @MAN1EXT@ .
 .
+This macro file is normally loaded at startup by the
+.I troffrc
+file.
+.
 .
 .TP
 .I pdfpic
-A single macro is provided in this file,
+provides a single macro,
 .BR PDFPIC ,
-to include a PDF graphic in a document, i.e., under the output driver
-.BR pdf .
+to include a PDF graphic in a document using features of the
+.B pdf
+output driver.
 .
-For all other drivers,
-.I pspic
-is used.
-.
-So
-.I pdfpic
-is an extension of
-.IR pspic .
-.
-This means you can safely replace all
-.B PSPIC
-with
-.BR PDFPIC ;
-nothing gets lost by that.
-.
-The options of
+For other output devices,
 .B PDFPIC
-are identical to the
-.B PSPIC
-options.
+calls
+.BR PSPIC ,
+with which it shares an interface
+(see below).
 .
 .
 .TP
@@ -603,13 +599,14 @@ preprocessor.
 .
 They center each picture.
 .
-Use it only if your macro package doesn't provide proper
-definitions for those three macros (most of them already do).
+Use it only if your macro package doesn't provide proper definitions for
+those three macros
+(most of them already do).
 .
 .
 .TP
 .I pspic
-A single macro is provided in this file,
+provides a single macro,
 .BR PSPIC ,
 to include a PostScript graphic in a document.
 .
@@ -619,15 +616,17 @@ The
 .BR html ,
 and
 .B xhtml
-output drivers support inclusion of PS images; for all other drivers
-the image is replaced with a hollow rectangle of the same size.
+output devices support such inclusions;
+for all other drivers,
+the image is replaced with a rectangular border of the same size.
 .
-This macro file is automatically loaded at startup by
-.B @g@troff
-so it isn't necessary to call it explicitly.
+This macro file is automatically loaded at startup by the
+.I troffrc
+file.
+.
 .
 .IP
-Syntax:
+Its syntax is as follows.
 .RS
 .IP
 \&\fB.PSPIC\fP \
@@ -637,6 +636,7 @@ Syntax:
 |\|\fB\-I\fP\ \fIn\fP] \
 \fI\|file\fP [\fIwidth\fP [\,\fIheight\/\fP]]
 .RE
+.
 .
 .IP
 .I file
@@ -650,20 +650,23 @@ If neither a
 .I width
 nor a
 .I height
-argument is specified, the image's natural width (as given in the
-file's bounding box) or the current line length is used as the
-width, whatever is smaller.
+argument is specified,
+the image's natural width
+(as given in the file's bounding box)
+or the current line length is used as the width,
+whatever is smaller.
 .
 The
 .I width
 and
 .I height
-arguments may have scaling indicators attached;
-the default scaling indicator is\~\c
-.BR i .
+arguments may have scaling units attached;
+the default scaling unit
+.RB is\~ i .
 .
-This macro scales the graphic uniformly
-in the x and y\~directions so that it is no more than
+.B PSPIC
+scales the graphic uniformly in the x and y\~dimensions so that it is no
+more than
 .I width
 wide
 and
@@ -672,36 +675,38 @@ high.
 .
 Option
 .B \-C
-centers the graphic horizontally, which is the default.
+centers the graphic horizontally;
+this is the default.
 .
-The
 .B \-L
 and
 .B \-R
-options left-align and right-align the graphic, respectively.
+left- and right-align the graphic,
+respectively.
 .
-The
 .B \-I
-option indents the graphic by\~\c
-.I n
-(default scaling indicator is\~\c
-.BR m ).
+indents the graphic
+.RI by\~ n
+(with a default scaling unit
+.RB of\~ m ).
+.
 .
 .IP
-For use of
-.B .PSPIC
-within a diversion it is recommended to extend it with the following
-code, assuring that the diversion's width completely covers the
-image's width.
+To use
+.B PSPIC
+within a diversion,
+we recommend extending it with the following code,
+assuring that the diversion's width completely covers the image's width.
+.
 .
 .RS
 .IP
 .EX
 \&.am PSPIC
-\&.\ \ vpt 0
+\&.\~\~vpt 0
 \&\[rs]h\[aq](\[rs]\[rs]n[ps-offset]u + \[rs]\[rs]n[ps-deswid]u)\[aq]
-\&.\ \ sp \-1
-\&.\ \ vpt 1
+\&.\~\~sp \-1
+\&.\~\~vpt 1
 \&..
 .EE
 .RE
@@ -709,9 +714,9 @@ image's width.
 .
 .TP
 .I ptx
-A single macro is provided in this file,
+provides a single macro,
 .BR xx ,
-for formatting permuted index entries as produced by the GNU
+to format permuted index entries as produced by the GNU
 .MR ptx 1
 program.
 .
