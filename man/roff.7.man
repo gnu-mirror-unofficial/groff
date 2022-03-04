@@ -764,11 +764,17 @@ the footnote is rendered.
 .\" ====================================================================
 .
 Computer-driven document formatting dates back to the 1960s.
+.\" John Labovitz points out that Peter Samson's TJ-2 dates to 1963,
+.\" but since this is a *roff man page, we do not begin our story there.
+.\" https://johnlabovitz.com/publications/\
+.\" The-electric-typesetter--The-origins-of-computing-in-typography.pdf
 .
 The
 .I roff
 system itself is intimately connected with the Unix operating system,
-but its roots go back to the earlier operating systems CTSS and Multics.
+but its roots go back to the earlier operating systems CTSS,
+GECOS,
+and Multics.
 .
 .
 .\" ====================================================================
@@ -855,10 +861,16 @@ proved influential,
 seeing many ports and derivations elsewhere.
 .
 .
+.\" "Morris did one port and called it roff. I did the BCPL one, adding
+.\" registers, but not macros. Molly Wagner contributed a hyphenation
+.\" algorithm. Ken and/or Dennis redid roff in PDP-11 assembler. Joe
+.\" started afresh for the grander nroff, including macros. Then Joe
+.\" bought a phototypesetter ..."
+.\" -- https://minnie.tuhs.org/pipermail/tuhs/2018-November/017052.html
 .P
 In 1969,
-Doug McIlroy wrote one such reimplementation of
-.I RUNOFF
+Doug McIlroy wrote one such reimplementation,
+adding extensions,
 in the BCPL language for a GE 645 running GECOS at the Bell Labs
 location in Murray Hill,
 New Jersey.
@@ -892,6 +904,21 @@ you had to backspace and underscore in the input yourself).
 .B .fi
 to enable filling of output lines got the name it retains to this day.
 .
+.I roff
+also featured a heuristic system for automatically placing hyphenation
+points,
+designed and implemented by Molly Wagner.
+.
+It furthermore introduced numeric variables,
+termed registers.
+.
+By 1971,
+this program had been ported to Multics and was known as
+.IR roff ,
+a name McIlroy attributes to Bob Morris,
+to distinguish it from CTSS
+.IR RUNOFF .
+.
 .\" GBR can't find a source for this claim (of Bernd's).
 .\"Multics
 .\".I runoff
@@ -904,32 +931,36 @@ to enable filling of output lines got the name it retains to this day.
 .SS "Unix and \f[I]roff\f[]"
 .\" ====================================================================
 .
+McIlroy's
 .I roff
 was one of the first Unix programs.
 .
-McIlroy's
-.I runoff
-was,
 in Dennis Ritchie's term,
-\[lq]transliterated\[rq] from BCPL to DEC PDP-7 assembly language
+it was \[lq]transliterated\[rq] from BCPL to DEC PDP-7 assembly language
 .\" see "The Evolution of the Unix Time-Sharing System", Ritchie, 1984
 for the fledgling Unix operating system.
 .
-It saw its name shortened to
-.I roff
-(perhaps under the influence of Ken Thompson),
-while adding support for automatic hyphenation with
+Automatic hyphenation was managed with
 .B .hc
 and
 .B .hy
-requests;
-a generalization of line spacing control with the
+requests,
+line spacing control was generalized with the
 .B .ls
-request;
+request,
 and what later
 .IR roff s
-would call diversions,
-with \[lq]footnote\[rq] requests.
+would call diversions were available via \[lq]footnote\[rq] requests.
+.\" The foregoing features may have been in McIlroy's Multics roff, but
+.\" he no longer has documentation for that--only the GECOS version.
+.\" GBR's guess is that they were, if we take Ritchie's choice of the
+.\" term "transliterated" seriously.  GBR further speculates that there
+.\" is no reason to suppose that McIlroy's roff was stagnant from
+.\" 1969-1971, whereas we have no record of any significant
+.\" post-transliteration development of Unix roff.  Its request list did
+.\" not appear until the 3rd edition manual, and did not change
+.\" thereafter.  In 7th edition, roff was characterized as "utterly
+.\" frozen".
 .
 This
 .I roff
