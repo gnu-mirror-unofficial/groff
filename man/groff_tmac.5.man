@@ -462,47 +462,53 @@ fonts which contain the necessary glyphs.
 The macro packages in this section are not intended for stand-alone
 use,
 but can add functionality to any other macro package or to plain
-(or \[lq]raw\[rq])
+(\[lq]raw\[rq])
 .I groff
 documents.
 .
 .
-.TP 9n
+.\" TODO:
+.\"   a4
+.\"   devtag
+.\"   doc-old
+.\"   europs
+.\"   psatk
+.\"   psfig
+.\"   psold
+.TP 9n \" 'papersize'
 .I 62bit
 provides macros for addition,
 multiplication,
 and division of 62-bit integers
-(allowing safe multiplication of 31-bit integers,
+(allowing safe multiplication of signed 31-bit integers,
 for example).
 .
 .
 .TP
 .I ec
-switches the
-.MR grodvi @MAN1EXT@
-output driver from the CM
-(Computer Modern)
-to the EC and TC font families.
+configures the
+.B dvi
+output device to use
+the EC and TC font families instead of CM
+(Computer Modern).
 .
-The
-.I \%grodvi
-man page has further details.
+See
+.MR grodvi @MAN1EXT@ .
 .
 .
 .TP
 .I hdtbl
-The Heidelberger table macros,
-contributed by Joachim Walsdorff,
-allow the generation of tables through a syntax similar to the HTML
-table model.
+allows the generation of tables using a syntax similar to the HTML table
+model.
 .
-.I hdtbl
-is a macro package,
-not a preprocessor like
-.MR tbl @MAN1EXT@ .
+This Heidelberger table macro package is not a preprocessor,
+which can be useful if the contents of table entries are determined by
+macro calls or string interpolations.
 .
-.I hdtbl
-works only with the
+Compare to
+.MR @g@tbl @MAN1EXT@ .
+.
+It works only with the
 .B ps
 and
 .B pdf
@@ -516,7 +522,7 @@ See
 .I papersize
 provides an interface to set the paper size on the command line by
 giving
-.I \%@g@troff
+.I @g@troff
 the
 .BI "\-d \%paper=" size
 option.
@@ -585,23 +591,41 @@ calls
 with which it shares an interface
 (see below).
 .
+This macro file is normally loaded at startup by the
+.I troffrc
+file.
+.
 .
 .TP
 .I pic
-This file provides proper definitions for the macros
+supplies definitions of the macros
 .BR PS ,
 .BR PE ,
 and
 .BR PF ,
-needed for the
+usable with the
 .MR @g@pic @MAN1EXT@
 preprocessor.
 .
 They center each picture.
 .
-Use it only if your macro package doesn't provide proper definitions for
-those three macros
-(most of them already do).
+Use it if your document does not use a full-service macro package,
+or that package does not supply working
+.I pic
+macro definitions.
+.
+Except for
+.I man
+and
+.IR mdoc ,
+those provided with
+.I groff
+already do so
+(exception:
+.I mm
+employs the name
+.B PF
+for a different purpose).
 .
 .
 .TP
@@ -869,9 +893,9 @@ for a demonstration.
 .
 .TP
 .I trace
-Use this for tracing macro calls.
-.
-It is only useful for debugging.
+aids the debugging of
+.I groff
+documents by tracing macro calls.
 .
 See
 .MR groff_trace @MAN7EXT@ .
@@ -879,22 +903,19 @@ See
 .
 .TP
 .I tty\-char
-Defines fallback definitions of
+defines fallback definitions of
 .I roff
 special characters for terminal devices.
 .
 These definitions more poorly optically approximate typeset output
 compared to those of the
 .I tty
-file in favor of communicating more semantic information,
-which can allow easier processing with critical equipment.
-.\" XXX: critical equipment like what?
+file in favor of communicating more semantic information.
 .
 .
 .TP
 .I www
-Additions of elements known from the HTML format, as used in World
-Wide Web pages; this includes URL links and mail addresses.
+defines macros corresponding to HTML elements.
 .
 See
 .MR groff_www @MAN7EXT@ .
