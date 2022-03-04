@@ -2693,10 +2693,12 @@ static int transparent_translate(int cc)
       int c = ci->get_ascii_code();
       if (c != '\0')
 	return c;
-      error("can't translate %1 to special character '%2'"
-	    " in transparent throughput",
-	    input_char_description(cc),
-	    ci->nm.contents());
+      if (getenv("GROFF_ENABLE_TRANSPARENCY_WARNINGS")
+	  != 0 /* nullptr */)
+	error("can't translate %1 to special character '%2'"
+	      " in transparent throughput",
+	      input_char_description(cc),
+	      ci->nm.contents());
     }
   }
   return cc;

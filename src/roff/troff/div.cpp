@@ -433,7 +433,8 @@ void top_level_diversion::transparent_output(unsigned char c)
 
 void top_level_diversion::transparent_output(node * /*n*/)
 {
-  error("can't transparently output node at top level");
+  if (getenv("GROFF_ENABLE_TRANSPARENCY_WARNINGS") != 0 /* nullptr */)
+    error("can't transparently output node at top level");
 }
 
 void top_level_diversion::copy_file(const char *filename)

@@ -1,3 +1,14 @@
+2022-03-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/div.cpp
+	(top_level_diversion::transparent_output):
+	* src/roff/troff/input.cpp (transparent_translate): Suppress two
+	troublesome (i.e., more or less spurious) error diagnostics
+	about transparent output/throughput unless the environment
+	variable `GROFF_ENABLE_TRANSPARENCY_WARNINGS` is present.  This
+	is a bit of a bodge until we get diversion sanitization worked
+	out.  See Savannah #61407.
+
 2022-03-04  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[preconv]: Stop assuming that the default input stream, or an
