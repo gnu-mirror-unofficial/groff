@@ -379,10 +379,7 @@ follows it.
 .
 The
 .request .cc
-can change the control character;
-if thus used,
-.RB \[lq] . \[rq]
-loses its special properties.
+request can change the control character.
 .
 .
 .IP \[aq]
@@ -751,7 +748,7 @@ Use
 .B (
 and
 .B )
-to specify operator precedence.
+to specify the precedence of sub-expressions.
 .
 Parentheses also permit the use of spaces between operators and their
 arguments.
@@ -5440,8 +5437,8 @@ returning to the enclosing context.
 .SS Parameters
 .\" ====================================================================
 .
-Macro call and string parameters can be accessed using escape sequences
-starting with
+Macro call and string interpolation parameters can be accessed using
+escape sequences starting with
 .RB \[lq] \[rs]$ \[rq].
 .
 The
