@@ -115,8 +115,7 @@
 .
 .\" start of reference
 .de ]-
-.	rm [A [B [C [D [E [G [I [J [N [O [P [Q [R [S [T [V
-.	rm ref*string
+.	ref*reset
 .	if d ref*item-start-hook \
 .		ref*item-start-hook
 ..
@@ -164,6 +163,12 @@
 .	als ref*print ref*normal-print
 .	if d ref*biblio-end-hook \
 .		ref*biblio-end-hook
+..
+.
+.
+.de ref*reset
+.	rm [A [B [C [D [E [G [I [J [N [O [P [Q [R [S [T [V
+.	rm ref*string
 ..
 .
 .

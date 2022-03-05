@@ -1,5 +1,22 @@
 2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[refer,mm]: Add and use `ref*reset` macro to clean up between
+	bibilography entries.
+
+	* tmac/refer.tmac (]-): Move string clean up logic from here...
+	(ref*reset): ...to this new macro.  Now we can also use it...
+
+	* contrib/mm/refer-mm.tmac (ref*][-first-pass): ...here.
+
+	Problem appears to date back to refer-mm.tmac's introduction in
+	January 2011.  Thanks to Bjarni Ingi Gislason for the root-cause
+	analysis and proposed fix, to which I applied the DRY principle
+	and added a reset of `ref*string` as well.
+
+	Fixes <https://savannah.gnu.org/bugs/?60657>.
+
+2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[mm]: Regression-test Savannah #60657.
 
 	* contrib/mm/tests/remove-stale-bib-entry-data.sh: Do it.
