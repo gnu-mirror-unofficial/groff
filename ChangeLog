@@ -1,5 +1,22 @@
 2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Tweak customization management.
+
+	* tmac/an.tmac: Load "man.local" with `msoquiet` request, so
+	people can get rid of the file if they don't need it.
+	(PT, BT): Define these macros only if not already defined.  This
+	is slightly less paranoid but far more ergonomic, given
+	interactions with the andoc wrapper.  Now user-defined page
+	header traps (PT) defined in man.local can take effect on the
+	first page rendered.
+
+	* tmac/groff_man.7.man.in (Hooks): Document how to remove page
+	headers and/or footers entirely.
+
+	Fixes <https://savannah.gnu.org/bugs/?61954>.
+
+2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[refer,mm]: Add and use `ref*reset` macro to clean up between
 	bibilography entries.
 

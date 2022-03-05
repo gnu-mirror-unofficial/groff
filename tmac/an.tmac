@@ -25,8 +25,8 @@
 .\" <http://www.gnu.org/licenses/>.
 .
 .
-.\" Put local additions in the file man.local, loaded near the end of
-.\" this file.  If you need to add things to TH, use '.am1 TH'.
+.\" Put site additions in the file man.local, loaded near the end of
+.\" this file.  To add things to TH, use '.am1 TH'.
 .
 .if !\n(.g \
 .  ab groff man macros require groff extensions; aborting
@@ -378,6 +378,7 @@
 .\"
 .\" In continuous rendering mode, we need to extend the page length to
 .\" accommodate the vertical size of our header (plus any spacing).
+.if d PT .ig
 .de1 PT
 .  ie \\n[cR] .pl +1v
 .  el         .sp .5i
@@ -397,6 +398,7 @@
 .\"
 .\" In continuous rendering mode, we need to extend the page length to
 .\" accommodate the vertical size of our footer (plus any spacing).
+.if d BT .ig
 .de1 BT
 .  if \\n[cR] .pl +1v
 .  ie \\n[D] \{\
@@ -1111,8 +1113,8 @@
 .\" Load man macro extensions.
 .mso an-ext.tmac
 .
-.\" Load local modifications.
-.mso man.local
+.\" Load site modifications.
+.msoquiet man.local
 .
 .\" Set each rendering parameter only if its -[dr] option or man.local
 .\" did not.
