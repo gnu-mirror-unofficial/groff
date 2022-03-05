@@ -1,5 +1,13 @@
 2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an.tmac (AT, UC, HP): Add deprecation warnings.  For the
+	last, only do so if we're not inside a synopsis (SY/YS), since
+	our definition of `SY` calls `HP` internally.  (This does seem
+	hypocritical.  Perhaps if we knew the correct CSS incantation
+	to speak in grohtml, we could un-deprecate `HP`.)
+
+2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/tmac.an (M4CHECK): Rename stamp file to make its purpose
 	clearer.
 
