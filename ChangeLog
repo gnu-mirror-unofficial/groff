@@ -1,5 +1,18 @@
 2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[refer]: Report correct line number in bibliography file
+	diagnostics.
+
+	* src/preproc/refer/refer.cpp (do_bib): Set line number to 1
+	upon successfully opening a bibliography file.
+
+	Problem appears to date back to groff 1.02 (June 1991) at the
+	latest.
+
+	Fixes <https://savannah.gnu.org/bugs/?62142>.
+
+2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[refer]: Regression-test Savannah #62124.
 
 	* src/preproc/refer/tests/report-correct-line-numbers.sh: Do it.
