@@ -1099,9 +1099,8 @@ do_file(const char *filename)
   }
   if (debug_flag)
     fprintf(stderr, "processing %s\n", reported_filename.contents());
-  if (fseek(fp, 0L, SEEK_SET) == 0) {
+  if (fseek(fp, 0L, SEEK_SET) == 0)
     is_seekable = true;
-  }
   else {
     SET_BINARY(fileno(fp));
     if (debug_flag)
