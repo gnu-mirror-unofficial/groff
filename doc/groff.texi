@@ -5992,9 +5992,6 @@ The @code{nr} request (@pxref{Setting Registers}) expects up to two
 numeric expressions as arguments; a bare @samp{+} does not qualify, so
 our first attempt got a warning.
 
-@codequotebacktick off
-@codequoteundirected off
-
 
 @c =====================================================================
 
@@ -6002,72 +5999,87 @@ our first attempt got a warning.
 @section Identifiers
 @cindex identifiers
 
-Like any other language, GNU @code{troff} has rules for properly formed
-@dfn{identifiers}---labels for objects with syntactical importance,
-like registers, names (macros, strings, or diversions), environments,
-fonts, styles, and glyphs.  In GNU @code{troff}, an identifier is a
-sequence of one or more characters with the following exceptions.
+GNU @code{troff} has rules for properly formed
+@dfn{identifiers}---labels for objects with syntactical importance, like
+registers, names (macros, strings, or diversions), environments, fonts,
+styles, colors, and glyphs.  An identifier consists of one or more
+characters with the exception of spaces, tabs, newlines, and invalid
+input characters.
 
-@itemize @bullet
-@item
-Spaces, tabs, or newlines.
-
-@item
 @cindex invalid input characters
 @cindex input characters, invalid
 @cindex characters, invalid input
 @cindex Unicode
-Invalid input characters; these are certain control characters (from the
+Invalid input characters are a subset of control characters (from the
 sets ``C0 Controls'' and ``C1 Controls'' as Unicode describes them).
 When GNU @code{troff} encounters one in an identifier, it produces a
-warning diagnostic of type @samp{input} (@pxref{Debugging}).
+warning diagnostic of type @samp{input} (@pxref{Debugging}).  They are
+removed during parsing; an identifier @samp{foo}, followed by an invalid
+character, followed by @samp{bar}, is treated as @samp{foobar}.
 
 On a machine using the ISO 646, 8859, or 10646 character encodings,
 invalid input characters are @code{0x00}, @code{0x08}, @code{0x0B},
-@code{0x0D}--@code{0x1F}, and @code{0x80}--@code{0x9F}.
-
-On an @acronym{EBCDIC} host, they are @code{0x00}--@code{0x01},
-@code{0x08}, @code{0x09}, @code{0x0B}, @code{0x0D}--@code{0x14},
-@code{0x17}--@code{0x1F}, and @code{0x30}--@code{0x3F}.
-
-Some of these code points are used by GNU @code{troff} internally,
-making it non-trivial to extend the program to cover Unicode or other
-character encodings that use characters from these
+@code{0x0D}--@code{0x1F}, and @code{0x80}--@code{0x9F}.  On an
+@acronym{EBCDIC} host, they are @code{0x00}--@code{0x01}, @code{0x08},
+@code{0x09}, @code{0x0B}, @code{0x0D}--@code{0x14},
+@code{0x17}--@code{0x1F}, and
+@code{0x30}--@code{0x3F}.@footnote{Historically, control characters like
+ASCII STX, ETX, and BEL (Control+B, Control+C, and Control+G) have been
+observed in @code{roff} documents, particularly in macro packages
+employing them as delimiters with the output comparison operator to try
+to avoid collisions with the content of arbitrary user-supplied
+parameters (@pxref{Operators in Conditionals}).  We discourage this
+expedient; in GNU @code{troff} it is unnecessary (outside of
+compatibility mode) because delimited arguments are parsed at a different
+input level than the surrounding context.  @xref{Implementation
+Differences}.}  Some of these code points are used by GNU @code{troff}
+internally, making it non-trivial to extend the program to cover Unicode
+or other character encodings that use characters from these
 ranges.@footnote{Consider what happens when a C1 control
 @code{0x80}--@code{0x9F} is necessary as a continuation byte in a UTF-8
 sequence.}
 
-Invalid characters are removed during parsing; an identifier @code{foo},
-followed by an invalid character, followed by @code{bar} is treated as
-@code{foobar}.
-@end itemize
-
-For example, any of the following identifiers is valid.
+The identifiers @samp{br}, @samp{PP}, @samp{end-list},
+@samp{ref*normal-print}, @samp{|}, @samp{@@_}, and @samp{!"#$%'()*+,-./}
+are all valid.  Discretion should be exercised to prevent confusion.
+Some care is required with identifiers starting with @samp{(} or
+@samp{[}.
 
 @Example
-br
-PP
-(l
-end-list
-@@_
+.nr x 9
+.nr y 1
+.nr (x 2
+.nr [y 3
+.nr sum1 (\n(x + \n[y])
+    @error{} space character not allowed in escape
+    @error{}   sequence parameter
+A:2+3=\n[sum1]
+.nr sum2 (\n((x + \n[[y])
+B:2+3=\n[sum2]
+.nr sum3 (\n[(x] + \n([y)
+C:2+3=\n[sum3]
+    @result{} A:2+3=1 B:2+3=5 C:2+3=5
 @endExample
 
 @cindex @code{]}, as part of an identifier
 @noindent
-An identifier longer than two characters with a closing bracket
-(@samp{]}) in its name can't be accessed with bracket-form escape
-sequences that expect an identifier as a parameter.  For example,
-@samp{\[foo]]} accesses the glyph @samp{foo}, followed by @samp{]} in
-whatever the surrounding context is, whereas @samp{\C'foo]'} really asks
-for glyph @samp{foo]}.
+An identifier with a closing bracket (@samp{]}) in its name can't be
+accessed with bracket-form escape sequences that expect an identifier as
+a parameter.  For example, @samp{\[foo]]} accesses the glyph @samp{foo},
+followed by @samp{]} in whatever the surrounding context is, whereas
+@samp{\C'foo]'} formats a glyph named @samp{foo]}.
 
 @cindex @code{refer}, and macro names starting with @code{[} or @code{]}
 @cindex @code{[}, macro names starting with, and @code{refer}
 @cindex @code{]}, macro names starting with, and @code{refer}
 @cindex macro names, starting with @code{[} or @code{]}, and @code{refer}
-If you name macros beginning with the characters @samp{[} or @samp{]},
-you foreclose use of the @code{refer} preprocessor, which recognizes
-@samp{.[} and @samp{.]} as bilbilographic reference delimiters.
+If you begin a macro, string, or diversion name with either of the
+characters @samp{[} or @samp{]}, you foreclose use of the @code{refer}
+preprocessor, which recognizes @samp{.[} and @samp{.]} as bilbilographic
+reference delimiters.
+
+@codequotebacktick off
+@codequoteundirected off
 
 @Defesc {\\A, @code{'}, ident, @code{'}}
 Test whether an identifier @var{ident} is valid in @code{gtroff}.  It
