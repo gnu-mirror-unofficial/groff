@@ -1,3 +1,33 @@
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/roff/troff/input.cpp (get_char_for_escape_name): Recast
+	diagnostic messages to more accurately refer to escape
+	"sequence" rather than "name".  "Name" is a confusing term here,
+	given that it also applies to a group of objects sharing a name
+	space (natch): requests, macros, strings, and diversions.
+	Further, the "escape name" cited by these diagnostics is not the
+	escape function selector; that is, the character after the
+	escape character which determines how the escape sequence is to
+	be interpreted.  These diagnostics are only thrown after that
+	function is known, however, when parsing of an escape sequence
+	parameter is attempted.
+	(input_char_description): Drop leading articles ("a") from
+	input character descriptions, to economize in diagnostic
+	messages this function helps produce.
+	(non_empty_name_warning): Use zero copula for economy.
+
+	* src/roff/troff/input.cpp (empty_name_warning, read_size,
+	token::get_char, check_missing_character):
+	* src/roff/troff/number.cpp (start_number, parse_term): Recast
+	messages to more consistently use the form "expected X, got Y"
+	where feasible.
+
+	* src/roff/troff/number.cpp (start_number): Say "numeric
+	expression missing" instead of "missing number"; we don't
+	require a terminal symbol in the expression grammar here.  Also
+	use `tok.description()` where we can, and remove assumption that
+	the escape character is the default.
+
 2022-03-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an.tmac (AT, UC, HP): Add deprecation warnings.  For the

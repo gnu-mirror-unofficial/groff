@@ -822,7 +822,7 @@ static char get_char_for_escape_name(int allow_space = 0)
   int c = get_copy(0, false /* is defining */, true /* handle \E */);
   switch (c) {
   case EOF:
-    copy_mode_error("end of input in escape name");
+    copy_mode_error("end of input in escape sequence");
     return '\0';
   default:
     if (!invalid_input_char(c))
@@ -839,7 +839,7 @@ static char get_char_for_escape_name(int allow_space = 0)
   case '\t':
   case '\001':
   case '\b':
-    copy_mode_error("%1 is not allowed in an escape name",
+    copy_mode_error("%1 not allowed in escape sequence parameter",
 		    input_char_description(c));
     return '\0';
   }
@@ -2477,9 +2477,10 @@ static void empty_name_warning(bool required)
       warning(WARN_MISSING, "missing name");
   }
   else if (required)
-    error("name expected (got %1)", tok.description());
+    error("expected name, got %1", tok.description());
   else
-    error("name expected (got %1): treated as missing", tok.description());
+    error("expected name, got %1; treated as missing",
+	  tok.description());
 }
 
 static void non_empty_name_warning()
@@ -2488,7 +2489,7 @@ static void non_empty_name_warning()
       && !tok.is_tab() && !tok.is_right_brace()
       // We don't want to give a warning for .el\{
       && !tok.is_left_brace())
-    error("%1 is not allowed in a name", tok.description());
+    error("%1 not allowed in a name", tok.description());
 }
 
 symbol get_name(bool required)
@@ -5116,7 +5117,7 @@ static bool read_size(int *x)
   }
   if (contains_invalid_digit) {
     if (c)
-      error("invalid digit in type size escape sequence: %1",
+      error("expected valid digit in type size escape sequence, got %1",
 	    input_char_description(c));
     else
       error("invalid digit in type size escape sequence");
@@ -6628,17 +6629,17 @@ const char *input_char_description(int c)
 {
   switch (c) {
   case '\n':
-    return "a newline character";
+    return "newline character";
   case '\b':
-    return "a backspace character";
+    return "backspace character";
   case '\001':
-    return "a leader character";
+    return "leader character";
   case '\t':
-    return "a tab character";
+    return "tab character";
   case ' ':
-    return "a space character";
+    return "space character";
   case '\0':
-    return "a node";
+    return "node";
   }
   static char buf[sizeof("magic character code ") + 1 + INT_DIGITS];
   if (invalid_input_char(c)) {
@@ -7226,7 +7227,8 @@ charinfo *token::get_char(bool required)
     if (type == TOKEN_EOF || type == TOKEN_NEWLINE)
       warning(WARN_MISSING, "missing normal or special character");
     else
-      error("normal or special character expected (got %1)", description());
+      error("expected normal or special character, got %1",
+	    description());
   }
   return 0;
 }
@@ -7247,9 +7249,8 @@ void check_missing_character()
 {
   if (!tok.is_newline() && !tok.is_eof() && !tok.is_right_brace()
       && !tok.is_tab())
-    error("normal or special character expected (got %1): "
-	  "treated as missing",
-	  tok.description());
+    error("expected normal or special character, got %1; treated as"
+	  " missing", tok.description());
 }
 
 // this is for \Z
