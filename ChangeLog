@@ -1,5 +1,12 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/X.tmac: Redirect `fchar` requests for \[lq] and \[rq] to
+	\[dq] since the X11 Type 1-based text fonts encode ISO 8859-1
+	{Latin-1} and don't have typopgrapher's quotes.  Drop `fchar`
+	request for \[aq], which _is_ represented, per recent changes.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* /font/devX100-12/CB:
 	* /font/devX100-12/CBI:
 	* /font/devX100-12/CI:
