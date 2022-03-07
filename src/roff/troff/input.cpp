@@ -153,15 +153,12 @@ static symbol get_delim_name();
 static void init_registers();
 static void trapping_blank_line();
 
-// this is for gcc 2.95 with old versions of libstdc++
-#define input_iterator my_input_iterator
-
 class input_iterator;
 input_iterator *make_temp_iterator(const char *);
 const char *input_char_description(int);
 
 void process_input_stack();
-void chop_macro();		// declare to avoid friend name injection
+void chop_macro();	// declare to avoid friend name injection
 
 
 void set_escape_char()
@@ -817,9 +814,10 @@ void shift()
   skip_line();
 }
 
-static char get_char_for_escape_parameter(int allow_space = 0)
+static char get_char_for_escape_parameter(bool allow_space = false)
 {
-  int c = get_copy(0, false /* is defining */, true /* handle \E */);
+  int c = get_copy(0 /* nullptr */, false /* is defining */,
+		   true /* handle \E */);
   switch (c) {
   case EOF:
     copy_mode_error("end of input in escape sequence");

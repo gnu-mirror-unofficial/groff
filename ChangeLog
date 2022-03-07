@@ -1,5 +1,14 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp: Trivially refactor.  Drop `#define`
+	that was working around a GCC 2.95-era libstdc++ problem.
+	Shorten long line.
+	(get_char_for_escape_parameter): Demote parameter from `int` to
+	`bool` and use Boolean literal for default argument.  Annotate a
+	null pointer constant.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[troff]: Rename some internal functions.
 
 	* src/roff/troff/input.cpp: Do it.
