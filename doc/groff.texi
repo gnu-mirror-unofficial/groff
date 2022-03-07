@@ -7369,6 +7369,7 @@ A break is implied by several other requests:@: @code{bp}, @code{ce},
 @code{sp}, @code{ti}, and @code{trf}.  If the no-break control character
 is used with any of these requests, GNU @code{troff} suppresses the
 break; instead the requested operation takes effect at the next break.
+@samp{'br} does nothing.
 
 @Example
 .ll 55n
@@ -7395,8 +7396,7 @@ is as if a break has already happened; additional breaks, whether
 explicit or implicit, have no effect.
 
 @Defreq {br, }
-Break the current line: the pending output line is emitted without
-adjustment.
+Break the line: emit any pending output line without adjustment.
 
 @Example
 foo bar
