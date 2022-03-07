@@ -5950,23 +5950,49 @@ In the foregoing example, we've used the @code{\Z} escape sequence
 (@pxref{Page Motions}) to restore the drawing position after formatting
 @samp{C}, then moved vertically to the first text baseline on the page.
 
-@codequotebacktick off
-@codequoteundirected off
-
 @Defesc {\\B, @code{'}, anything, @code{'}}
 @cindex numeric expression, valid
 @cindex valid numeric expression
-Return@tie{}1 if @var{anything} is a valid numeric expression; or@tie{}0
-if @var{anything} is empty or not a valid numeric expression.
+Interpolate@tie{}1 if @var{anything} is a valid numeric expression,
+and@tie{}0 otherwise.  You might use this escape sequence along with the
+@code{if} request to filter out invalid macro or string arguments.
+@xref{Conditionals and Loops}.
 @endDefesc
 
+@Example
+.\" Indent by amount given in first argument; assume ens.
+.de Indent
+.  if \B'\\$1' .in (n;\\$1)
+..
+@endExample
+
 A register interpolation used as an operand in an expression must have
-an Arabic format; see @ref{Assigning Register Formats}.
+an Arabic format; luckily, this is the default.  @xref{Assigning
+Register Formats}.
 @cindex space characters, in expressions
 @cindex expressions, and space characters
 Due to the way arguments are parsed, spaces are not allowed in
-expressions unless the entire expression is surrounded by parentheses.
+expressions unless the (sub)expression containing them is surrounded by
+parentheses.
 @xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
+
+@Example
+.nf
+.nr a 1+2 + 2+1
+\na
+    @error{} expected numeric expression, got a space
+    @result{} 3
+.nr a 1+(2 + 2)+1
+\na
+    @result{} 6
+@endExample
+
+The @code{nr} request (@pxref{Setting Registers}) expects up to two
+numeric expressions as arguments; a bare @samp{+} does not qualify, so
+our first attempt got a warning.
+
+@codequotebacktick off
+@codequoteundirected off
 
 
 @c =====================================================================
