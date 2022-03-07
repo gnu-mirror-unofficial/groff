@@ -4663,7 +4663,7 @@ not interested in details.
 * Text::
 * Page Geometry::
 * Measurements::
-* Expressions::
+* Numeric Expressions::
 * Identifiers::
 * Embedded Commands::
 * Registers::
@@ -5570,7 +5570,7 @@ margins larger than one vee.
 @c parsing and they apply to escape sequences in general.
 @c =====================================================================
 
-@node Measurements, Expressions, Text, gtroff Reference
+@node Measurements, Numeric Expressions, Text, gtroff Reference
 @section Measurements
 @cindex measurements
 @cindex scaling indicator
@@ -5722,9 +5722,10 @@ scalar value, use @samp{u} as the unit for that value.
 
 @c =====================================================================
 
-@node Expressions, Identifiers, Measurements, gtroff Reference
-@section Expressions
-@cindex expressions
+@node Numeric Expressions, Identifiers, Measurements, gtroff Reference
+@section Numeric Expressions
+@cindex numeric expressions
+@cindex expressions, numeric
 
 @code{gtroff} has most arithmetic operators common to other languages:
 
@@ -5997,7 +5998,7 @@ our first attempt got a warning.
 
 @c =====================================================================
 
-@node Identifiers, Embedded Commands, Expressions, gtroff Reference
+@node Identifiers, Embedded Commands, Numeric Expressions, gtroff Reference
 @section Identifiers
 @cindex identifiers
 
@@ -7089,7 +7090,7 @@ and nothing is interpolated.  @code{\g} is interpreted even in copy mode
 @cindex expressions, and register format
 GNU @code{troff}'s input parser understands only Arabic numerals.  The
 Roman numeral or alphabetic formats cannot be used as operands to
-arithmetic operators in expressions (@pxref{Expressions}).  For
+arithmetic operators in expressions (@pxref{Numeric Expressions}).  For
 instance, it may be desirable to test the page number independently of
 its format.
 
@@ -8214,6 +8215,9 @@ moves the drawing position up the page.  The default scaling unit is
 
 You may wish to use the following macros to set the baseline of the next
 output text at a given distance from the top or the bottom of the page.
+We subtract one line height (@code{\n[.v]}) because the @code{|}
+operator moves to one vee below the page top (@pxref{Numeric
+Expressions}).
 
 @Example
 .de y-from-top-down
@@ -9245,8 +9249,8 @@ input during document maintenance; you can break an input line in the
 middle of a request invocation, macro call, or escape sequence.  Input
 line continuation is invisible to the formatter, with two exceptions:
 the @code{|} operator recognizes the new input line
-(@pxref{Expressions}), and the input line counter register @code{.c} is
-incremented.
+(@pxref{Numeric Expressions}), and the input line counter register
+@code{.c} is incremented.
 
 @c Wrap example at 56 columns (on the _output_).  We use 50n in the
 @c groff input to avoid line adjustment.
@@ -12048,9 +12052,9 @@ in the branches or bodies of these structures is unusual.
 @cindex conditional expressions
 @cindex expressions, conditional
 In @code{if}, @code{ie}, and @code{while} requests, in addition to the
-numeric expressions described in @ref{Expressions}, several Boolean
-operators are available; the members of this expanded class are termed
-@dfn{conditional expressions}.
+numeric expressions described in @ref{Numeric Expressions}, several
+Boolean operators are available; the members of this expanded class are
+termed @dfn{conditional expressions}.
 
 @table @code
 @item c @var{glyph}
@@ -15951,7 +15955,7 @@ default.
 @itemx 2
 An invalid numeric expression was encountered.  This category is enabled
 by default.
-@xref{Expressions}.
+@xref{Numeric Expressions}.
 
 @item break
 @itemx 4
