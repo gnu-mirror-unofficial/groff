@@ -1,5 +1,12 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/libs/libxutil/DviChar.c (ISO_8859_1_map): Fix incorrect
+	assignment of Latin-1 grave accent to \[oq] special character;
+	reassign it to the neutral apostrophe.  Map \[aq] to neutral
+	apostrophe.  Map \[ga] to '`'.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/xtotroff/xtotroff.1.man (Options) <-d>: Document it.
 	* src/utils/xtotroff/xtotroff.c (usage): Align with man page.
 
