@@ -1,5 +1,79 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* /font/devX100-12/CB:
+	* /font/devX100-12/CBI:
+	* /font/devX100-12/CI:
+	* /font/devX100-12/CR:
+	* /font/devX100-12/HB:
+	* /font/devX100-12/HBI:
+	* /font/devX100-12/HI:
+	* /font/devX100-12/HR:
+	* /font/devX100-12/NB:
+	* /font/devX100-12/NBI:
+	* /font/devX100-12/NI:
+	* /font/devX100-12/NR:
+	* /font/devX100-12/TB:
+	* /font/devX100-12/TBI:
+	* /font/devX100-12/TI:
+	* /font/devX100-12/TR:
+	* /font/devX100/CB:
+	* /font/devX100/CBI:
+	* /font/devX100/CI:
+	* /font/devX100/CR:
+	* /font/devX100/HB:
+	* /font/devX100/HBI:
+	* /font/devX100/HI:
+	* /font/devX100/HR:
+	* /font/devX100/NB:
+	* /font/devX100/NBI:
+	* /font/devX100/NI:
+	* /font/devX100/NR:
+	* /font/devX100/TB:
+	* /font/devX100/TBI:
+	* /font/devX100/TI:
+	* /font/devX100/TR:
+	* /font/devX75-12/CB:
+	* /font/devX75-12/CBI:
+	* /font/devX75-12/CI:
+	* /font/devX75-12/CR:
+	* /font/devX75-12/HB:
+	* /font/devX75-12/HBI:
+	* /font/devX75-12/HI:
+	* /font/devX75-12/HR:
+	* /font/devX75-12/NB:
+	* /font/devX75-12/NBI:
+	* /font/devX75-12/NI:
+	* /font/devX75-12/NR:
+	* /font/devX75-12/TB:
+	* /font/devX75-12/TBI:
+	* /font/devX75-12/TI:
+	* /font/devX75-12/TR:
+	* /font/devX75/CB:
+	* /font/devX75/CBI:
+	* /font/devX75/CI:
+	* /font/devX75/CR:
+	* /font/devX75/HB:
+	* /font/devX75/HBI:
+	* /font/devX75/HI:
+	* /font/devX75/HR:
+	* /font/devX75/NB:
+	* /font/devX75/NBI:
+	* /font/devX75/NI:
+	* /font/devX75/NR:
+	* /font/devX75/TB:
+	* /font/devX75/TBI:
+	* /font/devX75/TI:
+	* /font/devX75/TR: Regenerate font descriptions with xtotroff,
+	using updated ISO-8859_1 map.  \[aq] and \[oq] are now aliases
+	of "'" and \[ga] is an alias of "`".  This change probably
+	should have been made when the X11 fonts were corrected in
+	XFree86 4.0 (March 2000).  See
+	<https://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html>.
+
+	Fixes <https://bugs.debian.org/243238>.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libxutil/DviChar.c (ISO_8859_1_map): Fix incorrect
 	assignment of Latin-1 grave accent to \[oq] special character;
 	reassign it to the neutral apostrophe.  Map \[aq] to neutral
