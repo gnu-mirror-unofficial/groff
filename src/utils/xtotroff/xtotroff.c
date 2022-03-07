@@ -270,9 +270,9 @@ static bool MapFont(char *font_name, const char *troff_name)
 static void usage(FILE *stream)
 {
   fprintf(stream,
-	  "usage: %s [-d directory] [-r resolution] [-s type-size]"
-	  " font-map\n"
-	  "       %s -v\n",
+	  "usage: %s [-d destination-directory] [-r resolution]"
+	  " [-s type-size] font-map\n"
+	  "usage: %s -v\n",
 	  program_name, program_name);
 }
 
