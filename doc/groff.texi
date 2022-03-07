@@ -5890,13 +5890,10 @@ decrements.
 @cindex boundary-relative motion operator (@code{|})
 @c "motion" and "operators" already indexed above
 Similarly, a leading @samp{|} operator indicates a motion relative not
-to the current position but to a boundary.  For vertical movements, it
-specifies a distance from the top of the page (or diversion); for
-horizontal ones, from the beginning of the @emph{input} line.  Some
-escape sequences
-@c XXX: which ones?
-reckon motions relative to the beginning of the input line.@footnote{As
-do tab stops, by default (@pxref{Tabs and Fields}).}  Most do not;
+to the current position but to a boundary.  For horizontal motions, the
+measurement specifies a distance relative to what was formatted at the
+beginning of the @emph{input} line.  By default, tab stops are reckoned
+in this way.  Most escape sequences do not; @c XXX: Which ones do?
 @samp{|} tells them to do so.
 
 @Example
@@ -5912,8 +5909,8 @@ Mind the
     @result{} Mind the             gap.
 @endExample
 
-The main use of this feature is to define macros whose scope is limited
-to the output they format.
+One use of this feature is to define macros whose scope is limited to
+the output they format.
 
 @Example
 .\" underline word $1 with trailing punctuation $2
@@ -5936,6 +5933,22 @@ recalling our example, @samp{.if 1 .Underline this} would underline only
 operator were omitted, then the underline would be drawn a zero distance
 from the current position, producing device-dependent, and likely
 undesirable, results.
+
+For vertical movements, the @code{|} operator specifies a distance from
+the first text baseline on the page or in the diversion, using the
+current vertical spacing.
+
+@Example
+A
+.br
+B \Z'C'\v'|0'D
+    @result{} A D
+    @result{} B C
+@endExample
+
+In the foregoing example, we've used the @code{\Z} escape sequence
+(@pxref{Page Motions}) to restore the drawing position after formatting
+@samp{C}, then moved vertically to the first text baseline on the page.
 
 @codequotebacktick off
 @codequoteundirected off
@@ -8170,10 +8183,8 @@ The hyphenation space adjustment threshold is available in the
 Space downward by @var{distance}.  With no argument, the drawing
 position is advanced downward by one vee.  Inside a diversion, any
 @var{distance} argument is ignored.  Otherwise, a negative argument
-moves the drawing position up the page.   If the argument is preceded by
-the @samp{|} operator, GNU @code{troff} moves that distance from the top
-of the page, plus the current line spacing.  The default scaling
-indicator is @samp{v}.  This request causes a break.
+moves the drawing position up the page.  The default scaling unit is
+@samp{v}.  This request causes a break.
 
 You may wish to use the following macros to set the baseline of the next
 output text at a given distance from the top or the bottom of the page.
