@@ -7387,9 +7387,9 @@ This line returns to normal filling and adjustment.
 @noindent
 @cindex pending output line
 @cindex partially collected line
-Output line properties like adjustment and indentation are not
-determined until the line has been broken.  An output line is said to be
-@dfn{pending} if some input has been collected but an output line
+Output line properties like page offset, indentation, and adjustment are
+not determined until the line has been broken.  An output line is said
+to be @dfn{pending} if some input has been collected but an output line
 corresponding to it has not yet been written; such an output line is
 also termed @dfn{partially collected}.  If no output line is pending, it
 is as if a break has already happened; additional breaks, whether
@@ -9127,23 +9127,20 @@ ous values.
 @DefreqItem {po, @t{+}@Var{offset}}
 @DefreqItem {po, @t{-}@Var{offset}}
 @DefregListEndx {.o}
-@pindex troffrc
-Set horizontal page offset to @var{offset} (or increment or decrement
-the current value by @var{offset}).  This request does not cause a
-break, so changing the page offset in the middle of text being filled
-may not yield the expected result.  The initial value is 1@dmn{i}.
-For terminal output devices, it is set to 0 in the startup file
-@file{troffrc}; the default scaling indicator is @samp{m}.
+@pindex tty.tmac
+Set page offset to @var{offset} (or increment or decrement its current
+value by @var{offset}).  If invoked without an argument, the page offset
+is restored to the value before the previous @code{po} request.
+This request does not cause a break; the page offset in effect when an
+output line is broken prevails (@pxref{Manipulating Filling and
+Adjustment}).  The initial value is 1@dmn{i} and the default scaling
+unit is @samp{m}.  On terminal devices, the page offset is set to zero
+by a driver-specific macro file, @file{tty.tmac}.  The current page
+offset can be found in the read-only register @samp{.o}.
 @cindex CSTR@tie{}#54 errata
 @cindex CSTR@tie{}#54 erratum, @code{po} request
 This request is incorrectly documented in the @acronym{AT&T}
-@code{troff} manual as having a default scaling indicator of @samp{v}.
-
-The current page offset can be found in the read-only register
-@samp{.o}.
-
-If @code{po} is called without an argument, the page offset is reset to
-the previous value before the last call to @code{po}.
+@code{troff} manual as using a default scaling unit of @samp{v}.
 
 @Example
 .po 3i

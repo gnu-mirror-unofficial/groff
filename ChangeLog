@@ -1,5 +1,24 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/groff.texi (Manipulating Filling and Adjustment):
+	Explicitly identify the page offset as an output line property
+	that is not determined until a break occurs.
+
+	(Line Layout) <po>: Correct error; the page offset for terminal
+	devices is set by "tty.tmac", not "troffrc".  (The manual has
+	been wrong for a long time; we've had it in tty.tmac since James
+	Clark put it there in 1992.)  Recast and tighten wording.  Drop
+	the word "horizontal"; there is no vertical page offset (as
+	such) in *roff.  Drop hand-waving about unexpected results with
+	a description of the formatter's behavior.  Dcoument request
+	behavior without an argument before getting into the weeds (and
+	CSTR #54 errata).  Migrate terminology from "scaling indicator"
+	to "scaling unit".
+
+	Fixes <https://savannah.gnu.org/bugs/?58035>.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp: Trivially refactor.  Drop `#define`
 	that was working around a GCC 2.95-era libstdc++ problem.
 	Shorten long line.
