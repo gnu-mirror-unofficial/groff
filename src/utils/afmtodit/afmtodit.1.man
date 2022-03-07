@@ -37,20 +37,20 @@ afmtodit \- adapt Adobe Font Metrics files for groff \-Tps and \-Tpdf
 .SY afmtodit
 .RB [ \-ckmnsx ]
 .RB [ \-a\~\c
-.IR n ]
+.IR slant ]
 .RB [ \-d\~\c
-.IR desc-file ]
+.IR device-description-file ]
 .RB [ \-e\~\c
-.IR enc-file ]
+.IR encoding-file ]
 .RB [ \-f\~\c
 .IR internal-name ]
 .RB [ \-i\~\c
-.IR n ]
+.IR italic-correction-factor ]
 .RB [ \-o\~\c
 .IR output-file ]
 .I afm-file
 .I map-file
-.I font-description
+.I font-description-file
 .YS
 .
 .
@@ -83,7 +83,7 @@ glyph name with a PostScript glyph name.
 Output is written in
 .MR groff_font @MAN5EXT@
 format to
-.I font-description,
+.I font-description-file,
 a file named for the intended
 .I groff
 font name
@@ -241,7 +241,7 @@ meaning that
 should search it whenever a glyph is not found in the current font.
 .
 In that case,
-.I font-description
+.I font-description-file
 should be listed as an argument to the
 .B fonts
 directive in the output device's
@@ -259,10 +259,10 @@ will automatically mount it when it is first used.
 .\" ====================================================================
 .
 .TP
-.BI \-a\~ n
+.BI \-a\~ slant
 Use
-.I n
-as the slant parameter in the font description file;
+.I slant
+as the slant (\[lq]angle\[rq]) parameter in the font description file;
 this is used by
 .I groff
 in the positioning of accents.
@@ -289,7 +289,7 @@ font.
 .
 .
 .TP
-.BI \-d\~ desc-file
+.BI \-d\~ device-description-file
 The device description file is
 .I desc-file
 rather than the default
@@ -305,7 +305,7 @@ given with option
 .
 .
 .TP
-.BI \-e\~ enc-file
+.BI \-e\~ encoding-file
 The PostScript font should be reencoded to use the encoding described
 in
 .IR enc-file .
@@ -322,7 +322,7 @@ subdirectory of the default font directory is searched.
 .
 .
 .TP
-.BI \-f\~ name
+.BI \-f\~ internal-name
 The internal name of the
 .I groff
 font is set to
@@ -330,10 +330,10 @@ font is set to
 .
 .
 .TP
-.BI \-i\~ n
+.BI \-i\~ italic-correction-factor
 Generate an italic correction for each glyph so that its width plus its
 italic correction is equal to
-.I n
+.I italic-correction-factor
 thousandths of an em
 plus the amount by which the right edge of the glyph's bounding box is
 to the right of its origin.
@@ -354,7 +354,7 @@ use a subscript correction equal to the italic correction instead.
 .
 .IP
 Also generate a left italic correction for each glyph equal to
-.I n
+.I italic-correction-factor
 thousandths of an em
 plus the amount by which the left edge of the glyph's bounding box is to
 the left of its origin.
@@ -381,7 +381,7 @@ for italic fonts.
 Write to
 .I output-file
 instead of
-.I font-description.
+.I font-description-file.
 .
 .
 .TP

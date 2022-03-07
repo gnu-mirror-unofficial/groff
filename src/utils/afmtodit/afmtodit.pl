@@ -39,9 +39,10 @@ if ($opt_v) {
 }
 
 if ($#ARGV != 2) {
-    die "usage: $prog [-ckmnsx] [-a ANGLE] [-d DESC-FILE]" .
-	" [-e ENCODING] [-f NAME] [-i N]\n" .
-	" [-o OUT-FILE] AFM-FILE MAP-FILE FONT\n" .
+    die "usage: $prog [-ckmnsx] [-a slant]" .
+	" [-d device-description-file] [-e encoding-file]" .
+	" [-f internal-name] [-i italic-correction-factor]" .
+	" [-o output-file] afm-file map-file font-description-file\n" .
 	"usage: $prog -v\n";
 }
 
