@@ -1,5 +1,24 @@
 2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Rename some internal functions.
+
+	* src/roff/troff/input.cpp: Do it.
+	(read_escape_name):
+	(read_long_escape_name):
+	(read_two_char_escape_name):
+	(get_char_for_escape_name):
+	(read_increment_and_escape_name): Rename these...
+	(read_escape_parameter):
+	(read_long_escape_parameters):
+	(get_char_for_escape_name):
+	(read_two_char_escape_parameter):
+	(read_increment_and_escape_parameter): ...to these.
+	(read_two_char_escape_parameter, read_long_escape_parameters,
+	read_escape_parameter, read_increment_and_escape_parameter,
+	get_copy, token::next): Update call sites.
+
+2022-03-07  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (get_char_for_escape_name): Recast
 	diagnostic messages to more accurately refer to escape
 	"sequence" rather than "name".  "Name" is a confusing term here,

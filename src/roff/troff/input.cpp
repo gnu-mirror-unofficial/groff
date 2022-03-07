@@ -133,8 +133,8 @@ static void copy_mode_error(const char *,
 			    const errarg & = empty_errarg);
 
 enum read_mode { ALLOW_EMPTY, WITH_ARGS, NO_ARGS };
-static symbol read_escape_name(read_mode = NO_ARGS);
-static symbol read_long_escape_name(read_mode = NO_ARGS);
+static symbol read_escape_parameter(read_mode = NO_ARGS);
+static symbol read_long_escape_parameters(read_mode = NO_ARGS);
 static void interpolate_string(symbol);
 static void interpolate_string_with_args(symbol);
 static void interpolate_macro(symbol, int = 0);
@@ -817,7 +817,7 @@ void shift()
   skip_line();
 }
 
-static char get_char_for_escape_name(int allow_space = 0)
+static char get_char_for_escape_parameter(int allow_space = 0)
 {
   int c = get_copy(0, false /* is defining */, true /* handle \E */);
   switch (c) {
@@ -846,12 +846,12 @@ static char get_char_for_escape_name(int allow_space = 0)
   return c;
 }
 
-static symbol read_two_char_escape_name()
+static symbol read_two_char_escape_parameter()
 {
   char buf[3];
-  buf[0] = get_char_for_escape_name();
+  buf[0] = get_char_for_escape_parameter();
   if (buf[0] != '\0') {
-    buf[1] = get_char_for_escape_name();
+    buf[1] = get_char_for_escape_parameter();
     if (buf[1] == '\0')
       buf[0] = 0;
     else
@@ -860,7 +860,7 @@ static symbol read_two_char_escape_name()
   return symbol(buf);
 }
 
-static symbol read_long_escape_name(read_mode mode)
+static symbol read_long_escape_parameters(read_mode mode)
 {
   int start_level = input_stack::get_level();
   char abuf[ABUF_SIZE];
@@ -870,7 +870,7 @@ static symbol read_long_escape_name(read_mode mode)
   char c;
   int have_char = 0;
   for (;;) {
-    c = get_char_for_escape_name(have_char && mode == WITH_ARGS);
+    c = get_char_for_escape_parameter(have_char && mode == WITH_ARGS);
     if (c == 0) {
       if (buf != abuf)
 	delete[] buf;
@@ -915,41 +915,41 @@ static symbol read_long_escape_name(read_mode mode)
   }
 }
 
-static symbol read_escape_name(read_mode mode)
+static symbol read_escape_parameter(read_mode mode)
 {
-  char c = get_char_for_escape_name();
+  char c = get_char_for_escape_parameter();
   if (c == 0)
     return NULL_SYMBOL;
   if (c == '(')
-    return read_two_char_escape_name();
+    return read_two_char_escape_parameter();
   if (c == '[' && !compatible_flag)
-    return read_long_escape_name(mode);
+    return read_long_escape_parameters(mode);
   char buf[2];
   buf[0] = c;
   buf[1] = '\0';
   return symbol(buf);
 }
 
-static symbol read_increment_and_escape_name(int *incp)
+static symbol read_increment_and_escape_parameter(int *incp)
 {
-  char c = get_char_for_escape_name();
+  char c = get_char_for_escape_parameter();
   switch (c) {
   case 0:
     *incp = 0;
     return NULL_SYMBOL;
   case '(':
     *incp = 0;
-    return read_two_char_escape_name();
+    return read_two_char_escape_parameter();
   case '+':
     *incp = 1;
-    return read_escape_name();
+    return read_escape_parameter();
   case '-':
     *incp = -1;
-    return read_escape_name();
+    return read_escape_parameter();
   case '[':
     if (!compatible_flag) {
       *incp = 0;
-      return read_long_escape_name();
+      return read_long_escape_parameters();
     }
     break;
   }
@@ -1018,7 +1018,7 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
     case '$':
       {
 	(void)input_stack::get(0);
-	symbol s = read_escape_name();
+	symbol s = read_escape_parameter();
 	if (!(s.is_null() || s.is_empty()))
 	  interpolate_arg(s);
 	break;
@@ -1026,7 +1026,7 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
     case '*':
       {
 	(void)input_stack::get(0);
-	symbol s = read_escape_name(WITH_ARGS);
+	symbol s = read_escape_parameter(WITH_ARGS);
 	if (!(s.is_null() || s.is_empty())) {
 	  if (have_string_arg) {
 	    have_string_arg = 0;
@@ -1052,7 +1052,7 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
       {
 	(void)input_stack::get(0);
 	int inc;
-	symbol s = read_increment_and_escape_name(&inc);
+	symbol s = read_increment_and_escape_parameter(&inc);
 	if (!(s.is_null() || s.is_empty()))
 	  interpolate_number_reg(s, inc);
 	break;
@@ -1060,7 +1060,7 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
     case 'g':
       {
 	(void)input_stack::get(0);
-	symbol s = read_escape_name();
+	symbol s = read_escape_parameter();
 	if (!(s.is_null() || s.is_empty()))
 	  interpolate_number_format(s);
 	break;
@@ -1071,7 +1071,7 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
     case 'V':
       {
 	(void)input_stack::get(0);
-	symbol s = read_escape_name();
+	symbol s = read_escape_parameter();
 	if (!(s.is_null() || s.is_empty()))
 	  interpolate_environment_variable(s);
 	break;
@@ -1918,7 +1918,7 @@ void token::next()
       cc = input_stack::get(&n);
       switch(cc) {
       case '(':
-	nm = read_two_char_escape_name();
+	nm = read_two_char_escape_parameter();
 	type = TOKEN_SPECIAL;
 	return;
       case EOF:
@@ -1982,14 +1982,14 @@ void token::next()
 	break;
       case '$':
 	{
-	  symbol s = read_escape_name();
+	  symbol s = read_escape_parameter();
 	  if (!(s.is_null() || s.is_empty()))
 	    interpolate_arg(s);
 	  break;
 	}
       case '*':
 	{
-	  symbol s = read_escape_name(WITH_ARGS);
+	  symbol s = read_escape_parameter(WITH_ARGS);
 	  if (!(s.is_null() || s.is_empty())) {
 	    if (have_string_arg) {
 	      have_string_arg = 0;
@@ -2041,7 +2041,7 @@ void token::next()
 	goto handle_escape_char;
       case 'f':
 	{
-	  symbol s = read_escape_name(ALLOW_EMPTY);
+	  symbol s = read_escape_parameter(ALLOW_EMPTY);
 	  if (s.is_null())
 	    break;
 	  const char *p;
@@ -2058,7 +2058,7 @@ void token::next()
 	}
       case 'F':
 	{
-	  symbol s = read_escape_name(ALLOW_EMPTY);
+	  symbol s = read_escape_parameter(ALLOW_EMPTY);
 	  if (s.is_null())
 	    break;
 	  curenv->set_family(s);
@@ -2067,7 +2067,7 @@ void token::next()
 	}
       case 'g':
 	{
-	  symbol s = read_escape_name();
+	  symbol s = read_escape_parameter();
 	  if (!(s.is_null() || s.is_empty()))
 	    interpolate_number_format(s);
 	  break;
@@ -2093,7 +2093,7 @@ void token::next()
 	  have_input = 1;
 	break;
       case 'k':
-	nm = read_escape_name();
+	nm = read_escape_parameter();
 	if (nm.is_null() || nm.is_empty())
 	  break;
 	type = TOKEN_MARK_INPUT;
@@ -2115,19 +2115,19 @@ void token::next()
 	  return;
 	}
       case 'm':
-	do_glyph_color(read_escape_name(ALLOW_EMPTY));
+	do_glyph_color(read_escape_parameter(ALLOW_EMPTY));
 	if (!compatible_flag)
 	  have_input = 1;
 	break;
       case 'M':
-	do_fill_color(read_escape_name(ALLOW_EMPTY));
+	do_fill_color(read_escape_parameter(ALLOW_EMPTY));
 	if (!compatible_flag)
 	  have_input = 1;
 	break;
       case 'n':
 	{
 	  int inc;
-	  symbol s = read_increment_and_escape_name(&inc);
+	  symbol s = read_increment_and_escape_parameter(&inc);
 	  if (!(s.is_null() || s.is_empty()))
 	    interpolate_number_reg(s, inc);
 	  break;
@@ -2146,7 +2146,7 @@ void token::next()
 	type = TOKEN_NODE;
 	return;
       case 'O':
-	nd = do_suppress(read_escape_name());
+	nd = do_suppress(read_escape_parameter());
 	if (!nd)
 	  break;
 	type = TOKEN_NODE;
@@ -2192,7 +2192,7 @@ void token::next()
 	return;
       case 'V':
 	{
-	  symbol s = read_escape_name();
+	  symbol s = read_escape_parameter();
 	  if (!(s.is_null() || s.is_empty()))
 	    interpolate_environment_variable(s);
 	  break;
@@ -2214,7 +2214,7 @@ void token::next()
 	return;
       case 'Y':
 	{
-	  symbol s = read_escape_name();
+	  symbol s = read_escape_parameter();
 	  if (s.is_null() || s.is_empty())
 	    break;
 	  request_or_macro *p = lookup_request(s);
@@ -2258,7 +2258,7 @@ void token::next()
 	break;
       case '[':
 	if (!compatible_flag) {
-	  symbol s = read_long_escape_name(WITH_ARGS);
+	  symbol s = read_long_escape_parameters(WITH_ARGS);
 	  if (s.is_null() || s.is_empty())
 	    break;
 	  if (have_string_arg) {
