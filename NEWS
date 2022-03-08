@@ -351,14 +351,14 @@ o A new device control command, "link", generates OSC 8 hyperlinks.
   This means that groff documents can produce clickable links in the
   terminal window for emulators that support such escape sequences.
 
-o On the Latin-1 output device ("groff -T latin1") the special character
-  escape sequence \[oq] (opening quote) is now rendered as code point
-  0x27 (apostrophe) instead of 0x60 (grave accent).  The ISO
-  8859/ECMA-94 Latin character sets do not define any glyphs for
-  directional ("typographer's") quotation marks, but the apostrophe is
-  depicted in the defining standard as a neutral (vertical) glyph,
-  whereas the grave accent 0x60 and acute accent 0xB4 are
-  mirror-symmetric diacritical marks.
+o On output devices using the Latin-1 character encoding ("groff -T
+  latin1" and the X11 devices) the special character escape sequence
+  \[oq] (opening quote) is now rendered as code point 0x27 (apostrophe)
+  instead of 0x60 (grave accent).  The ISO 8859/ECMA-94 Latin character
+  sets do not define any glyphs for directional ("typographer's")
+  quotation marks, but the apostrophe is depicted in the defining
+  standard as a neutral (vertical) glyph, whereas the grave accent 0x60
+  and acute accent 0xB4 are mirror-symmetric diacritical marks.
 
   This change has no effect on _input_ conventions for roff source
   documents.  You can still get directional single quotes on UTF-8,
