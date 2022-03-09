@@ -1,5 +1,17 @@
 2022-03-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* font/devps/symbolsl.afm: New file.
+	* font/devps/devps.am (EXTRA_DIST): We have long shipped
+	"symbol.afm" with the distribution archive--I don't see why we
+	don't ship "symbolsl.afm" and "zapfdr.afm" as well (metrics for
+	`SS`, the slanted symbol font, and ZDR, reversed Zapf Dingbats).
+	Like the Type 1 font descriptions themselves, this file is
+	updated only in "maintainer mode", not as part of the build.
+	Moreover, these fonts are not part of the PostScript level 2
+	base 35 fonts so their AFM files are unlikely to be readily
+	available elsewhere.
+
+2022-03-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 	* src/utils/afmtodit/afmtodit.pl: Trivially refactor.  Store the
 	program's version string in scalar `afmtodit_version` and use
 	that in the usage message and comment embedded in the output.
