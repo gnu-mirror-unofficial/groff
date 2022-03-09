@@ -48,8 +48,8 @@ if ($#ARGV != 2) {
 
 my $afm = $ARGV[0];
 my $map = $ARGV[1];
-my $font = $ARGV[2];
-my $outfile = $opt_o || $font;
+my $fontfile = $ARGV[2];
+my $outfile = $opt_o || $fontfile;
 my $desc = $opt_d || "DESC";
 my $sys_map = $groff_sys_fontdir . "/devps/generate/" . $map;
 my $sys_desc = $groff_sys_fontdir . "/devps/" . $desc;
@@ -445,7 +445,10 @@ if ($opt_c) {
 
 print("\n");
 
-print("name $font\n");
+my $name = $fontfile;
+$name =~ s@.*/@@;
+
+print("name $name\n");
 print("internalname $psname\n") if $psname;
 print("special\n") if $opt_s;
 printf("slant %g\n", $italic_angle) if $italic_angle != 0;
