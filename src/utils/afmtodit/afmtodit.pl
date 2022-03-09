@@ -34,8 +34,10 @@ getopts('a:cd:e:f:i:kmno:svx');
 our ($opt_a, $opt_c, $opt_d, $opt_e, $opt_f, $opt_i, $opt_k,
      $opt_m, $opt_n, $opt_o, $opt_s, $opt_v, $opt_x);
 
+my $afmtodit_version = "GNU afmtodit (groff) version @VERSION@\n";
+
 if ($opt_v) {
-    print "GNU afmtodit (groff) version @VERSION@\n";
+    print "$afmtodit_version";
     exit 0;
 }
 
@@ -422,8 +424,7 @@ foreach my $lig (sort keys %default_ligatures) {
 open(FONT, ">$outfile") || die "$prog: can't open '$outfile' for output: $!\n";
 select(FONT);
 
-print("# This file was generated with " .
-      "GNU afmtodit (groff) version @VERSION@\n");
+print("# This file was generated with $afmtodit_version.\n");
 print("#\n");
 print("#   $fullname\n") if defined $fullname;
 print("#   $version\n") if defined $version;
