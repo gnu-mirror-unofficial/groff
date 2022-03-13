@@ -1,4 +1,4 @@
-# Copyright (C) 2014-2020 Free Software Foundation, Inc.
+# Copyright (C) 2014-2022 Free Software Foundation, Inc.
 #
 # This file is part of 'groff'.
 #
@@ -150,10 +150,17 @@ font/devps/DESC: $(devps_srcdir)/DESC.in
 	&& (test -z '$(PSPRINT)' \
 	    || echo print '$(PSPRINT)' >>$@)
 
-fonts: devps_fonts
+maintainer-font-descriptions: devps_font-descriptions
+# This target generates font descriptions from installed Type 1 AFM
+# files; these are _not_ normally generated during a build, but provided
+# with the groff source distribution.
+#
 # We add top_builddir to the PATH in case the only afmtodit available is
 # the one in the current build.
-devps_fonts: afmtodit font/devps/DESC
+#
+# The AFM files from which these descriptions are produced must be
+# obtained elsewhere, so this target runs only in "maintainer mode".
+devps_font-descriptions: afmtodit font/devps/DESC
 	PATH=$(top_builddir)$(GROFF_PATH_SEPARATOR)$(PATH) \
 	  $(MAKE) -f $(devps_srcdir)/generate/Makefile \
 	  srcdir=$(devps_srcdir)/generate DESC=$(devps_srcdir)/DESC.in

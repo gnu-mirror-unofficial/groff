@@ -1,3 +1,27 @@
+2022-03-13  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* font/devps/devps.am: Rename targets.
+	(fonts):
+	(devps_fonts): Rename these...
+	(maintainer-font-descriptions):
+	(devps_font-descriptions): ...to these.  Add comments explaining
+	what they're for and why they aren't used in a build.
+
+	* font/devps/generate/Makefile: Add `outdir` variable to store
+	destination directory of font description files, and update all
+	targets that write artifacts to use this directory.  This makes
+	the targets "phony", which I don't regard as a problem since the
+	generated artifacts are kept under source control, and this
+	isn't really a user-facing script (even though it gets
+	installed).  I think there is a good chance that this will
+	become a shell script, because to avoid regressions we need to
+	generate the font descriptions using both the 229-glyph and
+	314-glyph versions of the Adobe fonts' AFM files (so that we get
+	wider glyph coverage _and_ more kerning pair data) and we need
+	to add kerning information for the ellipsis (Savannah #59907).
+	(symbolsl.afm): Revise generation process to be sensitive to
+	failure.
+
 2022-03-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* font/devps/symbolsl.afm: New file.
