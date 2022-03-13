@@ -3111,6 +3111,17 @@ and
 .B rq
 strings.
 .
+.\" per <https://minnie.tuhs.org/pipermail/tuhs/2022-March/025544.html>
+.\" and <https://minnie.tuhs.org/pipermail/tuhs/2022-March/025545.html>
+Documenter's Workbench 1.0 (1984) exposed the
+.B IN
+and
+.B LL
+registers,
+which had been internal to Seventh Edition Unix
+.IR man .
+.\" ...as well as a PD register, which we use but don't expose.
+.
 4.3BSD (1986) added
 .\" undocumented .DS and .DE macros for "displays", which are .RS/.RE
 .\" wrappers with filling disabled and vertical space of 1v before and
@@ -3911,13 +3922,7 @@ supplied the
 .B S \" 1.16
 and
 .B cR \" 1.17
-registers,
-and exposed the
-.B LL
-register \" 1.18
-(internal to Seventh Edition Unix
-.IR man )
-to the user interface.
+registers.
 .
 .MT kollar@\:alltel\:.net
 Larry Kollar
@@ -3931,17 +3936,11 @@ registers;
 the
 .B HF
 string;
-the
+and the
 .B PT
 and
 .B BT
-macros;
-and exposed the
-.B IN
-register
-(internal to Seventh Edition Unix
-.IR man )
-to the user interface. \" all 1.19
+macros.
 .
 .MT g.branden\:.robinson@\:gmail\:.com
 G.\& Branden Robinson
