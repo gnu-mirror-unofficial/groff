@@ -299,7 +299,7 @@ When
 .I uri
 is present,
 any number of additional key/value pairs can be specified;
-their interpretation is the responsibility of the terminal emulator.
+their interpretation is the responsibility of the pager or terminal.
 .
 Spaces or tabs cannot appear literally in
 .IR uri ,
@@ -313,7 +313,7 @@ they must be represented in an alternate form.
 .SS "Device description files"
 .\" ====================================================================
 .
-If
+If the
 .I DESC
 file for the character encoding contains the
 .RB \[lq] unicode \[rq]
@@ -326,8 +326,7 @@ it emits characters in a single-byte encoding depending on the data in
 the font description files.
 .
 See
-.MR groff_font @MAN5EXT@
-for more details.
+.MR groff_font @MAN5EXT@ .
 .
 .
 .P
