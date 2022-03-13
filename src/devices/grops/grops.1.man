@@ -570,6 +570,23 @@ should be used.
 .
 .
 .LP
+The default color for
+.B \[rs]m
+and
+.B \[rs]M
+is black; for colors defined in the \[oq]rgb\[cq] color space
+.B setrgbcolor
+is used, for \[oq]cmy\[cq] and \[oq]cmyk\[cq]
+.BR setcmykcolor ,
+and for \[oq]gray\[cq]
+.BR setgray .
+.
+.B setcmykcolor
+is a PostScript LanguageLevel\~2 command and thus not available on some
+older printers.
+.
+.
+.LP
 In the default setup
 there are styles called
 .BR R ,
@@ -813,23 +830,6 @@ is available as
 .BR ZDR ;
 most characters in these fonts are unnamed and must be accessed using
 .BR \[rs]N .
-.
-.
-.LP
-The default color for
-.B \[rs]m
-and
-.B \[rs]M
-is black; for colors defined in the \[oq]rgb\[cq] color space
-.B setrgbcolor
-is used, for \[oq]cmy\[cq] and \[oq]cmyk\[cq]
-.BR setcmykcolor ,
-and for \[oq]gray\[cq]
-.BR setgray .
-.
-.B setcmykcolor
-is a PostScript LanguageLevel\~2 command and thus not available on some
-older printers.
 .
 .
 .P
