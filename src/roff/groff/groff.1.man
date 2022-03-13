@@ -116,10 +116,9 @@ It is also used to format man pages for viewing on terminals.
 The
 .I groff
 command orchestrates the execution of preprocessors,
-the loading of macro packages,
-the formatting of input documents,
-and the production of output appropriate to a variety of hardware
-devices and file formats.
+the transformation of input documents into a device-independent page
+description language,
+and the production of output from that language.
 .
 .
 .\" ====================================================================
@@ -290,10 +289,7 @@ each should be passed with a separate
 option.
 .
 .I groff
-does not prepend
-\[lq]\-\[rq]
-(a minus sign)
-to
+does not prefix an option dash to
 .I arg
 before passing it to the spooler program.
 .
@@ -330,10 +326,7 @@ each should be passed with a separate
 option.
 .
 .I groff
-does not prepend
-\[lq]\-\[rq]
-(a minus sign)
-to
+does not prefix an option dash to
 .I arg
 before passing it to the postprocessor.
 .
@@ -458,7 +451,7 @@ for a description of this format.
 .\" ====================================================================
 .
 The following options are passed as-is to the formatter program
-.MR @g@troff @MAN1EXT@ ,
+.MR @g@troff @MAN1EXT@
 and described in more detail in its man page.
 .
 .
@@ -1236,8 +1229,7 @@ also known as US-ASCII.
 .
 .TP
 .B cp1047
-for terminals using the IBM code page 1047 character set and encoding,
-an EBCDIC arrangement of ISO Latin-1.
+for terminals using the IBM code page 1047 character set and encoding.
 .
 .
 .TP
@@ -2077,37 +2069,28 @@ groff page of the GNU website
 .P
 Three
 .I groff
-mailing lists are available:
-.
-.
-.IP
+mailing lists are available
+for
 .MT bug\-groff@\:gnu\:.org
-bug tracker activity (read-only)
-.ME ;
+bug tracker activity
+.ME
+(read-only),
 .
-.
-.IP
 .MT groff@\:gnu\:.org
 general discussion
-.ME ;
+.ME ,
 and
 .
-.
-.IP
 .MT groff\-commit@\:gnu\:.org
-commit activity (read-only)
-.ME ,
-which reports changes to
-.IR groff 's
-source code repository by its developers.
+source code repository commit activity
+.ME
+(read-only).
 .
-.
-.P
-Details on repository access and much more can be found in the file
+Details of repository access and more can be found in the file
 .I README
-at the top directory of the
+in the top-level directory of the
 .I groff
-source package.
+source distribution.
 .
 .
 .P
@@ -2124,10 +2107,9 @@ can be found at the
 grap website
 .UE .
 .
-This is the only
-.I grap
-supported by
-.IR groff .
+.I groff
+supports only this
+.IR grap .
 .
 .
 .\" ====================================================================
@@ -2196,7 +2178,7 @@ Preprocessors:
 .
 .
 .TP
-Macro packages and macro-specific utilities:
+Macro packages and package-specific utilities:
 .MR groff_hdtbl @MAN7EXT@ , \" #9
 .MR groff_man @MAN7EXT@ , \" #55a
 .MR groff_man_style @MAN7EXT@ , \" #55b
@@ -2214,7 +2196,7 @@ Macro packages and macro-specific utilities:
 .
 .
 .TP
-Bibliographic and index tools:
+Bibliographic database management tools:
 .MR @g@indxbib @MAN1EXT@ , \" #49
 .MR lkbib @MAN1EXT@ , \" #50
 .MR @g@lookbib @MAN1EXT@ \" #51
