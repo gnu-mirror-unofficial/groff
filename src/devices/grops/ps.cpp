@@ -1870,7 +1870,7 @@ static void usage(FILE *stream)
 {
   fprintf(stream,
 "usage: %s [-glm] [-b n] [-c n] [-F dir] [-I dir] [-p paper-format]"
-" [-P prologue] [-w n] [file] ...\n"
+" [-P prologue-file] [-w n] [file ...]\n"
 "usage: %s {-v | --version}\n", program_name, program_name);
 }
 
