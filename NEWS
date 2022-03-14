@@ -61,7 +61,7 @@ o Type size escape sequences of the form "\sNN", where NN is in the
 
 o New requests `soquiet` and `msoquiet` are available.  They operate as
   `so` and `mso`, respectively, except that they do not emit a warning
-  diagnostic if the file name argument does not exist.
+  diagnostic if the file named in their argument does not exist.
 
 o New requests `stringdown` and `stringup` are available.  These change
   the string named in their argument by replacing each of its bytes with
@@ -228,9 +228,9 @@ o The an (man) macro package no longer honors an `ll` request to set the
   or at all (mandoc, Heirloom Doctools troff).
 
 o The an (man) macro package now interprets the value of the `HY`
-  register as a Boolean; using it to set specific hyphenation mode
-  is no longer supported.  The groff command-line option `-rHY=0`
-  continues to disable automatic hyphenation of man page text as before.
+  register as a Boolean; using it to set a specific hyphenation mode is
+  no longer supported.  The groff command-line option `-rHY=0` continues
+  to disable automatic hyphenation of man page text as before.
 
 o The groff_man(7) man page documenting the groff implementation of the
   an (man) macro package has been split into two pages.  The original
