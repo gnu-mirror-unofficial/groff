@@ -17,7 +17,7 @@
 	[tests]: Rename test to apply naming scheme.
 
 	* tmac/tests/pdfpic_falls_back_to_PSPIC.sh: Rename this...
-	* tmac/tests/pdfpic_falls-back-to-PSPIC.sh: ...to his.
+	* tmac/tests/pdfpic_falls-back-to-PSPIC.sh: ...to this.
 	* tmac/tmac.am (tmac_TESTS): Use new name.
 
 2022-03-14  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -52,7 +52,7 @@
 	generate the font descriptions using both the 229-glyph and
 	314-glyph versions of the Adobe fonts' AFM files (so that we get
 	wider glyph coverage _and_ more kerning pair data) and we need
-	to add kerning information for the ellipsis (Savannah #59907).
+	to add kerning information for the ellipsis (Savannah #58897).
 	(symbolsl.afm): Revise generation process to be sensitive to
 	failure.
 
@@ -70,6 +70,7 @@
 	available elsewhere.
 
 2022-03-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/utils/afmtodit/afmtodit.pl: Trivially refactor.  Store the
 	program's version string in scalar `afmtodit_version` and use
 	that in the usage message and comment embedded in the output.
@@ -78,9 +79,9 @@
 
 	* src/utils/afmtodit/afmtodit.pl: Fix code style nits.  Migrate
 	to the shebang line style we use in more recently modified Perl
-	scripts.  Replace `-w` with 'use warnings;`.  Shorten an output
+	scripts.  Replace `-w` with `use warnings;`.  Shorten an output
 	comment since the groff version string can grow long (see commit
-	1264531310, 14 January 2014).
+	1264531310, 14 January 2018).
 
 2022-03-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
