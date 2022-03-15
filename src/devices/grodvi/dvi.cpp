@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Copyright (C) 1989-2020 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
@@ -316,23 +315,23 @@ void dvi_printer::set_color(color *col)
     break;
   case RGB:
     sprintf(buf, "color rgb %.3g %.3g %.3g",
-		 double(Red) / color::MAX_COLOR_VAL,
-		 double(Green) / color::MAX_COLOR_VAL,
-		 double(Blue) / color::MAX_COLOR_VAL);
+		 double(Red) / (double)color::MAX_COLOR_VAL,
+		 double(Green) / (double)color::MAX_COLOR_VAL,
+		 double(Blue) / (double)color::MAX_COLOR_VAL);
     break;
   case CMY:
     col->get_cmyk(&Cyan, &Magenta, &Yellow, &Black);
     // fall through
   case CMYK:
     sprintf(buf, "color cmyk %.3g %.3g %.3g %.3g",
-		 double(Cyan) / color::MAX_COLOR_VAL,
-		 double(Magenta) / color::MAX_COLOR_VAL,
-		 double(Yellow) / color::MAX_COLOR_VAL,
-		 double(Black) / color::MAX_COLOR_VAL);
+		 double(Cyan) / (double)color::MAX_COLOR_VAL,
+		 double(Magenta) / (double)color::MAX_COLOR_VAL,
+		 double(Yellow) / (double)color::MAX_COLOR_VAL,
+		 double(Black) / (double)color::MAX_COLOR_VAL);
     break;
   case GRAY:
     sprintf(buf, "color gray %.3g",
-		 double(Gray) / color::MAX_COLOR_VAL);
+		 double(Gray) / (double)color::MAX_COLOR_VAL);
     break;
   }
   do_special(buf);
@@ -694,7 +693,7 @@ void draw_dvi_printer::fill_next(const environment *env)
     env->fill->get_gray(&g);
   }
   char buf[256];
-  sprintf(buf, "sh %.3g", 1 - double(g)/color::MAX_COLOR_VAL);
+  sprintf(buf, "sh %.3g", 1 - double(g) / (double)color::MAX_COLOR_VAL);
   do_special(buf);
 }
 
@@ -976,3 +975,9 @@ static void usage(FILE *stream)
   fprintf(stream, "usage: %s [-dv] [-F dir] [-w n] [files ...]\n",
 	  program_name);
 }
+
+// Local Variables:
+// fill-column: 72
+// mode: C++
+// End:
+// vim: set cindent noexpandtab shiftwidth=2 textwidth=72:

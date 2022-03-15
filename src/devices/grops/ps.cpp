@@ -371,7 +371,7 @@ ps_output &ps_output::put_symbol(const char *s)
 ps_output &ps_output::put_color(unsigned int c)
 {
   char buf[128];
-  sprintf(buf, "%.3g", double(c) / color::MAX_COLOR_VAL);
+  sprintf(buf, "%.3g", double(c) / (double)color::MAX_COLOR_VAL);
   int len = strlen(buf);
   if (col > 0 && col + len + need_space > max_line_length) {
     putc('\n', fp);
