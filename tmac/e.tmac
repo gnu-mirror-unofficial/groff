@@ -2010,7 +2010,8 @@
 .\" Set package default hyphenation mode, but override it with groff's
 .\" localized value if available.
 .hy 6
-.do hy \\n[\\*[locale]*hyphenation-mode-trap]
+.do if r \\*[locale]*hyphenation-mode-trap \
+.  do hy \\n[\\*[locale]*hyphenation-mode-trap]
 ..
 .
 .ld

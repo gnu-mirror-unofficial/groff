@@ -1,3 +1,17 @@
+2022-03-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* tmac/e.tmac: Test register for existence before using it to
+	set hyphenation mode.  A site troffrc or other local
+	customization might remove the register (which is guaranteed to
+	be set under the stock configuration) and, perversely, Heirloom
+	Doctools troff interprets a `do` request, instead of ignoring it
+	as a historical troff implementation would, so if they borrow
+	our me(7) changes, the register would be unset, interpolate
+	zero, and hyphenation would wind up disabled.
+
+	Fixes <https://savannah.gnu.org/bugs/?62181>.  Thanks to Dave
+	Kemper for the report.
+
 2022-03-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tests]: Rename test to apply naming scheme.
