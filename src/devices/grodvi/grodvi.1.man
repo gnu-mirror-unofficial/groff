@@ -51,7 +51,7 @@ grodvi \- groff output driver for TeX DVI format
 .RB [ \-F\~\c
 .IR dir ]
 .RB [ \-p\~\c
-.IR papersize ]
+.IR paper-format ]
 .RB [ \-w\~\c
 .IR n ]
 .RI [ file\~ .\|.\|.]
@@ -299,37 +299,38 @@ usually
 .
 .TP
 .B \-l
-Specify landscape orientation.
+Use landscape orientation rather than portrait.
 .
 .
 .TP
-.BI \-p papersize
-Specify paper dimensions.
-.
-This overrides the
-.BR papersize ,
-.BR paperlength ,
+.BI \-p\~ paper-format
+Set physical dimensions of output medium,
+overriding the
+.BR \%papersize ,
+.BR \%paperlength ,
 and
-.B paperwidth
-commands in the
+.B \%paperwidth
+directives in the
 .I DESC
-file;
-it accepts the same arguments as the
-.B papersize
-command
-(see
-.MR groff_font @MAN5EXT@
-for details).
+file.
+.
+.I paper-format
+can be any argument accepted by the
+.B \%papersize
+directive;
+see
+.MR groff_font @MAN5EXT@ .
 .
 .
 .TP
-.BI \-w n
-Set the default line thickness to
-.I n
-thousandths of an em.
+.BI \-w\~ n
+Draw rules (lines) with a thickness of
+.IR n \~thousandths
+of an em.
 .
-If this option isn't specified,
-the line thickness defaults to 0.04\~em.
+The default thickness is
+.B 40
+(0.04\~em).
 .
 .
 .\" ====================================================================
