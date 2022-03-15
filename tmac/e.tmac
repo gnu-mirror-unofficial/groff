@@ -508,7 +508,8 @@
 .\"		*** COMMANDS WITH VARIANT DEFINITIONS ***
 .
 .
-.if !'\*(.T'html' .rn bp @b	\" --- begin page
+.ie '\*(.T'html' .ds @b \" empty
+.el              .rn bp @b	\" --- begin page
 .
 .de bp			\" *** begin new page (overrides columns)
 .nr $c \\n($m			\" force new page, not new column
