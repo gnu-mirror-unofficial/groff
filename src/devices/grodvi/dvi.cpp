@@ -945,7 +945,7 @@ int main(int argc, char **argv)
     case 'w':
       if (sscanf(optarg, "%d", &linewidth) != 1
 	  || linewidth < 0 || linewidth > 1000) {
-	error("bad line width");
+	error("invalid line width '%1' ignored", optarg);
 	linewidth = DEFAULT_LINEWIDTH;
       }
       break;

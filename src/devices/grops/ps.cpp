@@ -1840,7 +1840,7 @@ int main(int argc, char **argv)
       break;
     case 'w':
       if (sscanf(optarg, "%d", &linewidth) != 1 || linewidth < 0) {
-	error("bad linewidth '%1'", optarg);
+	error("invalid line width '%1' ignored", optarg);
 	linewidth = -1;
       }
       break;
