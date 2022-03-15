@@ -223,6 +223,9 @@
 .  \" once when initializing the package because when rendering multiple
 .  \" pages, a previous page might have changed them.
 .
+.  fam \\*[an*body-family]
+.  ft R
+.
 .  nr PS    10z \" default point size
 .  nr PS-SS 10z
 .  nr PS-SH 10.95z
@@ -628,6 +631,7 @@
 .
 .\" Set arguments (or next input line if none) as a section heading.
 .de1 SH
+.  fam \\*[an*body-family]
 .  an-break-paragraph
 .  an-reset-margin-and-inset-level
 .  fi
@@ -653,6 +657,7 @@
 .
 .\" Set arguments (or next input line if none) as a subsection heading.
 .de1 SS
+.  fam \\*[an*body-family]
 .  an-break-paragraph
 .  an-reset-margin-and-inset-level
 .  fi
@@ -961,7 +966,7 @@
 .    ftr I CWI
 .    ftr BI CWI
 .  \}
-.  el .fam C
+.  el .fam \\*[an*example-family]
 .  ft R
 ..
 .
@@ -1105,6 +1110,9 @@
 .
 .nr an-is-output-html 0
 .if '\*[.T]'html' .nr an-is-output-html 1
+.
+.ds an*body-family T \" Times
+.ds an*example-family C \" Courier
 .
 .\" Map monospaced fonts to standard styles for groff's nroff devices.
 .if n \{\

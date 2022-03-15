@@ -1,5 +1,17 @@
 2022-03-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/an.tmac: Recover more quickly from missing `EE` calls.
+	(initialization): Define new strings, `an*body-family` and
+	`an*example-family` to house the font families used in these
+	rendering contexts.
+	(TH, SH, SS): Restore the font family to `an*body-family`.
+	(TH): Set font style to roman as well.
+	(EX): Change to `an*example-family` instead of literal "C".
+
+	Fixes <https://savannah.gnu.org/bugs/?62187>.
+
+2022-03-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/e.tmac: Test register for existence before using it to
 	set hyphenation mode.  A site troffrc or other local
 	customization might remove the register (which is guaranteed to
