@@ -972,8 +972,9 @@ int main(int argc, char **argv)
 
 static void usage(FILE *stream)
 {
-  fprintf(stream, "usage: %s [-dv] [-F dir] [-w n] [files ...]\n",
-	  program_name);
+  fprintf(stream,
+"usage: %s [-dl] [-F dir] [-p paper-format] [-w n] [file ...]\n"
+"usage: %s {-v | --version}\n", program_name, program_name);
 }
 
 // Local Variables:
