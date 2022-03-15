@@ -660,7 +660,7 @@ registers exercise color support.
 .
 .
 .\" ====================================================================
-.SH "Numerical expressions"
+.SH "Numeric expressions"
 .\" ====================================================================
 .
 A
@@ -850,13 +850,23 @@ sequence by the following expression.
 Interpret the following expression as a motion relative not to the
 current position but to a boundary.
 .
-For vertical movements,
-it specifies a distance from the top of the page
-(or diversion);
-for horizontal ones,
-from the beginning of the
+For horizontal motions,
+the measurement specifies a distance relative to the drawing position at
+the beginning of the
 .I input
 line.
+.
+By default,
+tab stops reckon measurements in this way.
+.
+Most escape sequences do not; \" XXX: Which ones do?
+.B |
+tells them to do so.
+.
+For vertical movements,
+this operator specifies a distance from the first text baseline on the
+page or in the diversion,
+using the current vertical spacing.
 .RE
 .
 .
