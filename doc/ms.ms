@@ -3404,13 +3404,13 @@ includes font selection escape sequences to set the word in italics.
 .\" ------------------------
 .if t .bp
 .NH 1
-Further Reading
+Further reading
 .XS
-Further Reading
+Further reading
 .XE
 .
 .
-.IP \[bu]
+.XP
 \[lq]Typing Documents on the Unix System:
 Using the \-ms Macros with Troff and Nroff\[rq];
 M.\& E.\& Lesk;
@@ -3421,7 +3421,7 @@ This document describes the
 supplied with AT&T Unix Version\~7.
 .
 .
-.IP \[bu]
+.XP
 \[lq]A Revised Version of \-ms\[rq];
 Bill Tuthill;
 August 1983.
@@ -3440,7 +3440,7 @@ contemporaneous degree-granting authorities of the University of
 California at Berkeley.)
 .
 .
-.IP \[bu]
+.XP
 \[lq]Using PDF boxes with
 .I groff
 and the
