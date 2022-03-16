@@ -412,8 +412,8 @@ as does
 .
 .
 .P
-The special character escape for the apostrophe as a neutral single
-quote is typically needed only in technical content;
+The special character escape sequence for the apostrophe as a neutral
+single quote is typically needed only in technical content;
 typing words like \[lq]can't\[rq] and \[lq]Anne's\[rq] in a natural way
 will render correctly,
 because in ordinary prose an apostrophe is typeset either as a closing
@@ -809,8 +809,8 @@ is the code point of the character,
 a decimal number between 0 and\~255
 without leading zeroes.
 .
-This legacy numeric special character escape is used to map characters
-onto glyphs via the
+This legacy numeric special character escape sequence is used to map
+characters onto glyphs via the
 .B trin
 request in macro files loaded by
 .MR grotty @MAN1EXT@ .
@@ -1036,7 +1036,8 @@ request designates a special character as combining.
 The
 .I composite.tmac
 macro file,
-loaded automatically by default,
+loaded automatically by the default
+.IR troffrc ,
 maps the following special characters to the combining characters shown
 below.
 .
@@ -1559,7 +1560,7 @@ _
 \[st]	\e[st]	u220B	such that
 \[3d]	\e[3d]	u2234	therefore
 \[tf]	\e[tf]	u2234	therefore
-\[or]	|	u007C	bar
+|	|	u007C	bar
 \[or]	\e[or]	u007C	bitwise or +
 .TE
 .
