@@ -68,7 +68,7 @@ and books.
 These
 .I groff
 macros support cover page and table of contents generation,
-automatic section numbering,
+automatically numbered headings,
 several different paragraph styles,
 a variety of text styling options,
 footnotes,
@@ -105,7 +105,7 @@ and Tenth Edition Research Unix have been recreated.
 The
 .I ms
 macro package expects a certain amount of structure:
-a well-formed document contains at least one paragraphing or sectioning
+a well-formed document contains at least one paragraphing or heading
 macro call.
 .
 To compose a document from scratch,
@@ -618,7 +618,7 @@ it is set to
 .
 Setting
 .B \[rs]*[FAM]
-before the first call of a sectioning,
+before the first call of a heading,
 paragraphing,
 or (non-date) document description macro also applies it to headers,
 footers,
@@ -766,14 +766,12 @@ rendered on the same output line in the same style.
 .
 .
 .TP
-.BI .NH\~ depth
+.B .NH\c
+.RI \~[ depth ]
 Set an automatically numbered heading.
 .
-The
-.I depth
-argument instructs
 .I ms
-to number heading in the form
+produces a numbered heading in the form
 .IR a . b . c .\|.\|.,
 to any level desired,
 with the numbering of each depth increasing automatically and being
@@ -783,6 +781,11 @@ reset to zero when a more significant depth is increased.
 the most significant or coarsest division of the document.
 .
 Only nonzero values are output.
+.
+If the argument is omitted,
+.I depth
+is taken to be
+.BR 1 .
 .
 If you specify
 .I depth
@@ -817,8 +820,9 @@ This feature is a Berkeley extension.
 .
 .
 .P
-After invocation of
-.BR .NH ,
+After
+.B .NH
+is called,
 the assigned number is made available in the strings
 .B SN\-DOT
 (as it appears in a printed heading with default formatting,
@@ -851,7 +855,7 @@ of
 following redefinition of the alias for
 .BR \[rs]*[SN\-STYLE] .
 .
-The formatted number of the current section is available in
+The formatted number of the current heading is available in
 .B \[rs]*[SN]
 (a feature first documented by Berkeley),
 facilitating its inclusion in
@@ -1125,9 +1129,8 @@ respectively.
 .SS "Indented regions"
 .\" ====================================================================
 .
-You may need to indent a region of text while still letting
-.I groff
-automatically break lines and fill the text.
+You may need to indent a region of text while otherwise formatting it
+normally.
 .
 .
 .TP
@@ -1832,10 +1835,8 @@ provides the information necessary to derive the right margin.
 .SS "Multiple columns"
 .\" ====================================================================
 .
-The
 .I ms
-macros can set text in as many columns as will reasonably fit on the
-page.
+can set text in as many columns as reasonably fit on the page.
 .
 The following macros force a page break if a multi-column layout is
 active when they are called.
@@ -2103,7 +2104,7 @@ argument,
 the
 .I text
 arguments are augmented,
-by prefixing the current section number,
+by prefixing the current heading number,
 (which is also deduced from the last preceding use of
 .BR .NH ).
 .
@@ -2275,14 +2276,14 @@ string).
 .
 .
 .IP \[bu]
-Macros that cause
+Many
 .I groff ms
-to internally reset its paragraph rendering parameters
-(paragraphs,
+macros,
+including those for paragraphs,
 headings,
 and displays,
-among others)
-may change the indentation;
+cause a reset of paragraph rendering parameters,
+and may change the indentation;
 they do so not by incrementing or decrementing it,
 but by setting it absolutely.
 .

@@ -49,7 +49,7 @@ and books.
 These
 .I groff
 macros feature cover page and table of contents generation,
-automatic section numbering,
+automatically numbered headings,
 several different paragraph styles,
 a variety of text styling options,
 footnotes,
@@ -191,7 +191,7 @@ document
 The
 .I ms
 macro package expects a certain amount of structure:
-a well-formed document contains at least one paragraphing or sectioning
+a well-formed document contains at least one paragraphing or heading
 macro call.
 .
 To compose a document from scratch,
@@ -925,14 +925,11 @@ cb cb
 lf(CR) lx .
 Macro	Description
 _
-\&.NH \f[I]depth\f[]	T{
+\&.NH [\f[I]depth\f[]]	T{
 Set an automatically numbered heading.
 .
-The
-.I depth
-argument instructs
 .I ms
-to number headings in the form
+produces a numbered heading in the form
 .CW
 .I a .\c
 .I b .\c
@@ -946,6 +943,11 @@ reset to zero when a more significant depth increases.
 document.
 .
 Only nonzero values are output.
+.
+If the argument is omitted,
+.I depth
+is taken to be
+.CW 1 .
 .
 If you specify
 .I depth
@@ -1023,8 +1025,9 @@ T}
 .
 .
 .PP
-After invocation of
-.CW .NH ,
+After
+.CW .NH
+is called,
 the assigned number is made available in the strings
 .CW SN\-DOT
 (as it appears in a printed heading with default formatting,
@@ -1065,7 +1068,7 @@ of
 following redefinition of the alias for
 .CW \[rs]*[SN\-STYLE] .
 .
-The formatted number of the current section is available in
+The formatted number of the current heading is available in
 .CW \[rs]*[SN]
 (a feature first documented by Berkeley),
 facilitating its inclusion in
@@ -1704,9 +1707,8 @@ Indented regions
 .
 .
 .LP
-You may need to indent a region of text while still letting
-.I groff
-automatically break lines and fill the text.
+You may need to indent a region of text while otherwise formatting it
+normally.
 .
 .
 .TS
@@ -2737,7 +2739,7 @@ Margins
 .LP
 Control margins using registers.
 .
-These are summarized in the \[lq]Margins\[rq] section of the table in
+These are summarized in the \[lq]Margins\[rq] portion of the table in
 section \[lq]Document control settings\[rq] above.
 .
 There is no explicit right margin setting;
@@ -2758,10 +2760,8 @@ Multiple columns
 .
 .
 .LP
-The
 .I ms
-macros can set text in as many columns as will reasonably fit on the
-page.
+can set text in as many columns as reasonably fit on the page.
 .
 The following macros force a page break if a multi-column layout is
 active when they are called.
@@ -3088,7 +3088,7 @@ they cannot be used with AT&T
 .I troff .
 .
 .I "groff ms"
-supports several features described above as Berkeley and Version 10
+supports several features described above as Berkeley and Tenth Edition
 Research Unix extensions,
 and adds several of its own.
 .
@@ -3147,14 +3147,14 @@ string).
 .
 .
 .PP
-Macros that cause
+Many
 .I "groff ms"
-to internally reset its paragraph rendering parameters
-(paragraphs,
+macros,
+including those for paragraphs,
 headings,
 and displays,
-among others)
-may change the indentation;
+cause a reset of paragraph rendering parameters,
+and may change the indentation;
 they do so not by incrementing or decrementing it,
 but by setting it absolutely.
 .

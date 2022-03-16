@@ -2507,15 +2507,16 @@ documentation.
 
 The @file{ms} (``manuscript'') package is suitable for the preparation
 of letters, memoranda, reports, and books.  These @code{groff}
-macros feature cover page and table of contents generation, automatic
-section numbering, several different paragraph styles, a variety of text
-styling options, footnotes, multi-column page layouts, and indexing.
-@file{ms} supports the @command{tbl}, @command{eqn}, @command{pic}, and
-@command{refer} preprocessors for inclusion of tables, mathematical
-equations, diagrams, and standardized bibliographic citations.  This
-implementation is mostly compatible with the documented interface and
-behavior of AT&T Unix Version@tie{}7 @file{ms}.  Several extensions from
-4.2BSD (Berkeley) @c Few changes were made in 4.3, Tahoe, Reno, or 4.4.
+macros feature cover page and table of contents generation,
+automatically numbered headings, several different paragraph styles, a
+variety of text styling options, footnotes, multi-column page layouts,
+and indexing.  @file{ms} supports the @command{tbl}, @command{eqn},
+@command{pic}, and @command{refer} preprocessors for inclusion of
+tables, mathematical equations, diagrams, and standardized bibliographic
+citations.  This implementation is mostly compatible with the documented
+interface and behavior of AT&T Unix Version@tie{}7 @file{ms}.  Several
+extensions from 4.2BSD (Berkeley)
+@c Few changes were made in 4.3, Tahoe, Reno, or 4.4.
 and Tenth Edition Research Unix have been recreated.
 
 @menu
@@ -2579,7 +2580,7 @@ We have used an arrow @arrow{} in the above to indicate a tab character.
 @cindex @code{ms} macros, general structure
 
 The @file{ms} macro package expects a certain amount of structure:
-a well-formed document contains at least one paragraphing or sectioning
+a well-formed document contains at least one paragraphing or heading
 macro call.  To compose a document from scratch, begin it by calling
 @code{LP} or @code{PP}.  Longer documents have a structure as follows.
 
@@ -3267,15 +3268,16 @@ Headings are available with and without automatic numbering.  Text lines
 immediately after heading macro calls are treated as part of the
 heading, rendered on the same output line in the same style.
 
-@DefmacList {NH, @Var{depth}, ms}
+@DefmacList {NH, [@Var{depth}], ms}
 @DefmacListEnd {NH, @t{S} @Var{heading-depth-index} @dots{}, ms}
 Set an automatically numbered heading.
 
-The @var{depth} argument instructs @file{ms} to number headings in the
-form @var{a.b.c@dots{}}, to any depth desired, with the numbering of
-each depth increasing automatically and being reset to zero when a more
-significant level is increased.  ``1''@tie{}is the most significant or
-coarsest division of the document.  Only nonzero values are output.
+@file{ms} produces a numbered heading the form @var{a.b.c@dots{}}, to
+any depth desired, with the numbering of each depth increasing
+automatically and being reset to zero when a more significant level is
+increased.  ``1''@tie{}is the most significant or coarsest division of
+the document.  Only nonzero values are output.  If the argument is
+omitted, @var{depth} is taken to be @samp{1}.
 
 If you specify @var{depth} such that an ascending gap occurs relative to
 the previous @code{NH} call---that is, you ``skip a depth'', as by
@@ -3323,11 +3325,10 @@ normally precedes each heading is omitted.
 @DefmpstrItemx {SN-DOT, ms}
 @DefmpstrItemx {SN-NO-DOT, ms}
 @DefmpstrListEndx {SN, ms}
-After invocation of @code{NH}, the assigned number is made available in
-the strings @code{SN-DOT} (as it appears in a printed heading with
-default formatting, followed by a terminating period) and
-@code{SN-NO-DOT} (with the terminating period omitted).  These are GNU
-extensions.
+After @code{NH} is called, the assigned number is made available in the
+strings @code{SN-DOT} (as it appears in a printed heading with default
+formatting, followed by a terminating period) and @code{SN-NO-DOT} (with
+the terminating period omitted).  These are GNU extensions.
 
 You can control the style used to print numbered headings by defining an
 appropriate alias for the string @code{SN-STYLE}.  By default,
@@ -3342,7 +3343,7 @@ define the alias as follows.
 @noindent
 Any such change in numbering style becomes effective from the next use
 of @code{NH} following redefinition of the alias for @code{SN-STYLE}.
-The formatted number of the current section is available in the
+The formatted number of the current heading is available in the
 @code{SN} string (a feature first documented by Berkeley), facilitating
 its inclusion in @code{XS}/@code{XA}/@code{XE} table of contents
 entries.
@@ -3651,8 +3652,8 @@ money
 @node Indented regions in ms, ms keeps and displays, Lists in ms, ms Body Text
 @subsubsection Indented regions
 
-You may need to indent a region of text while still letting @code{groff}
-automatically break lines and fill the text.
+You may need to indent a region of text while otherwise formatting it
+normally.
 
 @Defmac {RS, , ms}
 Begin a region where headings, paragraphs, and displays are indented by
@@ -3886,7 +3887,7 @@ view it.
 
 When @code{refer} emits collected references (as might be done on a
 ``Works Cited'' page), it interpolates the @code{REFERENCES} string as
-an unnumbered section heading (@code{SH}).
+an unnumbered heading (@code{SH}).
 
 @menu
 * Example multi-page table::
@@ -4125,9 +4126,9 @@ margin.
 @cindex @code{ms} macros, multiple columns
 @cindex multiple columns [@code{ms}]
 
-The @file{ms} macros can set text in as many columns as reasonably fit
-on the page.  The following macros force a page break if a multi-column
-layout is active when they are called.
+@file{ms} can set text in as many columns as reasonably fit on the page.
+The following macros force a page break if a multi-column layout is
+active when they are called.
 
 @Defmac {1C, , ms}
 Arrange page text in a single column (the default).
@@ -4466,13 +4467,13 @@ put the date, in U.S.@: traditional format (e.g., ``January 1, 2021''),
 in the center footer (the @code{CF} string).
 
 @item
-Macros that cause @code{groff} @file{ms} to internally reset its
-paragraph rendering parameters (paragraphs, headings, and displays,
-among others) may change the indentation; they do so not by incrementing
-or decrementing it, but by setting it absolutely.  This can cause
-problems for documents that define additional macros of their own that
-try to manipulate indentation.  The solution is to use, not the
-@code{in} request, but the @file{ms} @code{RS} and @code{RE} macros.
+Many @code{groff} @file{ms} macros, including those for paragraphs,
+headings, and displays, cause a reset of paragraph rendering parameters,
+and may change the indentation; they do so not by incrementing or
+decrementing it, but by setting it absolutely.  This can cause problems
+for documents that define additional macros of their own that try to
+manipulate indentation.  The solution is to use, not the @code{in}
+request, but the @file{ms} @code{RS} and @code{RE} macros.
 
 @item
 To make @code{groff} @file{ms} use the default page offset (which also
