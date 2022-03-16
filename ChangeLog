@@ -1,5 +1,19 @@
 2022-03-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Fix Savannah #62191.
+
+	* src/preproc/tbl/main.cpp (table_input::get): Increment input
+	line counter when encountering an escaped newline; this fixes
+	inaccurate diagnostics from the formatter at any point in a
+	document after a line-continued row of table data.  Also drop a
+	"perhaps" comment.  I tested the surmise (setting the FSM state
+	to "START"), and it results in bad formatting.
+
+	Fixes <https://savannah.gnu.org/bugs/?62191>.  Problem appears
+	to date back to groff 1.02 (June 1991) at the latest.
+
+2022-03-16  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Regression-test Savannah #62191.
 
 	* src/preproc/tbl/tests/count-continued-input-lines.sh: Do it.
