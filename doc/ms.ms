@@ -2679,11 +2679,9 @@ and
 (\[lq]bottom trap\[rq])
 when the footer is to be.
 .
-The
-.I roff
-trap that
+The page location trap that
 .I ms
-sets up to process the header also calls the
+sets up to format the header also calls the
 (normally undefined)
 .CW HD
 macro after
@@ -2894,7 +2892,6 @@ resets the page number
 .B i "" to\~
 (Roman numeral one),
 and then calls
-.\" XXX ".BR PX ." here throws diagnostic with WRONG LINE NUMBER
 .CW PX .
 .
 .

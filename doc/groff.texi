@@ -4087,7 +4087,7 @@ redefinition of the macros that are called when the @code{groff} traps
 that ordinarily cause the headers and footers to be output are sprung.
 @code{PT} (``page trap'') is called by @file{ms} when the header is to
 be written, and @code{BT} (``bottom trap'') when the footer is to be.
-The @code{groff} trap that @file{ms} sets up to process the header also
+The page location trap that @file{ms} sets up to format the header also
 calls the (normally undefined) @code{HD} macro after @code{PT}; you can
 define @code{HD} if you need additional processing after setting the
 header (for example, to draw a line below it).  The @code{HD} hook is a
