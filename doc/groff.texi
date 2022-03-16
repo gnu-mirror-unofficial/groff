@@ -2753,7 +2753,7 @@ Default: empty.
 Defines the type size of the body text in points.  If the value is
 larger than or equal to 1000, it is divided by 1000 to get a fractional
 type size.  For example, @samp{.nr PS 10500} sets the document's type
-size to 10.5@dmn{points}.  This rescaling of large point sizes is a GNU
+size to 10.5@dmn{points}.  This rescaling of large type sizes is a GNU
 extension.  In @file{ms} documents that don't need to be portable to
 other implementations, using a scaling indicator, as in @samp{.nr PS
 10.5p}, is preferable.
@@ -2766,7 +2766,7 @@ Default: 10@dmn{p}.
 @Defmpreg {VS, ms}
 Defines the space between lines (line height plus leading).  If the
 value is larger than or equal to 1000, it is divided by 1000 to get a
-fractional type size.  This rescaling of large point sizes is a GNU
+fractional type size.  This rescaling of large type sizes is a GNU
 extension.  See register @code{PS} above.
 
 Effective: next paragraph.
@@ -2854,7 +2854,7 @@ Default: 1@dmn{p}.
 @endDefmpreg
 
 @Defmpreg {GROWPS, ms}
-Defines the heading depth at which the type size increment set by
+Defines the heading depth above which the type size increment set by
 @code{PSINCR} becomes effective.  For each heading depth less than the
 value of @code{GROWPS}, the type size is increased by @code{PSINCR}.
 Setting @code{GROWPS} to any value less than@tie{}2 disables the
