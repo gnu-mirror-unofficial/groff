@@ -2502,7 +2502,9 @@ The footnote line length is effectively computed as
 If an absolute footnote line length is required,
 recall that arithmetic expressions in
 .I roff
-languages are evaluated from left to right.
+languages are evaluated strictly from left to right,
+with no operator precedence
+(parentheses are honored).
 .
 .
 .TS

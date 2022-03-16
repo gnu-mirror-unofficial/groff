@@ -4009,7 +4009,8 @@ after each call to @code{.1C}, @code{.2C}, or @code{.MC}.}
 contemporary documents.  The footnote line length is effectively
 computed as @samp{@slanted{column-width} * \*[FR]}.  If an absolute
 footnote line length is required, recall that arithmetic expressions in
-@code{roff} languages are evaluated from left to right.
+@code{roff} languages are evaluated strictly from left to right, with no
+operator precedence (parentheses are honored).
 
 @Example
 .ds FR 0+3i \" Set footnote line length to 3 inches.
