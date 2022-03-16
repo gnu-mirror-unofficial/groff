@@ -626,13 +626,20 @@ and footnotes.
 .
 .
 .P
-The hyphenation mode
-(as used by the
-.B hy
-request)
-is set from the
+The
 .B HY
-register.
+register defines the hyphenation mode used with the
+.B hy
+request.
+.
+Setting
+.B \[rs]n[HY]
+.RB to\~ 0
+is equivalent to using the
+.B nh
+request.
+.
+This is a Tenth Edition Research Unix extension.
 .
 .
 .\" ====================================================================

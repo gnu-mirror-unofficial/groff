@@ -718,13 +718,20 @@ and footnotes.
 .
 .
 .PP
-The hyphenation mode
-(as used by the
-.CW hy
-request)
-is set from the
+The
 .CW HY
-register.
+register defines the hyphenation mode used with the
+.CW hy
+request.
+.
+Setting
+.CW \[rs]n[HY]
+.CW 0 "" to\~
+is equivalent to using the
+.CW nh
+request.
+.
+This is a Tenth Edition Research Unix extension.
 .KE
 .
 .
