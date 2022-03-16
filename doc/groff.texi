@@ -2503,7 +2503,7 @@ documentation.
 
 @node ms,  , mom, Major Macro Packages
 @section @file{ms}
-@cindex @code{ms} macros
+@cindex @file{ms} macros
 
 The @file{ms} (``manuscript'') package is suitable for the preparation
 of letters, memoranda, reports, and books.  These @code{groff}
@@ -2577,7 +2577,7 @@ We have used an arrow @arrow{} in the above to indicate a tab character.
 
 @node ms Document Structure, ms Document Control Settings, ms Introduction, ms
 @subsection General structure of an @file{ms} document
-@cindex @code{ms} macros, general structure
+@cindex @file{ms} macros, general structure
 
 The @file{ms} macro package expects a certain amount of structure:
 a well-formed document contains at least one paragraphing or heading
@@ -2630,7 +2630,7 @@ separate processing.
 
 @node ms Document Control Settings, ms Document Description Macros, ms Document Structure, ms
 @subsection Document control settings
-@cindex @code{ms} macros, document control settings
+@cindex @file{ms} macros, document control settings
 
 @file{ms} exposes many aspects of document layout to user control via
 @code{groff} requests.  To use them, you must understand how to define
@@ -3019,8 +3019,8 @@ Default: @code{\w'000'}
 
 @node Fractional type sizes in ms, ms Document Description Macros, ms Document Control Settings, ms
 @subsection Fractional type sizes
-@cindex fractional type sizes in @code{ms} macros
-@cindex @code{ms} macros, fractional type sizes in
+@cindex fractional type sizes in @file{ms} macros
+@cindex @file{ms} macros, fractional type sizes in
 
 @acronym{AT&T} @file{ms} supported only integer values for the type size
 and vertical spacing.  To overcome this restriction, for the registers
@@ -3033,8 +3033,8 @@ Control Settings}.
 
 @node ms Document Description Macros, ms Body Text, Fractional type sizes in ms, ms
 @subsection Document Description Macros
-@cindex @code{ms} macros, document description
-@cindex document description macros, [@code{ms}]
+@cindex @file{ms} macros, document description
+@cindex document description macros, [@file{ms}]
 
 All but the simplest documents bear a title.@footnote{Distinguish a
 document title from ``titles'', which are what @code{roff} systems call
@@ -3106,8 +3106,8 @@ End the abstract.
 @endDefmac
 
 An example document description, using a cover page, follows.
-@cindex cover page in [@code{ms}], example markup
-@cindex example markup, cover page in [@code{ms}]
+@cindex cover page in [@file{ms}], example markup
+@cindex example markup, cover page in [@file{ms}]
 
 @CartoucheExample
 .RP
@@ -3142,7 +3142,7 @@ added features are more in line with user demand.
 
 @node ms Body Text, ms Page Layout, ms Document Description Macros, ms
 @subsection Body text
-@cindex @code{ms} macros, body text
+@cindex @file{ms} macros, body text
 
 A variety of macros, registers, and strings can be used to structure and
 style the body of your document.  Examples include paragraphs, headings,
@@ -3173,7 +3173,7 @@ The hyphenation mode (as used by the @code{hy} request) is set from the
 
 @node Paragraphs in ms, Headings in ms, ms Body Text, ms Body Text
 @subsubsection Paragraphs
-@cindex @code{ms} macros, paragraph handling
+@cindex @file{ms} macros, paragraph handling
 
 Several paragraph types are available, differing in how indentation
 applies to them: to left, right, or both margins; to the first output
@@ -3259,7 +3259,7 @@ software.
 
 @node Headings in ms, Highlighting in ms, Paragraphs in ms, ms Body Text
 @subsubsection Headings
-@cindex @code{ms} macros, headings
+@cindex @file{ms} macros, headings
 
 Use headings to create a sequential or hierarchical structure for your
 document.  The @file{ms} macros print headings in @strong{bold} using
@@ -3403,7 +3403,7 @@ the subsequent paragraph suppresses this grouping.
 
 @node Highlighting in ms, Lists in ms, Headings in ms, ms Body Text
 @subsubsection Highlighting
-@cindex @code{ms} macros, highlighting
+@cindex @file{ms} macros, highlighting
 
 The @file{ms} macros provide a variety of methods to highlight or
 emphasize text.
@@ -3508,7 +3508,7 @@ syntactical elements of @file{ms} and @code{groff}.
 
 @node Lists in ms, Indented regions in ms, Highlighting in ms, ms Body Text
 @subsubsection Lists
-@cindex @code{ms} macros, lists
+@cindex @file{ms} macros, lists
 
 The @var{marker} argument to the @code{IP} macro can be employed to
 present a variety of lists; for instance, you can use a bullet glyph
@@ -3517,8 +3517,8 @@ register) for numbered lists, or a word or phrase for glossary-style or
 definition lists.
 
 The following is an example of a bulleted list.
-@cindex example markup, bulleted list [@code{ms}]
-@cindex bulleted list, example markup [@code{ms}]
+@cindex example markup, bulleted list [@file{ms}]
+@cindex bulleted list, example markup [@file{ms}]
 
 @CartoucheExample
 A bulleted list:
@@ -3543,8 +3543,8 @@ A bulleted list:
 @endExample
 
 The following is an example of a numbered list.
-@cindex example markup, numbered list [@code{ms}]
-@cindex numbered list, example markup [@code{ms}]
+@cindex example markup, numbered list [@file{ms}]
+@cindex numbered list, example markup [@file{ms}]
 
 @CartoucheExample
 .nr step 1 1
@@ -3571,8 +3571,8 @@ A numbered list:
 
 Note the use of the auto-incrementing register @var{step} in the
 foregoing example.  The next illustrates a glossary-style list.
-@cindex example markup, glossary-style list [@code{ms}]
-@cindex glossary-style list, example markup [@code{ms}]
+@cindex example markup, glossary-style list [@file{ms}]
+@cindex glossary-style list, example markup [@file{ms}]
 
 @CartoucheExample
 A glossary-style list:
@@ -3667,8 +3667,8 @@ End the most recent indented region.
 Indented regions can be nested; you can change @code{\n[PI]} before each
 call to vary the amount of inset.  This feature enables you to easily
 line up text under hanging and indented paragraphs.
-@cindex @code{ms} macros, nested lists
-@cindex nested lists [@code{ms}]
+@cindex @file{ms} macros, nested lists
+@cindex nested lists [@file{ms}]
 For example, you may wish to structure lists hierarchically.
 
 @CartoucheExample
@@ -3709,9 +3709,9 @@ as output.
 
 @node ms keeps and displays, ms Insertions, Indented regions in ms, ms Body Text
 @subsubsection Keeps, boxed keeps, and displays
-@cindex @code{ms} macros, displays
-@cindex @code{ms} macros, keeps
-@cindex keeps [@code{ms}]
+@cindex @file{ms} macros, displays
+@cindex @file{ms} macros, keeps
+@cindex keeps [@file{ms}]
 
 On occasion, you may want to @dfn{keep} several lines of text, or a
 region of a document, together on a single page, preventing an automatic
@@ -3743,7 +3743,7 @@ specified in its argument remaining on the page (@pxref{Page Control}).
 One application of @code{ne} is to reserve space on the page for a
 figure or illustration to be included later.
 
-@cindex boxes [@code{ms}]
+@cindex boxes [@file{ms}]
 A keep can also be @dfn{boxed}.  Text in a box is automatically placed
 in a diversion (keep).
 
@@ -3775,7 +3775,7 @@ speeds.
 If you want a box to float, you will need to enclose the @code{B1} and
 @code{B2} calls within a pair of @code{KF} and @code{KE} calls.
 
-@cindex displays [@code{ms}]
+@cindex displays [@file{ms}]
 @dfn{Displays} turn off filling; lines of verse or program code are
 shown with their lines broken as in the source document without
 requiring @code{br} requests between lines.  Displays can be kept on a
@@ -3830,14 +3830,14 @@ effect at the next display boundary.
 
 @node ms Insertions, Example multi-page table, ms keeps and displays, ms Body Text
 @subsubsection Tables, figures, equations, and references
-@cindex @code{ms} macros, tables
-@cindex @code{ms} macros, figures
-@cindex @code{ms} macros, equations
-@cindex @code{ms} macros, references
-@cindex tables [@code{ms}]
-@cindex figures [@code{ms}]
-@cindex equations [@code{ms}]
-@cindex references [@code{ms}]
+@cindex @file{ms} macros, tables
+@cindex @file{ms} macros, figures
+@cindex @file{ms} macros, equations
+@cindex @file{ms} macros, references
+@cindex tables [@file{ms}]
+@cindex figures [@file{ms}]
+@cindex equations [@file{ms}]
+@cindex references [@file{ms}]
 
 The @file{ms} package is often used with the @code{tbl}, @code{pic},
 @code{eqn}, and @code{refer} preprocessors.
@@ -3897,8 +3897,8 @@ an unnumbered heading (@code{SH}).
 
 @node Example multi-page table, ms Footnotes, ms Insertions, ms Body Text
 @subsubsection An example multi-page table
-@cindex example markup, multi-page table [@code{ms}]
-@cindex multi-page table, example markup [@code{ms}]
+@cindex example markup, multi-page table [@file{ms}]
+@cindex multi-page table, example markup [@file{ms}]
 
 The following is an example of how to set up a table that may print
 across two or more pages.
@@ -3925,11 +3925,11 @@ is used.
 
 @node ms Footnotes,  , Example multi-page table, ms Body Text
 @subsubsection Footnotes
-@cindex @code{ms} macros, footnotes
-@cindex footnotes [@code{ms}]
+@cindex @file{ms} macros, footnotes
+@cindex footnotes [@file{ms}]
 
-@cindex footnote marker [@code{ms}]
-@cindex marker, footnote [@code{ms}]
+@cindex footnote marker [@file{ms}]
+@cindex marker, footnote [@file{ms}]
 A footnote is typically anchored to a place in the text with a
 @dfn{marker}, which is a small integer, a symbol such as a dagger, or
 arbitrary user-specified text.
@@ -3974,10 +3974,10 @@ Troff'', @file{pdfmark.ms} in the @code{groff} distribution, uses this
 technique.}  By default, this macro has an empty definition.
 @code{FS-MARK} is a GNU extension.
 
-@cindex footnotes, and keeps [@code{ms}]
-@cindex keeps, and footnotes [@code{ms}]
-@cindex footnotes, and displays [@code{ms}]
-@cindex displays, and footnotes [@code{ms}]
+@cindex footnotes, and keeps [@file{ms}]
+@cindex keeps, and footnotes [@file{ms}]
+@cindex footnotes, and displays [@file{ms}]
+@cindex displays, and footnotes [@file{ms}]
 Footnotes can be safely used within keeps and displays, but you should
 avoid using automatically numbered footnotes within floating keeps.  You
 can place a second @code{\**} interpolation between a @code{\**} and its
@@ -4021,10 +4021,10 @@ operator precedence (parentheses are honored).
 
 @node ms Page Layout, Differences from AT&T ms, ms Body Text, ms
 @subsection Page layout
-@cindex @code{ms} macros, page layout
-@cindex page layout [@code{ms}]
+@cindex @file{ms} macros, page layout
+@cindex page layout [@file{ms}]
 
-@code{ms}'s default page layout is simple: it arranges text a single
+@file{ms}'s default page layout is simple: it arranges text a single
 column with the page number centered between hyphens in a header on each
 page except the first.  It produces no footers.  You can customize this
 arrangement extensively.
@@ -4042,10 +4042,10 @@ arrangement extensively.
 
 @node ms Headers and Footers, Tab Stops in ms, ms Page Layout, ms Page Layout
 @subsubsection Headers and footers
-@cindex @code{ms} macros, headers
-@cindex @code{ms} macros, footers
-@cindex headers [@code{ms}]
-@cindex footers [@code{ms}]
+@cindex @file{ms} macros, headers
+@cindex @file{ms} macros, footers
+@cindex headers [@file{ms}]
+@cindex footers [@file{ms}]
 
 There are multiple ways to produce headers and footers.  One is to
 define the strings @code{LH}, @code{CH}, and @code{RH} to set the left,
@@ -4111,7 +4111,7 @@ Redefine this macro to create a different set of default tab stops.
 
 @node ms Margins, ms Multiple Columns, Tab Stops in ms, ms Page Layout
 @subsubsection Margins
-@cindex @code{ms} macros, margins
+@cindex @file{ms} macros, margins
 
 Control margins using registers.  See ``Margin Settings'' in @ref{ms
 Document Control Settings}.  There is no explicit right margin setting;
@@ -4123,8 +4123,8 @@ margin.
 
 @node ms Multiple Columns, ms TOC, ms Margins, ms Page Layout
 @subsubsection Multiple columns
-@cindex @code{ms} macros, multiple columns
-@cindex multiple columns [@code{ms}]
+@cindex @file{ms} macros, multiple columns
+@cindex multiple columns [@file{ms}]
 
 @file{ms} can set text in as many columns as reasonably fit on the page.
 The following macros force a page break if a multi-column layout is
@@ -4150,14 +4150,14 @@ gutter width; it is a GNU extension.
 
 @node ms TOC, ms Strings and Special Characters, ms Multiple Columns, ms Page Layout
 @subsubsection Creating a table of contents
-@cindex @code{ms} macros, creating table of contents
-@cindex table of contents, creating [@code{ms}]
+@cindex @file{ms} macros, creating table of contents
+@cindex table of contents, creating [@file{ms}]
 
 Because @code{roff} formatters process their input in a single pass,
 material on page 50, for example, cannot influence what appears on
 page@tie{}1---this poses a challenge for a table of contents at its
 traditional location in front matter, if you wish to avoid manually
-maintaining it.  @code{ms} enables the collection of material to be
+maintaining it.  @file{ms} enables the collection of material to be
 presented in the table of contents as it appears, saving its page number
 along with it, and then emitting the collected contents on demand toward
 the end of the document.  The table of contents can then be resequenced
@@ -4216,7 +4216,7 @@ the dot glyph @samp{.} with a horizontal space escape sequence to spread
 the dots.  The width of the page number field is stored in the
 @code{TC-MARGIN} register.
 
-Here's an example of typical @code{ms} table of contents preparation.
+Here's an example of typical @file{ms} table of contents preparation.
 
 @CartoucheExample
 .NH 1
@@ -4247,18 +4247,18 @@ Provins's ``Groff and Friends HOWTO'' includes a @code{sed} script that
 automatically inserts @code{XS} and @code{XE} entries after each heading
 in a document.  Altering the @code{NH} macro to automatically build the
 table of contents is perhaps initially more difficult, but could save a
-great deal of time in the long run if you use @code{ms} regularly.
+great deal of time in the long run if you use @file{ms} regularly.
 
 @c ---------------------------------------------------------------------
 
 @node ms Strings and Special Characters,  , ms TOC, ms Page Layout
 @subsubsection Strings and Special Characters
-@cindex @code{ms} macros, strings
-@cindex @code{ms} macros, special characters
-@cindex @code{ms} macros, accent marks
-@cindex accent marks [@code{ms}]
-@cindex special characters [@code{ms}]
-@cindex strings [@code{ms}]
+@cindex @file{ms} macros, strings
+@cindex @file{ms} macros, special characters
+@cindex @file{ms} macros, accent marks
+@cindex accent marks [@file{ms}]
+@cindex special characters [@file{ms}]
+@cindex strings [@file{ms}]
 
 Redefine the following strings to adapt the @code{groff} @file{ms} macro
 package to languages other than English.
@@ -4424,7 +4424,7 @@ Uppercase Æ ligature.
 
 @node Differences from AT&T ms, ms Naming Conventions, ms Page Layout, ms
 @subsection Differences from @acronym{AT&T} @file{ms}
-@cindex @code{ms} macros, @code{groff} differences from @acronym{AT&T}
+@cindex @file{ms} macros, @code{groff} differences from @acronym{AT&T}
 @cindex @acronym{AT&T} @file{ms}, macro package differences
 
 The @code{groff} @file{ms} macros are a complete re-implementation,
@@ -4518,7 +4518,7 @@ supports it.
 
 @Defmpreg {GS, ms}
 The register @code{GS} is set to@tie{}1 by the @code{groff} @file{ms}
-macros, but is not used by the @acronym{AT&T} @code{ms} package.
+macros, but is not used by the @acronym{AT&T} @file{ms} package.
 Documents that need to determine whether they are being formatted with
 @code{groff} @file{ms} or another implementation should test this
 register.
@@ -4601,8 +4601,8 @@ Characters}.
 
 @node ms Naming Conventions,  , Differences from AT&T ms, ms
 @subsection @file{ms} Naming Conventions
-@cindex @code{ms} macros, naming conventions
-@cindex naming conventions, @code{ms} macros
+@cindex @file{ms} macros, naming conventions
+@cindex naming conventions, @file{ms} macros
 
 The following conventions are used for names of macros, strings, and
 registers.  External names available to documents that use the
