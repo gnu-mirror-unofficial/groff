@@ -755,8 +755,8 @@ adapt it to your needs.
 .
 .TP
 .I rfc1345
-defines special character escape sequences based on the glyph mnemonics
-specified in RFC 1345 and the digraph table of the text editor Vim.
+defines special character escape sequences named for the glyph mnemonics
+specified in RFC\~1345 and the digraph table of the Vim text editor.
 .
 See
 .MR groff_rfc1345 @MAN7EXT@ .
@@ -777,43 +777,43 @@ it further includes special support for
 .
 .RS
 .TP
-.B .BOXSTART \c
-.B SHADED \c
-.I colour \c
-.B OUTLINED \c
-.I colour \c
-.B INDENT \c
+.B \%.BOXSTART \c
+.B \%SHADED \c
+.I color \c
+.B \%OUTLINED \c
+.I color \c
+.B \%INDENT \c
 .I size \c
-.B WEIGHT \c
+.B \%WEIGHT \c
 .I size
 begins a box,
 where the argument after
-.B SHADED
-gives the fill colour and that after
-.B OUTLINED
-the border colour.
+.B \%SHADED
+gives the fill color and that after
+.B \%OUTLINED
+the border color.
 .
 Omit the former to get a borderless filled box and the latter for a
 border with no fill.
 .
 The specified
-.B WEIGHT
+.B \%WEIGHT
 is used if the box is
-.BR OUTLINED .
+.BR \%OUTLINED .
 .
 .
 .IP
-.B INDENT
+.B \%INDENT
 precedes a value which leaves a gap between the border and the contents
 inside the box.
 .
 .
 .IP
 Each
-.I colour
+.I color
 must be a defined
 .I groff
-colour name,
+color name,
 and each
 .I size
 a valid
@@ -831,9 +831,9 @@ usually the later boxes would be smaller than the containing box,
 but this is not enforced.
 .
 When using
-.BR BOXSTART ,
+.BR \%BOXSTART ,
 the left position is the current indent minus the
-.B INDENT
+.B \%INDENT
 in the command,
 and the right position is the left position
 (calculated above)
@@ -842,12 +842,12 @@ plus the current line length and twice the indent.
 .
 .RS
 .TP
-.B .BOXSTOP
+.B \%.BOXSTOP
 takes no parameters.
 .
 It closes the most recently started box at the current vertical position
 after adding its
-.B INDENT
+.B \%INDENT
 spacing.
 .RE
 .
@@ -860,7 +860,7 @@ documents can conditionally exercise the
 .
 macros.
 The register
-.B GSBOX
+.B \%GSBOX
 is defined if the package is loaded,
 and interpolates a true value if the
 .B pdf
@@ -881,7 +881,7 @@ will close open boxes two points
 above the footnote separator and re-open them on the next page.
 .
 (This amount probably will not match the box's
-.BR INDENT .)
+.BR \%INDENT .)
 .
 .
 .IP
@@ -947,8 +947,8 @@ when directly followed by its argument without an intervening space,
 this looked like a long option preceded by a single minus\[em]a
 sensation in the computer stone age.
 .
-Macro packages therefore came to be known by names
-names that started with the letter \[lq]m\[rq],
+Macro packages therefore came to be known by names that started with the
+letter \[lq]m\[rq],
 which was omitted from the name of the macro file as stored on disk.
 .
 For example,
@@ -981,6 +981,7 @@ all of
 .RB \[lq] "groff \-m s" \[rq],
 .RB \[lq] "groff \-m ms" \[rq],
 .RB \[lq] "groff \-ms" \[rq],
+and
 .RB \[lq] "groff \-mms" \[rq]
 serve to load the manuscript macros.
 .
