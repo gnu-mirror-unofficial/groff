@@ -4260,8 +4260,21 @@ great deal of time in the long run if you use @file{ms} regularly.
 @cindex special characters [@file{ms}]
 @cindex strings [@file{ms}]
 
-Redefine the following strings to adapt the @code{groff} @file{ms} macro
-package to languages other than English.
+@code{groff} @file{ms} provides several strings that you can customize
+for your own purposes, or redefine to adapt the macro package to
+languages other than English.  It is already localized for
+@c cs, de, fr, it, sv
+Czech, German, French, Italian, and Swedish.  You can load an
+appropriate localization macro package after @file{ms}; see the
+Czech, German, French, Italian, and Swedish.  Load the desired
+localization macro package after @file{ms}; see the
+@cite{groff_tmac@r{(5)}} man page.
+
+@CartoucheExample
+$ groff -ms -mfr bienvenue.ms
+@endCartoucheExample
+
+The following strings are available.
 
 @Defmpstr {REFERENCES, ms}
 Contains the string printed at the beginning of a references

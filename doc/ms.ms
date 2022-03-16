@@ -22,8 +22,8 @@
 .nr TC-MARGIN \w'00' \" expect 2-digit page numbers at most
 .ie t .nr PI 3.5n
 .el   .nr PI 4n
-.ND January 2022
-.EH '%''January 2022'
+.ND March 2022
+.EH '%''March 2022'
 .EF ''''
 .OH 'Using \f[I]groff\f[] with the \f[I]ms\f[] macros''%'
 .OF ''''
@@ -3371,6 +3371,7 @@ Indexing term
 .
 .
 .\" ------------------------
+.KS
 .NH 2
 Localization strings
 .XS
@@ -3379,10 +3380,34 @@ Localization strings
 .
 .
 .LP
-Redefine the following strings to adapt the
 .I "groff ms"
-macro package to languages other than English.
+provides several strings that you can customize for your own purposes,
+or redefine to adapt the macro package to languages other than English.
 .
+It is already localized for
+.\" cs, de, fr, it, sv
+Czech,
+German,
+French,
+Italian,
+and
+Swedish.
+.
+Load the desired localization macro package after
+.I ms ;
+see the
+.I groff_tmac (5)
+man page.
+.
+.TS
+box center;
+lf(CR).
+$ \f[CB]groff \-ms \-mfr bienvenue.ms
+.TE
+.
+.
+.PP
+The following strings are available.
 .
 .TS
 box center;
@@ -3412,6 +3437,7 @@ _
 The default for
 .CW \[rs]*[ABSTRACT]
 includes font selection escape sequences to set the word in italics.
+.KE
 .
 .
 .\" ------------------------
