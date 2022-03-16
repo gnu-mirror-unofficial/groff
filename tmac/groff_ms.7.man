@@ -549,7 +549,7 @@ or heading or paragraphing macro call.
 .TP
 .B .DA\c
 .RI "\~[" x "\~.\|.\|.]"
-Print the current date,
+Typeset the current date,
 or any
 .RI arguments\~ x ,
 in the center footer,
@@ -564,7 +564,7 @@ page.
 .TP
 .B .ND\c
 .RI "\~[" x "\~.\|.\|.]"
-Print the current date,
+Typeset the current date,
 or any
 .RI arguments\~ x ,
 if
@@ -1054,9 +1054,9 @@ This is a Tenth Edition Research Unix extension.
 .TP
 .B .BX\c
 .RI " [" txt ]
-Prints
+Typeset
 .I txt
-and draws a box around it.
+and draw a box around it.
 .
 On terminal devices,
 reverse video is used instead.
@@ -1074,37 +1074,47 @@ or
 .TP
 .B .UL\c
 .RI " [" txt " [" post ]]
-Prints its first argument with an underline.
+Typeset
+.I txt
+with an underline.
 .
-If you specify a second argument,
-.I groff
-prints it in the previous font after the underlined text, with no
-intervening space.
+If you specify
+.IR post ,
+.I ms
+sets it in the previous font after the underlined text,
+with no intervening space.
+.
 .
 .TP
 .B .LG
-Prints all text following in larger type
+Set all subsequent text in larger type
 (2\~points larger than the current size) until
-the next font size, highlighting, paragraph, or heading macro.
+the next font size,
+highlighting,
+paragraphing,
+or heading macro.
 .
 You can specify this macro multiple times to enlarge the type size as
 needed.
 .
 .TP
 .B .SM
-Prints all text following in
+Set all subsequent text in
 smaller type
 (2\~points smaller than the current size) until
-the next type size, highlighting, paragraph, or heading macro.
+the next type size,
+highlighting,
+paragraphing,
+or heading macro.
 .
 You can specify this macro multiple times to reduce the type size as
 needed.
 .
 .TP
 .B .NL
-Prints all text following in
-the normal type size
-(that is, the value of the
+Set all subsequent text at the normal type size
+(that is,
+the value of the
 .B PS
 register).
 .
@@ -1745,13 +1755,13 @@ macros define footers for the odd and even pages.
 .P
 By default,
 .I ms
-prints no header on any page numbered \[lq]1\[rq]
+places no header on any page numbered \[lq]1\[rq]
 (regardless of its assigned format).
 .
 .
 .TP
 .B .P1
-Print the header on page\~1.
+Typeset the header even on page\~1.
 .
 To be effective,
 this macro must be called before the header trap is sprung on any page
@@ -1790,7 +1800,7 @@ macro after
 .BR .PT ;
 you can define
 .B .HD
-if you need additional processing after printing the header.
+if you need additional processing after setting the header.
 .
 The
 .B HD
@@ -2190,7 +2200,7 @@ The
 macros are a complete re-implementation,
 using no original AT&T code.
 .
-Since they take advantage of the extended features in
+Since they take advantage of the extended features of
 .IR groff ,
 they cannot be used with AT&T
 .IR troff .

@@ -576,7 +576,7 @@ or heading or paragraphing macro call.
 T}
 _
 \&.DA \f[R][\f[I]x\f[] .\|.\|.\&]	T{
-Print the current date,
+Typeset the current date,
 or any
 .I x , arguments\~
 in the center footer,
@@ -589,7 +589,7 @@ page.
 T}
 _
 \&.ND \f[R][\f[I]x\f[] .\|.\|.\&]	T{
-Print the current date,
+Typeset the current date,
 or any
 .I x , arguments\~
 if
@@ -1343,9 +1343,9 @@ This is a Tenth Edition Research Unix extension.
 T}
 _
 \&.BX [txt]	T{
-Prints
+Typeset
 .I txt
-and draws a
+and draw a
 .BX box
 around it.
 .
@@ -1364,21 +1364,24 @@ or
 T}
 _
 \&.UL [txt [post]]	T{
-Prints its first argument with an
+Typeset
+.I txt
+with an
 .UL underline .
 .
-If you specify a second argument,
-.I groff
-prints it in the previous font after the underlined text,
+If you specify
+.I post ,
+.I ms
+sets it in the previous font after the underlined text,
 with no intervening space.
 T}
 _
 \&.LG	T{
-Prints all text following in
+Set all subsequent text in
 .LG
 larger type
 .NL
-(2 points larger than the current size)
+(2\~points larger than the current size)
 until
 the next font size,
 highlighting,
@@ -1395,11 +1398,11 @@ to enlarge the type size as needed.
 T}
 _
 \&.SM	T{
-Prints all text following in
+Set all subsequent text in
 .SM
 smaller type
 .NL
-(2 points smaller than the current size)
+(2\~points smaller than the current size)
 until
 the next type size,
 highlighting,
@@ -1416,7 +1419,7 @@ to reduce the type size as needed.
 T}
 _
 \&.NL	T{
-Prints all text following in the normal type size
+Set all subsequent text at the normal type size
 (that is,
 the value of the
 .CW PS
@@ -2629,7 +2632,7 @@ T}
 .PP
 By default,
 .I ms
-prints no header on any page numbered \[lq]1\[rq]
+places no header on any page numbered \[lq]1\[rq]
 (regardless of its assigned format).
 .
 .
@@ -2640,7 +2643,7 @@ lf(CR) lx.
 Macro	Description
 _
 \&.P1	T{
-Print the header on page\~1.
+Typeset the header even on page\~1.
 .
 To be effective,
 this macro must be called before the header trap is sprung on any page
@@ -2687,7 +2690,7 @@ macro after
 .CW .PT ;
 you can define
 .CW .HD
-if you need additional processing after printing the header
+if you need additional processing after setting the header
 (for example,
 to draw a line below it).
 .
@@ -3089,7 +3092,7 @@ The
 macros are a complete re-implementation,
 using no original AT&T code.
 .
-Since they take advantage of the extended features in
+Since they take advantage of the extended features of
 .I groff ,
 they cannot be used with AT&T
 .I troff .

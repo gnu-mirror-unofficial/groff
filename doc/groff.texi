@@ -3082,13 +3082,13 @@ reaching an @code{AU}, @code{AB}, or heading or paragraphing macro call.
 @endDefmac
 
 @Defmac {DA, [@Var{x} @dots{}], ms}
-Print the current date, or any arguments @var{x} in the center footer,
+Typeset the current date, or any arguments @var{x} in the center footer,
 and, if @code{RP} is also called, left-aligned after other document
 description information on the cover page.
 @endDefmac
 
 @Defmac {ND, [@Var{x} @dots{}], ms}
-Print the current date, or any arguments @var{x}, if @code{RP} is also
+Typeset the current date, or any arguments @var{x}, if @code{RP} is also
 called, left-aligned after other document description information on the
 cover page.  This is the @code{groff} @file{ms} default.
 @endDefmac
@@ -3451,35 +3451,35 @@ otherwise.  This is a Tenth Edition Research Unix extension.
 @endDefmac
 
 @Defmac {BX, [@Var{txt}], ms}
-Prints @var{txt} and draws a box around it.  On terminal devices,
+Typeset @var{txt} and draw a box around it.  On terminal devices,
 reverse video is used instead.  If you want the argument to contain
 space, use non-breaking space escape sequences of appropriate width
 (@code{\~}, @code{\^}, @code{\|}, @code{\0}) or @code{\h}.
 @endDefmac
 
 @Defmac {UL, [@Var{txt} [@Var{post}]], ms}
-Prints its first argument with an underline.  If you specify a second
-argument, @code{groff} prints it in the previous font after the
-underlined text, with no intervening space.
+Typeset @var{txt} with an underline.  If you specify @var{post},
+@file{ms} sets it in the previous font after the underlined text, with
+no intervening space.
 @endDefmac
 
 @Defmac {LG, , ms}
-Prints all text following in larger type (two points larger than the
+Set all subsequent text in larger type (two points larger than the
 current size) until the next font size, highlighting, paragraphing, or
 heading macro.  You can specify this macro multiple times to enlarge the
 type size as needed.
 @endDefmac
 
 @Defmac {SM, , ms}
-Prints all text following in smaller type (two points smaller than the
+Set all subsequent text in smaller type (two points smaller than the
 current size) until the next type size, highlighting, paragraphing, or
 heading macro.  You can specify this macro multiple times to reduce the
 type size as needed.
 @endDefmac
 
 @Defmac {NL, , ms}
-Prints all text following in the normal type size (that is, the value
-of the @code{PS} register).
+Set all text following at the normal type size (that is, the value of
+the @code{PS} register).
 @endDefmac
 
 @code{groff} @file{ms} also supports strings to begin and end super- and
@@ -4071,15 +4071,15 @@ pages; the @code{OF} and @code{EF} macros define footers for the odd and
 even pages.
 @endDefmac
 
-By default, @file{ms} prints no header on any page numbered ``1''
+By default, @file{ms} places no header on any page numbered ``1''
 (regardless of its assigned format).
 
 @Defmac {P1, , ms}
-Print the header on page@tie{}1.  To be effective, this macro must be
-called before the header trap is sprung on any page numbered ``1''; in
-practice, unless your page numbering is unusual, this means that you
-should call it early, before @code{TL} or any heading or paragraphing
-macro.  This is a Berkeley extension.
+Typeset the header even on page@tie{}1.  To be effective, this macro
+must be called before the header trap is sprung on any page numbered
+``1''; in practice, unless your page numbering is unusual, this means
+that you should call it early, before @code{TL} or any heading or
+paragraphing macro.  This is a Berkeley extension.
 @endDefmac
 
 For even greater flexibility, @file{ms} is designed to permit the
@@ -4089,7 +4089,7 @@ that ordinarily cause the headers and footers to be output are sprung.
 be written, and @code{BT} (``bottom trap'') when the footer is to be.
 The @code{groff} trap that @file{ms} sets up to process the header also
 calls the (normally undefined) @code{HD} macro after @code{PT}; you can
-define @code{HD} if you need additional processing after printing the
+define @code{HD} if you need additional processing after setting the
 header (for example, to draw a line below it).  The @code{HD} hook is a
 Berkeley extension.  Any such macros you (re)define must implement any
 desired specialization for odd-, even-, or first-numbered pages.
@@ -4429,7 +4429,7 @@ Uppercase Æ ligature.
 
 The @code{groff} @file{ms} macros are a complete re-implementation,
 using no original @acronym{AT&T} code.  Since they take advantage of the
-extended features in @code{groff}, they cannot be used with
+extended features of @code{groff}, they cannot be used with
 @acronym{AT&T} @code{troff}.  @code{groff} @file{ms} supports several
 features described above as Berkeley and Tenth Edition Research Unix
 extensions, and adds several of its own.
