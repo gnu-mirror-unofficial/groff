@@ -2160,13 +2160,13 @@ T{
 .nf
 .CW
 \&.TS H
-allbox expand;
-cb | cb .
+allbox;
+Cb | Cb .
 Part\[->]Description
 _
 \&.TH
 \&.T&
-l | l .
+L | Lx .
 GH-1978\[->]Fribulating gonkulator
 .R
 \&.\|.\|.\|the rest of the table follows\|.\|.\|.
