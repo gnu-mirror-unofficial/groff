@@ -2552,14 +2552,14 @@ re-implementation.  Some macros specific to @acronym{AT&T} or Berkeley
 
 If you're in a hurry to get started, you need only know that @file{ms}
 needs one of its macros called at the beginning of a document so that it
-can initialize.  A paragraph macro like @code{PP} (if you want your
+can initialize.  A paragraphing macro like @code{PP} (if you want your
 paragraph to have a first-line indent) or @code{LP} (if you don't)
 suffices.
 
 After that, start typing normally.  You can separate paragraphs with
-further paragraph macros, or with blank lines, and you can indent with
-tabs.  When you need one of the features mentioned earlier (@pxref{ms}),
-return to this manual.
+further paragraphing macros, or with blank lines, and you can indent
+with tabs.  When you need one of the features mentioned earlier
+(@pxref{ms}), return to this manual.
 
 @CartoucheExample
 .LP
@@ -3063,14 +3063,14 @@ page but does not repeat any of its information on page@tie{}1 (see the
 @Defmac {TL, , ms}
 Specify the document title.  @file{ms} collects text on input lines
 following a call to this macro into the title until reaching an
-@code{AU}, @code{AB}, or heading or paragraph macro call.
+@code{AU}, @code{AB}, or heading or paragraphing macro call.
 @endDefmac
 
 @Defmac {AU, , ms}
 Specify an author's name.  @file{ms} collects text on input lines
 following a call to this macro into the author's name until reaching an
-@code{AI}, @code{AB}, another @code{AU}, or heading or paragraph macro
-call.  Call it repeatedly to specify multiple authors.
+@code{AI}, @code{AB}, another @code{AU}, or heading or paragraphing
+macro call.  Call it repeatedly to specify multiple authors.
 @endDefmac
 
 @Defmac {AI, , ms}
@@ -3078,7 +3078,7 @@ Specify the preceding author's institution.  An @code{AU} call is
 usefully followed by at most one @code{AI} call; if there are more, the
 last @code{AI} call controls.  @file{ms} collects text on input lines
 following a call to this macro into the author's institution until
-reaching an @code{AU}, @code{AB}, or heading or paragraph macro call.
+reaching an @code{AU}, @code{AB}, or heading or paragraphing macro call.
 @endDefmac
 
 @Defmac {DA, [@Var{x} @dots{}], ms}
@@ -3221,7 +3221,7 @@ amount stored in the @code{PI} register on every line @emph{except} the
 first (also known as a hanging indent).  This is a Berkeley extension.
 @endDefmac
 
-The following example illustrates several different paragraph macros.
+The following example illustrates several different paragraphing macros.
 
 @CartoucheExample
 .NH 2
@@ -3423,7 +3423,7 @@ previous font @emph{before} the first argument.  For example,
 prints @samp{(@strong{foo})}.
 
 If you give this macro no arguments, @code{groff} @file{ms} prints all
-text following in bold until the next highlighting, paragraph, or
+text following in bold until the next highlighting, paragraphing, or
 heading macro.
 @endDefmac
 
@@ -3465,14 +3465,14 @@ underlined text, with no intervening space.
 
 @Defmac {LG, , ms}
 Prints all text following in larger type (two points larger than the
-current size) until the next font size, highlighting, paragraph, or
+current size) until the next font size, highlighting, paragraphing, or
 heading macro.  You can specify this macro multiple times to enlarge the
 type size as needed.
 @endDefmac
 
 @Defmac {SM, , ms}
 Prints all text following in smaller type (two points smaller than the
-current size) until the next type size, highlighting, paragraph, or
+current size) until the next type size, highlighting, paragraphing, or
 heading macro.  You can specify this macro multiple times to reduce the
 type size as needed.
 @endDefmac

@@ -536,7 +536,7 @@ collects text on input lines following a call to this macro into the
 title until reaching an
 .CW .AU ,
 .CW .AB ,
-or heading or paragraph macro call.
+or heading or paragraphing macro call.
 T}
 _
 \&.AU	T{
@@ -549,7 +549,7 @@ author's name until reaching an
 .CW .AB ,
 another
 .CW .AU ,
-or heading or paragraph macro call.
+or heading or paragraphing macro call.
 .
 Call it repeatedly to specify multiple authors.
 T}
@@ -572,7 +572,7 @@ collects text on input lines following a call to this macro into the
 author's institution until reaching an
 .CW .AU ,
 .CW .AB ,
-or heading or paragraph macro call.
+or heading or paragraphing macro call.
 T}
 _
 \&.DA \f[R][\f[I]x\f[] .\|.\|.\&]	T{
@@ -857,7 +857,7 @@ T}
 .
 .KS
 .PP
-The following example illustrates several different paragraph macros.
+The following example illustrates several different paragraphing macros.
 .
 .
 .TS
@@ -1294,7 +1294,7 @@ prints
 If you give this macro no arguments,
 .I groff
 prints all text following in bold until the next highlighting,
-paragraph,
+paragraphing,
 or heading macro.
 T}
 _
@@ -1382,7 +1382,7 @@ larger type
 until
 the next font size,
 highlighting,
-paragraph,
+paragraphing,
 or heading macro.
 .
 You can
@@ -1403,7 +1403,7 @@ smaller type
 until
 the next type size,
 highlighting,
-paragraph,
+paragraphing,
 or heading macro.
 .
 You can
