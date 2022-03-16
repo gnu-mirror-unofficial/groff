@@ -5686,6 +5686,114 @@ with its corresponding amount of motion
 .
 .
 .\" ====================================================================
+.SH Environments
+.\" ====================================================================
+.
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Environments".
+Environments store most of the parameters that control text processing.
+.
+A default environment named
+.RB \[lq] 0 \[rq]
+exists when
+.I @g@troff
+starts up;
+it is modified by formatting-related requests and escape sequences.
+.
+.
+.P
+You can create new environments and switch among them.
+.
+Only one is current at any given time.
+.
+Active environments are managed using a
+.I stack,
+a data structure supporting \[lq]push\[rq] and \[lq]pop\[rq] operations.
+.
+The current environment is at the top of the stack.
+.
+The same environment name can be pushed onto the stack multiple times,
+possibly interleaved with others.
+.
+.
+.P
+Popping the environment stack does not destroy the current environment;
+it remains accessible by name and can be made current again by pushing
+it at any time.
+.
+Environments cannot be renamed or deleted,
+and can only be modified when current.
+.
+To inspect the environment stack,
+use the
+.B pev
+request;
+see section \[lq]Debugging\[rq] below.
+.
+.
+.P
+Environments store the following information.
+.
+.
+.IP \[bu] 2n
+typeface parameters
+(size,
+family,
+style,
+glyph height and slant,
+inter-word and inter-sentence space sizes)
+.
+.
+.IP \[bu]
+page parameters
+(line length,
+title length,
+vertical spacing,
+line
+spacing,
+indentation,
+line numbering,
+centering,
+right-justifying,
+underlining,
+hyphenation data)
+.
+.
+.IP \[bu]
+filling enablement,
+adjustment enablement and mode
+.
+.
+.IP \[bu]
+tab stops; tab and leader characters; escape,
+control,
+no-break control,
+hyphenation control,
+and margin characters
+.
+.
+.IP \[bu]
+partially collected lines
+.
+.
+.IP \[bu]
+input traps
+.
+.
+.IP \[bu]
+stroke and fill colors
+.
+.
+.P
+The
+.B ev
+request pushes to and pops from the environment stack,
+while
+.B evc
+copies a named environment's contents to the current one.
+.\" END Keep (roughly) parallel with groff.texi node "Environments".
+.
+.
+.\" ====================================================================
 .SH Underlining
 .\" ====================================================================
 .

@@ -14659,6 +14659,7 @@ space width, and so on) is retained.
 
 @c =====================================================================
 
+@c BEGIN Keep parallel with section "Environments" of groff(7).
 @node Environments, Suppressing Output, Diversions, gtroff Reference
 @section Environments
 @cindex environments
@@ -14670,15 +14671,17 @@ formatting-related requests and escape sequences.
 
 @cindex stack
 You can create new environments and switch among them.  Only one is
-active at any given time.  Environments are managed using a @dfn{stack},
-a data structure supporting ``push'' and ``pop''
-operations.  The current environment is at the top of the
-stack.@footnote{In a stack as strictly defined, only the ``top''
-item---the one most recently pushed---is accessible.  In @code{roff}
-systems, switching to an environment with an existing name moves it from
-its place in the stack to the top.  Further, when environments are
-popped, they are not lost; in fact, there is no mechanism for deleting
-environments.}
+current at any given time.  Active environments are managed using a
+@dfn{stack}, a data structure supporting ``push'' and ``pop''
+operations.  The current environment is at the top of the stack.
+The same environment name can be pushed onto the stack multiple times,
+possibly interleaved with others.
+
+Popping the environment stack does not destroy the current environment;
+it remains accessible by name and can be made current again by pushing
+it at any time.  Environments cannot be renamed or deleted, and can only
+be modified when current.  To inspect the environment stack, use the
+@code{pev} request; see @ref{Debugging}.
 
 Environments store the following information.
 
@@ -14708,6 +14711,7 @@ input traps
 @item
 stroke and fill colors
 @end itemize
+@c END Keep parallel with section "Environments" of groff(7).
 
 @DefreqList {ev, [@Var{ident}]}
 @DefregListEndx {.ev}
