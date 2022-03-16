@@ -442,7 +442,7 @@ is preferable.
 .
 .
 .\" ------------------------
-.bp
+.if t .bp
 .NH 1
 Document description macros
 .XS
@@ -670,7 +670,7 @@ T}
 .
 .
 .\" ------------------------
-.bp
+.if t .bp
 .NH 1
 Body text
 .XS
@@ -2521,7 +2521,7 @@ but on the next page in multiple-column contexts.
 .
 .
 .\" ------------------------
-.bp
+.if t .bp
 .NH 1
 Page layout
 .XS
