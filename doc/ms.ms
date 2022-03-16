@@ -2521,24 +2521,25 @@ but on the next page in multiple-column contexts.
 .
 .
 .\" ------------------------
+.bp
 .NH 1
 Page layout
 .XS
 Page layout
 .XE
 .LP
-The default output from the
-.I ms
-macros provides a minimalist
-page layout:
-it prints a single column,
-with the page number centered between hyphens at the top of each page.
+.I ms 's
+default page layout is simple:
+it arranges text in a single column
+with the page number
+centered between hyphens
+in a header
+on each page
+except the first.
 .
-It prints no footers.
+It produces no footers.
 .
-.
-.PP
-You can change the layout by setting appropriate registers and strings.
+You can customize this arrangement extensively.
 .
 .
 .NH 2
