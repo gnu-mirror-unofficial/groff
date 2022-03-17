@@ -660,7 +660,7 @@ registers exercise color support.
 .
 .
 .\" ====================================================================
-.SH "Numeric expressions"
+.SH Measurements
 .\" ====================================================================
 .
 A
@@ -735,175 +735,323 @@ multiply by 65,536
 .EL
 .
 .
-.P
-.B Numerical expressions
-are combinations of
-(zero or more)
-operators with the numerical values discussed above.
+.\" ====================================================================
+.SH "Numeric expressions"
+.\" ====================================================================
 .
-Arithmetic operators are parsed strictly from left to right;
-traditional algebraic precedence is not observed.
-.
-Use
-.B (
-and
-.B )
-to specify the precedence of sub-expressions.
-.
-Parentheses also permit the use of spaces between operators and their
-arguments.
-.
-AT&T
-.I troff \" AT&T
-originated several
-.I roff
-operators.
+A
+.I numeric expression
+is a syntactic structure,
+recognized only in specific contexts,
+that evaluates to an integral value:
+it can be as simple as a literal
+.RB \[lq] 0 \[rq]
+or it can be a complex sequence of register and string interpolations
+interleaved with operators.
 .
 .
 .P
-.BL
-.RS
+.TS
+Rf(CR) L.
++	addition
+\-	subtraction
+*	multiplication
+/	truncating division
+%	modulo
+_
+\f[R]unary\f[] +	assertion, motion, incrementation
+\f[R]unary\f[] \-	negation, motion, decrementation
+_
+(\f[CI]c\f[];\f[CI]e\f[])	scaling
+>?	maximum
+<?	minimum
+_
+<	less than
+>	greater than
+<=	less than or equal
+>=	greater than or equal
+\&=	equal
+==	equal
+_
+&	logical conjunction (\[lq]and\[rq])
+:	logical disjunction (\[lq]or\[rq])
+!	logical complementation (\[lq]not\[rq])
+_
+( )	precedence
+_
+|	boundary-relative motion
+.TE
 .
-.TPx
+.
+.P
+.I @g@troff
+provides a set of mathematical and logical operators familiar to
+programmers\[em]as well as some unusual ones\[em]but supports only
+integer arithmetic.
+.
+(Provision is made for intepreting and
+reporting decimal fractions in certain cases.)
+.
+The internal data type used for computing results is usually a 32-bit
+signed integer,
+which suffices to represent magnitudes within a range of \[+-]2
+billion.
+.
+(If that's not enough, see
+.MR groff_tmac @MAN5EXT@
+for the
+.I 62bit.tmac
+macro package.)
+.
+.
+.P
+Arithmetic infix operators perform a function on the numeric expressions
+to their left and right;
+they are
 .B +
-Addition
-.
-.TPx
+(addition),
 .B \-
-Subtraction
-.
-.TPx
+(subtraction),
 .B *
-Multiplication
-.
-.TPx
+(multiplication),
 .B /
-Division
-.
-.TPx
+(truncating division),
+and
 .B %
-Modulo
+(modulo).
 .
-.TPx
-.B =
-Equals
-.
-.TPx
-.B ==
-Equals
-.
-.TPx
-.B <
-Less than
-.
-.TPx
-.B >
-Greater than
-.
-.TPx
-.B <=
-Less or equal
-.
-.TPx
-.B >=
-Greater or equal
-.
-.TPx
-.B &
-Logical and
-.
-.TPx
-.B :
-Logical or
-.
-.TPx
-.B !
-Logical not
-.
-.TPx
-.B (
-Begin expression group of higher precedence
-.
-.TPx
-.B )
-End expression group of higher precedence
-.
-.RE
-.EL
+Overflow and division by zero are errors and abort evaluation of a
+numeric expression.
 .
 .
 .P
-Unary prefix operators are available in contexts where they make sense.
-.
-.
-.RS
-.TP
-.B +
-.TQ
+Arithmetic unary operators operate on the numeric expression to their
+right;
+they consist of
 .B \-
-Increment or decrement the argument implied by the request or escape
-sequence by the following expression.
+(negation)
+and
+.B +
+(assertion\[em]for completeness;
+it does nothing outside of special contexts,
+which are discussed below).
 .
 .
-.TP
+.P
+The sign of the modulo of operands of mixed signs is determined by the
+sign of the first.
+.
+Division and modulo operators satisfy the following property:
+given a
+.RI dividend\~ a
+and a
+.RI divisor\~ b ,
+a
+.RI quotient\~ q
+formed by
+.RB \[lq] "(a / b)" \[rq]
+and a
+.RI remainder\~ r
+by
+.RB \[lq] "(a % b)" \[rq],
+then
+.IR q \~*\~ b \~+\~ r \~=\~ a .
+.
+.
+.P
+.I @g@troff
+offers a scaling operator,
+.BI ( c ; e )\c
+, which evaluates a numeric
+.RI expression\~ e
+.RI using\~ c
+as the default scaling unit.
+.
+If
+.I c
+is missing,
+scaling units are ignored in the evaluation
+.RI of\~ e .
+.
+.
+.P
+.I @g@troff
+also provides a pair of operators to compute the extrema of two
+operands:
+.B >?\&
+(maximum)
+and
+.B <?\&
+(minimum).
+.
+.
+.P
+Comparison operators comprise
+.B <
+(less than),
+.B >
+(greater than),
+.B <=
+(less than or equal),
+.B >=
+(greater than or equal),
+and
+.B =
+(equal).
+.
+.B ==
+is a synonym for
+.BR = .
+.
+When evaluated,
+a comparison operation is replaced with
+.RB \[lq] 0 \[rq]
+if it is false and
+.RB \[lq] 1 \[rq]
+if true.
+.
+.
+.P
+With truth values established,
+we can consider the logical operators
+.B &
+(logical conjunction or \[lq]and\[rq])
+and
+.B :
+(logical disjunction or \[lq]or\[rq]).
+.
+A logical complementation or \[lq]not\[rq] operator,
+.B !\&,
+works only within
+.RB \[lq] if \[rq]
+and
+.RB \[lq] while \[rq]
+requests.
+.
+.RB (\[lq] !(\-1) \[rq]
+evaluates to
+.RB \[lq] 1 \[rq]
+because
+.I @g@troff
+treats negative numbers and zero as false.}
+.
+.
+.P
+Furthermore,
+.B !\&
+is recognized only at the beginning of a numeric expression not
+contained by another numeric expression.
+.
+In other words,
+it must be the \[lq]outermost\[rq] operator.
+.
+Attempting to include it elsewhere in the expression results in a
+warning diagnostic in the \[lq]number\[rq] category
+(see
+.MR @g@troff @MAN1EXT@ ),
+and its expression evaluates false.
+.
+This unfortunate limitation maintains compatibility with AT&T
+.IR troff .\" AT&T
+.
+You can work around it by comparing numeric expressions to truth values.
+.
+.
+.P
+.I roff
+languages have no operator precedence:
+expressions are evaluated strictly from left to right,
+in contrast to schoolhouse arithmetic.
+.
+Use parentheses
+.B ( )
+to impose a desired precedence upon subexpressions.
+.
+.
+.P
+For many requests and escape sequences that cause motion on the page,
+the unary operators
+.B +
+and
+.B \-
+work differently when leading a numeric expression.
+.
+They then indicate a motion relative to the current drawing position:
+down in vertical contexts,
+right in horizontal ones.
+.
+.
+.P
+.B +
+and
+.B \-
+are also treated differently by the following requests and escape
+sequences:
+.BR bp ,
+.BR in ,
+.BR ll ,
+.BR pl ,
+.BR pn ,
+.BR po ,
+.BR ps ,
+.BR pvs ,
+.BR rt ,
+.BR ti ,
+.BR \[rs]H ,
+.BR \[rs]R ,
+and
+.BR \[rs]s .
+.
+Here,
+leading plus and minus signs serve as incrementation and decrementation
+operators.\" @xref{Setting Registers}, for examples.
+.
+.
+.P
+A leading
 .B |
-Interpret the following expression as a motion relative not to the
-current position but to a boundary.
+operator indicates a motion relative not to the current position but to
+a boundary.
 .
 For horizontal motions,
-the measurement specifies a distance relative to the drawing position at
-the beginning of the
+the measurement specifies a distance relative to the drawing position
+corresponding to the beginning of the
 .I input
 line.
 .
 By default,
 tab stops reckon measurements in this way.
-.
-Most escape sequences do not; \" XXX: Which ones do?
+Most escape sequences do not;
+.\" XXX: Which ones do?
 .B |
 tells them to do so.
 .
 For vertical movements,
-this operator specifies a distance from the first text baseline on the
-page or in the diversion,
+the
+.B |
+operator specifies a distance from the first text baseline on the page
+or in the current diversion,
 using the current vertical spacing.
-.RE
 .
 .
 .P
-Furthermore,
-.I groff
-provides some additional arithmetic operators.
+The
+.B \[rs]B
+escape sequence tests its argument for validity as a numeric expression.
 .
 .
 .P
-.BL
-.RS
+A register interpolated as an operand in a numeric expression must have
+an Arabic format;
+luckily,
+this is the default.\" @xref{Assigning Register Formats}.
 .
-.TPx
-\f[I]e1\/\f[CB]>?\,\f[I]e2\f[R]
-The maximum of
-.I e1
-and
-.IR e2 .
 .
-.TPx
-\f[I]e1\/\f[CB]<?\,\f[I]e2\f[R]
-The minimum of
-.I e1
-and
-.IR e2 .
-.
-.TPx
-\f[CB](\,\f[I]c\/\f[CB];\,\f[I]e\/\f[CB])\f[R]
-Evaluate
-.I e
-using
-.I c
-as the default scaling indicator.
-.
-.RE
-.EL
+.P
+Due to the way arguments are parsed,
+spaces are not allowed in numeric expressions unless the (sub)expression
+containing them is surrounded by parentheses.
+.\"@xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
 .
 .
 .\" ====================================================================
@@ -1193,7 +1341,7 @@ and
 .RB \[lq] S \[rq]
 operators,
 but right after
-.RB \[lq] ! \[rq],
+.RB \[lq] !\& \[rq],
 they end the predicate and the conditional evaluates true.
 .
 (This bizarre behavior maintains compatibility with AT&T

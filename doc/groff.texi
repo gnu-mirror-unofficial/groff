@@ -5733,6 +5733,9 @@ Thus, the safest way to specify measurements is to always attach a
 scaling indicator.  If you want to multiply or divide by a certain
 scalar value, use @samp{u} as the unit for that value.
 
+@codequotebacktick on
+@codequoteundirected on
+
 
 @c =====================================================================
 
@@ -5741,66 +5744,105 @@ scalar value, use @samp{u} as the unit for that value.
 @cindex numeric expressions
 @cindex expressions, numeric
 
-@code{gtroff} has most arithmetic operators common to other languages:
+A @dfn{numeric expression} is a syntactic structure, recognized only in
+specific contexts, that evaluates to an integral value:@: it can be as
+simple as a literal @samp{0} or it can be a complex sequence of register
+and string interpolations interleaved with operators.
 
-@itemize @bullet
-@item
+GNU @code{troff} provides a set of mathematical and logical operators
+familiar to programmers---as well as some unusual ones---but supports
+only integer arithmetic.@footnote{Provision is made for intepreting and
+reporting decimal fractions in certain cases.}  The internal data type
+used for computing results is usually a 32-bit signed integer, which
+suffices to represent magnitudes within a range of ±2
+billion.@footnote{If that's not enough, see the @cite{groff_tmac@r{(5)}}
+man page for the @file{62bit.tmac} macro package.}
+
 @cindex arithmetic operators
 @cindex operators, arithmetic
 @opindex +
 @opindex -
-@opindex /
 @opindex *
+@opindex /
 @opindex %
-Arithmetic: @samp{+} (addition), @samp{-} (subtraction), @samp{/}
-(division), @samp{*} (multiplication), @samp{%} (modulo).
-
-@code{gtroff} only provides integer arithmetic.  The internal type used
-for computing results is @samp{int}, which is usually a 32-bit signed
-integer.
-
-@item
+Arithmetic infix operators perform a function on the numeric expressions
+to their left and right; they are @code{+} (addition), @code{-}
+(subtraction), @code{*} (multiplication), @code{/} (truncating
+division) and @code{%} (modulo).  Overflow and division by zero are
+errors and abort evaluation of a numeric expression.
 @cindex unary operators
 @cindex operators, unary
 @opindex -
 @opindex +
-@opindex !
 @cindex @code{if} request, and the @samp{!} operator
 @cindex @code{while} request, and the @samp{!} operator
-Unary operators: @samp{-} (negating, i.e., changing the sign), @samp{+}
-(just for completeness; does nothing in expressions), @samp{!} (logical
-not; this works only within @code{if} and @code{while}
-requests).@footnote{For example, @samp{!(-1)} evaluates to `true'
-because GNU @code{troff} treats both negative numbers and zero as
-`false'.}  See below for the use of unary operators in motion requests.
 
-@item
+Arithmetic unary operators operate on the numeric expression to their
+right; they consist of @code{-} (negation) and @code{+} (assertion---for
+completeness; it does nothing outside of special contexts, which are
+discussed below).
+
+Let's have a look at the behavior of the modulo and truncating division
+operators, and observe the effect of negative operands.
+
+@Example
+.nr U 5/2
+.nr V (-5)/2
+.nr W 5/-2
+.nr X 5%2
+.nr Y (-5)%2
+.nr Z 5%-2
+U=\n[U] V=\n[V] W=\n[W] X=\n[X] Y=\n[Y] Z=\n[Z]
+    @result{} U=2 V=-2 W=-2 X=1 Y=-1 Z=1
+@endExample
+
+@noindent
+The sign of the modulo of operands of mixed signs is determined by the
+sign of the first.  Division and modulo operators satisfy the following
+property:@: given a dividend@tie{}@var{a} and a divisor@tie{}@var{b}, a
+quotient@tie{}@var{q} formed by @samp{(a / b)} and a
+remainder@tie{}@var{r} by @samp{(a % b)}, then @samp{q * b + r = a}.
+
 @cindex scaling operator
 @cindex operator, scaling
 @opindex ;
-Scaling: @code{(@var{c};@var{e})}.  Evaluate@tie{}@var{e}
-using@tie{}@var{c} as the default scaling indicator.  If @var{c} is
-missing, ignore scaling indicators in the evaluation of@tie{}@var{e}.
+GNU @code{troff} offers a scaling operator, @code{(@var{c};@var{e})},
+which evaluates a numeric expression@tie{}@var{e} using@tie{}@var{c} as
+the default scaling unit.  If @var{c} is missing, scaling units are
+ignored in the evaluation of@tie{}@var{e}.  This operator can save
+typing by avoiding the necessity of attaching scaling units to every
+operand out of caution.  It can also make macros you write simpler to
+use:@: you can choose a sensible default unit in case the user neglects
+to supply one.
 
-@item
+@Example
+.\" Indent by amount given in first argument; assume ens.
+.de Indent
+.  in (n;\\$1)
+..
+@endExample
+
+@noindent
+Without the scaling operator, the foregoing macro would, if called with
+a unitless argument, cause indentation by the @code{in} request's
+default scaling unit (ems).  The result would be twice as much
+indentation as expected.
+
 @cindex extremum operators (@code{>?}, @code{<?})
 @cindex operators, extremum (@code{>?}, @code{<?})
 @opindex >?
 @opindex <?
-Extrema: @samp{>?} (maximum), @samp{<?} (minimum).
-
-Example:
+GNU @code{troff} also provides a pair of operators to compute the
+extrema of two operands: @code{>?} (maximum) and @code{<?} (minimum).
 
 @Example
-.nr x 5
-.nr y 3
-.nr z (\n[x] >? \n[y])
+.nr slots 5
+.nr candidates 3
+.nr salaries (\n[slots] <? \n[candidates])
+Looks like we'll end up paying \n[salaries] salaries.
+    @result{} Looks like we'll end up paying 3 salaries.
 @endExample
 
-@noindent
-The register@tie{}@code{z} now contains@tie{}5.
-
-@item
 @cindex comparison operators
 @cindex operators, comparison
 @opindex <
@@ -5809,11 +5851,12 @@ The register@tie{}@code{z} now contains@tie{}5.
 @opindex <=
 @opindex =
 @opindex ==
-Comparison: @samp{<} (less than), @samp{>} (greater than), @samp{<=}
-(less than or equal), @samp{>=} (greater than or equal), @samp{=}
-(equal), @samp{==} (the same as @samp{=}).
+Comparison operators comprise @code{<} (less than), @code{>} (greater
+than), @code{<=} (less than or equal), @code{>=} (greater than or
+equal), and @code{=} (equal).  @code{==} is a synonym for @code{=}.
+When evaluated, a comparison operation is replaced with @samp{0} if it
+is false and @samp{1} if true.
 
-@item
 @cindex logical operators
 @cindex operators, logical
 @opindex &
@@ -5823,41 +5866,57 @@ Comparison: @samp{<} (less than), @samp{>} (greater than), @samp{<=}
 @ifinfo
 @opindex @r{<colon>}
 @end ifinfo
-Logical: @samp{&} (logical and), @samp{:} (logical or).
-
+With truth values established, we can consider the logical operators
+@code{&} (logical conjunction or ``and'') and @code{:} (logical
+disjunction or ``or'').
+@opindex !
+@cindex complementation, logical
+@cindex logical complementation operator
 @cindex logical not, limitation in expression
 @cindex expression, limitation of logical not in
-The logical not operator, as described above, works only within
-@code{if} and @code{while} requests.  Furthermore, it may appear only at
-the beginning of an expression, and negates the entire expression.
-Attempting to insert the @samp{!} operator within the expression results
-in a @samp{numeric expression expected} warning.  This maintains
-compatibility with @acronym{AT&T} @code{troff}.
+A logical complementation or ``not'' operator, @code{!}, works only
+within @code{if} and @code{while} requests.@footnote{@samp{!(-1)}
+evaluates to @samp{1} because GNU @code{troff} treats negative numbers
+and zero as false.}
 
-Example:
+Furthermore, @code{!} is recognized only at the beginning of a numeric
+expression not contained by another numeric expression.  In other words,
+it must be the ``outermost'' operator.  Attempting to include it
+elsewhere in the expression results in a warning diagnostic in the
+@samp{number} category (@pxref{Debugging}), and its expression evaluates
+false.  This unfortunate limitation maintains compatibility with
+@acronym{AT&T} @code{troff}.  You can work around it by comparing
+numeric expressions to truth values.
 
 @Example
 .nr X 1
 .nr Y 0
 .\" This does not work as expected.
-.if (\n[X])&(!\n[Y]) .nop X only
+.if (\n[X])&(!\n[Y]) .nop A: X is true, Y is false
 .
 .\" Use this construct instead.
-.if (\n[X]=1)&(\n[Y]=0) .nop X only
+.if (\n[X])&(\n[Y]=0) .nop B: X is true, Y is false
+    @error{} warning: expected numeric expression, got '!'
+    @result{} B: X is true, Y is false
 @endExample
-@end itemize
 
 @cindex parentheses
 @cindex order of evaluation in expressions
 @cindex expression, order of evaluation
 @opindex (
 @opindex )
-Parentheses may be used as in any other language.  However, in
-@code{gtroff} they are necessary to ensure order of evaluation.
-@code{gtroff} has no operator precedence; expressions are evaluated left
-to right.  This means that @code{gtroff} evaluates @samp{3+5*4} as if it
-were parenthesized like @samp{(3+5)*4}, not as @samp{3+(5*4)}, as might
-be expected.
+@code{roff} languages have no operator precedence:@: expressions are
+evaluated strictly from left to right, in contrast to schoolhouse
+arithmetic.  Use parentheses @code{(} @code{)} to impose a desired
+precedence upon subexpressions.
+
+@Example
+.nr X 3+5*4
+.nr Y (3+5)*4
+.nr Z 3+(5*4)
+X=\n[X] Y=\n[Y] Z=\n[Z]
+    @result{} X=32 Y=32 Z=23
+@endExample
 
 @cindex @code{+}, and page motion
 @cindex @code{-}, and page motion
@@ -5865,10 +5924,11 @@ be expected.
 @cindex operators, motion
 @opindex + @r{(unary)}
 @opindex - @r{(unary)}
-For many requests that cause a motion on the page, the unary operators
-@samp{+} and @samp{-} work differently if leading an expression.  They
-then indicate a motion relative to the current position (down or up,
-respectively).
+For many requests and escape sequences that cause motion on the page,
+the unary operators @code{+} and @code{-} work differently when leading
+a numeric expression.  They then indicate a motion relative to the
+current drawing position:@: down in vertical contexts, right in
+horizontal ones.
 
 @cindex @code{bp} request, using @code{+} and@tie{}@code{-} with
 @cindex @code{in} request, using @code{+} and@tie{}@code{-} with
@@ -5886,17 +5946,12 @@ respectively).
 @cindex @code{\H}, using @code{+} and@tie{}@code{-} with
 @cindex @code{\R}, using @code{+} and@tie{}@code{-} with
 @cindex @code{\s}, using @code{+} and@tie{}@code{-} with
-@samp{+} and @samp{-} are also treated differently by the following
-requests and escape sequences: @code{bp}, @code{in}, @code{ll},
+@code{+} and @code{-} are also treated differently by the following
+requests and escape sequences:@: @code{bp}, @code{in}, @code{ll},
 @code{lt}, @code{nm}, @code{nr}, @code{pl}, @code{pn}, @code{po},
 @code{ps}, @code{pvs}, @code{rt}, @code{ti}, @code{\H}, @code{\R}, and
-@code{\s}.  Here, leading plus and minus signs indicate increments and
-decrements.
-
-@xref{Setting Registers}, for some examples.
-
-@codequotebacktick on
-@codequoteundirected on
+@code{\s}.  Here, leading plus and minus signs serve as incrementation
+and decrementation operators.  @xref{Setting Registers}, for examples.
 
 @opindex |
 @cindex @code{|}, and page motion
@@ -5904,13 +5959,14 @@ decrements.
 @cindex position, ``absolute'', operator (@code{|})
 @cindex boundary-relative motion operator (@code{|})
 @c "motion" and "operators" already indexed above
-Similarly, a leading @samp{|} operator indicates a motion relative not
-to the current position but to a boundary.  For horizontal motions, the
-measurement specifies a distance relative to the drawing position at the
-beginning of the @emph{input} line.  By default, tab stops reckon
-measurements in this way.  Most escape sequences do not;
+A leading @code{|} operator indicates a motion relative not to the
+current position but to a boundary.  For horizontal motions, the
+measurement specifies a distance relative to the drawing position
+corresponding to the beginning of the @emph{input} line.  By default,
+tab stops reckon measurements in this way.  Most escape sequences do
+not;
 @c XXX: Which ones do?
-@samp{|} tells them to do so.
+@code{|} tells them to do so.
 
 @Example
 Mind the \h'1.2i'gap.
@@ -5940,7 +5996,7 @@ Typographical emphasis is best used
 @noindent
 In the above example, @samp{|0} specifies a negative motion from the
 current position (at the end of the argument just emitted, @code{\$1})
-to the beginning of the input line.  Thus, the @samp{\l} escape sequence
+to the beginning of the input line.  Thus, the @code{\l} escape sequence
 in this case draws a line from right to left.  A macro call occurs at
 the beginning of an input line;@footnote{Control structure syntax
 creates an exception to this rule, but is designed to remain useful:
@@ -5948,11 +6004,12 @@ recalling our example, @samp{.if 1 .Underline this} would underline only
 ``this'', precisely.  @xref{Conditionals and Loops}.} if the @code{|}
 operator were omitted, then the underline would be drawn a zero distance
 from the current position, producing device-dependent, and likely
-undesirable, results.
+undesirable, results.  On the @samp{ps} output device, it underlines the
+period.
 
 For vertical movements, the @code{|} operator specifies a distance from
-the first text baseline on the page or in the diversion, using the
-current vertical spacing.
+the first text baseline on the page or in the current diversion, using
+the current vertical spacing.
 
 @Example
 A
@@ -5970,10 +6027,11 @@ In the foregoing example, we've used the @code{\Z} escape sequence
 @cindex numeric expression, valid
 @cindex valid numeric expression
 Interpolate@tie{}1 if @var{anything} is a valid numeric expression,
-and@tie{}0 otherwise.  You might use this escape sequence along with the
-@code{if} request to filter out invalid macro or string arguments.
-@xref{Conditionals and Loops}.
+and@tie{}0 otherwise.
 @endDefesc
+
+You might use @code{\B} along with the @code{if} request to filter out
+invalid macro or string arguments.  @xref{Conditionals and Loops}.
 
 @Example
 .\" Indent by amount given in first argument; assume ens.
@@ -5982,15 +6040,16 @@ and@tie{}0 otherwise.  You might use this escape sequence along with the
 ..
 @endExample
 
-A register interpolation used as an operand in an expression must have
+A register interpolated as an operand in a numeric expression must have
 an Arabic format; luckily, this is the default.  @xref{Assigning
 Register Formats}.
+
 @cindex space characters, in expressions
 @cindex expressions, and space characters
-Due to the way arguments are parsed, spaces are not allowed in
+Due to the way arguments are parsed, spaces are not allowed in numeric
 expressions unless the (sub)expression containing them is surrounded by
-parentheses.
-@xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
+parentheses.  @xref{Request and Macro Arguments}, and @ref{Conditionals
+and Loops}.
 
 @Example
 .nf
@@ -6003,10 +6062,9 @@ parentheses.
     @result{} 6
 @endExample
 
-The @code{nr} request (@pxref{Setting Registers}) expects up to two
-numeric expressions as arguments; a bare @samp{+} does not qualify, so
-our first attempt got a warning.
-
+The @code{nr} request (@pxref{Setting Registers}) expects its second and
+optional third arguments to be numeric expressions; a bare @code{+} does
+not qualify, so our first attempt got a warning.
 
 @c =====================================================================
 
