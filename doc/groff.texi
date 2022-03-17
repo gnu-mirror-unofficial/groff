@@ -5760,6 +5760,47 @@ for computing results is @samp{int}, which is usually a 32-bit signed
 integer.
 
 @item
+@cindex unary operators
+@cindex operators, unary
+@opindex -
+@opindex +
+@opindex !
+@cindex @code{if} request, and the @samp{!} operator
+@cindex @code{while} request, and the @samp{!} operator
+Unary operators: @samp{-} (negating, i.e., changing the sign), @samp{+}
+(just for completeness; does nothing in expressions), @samp{!} (logical
+not; this works only within @code{if} and @code{while}
+requests).@footnote{For example, @samp{!(-1)} evaluates to `true'
+because GNU @code{troff} treats both negative numbers and zero as
+`false'.}  See below for the use of unary operators in motion requests.
+
+@item
+@cindex scaling operator
+@cindex operator, scaling
+@opindex ;
+Scaling: @code{(@var{c};@var{e})}.  Evaluate@tie{}@var{e}
+using@tie{}@var{c} as the default scaling indicator.  If @var{c} is
+missing, ignore scaling indicators in the evaluation of@tie{}@var{e}.
+
+@item
+@cindex extremum operators (@code{>?}, @code{<?})
+@cindex operators, extremum (@code{>?}, @code{<?})
+@opindex >?
+@opindex <?
+Extrema: @samp{>?} (maximum), @samp{<?} (minimum).
+
+Example:
+
+@Example
+.nr x 5
+.nr y 3
+.nr z (\n[x] >? \n[y])
+@endExample
+
+@noindent
+The register@tie{}@code{z} now contains@tie{}5.
+
+@item
 @cindex comparison operators
 @cindex operators, comparison
 @opindex <
@@ -5784,21 +5825,6 @@ Comparison: @samp{<} (less than), @samp{>} (greater than), @samp{<=}
 @end ifinfo
 Logical: @samp{&} (logical and), @samp{:} (logical or).
 
-@item
-@cindex unary operators
-@cindex operators, unary
-@opindex -
-@opindex +
-@opindex !
-@cindex @code{if} request, and the @samp{!} operator
-@cindex @code{while} request, and the @samp{!} operator
-Unary operators: @samp{-} (negating, i.e., changing the sign), @samp{+}
-(just for completeness; does nothing in expressions), @samp{!} (logical
-not; this works only within @code{if} and @code{while}
-requests).@footnote{For example, @samp{!(-1)} evaluates to `true'
-because GNU @code{troff} treats both negative numbers and zero as
-`false'.}  See below for the use of unary operators in motion requests.
-
 @cindex logical not, limitation in expression
 @cindex expression, limitation of logical not in
 The logical not operator, as described above, works only within
@@ -5819,32 +5845,6 @@ Example:
 .\" Use this construct instead.
 .if (\n[X]=1)&(\n[Y]=0) .nop X only
 @endExample
-
-@item
-@cindex extremum operators (@code{>?}, @code{<?})
-@cindex operators, extremum (@code{>?}, @code{<?})
-@opindex >?
-@opindex <?
-Extrema: @samp{>?} (maximum), @samp{<?} (minimum).
-
-Example:
-
-@Example
-.nr x 5
-.nr y 3
-.nr z (\n[x] >? \n[y])
-@endExample
-
-@noindent
-The register@tie{}@code{z} now contains@tie{}5.
-
-@item
-@cindex scaling operator
-@cindex operator, scaling
-@opindex ;
-Scaling: @code{(@var{c};@var{e})}.  Evaluate@tie{}@var{e}
-using@tie{}@var{c} as the default scaling indicator.  If @var{c} is
-missing, ignore scaling indicators in the evaluation of@tie{}@var{e}.
 @end itemize
 
 @cindex parentheses
