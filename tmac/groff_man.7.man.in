@@ -456,12 +456,10 @@ Set
 .I heading-text
 as a section heading.
 .
-The text following
-.B .SH
-up to the end of the line,
+Its argument,
 or the text on the next input line if
 .B .SH
-is given no arguments,
+is given none,
 is set with no indentation,
 in bold
 (or the font specified by the string
@@ -530,12 +528,10 @@ ordinary paragraph
 See subsection \(lqHorizontal and vertical spacing\(rq below for the
 indentation amount.
 .
-The text following
-.B .SS
-up to the end of the line,
+Its argument,
 or the text on the next input line if
 .B .SS
-is given no arguments,
+is given none,
 is set in bold
 (or the font specified by the string
 .BR HF ).
@@ -1087,7 +1083,7 @@ produces the following output.
 Several features of the above example are of note.
 .
 .
-.IP \(bu
+.IP \(bu 2n
 The empty request (.),
 which does nothing,
 is used to vertically space the input file for readability by the
@@ -1928,17 +1924,15 @@ and
 .BR .SS ,
 which reset it to the default).
 .
-.
-The other kind of indentation is controlled by the paragraphing macros
+Indentation is controlled by the paragraphing macros
 (though,
 again,
 .\".BR .TH ,
 .B .SH
 and
 .B .SS
-reset it).
-.
-Indentation is imposed by the
+reset it);
+it is imposed by the
 .BR .TP ,
 .BR .IP ,
 and deprecated
@@ -2005,8 +1999,8 @@ the left margin and indentation.
 .
 .IP \(bu
 This indented paragraph has a bullet for a tag,
-making it more obvious that the left margin and the paragraph
-indentation are distinct;
+making it more obvious that the left margin and indentation are
+distinct;
 only the former affects the tag,
 but both affect the text of the paragraph.
 .
@@ -2803,9 +2797,9 @@ administrator in a site's
 file
 (see section \(lqFiles\(rq below).
 .
-The default headers and footers are documented in the description of
+The presentation of
 .B .TH
-above.
+above describes the default headers and footers.
 .
 Because these macros are hooks for
 .I groff man
@@ -2918,7 +2912,7 @@ information or distinctions that you use tab stops to express are likely
 to be lost.
 .
 If you feel tempted to change the tab stops such that calling this macro
-becomes desirable,
+later is desirable to restore them,
 you should probably be composing a table using
 .MR @g@tbl @MAN1EXT@
 instead.
@@ -3488,7 +3482,7 @@ A
 .I man
 program or user typing,
 for example,
-\(lqgroff \-mandoc page.1\(rq,
+.RB \[lq] "groff \-mandoc page.1" \[rq],
 need not know which package the file
 .I page.1
 uses.
@@ -3741,7 +3735,7 @@ instead.
 .IP
 In the last example,
 the empty argument does have a subtly different effect than its
-suggested replacement;
+suggested replacement:
 the empty argument causes an additional space character to be
 interpolated between the arguments \(lqtwo\(rq and \(lqthree\(rq\(embut
 it is a regular breaking space,
