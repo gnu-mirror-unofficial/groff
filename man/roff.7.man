@@ -373,7 +373,7 @@ it must know the page length.
 .
 A device's
 .I resolution
-enables conversion of practical units like inches or centimeters to
+converts practical units like inches or centimeters to
 .I basic units,
 a convenient length measure for the output device or file format.
 .
@@ -385,13 +385,18 @@ The device description file defines its resolution and page dimensions
 .MR groff_font @MAN5EXT@ ).
 .\" (@pxref{DESC File Format}).
 .
-A page is a two-dimensional structure upon which a
-.I roff
-system imposes a coordinate system in basic units with its upper left
-corner as the origin.
 .
-Useful coordinate values are therefore always positive and within the
-range of the page boundaries.
+.P
+A
+.I page
+is a two-dimensional structure upon which a
+.I roff
+system imposes a coordinate system with its upper left corner as the
+origin.
+.
+Coordinate values are in basic units and increase down and to the right.
+Useful ones are therefore always positive and within numeric ranges
+corresponding to the page boundaries.
 .
 .
 .P
@@ -406,8 +411,8 @@ which is the location at which the next glyph will be written,
 from which the next motion will be measured,
 or where a geometric primitive will commence rendering.
 .
-By convention,
-glyphs are drawn from a text baseline upward and to the right.
+Notionally,
+glyphs are drawn from the text baseline upward and to the right.
 .RI ( groff
 does not yet support right-to-left scripts.)
 .
@@ -415,7 +420,7 @@ The
 .I text baseline
 is a
 (usually invisible)
-line upon which the glyphs of a typeface \[lq]sit\[rq].
+line upon which the glyphs of a typeface are aligned.
 .
 A glyph therefore \[lq]starts\[rq] at its bottom-left corner.
 .
@@ -481,24 +486,23 @@ Rather than let that happen,
 formatters instruct the output driver to eject the page,
 start a new one,
 and reset the drawing position to one vee below the page top again;
-this is called a
+this is a
 .I page break.
 .
 .
 .P
 When the last line of input text is also the last output line that can
 fit on the page,
-the break caused by the last newline of the input file
-.\" (or end-of-file status)
-will also cause a page break,
-causing a useless blank page to be output.
+the break caused by the end of the input file
+will also break the page,
+producing a useless blank one.
 .
 Macro packages keep users from having
 to confront this difficulty by setting \[lq]traps\[rq];
 .\" (@pxref{Traps});
 moreover,
-all but the simplest page layouts tend to have headers and footers or at
-least bear vertical margins larger than one vee.
+all but the simplest page layouts tend to have headers and footers,
+or at least bear vertical margins larger than one vee.
 .\" END Keep parallel with groff.texi node "Page Geometry".
 .
 .
