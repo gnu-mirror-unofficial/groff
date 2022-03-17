@@ -1879,7 +1879,11 @@ The glyph resembling an underscore is a baseline rule,
 and that resembling a vertical line is a box rule.
 .
 In bold,
+according to some sources,
 the square became filled.
+.\" In the Holt, Reinhart, Winston edition of the _Unix Programmer's
+.\" Manual_, Revised and Expanded Version, Volume 2 (1983), the square
+.\" in Times bold is _not_ shown as filled on page 226.  -- GBR
 .
 In italics,
 the box rule was not slanted.
@@ -1906,6 +1910,19 @@ The special font supplied the missing ASCII and Teletype extended
 glyphs,
 among several others.
 .
+The plus,
+minus,
+and equals signs appeared in the special font despite availability in
+text fonts \[lq]to insulate the appearance of equations from the choice
+of standard [read: text] fonts\[rq].
+.
+Recall that
+.I troff \" AT&T
+was turned to the task of mathematical typesetting as soon as it was
+developed.
+.
+.
+.P
 We note that AT&T took the opportunity to de-unify the apostrophe
 and acute accent
 (a choice ISO later duplicated in its 8859 series of standards).
@@ -1947,6 +1964,11 @@ No equivalent was available on the C/A/T;
 the box rule
 .BR \[rs][br] ,
 brace vertical extension
+.\" CSTR #54 (1976 edition) called this the "bold vertical", probably
+.\" because it was thicker than the box rule and matched the thickness
+.\" of the bracket pieces \(lt, \(lb, \(rt, \(rb, \(lk, \(rk, and so on.
+.\" Saying "bold" could be misleading because it appeared only in the
+.\" special font, not a bold text font.
 .BR \[rs][bv] ,
 and \[lq]or\[rq] operator
 .BR \[rs][or] ,
@@ -1963,8 +1985,8 @@ The files below are loaded automatically by the default
 .
 .TP
 .I @MACRODIR@/\:\%composite\:.tmac
-assigns mappings for glyphs after the first in a composite special
-character.
+assigns alternate mappings for identifiers after the first in a
+composite special character escape sequence.
 .
 See subsection \[lq]Accents\[rq] above.
 .
