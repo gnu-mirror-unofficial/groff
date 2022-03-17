@@ -113,7 +113,7 @@ int old_have_input = 0;		// value of have_input right before \n
 bool device_has_tcommand = false;	// 't' ouput command supported
 int unsafe_flag = 0;		// safer by default
 
-int have_string_arg = 0;	// whether we have \*[foo bar...]
+bool have_multiple_params = false;	// e.g., \[e aa], \*[foo bar]
 
 double spread_limit = -3.0 - 1.0;	// negative means deactivated
 
@@ -897,7 +897,7 @@ static symbol read_long_escape_parameters(read_mode mode)
   }
   buf[i] = 0;
   if (c == ' ')
-    have_string_arg = 1;
+    have_multiple_params = true;
   if (buf == abuf) {
     if (i == 0) {
       if (mode != ALLOW_EMPTY)
@@ -1026,8 +1026,8 @@ static int get_copy(node **nd, bool is_defining, bool handle_escape_E)
 	(void)input_stack::get(0);
 	symbol s = read_escape_parameter(WITH_ARGS);
 	if (!(s.is_null() || s.is_empty())) {
-	  if (have_string_arg) {
-	    have_string_arg = 0;
+	  if (have_multiple_params) {
+	    have_multiple_params = false;
 	    interpolate_string_with_args(s);
 	  }
 	  else
@@ -1989,8 +1989,8 @@ void token::next()
 	{
 	  symbol s = read_escape_parameter(WITH_ARGS);
 	  if (!(s.is_null() || s.is_empty())) {
-	    if (have_string_arg) {
-	      have_string_arg = 0;
+	    if (have_multiple_params) {
+	      have_multiple_params = false;
 	      interpolate_string_with_args(s);
 	    }
 	    else
@@ -2259,8 +2259,8 @@ void token::next()
 	  symbol s = read_long_escape_parameters(WITH_ARGS);
 	  if (s.is_null() || s.is_empty())
 	    break;
-	  if (have_string_arg) {
-	    have_string_arg = 0;
+	  if (have_multiple_params) {
+	    have_multiple_params = false;
 	    nm = composite_glyph_name(s);
 	  }
 	  else {

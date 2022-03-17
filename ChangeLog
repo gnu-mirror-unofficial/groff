@@ -1,3 +1,12 @@
+2022-03-17  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[troff]: Trivially refactor.
+
+	* src/roff/troff/input.cpp: Rename global variable
+	`have_string_arg` to `have_multiple_params` and demote it from
+	an integer to a Boolean.  Assign Boolean literals to it.
+	(read_long_escape_parameters, get_copy, token::next): Do it.
+
 2022-03-16  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[tbl]: Fix Savannah #62191.
