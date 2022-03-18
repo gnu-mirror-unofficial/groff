@@ -10,7 +10,7 @@
 	  invalid_warning    -> emit_invalid_utf8_warning
 	  incomplete_warning -> emit_incomplete_utf8_warning
 	Rename `expected_bytes` to `expected_byte_count`.  Except for
-	the the debugging flag, these are all members of `struct
+	the debugging flag, these are all members of `struct
 	conversion`.
 	(get_tag_lines): Migrate to `warning()`.
 	(detect_file_encoding): Migrate to `error()` and `fatal()`, as
@@ -307,11 +307,11 @@
 	been wrong for a long time; we've had it in tty.tmac since James
 	Clark put it there in 1992.)  Recast and tighten wording.  Drop
 	the word "horizontal"; there is no vertical page offset (as
-	such) in *roff.  Drop hand-waving about unexpected results with
-	a description of the formatter's behavior.  Dcoument request
-	behavior without an argument before getting into the weeds (and
-	CSTR #54 errata).  Migrate terminology from "scaling indicator"
-	to "scaling unit".
+	such) in *roff.  Replace hand-waving about unexpected results
+	with a description of the formatter's behavior.  Dcoument
+	request behavior without an argument before getting into the
+	weeds (and CSTR #54 errata).  Migrate terminology from "scaling
+	indicator" to "scaling unit".
 
 	Fixes <https://savannah.gnu.org/bugs/?58035>.
 
