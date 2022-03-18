@@ -1,3 +1,24 @@
+2022-03-18  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[preconv]: Trivially refactor.
+
+	* src/preproc/preconv/preconv.cpp: Use diagnostic message
+	functions from libgroff where possible.  Explain in a comment
+	why we don't use `debug()`.  Boolify and rename some variables,
+	and use Boolean literals to assign to them.
+	  debug_flag         -> is_debugging
+	  invalid_warning    -> emit_invalid_utf8_warning
+	  incomplete_warning -> emit_incomplete_utf8_warning
+	Rename `expected_bytes` to `expected_byte_count`.  Except for
+	the the debugging flag, these are all members of `struct
+	conversion`.
+	(get_tag_lines): Migrate to `warning()`.
+	(detect_file_encoding): Migrate to `error()` and `fatal()`, as
+	appropriate.
+	(utf8::invalid, utf8::incomplete, get_tag_lines): Don't break a
+	line in the middle of a diagnostic; doing so frustrates grepping
+	and necessarily makes an assumption about the terminal width.
+
 2022-03-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[troff]: Trivially refactor.
