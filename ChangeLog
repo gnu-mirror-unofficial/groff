@@ -1,3 +1,16 @@
+2022-03-19  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	Drop ditroff(7) document.  It says nothing that is not covered
+	elsewhere.
+
+	* man/ditroff.7.man: Delete.
+	* doc/doc.am (GROFF_MAN_PAGES):
+	* man/man.am (man7_MANS, EXTRA_DIST): Stop processing, shipping.
+	* src/roff/groff/groff.1.man: Drop cross reference to it.
+	* NEWS: Add item.
+
+	Fixes <https://savannah.gnu.org/bugs/?61817>.
+
 2022-03-18  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[preconv]: Trivially refactor.
