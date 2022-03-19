@@ -287,7 +287,7 @@ that is different versions of basically the same font.
 During install a
 .I Foundry
 file controls where fonts are found and builds
-.B groff
+.I groff
 fonts from the files it discovers on your system.
 .
 .
@@ -313,7 +313,9 @@ This code can be used with the
 escape sequence in
 .B troff
 to select the character,
-even if the character does not have a groff name.
+even if the character does not have a
+.I groff
+name.
 .
 Every character in the font file must exist in the PostScript font, and
 the widths given in the font file must match the widths used
@@ -376,7 +378,9 @@ fields must be separated by tabs
 allowed);
 .I filename
 is searched for using the same mechanism that is used
-for groff font metric files.
+for
+.I groff
+font metric files.
 .
 The
 .I download
@@ -736,7 +740,7 @@ Many of the other
 commands are already available in other macro packages.
 .LP
 These commands are implemented with
-.B groff
+.I groff
 X commands:-
 .LP
 .TP
@@ -1343,7 +1347,9 @@ as a step-by-step font installation guide for
 .BR gropdf .
 .
 .IP \(bu
-Convert your font to something groff understands.
+Convert your font to something
+.I groff
+understands.
 .
 This is either a PostScript Type\~1 font in either PFA or PFB,
 together with an AFM file.
@@ -1361,7 +1367,9 @@ A PFB file has this also in the first line, but the string is
 preceded with some binary bytes.
 .
 .IP \(bu
-Convert the AFM file to a groff font description file with the
+Convert the AFM file to a
+.I groff
+font description file with the
 .MR afmtodit @MAN1EXT@
 program.
 .
@@ -1373,7 +1381,8 @@ afmtodit Foo\-Bar\-Bold.afm map/textmap FBB
 .RE
 .
 .IP
-which converts the metric file \[oq]Foo\-Bar\-Bold.afm\[cq] to the groff
+which converts the metric file \[oq]Foo\-Bar\-Bold.afm\[cq] to the
+.I groff
 font \[oq]FBB\[cq].
 .
 If you have a font family which comes with normal, bold, italic, and
@@ -1383,13 +1392,19 @@ bold italic faces, it is recommended to use the letters
 .BR I ,
 and
 .BR BI ,
-respectively, as postfixes in the groff font names to make groff's
+respectively, as postfixes in the
+.I groff font names to make
+.IR groff 's
 \[oq].fam\[cq] request work.
 .
-An example is groff's built-in Times-Roman font: The font family
+An example is
+.IR groff 's
+built-in Times-Roman font: The font family
 name is
 .BR T ,
-and the groff font names are
+and the
+.I groff
+font names are
 .BR TR ,
 .BR TB ,
 .BR TI ,
@@ -1397,14 +1412,20 @@ and
 .BR TBI .
 .
 .IP \(bu
-Install both the groff font description files and the fonts in a
-\[oq]devpdf\[cq] subdirectory of the font path which groff finds.
+Install both the
+.I groff
+font description files and the fonts in a
+\[oq]devpdf\[cq] subdirectory of the font path which
+.I groff
+finds.
 .
 See section \[lq]Environment\[rq] in
 .MR @g@troff @MAN1EXT@
 for the actual value of the font path.
 .
-Note that groff doesn't use the AFM files (but it is a good idea to
+Note that
+.I groff
+doesn't use the AFM files (but it is a good idea to
 store them anyway).
 .
 .IP \(bu
