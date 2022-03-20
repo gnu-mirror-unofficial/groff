@@ -93,6 +93,46 @@ modified such that they display diagnostic messages.
 .
 .
 .\" ====================================================================
+.SH Problems
+.\" ====================================================================
+.
+Because
+.B trace.tmac
+wraps the
+.B .de
+request (and its cousins), macro arguments are expanded one level more.
+.
+This causes problems if an argument contains four backslashes or more
+to prevent too early expansion of the backslash.
+.
+For example, this macro call
+.
+.IP
+.EX
+\&.foo \e\e\e\en[bar]
+.EE
+.
+.
+.P
+normally passes \[oq]\e\en[bar]\[cq] to macro \[oq].foo\[cq], but with
+the redefined
+.B .de
+request it passes \[oq]\en[bar]\[cq] instead.
+.
+.
+.P
+The solution to this problem is to use groff's
+.B \eE
+escape which is an escape character not interpreted in copy mode, for
+example
+.
+.IP
+.EX
+\&.foo \eEn[bar]
+.EE
+.
+.
+.\" ====================================================================
 .SH Example
 .\" ====================================================================
 .
@@ -205,46 +245,6 @@ was defined, no call of this macro is protocolled; on the other hand,
 the macro
 .I after
 is fully protocolled.
-.
-.
-.\" ====================================================================
-.SH Problems
-.\" ====================================================================
-.
-Because
-.B trace.tmac
-wraps the
-.B .de
-request (and its cousins), macro arguments are expanded one level more.
-.
-This causes problems if an argument contains four backslashes or more
-to prevent too early expansion of the backslash.
-.
-For example, this macro call
-.
-.IP
-.EX
-\&.foo \e\e\e\en[bar]
-.EE
-.
-.
-.P
-normally passes \[oq]\e\en[bar]\[cq] to macro \[oq].foo\[cq], but with
-the redefined
-.B .de
-request it passes \[oq]\en[bar]\[cq] instead.
-.
-.
-.P
-The solution to this problem is to use groff's
-.B \eE
-escape which is an escape character not interpreted in copy mode, for
-example
-.
-.IP
-.EX
-\&.foo \eEn[bar]
-.EE
 .
 .
 .\" ====================================================================
