@@ -220,9 +220,9 @@ comments.
 .
 .IP
 Add\~8 to write
-.B %!PS-Adobe-2.0
+.B %!PS\-Adobe\-2.0
 rather than
-.B %!PS-Adobe-3.0
+.B %!PS\-Adobe\-3.0
 as the first line of the PostScript output;
 this is needed when using Sun's Newsprint with a printer that requires
 page reversal.
@@ -541,7 +541,7 @@ for example by beginning with the following lines.
 .
 .RS
 .EX
-%!PS-Adobe-3.0 Resource-Font
+%!PS\-Adobe\-3.0 Resource\-Font
 %%DocumentNeededResources: font Garamond
 %%EndComments
 %%IncludeResource: font Garamond
@@ -1270,7 +1270,7 @@ produces an EPS file.
 groff \-P\-b16 "$1" > "$1".ps
 gs \-dNOPAUSE \-sDEVICE=bbox \-\- "$1".ps 2> "$1".bbox
 sed \-e "/\[ha]%%Orientation/r $1.bbox" \[rs]
-    \-e "/\[ha]%!PS-Adobe-3.0/s/$/ EPSF-3.0/" "$1".ps > "$1".eps
+    \-e "/\[ha]%!PS\-Adobe\-3.0/s/$/ EPSF\-3.0/" "$1".ps > "$1".eps
 rm "$1".ps "$1".bbox
 .EE
 .RE
@@ -1395,7 +1395,7 @@ A PFA file begins as follows.
 .RS
 .RS \" We need two RS calls to get inboard of the paragraph indentation.
 .EX
-%!PS-AdobeFont-1.0:
+%!PS\-AdobeFont\-1.0:
 .EE
 .RE
 .
@@ -1406,7 +1406,7 @@ A Type\~42 font file begins as follows.
 .
 .RS \" We need two RS calls to get inboard of the paragraph indentation.
 .EX
-%!PS-TrueTypeFont
+%!PS\-TrueTypeFont
 .EE
 .RE
 .
