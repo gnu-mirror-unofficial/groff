@@ -1013,11 +1013,14 @@ The foreground color of the cell contents.
 The font family for the table.
 .
 .CI name
-is one of the groff font families, for example
+is a
+.I groff
+font familiy identifier,
+such as
 .CR A
-for the AvantGarde fonts or
+for Avant Garde or
 .CR HN
-for Helvetica-Narrow.
+for Helvetica Narrow.
 .
 .XDEF
 The font family found before the table (string
@@ -1234,13 +1237,15 @@ and for missing
 .CR ETB
 macros (table not closed).
 .
-You can append this macro
-to the \[lq]end\[rq] macro of your document's main macro package.
+You can call this macro by appending it the to end-of-input macro of
+the main,
+or \[lq]full-service\[rq],
+macro package your document uses.
 .
-For example:
+For example,
+try
 .
 .
-.PP
 .RS
 .EX
 \&.am pg@end\-text
@@ -1249,11 +1254,9 @@ For example:
 .EE
 .RE
 .
-.
-.PP
-If you use the
+if you use the
 .I ms
-macro package.
+package.
 .
 .
 .\" ====================================================================
