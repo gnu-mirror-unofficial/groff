@@ -34,10 +34,10 @@ getopts('a:cd:e:f:i:kmno:svx');
 our ($opt_a, $opt_c, $opt_d, $opt_e, $opt_f, $opt_i, $opt_k,
      $opt_m, $opt_n, $opt_o, $opt_s, $opt_v, $opt_x);
 
-my $afmtodit_version = "GNU afmtodit (groff) version @VERSION@\n";
+my $afmtodit_version = "GNU afmtodit (groff) version @VERSION@";
 
 if ($opt_v) {
-    print "$afmtodit_version";
+    print "$afmtodit_version\n";
     exit 0;
 }
 
