@@ -242,15 +242,15 @@ doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL)
 
 doc/meintro.me: $(doc_srcdir)/meintro.me.in
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $< >$@
+	&& $(DOC_SED) $? >$@
 
 doc/meintro_fr.me: $(doc_srcdir)/meintro_fr.me.in
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $< >$@
+	&& $(DOC_SED) $? >$@
 
 doc/meref.me: $(doc_srcdir)/meref.me.in
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $< >$@
+	&& $(DOC_SED) $? >$@
 
 # The me(7) intro French translation gets its own target rule because it
 # needs the "-mfr" option.

@@ -1,5 +1,12 @@
 2022-03-22  Ingo Schwarze <schwarze@openbsd.org>
 
+	* doc/doc.am: fix non-portable syntax in the doc/me*.me targets:
+	POSIX does not define the meaning of $< in non-suffix rules, so
+	use the portable $? instead.  This is adequate here because each
+	of these three rules has exactly one prerequisite.
+
+2022-03-22  Ingo Schwarze <schwarze@openbsd.org>
+
 	* doc/doc.am: fix non-portable syntax in the groff-man-pages.*
 	targets by using DOC_GROFF_ONLY rather than DOC_GROFF in order
 	to not use $< outside a suffix rule; DOC_GROFF functionality is
