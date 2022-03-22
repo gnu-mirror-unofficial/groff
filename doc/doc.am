@@ -254,7 +254,8 @@ doc/meref.me: $(doc_srcdir)/meref.me.in
 
 # The me(7) intro French translation gets its own target rule because it
 # needs the "-mfr" option.
-doc/meintro_fr.ps: doc/meintro_fr.me
+SUFFIXES += _fr.me _fr.ps
+_fr.me._fr.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -k -Tps -me -mfr >$@
 
