@@ -1,3 +1,10 @@
+2022-03-22  Ingo Schwarze <schwarze@openbsd.org>
+
+	* doc/doc.am: fix non-portable syntax in the groff-man-pages.*
+	targets by using DOC_GROFF_ONLY rather than DOC_GROFF in order
+	to not use $< outside a suffix rule; DOC_GROFF functionality is
+	not needed here in the first place.
+
 2022-03-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an.tmac:

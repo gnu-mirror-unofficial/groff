@@ -229,13 +229,13 @@ man-clean:
 	$(RM) $(GROFF_MAN_PAGES_ALL)
 
 doc/groff-man-pages.pdf: $(GROFF_MAN_PAGES_ALL)
-	$(GROFF_V)$(DOC_GROFF) -Tpdf -P-e -mandoc -rC1 \
+	$(GROFF_V)$(DOC_GROFF_ONLY) -Tpdf -P-e -mandoc -rC1 \
 	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
 
 doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL)
-	$(GROFF_V)$(DOC_GROFF) -Tutf8 -mandoc \
+	$(GROFF_V)$(DOC_GROFF_ONLY) -Tutf8 -mandoc \
 	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
