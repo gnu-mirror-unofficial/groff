@@ -4954,25 +4954,6 @@
 
 2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	Update .version file more aggressively.
-
-	* Makefile.am: Regenerate a temporary version string file on
-	every build, but update the real version file's mtime only if
-	its contents change.
-	(.version.tree): New target.  Mark it phony, populating it with
-	`$(VERSION)` with every `make` if the `.tarball-version` file
-	{created by `dist-hook`} doesn't exist.
-	($(top_srcdir)/.version): Depend on foregoing target.  If the
-	tarball version file and the target do not exist, copy `.tree`
-	file into place.  Compare this file with `.tree` file; if they
-	differ, move the `.tree` file to this one.
-	(MOSTLYCLEANFILES): Add `.version.tree`.
-
-	Fixes <https://savannah.gnu.org/bugs/?61052>.  Thanks to Bjarni
-	Ingi Gislason for the report.
-
-2021-08-21  G. Branden Robinson <g.branden.robinson@gmail.com>
-
 	[libgroff]: Rename font class member variable.
 
 	* src/include/font.h (font class): Rename `unscaled_charwidths`

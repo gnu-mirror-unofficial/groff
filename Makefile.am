@@ -924,17 +924,8 @@ SUFFIXES += .man
 # Version files - see script 'build-aux/git-gen-version'
 EXTRA_DIST += $(top_srcdir)/.version
 BUILT_SOURCES += $(top_srcdir)/.version
-# Regenerate a temporary version string file on every build, but update
-# the real version file's mtime only if its contents change.
-.PHONY: .version.tree
-.version.tree:
-	@test -f $(distdir)/.tarball-verion || echo $(VERSION) > $@
-$(top_srcdir)/.version: .version.tree
-	@if ! test -f $(distdir)/.tarball-version; then \
-	  test -f $@ || cp .version.tree $@; \
-	  cmp -s .version.tree $@ || cp .version.tree $@; \
-	fi
-MOSTLYCLEANFILES += .version.tree
+$(top_srcdir)/.version:
+	echo $(VERSION) > $@-t && mv $@-t $@
 dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
 
