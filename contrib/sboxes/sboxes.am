@@ -36,8 +36,8 @@ SBOXES_EXAMPLEFILES = $(sboxes_srcdir)/msboxes.ms.in
 if BUILD_EXAMPLES
 sboxesexampledir = $(exampledir)/sboxes
 dist_sboxesexample_DATA = $(SBOXES_EXAMPLEFILES)
-SBOXES_PROCESSEDEXAMPLEFILES = contrib/sboxes/msboxes.ms \
-    contrib/sboxes/msboxes.pdf
+SBOXES_PROCESSEDEXAMPLEFILES = $(sboxes_builddir)/msboxes.ms \
+    $(sboxes_builddir)/msboxes.pdf
 sboxesprocessedexampledir = $(exampledir)/sboxes
 nodist_sboxesprocessedexample_DATA = $(SBOXES_PROCESSEDEXAMPLEFILES)
 else
