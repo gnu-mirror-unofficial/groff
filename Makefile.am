@@ -921,7 +921,7 @@ SUFFIXES += .man
 	     $< \
 	     >$@
 
-# Version files - see script 'build-aux/git-gen-version'
+# Version files - see script 'build-aux/git-version-gen'
 EXTRA_DIST += $(top_srcdir)/.version
 BUILT_SOURCES += $(top_srcdir)/.version
 $(top_srcdir)/.version:
