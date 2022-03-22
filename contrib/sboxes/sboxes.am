@@ -63,7 +63,7 @@ $(sboxes_builddir)/msboxes.ms: $(SBOXES_EXAMPLEFILES) $(sboxesnotquine)
 	$(AM_V_GEN)mv $@.tmp $@
 
 $(sboxes_builddir)/msboxes.pdf: $(sboxes_builddir)/msboxes.ms
-	$(GROFF_V)$(DOC_GROFF) -M$(sboxes_srcdir) -ms -msboxes -Tpdf \
+	$(GROFF_V)$(DOC_GROFF_ONLY) -M$(sboxes_srcdir) -ms -msboxes -Tpdf \
 	  $(sboxes_builddir)/msboxes.ms > $@
 
 uninstall_groffdirs: uninstall_sboxes
