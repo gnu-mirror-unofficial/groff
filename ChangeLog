@@ -1,5 +1,12 @@
 2022-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor.  Add explicit dependencies of compiled
+	man page documents on preprocessors needed to generate them.  In
+	their target rules, explicitly use groff's preprocessor options,
+	freeing us up to simplify the `DOC_GROFF_ONLY` macro.
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Rationalize dependencies.  Drop dependency of
 	`PROCESSEDEXAMPLEFILES` and `PROCESSEDDOCFILES` on expansion of
 	`hdtbltmac_DATA`, because nothing in this directory uses the
