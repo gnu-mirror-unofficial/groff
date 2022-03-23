@@ -21,13 +21,11 @@
 mom_srcdir = $(top_srcdir)/contrib/mom
 
 # pdfmom command used to generated .pdf
-MOM_TFLAG = -M$(mom_srcdir)
-MOM_KFLAG = -k -p -e -t
 MOMPDFMOM = \
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
   PDFMOM_BIN_PATH="$(top_builddir)" \
-  $(PDFMOMBIN) $(FFLAG) $(TFLAG) $(MOM_TFLAG) $(MOM_KFLAG)
+  $(PDFMOMBIN) $(FFLAG) $(MFLAG) -M$(mom_srcdir) -k -p -e -t
 
 man7_MANS += contrib/mom/groff_mom.7
 

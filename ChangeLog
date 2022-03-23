@@ -22,6 +22,13 @@
 
 2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* Makefile.am: Rename `TFLAG` macro, which means "tmac flag", to
+	`MFLAG`, because it expands to `-M` options to groff, not the
+	`-T` option, which can be bewildering.
+	* doc/doc.am (DOC_GROFF): Update expansion site.
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Rename `DOC_GROFF_ONLY` to `DOC_GROFF`.
 
 2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>

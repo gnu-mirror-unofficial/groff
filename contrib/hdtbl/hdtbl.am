@@ -23,12 +23,10 @@ hdtbl_srcdir = $(top_srcdir)/contrib/hdtbl
 man7_MANS += contrib/hdtbl/groff_hdtbl.7
 
 # Groff command used to generate .ps files
-HDTBL_TFLAG = -M$(hdtbl_srcdir)
-HDTBL_PFLAG=-t -p -e -U
 HDTBLGROFF = \
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
-  $(GROFFBIN) $(FFLAG) $(TFLAG) $(HDTBL_TFLAG) $(HDTBL_PFLAG)
+  $(GROFFBIN) $(FFLAG) $(MFLAG) -M$(hdtbl_srcdir) -t -p -e -U
 
 HDTBLTMACFILES = \
   contrib/hdtbl/hdtbl.tmac \
