@@ -343,6 +343,7 @@ if BUILD_HTML
 	  for f in $(HTMLDOCIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
+	  rmdir  $(doc_builddir)/$(imagedir) || :; \
 	fi
 endif
 	if test $(top_builddir) != $(top_srcdir); then \
@@ -361,6 +362,7 @@ if BUILD_HTMLEXAMPLES
 	  for f in $(HTMLEXAMPLEIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
+	  rmdir  $(doc_builddir)/$(imagedir) || :; \
 	fi
 endif
 
