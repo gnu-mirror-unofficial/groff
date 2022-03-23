@@ -1,5 +1,14 @@
 2022-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor.  Relocate "doc/grnexampl.ps" target to
+	group it with other me(7) documents.  Put addition of
+	"doc/examples.stamp" to `MOSTLYCLEANFILES` adjacent to its
+	target rule.  Relocate same rule so that it precedes the target
+	depending on it (make(1) might not benefit from this, but human
+	readers can).
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Refactor.
 	(DOC_GROFF_ONLY): Drop preprocessor options from groff command.
 	This macro is now, simply, a way to run the in-tree groff: no

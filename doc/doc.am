@@ -145,8 +145,6 @@ imagedir = img
 htmldocimagedir = $(htmldocdir)/img
 exampleimagedir = $(exampledir)/img
 
-MOSTLYCLEANFILES += doc/examples.stamp
-
 EXTRA_DIST += \
   doc/txi-en.tex
 
@@ -247,6 +245,11 @@ doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL) eqn pic tbl
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
 
+doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
+  grn eqn
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF_ONLY) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
+
 $(PROCESSEDDOCFILES_PS): \
   $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
 
@@ -320,6 +323,13 @@ $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(prefixexecbin_PROGRAMS) \
   $(dist_tmac_DATA) $(nodist_tmac_DATA)
 
+MOSTLYCLEANFILES += doc/examples.stamp
+doc/examples.stamp: doc/groff.css
+	$(AM_V_at)$(MKDIR_P) $(doc_builddir)
+	$(AM_V_at)test -f $(doc_builddir)/groff.css || \
+	  cp $(doc_srcdir)/groff.css $(doc_builddir)
+	$(AM_V_at)echo timestamp > $@
+
 doc/pic.html: tmac/www.tmac
 doc/pic.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/pic.html: doc/examples.stamp
@@ -333,12 +343,6 @@ doc/pic.html: $(doc_srcdir)/pic.ms
 	  $(doc_srcdir)/pic.ms \
 	   | $(DOC_GROFF_ONLY) -pet -P-Ipic -P-D$(imagedir) -P-jpic \
 	                       -Thtml -ms > pic.html
-
-doc/examples.stamp: doc/groff.css
-	$(AM_V_at)$(MKDIR_P) $(doc_builddir)
-	$(AM_V_at)test -f $(doc_builddir)/groff.css || \
-	  cp $(doc_srcdir)/groff.css $(doc_builddir)
-	$(AM_V_at)echo timestamp > $@
 
 doc/webpage.html: tmac/www.tmac
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
@@ -357,11 +361,6 @@ doc/webpage.html: \
 	   | $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
 	     -P-jwebpage -P-nrb -P-Iwebpage -P-D$(imagedir) -Thtml -ms \
 	     > webpage.html
-
-doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
-  grn eqn
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
 
 # Note that we remove groff.css only if out-of-source build tree
 mostlyclean-local: mostlyclean_doc
