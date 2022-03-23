@@ -13,6 +13,15 @@
 
 2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor.  Drop ghastly hack used to get file
+	names into troff diagnostics when reading from standard input.
+	We've refactored so that it no longer does, making the hack
+	unnecessary.  For the same reason, no users of the `DOC_GROFF`
+	macro remain, so delete it.  Add comments to explain what
+	`DOC_SED` and `DOC_GROFF_ONLY` are for.
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Refactor.
 	(doc/pic.html, doc/webpage.html): Drop indirection of source
 	document through `DOC_SED` macro.  It was not necessary since
