@@ -120,6 +120,7 @@ SUFFIXES += .roff .in .ps
 	     -dfontpath=$(top_srcdir)/font \
 	     -dsopath=$(hdtbl_srcdir)/ \
 	     -mhdtbl $< >$@
+
 .in.roff:
 	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
 	&& sed -e "s|[@]fontdir[@]|$(fontdir)|" \
