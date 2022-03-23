@@ -33,7 +33,7 @@ DOC_SED = $(SED) \
 # It includes flags to locate its tmac and device/font description
 # directories and to produce verbose diagnostics in the event of syntax
 # or formatting problems.
-DOC_GROFF_ONLY=\
+DOC_GROFF=\
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
   $(GROFFBIN) -I$(abs_top_builddir) -M $(doc_srcdir) $(TFLAG) $(FFLAG) \
@@ -228,13 +228,13 @@ man-clean:
 
 # Many pages use tbl, a few use eqn, and soelim(1) uses pic.
 doc/groff-man-pages.pdf: $(GROFF_MAN_PAGES_ALL) eqn pic tbl
-	$(GROFF_V)$(DOC_GROFF_ONLY) -pet -Tpdf -P-e -mandoc -rC1 \
+	$(GROFF_V)$(DOC_GROFF) -pet -Tpdf -P-e -mandoc -rC1 \
 	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
 
 doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL) eqn pic tbl
-	$(GROFF_V)$(DOC_GROFF_ONLY) -pet -Tutf8 -mandoc \
+	$(GROFF_V)$(DOC_GROFF) -pet -Tutf8 -mandoc \
 	  -rCHECKSTYLE=3 $(GROFF_MAN_PAGES1) \
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
@@ -242,7 +242,7 @@ doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL) eqn pic tbl
 doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
   grn eqn
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
+	&& $(DOC_GROFF) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
 
 $(PROCESSEDDOCFILES_PS): \
   $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
@@ -287,30 +287,30 @@ SUFFIXES += .me.in .me
 
 .me.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -Tps -me $< >$@
+	&& $(DOC_GROFF) -Tps -me $< >$@
 
 doc/meintro_fr.ps: doc/meintro_fr.me preconv
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -k -Tps -me -mfr $< >$@
+	&& $(DOC_GROFF) -k -Tps -me -mfr $< >$@
 
 doc/ms.ps: $(doc_srcdir)/ms.ms
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -t -Tps -ms $(doc_srcdir)/ms.ms >$@
+	&& $(DOC_GROFF) -t -Tps -ms $(doc_srcdir)/ms.ms >$@
 
 doc/pic.ps: $(doc_srcdir)/pic.ms eqn pic tbl
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -pet -Tps -ms $(doc_srcdir)/pic.ms >$@
+	&& $(DOC_GROFF) -pet -Tps -ms $(doc_srcdir)/pic.ms >$@
 
 doc/webpage.ps: $(DOC_GNU_EPS) tmac/www.tmac tbl
 doc/webpage.ps: $(doc_srcdir)/webpage.ms
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF_ONLY) -I $(doc_builddir) -I $(doc_srcdir) -Tps \
-	  -t -Tps -ms -mwww $(doc_srcdir)/webpage.ms >$@
+	&& $(DOC_GROFF) -I $(doc_srcdir) -I $(doc_builddir) -t -Tps \
+	  -ms -mwww $(doc_srcdir)/webpage.ms >$@
 
 # We have no "generic" ms documents.
 #.ms.ps:
 #	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-#	&& $(DOC_GROFF_ONLY) -Tps -ms $< >$@
+#	&& $(DOC_GROFF) -Tps -ms $< >$@
 
 $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
@@ -332,7 +332,7 @@ doc/pic.html: $(devhtmlfont_DATA)
 doc/pic.html: $(doc_srcdir)/pic.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
-	&& $(DOC_GROFF_ONLY) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
+	&& $(DOC_GROFF) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
 	  $(doc_srcdir)/pic.ms > pic.html
 
 doc/webpage.html: tmac/www.tmac
@@ -344,7 +344,7 @@ doc/webpage.html: $(DOC_GNU_EPS) $(doc_srcdir)/groff.css
 doc/webpage.html: $(doc_srcdir)/webpage.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
-	&& $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
+	&& $(DOC_GROFF) -t -I $(doc_builddir) -I $(doc_srcdir) \
 	  -P-jwebpage -P-nrb -P-Iwebpage -P-Dimg -Thtml -ms \
 	  $(doc_srcdir)/webpage.ms > webpage.html
 
