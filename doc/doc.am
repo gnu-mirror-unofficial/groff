@@ -28,7 +28,8 @@ DOC_SED = $(SED) \
 DOC_GROFF_ONLY=\
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
-  $(GROFFBIN) -M $(doc_srcdir) $(TFLAG) $(FFLAG) -pet -ww -b
+  $(GROFFBIN) -I$(abs_top_builddir) -M $(doc_srcdir) $(TFLAG) $(FFLAG) \
+    -ww -b
 
 # This image file is used by several documents in the groff source tree.
 DOC_GNU_EPS=doc/gnu.eps
@@ -330,7 +331,7 @@ doc/pic.html: $(doc_srcdir)/pic.ms
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/pic.ms$$nl" \
 	  $(doc_srcdir)/pic.ms \
-	   | $(DOC_GROFF_ONLY) -P-Ipic -P-D$(imagedir) -P-jpic \
+	   | $(DOC_GROFF_ONLY) -pet -P-Ipic -P-D$(imagedir) -P-jpic \
 	                       -Thtml -ms > pic.html
 
 doc/examples.stamp: doc/groff.css
@@ -353,7 +354,7 @@ doc/webpage.html: \
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
 	  $(doc_srcdir)/webpage.ms \
-	   | $(DOC_GROFF_ONLY) -I $(doc_builddir) -I $(doc_srcdir) \
+	   | $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
 	     -P-jwebpage -P-nrb -P-Iwebpage -P-D$(imagedir) -Thtml -ms \
 	     > webpage.html
 

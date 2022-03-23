@@ -1,5 +1,15 @@
 2022-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor.
+	(DOC_GROFF_ONLY): Drop preprocessor options from groff command.
+	This macro is now, simply, a way to run the in-tree groff: no
+	assumptions about preprocessors, macro packages, or output
+	device are made.
+	(doc/pic.html, doc/webpage.html): Add only necessary
+	preprocessor options after expansion of `DOC_GROFF_ONLY`.
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Refactor.  Add explicit dependencies of compiled
 	man page documents on preprocessors needed to generate them.  In
 	their target rules, explicitly use groff's preprocessor options,
