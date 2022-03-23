@@ -1,3 +1,16 @@
+2022-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/doc.am: Rationalize dependencies.  Drop dependency of
+	`PROCESSEDEXAMPLEFILES` and `PROCESSEDDOCFILES` on expansion of
+	`hdtbltmac_DATA`, because nothing in this directory uses the
+	hdtbl package.  Move dep of same expansions on "gnu.eps" to
+	"doc/webpage.html", which actually uses it.  Put the numerous
+	dependencies of "doc/pic.html" and "doc/webpage.html" in a
+	parallel ordering so that they are easier for humans to
+	evaluate.  These targets' dependencies on `bin_PROGRAMS` and
+	`prefixexecbin_PROGRAMS` is overkill and should be reviewed at a
+	later date.
+
 2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Refactor use of target and suffix rules.

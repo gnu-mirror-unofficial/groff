@@ -316,14 +316,14 @@ doc/webpage.ps: $(doc_srcdir)/webpage.ms
 $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
   $(prefixexecbin_PROGRAMS) \
-  $(hdtbltmac_DATA) \
   $(dist_tmac_DATA) $(nodist_tmac_DATA)
 
 doc/pic.html: tmac/www.tmac
 doc/pic.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/pic.html: doc/examples.stamp
 doc/pic.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
-doc/pic.html: $(doc_srcdir)/pic.ms $(devhtmlfont_DATA)
+doc/pic.html: $(devhtmlfont_DATA)
+doc/pic.html: $(doc_srcdir)/pic.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
@@ -338,9 +338,11 @@ doc/examples.stamp: doc/groff.css
 	  cp $(doc_srcdir)/groff.css $(doc_builddir)
 	$(AM_V_at)echo timestamp > $@
 
+doc/webpage.html: tmac/www.tmac
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
-doc/webpage.html: doc/examples.stamp $(devhtmlfont_DATA)
+doc/webpage.html: doc/examples.stamp
 doc/webpage.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
+doc/webpage.html: $(devhtmlfont_DATA)
 doc/webpage.html: \
   $(doc_srcdir)/webpage.ms \
   $(DOC_GNU_EPS) \
