@@ -62,14 +62,15 @@ GENERATEDDOCFILES = \
   doc/meintro_fr.me \
   doc/meref.me
 # Files generated in the build tree
-PROCESSEDDOCFILES = \
-  doc/groff-man-pages.pdf \
-  doc/groff-man-pages.utf8.txt \
+PROCESSEDDOCFILES_PS = \
   doc/meref.ps \
   doc/meintro.ps \
   doc/meintro_fr.ps \
   doc/ms.ps \
   doc/pic.ps
+PROCESSEDDOCFILES = $(PROCESSEDDOCFILES_PS) \
+  doc/groff-man-pages.pdf \
+  doc/groff-man-pages.utf8.txt
 
 otherdocdir = $(docdir)
 dist_otherdoc_DATA = $(DOCFILES) $(GENERATEDDOCFILES)
@@ -224,7 +225,7 @@ GROFF_MAN_PAGES_ALL = $(GROFF_MAN_PAGES1) $(GROFF_MAN_PAGES2) \
 # This is a convenience target for (re-)generating all the man pages.
 man-all: $(GROFF_MAN_PAGES_ALL)
 
-# ...and for clearning them.
+# ...and for cleaning them.
 man-clean:
 	$(RM) $(GROFF_MAN_PAGES_ALL)
 
@@ -252,6 +253,9 @@ doc/meref.me: $(doc_srcdir)/meref.me.in
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_SED) $? >$@
 
+$(PROCESSEDDOCFILES_PS): \
+  $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
+
 # The me(7) intro French translation gets its own target rule because it
 # needs the "-mfr" option.
 SUFFIXES += _fr.me _fr.ps
@@ -272,7 +276,6 @@ $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
   $(prefixexecbin_PROGRAMS) \
   gnu.eps \
-  $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA) \
   $(hdtbltmac_DATA) \
   $(dist_tmac_DATA) $(nodist_tmac_DATA)
 

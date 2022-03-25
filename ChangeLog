@@ -4,6 +4,20 @@
 
 2022-03-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Add new macro `PROCESSEDDOCFILES_PS` to isolate
+	names of targets in PostScript format.  Expand this macro in
+	definition of `PROCESSEDDOCFILES` and use it to move PostScript
+	font description file dependencies of the latter and
+	`PROCESSEDEXAMPLEFILES` to the former.  (At present, the
+	dependency might seem superfluous, since those files are in the
+	source distribution, but it's conceivable that in the near
+	future, they will be produced at build time from Adobe font
+	metric files; see font/devps/generate/Makefile).  The "pic.html"
+	and "webpage.html" targets already had such a dependency because
+	of the way grohtml (pre-grohtml) works.
+
+2022-03-23  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Create target rule for "doc/grnexampl.ps" instead
 	of relying on a suffix rule.  Explicitly depend on grn and eqn
 	executables.  Produce output using their groff flags, "-ge".
