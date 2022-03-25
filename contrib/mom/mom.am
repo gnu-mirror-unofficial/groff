@@ -20,7 +20,7 @@
 
 mom_srcdir = $(top_srcdir)/contrib/mom
 
-# pdfmom command used to generated .pdf
+# pdfmom command used to generate .pdf
 MOMPDFMOM = \
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
@@ -142,7 +142,7 @@ MOSTLYCLEANFILES += \
   penguin.ps \
   penguin.pdf
 
-# Rule to generated .pdf files from .mom files
+# rule to generate .pdf files from .mom files
 SUFFIXES += .mom .pdf
 .mom.pdf:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
