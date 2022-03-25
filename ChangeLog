@@ -1,5 +1,13 @@
 2022-03-25  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* tmac/pdfpic.tmac (PDFPIC): Fix breakage when no temporary
+	directory environment variables are defined: actually use string
+	interpolation syntax in comparand to output comparison
+	operator.  Problem introduced by me in commits adc1999af and
+	24900cf6d, 15 February.
+
+2022-03-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* font/devX100-12/devX100-12.am:
 	* font/devX100/devX100.am:
 	* font/devX75-12/devX75-12.am:
