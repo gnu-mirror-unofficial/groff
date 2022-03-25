@@ -310,7 +310,10 @@ doc/webpage.html: \
 	   | $(DOC_GROFF_ONLY) -P-jwebpage -P-nrb -P-Iwebpage \
 	                       -P-D$(imagedir) -Thtml -ms > webpage.html
 
-doc/grnexmpl.ps: doc/grnexmpl.me doc/grnexmpl.g
+doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
+  grn eqn
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF_ONLY) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
 
 # Note that we remove groff.css only if out-of-source build tree
 mostlyclean-local: mostlyclean_doc
