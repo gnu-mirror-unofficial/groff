@@ -1,3 +1,14 @@
+2022-03-25  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* font/devX100-12/devX100-12.am:
+	* font/devX100/devX100.am:
+	* font/devX75-12/devX75-12.am:
+	* font/devX75/devX75.am: Fix in-tree build; expand `fontdir`
+	rather instead of `abs_top_builddir` Make macro when definining
+	Automake variable for generated artifacts.  Problem introduced
+	by me in commit 3c82cbbfe, 27 February.  Thanks to Robert
+	Goulding for the report.
+
 2022-03-22  Ingo Schwarze <schwarze@openbsd.org>
 
 	* doc/doc.am: delete redundant "SUFFIXES +=" line
