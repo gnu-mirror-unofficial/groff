@@ -30,7 +30,7 @@ wail () {
 # Regression-test Savannah #62124.  Ensure correct line numbers in
 # diagnostics on bibliography files.
 
-# Locate our test artifacts.
+# Locate directory containing our test artifacts.
 artifact_dir=
 
 for buildroot in . .. ../..

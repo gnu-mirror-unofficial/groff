@@ -28,9 +28,9 @@ wail () {
 }
 
 # Regression-test Savannah #60657.  Ensure data from a bibliographic
-# entry doesn't carry over to the next.
+# entry don't carry over to the next.
 
-# Locate our test artifacts.
+# Locate directory containing our test artifacts.
 artifact_dir=
 
 for buildroot in . .. ../..
