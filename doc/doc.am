@@ -28,8 +28,10 @@ DOC_SED = $(SED) \
 DOC_GROFF_ONLY=\
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
-  $(GROFFBIN) -I$(abs_top_builddir) -M $(doc_srcdir) \
-	$(TFLAG) $(FFLAG) -pet -ww -b
+  $(GROFFBIN) -M $(doc_srcdir) $(TFLAG) $(FFLAG) -pet -ww -b
+
+# This image file is used by several documents in the groff source tree.
+DOC_GNU_EPS=doc/gnu.eps
 
 # A dance is required to embed a literal newline inside a sed expression
 # inside a shell command executed as part of a Make target rule.
@@ -58,6 +60,7 @@ DOCFILES= \
   doc/pic.ms
 # Files that undergo a transformation prior to groff processing
 GENERATEDDOCFILES = \
+  $(DOC_GNU_EPS) \
   doc/meintro.me \
   doc/meintro_fr.me \
   doc/meref.me
@@ -142,7 +145,6 @@ exampleimagedir = $(exampledir)/img
 MOSTLYCLEANFILES += doc/examples.stamp
 
 EXTRA_DIST += \
-  doc/gnu.xpm \
   doc/txi-en.tex
 
 # Introduce variables to house the groff man pages.  We break the list
@@ -270,12 +272,11 @@ _fr.me._fr.ps:
 
 .ms.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -Tps -ms -mwww >$@
+	&& $(DOC_GROFF) -Tps -ms >$@
 
 $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
   $(prefixexecbin_PROGRAMS) \
-  gnu.eps \
   $(hdtbltmac_DATA) \
   $(dist_tmac_DATA) $(nodist_tmac_DATA)
 
@@ -298,20 +299,27 @@ doc/examples.stamp: doc/groff.css
 	  cp $(doc_srcdir)/groff.css $(doc_builddir)
 	$(AM_V_at)echo timestamp > $@
 
+doc/webpage.ps: $(DOC_GNU_EPS)
+doc/webpage.ps: doc/webpage.ms
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -I $(doc_builddir) -I $(doc_srcdir) -Tps -ms \
+	  -mwww >$@
+
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/webpage.html: doc/examples.stamp $(devhtmlfont_DATA)
 doc/webpage.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
 doc/webpage.html: \
   $(doc_srcdir)/webpage.ms \
-  gnu.eps \
+  $(DOC_GNU_EPS) \
   $(doc_srcdir)/groff.css
 	$(GROFF_V)$(MKDIR_P) doc \
 	&& cd $(doc_builddir) \
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
 	  $(doc_srcdir)/webpage.ms \
-	   | $(DOC_GROFF_ONLY) -P-jwebpage -P-nrb -P-Iwebpage \
-	                       -P-D$(imagedir) -Thtml -ms > webpage.html
+	   | $(DOC_GROFF_ONLY) -I $(doc_builddir) -I $(doc_srcdir) \
+	     -P-jwebpage -P-nrb -P-Iwebpage -P-D$(imagedir) -Thtml -ms \
+	     > webpage.html
 
 doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
   grn eqn
@@ -371,7 +379,7 @@ if BUILD_HTML
 endif
 
 install-data-hook: install_doc_examples
-install_doc_examples: gnu.eps
+install_doc_examples: $(DOC_GNU_EPS)
 if BUILD_EXAMPLES
 # Prefer gnu.eps in builddir over srcdir.
 	d=.; test -f "gnu.eps" || d=$(doc_srcdir); \
@@ -559,7 +567,7 @@ doc_html: doc/groff.html
 install-doc: install-pdf install-html
 
 distclean-local: clean_infodoc clean_otherdoc
-maintainer-clean-local: clean_infodoc clean_otherdoc
+maintainer-clean-local: clean_infodoc clean_otherdoc clean_maintdoc
 clean_infodoc:
 	-$(RM) $(doc_builddir)/groff.info*
 	-$(RM) $(doc_builddir)/groff.pdf
@@ -568,6 +576,8 @@ clean_infodoc:
 clean_otherdoc:
 	-cd $(doc_builddir) && \
 	  $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
+clean_maintdoc:
+	-$(RM) $(DOC_GNU_EPS)
 
 install-data-local: install_infodoc
 install_infodoc: doc/groff.info
@@ -610,11 +620,10 @@ uninstall-pdf:
 uninstall-html:
 	-$(RM) -r $(DESTDIR)$(htmldocdir)/groff.html.*
 
-# File used by contrib/hdtbl and contrib/pdfmark. It is distributed in
-# doc.eps. We try in priority to use the file in 'doc'.
+# An image of a gnu in enscapsulated PostScript is generated during the
+# build process if possible.
 EXTRA_DIST += doc/gnu.xpm
-MOSTLYCLEANFILES += gnu.eps
-gnu.eps:
+$(DOC_GNU_EPS): doc/gnu.xpm
 	$(AM_V_GEN)if test -f $(top_srcdir)/doc/gnu.eps; then \
 	  cp $(top_srcdir)/doc/gnu.eps . ; \
 	elif test -f $(top_builddir)/doc/gnu.eps; then \
@@ -636,12 +645,21 @@ gnu.eps:
 	  xpmtoppm $(top_srcdir)/doc/gnu.xpm | pnmdepth 15 \
 	    | $(pnmtops_nosetpage) -noturn -rle >$@ ; \
 	fi
+	$(AM_V_GEN)test -f $(top_builddir)/doc/gnu.eps
 
-# Copy gnu.eps in 'doc' directory
+# Provide a copy of the image in the distribution archive to accommodate
+# systems without a tool to generate it from an X pixmap.
 dist-hook: dist-gnueps
 dist-gnueps:
 	chmod u+w $(distdir)/doc
-	cp -f gnu.eps $(distdir)/doc
+	for d in $(doc_builddir) $(doc_srcdir); \
+	do \
+	  if [ -f "$$d"/$(DOC_GNU_EPS) ]; \
+	  then \
+	    cp -f "$$d"/$(DOC_GNU_EPS) $(distdir)/doc; \
+	  fi; \
+	  break; \
+	done
 
 
 # Local Variables:

@@ -19,15 +19,31 @@
 #
 
 groff="${abs_top_builddir:-.}/test-groff"
-gnu_eps="${abs_top_builddir:-.}/gnu.eps"
-gnu_pdf="${abs_top_builddir:-.}/gnu-fallback-pspic.pdf"
-gnu_fallback_eps="${abs_top_builddir:-.}/gnu-fallback-pspic.eps"
+# Give the output a name that won't collide with another test.
+gnu_pdf="${abs_top_builddir:-.}/doc/gnu-fallback-pspic.pdf"
 
 if ! command -v gs >/dev/null
 then
     echo "cannot locate 'gs' command" >&2
     exit 77 # skip
 fi
+
+# Locate directory containing our test artifacts.
+artifact_dir=
+
+for buildroot in . .. ../..
+do
+    d=$buildroot/doc
+    if [ -f $d/gnu.eps ]
+    then
+        artifact_dir=$d
+        gnu_eps=$artifact_dir/gnu.eps
+        break
+    fi
+done
+
+# If we can't find it, we can't test.
+test -z "$artifact_dir" && exit 77 # skip
 
 if [ -e "$gnu_pdf" ]
 then
@@ -51,7 +67,7 @@ fi
 test -z $fail \
     && printf '%s\n' "$input" | "$groff" -Tps -U -z || fail=YES
 
-rm -f "$gnu_pdf" "$gnu_fallback_eps"
+rm -f "$gnu_pdf"
 test -z $fail
 
 # vim:set ai et sw=4 ts=4 tw=72:

@@ -19,8 +19,8 @@
 #
 
 groff="${abs_top_builddir:-.}/test-groff"
-gnu_eps="${abs_top_builddir:-.}/gnu.eps"
-gnu_pdf="${abs_top_builddir:-.}/gnu.pdf"
+# Give the output a name that won't collide with another test.
+gnu_pdf="${abs_top_builddir:-.}/doc/gnu-no-choke-on-pdfinfo.pdf"
 
 # Regression-test Savannah #58206.
 
@@ -29,6 +29,23 @@ then
     echo "cannot locate 'gs' command" >&2
     exit 77 # skip
 fi
+
+# Locate directory containing our test artifacts.
+artifact_dir=
+
+for buildroot in . .. ../..
+do
+    d=$buildroot/doc
+    if [ -f $d/gnu.eps ]
+    then
+        artifact_dir=$d
+        gnu_eps=$artifact_dir/gnu.eps
+        break
+    fi
+done
+
+# If we can't find it, we can't test.
+test -z "$artifact_dir" && exit 77 # skip
 
 if [ -e "$gnu_pdf" ]
 then

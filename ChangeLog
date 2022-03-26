@@ -1,3 +1,31 @@
+2022-03-28  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[doc]: Refactor handling of "gnu.eps" file.
+
+	* doc/doc.am: Put "gnu.eps" in a Make macro, `DOC_GNU_EPS`.
+	($(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES),
+	doc/webpage.html, install_doc_examples): Migrate dependency to
+	`DOC_GNU_EPS`.
+	(doc/webpage.ps): Add (missing) dependency on `DOC_GNU_EPS`.
+	(DOC_GROFF_ONLY): Drop `-I` flag; it's not necessary given the
+	following.
+	(.ms.ps): Drop `-mwww` argument from suffix rule.  A truly
+	generic ms document won't need it.
+	(doc/webpage.ps): Add target rule.  Include `-mwww` argument.
+	(doc/webpage.ps, doc/webpage.html): Pass `-I` option to
+	`DOC_GROFF` and `DOC_GROFF_ONLY` (respectively) to enable
+	location of "gnu.eps" file.  Search the build and source trees'
+	"doc" directories because the file can be generated as part of
+	the build or can come with the distribution archive.
+	(EXTRA_DIST): Drop redundant inclusion of "doc/gnu.xpm".
+	(clean_maintdoc): Add phony target to dispose of `DOC_GNU_EPS`.
+	(maintainer-clean-local): Depend on "clean_maintdoc".
+
+	* tmac/tests/pdfpic_does-not-choke-on-bad-pdfinfo-output.sh:
+	* tmac/tests/pdfpic_falls-back-to-PSPIC.sh: Update tests to look
+	for "gnu.eps" in "doc" directory of build tree.  Give generated
+	files distinguishable names so their tests can run concurrently.
+
 2022-03-23  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Add new macro `PROCESSEDDOCFILES_PS` to isolate
