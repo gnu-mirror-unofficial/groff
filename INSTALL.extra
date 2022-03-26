@@ -177,6 +177,22 @@ tracker.
 
   https://savannah.gnu.org/bugs/?group=groff&func=additem
 
+
+Uninstalling
+============
+
+If you are dissatisfied with groff, or to prepare for a new installation
+from source, you can uninstall it to ensure that no stale files persist
+on the system.  Run the command 'make uninstall'.  At a minimum, some
+directories not particular to groff, like 'bin' and (depending on
+configuration) an X11 'app-defaults' directory will remain, as will one
+plain file called 'dir', created by GNU Texinfo's 'install-info'
+command.  (As of this writing, 'install-info' offers no provision for
+removing an effectively empty 'dir' file, and groff does not attempt to
+parse this file to determine whether it can be safely removed.)  All
+other groff artifacts will be deleted from the installation hierarchy.
+
+
 ##### Editor settings
 Local Variables:
 fill-column: 72
