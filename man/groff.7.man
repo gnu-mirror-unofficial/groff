@@ -4564,12 +4564,25 @@ double quotes in any other location are included in the string
 .
 .
 .P
-Strings,
-macros,
-and diversions share a name space.
+Macros,
+strings,
+and diversions share a name space;
+see section \[lq]Identifiers\[rq] above.
 .
 Internally,
 the same mechanism is used to store them.
+.
+You can thus call a macro with string interpolation syntax and vice
+versa.
+.
+Interpolating a string does not hide existing macro arguments.
+.
+The sequence
+.B \[rs]\[rs]
+can be placed at the end of a line in a macro definition or,
+within a macro definition,
+immediately after the interpolation of a macro as a string to suppress
+the effect of a newline.
 .
 .
 .P

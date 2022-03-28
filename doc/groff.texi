@@ -11775,10 +11775,10 @@ It is not possible to embed a newline in a string that will be
 interpreted as such when the string is interpolated.  To achieve that
 effect, use the @code{\*} escape to interpolate a macro instead.
 
-Strings, macros, and diversions share a name space; @ref{Identifiers}.
-Internally, the same mechanism is used to store them.  It is thus
-possible to call a macro with string interpolation syntax and vice
-versa.
+Macros, strings, and diversions share a name space; see
+@ref{Identifiers}.  Internally, the same mechanism is used to store
+them.  You can thus call a macro with string interpolation syntax and
+vice versa.
 
 @Example
 .de subject
@@ -11816,11 +11816,14 @@ Truly.
 @noindent
 By ending each text line of the macros with an escaped
 @samp{\@key{RET}}, we get the desired effect (@pxref{Line
-Continuation}).  What would have happened if we had used only one
-backslash at a time instead?
+Continuation}).@footnote{The backslash is doubled.  @xref{Copy Mode}.}
+What would have happened if we had used only one backslash at a time
+instead?
 
-Interpolating a string does not hide existing macro arguments.  Thus in
-a macro, a more efficient way of doing
+Interpolating a string does not hide existing macro arguments.  We can
+also place the escaped newline outside the string interpolation instead
+of within the string definition.  Thus, in a macro, a more efficient way
+of doing
 
 @Example
 .xx \\$@@
