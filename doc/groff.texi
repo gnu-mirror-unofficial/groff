@@ -13227,10 +13227,10 @@ Several escape sequences enable fine control of movement about the page.
 @Defesc {\\v, @code{'}, expr, @code{'}}
 @cindex vertical motion (@code{\v})
 @cindex motion, vertical (@code{\v})
-Move vertically; usually from the current location on the page (if no
-absolute position operator @samp{|} is used).  The
-argument@tie{}@var{expr} specifies the distance to move; positive is
-downward and negative upward.  The default scaling indicator is
+Move vertically relative to the drawing position.@footnote{unless the
+boundary-relative motion operator @samp{|} is used---see @ref{Numeric
+Expressions})}  @var{expr} indicates the magnitude of motion: positive
+is downward and and negative upward.  The default scaling unit is
 @samp{v}.  Beware, however, that GNU @code{troff} continues text
 processing at the point where the motion ends, so you should always
 balance motions to avoid interference with text processing.
@@ -13282,13 +13282,14 @@ string definitions.
 @cindex space, horizontal (@code{\h})
 @cindex horizontal motion (@code{\h})
 @cindex motion, horizontal (@code{\h})
-Move horizontally; usually from the current location (if no absolute
-position operator @samp{|} is used).  The expression@tie{}@var{expr}
-indicates how far to move: positive is rightward and negative leftward.
-The default scaling indicator for this escape is @samp{m}.
+Move horizontally relative to the drawing postition.@footnote{unless the
+boundary-relative motion operator @samp{|} is used---see @ref{Numeric
+Expressions})}  @var{expr} indicates the magnitude of motion: positive
+is rightward and negative leftward.  The default scaling unit is
+@samp{m}.
 
 This horizontal space is not discarded at the end of a line.  To insert
-discardable space of a certain length use the @code{ss} request.
+discardable space of a certain length, use the @code{ss} request.
 @endDefesc
 
 The following string definition sets the @TeX{}
