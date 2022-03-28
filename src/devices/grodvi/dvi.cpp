@@ -315,23 +315,23 @@ void dvi_printer::set_color(color *col)
     break;
   case RGB:
     sprintf(buf, "color rgb %.3g %.3g %.3g",
-		 double(Red) / (double)color::MAX_COLOR_VAL,
-		 double(Green) / (double)color::MAX_COLOR_VAL,
-		 double(Blue) / (double)color::MAX_COLOR_VAL);
+		 double(Red) / double(color::MAX_COLOR_VAL),
+		 double(Green) / double(color::MAX_COLOR_VAL),
+		 double(Blue) / double(color::MAX_COLOR_VAL));
     break;
   case CMY:
     col->get_cmyk(&Cyan, &Magenta, &Yellow, &Black);
     // fall through
   case CMYK:
     sprintf(buf, "color cmyk %.3g %.3g %.3g %.3g",
-		 double(Cyan) / (double)color::MAX_COLOR_VAL,
-		 double(Magenta) / (double)color::MAX_COLOR_VAL,
-		 double(Yellow) / (double)color::MAX_COLOR_VAL,
-		 double(Black) / (double)color::MAX_COLOR_VAL);
+		 double(Cyan) / double(color::MAX_COLOR_VAL),
+		 double(Magenta) / double(color::MAX_COLOR_VAL),
+		 double(Yellow) / double(color::MAX_COLOR_VAL),
+		 double(Black) / double(color::MAX_COLOR_VAL));
     break;
   case GRAY:
     sprintf(buf, "color gray %.3g",
-		 double(Gray) / (double)color::MAX_COLOR_VAL);
+		 double(Gray) / double(color::MAX_COLOR_VAL));
     break;
   }
   do_special(buf);
@@ -693,7 +693,7 @@ void draw_dvi_printer::fill_next(const environment *env)
     env->fill->get_gray(&g);
   }
   char buf[256];
-  sprintf(buf, "sh %.3g", 1 - double(g) / (double)color::MAX_COLOR_VAL);
+  sprintf(buf, "sh %.3g", 1 - double(g) / double(color::MAX_COLOR_VAL));
   do_special(buf);
 }
 

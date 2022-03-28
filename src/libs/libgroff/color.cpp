@@ -369,26 +369,26 @@ char *color::print_color()
     break;
   case RGB:
     sprintf(s, "rgb %.2ff %.2ff %.2ff",
-	    double(Red) / (double)MAX_COLOR_VAL,
-	    double(Green) / (double)MAX_COLOR_VAL,
-	    double(Blue) / (double)MAX_COLOR_VAL);
+	    double(Red) / double(MAX_COLOR_VAL),
+	    double(Green) / double(MAX_COLOR_VAL),
+	    double(Blue) / double(MAX_COLOR_VAL));
     break;
   case CMY:
     sprintf(s, "cmy %.2ff %.2ff %.2ff",
-	    double(Cyan) / (double)MAX_COLOR_VAL,
-	    double(Magenta) / (double)MAX_COLOR_VAL,
-	    double(Yellow) / (double)MAX_COLOR_VAL);
+	    double(Cyan) / double(MAX_COLOR_VAL),
+	    double(Magenta) / double(MAX_COLOR_VAL),
+	    double(Yellow) / double(MAX_COLOR_VAL));
     break;
   case CMYK:
     sprintf(s, "cmyk %.2ff %.2ff %.2ff %.2ff",
-	    double(Cyan) / (double)MAX_COLOR_VAL,
-	    double(Magenta) / (double)MAX_COLOR_VAL,
-	    double(Yellow) / (double)MAX_COLOR_VAL,
-	    double(Black) / (double)MAX_COLOR_VAL);
+	    double(Cyan) / double(MAX_COLOR_VAL),
+	    double(Magenta) / double(MAX_COLOR_VAL),
+	    double(Yellow) / double(MAX_COLOR_VAL),
+	    double(Black) / double(MAX_COLOR_VAL));
     break;
   case GRAY:
     sprintf(s, "gray %.2ff",
-	    double(Gray) / (double)MAX_COLOR_VAL);
+	    double(Gray) / double(MAX_COLOR_VAL));
     break;
   }
   return s;
