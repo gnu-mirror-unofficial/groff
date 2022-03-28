@@ -11501,6 +11501,7 @@ with a default scaling indicator of @samp{z}.
 
 @c =====================================================================
 
+@c BEGIN Keep (roughly) parallel with section "Colors" of groff(7).
 @node Colors, Strings, Sizes, gtroff Reference
 @section Colors
 @cindex colors
@@ -11559,28 +11560,32 @@ clamps it at 65,535).
 .defcolor gray50 rgb 0.5 0.5 0.5
 .defcolor darkgreen rgb 0.1f 0.5f 0.2f
 @endExample
+@endDefreq
 
 @cindex default color
 @cindex color, default
 Each output device has a color named @samp{default}, which cannot be
 redefined.  A device's default stroke and fill colors are not
-necessarily the same.
-@endDefreq
+necessarily the same.  For the @code{dvi}, @code{html}, @code{pdf},
+@code{ps}, and @code{xhtml} output devices, GNU @code{troff}
+automatically loads a macro file defining many color names at startup.
+By the same mechanism, the devices supported by @code{grotty} recognize
+the eight standard ISO@tie{}6429/EMCA-48 color names.@footnote{also
+known vulgarly as ``ANSI colors''.}
 
 @DefreqList {gcolor, [@Var{color}]}
 @DefescItemx {\\m, , c, }
 @DefescItem {\\m, (, co, }
 @DefescItem {\\m, [, color, ]}
 @DefregListEndx {.m}
-Set the stroke color to @var{color}.  The following examples show how to
-turn the next four words red.
+Set the stroke color to @var{color}.
 
 @Example
 .gcolor red
-These words
+The next words
 .gcolor
-\m[red]are in red\m[[]
-and these words are in black.
+\m[red]are in red\m[]
+and these words are in the previous color.
 @endExample
 
 The escape sequence @code{\m[]} restores the previous stroke color, as
@@ -11617,7 +11622,7 @@ Create an ellipse with a red interior as follows.
 @endExample
 
 The escape sequence @code{\M[]} restores the previous fill color, as
-does a @code{fcolor} request without an argument.
+does an @code{fcolor} request without an argument.
 
 @cindex background color name register (@code{.M})
 @cindex name, background color, register (@code{.M})
@@ -11631,6 +11636,7 @@ string-valued register @samp{.M}; it is associated with the environment
 
 @code{\M} doesn't produce an input token in GNU @code{troff}.
 @endDefesc
+@c END Keep (roughly) parallel with section "Colors" of groff(7).
 
 
 @c =====================================================================

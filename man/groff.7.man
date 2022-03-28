@@ -621,6 +621,7 @@ environment.
 .SH Colors
 .\" ====================================================================
 .
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Colors".
 .I groff
 supports color output with a variety of color spaces and up to 16 bits
 per channel.
@@ -657,6 +658,32 @@ and
 and
 .B .M
 registers exercise color support.
+.
+.
+.P
+Each output device has a color named
+.RB \[lq] default \[rq],
+which cannot be redefined.
+.
+A device's default stroke and fill colors are not necessarily the same.
+.
+For the
+.BR dvi ,
+.BR html ,
+.BR pdf ,
+.BR ps ,
+and
+.B xhtml
+output devices,
+.I @g@troff
+automatically loads a macro file defining many color names at startup.
+.
+By the same mechanism,
+the devices supported by
+.MR grotty @MAN1EXT@
+recognize the eight standard ISO\~6429/ECMA-48 color names
+(also known vulgarly as \[lq]ANSI colors\[rq]).
+.\" END Keep (roughly) parallel with groff.texi node "Colors".
 .
 .
 .\" ====================================================================
