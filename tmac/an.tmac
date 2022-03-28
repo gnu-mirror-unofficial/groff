@@ -193,11 +193,7 @@
 .
 .\" Write a bookmark/anchor/link target $2 at hierarchical depth $1.
 .de an*bookmark
-.  if '\\*[.T]'pdf' \{\
-.    nr an*bookmark-depth \\$1
-.    pdfbookmark \\n[an*bookmark-depth] \\$2
-.    rr an*bookmark-depth
-.  \}
+.  if '\\*[.T]'pdf' .pdfbookmark \\$1 \\$2
 ..
 .
 .\" Begin man page.
