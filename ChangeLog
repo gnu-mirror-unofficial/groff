@@ -1,5 +1,16 @@
 2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/preconv/preconv.cpp (detect_file_encoding): Demote
+	an error diagnostic to a debugging message.  libuchardet has no
+	man page, and inspecting the source of the
+	`uchardet_handle_data` function we find that it effectively
+	returns a Boolean value (if the result of a
+	`reinterpret_cast`(!) is not `NS_OK`).  This is useless
+	information for a user-facing tool.  We're designed to muddle on
+	regardless (see preconv(1)).
+
+2022-03-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/grodvi/dvi.cpp (dvi_printer::set_color,
 	draw_dvi_printer::fill_next):
 	* src/devices/grops/ps.cpp (output::put_color):

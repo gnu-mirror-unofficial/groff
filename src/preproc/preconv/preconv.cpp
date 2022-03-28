@@ -1039,7 +1039,7 @@ detect_file_encoding(FILE *fp)
   ud = uchardet_new();
   res = uchardet_handle_data(ud, data, len);
   if (res != 0) {
-    error("uchardet_handle_data: %1\n", res);
+    debug("  uchardet_handle_data: error %1\n", res);
     goto end;
   }
   if (is_debugging)
