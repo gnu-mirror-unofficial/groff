@@ -20,7 +20,9 @@
 
 groff="${abs_top_builddir:-.}/test-groff"
 # Give the output a name that won't collide with another test.
-gnu_pdf="${abs_top_builddir:-.}/doc/gnu-fallback-pspic.pdf"
+gnu_base="${abs_top_builddir:-.}/doc/gnu-fallback-pspic"
+gnu_fallback_eps="$gnu_base.eps"
+gnu_pdf="$gnu_base.pdf"
 
 if ! command -v gs >/dev/null
 then
@@ -62,12 +64,14 @@ Here is a picture of a wildebeest.
 if ! gs -q -o - -sDEVICE=pdfwrite -f "$gnu_eps" > "$gnu_pdf"
 then
     echo "gs command failed" >&2
+    rm -f "$gnu_fallback_eps" "$gnu_pdf"
     exit 77 # skip
 fi
-test -z $fail \
+
+test -z "$fail" \
     && printf '%s\n' "$input" | "$groff" -Tps -U -z || fail=YES
 
-rm -f "$gnu_pdf"
-test -z $fail
+rm -f "$gnu_fallback_eps" "$gnu_pdf"
+test -z "$fail"
 
 # vim:set ai et sw=4 ts=4 tw=72:

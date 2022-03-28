@@ -66,13 +66,14 @@ if ! gs -q -o - -sDEVICE=pdfwrite -f "$gnu_eps" \
     > "$gnu_pdf"
 then
     echo "gs command failed" >&2
+    rm -f "$gnu_pdf"
     exit 77 # skip
 fi
 
-test -z $fail \
+test -z "$fail" \
     && printf '%s\n' "$input" | "$groff" -Tpdf -U -z || fail=YES
 
 rm -f "$gnu_pdf"
-test -z $fail
+test -z "$fail"
 
 # vim:set ai et sw=4 ts=4 tw=72:
