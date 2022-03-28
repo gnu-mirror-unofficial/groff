@@ -6236,6 +6236,7 @@ see
 .SH Debugging
 .\" ====================================================================
 .
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Debugging".
 .I groff
 is not the easiest language to debug,
 in part thanks to its design features of recursive interpolation and the
@@ -6286,10 +6287,10 @@ respectively,
 to halt further processing when continuing would be fruitless.
 .
 The state of the formatter can be examined with requests that write
-lists of defined macros,
+lists of defined names\[em]macros,
 strings,
-and diversions
-.RB ( .pm );
+and
+.RB diversions\[em]( .pm );
 environments
 .RB ( .pev ),
 registers
@@ -6297,6 +6298,7 @@ registers
 and page location traps
 .RB ( .ptr )
 to the standard error stream.
+.\" END Keep (roughly) parallel with groff.texi node "Debugging".
 .
 .
 .\" ====================================================================
