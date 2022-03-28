@@ -5770,7 +5770,7 @@ man page for the @file{62bit.tmac} macro package.}
 Arithmetic infix operators perform a function on the numeric expressions
 to their left and right; they are @code{+} (addition), @code{-}
 (subtraction), @code{*} (multiplication), @code{/} (truncating
-division) and @code{%} (modulo).  Overflow and division by zero are
+division), and @code{%} (modulo).  Overflow and division by zero are
 errors and abort evaluation of a numeric expression.
 @cindex unary operators
 @cindex operators, unary
@@ -5929,8 +5929,8 @@ X=\n[X] Y=\n[Y] Z=\n[Z]
 For many requests and escape sequences that cause motion on the page,
 the unary operators @code{+} and @code{-} work differently when leading
 a numeric expression.  They then indicate a motion relative to the
-current drawing position:@: down in vertical contexts, right in
-horizontal ones.
+current drawing position:@: positive is down in vertical contexts, right
+in horizontal ones.
 
 @cindex @code{bp} request, using @code{+} and@tie{}@code{-} with
 @cindex @code{in} request, using @code{+} and@tie{}@code{-} with
@@ -5965,8 +5965,7 @@ A leading @code{|} operator indicates a motion relative not to the
 current position but to a boundary.  For horizontal motions, the
 measurement specifies a distance relative to the drawing position
 corresponding to the beginning of the @emph{input} line.  By default,
-tab stops reckon measurements in this way.  Most escape sequences do
-not;
+tab stops reckon movements in this way.  Most escape sequences do not;
 @c XXX: Which ones do?
 @code{|} tells them to do so.
 

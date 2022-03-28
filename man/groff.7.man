@@ -739,6 +739,8 @@ multiply by 65,536
 .SH "Numeric expressions"
 .\" ====================================================================
 .
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Numeric
+.\" expressions".
 A
 .I numeric expression
 is a syntactic structure,
@@ -977,7 +979,7 @@ and
 work differently when leading a numeric expression.
 .
 They then indicate a motion relative to the current drawing position:
-down in vertical contexts,
+positive is down in vertical contexts,
 right in horizontal ones.
 .
 .
@@ -1020,7 +1022,7 @@ corresponding to the beginning of the
 line.
 .
 By default,
-tab stops reckon measurements in this way.
+tab stops reckon movements in this way.
 Most escape sequences do not;
 .\" XXX: Which ones do?
 .B |
@@ -1052,6 +1054,8 @@ Due to the way arguments are parsed,
 spaces are not allowed in numeric expressions unless the (sub)expression
 containing them is surrounded by parentheses.
 .\"@xref{Request and Macro Arguments}, and @ref{Conditionals and Loops}.
+.\" END Keep (roughly) parallel with groff.texi node "Numeric
+.\" expressions".
 .
 .
 .\" ====================================================================
