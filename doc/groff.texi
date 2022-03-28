@@ -884,7 +884,11 @@ streams, respectively.  Diagnostic messages from the GNU @code{troff}
 formatter and other programs are examples of the latter, but the
 formatter can also be directed to write user-specified messages to the
 standard error stream.  The notation then serves to distinguish the
-output stream and does not necessarily mean that an error has occurred.
+output stream and does not necessarily mean that an error has
+occurred.@footnote{Unix and related operating systems distinguish
+standard output and standard error streams @emph{because} of
+@code{troff}:@:
+@uref{https://minnie.tuhs.org/pipermail/tuhs/2013-December/006113.html}.}
 
 @Example
 $ echo "Twelve o'clock and" | groff -Tascii | sed '/^$/d'
