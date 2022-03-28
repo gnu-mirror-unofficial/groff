@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" Define a string for use in diagnostic messages.
 .ds bx*name sboxes.tmac\"
 .
+.if !r GS \
+.  ab \*[bx*name]: ms macros must be loaded first; aborting
+.
 .if (\n[.x]\n[.y] < 123) \{\
 .  ds bx*msg \*[bx*name]: groff 1.23 or later is required,\"
 .  as bx*msg " but found groff \n[.x].\n[.y]; not loading\"
@@ -60,18 +63,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .  .
 .\}
 .
-.\" Link into ms macros to trap footnote growth.
-.if r GS \{\
-.  am fn@print-sep
-.    nr bx*pb \\n[nl]u-2p
-.    nop \!x X pdf: background footnote \\n[bx*pb]z
-.    rr bx*pb
-.  .
+.\" Link into ms macros to trap footnote growth
+.am fn@print-sep
+.  nr bx*pb \\n[nl]u-2p
+.  nop \!x X pdf: background footnote \\n[bx*pb]z
+.  rr bx*pb
+..
 .\" Has PD been actioned?
-.  am par*start
-.    nr bx*PD \\n[PD]
-.  .
-.\}
+.am par*start
+.  nr bx*PD \\n[PD]
+..
 .
 .de BOXSTART
 .  fl
