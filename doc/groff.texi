@@ -6091,8 +6091,8 @@ input characters.
 Invalid input characters are a subset of control characters (from the
 sets ``C0 Controls'' and ``C1 Controls'' as Unicode describes them).
 When GNU @code{troff} encounters one in an identifier, it produces a
-warning diagnostic of type @samp{input} (@pxref{Debugging}).  They are
-removed during parsing; an identifier @samp{foo}, followed by an invalid
+warning in category @samp{input} (@pxref{Debugging}).  They are removed
+during parsing; an identifier @samp{foo}, followed by an invalid
 character, followed by @samp{bar}, is interpreted as @samp{foobar}.
 
 On a machine using the ISO 646, 8859, or 10646 character encodings,
@@ -6380,7 +6380,7 @@ value of the @code{.br} register is inherited from the caller.
 There is no way to invoke an undefined request; such syntax is
 interpreted as a macro call instead.  If a macro of the desired name
 does not exist, it is created, assigned an empty definition, and a
-warning of type @samp{mac} is produced.  @xref{Debugging}, for
+warning in category @samp{mac} is produced.  @xref{Debugging}, for
 information about the enablement and suppression of warnings.  A call of
 an undefined macro @emph{does} end a macro definition naming it as its
 end macro (@pxref{Writing Macros}).
@@ -6963,8 +6963,8 @@ exist, the request is ignored.
 @cindex register, creating alias for (@code{aln})
 Create an alias @var{new} for an existing register @var{old}, causing
 the names to refer to the same stored object.  If @var{old} is
-undefined, a warning of type @samp{reg} is produced and the request is
-ignored.  @xref{Debugging}, for information about the enablement and
+undefined, a warning in category @samp{reg} is produced and the request
+is ignored.  @xref{Debugging}, for information about the enablement and
 suppression of warnings.
 
 @cindex alias, register, removing (@code{aln})
@@ -6994,7 +6994,7 @@ Interpolate register with name @var{ident} (one-character
 name@tie{}@var{i}, two-character name @var{id}).  @code{\n} is
 interpreted even in copy mode (@pxref{Copy Mode}).  If the register is
 undefined, it is created, assigned a value of@tie{}@samp{0}, and a
-warning of type @samp{reg} is produced.  @xref{Debugging}, for
+warning in category @samp{reg} is produced.  @xref{Debugging}, for
 information about the enablement and suppression of warnings.
 
 @Example
@@ -7131,7 +7131,7 @@ Uppercase letters: 0, A, B, C, @dots{},@tie{}Z, AA, AB,@tie{}@enddots{}
 Lowercase letters: 0, a, b, c, @dots{},@tie{}z, aa, ab,@tie{}@enddots{}
 @end table
 
-Omitting @var{fmt} causes a warning of type @samp{missing}; see
+Omitting @var{fmt} causes a warning in category @samp{missing}; see
 @ref{Debugging}.  Specifying an unrecognized format is an error.
 
 Zero values are interpolated as @samp{0} in non-Arabic formats.
@@ -8264,7 +8264,7 @@ is reset to its default value, 0.  The default scaling indicator is
 (@pxref{Environments}).
 
 A negative argument resets the hyphenation margin to zero, emitting a
-warning of type @samp{range}.
+warning in category @samp{range}.
 
 @cindex hyphenation margin register (@code{.hym})
 The hyphenation margin is available in the @code{.hym} read-only
@@ -8285,7 +8285,7 @@ hyphenation space adjustment threshold is associated with the
 environment (@pxref{Environments}).
 
 A negative argument resets the hyphenation space adjustment threshold to
-zero, emitting a warning of type @samp{range}.
+zero, emitting a warning in category @samp{range}.
 
 @cindex hyphenation space adjustment threshold register (@code{.hys})
 The hyphenation space adjustment threshold is available in the
@@ -9253,7 +9253,7 @@ the previous value before the last call to @code{in}.  The default
 scaling indicator is @samp{m}.
 
 If a negative indentation value is specified (which is not allowed),
-@code{gtroff} emits a warning of type @samp{range} and sets the
+@code{gtroff} emits a warning in category @samp{range} and sets the
 indentation to zero.
 
 The effect of @code{in} is delayed until a partially collected line (if
@@ -9278,7 +9278,7 @@ environment (@pxref{Environments}).  The default scaling indicator is
 @samp{m}.  A call of @code{ti} without an argument is ignored.
 
 If the total indentation value is negative (which is not allowed),
-@code{gtroff} emits a warning of type @samp{range} and sets the
+@code{gtroff} emits a warning in category @samp{range} and sets the
 temporary indentation to zero.  `Total indentation' is either
 @var{offset} if specified as an absolute value, or the temporary plus
 normal indentation, if @var{offset} is given as a relative value.
@@ -9308,8 +9308,8 @@ is @samp{m}.
 If @code{ll} is called without an argument, the line length is reset to
 the previous value before the last call to @code{ll}.  If a negative
 line length is specified (which is not allowed), @code{gtroff} emits a
-warning of type @samp{range} and sets the line length to zero.  The line
-length is associated with the environment (@pxref{Environments}).
+warning in category @samp{range} and sets the line length to zero.  The
+line length is associated with the environment (@pxref{Environments}).
 
 @cindex line length register (@code{.l})
 The current line length (as set by @code{ll}) can be found in the
@@ -9526,10 +9526,10 @@ right-justified parts are empty.
 The title line is printed using its own line length, which is specified
 (or incremented or decremented) with the @code{lt} request.  Initially,
 the title line length is set to 6.5@dmn{i}.  If a negative line length
-is specified (which is not allowed), @code{gtroff} emits a warning of
-type @samp{range} and sets the title line length to zero.  The default
-scaling indicator is @samp{m}.  If @code{lt} is called without an
-argument, the title length is reset to the previous value before the
+is specified (which is not allowed), @code{gtroff} emits a warning in
+category @samp{range} and sets the title line length to zero.  The
+default scaling indicator is @samp{m}.  If @code{lt} is called without
+an argument, the title length is reset to the previous value before the
 last call to @code{lt}.  The current setting is available in the
 @code{.lt} read-only register; it is associated with the environment
 (@pxref{Environments}).
@@ -10318,9 +10318,9 @@ the same as the input character with character code @var{XXX}.  For
 example, @code{\[char97]} is identical to the letter @code{a} if
 @acronym{ASCII} encoding is active.}
 
-If @var{name} is undefined, a warning of type @samp{char} is produced
-and the escape is ignored.  @xref{Debugging}, for information about the
-enablement and suppression of warnings.
+If @var{name} is undefined, a warning in category @samp{char} is
+produced and the escape is ignored.  @xref{Debugging}, for information
+about the enablement and suppression of warnings.
 
 GNU @code{troff} resolves @code{\[@r{@dots{}}]} with more than a single
 component as follows:
@@ -11327,9 +11327,9 @@ If @code{vs} is called without an argument, the vertical spacing is
 reset to the previous value before the last call to @code{vs}.
 
 @cindex @code{.V} register, and @code{vs}
-@code{gtroff} creates a warning of type @samp{range} if @var{space} is
-negative; the vertical spacing is then set to smallest positive value,
-the vertical resolution (as given in the @code{.V} register).
+@code{gtroff} creates a warning in category @samp{range} if @var{space}
+is negative; the vertical spacing is then set to smallest positive
+value, the vertical resolution (as given in the @code{.V} register).
 
 @w{@samp{.vs 0}} isn't saved in a diversion since it doesn't result in
 a vertical motion.  You explicitly have to repeat this command before
@@ -11394,8 +11394,8 @@ The default scaling indicator is @samp{p}.
 If @code{pvs} is called without an argument, the post-vertical spacing
 is reset to the previous value before the last call to @code{pvs}.
 
-@code{gtroff} creates a warning of type @samp{range} if @var{space} is
-zero or negative; the vertical spacing is then set to zero.
+@code{gtroff} creates a warning in category @samp{range} if @var{space}
+is zero or negative; the vertical spacing is then set to zero.
 
 The read-only register @code{.pvs} contains the current post-vertical
 spacing; it is associated with the environment (@pxref{Environments}).
@@ -11703,7 +11703,7 @@ I see a \*[b].
 @endExample
 
 If the string named by the @code{\*} escape does not exist, it is
-defined as empty, and a warning of type @samp{mac} is produced.
+defined as empty, and a warning in category @samp{mac} is produced.
 @xref{Debugging}, for information about the enablement and suppression
 of warnings.
 
@@ -12075,9 +12075,9 @@ been defined.
 @cindex diversion, creating alias for (@code{als})
 Create an alias @var{new} for the existing request, string, macro, or
 diversion object named @var{old}, causing the names to refer to the same
-stored object.  If @var{old} is undefined, a warning of type @samp{mac}
-is produced, and the request is ignored.  @xref{Debugging}, for
-information about the enablement and suppression of warnings.
+stored object.  If @var{old} is undefined, a warning in category
+@samp{mac} is produced, and the request is ignored.  @xref{Debugging},
+for information about the enablement and suppression of warnings.
 
 To understand how the @code{als} request works, consider two different
 storage pools:@: one for objects (macros, strings, etc.), and another
@@ -14457,7 +14457,7 @@ For orthogonality it is said that GNU @code{troff} is in the
 output is being ``diverted'' immediately to the output device).
 
 Dereferencing an undefined diversion will create an empty one of that
-name and cause a warning of type @samp{mac} to be emitted
+name and cause a warning in category @samp{mac} to be emitted
 (@pxref{Debugging}).  A diversion does not exist for the purpose of
 testing with the @code{d} conditional operator until its initial
 definition ends (@pxref{Operators in Conditionals}).  The following
@@ -14481,7 +14481,7 @@ avoids the inclusion of the current partially collected line;
 Invoking @code{di} or @code{da} without an argument stops diverting
 output to the diversion named by the most recent corresponding request.
 If @code{di} or @code{da} is called without an argument when there is no
-current diversion, a warning of type @samp{di} is produced.
+current diversion, a warning in category @samp{di} is produced.
 @xref{Debugging}, for information about the enablement and suppression
 of warnings.
 
@@ -15034,9 +15034,9 @@ production of the next inline image.
 Replace the @code{so} request's control line with the contents of the
 file named by the argument, ``sourcing'' it.  @var{file} is sought in
 the directories specified by @option{-I} command-line option.  If
-@var{file} does not exist, a warning of type @samp{file} is produced and
-the request has no further effect.  @xref{Debugging}, for information
-about the enablement and suppression of warnings.
+@var{file} does not exist, a warning in category @samp{file} is produced
+and the request has no further effect.  @xref{Debugging}, for
+information about the enablement and suppression of warnings.
 
 @code{so} can be useful for large documents; e.g., allowing each chapter
 of a book to be kept in a separate file.  However, files interpolated
