@@ -2779,10 +2779,9 @@ Default: 12@dmn{p}.
 @endDefmpreg
 
 @Defmpreg {HY, ms}
-Defines the hyphenation mode.  @code{HY} safely sets the value of the
-low-level @code{hy} register.  Setting @code{HY} to@tie{}0 is equivalent
-to using the @code{nh} request.  This is a Tenth Edition Research Unix
-extension.
+Defines the automatic hyphenation mode used with the @code{hy} request.
+Setting @code{HY} to@tie{}0 is equivalent to using the @code{nh}
+request.  This is a Tenth Edition Research Unix extension.
 @c possibly 9th, but definitely not Berkeley
 
 Effective: next paragraph.
@@ -3200,9 +3199,9 @@ in the @code{PI} register.
 @Defmac {IP, [@Var{marker} [@Var{width}]], ms}
 Set a paragraph with a left indentation.  The optional @var{marker} is
 not indented and is empty by default.  It has several applications;
-see @ref{Lists in ms}.  @var{width} overrides the default indentation
-amount stored in the @code{PI} register; its default unit is @samp{n}.
-Once specified, @var{width} applies to further @code{IP} calls until
+see @ref{Lists in ms}.  @var{width} overrides the indentation amount
+stored in the @code{PI} register; its default unit is @samp{n}.  Once
+specified, @var{width} applies to further @code{IP} calls until
 specified again or a heading or different paragraphing macro is called.
 @endDefmac
 
@@ -3280,8 +3279,8 @@ Set an automatically numbered heading.
 any depth desired, with the numbering of each depth increasing
 automatically and being reset to zero when a more significant level is
 increased.  ``1''@tie{}is the most significant or coarsest division of
-the document.  Only nonzero values are output.  If the argument is
-omitted, @var{depth} is taken to be @samp{1}.
+the document.  Only nonzero values are output.  If @var{depth} is
+omitted, it is taken to be @samp{1}.
 
 If you specify @var{depth} such that an ascending gap occurs relative to
 the previous @code{NH} call---that is, you ``skip a depth'', as by

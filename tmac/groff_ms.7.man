@@ -628,7 +628,7 @@ and footnotes.
 .P
 The
 .B HY
-register defines the hyphenation mode used with the
+register defines the automatic hyphenation mode used with the
 .B hy
 request.
 .
@@ -702,7 +702,7 @@ The optional
 is not indented and is empty by default.
 .
 .I width
-overrides the default indentation amount of
+overrides the indentation amount in
 .BR \[rs]n[PI] ;
 its default unit is
 .RB \[lq] n \[rq].
@@ -789,9 +789,10 @@ the most significant or coarsest division of the document.
 .
 Only nonzero values are output.
 .
-If the argument is omitted,
+If
 .I depth
-is taken to be
+is omitted,
+it is taken to be
 .BR 1 .
 .
 If you specify

@@ -720,7 +720,7 @@ and footnotes.
 .PP
 The
 .CW HY
-register defines the hyphenation mode used with the
+register defines the automatic hyphenation mode used with the
 .CW hy
 request.
 .
@@ -805,7 +805,7 @@ It has several applications;
 see subsection \[lq]Lists\[rq] below.
 .
 .I width
-overrides the default indentation amount stored in
+overrides the indentation amount in
 .CW \[rs]n[PI] ;
 its default unit is
 .CW n \[rq]. \[lq]
@@ -951,9 +951,10 @@ document.
 .
 Only nonzero values are output.
 .
-If the argument is omitted,
+If
 .I depth
-is taken to be
+is omitted,
+it is taken to be
 .CW 1 .
 .
 If you specify
