@@ -274,6 +274,12 @@ _fr.me._fr.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -Tps -ms >$@
 
+doc/webpage.ps: $(DOC_GNU_EPS)
+doc/webpage.ps: doc/webpage.ms
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF) -I $(doc_builddir) -I $(doc_srcdir) -Tps -ms \
+	  -mwww >$@
+
 $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
   $(prefixexecbin_PROGRAMS) \
@@ -298,12 +304,6 @@ doc/examples.stamp: doc/groff.css
 	$(AM_V_at)test -f $(doc_builddir)/groff.css || \
 	  cp $(doc_srcdir)/groff.css $(doc_builddir)
 	$(AM_V_at)echo timestamp > $@
-
-doc/webpage.ps: $(DOC_GNU_EPS)
-doc/webpage.ps: doc/webpage.ms
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -I $(doc_builddir) -I $(doc_srcdir) -Tps -ms \
-	  -mwww >$@
 
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/webpage.html: doc/examples.stamp $(devhtmlfont_DATA)
