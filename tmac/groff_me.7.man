@@ -280,14 +280,14 @@ $s	output footnote area separator
 2c	begin multi-column layout
 EN	end \fI@g@eqn\fP equation
 EQ	begin \fI@g@eqn\fP equation
-GE	end \fI@g@grn\fP picture with position at bottom
-GF	end \fI@g@grn\fP picture with position at top
+GE	end \fI@g@grn\fP picture with drawing position at bottom
+GF	end \fI@g@grn\fP picture with drawing position at top
 GS	start \fI@g@grn\fP picture
-IE	end \fIideal\fP picture with position at bottom
-IF	end \fIideal\fP picture with position at top
+IE	end \fIideal\fP picture with drawing position at bottom
+IF	end \fIideal\fP picture with drawing position at top
 IS	start \fIideal\fP picture
-PE	end \fI@g@pic\fP picture with position at bottom
-PF	end \fI@g@pic\fP picture with position at top
+PE	end \fI@g@pic\fP picture with drawing position at bottom
+PF	end \fI@g@pic\fP picture with drawing position at top
 PS	start \fI@g@pic\fP picture
 TE	end \fI@g@tbl\fP table
 TH	end heading for multi-page \fI@g@tbl\fP table
@@ -306,7 +306,7 @@ hl	draw horizontal line
 hx	suppress next page's headers/footers
 i	italicize argument
 ip	begin indented paragraph
-ld	reset localization and date info
+ld	reset localization and date registers and strings\fB*
 ll	set line length
 lp	begin fully left-aligned paragraph
 np	begin numbered paragraph
@@ -373,7 +373,6 @@ $3	third section number component
 $4	fourth section number component
 $5	fifth section number component
 $6	sixth section number component
-$V	vertical spacing of displayed text (as percentage)\fB*
 $c	current column number
 $d	delayed text number
 $f	footnote number
@@ -382,13 +381,13 @@ $l	column width
 $m	number of available columns
 $p	numbered paragraph number
 $s	column spacing (indentation)
-$v	vertical spacing of text (as percentage)\fB*
 bi	display (block) indentation
 bm	distance from text area to page bottom
 bs	display (block) pre/post space
 bt	block threshold for keeps
 ch	current chapter number
 df	display font
+dv	vertical spacing of displayed text (as percentage)\fB*
 es	equation pre/post space
 ff	footnote font
 fi	footnote indentation (first line only)
@@ -416,6 +415,7 @@ sx	super/subscript line height increase\fB*
 tf	title font
 tm	distance from page top to text area
 tp	title type size in points
+tv	vertical spacing of text (as percentage)\fB*
 xs	index entry prespace
 xu	index undent (right indentation)
 y2	year of the century\fB*
