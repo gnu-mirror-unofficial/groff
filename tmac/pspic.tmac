@@ -12,6 +12,13 @@
 .do nr *groff_pspic_tmac_C \n[.cp]
 .cp 0
 .
+.\" This is called if the `psbb` request returned a bounding box of all
+.\" zeroes.  It already issues a diagnostic; one can append `ab` to this
+.\" macro if that should be a fatal error, or redefine it for some other
+.\" purpose.
+.de pspic*error-hook
+..
+.
 .de PSPIC
 .  nr ps-offset-mode 0
 .  \" left-aligned?
@@ -48,7 +55,7 @@
 .
 .  \" get bounding box
 .  psbb \\$1
-.  if (\\n[llx] : \\n[lly] : \\n[urx] : \\n[ury]) \{\
+.  ie (\\n[llx] : \\n[lly] : \\n[urx] : \\n[ury]) \{\
 .    nr ps-wid (\\n[urx] - \\n[llx])
 .    nr ps-ht (\\n[ury] - \\n[lly])
 .    if (\\n[ps-wid] < 0) \
@@ -156,6 +163,8 @@
 .    br
 .    sp \\n[ps-desht]u
 .  \}
+.  el \
+.    pspic*error-hook \\$@
 .  HTML-IMAGE-END
 ..
 .

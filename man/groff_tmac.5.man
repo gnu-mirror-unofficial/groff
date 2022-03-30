@@ -635,9 +635,9 @@ for a different purpose).
 .
 .TP
 .I pspic
-provides a single macro,
+provides a macro,
 .BR PSPIC ,
-to include a PostScript graphic in a document.
+that includes a PostScript graphic in a document.
 .
 The
 .BR ps ,
@@ -736,6 +736,31 @@ assuring that the diversion's width completely covers the image's width.
 \&\[rs]h\[aq](\[rs]\[rs]n[ps\-offset]u + \[rs]\[rs]n[ps\-deswid]u)\[aq]
 \&.\~\~sp \-1
 \&.\~\~vpt 1
+\&..
+.EE
+.RE
+.
+.
+.IP
+Failure to load
+.BR PSPIC 's
+image argument is not an error.
+.
+(The
+.B psbb
+request does issue an error diagnostic.)
+.
+To make such a failure fatal,
+append to the
+.B pspic*error\-hook
+macro.
+.
+.
+.RS
+.IP
+.EX
+\&.am pspic*error\-hook
+\&.\~\~ab
 \&..
 .EE
 .RE
