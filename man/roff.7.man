@@ -146,10 +146,10 @@ and supplies additional inter-sentence space between them.
 .
 It does this by flagging certain characters
 (normally
-.RB \[lq] ! \[rq],
-.RB \[lq] ? \[rq],
+.RB \[lq] !\& \[rq],
+.RB \[lq] ?\& \[rq],
 and
-.RB \[lq] . \[rq])
+.RB \[lq] .\& \[rq])
 as potentially ending a sentence.
 .
 When the formatter encounters one of these
@@ -161,7 +161,8 @@ followed by an inter-sentence space in the formatted output.
 .
 The non-printing input break escape sequence
 .B \[rs]&
-can be used after an end-of-sentence character to defeat end-of-sentence detection on a per-instance basis.
+can be used after an end-of-sentence character to defeat end-of-sentence
+detection on a per-instance basis.
 .
 Normally,
 the occurrence of a visible non-end-of-sentence character
