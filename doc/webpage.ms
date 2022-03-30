@@ -5,6 +5,10 @@
 .\" To make it work with other output devices also, we include
 .\" www.tmac directly.
 .\"
+.am pspic*error-hook
+.  ab \\n[.F]:\\n[.c]: fatal error: PSPIC failed to include '\\$1'
+..
+.
 .nr PS 10
 .nr VS 12
 .if '\*[.T]'html' .nr LL 10i
