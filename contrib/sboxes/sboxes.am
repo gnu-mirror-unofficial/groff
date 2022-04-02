@@ -29,21 +29,16 @@ EXTRA_DIST += \
     contrib/sboxes/ChangeLog \
     contrib/sboxes/notquine.sed
 
-# Files installed in $(examplesdir)/sboxes.  SBOXES_EXAMPLEFILES are
-# located in the source tree, while SBOXESPROCESSEDEXAMPLEFILES are
-# generated in the build tree.
 SBOXES_EXAMPLEFILES = $(sboxes_srcdir)/msboxes.ms.in
 if BUILD_EXAMPLES
 sboxesexampledir = $(exampledir)/sboxes
-dist_sboxesexample_DATA = $(SBOXES_EXAMPLEFILES)
 SBOXES_PROCESSEDEXAMPLEFILES = $(sboxes_builddir)/msboxes.ms \
     $(sboxes_builddir)/msboxes.pdf
 sboxesprocessedexampledir = $(exampledir)/sboxes
 nodist_sboxesprocessedexample_DATA = $(SBOXES_PROCESSEDEXAMPLEFILES)
-else
+endif
 EXTRA_DIST += \
     contrib/sboxes/msboxes.ms.in
-endif
 
 MOSTLYCLEANFILES += msboxes.ms \
     $(SBOXES_PROCESSEDEXAMPLEFILES)

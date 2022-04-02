@@ -51,13 +51,14 @@ DOC_GROFF = nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 # Other doc, installed in $(docdir)
 if BUILD_OTHERDOC
 # Files located in the source tree
-DOCFILES= \
+DOCFILES_INST= \
   doc/me-revisions \
-  doc/meintro.me.in \
-  doc/meintro_fr.me.in \
-  doc/meref.me.in \
   doc/ms.ms \
   doc/pic.ms
+DOCFILES_NOINST= \
+  doc/meintro.me.in \
+  doc/meintro_fr.me.in \
+  doc/meref.me.in
 # Files that undergo a transformation prior to groff processing
 GENERATEDDOCFILES = \
   $(DOC_GNU_EPS) \
@@ -76,12 +77,13 @@ PROCESSEDDOCFILES = $(PROCESSEDDOCFILES_PS) \
   doc/groff-man-pages.utf8.txt
 
 otherdocdir = $(docdir)
-dist_otherdoc_DATA = $(DOCFILES) $(GENERATEDDOCFILES)
+dist_otherdoc_DATA = $(DOCFILES_INST) $(GENERATEDDOCFILES)
 nodist_otherdoc_DATA = $(PROCESSEDDOCFILES)
 MOSTLYCLEANFILES += $(PROCESSEDDOCFILES)
 else
-EXTRA_DIST += $(DOCFILES) $(GENERATEDDOCFILES)
+EXTRA_DIST += $(DOCFILES_INST) $(GENERATEDDOCFILES)
 endif
+EXTRA_DIST += $(DOCFILES_NOINST)
 
 # pdf doc, written in mom and therefore using contrib/mom/mom.am
 # definitions
