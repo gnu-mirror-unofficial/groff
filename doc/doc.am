@@ -485,10 +485,8 @@ doc/groff.info: $(doc_srcdir)/groff.texi
 dist-hook: dist-info-bits
 dist-info-bits:
 	chmod u+w $(distdir)/doc
-	for d in $(doc_builddir) $(doc_srcdir); \
-	do \
-	  if [ -f "$$d"/groff.info ]; \
-	  then \
+	for d in $(doc_builddir) $(doc_srcdir); do \
+	  if [ -f "$$d"/groff.info ]; then \
 	    cp -f "$$d"/groff.info-* $(distdir)/doc; \
 	  fi; \
 	  break; \
@@ -588,10 +586,8 @@ install_infodoc: doc/groff.info
 	-test -d $(DESTDIR)$(infodir) \
 	  || $(mkinstalldirs) $(DESTDIR)$(infodir)
 	$(RM) $(DESTDIR)/doc/groff.info*
-	for d in $(doc_builddir) $(doc_srcdir); \
-	do \
-	  if [ -f "$$d"/groff.info ]; \
-	  then \
+	for d in $(doc_builddir) $(doc_srcdir); do \
+	  if [ -f "$$d"/groff.info ]; then \
 	    cp "$$d"/groff.info* $(DESTDIR)$(infodir); \
 	    $(INSTALL_INFO) --info-file="$$d"/groff.info \
 	      --info-dir=$(DESTDIR)$(infodir); \
@@ -656,10 +652,8 @@ $(DOC_GNU_EPS): doc/gnu.xpm
 dist-hook: dist-gnueps
 dist-gnueps:
 	chmod u+w $(distdir)/doc
-	for d in $(doc_builddir) $(doc_srcdir); \
-	do \
-	  if [ -f "$$d"/$(DOC_GNU_EPS) ]; \
-	  then \
+	for d in $(doc_builddir) $(doc_srcdir); do \
+	  if [ -f "$$d"/$(DOC_GNU_EPS) ]; then \
 	    cp -f "$$d"/$(DOC_GNU_EPS) $(distdir)/doc; \
 	  fi; \
 	  break; \
