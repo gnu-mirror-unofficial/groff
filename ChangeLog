@@ -1,5 +1,25 @@
 2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor use of target and suffix rules.
+	(doc/meintro.me, doc/meintro_fr.me, doc/meref.me): Add target
+	rules, with lengthy, exasperated comment about lack of feature
+	parity in various make(1) implementations.
+	(doc/meintro_fr.ps): Add target rule, as this seems to be the
+	only way to keep GNU Make from ignoring a '_fr.me._fr.ps' suffix
+	rule in favor of '.me.ps', which doesn't call preconv (and
+	doesn't need to--and moreover we don't want to build English
+	me(7) documents with the `-mfr` option).  Depend on `preconv`.
+	(doc/webpage.ps): Convert from suffix rule to target rule.
+	(doc/ms.ps, doc/pic.ps, doc/webpage.ps): Add target rules and
+	dependencies.
+	(.ms.ps): Add commented-out suffix rule (since nothing uses it,
+	but might in the future).
+	(doc/meintro_fr.ps, .me.ps, doc/pic.ps, doc/webpage.ps): Migrate
+	expansions of `DOC_GROFF` to `DOC_GROFF_ONLY` to prepare for a
+	forthcoming simplification.
+
+2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Clean generated doc files better.  doc/me*.me were
 	getting left behind in the build tree.
 	(MOSTLYCLEANFILES): Add `GENERATEDDOCFILES`.  This includes

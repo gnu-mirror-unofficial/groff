@@ -245,42 +245,73 @@ doc/groff-man-pages.utf8.txt: $(GROFF_MAN_PAGES_ALL)
 	  $(tmac_srcdir)/sv.tmac $(GROFF_MAN_PAGES2) \
 	  $(tmac_srcdir)/en.tmac $(GROFF_MAN_PAGES3) > $@
 
-doc/meintro.me: $(doc_srcdir)/meintro.me.in
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $? >$@
-
-doc/meintro_fr.me: $(doc_srcdir)/meintro_fr.me.in
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $? >$@
-
-doc/meref.me: $(doc_srcdir)/meref.me.in
-	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_SED) $? >$@
-
 $(PROCESSEDDOCFILES_PS): \
   $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
 
-# The me(7) intro French translation gets its own target rule because it
-# needs the "-mfr" option.
-SUFFIXES += _fr.me _fr.ps
-_fr.me._fr.ps:
+# Generating *.me from *.me.in is, surprisingly, a challenge.
+# 1.  A pattern rule ("%.me: %.me.in") is not portable to NetBSD or
+#     OpenBSD make.
+# 2.  A double-suffix rule won't work in an obvious way because its
+#     sematics are that the suffix is replaced, not removed.  You have
+#     to add both suffixes to the .SUFFIXES special target, in order
+#     with the dependency first.
+#       .SUFFIXES: .me.in .me
+#       .me.in.me:
+#		$(DOC_SED) $< >$@
+# 3.  A single-suffix rule works in an isolated Makefile, but _only_
+#     with the .SUFFIXES special target, not with the
+#     (Automake-specific) SUFFIXES macro.
+#       .SUFFIXES: .in
+#       .in:
+#		$(DOC_SED) $< >$@
+#
+# (One can validly complain that approach #3 is too general.)
+#
+# But...
+#
+# 4.  GNU Automake insists that we use the SUFFIXES macro and not the
+#     special target.
+#       error: use variable 'SUFFIXES', not target '.SUFFIXES'
+# 5.  So we have to use target rules, and explicitly write the first
+#     dependency name in the rule commands because NetBSD make (and
+#     reportedly OpenBSD) refuses to honor the $< variable in target
+#     rules.
+#
+# This rigamarole by itself justifies to me the worth of pattern rules
+# (which require neither '.SUFFIXES' nor 'SUFFIXES') and establishing
+# semantics for $< in target rules.  But I won't hold my breath waiting
+# on make(1) implementors to agree.
+SUFFIXES += .me.in .me
+.me.in.me:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -k -Tps -me -mfr >$@
+	&& $(DOC_SED) $< >$@
 
-# For simplicity, we always call preconv, grn, and eqn.
 .me.ps:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -k -Tps -ge -me >$@
+	&& $(DOC_GROFF_ONLY) -Tps -me $< >$@
 
-.ms.ps:
+doc/meintro_fr.ps: doc/meintro_fr.me preconv
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -Tps -ms >$@
+	&& $(DOC_GROFF_ONLY) -k -Tps -me -mfr $< >$@
 
-doc/webpage.ps: $(DOC_GNU_EPS)
-doc/webpage.ps: doc/webpage.ms
+doc/ms.ps: $(doc_srcdir)/ms.ms
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
-	&& $(DOC_GROFF) -I $(doc_builddir) -I $(doc_srcdir) -Tps -ms \
-	  -mwww >$@
+	&& $(DOC_GROFF_ONLY) -t -Tps -ms $(doc_srcdir)/ms.ms >$@
+
+doc/pic.ps: $(doc_srcdir)/pic.ms eqn pic tbl
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF_ONLY) -pet -Tps -ms $(doc_srcdir)/pic.ms >$@
+
+doc/webpage.ps: $(DOC_GNU_EPS) tmac/www.tmac tbl
+doc/webpage.ps: $(doc_srcdir)/webpage.ms
+	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+	&& $(DOC_GROFF_ONLY) -I $(doc_builddir) -I $(doc_srcdir) -Tps \
+	  -t -Tps -ms -mwww $(doc_srcdir)/webpage.ms >$@
+
+# We have no "generic" ms documents.
+#.ms.ps:
+#	$(GROFF_V)$(MKDIR_P) `dirname $@` \
+#	&& $(DOC_GROFF_ONLY) -Tps -ms $< >$@
 
 $(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
   $(bin_PROGRAMS) \
