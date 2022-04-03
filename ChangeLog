@@ -1,5 +1,14 @@
 2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Clean generated doc files better.  doc/me*.me were
+	getting left behind in the build tree.
+	(MOSTLYCLEANFILES): Add `GENERATEDDOCFILES`.  This includes
+	`DOC_GNU_EPS`, so...
+	(clean_maintdoc): Drop phony target that manually removes it.
+	(maintainer-clean-local): Drop dependency on foregoing.
+
+2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/xditview/xditview.am (install_xditview)
 	[!WITHOUT_X11]: Stop backing up existing "GXditview" and
 	"GXditview-color" application defaults files.  There is no

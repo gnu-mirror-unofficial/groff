@@ -79,7 +79,7 @@ PROCESSEDDOCFILES = $(PROCESSEDDOCFILES_PS) \
 otherdocdir = $(docdir)
 dist_otherdoc_DATA = $(DOCFILES_INST) $(GENERATEDDOCFILES)
 nodist_otherdoc_DATA = $(PROCESSEDDOCFILES)
-MOSTLYCLEANFILES += $(PROCESSEDDOCFILES)
+MOSTLYCLEANFILES += $(GENERATEDDOCFILES) $(PROCESSEDDOCFILES)
 else
 EXTRA_DIST += $(DOCFILES_INST) $(GENERATEDDOCFILES)
 endif
@@ -574,7 +574,7 @@ doc_html: doc/groff.html
 install-doc: install-pdf install-html
 
 distclean-local: clean_infodoc clean_otherdoc
-maintainer-clean-local: clean_infodoc clean_otherdoc clean_maintdoc
+maintainer-clean-local: clean_infodoc clean_otherdoc
 clean_infodoc:
 	-$(RM) $(doc_builddir)/groff.info*
 	-$(RM) $(doc_builddir)/groff.pdf
@@ -583,8 +583,6 @@ clean_infodoc:
 clean_otherdoc:
 	-cd $(doc_builddir) && \
 	  $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
-clean_maintdoc:
-	-$(RM) $(DOC_GNU_EPS)
 
 install-data-local: install_infodoc
 install_infodoc: doc/groff.info
