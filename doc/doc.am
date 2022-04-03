@@ -382,14 +382,19 @@ if BUILD_HTML
 	  $(DESTDIR)$(htmldocimagedir)
 endif
 
-install-data-hook: install_doc_examples
+install-data-hook: install_doc_gnu_eps install_doc_examples
+
+install_doc_gnu_eps: $(DOC_GNU_EPS)
+	for d in $(doc_builddir) $(doc_srcdir); do \
+	  if test -f "$$d/gnu.eps"; then \
+	    $(RM) $(DESTDIR)$(exampledir)/gnu.eps; \
+	    $(INSTALL_DATA) \
+	      $$d/gnu.eps $(DESTDIR)$(exampledir)/gnu.eps; \
+	    break; \
+	  fi; \
+	done
+
 install_doc_examples: $(DOC_GNU_EPS)
-if BUILD_EXAMPLES
-# Prefer gnu.eps in builddir over srcdir.
-	d=.; test -f "gnu.eps" || d=$(doc_srcdir); \
-	  $(RM) $(DESTDIR)$(exampledir)/gnu.eps; \
-	  $(INSTALL_DATA) $$d/gnu.eps $(DESTDIR)$(exampledir)/gnu.eps
-endif
 if BUILD_HTMLEXAMPLES
 	cd $(doc_builddir) && \
 	for f in `ls $(HTMLEXAMPLEFILESALL)`; do \

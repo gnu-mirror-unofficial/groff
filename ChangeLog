@@ -1,5 +1,17 @@
 2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Stop treating "gnu.eps" as an "example" file; it
+	is also used by pdfmark's cover.ms, which is ordinary
+	documentation.  We therefore must not omit it when building.
+	(install-data-hook): Add dependency on new phony target,
+	"install_doc_gnu_eps".
+	(install_doc_examples): Move installation of "gnu.eps" from
+	here...
+	(install_doc_gnu_eps): ...to here.  Also refactor the loop we
+	use to locate the file follow a more idiomatic pattern.
+
+2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (dist-info-bits, install_infodoc, dist-gnueps): Fix
 	code style nit: use consistent "brace style" in conditionals and
 	loops.
