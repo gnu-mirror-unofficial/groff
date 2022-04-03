@@ -98,14 +98,6 @@ install_xditview: \
 	  $(DESTDIR)$(fontdir)/FontMap-X11
 	-test -d $(DESTDIR)$(appresdir) \
 	  || $(mkinstalldirs) $(DESTDIR)$(appresdir)
-	if test -f $(DESTDIR)$(appresdir)/GXditview; then \
-	  mv $(DESTDIR)$(appresdir)/GXditview \
-	    $(DESTDIR)$(appresdir)/GXditview.old; \
-	fi
-	if test -f $(DESTDIR)$(appresdir)/GXditview-color; then \
-	  mv $(DESTDIR)$(appresdir)/GXditview-color \
-	    $(DESTDIR)$(appresdir)/GXditview-color.old; \
-	fi
 	$(INSTALL_DATA) $(xditview_srcdir)/GXditview.ad \
 	  $(DESTDIR)$(appresdir)/GXditview
 	$(INSTALL_DATA) $(xditview_srcdir)/GXditview-color.ad \

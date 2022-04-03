@@ -1,5 +1,18 @@
 2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/devices/xditview/xditview.am (install_xditview)
+	[!WITHOUT_X11]: Stop backing up existing "GXditview" and
+	"GXditview-color" application defaults files.  There is no
+	symmetric restoration of them in the uninstall target, and it
+	seems like unjustifiable complexity to add such.  These are
+	groff-specific file names, installed (by default) to /usr,
+	not /etc, so they are not going to be "configuration files" in
+	Debian-based systems, for example (and likely not elsewhere).
+	There are other ways to supersede application defaults for
+	programs using the X Toolkit Intrinsicts.
+
+2022-04-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Stop treating "gnu.eps" as an "example" file; it
 	is also used by pdfmark's cover.ms, which is ordinary
 	documentation.  We therefore must not omit it when building.
