@@ -31,6 +31,16 @@
 
 2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Trivially refactor shell style in rule commands.
+	The placement of `&&` was inconsistent.  Always begin a
+	continued rule line with it, and don't give it its own
+	indentation level.  In general, operators adjacent to line
+	continuations should _follow_ the continuations because they are
+	easier for humans to spot at the (possibly indented) beginning
+	of a physical line.
+
+2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* Makefile.am: Rename `TFLAG` macro, which means "tmac flag", to
 	`MFLAG`, because it expands to `-M` options to groff, not the
 	`-T` option, which can be bewildering.

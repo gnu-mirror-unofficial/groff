@@ -367,14 +367,14 @@ mostlyclean-local: mostlyclean_doc
 mostlyclean_doc:
 if BUILD_HTML
 	if test -d $(doc_builddir); then \
-	  cd $(doc_builddir) && \
-	  for f in $(HTMLDOCFILESALL); do \
+	  cd $(doc_builddir) \
+	  && for f in $(HTMLDOCFILESALL); do \
 	    $(RM) $$f; \
 	  done; \
 	fi
 	if test -d $(doc_builddir)/img; then \
-	  cd $(doc_builddir)/img && \
-	  for f in $(HTMLDOCIMAGEFILES); do \
+	  cd $(doc_builddir)/img \
+	  && for f in $(HTMLDOCIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
 	  rmdir  $(doc_builddir)/img || :; \
@@ -385,14 +385,14 @@ endif
 	fi
 if BUILD_HTMLEXAMPLES
 	if test -d $(doc_builddir); then \
-	  cd $(doc_builddir) && \
-	  for f in $(HTMLEXAMPLEFILESALL); do \
+	  cd $(doc_builddir) \
+	  && for f in $(HTMLEXAMPLEFILESALL); do \
 	    $(RM) $$f; \
 	  done; \
 	fi
 	if test -d $(doc_builddir)/img; then \
-	  cd $(doc_builddir)/img && \
-	  for f in $(HTMLEXAMPLEIMAGEFILES); do \
+	  cd $(doc_builddir)/img \
+	  && for f in $(HTMLEXAMPLEIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
 	  rmdir  $(doc_builddir)/img || :; \
@@ -402,8 +402,8 @@ endif
 install-data-hook: install_doc_htmldoc
 install_doc_htmldoc:
 if BUILD_HTML
-	cd $(doc_builddir) && \
-	for f in `ls $(HTMLDOCFILESALL)`; do \
+	cd $(doc_builddir) \
+	&& for f in `ls $(HTMLDOCFILESALL)`; do \
 	  $(RM) $(DESTDIR)$(htmldocdir)/$$f; \
 	  $(INSTALL_DATA) $$f $(DESTDIR)$(htmldocdir)/$$f; \
 	done
@@ -428,8 +428,8 @@ install_doc_gnu_eps: $(DOC_GNU_EPS)
 
 install_doc_examples: $(DOC_GNU_EPS)
 if BUILD_HTMLEXAMPLES
-	cd $(doc_builddir) && \
-	for f in `ls $(HTMLEXAMPLEFILESALL)`; do \
+	cd $(doc_builddir) \
+	&& for f in `ls $(HTMLEXAMPLEFILESALL)`; do \
 	  $(RM) $(DESTDIR)$(exampledir)/$$f; \
 	  $(INSTALL_DATA) $$f $(DESTDIR)$(exampledir)/$$f; \
 	done
@@ -448,14 +448,14 @@ if BUILD_EXAMPLES
 	$(RM) $(DESTDIR)$(exampledir)/gnu.eps
 endif
 if BUILD_HTMLEXAMPLES
-	-test -d $(DESTDIR)$(docexamplesdir) && \
-	cd $(DESTDIR)$(docexamplesdir) && \
-	for f in $(HTMLEXAMPLEFILESALL); do \
+	-test -d $(DESTDIR)$(docexamplesdir) \
+	&& cd $(DESTDIR)$(docexamplesdir) \
+	&& for f in $(HTMLEXAMPLEFILESALL); do \
 	  $(RM) $$f; \
 	done
-	-test -d $(DESTDIR)$(docexamplesdir)/$(imagedir) && \
-	cd $(DESTDIR)$(docexamplesdir)/$(imagedir) && \
-	for f in $(HTMLEXAMPLEIMAGEFILES); do \
+	-test -d $(DESTDIR)$(docexamplesdir)/$(imagedir) \
+	&& cd $(DESTDIR)$(docexamplesdir)/$(imagedir) \
+	&& for f in $(HTMLEXAMPLEIMAGEFILES); do \
 	  $(RM) $$f; \
 	done
 	-rmdir $(DESTDIR)$(docexamplesdir)/$(imagedir)
@@ -464,14 +464,14 @@ endif
 
 uninstall_doc_htmldoc:
 if BUILD_HTML
-	-test -d $(DESTDIR)$(htmldocdir) && \
-	cd $(DESTDIR)$(htmldocdir) && \
-	for f in $(HTMLDOCFILESALL); do \
+	-test -d $(DESTDIR)$(htmldocdir) \
+	&& cd $(DESTDIR)$(htmldocdir) \
+	&& for f in $(HTMLDOCFILESALL); do \
 	  $(RM) $$f; \
 	done
-	-test -d $(DESTDIR)$(htmldocdir)/$(imagedir) && \
-	cd $(DESTDIR)$(htmldocdir)/$(imagedir) && \
-	for f in $(HTMLDOCIMAGEFILES); do \
+	-test -d $(DESTDIR)$(htmldocdir)/$(imagedir) \
+	&& cd $(DESTDIR)$(htmldocdir)/$(imagedir) \
+	&& for f in $(HTMLDOCIMAGEFILES); do \
 	  $(RM) $$f; \
 	done
 	-rmdir $(DESTDIR)$(htmldocdir)/$(imagedir)
@@ -613,8 +613,8 @@ clean_infodoc:
 	$(RM) $(doc_builddir)/groff.dvi
 	$(RM) -r $(doc_builddir)/groff.html.*
 clean_otherdoc:
-	-cd $(doc_builddir) && \
-	  $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
+	-cd $(doc_builddir) \
+	&& $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
 
 install-data-local: install_infodoc
 install_infodoc: doc/groff.info
