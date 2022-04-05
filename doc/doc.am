@@ -446,7 +446,7 @@ uninstall-hook: \
   uninstall_doc_examples uninstall_doc_htmldoc uninstall_mom
 uninstall_doc_examples:
 if BUILD_EXAMPLES
-	$(RM) -f $(DESTDIR)$(exampledir)/gnu.eps
+	$(RM) $(DESTDIR)$(exampledir)/gnu.eps
 endif
 if BUILD_HTMLEXAMPLES
 	-test -d $(DESTDIR)$(docexamplesdir) && \
@@ -609,10 +609,10 @@ install-doc: install-pdf install-html
 distclean-local: clean_infodoc clean_otherdoc
 maintainer-clean-local: clean_infodoc clean_otherdoc
 clean_infodoc:
-	-$(RM) $(doc_builddir)/groff.info*
-	-$(RM) $(doc_builddir)/groff.pdf
-	-$(RM) $(doc_builddir)/groff.dvi
-	-$(RM) -r $(doc_builddir)/groff.html.*
+	$(RM) $(doc_builddir)/groff.info*
+	$(RM) $(doc_builddir)/groff.pdf
+	$(RM) $(doc_builddir)/groff.dvi
+	$(RM) -r $(doc_builddir)/groff.html.*
 clean_otherdoc:
 	-cd $(doc_builddir) && \
 	  $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
@@ -652,9 +652,9 @@ uninstall_infodoc:
 	  $(RM) $$f; \
 	done
 uninstall-pdf:
-	-$(RM) -f $(DESTDIR)$(pdfdocdir)/groff.pdf
+	$(RM) $(DESTDIR)$(pdfdocdir)/groff.pdf
 uninstall-html:
-	-$(RM) -r $(DESTDIR)$(htmldocdir)/groff.html.*
+	$(RM) $(DESTDIR)$(htmldocdir)/groff.html.*
 
 # An image of a gnu in enscapsulated PostScript is generated during the
 # build process if possible.

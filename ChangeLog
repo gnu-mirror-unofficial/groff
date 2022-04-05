@@ -1,3 +1,16 @@
+2022-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/doc.am: Trivially refactor.  Use `RM` macro idiomatically.
+	Automake ensures that it is defined to call an `rm` command with
+	the `-f` option, and this in turn ignores failures to delete
+	nonexistent files, so...
+	(uninstall_doc_examples, uninstall-pdf): Stop adding superfluous
+	`-f` flag.
+	(clean_infodoc uninstall-pdf, uninstall-html): Stop prefixing
+	command with `-` to ignore error exit status.
+	(uninstall-html): Drop superfluous `-r` flag; we're only
+	deleting files with this command, not directories.
+
 2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Refactor and fix error in builds in remote
