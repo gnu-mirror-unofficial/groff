@@ -36,8 +36,7 @@ DOC_SED = $(SED) \
 DOC_GROFF=\
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
-  $(GROFFBIN) -I$(abs_top_builddir) -M $(doc_srcdir) $(TFLAG) $(FFLAG) \
-    -ww -b
+  $(GROFFBIN) -M $(doc_srcdir) $(TFLAG) $(FFLAG) -ww -b
 
 # This image file is used by several documents in the groff source tree.
 DOC_GNU_EPS=doc/gnu.eps
@@ -344,9 +343,9 @@ doc/webpage.html: $(DOC_GNU_EPS) $(doc_srcdir)/groff.css
 doc/webpage.html: $(doc_srcdir)/webpage.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
-	&& $(DOC_GROFF) -t -I $(doc_builddir) -I $(doc_srcdir) \
-	  -P-jwebpage -P-nrb -P-Iwebpage -P-Dimg -Thtml -ms \
-	  $(doc_srcdir)/webpage.ms > webpage.html
+	&& $(DOC_GROFF) -t -I $(doc_srcdir) -P-jwebpage -P-nrb \
+	  -P-Iwebpage -P-Dimg -Thtml -ms $(doc_srcdir)/webpage.ms \
+	  > webpage.html
 
 # We remove groff.css only from an out-of-source build tree.
 mostlyclean-local: mostlyclean_doc
@@ -502,7 +501,7 @@ doc/groff.info: $(doc_srcdir)/groff.texi
 	$(AM_V_GEN)LANG=C \
 	LC_ALL=C \
 	$(MAKEINFO) -o doc/groff.info --enable-encoding \
-	  -I$(doc_srcdir) $(doc_srcdir)/groff.texi
+	  -I $(doc_srcdir) $(doc_srcdir)/groff.texi
 
 # Distribute the Info files.
 dist-hook: dist-info-bits
@@ -521,7 +520,7 @@ MAINTAINERCLEANFILES += doc/groff.txt
 	$(AM_V_at)$(MKDIR_P) $(doc_builddir)
 	$(AM_V_GEN)LANG=C \
 	LC_ALL=C \
-	$(MAKEINFO) --enable-encoding -I$(doc_srcdir) --plaintext \
+	$(MAKEINFO) --enable-encoding -I $(doc_srcdir) --plaintext \
 	  -o $@ $<
 
 # Generate HTML, both split into several files, and as a single file.

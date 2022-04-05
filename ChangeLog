@@ -1,5 +1,14 @@
 2022-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Drop unnecessary `-I` options to groff.
+	(DOC_GROFF): There is no need to look at the top of the build
+	directory for any file inclusions.
+	(doc/webpage.html): There is no need to look in `doc_builddir`
+	for file inclusions, since that is the current working directory
+	when "webpage.ms" is processed.
+
+2022-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Trivially refactor.  Use `RM` macro idiomatically.
 	Automake ensures that it is defined to call an `rm` command with
 	the `-f` option, and this in turn ignores failures to delete
