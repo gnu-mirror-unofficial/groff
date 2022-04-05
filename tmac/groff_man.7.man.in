@@ -152,12 +152,12 @@ _
 \&.IB	Italic, bold alternating	Font style macros
 \&.IP	Indented paragraph	Paragraphing macros
 \&.IR	Italic, roman alternating	Font style macros
-\&.LP	(Left) paragraph	Paragraphing macros
+\&.LP	Begin paragraph	Paragraphing macros
 \&.ME	Mail-to end	Hyperlink macros
 \&.MR	Man page cross reference	Hyperlink macros
 \&.MT	Mail-to start	Hyperlink macros
-\&.P	Paragraphing	Paragraphing macros
-\&.PP	Paragraphing	Paragraphing macros
+\&.P	Begin paragraph	Paragraphing macros
+\&.PP	Begin paragraph	Paragraphing macros
 \&.RB	Roman, bold alternating	Font style macros
 \&.RE	Relative inset end	Document structure macros
 \&.RI	Roman, italic alternating	Font style macros
@@ -922,15 +922,13 @@ has already been called without a corresponding
 .BR .YS ,
 in which case only a break is performed.
 .
-Hyphenation is turned off.
+Automatic hyphenation is disabled.
 .
-The
 .I command
-argument is set in bold.
+is set in bold.
 .
-The output line is filled as normal,
-but if a break is required,
-subsequent output lines are indented by the width of
+If a break is required,
+lines after the first are indented by the width of
 .I command
 plus a space.
 .
@@ -939,7 +937,8 @@ plus a space.
 .B .YS
 End synopsis.
 .
-Restore previous indentation and initial hyphenation mode.
+The previous indentation amount and initial hyphenation mode are
+restored.
 _ifstyle()dnl
 .
 .
