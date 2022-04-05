@@ -13,6 +13,14 @@
 
 2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor.
+	(doc/pic.html, doc/webpage.html): Drop indirection of source
+	document through `DOC_SED` macro.  It was not necessary since
+	neither of these documents are parameterized in configuration
+	options (that is, they don't contain @VERSION@ or @g@).
+
+2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Trivially refactor.
 	(doc/webpage.html): Tidy up dependency list.  Create directory
 	using the same macro interpolation we use to change into it.

@@ -339,11 +339,8 @@ doc/pic.html: $(devhtmlfont_DATA)
 doc/pic.html: $(doc_srcdir)/pic.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
-	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
-	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/pic.ms$$nl" \
-	  $(doc_srcdir)/pic.ms \
-	   | $(DOC_GROFF_ONLY) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
-	   > pic.html
+	&& $(DOC_GROFF_ONLY) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
+	  $(doc_srcdir)/pic.ms > pic.html
 
 doc/webpage.html: tmac/www.tmac
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
@@ -354,12 +351,9 @@ doc/webpage.html: $(DOC_GNU_EPS) $(doc_srcdir)/groff.css
 doc/webpage.html: $(doc_srcdir)/webpage.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
-	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
-	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
-	  $(doc_srcdir)/webpage.ms \
-	   | $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
-	     -P-jwebpage -P-nrb -P-Iwebpage -P-Dimg -Thtml -ms \
-	     > webpage.html
+	&& $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
+	  -P-jwebpage -P-nrb -P-Iwebpage -P-Dimg -Thtml -ms \
+	  $(doc_srcdir)/webpage.ms > webpage.html
 
 # We remove groff.css only from an out-of-source build tree.
 mostlyclean-local: mostlyclean_doc
