@@ -735,7 +735,8 @@ see
 is a Unicode numeric special character escape sequence.
 .
 With this form,
-any Unicode point can be indicated using four to six hexadecimal digits,
+any Unicode character can be accessed by code point using four to six
+hexadecimal digits,
 with hexadecimal letters accepted in uppercase form only.
 .
 Thus,
@@ -1282,7 +1283,7 @@ can be used for other mathematical symbols as well,
 for example
 .B \[rs](lf
 and
-.B \[rs](rf
+.BR \[rs](rf ,
 which provide the floor operator.
 .
 Some output devices,
@@ -1291,18 +1292,18 @@ such as
 don't unify such glyphs.
 .
 For this reason,
-the four glyphs
+the glyphs
 .BR \[rs][lf] ,
 .BR \[rs][rf] ,
 .BR \[rs][lc] ,
 and
-.BR \[rs][rc] ,
+.B \[rs][rc]
 are not unified with similar-looking bracket pieces.
 .
 In
 .IR groff ,
 only glyphs with long names are guaranteed to pile up correctly for all
-devices\[em]provided those glyphs exist.
+devices\[em]provided those glyphs are available.
 .
 .
 .TS
@@ -1916,9 +1917,7 @@ The plus,
 minus,
 and equals signs appeared in the special font despite availability in
 text fonts \[lq]to insulate the appearance of equations from the choice
-of standard [read: text] fonts\[rq].
-.
-Recall that
+of standard [read: text] fonts\[rq]\[em]a priority since
 .I troff \" AT&T
 was turned to the task of mathematical typesetting as soon as it was
 developed.
@@ -1959,8 +1958,8 @@ Lf(I),Lf(R).
 One ASCII character as rendered by the Model 37 was apparently
 abandoned.
 .
-That device printed decimal 124 (|) as a broken vertical line,
-like Unicode U+00A6.
+That device printed decimal 124 (\[or]) as a broken vertical line,
+like Unicode U+00A6 (\[bb]).
 .
 No equivalent was available on the C/A/T;
 the box rule
@@ -1973,8 +1972,8 @@ brace vertical extension
 .\" special font, not a bold text font.
 .BR \[rs][bv] ,
 and \[lq]or\[rq] operator
-.BR \[rs][or] ,
-were used as appropriate to the context.
+.B \[rs][or]
+were used as contextually appropriate.
 .
 .
 .\" ====================================================================
@@ -2062,13 +2061,14 @@ The Unicode Standard
 .UE
 .
 .
+.br
+.ne 2v
 .P
 .UR https://\:www\:.aivosto\:.com/\:articles/\:charsets\-7bit\:.html
 \[lq]7-bit Character Sets\[rq]
 .UE
-by Tuomas Salste documents the inherent ambiguity and configurability
-(in terms of variable code points)
-of the ASCII encoding standard.
+by Tuomas Salste documents the inherent ambiguity and configurable code
+points of the ASCII encoding standard.
 .
 .
 .P
