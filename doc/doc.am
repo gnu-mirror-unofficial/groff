@@ -249,36 +249,51 @@ $(PROCESSEDDOCFILES_PS): \
 # Generating *.me from *.me.in is, surprisingly, a challenge.
 # 1.  A pattern rule ("%.me: %.me.in") is not portable to NetBSD or
 #     OpenBSD make.
-# 2.  A double-suffix rule won't work in an obvious way because its
-#     sematics are that the suffix is replaced, not removed.  You have
-#     to add both suffixes to the .SUFFIXES special target, in order
-#     with the dependency first.
-#       .SUFFIXES: .me.in .me
-#       .me.in.me:
-#		$(DOC_SED) $< >$@
-# 3.  A single-suffix rule works in an isolated Makefile, but _only_
+# 2.  A single-suffix rule works in an isolated Makefile, but _only_
 #     with the .SUFFIXES special target, not with the
 #     (Automake-specific) SUFFIXES macro.
 #       .SUFFIXES: .in
 #       .in:
 #		$(DOC_SED) $< >$@
-#
-# (One can validly complain that approach #3 is too general.)
-#
-# But...
-#
-# 4.  GNU Automake insists that we use the SUFFIXES macro and not the
+#     (One can validly complain that this approach is too general.)
+# 3.  GNU Automake insists that we use the SUFFIXES macro and not the
 #     special target.
 #       error: use variable 'SUFFIXES', not target '.SUFFIXES'
-# 5.  So we have to use target rules, and explicitly write the first
+# 4.  What about a target rule?  We'd have to explicitly write the first
 #     dependency name in the rule commands because NetBSD make (and
 #     reportedly OpenBSD) refuses to honor the $< variable in target
 #     rules.
 #
-# This rigamarole by itself justifies to me the worth of pattern rules
-# (which require neither '.SUFFIXES' nor 'SUFFIXES') and establishing
-# semantics for $< in target rules.  But I won't hold my breath waiting
-# on make(1) implementors to agree.
+# So what is left?  A double-suffix rule--but you have to use it in a
+# special way that is explicitly not countenanced by POSIX.
+#
+#   "The application shall ensure that the target portion is a valid
+#   target name (see Target Rules) of the form .s2 or .s1.s2 (where .s1
+#   and .s2 are suffixes that have been given as prerequisites of the
+#   .SUFFIXES special target and s1 and s2 do not contain any <slash> or
+#   <period> characters.) If there is only one <period> in the target,
+#   it is a single-suffix inference rule. Targets with two periods are
+#   double-suffix inference rules. Inference rules can have only one
+#   target before the <colon>."
+#     (POSIX Issue 8, make(1), "Inference Rules")
+#
+# A double-suffix rule won't work in an obvious way because its
+# semantics are that the suffix is replaced, not removed.  You have to
+# add both suffixes to the .SUFFIXES special target, in order with the
+# dependency first.
+#   .SUFFIXES: .me.in .me
+#   .me.in.me:
+#	$(DOC_SED) $< >$@
+# Thanks to Automake, we must say
+#   SUFFIXES += .me.in .me
+# for reason 3 above.  The GNU Automake manual does not explicitly state
+# that it preserves the ordering of the suffixes, but for now it does.
+#
+# It appears to be dumb luck that this works; the rigamarole by itself
+# justifies to me the worth of GNU Make's pattern rules (which require
+# neither '.SUFFIXES' nor 'SUFFIXES') and establishing semantics for $<
+# in target rules.  But I won't hold my breath waiting on other make(1)
+# implementors to agree.  -- GBR
 SUFFIXES += .me.in .me
 .me.in.me:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
