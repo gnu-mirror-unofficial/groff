@@ -350,11 +350,9 @@ doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
 doc/webpage.html: doc/examples.stamp
 doc/webpage.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
 doc/webpage.html: $(devhtmlfont_DATA)
-doc/webpage.html: \
-  $(doc_srcdir)/webpage.ms \
-  $(DOC_GNU_EPS) \
-  $(doc_srcdir)/groff.css
-	$(GROFF_V)$(MKDIR_P) doc \
+doc/webpage.html: $(DOC_GNU_EPS) $(doc_srcdir)/groff.css
+doc/webpage.html: $(doc_srcdir)/webpage.ms
+	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
