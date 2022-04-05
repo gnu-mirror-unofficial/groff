@@ -1,3 +1,30 @@
+2022-04-05  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* doc/doc.am: Refactor and fix error in builds in remote
+	out-of-source-tree builds exposed by pending commit and `make
+	distcheck`.  The images generated for the pic.html and
+	webpage.html files were being built in the wrong directory, and
+	subsequently not found by an install rule.
+	(imagedir): Add comment explaining purpose of macro.  It should
+	_not_ be used with any file specifications relative to the
+	source or build trees--it is for installation directories only.
+	(htmldocimagedir, exampleimagedir): Drop macros.
+
+	(doc/pic.html, doc/webpage.html): Replace interpolations of
+	`imagedir` with literal "img", since these files are being
+	generated within the build tree: the directory name is known.
+
+	(mostlyclean_doc, install_doc_htmldoc, install_doc_examples):
+	Replace interpolations of `htmldocimagedir` relative to
+	`doc_builddir` with "img" literals.
+
+	(install_doc_htmldoc, uninstall_doc_htmldoc): Interpolate
+	concatenation of `htmldocdir` and `imagedir` instead of
+	`htmldocimagedir` (relative to `DESTDIR`).
+	(install_doc_examples, uninstall_doc_examples): Interpolate
+	concatenation of `exampledir` and `imagedir` instead of
+	`exampleimagedir` (relative to `DESTDIR`).
+
 2022-04-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* doc/doc.am: Refactor.  Relocate "doc/grnexampl.ps" target to

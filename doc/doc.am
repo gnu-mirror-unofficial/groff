@@ -141,9 +141,10 @@ htmlexamplesdir = $(exampledir)
 nodist_htmlexamples_DATA = $(HTMLEXAMPLEFILES)
 endif
 
+# Locate image subdirectory for HTML documents relative to an
+# installation directory such as `htmldocdir` or `exampledir`.  Do _not_
+# use for locating files within the source or build trees.
 imagedir = img
-htmldocimagedir = $(htmldocdir)/img
-exampleimagedir = $(exampledir)/img
 
 EXTRA_DIST += \
   doc/txi-en.tex
@@ -341,8 +342,8 @@ doc/pic.html: $(doc_srcdir)/pic.ms
 	&& nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/pic.ms$$nl" \
 	  $(doc_srcdir)/pic.ms \
-	   | $(DOC_GROFF_ONLY) -pet -P-Ipic -P-D$(imagedir) -P-jpic \
-	                       -Thtml -ms > pic.html
+	   | $(DOC_GROFF_ONLY) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
+	   > pic.html
 
 doc/webpage.html: tmac/www.tmac
 doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
@@ -359,10 +360,10 @@ doc/webpage.html: \
 	  $(DOC_SED) -e "1i\\$$nl.lf 1 $(doc_srcdir)/webpage.ms$$nl" \
 	  $(doc_srcdir)/webpage.ms \
 	   | $(DOC_GROFF_ONLY) -t -I $(doc_builddir) -I $(doc_srcdir) \
-	     -P-jwebpage -P-nrb -P-Iwebpage -P-D$(imagedir) -Thtml -ms \
+	     -P-jwebpage -P-nrb -P-Iwebpage -P-Dimg -Thtml -ms \
 	     > webpage.html
 
-# Note that we remove groff.css only if out-of-source build tree
+# We remove groff.css only from an out-of-source build tree.
 mostlyclean-local: mostlyclean_doc
 mostlyclean_doc:
 if BUILD_HTML
@@ -372,18 +373,17 @@ if BUILD_HTML
 	    $(RM) $$f; \
 	  done; \
 	fi
-	if test -d $(doc_builddir)/$(imagedir); then \
-	  cd $(doc_builddir)/$(imagedir) && \
+	if test -d $(doc_builddir)/img; then \
+	  cd $(doc_builddir)/img && \
 	  for f in $(HTMLDOCIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
-	  rmdir  $(doc_builddir)/$(imagedir) || :; \
+	  rmdir  $(doc_builddir)/img || :; \
 	fi
 endif
 	if test $(top_builddir) != $(top_srcdir); then \
 	  $(RM) $(top_builddir)/doc/groff.css; \
 	fi
-
 if BUILD_HTMLEXAMPLES
 	if test -d $(doc_builddir); then \
 	  cd $(doc_builddir) && \
@@ -391,12 +391,12 @@ if BUILD_HTMLEXAMPLES
 	    $(RM) $$f; \
 	  done; \
 	fi
-	if test -d $(doc_builddir)/$(imagedir); then \
-	  cd $(doc_builddir)/$(imagedir) && \
+	if test -d $(doc_builddir)/img; then \
+	  cd $(doc_builddir)/img && \
 	  for f in $(HTMLEXAMPLEIMAGEFILES); do \
 	    $(RM) $$f; \
 	  done; \
-	  rmdir  $(doc_builddir)/$(imagedir) || :; \
+	  rmdir  $(doc_builddir)/img || :; \
 	fi
 endif
 
@@ -408,12 +408,11 @@ if BUILD_HTML
 	  $(RM) $(DESTDIR)$(htmldocdir)/$$f; \
 	  $(INSTALL_DATA) $$f $(DESTDIR)$(htmldocdir)/$$f; \
 	done
-	-test -d $(DESTDIR)$(htmldocimagedir) \
-	  || $(mkinstalldirs) $(DESTDIR)$(htmldocimagedir)
-	$(RM) $(DESTDIR)$(htmldocimagedir)/$(HTMLDOCIMAGEFILES)
-	$(INSTALL_DATA) \
-	  $(doc_builddir)/$(imagedir)/$(HTMLDOCIMAGEFILES) \
-	  $(DESTDIR)$(htmldocimagedir)
+	-test -d $(DESTDIR)$(htmldocdir)/$(imagedir) \
+	  || $(mkinstalldirs) $(DESTDIR)$(htmldocdir)/$(imagedir)
+	$(RM) $(DESTDIR)$(htmldocdir)/$(imagedir)/$(HTMLDOCIMAGEFILES)
+	$(INSTALL_DATA) $(doc_builddir)/img/$(HTMLDOCIMAGEFILES) \
+	  $(DESTDIR)$(htmldocdir)/$(imagedir)
 endif
 
 install-data-hook: install_doc_gnu_eps install_doc_examples
@@ -435,12 +434,12 @@ if BUILD_HTMLEXAMPLES
 	  $(RM) $(DESTDIR)$(exampledir)/$$f; \
 	  $(INSTALL_DATA) $$f $(DESTDIR)$(exampledir)/$$f; \
 	done
-	-test -d $(DESTDIR)$(exampleimagedir) \
-	  || $(mkinstalldirs) $(DESTDIR)$(exampleimagedir)
-	$(RM) $(DESTDIR)$(exampleimagedir)/$(HTMLEXAMPLEIMAGEFILES)
-	$(INSTALL_DATA) \
-	  $(doc_builddir)/$(imagedir)/$(HTMLEXAMPLEIMAGEFILES) \
-	  $(DESTDIR)$(exampleimagedir)
+	-test -d $(DESTDIR)$(exampledir)/$(imagedir) \
+	  || $(mkinstalldirs) $(DESTDIR)$(exampledir)/$(imagedir)
+	$(RM) \
+	  $(DESTDIR)$(exampledir)/$(imagedir)/$(HTMLEXAMPLEIMAGEFILES)
+	$(INSTALL_DATA) $(doc_builddir)/img/$(HTMLEXAMPLEIMAGEFILES) \
+	  $(DESTDIR)$(exampledir)/$(imagedir)
 endif
 
 uninstall-hook: \
@@ -653,7 +652,7 @@ uninstall_infodoc:
 	  $(RM) $$f; \
 	done
 uninstall-pdf:
-	-$(RM) -f $(DESTDIR)$(pdfdocdir)/groff.pdf 
+	-$(RM) -f $(DESTDIR)$(pdfdocdir)/groff.pdf
 uninstall-html:
 	-$(RM) -r $(DESTDIR)$(htmldocdir)/groff.html.*
 
