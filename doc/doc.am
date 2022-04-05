@@ -554,6 +554,9 @@ MAINTAINERCLEANFILES += doc/groff.html doc/groff.html.node
 	$(MAKEINFO) --html -I $(doc_srcdir) --no-split \
 	  -o $@ $<
 
+# The distribution archive gets these formats too; TeX is required.
+EXTRA_DIST += doc/groff.dvi doc/groff.pdf
+
 # GNU Make has a built-in variable TEXI2DVI, but that is not true of
 # all 'make' implementations.  As it defaults to 'texi2dvi', we (at
 # worst) harmlessly redefine it here.
