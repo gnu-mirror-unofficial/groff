@@ -3878,9 +3878,7 @@ _
 .
 .
 .TP
-.\" Keep TWO spaces before that \c.
-\(bu Why doesn't the package provide a string to insert an ellipsis?  \c
-How do I make one?
+\(bu Why doesn't the package provide a string to insert an ellipsis?
 .
 Examples of ellipsis usage are shown above,
 in subsection \[lq]Command synopsis macros\[rq].
@@ -3901,7 +3899,7 @@ non-printing input break escape sequence
 .
 That fact stands even if a string is defined to contain the sequence;
 moreover,
-if the input breaks were included unconditionally as part of the string,
+if the string included the input breaks,
 end-of-sentence detection would be defeated in the event you used such a
 string at the end of an actual sentence.
 .
@@ -3912,28 +3910,33 @@ A hypothetical string
 .B EL
 that contained an ellipsis,
 but not the trailing input break,
-would be interpolated when the trailing input break was needed.
-.
-Compare and contrast.
+would then need to be suffixed with
+.B \[rs]&
+when not ending a sentence.
 .
 .RS
 .RS
 .EX
-Arguments are foo bar \[rs]*[EL]\[rs]& unless an option is given.
-Arguments are foo bar .\[rs]|.\[rs]|.\[rs]& unless an option is given.
+Arguments are foo bar \[rs]*[EL]\[rs]& except when debugging.
+Arguments are foo bar .\[rs]|.\[rs]|.\[rs]& except when debugging.
 .EE
 .RE
 .
-By using a string,
-a whopping one character of typing has been saved,
-and even the presence of an ellipsis is obscured.
+Such a string saves one character of typing,
+at the cost of obscuring even the suggestion of an ellipsis to a casual
+reader of the source document.
 .RE
 .
 .
 .IP
-Some fonts have an ellipsis character,
-and there is a Unicode character for it,
-but we discourage the use of these;
+There is an ellipsis code point in Unicode,
+and some fonts have an ellipsis glyph,
+which some man pages have accessed in a non-portable way with the
+font-dependent
+.B \[rs]N
+escape sequence.
+.
+We discourage the use of these;
 they usually crowd the dots into a single character cell,
 and will not render at all if the output device doesn't have the glyph.
 .
