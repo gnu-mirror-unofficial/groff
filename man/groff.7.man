@@ -399,8 +399,9 @@ but suppresses the break implied by the
 .request .sp ,
 .request .ti ,
 .request .trf ,
-requests;
-if the no-break control character is used with any of these requests,
+requests.
+.
+If the no-break control character is used with any of these requests,
 .I @g@troff
 suppresses the break;
 instead the requested operation takes effect at the next break.
@@ -424,7 +425,7 @@ special character escape sequence to format a neutral apostrophe glyph.
 .IP \[dq]
 The neutral double quote can be used to enclose arguments to macros and
 strings,
-and is required if those arguments contain ordinary inter-word spaces.
+and is required if those arguments contain space or tab characters.
 .
 In the
 .request .ds ,
@@ -579,7 +580,7 @@ or escape sequence.
 Input line continuation is invisible to the formatter,
 with two exceptions:
 the
-.B |
+.B \[or]
 operator recognizes the new input line,
 and the input line counter register
 .B .c
@@ -962,7 +963,7 @@ evaluates to
 .RB \[lq] 1 \[rq]
 because
 .I @g@troff
-treats negative numbers and zero as false.}
+treats negative numbers and zero as false.)
 .
 .
 .P
@@ -1038,7 +1039,7 @@ operators.\" @xref{Setting Registers}, for examples.
 .
 .P
 A leading
-.B |
+.B \[or]
 operator indicates a motion relative not to the current position but to
 a boundary.
 .
@@ -1052,12 +1053,12 @@ By default,
 tab stops reckon movements in this way.
 Most escape sequences do not;
 .\" XXX: Which ones do?
-.B |
+.B \[or]
 tells them to do so.
 .
 For vertical movements,
 the
-.B |
+.B \[or]
 operator specifies a distance from the first text baseline on the page
 or in the current diversion,
 using the current vertical spacing.
@@ -1133,9 +1134,9 @@ line
 .P
 It is frequently desirable for a control structure to govern more than
 one request,
-call more than one macro,
-span more than one text line,
-or mix the foregoing.
+macro call,
+or text line,
+or a combination of the foregoing.
 .
 The opening and closing brace escape sequences
 .esc {
@@ -3031,7 +3032,7 @@ Positive values are downwards.
 Prefixing
 .I N
 with the
-.B |
+.B \[or]
 operator moves to a position relative to the page top for positive
 .IR N ,
 and the bottom if
@@ -4010,7 +4011,7 @@ Interpolate format of register with arbitrarily long name
 Move drawing postition horizontally by
 .IR N \~ems
 (or specified units);
-.B |
+.B \[or]
 may be used.
 .
 Positive motion is rightward.
@@ -4298,7 +4299,7 @@ contingent on device support).
 Move drawing position vertically by
 .IR N \~vees
 (or specified units);
-.B |
+.B \[or]
 may be used.
 .
 Positive motion is downward.
