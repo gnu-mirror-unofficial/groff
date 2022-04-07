@@ -310,7 +310,12 @@
 .    rm an-msg
 .  \}
 .
-.  \" We now have what we need to typeset the (default) page header.
+.  \" Initialize environment for headers and footers.
+.  ev an*env-header-and-footer
+.  ps \\n[PS]u
+.  vs \\n[VS]u
+.  lt \\n[LT]u
+.  ev
 .
 .  \" HTML gets the title without any abbreviation, since it's metadata.
 .  if \\n[an-is-output-html] \{\
@@ -526,10 +531,7 @@
 .\" Prepare the header for a page of the document.
 .de1 an-header
 .  if \\n[an-suppress-header-and-footer] .return
-.  ev an-env-header-or-footer
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  lt \\n[LT]u
+.  ev an*env-header-and-footer
 .  an*abbreviate-page-title
 .  PT
 .  ev
@@ -545,10 +547,7 @@
 .\" Prepare the footer for a page of the document.
 .de1 an-footer
 .  if \\n[an-suppress-header-and-footer] .return
-.  ev an-env-header-or-footer
-.  ps \\n[PS]u
-.  vs \\n[VS]u
-.  lt \\n[LT]u
+.  ev an*env-header-and-footer
 .  ie \\n[cR] \
 .    ds an-outer-footer-text "\\*[an-pageref]\"
 .  el \{\
