@@ -291,8 +291,17 @@ or the values specified are invalid.
 .
 .TP
 .I @MACRODIR@/\:\%tty\-char\:.tmac
-Character definitions from this file are loaded to replace
-unrepresentable glyphs.
+defines fallback definitions of
+.I roff
+special characters.
+.
+These definitions more poorly optically approximate typeset output
+compared to those of the
+.I tty
+macro file in favor of communicating more semantic information.
+.
+.I nroff
+loads it automatically.
 .
 .
 .\" ====================================================================
