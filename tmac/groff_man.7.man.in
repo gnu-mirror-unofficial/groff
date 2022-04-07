@@ -3875,6 +3875,73 @@ _
 \fIanother-paragraph	\fIanother-paragraph
 _
 .TE
+.
+.
+.TP
+.\" Keep TWO spaces before that \c.
+\(bu Why doesn't the package provide a string to insert an ellipsis?  \c
+How do I make one?
+.
+Examples of ellipsis usage are shown above,
+in subsection \[lq]Command synopsis macros\[rq].
+.
+The idiomatic
+.I roff
+ellipsis is three dots (periods)
+with a \[lq]thin space\[rq] escape sequence
+.B \[rs]|
+internally separating them.
+.
+Since dots both begin control lines and are candidate end-of-sentence
+characters,
+however,
+it is sometimes necessary to prefix and/or suffix an ellipsis with the
+non-printing input break escape sequence
+.BR \[rs]& .
+.
+That fact stands even if a string is defined to contain the sequence;
+moreover,
+if the input breaks were included unconditionally as part of the string,
+end-of-sentence detection would be defeated in the event you used such a
+string at the end of an actual sentence.
+.
+(Ending a sentence thus is often poor style,
+but not always.)
+.
+A hypothetical string
+.B EL
+that contained an ellipsis,
+but not the trailing input break,
+would be interpolated when the trailing input break was needed.
+.
+Compare and contrast.
+.
+.RS
+.RS
+.EX
+Arguments are foo bar \[rs]*[EL]\[rs]& unless an option is given.
+Arguments are foo bar .\[rs]|.\[rs]|.\[rs]& unless an option is given.
+.EE
+.RE
+.
+By using a string,
+a whopping one character of typing has been saved,
+and even the presence of an ellipsis is obscured.
+.RE
+.
+.
+.IP
+Some fonts have an ellipsis character,
+and there is a Unicode character for it,
+but we discourage the use of these;
+they usually crowd the dots into a single character cell,
+and will not render at all if the output device doesn't have the glyph.
+.
+In syntax synopses,
+missing ellipses can cause great confusion.
+.
+Dots and space are universally supported.
+.\" XXX: Does an unconditional _preceding_ input break cause problems?
 _endif()dnl
 .
 .
