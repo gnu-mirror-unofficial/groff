@@ -1,5 +1,14 @@
 2022-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[ms]: Add nroff mode fallback for `UL` macro.
+
+	* tmac/s.tmac (UL): On nroff devices, bracket the first argument
+	with \(ul (underline rule) special character escape sequences.
+	{In plain language, '.UL "like this"' renders "_like this_".}
+	See corresponding 12 February change to "tmac/e.tmac".
+
+2022-04-06  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am: Drop unnecessary `-I` options to groff.
 	(DOC_GROFF): There is no need to look at the top of the build
 	directory for any file inclusions.

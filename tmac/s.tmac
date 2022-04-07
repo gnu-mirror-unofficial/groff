@@ -1568,7 +1568,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" underline a word
 .de UL
 .if \En[.$]>2 .@warning excess arguments to .UL ignored
-\Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
+.	ie t .do nop \Z'\\$1'\v'.25m'\D'l \w'\\$1'u 0'\v'-.25m'\\$2
+.	el \(ul\\$1\(ul\\$2
 ..
 .\" box a word
 .de BX
