@@ -315,6 +315,10 @@
 .  ps \\n[PS]u
 .  vs \\n[VS]u
 .  lt \\n[LT]u
+.  \" Abbreviate the page title and inner footer.
+.  \" If UC/AT, we'll need to call it again.
+.  an*abbreviate-page-title
+.  an*abbreviate-inner-footer
 .  ev
 .
 .  \" HTML gets the title without any abbreviation, since it's metadata.
@@ -354,6 +358,9 @@
 .    ie "\\$2"" .ds an-extra2 "System V\"
 .    el         .ds an-extra2 "System V Release \\$2\"
 .  \}
+.  ev an*env-header-and-footer
+.  an*abbreviate-inner-footer
+.  ev
 ..
 .
 .\" Designate a BSD Unix man page.
@@ -366,6 +373,9 @@
 .  if "\\$1"5" .ds an-extra2 "4.2 Berkeley Distribution\"
 .  if "\\$1"6" .ds an-extra2 "4.3 Berkeley Distribution\"
 .  if "\\$1"7" .ds an-extra2 "4.4 Berkeley Distribution\"
+.  ev an*env-header-and-footer
+.  an*abbreviate-inner-footer
+.  ev
 ..
 .
 .\" Restore tab stops to defaults.
@@ -532,7 +542,6 @@
 .de1 an-header
 .  if \\n[an-suppress-header-and-footer] .return
 .  ev an*env-header-and-footer
-.  an*abbreviate-page-title
 .  PT
 .  ev
 .  ns
@@ -559,7 +568,6 @@
 .      \}
 .    \}
 .  \}
-.  an*abbreviate-inner-footer
 .  BT
 .  rm an-outer-footer-text
 .  ev
