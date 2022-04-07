@@ -1373,7 +1373,7 @@ with an
 If you specify
 .I post ,
 .I ms
-sets it in the previous font after the underlined text,
+sets it after the underlined text,
 with no intervening space.
 T}
 _
@@ -1821,9 +1821,8 @@ or a paragraph that refers to a table,
 list,
 or figure adjacent to the item it discusses.
 .
-The
 .I ms
-macros provide the
+provides the
 .CW KS
 and
 .CW KE
