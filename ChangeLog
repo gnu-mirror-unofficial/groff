@@ -1,5 +1,17 @@
 2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[localization]: Define hyphenation mode registers for Japanese
+	and Chinese.  They are set to zero but must be defined so that
+	macro packages can rely on their existence without causing 'reg'
+	warnings.
+
+	* tmac/ja.tmac:
+	* tmac/zh.tmac: Do it.
+
+	Fixes <https://savannah.gnu.org/bugs/?62273>.
+
+2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tests]: Add test for multi-lingual man(7) scenario.
 
 	* tmac/tests/localization-works.sh: Test two more cases.  Ensure
