@@ -1,5 +1,16 @@
 2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tests]: Add test for multi-lingual man(7) scenario.
+
+	* tmac/tests/localization-works.sh: Test two more cases.  Ensure
+	that the 'trap bit' (hyphenation value 2, which has nothing to
+	do with any language) is preserved when switching locales back
+	from a CJK language, since those languages' modes
+	unconditionally clear it.  We test Japanese and Chinese; we have
+	no localization macro file for Korean at this time.
+
+2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[man]: Slightly refactor `an*abbreviate-inner-footer`.
 
 	* tmac/an.tmac (an*abbreviate-inner-footer): Discard

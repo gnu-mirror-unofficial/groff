@@ -152,6 +152,38 @@ output=$(echo "$input" | "$groff" -Tascii -P-cbou -rcR=1 -man -msv 2>&1)
 echo 'checking -man with -rcR=1 -msv' >&2
 echo "$output" | grep -Fqx '.hy=32' || wail
 
+# Ensure that the 'trap bit' (hyphenation value 2, which has nothing to
+# do with any language) is preserved when switching locales back from a
+# CJK language, since those languages' modes unconditionally clear it.
+
+input='.TH foo 1 2022-04-09 "groff test suite"
+.SH 名前
+foo \- APT 用選択制御ファイル
+.mso en.tmac
+.TH bar 1 2022-04-09 "groff test suite"
+.SH Name
+bar \- three subjects walk into this
+.tm .hy=\\n[.hy]'
+
+output=$(echo "$input" | "$groff" -Tascii -P-cbou -rcR=0 -man -mja \
+  -men 2>&1)
+echo 'checking -man with -rcR=0 -mja -men' >&2
+echo "$output" | grep -Fqx '.hy=6' || wail
+
+input='.TH foo 1 2022-04-09 "groff test suite"
+.SH 名称
+foo \- 解析 man 手册页的头部信息
+.mso en.tmac
+.TH bar 1 2022-04-09 "groff test suite"
+.SH Name
+bar \- three subjects walk into this
+.tm .hy=\\n[.hy]'
+
+output=$(echo "$input" | "$groff" -Tascii -P-cbou -rcR=0 -man -mzh \
+  -men 2>&1)
+echo 'checking -man with -rcR=0 -mzh -men' >&2
+echo "$output" | grep -Fqx '.hy=6' || wail
+
 test -z "$fail"
 
 # vim:set ai et sw=4 ts=4 tw=72:
