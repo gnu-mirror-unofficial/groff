@@ -557,11 +557,6 @@ MAINTAINERCLEANFILES += doc/groff.html doc/groff.html.node
 # The distribution archive gets these formats too; TeX is required.
 EXTRA_DIST += doc/groff.dvi doc/groff.pdf
 
-# GNU Make has a built-in variable TEXI2DVI, but that is not true of
-# all 'make' implementations.  As it defaults to 'texi2dvi', we (at
-# worst) harmlessly redefine it here.
-TEXI2DVI = texi2dvi
-
 # Define pattern rules to make our Texinfo manual in DVI and PDF
 # formats.  These are not built by default.  'pdf' and 'dvi' and their
 # installation counterparts 'install-pdf' and 'install-dvi' are standard
@@ -574,7 +569,7 @@ if HAVE_TEXI2DVI
 	TEXINPUTS="$(top_srcdir)/build-aux:$(TEXINPUTS)" \
 	MAKEINFO='$(MAKEINFO) -I $(doc_srcdir)' \
 	FORCE_SOURCE_DATE=1 \
-	$(TEXI2DVI) -e --batch --build-dir=doc/`basename $@`.t2d \
+	$(PROG_TEXI2DVI) -e --batch --build-dir=doc/`basename $@`.t2d \
 	  -o $@ $<
 else
 	@echo "program texi2dvi is missing or too old;" \
@@ -589,7 +584,7 @@ if HAVE_TEXI2DVI
 	LC_ALL=C \
 	TEXINPUTS="$(top_srcdir)/build-aux:$(TEXINPUTS)" \
 	MAKEINFO='$(MAKEINFO) -I $(doc_srcdir)' \
-	$(TEXI2DVI) -e --batch --pdf --build-dir=doc/`basename $@`.t2p \
+	$(PROG_TEXI2DVI) -e --batch --pdf --build-dir=doc/`basename $@`.t2p \
 	  -o $@ $<
 else
 	@echo "program texi2dvi is missing or too old;" \

@@ -1,3 +1,20 @@
+2022-04-09  Ingo Schwarze <schwarze@openbsd.org>
+
+	Fix the configuration of texi2dvi.
+
+	* m4/groff.m4: Set groff_have_texi2dvi if texi2dvi(1) is available
+	and useable, even if the availability was specified by the user
+	by manually providing the configure variable PROG_TEXI2DVI,
+	and not only if it was autodetected.
+	Also, set the PROG_TEXI2DVI Makefile variable to the name of
+	the texi2dvi program specified by the user or autodetected,
+	and not to the string "found", such that this Makefile variable
+	can be used for invoking the program.
+	* doc/doc.am: Call the texi2dvi program specified by the user
+	or autodetected rather than hardcoding "texi2dvi".  This lets
+	the groff build succeed on systems where the first texi2dvi
+	in the $PATH is an old version unfit for groff's purposes.
+
 2022-04-08  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[man]: Abbreviate long `TH` arguments more carefully.

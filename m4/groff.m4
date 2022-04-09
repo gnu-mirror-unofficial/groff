@@ -210,9 +210,9 @@ AC_DEFUN([GROFF_MAKEINFO],
 # is too old, the latter is too.
 AC_DEFUN([GROFF_TEXI2DVI],
   [AC_REQUIRE([GROFF_MAKEINFO])
-   AC_CHECK_PROG([PROG_TEXI2DVI], [texi2dvi], [found], [missing])
+   AC_CHECK_PROG([PROG_TEXI2DVI], [texi2dvi], [texi2dvi], [missing])
    groff_have_texi2dvi=no
-   if test "$PROG_TEXI2DVI" = found && test -n "$MAKEINFO"
+   if test "$PROG_TEXI2DVI" != missing && test -n "$MAKEINFO"
    then
       groff_have_texi2dvi=yes
    fi])
