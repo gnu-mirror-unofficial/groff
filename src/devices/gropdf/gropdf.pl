@@ -418,7 +418,7 @@ foreach my $fontno (sort keys %fontlst)
 
 	push(@{$o->{DIFF}},$psname);
 	push(@{$o->{WIDTH}},$wid);
-	last if $#{$o->{DIFF}} >= 255;
+	last if $#{$o->{DIFF}} >= 256;
     }
     unshift(@{$o->{DIFF}},0);
     my $p=GetObj($fontlst{$fontno}->{OBJ});
@@ -426,8 +426,8 @@ foreach my $fontno (sort keys %fontlst)
     if (exists($p->{LastChar}) and $p->{LastChar} > 255)
     {
 	$p->{LastChar} = 255;
-	splice(@{$o->{DIFF}},256);
-	splice(@{$o->{WIDTH}},256);
+	splice(@{$o->{DIFF}},257);
+	splice(@{$o->{WIDTH}},257);
     }
 }
 
