@@ -2188,69 +2188,6 @@ Unix systems
 though even it supports
 .BR \(rs(rg ),
 the above strings should be avoided.
-_endif()dnl
-.
-.
-.\" ====================================================================
-.SS "Interaction with preprocessors"
-.\" ====================================================================
-.
-When a preprocessor like
-.I @g@tbl
-or
-.I @g@eqn
-is needed,
-a hint can be given to the man page librarian by making the first line
-of a man page look like this:
-.
-.
-.P
-.RS
-.BI "\(aq\e\(dq " word
-.\" AT&T: .BI "'\e"" " word
-.\" ...and good luck with that "'".
-.RE
-.
-.
-.P
-The line starts with an apostrophe (\(aq),
-not a dot,
-and a single space character follows the double quote.
-.
-The
-.I word
-consists of one letter for each needed preprocessor:
-\(lqe\(rq for
-.IR @g@eqn ,
-\(lqr\(rq for
-.IR @g@refer ,
-and
-\(lqt\(rq for
-.IR @g@tbl .
-.
-Modern implementations of the
-.I man
-program can use this information to automatically call the required
-preprocessor(s) in the right order.
-.
-.
-.P
-The usual
-.I tbl
-and
-.I eqn
-macros for table and equation inclusion,
-.BR .TS ,
-.BR .T& ,
-.BR .TE ,
-.BR .EQ ,
-and
-.BR .EN ,
-may be used freely.
-.
-Terminal devices are extremely limited in presentation of mathematical
-equations.
-_ifstyle()dnl
 .
 .
 .\" ====================================================================
