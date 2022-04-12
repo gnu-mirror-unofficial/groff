@@ -2794,9 +2794,8 @@ This macro exists only to render man pages from historical systems.
 .
 .
 .IP
-The first argument
 .I system
-can be:
+can be any of the following.
 .
 .
 .RS \" Invisibly move left margin to current .IP indentation.
@@ -2998,8 +2997,8 @@ can be any of the following.
 .
 Unix Version\~7 (1979) introduced the
 .I man
-macro package and supported all of the macros described in this page not
-listed as extensions,
+macro package and supported the macros listed in this page not described
+as extensions,
 except
 .BR .P ,
 .BR .SB ,
@@ -3452,7 +3451,7 @@ They are written to be compatible with AT&T
 and permissively licensed\(emnot copylefted.
 .
 To reduce the risk of name space collisions,
-its internal string and register names begin only with
+string and register names begin only with
 .RB \[lq] m \[rq] .
 .
 Man page authors concerned about portability to legacy Unix systems are
@@ -3660,7 +3659,7 @@ If your page renders adequately without one,
 use the simpler form.
 .
 If you need to indent multiple (unmarked) paragraphs,
-consider setting an indented region with
+consider setting an inset region with
 .B .RS
 and
 .B .RE
