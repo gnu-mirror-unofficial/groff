@@ -4720,6 +4720,7 @@ not interested in details.
 @codequotebacktick on
 @codequoteundirected on
 
+@c BEGIN Keep roughly parallel with roff(7) section "Concepts".
 @node Text, Measurements, gtroff Reference, gtroff Reference
 @section Text
 @cindex text, GNU @code{troff} processing
@@ -5017,6 +5018,7 @@ reaches the right margin.  Extra spaces between words are preserved.
 Leading and trailing spaces are handled as noted above.  Text can be
 aligned to the left or right margins or centered; see @ref{Manipulating
 Filling and Adjustment}.
+@c END Keep roughly parallel with roff(7) section "Concepts".
 
 @c ---------------------------------------------------------------------
 
@@ -5060,7 +5062,7 @@ when using such low-level features, so most users turn to the
 @subsection Requests and Macros
 
 We have now encountered almost all of the syntax there is in @code{roff}
-languages, with an exception already noted several times in passing.
+languages, with an exception already noted in passing.
 @cindex request
 @cindex control character
 @cindex control character, no-break
@@ -5075,10 +5077,10 @@ suppresses the break that is implied by some requests.  The default
 control characters are the dot (@code{.}) and the neutral apostrophe
 (@code{'}), the latter being the no-break control character.  These
 characters were chosen because it is uncommon for lines of text in
-natural languages to begin with periods or apostrophes.  If you require
-a literal period or neutral apostrophe where GNU @code{troff} is
-expecting a control character, prefix it with the non-printing input
-break escape sequence, @samp{\&}.
+natural languages to begin them.  If you require a formatted period or
+apostrophe (closing single quotation mark) where GNU @code{troff} is
+expecting a control character, prefix the dot or neutral apostrophe with
+the non-printing input break escape sequence, @samp{\&}.
 
 @cindex control line
 An input line beginning with a control character is called a
@@ -5749,9 +5751,9 @@ scaling unit.  To multiply or divide by a dimensionless value, use
 @cindex expressions, numeric
 
 A @dfn{numeric expression} is a syntactic structure, recognized only in
-specific contexts, that evaluates to an integral value:@: it can be as
-simple as a literal @samp{0} or it can be a complex sequence of register
-and string interpolations interleaved with operators.
+specific contexts, that evaluates to an integer:@: it can be as simple
+as a literal @samp{0} or it can be a complex sequence of register and
+string interpolations interleaved with operators.
 
 GNU @code{troff} provides a set of mathematical and logical operators
 familiar to programmers---as well as some unusual ones---but supports
@@ -6426,13 +6428,13 @@ The first line is the @code{uh} macro being called with three arguments,
 solution, using escaped spaces, is ``classical'' in the sense that it
 can be found in documents prepared for @acronym{AT&T} @code{troff}.
 Nevertheless, it is not optimal in most situations, since @w{@samp{\ }}
-inserts a fixed-width, non-breaking space character that can't be
-adjusted.  GNU @code{troff} provides a different command @code{\~} to
-insert a adjustable, non-breaking space.@footnote{@code{\~} is also
-supported by Heirloom Doctools @code{troff} 050915 (September 2005),
-@code{neatroff} (since commit 1c6ab0f6e, 2016-09-13), and @code{mandoc}
-1.14.5 (March 2019) but not by Plan@tie{}9 @code{troff}, Solaris
-@code{troff}, or DWB @code{troff} or @code{onroff}.}
+inserts a fixed-width, non-breaking space that can't be adjusted.  GNU
+@code{troff} provides a different command @code{\~} to insert a
+adjustable, non-breaking space.@footnote{@code{\~} is also supported by
+Heirloom Doctools @code{troff} 050915 (September 2005), @code{neatroff}
+(since commit 1c6ab0f6e, 2016-09-13), and @code{mandoc} 1.14.5 (March
+2019) but not by Plan@tie{}9 @code{troff}, Solaris @code{troff}, or DWB
+@code{troff} or @code{onroff}.}
 @c as of this writing, 2022-03-21
 
 @cindex @code{"}, in a macro argument
