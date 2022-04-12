@@ -468,7 +468,7 @@ developing GNU and promoting software freedom.''
 @title groff
 @subtitle The GNU implementation of @code{troff}
 @subtitle Edition 1.23.0
-@subtitle March 2022
+@subtitle April 2022
 @author Trent A.@tie{}Fisher
 @author Werner Lemberg
 @author G.@tie{}Branden Robinson
@@ -5763,6 +5763,12 @@ man page for the @file{62bit.tmac} macro package.}
 
 @cindex arithmetic operators
 @cindex operators, arithmetic
+@cindex truncating division
+@cindex addition
+@cindex subtraction
+@cindex multiplication
+@cindex division, truncating
+@cindex modulo
 @opindex +
 @opindex -
 @opindex *
@@ -5771,32 +5777,38 @@ man page for the @file{62bit.tmac} macro package.}
 Arithmetic infix operators perform a function on the numeric expressions
 to their left and right; they are @code{+} (addition), @code{-}
 (subtraction), @code{*} (multiplication), @code{/} (truncating
-division), and @code{%} (modulo).  Overflow and division by zero are
-errors and abort evaluation of a numeric expression.
-@cindex unary operators
-@cindex operators, unary
+division), and @code{%} (modulo).  @dfn{Truncating division} rounds to
+the integer nearer to zero, no matter how large the fractional portion.
+Overflow and division by zero are errors and abort evaluation of a
+numeric expression.
+@cindex unary arithmetic operators
+@cindex operators, unary arithmetic
+@cindex negation
+@cindex assertion (arithmetic operator)
 @opindex -
 @opindex +
 @cindex @code{if} request, and the @samp{!} operator
 @cindex @code{while} request, and the @samp{!} operator
 
 Arithmetic unary operators operate on the numeric expression to their
-right; they consist of @code{-} (negation) and @code{+} (assertion---for
-completeness; it does nothing outside of special contexts, which are
-discussed below).
+right; they are @code{-} (negation) and @code{+} (assertion---for
+completeness; it does nothing).  The unary minus must often be used
+with parentheses to avoid confusion with the decrementation operator,
+discussed below.
 
-Let's have a look at the behavior of the modulo and truncating division
-operators, and observe the effect of negative operands.
+Observe the rounding behavior and effect of negative operands on the
+modulo and truncating division operators.
 
 @Example
+.nr T 199/100
 .nr U 5/2
 .nr V (-5)/2
 .nr W 5/-2
 .nr X 5%2
 .nr Y (-5)%2
 .nr Z 5%-2
-U=\n[U] V=\n[V] W=\n[W] X=\n[X] Y=\n[Y] Z=\n[Z]
-    @result{} U=2 V=-2 W=-2 X=1 Y=-1 Z=1
+T=\n[T] U=\n[U] V=\n[V] W=\n[W] X=\n[X] Y=\n[Y] Z=\n[Z]
+    @result{} T=1 U=2 V=-2 W=-2 X=1 Y=-1 Z=1
 @endExample
 
 @noindent
@@ -5809,14 +5821,13 @@ remainder@tie{}@var{r} by @samp{(a % b)}, then @samp{q * b + r = a}.
 @cindex scaling operator
 @cindex operator, scaling
 @opindex ;
-GNU @code{troff} offers a scaling operator, @code{(@var{c};@var{e})},
-which evaluates a numeric expression@tie{}@var{e} using@tie{}@var{c} as
-the default scaling unit.  If @var{c} is missing, scaling units are
-ignored in the evaluation of@tie{}@var{e}.  This operator can save
-typing by avoiding the necessity of attaching scaling units to every
-operand out of caution.  It can also make macros you write simpler to
-use:@: you can choose a sensible default unit in case the user neglects
-to supply one.
+GNU @code{troff}'s scaling operator @code{(@var{c};@var{e})}, evaluates
+a numeric expression@tie{}@var{e} using@tie{}@var{c} as the default
+scaling unit.  If @var{c} is omitted, scaling units are ignored in the
+evaluation of@tie{}@var{e}.  This operator can save typing by avoiding
+the attachment of scaling units to every operand out of caution.  Your
+macros can select a sensible default unit in case the user neglects to
+supply one.
 
 @Example
 .\" Indent by amount given in first argument; assume ens.
@@ -5833,6 +5844,8 @@ indentation as expected.
 
 @cindex extremum operators (@code{>?}, @code{<?})
 @cindex operators, extremum (@code{>?}, @code{<?})
+@cindex maximum operator
+@cindex minimum operator
 @opindex >?
 @opindex <?
 GNU @code{troff} also provides a pair of operators to compute the
@@ -5848,6 +5861,9 @@ Looks like we'll end up paying \n[salaries] salaries.
 
 @cindex comparison operators
 @cindex operators, comparison
+@cindex greater than (or equal to) operator
+@cindex less than (or equal to) operator
+@cindex equality operator
 @opindex <
 @opindex >
 @opindex >=
@@ -5858,10 +5874,15 @@ Comparison operators comprise @code{<} (less than), @code{>} (greater
 than), @code{<=} (less than or equal), @code{>=} (greater than or
 equal), and @code{=} (equal).  @code{==} is a synonym for @code{=}.
 When evaluated, a comparison operation is replaced with @samp{0} if it
-is false and @samp{1} if true.
+is false and @samp{1} if true.  In the @code{roff} language, positive
+values are true, others false.
 
 @cindex logical operators
 @cindex operators, logical
+@cindex logical ``and'' operator
+@cindex logical conjunction operator
+@cindex logical ``or'' operator
+@cindex logical disjunction operator
 @opindex &
 @ifnotinfo
 @opindex :
@@ -5869,27 +5890,25 @@ is false and @samp{1} if true.
 @ifinfo
 @opindex @r{<colon>}
 @end ifinfo
-With truth values established, we can consider the logical operators
-@code{&} (logical conjunction or ``and'') and @code{:} (logical
-disjunction or ``or'').
+We can operate on truth values with the the logical operators @code{&}
+(logical conjunction or ``and'') and @code{:} (logical disjunction or
+``or'').  They evaluate as comparison operators do.
+
 @opindex !
 @cindex complementation, logical
 @cindex logical complementation operator
 @cindex logical not, limitation in expression
 @cindex expression, limitation of logical not in
-A logical complementation or ``not'' operator, @code{!}, works only
-within @code{if} and @code{while} requests.@footnote{@samp{!(-1)}
-evaluates to @samp{1} because GNU @code{troff} treats negative numbers
-and zero as false.}
-
-Furthermore, @code{!} is recognized only at the beginning of a numeric
-expression not contained by another numeric expression.  In other words,
-it must be the ``outermost'' operator.  Attempting to include it
-elsewhere in the expression results in a warning diagnostic in the
-@samp{number} category (@pxref{Debugging}), and its expression evaluates
-false.  This unfortunate limitation maintains compatibility with
-@acronym{AT&T} @code{troff}.  You can work around it by comparing
-numeric expressions to truth values.
+A logical complementation (``not'') operator, @code{!}, works only
+within @code{if}, @code{ie}, and @code{while} requests.  Furthermore,
+@code{!} is recognized only at the beginning of a numeric expression not
+contained by another numeric expression.  In other words, it must be the
+``outermost'' operator.  Attempting to include it elsewhere in the
+expression results in a warning diagnostic in the @samp{number} category
+(@pxref{Debugging}), and its expression evaluates false.  This
+unfortunate limitation maintains compatibility with @acronym{AT&T}
+@code{troff}.  You can around it by comparing numeric expressions to the
+canonical truth values @samp{0} and @samp{1}.
 
 @Example
 .nr X 1
@@ -5954,7 +5973,9 @@ requests and escape sequences:@: @code{bp}, @code{in}, @code{ll},
 @code{lt}, @code{nm}, @code{nr}, @code{pl}, @code{pn}, @code{po},
 @code{ps}, @code{pvs}, @code{rt}, @code{ti}, @code{\H}, @code{\R}, and
 @code{\s}.  Here, leading plus and minus signs serve as incrementation
-and decrementation operators.  @xref{Setting Registers}, for examples.
+and decrementation operators.  To negate an expression, include the
+unary minus in parentheses with its argument.  @xref{Setting Registers},
+for examples.
 
 @opindex |
 @cindex @code{|}, and page motion
@@ -5963,8 +5984,8 @@ and decrementation operators.  @xref{Setting Registers}, for examples.
 @cindex boundary-relative motion operator (@code{|})
 @c "motion" and "operators" already indexed above
 A leading @code{|} operator indicates a motion relative not to the
-current position but to a boundary.  For horizontal motions, the
-measurement specifies a distance relative to the drawing position
+drawing position but to a boundary.  For horizontal motions, the
+measurement specifies a distance relative to a drawing position
 corresponding to the beginning of the @emph{input} line.  By default,
 tab stops reckon movements in this way.  Most escape sequences do not;
 @c XXX: Which ones do?
@@ -6029,7 +6050,8 @@ In the foregoing example, we've used the @code{\Z} escape sequence
 @cindex numeric expression, valid
 @cindex valid numeric expression
 Interpolate@tie{}1 if @var{anything} is a valid numeric expression,
-and@tie{}0 otherwise.
+and@tie{}0 otherwise.  The delimiter need not be an apostrophe; see
+@ref{Escape Sequences}.
 @endDefesc
 
 You might use @code{\B} along with the @code{if} request to filter out

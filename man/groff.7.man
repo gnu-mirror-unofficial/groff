@@ -850,6 +850,10 @@ and
 .B %
 (modulo).
 .
+.I Truncating division
+rounds to the integer nearer to zero,
+no matter how large the fractional portion.
+.
 Overflow and division by zero are errors and abort evaluation of a
 numeric expression.
 .
@@ -857,14 +861,17 @@ numeric expression.
 .P
 Arithmetic unary operators operate on the numeric expression to their
 right;
-they consist of
+they are
 .B \-
 (negation)
 and
 .B +
 (assertion\[em]for completeness;
-it does nothing outside of special contexts,
-which are discussed below).
+it does nothing).
+.
+The unary minus must often be used with parentheses to avoid confusion
+with the decrementation operator,
+discussed below.
 .
 .
 .P
@@ -889,17 +896,17 @@ then
 .
 .
 .P
-.I @g@troff
-offers a scaling operator,
-.BI ( c ; e )\c
-, which evaluates a numeric
+.IR @g@troff 's
+scaling operator
+.BI ( c ; e )
+evaluates a numeric
 .RI expression\~ e
 .RI using\~ c
 as the default scaling unit.
 .
 If
 .I c
-is missing,
+is omitted,
 scaling units are ignored in the evaluation
 .RI of\~ e .
 .
@@ -940,33 +947,33 @@ if it is false and
 .RB \[lq] 1 \[rq]
 if true.
 .
+In the
+.I roff
+language,
+positive values are true,
+others false.
+.
 .
 .P
-With truth values established,
-we can consider the logical operators
+We can operate on truth values with the logical operators
 .B &
 (logical conjunction or \[lq]and\[rq])
 and
 .B :
 (logical disjunction or \[lq]or\[rq]).
 .
-A logical complementation or \[lq]not\[rq] operator,
+They evaluate as comparison operators do.
+.
+A logical complementation (\[lq]not\[rq]) operator,
 .B !\&,
 works only within
-.RB \[lq] if \[rq]
+.RB \[lq] if \[rq],
+.RB \[lq] ie \[rq],
 and
 .RB \[lq] while \[rq]
 requests.
 .
-.RB (\[lq] !(\-1) \[rq]
-evaluates to
-.RB \[lq] 1 \[rq]
-because
-.I @g@troff
-treats negative numbers and zero as false.)
 .
-.
-.P
 Furthermore,
 .B !\&
 is recognized only at the beginning of a numeric expression not
@@ -984,7 +991,11 @@ and its expression evaluates false.
 This unfortunate limitation maintains compatibility with AT&T
 .IR troff .\" AT&T
 .
-You can work around it by comparing numeric expressions to truth values.
+You can work around it by comparing numeric expressions to the canonical
+truth values
+.B 0
+and
+.BR 1 .
 .
 .
 .P
@@ -1034,17 +1045,21 @@ and
 .
 Here,
 leading plus and minus signs serve as incrementation and decrementation
-operators.\" @xref{Setting Registers}, for examples.
+operators.
+.
+To negate an expression,
+include the unary minus in parentheses with its argument.
+.\" @xref{Setting Registers}, for examples.
 .
 .
 .P
 A leading
 .B \[or]
-operator indicates a motion relative not to the current position but to
+operator indicates a motion relative not to the drawing position but to
 a boundary.
 .
 For horizontal motions,
-the measurement specifies a distance relative to the drawing position
+the measurement specifies a distance relative to a drawing position
 corresponding to the beginning of the
 .I input
 line.
