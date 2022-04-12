@@ -5254,10 +5254,10 @@ request.
 @node Input Encodings, Input Conventions, Macro Packages, Text
 @subsection Input Encodings
 
-The @command{groff} front end calls the @command{preconv} preprocessor
-to handle most input character encoding issues without troubling the
-user.  Direct input to GNU @code{troff}, on the other hand, must be in
-one of two encodings it can recognize.
+The @command{groff} command's @option{-k} option calls the
+@command{preconv} preprocessor to perform input character encoding
+conversions.  Input to the GNU @code{troff} formatter itself, on the
+other hand, must be in one of two encodings it can recognize.
 
 @table @code
 @item cp1047
@@ -5336,9 +5336,8 @@ Some characters from an input encoding may not be available with a
 particular output driver, or their glyphs may not have representation in
 the font used.  For terminal devices, fallbacks are defined, like
 @samp{EUR} for the Euro sign and @samp{(C)} for the copyright sign.  For
-typesetter devices, it usually suffices to install fonts that contain
-the necessary glyphs and have compatible metrics with other fonts used
-in the document.
+typesetter devices, you may need to ``mount'' fonts that support glyphs
+required by the document.  @xref{Font Positions}.
 
 @pindex freeeuro.pfa
 @pindex ec.tmac
