@@ -1,12 +1,13 @@
 2022-04-11  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	[gropdf] fails to deal with 255th glyph in font.
-	Savannah bug #62294
 
 	* src/devices/gropdf/gropdf.pl: a pdf font can only contain 255
 	glyphs. The array which holds the glyph names also holds the
 	start position (zero) as first element, it is legal for it to
 	contain 256 elements, so truncate to 256 (not 255).
+
+	Fixes <https://savannah.gnu.org/bugs/?62294>.
 
 2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -17,8 +18,6 @@
 
 	* tmac/ja.tmac:
 	* tmac/zh.tmac: Do it.
-
-	Fixes <https://savannah.gnu.org/bugs/?62273>.
 
 2022-04-09  G. Branden Robinson <g.branden.robinson@gmail.com>
 
