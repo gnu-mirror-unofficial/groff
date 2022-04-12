@@ -42,7 +42,6 @@ DOC_GROFF=\
 DOC_GNU_EPS=doc/gnu.eps
 
 # Other doc, installed in $(docdir)
-if BUILD_OTHERDOC
 # Files located in the source tree
 DOCFILES_INST= \
   doc/me-revisions \
@@ -73,9 +72,6 @@ otherdocdir = $(docdir)
 dist_otherdoc_DATA = $(DOCFILES_INST) $(GENERATEDDOCFILES)
 nodist_otherdoc_DATA = $(PROCESSEDDOCFILES)
 MOSTLYCLEANFILES += $(GENERATEDDOCFILES) $(PROCESSEDDOCFILES)
-else
-EXTRA_DIST += $(DOCFILES_INST) $(GENERATEDDOCFILES)
-endif
 EXTRA_DIST += $(DOCFILES_NOINST)
 
 # pdf doc, written in mom and therefore using contrib/mom/mom.am
@@ -110,7 +106,6 @@ EXAMPLEFILES = \
   doc/grnexmpl.g \
   doc/grnexmpl.me
 
-if BUILD_EXAMPLES
 # Generated in the build tree
 PROCESSEDEXAMPLEFILES = \
   doc/webpage.ps \
@@ -119,11 +114,8 @@ docexamplesdir = $(exampledir)
 dist_docexamples_DATA = $(EXAMPLEFILES)
 nodist_docexamples_DATA = $(PROCESSEDEXAMPLEFILES)
 MOSTLYCLEANFILES += $(PROCESSEDEXAMPLEFILES)
-else
-EXTRA_DIST += $(EXAMPLEFILES)
-endif
 
-if BUILD_HTMLEXAMPLES
+if BUILD_HTML
 # webpage.html is generated; webpage*.html files are installed by the
 # local rule.
 HTMLEXAMPLEFILES = doc/webpage.html
@@ -383,7 +375,7 @@ endif
 	if test $(top_builddir) != $(top_srcdir); then \
 	  $(RM) $(top_builddir)/doc/groff.css; \
 	fi
-if BUILD_HTMLEXAMPLES
+if BUILD_HTML
 	if test -d $(doc_builddir); then \
 	  cd $(doc_builddir) \
 	  && for f in $(HTMLEXAMPLEFILESALL); do \
@@ -427,7 +419,7 @@ install_doc_gnu_eps: $(DOC_GNU_EPS)
 	done
 
 install_doc_examples: $(DOC_GNU_EPS)
-if BUILD_HTMLEXAMPLES
+if BUILD_HTML
 	cd $(doc_builddir) \
 	&& for f in `ls $(HTMLEXAMPLEFILESALL)`; do \
 	  $(RM) $(DESTDIR)$(exampledir)/$$f; \
@@ -444,10 +436,8 @@ endif
 uninstall-hook: \
   uninstall_doc_examples uninstall_doc_htmldoc uninstall_mom
 uninstall_doc_examples:
-if BUILD_EXAMPLES
 	$(RM) $(DESTDIR)$(exampledir)/gnu.eps
-endif
-if BUILD_HTMLEXAMPLES
+if BUILD_HTML
 	-test -d $(DESTDIR)$(docexamplesdir) \
 	&& cd $(DESTDIR)$(docexamplesdir) \
 	&& for f in $(HTMLEXAMPLEFILESALL); do \

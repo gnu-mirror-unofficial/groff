@@ -1,3 +1,21 @@
+2022-04-12  Ingo Schwarze <schwarze@openbsd.org>
+
+	Delete the harmful, ill-designed, buggy, and essentially
+	unmaintained and untested --with-doc option of the configure
+	script.
+
+	* configure.ac: Delete five AM_CONDITIONAL variables, one
+	autoconf(1) macro call, and some related diagnostic output.
+	* doc/doc.am: Delete two BUILD_EXAMPLES and one BUILD_OTHERDOC
+	conditional and use BUILD_HTML instead of BUILD_HTMLEXAMPLES.
+	* m4/groff.m4: Delete the GROFF_DOC_CHECK macro and simplify the
+	macros GROFF_HTML_PROGRAMS, GROFF_INSTALL_INFO, GROFF_MAKEINFO,
+	and GROFF_PDFDOC_PROGRAMS.  This also deletes more than thirty
+	configuration variables.
+	* Makefile.am: Delete comments about 16 variables that are no
+	longer set.
+	* NEWS: Add details regarding the rationale.
+
 2022-04-12  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/preconv/preconv.cpp (unicode_entity): Convert

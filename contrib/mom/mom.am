@@ -38,7 +38,6 @@ momtmacdir = $(tmacdir)
 dist_momtmac_DATA = $(MOMNORMALFILES)
 
 # Files installed in htmldocdir/mom
-if INSTALL_SHIPPED_HTML
 MOMHTMLDOCFILES=\
   contrib/mom/momdoc/stylesheet.css \
   contrib/mom/momdoc/appendices.html \
@@ -65,7 +64,6 @@ MOMHTMLDOCFILES=\
   contrib/mom/momdoc/version-2.html
 momhtmldir = $(htmldocdir)/mom
 momhtml_DATA = $(MOMHTMLDOCFILES)
-endif
 
 # Files installed in $(examplesdir)/mom.  MOMEXAMPLEFILES are located
 # in the source tree, while MOMPROCESSEDEXAMPLEFILES are generated in
@@ -86,14 +84,10 @@ MOMEXAMPLEFILES=\
   contrib/mom/examples/slide-demo.mom \
   contrib/mom/examples/copyright-default.mom \
   contrib/mom/examples/copyright-chapter.mom
-if BUILD_EXAMPLES
 momexampledir = $(exampledir)/mom
 dist_momexample_DATA = $(MOMEXAMPLEFILES)
-else
-EXTRA_DIST += $(MOMEXAMPLEFILES)
-endif
 
-if BUILD_PDFEXAMPLES
+if BUILD_PDFDOC
 MOMPROCESSEDEXAMPLEFILES = \
   contrib/mom/examples/letter.pdf \
   contrib/mom/examples/mom-pdf.pdf \
@@ -159,7 +153,7 @@ penguin.pdf:
 
 install-data-hook: install_mom
 install_mom:
-if BUILD_PDFEXAMPLES
+if BUILD_PDFDOC
 	for f in $(PDFDOCFILE); do \
 	  $(RM) $(DESTDIR)$(pdfdocdir)/$$f; \
 	  ln -s $(exampledir)/mom/$$f $(DESTDIR)$(pdfdocdir)/$$f; \

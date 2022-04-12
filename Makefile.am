@@ -308,46 +308,17 @@ man5dir=$(manroot)/man$(man5ext)
 man7ext=7
 man7dir=$(manroot)/man$(man7ext)
 
-# doc_dist_target_ok
-# `dist' target is disallowed in some `configure' combinations.
-
-# The configure script checks whether the user wants the info documentation.
-# For the repo version this mechanism also suppresses building via `makeinfo'.
-# make_infodoc
-# make_install_infodoc
-# make_uninstall_infodoc
-
 # The configure script checks whether all necessary utility programs for
 # grohtml are available -- only then can we build the HTML documentation.
 # make_htmldoc
 # make_install_htmldoc
 # make_uninstall_htmldoc
 
-# make_htmlexamples
-# make_install_htmlexamples
-# make_uninstall_htmlexamples
-
 # The configure script also checks whether all necessary utility programs
 # for pdfroff are available -- only then can we build PDF documentation.
 # make_pdfdoc
 # make_install_pdfdoc
 # make_uninstall_pdfdoc
-
-# make_pdfexamples
-# make_install_pdfexamples
-# make_uninstall_pdfexamples
-
-# `other' documentation, e.g., `meref.me' and `pic.ms', as well as their
-# generated counterparts..
-# make_otherdoc
-# make_install_otherdoc
-# make_uninstall_otherdoc
-
-# `examples' -- a generic switch, but the generated examples are further
-# subdivided to catch HTML and PDF production availability.
-# make_examples
-# make_install_examples
-# make_uninstall_examples
 
 # Windows `.cmd' files
 # make_winscripts

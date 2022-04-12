@@ -65,7 +65,6 @@ GROFF_PRINT
 GROFF_REFERDIR_DEFAULT
 AC_PROG_EGREP
 GROFF_PROG_YACC
-GROFF_DOC_CHECK
 GROFF_MAKEINFO
 GROFF_TEXI2DVI
 AC_PROG_RANLIB
@@ -198,13 +197,8 @@ AM_CONDITIONAL([MAKE_DONT_HAVE_RM], [test "x$groff_is_rm_defined" = "xno"])
 AM_CONDITIONAL([USEPROGRAMPREFIX], [test x$g = xg])
 
 AM_CONDITIONAL([BUILD_HTML], [test -n "$make_htmldoc"])
-AM_CONDITIONAL([BUILD_HTMLEXAMPLES], [test -n "$make_htmlexamples"])
 AM_CONDITIONAL([BUILD_PDFDOC], [test -n "$make_pdfdoc"])
-AM_CONDITIONAL([BUILD_PDFEXAMPLES], [test -n "$make_pdfexamples"])
-AM_CONDITIONAL([BUILD_OTHERDOC], [test -n "$make_otherdoc"])
-AM_CONDITIONAL([BUILD_EXAMPLES], [test -n "$make_examples"])
 AM_CONDITIONAL([USE_GROFF_ALLOCATOR], [test "x$use_groff_allocator" = "xyes"])
-AM_CONDITIONAL([INSTALL_SHIPPED_HTML], [test -n "$make_install_shipped_htmldoc"])
 AM_CONDITIONAL([HAVE_PDFTOOLS], [test "x$groff_have_pdftools" = "xyes" ])
 AM_CONDITIONAL([HAVE_TEXI2DVI], [test "x$groff_have_texi2dvi" = "xyes" ])
 
@@ -231,13 +225,6 @@ else
 echo "\
  X11 support                     : yes
  X11 resources dir               : $appresdir"
-fi
-if test "x$doc" = x; then
-echo "\
- Doc build                       : no"
-else
-echo "\
- Doc build                       : ${doc} "
 fi
 echo "\
  URW fonts for pdf               : $groff_have_urw_fonts

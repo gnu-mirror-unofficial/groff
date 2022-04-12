@@ -420,6 +420,26 @@ o The semantics of the environment variable SOURCE_DATE_EPOCH (support
 o xtotroff now supports a "-d" option to specify the directory in which
   to generate font description files.
 
+o The 'configure' option --with-doc that was introduced in version
+  1.22.3 has been deleted again.  Its basic idea was misguided because
+  each of the documents is only available in a subset of the output
+  formats, so in contrast to the documentation, the option not only
+  affected which output formats were generated, but also restricted the
+  documentation content the user would get in erratic and surprising
+  ways.  The option was also ill-designed in so far as the "examples"
+  keyword did not represent an output format.  Some example files were
+  controlled by the "examples" keyword alone, some by the respective
+  format keywords alone, and some by a combination of both.  The
+  implementation of the option was full of bugs, but few, if any, of
+  these bugs were ever reported by users, giving the impression that
+  few, if any, users ever attempted to use the option, and those who
+  did likely remained unaware that doing so deprived them of parts of
+  the content of the documentation.  Experience has demonstrated that
+  properly maintaining and testing the option exceeds the amount of
+  effort the GNU troff team is able to invest.  Finally, GNU standards
+  contain no recommendation to support this option, and indeed, few, if
+  any, GNU packages apart from groff support it.
+
 o groffer has been deleted from the distribution.
 
 o grog no longer supports the "--warnings" option; the one diagnostic

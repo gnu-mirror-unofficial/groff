@@ -75,83 +75,6 @@ AC_DEFUN([GROFF_PERL],
      AC_MSG_ERROR([perl version is too old], 1))])
 
 
-# It is possible to fine-tune generation of documentation.
-
-AC_DEFUN([GROFF_DOC_CHECK],
-  [AC_ARG_WITH([doc],
-    [AS_HELP_STRING([--with-doc[[=TYPE]]],
-      [choose which manuals (beside man pages) are desirable. \
-       TYPE can be 'yes' or 'no', or a comma-separated list of \
-       one or multiple of 'html', 'info', 'other', 'pdf', and \
-       'examples', to restrict what is produced])],
-    [doc="$withval"],
-    [doc=yes])
-  test "$doc" = no && doc=''
-  if test "$doc" = yes; then
-    doc_dist_target_ok=yes
-    docadd_html=yes
-    docadd_info=yes
-    docadd_other=yes
-    docadd_pdf=yes
-    docadd_examples=yes
-  else
-    # Don't use case/esac, verify input.
-    doc_dist_target_ok=no
-    docadd_html=no
-    docadd_info=no
-    docadd_other=no
-    docadd_pdf=no
-    docadd_examples=no
-    OFS=$IFS
-    IFS=','
-    set -- $doc
-    IFS=$OFS
-    for i
-    do
-      test "$i" = html     && { docadd_html=yes; continue; }
-      test "$i" = info     && { docadd_info=yes; continue; }
-      test "$i" = other    && { docadd_other=yes; continue; }
-      test "$i" = pdf      && { docadd_pdf=yes; continue; }
-      test "$i" = examples && { docadd_examples=yes; continue; }
-      AC_MSG_WARN([Invalid '--with-doc' argument:] $i)
-    done
-  fi
-  if test $docadd_html = yes; then
-    make_install_shipped_htmldoc=install_shipped_htmldoc
-    make_uninstall_shipped_htmldoc=uninstall_shipped_htmldoc
-  else
-    make_install_shipped_htmldoc=
-    make_uninstall_shipped_htmldoc=
-  fi
-  if test $docadd_other = yes; then
-    make_otherdoc=otherdoc
-    make_install_otherdoc=install_otherdoc
-    make_uninstall_otherdoc=uninstall_otherdoc
-  else
-    make_otherdoc=
-    make_install_otherdoc=
-    make_uninstall_otherdoc=
-  fi
-  if test "$docadd_examples" = yes; then
-    make_examples=examples
-    make_install_examples=install_examples
-    make_uninstall_examples=uninstall_examples
-  else
-    make_examples=
-    make_install_examples=
-    make_uninstall_examples=
-  fi
-  AC_SUBST([doc_dist_target_ok])
-  AC_SUBST([make_install_shipped_htmldoc])
-  AC_SUBST([make_uninstall_shipped_htmldoc])
-  AC_SUBST([make_otherdoc])
-  AC_SUBST([make_install_otherdoc])
-  AC_SUBST([make_uninstall_otherdoc])
-  AC_SUBST([make_examples])
-  AC_SUBST([make_install_examples])
-  AC_SUBST([make_uninstall_examples])])
-
-
 # We need makeinfo from Texinfo 5.0 or newer, for @codequoteundirected.
 # The minor version checking logic is present for future needs.
 
@@ -160,7 +83,6 @@ AC_DEFUN([GROFF_MAKEINFO],
   # src dir>/build-aux/missing makeinfo.  As we need a more precise
   # check of makeinfo version, we don't use it.
   [MAKEINFO=
-   if test "$docadd_info" = yes; then
      missing=
      AC_CHECK_PROG([MAKEINFO], [makeinfo], [makeinfo])
      if test -z "$MAKEINFO"; then
@@ -192,19 +114,7 @@ AC_DEFUN([GROFF_MAKEINFO],
 [Get the 'texinfo' package version 5.0 or newer.])
        fi
      fi
-
-     make_infodoc=infodoc
-     make_install_infodoc=install_infodoc
-     make_uninstall_infodoc=uninstall_infodoc
-   else
-     make_infodoc=
-     make_install_infodoc=
-     make_uninstall_infodoc=
-   fi
-   AC_SUBST([MAKEINFO])
-   AC_SUBST([make_infodoc])
-   AC_SUBST([make_install_infodoc])
-   AC_SUBST([make_uninstall_infodoc])])
+   AC_SUBST([MAKEINFO])])
 
 # 'makeinfo' and 'texi2dvi' are distributed together, so if the former
 # is too old, the latter is too.
@@ -223,9 +133,6 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
   [make_htmldoc=
    make_install_htmldoc=
    make_uninstall_htmldoc=
-   make_htmlexamples=
-   make_install_htmlexamples=
-   make_uninstall_htmlexamples=
    AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
 
    missing=
@@ -239,16 +146,9 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
    test "$GHOSTSCRIPT" = "missing" && missing="$missing 'gs'"
 
    if test -z "$missing"; then
-     if test $docadd_html = yes; then
        make_htmldoc=htmldoc
        make_install_htmldoc=install_htmldoc
        make_uninstall_htmldoc=uninstall_htmldoc
-       if test "$docadd_examples" = yes; then
-         make_htmlexamples=html_examples
-         make_install_htmlexamples=install_htmlexamples
-         make_uninstall_htmlexamples=uninstall_htmlexamples
-       fi
-     fi
    else
      plural=`set $missing; test $[#] -gt 1 && echo s`
      missing=`set $missing
@@ -264,8 +164,7 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
 	 done
 	 echo $missing`
 
-     docnote=.
-     test $docadd_html = yes && docnote=';
+     docnote=';
   therefore, it will be possible neither to prepare, nor to install,
   groff-generated documentation in HTML format.'
 
@@ -275,14 +174,10 @@ AC_DEFUN([GROFF_HTML_PROGRAMS],
 
   Consequently, groff's HTML backend (grohtml) will not work properly$docnote
      ])
-     doc_dist_target_ok=no
    fi
    AC_SUBST([make_htmldoc])
    AC_SUBST([make_install_htmldoc])
-   AC_SUBST([make_uninstall_htmldoc])
-   AC_SUBST([make_htmlexamples])
-   AC_SUBST([make_install_htmlexamples])
-   AC_SUBST([make_uninstall_htmlexamples])])
+   AC_SUBST([make_uninstall_htmldoc])])
 
 
 # To produce PDF docs, we need both awk and ghostscript.
@@ -291,9 +186,6 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
   [make_pdfdoc=
    make_install_pdfdoc=
    make_uninstall_pdfdoc=
-   make_pdfexamples=
-   make_install_pdfexamples=
-   make_uninstall_pdfexamples=
    AC_REQUIRE([GROFF_AWK_PATH])
    AC_REQUIRE([GROFF_GHOSTSCRIPT_PATH])
 
@@ -301,24 +193,16 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
    test "$AWK" = missing && missing="'awk'"
    test "$GHOSTSCRIPT" = missing && missing="$missing 'gs'"
    if test -z "$missing"; then
-     if test $docadd_pdf = yes; then
        make_pdfdoc=pdfdoc
        make_install_pdfdoc=install_pdfdoc
        make_uninstall_pdfdoc=uninstall_pdfdoc
-       if test "$docadd_examples" = yes; then
-         make_pdfexamples=pdfexamples
-         make_install_pdfexamples=install_pdfexamples
-         make_uninstall_pdfexamples=uninstall_pdfexamples
-       fi
-     fi
    else
      plural=`set $missing; test $[#] -eq 2 && echo s`
      test "$plural" = s \
        && missing=`set $missing; echo "$[1] and $[2]"` \
        || missing=`echo $missing`
 
-     docnote=.
-     test $docadd_pdf = yes && docnote=';
+     docnote=';
   therefore, it will neither be possible to prepare, nor to install,
   documentation and most of the examples in PDF format.'
 
@@ -328,14 +212,10 @@ AC_DEFUN([GROFF_PDFDOC_PROGRAMS],
 
   Consequently, groff's PDF formatter (pdfroff) will not work properly$docnote
      ])
-     doc_dist_target_ok=no
    fi
    AC_SUBST([make_pdfdoc])
    AC_SUBST([make_install_pdfdoc])
-   AC_SUBST([make_uninstall_pdfdoc])
-   AC_SUBST([make_pdfexamples])
-   AC_SUBST([make_install_pdfexamples])
-   AC_SUBST([make_uninstall_pdfexamples])])
+   AC_SUBST([make_uninstall_pdfdoc])])
 
 # Option to configure path to URW fonts
 AC_DEFUN([GROFF_URW_FONTS_PATH],
@@ -1276,9 +1156,7 @@ AC_DEFUN([GROFF_INSTALL_SH],
 # Test whether install-info is available.
 
 AC_DEFUN([GROFF_INSTALL_INFO],
-  [if test $docadd_info = yes; then
-     AC_CHECK_PROGS([INSTALL_INFO], [install-info], [:])
-   fi])
+  [AC_CHECK_PROGS([INSTALL_INFO], [install-info], [:])])
 
 
 # At least one Unix system, Apple Macintosh Rhapsody 5.5,
