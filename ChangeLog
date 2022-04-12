@@ -1,3 +1,10 @@
+2022-04-12  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/preconv/preconv.cpp (unicode_entity): Convert
+	input U+00A0 to \~ as troff would, not to \[u00A0].
+
+	Fixes <https://savannah.gnu.org/bugs/?62300>.
+
 2022-04-11  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	[gropdf] fails to deal with 255th glyph in font.
