@@ -5873,9 +5873,9 @@ Looks like we'll end up paying \n[salaries] salaries.
 Comparison operators comprise @code{<} (less than), @code{>} (greater
 than), @code{<=} (less than or equal), @code{>=} (greater than or
 equal), and @code{=} (equal).  @code{==} is a synonym for @code{=}.
-When evaluated, a comparison operation is replaced with @samp{0} if it
-is false and @samp{1} if true.  In the @code{roff} language, positive
-values are true, others false.
+When evaluated, a comparison is replaced with @samp{0} if it is false
+and @samp{1} if true.  In the @code{roff} language, positive values are
+true, others false.
 
 @cindex logical operators
 @cindex operators, logical
@@ -5904,11 +5904,11 @@ within @code{if}, @code{ie}, and @code{while} requests.  Furthermore,
 @code{!} is recognized only at the beginning of a numeric expression not
 contained by another numeric expression.  In other words, it must be the
 ``outermost'' operator.  Attempting to include it elsewhere in the
-expression results in a warning diagnostic in the @samp{number} category
+expression produces a warning in the @samp{number} category
 (@pxref{Debugging}), and its expression evaluates false.  This
 unfortunate limitation maintains compatibility with @acronym{AT&T}
-@code{troff}.  You can around it by comparing numeric expressions to the
-canonical truth values @samp{0} and @samp{1}.
+@code{troff}.  You can work around it by comparing numeric expressions
+to the canonical truth values @samp{0} and @samp{1}.
 
 @Example
 .nr X 1
@@ -5949,8 +5949,8 @@ X=\n[X] Y=\n[Y] Z=\n[Z]
 For many requests and escape sequences that cause motion on the page,
 the unary operators @code{+} and @code{-} work differently when leading
 a numeric expression.  They then indicate a motion relative to the
-current drawing position:@: positive is down in vertical contexts, right
-in horizontal ones.
+drawing position:@: positive is down in vertical contexts, right in
+horizontal ones.
 
 @cindex @code{bp} request, using @code{+} and@tie{}@code{-} with
 @cindex @code{in} request, using @code{+} and@tie{}@code{-} with
@@ -6025,10 +6025,10 @@ the beginning of an input line;@footnote{Control structure syntax
 creates an exception to this rule, but is designed to remain useful:
 recalling our example, @samp{.if 1 .Underline this} would underline only
 ``this'', precisely.  @xref{Conditionals and Loops}.} if the @code{|}
-operator were omitted, then the underline would be drawn a zero distance
-from the current position, producing device-dependent, and likely
-undesirable, results.  On the @samp{ps} output device, it underlines the
-period.
+operator were omitted, then the underline would be drawn at zero
+distance from the current position, producing device-dependent, and
+likely undesirable, results.  On the @samp{ps} output device, it
+underlines the period.
 
 For vertical movements, the @code{|} operator specifies a distance from
 the first text baseline on the page or in the current diversion, using
@@ -12165,6 +12165,8 @@ in the branches or bodies of these structures is unusual.
 
 @c ---------------------------------------------------------------------
 
+@c BEGIN Keep (roughly) parallel with subsection "Conditional
+@c expressions" of groff(7).
 @node Operators in Conditionals, if-then, Conditionals and Loops, Conditionals and Loops
 @subsection Operators in Conditionals
 
@@ -12327,6 +12329,8 @@ true.@footnote{This bizarre behavior maintains compatibility with
 The unexpected @samp{r x} in the output is a clue that our conditional
 was not interpreted as we planned, but matters may not always be so
 obvious.
+@c END Keep (roughly) parallel with subsection "Conditional expressions"
+@c of groff(7).
 
 @c ---------------------------------------------------------------------
 

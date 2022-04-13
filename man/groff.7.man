@@ -896,7 +896,8 @@ then
 .
 .
 .P
-.IR @g@troff 's
+GNU
+.IR troff 's \" GNU
 scaling operator
 .BI ( c ; e )
 evaluates a numeric
@@ -910,9 +911,8 @@ is omitted,
 scaling units are ignored in the evaluation
 .RI of\~ e .
 .
-.
-.P
-.I @g@troff
+GNU
+.I troff \" GNU
 also provides a pair of operators to compute the extrema of two
 operands:
 .B >?\&
@@ -941,7 +941,7 @@ is a synonym for
 .BR = .
 .
 When evaluated,
-a comparison operation is replaced with
+a comparison is replaced with
 .RB \[lq] 0 \[rq]
 if it is false and
 .RB \[lq] 1 \[rq]
@@ -982,8 +982,8 @@ contained by another numeric expression.
 In other words,
 it must be the \[lq]outermost\[rq] operator.
 .
-Attempting to include it elsewhere in the expression results in a
-warning diagnostic in the \[lq]number\[rq] category
+Attempting to include it elsewhere in the expression produces a warning
+in the \[lq]number\[rq] category
 (see
 .MR @g@troff @MAN1EXT@ ),
 and its expression evaluates false.
@@ -1017,7 +1017,7 @@ and
 .B \-
 work differently when leading a numeric expression.
 .
-They then indicate a motion relative to the current drawing position:
+They then indicate a motion relative to the drawing position:
 positive is down in vertical contexts,
 right in horizontal ones.
 .
@@ -1196,36 +1196,24 @@ request must be the last such escape sequence on an input line.
 .SS "Conditional expressions"
 .\" ====================================================================
 .
+.\" BEGIN Keep (roughly) parallel with groff.texi node "Operators in
+.\" Conditionals".
 The
 .request .if ,
 .request .ie ,
 and
 .request .while
-requests can test the truth values of numerical expressions.
+requests test the truth values of numeric expressions.
 .
 They also support several additional Boolean operators;
 the members of this expanded class are termed
-.IR "conditional expressions" .
+.IR "conditional expressions" ;
+their truth values are as shown below.
 .
 .
-.P
-A numerical expression
-.I expr
-is true if its value is positive.
-.
-In
-.I roff
-languages,
-negative values are false.
-.
-The truth values of other conditional expression operators are as shown
-below.
-.
-.
-.\" BEGIN Keep (roughly) parallel with groff.texi node "Operators in
-.\" Conditionals".
-.P
+.br
 .ne 14v
+.P
 .TS
 rf(BI) lB
 rB lx.
