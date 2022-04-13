@@ -2512,9 +2512,9 @@ The footnote line length is effectively computed as
 .CW "\~*\~\[rs]*[FR]" \[rq].
 .
 If an absolute footnote line length is required,
-recall that arithmetic expressions in
+recall that arithmetic expressions in the
 .I roff
-languages are evaluated strictly from left to right,
+language are evaluated strictly from left to right,
 with no operator precedence
 (parentheses are honored).
 .

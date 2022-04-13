@@ -878,6 +878,13 @@ and @acronym{PDF}.
 @node Conventions Used in This Manual, Credits, Output Device Intro, Introduction
 @section Conventions Used in This Manual
 
+We apply the term ``groff'' to the language documented here, the GNU
+implementation of the overall system, the project that develops that
+system, and the command of that name.  In the first sense, @code{groff}
+is an extended dialect of the @code{roff} language, for which many
+similar implementations exist; see the @cite{roff@r{(7)}} man page for a
+history.
+
 We use Texinfo's ``result'' (@result{}) and @error{} notations to
 present output written to the standard output and standard error
 streams, respectively.  Diagnostic messages from the GNU @code{troff}
@@ -4012,7 +4019,7 @@ after each call to @code{.1C}, @code{.2C}, or @code{.MC}.}
 contemporary documents.  The footnote line length is effectively
 computed as @samp{@slanted{column-width} * \*[FR]}.  If an absolute
 footnote line length is required, recall that arithmetic expressions in
-@code{roff} languages are evaluated strictly from left to right, with no
+@code{roff} input are evaluated strictly from left to right, with no
 operator precedence (parentheses are honored).
 
 @Example
@@ -5061,8 +5068,8 @@ when using such low-level features, so most users turn to the
 @node Requests and Macros, Macro Packages, Tab Stops, Text
 @subsection Requests and Macros
 
-We have now encountered almost all of the syntax there is in @code{roff}
-languages, with an exception already noted in passing.
+We have now encountered almost all of the syntax there is in the
+@code{roff} language, with an exception already noted in passing.
 @cindex request
 @cindex control character
 @cindex control character, no-break
@@ -5363,7 +5370,7 @@ Euro @samp{\[Eu]} and per mille @samp{\[%0]} glyphs.}
 @cindex conventions for input
 
 Since GNU @code{troff} fills text automatically, it is common practice
-in @code{roff} languages to avoid visual composition of text in input
+in the @code{roff} language to avoid visual composition of text in input
 files: the esthetic appeal of the formatted output is what matters.
 Therefore, @code{roff} input should be arranged such that it is easy for
 authors and maintainers to compose and develop the document, understand
@@ -5927,7 +5934,7 @@ to the canonical truth values @samp{0} and @samp{1}.
 @cindex expression, order of evaluation
 @opindex (
 @opindex )
-@code{roff} languages have no operator precedence:@: expressions are
+The @code{roff} language has no operator precedence:@: expressions are
 evaluated strictly from left to right, in contrast to schoolhouse
 arithmetic.  Use parentheses @code{(} @code{)} to impose a desired
 precedence upon subexpressions.
@@ -9348,7 +9355,8 @@ collected line still uses the old line length value.
 @cindex line control
 @cindex control, line
 
-GNU @code{troff} distinguishes input and output line continuation.
+The @code{roff} language distinguishes input and output line
+continuation.
 
 @Defesc {\\@key{RET}, , ,}
 @cindex input line continuation (@code{\@key{RET}})
