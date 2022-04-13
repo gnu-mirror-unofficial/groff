@@ -3086,8 +3086,8 @@ Differences from AT&T
 .LP
 The
 .I "groff ms"
-macros are a complete re-implementation,
-using no original AT&T code.
+macros are an independent reimplementation,
+using no AT&T code.
 .
 Since they take advantage of the extended features of
 .I groff ,
