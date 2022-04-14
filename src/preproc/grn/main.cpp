@@ -567,8 +567,10 @@ conv(FILE *fp,
       }
       char *path;
       gfp = macro_path.open_file(gremlinfile, &path);
-      if (!gfp)
+      if (0 /* nullptr */ == gfp) {
+	error("cannot open picture file '%1'", gremlinfile);
 	return;
+      }
       PICTURE = DBRead(gfp);	/* read picture file */
       fclose(gfp);
       free(path);
