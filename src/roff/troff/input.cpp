@@ -5829,8 +5829,8 @@ int do_if_request()
       for (;;) {
 	tok.next();
 	if (tok.is_newline() || tok.is_eof()) {
-	  warning(WARN_DELIM, "missing closing delimiter in conditional"
-		  " expression (got %1)", tok.description());
+	  warning(WARN_DELIM, "missing closing delimiter in output"
+		  " comparison operator (got %1)", tok.description());
 	  tok.next();
 	  curenv = oldenv;
 	  return 0;
