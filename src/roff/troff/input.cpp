@@ -1,4 +1,4 @@
-/* Copyright (C) 1989-2020 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2022 Free Software Foundation, Inc.
      Written by James Clark (jjc@jclark.com)
 
 This file is part of groff.
@@ -1744,6 +1744,12 @@ void token::next()
     if (cc != escape_char || escape_char == 0) {
     handle_normal_char:
       switch(cc) {
+      case INPUT_NO_BREAK_SPACE:
+	  type = TOKEN_STRETCHABLE_SPACE;
+	  return;
+      case INPUT_SOFT_HYPHEN:
+	  type = TOKEN_HYPHEN_INDICATOR;
+	  return;
       case PUSH_GROFF_MODE:
 	input_stack::save_compatible_flag(compatible_flag);
 	compatible_flag = 0;

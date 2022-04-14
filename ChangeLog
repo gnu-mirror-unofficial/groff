@@ -1,5 +1,20 @@
 2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[troff]: Translate 8-bit NBSP and SHY on input.
+
+	* src/roff/troff/input.h: Define constant integers for "input"
+	no-break spaces and soft hyphens for EBCDIC and non-EBCDIC
+	(presumably ASCII/ISO 8859/Unicode) systems.
+
+	* src/roff/troff/input.cpp (token::next): Translate the input
+	character codes for input NBSP to \~ and nput SHY to \%.
+
+	Fixes <https://savannah.gnu.org/bugs/?58962>.  Thanks to Dave
+	Kemper for the report, code review, and his suggestion to push
+	more work to compile time.
+
+2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[groff]: Regression-test Savannah #58962.
 
 	* src/roff/groff/handle_special_input_code_points.diff: Do it.
