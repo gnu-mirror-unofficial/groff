@@ -1,5 +1,14 @@
 2022-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/grn/hdb.cpp (DBGetType): Lower fatal diagnostics
+	to errors when encounting invalid element type characters.
+	Return a value interpreted by our caller as an error indication
+	instead.  Helps compilers determine that we're not implicitly
+	falling through our cases.  Addresses "-Wimplicit-fallthrough"
+	warnings from GCC.
+
+2022-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/grn/hdb.cpp (DBRead): Add more validity checking.
 	Verify that the number of conversions returned by fscanf() is as
 	expected instead of throwing this information away--abort

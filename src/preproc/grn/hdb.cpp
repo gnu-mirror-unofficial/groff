@@ -325,9 +325,9 @@ DBGetType(char *s)
     case 'R':
       return (CENTRIGHT);
     default:
-      fatal_with_file_and_line(gremlinfile, lineno,
+      error_with_file_and_line(gremlinfile, lineno,
 			       "unknown element type '%1'", s);
-      // fatal_with_file_and_line() does not return
+      return -1;
     }
   case 'B':
     switch (s[3]) {
@@ -338,9 +338,9 @@ DBGetType(char *s)
     case 'R':
       return (BOTRIGHT);
     default:
-      fatal_with_file_and_line(gremlinfile, lineno,
+      error_with_file_and_line(gremlinfile, lineno,
 			       "unknown element type '%1'", s);
-      // fatal_with_file_and_line() does not return
+      return -1;
     }
   case 'T':
     switch (s[3]) {
@@ -351,16 +351,15 @@ DBGetType(char *s)
     case 'R':
       return (TOPRIGHT);
     default:
-      fatal_with_file_and_line(gremlinfile, lineno,
+      error_with_file_and_line(gremlinfile, lineno,
 			       "unknown element type '%1'", s);
-      // fatal_with_file_and_line() does not return
+      return -1;
     }
   default:
-    fatal_with_file_and_line(gremlinfile, lineno,
+    error_with_file_and_line(gremlinfile, lineno,
 			     "unknown element type '%1'", s);
+    return -1;
   }
-
-  return 0;				/* never reached */
 }
 
 #ifdef UW_FASTSCAN
