@@ -1,5 +1,24 @@
 2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[man]: Fix extraneous space when `ME` or `UE` given extraneous
+	arguments and mandoc wrapper is used.
+
+	* tmac/an-ext.tmac (UE, ME): Double backslashes in macro
+	definitions when interpolating `.$` register (just like we tell
+	everyone else to do).  This one was interesting to track down.
+	When using just `-man`, the problem never manifested; only with
+	`-mandoc`.  The difference is that with the former, the `.$`
+	register is initialized to zero; with the latter, because `TH`
+	is aliased to another macro (then unaliased), `.$` has the
+	argument count to the `TH` macro, not to the macros actually
+	being called.  This caused the wrong branch of a conditional to
+	be taken and put an extra space node on the output.  And all
+	this to interpolate arguments we don't even claim to support. :|
+
+	Fixes <https://savannah.gnu.org/bugs/?62044>.
+
+2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* tmac/cp1047.tmac:
 	* tmac/latin1.tmac:
 	* tmac/latin2.tmac:
