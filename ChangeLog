@@ -1,3 +1,15 @@
+2022-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/preproc/grn/hdb.cpp (DBRead): Add more validity checking.
+	Verify that the number of conversions returned by fscanf() is as
+	expected instead of throwing this information away--abort
+	processing ("giving up" like pic(1) does) if it does not.
+	Consistently report this abandonment in diagnostic messages.
+	Similarly validate pointer returned by fgets().  Soften handling
+	of invalid text condition from fatal errors, introduced in
+	commit eb4f0675e, 16 August, to throw an error and give up.
+	Addresses "-Wunused-result" warnings from GCC.
+
 2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/grn/main.cpp (conv): Throw an error diagnostic
