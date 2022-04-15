@@ -1,5 +1,14 @@
 2022-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/refer/label.ypp: Drop redundant declaration of
+	`yyparse`.  Both byacc 20140715 and GNU Bison 3.3.2 supply the
+	the function prototype themselves.  Addresses
+	"-Wredundant-decls" warning from GCC.
+
+	Fixes <https://savannah.gnu.org/bugs/?43569>.
+
+2022-04-15  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/grn/hdb.cpp (DBGetType): Lower fatal diagnostics
 	to errors when encounting invalid element type characters.
 	Return a value interpreted by our caller as an error indication
