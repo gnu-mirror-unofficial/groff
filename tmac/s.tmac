@@ -1789,9 +1789,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .de XN de
 .\" .XN <text>
 .ie \\n[nh*hl] .toc*xn-init \\$@
-.el \{ .@error .XN is not allowed before .NH
-.      nop \&\\$*
-.   \}
+.el \{\
+.	@error .XN is not allowed before .NH
+.	nop \&\\$*
+.\}
 .de toc*xn-init de
 .rn XN-REPLACEMENT XN
 .XN \\$@
