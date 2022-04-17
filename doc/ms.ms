@@ -3005,16 +3005,11 @@ register.
 Here's an example of typical
 .I ms
 table of contents preparation and
-(a simulation of)
 its result.
 .
-.ds DOT \h'1m'.\"
 .TS
 box center;
-cb | cb
-l | c.
-Input	Result
-_
+L.
 T{
 .nf
 .CW
@@ -3030,8 +3025,9 @@ Introduction
 Methodology
 \&.XS
 \[->]Methodology
-\&.XA
+\&.XA no
 \[->]\[->]Fassbinder\[aq]s Approach
+\&.XA no
 \[->]\[->]Kahiu\[aq]s Approach
 \&.XE
 .R
@@ -3047,26 +3043,55 @@ Findings
 .CW
 \&.TC
 .fi
-T}	T{
-.sp 1v
-.nf
-.LG
-.\" Manual centering--ugh!
-.B "\h'2m'Table of Contents"
-.NL
-.sp 2v
-.\" Use absolute motions to gets the dots aligned.
-Introduction\h'|4.5m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\01
-\h'1m'Methodology\h'|4.5m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\02
-\h'2m'Fassbinder's Approach
-\h'2m'Kahiu's Approach
-\&.\|.\|.
-.\" XXX: Why doesn't \h'|3.5m' achieve alignment?
-Findings\h'|3.2m'\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\*[DOT]\08
 T}
 .TE
-.rm DOT
 .KE
+.
+.nr SavedPageNumber \n%
+.nr SavedH1 \n[H1] \" groff ms internal name
+.nr SavedH2 \n[H2] \" groff ms internal name
+.nr % 1
+.rr H1
+.rr H2
+.als SavedTOC toc*div \" groff ms internal name
+.rm toc*div
+.di ThrowAway
+.NH 1
+Introduction
+.XS
+Introduction
+.XE
+.nr % 2
+.NH 2
+Methodology
+.XS
+	Methodology
+.XA no
+		Fassbinder's Approach
+.XA no
+		Kahiu's Approach
+.XE
+.nr % 5
+.NH 1
+Findings
+.XS
+Findings
+.XE
+.br
+.di
+.\" We can't emit the TOC inside a B1/B2 box, so use lines instead.
+.R
+\l'\n[.l]u'
+.PX
+\l'\n[.l]u'
+.als toc*div SavedTOC
+.rm SavedTOC
+.nr % \n[SavedPageNumber]
+.nr H1 \n[SavedH1]
+.nr H2 \n[SavedH2]
+.rr SavedPageNumber
+.rr SavedH1
+.rr SavedH2
 .
 .
 .PP
@@ -3090,6 +3115,7 @@ regularly.
 .
 .
 .\" ------------------------
+.if t .bp
 .NH 1
 Differences from AT&T
 .BI ms
