@@ -2133,10 +2133,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" ****************************
 .\" Emulate Bell Labs localisms. Note, (a) they're not documented, and
 .\" (b) the .P1 and .UC macros collide with different ones in Berkeley
-.\" ms.  We hack around this by conditionalizing the behavior of P1; UC
-.\" was not defined by groff and will be a no-op if called Berkeley
-.\" style with no arguments, so there is no problem with hijacking it
-.\" here.
+.\" ms.
+.\"
+.\" [Correction 2022-04-17: 10th Edition AT&T ms also collides with
+.\" Berkeley's (undocumented) FP macro.]
+.\"
+.\" We hack around this by conditionalizing the behavior of P1; UC was
+.\" not defined by groff and will be a no-op if called Berkeley style
+.\" with no arguments, so there is no problem with hijacking it here.
 .\"
 .\" What's done here is sufficient to give back the Guide to EQN (1976)
 .\" its section headings and restore some text that had gone missing as
