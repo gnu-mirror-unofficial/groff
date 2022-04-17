@@ -1502,12 +1502,15 @@ or arbitrary user-specified text.
 .
 .TP
 .B \[rs]**
-Place an automatically numbered footnote marker in the text.
+Place an
+.I automatic number,
+an automatically generated numeric footnote marker,
+in the text.
 .
 Each time this string is interpolated,
 the number it produces increments by one.
 .
-Automatic footnote numbers start at 1.
+Automatic numbers start at 1.
 .
 This is a Berkeley extension.
 .
@@ -1539,8 +1542,7 @@ which is then also placed at the beginning of the footnote text.
 If
 .I marker
 is omitted,
-the next pending automatic footnote number enqueued by interpolation of
-the
+the next pending automatic number enqueued by interpolation of the
 .B *
 string is used,
 and if none exists,
@@ -1591,33 +1593,22 @@ respectively.
 .
 .
 .P
-Paragraph-level formatting of footnotes is performed by a macro named
-.BR FP ,
-which is called once for each individual footnote.
-A default implementation of
-.B FP
-is provided;
-alternatively,
-you may define your own replacement implementation,
-and so assert your own control over footnote paragraph formatting.
-.
-.P
-When using the default implementation of
-.BR FP ,
-the
+The
 .B FF
-register controls the formatting of automatically numbered footnotes,
+register controls the formatting of automatically numbered footnote
+paragraphs,
 and those for which
 .B .FS
 is given a
 .I marker
 argument,
-at the bottom of a column or page as follows:-
+at the bottom of a column or page as follows.
+.
 .
 .RS
 .TP
 0
-Set an automatically generated number,
+Set an automatic number,
 or a specified
 .B FS
 .I marker
@@ -1644,7 +1635,7 @@ This is the default.
 As
 .BR 0 ,
 but set the marker as regular text,
-and follow an automatically generated number with a period.
+and follow an automatic number with a period.
 .
 .
 .TP
@@ -1664,35 +1655,6 @@ but set the footnote paragraph with the marker hanging
 (like
 .BR .IP ).
 .RE
-.
-.
-.P
-Conversely,
-if you choose to provide your own
-.B FP
-macro implementation,
-.I you
-have control of how footnote paragraphs will be formatted;
-it is your choice as to how the
-.B FF
-register should be interpreted,
-(if at all).
-For each individual footnote,
-your macro will be called with one argument,
-which represents either an automatically generated footnote number,
-or the verbatim
-.I marker
-argument passed in the initiating
-.B FS
-macro call;
-in the latter case,
-an explicit second argument of
-.RB \[lq] no \[rq]
-will also be present,
-indicating that no embellishment of the footnote
-.I marker
-(as may be appropriate for footnote numbers)
-is required.
 .
 .
 .\" ====================================================================

@@ -2232,12 +2232,15 @@ lf(CR) lx.
 String	Description
 _
 \[rs]**	T{
-Place an automatically numbered footnote marker in the text.
+Place an
+.I automatic number,
+an automatically generated numeric footnote marker,
+in the text.
 .
 Each time this string is interpolated,
 the number it produces increments by one.
 .
-Automatic footnote numbers start at 1.
+Automatic numbers start at 1.
 .
 This is a Berkeley extension.
 T}
@@ -2275,8 +2278,7 @@ which is then also placed at the beginning of the footnote text.
 If
 .I marker
 is omitted,
-the next pending automatic footnote number enqueued by interpolation of
-the
+the next pending automatic number enqueued by interpolation of the
 .CW *
 string is used,
 and if none exists,
@@ -2417,10 +2419,13 @@ respectively.
 .PP
 The
 .CW FF
-register controls the formatting of automatically numbered footnotes,
+register controls the formatting of automatically numbered footnote
+paragraphs,
 and those for which
 .CW .FS
-is given a marker argument,
+is given a
+.I marker
+argument,
 at the bottom of a column or page as follows.
 .
 .

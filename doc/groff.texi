@@ -2914,10 +2914,11 @@ and those for which the @code{FS} request is given a marker argument, at
 the bottom of a column or page.  This is a Berkeley extension.
 @table @code
 @item 0
-Set an automatic number as a superscript (on typesetter devices) or
-surrounded by square brackets (on terminals).  The footnote paragraph is
-indented as with @code{PP} if there is an @code{FS} argument or an
-automatic number, and as with @code{LP} otherwise.  This is the default.
+Set an automatic number@footnote{defined in @ref{ms Footnotes}) below}
+as a superscript (on typesetter devices) or surrounded by square
+brackets (on terminals).  The footnote paragraph is indented as with
+@code{PP} if there is an @code{FS} argument or an automatic number, and
+as with @code{LP} otherwise.  This is the default.
 
 @item 1
 As @code{0}, but set the marker as regular text and follow an
@@ -3945,9 +3946,10 @@ A footnote is typically anchored to a place in the text with a
 arbitrary user-specified text.
 
 @Defmpstr {*, ms}
-Place an automatically numbered footnote marker in the text.  Each time
-this string is interpolated, the number it produces increments by one.
-Automatic footnote numbers start at 1.  This is a Berkeley extension.
+Place an @dfn{automatic number}, an automatically generated numeric
+footnote marker, in the text.  Each time this string is interpolated,
+the number it produces increments by one.  Automatic numbers start at 1.
+This is a Berkeley extension.
 @endDefesc
 
 Enclose the footnote text in @code{FS} and @code{FE} macro calls to set
@@ -4002,8 +4004,8 @@ parameters.  The registers @code{FI}, @code{FPD}, @code{FPS}, and
 respectively.
 
 The @code{FF} register controls the formatting of automatically numbered
-footnotes and those for which @code{FS} is given a marker argument.
-@xref{ms Document Control Settings}.
+footnote paragraphs and those for which @code{FS} is given a marker
+argument.  @xref{ms Document Control Settings}.
 
 The default footnote line length is 11/12ths of the normal line length
 for compatibility with the expectations of historical @file{ms}
