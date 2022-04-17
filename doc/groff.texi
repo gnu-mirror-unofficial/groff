@@ -2916,18 +2916,19 @@ the bottom of a column or page.  This is a Berkeley extension.
 @item 0
 Set an automatic number as a superscript (on typesetter devices) or
 surrounded by square brackets (on terminals).  The footnote paragraph is
-indented if there is an @code{FS} argument or an automatic number.  This
-is the default.
+indented as with @code{PP} if there is an @code{FS} argument or an
+automatic number, and as with @code{LP} otherwise.  This is the default.
 
 @item 1
-Like @code{0}, but set the marker as regular text and follow an
+As @code{0}, but set the marker as regular text and follow an
 automatic number with a period.
 
 @item 2
-Like @code{1}, but without indentation.
+As @code{1}, but without indentation (like @code{LP}).
 
 @item 3
-Like @code{1}, but set the footnote paragraph with the marker hanging.
+As @code{1}, but set the footnote paragraph with the marker hanging
+(like @code{IP}).
 @end table
 
 Effective: next footnote.

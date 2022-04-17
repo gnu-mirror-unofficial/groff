@@ -2436,27 +2436,36 @@ Set an automatic number as a superscript
 or surrounded by square brackets
 (on terminals).
 .
-The footnote paragraph is indented if there is an
+The footnote paragraph is indented as with
+.CW .PP
+if there is an
 .CW .FS
-argument or an automatic number.
+argument or an automatic number,
+and as with
+.CW .LP
+otherwise.
 .
 This is the default.
 T}
 1	T{
-Like
+As
 .CW 0 ,
 but set the marker as regular text,
 and follow an automatic number with a period.
 T}
 2	T{
-Like
+As
 .CW 1 ,
-but without indentation.
+but without indentation
+(like
+.CW .LP ).
 T}
 3	T{
-Like
+As
 .CW 1 ,
-but set the footnote paragraph with the marker hanging.
+but set the footnote paragraph with the marker hanging
+(like
+.CW .IP ).
 T}
 .TE
 .KE

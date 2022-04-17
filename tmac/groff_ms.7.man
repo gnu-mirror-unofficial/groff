@@ -1627,16 +1627,21 @@ as a superscript
 or surrounded by square brackets
 (on terminals).
 .
-The footnote paragraph is indented if there is an
+The footnote paragraph is indented as with
+.B .PP
+if there is an
 .B .FS
-argument or an automatically generated number.
+argument or an automatic number,
+and as with
+.B .LP
+otherwise.
 .
 This is the default.
 .
 .
 .TP
 1
-Like
+As
 .BR 0 ,
 but set the marker as regular text,
 and follow an automatically generated number with a period.
@@ -1644,17 +1649,22 @@ and follow an automatically generated number with a period.
 .
 .TP
 2
-Like
+As
 .BR 1 ,
-but without indentation.
+but without indentation
+(like
+.BR .LP ).
 .
 .
 .TP
 3
-Like
+As
 .BR 1 ,
-but set the footnote paragraph with the marker hanging.
+but set the footnote paragraph with the marker hanging
+(like
+.BR .IP ).
 .RE
+.
 .
 .P
 Conversely,
