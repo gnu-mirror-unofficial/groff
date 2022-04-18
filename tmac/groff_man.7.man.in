@@ -412,8 +412,11 @@ The macro package may also abbreviate
 .I title
 and
 .I footer-inside
-with an ellipsis if they overrun the space available in the header and
-footer,
+with ellipses
+_ifstyle()dnl
+.RB ( .\|.\|.\& )
+_endif()dnl
+if they overrun the space available in the header and footer,
 respectively.
 .
 For HTML output,
@@ -2397,10 +2400,10 @@ recognized as such.
 .
 .TP
 .B \e|
-Narrow
+Thin space
 (one-sixth em on typesetters,
-zero-width on terminals)
-non-breaking space.
+zero-width on terminals);
+a non-breaking space.
 .
 Used primarily in ellipses
 (\(lq.\e|.\e|.\(rq)
@@ -3822,7 +3825,7 @@ in subsection \[lq]Command synopsis macros\[rq].
 The idiomatic
 .I roff
 ellipsis is three dots (periods)
-with a \[lq]thin space\[rq] escape sequence
+with thin space escape sequences
 .B \[rs]|
 internally separating them.
 .
@@ -3850,18 +3853,28 @@ would then need to be suffixed with
 .B \[rs]&
 when not ending a sentence.
 .
-.RS
-.RS
-.EX
-Arguments are foo bar \[rs]*[EL]\[rs]& except when debugging.
-Arguments are foo bar .\[rs]|.\[rs]|.\[rs]& except when debugging.
-.EE
-.RE
+.br
+.ne 4v
+.TS
+C C
+LfCB LfCB.
+Instead of.\|.\|.	.\|.\|.do this.
+_
+\&.ds EL \[rs]&.\[rs]|.\[rs]|.	Arguments are
+Arguments are	.IR src-file\[rs]\[ti] .\[rs]|.\[rs]|.\[rs]&
+\&.IR src-file\[rs]\[ti] \[rs]*(EL\[rs]&	.IR dest-dir .
+\&.IR dest-dir .
+_
+.TE
 .
-Such a string saves one character of typing,
-at the cost of obscuring even the suggestion of an ellipsis to a casual
-reader of the source document.
-.RE
+.
+.IP
+The first column practices a false economy;
+the savings in typing is offset by the cost of obscuring even the
+suggestion of an ellipsis to a casual reader of the source document,
+and reduced portability to
+.RI non- roff
+man page formatters that cannot handle string definitions.
 .
 .
 .IP
