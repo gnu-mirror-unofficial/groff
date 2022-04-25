@@ -70,9 +70,9 @@
 	processing ("giving up" like pic(1) does) if it does not.
 	Consistently report this abandonment in diagnostic messages.
 	Similarly validate pointer returned by fgets().  Soften handling
-	of invalid text condition from fatal errors, introduced in
-	commit eb4f0675e, 16 August, to throw an error and give up.
-	Addresses "-Wunused-result" warnings from GCC.
+	of invalid text condition from fatal error, introduced in
+	commit eb4f0675e, 16 August, to a normal one with abandonment of
+	Gremlin file.  Addresses "-Wunused-result" warnings from GCC.
 
 2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -1399,9 +1399,9 @@
 	* tmac/fr.tmac:
 	* tmac/it.tmac:
 	* tmac/sv.tmac: Before switching locales, set a flag if
-	troublesome bit 2 of the hyphenation mode is set so that we can
-	preserve it.  Shift man(7) and me(7) logic to follow setup of
-	the new hyphenation mode; for the former, call the new
+	troublesome value 2 of the hyphenation mode is set so that we
+	can preserve it.  Shift man(7) and me(7) logic to follow setup
+	of the new hyphenation mode; for the former, call the new
 	`an*reset-hyphenation-mode`.
 
 	* tmac/groff_man.7.man.in:
@@ -1977,7 +1977,8 @@
 
 	Fixes <https://savannah.gnu.org/bugs/?61908>.
 
-	Problem found and patch supplied by KUBO Koichi.
+	Thanks to KUBO Koichi for finding the problem and supplying a
+	patch.
 
 2022-01-24  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
@@ -3356,7 +3357,7 @@
 
 	[mom]: Build more quietly.
 
-	* contrib/mom/mom.am (penguin.{ps,.pdf}: Make targets quiet by
+	* contrib/mom/mom.am (penguin.{ps,.pdf}): Make targets quiet by
 	default; they are simple file copies.
 
 2021-11-11  G. Branden Robinson <g.branden.robinson@gmail.com>
@@ -4169,17 +4170,17 @@
 
 2021-10-10  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
-	Handle pdfs > v1.4 loaded by \X'pdf: pdfpic.
+	Handle pdfs > v1.4 loaded by \X'pdf: pdfpic'.
 
 	* src/devices/gropdf/gropdf.pl: Improve loading of pdfs above
-	version 1.4, i.e. handle compressed nodes in /ObjStm. Also improve
-	code in \X'pdf: import'.
+	version 1.4, i.e. handle compressed nodes in /ObjStm. Also
+	improve code in \X'pdf: import'.
 
 2021-10-10  Deri James  <deri@chuzzlewit.myzen.co.uk>
 
 	Add new background boxes to gropdf.
 
-	* src/devices/gropdf/gropdf.pl: New \X'pdf background' command.
+	* src/devices/gropdf/gropdf.pl: New \X'pdf: background' command.
 	* tmac/pdf.tmac: Covenience command .pdfbackground added.
 	* contrib/sboxes/: Files which demonstrate use of background
 	boxes using -ms macros.
@@ -5893,7 +5894,7 @@
 2021-08-08  Dave Kemper <saint.snit@gmail.com>
 
 	* tmac/e.tmac: Rename `PE` to `PF` but remove vertical spacing.
-	(PE): New `PE` calls `PF` and then space as old `PE` did.
+	(PE): New `PE` calls `PF` and then spaces as old `PE` did.
 
 	Fixes <https://savannah.gnu.org/bugs/?60479>.
 
@@ -5925,7 +5926,7 @@
 
 	* tmac/refer-ms.tmac:
 	* tmac/s.tmac (fn@init, @PP): Rename strings
-	`fn@sup-{start,end}` to `fn@mark-{start,end}.  This makes it
+	`fn@sup-{start,end}` to `fn@mark-{start,end}`.  This makes it
 	more clear that the strings are brackets for the footnote
 	marker, and not so much to do with the note text.  Further, in
 	nroff mode, they aren't superscripts at all, but bracket glyphs.
@@ -5939,7 +5940,7 @@
 2021-08-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/refer-ms.tmac: Use `fn@sup-{start,end}` instead of
-	`par@sup-{start,end} when setting refer(1) citation labels.
+	`par@sup-{start,end}` when setting refer(1) citation labels.
 	This improves the appearance of the default labels on nroff
 	devices.  Continues commit caeede07, 1 May.
 
@@ -8424,7 +8425,7 @@
 
 	Now the only glyph in the page that doesn't render on a UTF-8
 	terminal (if one's font has adequate coverage) is the Bell
-	Systems logo.
+	System logo.
 
 2021-05-07  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -10626,7 +10627,7 @@
 
 2020-09-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	* tmac/tty.tmac: Define fallback glyphs for Bell Systems logo
+	* tmac/tty.tmac: Define fallback glyphs for Bell System logo
 	{non-breaking adjustable space} and radical extension and square
 	root extension (both non-printing input breaks) to suppress
 	warnings from groff_char(7).  As none of these are encoded in
