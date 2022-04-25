@@ -1,24 +1,26 @@
 2022-04-23  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
-    gnulib: replace non-recursive-gnulib-prefix-hack with automake-subdir option
+	gnulib: replace non-recursive-gnulib-prefix-hack with
+	automake-subdir option
 
-    'non-recursive-gnulib-prefix-hack' is deprecated by gnulib's commit
-    f8eed11b15e9141d061900e4068ea1f3ba9b63f6 and replaced by
-    '--automake-subdir'.
+	'non-recursive-gnulib-prefix-hack' is deprecated by gnulib's
+	commit f8eed11b15e9141d061900e4068ea1f3ba9b63f6 and replaced by
+	'--automake-subdir'.
 
-    * bootstrap.conf:
-      (gnulib_modules): Remove option 'non-recursive-gnulib-prefix-hack'.
-      (gnulib_tool_option_extras): Add option '--automake-subdir'.
-      (bootstrap_post_import_hook): Remove the invocation of '
-      build-aux/prefix-gnulib-mk'.
+	* bootstrap.conf:
+	(gnulib_modules): Remove option
+	'non-recursive-gnulib-prefix-hack'.
+	(gnulib_tool_option_extras): Add option '--automake-subdir'.
+	(bootstrap_post_import_hook): Remove the invocation of
+	'build-aux/prefix-gnulib-mk'.
 
-    * doc/automake.mom: update documentation accordingly.
+	* doc/automake.mom: update documentation accordingly.
 
-    Fixes <http://savannah.gnu.org/bugs/?61708> and
-    <https://savannah.gnu.org/bugs/?62205> , issues reported and fix
-    suggested by Bjarni Ingi Gislason <bjarniig@rhi.hi.is>.  Fix also
-    suggested by Werner LEMBERG <wl@gnu.org> (see
-    <https://repo.or.cz/ttfautohint.git/commit/a938fc63cb55ef48393a924d7083b13c1352d294>).
+	Fixes <http://savannah.gnu.org/bugs/?61708> and
+	<https://savannah.gnu.org/bugs/?62205> , issues reported and fix
+	suggested by Bjarni Ingi Gislason <bjarniig@rhi.hi.is>.  Fix
+	also suggested by Werner LEMBERG <wl@gnu.org> (see
+	<https://repo.or.cz/ttfautohint.git/commit/a938fc63cb55ef48393a924d7083b13c1352d294>).
 
 2022-04-23  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
@@ -26,8 +28,8 @@
 
 	* gnulib now points on c8b8f3bbcde37a53cd226f4c9cebd0dde6aca37f
 
-	* bootstrap: merge the latest version from gnulib/build-aux (groff's
-	bootstrap has a patch for OS x).
+	* bootstrap: merge the latest version from gnulib/build-aux
+	{groff's bootstrap has a patch for OS X}.
 
 	* bootstrap.conf: update copyright date.
 
