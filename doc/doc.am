@@ -574,8 +574,8 @@ if HAVE_TEXI2DVI
 	LC_ALL=C \
 	TEXINPUTS="$(top_srcdir)/build-aux:$(TEXINPUTS)" \
 	MAKEINFO='$(MAKEINFO) -I $(doc_srcdir)' \
-	$(PROG_TEXI2DVI) -e --batch --pdf --build-dir=doc/`basename $@`.t2p \
-	  -o $@ $<
+	$(PROG_TEXI2DVI) -e --batch --pdf \
+	  --build-dir=doc/`basename $@`.t2p -o $@ $<
 else
 	@echo "program texi2dvi is missing or too old;" \
 	  "cannot generate $@" >&2; \
