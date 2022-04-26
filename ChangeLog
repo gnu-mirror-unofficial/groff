@@ -1,3 +1,10 @@
+2022-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/string.cpp (string::extract): Check return
+	value of `malloc()` for nullity, and only poke into the buffer
+	returned if it is valid.  Discovered while troubleshooting
+	Savannah #62366.
+
 2022-04-23  Bertrand Garrigues <bertrand.garrigues@laposte.net>
 
 	gnulib: replace non-recursive-gnulib-prefix-hack with
