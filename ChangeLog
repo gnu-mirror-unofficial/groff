@@ -8,6 +8,22 @@
 
 2022-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tbl]: Handle `\R` sequences in text blocks robustly.
+
+	* src/preproc/tbl/table.cpp (table::add_entry): Fix SEGV when
+	repeating glyph table entry syntax (`\Rx`) used in a text block.
+	Lift extraction of entry string to be done unconditionally,
+	rather than in 5 different special cases.  This frees us up to
+	rewrite the entry if necessary, changing '\R' to '\&' inside a
+	text block.  Recast diagnostic to describe the problem
+	clearly--"bad repeated character" suggests that something is
+	wrong with the "argument" to `\R`, when really the problem is
+	the _context_.
+
+	Fixes <http://savannah.gnu.org/bugs/?62366>.
+
+2022-04-26  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/string.cpp (string::extract): Check return
 	value of `malloc()` for nullity, and only poke into the buffer
 	returned if it is valid.  Discovered while troubleshooting
