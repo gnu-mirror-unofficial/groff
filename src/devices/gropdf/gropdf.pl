@@ -143,7 +143,8 @@ my $bgbox='';		# Draw commands for boxes on this page
 
 $noslide=1 if exists($ENV{GROPDF_NOSLIDE}) and $ENV{GROPDF_NOSLIDE};
 
-my %ppsz=(	'ledger'=>[1224,792],
+my %ppsz=(
+	'ledger'=>[1224,792],
 	'legal'=>[612,1008],
 	'letter'=>[612,792],
 	'a0'=>[2384,3370],
@@ -170,7 +171,9 @@ my %ppsz=(	'ledger'=>[1224,792],
 	'c3'=>[918,1298],
 	'c4'=>[649,918],
 	'c5'=>[459,649],
-	'c6'=>[323,459] );
+	'c6'=>[323,459],
+	'com10'=>[297,684],
+);
 
 my $ucmap=<<'EOF';
 /CIDInit /ProcSet findresource begin
