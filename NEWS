@@ -440,6 +440,13 @@ o The 'configure' option --with-doc that was introduced in version
   contain no recommendation to support this option, and indeed, few, if
   any, GNU packages apart from groff support it.
 
+o The 'doc' Make target has been eliminated.  'all' (the default Make
+  target) assumes responsibility for generating the groff Texinfo manual
+  in all formats supported by the build host.  This change is only
+  significant when building from a Git checkout or if our Texinfo
+  manual's sources are modified; the distribution archive now provides
+  copies of the manual in Info, plain text, HTML, DVI, and PDF.
+
 o groffer has been deleted from the distribution.
 
 o grog no longer supports the "--warnings" option; the one diagnostic

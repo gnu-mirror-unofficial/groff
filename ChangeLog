@@ -1,5 +1,17 @@
 2022-04-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am: Refactor to simplify.  Ingo's removal of the
+	"--with-doc" "configure" option, among other changes, clears the
+	way to remove many phony targets and simplify dependencies
+	involving generation of the 5 formats of our Texinfo manual.
+	(build_infodoc, doc, doc_all, doc_txt, dvi, doc_dvi, pdf,
+	doc_pdf, html, doc_html): Drop phony targets.
+	(all): Depend directly on doc/groff.{info,txt,html,dvi,pdf}.
+	* NEWS: Add item since "make doc" is no longer necessary and
+	will do nothing.
+
+2022-04-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[tbl]: Regression-test Savannah #62366.
 
 	* src/preproc/tbl/tests/\

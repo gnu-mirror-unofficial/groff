@@ -485,19 +485,12 @@ endif
 # Were the foregoing not true, we would simply say this:
 #info_TEXINFOS = doc/groff.texi
 #doc_groff_TEXINFOS = doc/fdl.texi
-#
-# The GNU Coding Standards require only installation of documentation in
-# Info format.  This can still be disabled by passing
-#   --with-doc=<something other than "info" or "yes">
-# to configure.
 
-all: build_infodoc
+all: doc/groff.info doc/groff.txt doc/groff.html doc/groff.dvi \
+  doc/groff.pdf
 
 # Provide the manual in source form.
 EXTRA_DIST += doc/groff.texi doc/fdl.texi
-
-# Define targets to generate GNU Info, plain text, and HTML from .texi.
-build_infodoc: doc/groff.info doc_txt doc_html
 
 EXTRA_DIST += doc/groff.info
 MAINTAINERCLEANFILES += doc/groff.info
@@ -582,15 +575,6 @@ else
 	exit 1
 endif
 
-doc: doc_all
-doc_all: dvi pdf
-doc_txt: doc/groff.txt
-dvi: doc_dvi
-doc_dvi: doc/groff.dvi
-pdf: doc_pdf
-doc_pdf: doc/groff.pdf
-html: doc_html
-doc_html: doc/groff.html
 install-doc: install-pdf install-html
 
 distclean-local: clean_infodoc clean_otherdoc
