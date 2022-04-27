@@ -80,7 +80,7 @@
 
 	* tmac/s.tmac (XH-UPDATE-TOC): Modify Keith Marshall's new XN/XH
 	feature to indent TOC entries by section heading depth.  The
-	default increment is 2 ens.
+	increment is 2 ens per depth level.
 
 2022-04-17  G. Branden Robinson <g.branden.robinson@gmail.com>
 
@@ -124,8 +124,8 @@
 
 2022-04-14  G. Branden Robinson <g.branden.robinson@gmail.com>
 
-	[man]: Fix extraneous space when `ME` or `UE` given arguments
-	and mandoc wrapper is used.
+	[man]: Fix extraneous space in output after `ME` or `UE` when
+	mandoc wrapper is used.
 
 	* tmac/an-ext.tmac (UE, ME): Double backslashes in macro
 	definitions when interpolating `.$` register (just like we tell
@@ -136,8 +136,7 @@
 	is aliased to another macro (then unaliased), `.$` has the
 	argument count to the `TH` macro, not to the macros actually
 	being called.  This caused the wrong branch of a conditional to
-	be taken and put an extra space node on the output.  And all
-	this to interpolate arguments we don't even claim to support. :|
+	be taken and put an extra space node on the output.
 
 	Fixes <https://savannah.gnu.org/bugs/?62044>.
 
