@@ -1,5 +1,17 @@
 2022-04-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[tests]: Fix portability problem.  Don't pass echo(1) arguments
+	containing backslashes because implementations handle them
+	differently.  Use printf(1) instead.  Thanks to Bertrand
+	Garrigues for reporting the problem and confirming the fix on
+	his build host.
+
+	* tmac/tests/e_chapter-titles-work.sh:
+	* tmac/tests/e_ld-works.sh:
+	* tmac/tests/localization-works.sh: Do it.
+
+2022-04-27  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/devices/gropdf/gropdf.pl (ppsz): Recognize "com10" (U.S.
 	commercial envelope) paper format.
 
