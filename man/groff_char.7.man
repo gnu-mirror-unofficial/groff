@@ -263,7 +263,7 @@ in the next subsection.
 All of the following characters map to glyphs as you would expect.
 .TS
 center box;
-lf(CR).
+Lf(CR).
 ! # $ % & ( ) * + , . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ ] _
 a b c d e f g h i j k l m n o p q r s t u v w x y z { | }
@@ -352,16 +352,16 @@ Review your document using as many different output devices as possible.
 .fchar \[u02DC] ~
 .TS
 center box;
-l l l.
+L L L.
 Keycap	Appearance and meaning	Special character and meaning
 _
-"	" neutral double quote	\f[B]\[rs][dq]\f[] neutral double quote
-\[aq]	\[cq] closing single quote	\f[B]\[rs][aq]\f[] neutral apostrophe
-\-	- hyphen	\f[B]\[rs]\-\f[] or \f[B]\[rs][\-]\f[] minus sign/Unix dash
-\[rs]	(escape character)	\f[B]\[rs]e\f[] or \f[B]\[rs][rs]\f[] reverse solidus
-\[ha]	\[u02C6] modifier circumflex	\f[B]\[rs](ha\f[] circumflex/caret/\[lq]hat\[rq]
-\[ga]	\[oq] opening single quote	\f[B]\[rs](ga\f[] grave accent
-\[ti]	\[u02DC] modifier tilde	\f[B]\[rs](ti\f[] tilde
+"	" neutral double quote	\f[CR]\[rs][dq]\f[] neutral double quote
+\[aq]	\[cq] closing single quote	\f[CR]\[rs][aq]\f[] neutral apostrophe
+\-	- hyphen	\f[CR]\[rs]\-\f[] or \f[CR]\[rs][\-]\f[] minus sign/Unix dash
+\[rs]	(escape character)	\f[CR]\[rs]e\f[] or \f[CR]\[rs][rs]\f[] reverse solidus
+\[ha]	\[u02C6] modifier circumflex	\f[CR]\[rs](ha\f[] circumflex/caret/\[lq]hat\[rq]
+\[ga]	\[oq] opening single quote	\f[CR]\[rs](ga\f[] grave accent
+\[ti]	\[u02DC] modifier tilde	\f[CR]\[rs](ti\f[] tilde
 .TE
 .fchar \[u02C6]
 .fchar \[u02DC]
@@ -444,14 +444,19 @@ and perhaps on others
 .
 .TS
 tab(@) center box;
-l l.
+L L.
 AT&T \f[I]troff\f[] input@recommended \f[I]groff\f[] input
 _
+.T&
+Lf(CR) Lf(CR).
 A Winter\[aq]s Tale@A Winter\[aq]s Tale
-\[ga]U.K.\& outer quotes\[aq]@\f[B]\[rs][oq]\f[]U.K.\& outer quotes\f[B]\[rs][cq]\f[]
-\[ga]U.K.\& \[ga]\[ga]inner\[aq]\[aq] quotes\[aq]@\f[B]\[rs][oq]\f[]U.K.\& \f[B]\[rs][lq]\f[]inner\f[B]\[rs][rq]\f[] quotes\f[B]\[rs][cq]\f[]
-\[ga]\[ga]U.S.\& outer quotes\[aq]\[aq]@\f[B]\[rs][lq]\f[]U.S.\& outer quotes\f[B]\[rs][rq]\f[]
-\[ga]\[ga]U.S.\& \[ga]inner\[aq] quotes\[aq]\[aq]@\f[B]\[rs][lq]\f[]U.S.\& \f[B]\[rs][oq]\f[]inner\f[B]\[rs][cq]\f[] quotes\f[B]\[rs][rq]\f[]
+\[ga]U.K.\& outer quotes\[aq]@\[rs][oq]U.K.\& outer quotes\[rs][cq]
+\[ga]U.K.\& \[ga]\[ga]inner\[aq]\[aq] quotes\[aq]\
+@\[rs][oq]U.K.\& \[rs][lq]inner\[rs][rq] quotes\[rs][cq]
+\[ga]\[ga]U.S.\& outer quotes\[aq]\[aq]\
+@\[rs][lq]U.S.\& outer quotes\[rs][rq]
+\[ga]\[ga]U.S.\& \[ga]inner\[aq] quotes\[aq]\[aq]\
+@\[rs][lq]U.S.\& \[rs][oq]inner\[rs][cq] quotes\[rs][rq]
 .TE
 .\" paragraph necessary due to tbl spacing bug with box usage; see
 .\" https://lists.gnu.org/archive/html/groff/2020-07/msg00053.html
@@ -538,7 +543,7 @@ shown below.
 .
 .P
 .TS
-l2 l1 l l2 l1 l.
+L2 Lf(CR)1 L L2 Lf(CR)1 L.
 \[r!]	\e[r!]	inverted exclamation mark	\[~N]	\e[\[ti]N]	N tilde
 \[ct]	\e[ct]	cent sign	\[`O]	\e[\[ga]O]	O grave
 \[Po]	\e[Po]	pound sign	\['O]	\e[\[aq]O]	O acute
@@ -940,10 +945,12 @@ and equals
 signs normally drawn from this range.
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[dq]	\e[dq]	u0022	neutral double quote
 \[sh]	\e[sh]	u0023	number sign
 \[Do]	\e[Do]	u0024	dollar sign
@@ -983,10 +990,12 @@ but rather to \[lq]SS\[rq].
 see subsection \[lq]Mathematical symbols\[rq] below.
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[-D]	\e[\-D]	u00D0	uppercase eth
 \[Sd]	\e[Sd]	u00F0	lowercase eth
 \[TP]	\e[TP]	u00DE	uppercase thorn
@@ -1009,9 +1018,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[ff]	\e[ff]	u0066_0066	ff ligature +
 \[fi]	\e[fi]	u0066_0069	fi ligature +
 \[fl]	\e[fl]	u0066_006C	fl ligature +
@@ -1055,10 +1066,12 @@ and
 .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[a"]	\e[a"]	u030B (u02DD)	double acute accent
 \[a-]	\e[a\-]	u0304 (u00AF)	macron accent
 \[a.]	\e[a.]	u0307 (u02D9)	dot accent
@@ -1084,10 +1097,12 @@ described in subsection \[lq]Special character escape forms\[rq] above;
 the names below are short aliases for convenience.
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \['A]	\e[\[aq]A]	u0041_0301	A acute
 \['C]	\e[\[aq]C]	u0043_0301	C acute
 \['E]	\e[\[aq]E]	u0045_0301	E acute
@@ -1169,10 +1184,12 @@ macro arguments;
 see subsection \[lq]Fundamental character set\[rq] above.
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[Bq]	\e[Bq]	u201E	low double comma quote
 \[bq]	\e[bq]	u201A	low single comma quote
 \[lq]	\e[lq]	u201C	left double quote
@@ -1201,10 +1218,12 @@ multiplication dot;
 see subsection \[lq]Mathematical symbols\[rq] below.
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[r!]	\e[r!]	u00A1	inverted exclamation mark
 \[r?]	\e[r?]	u00BF	inverted question mark
 \[pc]	\e[pc]	u00B7	centered period
@@ -1315,10 +1334,12 @@ devices\[em]provided those glyphs are available.
 .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[lB]	[	u005B	left square bracket
 \[lB]	\e[lB]	u005B	left square bracket
 \[rB]	]	u005D	right square bracket
@@ -1372,9 +1393,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[<-]	\e[<\-]	u2190	horizontal arrow left +
 \[->]	\e[\->]	u2192	horizontal arrow right +
 \[<>]	\e[<>]	u2194	bidirectional horizontal arrow
@@ -1443,10 +1466,12 @@ see subsection \[lq]Mathematical symbols\[rq] below.
 .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 |	|	u007C	bar
 \[ba]	\e[ba]	u007C	bar
 \[br]	\e[br]	u2502	box rule +
@@ -1468,9 +1493,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[ci]	\e[ci]	u25CB	circle +
 \[bu]	\e[bu]	u2022	bullet +
 \[dg]	\e[dg]	u2020	dagger +
@@ -1497,10 +1524,12 @@ The Bell System logo is not supported in
 .IR groff .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[co]	\e[co]	u00A9	copyright sign +
 \[rg]	\e[rg]	u00AE	registered sign +
 \[tm]	\e[tm]	u2122	trade mark sign
@@ -1515,9 +1544,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[Do]	$	u0024	dollar sign
 \[Do]	\e[Do]	u0024	dollar sign
 \[ct]	\e[ct]	u00A2	cent sign +
@@ -1536,9 +1567,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[de]	\e[de]	u00B0	degree sign +
 \[%0]	\e[%0]	u2030	per thousand, per mille sign
 \[fm]	\e[fm]	u2032	arc minute sign, foot mark +
@@ -1567,10 +1600,12 @@ and
 .BR \[rs][or] .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[AN]	\e[AN]	u2227	logical and
 \[OR]	\e[OR]	u2228	logical or
 \[no]	\e[no]	u00AC	logical not + ***
@@ -1643,10 +1678,12 @@ are their counterparts with mathematical spacing.
 .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[12]	\e[12]	u00BD	one half symbol +
 \[14]	\e[14]	u00BC	one quarter symbol +
 \[34]	\e[34]	u00BE	three quarters symbol +
@@ -1748,10 +1785,12 @@ and the lowercase ones are slanted.
 .
 .
 .TS
-l l l lx.
+L L L Lx.
 .ne 3v
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[*A]	\e[*A]	u0391	uppercase alpha +
 \[*B]	\e[*B]	u0392	uppercase beta +
 \[*G]	\e[*G]	u0393	uppercase gamma +
@@ -1817,9 +1856,11 @@ _
 .\" ====================================================================
 .
 .TS
-l l l lx.
+L L L Lx.
 Output	Input	Unicode	Notes
 _
+.T&
+L Lf(CR) L Lx.
 \[CL]	\e[CL]	u2663	solid club suit
 \[SP]	\e[SP]	u2660	solid spade suit
 \[HE]	\e[HE]	u2665	solid heart suit
