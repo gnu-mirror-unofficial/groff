@@ -106,10 +106,10 @@ Bell Labs internal memorandum.
 .
 While the
 .I man
-package was designed for brief documents to be perused at a terminal,
+package was designed for brief reference documents,
 the
 .I ms
-macros are also suitable for longer documents intended for printing and
+macros are also suitable for longer works intended for printing and
 possible publication.
 .
 .
@@ -205,7 +205,7 @@ Longer documents have a structure as follows.
 .
 .IP "\fBDocument type\fP"
 Calling the
-.CW .RP
+.CW RP
 macro at the beginning of your document puts the document description
 (see below)
 on a cover page.
@@ -1831,7 +1831,7 @@ macros for this purpose.
 .
 .PP
 You can alternatively specify a
-.I "floating keep" ;
+.I "floating keep;"
 if a keep cannot fit on the current page,
 .I ms
 holds its contents and allows material following the keep
@@ -1894,7 +1894,7 @@ _
 .
 .
 .LP
-Box macros cause line breaks;
+Box macros cause breaks;
 if you need to box a word or phrase within a line,
 see the
 .CW BX
