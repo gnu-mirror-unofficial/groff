@@ -513,11 +513,20 @@
 .  nr an*half-cfoot-width (\w'\\*[an-extra1]' / 2u)
 .  nr an*half-footer-width \
      (\w'\\*[an*ifoot]' + \\n[an*half-cfoot-width])
-.  if (\\n[an*half-footer-width] < \\n[an*half-title-width]) .return
+.  if (\\n[an*half-footer-width] < \\n[an*half-title-width]) \{\
+.    rr an*half-footer-width
+.    rr an*half-cfoot-width
+.    rr an*half-title-width
+.    return
+.  \}
 .  an*scan-string-for-backslash \\*[an*ifoot]
 .  if \\n[an*string-contains-backslash] \{\
 .    an-warn not abbreviating fourth argument to 'TH' '\\*[an*ifoot]': \
 contains unsupported escape sequence
+.    rr an*string-contains-backslash
+.    rr an*half-footer-width
+.    rr an*half-cfoot-width
+.    rr an*half-title-width
 .    return
 .  \}
 .  ds an*saved-ifoot \\*[an*ifoot]
