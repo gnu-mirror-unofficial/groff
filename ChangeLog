@@ -1,3 +1,10 @@
+2022-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	* src/libs/libgroff/error.cpp: Trivially refactor.  Explicitly
+	compare pointer lvalues to null pointers instead of punningly
+	treating them as Booleans.  Annotate use of zero literals as
+	null pointers to ease any future migration to ISO C++11.
+
 2022-04-27  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* tmac/an.tmac (an*abbreviate-inner-footer): Clean up better
