@@ -116,11 +116,12 @@ int main(int argc, char **argv)
   int bib_flag = 0;
   int done_spec = 0;
 
+  // TODO: Migrate to getopt_long; see, e.g., src/preproc/eqn/main.cpp.
   for (--argc, ++argv;
        !finished_options && argc > 0 && argv[0][0] == '-'
        && argv[0][1] != '\0';
        argv++, argc--) {
-    const char *opt = argv[0] + 1; 
+    const char *opt = argv[0] + 1;
     while (opt != 0 && *opt != '\0') {
       switch (*opt) {
       case 'C':
@@ -356,7 +357,7 @@ int main(int argc, char **argv)
 	}
 	// fall through
       default:
-	error("unrecognized option '%1'", *opt);
+	error("unrecognized option '%1'", opt);
 	usage(stderr);
 	exit(1);
 	break;

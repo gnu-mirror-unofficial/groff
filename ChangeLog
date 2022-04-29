@@ -1,5 +1,11 @@
 2022-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/refer/refer.cpp (main): When complaining of
+	unrecognized option, report the entire option string (after
+	the leading dash), not just its first character.
+
+2022-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/libs/libgroff/error.cpp: Trivially refactor.  Explicitly
 	compare pointer lvalues to null pointers instead of punningly
 	treating them as Booleans.  Annotate use of zero literals as
