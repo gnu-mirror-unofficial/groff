@@ -1,3 +1,17 @@
+2022-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[build]: Fix code style nits in Automake files.
+
+	* doc/doc.am: Put spaces around (Auto)make variable assignments,
+	for consistency with the rest of this .am file, and our others.
+	* font/devpdf/devpdf.am (font/devpdf/build_font_files): Use
+	shell '>' operator instead of touch(1).
+	* font/devhtml/devhtml.am (font/devhtml/DESC):
+	* font/devps/devps.am (font/devps/DESC): Construct target in
+	temporary file, since doing so is a multi-step process, moving
+	it to the target name when it is complete and usable by
+	dependencies.
+
 2022-04-29  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	* src/preproc/refer/refer.cpp (main): When complaining of

@@ -126,7 +126,7 @@ font/devpdf/build_font_files: afmtodit font/devpdf/DESC \
 	       $(abs_top_builddir)/font/devpdf \
 	       '$(abs_top_srcdir)/font/devps : $(abs_top_builddir)/font/devps' \
 	       >> $(top_builddir)/font/devpdf/download \
-	&& touch $@
+	&& >$@
 
 mostlyclean-local: mostlyclean_devpdf_extra
 mostlyclean_devpdf_extra:

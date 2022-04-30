@@ -37,12 +37,12 @@ $(DEVUTF8FONTSFILES): $(devutf8_srcdir)/R.proto
 	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
 	&& $(RM) $@ \
 	&& $(SHELL) $(GENFONTSSH) $(devutf8_srcdir)/R.proto \
-	     $(DEVUTF8RES) $(DEVUTF8CPI) `basename $@` > $@
+	  $(DEVUTF8RES) $(DEVUTF8CPI) `basename $@` >$@
 
 font/devutf8/DESC: $(devutf8_srcdir)/DESC.proto
 	$(AM_V_GEN)$(MKDIR_P) `dirname $@` \
 	&& $(SHELL) $(GENDESCSH) $(devutf8_srcdir)/DESC.proto \
-	     $(DEVUTF8RES) $(DEVUTF8CPI) $(DEVUTF8LPI) $(DEVUTF8FONTS) > $@
+	  $(DEVUTF8RES) $(DEVUTF8CPI) $(DEVUTF8LPI) $(DEVUTF8FONTS) >$@
 
 
 # Local Variables:

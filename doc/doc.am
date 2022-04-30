@@ -33,21 +33,21 @@ DOC_SED = $(SED) \
 # It includes flags to locate its tmac and device/font description
 # directories and to produce verbose diagnostics in the event of syntax
 # or formatting problems.
-DOC_GROFF=\
+DOC_GROFF = \
   GROFF_COMMAND_PREFIX= \
   GROFF_BIN_PATH="$(GROFF_BIN_PATH)" \
   $(GROFFBIN) -M $(doc_srcdir) $(MFLAG) $(FFLAG) -ww -b
 
 # This image file is used by several documents in the groff source tree.
-DOC_GNU_EPS=doc/gnu.eps
+DOC_GNU_EPS = doc/gnu.eps
 
 # Other doc, installed in $(docdir)
 # Files located in the source tree
-DOCFILES_INST= \
+DOCFILES_INST = \
   doc/me-revisions \
   doc/ms.ms \
   doc/pic.ms
-DOCFILES_NOINST= \
+DOCFILES_NOINST = \
   doc/meintro.me.in \
   doc/meintro_fr.me.in \
   doc/meref.me.in
