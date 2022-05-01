@@ -1,5 +1,17 @@
 2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/refer/refer.cpp: Trivially refactor.  Demote
+	global variable `recognize_R1_R2` from integer to Boolean.
+	(main, do_bib): Give expressions to `assert()` meaningful
+	content.
+	(is_list): Demote return type from `int` to `bool`.
+	(do_file): Demote and rename integer local variables
+	`start_of_line` to Boolean `at_start_of_line`.
+	(is_list, do_file): Reorder equality comparisons to avoid
+	inadvertent lvalue assignment.
+
+2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[build]: Reduce and rationalize in-tree document dependencies.
 	This eliminates spurious rebuilds of numerous documents
 	{including the 380+-page groff-man-pages collections}.  It also

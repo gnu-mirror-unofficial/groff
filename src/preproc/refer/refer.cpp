@@ -76,7 +76,7 @@ int compatible_flag = 0;
 
 int short_label_flag = 0;
 
-static int recognize_R1_R2 = 1;
+static bool recognize_R1_R2 = true;
 
 search_list database_list;
 int search_default = 1;
@@ -103,7 +103,8 @@ static reference *make_reference(const string &, unsigned *);
 static void usage(FILE *stream);
 static void do_file(const char *);
 static void split_punct(string &line, string &punct);
-static void output_citation_group(reference **v, int n, label_type, FILE *fp);
+static void output_citation_group(reference **v, int n, label_type,
+				  FILE *fp);
 static void possibly_load_default_database();
 
 int main(int argc, char **argv)
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
 	opt++;
 	break;
       case 'R':
-	recognize_R1_R2 = 0;
+	recognize_R1_R2 = false;
 	opt++;
 	break;
       case 'S':
@@ -285,7 +286,7 @@ int main(int argc, char **argv)
 	  }
 	  strcat(buf, "%a");
 	  if (!set_label_spec(buf))
-	    assert(0);
+	    assert(0 == "set_label_spec() failed");
 	  done_spec = 1;
 	}
 	break;
@@ -344,13 +345,13 @@ int main(int argc, char **argv)
 	  opt++;
 	  break;
 	}
-	if (strcmp(opt,"-version")==0) {
+	if (strcmp(opt, "-version") == 0) {
       case 'v':
 	  printf("GNU refer (groff) version %s\n", Version_string);
 	  exit(0);
 	  break;
 	}
-	if (strcmp(opt,"-help")==0) {
+	if (strcmp(opt, "-help") == 0) {
 	  usage(stdout);
 	  exit(0);
 	  break;
@@ -407,7 +408,7 @@ static void possibly_load_default_database()
   }
 }
 
-static int is_list(const string &str)
+static bool is_list(const string &str)
 {
   const char *start = str.contents();
   const char *end = start + str.length();
@@ -443,7 +444,7 @@ static void do_file(const char *filename)
     line.clear();
     for (;;) {
       int c = getc(fp);
-      if (c == EOF) {
+      if (EOF == c) {
 	if (line.length() > 0)
 	  line += '\n';
 	break;
@@ -452,7 +453,7 @@ static void do_file(const char *filename)
 	error("invalid input character code %1", c);
       else {
 	line += c;
-	if (c == '\n')
+	if ('\n' == c)
 	  break;
       }
     }
@@ -462,20 +463,20 @@ static void do_file(const char *filename)
     current_lineno++;
     if (len >= 2 && line[0] == '.' && line[1] == '[') {
       int start_lineno = current_lineno;
-      int start_of_line = 1;
+      bool at_start_of_line = true;
       string str;
       string post;
       string pre(line.contents() + 2, line.length() - 3);
       for (;;) {
 	int c = getc(fp);
-	if (c == EOF) {
+	if (EOF == c) {
 	  error_with_file_and_line(current_filename, start_lineno,
 				   "missing '.]' line");
 	  break;
 	}
-	if (start_of_line)
+	if (at_start_of_line)
 	  current_lineno++;
-	if (start_of_line && c == '.') {
+	if (at_start_of_line && '.' == c) {
 	  int d = getc(fp);
 	  if (d == ']') {
 	    while ((d = getc(fp)) != '\n' && d != EOF) {
@@ -493,7 +494,7 @@ static void do_file(const char *filename)
 	  error("invalid input character code %1", c);
 	else
 	  str += c;
-	start_of_line = (c == '\n');
+	at_start_of_line = ('\n' == c);
       }
       if (is_list(str)) {
 	output_pending_line();
@@ -535,8 +536,9 @@ static void do_file(const char *filename)
       need_syncing = 1;
     }
     else if (len >= 4
-	     && line[0] == '.' && line[1] == 'l' && line[2] == 'f'
-	     && (compatible_flag || line[3] == '\n' || line[3] == ' ')) {
+	     && '.' == line[0] && 'l' == line[1] && 'f' == line[2]
+	     && (compatible_flag || '\n' == line[3] || ' ' == line[3]))
+    {
       pending_lf_lines += line;
       line += '\0';
       if (interpret_lf_args(line.contents() + 3))
@@ -544,22 +546,24 @@ static void do_file(const char *filename)
     }
     else if (recognize_R1_R2
 	     && len >= 4
-	     && line[0] == '.' && line[1] == 'R' && line[2] == '1'
-	     && (compatible_flag || line[3] == '\n' || line[3] == ' ')) {
+	     && '.' == line[0] && 'R' == line[1] && '1' == line[2]
+	     && (compatible_flag || '\n' == line[3] || ' ' == line[3]))
+    {
       line.clear();
-      int start_of_line = 1;
       int start_lineno = current_lineno;
+      bool at_start_of_line = true;
       for (;;) {
 	int c = getc(fp);
-	if (c != EOF && start_of_line)
+	if (c != EOF && at_start_of_line)
 	  current_lineno++;
-	if (start_of_line && c == '.') {
+	if (at_start_of_line && '.' == c) {
 	  c = getc(fp);
-	  if (c == 'R') {
+	  if ('R' == c) {
 	    c = getc(fp);
-	    if (c == '2') {
+	    if ('2' == c) {
 	      c = getc(fp);
-	      if (compatible_flag || c == ' ' || c == '\n' || c == EOF) {
+	      if (compatible_flag || ' ' == c || '\n' == c || EOF == c)
+	      {
 		while (c != EOF && c != '\n')
 		  c = getc(fp);
 		break;
@@ -578,7 +582,7 @@ static void do_file(const char *filename)
 	  else
 	    line += '.';
 	}
-	if (c == EOF) {
+	if (EOF == c) {
 	  error_with_file_and_line(current_filename, start_lineno,
 				   "missing '.R2' line");
 	  break;
@@ -587,7 +591,7 @@ static void do_file(const char *filename)
 	  error("invalid input character code %1", int(c));
 	else {
 	  line += c;
-	  start_of_line = c == '\n';
+	  at_start_of_line = ('\n' == c);
 	}
       }
       output_pending_line();
@@ -663,7 +667,8 @@ static void split_punct(string &line, string &punct)
       break;
     last_token_start = ptr;
     if (*ptr == PRE_LABEL_MARKER || *ptr == POST_LABEL_MARKER
-	|| (*ptr >= LABEL_MARKER && *ptr < LABEL_MARKER + N_LABEL_TYPES))
+	|| (*ptr >= LABEL_MARKER
+	    && *ptr < LABEL_MARKER + N_LABEL_TYPES))
       ptr++;
     else if (!get_token(&ptr, end))
       break;
@@ -743,7 +748,7 @@ static unsigned store_reference(const string &str)
 	if (old_table[i]) {
 	  reference **p;
 	  for (p = (reference_hash_table
-				+ (old_table[i]->hash() % hash_table_size));
+		    + (old_table[i]->hash() % hash_table_size));
 	       *p;
 	       ((p == reference_hash_table)
 		? (p = reference_hash_table + hash_table_size - 1)
@@ -817,7 +822,8 @@ static void output_citation_group(reference **v, int n, label_type type,
   }
   string merged_label;
   for (int i = 0; i < n; i++) {
-    int nmerged = v[i]->merge_labels(v + i + 1, n - i - 1, type, merged_label);
+    int nmerged = v[i]->merge_labels(v + i + 1, n - i - 1, type,
+	merged_label);
     if (nmerged > 0) {
       put_string(merged_label, fp);
       i += nmerged;
@@ -830,7 +836,8 @@ static void output_citation_group(reference **v, int n, label_type type,
 }
 
 
-label_processing_state::label_processing_state(reference **p, int n, FILE *f)
+label_processing_state::label_processing_state(reference **p, int n,
+					       FILE *f)
 : state(NORMAL), count(0), rptr(p), rcount(n), fp(f)
 {
 }
@@ -848,7 +855,7 @@ int label_processing_state::handle_pending(int c)
   case NORMAL:
     break;
   case PENDING_LABEL:
-    if (c == POST_LABEL_MARKER) {
+    if (POST_LABEL_MARKER == c) {
       state = PENDING_LABEL_POST;
       return 1;
     }
@@ -860,7 +867,7 @@ int label_processing_state::handle_pending(int c)
     }
     break;
   case PENDING_LABEL_POST:
-    if (c == PRE_LABEL_MARKER) {
+    if (PRE_LABEL_MARKER == c) {
       state = PENDING_LABEL_POST_PRE;
       return 1;
     }
@@ -889,7 +896,7 @@ int label_processing_state::handle_pending(int c)
     }
     break;
   case PENDING_POST:
-    if (c == PRE_LABEL_MARKER) {
+    if (PRE_LABEL_MARKER == c) {
       put_string(sep_label, fp);
       state = NORMAL;
       return 1;
@@ -957,7 +964,8 @@ void output_references()
     assert(j == nreferences);
     for (; j < hash_table_size; j++)
       reference_hash_table[j] = 0;
-    qsort(reference_hash_table, nreferences, sizeof(reference*), rcompare);
+    qsort(reference_hash_table, nreferences, sizeof(reference*),
+	  rcompare);
     for (i = 0; i < nreferences; i++)
       reference_hash_table[i]->set_number(i);
     compute_labels(reference_hash_table, nreferences);
@@ -981,7 +989,8 @@ void output_references()
 	reference_hash_table[i]->print_sort_key_comment(outfp);
       if (label_in_reference) {
 	fputs(".ds [F ", outfp);
-	const string &label = reference_hash_table[i]->get_label(NORMAL_LABEL);
+	const string &label
+	  = reference_hash_table[i]->get_label(NORMAL_LABEL);
 	if (label.length() > 0
 	    && (label[0] == ' ' || label[0] == '\\' || label[0] == '"'))
 	  putc('"', outfp);
@@ -1122,7 +1131,7 @@ void do_bib(const char *filename)
   string body;
   for (;;) {
     int c = getc(fp);
-    if (c == EOF)
+    if (EOF == c)
       break;
     if (invalid_input_char(c)) {
       error("invalid input character code %1", c);
@@ -1130,7 +1139,7 @@ void do_bib(const char *filename)
     }
     switch (state) {
     case START:
-      if (c == '%') {
+      if ('%' == c) {
 	body = c;
 	state = BODY;
       }
@@ -1138,20 +1147,20 @@ void do_bib(const char *filename)
 	state = MIDDLE;
       break;
     case MIDDLE:
-      if (c == '\n')
+      if ('\n' == c)
 	state = START;
       break;
     case BODY:
       body += c;
-      if (c == '\n')
+      if ('\n' == c)
 	state = BODY_START;
       break;
     case BODY_START:
-      if (c == '\n') {
+      if ('\n' == c) {
 	do_ref(body);
 	state = START;
       }
-      else if (c == '.')
+      else if ('.' == c)
 	state = BODY_DOT;
       else if (csspace(c)) {
 	state = BODY_BLANK;
@@ -1163,7 +1172,7 @@ void do_bib(const char *filename)
       }
       break;
     case BODY_BLANK:
-      if (c == '\n') {
+      if ('\n' == c) {
 	trim_blanks(body);
 	do_ref(body);
 	state = START;
@@ -1176,20 +1185,20 @@ void do_bib(const char *filename)
       }
       break;
     case BODY_DOT:
-      if (c == ']') {
+      if (']' == c) {
 	do_ref(body);
 	state = MIDDLE;
       }
       else {
 	body += '.';
 	body += c;
-	state = c == '\n' ? BODY_START : BODY;
+	state = ('\n' == c) ? BODY_START : BODY;
       }
       break;
     default:
-      assert(0);
+      assert(0 == "unhandled case while parsing bibliography file");
     }
-    if (c == '\n')
+    if ('\n' == c)
       current_lineno++;
   }
   switch (state) {
@@ -1231,10 +1240,10 @@ unsigned hash_string(const char *s, int len)
 
 int next_size(int n)
 {
-  static const int table_sizes[] = { 
+  static const int table_sizes[] = {
     101, 503, 1009, 2003, 3001, 4001, 5003, 10007, 20011, 40009,
     80021, 160001, 500009, 1000003, 2000003, 4000037, 8000009,
-    16000057, 32000011, 64000031, 128000003, 0 
+    16000057, 32000011, 64000031, 128000003, 0
   };
 
   const int *p;
