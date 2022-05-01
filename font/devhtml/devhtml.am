@@ -54,6 +54,13 @@ font/devhtml/DESC: $(devhtml_srcdir)/DESC.proto
 	&& echo "image_generator $(GHOSTSCRIPT)" >>$@.tmp \
 	&& mv $@.tmp $@
 
+# HTML documents to be produced by troff should depend on this stamp
+# file to ensure that (post-)grohtml's device and font description files
+# are available.
+MOSTLYCLEANFILES += font/devhtml/stamp
+font/devhtml/stamp: font/devhtml/DESC $(DEVHTMLFONTSFILES)
+	$(AM_V_at)>$@
+
 
 # Local Variables:
 # mode: makefile-automake

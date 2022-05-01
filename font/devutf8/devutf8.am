@@ -44,6 +44,13 @@ font/devutf8/DESC: $(devutf8_srcdir)/DESC.proto
 	&& $(SHELL) $(GENDESCSH) $(devutf8_srcdir)/DESC.proto \
 	  $(DEVUTF8RES) $(DEVUTF8CPI) $(DEVUTF8LPI) $(DEVUTF8FONTS) >$@
 
+# (UTF-8-encoded) text documents to be produced by troff should depend
+# on this stamp file to ensure that grotty's device and font description
+# files are available.
+MOSTLYCLEANFILES += font/devutf8/stamp
+font/devutf8/stamp: font/devutf8/DESC $(DEVUTF8FONTSFILES)
+	$(AM_V_at)>$@
+
 
 # Local Variables:
 # mode: makefile-automake

@@ -151,6 +151,14 @@ font/devps/DESC: $(devps_srcdir)/DESC.in
 	    || echo print '$(PSPRINT)' >>$@.tmp)
 	$(AM_V_at)mv $@.tmp $@
 
+# PostScript documents to be produced by troff should depend on this
+# stamp file to ensure that grops's device and font description files
+# are available.
+MOSTLYCLEANFILES += font/devps/stamp
+font/devps/stamp: font/devps/DESC \
+  $(DEVPSFONTFILES) $(DEVPSFONTFILES_GENERATED)
+	$(AM_V_at)>$@
+
 maintainer-font-descriptions: devps_font-descriptions
 # This target generates font descriptions from installed Type 1 AFM
 # files; these are _not_ normally generated during a build, but provided

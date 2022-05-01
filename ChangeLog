@@ -1,3 +1,75 @@
+2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
+	[build]: Reduce and rationalize in-tree document dependencies.
+	This eliminates spurious rebuilds of numerous documents
+	{including the 380+-page groff-man-pages collections}.  It also
+	fixes missing dependencies when using the build's groff to
+	generate PostScript documents.
+
+	* .gitignore: Drop old name of devpdf stamp file.
+	* doc/.gitignore: Drop now-unused "example.stamp" file.
+	* doc/doc.am (PROCESSEDDOCFILES_HTML, PROCESSEDDOCFILES_PDF,
+	PROCESSEDDOCFILES_TXT): Add new macros grouping targets by the
+	format/output driver used to produce them, to better organize
+	dependencies for their generation.
+	(PROCESSEDDOCFILES): Redefine as simply the expansions of the
+	foregeoing.
+	(PROCESSEDFILES_DEPS_HTML, PROCESSEDFILES_DEPS_HTML,
+	PROCESSEDFILES_DEPS_PDF, PROCESSEDFILES_DEPS_TXT): Add new
+	macros defining prerequisites for production of the
+	corresponding output document formats.
+	($(PROCESSEDDOCFILES_HTML), $(PROCESSEDDOCFILES_PDF),
+	$(PROCESSEDDOCFILES_PS), $(PROCESSEDDOCFILES_TXT)): Declare the
+	dependencies using expansions of the foregoing macros.
+	(MOSTLYCLEANFILES): Drop "doc/automake.pdf", now part of
+	`PROCESSEDDOCFILES_PDF`.
+	(doc/automake.pdf): Drop dependencies already supplied by
+	`PROCESSEDFILES_DEPS_PDF`.
+	(HTMLDOCFILES): Drop macro.  "doc/pic.html" is now in the
+	expansion of `PROCESSEDDOCFILES_HTML`.
+	(htmlpic_DATA): Redefine as expansion of
+	`PROCESSEDDOCFILES_HTML` instead of `HTMLDOCFILES`.
+	(PROCESSEDEXAMPLEFILES_HTML) [BUILD_HTML]: Define as
+	"doc/webpage.html", otherwise as empty.
+	(PROCESSEDEXAMPLEFILES_PS): Contain "doc/webpage.ps" and
+	"doc/grnexampl.ps".
+	(PROCESSEDEXAMPLEFILES): Redefine as expansions of
+	`PROCESSEDEXAMPLEFILES_HTML` and `PROCESSEDEXAMPLEFILES_PS`.
+	($(PROCESSEDEXAMPLEFILES_HTML), $(PROCESSEDEXAMPLEFILES_PS)):
+	Declare dependencies using `PROCESSEDFILES_DEPS_HTML` and
+	`PROCESSEDFILES_DEPS_PS`, respectively.
+	(HTMLEXAMPLEFILES): Drop macro.  "doc/webpage.html" is now in
+	the expansion of `PROCESSEDDOCFILES_HTML`.
+	(nodist_htmlexamples_DATA): Drop macro, no longer needed.
+	($(PROCESSEDDOCFILES_PS)): Relocated and redefined above.
+	($(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES)): Drop overbroad
+	dependency declarations in favor of the above.
+	(MOSTLYCLEANFILES, doc/examples.stamp): Drop generation and
+	removal of unnecessary stamp file.
+	(doc/pic.html, doc/webpage.html): Add explicit dependency on
+	required preprocessors.  Drop redundant and spurious
+	dependencies.
+	* font/devhtml/devhtml.am (MOSTLYCLEANFILES,
+	font/devhtml/stamp): Generate and remove stamp file to enable
+	reliable target dependencies for build-time generation of HTML
+	documents by groff.
+	* font/devpdf/devpdf.am (MOSTLYCLEANFILES, font/devpdf/stamp):
+	Rename stamp file from "font/devpdf/build_font_files".
+	(font/devpdf/stamp): Drop unnecessary dependency on "afmtodit".
+	* font/devps/devps.am (MOSTLYCLEANFILES, font/devps/stamp):
+	Generate and remove stamp file to enable reliable target
+	dependencies for build-time generation of PostScript documents
+	by groff.
+	* font/devutf8/devutf8.am (MOSTLYCLEANFILES,
+	font/devutf8/stamp): Generate and remove stamp file to enable
+	reliable target dependencies for build-time generation of
+	UTF-8-encoded text documents by groff.
+
+	Fixes <https://savannah.gnu.org/bugs/?62084>; thanks to
+	Sergei Trofimovich for the report.  Also fixes
+	<https://savannah.gnu.org/bugs/?62297>; thanks to Bjarni Ingi
+	Gislason for the report.
+
 2022-04-30  G. Branden Robinson <g.branden.robinson@gmail.com>
 
 	[build]: Fix code style nits in Automake files.

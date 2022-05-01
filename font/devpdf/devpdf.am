@@ -28,7 +28,6 @@ MOSTLYCLEANFILES += \
   font/devpdf/download \
   font/devpdf/DESC \
   font/devpdf/Foundry \
-  font/devpdf/build_font_files \
   font/devpdf/util/BuildFoundries
 
 devpdffontdir = $(fontdir)/devpdf
@@ -106,11 +105,10 @@ font/devpdf/Foundry:
 	&& sed "s|[@]urwfontsdir[@]|$(urwfontsdir)|" \
 	       $(devpdf_srcdir)/Foundry.in >$(top_builddir)/$@
 
-all: font/devpdf/build_font_files
-
-# PATH: path to find afmtodit. We add $(abs_top_builddir) because
-# afmtodit is built in the top builddir.
-font/devpdf/build_font_files: afmtodit font/devpdf/DESC \
+# PDFs to be produced by troff should depend on this stamp file to
+# ensure that gropdf's device and font description files are available.
+MOSTLYCLEANFILES += font/devpdf/stamp
+font/devpdf/stamp: font/devpdf/DESC \
   $(devpdffontenc_DATA) $(devpdffontmap_DATA) $(devpdffont_DATA) \
   font/devpdf/util/BuildFoundries
 	@if $(AM_V_P); then \

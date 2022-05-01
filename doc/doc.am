@@ -58,15 +58,36 @@ GENERATEDDOCFILES = \
   doc/meintro_fr.me \
   doc/meref.me
 # Files generated in the build tree
+PROCESSEDDOCFILES_HTML = \
+  doc/pic.html
+PROCESSEDDOCFILES_PDF = \
+  doc/automake.pdf \
+  doc/groff-man-pages.pdf
 PROCESSEDDOCFILES_PS = \
   doc/meref.ps \
   doc/meintro.ps \
   doc/meintro_fr.ps \
   doc/ms.ps \
   doc/pic.ps
-PROCESSEDDOCFILES = $(PROCESSEDDOCFILES_PS) \
-  doc/groff-man-pages.pdf \
+PROCESSEDDOCFILES_TXT = \
   doc/groff-man-pages.utf8.txt
+PROCESSEDDOCFILES = \
+  $(PROCESSEDDOCFILES_HTML) \
+  $(PROCESSEDDOCFILES_PS) \
+  $(PROCESSEDDOCFILES_PDF) \
+  $(PROCESSEDDOCFILES_TXT)
+
+# Declare minimal dependencies for documents by output driver.
+PROCESSEDFILES_DEPS_HTML = pre-grohtml groff troff post-grohtml \
+  font/devhtml/stamp font/devps/stamp
+PROCESSEDFILES_DEPS_PS = groff troff grops font/devps/stamp
+PROCESSEDFILES_DEPS_PDF = groff troff gropdf font/devpdf/stamp
+PROCESSEDFILES_DEPS_TXT = groff troff grotty font/devutf8/stamp
+
+$(PROCESSEDDOCFILES_HTML): $(PROCESSEDFILES_DEPS_HTML)
+$(PROCESSEDDOCFILES_PS): $(PROCESSEDFILES_DEPS_PS)
+$(PROCESSEDDOCFILES_PDF): $(PROCESSEDFILES_DEPS_PDF)
+$(PROCESSEDDOCFILES_TXT): $(PROCESSEDFILES_DEPS_TXT)
 
 otherdocdir = $(docdir)
 dist_otherdoc_DATA = $(DOCFILES_INST) $(GENERATEDDOCFILES)
@@ -80,19 +101,14 @@ EXTRA_DIST += doc/automake.mom
 if BUILD_PDFDOC
 docpdfdocdir = $(pdfdocdir)
 nodist_docpdfdoc_DATA = doc/automake.pdf
-MOSTLYCLEANFILES += doc/automake.pdf
 endif
-doc/automake.pdf: doc/automake.mom \
-  groff troff gropdf pdfmom font/devpdf/build_font_files \
-  contrib/mom/om.tmac
+doc/automake.pdf: doc/automake.mom pdfmom contrib/mom/om.tmac
 
 # GNU PIC html documentation, installed in $(htmldocdir)
 # Other pic*.html files are installed by the local rule
 if BUILD_HTML
-HTMLDOCFILES = \
-  doc/pic.html
 htmlpicdir = $(htmldocdir)
-htmlpic_DATA = $(HTMLDOCFILES)
+htmlpic_DATA = $(PROCESSEDDOCFILES_HTML)
 HTMLDOCFILESALL = pic*.html
 HTMLDOCIMAGEFILES = pic*
 endif
@@ -107,9 +123,21 @@ EXAMPLEFILES = \
   doc/grnexmpl.me
 
 # Generated in the build tree
-PROCESSEDEXAMPLEFILES = \
+if BUILD_HTML
+PROCESSEDEXAMPLEFILES_HTML = doc/webpage.html
+else
+PROCESSEDEXAMPLEFILES_HTML =
+endif
+PROCESSEDEXAMPLEFILES_PS = \
   doc/webpage.ps \
   doc/grnexmpl.ps
+PROCESSEDEXAMPLEFILES = \
+  $(PROCESSEDEXAMPLEFILES_HTML) \
+  $(PROCESSEDEXAMPLEFILES_PS)
+
+$(PROCESSEDEXAMPLEFILES_HTML): $(PROCESSEDFILES_DEPS_HTML)
+$(PROCESSEDEXAMPLEFILES_PS): $(PROCESSEDFILES_DEPS_PS)
+
 docexamplesdir = $(exampledir)
 dist_docexamples_DATA = $(EXAMPLEFILES)
 nodist_docexamples_DATA = $(PROCESSEDEXAMPLEFILES)
@@ -118,11 +146,9 @@ MOSTLYCLEANFILES += $(PROCESSEDEXAMPLEFILES)
 if BUILD_HTML
 # webpage.html is generated; webpage*.html files are installed by the
 # local rule.
-HTMLEXAMPLEFILES = doc/webpage.html
 HTMLEXAMPLEFILESALL = webpage*.html
 HTMLEXAMPLEIMAGEFILES = webpage*
 htmlexamplesdir = $(exampledir)
-nodist_htmlexamples_DATA = $(HTMLEXAMPLEFILES)
 endif
 
 # Locate image subdirectory for HTML documents relative to an
@@ -235,9 +261,6 @@ doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 	&& $(DOC_GROFF) -Tps -ge -me $(doc_srcdir)/grnexmpl.me >$@
 
-$(PROCESSEDDOCFILES_PS): \
-  $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
-
 # Generating *.me from *.me.in is, surprisingly, a challenge.
 # 1.  A pattern rule ("%.me: %.me.in") is not portable to NetBSD or
 #     OpenBSD make.
@@ -318,35 +341,18 @@ doc/webpage.ps: $(doc_srcdir)/webpage.ms
 #	$(GROFF_V)$(MKDIR_P) `dirname $@` \
 #	&& $(DOC_GROFF) -Tps -ms $< >$@
 
-$(PROCESSEDEXAMPLEFILES) $(PROCESSEDDOCFILES): \
-  $(bin_PROGRAMS) \
-  $(prefixexecbin_PROGRAMS) \
-  $(dist_tmac_DATA) $(nodist_tmac_DATA)
-
-MOSTLYCLEANFILES += doc/examples.stamp
-doc/examples.stamp: doc/groff.css
-	$(AM_V_at)$(MKDIR_P) $(doc_builddir)
-	$(AM_V_at)test -f $(doc_builddir)/groff.css || \
-	  cp $(doc_srcdir)/groff.css $(doc_builddir)
-	$(AM_V_at)echo timestamp > $@
-
+doc/pic.html: eqn pic tbl
 doc/pic.html: tmac/www.tmac
-doc/pic.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
-doc/pic.html: doc/examples.stamp
-doc/pic.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
-doc/pic.html: $(devhtmlfont_DATA)
 doc/pic.html: $(doc_srcdir)/pic.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
 	&& $(DOC_GROFF) -pet -P-Ipic -P-Dimg -P-jpic -Thtml -ms \
 	  $(doc_srcdir)/pic.ms > pic.html
 
+doc/webpage.html: tbl
 doc/webpage.html: tmac/www.tmac
-doc/webpage.html: $(bin_PROGRAMS) $(prefixexecbin_PROGRAMS)
-doc/webpage.html: doc/examples.stamp
-doc/webpage.html: $(dist_devpsfont_DATA) $(nodist_devpsfont_DATA)
-doc/webpage.html: $(devhtmlfont_DATA)
-doc/webpage.html: $(DOC_GNU_EPS) $(doc_srcdir)/groff.css
+doc/webpage.html: $(DOC_GNU_EPS)
+doc/webpage.html: $(doc_srcdir)/groff.css
 doc/webpage.html: $(doc_srcdir)/webpage.ms
 	$(GROFF_V)$(MKDIR_P) $(doc_builddir) \
 	&& cd $(doc_builddir) \
