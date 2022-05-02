@@ -47,7 +47,7 @@ if ($check)
 }
 else
 {
-    LoadDownload("download");
+    LoadDownload("download"); # not required
     LoadFoundry("Foundry");
     WriteDownload("download");
 }
@@ -61,7 +61,7 @@ sub LoadFoundry
     my $foundrypath='';
     $notFoundFont=0;
 
-    open(F,"<$fn") or Die("No $fn file found");
+    open(F,"<$fn") or Die("file '$fn' not found or not readable");
 
     while (<F>)
     {
@@ -442,7 +442,7 @@ sub WriteDownload
     my $fn=shift;
     my $top=1;
 
-    open(F,">$fn") or Die("Can't Create new file '$fn'");
+    open(F,">$fn") or Die("can't create new file '$fn'");
 
     print F join("\n",@downloadpreamble),"\n";
 
@@ -468,7 +468,7 @@ sub Warn {
 
 sub Die {
     my $msg=shift;
-    Msg("error: line $lct: $msg");
+    Msg("error: $msg");
     exit 2;
 }
 
@@ -483,7 +483,7 @@ sub CheckFoundry
     my $foundrypath='';
     $notFoundFont=0;
 
-    open(F,"<$fn") or Die("No $fn file found");
+    open(F,"<$fn") or Die("file '$fn' not found or not readable");
 
     while (<F>)
     {

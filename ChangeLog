@@ -1,5 +1,15 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[build]: Tweak diagnostic messages in BuildFoundries script.
+
+	* font/devpdf/util/BuildFoundries.pl (LoadFoundry,
+	WriteDownload, CheckFoundry): Recast for specificity and
+	consistent style.
+	(Die): Stop reporting line number with fatal errors; none of the
+	call sites are parsing input.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[refer]: Fix off-by-one error in line number for some
 	diagnostics.
 
