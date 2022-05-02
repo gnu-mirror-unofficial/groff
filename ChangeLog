@@ -1,5 +1,12 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am (clean_otherdoc): Drop target: it doesn't seem to
+	accomplish anything.
+	(clean_infodoc): Drop target, moving its rules into...
+	(maintainer-clean-local): ...this.  Drop deps, both gone now.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (distclean-local): Drop target: stop cleaning
 	generated forms of our Texinfo manual with the "distclean"
 	target.  They ship with the distribution archive and should

@@ -583,15 +583,11 @@ endif
 
 install-doc: install-pdf install-html
 
-maintainer-clean-local: clean_infodoc clean_otherdoc
-clean_infodoc:
+maintainer-clean-local:
 	$(RM) $(doc_builddir)/groff.info*
 	$(RM) $(doc_builddir)/groff.pdf
 	$(RM) $(doc_builddir)/groff.dvi
 	$(RM) -r $(doc_builddir)/groff.html.*
-clean_otherdoc:
-	-cd $(doc_builddir) \
-	&& $(RM) -r *.pdf *.html *.txt *.dvi *.t2p *.t2d
 
 install-data-local: install_infodoc
 install_infodoc: doc/groff.info
