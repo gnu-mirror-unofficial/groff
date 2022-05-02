@@ -1,5 +1,12 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am (distclean-local): Drop target: stop cleaning
+	generated forms of our Texinfo manual with the "distclean"
+	target.  They ship with the distribution archive and should
+	remain in the tree even if the user needs to re-./configure.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[build]: Fix problems exposed by high build parallelism.
 
 	* font/devpdf/devpdf.am (font/devpdf/util/BuildFoundries,
