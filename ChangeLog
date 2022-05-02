@@ -1,5 +1,27 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[build]: Fix problems exposed by high build parallelism.
+
+	* font/devpdf/devpdf.am (font/devpdf/util/BuildFoundries,
+	font/devpdf/DESC, font/devpdf/Foundry): Drop
+	unnecessary removal of target prior to creating it.
+	(font/devpdf/Foundry): Add creation of destination build
+	directory as other targets do.
+	(font/devpdf/download): Create dedicated target instead of
+	lumping its generation under the stamp file.  Add missing
+	dependencies on `$(DEVPDFFONTMAP_1)`, `$(DEVPDFFONTMAP_2)`,
+	`font/devpdf/Foundry` and `font/devpdf/enc/text.enc`.  Remove
+	now-unnecessarily complicated "forgery" of "GEN" line in quiet
+	builds.  Tweak format of comment written to "download" file to
+	make field identities clearer.  Construct output (with multiple
+	shell commands) in temporary file so it is not read prematurely
+	by the "BuildFoundries" script.  Move target into place as the
+	last step.
+	(font/devpdf/stamp): Relocate target to follow its dependencies.
+	Add dependency on "font/devpdf/download".
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[build]: Tweak diagnostic messages in BuildFoundries script.
 
 	* font/devpdf/util/BuildFoundries.pl (LoadFoundry,
