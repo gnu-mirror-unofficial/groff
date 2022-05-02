@@ -3579,9 +3579,9 @@ int string_iterator::get_location(int allow_macro,
 
 void string_iterator::backtrace()
 {
-  if (program_name)
-    fprintf(stderr, "%s: ", program_name);
   if (mac.filename) {
+    if (program_name)
+      fprintf(stderr, "%s: ", program_name);
     errprint("backtrace: '%1':%2", mac.filename,
 	     mac.lineno + lineno - 1);
     if (how_invoked) {

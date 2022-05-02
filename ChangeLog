@@ -1,5 +1,11 @@
 2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/roff/troff/input.cpp (string_iterator::backtrace): Fix
+	spurious output when `mac.filename` is empty.  Provoked by:
+	  $ printf '\\(' | troff
+
+2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/refer/refer.cpp: Trivially refactor.  Demote
 	global variable `recognize_R1_R2` from integer to Boolean.
 	(main, do_bib): Give expressions to `assert()` meaningful
