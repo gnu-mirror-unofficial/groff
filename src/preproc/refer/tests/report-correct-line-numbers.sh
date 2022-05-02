@@ -97,6 +97,15 @@ echo "$output" | grep -q "refer:.*:4:.*unknown command" || wail
 echo "checking detection of 2nd invalid refer(1) command in input file"
 echo "$output" | grep -q "refer:.*:9:.*unknown command" || wail
 
+# Regression-test Savannah #62391.
+
+output=$(printf '\0201\n' | "$refer" 2>&1 >/dev/null)
+
+echo "checking detection of invalid input character on first line of" \
+  "input file"
+echo "$output" | grep -q "refer:.*:1:.*invalid input character" \
+  || wail
+
 test -z "$fail" || exit 1
 
 # vim:set ai et sw=4 ts=4 tw=72:
