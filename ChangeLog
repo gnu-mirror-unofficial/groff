@@ -1,5 +1,24 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[refer]: Fix off-by-one error in line number for some
+	diagnostics.
+
+	* src/preproc/refer/command.cpp (input_item::get_location):
+	Decrement reported line number by one after looping over input
+	so that we report the line number as it was before the last
+	newline character seen.  This off-by-one error was partially
+	masked by...
+	* src/preproc/refer/refer.cpp (do_file): ...initialzation of
+	`current_lineno` to zero.  However, for syntax problems (as
+	opposed to the semantic problems of refer(1) command
+	processing), this could result in complaints about the line
+	number before they occurred, even on "line zero".  Initialize
+	the variable to 1.
+
+	Fixes <https://savannah.gnu.org/bugs/?62391>.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/refer/tests/report-correct-line-numbers.sh: Add
 	regression test for Savannah #62391.
 

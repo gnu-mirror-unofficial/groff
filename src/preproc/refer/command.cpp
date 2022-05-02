@@ -87,6 +87,7 @@ int input_item::get_location(const char **filenamep, int *linenop)
     for (const char *p = buffer.contents(); p < e; p++)
       if (*p == '\n')
 	ln++;
+    ln--; // Back up to identify line number _before_ last seen newline.
     *linenop = ln;
   }
   return 1;

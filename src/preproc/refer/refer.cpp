@@ -440,8 +440,8 @@ static void do_file(const char *filename)
   normalize_for_lf(fn);
   current_filename = fn.contents();
   fprintf(outfp, ".lf 1 %s\n", current_filename);
+  current_lineno = 1;
   string line;
-  current_lineno = 0;
   for (;;) {
     line.clear();
     for (;;) {
