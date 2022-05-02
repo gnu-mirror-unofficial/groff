@@ -1,5 +1,17 @@
 2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/refer/refer.cpp (main): Tweak wording of
+	diagnostic messages to refer to options consistently and to
+	characterize input as "invalid" rather than "bad".
+	(usage): Document --version option.  Use more informative
+	metasyntactic variable names.  Organize usage message
+	consistently with our others, and stop wrapping the output
+	lines: we know neither the width of the terminal nor the length
+	of the `program_name` string we're interpolating.  See commit
+	b4de44f0, 19 July 2021.
+
+2022-05-01  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/roff/troff/input.cpp (string_iterator::backtrace): Fix
 	spurious output when `mac.filename` is empty.  Provoked by:
 	  $ printf '\\(' | troff

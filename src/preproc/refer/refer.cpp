@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 	      --argc;
 	    }
 	    else {
-	      error("option 'f' requires an argument");
+	      error("'f' option requires an argument");
 	      usage(stderr);
 	      exit(1);
 	    }
@@ -186,7 +186,8 @@ int main(int argc, char **argv)
 	  const char *ptr;
 	  for (ptr = num; *ptr; ptr++)
 	    if (!csdigit(*ptr)) {
-	      error("bad character '%1' in argument to -f option", *ptr);
+	      error("invalid character '%1' in argument to 'f' option",
+		    *ptr);
 	      break;
 	    }
 	  if (*ptr == '\0') {
@@ -219,7 +220,8 @@ int main(int argc, char **argv)
 	    buf[0] = *opt++;
 	  else {
 	    if (*opt != '\0')
-	      error("bad field name '%1'", *opt++);
+	      error("invalid field name '%1' in argument to 'k' option",
+		    *opt++);
 	    buf[0] = 'L';
 	  }
 	  buf[1] = '~';
@@ -235,7 +237,7 @@ int main(int argc, char **argv)
 	  const char *ptr;
 	  for (ptr = ++opt; *ptr; ptr++)
 	    if (!csdigit(*ptr)) {
-	      error("argument to 'a' option not a number");
+	      error("'a' option argument must be an integer");
 	      break;
 	    }
 	  if (*ptr == '\0') {
@@ -257,7 +259,7 @@ int main(int argc, char **argv)
 	    char *ptr;
 	    long n = strtol(opt, &ptr, 10);
 	    if (n == 0 && ptr == opt) {
-	      error("bad integer '%1' in 'l' option", opt);
+	      error("invalid integer '%1' in 'l' option argument", opt);
 	      opt = 0;
 	      break;
 	    }
@@ -273,7 +275,7 @@ int main(int argc, char **argv)
 	    char *ptr;
 	    long n = strtol(opt, &ptr, 10);
 	    if (n == 0 && ptr == opt) {
-	      error("bad integer '%1' in 'l' option", opt);
+	      error("invalid integer '%1' in 'l' option argument", opt);
 	      opt = 0;
 	      break;
 	    }
@@ -329,7 +331,7 @@ int main(int argc, char **argv)
 	  char *ptr;
 	  long n = strtol(opt, &ptr, 10);
 	  if (n == 0 && ptr == opt) {
-	    error("bad integer '%1' in 't' option", opt);
+	    error("invalid integer '%1' in 't' option argument", opt);
 	    opt = 0;
 	    break;
 	  }
@@ -391,9 +393,9 @@ int main(int argc, char **argv)
 static void usage(FILE *stream)
 {
   fprintf(stream,
-"usage: %s [-benvCPRS] [-aN] [-cXYZ] [-fN] [-iXYZ] [-kX] [-lM,N] [-p file]\n"
-"       [-sXYZ] [-tN] [-BL.M] [files ...]\n",
-	  program_name);
+"usage: %s [-benCPRS] [-aN] [-cXYZ] [-fN] [-iXYZ] [-kX] [-lM,N]"
+" [-p db-file] [-sXYZ] [-tN] [-Bl.m] [file ...]\n"
+"usage: %s { -v | --version }\n", program_name, program_name);
 }
 
 static void possibly_load_default_database()
@@ -950,7 +952,8 @@ void output_references()
   assert(accumulate);
   if (!hash_table_size) {
     if (have_bibliography)
-      error("nothing to reference (probably 'bibliography' before 'sort')");
+      error("nothing to reference (probably 'bibliography' before"
+	    " 'sort')");
     accumulate = 0;
     nreferences = 0;
     return;
