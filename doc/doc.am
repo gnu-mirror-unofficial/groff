@@ -89,8 +89,8 @@ $(PROCESSEDDOCFILES_PDF): $(PROCESSEDFILES_DEPS_PDF)
 $(PROCESSEDDOCFILES_TXT): $(PROCESSEDFILES_DEPS_TXT)
 
 otherdocdir = $(docdir)
-dist_otherdoc_DATA = $(DOCFILES_INST) $(GENERATEDDOCFILES)
-nodist_otherdoc_DATA = $(PROCESSEDDOCFILES)
+dist_otherdoc_DATA = $(DOCFILES_INST)
+nodist_otherdoc_DATA = $(PROCESSEDDOCFILES) $(GENERATEDDOCFILES)
 MOSTLYCLEANFILES += $(GENERATEDDOCFILES) $(PROCESSEDDOCFILES)
 EXTRA_DIST += $(DOCFILES_NOINST)
 
@@ -308,6 +308,7 @@ doc/grnexmpl.ps: $(doc_srcdir)/grnexmpl.me $(doc_srcdir)/grnexmpl.g \
 # neither '.SUFFIXES' nor 'SUFFIXES') and establishing semantics for $<
 # in target rules.  But I won't hold my breath waiting on other make(1)
 # implementors to agree.  -- GBR
+.PRECIOUS: $(GENERATEDDOCFILES)
 SUFFIXES += .me.in .me
 .me.in.me:
 	$(GROFF_V)$(MKDIR_P) `dirname $@` \

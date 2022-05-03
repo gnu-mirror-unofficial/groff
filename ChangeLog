@@ -1,5 +1,17 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[build]: Ensure that we install *.me source files, but don't
+	include them in the distribution archive.
+
+	* doc/doc.am (dist_otherdoc_DATA): Move `$(GENERATEDDOCFILES)`
+	from here...
+	(nodist_otherdoc_DATA): ...to here.
+	(.PRECIOUS): Add `$(GENERATEDDOCFILES)` so that make(1) doesn't
+	automatically remove "intermediate" objects in the .me.in -> .me
+	-> .ps chain.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[build]: Handle "gnu.eps" file better.
 
 	* doc/doc.am (GENERATEDDOCFILES): Remove `$(DOC_GNU_EPS)`.
