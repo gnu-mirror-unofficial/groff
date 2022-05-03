@@ -1,5 +1,13 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* src/preproc/eqn/eqn.am (neqn): Produce temporary file first
+	and set its permissions before moving it into place.  If
+	anything in the future ever has a dependency on it, this avoids
+	a race where the file exists, satisfying a dependency, but
+	execution is attempted before its `x` permission bit is set.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	[build]: Ensure that we install *.me source files, but don't
 	include them in the distribution archive.
 

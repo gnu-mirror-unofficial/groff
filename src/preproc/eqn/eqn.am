@@ -62,8 +62,9 @@ neqn: $(top_srcdir)/src/preproc/eqn/neqn.sh $(SH_DEPS_SED_SCRIPT)
 	       -f $(SH_DEPS_SED_SCRIPT) \
 	       -e $(SH_SCRIPT_SED_CMD) \
 	       $(top_srcdir)/src/preproc/eqn/neqn.sh \
-	       >$@ \
-	&& chmod +x $@
+	       >$@.tmp \
+	&& chmod +x $@.tmp \
+	&& mv $@.tmp $@
 
 
 # Local Variables:
