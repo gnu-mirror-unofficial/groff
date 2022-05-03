@@ -8,8 +8,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -1478,15 +1478,16 @@ AC_DEFUN([GROFF_X11],
 AC_DEFUN([GROFF_APPRESDIR_OPTION],
   [AC_ARG_WITH([appresdir],
      AS_HELP_STRING([--with-appresdir=DIR],
-		    [X11 application resource files]))])
+		    [X11 application defaults files]))])
 
 
-# Get a default value for the application resource directory.
+# Get a default value for the application defaults directory.
 #
-# We ignore the 'XAPPLRES' and 'XUSERFILESEARCHPATH' environment variables.
+# We ignore the 'XAPPLRES' and 'XUSERFILESEARCHPATH' environment
+# variables.
 #
 # By default if --with-appresdir is not used, we will install the
-# gxditview resources in $prefix/lib/X11/app-defaults.
+# gxditview application defaults in $prefix/lib/X11/app-defaults.
 #
 # Note that if --with-appresdir was passed to 'configure', no prefix is
 # added to 'appresdir'.
@@ -1511,27 +1512,23 @@ AC_DEFUN([GROFF_APPRESDIR_CHECK],
   [if test -z "$groff_no_x"; then
      if test -z "$with_appresdir"; then
        AC_MSG_NOTICE([
-  The application resource files for gxditview (GXditview and
-  GXditview-color) will be installed in:
+  The application defaults files for gxditview (GXditview and
+  GXditview-color) will be installed in the following directory.
 
     $appresdir
 
-  (existing files will be saved by appending '.old' to the file
-  name).
-
-  To install them into a different directory, say,
-  '/etc/X11/app-defaults', add
+  To install elsewhere, say, '/etc/X11/app-defaults', add
   '--with-appresdir=/etc/X11/app-defaults' to the configure script
-  command-line options and rerun it ('prefix' value has no effect on
+  command-line options and rerun it (the 'prefix' value has no effect on
   a --with-appresdir option).
 
-  If the gxditview resources are installed in a directory that is not
-  one of the default X11 resources directories (common default
-  directories are /usr/lib/X11/app-defaults,
-  /usr/share/X11/app-defaults and /etc/X11/app-defaults), you will
-  have to set the environment variable XFILESEARCHPATH to this
-  path.  More details can be found in the X(7) manual page, or in "X
-  Toolkit Intrinsics - C Language Interface manual".
+  If the gxditview app-defaults are installed in a directory that is not
+  one of the default X11 directories for this purpose (common defaults
+  are /usr/lib/X11/app-defaults, /usr/share/X11/app-defaults, and
+  /etc/X11/app-defaults), you will have to set the environment variable
+  XFILESEARCHPATH to this path.  More details can be found in the X(7)
+  manual page, or in the document "X Toolkit Intrinsics - C Language
+  Interface manual".
        ])
      fi
    fi])

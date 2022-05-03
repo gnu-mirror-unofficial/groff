@@ -1,5 +1,17 @@
 2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* m4/groff.m4 (GROFF_APPRESDIR_OPTION): Update comments and
+	human-readable output to (1) stop claiming that existing
+	gxditview application defaults in the installation directory
+	will be backed up; this is no longer true as of commit
+	c66cb7725f, 3 April; and (2) refer to these files as
+	"application defaults", not "resources".  (X11 application
+	defaults are client-side and mandatory [for Xt-based programs];
+	X resources are stored server-side and need not be configured to
+	determine an X client's geometry and rendering.)
+
+2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* font/devX100-12/devX100-12.am (devX100_12_fontdir):
 	* font/devX100/devX100.am (devX100_fontdir):
 	* font/devX75-12/devX75-12.am (devX75_12_fontdir):
