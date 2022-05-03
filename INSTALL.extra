@@ -1,69 +1,86 @@
-    Copyright 1997-2021 Free Software Foundation, Inc.
+    Copyright 1997-2022 Free Software Foundation, Inc.
 
     Copying and distribution of this file, with or without modification,
     are permitted in any medium without royalty provided the copyright
     notice and this notice are preserved.
 
 This file contains information that supplements the generic
-installation instructions in file `INSTALL'.
+installation instructions in file 'INSTALL'.
 
 
 Normal Installation
 ===================
 
-The simplest way to compile groff is:
+A simple method of building and installing groff is as follows.
 
-  1. `cd' to the directory containing groff's source code and type
-     `./configure' to configure groff for your system.  If you are
-     using `csh' on an old version of System V, you might need to type
-     `sh ./configure' instead to prevent `csh' from trying to execute
-     `configure' itself.
+  1. 'cd' to the directory containing groff's source code and type
+     './configure' to configure groff for your system.  If you are
+     using 'csh' on an old version of System V, you might need to type
+     'sh ./configure' instead to prevent 'csh' from trying to execute
+     'configure' itself.
 
-     Running `configure' takes awhile.  While running, it prints some
-     messages telling which features it is checking for.
+     While 'configure' runs, it reports properties of the host system
+     that determine how the build is to be performed.
 
-  2. Type `make' to compile groff.
+  2. Type 'make' to compile groff.  You may wish to add the '-j' option
+     to accelerate the build on multicore systems.
 
-  3. Type `sudo make install' to install the groff programs and any
-     data files and documentation.  `make install' is the only step for
-     which you need `root' access; this is done by `sudo'.
+  3. Type 'sudo make install' to install groff's programs, data files,
+     and documentation.  'make install' is the only step for which you
+     need 'root' access; 'sudo' obtains this access.
 
-  4. You can remove the groff binaries and object files from the
-     source code directory by typing `make clean'.  To also remove the
-     files that `configure' created (so you can compile groff for
-     a different kind of computer), type `make distclean'.
+  4. You can remove the groff executables and other generated files from
+     the source code directory by typing 'make clean'.  To also remove
+     the files that 'configure' created (so you can compile groff for a
+     different kind of computer or with different options to
+     'configure'), type 'make distclean'.
 
 
 External Installation
 =====================
 
-It is also possible to perform the whole installation process outside
-of the source code directory.  In this case a whole external build
+It is also possible to perform the build and installation procedure
+outside the source code directory.  In this case an external build
 directory structure is created without changing any parts of the source
-code tree.  This is useful if the source code is read-only or if
+tree.  This practice is useful if the source code is read-only or if
 several different installations, such as for multiple architectures,
 should be constructed.
 
-As an example we assume that the source code of the `groff' code is in
-`/usr/local/src/groff', and that the build process should be done
-within the directory `/home/my/groff.compile'.
+As an example, we will imagine that groff's source code is in
+'/usr/local/src/groff' and that the build should happen within the
+directory '/home/my/groff-build'.  You can choose your own name for the
+build directory.
 
-  0. Create `/home/my/groff.compile' and change to that directory.
+  0. Create '/home/my/groff-build' and change to that directory.
 
-  1. Call `/usr/local/src/groff/configure' in that directory to
-     configure groff for your system.  If you are using `csh' on an old
-     version of System V, you might need to type `sh
+  1. Call '/usr/local/src/groff/configure' in that directory to
+     configure groff for your system.  If you are using 'csh' on an old
+     version of AT&T System V Unix, you might need to type 'sh
      /usr/local/src/groff/configure' instead.
 
-  2. Type `make' to compile groff in that directory.
+  2. Type 'make' to compile groff in that directory.
 
-  3. Type `sudo make install' to install the groff programs and any
+  3. Type 'sudo make install' to install the groff programs and any
      data files and documentation.
 
   4. You can remove the groff binaries and object files from the
-     build directory by typing `make clean'.  To also remove the
-     files that `configure' created (so you can compile the package for
-     a different kind of computer), type `make distclean'.
+     build directory by typing 'make clean'.  To also remove the
+     files that 'configure' created (so you can compile the package for
+     a different kind of computer), type 'make distclean'.
+
+
+Unprivileged Installation
+=========================
+
+The use of 'sudo' is only necessary if one or more destination
+directories used by the 'make install' command are in locations that
+require administrative access for writing.  You can 'configure' groff
+with options like '--prefix' that select an alternative directory that
+is writable by the user conducting the build.  type './configure --help'
+from the groff source tree for documentation of relevant options.
+Running groff commands from such a directory may require you to set the
+'GROFF_FONT_PATH' and 'GROFF_TMAC_PATH' environment variables.  See the
+groff(1) man page.
 
 
 Special Platforms
@@ -94,10 +111,9 @@ variable-length arrays) are not used.
 Several programs distributed with GNU roff are written in the Perl
 language.  Version 5.6.1 (1 April 2001) or later is required.
 
-groff's Texinfo manual is distributed in source, GNU info, HTML, and
-plain text formats.  To regenerate the latter formats (if you alter the
-source, for example), or to produce DVI or PDF versions, see section
-"Evaluation" below.
+groff's Texinfo manual is distributed in source, GNU info, HTML, TeX
+DVI, PDF, and plain text formats.  To regenerate the latter formats (if
+you alter the source, for example), see section "Evaluation" below.
 
 The 'uchardet' library is an optional dependency of the 'preconv'
 program: if this library is found by 'configure', it will be
@@ -116,11 +132,11 @@ produces an incorrect guess, say
 
   PAGE=xxx ./configure
 
-where `xxx' should be either `A4' or `letter'.  This affects only the
-paper selection of some groff output drivers, like grops (which can
+where 'xxx' should be either 'A4' or 'letter'.  This affects only the
+media size used by some groff output drivers, like grops (which can
 still be overridden on the command line).  For compatibility with AT&T
 troff, GNU troff's default page length is always 11 inches.  The page
-length can be changed with the `pl' request.
+length can be changed with the 'pl' request.
 
 
 Evaluation
@@ -152,28 +168,24 @@ It can be viewed as text encoded in ISO Latin-1 as well.
   iconv -f latin1 -t utf8 doc/groff.txt | less # for UTF-8 users
   less doc/groff.txt # for Latin-1 users
 
-An HTML rendering is also available.
+Renderings in HTML, TeX DVI, and PDF are also available.
 
   lynx doc/groff.html
-
-Texinfo version 5.0 or later is a prerequisite for regeneration of
-groff's Texinfo manual if you make changes.  If you also have a working
-TeX installation, you can furthermore render it in DVI or PDF.  Say
-'make doc/groff.dvi' or 'make doc/groff.pdf', respectively, in your
-build directory after configuring the groff package.  Here are some ways
-you might view the formats produced.  Do so from your build directory.
-
   xdvi doc/groff.dvi
   evince doc/groff.pdf
+
+Texinfo version 5.0 or later is a prerequisite for regeneration of
+groff's Texinfo manual if you make changes.  A working TeX installation
+(such as TeX Live) is furthermore required to render it in DVI or PDF.
 
 
 In Case of Trouble
 ==================
 
 If you have problems, read the PROBLEMS file.  If this doesn't help
-and you need support, please contact the `groff' mailing list.  If you
-think that you have found a bug, please submit a report to our bug
-tracker.
+and you need support, please contact the groff mailing list at
+groff@gnu.org.  If you think that you have found a bug, please submit a
+report to our bug tracker.
 
   https://savannah.gnu.org/bugs/?group=groff&func=additem
 
@@ -183,7 +195,8 @@ Uninstalling
 
 If you are dissatisfied with groff, or to prepare for a new installation
 from source, you can uninstall it to ensure that no stale files persist
-on the system.  Run the command 'make uninstall'.  At a minimum, some
+on the system.  Run the command 'make uninstall'.  (If you used 'sudo
+make install', run 'sudo make uninstall'.)  At a minimum, some
 directories not particular to groff, like 'bin' and (depending on
 configuration) an X11 'app-defaults' directory will remain, as will one
 plain file called 'dir', created by GNU Texinfo's 'install-info'
@@ -198,4 +211,4 @@ Local Variables:
 fill-column: 72
 mode: text
 End:
-vim: set textwidth=72:
+vim: set autoindent textwidth=72:
