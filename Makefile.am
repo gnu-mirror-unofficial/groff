@@ -9,8 +9,8 @@
 # Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# groff is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# groff is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
@@ -690,9 +690,6 @@ include $(top_srcdir)/tmac/tmac.am
 # src/roff/groff/groff.$(OBJEXT): defs.h)
 BUILT_SOURCES += defs.h
 
-# Force generation of test-groff even though we don't ship it.
-BUILT_SOURCES += test-groff
-
 .DELETE_ON_ERROR:
 .PRECIOUS: $(TEST_SUITE_LOG)
 
@@ -823,8 +820,7 @@ EXTRA_DIST += \
 
 MOSTLYCLEANFILES += $(prefixexecbin_SCRIPTS) $(bin_SCRIPTS) \
   $(man1_MANS) $(man5_MANS) $(man7_MANS) \
-  $(PREFIXMAN1) \
-  test-groff
+  $(PREFIXMAN1)
 
 # Suffix rule to build .1, .5 and .7 files from .1.man, .5.man and
 # .7.man files.  The brackets around the @ are used to prevent the

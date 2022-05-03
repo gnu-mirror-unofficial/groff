@@ -1,5 +1,13 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* Makefile.am: Stop manually handling "test-groff".  Per the
+	GNU Automake manual, "If configure built it, then distclean
+	should delete it."  This is taken care of automatically if we
+	don't interfere.
+	(BUILT_SOURCES, MOSTLYCLEANFILES): Drop "test-groff".
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* src/preproc/eqn/eqn.am (neqn): Produce temporary file first
 	and set its permissions before moving it into place.  If
 	anything in the future ever has a dependency on it, this avoids
