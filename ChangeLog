@@ -1,5 +1,18 @@
 2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* doc/doc.am (dist-info-bits, install_infodoc, dist-gnueps): Fix
+	logic error.  When checking both source and build trees for
+	files to copy, break after successfully copying the files, not
+	after the first iteration of the loop unconditionally.  This
+	caused the Info documents not to be installed from out-of-tree
+	builds, and potentially would prevent them and doc/gnu.eps from
+	being included in the distribution archive if for some reason
+	they didn't build and that build failure were not treated as an
+	error.  Problems introduced by me in commits e78bd20d54, 27
+	March, and d79c3f3a4a, 11 November.
+
+2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* m4/groff.m4 (GROFF_APPRESDIR_OPTION): Update comments and
 	human-readable output to (1) stop claiming that existing
 	gxditview application defaults in the installation directory

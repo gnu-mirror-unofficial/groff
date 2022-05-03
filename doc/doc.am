@@ -514,8 +514,8 @@ dist-info-bits:
 	for d in $(doc_builddir) $(doc_srcdir); do \
 	  if [ -f "$$d"/groff.info ]; then \
 	    cp -f "$$d"/groff.info-* $(distdir)/doc; \
+	    break; \
 	  fi; \
-	  break; \
 	done
 
 EXTRA_DIST += doc/groff.txt
@@ -599,8 +599,8 @@ install_infodoc: doc/groff.info
 	    cp "$$d"/groff.info* $(DESTDIR)$(infodir); \
 	    $(INSTALL_INFO) --info-file="$$d"/groff.info \
 	      --info-dir=$(DESTDIR)$(infodir); \
+	    break; \
 	  fi; \
-	  break; \
 	done
 install-pdf-local: doc/groff.pdf
 	-test -d $(DESTDIR)$(pdfdocdir) \
@@ -657,8 +657,8 @@ dist-gnueps:
 	for d in $(doc_builddir) $(doc_srcdir); do \
 	  if [ -f "$$d"/$(DOC_GNU_EPS) ]; then \
 	    cp -f "$$d"/$(DOC_GNU_EPS) $(distdir)/doc; \
+	    break; \
 	  fi; \
-	  break; \
 	done
 
 
