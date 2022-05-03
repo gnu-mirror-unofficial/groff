@@ -1,5 +1,16 @@
 2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	* font/devX100-12/devX100-12.am (devX100_12_fontdir):
+	* font/devX100/devX100.am (devX100_fontdir):
+	* font/devX75-12/devX75-12.am (devX75_12_fontdir):
+	* font/devX75/devX75.am (devX75_fontdir): Define macros without
+	an extra "font/" layer in the directory hierarchy.
+
+	Fixes problem introduced by me in commit 3c82cbbfe5, 27
+	February.
+
+2022-05-03  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* font/devpdf/devpdf.am (font/devpdf/util/BuildFoundries): Spell
 	dependency on `$(SH_DEPS_SED_SCRIPT)` using that macro expansion
 	instead of a literal file name.  See doc/automake.mom.
