@@ -53,7 +53,6 @@ DOCFILES_NOINST = \
   doc/meref.me.in
 # Files that undergo a transformation prior to groff processing
 GENERATEDDOCFILES = \
-  $(DOC_GNU_EPS) \
   doc/meintro.me \
   doc/meintro_fr.me \
   doc/meref.me
@@ -629,31 +628,25 @@ uninstall-html:
 	$(RM) $(DESTDIR)$(htmldocdir)/groff.html.*
 
 # An image of a gnu in enscapsulated PostScript is generated during the
-# build process if possible.
-EXTRA_DIST += doc/gnu.xpm
+# build process if necessary.  We assume pnmdepth is available if
+# xpmtoppm is.
+EXTRA_DIST += $(DOC_GNU_EPS) doc/gnu.xpm
 $(DOC_GNU_EPS): doc/gnu.xpm
-	$(AM_V_GEN)if test -f $(top_srcdir)/doc/gnu.eps; then \
-	  cp $(top_srcdir)/doc/gnu.eps . ; \
-	elif test -f $(top_builddir)/doc/gnu.eps; then \
-	  cp $(top_builddir)/doc/gnu.eps . ; \
-	else \
-	  if test ""$(XPMTOPPM) != "found"; then \
-	    echo "program xpmtoppm is missing; can't generate $@" >&2;\
-	    exit 1; \
-	  fi; \
-	  if test ""$(pnmtops) != "found"; then \
-	    echo "program pnmtops is missing; can't generate $@" >&2;\
-	    exit 1; \
-	  fi; \
-	  if ! echo "$(pnmtops_nosetpage)" | grep -q nosetpage; then \
-	    echo "program pnmtops can't handle -nosetpage option;" \
-	      "can't generate $@" >&2;\
-	    exit 1; \
-	  fi; \
-	  xpmtoppm $(top_srcdir)/doc/gnu.xpm | pnmdepth 15 \
-	    | $(pnmtops_nosetpage) -noturn -rle >$@ ; \
-	fi
-	$(AM_V_GEN)test -f $(top_builddir)/doc/gnu.eps
+	$(AM_V_GEN)if test "$(XPMTOPPM)" != found; then \
+	  echo "program xpmtoppm is missing; can't generate $@" >&2;\
+	  exit 1; \
+	fi; \
+	if test "$(pnmtops)" != found; then \
+	  echo "program pnmtops is missing; can't generate $@" >&2;\
+	  exit 1; \
+	fi; \
+	if ! echo "$(pnmtops_nosetpage)" | grep -q nosetpage; then \
+	  echo "program pnmtops can't handle -nosetpage option;" \
+	    "can't generate $@" >&2;\
+	  exit 1; \
+	fi; \
+	xpmtoppm $(top_srcdir)/doc/gnu.xpm | pnmdepth 15 \
+	  | $(pnmtops_nosetpage) -noturn -rle >$@
 
 # Provide a copy of the image in the distribution archive to accommodate
 # systems without a tool to generate it from an X pixmap.

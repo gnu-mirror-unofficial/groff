@@ -1,5 +1,17 @@
 2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
 
+	[build]: Handle "gnu.eps" file better.
+
+	* doc/doc.am (GENERATEDDOCFILES): Remove `$(DOC_GNU_EPS)`.
+	(EXTRA_DIST): Ship `$(DOC_GNU_EPS)` in distribution archive.
+	($(DOC_GNU_EPS)): Simplify rule commands; stop trying to copy
+	the file around since it will either be (1) in the distribution
+	archive from which a build is performed; or (2) missing because
+	a build is being done from Git, in which case we expect the PNM
+	tools to be available.
+
+2022-05-02  G. Branden Robinson <g.branden.robinson@gmail.com>
+
 	* doc/doc.am (clean_otherdoc): Drop target: it doesn't seem to
 	accomplish anything.
 	(clean_infodoc): Drop target, moving its rules into...
