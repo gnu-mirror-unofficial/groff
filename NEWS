@@ -68,7 +68,7 @@ o New requests `stringdown` and `stringup` are available.  These change
   its lowercase or uppercase version (if any), respectively.  groff
   special characters (see the groff_char(7) man page) can be used and
   the output will often transform in the expected way due to the
-  regular naming convention of the special character escapes sequences
+  regular naming convention of the special character escape sequences
   for accented letters.
 
 o The `ab` request no longer writes "User Abort." to the standard error
@@ -268,13 +268,13 @@ o The e (me) macro package now uses strings `wa` and `wc` to store the
 
 o The e (me) macro package has a new macro, `ld`, which "re-localizes
   the date"; if you modify troff registers `dw`, `mo`, and `yr` (to
-  record a document's date of composition, for instance), call `ld`
+  record a document's date of revision, for instance), call `ld`
   afterward to update the package's `y2` and `y4` registers and the
   localized strings `dw` and `mo` for the names of the weekday and
   month.  `ld` is also used internally to simplify the use of the
   package with languages other than English; it thus updates the `wa`
-  and `wc` strings as well.  If you want to customize these strings,
-  do so after any `ld` call you make.
+  and `wc` strings as well.  If you want to customize these strings, do
+  so after any `ld` call you make.
 
 o The e (me) macro package now has a register `sx` that eases the
   configuration of space added to the line height above/below when
@@ -378,7 +378,7 @@ o On output devices using the Latin-1 character encoding ("groff -T
   requests and similar notwithstanding).
 
 o The "sgr" device control command, which dynamically configured support
-  for ISO 6429/EMA-48 SGR escape sequences (and restored traditional
+  for ISO 6429/ECMA-48 SGR escape sequences (and restored traditional
   overstriking behavior if disabled), has been removed.  It took effect
   only at page boundaries.  grotty's "-c" command-line option and the
   GROFF_NO_SGR environment variable remain supported.
